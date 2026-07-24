@@ -1,0 +1,97 @@
+from __future__ import annotations
+
+import re
+import unicodedata
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class UniversityProfile:
+    id: str
+    school_name: str
+    short_name: str
+    english_name: str
+    aliases: tuple[str, ...]
+    hero_image: str
+    official_url: str
+    coverage_note: str
+    partner_count_hint: int
+    academic_score_minimum: float
+    student_card_signals: tuple[str, ...]
+
+
+CGU = UniversityProfile(
+    id="cgu",
+    school_name="長庚大學",
+    short_name="長庚",
+    english_name="Chang Gung University",
+    aliases=("長庚大學", "長庚", "CGU", "Chang Gung University"),
+    hero_image="/static/assets/cgu-campus.jpg",
+    official_url="https://www.cgu.edu.tw/oia-ch",
+    coverage_note="已整理長庚大學交換、補助、文件與合作校資訊。",
+    partner_count_hint=62,
+    academic_score_minimum=70,
+    student_card_signals=("長庚大學", "CHANGGUNGUNIVERSITY", "CGU"),
+)
+
+
+NTPU = UniversityProfile(
+    id="ntpu",
+    school_name="國立臺北大學",
+    short_name="臺北大學",
+    english_name="National Taipei University",
+    aliases=(
+        "國立臺北大學",
+        "臺北大學",
+        "台北大學",
+        "北大",
+        "NTPU",
+        "National Taipei University",
+    ),
+    hero_image="/static/assets/ntpu-campus.jpg",
+    official_url="https://new.ntpu.edu.tw/oia",
+    coverage_note="已套用完整交換申請流程，並接入 115 學年度三語組官方名額表。",
+    partner_count_hint=155,
+    academic_score_minimum=75,
+    student_card_signals=(
+        "國立臺北大學",
+        "臺北大學",
+        "台北大學",
+        "NATIONALTAIPEIUNIVERSITY",
+        "NTPU",
+    ),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU)
+DEFAULT_UNIVERSITY = CGU
+
+
+def _alias_key(value: str) -> str:
+    normalized = unicodedata.normalize("NFKC", value or "").casefold()
+    return re.sub(r"[^0-9a-z\u4e00-\u9fff]+", "", normalized)
+
+
+_UNIVERSITY_BY_ALIAS = {
+    _alias_key(alias): university
+    for university in SUPPORTED_UNIVERSITIES
+    for alias in (*university.aliases, university.school_name)
+}
+
+
+def resolve_university(value: str | None) -> UniversityProfile | None:
+    if value is None or not value.strip():
+        return DEFAULT_UNIVERSITY
+    return _UNIVERSITY_BY_ALIAS.get(_alias_key(value))
+
+
+def require_university(value: str | None) -> UniversityProfile:
+    university = resolve_university(value)
+    if university is None:
+        supported = "、".join(item.school_name for item in SUPPORTED_UNIVERSITIES)
+        raise ValueError(f"目前支援的學校為：{supported}。")
+    return university
+
+
+def is_home_university(value: str | None) -> bool:
+    return resolve_university(value) is not None

@@ -1,0 +1,59 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.pyc
+*.egg-info/
+*.log
+
+.idea/
+*.iml
+.DS_Store
+.codex/
+.agents/
+.codex-remote-attachments/
+.playwright-cli/
+.server-*.stdout.log
+.server-*.stderr.log
+android/**/.gradle/
+android/**/build/
+android/**/local.properties
+
+# Flutter/Dart generated files and local release artifacts
+mobile_flutter/.dart_tool/
+mobile_flutter/.flutter-plugins
+mobile_flutter/.flutter-plugins-dependencies
+mobile_flutter/build/
+mobile_flutter/build_*/
+mobile_flutter/build_stale_codex/
+mobile_flutter/artifacts/
+mobile_flutter/android/**/.gradle/
+mobile_flutter/android/**/local.properties
+mobile_flutter/ios/Pods/
+mobile_flutter/ios/.symlinks/
+
+# Apple/Xcode generated and per-user state
+ios/Pods/
+ios/**/DerivedData/
+ios/**/*.xcuserstate
+ios/**/xcuserdata/
+
+# Built app packages are reproducible and should not live in Git
+*.apk
+*.aab
+*.ipa
+
+# Local delivery/preview output
+output/
+
+# Accidental shell scratch files
+/([{}]src
+/e.textContent.trim()).filter(Boolean))
+
+data/*.log
+data/raw/*
+!data/raw/.gitkeep
+data/raw_files/*
+!data/raw_files/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
