@@ -1,9 +1,14 @@
 from __future__ import annotations
 
+import json
 import re
 import unicodedata
 from datetime import datetime, timezone
+from difflib import SequenceMatcher
+from functools import lru_cache
 from urllib.parse import urlparse
+
+import requests
 
 from .content_summary import summarize_official_life_link
 from .experience_collector import COUNTRY_SEARCH_NAMES, school_search_name
@@ -469,6 +474,296 @@ VERIFIED_OFFICIAL_SITES = {
         "Sejong University official English website",
     ),
 }
+
+# These entries use the exact display name from NTPU's current partner-school
+# catalog. They are intentionally kept separate from the broad search aliases:
+# several schools have near-identical English or Chinese names, and a generic
+# web search can otherwise select a different university (for example Shandong
+# University of Science and Technology instead of Shandong University).
+VERIFIED_OFFICIAL_SITES.update(
+    {
+        "下諾夫哥羅德羅巴切夫斯基國立大學": (
+            "https://eng.unn.ru/",
+            "Lobachevsky State University official English website",
+        ),
+        "東北大學": (
+            "https://www.tohoku.ac.jp/en/",
+            "Tohoku University official English website",
+        ),
+        "勞倫森大學": (
+            "https://laurentian.ca/",
+            "Laurentian University official website",
+        ),
+        "o.p.金達爾全球大學": (
+            "https://jgu.edu.in/",
+            "O.P. Jindal Global University official website",
+        ),
+        "republic 布拉格生命科學大學": (
+            "https://www.czu.cz/en/",
+            "Czech University of Life Sciences Prague official English website",
+        ),
+        "republic 茲林托馬斯巴塔大學": (
+            "https://www.utb.cz/en/",
+            "Tomas Bata University in Zlin official English website",
+        ),
+        "republic 西波西米亞大學": (
+            "https://www.zcu.cz/en/",
+            "University of West Bohemia official English website",
+        ),
+        "republic 俄斯特拉發工業大學": (
+            "https://www.vsb.cz/en/",
+            "VSB Technical University of Ostrava official English website",
+        ),
+        "中央財經大學": (
+            "https://en.cufe.edu.cn/",
+            "Central University of Finance and Economics official English website",
+        ),
+        "仰光大學": (
+            "https://www.uy.edu.mm/",
+            "University of Yangon official website",
+        ),
+        "佛羅倫斯藝術大學": (
+            "https://fua.it/",
+            "Florence University of the Arts official website",
+        ),
+        "俄斯特拉發大學": (
+            "https://www.osu.eu/",
+            "University of Ostrava official English website",
+        ),
+        "北安普頓大學": (
+            "https://www.northampton.ac.uk/",
+            "University of Northampton official website",
+        ),
+        "北愛荷華大學": (
+            "https://uni.edu/",
+            "University of Northern Iowa official website",
+        ),
+        "南猶他大學": (
+            "https://www.suu.edu/",
+            "Southern Utah University official website",
+        ),
+        "卡爾斯塔德大學": (
+            "https://www.kau.se/en",
+            "Karlstad University official English website",
+        ),
+        "印尼大學": (
+            "https://www.ui.ac.id/en/",
+            "Universitas Indonesia official English website",
+        ),
+        "印尼伊斯蘭大學": (
+            "https://www.uii.ac.id/en/",
+            "Universitas Islam Indonesia official English website",
+        ),
+        "比娜大學": (
+            "https://binus.ac.id/",
+            "BINUS University official website",
+        ),
+        "印尼迪安努斯萬托羅大學": (
+            "https://dinus.ac.id/en/",
+            "Universitas Dian Nuswantoro official English website",
+        ),
+        "吉羅卡斯特大學": (
+            "https://uogj.edu.al/",
+            "Eqrem Cabej University of Gjirokaster official website",
+        ),
+        "奧斯陸大學（犯罪學與社會學法系）": (
+            "https://www.jus.uio.no/ikrs/english/",
+            "University of Oslo Department of Criminology and Sociology of Law",
+        ),
+        "奧維第烏斯大學": (
+            "https://www.univ-ovidius.ro/",
+            "Ovidius University of Constanta official website",
+        ),
+        "挪威克里斯蒂安尼亞應用科學大學": (
+            "https://www.kristiania.no/en/",
+            "Kristiania University of Applied Sciences official English website",
+        ),
+        "山東大學": (
+            "https://www.en.sdu.edu.cn/",
+            "Shandong University official English website",
+        ),
+        "布拉提斯拉瓦斯洛伐克工業大學": (
+            "https://www.stuba.sk/english.html?page_id=132",
+            "Slovak University of Technology in Bratislava official English website",
+        ),
+        "愛丁堡大學": (
+            "https://www.ed.ac.uk/",
+            "University of Edinburgh official website",
+        ),
+        "拉斯帕爾瑪斯大學": (
+            "https://www.ulpgc.es/en/",
+            "University of Las Palmas de Gran Canaria official English website",
+        ),
+        "拉脫維亞大學": (
+            "https://www.lu.lv/en/",
+            "University of Latvia official English website",
+        ),
+        "新加坡社科大學": (
+            "https://www.suss.edu.sg/",
+            "Singapore University of Social Sciences official website",
+        ),
+        "新墨西哥州立大學": (
+            "https://www.nmsu.edu/",
+            "New Mexico State University official website",
+        ),
+        "義大利卡利亞里大學": (
+            "https://www.unica.it/unica/en/homepage.page",
+            "University of Cagliari official English website",
+        ),
+        "昌迪加爾大學": (
+            "https://www.cuchd.in/",
+            "Chandigarh University official website",
+        ),
+        "明斯特大學": (
+            "https://www.uni-muenster.de/en/",
+            "University of Muenster official English website",
+        ),
+        "明斯特應用技術大學": (
+            "https://www.fh-muenster.de/msb/en/index.php",
+            "FH Muenster School of Business official English website",
+        ),
+        "普列漢諾夫經濟大學": (
+            "https://www.rea.ru/en/",
+            "Plekhanov Russian University of Economics official English website",
+        ),
+        "俄羅斯經濟與公共管理學院": (
+            "https://www.ranepa.ru/eng/",
+            "RANEPA official English website",
+        ),
+        "普雷紹夫大學": (
+            "https://www.unipo.sk/en/",
+            "University of Presov official English website",
+        ),
+        "暨南大學": (
+            "https://english.jnu.edu.cn/",
+            "Jinan University official English website",
+        ),
+        "東華理工大學": (
+            "https://eng.ecut.edu.cn/",
+            "East China University of Technology official English website",
+        ),
+        "格但斯克科技大學": (
+            "https://pg.edu.pl/en",
+            "Gdansk University of Technology official English website",
+        ),
+        "梅拉達倫大學": (
+            "https://www.mdu.se/en/malardalen-university",
+            "Malardalen University official English website",
+        ),
+        "比利時魯汶林堡學院大學": (
+            "https://www.ucll.be/en",
+            "UCLL University of Applied Sciences official English website",
+        ),
+        "泰國東方大學": (
+            "https://www.buu.ac.th/en/",
+            "Burapha University official English website",
+        ),
+        "泰國清邁大學": (
+            "https://www.cmu.ac.th/en/",
+            "Chiang Mai University official English website",
+        ),
+        "斯洛伐克布拉斯第拉瓦經濟大學": (
+            "https://euba.sk/en/",
+            "University of Economics in Bratislava official English website",
+        ),
+        "圖里巴大學": (
+            "https://www.turiba.lv/en/",
+            "Turiba University official English website",
+        ),
+        "瑞典厄勒布魯大學": (
+            "https://www.oru.se/english/",
+            "Orebro University official English website",
+        ),
+        "瑞士西部應用科技大學日內瓦商學院": (
+            "https://www.hesge.ch/heg/en",
+            "Geneva School of Business Administration official English website",
+        ),
+        "百麗宮國際大學": (
+            "https://paragoniu.edu.kh/",
+            "Paragon International University official website",
+        ),
+        "穆爾西亞聖安東尼奧天主教大學": (
+            "https://international.ucam.edu/",
+            "UCAM Catholic University of Murcia official international website",
+        ),
+        "立陶宛維塔斯．馬格努斯大學": (
+            "https://www.vdu.lt/en/",
+            "Vytautas Magnus University official English website",
+        ),
+        "英屬哥倫比亞大學": (
+            "https://www.ubc.ca/",
+            "University of British Columbia official website",
+        ),
+        "荷蘭烏特勒支應用科技大學": (
+            "https://www.internationalhu.com/",
+            "HU University of Applied Sciences Utrecht official international website",
+        ),
+        "羅馬尼亞布拉索夫特蘭西瓦尼亞大學": (
+            "https://www.unitbv.ro/en/",
+            "Transilvania University of Brasov official English website",
+        ),
+        "茵斯堡大學": (
+            "https://www.uibk.ac.at/en/",
+            "University of Innsbruck official English website",
+        ),
+        "蒂米什拉西部大學": (
+            "https://www.uvt.ro/en/",
+            "West University of Timisoara official English website",
+        ),
+        "蘭州大學": (
+            "https://en.lzu.edu.cn/",
+            "Lanzhou University official English website",
+        ),
+        "費內巴赫大學": (
+            "https://www.fbu.edu.tr/en",
+            "Fenerbahce University official English website",
+        ),
+        "阿拉木圖管理大學": (
+            "https://almau.edu.kz/en/",
+            "Almaty Management University official English website",
+        ),
+        "阿提巴斯大學": (
+            "https://altinbas.edu.tr/en/",
+            "Altinbas University official English website",
+        ),
+        "蒙古財經大學": (
+            "https://ufe.edu.mn/",
+            "University of Finance and Economics Mongolia official website",
+        ),
+        "高麗大學世宗校區": (
+            "https://sejong.korea.ac.kr/eng/",
+            "Korea University Sejong Campus official English website",
+        ),
+        "越南融促大學": (
+            "https://daihoc.fpt.edu.vn/en/",
+            "FPT University official English website",
+        ),
+        "加拿大多倫多都會大學": (
+            "https://www.torontomu.ca/",
+            "Toronto Metropolitan University official website",
+        ),
+        "香港恆生大學": (
+            "https://www.hsu.edu.hk/en/",
+            "Hang Seng University of Hong Kong official English website",
+        ),
+        "香港教育大學": (
+            "https://www.eduhk.hk/en/",
+            "Education University of Hong Kong official English website",
+        ),
+        "香港樹仁大學": (
+            "https://www.hksyu.edu/en/",
+            "Hong Kong Shue Yan University official English website",
+        ),
+        "香港理工大學": (
+            "https://www.polyu.edu.hk/en/",
+            "Hong Kong Polytechnic University official English website",
+        ),
+        "黎剎系統大學": (
+            "https://www.urs.edu.ph/",
+            "University of Rizal System official website",
+        ),
+    }
+)
 
 CURATED_DESTINATION_DETAILS = {
     "kyonggi university": {
@@ -2211,8 +2506,7 @@ def research_school_name(value: str) -> str:
     name = re.sub(r"\)?\s*無\s*$", "", name).strip(" ()")
     name = re.sub(r"\s*黑龍江省哈爾\s*濱市\s*$", "", name).strip()
     name = re.sub(r"\s+", " ", name)
-    if any(character.isascii() and character.isalpha() for character in name):
-        name = school_search_name(name).strip(" ()（）,，")
+    name = school_search_name(name).strip(" ()（）,，")
     name = re.sub(
         r"\s+(?:For|FOR)\s+(?:SPACE|SE-|Program|Programme).*$",
         "",
@@ -2318,6 +2612,443 @@ def _search_candidates(
     return sorted(deduped.values(), key=lambda row: (-row[0], len(row[2])))
 
 
+def _wikidata_name(value: str) -> str:
+    ascii_value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode()
+    return re.sub(r"[^a-z0-9]+", " ", ascii_value.casefold()).strip()
+
+
+def _wikidata_search_names(value: str) -> list[str]:
+    names = [value]
+    root = re.split(
+        r"\b(?:college|department|faculty|graduate school|school of)\b",
+        value,
+        maxsplit=1,
+        flags=re.IGNORECASE,
+    )[0].strip(" ,-/")
+    if len(root) >= 4 and _wikidata_name(root) != _wikidata_name(value):
+        names.append(root)
+    return names
+
+
+def _wikidata_candidate_score(query: str, label: str, description: str) -> float:
+    normalized_query = _wikidata_name(query)
+    normalized_label = _wikidata_name(label)
+    if not normalized_query or not normalized_label:
+        return 0.0
+    description_key = _wikidata_name(description)
+    if not re.search(r"\b(university|college|school|institute|academy)\b", description_key):
+        return 0.0
+    query_tokens = set(normalized_query.split())
+    label_tokens = set(normalized_label.split())
+    overlap = len(query_tokens & label_tokens) / max(1, len(query_tokens | label_tokens))
+    ratio = SequenceMatcher(None, normalized_query, normalized_label).ratio()
+    exact_bonus = 0.22 if normalized_query == normalized_label else 0.0
+    return ratio * 0.62 + overlap * 0.38 + exact_bonus
+
+
+def _wikidata_official_site(
+    partner: PartnerUniversity,
+    *,
+    timeout_seconds: float,
+) -> tuple[str, str, str, float] | None:
+    """Resolve an institution's official website from an exact Wikidata entity match.
+
+    Search-engine results can confuse similarly named institutions (for example,
+    Shandong University and Shandong University of Science and Technology).
+    Wikidata's institution label plus P856 official-website property gives us a
+    safer canonical-domain fallback before general web search.
+    """
+
+    endpoint = "https://www.wikidata.org/w/api.php"
+    headers = {
+        "User-Agent": "taiwan-exchange-info/0.1 (public university metadata reader)",
+        "Accept-Language": "en,zh-TW;q=0.8",
+    }
+    research_name = research_school_name(partner.school_name)
+    candidates: dict[str, tuple[float, str]] = {}
+    try:
+        for query in _wikidata_search_names(research_name):
+            response = requests.get(
+                endpoint,
+                params={
+                    "action": "wbsearchentities",
+                    "search": query,
+                    "language": "en",
+                    "format": "json",
+                    "limit": 6,
+                    "origin": "*",
+                },
+                headers=headers,
+                timeout=timeout_seconds,
+            )
+            response.raise_for_status()
+            for item in response.json().get("search", []):
+                entity_id = str(item.get("id") or "")
+                label = str(item.get("label") or "")
+                score = _wikidata_candidate_score(
+                    query,
+                    label,
+                    str(item.get("description") or ""),
+                )
+                if entity_id and score >= 0.56 and score > candidates.get(entity_id, (0.0, ""))[0]:
+                    candidates[entity_id] = (score, label)
+        if not candidates:
+            return None
+        entity_ids = sorted(candidates, key=lambda item: candidates[item][0], reverse=True)[:6]
+        response = requests.get(
+            endpoint,
+            params={
+                "action": "wbgetentities",
+                "ids": "|".join(entity_ids),
+                "props": "claims",
+                "format": "json",
+                "origin": "*",
+            },
+            headers=headers,
+            timeout=timeout_seconds,
+        )
+        response.raise_for_status()
+        entities = response.json().get("entities", {})
+    except (requests.RequestException, ValueError, TypeError):
+        return None
+
+    for entity_id in entity_ids:
+        claims = entities.get(entity_id, {}).get("claims", {})
+        websites = claims.get("P856", [])
+        for statement in websites:
+            if statement.get("rank") == "deprecated":
+                continue
+            value = (
+                statement.get("mainsnak", {})
+                .get("datavalue", {})
+                .get("value")
+            )
+            if isinstance(value, str) and value.startswith(("http://", "https://")):
+                score, label = candidates[entity_id]
+                return value, label, entity_id, score
+    return None
+
+
+THE_WORLD_RANKING_URL = (
+    "https://www.timeshighereducation.com/world-university-rankings/"
+    "latest/world-ranking"
+)
+
+THE_RANKING_NAME_ALIASES = {
+    "university of california davis": "University of California, Davis",
+    "uc davis": "University of California, Davis",
+    "uc davis the regents of the university of california on the behalf of the davis campus": "University of California, Davis",
+    "university of california irvine": "University of California, Irvine",
+    "uc i": "University of California, Irvine",
+    "uc i university of california irvine uci": "University of California, Irvine",
+    "king mongkut s institute of technology ladkrabang kmitl": "KMITL - King Mongkut's Institute of Technology Ladkrabang",
+    "king mongkut s university of technology thonburi kmutt": "King Mongkut's University of Technology Thonburi",
+    "thammasat university thailand": "Thammasat University",
+    "prince of songkla university psu": "Prince of Songkla University",
+    "kyungpook national university": "Kyungpook National University (KNU)",
+    "xi an jiaotong university": "Xi'an Jiaotong University",
+    "leopold franzens university of innsbruck": "University of Innsbruck",
+    "universite de lille": "University of Lille",
+    "college of liberal arts and social sciences city university of hong kong": "City University of Hong Kong",
+    "osaka university school of law graduate school of law and politics osaka school of international public policy": "The University of Osaka",
+    "the university of electro communications uec": "The University of Electro-Communications",
+    "university of munster": "University of Munster",
+    "fh munster munster school of business": "Munster University of Applied Sciences",
+    "sciences po aix": "Sciences Po Aix",
+    "sciences po toulouse": "Sciences Po Toulouse",
+    "universiti tunku abdul rahman": "Universiti Tunku Abdul Rahman (UTAR)",
+}
+
+THE_RANKING_STOP_WORDS = {
+    "and",
+    "at",
+    "campus",
+    "college",
+    "faculty",
+    "for",
+    "in",
+    "institute",
+    "institue",
+    "international",
+    "national",
+    "of",
+    "school",
+    "the",
+    "university",
+}
+
+
+def _normalise_ranking_name(value: str) -> str:
+    folded = unicodedata.normalize("NFKD", value or "")
+    ascii_value = folded.encode("ascii", "ignore").decode("ascii").casefold()
+    return " ".join(re.findall(r"[a-z0-9]+", ascii_value))
+
+
+def _ranking_name_score(query: str, candidate: str) -> tuple[float, float]:
+    query_name = _normalise_ranking_name(query)
+    candidate_name = _normalise_ranking_name(candidate)
+    if not query_name or not candidate_name:
+        return 0.0, 0.0
+    if query_name == candidate_name:
+        return 1.0, 1.0
+
+    query_tokens = set(query_name.split()) - THE_RANKING_STOP_WORDS
+    candidate_tokens = set(candidate_name.split()) - THE_RANKING_STOP_WORDS
+    overlap = query_tokens & candidate_tokens
+    coverage = len(overlap) / max(1, len(query_tokens))
+    jaccard = len(overlap) / max(1, len(query_tokens | candidate_tokens))
+    containment = float(query_name in candidate_name or candidate_name in query_name)
+    similarity = SequenceMatcher(None, query_name, candidate_name).ratio()
+    score = 0.48 * similarity + 0.38 * jaccard + 0.14 * containment
+    return score, coverage
+
+
+@lru_cache(maxsize=2)
+def _the_world_ranking_rows(timeout_seconds: float = 20.0) -> tuple[dict, ...]:
+    """Load the current THE table once; it contains rank, name and profile URL."""
+
+    from bs4 import BeautifulSoup
+
+    response = requests.get(
+        f"{THE_WORLD_RANKING_URL}?embed=true",
+        headers={"User-Agent": "Mozilla/5.0 ExchangeInfoMVP/0.1"},
+        timeout=timeout_seconds,
+    )
+    response.raise_for_status()
+    next_data = BeautifulSoup(response.text, "html.parser").find(
+        "script", id="__NEXT_DATA__"
+    )
+    if not next_data or not next_data.string:
+        raise ValueError("THE ranking table did not expose its structured data")
+    payload = json.loads(next_data.string)
+    rows = (
+        payload.get("props", {})
+        .get("pageProps", {})
+        .get("page", {})
+        .get("rankingsTableConfig", {})
+        .get("rankingsData", {})
+        .get("data", [])
+    )
+    return tuple(row for row in rows if isinstance(row, dict) and row.get("name"))
+
+
+def _match_the_world_ranking(
+    partner: PartnerUniversity,
+    record: PartnerResearchRecord,
+    rows: tuple[dict, ...],
+) -> dict | None:
+    search_name = record.research_name or research_school_name(partner.school_name)
+    normalised = _normalise_ranking_name(search_name)
+    alias = THE_RANKING_NAME_ALIASES.get(normalised)
+    queries = [value for value in (alias, search_name) if value]
+
+    ranked: list[tuple[float, float, dict]] = []
+    for row in rows:
+        best_score = 0.0
+        best_coverage = 0.0
+        candidates = [str(row.get("name") or "")]
+        aliases = row.get("aliases")
+        if isinstance(aliases, str):
+            candidates.extend(part.strip() for part in aliases.split("|") if part.strip())
+        for query in queries:
+            for candidate in candidates:
+                score, coverage = _ranking_name_score(query, candidate)
+                if score > best_score:
+                    best_score, best_coverage = score, coverage
+        ranked.append((best_score, best_coverage, row))
+
+    ranked.sort(key=lambda item: item[0], reverse=True)
+    if not ranked:
+        return None
+    score, coverage, row = ranked[0]
+    runner_up = ranked[1][0] if len(ranked) > 1 else 0.0
+    if score == 1.0:
+        return row
+    if score >= 0.78 and coverage >= 0.75 and score - runner_up >= 0.04:
+        return row
+    return None
+
+
+def enrich_partner_ranking(
+    partner: PartnerUniversity,
+    record: PartnerResearchRecord,
+    *,
+    timeout_seconds: float = 15.0,
+) -> PartnerResearchRecord:
+    """Attach one comparable, source-linked ranking status to a partner record.
+
+    THE is used consistently across schools. If a school has no THE profile or
+    is not ranked in the current table, the record says so explicitly instead
+    of inventing a number or mixing incompatible ranking systems.
+    """
+
+    checked_at = datetime.now(timezone.utc)
+    general_ranking_url = THE_WORLD_RANKING_URL
+    table_loaded = False
+    try:
+        table_rows = _the_world_ranking_rows(min(30.0, timeout_seconds + 10.0))
+        table_loaded = True
+        table_match = _match_the_world_ranking(partner, record, table_rows)
+    except (requests.RequestException, ValueError, TypeError, json.JSONDecodeError):
+        table_match = None
+
+    if table_match is not None:
+        rank = str(table_match.get("rank") or "").strip()
+        profile_path = str(table_match.get("url") or "").strip()
+        ranking_url = (
+            f"https://www.timeshighereducation.com{profile_path}"
+            if profile_path.startswith("/")
+            else general_ranking_url
+        )
+        ranking_text = (
+            "Reporter（參與評比但未獲排名區間）"
+            if rank.casefold() == "reporter"
+            else rank
+        )
+        return record.model_copy(
+            update={
+                "research_name": record.research_name
+                or research_school_name(partner.school_name),
+                "ranking_info": f"THE 世界大學排名 2026：{ranking_text}",
+                "ranking_source_url": ranking_url,
+                "ranking_checked_at": checked_at,
+            }
+        )
+
+    if table_loaded:
+        return record.model_copy(
+            update={
+                "research_name": record.research_name
+                or research_school_name(partner.school_name),
+                "ranking_info": (
+                    "THE 世界大學排名 2026：未在完整排名表中找到可可靠對應的校名；"
+                    "不代表未被其他榜單收錄。"
+                ),
+                "ranking_source_url": general_ranking_url,
+                "ranking_checked_at": checked_at,
+            }
+        )
+
+    wikidata_url = record.wikidata_url
+    if not wikidata_url:
+        metadata = _wikidata_official_site(
+            partner,
+            timeout_seconds=min(12.0, timeout_seconds),
+        )
+        if metadata and metadata[3] >= 0.82:
+            _, _, entity_id, _ = metadata
+            wikidata_url = f"https://www.wikidata.org/wiki/{entity_id}"
+
+    if not wikidata_url or not re.search(r"/Q\d+$", wikidata_url):
+        return record.model_copy(
+            update={
+                "research_name": record.research_name or research_school_name(partner.school_name),
+                "ranking_info": (
+                    "THE 世界大學排名 2026：未查得可可靠對應的學校排名頁；"
+                    "不代表未被其他榜單收錄。"
+                ),
+                "ranking_source_url": general_ranking_url,
+                "ranking_checked_at": checked_at,
+            }
+        )
+
+    entity_id = wikidata_url.rsplit("/", 1)[-1]
+    endpoint = "https://www.wikidata.org/w/api.php"
+    headers = {
+        "User-Agent": "taiwan-exchange-info/0.1 (public university ranking metadata reader)",
+        "Accept-Language": "en,zh-TW;q=0.8",
+    }
+    try:
+        response = requests.get(
+            endpoint,
+            params={
+                "action": "wbgetentities",
+                "ids": entity_id,
+                "props": "claims",
+                "format": "json",
+                "origin": "*",
+            },
+            headers=headers,
+            timeout=timeout_seconds,
+        )
+        response.raise_for_status()
+        claims = response.json().get("entities", {}).get(entity_id, {}).get("claims", {})
+        the_ids = claims.get("P5586", [])
+        the_slug = next(
+            (
+                statement.get("mainsnak", {}).get("datavalue", {}).get("value")
+                for statement in the_ids
+                if statement.get("rank") != "deprecated"
+            ),
+            None,
+        )
+    except (requests.RequestException, ValueError, TypeError):
+        the_slug = None
+
+    if not isinstance(the_slug, str) or not the_slug.strip():
+        return record.model_copy(
+            update={
+                "research_name": record.research_name or research_school_name(partner.school_name),
+                "wikidata_url": wikidata_url,
+                "ranking_info": (
+                    "THE 世界大學排名 2026：未查得該校綜合排名頁；"
+                    "不代表未被其他榜單收錄。"
+                ),
+                "ranking_source_url": general_ranking_url,
+                "ranking_checked_at": checked_at,
+            }
+        )
+
+    ranking_url = (
+        "https://www.timeshighereducation.com/world-university-rankings/"
+        f"{the_slug.strip()}"
+    )
+    rank = None
+    year = 2026
+    try:
+        from bs4 import BeautifulSoup
+
+        response = requests.get(
+            ranking_url,
+            headers={"User-Agent": "Mozilla/5.0 ExchangeInfoMVP/0.1"},
+            timeout=timeout_seconds,
+        )
+        response.raise_for_status()
+        next_data = BeautifulSoup(response.text, "html.parser").find(
+            "script", id="__NEXT_DATA__"
+        )
+        if next_data and next_data.string:
+            payload = json.loads(next_data.string)
+            rank_payload = (
+                payload.get("props", {})
+                .get("pageProps", {})
+                .get("headerProps", {})
+                .get("wurRankGRA", {})
+            )
+            rank = str(rank_payload.get("rank") or "").strip() or None
+            year = int(rank_payload.get("year") or year)
+    except (requests.RequestException, ValueError, TypeError, json.JSONDecodeError):
+        rank = None
+
+    ranking_info = (
+        f"THE 世界大學排名 {year}：{rank}"
+        if rank
+        else (
+            "THE 世界大學排名 2026：學校頁未顯示當年度綜合排名；"
+            "不代表未被其他榜單收錄。"
+        )
+    )
+    return record.model_copy(
+        update={
+            "research_name": record.research_name or research_school_name(partner.school_name),
+            "wikidata_url": wikidata_url,
+            "ranking_info": ranking_info,
+            "ranking_source_url": ranking_url,
+            "ranking_checked_at": checked_at,
+        }
+    )
+
+
 def discover_partner_official_site(
     partner: PartnerUniversity,
     *,
@@ -2326,8 +3057,14 @@ def discover_partner_official_site(
     timeout_seconds: float = 15.0,
 ) -> PartnerResearchRecord:
     checked_at = datetime.now(timezone.utc)
-    verified = VERIFIED_OFFICIAL_SITES.get(
-        research_school_name(partner.school_name).casefold()
+    canonical_name = research_school_name(partner.school_name)
+    verified = VERIFIED_OFFICIAL_SITES.get(canonical_name.casefold()) or next(
+        (
+            value
+            for local_name, value in VERIFIED_OFFICIAL_SITES.items()
+            if partner.school_name.casefold().startswith(local_name.casefold())
+        ),
+        None,
     )
     if verified:
         url, title = verified
@@ -2336,6 +3073,7 @@ def discover_partner_official_site(
             home_university=home_university,
             school_name=partner.school_name,
             country=partner.country,
+            research_name=canonical_name,
             official_website=url,
             official_domain=parsed.netloc.casefold().removeprefix("www."),
             verification_status="official_verified",
@@ -2350,6 +3088,7 @@ def discover_partner_official_site(
             home_university=home_university,
             school_name=partner.school_name,
             country=partner.country,
+            research_name=canonical_name,
             official_website=parsed.geturl(),
             official_domain=parsed.netloc.casefold().removeprefix("www."),
             verification_status="official_verified",
@@ -2357,6 +3096,30 @@ def discover_partner_official_site(
             discovery_source_url=partner.website,
             checked_at=checked_at,
             note="合作校名額資料已提供官方網站。",
+        )
+    wikidata = _wikidata_official_site(
+        partner,
+        timeout_seconds=min(12.0, timeout_seconds),
+    )
+    if wikidata:
+        url, label, entity_id, score = wikidata
+        parsed = urlparse(url)
+        return PartnerResearchRecord(
+            home_university=home_university,
+            school_name=partner.school_name,
+            country=partner.country,
+            research_name=canonical_name,
+            official_website=url,
+            official_domain=parsed.netloc.casefold().removeprefix("www."),
+            wikidata_url=f"https://www.wikidata.org/wiki/{entity_id}",
+            verification_status="official_verified" if score >= 0.82 else "needs_review",
+            candidate_title=f"{label} official website",
+            discovery_source_url=f"https://www.wikidata.org/wiki/{entity_id}",
+            checked_at=checked_at,
+            note=(
+                f"Wikidata 機構名稱比對分數 {score:.2f}，官方網站取自 P856；"
+                "低於高信心門檻的結果保留人工複核狀態。"
+            ),
         )
     try:
         candidates = _search_candidates(
@@ -2369,6 +3132,7 @@ def discover_partner_official_site(
             home_university=home_university,
             school_name=partner.school_name,
             country=partner.country,
+            research_name=canonical_name,
             verification_status="error",
             checked_at=checked_at,
             note=str(exc)[:500],
@@ -2378,6 +3142,7 @@ def discover_partner_official_site(
             home_university=home_university,
             school_name=partner.school_name,
             country=partner.country,
+            research_name=canonical_name,
             verification_status="not_found",
             checked_at=checked_at,
             note="公開搜尋未找到可可靠對應的合作校官方網域。",
@@ -2389,6 +3154,7 @@ def discover_partner_official_site(
         home_university=home_university,
         school_name=partner.school_name,
         country=partner.country,
+        research_name=canonical_name,
         official_website=url,
         official_domain=parsed.netloc.casefold().removeprefix("www."),
         verification_status=status,
@@ -2415,7 +3181,11 @@ def apply_partner_research(
     return [
         partner.model_copy(
             deep=True,
-            update={"website": record_map[school_identity_key(partner.school_name)].official_website},
+            update={
+                "website": record_map[school_identity_key(partner.school_name)].official_website,
+                "ranking_info": record_map[school_identity_key(partner.school_name)].ranking_info,
+                "ranking_source_url": record_map[school_identity_key(partner.school_name)].ranking_source_url,
+            },
         )
         if school_identity_key(partner.school_name) in record_map
         else partner.model_copy(deep=True)

@@ -36,6 +36,58 @@ from .school_identity import school_identity_key
 
 T = TypeVar("T", bound=BaseModel)
 
+PACKAGE_DIR = Path(__file__).resolve().parent
+BUNDLED_NTPU_DIR = PACKAGE_DIR / "official_data" / "ntpu"
+
+
+def _include_bundled_defaults(data_dir: Path) -> bool:
+    try:
+        return Path(data_dir).resolve() == Path(DEFAULT_DATA_DIR).resolve()
+    except OSError:
+        return Path(data_dir) == Path(DEFAULT_DATA_DIR)
+
+
+def _merge_rows(
+    bundled: Iterable[T],
+    local: Iterable[T],
+    *,
+    key,
+) -> list[T]:
+    """Merge a tracked baseline with machine-local refreshes; local rows win."""
+
+    merged = {key(row): row for row in bundled}
+    merged.update({key(row): row for row in local})
+    return list(merged.values())
+
+
+def _with_explicit_destination_gaps(profile: DestinationProfile) -> DestinationProfile:
+    """Keep an honest, visible answer for official details that are not public."""
+
+    defaults = {
+        "housing_summary": (
+            "官方網站未公開可可靠核對的交換生住宿資訊；請以合作校最新 fact sheet、"
+            "錄取通知或住宿單位通知為準。"
+        ),
+        "cost_summary": (
+            "官方網站未公開可可靠核對的交換生生活費金額；請依最新 fact sheet、"
+            "住宿型態及個人生活方式另行估算。"
+        ),
+        "transport_summary": (
+            "官方網站未公開可可靠核對的到校交通說明；獲錄取後請依合作校行前資料"
+            "及當地公共運輸官方資訊規劃。"
+        ),
+        "campus_life_summary": (
+            "官方網站未公開足以核對的交換生校園生活資訊；請以國際處迎新通知與"
+            "學生服務單位最新公告為準。"
+        ),
+    }
+    update = {
+        field: value
+        for field, value in defaults.items()
+        if not str(getattr(profile, field, "") or "").strip()
+    }
+    return profile.model_copy(update=update) if update else profile
+
 
 def data_paths(data_dir: Path = DEFAULT_DATA_DIR) -> dict[str, Path]:
     data_dir = Path(data_dir)
@@ -215,8 +267,22 @@ def replace_school_experiences(
 def load_application_workflows(
     data_dir: Path = DEFAULT_DATA_DIR,
 ) -> list[UniversityApplicationWorkflow]:
-    return read_jsonl(
+    local = read_jsonl(
         data_paths(data_dir)["application_workflows"], UniversityApplicationWorkflow
+    )
+    if not _include_bundled_defaults(data_dir):
+        return local
+    bundled = read_jsonl(
+        BUNDLED_NTPU_DIR / "application_workflows.jsonl",
+        UniversityApplicationWorkflow,
+    )
+    return _merge_rows(
+        bundled,
+        local,
+        key=lambda row: (
+            school_identity_key(row.home_university),
+            school_identity_key(row.school_name),
+        ),
     )
 
 
@@ -293,13 +359,43 @@ def upsert_collection_audit(
 def load_destination_profiles(
     data_dir: Path = DEFAULT_DATA_DIR,
 ) -> list[DestinationProfile]:
-    return read_jsonl(data_paths(data_dir)["destination_profiles"], DestinationProfile)
+    local = read_jsonl(
+        data_paths(data_dir)["destination_profiles"], DestinationProfile
+    )
+    if not _include_bundled_defaults(data_dir):
+        return local
+    bundled = read_jsonl(
+        BUNDLED_NTPU_DIR / "destination_profiles.jsonl", DestinationProfile
+    )
+    return [
+        _with_explicit_destination_gaps(row)
+        for row in _merge_rows(
+        bundled,
+        local,
+        key=lambda row: school_identity_key(row.school_name),
+        )
+    ]
 
 
 def load_partner_research(
     data_dir: Path = DEFAULT_DATA_DIR,
 ) -> list[PartnerResearchRecord]:
-    return read_jsonl(data_paths(data_dir)["partner_research"], PartnerResearchRecord)
+    local = read_jsonl(
+        data_paths(data_dir)["partner_research"], PartnerResearchRecord
+    )
+    if not _include_bundled_defaults(data_dir):
+        return local
+    bundled = read_jsonl(
+        BUNDLED_NTPU_DIR / "partner_research.jsonl", PartnerResearchRecord
+    )
+    return _merge_rows(
+        bundled,
+        local,
+        key=lambda row: (
+            school_identity_key(row.home_university),
+            school_identity_key(row.school_name),
+        ),
+    )
 
 
 def save_partner_research(

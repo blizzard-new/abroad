@@ -104,6 +104,54 @@ SCHOOL_SEARCH_ALIASES = {
     "西北政法大學": "Northwest University of Political Science and Law",
     "西安交通大學": "Xi'an Jiaotong University",
     "廈門大學": "Xiamen University",
+    "山東大學": "Shandong University",
+    "中央財經大學": "Central University of Finance and Economics",
+    "北京科技大學": "University of Science and Technology Beijing",
+    "西南政法大學": "Southwest University of Political Science and Law",
+    "東華理工大學": "East China University of Technology",
+    "華東政法大學": "East China University of Political Science and Law",
+    "暨南大學": "Jinan University",
+    "蘭州大學": "Lanzhou University",
+    "大阪大學法學研究科、法學部、大學院高等司法研究科暨大學院國際公共政策研究科": "Osaka University School of Law Graduate School of Law and Politics Osaka School of International Public Policy",
+    "日本信州大學經法學部": "Shinshu University Faculty of Economics and Law",
+    "東北大學": "Tohoku University",
+    "金澤大學": "Kanazawa University",
+    "梨花女子大學": "Ewha Womans University",
+    "高麗大學世宗校區": "Korea University Sejong Campus",
+    "越南融促大學": "FPT University",
+    "芹苴大學－經濟學院": "Can Tho University School of Economics",
+    "泰國東方大學": "Burapha University",
+    "泰國清邁大學": "Chiang Mai University",
+    "印度吉特卡拉大學": "Chitkara University",
+    "印度阿努拉格大學": "Anurag University",
+    "卡倫亞技術與科學研究所": "Karunya Institute of Technology and Sciences",
+    "印尼迪安努斯萬托羅大學": "Universitas Dian Nuswantoro",
+    "黎剎系統大學": "University of Rizal System",
+    "百麗宮國際大學": "Paragon International University",
+    "香港理工大學": "The Hong Kong Polytechnic University",
+    "俄斯特拉發大學": "University of Ostrava",
+    "北愛荷華大學": "University of Northern Iowa",
+    "密蘇里大學藝術與科學學院": "University of Missouri College of Arts and Science",
+    "新墨西哥州立大學": "New Mexico State University",
+    "勞倫森大學": "Laurentian University",
+    "加拿大多倫多都會大學": "Toronto Metropolitan University",
+    "英屬哥倫比亞大學": "The University of British Columbia",
+    "高等廣告與行銷學院": "ESPM School of Advertising and Marketing",
+    "奧維第烏斯大學": "Ovidius University of Constanta",
+    "蒂米什拉西部大學": "West University of Timisoara",
+    "立陶宛維塔斯．馬格努斯大學": "Vytautas Magnus University",
+    "格但斯克科技大學": "Gdansk University of Technology",
+    "明斯特大學": "University of Münster",
+    "霍夫應用科技大學": "Hof University of Applied Sciences",
+    "女性高等綜合理工學院": "EPF Graduate School of Engineering",
+    "里爾政治大學": "Sciences Po Lille",
+    "奧斯陸大學（犯罪學與社會學法系）": "University of Oslo Department of Criminology and Sociology of Law",
+    "阿提巴斯大學": "Altinbas University",
+    "埃斯基謝希爾技術大學": "Eskisehir Technical University",
+    "拉脫維亞大學": "University of Latvia",
+    "布拉提斯拉瓦斯洛伐克工業大學": "Slovak University of Technology in Bratislava",
+    "卡薩布蘭卡管理學院": "ESCA School of Management",
+    "埃斯特哈茲天主教大學": "Eszterhazy Karoly Catholic University",
 }
 
 THEME_LABELS = {
@@ -429,6 +477,26 @@ def school_search_name(school_name: str) -> str:
     for local_name, search_alias in SCHOOL_SEARCH_ALIASES.items():
         if school_name.startswith(local_name):
             return search_alias
+
+    # NTPU's quota tables commonly format a school as
+    # ``中文名 (Official English Name) + requirement notes``.  Prefer that
+    # bounded English name over the first ASCII character in the whole cell;
+    # the older fallback could return strings such as ``ESIC(ESIC University)``
+    # or include TOEFL/IELTS notes in the search identity.
+    parenthesized = re.findall(r"\(([^()]*)\)", school_name)
+    english_names = [
+        re.sub(r"\s+", " ", candidate).strip(" ,;:-")
+        for candidate in parenthesized
+        if len(re.findall(r"[A-Za-z]{2,}", candidate)) >= 2
+        and re.search(
+            r"\b(university|college|school|institute|academy|universit|hochschule)\b",
+            candidate,
+            flags=re.IGNORECASE,
+        )
+    ]
+    if english_names:
+        return max(english_names, key=len)
+
     for index, character in enumerate(school_name):
         if character.isascii() and character.isalpha():
             candidate = school_name[index:].strip()

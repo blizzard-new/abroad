@@ -1,6 +1,6 @@
 # 台灣大學生交換申請資訊整理系統 MVP
 
-目前 Web 版支援長庚大學與國立臺北大學。長庚資料入口為國際事務處公開網站；臺北大學版則接入 115 學年度赴外交換簡章與英語、日語、中文三組官方名額表：
+目前 Web 版支援長庚大學與國立臺北大學。長庚資料入口為國際事務處公開網站；臺北大學版接入 115 學年度赴外交換簡章與英語、日語、中文三組官方名額表，並補上現行合作資料庫中具交換合約、但尚未列入 115 學年度名額表的 48 所合作校。畫面會區分「本期開放」與「合作備查」，不會把合作合約誤當成當期可申請名額：
 
 https://www.cgu.edu.tw/oia-ch
 
@@ -116,6 +116,19 @@ exchange-info research-partners --home-school "國立臺北大學" --max-schools
 ```
 
 每校會依序查核官方網域、校園照片、母校與合作校申請流程、官方住宿／生活費／交通／校園生活頁，以及公開學生心得。找到連結後會實際讀取頁面正文，為每個來源產生學生可直接閱讀的中文摘要；無法取得全文時只保留來源並明確標示，不把搜尋片段冒充摘要。省略 `--school` 時會從尚未完成五個階段的學校繼續；`--refresh` 可重新查核。校園照片必須通過來源與影像驗證才計入完成，官網低信心候選會保留為 `needs_review`，搜尋過但沒有可靠結果會記為 `not_found`。
+
+臺北大學 203 所合作校的完整資料會匯出到 `src/exchange_info/official_data/ntpu/`，並與已驗證校園圖片一起納入 Git 版本控制。因此從 GitHub 複製到另一臺 Windows 或 Mac 後，即使當地尚未建立 `data/processed/`，API 仍會自動讀取這份基準資料。重新查核及匯出時使用：
+
+```powershell
+$env:PYTHONPATH='src'
+python scripts/refresh_ntpu_catalog.py --workers 6 --max-pages 3 --timeout 12
+python scripts/refresh_ntpu_images.py
+python scripts/export_ntpu_catalog.py
+```
+
+`export_ntpu_catalog.py` 會同時產生 `catalog-completeness.json`。交付前應確認合作校、官網、必要詳細欄位、圖片、申請流程與目的地資料的數量全部都是 203。
+
+在 Mac 更新專案時，先執行 `git pull --ff-only`；完成開發並通過測試後，再依序執行 `git add`、`git commit` 與 `git push`。不要把同一份專案放在 OneDrive、iCloud Drive 等同步資料夾內，以免建置產物造成路徑過長或檔案同步衝突。
 
 ## 啟動 API
 

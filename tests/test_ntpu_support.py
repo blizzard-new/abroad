@@ -3,7 +3,10 @@ from fastapi.testclient import TestClient
 from exchange_info.api import create_app
 from exchange_info.application_documents import all_application_templates
 from exchange_info.models import PartnerUniversity
-from exchange_info.ntpu_student_view import fetch_ntpu_partner_universities
+from exchange_info.ntpu_student_view import (
+    NTPU_EXCHANGE_AGREEMENTS_WITHOUT_115_QUOTA,
+    fetch_ntpu_partner_universities,
+)
 from exchange_info.school_identity import school_identity_key
 from exchange_info.storage import ensure_data_dirs
 from exchange_info.university_registry import NTPU, resolve_university
@@ -27,13 +30,38 @@ def test_bundled_official_ntpu_lists_are_available_offline(monkeypatch) -> None:
     monkeypatch.setattr("exchange_info.ntpu_student_view.requests.get", reject_network)
     partners = fetch_ntpu_partner_universities()
 
-    assert len(partners) == 155
+    open_partners = [row for row in partners if row.availability_status == "open"]
+    agreement_only = [
+        row for row in partners if row.availability_status == "agreement_only"
+    ]
+
+    assert len(partners) == 203
+    assert len(open_partners) == 155
+    assert len(agreement_only) == 48
     assert {"英語組", "日語組", "中文組"}.issubset(
-        {row.program_type.removeprefix("交換學生（").removesuffix("）") for row in partners}
+        {
+            row.program_type.removeprefix("交換學生（").removesuffix("）")
+            for row in open_partners
+        }
     )
     assert "東北林業大學" in {row.school_name for row in partners}
     assert all("黑龍江省哈爾" not in row.school_name for row in partners)
-    assert all(row.source_url.startswith("https://cms-carrier.ntpu.edu.tw/") for row in partners)
+    assert all(
+        row.source_url.startswith("https://cms-carrier.ntpu.edu.tw/")
+        for row in open_partners
+    )
+    assert {
+        row.school_name for row in agreement_only
+    } == {
+        school_name
+        for _, school_name, _, _ in NTPU_EXCHANGE_AGREEMENTS_WITHOUT_115_QUOTA
+    }
+    assert all(
+        row.source_url == "https://new.ntpu.edu.tw/oia/sister-schools"
+        for row in agreement_only
+    )
+    assert all(row.quota == "本期未開放交換名額" for row in agreement_only)
+    assert all("未列入 115 學年度交換名額表" in row.availability_note for row in agreement_only)
 
 
 def test_ntpu_application_templates_do_not_leak_cgu_copy() -> None:

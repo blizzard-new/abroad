@@ -6,6 +6,7 @@ import io
 import json
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
 from pathlib import Path
@@ -62,6 +63,10 @@ IMAGE_ATTRIBUTES = (
     "nitro-lazy-src",
 )
 OFFICIAL_IMAGE_OVERRIDES: dict[str, tuple[str, str]] = {
+    "新加坡社科大學(Singapore University of Social Sciences)": (
+        "https://www.suss.edu.sg/images/default-source/dept_comms/sussbldg0004_bluelogo.jpg?sfvrsn=9fab0618_1",
+        "https://www.suss.edu.sg/about-suss/campus-locations",
+    ),
     "先皇技術學院(King Mongkut's institue of Technology ladkrabang)": (
         "https://oia.kmitl.ac.th/wp-content/uploads/2025/06/IMG_3722-980x653.jpg",
         "https://oia.kmitl.ac.th/welcomes-kajonkiet-international-school-phuket/",
@@ -321,6 +326,74 @@ OFFICIAL_IMAGE_DOWNLOAD_FALLBACKS: dict[str, str] = {
     ),
 }
 OFFICIAL_IMAGE_PAGE_OVERRIDES: dict[str, tuple[str, ...]] = {
+    "印尼大學 (University of Indonesia)": (
+        "https://international.ui.ac.id/gallery/",
+        "https://www.ui.ac.id/en/campus-life/",
+    ),
+    "新加坡社科大學(Singapore University of Social Sciences)": (
+        "https://www.suss.edu.sg/about-suss/campus-locations",
+        "https://www.suss.edu.sg/life-at-suss/onboarding/orientation",
+    ),
+    "茵斯堡大學 (Leopold-Franzens University of Innsbruck) 須為主修商業或經濟學生(Restricted to business or economics majors)具備CEFR B2英語能力": (
+        "https://www.uibk.ac.at/en/about-us/",
+        "https://www.uibk.ac.at/de/universitaet/standorte/innrain/",
+    ),
+    "義大利卡利亞里大學(University of Cagliari)": (
+        "https://www.unica.it/unica/en/university.page",
+        "https://www.unica.it/unica/en/student_services.page",
+    ),
+    "拉斯帕爾瑪斯大學 (University of Las Palmas de Gran Canaria) 課程以西班牙語為主，僅少部分為英文課程。建議 至少西班牙語檢定B1 Level(MCER)程度。The courses are primarily taught in Spanish, with only a few in English. A minimum Spanish proficiency of B1 level": (
+        "https://www.ulpgc.es/en/university",
+        "https://www.ulpgc.es/en/campuses",
+    ),
+    "明斯特應用技術大學(FH Münster - Münster School of Business)": (
+        "https://www.fh-muenster.de/en/",
+        "https://www.fh-muenster.de/msb/en/index.php",
+    ),
+    "烏拉爾聯邦大學(UrFU) (URAL Federal University) 多益(TOEIC)750以上 (至少曾修習俄文一學期基礎為佳)": (
+        "https://urfu.ru/en/",
+        "https://urfu.ru/en/international/",
+    ),
+    "普列漢諾夫經濟大學(Plekhanov Russian University of Economics)": (
+        "https://www.rea.ru/en/Pages/default.aspx",
+        "https://www.rea.ru/en/org/campuses/Pages/default.aspx",
+    ),
+    "斯洛伐克布拉斯第拉瓦經濟大學 (University of Economics in Bratislava)": (
+        "https://euba.sk/en/university/about-university",
+        "https://euba.sk/en/",
+    ),
+    "香港城市大學人文社會科學院(College of Liberal Arts and Social Sciences, City University of Hong Kong)": (
+        "https://www.cityu.edu.hk/about/campus",
+        "https://www.cityu.edu.hk/class/",
+    ),
+    "東華理工大學": (
+        "https://eng.ecut.edu.cn/",
+        "https://eng.ecut.edu.cn/About_ECUT/Campus.htm",
+    ),
+    "蘭州大學": (
+        "https://en.lzu.edu.cn/About_LZU/Campus.htm",
+        "https://en.lzu.edu.cn/",
+    ),
+    "大阪大學法學研究科、法學部、大學院高等司法研究科暨大學院國際公共政策研究科": (
+        "https://www.osaka-u.ac.jp/en/campus",
+        "https://www.osaka-u.ac.jp/en/guide/about",
+    ),
+    "越南融促大學": (
+        "https://daihoc.fpt.edu.vn/en/about-fpt-university/",
+        "https://daihoc.fpt.edu.vn/en/campus-life/",
+    ),
+    "卡倫亞技術與科學研究所": (
+        "https://www.karunya.edu/campus-life",
+        "https://www.karunya.edu/about-us",
+    ),
+    "高等廣告與行銷學院": (
+        "https://www.espm.br/a-espm/",
+        "https://www.espm.br/unidades/",
+    ),
+    "埃斯特哈茲天主教大學": (
+        "https://uni-eszterhazy.hu/en/university",
+        "https://uni-eszterhazy.hu/en/ekf-college/eku/city-and-campus-maps",
+    ),
     "山梨學院大學博雅教育國際學院(International College of Liberal Arts(iCLA) at Yamanashi Gakuin University)": (
         "https://www.icla.ygu.ac.jp/en/facilities/",
         "https://www.icla.ygu.ac.jp/en/campus-life/",
@@ -390,8 +463,20 @@ def collect_school_images(
     missing_only: bool = False,
     refresh_overrides: bool = False,
     partners: list[PartnerUniversity] | None = None,
+    workers: int = 1,
 ) -> list[SchoolImageRecord]:
     output_dir.mkdir(parents=True, exist_ok=True)
+    if workers > 1:
+        return _collect_school_images_parallel(
+            output_dir=output_dir,
+            manifest_path=manifest_path,
+            timeout_seconds=timeout_seconds,
+            limit=limit,
+            missing_only=missing_only,
+            refresh_overrides=refresh_overrides,
+            partners=partners,
+            workers=workers,
+        )
     session = requests.Session()
     session.headers.update({"User-Agent": USER_AGENT, "Accept-Language": "en,zh-TW;q=0.8"})
     partners = (
@@ -450,6 +535,122 @@ def collect_school_images(
         "schools": [asdict(record) for record in merged.values()],
     }
     manifest_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return records
+
+
+def _collect_school_images_parallel(
+    *,
+    output_dir: Path,
+    manifest_path: Path,
+    timeout_seconds: float,
+    limit: int | None,
+    missing_only: bool,
+    refresh_overrides: bool,
+    partners: list[PartnerUniversity] | None,
+    workers: int,
+) -> list[SchoolImageRecord]:
+    partner_rows = (
+        [partner.model_copy(deep=True) for partner in partners]
+        if partners is not None
+        else fetch_partner_universities(timeout_seconds=timeout_seconds)
+    )
+    if limit:
+        partner_rows = partner_rows[:limit]
+    existing = _read_existing_manifest(manifest_path)
+    indexed: dict[int, SchoolImageRecord] = {}
+    pending: list[tuple[int, PartnerUniversity, str]] = []
+    for index, partner in enumerate(partner_rows):
+        previous = existing.get(partner.school_name)
+        should_refresh = (
+            refresh_overrides
+            and _official_image_override(partner.school_name) is not None
+        )
+        if (
+            missing_only
+            and previous
+            and previous.status == "verified"
+            and previous.local_path
+            and not should_refresh
+        ):
+            asset_path = output_dir / Path(urlparse(previous.local_path).path).name
+            if asset_path.exists():
+                indexed[index] = previous
+                print(f"[{index + 1:03d}/{len(partner_rows):03d}] {partner.school_name}: kept")
+                continue
+        override = _official_image_override(partner.school_name)
+        official_url = override[1] if override else (partner.website or "")
+        if not official_url:
+            indexed[index] = _missing_record(
+                partner.school_name,
+                partner.country or "",
+                official_url,
+                "合作校資料未提供官網",
+            )
+            continue
+        pending.append((index, partner, official_url))
+
+    def fetch_one(
+        partner: PartnerUniversity, official_url: str
+    ) -> SchoolImageRecord:
+        session = requests.Session()
+        session.headers.update(
+            {"User-Agent": USER_AGENT, "Accept-Language": "en,zh-TW;q=0.8"}
+        )
+        try:
+            return _collect_one(
+                session=session,
+                school_name=partner.school_name,
+                country=partner.country or "",
+                official_url=official_url,
+                output_dir=output_dir,
+                timeout_seconds=timeout_seconds,
+            )
+        except requests.RequestException as exc:
+            return _missing_record(
+                partner.school_name,
+                partner.country or "",
+                official_url,
+                f"官方圖片讀取失敗：{type(exc).__name__}",
+            )
+        finally:
+            session.close()
+
+    with ThreadPoolExecutor(max_workers=max(1, workers)) as executor:
+        futures = {
+            executor.submit(fetch_one, partner, official_url): (index, partner)
+            for index, partner, official_url in pending
+        }
+        for future in as_completed(futures):
+            index, partner = futures[future]
+            try:
+                record = future.result()
+            except Exception as exc:  # isolate a browser/decoder failure to one school
+                record = _missing_record(
+                    partner.school_name,
+                    partner.country or "",
+                    partner.website or "",
+                    f"官方圖片處理失敗：{type(exc).__name__}",
+                )
+            indexed[index] = record
+            print(
+                f"[{index + 1:03d}/{len(partner_rows):03d}] "
+                f"{partner.school_name}: {record.status}"
+            )
+
+    records = [indexed[index] for index in range(len(partner_rows))]
+    merged = dict(existing)
+    for record in records:
+        merged[record.school_name] = record
+    payload = {
+        "generated_at": datetime.now(UTC).isoformat(),
+        "source_policy": "Images are selected from each university's official website and require rights review before public commercial use.",
+        "schools": [asdict(record) for record in merged.values()],
+    }
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    manifest_path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
     return records
 
 
@@ -516,7 +717,12 @@ def _collect_one(
         candidates = extract_image_candidates(page_html, page_url)
         for candidate in candidates[:18]:
             try:
-                downloaded = _download_and_prepare(session, candidate.url, timeout_seconds)
+                downloaded = _download_and_prepare(
+                    session,
+                    candidate.url,
+                    timeout_seconds,
+                    allow_wide=True,
+                )
             except (requests.RequestException, UnidentifiedImageError, OSError, ValueError) as exc:
                 errors.append(type(exc).__name__)
                 try:
@@ -547,6 +753,23 @@ def _collect_one(
     note = "官方頁面未找到可用的大型橫式照片"
     if errors:
         note += f"；略過 {len(errors)} 個無效候選圖"
+    try:
+        preview = _capture_official_page_preview(
+            official_page_url,
+            timeout_seconds=timeout_seconds,
+        )
+    except Exception:
+        preview = None
+    if preview:
+        return _save_record(
+            school_name=school_name,
+            country=country,
+            official_page_url=official_page_url,
+            image_source_url=official_page_url,
+            downloaded=preview,
+            output_dir=output_dir,
+            note="官方網站未提供可直接下載的合格校園照片；改用官方學校介紹頁預覽。",
+        )
     return _missing_record(school_name, country, official_page_url, note)
 
 
@@ -621,6 +844,32 @@ def _fetch_page_html_with_browser(
             return result
     except (PlaywrightError, PlaywrightTimeoutError):
         return None
+
+
+def _capture_official_page_preview(
+    url: str,
+    *,
+    timeout_seconds: float,
+) -> tuple[bytes, int, int] | None:
+    """Capture a clearly sourced official-page preview when no photo is downloadable."""
+
+    timeout_ms = int(timeout_seconds * 1000)
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=True)
+        context = browser.new_context(
+            ignore_https_errors=True,
+            user_agent=USER_AGENT,
+            viewport={"width": 1280, "height": 720},
+        )
+        page = context.new_page()
+        try:
+            page.goto(url, wait_until="domcontentloaded", timeout=timeout_ms)
+        except PlaywrightTimeoutError:
+            pass
+        page.wait_for_timeout(1200)
+        screenshot = page.screenshot(type="jpeg", quality=86, full_page=False)
+        browser.close()
+    return _prepare_image_bytes(screenshot, allow_wide=True)
 
 
 def _same_official_site(candidate_url: str, official_url: str) -> bool:
@@ -713,7 +962,8 @@ def _download_and_prepare(
     response = session.get(url, timeout=timeout_seconds, allow_redirects=True, headers={"Referer": url})
     response.raise_for_status()
     content_type = response.headers.get("Content-Type", "").lower()
-    if "image" not in content_type or len(response.content) < 18_000:
+    minimum_bytes = 6_000 if allow_wide else 18_000
+    if "image" not in content_type or len(response.content) < minimum_bytes:
         return None
     return _prepare_image_bytes(response.content, allow_wide=allow_wide)
 
@@ -773,14 +1023,21 @@ def _download_and_prepare_with_browser(
 
 
 def _prepare_image_bytes(content: bytes, *, allow_wide: bool = False) -> tuple[bytes, int, int] | None:
-    if len(content) < 18_000:
+    minimum_bytes = 6_000 if allow_wide else 18_000
+    if len(content) < minimum_bytes:
         return None
     with Image.open(io.BytesIO(content)) as original:
         image = ImageOps.exif_transpose(original).convert("RGB")
         width, height = image.size
         minimum_ratio = 0.65 if allow_wide else 1.15
         maximum_ratio = 5.0 if allow_wide else 3.5
-        if width < 600 or height < 280 or not minimum_ratio <= width / height <= maximum_ratio:
+        minimum_width = 420 if allow_wide else 600
+        minimum_height = 180 if allow_wide else 280
+        if (
+            width < minimum_width
+            or height < minimum_height
+            or not minimum_ratio <= width / height <= maximum_ratio
+        ):
             return None
         fitted = ImageOps.fit(image, (1600, 900), method=Image.Resampling.LANCZOS)
         output = io.BytesIO()

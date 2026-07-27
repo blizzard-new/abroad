@@ -59,6 +59,11 @@ def build_advisor_plan(
 ) -> AdvisorPlan:
     workflow_map = {_school_key(item.school_name): item for item in workflows}
     destination_map = {_school_key(item.school_name): item for item in destinations}
+    open_partners = [
+        partner
+        for partner in dashboard.partner_universities
+        if partner.availability_status == "open"
+    ]
     matches = [
         _score_partner(
             partner,
@@ -67,7 +72,7 @@ def build_advisor_plan(
             workflow_map.get(_school_key(partner.school_name)),
             destination_map.get(_school_key(partner.school_name)),
         )
-        for partner in dashboard.partner_universities
+        for partner in open_partners
     ]
     matches.sort(
         key=lambda item: (-item.match_score, item.school_name.casefold())

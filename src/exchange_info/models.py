@@ -350,6 +350,10 @@ class PartnerProgramOption(BaseModel):
 
 class PartnerUniversity(BaseModel):
     program_type: str
+    availability_status: Literal["open", "agreement_only"] = "open"
+    availability_note: str | None = None
+    agreement_type: str | None = None
+    agreement_level: str | None = None
     country: str | None = None
     school_name: str
     website: str | None = None
@@ -362,6 +366,7 @@ class PartnerUniversity(BaseModel):
     application_info: str | None = None
     tuition_info: str | None = None
     ranking_info: str | None = None
+    ranking_source_url: str | None = None
     source_url: str
     image_url: str | None = None
     image_source_url: str | None = None
@@ -420,8 +425,13 @@ class PartnerResearchRecord(BaseModel):
     home_university: str
     school_name: str
     country: str | None = None
+    research_name: str | None = None
     official_website: str | None = None
     official_domain: str | None = None
+    wikidata_url: str | None = None
+    ranking_info: str | None = None
+    ranking_source_url: str | None = None
+    ranking_checked_at: datetime | None = None
     verification_status: str = "not_collected"
     candidate_title: str | None = None
     discovery_source_url: str | None = None

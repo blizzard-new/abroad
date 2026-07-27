@@ -21,6 +21,7 @@ from .partner_research import (
     apply_partner_research,
     collect_destination_profile,
     discover_partner_official_site,
+    enrich_partner_ranking,
 )
 from .rag import build_rag_index
 from .school_image_collector import (
@@ -135,6 +136,11 @@ def main(argv: list[str] | None = None) -> int:
     research_parser.add_argument("--max-sources", type=int, default=12)
     research_parser.add_argument("--school-delay", type=float, default=1.0)
     research_parser.add_argument("--refresh", action="store_true")
+    research_parser.add_argument(
+        "--site-only",
+        action="store_true",
+        help="Only verify the official website and comparable ranking status.",
+    )
     research_parser.set_defaults(func=cmd_research_partners)
 
     args = parser.parse_args(argv)
@@ -507,6 +513,8 @@ def cmd_research_partners(args: argparse.Namespace) -> int:
                     research_input,
                     home_university=home.school_name,
                 )
+            if args.refresh or not research.ranking_info:
+                research = enrich_partner_ranking(partner, research)
             upsert_partner_research(research, args.data_dir)
             upsert_collection_audit(
                 CollectionAudit(
@@ -528,6 +536,7 @@ def cmd_research_partners(args: argparse.Namespace) -> int:
                 f"  official website: {research.verification_status}"
                 + (f" ({research.official_domain})" if research.official_domain else "")
             )
+            print(f"  ranking: {research.ranking_info}")
             stage_successes += 1
         except Exception as exc:
             stage_failures += 1
@@ -542,6 +551,9 @@ def cmd_research_partners(args: argparse.Namespace) -> int:
                 args.data_dir,
             )
             print(f"  official website: failed ({exc})")
+
+        if args.site_only:
+            continue
 
         try:
             image_records = collect_school_images(

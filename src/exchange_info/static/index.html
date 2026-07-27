@@ -42,7 +42,7 @@
           </button>
           <button type="button" class="school-option" data-home-school="國立臺北大學" role="option" aria-selected="false">
             <img src="/static/assets/ntpu-campus.jpg" alt="國立臺北大學校園" />
-            <span><strong>國立臺北大學</strong><small>115 學年度已整理 · 155 所合作校</small></span>
+            <span><strong>國立臺北大學</strong><small>155 所本期開放 · 48 所交換合作校備查</small></span>
             <i data-lucide="circle" aria-hidden="true"></i>
           </button>
         </div>
@@ -360,11 +360,12 @@
 
           <section id="partners" class="page-section" data-university-page="partners" aria-labelledby="partners-title" hidden>
             <div class="section-heading">
-              <div><span class="section-kicker">依你的學校篩選</span><h2 id="partners-title">可申請的交換學校</h2><p>使用篩選後，點開學校查看詳細資訊。</p></div>
+              <div><span class="section-kicker">依你的學校篩選</span><h2 id="partners-title">交換學校與合作名單</h2><p>「本期開放」可依 115 學年度名額表準備申請；「合作備查」仍須等待當期公告名額。</p></div>
               <span class="count-badge" id="partner-count">--</span>
             </div>
             <div class="filter-panel" aria-label="合作學校篩選條件">
-              <label class="search-field" for="partner-search"><span>搜尋學校</span><span class="control-with-icon"><i data-lucide="search" aria-hidden="true"></i><input id="partner-search" placeholder="學校、國家或申請條件" /></span></label>
+               <label class="search-field" for="partner-search"><span>搜尋學校</span><span class="control-with-icon"><i data-lucide="search" aria-hidden="true"></i><input id="partner-search" placeholder="學校、國家或申請條件" /></span></label>
+              <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">115 學年度開放</option><option value="agreement_only">合作備查／本期未公告</option></select></label>
               <label for="country-filter"><span>國家</span><select id="country-filter"></select></label>
               <label for="college-filter"><span>學院</span><select id="college-filter"></select></label>
               <label for="degree-filter"><span>學制</span><select id="degree-filter"></select></label>

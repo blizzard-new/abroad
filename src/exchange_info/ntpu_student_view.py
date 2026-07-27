@@ -28,6 +28,7 @@ from .student_view import _merge_partner_universities
 NTPU_OIA_URL = "https://new.ntpu.edu.tw/oia"
 NTPU_FILES_URL = "https://new.ntpu.edu.tw/oia/files"
 NTPU_SISTER_SCHOOL_URL = "https://new.ntpu.edu.tw/oia/sister-school"
+NTPU_CURRENT_SISTER_SCHOOLS_URL = "https://new.ntpu.edu.tw/oia/sister-schools"
 NTPU_115_ANNOUNCEMENT_URL = "https://new.ntpu.edu.tw/news/68d5e81963f5a608851f74c1"
 NTPU_115_GUIDELINES_URL = (
     "https://cms-carrier.ntpu.edu.tw/uploads/"
@@ -49,7 +50,7 @@ NTPU_115_SCHOLARSHIP_URL = (
     "%E6%83%9C%E7%8F%A0%E3%80%8D%E7%8D%8E%E5%AD%B8%E9%87%91%E5%BB%B6%E9%95%B7"
     "%E5%8F%97%E7%90%86%E8%87%B3115%E5%B9%B43%E6%9C%886%E6%97%A5%E4%BA%9417%3A00%EF%BC%81"
 )
-NTPU_SOURCE_CHECKED_AT = datetime(2026, 7, 20, tzinfo=timezone.utc)
+NTPU_SOURCE_CHECKED_AT = datetime(2026, 7, 27, tzinfo=timezone.utc)
 
 
 NTPU_OFFICIAL_DATA_DIR = Path(__file__).resolve().parent / "official_data" / "ntpu"
@@ -59,6 +60,63 @@ PARTNER_PDFS = (
     ("英語組", NTPU_115_ENGLISH_PARTNERS_URL, 121, "115-english-partners.pdf"),
     ("日語組", NTPU_115_JAPANESE_PARTNERS_URL, 16, "115-japanese-partners.pdf"),
     ("中文組", NTPU_115_CHINESE_PARTNERS_URL, 19, "115-chinese-partners.pdf"),
+)
+
+
+# The 115 academic-year quota sheets list schools that students may apply to
+# in that cycle.  NTPU's current sister-school database (updated 2026-07-03)
+# also lists the following student-exchange agreements, but those schools do
+# not appear in the 115 quota sheets.  Keep them visible without presenting
+# them as currently open application choices.
+NTPU_EXCHANGE_AGREEMENTS_WITHOUT_115_QUOTA = (
+    ("大陸地區", "山東大學", "學術交流、學生交換", "校級"),
+    ("大陸地區", "中央財經大學", "學術交流、學生交換", "校級"),
+    ("大陸地區", "北京科技大學", "學術交流、學生交換", "校級"),
+    ("大陸地區", "西南政法大學", "學術交流、學生交換", "校級"),
+    ("大陸地區", "東華理工大學", "學術交流、學生交換", "校級"),
+    ("大陸地區", "華東政法大學", "學術交流、學生交換", "院級"),
+    ("大陸地區", "暨南大學", "學術交流、學生交換", "校級"),
+    ("大陸地區", "蘭州大學", "學術交流、學生交換", "校級"),
+    ("日本", "大阪大學法學研究科、法學部、大學院高等司法研究科暨大學院國際公共政策研究科", "學術交流、學生交換", "院級"),
+    ("日本", "日本信州大學經法學部", "學術交流、學生交換", "院級"),
+    ("日本", "東北大學", "學術交流、學生交換", "院級"),
+    ("日本", "金澤大學", "學術交流、學生交換", "院級"),
+    ("韓國", "梨花女子大學", "學術交流、學生交換", "校級"),
+    ("韓國", "高麗大學世宗校區", "學術交流、學生交換", "校級"),
+    ("越南", "越南融促大學", "學術交流、學生交換", "校級"),
+    ("越南", "芹苴大學－經濟學院", "學術交流、學生交換", "校級／院級"),
+    ("泰國", "泰國東方大學", "學術交流、學生交換", "校級"),
+    ("泰國", "泰國清邁大學", "學術交流、學生交換", "校級"),
+    ("印度", "印度吉特卡拉大學", "學術交流、學生交換", "校級"),
+    ("印度", "印度阿努拉格大學", "學術交流、學生交換", "校級"),
+    ("印度", "卡倫亞技術與科學研究所", "學術交流、學生交換", "校級"),
+    ("印尼", "印尼迪安努斯萬托羅大學", "學術交流、學生交換", "校級"),
+    ("菲律賓", "黎剎系統大學", "學生交換", "校級"),
+    ("柬埔寨", "百麗宮國際大學", "學術交流、學生交換", "校級"),
+    ("香港", "香港理工大學", "學術交流、學生交換", "系級"),
+    ("捷克", "俄斯特拉發大學", "學術交流、學生交換", "校級"),
+    ("美國", "北愛荷華大學", "學術交流、學生交換", "校級"),
+    ("美國", "密蘇里大學藝術與科學學院", "學術交流、學生交換", "院級／系級"),
+    ("美國", "新墨西哥州立大學", "學生交換", "校級"),
+    ("加拿大", "勞倫森大學", "學術交流、學生交換", "院級"),
+    ("加拿大", "加拿大多倫多都會大學", "學術交流、學生交換", "校級"),
+    ("加拿大", "英屬哥倫比亞大學", "學術交流、學生交換", "校級"),
+    ("巴西", "高等廣告與行銷學院", "學術交流、學生交換", "校級"),
+    ("羅馬尼亞", "奧維第烏斯大學", "學術交流、學生交換", "校級"),
+    ("羅馬尼亞", "蒂米什拉西部大學", "師生交換", "校級"),
+    ("立陶宛", "立陶宛維塔斯．馬格努斯大學", "學術交流、學生交換", "校級"),
+    ("波蘭", "格但斯克科技大學", "學術交流、學生交換", "校級"),
+    ("德國", "明斯特大學", "學術交流、學生交換", "院級"),
+    ("德國", "霍夫應用科技大學", "學術交流、學生交換", "校級"),
+    ("法國", "女性高等綜合理工學院", "學生交換", "校級"),
+    ("法國", "里爾政治大學", "學術交流、學生交換", "校級"),
+    ("挪威", "奧斯陸大學（犯罪學與社會學法系）", "學術交流、學生交換", "校級"),
+    ("土耳其", "阿提巴斯大學", "學術交流、學生交換", "校級"),
+    ("土耳其", "埃斯基謝希爾技術大學", "學術交流、學生交換", "校級"),
+    ("拉脫維亞", "拉脫維亞大學", "學術交流、學生交換", "校級"),
+    ("斯洛伐克", "布拉提斯拉瓦斯洛伐克工業大學", "學術交流、學生交換", "校級"),
+    ("摩洛哥", "卡薩布蘭卡管理學院", "學術交流、學生交換", "校級"),
+    ("匈牙利", "埃斯特哈茲天主教大學", "學術交流、學生交換", "校級"),
 )
 
 
@@ -200,7 +258,11 @@ def _partner_from_block(
     period_match = re.search(r"(?:1|一)學期(?:\s*(?:或|/|／)\s*(?:1|一)學年)?", details)
     study_period = period_match.group(0) if period_match else "依當期名額表"
     quota_matches = re.findall(r"\b(\d{1,2})\s+(?=(?:1|一)學期)", details)
-    quota = f"{quota_matches[-1]} 名上限" if quota_matches else None
+    quota = (
+        f"{quota_matches[-1]} 名上限"
+        if quota_matches
+        else "當期名額表未列明人數；請洽臺北大學國際處確認。"
+    )
     if re.search(r"限大學部|undergraduate students only", details, re.IGNORECASE):
         degree_levels = "大學部"
     elif re.search(r"研究生|碩士|master|doctoral", details, re.IGNORECASE):
@@ -281,6 +343,55 @@ def _fallback_partner_universities() -> list[PartnerUniversity]:
     ]
 
 
+def _agreement_only_partner_universities() -> list[PartnerUniversity]:
+    availability_note = (
+        "臺北大學現行合作學校資料庫列有學生交換合約，但未列入 115 學年度交換名額表；"
+        "是否開放、名額與資格須以當期赴外交換簡章為準。"
+    )
+    return [
+        PartnerUniversity(
+                program_type="交換合作協議",
+            availability_status="agreement_only",
+            availability_note=availability_note,
+            agreement_type=agreement_type,
+            agreement_level=agreement_level,
+            country=country,
+            school_name=school_name,
+            colleges=agreement_level,
+                degree_levels="待當期簡章確認",
+            study_period="本期未公告",
+            quota="本期未開放交換名額",
+            eligibility=availability_note,
+            application_deadline="目前未列入 115 學年度交換名額表；請留意下一期公告。",
+            application_info=(
+                "這是合作關係備查資料，不代表目前可直接申請；"
+                "請先確認臺北大學國際事務處最新赴外交換名額表。"
+            ),
+            tuition_info="學費、減免與其他費用須以未來當期簡章及合作校公告為準。",
+            source_url=NTPU_CURRENT_SISTER_SCHOOLS_URL,
+            student_summary_zh=PartnerStudentSummary(
+                study_period="本期未公告",
+                application_deadline="目前未列入 115 學年度交換名額表。",
+                eligibility_points=[availability_note],
+                application_steps=[
+                    "先確認最新赴外交換名額表是否已開放這所學校",
+                    "開放後再依當期簡章完成校內甄選與合作校申請",
+                ],
+                tuition_points=["費用與學費減免須待當期簡章確認"],
+            ),
+        )
+        for country, school_name, agreement_type, agreement_level in (
+            NTPU_EXCHANGE_AGREEMENTS_WITHOUT_115_QUOTA
+        )
+    ]
+
+
+def _with_current_exchange_agreements(
+    open_partners: list[PartnerUniversity],
+) -> list[PartnerUniversity]:
+    return [*open_partners, *_agreement_only_partner_universities()]
+
+
 def fetch_ntpu_partner_universities(timeout_seconds: float = 8.0) -> list[PartnerUniversity]:
     rows: list[PartnerUniversity] = []
     headers = {
@@ -311,9 +422,10 @@ def fetch_ntpu_partner_universities(timeout_seconds: float = 8.0) -> list[Partne
                 )
             )
     except (requests.RequestException, OSError, ValueError, PdfReadError):
-        return _fallback_partner_universities()
+        return _with_current_exchange_agreements(_fallback_partner_universities())
     merged = _merge_partner_universities(rows)
-    return merged if len(merged) >= 100 else _fallback_partner_universities()
+    open_partners = merged if len(merged) >= 100 else _fallback_partner_universities()
+    return _with_current_exchange_agreements(open_partners)
 
 
 def _reference(title: str, url: str, category: PageCategory) -> SourceReference:

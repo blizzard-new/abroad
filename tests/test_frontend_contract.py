@@ -63,6 +63,9 @@ def test_ntpu_uses_the_same_dynamic_web_shell() -> None:
 
     assert 'data-home-school="國立臺北大學"' in html
     assert "/static/assets/ntpu-campus.jpg" in html
+    assert "155 所本期開放 · 48 所交換合作校備查" in html
+    assert 'id="availability-filter"' in html
+    assert "交換學校與合作名單" in html
     assert "refreshHomeUniversityData" in script
     assert "school: requestedSchool" in script
     assert "academicMinimum()" in script

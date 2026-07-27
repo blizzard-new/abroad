@@ -2,6 +2,7 @@ const state = {
   dashboard: null,
   query: "",
   partnerQuery: "",
+  availability: "",
   country: "",
   college: "",
   degree: "",
@@ -502,7 +503,7 @@ async function loadSupportedUniversities() {
         hero_image: "/static/assets/ntpu-campus.jpg",
         official_url: "https://new.ntpu.edu.tw/oia",
         supported: true,
-        partner_count: 155,
+        partner_count: 203,
         coverage_note: "已整理 115 學年度赴外交換資訊。",
       },
     ];
@@ -1400,6 +1401,15 @@ function partnerMatch(item, profile = state.eligibilityProfile) {
   const reasons = [];
   const risks = [];
   let score = 0;
+  if (item.availability_status === "agreement_only") {
+    return {
+      score: -100,
+      tone: "blocked",
+      label: "本期未開放",
+      reasons: ["臺北大學交換合作校"],
+      risks: [item.availability_note || "目前未列入當期交換名額表"],
+    };
+  }
   if (!profile) {
     const coverage = coverageForSchool(item.school_name);
     score = (coverage?.workflow_status === "completed" ? 20 : 0) + (coverage?.experience_status === "completed" ? 10 : 0) + (destinationProfileForSchool(item.school_name) ? 10 : 0);
@@ -2956,6 +2966,7 @@ function renderPartnerFilters() {
   fillSelect("#country-filter", countries, "全部國家", state.country);
   fillSelect("#college-filter", colleges, "全部學院", state.college);
   fillSelect("#degree-filter", degrees, "全部學制", state.degree);
+  $("#availability-filter").value = state.availability;
 }
 
 function filteredPartners() {
@@ -2968,6 +2979,7 @@ function filteredPartners() {
     );
     return (
       (!query || text.includes(query)) &&
+      (!state.availability || (item.availability_status || "open") === state.availability) &&
       (!state.country || item.country === state.country) &&
       (!state.college || collegeMatches(item.colleges, state.college)) &&
       (!state.degree || degreeMatches(item.degree_levels, state.degree))
@@ -2994,7 +3006,11 @@ function degreeMatches(value, selected) {
 function renderPartnerTable() {
   const partners = filteredPartners();
   const visible = partners.slice(0, state.partnerLimit);
-  $("#partner-count").textContent = `${partners.length} 所`;
+  const openCount = partners.filter((item) => (item.availability_status || "open") === "open").length;
+  const agreementOnlyCount = partners.length - openCount;
+  $("#partner-count").textContent = agreementOnlyCount
+    ? `${partners.length} 所（${openCount} 本期開放／${agreementOnlyCount} 合作備查）`
+    : `${partners.length} 所`;
 
   if (!partners.length) {
     renderEmpty("#partner-table", "沒有符合的學校", "調整國家、學院、學制或關鍵字後再試一次。");
@@ -3040,7 +3056,7 @@ function renderPartnerTableRow(item) {
           </div>
         </div>
       </td>
-      <td>${escapeHtml(item.program_type || "--")}</td>
+      <td>${escapeHtml(item.program_type || "--")}${item.availability_status === "agreement_only" ? '<br><span class="coverage-chip empty">本期未公告名額</span>' : ""}</td>
       <td>${escapeHtml([item.colleges, item.degree_levels].filter(Boolean).join("／") || "--")}</td>
       <td>${escapeHtml([item.quota, period, deadline].filter(Boolean).join("／") || "--")}</td>
       <td class="condition-cell">${renderStudentPointList(partnerSummaryPoints(item, "eligibility_points"), { limit: 3, compact: true })}</td>
@@ -3049,7 +3065,7 @@ function renderPartnerTableRow(item) {
 }
 
 function renderPartnerCard(item) {
-  const meta = [item.program_type, item.colleges, item.degree_levels].filter(Boolean).join(" · ");
+  const meta = [item.availability_status === "agreement_only" ? "合作備查／本期未公告" : "115 學年度開放", item.program_type, item.colleges, item.degree_levels].filter(Boolean).join(" · ");
   const period = localizedPartnerValue(item, "study_period", "study_period");
   const deadline = localizedPartnerValue(item, "application_deadline", "application_deadline");
   const match = partnerMatch(item);
@@ -3137,7 +3153,10 @@ function renderPartnerLinks(item) {
   const imageSource = visual?.official_page_url
     ? `<a href="${escapeHtml(visual.official_page_url)}" target="_blank" rel="noreferrer">官方圖片來源</a>`
     : "";
-  return [website, source, imageSource].filter(Boolean).join("");
+  const rankingSource = item.ranking_source_url
+    ? `<a href="${escapeHtml(item.ranking_source_url)}" target="_blank" rel="noreferrer">排名來源</a>`
+    : "";
+  return [website, source, imageSource, rankingSource].filter(Boolean).join("");
 }
 
 function partnerByName(schoolName) {
@@ -5771,7 +5790,7 @@ function bindEvents() {
     renderPartnerTable();
   });
 
-  ["country", "college", "degree"].forEach((name) => {
+  ["availability", "country", "college", "degree"].forEach((name) => {
     $(`#${name}-filter`).addEventListener("change", (event) => {
       state[name] = event.target.value;
       state.partnerLimit = window.matchMedia("(max-width: 820px)").matches ? 8 : 20;
@@ -5781,6 +5800,7 @@ function bindEvents() {
 
   $("#clear-partner-filters").addEventListener("click", () => {
     state.partnerQuery = "";
+    state.availability = "";
     state.country = "";
     state.college = "";
     state.degree = "";

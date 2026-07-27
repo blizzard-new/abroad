@@ -16,6 +16,8 @@ from exchange_info.models import (
 )
 from exchange_info.partner_research import (
     _candidate_score,
+    _match_the_world_ranking,
+    _wikidata_candidate_score,
     apply_partner_research,
     collect_destination_profile,
     discover_partner_official_site,
@@ -80,6 +82,79 @@ def test_official_site_scoring_rejects_aggregators() -> None:
     )
 
 
+def test_wikidata_scoring_distinguishes_similarly_named_universities() -> None:
+    exact = _wikidata_candidate_score(
+        "Shandong University",
+        "Shandong University",
+        "university in China",
+    )
+    different_school = _wikidata_candidate_score(
+        "Shandong University",
+        "Shandong University of Science and Technology",
+        "public university in Qingdao, China",
+    )
+
+    assert exact >= 0.82
+    assert exact > different_school
+
+
+def test_ranking_table_matches_exact_school_and_rejects_branch_mixup() -> None:
+    rows = (
+        {
+            "name": "Shandong University",
+            "aliases": "Shandong University",
+            "rank": "251–300",
+            "url": "/world-university-rankings/shandong-university",
+        },
+        {
+            "name": "Shandong University of Science and Technology",
+            "aliases": "Shandong University of Science and Technology",
+            "rank": "801–1000",
+            "url": "/world-university-rankings/shandong-university-science-and-technology",
+        },
+    )
+    partner = PartnerUniversity(
+        program_type="交換學生",
+        country="中國大陸",
+        school_name="山東大學",
+        source_url="https://new.ntpu.edu.tw/oia/sister-schools",
+    )
+    record = PartnerResearchRecord(
+        home_university="國立臺北大學",
+        school_name="山東大學",
+        research_name="Shandong University",
+    )
+
+    matched = _match_the_world_ranking(partner, record, rows)
+
+    assert matched is not None
+    assert matched["name"] == "Shandong University"
+
+
+def test_ranking_table_does_not_treat_sciences_po_as_sciences_po_aix() -> None:
+    partner = PartnerUniversity(
+        program_type="交換學生",
+        country="法國",
+        school_name="法國普羅旺斯艾克斯政治大學 Sciences Po Aix",
+        source_url="https://new.ntpu.edu.tw/oia/sister-schools",
+    )
+    record = PartnerResearchRecord(
+        home_university="國立臺北大學",
+        school_name=partner.school_name,
+        research_name="Sciences Po Aix",
+    )
+    rows = (
+        {
+            "name": "Sciences Po",
+            "aliases": "Sciences Po Paris",
+            "rank": "601–800",
+            "url": "/world-university-rankings/sciences-po",
+        },
+    )
+
+    assert _match_the_world_ranking(partner, record, rows) is None
+
+
 def test_korean_academic_domains_do_not_collapse_to_ac_kr() -> None:
     assert is_official_partner_url(
         "https://admu-intl.unist.ac.kr/",
@@ -99,7 +174,16 @@ def test_ntpu_blank_marker_is_not_part_of_japanese_school_identity() -> None:
 
 
 def test_ntpu_location_note_is_not_part_of_chinese_school_identity() -> None:
-    assert research_school_name("東北林業大學 黑龍江省哈爾 濱市") == "東北林業大學"
+    assert (
+        research_school_name("東北林業大學 黑龍江省哈爾 濱市")
+        == "Northeast Forestry University"
+    )
+
+
+def test_ntpu_agreement_only_chinese_name_uses_verified_english_search_alias() -> None:
+    assert research_school_name("山東大學") == "Shandong University"
+    assert research_school_name("越南融促大學") == "FPT University"
+    assert research_school_name("卡薩布蘭卡管理學院") == "ESCA School of Management"
 
 
 def test_remaining_ntpu_japanese_sites_are_verified_without_search(monkeypatch) -> None:

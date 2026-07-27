@@ -289,6 +289,12 @@ def fetch_official_page_text(
         return ""
     if "text/html" not in response.headers.get("content-type", "text/html").lower():
         return ""
+    if not response.encoding or response.encoding.casefold() in {
+        "iso-8859-1",
+        "latin-1",
+        "latin1",
+    }:
+        response.encoding = response.apparent_encoding or "utf-8"
     soup = BeautifulSoup(response.text, "html.parser")
     for node in soup.select("script, style, nav, footer, header, aside, form, noscript"):
         node.decompose()
