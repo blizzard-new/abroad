@@ -4,6 +4,7 @@ struct ExchangeHomeView: View {
     @EnvironmentObject private var store: DashboardStore
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Binding var selectedTab: ExchangeRootTab
+    @State private var deadlineExpanded = false
 
     var body: some View {
         Group {
@@ -17,19 +18,17 @@ struct ExchangeHomeView: View {
                 ExchangeLoadingState(message: "正在整理交換資訊")
             }
         }
-        .navigationTitle("總覽")
-        .navigationBarTitleDisplayMode(.large)
+        .navigationTitle("交換指南")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    selectedTab = .eligibility
+                    Task { await store.load(force: true) }
                 } label: {
-                    Image(systemName: "person.crop.circle.fill")
-                        .font(.title2)
-                        .foregroundStyle(ExchangeColor.accent)
+                    Image(systemName: "arrow.clockwise")
                         .frame(minWidth: ExchangeLayout.minimumTarget, minHeight: ExchangeLayout.minimumTarget)
                 }
-                .accessibilityLabel("查看我的資格")
+                .accessibilityLabel("重新整理")
             }
         }
         .exchangePageBackground()
@@ -38,122 +37,157 @@ struct ExchangeHomeView: View {
     private func content(_ dashboard: StudentDashboard) -> some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: ExchangeSpacing.xl) {
-                greetingHeader
                 campusIdentity(dashboard)
-                adaptiveTaskAndChartLayout(dashboard)
-                latestInformation(dashboard)
+                taskPanel
+                focusPanel(dashboard)
+                ExchangeCoverageChart(dashboard: dashboard)
             }
             .frame(maxWidth: 1080, alignment: .leading)
             .padding(.horizontal, horizontalSizeClass == .regular ? ExchangeLayout.regularMargin : ExchangeLayout.compactMargin)
+            .padding(.top, ExchangeSpacing.sm)
             .padding(.bottom, ExchangeSpacing.section)
         }
         .refreshable { await store.load(force: true) }
     }
 
-    private var greetingHeader: some View {
-        VStack(alignment: .leading, spacing: ExchangeSpacing.xxs) {
-            Text("你好，準備交換的同學")
-                .font(ExchangeTypography.title3)
-                .foregroundStyle(ExchangeColor.labelPrimary)
-            Text("先完成今天最重要的一件事")
-                .font(ExchangeTypography.subheadline)
-                .foregroundStyle(ExchangeColor.labelSecondary)
-        }
-    }
-
-    @ViewBuilder
-    private func adaptiveTaskAndChartLayout(_ dashboard: StudentDashboard) -> some View {
-        if horizontalSizeClass == .regular {
-            HStack(alignment: .top, spacing: ExchangeSpacing.md) {
-                taskPanel
-                    .frame(maxWidth: .infinity, alignment: .top)
-                ExchangeCoverageChart(dashboard: dashboard)
-                    .frame(maxWidth: .infinity, alignment: .top)
-            }
-        } else {
-            taskPanel
-            ExchangeCoverageChart(dashboard: dashboard)
-        }
-    }
-
     private var taskPanel: some View {
         VStack(alignment: .leading, spacing: ExchangeSpacing.sm) {
-            ExchangeSectionHeader(title: "今天想先做什麼？")
-                .padding(.bottom, ExchangeSpacing.xxs)
+            ExchangeSectionHeader(
+                title: "開始",
+                detail: "選一個圖示，詳細內容會在下一頁展開"
+            )
 
-            ExchangeTaskButton(
-                title: "找可申請學校",
-                detail: "依國家、學院與學制篩選",
-                symbol: "building.columns.fill",
-                tint: ExchangeColor.accent
-            ) { selectedTab = .schools }
-            ExchangeTaskButton(
-                title: "掌握截止日期",
-                detail: "比較校內與合作校時程",
-                symbol: "calendar.badge.clock",
-                tint: ExchangeColor.warning
-            ) { selectedTab = .deadlines }
-            ExchangeTaskButton(
-                title: "查看補助",
-                detail: "先讀重點，再開官方規章",
-                symbol: "banknote.fill",
-                tint: ExchangeColor.success
-            ) { selectedTab = .support }
-            ExchangeTaskButton(
-                title: "資格初步檢查",
-                detail: "確認成績、語言與可看學校",
-                symbol: "person.text.rectangle",
-                tint: ExchangeColor.indigo
-            ) { selectedTab = .eligibility }
+            LazyVGrid(columns: actionColumns, spacing: ExchangeSpacing.sm) {
+                ExchangeTaskButton(
+                    title: "找學校",
+                    detail: "依國家、學院與學制篩選",
+                    symbol: "building.columns.fill",
+                    tint: ExchangeColor.accent
+                ) { selectedTab = .schools }
+                ExchangeTaskButton(
+                    title: "截止日",
+                    detail: "比較校內與合作校時程",
+                    symbol: "calendar",
+                    tint: ExchangeColor.warning
+                ) { selectedTab = .deadlines }
+                ExchangeTaskButton(
+                    title: "補助文件",
+                    detail: "閱讀摘要與官方規章",
+                    symbol: "doc.text.fill",
+                    tint: ExchangeColor.success
+                ) { selectedTab = .support }
+                ExchangeTaskButton(
+                    title: "我的資格",
+                    detail: "確認成績、語言與可看學校",
+                    symbol: "person.crop.circle.badge.checkmark",
+                    tint: ExchangeColor.indigo
+                ) { selectedTab = .eligibility }
+            }
         }
     }
 
+    private var actionColumns: [GridItem] {
+        let count = horizontalSizeClass == .regular ? 4 : 2
+        return Array(
+            repeating: GridItem(.flexible(), spacing: ExchangeSpacing.sm),
+            count: count
+        )
+    }
+
     @ViewBuilder
-    private func latestInformation(_ dashboard: StudentDashboard) -> some View {
-        if horizontalSizeClass == .regular {
-            HStack(alignment: .top, spacing: ExchangeSpacing.md) {
+    private func focusPanel(_ dashboard: StudentDashboard) -> some View {
+        VStack(alignment: .leading, spacing: ExchangeSpacing.sm) {
+            ExchangeSectionHeader(title: "焦點")
+
+            if horizontalSizeClass == .regular {
+                HStack(alignment: .top, spacing: ExchangeSpacing.sm) {
+                    recentDeadline(dashboard)
+                        .frame(maxWidth: .infinity, alignment: .top)
+                    featuredUniversity(dashboard)
+                        .frame(maxWidth: .infinity, alignment: .top)
+                }
+            } else {
                 recentDeadline(dashboard)
-                    .frame(maxWidth: .infinity, alignment: .top)
                 featuredUniversity(dashboard)
-                    .frame(maxWidth: .infinity, alignment: .top)
             }
-        } else {
-            recentDeadline(dashboard)
-            featuredUniversity(dashboard)
         }
     }
 
     @ViewBuilder
     private func recentDeadline(_ dashboard: StudentDashboard) -> some View {
         if let period = dashboard.applicationPeriods.first {
-            VStack(alignment: .leading, spacing: ExchangeSpacing.sm) {
-                ExchangeSectionHeader(title: "最近申請時程")
-                ExchangeDeadlineRow(
-                    title: period.title,
-                    detail: period.details.first ?? "請開啟官方來源確認日期"
+            DisclosureGroup(isExpanded: $deadlineExpanded) {
+                Text(period.details.first ?? "請開啟官方來源確認日期")
+                    .font(ExchangeTypography.subheadline)
+                    .foregroundStyle(ExchangeColor.labelSecondary)
+                    .padding(.top, ExchangeSpacing.sm)
+                    .fixedSize(horizontal: false, vertical: true)
+            } label: {
+                focusLabel(
+                    title: "最近截止",
+                    summary: period.title,
+                    symbol: "calendar",
+                    tint: ExchangeColor.warning
                 )
             }
+            .tint(ExchangeColor.labelSecondary)
+            .exchangeCard()
         }
     }
 
     @ViewBuilder
     private func featuredUniversity(_ dashboard: StudentDashboard) -> some View {
         if let university = dashboard.partnerUniversities.first {
-            VStack(alignment: .leading, spacing: ExchangeSpacing.sm) {
-                ExchangeSectionHeader(title: "先從這所學校開始")
-                NavigationLink {
-                    ExchangeSchoolDetailView(university: university)
-                } label: {
-                    ExchangeUniversityRow(university: university)
-                        .exchangeCard()
+            NavigationLink {
+                ExchangeSchoolDetailView(university: university)
+            } label: {
+                HStack(spacing: ExchangeSpacing.sm) {
+                    focusLabel(
+                        title: "推薦學校",
+                        summary: university.schoolName,
+                        symbol: "building.columns.fill",
+                        tint: ExchangeColor.accent
+                    )
+                    Image(systemName: "chevron.right")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(ExchangeColor.labelTertiary)
                 }
-                .buttonStyle(.plain)
+                .exchangeCard()
             }
+            .buttonStyle(.plain)
+            .accessibilityHint("開啟學校詳細資訊")
         }
     }
 
+    private func focusLabel(
+        title: String,
+        summary: String,
+        symbol: String,
+        tint: Color
+    ) -> some View {
+        HStack(spacing: ExchangeSpacing.sm) {
+            Image(systemName: symbol)
+                .font(.body.weight(.semibold))
+                .foregroundStyle(tint)
+                .frame(width: 40, height: 40)
+                .background(tint.opacity(0.13), in: Circle())
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(ExchangeTypography.caption)
+                    .foregroundStyle(ExchangeColor.labelSecondary)
+                Text(summary)
+                    .font(ExchangeTypography.headline)
+                    .foregroundStyle(ExchangeColor.labelPrimary)
+                    .lineLimit(1)
+            }
+            Spacer(minLength: ExchangeSpacing.xs)
+        }
+        .accessibilityElement(children: .combine)
+    }
+
     private func campusIdentity(_ dashboard: StudentDashboard) -> some View {
-        let height: CGFloat = horizontalSizeClass == .regular ? 240 : 190
+        let height: CGFloat = horizontalSizeClass == .regular ? 190 : 150
 
         return ZStack(alignment: .bottomLeading) {
             Image("cgu-campus")
@@ -164,21 +198,30 @@ struct ExchangeHomeView: View {
                 .exchangeBackgroundExtension()
                 .accessibilityLabel("長庚大學校園與 CGU 地標")
             LinearGradient(
-                colors: [.clear, .black.opacity(0.55)],
-                startPoint: .center,
+                colors: [.clear, .black.opacity(0.68)],
+                startPoint: .top,
                 endPoint: .bottom
             )
-            VStack(alignment: .leading, spacing: ExchangeSpacing.xxs) {
-                Text(dashboard.schoolName)
-                    .font(ExchangeTypography.title2)
+            HStack(alignment: .bottom, spacing: ExchangeSpacing.sm) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(dashboard.schoolName)
+                        .font(ExchangeTypography.title2)
+                        .foregroundStyle(.white)
+                    Text("交換探索")
+                        .font(ExchangeTypography.subheadline)
+                        .foregroundStyle(.white.opacity(0.82))
+                }
+                Spacer(minLength: ExchangeSpacing.sm)
+                Text("\(dashboard.partnerUniversities.count)")
+                    .font(ExchangeTypography.headline)
                     .foregroundStyle(.white)
-                Text("桃園 · 台灣")
-                    .font(ExchangeTypography.subheadline)
-                    .foregroundStyle(.white.opacity(0.82))
+                    .padding(.horizontal, 13)
+                    .padding(.vertical, 8)
+                    .background(.white.opacity(0.20), in: Capsule())
             }
             .padding(ExchangeSpacing.md)
         }
         .frame(height: height)
-        .clipShape(RoundedRectangle(cornerRadius: ExchangeRadius.card, style: .continuous))
+        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
     }
 }

@@ -59,36 +59,66 @@ struct ExchangeSchoolDetailView: View {
             ExchangeSectionHeader(
                 eyebrow: [university.country, university.programType].compactMap { $0 }.joined(separator: " · "),
                 title: university.schoolName,
-                detail: "先確認限制，再依步驟完成長庚校內與合作校申請。"
+                detail: "先掃描重點，再展開完整條件。"
             )
 
-            VStack(spacing: 0) {
-                ExchangeInfoRow(label: "適用身分", value: [university.colleges, university.degreeLevels].compactMap { $0 }.joined(separator: "／").nilIfEmpty ?? "依公告")
-                Divider().overlay(ExchangeColor.separator)
-                ExchangeInfoRow(label: "名額", value: university.quota ?? "依公告")
-                Divider().overlay(ExchangeColor.separator)
-                ExchangeInfoRow(label: "研修期間", value: university.studyPeriod ?? "依公告")
-                Divider().overlay(ExchangeColor.separator)
-                ExchangeInfoRow(label: "合作校截止日", value: university.applicationDeadline ?? "依公告", symbol: "calendar")
-                Divider().overlay(ExchangeColor.separator)
-                ExchangeInfoRow(label: "學費", value: university.tuitionInfo ?? "依公告")
+            ExchangeSnapshotRail(metrics: [
+                ExchangeSnapshotMetric(value: university.country?.nilIfEmpty ?? "未提供", label: "國家", tint: ExchangeColor.accent),
+                ExchangeSnapshotMetric(value: university.programType?.nilIfEmpty ?? "未提供", label: "方案", tint: ExchangeColor.indigo),
+                ExchangeSnapshotMetric(value: university.quota?.nilIfEmpty ?? "依公告", label: "名額", tint: ExchangeColor.warning),
+                ExchangeSnapshotMetric(
+                    value: university.applicationDeadline?.nilIfEmpty == nil ? "待確認" : "已整理",
+                    label: "截止資訊",
+                    tint: university.applicationDeadline?.nilIfEmpty == nil ? ExchangeColor.danger : ExchangeColor.success
+                )
+            ])
+
+            let summaries = [
+                (university.colleges?.nilIfEmpty).map {
+                    ExchangeInfoSummaryItem(label: "可申請學院", value: $0, symbol: "building.columns.fill", tint: ExchangeColor.accent)
+                },
+                (university.degreeLevels?.nilIfEmpty).map {
+                    ExchangeInfoSummaryItem(label: "學制", value: $0, symbol: "graduationcap.fill", tint: ExchangeColor.indigo)
+                },
+                (university.studyPeriod?.nilIfEmpty).map {
+                    ExchangeInfoSummaryItem(label: "研修期間", value: $0, symbol: "calendar", tint: ExchangeColor.warning)
+                },
+                (university.tuitionInfo?.nilIfEmpty).map {
+                    ExchangeInfoSummaryItem(label: "學費資訊", value: $0, symbol: "banknote.fill", tint: ExchangeColor.success)
+                }
+            ].compactMap { $0 }
+
+            if !summaries.isEmpty {
+                ExchangeInfoSummaryGrid(items: summaries)
             }
-            .exchangeCard()
 
             if let eligibility = university.eligibility, !eligibility.isEmpty {
-                DisclosureGroup {
-                    Text(eligibility)
-                        .font(ExchangeTypography.body)
-                        .foregroundStyle(ExchangeColor.labelSecondary)
-                        .padding(.top, ExchangeSpacing.sm)
-                } label: {
-                    Label("申請限制與語言條件", systemImage: "checklist")
-                        .font(ExchangeTypography.headline)
-                        .foregroundStyle(ExchangeColor.labelPrimary)
-                }
-                .exchangeCard()
+                detailDisclosure(title: "申請限制與語言條件", symbol: "checklist", value: eligibility)
+            }
+            if let deadline = university.applicationDeadline, !deadline.isEmpty {
+                detailDisclosure(title: "完整截止資訊", symbol: "calendar.badge.exclamationmark", value: deadline)
+            }
+            if let applicationInfo = university.applicationInfo, !applicationInfo.isEmpty {
+                detailDisclosure(title: "申請方式", symbol: "checkmark.seal", value: applicationInfo)
+            }
+            if let rankingInfo = university.rankingInfo, !rankingInfo.isEmpty {
+                detailDisclosure(title: "其他資訊", symbol: "info.circle", value: rankingInfo)
             }
         }
+    }
+
+    private func detailDisclosure(title: String, symbol: String, value: String) -> some View {
+        DisclosureGroup {
+            Text(value)
+                .font(ExchangeTypography.body)
+                .foregroundStyle(ExchangeColor.labelSecondary)
+                .padding(.top, ExchangeSpacing.sm)
+        } label: {
+            Label(title, systemImage: symbol)
+                .font(ExchangeTypography.headline)
+                .foregroundStyle(ExchangeColor.labelPrimary)
+        }
+        .exchangeCard()
     }
 
     private func workflowSection(_ workflow: UniversityApplicationWorkflow) -> some View {

@@ -1,25 +1,34 @@
 from __future__ import annotations
 
 import json
+import os
+import tempfile
+import threading
+from contextlib import contextmanager
 from pathlib import Path
-from typing import Iterable, TypeVar
+from typing import Generator, Iterable, TextIO, TypeVar
 
 from pydantic import BaseModel
 
 from .models import (
+    AccountNotification,
     AccountSessionRecord,
     AnonymousIdentity,
     CollectionAudit,
     CommunityAnswer,
     CommunityBlock,
+    CommunityModerationAudit,
     CommunityPost,
     CommunityPostComment,
+    CommunityPublishEvent,
     CommunityQuestion,
     CommunityReport,
     DestinationProfile,
     DocumentChunk,
+    EmailVerificationChallenge,
     ExchangeInfo,
     ExperienceSubmission,
+    NotificationDelivery,
     PartnerResearchRecord,
     ProcessedPage,
     PrivateConversation,
@@ -28,16 +37,86 @@ from .models import (
     RawPage,
     StudentExperienceSource,
     StructuredSourceRecord,
+    ApplicationWorkflowRevision,
+    ApplicationFormDraftRecord,
     UniversityApplicationWorkflow,
     UserAccount,
+    VaultAuditRecord,
+    VaultConsentRecord,
+    VaultDocumentRecord,
+    VaultDocumentVersionRecord,
 )
 from .settings import DEFAULT_DATA_DIR
 from .school_identity import school_identity_key
+from .university_registry import CGU, NTPU
+from .workflow_structuring import structure_application_workflow
+from .workflow_identity import workflow_storage_key
 
 T = TypeVar("T", bound=BaseModel)
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 BUNDLED_NTPU_DIR = PACKAGE_DIR / "official_data" / "ntpu"
+BUNDLED_CGU_DIR = PACKAGE_DIR / "official_data" / "cgu"
+
+_STORAGE_LOCKS_GUARD = threading.Lock()
+_STORAGE_LOCKS: dict[str, threading.RLock] = {}
+
+
+def _storage_lock_key(path: Path) -> str:
+    # Keep the in-process lock identity independent of whether a parent directory
+    # or target file already exists. Path.resolve() can consult the Windows
+    # filesystem and produce a different spelling while concurrent writers are
+    # creating the path, which would briefly split one file across two locks.
+    key = os.path.abspath(os.fspath(Path(path)))
+    return os.path.normcase(key) if os.name == "nt" else key
+
+
+def _storage_lock(path: Path) -> threading.RLock:
+    key = _storage_lock_key(path)
+    with _STORAGE_LOCKS_GUARD:
+        lock = _STORAGE_LOCKS.get(key)
+        if lock is None:
+            lock = threading.RLock()
+            _STORAGE_LOCKS[key] = lock
+        return lock
+
+
+@contextmanager
+def storage_path_lock(path: Path) -> Generator[None, None, None]:
+    """Serialize same-process access to a local fallback storage path."""
+
+    with _storage_lock(path):
+        yield
+
+
+def _atomic_text_writer(path: Path, *, encoding: str) -> tuple[TextIO, Path]:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary_name = tempfile.mkstemp(
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+        dir=path.parent,
+        text=True,
+    )
+    temporary = Path(temporary_name)
+    try:
+        handle = os.fdopen(descriptor, "w", encoding=encoding, newline="")
+    except BaseException:
+        os.close(descriptor)
+        temporary.unlink(missing_ok=True)
+        raise
+    return handle, temporary
+
+
+def _application_workflow_key(
+    workflow: UniversityApplicationWorkflow,
+) -> tuple[str, str, str, str, str]:
+    return (
+        school_identity_key(workflow.home_university),
+        school_identity_key(workflow.school_name),
+        str(workflow.program_type or "").strip().casefold(),
+        str(workflow.academic_year or "").strip().casefold(),
+        str(workflow.application_round or "").strip().casefold(),
+    )
 
 
 def _include_bundled_defaults(data_dir: Path) -> bool:
@@ -58,6 +137,53 @@ def _merge_rows(
     merged = {key(row): row for row in bundled}
     merged.update({key(row): row for row in local})
     return list(merged.values())
+
+
+def merge_application_workflows(
+    baseline: Iterable[UniversityApplicationWorkflow],
+    overrides: Iterable[UniversityApplicationWorkflow],
+) -> list[UniversityApplicationWorkflow]:
+    """Merge workflow catalogs while treating a generic local row as an override.
+
+    A reviewed runtime row may intentionally omit ``program_type`` because it
+    applies to every program for the same school, year, and round. In that case
+    it replaces a more specifically labelled bundled baseline instead of
+    competing with it during rule selection.
+    """
+
+    merged = list(baseline)
+    for override in overrides:
+        override_key = _application_workflow_key(override)
+        governance_key = override.governance_key
+        override_scope = (
+            override_key[0],
+            override_key[1],
+            override_key[3],
+            override_key[4],
+        )
+        merged = [
+            row
+            for row in merged
+            if (
+                _application_workflow_key(row) != override_key
+                and not (
+                    governance_key
+                    and workflow_storage_key(row) == governance_key
+                )
+                and (
+                    bool(override_key[2])
+                    or (
+                        _application_workflow_key(row)[0],
+                        _application_workflow_key(row)[1],
+                        _application_workflow_key(row)[3],
+                        _application_workflow_key(row)[4],
+                    )
+                    != override_scope
+                )
+            )
+        ]
+        merged.append(override)
+    return merged
 
 
 def _with_explicit_destination_gaps(profile: DestinationProfile) -> DestinationProfile:
@@ -89,6 +215,56 @@ def _with_explicit_destination_gaps(profile: DestinationProfile) -> DestinationP
     return profile.model_copy(update=update) if update else profile
 
 
+def _destination_profile_key(profile: DestinationProfile) -> tuple[str, str]:
+    return (
+        school_identity_key(profile.home_university or CGU.school_name),
+        school_identity_key(profile.school_name),
+    )
+
+
+def _scope_legacy_destination_profiles(
+    rows: Iterable[DestinationProfile],
+    data_dir: Path,
+) -> list[DestinationProfile]:
+    """Recover home-school provenance for rows written before it was stored.
+
+    The original product only supported CGU, so an unscoped row with no audit
+    is assigned to CGU. A row with exactly one audited home is assigned there.
+    Ambiguous rows stay unscoped so the API can fail closed instead of sharing
+    one research result across universities.
+    """
+
+    homes_by_school: dict[str, set[str]] = {}
+    for audit in read_jsonl(
+        data_paths(data_dir)["collection_audits"],
+        CollectionAudit,
+    ):
+        if audit.collector != "destinations" or not audit.home_university:
+            continue
+        homes_by_school.setdefault(
+            school_identity_key(audit.school_name),
+            set(),
+        ).add(audit.home_university)
+
+    scoped: list[DestinationProfile] = []
+    for row in rows:
+        if row.home_university:
+            scoped.append(row)
+            continue
+        homes = homes_by_school.get(school_identity_key(row.school_name), set())
+        if len(homes) == 1:
+            scoped.append(
+                row.model_copy(update={"home_university": next(iter(homes))})
+            )
+        elif not homes:
+            scoped.append(
+                row.model_copy(update={"home_university": CGU.school_name})
+            )
+        else:
+            scoped.append(row)
+    return scoped
+
+
 def data_paths(data_dir: Path = DEFAULT_DATA_DIR) -> dict[str, Path]:
     data_dir = Path(data_dir)
     return {
@@ -102,6 +278,9 @@ def data_paths(data_dir: Path = DEFAULT_DATA_DIR) -> dict[str, Path]:
         "structured_sources": data_dir / "processed" / "structured_sources.jsonl",
         "student_experiences": data_dir / "processed" / "student_experiences.jsonl",
         "application_workflows": data_dir / "processed" / "application_workflows.jsonl",
+        "application_workflow_revisions": (
+            data_dir / "processed" / "application_workflow_revisions.jsonl"
+        ),
         "partner_research": data_dir / "processed" / "partner_research.jsonl",
         "community_questions": data_dir / "processed" / "community_questions.jsonl",
         "community_answers": data_dir / "processed" / "community_answers.jsonl",
@@ -113,11 +292,36 @@ def data_paths(data_dir: Path = DEFAULT_DATA_DIR) -> dict[str, Path]:
         "private_messages": data_dir / "processed" / "private_messages.jsonl",
         "community_blocks": data_dir / "processed" / "community_blocks.jsonl",
         "community_reports": data_dir / "processed" / "community_reports.jsonl",
+        "community_publish_events": data_dir / "processed" / "community_publish_events.jsonl",
+        "community_moderation_audits": data_dir / "processed" / "community_moderation_audits.jsonl",
         "experience_submissions": data_dir / "processed" / "experience_submissions.jsonl",
         "collection_audits": data_dir / "processed" / "collection_audits.jsonl",
         "destination_profiles": data_dir / "processed" / "destination_profiles.jsonl",
+        "destination_profile_reviews": (
+            data_dir / "processed" / "destination_profile_reviews.jsonl"
+        ),
+        "destination_profile_promotions": (
+            data_dir / "processed" / "destination_profile_promotions.jsonl"
+        ),
+        "destination_profile_rollbacks": (
+            data_dir / "processed" / "destination_profile_rollbacks.jsonl"
+        ),
         "user_accounts": data_dir / "processed" / "user_accounts.jsonl",
         "account_sessions": data_dir / "processed" / "account_sessions.jsonl",
+        "account_notifications": data_dir / "processed" / "account_notifications.jsonl",
+        "notification_deliveries": data_dir / "processed" / "notification_deliveries.jsonl",
+        "private_auth": data_dir / "private_auth",
+        "email_verification_secret": data_dir / "private_auth" / ".local-email-secret",
+        "email_verifications": data_dir / "private_auth" / "email_verifications.jsonl",
+        "private_vault": data_dir / "private_vault",
+        "vault_blobs": data_dir / "private_vault" / "blobs",
+        "vault_master_key": data_dir / "private_vault" / ".local-master-key",
+        "vault_documents": data_dir / "private_vault" / "documents.jsonl",
+        "vault_versions": data_dir / "private_vault" / "versions.jsonl",
+        "vault_consents": data_dir / "private_vault" / "consents.jsonl",
+        "vault_audits": data_dir / "private_vault" / "audit.jsonl",
+        "private_form_drafts": data_dir / "private_form_drafts",
+        "form_drafts": data_dir / "private_form_drafts" / "drafts.jsonl",
     }
 
 
@@ -126,38 +330,62 @@ def ensure_data_dirs(data_dir: Path = DEFAULT_DATA_DIR) -> dict[str, Path]:
     paths["raw"].mkdir(parents=True, exist_ok=True)
     paths["raw_files"].mkdir(parents=True, exist_ok=True)
     paths["processed"].mkdir(parents=True, exist_ok=True)
+    paths["private_auth"].mkdir(parents=True, exist_ok=True)
+    paths["private_vault"].mkdir(parents=True, exist_ok=True)
+    paths["vault_blobs"].mkdir(parents=True, exist_ok=True)
+    paths["private_form_drafts"].mkdir(parents=True, exist_ok=True)
     return paths
 
 
 def write_jsonl(path: Path, rows: Iterable[BaseModel]) -> int:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    count = 0
-    with path.open("w", encoding="utf-8") as handle:
-        for row in rows:
-            handle.write(row.model_dump_json() + "\n")
-            count += 1
-    return count
+    with storage_path_lock(path):
+        count = 0
+        handle, temporary = _atomic_text_writer(path, encoding="utf-8")
+        try:
+            with handle:
+                for row in rows:
+                    handle.write(row.model_dump_json() + "\n")
+                    count += 1
+                handle.flush()
+                os.fsync(handle.fileno())
+            os.replace(temporary, path)
+        except BaseException:
+            temporary.unlink(missing_ok=True)
+            raise
+        return count
 
 
 def read_jsonl(path: Path, model: type[T]) -> list[T]:
-    if not path.exists():
-        return []
-    rows: list[T] = []
-    with path.open("r", encoding="utf-8") as handle:
-        for line in handle:
-            line = line.strip()
-            if not line:
-                continue
-            rows.append(model.model_validate_json(line))
-    return rows
+    with storage_path_lock(path):
+        if not path.exists():
+            return []
+        rows: list[T] = []
+        with path.open("r", encoding="utf-8") as handle:
+            for line in handle:
+                line = line.strip()
+                if not line:
+                    continue
+                rows.append(model.model_validate_json(line))
+        return rows
 
 
 def save_json(path: Path, row: BaseModel) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(row.model_dump(mode="json"), ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
+    with storage_path_lock(path):
+        handle, temporary = _atomic_text_writer(path, encoding="utf-8")
+        try:
+            with handle:
+                json.dump(
+                    row.model_dump(mode="json"),
+                    handle,
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                handle.flush()
+                os.fsync(handle.fileno())
+            os.replace(temporary, path)
+        except BaseException:
+            temporary.unlink(missing_ok=True)
+            raise
 
 
 def load_raw_pages(data_dir: Path = DEFAULT_DATA_DIR) -> list[RawPage]:
@@ -267,23 +495,33 @@ def replace_school_experiences(
 def load_application_workflows(
     data_dir: Path = DEFAULT_DATA_DIR,
 ) -> list[UniversityApplicationWorkflow]:
-    local = read_jsonl(
-        data_paths(data_dir)["application_workflows"], UniversityApplicationWorkflow
-    )
+    local = [
+        structure_application_workflow(row)
+        for row in read_jsonl(
+            data_paths(data_dir)["application_workflows"],
+            UniversityApplicationWorkflow,
+        )
+    ]
     if not _include_bundled_defaults(data_dir):
         return local
-    bundled = read_jsonl(
-        BUNDLED_NTPU_DIR / "application_workflows.jsonl",
-        UniversityApplicationWorkflow,
-    )
-    return _merge_rows(
-        bundled,
+    return merge_application_workflows(
+        load_bundled_application_workflows(),
         local,
-        key=lambda row: (
-            school_identity_key(row.home_university),
-            school_identity_key(row.school_name),
-        ),
     )
+
+
+def load_bundled_application_workflows() -> list[UniversityApplicationWorkflow]:
+    """Load the tracked official workflow baseline without runtime data-dir rules."""
+
+    bundled = [
+        row
+        for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR)
+        for row in read_jsonl(
+            directory / "application_workflows.jsonl",
+            UniversityApplicationWorkflow,
+        )
+    ]
+    return [structure_application_workflow(row) for row in bundled]
 
 
 def save_application_workflows(
@@ -297,23 +535,46 @@ def replace_application_workflow(
     workflow: UniversityApplicationWorkflow,
     data_dir: Path = DEFAULT_DATA_DIR,
 ) -> list[UniversityApplicationWorkflow]:
-    school_key = school_identity_key(workflow.school_name)
-    home_key = school_identity_key(workflow.home_university)
+    workflow = structure_application_workflow(workflow)
+    workflow_key = _application_workflow_key(workflow)
     retained = [
         row
         for row in load_application_workflows(data_dir)
         if (
-            school_identity_key(row.school_name),
-            school_identity_key(row.home_university),
+            _application_workflow_key(row) != workflow_key
+            and not (
+                workflow.governance_key
+                and workflow_storage_key(row) == workflow.governance_key
+            )
         )
-        != (school_key, home_key)
     ]
     ordered = sorted(
         [*retained, workflow],
-        key=lambda row: (row.home_university.casefold(), row.school_name.casefold()),
+        key=lambda row: (
+            row.home_university.casefold(),
+            row.school_name.casefold(),
+            str(row.academic_year or "").casefold(),
+            str(row.application_round or "").casefold(),
+        ),
     )
     save_application_workflows(ordered, data_dir)
     return ordered
+
+
+def load_application_workflow_revisions(
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> list[ApplicationWorkflowRevision]:
+    return read_jsonl(
+        data_paths(data_dir)["application_workflow_revisions"],
+        ApplicationWorkflowRevision,
+    )
+
+
+def save_application_workflow_revisions(
+    rows: Iterable[ApplicationWorkflowRevision],
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> int:
+    return write_jsonl(data_paths(data_dir)["application_workflow_revisions"], rows)
 
 
 def load_collection_audits(
@@ -358,32 +619,58 @@ def upsert_collection_audit(
 
 def load_destination_profiles(
     data_dir: Path = DEFAULT_DATA_DIR,
+    *,
+    include_bundled_baseline: bool | None = None,
 ) -> list[DestinationProfile]:
-    local = read_jsonl(
-        data_paths(data_dir)["destination_profiles"], DestinationProfile
+    local = _scope_legacy_destination_profiles(
+        read_jsonl(
+            data_paths(data_dir)["destination_profiles"],
+            DestinationProfile,
+        ),
+        data_dir,
     )
-    if not _include_bundled_defaults(data_dir):
+    include_bundled = (
+        _include_bundled_defaults(data_dir)
+        if include_bundled_baseline is None
+        else include_bundled_baseline
+    )
+    if not include_bundled:
         return local
-    bundled = read_jsonl(
-        BUNDLED_NTPU_DIR / "destination_profiles.jsonl", DestinationProfile
-    )
+    bundled = [
+        row.model_copy(update={"home_university": home_university})
+        for directory, home_university in (
+            (BUNDLED_NTPU_DIR, NTPU.school_name),
+            (BUNDLED_CGU_DIR, CGU.school_name),
+        )
+        for row in read_jsonl(
+            directory / "destination_profiles.jsonl",
+            DestinationProfile,
+        )
+    ]
     return [
         _with_explicit_destination_gaps(row)
         for row in _merge_rows(
-        bundled,
-        local,
-        key=lambda row: school_identity_key(row.school_name),
+            bundled,
+            local,
+            key=_destination_profile_key,
         )
     ]
 
 
 def load_partner_research(
     data_dir: Path = DEFAULT_DATA_DIR,
+    *,
+    include_bundled_baseline: bool | None = None,
 ) -> list[PartnerResearchRecord]:
     local = read_jsonl(
         data_paths(data_dir)["partner_research"], PartnerResearchRecord
     )
-    if not _include_bundled_defaults(data_dir):
+    include_bundled = (
+        _include_bundled_defaults(data_dir)
+        if include_bundled_baseline is None
+        else include_bundled_baseline
+    )
+    if not include_bundled:
         return local
     bundled = read_jsonl(
         BUNDLED_NTPU_DIR / "partner_research.jsonl", PartnerResearchRecord
@@ -435,15 +722,21 @@ def save_destination_profiles(
 def upsert_destination_profile(
     profile: DestinationProfile, data_dir: Path = DEFAULT_DATA_DIR
 ) -> list[DestinationProfile]:
-    school_key = school_identity_key(profile.school_name)
+    profile_key = _destination_profile_key(profile)
     retained = [
         row
-        for row in load_destination_profiles(data_dir)
-        if school_identity_key(row.school_name) != school_key
+        for row in load_destination_profiles(
+            data_dir,
+            include_bundled_baseline=False,
+        )
+        if _destination_profile_key(row) != profile_key
     ]
     ordered = sorted(
         [*retained, profile],
-        key=lambda row: row.school_name.casefold(),
+        key=lambda row: (
+            (row.home_university or CGU.school_name).casefold(),
+            row.school_name.casefold(),
+        ),
     )
     save_destination_profiles(ordered, data_dir)
     return ordered
@@ -464,9 +757,12 @@ def save_community_questions(
 def append_community_question(
     question: CommunityQuestion, data_dir: Path = DEFAULT_DATA_DIR
 ) -> CommunityQuestion:
-    rows = [*load_community_questions(data_dir), question]
-    save_community_questions(rows, data_dir)
-    return question
+    return _append_row(
+        "community_questions",
+        question,
+        CommunityQuestion,
+        data_dir,
+    )
 
 
 def load_community_answers(
@@ -484,15 +780,19 @@ def save_community_answers(
 def append_community_answer(
     answer: CommunityAnswer, data_dir: Path = DEFAULT_DATA_DIR
 ) -> CommunityAnswer:
-    rows = [*load_community_answers(data_dir), answer]
-    save_community_answers(rows, data_dir)
-    return answer
+    return _append_row(
+        "community_answers",
+        answer,
+        CommunityAnswer,
+        data_dir,
+    )
 
 
 def _append_row(path_key: str, row: T, model: type[T], data_dir: Path) -> T:
     path = data_paths(data_dir)[path_key]
-    rows = read_jsonl(path, model)
-    write_jsonl(path, [*rows, row])
+    with storage_path_lock(path):
+        rows = read_jsonl(path, model)
+        write_jsonl(path, [*rows, row])
     return row
 
 
@@ -532,8 +832,118 @@ def save_account_sessions(
     return write_jsonl(data_paths(data_dir)["account_sessions"], rows)
 
 
+def load_email_verifications(
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> list[EmailVerificationChallenge]:
+    return read_jsonl(
+        data_paths(data_dir)["email_verifications"],
+        EmailVerificationChallenge,
+    )
+
+
+def save_email_verifications(
+    rows: Iterable[EmailVerificationChallenge],
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> int:
+    return write_jsonl(data_paths(data_dir)["email_verifications"], rows)
+
+
+def load_account_notifications(
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> list[AccountNotification]:
+    return read_jsonl(data_paths(data_dir)["account_notifications"], AccountNotification)
+
+
+def save_account_notifications(
+    rows: Iterable[AccountNotification], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["account_notifications"], rows)
+
+
+def load_notification_deliveries(
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> list[NotificationDelivery]:
+    return read_jsonl(
+        data_paths(data_dir)["notification_deliveries"], NotificationDelivery
+    )
+
+
+def save_notification_deliveries(
+    rows: Iterable[NotificationDelivery], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["notification_deliveries"], rows)
+
+
+def load_application_form_drafts(
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> list[ApplicationFormDraftRecord]:
+    return read_jsonl(data_paths(data_dir)["form_drafts"], ApplicationFormDraftRecord)
+
+
+def save_application_form_drafts(
+    rows: Iterable[ApplicationFormDraftRecord], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["form_drafts"], rows)
+
+
+def load_vault_documents(
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> list[VaultDocumentRecord]:
+    return read_jsonl(data_paths(data_dir)["vault_documents"], VaultDocumentRecord)
+
+
+def save_vault_documents(
+    rows: Iterable[VaultDocumentRecord], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["vault_documents"], rows)
+
+
+def load_vault_versions(
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> list[VaultDocumentVersionRecord]:
+    return read_jsonl(
+        data_paths(data_dir)["vault_versions"], VaultDocumentVersionRecord
+    )
+
+
+def save_vault_versions(
+    rows: Iterable[VaultDocumentVersionRecord], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["vault_versions"], rows)
+
+
+def load_vault_consents(
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> list[VaultConsentRecord]:
+    return read_jsonl(data_paths(data_dir)["vault_consents"], VaultConsentRecord)
+
+
+def save_vault_consents(
+    rows: Iterable[VaultConsentRecord], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["vault_consents"], rows)
+
+
+def load_vault_audits(
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> list[VaultAuditRecord]:
+    return read_jsonl(data_paths(data_dir)["vault_audits"], VaultAuditRecord)
+
+
+def save_vault_audits(
+    rows: Iterable[VaultAuditRecord], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["vault_audits"], rows)
+
+
 def load_community_posts(data_dir: Path = DEFAULT_DATA_DIR) -> list[CommunityPost]:
     return read_jsonl(data_paths(data_dir)["community_posts"], CommunityPost)
+
+
+def save_community_posts(
+    rows: Iterable[CommunityPost], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["community_posts"], rows)
 
 
 def append_community_post(post: CommunityPost, data_dir: Path = DEFAULT_DATA_DIR) -> CommunityPost:
@@ -544,12 +954,24 @@ def load_community_post_comments(data_dir: Path = DEFAULT_DATA_DIR) -> list[Comm
     return read_jsonl(data_paths(data_dir)["community_post_comments"], CommunityPostComment)
 
 
+def save_community_post_comments(
+    rows: Iterable[CommunityPostComment], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["community_post_comments"], rows)
+
+
 def append_community_post_comment(comment: CommunityPostComment, data_dir: Path = DEFAULT_DATA_DIR) -> CommunityPostComment:
     return _append_row("community_post_comments", comment, CommunityPostComment, data_dir)
 
 
 def load_public_chat_messages(data_dir: Path = DEFAULT_DATA_DIR) -> list[PublicChatMessage]:
     return read_jsonl(data_paths(data_dir)["public_chat_messages"], PublicChatMessage)
+
+
+def save_public_chat_messages(
+    rows: Iterable[PublicChatMessage], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["public_chat_messages"], rows)
 
 
 def append_public_chat_message(message: PublicChatMessage, data_dir: Path = DEFAULT_DATA_DIR) -> PublicChatMessage:
@@ -572,6 +994,12 @@ def load_private_messages(data_dir: Path = DEFAULT_DATA_DIR) -> list[PrivateMess
     return read_jsonl(data_paths(data_dir)["private_messages"], PrivateMessage)
 
 
+def save_private_messages(
+    rows: Iterable[PrivateMessage], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["private_messages"], rows)
+
+
 def append_private_message(message: PrivateMessage, data_dir: Path = DEFAULT_DATA_DIR) -> PrivateMessage:
     return _append_row("private_messages", message, PrivateMessage, data_dir)
 
@@ -580,12 +1008,70 @@ def load_community_blocks(data_dir: Path = DEFAULT_DATA_DIR) -> list[CommunityBl
     return read_jsonl(data_paths(data_dir)["community_blocks"], CommunityBlock)
 
 
+def save_community_blocks(
+    rows: Iterable[CommunityBlock], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["community_blocks"], rows)
+
+
 def append_community_block(block: CommunityBlock, data_dir: Path = DEFAULT_DATA_DIR) -> CommunityBlock:
     return _append_row("community_blocks", block, CommunityBlock, data_dir)
 
 
+def load_community_reports(data_dir: Path = DEFAULT_DATA_DIR) -> list[CommunityReport]:
+    return read_jsonl(data_paths(data_dir)["community_reports"], CommunityReport)
+
+
+def save_community_reports(
+    rows: Iterable[CommunityReport], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["community_reports"], rows)
+
+
 def append_community_report(report: CommunityReport, data_dir: Path = DEFAULT_DATA_DIR) -> CommunityReport:
     return _append_row("community_reports", report, CommunityReport, data_dir)
+
+
+def load_community_publish_events(
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> list[CommunityPublishEvent]:
+    return read_jsonl(
+        data_paths(data_dir)["community_publish_events"],
+        CommunityPublishEvent,
+    )
+
+
+def save_community_publish_events(
+    rows: Iterable[CommunityPublishEvent], data_dir: Path = DEFAULT_DATA_DIR
+) -> int:
+    return write_jsonl(data_paths(data_dir)["community_publish_events"], rows)
+
+
+def load_community_moderation_audits(
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> list[CommunityModerationAudit]:
+    return read_jsonl(
+        data_paths(data_dir)["community_moderation_audits"],
+        CommunityModerationAudit,
+    )
+
+
+def save_community_moderation_audits(
+    rows: Iterable[CommunityModerationAudit],
+    data_dir: Path = DEFAULT_DATA_DIR,
+) -> int:
+    return write_jsonl(data_paths(data_dir)["community_moderation_audits"], rows)
+
+
+def append_community_moderation_audit(
+    audit: CommunityModerationAudit, data_dir: Path = DEFAULT_DATA_DIR
+) -> CommunityModerationAudit:
+    return _append_row(
+        "community_moderation_audits",
+        audit,
+        CommunityModerationAudit,
+        data_dir,
+    )
 
 
 def load_experience_submissions(
@@ -605,6 +1091,9 @@ def save_experience_submissions(
 def append_experience_submission(
     submission: ExperienceSubmission, data_dir: Path = DEFAULT_DATA_DIR
 ) -> ExperienceSubmission:
-    rows = [*load_experience_submissions(data_dir), submission]
-    save_experience_submissions(rows, data_dir)
-    return submission
+    return _append_row(
+        "experience_submissions",
+        submission,
+        ExperienceSubmission,
+        data_dir,
+    )

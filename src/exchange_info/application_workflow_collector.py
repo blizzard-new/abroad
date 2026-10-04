@@ -11,19 +11,22 @@ from bs4 import BeautifulSoup
 
 from .experience_collector import school_search_name
 from .ntpu_student_view import (
-    NTPU_115_ANNOUNCEMENT_URL,
-    NTPU_115_GUIDELINES_URL,
+    NTPU_116_ANNOUNCEMENT_URL,
+    NTPU_116_GUIDELINES_URL,
     NTPU_FILES_URL,
 )
 from .models import (
     ApplicationSourceRole,
     ApplicationStep,
+    ApplicationSubmissionDetails,
+    ApplicationSubmissionMethod,
     ApplicationWorkflowSource,
     PartnerUniversity,
     UniversityApplicationWorkflow,
 )
 from .university_registry import NTPU, require_university
 from .web_search import search_text
+from .workflow_structuring import structure_application_workflow
 
 
 CGU_PARTNER_LIST_URL = "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554"
@@ -162,18 +165,107 @@ def collect_application_workflow(
             "未公開或無法讀取的細節會標示為需以提名信確認。"
         )
 
-    return UniversityApplicationWorkflow(
-        home_university=home.school_name,
-        school_name=partner.school_name,
-        partner_website=partner.website,
-        country=partner.country,
-        program_type=partner.program_type,
-        steps=steps,
-        sources=_dedupe_sources(sources),
-        last_checked=checked_at,
-        coverage_status=coverage_status,
-        coverage_note=coverage_note,
-        disclaimer=f"截止日與申請方式可能調整；送件前請再核對{home.short_name}國際處、合作校通知信與官方申請頁。",
+    return structure_application_workflow(
+        UniversityApplicationWorkflow(
+            home_university=home.school_name,
+            school_name=partner.school_name,
+            partner_website=partner.website,
+            country=partner.country,
+            program_type=partner.program_type,
+            steps=steps,
+            sources=_dedupe_sources(sources),
+            last_checked=checked_at,
+            coverage_status=coverage_status,
+            coverage_note=coverage_note,
+            disclaimer=f"截止日與申請方式可能調整；送件前請再核對{home.short_name}國際處、合作校通知信與官方申請頁。",
+        )
+    )
+
+
+def build_cgu_reference_workflow(
+    partner: PartnerUniversity,
+    *,
+    partner_sources: list[tuple[str, str]],
+    partner_application_summary: str,
+    partner_application_details: list[str],
+    required_documents: list[str],
+    timing: str = "以提名信與合作校交換生入口為準",
+    submission_method: ApplicationSubmissionMethod = (
+        ApplicationSubmissionMethod.UNKNOWN
+    ),
+    submission_email: str | None = None,
+    portal_url: str | None = None,
+    partner_website: str | None = None,
+    coverage_note: str | None = None,
+    checked_at: datetime | None = None,
+) -> UniversityApplicationWorkflow:
+    """Build a conservative CGU workflow from manually verified official pages.
+
+    The result intentionally remains a legacy, reference-only workflow. Exact
+    deadlines are not inferred from recurring month/day text, and every partner
+    application detail remains confirmation-gated until a reviewed workflow is
+    formally published.
+    """
+
+    checked_at = checked_at or datetime.now(timezone.utc)
+    if not partner_sources:
+        raise ValueError("partner_sources must include at least one official page")
+    effective_partner = partner.model_copy(
+        update={"website": partner_website or partner.website}
+    )
+    source_urls = list(dict.fromkeys(url for _, url in partner_sources if url))
+    primary_url = portal_url or source_urls[0]
+    steps = _generic_steps(effective_partner, partner_sources, {})
+    partner_step_data = steps[3].model_dump()
+    partner_step_data.update(
+        {
+            "timing": timing,
+            "summary": partner_application_summary,
+            "details": partner_application_details,
+            "required_documents": required_documents,
+            "document_requirements": [],
+            "submission": ApplicationSubmissionDetails(
+                method=submission_method,
+                email=submission_email,
+                portal_url=portal_url,
+                deadline_note=(
+                    "期限僅供來源查核；應以長庚提名信與合作校當期通知為準。"
+                ),
+            ),
+            "action_url": primary_url,
+            "source_urls": [effective_partner.source_url, *source_urls],
+            "checked_at": checked_at,
+            "needs_confirmation": True,
+        }
+    )
+    steps[3] = ApplicationStep.model_validate(partner_step_data)
+    sources = _home_sources("長庚大學", checked_at)
+    sources.extend(
+        ApplicationWorkflowSource(
+            title=title,
+            source_url=url,
+            role=ApplicationSourceRole.PARTNER_UNIVERSITY,
+            checked_at=checked_at,
+        )
+        for title, url in partner_sources
+    )
+    return structure_application_workflow(
+        UniversityApplicationWorkflow(
+            home_university="長庚大學",
+            school_name=effective_partner.school_name,
+            partner_website=effective_partner.website,
+            country=effective_partner.country,
+            program_type=effective_partner.program_type,
+            steps=steps,
+            sources=_dedupe_sources(sources),
+            last_checked=checked_at,
+            coverage_status="official_partial",
+            coverage_note=(
+                coverage_note
+                or "已建立長庚校內流程並連結合作校官方交換資訊；學年度、梯次與個人期限仍須依提名信確認。"
+            ),
+            disclaimer="此流程是尚未正式發布的參考資料；送件前請核對長庚國際處、合作校提名信與當期官方申請頁。",
+        )
     )
 
 
@@ -368,8 +460,8 @@ def _cgu_sources(checked_at: datetime) -> list[ApplicationWorkflowSource]:
 
 def _ntpu_sources(checked_at: datetime) -> list[ApplicationWorkflowSource]:
     specs = [
-        ("國立臺北大學 115 學年度赴外交換公告", NTPU_115_ANNOUNCEMENT_URL),
-        ("國立臺北大學 115 學年度赴外交換簡章", NTPU_115_GUIDELINES_URL),
+        ("國立臺北大學 116 學年度赴外交換公告", NTPU_116_ANNOUNCEMENT_URL),
+        ("國立臺北大學 116 學年度赴外交換簡章", NTPU_116_GUIDELINES_URL),
         ("國立臺北大學國際事務處檔案下載", NTPU_FILES_URL),
     ]
     return [
@@ -448,11 +540,11 @@ def _ntpu_opening_steps(partner: PartnerUniversity) -> list[ApplicationStep]:
             details=[
                 eligibility,
                 "校內基本門檻為前一學年平均 75 分以上；大學部亦可用班排前 50%。",
-                f"本校表列名額：{partner.quota or '依 115 學年度官方名額表'}。",
+                f"本校表列名額：{partner.quota or '依 116 學年度官方名額表'}。",
             ],
             required_documents=["有效官方語言成績（英語組／日語組）", "歷年正式成績單與班級排名"],
-            action_url=NTPU_115_ANNOUNCEMENT_URL,
-            source_urls=[NTPU_115_ANNOUNCEMENT_URL, NTPU_115_GUIDELINES_URL, partner.source_url],
+            action_url=NTPU_116_ANNOUNCEMENT_URL,
+            source_urls=[NTPU_116_ANNOUNCEMENT_URL, NTPU_116_GUIDELINES_URL, partner.source_url],
         ),
         ApplicationStep(
             order=2,
@@ -466,8 +558,8 @@ def _ntpu_opening_steps(partner: PartnerUniversity) -> list[ApplicationStep]:
                 "一年級碩士生另附完整大學成績單。",
             ],
             required_documents=["簽名申請表", "有效語言證明", "交換研修計畫書", "正式成績單與排名"],
-            action_url=NTPU_115_ANNOUNCEMENT_URL,
-            source_urls=[NTPU_115_ANNOUNCEMENT_URL, NTPU_115_GUIDELINES_URL],
+            action_url=NTPU_116_ANNOUNCEMENT_URL,
+            source_urls=[NTPU_116_ANNOUNCEMENT_URL, NTPU_116_GUIDELINES_URL],
         ),
         ApplicationStep(
             order=3,
@@ -478,8 +570,8 @@ def _ntpu_opening_steps(partner: PartnerUniversity) -> list[ApplicationStep]:
             summary="書審 30%、研修計畫 30%、面試 40%，再依總成績及志願序分發；總分低於 70 分不予推薦。",
             details=["獲校內推薦不等同合作校正式錄取。", "錄取後依通知繳交錄取確認及家長同意資料。"],
             required_documents=["錄取確認資料", "家長同意資料（獲推薦後）"],
-            action_url=NTPU_115_GUIDELINES_URL,
-            source_urls=[NTPU_115_GUIDELINES_URL],
+            action_url=NTPU_116_GUIDELINES_URL,
+            source_urls=[NTPU_116_GUIDELINES_URL],
         ),
     ]
 
@@ -687,7 +779,7 @@ def _ntpu_generic_steps(
                 details=["保留合作校正式成績單與課程大綱。", "依系所及註冊組規定完成學分採認。"],
                 required_documents=["當地聯絡資料", "合作校正式成績單", "課程大綱", "交換心得"],
                 action_url=NTPU_FILES_URL,
-                source_urls=[NTPU_115_GUIDELINES_URL, NTPU_FILES_URL],
+                source_urls=[NTPU_116_GUIDELINES_URL, NTPU_FILES_URL],
             ),
         ]
     )

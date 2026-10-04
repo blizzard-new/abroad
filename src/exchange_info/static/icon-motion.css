@@ -1,0 +1,414 @@
+/*
+ * Shared motion language for Lucide and Morphicons.
+ *
+ * data-icon-motion may be placed on an interactive control or on the icon:
+ * lift (default), forward, back, upload, download, rotate, refresh, pulse,
+ * favorite, select, ring, notification, or morph.
+ *
+ * Runtime-only loops must be enabled by real state (`aria-busy="true"`,
+ * `data-loading="true"`, `.is-loading`, or `data-icon-motion-loop="spin"`).
+ */
+
+:root {
+  --icon-motion-enter-duration: 320ms;
+  --icon-motion-interaction-duration: 160ms;
+  --icon-motion-ease: cubic-bezier(0.2, 0.78, 0.2, 1);
+  --icon-motion-emphasized-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --icon-motion-loop-duration: 900ms;
+
+  --icon-motion-hover-translate: 0 -1px;
+  --icon-motion-hover-scale: 1.045;
+  --icon-motion-hover-rotate: 0deg;
+  --icon-motion-active-translate: 0 0;
+  --icon-motion-active-scale: 0.93;
+  --icon-motion-active-rotate: 0deg;
+}
+
+/* Keep custom-element icons aligned with the existing 20px SVG system. */
+morph-icon,
+[data-morph-icon] {
+  flex: 0 0 auto;
+  vertical-align: -0.125em;
+}
+
+/*
+ * Lucide replaces [data-lucide] placeholders with .lucide SVGs. Targeting both
+ * makes the rule safe before and after replacement, as well as for dynamic UI.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  :where(
+    .lucide,
+    [data-lucide],
+    morph-icon,
+    [data-morph-icon],
+    .morph-icon,
+    [data-icon-motion-target]
+  ) {
+    transform-box: fill-box;
+    transform-origin: center;
+    backface-visibility: hidden;
+    transition:
+      translate var(--icon-motion-interaction-duration) var(--icon-motion-ease),
+      scale var(--icon-motion-interaction-duration) var(--icon-motion-ease),
+      rotate var(--icon-motion-interaction-duration) var(--icon-motion-ease),
+      opacity var(--icon-motion-interaction-duration) ease,
+      color var(--icon-motion-interaction-duration) ease;
+  }
+
+  /*
+   * Entrance is opt-in: runtime adds this class once the final Lucide SVG is in
+   * the DOM, then replaces it with the non-animated .icon-motion-ready marker.
+   */
+  :where(
+    .lucide,
+    [data-lucide],
+    morph-icon,
+    [data-morph-icon],
+    .morph-icon,
+    [data-icon-motion-target]
+  ).icon-motion-enter {
+    animation: exchange-icon-enter var(--icon-motion-enter-duration)
+      var(--icon-motion-emphasized-ease) backwards;
+  }
+
+  /* Hover is intentionally unavailable to coarse pointers, so touch cannot stick. */
+  @media (hover: hover) and (pointer: fine) {
+    :where(
+      a,
+      button,
+      summary,
+      [role="button"],
+      [role="link"],
+      [role="menuitem"],
+      [role="tab"],
+      [data-icon-interactive]
+    ):not([aria-disabled="true"]):not(:disabled):hover
+      :where(
+        .lucide,
+        [data-lucide],
+        morph-icon,
+        [data-morph-icon],
+        .morph-icon,
+        [data-icon-motion-target]
+      ),
+    :where(
+      .lucide,
+      [data-lucide],
+      morph-icon,
+      [data-morph-icon],
+      .morph-icon,
+      [data-icon-motion-target]
+    ):is([role="button"], [role="link"], [data-icon-interactive]):hover {
+      translate: var(--icon-motion-hover-translate);
+      scale: var(--icon-motion-hover-scale);
+      rotate: var(--icon-motion-hover-rotate);
+    }
+  }
+
+  /* Keyboard users receive the same icon feedback without changing focus rings. */
+  :where(
+    a,
+    button,
+    summary,
+    [role="button"],
+    [role="link"],
+    [role="menuitem"],
+    [role="tab"],
+    [data-icon-interactive]
+  ):not([aria-disabled="true"]):not(:disabled):focus-visible
+    :where(
+      .lucide,
+      [data-lucide],
+      morph-icon,
+      [data-morph-icon],
+      .morph-icon,
+      [data-icon-motion-target]
+    ),
+  :where(
+    .lucide,
+    [data-lucide],
+    morph-icon,
+    [data-morph-icon],
+    .morph-icon,
+    [data-icon-motion-target]
+  ):is([role="button"], [role="link"], [data-icon-interactive]):focus-visible,
+  :where(.search-form, .control-with-icon, [data-icon-focus-group]):focus-within
+    :where(
+      .lucide,
+      [data-lucide],
+      morph-icon,
+      [data-morph-icon],
+      .morph-icon,
+      [data-icon-motion-target]
+    ) {
+    translate: var(--icon-motion-hover-translate);
+    scale: var(--icon-motion-hover-scale);
+    rotate: var(--icon-motion-hover-rotate);
+  }
+
+  /* :active is momentary on touch, providing tap feedback without a sticky hover. */
+  :where(
+    a,
+    button,
+    summary,
+    [role="button"],
+    [role="link"],
+    [role="menuitem"],
+    [role="tab"],
+    [data-icon-interactive]
+  ):not([aria-disabled="true"]):not(:disabled):active
+    :where(
+      .lucide,
+      [data-lucide],
+      morph-icon,
+      [data-morph-icon],
+      .morph-icon,
+      [data-icon-motion-target]
+    ),
+  :where(
+    .lucide,
+    [data-lucide],
+    morph-icon,
+    [data-morph-icon],
+    .morph-icon,
+    [data-icon-motion-target]
+  ):is([role="button"], [role="link"], [data-icon-interactive]):active {
+    translate: var(--icon-motion-active-translate);
+    scale: var(--icon-motion-active-scale);
+    rotate: var(--icon-motion-active-rotate);
+  }
+
+  /* Semantic motion variants. Custom properties inherit when set on a control. */
+  :where([data-icon-motion="forward"], [data-icon-motion="next"]) {
+    --icon-motion-hover-translate: 2px 0;
+    --icon-motion-hover-scale: 1.025;
+  }
+
+  :where([data-icon-motion="back"], [data-icon-motion="previous"]) {
+    --icon-motion-hover-translate: -2px 0;
+    --icon-motion-hover-scale: 1.025;
+  }
+
+  :where([data-icon-motion="upload"], [data-icon-motion="up"]) {
+    --icon-motion-hover-translate: 0 -2px;
+    --icon-motion-hover-scale: 1.025;
+  }
+
+  :where([data-icon-motion="download"], [data-icon-motion="down"]) {
+    --icon-motion-hover-translate: 0 2px;
+    --icon-motion-hover-scale: 1.025;
+  }
+
+  :where([data-icon-motion="rotate"], [data-icon-motion="refresh"]) {
+    --icon-motion-hover-translate: 0 0;
+    --icon-motion-hover-scale: 1.02;
+    --icon-motion-hover-rotate: 12deg;
+    --icon-motion-active-rotate: 28deg;
+  }
+
+  :where(
+    [data-icon-motion="pulse"],
+    [data-icon-motion="favorite"],
+    [data-icon-motion="select"]
+  ) {
+    --icon-motion-hover-translate: 0 0;
+    --icon-motion-hover-scale: 1.085;
+  }
+
+  :where([data-icon-motion="ring"], [data-icon-motion="notification"]) {
+    --icon-motion-hover-translate: 0 -1px;
+    --icon-motion-hover-scale: 1.025;
+    --icon-motion-hover-rotate: 8deg;
+    --icon-motion-active-rotate: -7deg;
+  }
+
+  /* Morphicons supplies the state change; this keeps the host response restrained. */
+  [data-icon-motion="morph"] {
+    --icon-motion-hover-translate: 0 0;
+    --icon-motion-hover-scale: 1.025;
+    --icon-motion-active-scale: 0.96;
+  }
+
+  /* Optional one-shot states; toggle the attribute to replay after a state change. */
+  [data-icon-motion-play="confirm"]
+    :where(
+      .lucide,
+      [data-lucide],
+      morph-icon,
+      [data-morph-icon],
+      .morph-icon,
+      [data-icon-motion-target]
+    ),
+  :where(
+    .lucide,
+    [data-lucide],
+    morph-icon,
+    [data-morph-icon],
+    .morph-icon,
+    [data-icon-motion-target]
+  )[data-icon-motion-play="confirm"] {
+    animation: exchange-icon-confirm 360ms var(--icon-motion-emphasized-ease);
+  }
+
+  [data-icon-motion-play="ring"]
+    :where(
+      .lucide,
+      [data-lucide],
+      morph-icon,
+      [data-morph-icon],
+      .morph-icon,
+      [data-icon-motion-target]
+    ),
+  :where(
+    .lucide,
+    [data-lucide],
+    morph-icon,
+    [data-morph-icon],
+    .morph-icon,
+    [data-icon-motion-target]
+  )[data-icon-motion-play="ring"] {
+    animation: exchange-icon-ring 420ms var(--icon-motion-ease);
+  }
+
+  [data-icon-motion-play="attention"]
+    :where(
+      .lucide,
+      [data-lucide],
+      morph-icon,
+      [data-morph-icon],
+      .morph-icon,
+      [data-icon-motion-target]
+    ),
+  :where(
+    .lucide,
+    [data-lucide],
+    morph-icon,
+    [data-morph-icon],
+    .morph-icon,
+    [data-icon-motion-target]
+  )[data-icon-motion-play="attention"] {
+    animation: exchange-icon-attention 380ms var(--icon-motion-ease);
+  }
+
+  /*
+   * Continuous rotation is impossible without explicit runtime loading state.
+   * A refresh icon at rest therefore only receives the 12-degree hover response.
+   */
+  :where([aria-busy="true"], [data-loading="true"], .is-loading)
+    :where(
+      .lucide-loader,
+      .lucide-loader-circle,
+      .lucide-refresh-cw
+    ),
+  :where(
+    .lucide-loader,
+    .lucide-loader-circle,
+    .lucide-refresh-cw
+  ):is([aria-busy="true"], [data-loading="true"], .is-loading),
+  [data-icon-motion-loop="spin"]
+    :where(
+      .lucide,
+      [data-lucide],
+      morph-icon,
+      [data-morph-icon],
+      .morph-icon,
+      [data-icon-motion-target]
+    ),
+  :where(
+    .lucide,
+    [data-lucide],
+    morph-icon,
+    [data-morph-icon],
+    .morph-icon,
+    [data-icon-motion-target]
+  )[data-icon-motion-loop="spin"] {
+    animation: exchange-icon-spin var(--icon-motion-loop-duration) linear infinite;
+  }
+}
+
+@keyframes exchange-icon-enter {
+  0% {
+    opacity: 0.62;
+    translate: 0 2px;
+    scale: 0.9;
+  }
+
+  70% {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1.025;
+  }
+
+  100% {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
+@keyframes exchange-icon-confirm {
+  0%,
+  100% {
+    translate: 0 0;
+    scale: 1;
+  }
+
+  48% {
+    translate: 0 -1px;
+    scale: 1.12;
+  }
+}
+
+@keyframes exchange-icon-ring {
+  0%,
+  100% {
+    rotate: 0deg;
+  }
+
+  28% {
+    rotate: 10deg;
+  }
+
+  58% {
+    rotate: -8deg;
+  }
+
+  78% {
+    rotate: 4deg;
+  }
+}
+
+@keyframes exchange-icon-attention {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  35% {
+    translate: -1.5px 0;
+  }
+
+  68% {
+    translate: 1.5px 0;
+  }
+}
+
+@keyframes exchange-icon-spin {
+  to {
+    rotate: 1turn;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    .lucide,
+    [data-lucide],
+    morph-icon,
+    [data-morph-icon],
+    .morph-icon,
+    [data-icon-motion-target]
+  ) {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,160 @@
+/* One shell for discovery, guides and application tools. */
+body.unified-shell { --nav-header-height: 74px; --nav-toolbar-height: 66px; }
+.unified-shell .sidebar,
+.unified-shell #back-to-global-home,
+.unified-shell .global-topbar-context,
+.unified-shell .topbar-status { display: none !important; }
+.unified-shell .app-shell { display: block; }
+.unified-shell .workspace { width: 100%; max-width: none; padding: 0 0 40px; margin: 0; }
+.unified-shell .topbar {
+  min-height: var(--nav-header-height); height: auto; width: 100%; margin: 0;
+  padding: 12px max(24px, calc((100% - 1240px) / 2)); gap: 20px;
+  background: color-mix(in srgb, var(--uw-surface) 92%, transparent);
+  border-bottom: 1px solid var(--uw-line); z-index: 41;
+}
+.unified-shell .uniway-header-brand,
+.unified-shell .uniway-public-nav { display: flex !important; }
+.unified-shell .mobile-brand { display: none !important; }
+.unified-shell .topbar-actions { margin-left: auto; flex-shrink: 0; }
+.unified-shell .uniway-public-nav { gap: 0; }
+.unified-shell .uniway-public-nav a { padding: 9px 10px; }
+.unified-shell #dashboard-view > [data-university-page],
+.unified-shell .school-detail-view,
+.unified-shell .global-community-section {
+  width: calc(100% - 48px); max-width: 1240px; margin: 0 auto;
+  padding: 28px 0 64px; border-bottom: 0;
+}
+.unified-shell.global-home-mode[data-global-feed="all"] .global-community-section { background: transparent; border: 0; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.unified-shell .global-community-section > .community-home-heading:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+.unified-shell.global-home-mode[data-global-feed="all"] .community-home-heading h1 { margin: 0; font-size: 22px; }
+.unified-shell .route-toolbar {
+  display: flex; align-items: center; gap: 14px; min-height: 66px;
+  position: sticky; top: var(--nav-header-height); z-index: 40;
+  padding: 8px max(24px, calc((100% - 1240px) / 2));
+  background: color-mix(in srgb, var(--uw-page) 90%, transparent);
+  backdrop-filter: blur(18px); border-bottom: 1px solid var(--uw-line);
+}
+.route-back-slot { margin-right: auto; flex-shrink: 0; }
+.route-back { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 12px; border: 0; border-radius: 12px; background: transparent; color: var(--uw-navy); font: inherit; font-weight: 650; cursor: pointer; }
+.route-back:hover:not(:disabled) { background: var(--uw-blue-soft); color: var(--uw-blue-strong); }
+.route-back:disabled { opacity: .45; cursor: default; }
+.route-back .lucide { width: 18px; height: 18px; }
+.unified-shell .route-toolbar #school-switcher { display: flex; min-height: 44px; max-width: 240px; margin: 0; padding: 6px 12px; border: 0; background: transparent; box-shadow: none; }
+.route-toolbar #school-switcher small { display: none; }
+.route-toolbar #school-switcher strong { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.route-toolbar #school-switcher > span:nth-child(2) { min-width: 0; }
+.route-toolbar .school-switcher-icon { background: none; height: 28px; width: 28px; }
+.application-tools { position: relative; flex-shrink: 0; }
+.application-tools > summary { display: flex; align-items: center; gap: 7px; min-height: 44px; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--uw-line); background: var(--uw-surface); color: var(--uw-text); font-weight: 650; cursor: pointer; list-style: none; }
+.application-tools > summary::-webkit-details-marker, .guide-faq > summary::-webkit-details-marker { display: none; }
+.application-tools > summary .lucide { height: 16px; width: 16px; }
+.application-tools[open] > summary { background: var(--uw-blue-soft); color: var(--uw-blue-strong); }
+.application-tools-panel { position: absolute; right: 0; top: calc(100% + 10px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; width: min(640px, calc(100vw - 32px)); max-height: calc(100dvh - 210px); overflow: auto; padding: 22px; border: 1px solid var(--uw-line); border-radius: 20px; background: var(--uw-surface); box-shadow: var(--uw-shadow); }
+.application-tools-panel > div > strong {
+  display: block; margin-bottom: 8px; padding: 10px 12px;
+  color: var(--uw-navy); background: var(--uw-blue-soft);
+  border-left: 4px solid var(--uw-blue); border-radius: 4px;
+  font-size: 16px; font-weight: 700; line-height: 1.5;
+}
+.application-tools-panel a { display: block; border-radius: 9px; padding: 10px; text-decoration: none; color: var(--uw-text); }
+.application-tools-panel a:hover, .application-tools-panel a[aria-current="page"] { color: var(--uw-blue-strong); background: var(--uw-blue-soft); }
+.route-back:focus-visible, .application-tools summary:focus-visible, .application-tools a:focus-visible,
+.study-guide a:focus-visible, .study-guide summary:focus-visible { outline: 3px solid var(--uw-blue); outline-offset: 3px; }
+.unified-shell .detail-top-actions { justify-content: flex-end; }
+.unified-shell [data-university-page], .unified-shell .detail-tabs { scroll-margin-top: calc(var(--nav-header-height) + var(--nav-toolbar-height) + 12px); }
+.unified-shell .detail-tabs,
+.unified-shell :is(.community-guidelines, .budget-result-panel, .application-packet-panel, .application-form-guide, .advisor-form, .document-check-form, .discovery-ranking) { top: calc(var(--nav-header-height) + var(--nav-toolbar-height) + 8px); }
+
+/* A short journey overview, with the detailed tools one step away. */
+.unified-shell #dashboard-view > .study-guide { background: transparent; box-shadow: none; border: 0; border-radius: 0; }
+.guide-intro { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 30px 36px 40px; }
+.guide-intro h1 { font-size: clamp(30px, 3.5vw, 46px); line-height: 1.35; letter-spacing: -.04em; color: var(--uw-navy); margin: 12px 0 16px; font-weight: 800; }
+.guide-intro p { color: var(--uw-muted); font-size: 15px; margin: 0; }
+.guide-illustration { position: relative; display: grid; place-items: center; width: 250px; height: 210px; flex-shrink: 0; }
+.guide-globe { width: 142px; height: 142px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(145deg, var(--uw-cyan-soft), var(--uw-blue-soft)); color: var(--uw-blue); box-shadow: 0 16px 45px color-mix(in srgb, var(--uw-blue) 12%, transparent); transform: rotate(-16deg); }
+.guide-globe .lucide { width: 108px; height: 108px; stroke-width: .9; }
+.guide-orbit { position: absolute; width: 235px; height: 140px; border: 1px dashed var(--uw-line-strong); border-radius: 50%; transform: rotate(-28deg); }
+.guide-plane { position: absolute; right: 13px; top: 15px; display: grid; place-items: center; width: 55px; height: 55px; border-radius: 19px; background: var(--uw-surface); color: var(--uw-blue); box-shadow: var(--uw-shadow-soft); transform: rotate(12deg); }
+.guide-plane .lucide { width: 28px; height: 28px; }
+.guide-star { position: absolute; bottom: 17px; left: 27px; color: var(--uw-warning); font-size: 30px; }
+.guide-stages { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; padding: 0; margin: 0; list-style: none; }
+.guide-stage { position: relative; display: flex; flex-direction: column; align-items: flex-start; padding: 26px 24px 22px; border: 1px solid var(--uw-line); border-radius: 24px; background: linear-gradient(155deg, color-mix(in srgb, var(--stage-tint) 8%, var(--uw-surface)), var(--uw-surface) 60%); box-shadow: var(--uw-shadow-soft); }
+.guide-stage-explore { --stage-tint: #168db0; --stage-ink: #08768c; }
+.guide-stage-prepare { --stage-tint: #8472ce; --stage-ink: #7654b0; }
+.guide-stage-apply { --stage-tint: #dd8e45; --stage-ink: #9e5d17; }
+.guide-stage-depart { --stage-tint: #55a28a; --stage-ink: #237c65; }
+html[data-theme="dark"] .guide-stage { --stage-ink: var(--uw-text); }
+.guide-stage-number { position: absolute; right: 22px; top: 26px; font-size: 13px; letter-spacing: .08em; color: var(--uw-muted); }
+.guide-stage-icon { display: grid; place-items: center; width: 50px; height: 50px; border-radius: 16px; background: color-mix(in srgb, var(--stage-tint) 13%, var(--uw-surface)); color: var(--stage-ink); }
+.guide-stage-icon .lucide { width: 25px; height: 25px; stroke-width: 1.6; }
+.guide-stage h2 { font-size: 19px; line-height: 1.5; color: var(--uw-navy); margin: 24px 0 8px; letter-spacing: -.03em; }
+.guide-stage p { color: var(--uw-muted); line-height: 1.75; margin: 0 0 24px; font-size: 14px; }
+.guide-action { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 44px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--uw-line); text-decoration: none; color: var(--stage-ink); font-weight: 700; font-size: 14px; }
+.guide-action .lucide { width: 18px; height: 18px; flex-shrink: 0; }
+.guide-action:hover { color: var(--uw-blue-strong); }
+.guide-bottom-row { display: grid; grid-template-columns: .8fr 1.2fr; gap: 22px; margin-top: 28px; align-items: start; }
+.guide-plan-link { display: flex; align-items: center; gap: 16px; min-height: 88px; text-decoration: none; padding: 18px 22px; background: var(--uw-blue-soft); border-radius: 18px; color: var(--uw-navy); }
+.guide-plan-link strong, .guide-plan-link small { display: block; }
+.guide-plan-link small { margin-top: 3px; color: var(--uw-muted); }
+.guide-plan-link > .lucide { margin-left: auto; width: 18px; }
+.guide-plan-icon { color: var(--uw-blue); }
+.guide-faq { border: 1px solid var(--uw-line); border-radius: 18px; padding: 18px 22px; background: var(--uw-surface); }
+.guide-faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 50px; cursor: pointer; color: var(--uw-navy); font-weight: 650; list-style: none; }
+.guide-faq summary .lucide { width: 18px; flex-shrink: 0; }
+.guide-faq[open] summary .lucide { transform: rotate(45deg); }
+.guide-faq p { color: var(--uw-muted); line-height: 1.8; margin: 8px 0 18px; }
+.guide-faq a { display: inline-flex; align-items: center; gap: 8px; color: var(--uw-blue-strong); text-decoration: none; min-height: 44px; }
+.guide-faq a .lucide { width: 16px; }
+
+@media (max-width: 1100px) {
+  .unified-shell .topbar { gap: 12px; }
+  .unified-shell .workspace-sync-control { display: none; }
+  .guide-stages { gap: 14px; }
+  .guide-stage { padding: 22px 18px; }
+  .guide-stage h2 { font-size: 17px; }
+}
+@media (max-width: 900px) {
+  body.unified-shell { --nav-header-height: 114px; --nav-toolbar-height: 58px; }
+  .unified-shell .topbar { display: grid; grid-template-columns: 1fr auto; grid-template-rows: 42px 42px; padding: 8px 16px; gap: 4px 12px; }
+  .unified-shell .uniway-header-brand { grid-column: 1; grid-row: 1; }
+  .unified-shell .topbar-actions { grid-column: 2; grid-row: 1; }
+  .unified-shell .uniway-public-nav { grid-column: 1 / -1; grid-row: 2; min-width: 0; width: 100%; overflow-x: auto; scrollbar-width: none; }
+  .unified-shell .uniway-public-nav a { min-height: 40px; display: flex; align-items: center; }
+  .unified-shell .route-toolbar { padding: 6px 16px; min-height: 58px; gap: 8px; }
+  .unified-shell #dashboard-view > [data-university-page], .unified-shell .school-detail-view, .unified-shell .global-community-section { width: calc(100% - 32px); padding-top: 20px; }
+  .guide-intro { padding: 16px 10px 28px; }
+  .guide-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .guide-bottom-row { grid-template-columns: 1fr; gap: 14px; }
+}
+@media (max-width: 560px) {
+  .unified-shell .route-toolbar #school-switcher { padding: 4px; max-width: 148px; gap: 4px; }
+  .route-toolbar .school-switcher-icon { display: none; }
+  .route-back { padding: 8px; gap: 5px; }
+  .application-tools > summary { padding: 8px 10px; font-size: 12px; }
+  .application-tools > summary > .lucide:first-child { display: none; }
+  .application-tools-panel { grid-template-columns: 1fr; gap: 12px; width: min(320px, calc(100vw - 32px)); padding: 18px; }
+  .application-tools-panel > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .application-tools-panel strong { grid-column: 1 / -1; }
+  .application-tools-panel a { font-size: 13px; min-height: 44px; }
+  .guide-intro { gap: 0; padding: 10px 6px 28px; }
+  .guide-intro h1 { font-size: 30px; }
+  .guide-intro p { font-size: 13px; max-width: 240px; }
+  .guide-illustration { width: 88px; height: 138px; }
+  .guide-globe { width: 78px; height: 78px; }
+  .guide-globe .lucide { width: 62px; height: 62px; }
+  .guide-orbit { width: 95px; height: 62px; }
+  .guide-plane { width: 32px; height: 32px; border-radius: 10px; right: 0; top: 15px; }
+  .guide-plane .lucide { width: 18px; height: 18px; }
+  .guide-star { font-size: 22px; left: 0; bottom: 6px; }
+  .guide-stages { grid-template-columns: 1fr; }
+  .guide-stage { display: grid; grid-template-columns: 44px 1fr; gap: 0 16px; padding: 20px; border-radius: 20px; }
+  .guide-stage-icon { width: 44px; height: 44px; grid-row: 1 / 3; }
+  .guide-stage-number { display: none; }
+  .guide-stage h2 { margin: 0 0 5px; font-size: 17px; }
+  .guide-stage p { margin-bottom: 14px; font-size: 13px; }
+  .guide-action { grid-column: 2; margin: 0; padding-top: 8px; font-size: 13px; }
+  .guide-plan-link, .guide-faq { padding: 16px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .route-toolbar *, .study-guide * { transition: none; animation: none; scroll-behavior: auto; }
+}

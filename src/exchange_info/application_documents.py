@@ -1,15 +1,19 @@
 from __future__ import annotations
 
 import base64
+import hashlib
+import hmac
 import html
 import io
+import json
 import os
 import re
 import shutil
 import tempfile
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Iterable, Literal
 
 from docx import Document
 from docx.shared import Inches
@@ -19,6 +23,7 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import mm
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.cidfonts import UnicodeCIDFont
 from reportlab.platypus import (
@@ -34,14 +39,24 @@ from reportlab.platypus import (
 
 from .models import (
     ApplicationCenterContext,
+    ApplicationCopyType,
+    ApplicationDocumentCatalog,
+    ApplicationDocumentCatalogItem,
     ApplicationDocumentSelection,
     ApplicationDocumentTemplate,
+    ApplicationFieldPreviewItem,
     ApplicationFieldType,
     ApplicationFormField,
     ApplicationPacketManifest,
+    ApplicationPacketAttachmentItem,
     ApplicationPacketManifestItem,
     ApplicationPacketRequest,
+    ApplicationRuleContext,
+    ApplicationSupportStatus,
+    ApplicationWorkflowReviewStatus,
+    UniversityApplicationWorkflow,
 )
+from .application_rules import select_application_workflow
 from .university_registry import NTPU, require_university
 
 
@@ -58,6 +73,24 @@ NTPU_EXCHANGE_GUIDELINES_URL = (
     "https://cms-carrier.ntpu.edu.tw/uploads/"
     "2026_2027_Academic_Year_Outbound_Exchange_Program_Guidelines_1e5870e83d.pdf"
 )
+
+
+@dataclass(frozen=True)
+class _AttachmentPayload:
+    field_id: str
+    field_label: str
+    file_name: str
+    media_type: str
+    raw: bytes
+    page_count: int | None
+    placement: Literal["after_document", "inside_document"]
+SHORT_TERM_SOURCE_CHECKED_AT = datetime(2026, 7, 29, tzinfo=timezone.utc)
+CGU_OFFICIAL_FORM_DOWNLOADS = {
+    "2B0001001": "https://www.cgu.edu.tw/regulation/ServerFile/Get/bee3b146-0cb7-4095-8441-cbf5913cb245",
+    "2B0001002": "https://www.cgu.edu.tw/regulation/ServerFile/Get/401314f7-0304-431f-8432-ff219f4bf434",
+    "2B0001003": "https://www.cgu.edu.tw/regulation/ServerFile/Get/3436f7fa-57fa-4581-a354-e4056de768f6",
+    "2B0001004": "https://www.cgu.edu.tw/regulation/ServerFile/Get/c738f57d-1808-4103-a2ef-e903ce1e1926",
+}
 
 
 def _field(
@@ -84,7 +117,7 @@ def _field(
         placeholder=placeholder,
         help_text=help_text,
         options=list(options),
-        sensitive=sensitive,
+        sensitive=sensitive or field_type == ApplicationFieldType.FILES,
         max_length=max_length,
         min_files=min_files,
         max_files=max_files,
@@ -124,8 +157,29 @@ def _template(
     official_layout: bool = False,
     official_form_number: str | None = None,
     official_file_name: str | None = None,
+    official_download_url: str | None = None,
+    paper_size: str = "A4",
+    print_sides: Literal["single_sided", "double_sided", "confirm_official"] | None = None,
+    print_note: str | None = None,
+    attachment_field_order: Iterable[str] = (),
     version: str = "2026-07-16",
 ) -> ApplicationDocumentTemplate:
+    file_field_ids = [
+        field.id for field in fields if field.field_type == ApplicationFieldType.FILES
+    ]
+    ordered_attachment_fields = list(attachment_field_order) or file_field_ids
+    if not set(ordered_attachment_fields) <= set(file_field_ids):
+        raise ValueError(f"{template_id} 的附件順序包含非檔案欄位。")
+    resolved_print_sides = print_sides or (
+        "confirm_official" if official_layout else "single_sided"
+    )
+    resolved_print_note = print_note
+    if resolved_print_note is None:
+        resolved_print_note = (
+            "官方未明確標示單雙面，請依當期表格與承辦單位指示列印。"
+            if resolved_print_sides == "confirm_official"
+            else "系統整理頁以 A4 單面列印；校方另有格式時以官方最新版為準。"
+        )
     return ApplicationDocumentTemplate(
         id=template_id,
         title=title,
@@ -144,8 +198,20 @@ def _template(
         official_layout=official_layout,
         official_form_number=official_form_number,
         official_file_name=official_file_name,
+        official_download_url=(
+            official_download_url
+            or CGU_OFFICIAL_FORM_DOWNLOADS.get(official_form_number or "")
+        ),
+        paper_size=paper_size,
+        print_sides=resolved_print_sides,
+        print_note=resolved_print_note,
+        attachment_field_order=ordered_attachment_fields,
         source_url=source_url,
-        source_checked_at=SOURCE_CHECKED_AT,
+        source_checked_at=(
+            SHORT_TERM_SOURCE_CHECKED_AT
+            if official_form_number in CGU_OFFICIAL_FORM_DOWNLOADS
+            else SOURCE_CHECKED_AT
+        ),
         version=version,
     )
 
@@ -360,7 +426,7 @@ APPLICATION_TEMPLATES = [
             _field("id_number", "身分證字號", required=True, profile="id_number", sensitive=True),
             _field("mailing_address", "通訊地址", required=True, profile="mailing_address", field_type=ApplicationFieldType.TEXTAREA, max_length=500),
             _field("bank_last_five", "本人帳戶末五碼", required=True, sensitive=True, help_text="完整帳戶仍以校務資訊系統資料為準"),
-            _field("subsidy_program", "補助計畫", required=True, field_type=ApplicationFieldType.SELECT, options=("校內領航者補助", "教育部學海飛颺", "教育部學海惜珠", "其他")),
+            _field("subsidy_program", "補助計畫", required=True, field_type=ApplicationFieldType.SELECT, options=("長庚大學領航者補助", "教育部學海惜珠", "其他")),
         ],
         source_url=PREDEPARTURE_SOURCE_URL,
         copies=2,
@@ -368,6 +434,7 @@ APPLICATION_TEMPLATES = [
         signatures=("學生本人親筆簽名（每份都要）",),
         conditional_note="金額與日期依官方要求保留空白，收到承辦人通知後再辦理。",
         flags=("subsidy",),
+        version="2026-10-03",
     ),
     _template(
         "administrative-contract",
@@ -383,7 +450,7 @@ APPLICATION_TEMPLATES = [
             _field("overseas_institution", "研修學校", required=True),
             _field("destination_country", "研修國家", required=True),
             _field("study_period", "研修期間", required=True),
-            _field("subsidy_program", "補助計畫", required=True, field_type=ApplicationFieldType.SELECT, options=("教育部學海飛颺", "教育部學海惜珠", "長庚校內補助", "其他")),
+            _field("subsidy_program", "補助計畫", required=True, field_type=ApplicationFieldType.SELECT, options=("長庚大學領航者補助", "教育部學海惜珠", "其他")),
             _field("approved_amount", "核定補助金額", required=True, field_type=ApplicationFieldType.NUMBER),
         ],
         source_url=PREDEPARTURE_SOURCE_URL,
@@ -392,7 +459,8 @@ APPLICATION_TEMPLATES = [
         signatures=("學生親筆簽名（每份都要）",),
         stamps=("長庚大學用印",),
         flags=("subsidy",),
-        conditional_note="依實際獲核定的補助類型選用國際處提供的最新版契約。",
+        conditional_note="依實際獲核定的補助類型選用國際處提供的最新版契約（長庚大學領航者補助作業要點行政契約書，或教育部學海惜珠之行政契約書）。",
+        version="2026-10-03",
     ),
     _template(
         "arrival-checkin",
@@ -623,7 +691,11 @@ def _ntpu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
                     "label": replace(field.label),
                     "placeholder": replace(field.placeholder) if field.placeholder else None,
                     "help_text": replace(field.help_text) if field.help_text else None,
-                    "options": [replace(option) for option in field.options],
+                    "options": (
+                        ["教育部學海飛颺", "教育部學海惜珠", "其他"]
+                        if field.id == "subsidy_program"
+                        else [replace(option) for option in field.options]
+                    ),
                 },
             )
             for field in template.fields
@@ -631,7 +703,8 @@ def _ntpu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
         "official_layout": False,
         "official_form_number": None,
         "official_file_name": None,
-        "version": "115學年度",
+        "official_download_url": None,
+        "version": "116學年度",
         "source_checked_at": NTPU_SOURCE_CHECKED_AT,
     }
     ntpu_overrides: dict[str, dict[str, Any]] = {
@@ -707,6 +780,111 @@ def templates_for_context(context: ApplicationCenterContext) -> list[Application
     ]
 
 
+def build_application_document_catalog(
+    context: ApplicationCenterContext,
+    workflows: Iterable[UniversityApplicationWorkflow],
+) -> ApplicationDocumentCatalog:
+    """Build a source-backed document catalog without guessing missing fields."""
+
+    contact_unit = f"{context.school_name}國際事務處／所屬系所"
+    workflow = select_application_workflow(
+        workflows,
+        ApplicationRuleContext(
+            home_university=context.school_name,
+            partner_university=context.target_school,
+            college=context.college,
+            department=context.department,
+            academic_year=context.academic_year,
+            application_round=context.application_round,
+        ),
+    )
+    if workflow is None:
+        return ApplicationDocumentCatalog(
+            context=context,
+            contact_unit=contact_unit,
+        )
+
+    workflow_is_published = (
+        workflow.review_status == ApplicationWorkflowReviewStatus.PUBLISHED
+    )
+    items: list[ApplicationDocumentCatalogItem] = []
+    sequence = 0
+    for step in sorted(workflow.steps, key=lambda row: row.order):
+        for requirement in step.document_requirements:
+            sequence += 1
+            needs_confirmation = (
+                not workflow_is_published
+                or step.needs_confirmation
+                or requirement.needs_confirmation
+            )
+            official_form_url = (
+                requirement.official_form_url
+                if str(requirement.official_form_url or "").startswith("https://")
+                else None
+            )
+            source_urls = list(
+                dict.fromkeys(
+                    [
+                        *requirement.source_urls,
+                        *([official_form_url] if official_form_url else []),
+                        *step.source_urls,
+                    ]
+                )
+            )
+            identity = "|".join(
+                (
+                    context.school_name,
+                    workflow.school_name,
+                    str(step.order),
+                    requirement.name,
+                    str(sequence),
+                )
+            )
+            items.append(
+                ApplicationDocumentCatalogItem(
+                    id=hashlib.sha256(identity.encode("utf-8")).hexdigest()[:20],
+                    sequence=sequence,
+                    phase=step.phase,
+                    step_title=step.title,
+                    name=requirement.name,
+                    copies=requirement.copies,
+                    copy_type=requirement.copy_type,
+                    signatures=requirement.signatures,
+                    stamps=requirement.stamps,
+                    official_form_url=official_form_url,
+                    source_urls=source_urls,
+                    source_checked_at=step.checked_at or workflow.last_checked,
+                    support_status=(
+                        ApplicationSupportStatus.NEEDS_CONFIRMATION
+                        if needs_confirmation
+                        else ApplicationSupportStatus.VERIFIED
+                    ),
+                    needs_confirmation=needs_confirmation,
+                    download_available=bool(
+                        official_form_url and not needs_confirmation
+                    ),
+                    contact_unit=(
+                        step.confirmation_contact
+                        or step.responsible_unit
+                        or contact_unit
+                        if needs_confirmation
+                        else None
+                    ),
+                )
+            )
+
+    return ApplicationDocumentCatalog(
+        context=context,
+        workflow_found=True,
+        workflow_coverage_status=workflow.coverage_status,
+        workflow_review_status=workflow.review_status,
+        academic_year=workflow.academic_year,
+        application_round=workflow.application_round,
+        items=items,
+        contact_unit=contact_unit,
+    )
+
+
 def _has_value(value: Any) -> bool:
     if value is None or value is False:
         return False
@@ -746,18 +924,84 @@ def _decode_data_url(
     return mime_type, raw
 
 
+def _attachment_file_name(
+    value: Any,
+    field: ApplicationFormField,
+    index: int,
+    media_type: str,
+) -> str:
+    supplied = value.get("name") or value.get("filename") if isinstance(value, dict) else None
+    name = re.split(r"[\\/]", str(supplied or ""))[-1]
+    name = re.sub(r"[\x00-\x1f\x7f]", "", name).strip()
+    if name:
+        return name[:255]
+    extension = {
+        "application/pdf": "pdf",
+        "image/jpeg": "jpg",
+        "image/png": "png",
+    }[media_type]
+    return f"{field.label}-{index}.{extension}"
+
+
+def _inspect_attachment_payload(
+    field: ApplicationFormField,
+    value: Any,
+    index: int,
+) -> _AttachmentPayload | None:
+    decoded = _decode_data_url(
+        value,
+        accepted_types=("application/pdf", "image/jpeg", "image/png"),
+    )
+    if decoded is None:
+        return None
+    media_type, raw = decoded
+    page_count: int | None = None
+    placement: Literal["after_document", "inside_document"]
+    try:
+        if media_type == "application/pdf":
+            page_count = len(PdfReader(io.BytesIO(raw)).pages)
+            if page_count < 1 or page_count > 200:
+                return None
+            placement = "after_document"
+        else:
+            width, height = ImageReader(io.BytesIO(raw)).getSize()
+            if width < 1 or height < 1 or width * height > 40_000_000:
+                return None
+            placement = "inside_document"
+    except Exception:
+        return None
+    return _AttachmentPayload(
+        field_id=field.id,
+        field_label=field.label,
+        file_name=_attachment_file_name(value, field, index, media_type),
+        media_type=media_type,
+        raw=raw,
+        page_count=page_count,
+        placement=placement,
+    )
+
+
+def _attachment_payloads(
+    field: ApplicationFormField,
+    value: Any,
+) -> tuple[list[_AttachmentPayload], str | None]:
+    values = _file_values(value)
+    payloads = [
+        payload
+        for index, item in enumerate(values[: field.max_files], start=1)
+        if (payload := _inspect_attachment_payload(field, item, index)) is not None
+    ]
+    if len(values) > field.max_files:
+        return payloads, f"最多只能加入 {field.max_files} 個檔案。"
+    if len(payloads) != len(values):
+        return payloads, "含有無法讀取或格式不符的檔案，請重新選擇 PDF、JPG 或 PNG。"
+    return payloads, None
+
+
 def _has_field_value(field: ApplicationFormField, value: Any) -> bool:
     if field.field_type != ApplicationFieldType.FILES:
         return _has_value(value)
-    valid_files = [
-        item
-        for item in _file_values(value)
-        if _decode_data_url(
-            item,
-            accepted_types=("application/pdf", "image/jpeg", "image/png"),
-        )
-        is not None
-    ]
+    valid_files, _ = _attachment_payloads(field, value)
     minimum = max(field.min_files, 1 if field.required else 0)
     return len(valid_files) >= minimum
 
@@ -775,7 +1019,97 @@ def answer_for_field(
     return value
 
 
-def build_packet_manifest(request: ApplicationPacketRequest) -> ApplicationPacketManifest:
+def _attachment_fields_in_order(
+    template: ApplicationDocumentTemplate,
+) -> list[ApplicationFormField]:
+    file_fields = {
+        field.id: field
+        for field in template.fields
+        if field.field_type == ApplicationFieldType.FILES
+    }
+    ordered = [
+        file_fields[field_id]
+        for field_id in template.attachment_field_order
+        if field_id in file_fields
+    ]
+    included = {field.id for field in ordered}
+    ordered.extend(
+        field
+        for field in template.fields
+        if field.field_type == ApplicationFieldType.FILES and field.id not in included
+    )
+    return ordered
+
+
+def _canonical_review_value(value: Any) -> Any:
+    if value is None or isinstance(value, (str, int, float, bool)):
+        return value
+    if isinstance(value, dict):
+        return {
+            str(key): _canonical_review_value(item)
+            for key, item in sorted(value.items(), key=lambda row: str(row[0]))
+            if key != "source_file"
+        }
+    if isinstance(value, (list, tuple)):
+        return [_canonical_review_value(item) for item in value]
+    return str(value)
+
+
+def _field_is_blank(field: ApplicationFormField, value: Any) -> bool:
+    if field.field_type != ApplicationFieldType.FILES:
+        return not _has_value(value)
+    payloads, _ = _attachment_payloads(field, value)
+    return not payloads
+
+
+def _review_content_sha256(
+    request: ApplicationPacketRequest,
+    template: ApplicationDocumentTemplate,
+    selection: ApplicationDocumentSelection,
+    review_key: bytes | None = None,
+) -> str:
+    answers = request.answers.get(template.id, {})
+    snapshot = {
+        "schema": "application-review-v1",
+        "context": request.context.model_dump(mode="json"),
+        "template": {
+            "id": template.id,
+            "version": template.version,
+            "copies": selection.copies,
+            "paper_size": template.paper_size,
+            "print_sides": template.print_sides,
+            "print_note": template.print_note,
+            "destinations": template.destinations,
+            "signatures": template.signatures,
+            "stamps": template.stamps,
+            "attachment_field_order": template.attachment_field_order,
+        },
+        "fields": [
+            {
+                "id": field.id,
+                "value": _canonical_review_value(
+                    answer_for_field(field, request.profile, answers)
+                ),
+            }
+            for field in template.fields
+        ],
+    }
+    encoded = json.dumps(
+        snapshot,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    if review_key is not None:
+        return hmac.new(review_key, encoded, hashlib.sha256).hexdigest()
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def build_packet_manifest(
+    request: ApplicationPacketRequest,
+    *,
+    review_key: bytes | None = None,
+) -> ApplicationPacketManifest:
     applicable = {template.id: template for template in templates_for_context(request.context)}
     selections = request.selections or [
         ApplicationDocumentSelection(template_id=template.id, copies=template.default_copies)
@@ -787,19 +1121,81 @@ def build_packet_manifest(request: ApplicationPacketRequest) -> ApplicationPacke
         if template is None:
             continue
         answers = request.answers.get(template.id, {})
+        field_values = {
+            field.id: answer_for_field(field, request.profile, answers)
+            for field in template.fields
+        }
+        attachment_payloads: list[_AttachmentPayload] = []
+        attachment_errors: dict[str, str] = {}
+        for field in _attachment_fields_in_order(template):
+            payloads, error = _attachment_payloads(field, field_values.get(field.id))
+            attachment_payloads.extend(payloads)
+            if error:
+                attachment_errors[field.id] = error
+        review_content_sha256 = _review_content_sha256(
+            request,
+            template,
+            selection,
+            review_key,
+        )
+        preview_fields = []
+        for field in template.fields:
+            value = field_values[field.id]
+            preview_fields.append(
+                ApplicationFieldPreviewItem(
+                    field_id=field.id,
+                    label=field.label,
+                    field_type=field.field_type,
+                    required=field.required,
+                    sensitive=field.sensitive,
+                    display_value=_format_value(value),
+                    is_blank=_field_is_blank(field, value),
+                    validation_error=attachment_errors.get(field.id),
+                )
+            )
         missing = [
             field.label
             for field in template.fields
-            if field.required and not _has_field_value(field, answer_for_field(field, request.profile, answers))
+            if field.required and not _has_field_value(field, field_values[field.id])
+        ]
+        attachments = [
+            ApplicationPacketAttachmentItem(
+                order=index,
+                field_id=payload.field_id,
+                field_label=payload.field_label,
+                file_name=payload.file_name,
+                media_type=payload.media_type,
+                page_count=payload.page_count,
+                placement=payload.placement,
+            )
+            for index, payload in enumerate(attachment_payloads, start=1)
         ]
         items.append(
             ApplicationPacketManifestItem(
                 template_id=template.id,
                 title=template.title,
                 copies=selection.copies,
+                template_version=template.version,
+                review_content_sha256=review_content_sha256,
+                reviewed=(
+                    selection.reviewed_version == template.version
+                    and selection.reviewed_content_sha256 == review_content_sha256
+                ),
+                preview_fields=preview_fields,
                 destinations=template.destinations,
                 signatures=template.signatures,
                 stamps=template.stamps,
+                paper_size=template.paper_size,
+                print_sides=template.print_sides,
+                print_note=template.print_note,
+                attachment_order=list(dict.fromkeys(item.field_label for item in attachments)),
+                attachments=attachments,
+                invalid_attachment_fields=[
+                    f"{field.label}：{attachment_errors[field.id]}"
+                    for field in _attachment_fields_in_order(template)
+                    if field.id in attachment_errors
+                ],
+                source_url=template.source_url,
                 official_layout=template.official_layout,
                 missing_required_fields=missing,
             )
@@ -809,7 +1205,13 @@ def build_packet_manifest(request: ApplicationPacketRequest) -> ApplicationPacke
         target_school=request.context.target_school,
         items=items,
         total_printed_copies=sum(item.copies for item in items),
-        ready_to_generate=bool(items) and all(not item.missing_required_fields for item in items),
+        ready_to_generate=bool(items)
+        and all(
+            not item.missing_required_fields
+            and not item.invalid_attachment_fields
+            and item.reviewed
+            for item in items
+        ),
         source_checked_at=(
             NTPU_SOURCE_CHECKED_AT
             if require_university(request.context.school_name).id == NTPU.id
@@ -822,9 +1224,11 @@ def _register_pdf_font() -> tuple[str, str]:
     regular = "ApplicationCJK"
     bold = "ApplicationCJKBold"
     candidates = [
-        (Path("C:/Windows/Fonts/msjh.ttc"), Path("C:/Windows/Fonts/msjhbd.ttc")),
+        # Prefer the standalone TTF. ReportLab can reuse it across the separate
+        # cover and document PDFs; Windows TTC fonts may corrupt later subsets.
         (Path("C:/Windows/Fonts/NotoSansTC-VF.ttf"), Path("C:/Windows/Fonts/NotoSansTC-VF.ttf")),
         (Path("C:/Windows/Fonts/kaiu.ttf"), Path("C:/Windows/Fonts/kaiu.ttf")),
+        (Path("C:/Windows/Fonts/msjh.ttc"), Path("C:/Windows/Fonts/msjhbd.ttc")),
     ]
     for regular_path, bold_path in candidates:
         try:
@@ -980,19 +1384,44 @@ def _manifest_cover(request: ApplicationPacketRequest, manifest: ApplicationPack
         ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
     ]))
     story.extend([summary_table, Spacer(1, 8 * mm), Paragraph("列印與送件清單", styles["subtitle"])])
+    print_side_labels = {
+        "single_sided": "單面",
+        "double_sided": "雙面",
+        "confirm_official": "待確認官方單雙面規定",
+    }
     rows = [[
         Paragraph("文件", styles["label"]),
         Paragraph("份數", styles["label"]),
+        Paragraph("列印與附件", styles["label"]),
         Paragraph("交件與簽核", styles["label"]),
     ]]
     for item in manifest.items:
         actions = [*(f"交至：{value}" for value in item.destinations), *(f"簽名：{value}" for value in item.signatures), *(f"核章：{value}" for value in item.stamps)]
+        attachment_details = [
+            (
+                f"{attachment.order}. {attachment.field_label}：{attachment.file_name}"
+                + (
+                    f"（PDF {attachment.page_count} 頁，接在文件後）"
+                    if attachment.placement == "after_document"
+                    else "（排入文件內）"
+                )
+            )
+            for attachment in item.attachments
+        ]
+        print_details = [
+            f"紙張：{item.paper_size}",
+            f"單雙面：{print_side_labels[item.print_sides]}",
+            "附件順序：" + ("；".join(attachment_details) if attachment_details else "無"),
+        ]
+        if item.print_note:
+            print_details.append(item.print_note)
         rows.append([
             Paragraph(html.escape(item.title), styles["body"]),
             Paragraph(str(item.copies), styles["center"]),
+            Paragraph("<br/>".join(html.escape(value) for value in print_details), styles["small"]),
             Paragraph("<br/>".join(html.escape(value) for value in actions) or "學生自存", styles["small"]),
         ])
-    table = Table(rows, colWidths=[60 * mm, 18 * mm, 82 * mm], repeatRows=1)
+    table = Table(rows, colWidths=[46 * mm, 14 * mm, 52 * mm, 48 * mm], repeatRows=1)
     table.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#E9F4FD")),
         ("BOX", (0, 0), (-1, -1), 0.6, colors.HexColor("#C4D3DF")),
@@ -1006,8 +1435,13 @@ def _manifest_cover(request: ApplicationPacketRequest, manifest: ApplicationPack
     story.extend([
         table,
         Spacer(1, 8 * mm),
+        Paragraph("列印後待辦", styles["subtitle"]),
+        Paragraph("1. 依上表的份數、紙張與單雙面設定列印，每一份文件都要附上該列所列附件。", styles["small"]),
+        Paragraph("2. 依編號放置附件，再完成本人、家長、教授或系所需要的簽名與核章。", styles["small"]),
+        Paragraph("3. 由學生依上表交件單位與當期公告自行送件；本系統沒有代替學生送出申請。", styles["small"]),
         Paragraph("列印後請逐份確認簽名、日期、附件與核章。官方規定可能調整，送件前仍須核對來源頁及承辦人通知。", styles["small"]),
-        Paragraph(f"資料來源最後檢查：{SOURCE_CHECKED_AT.astimezone().strftime('%Y/%m/%d')}", styles["small"]),
+        Paragraph("這份 PDF 只在本次請求中產生並回傳，伺服器不會永久保存；若要跨裝置保存，必須在私人文件庫另外同意。", styles["small"]),
+        Paragraph(f"資料來源最後檢查：{manifest.source_checked_at.astimezone().strftime('%Y/%m/%d')}", styles["small"]),
     ])
     return _pdf_document(story, title="交換申請列印包")
 
@@ -1036,20 +1470,14 @@ def _uploaded_pdf_attachments(
 ) -> list[bytes]:
     answers = request.answers.get(template.id, {})
     attachments: list[bytes] = []
-    for field in template.fields:
-        if field.field_type != ApplicationFieldType.FILES:
-            continue
+    for field in _attachment_fields_in_order(template):
         value = answer_for_field(field, request.profile, answers)
-        for item in _file_values(value)[: field.max_files]:
-            decoded = _decode_data_url(item, accepted_types=("application/pdf",))
-            if decoded is None:
-                continue
-            _, raw = decoded
-            try:
-                if PdfReader(io.BytesIO(raw)).pages:
-                    attachments.append(raw)
-            except Exception:
-                continue
+        payloads, _ = _attachment_payloads(field, value)
+        attachments.extend(
+            payload.raw
+            for payload in payloads
+            if payload.media_type == "application/pdf"
+        )
     return attachments
 
 
@@ -1076,19 +1504,13 @@ def _generic_template_pdf(
     photo_values: list[Any] = []
     for field in template.fields:
         value = answer_for_field(field, request.profile, answers)
-        if not field.required and not _has_field_value(field, value):
-            continue
         if field.field_type == ApplicationFieldType.FILES:
             values = value if isinstance(value, list) else ([value] if value else [])
             photo_values.extend(item for item in values if _data_url_image(item) is not None)
         formatted = _format_value(value)
-        if field.sensitive and formatted:
-            display_value = formatted
-        else:
-            display_value = formatted
         rows.append([
             Paragraph(html.escape(field.label), styles["label"]),
-            Paragraph(html.escape(display_value).replace("\n", "<br/>") or "&nbsp;", styles["body"]),
+            Paragraph(html.escape(formatted).replace("\n", "<br/>") or "&nbsp;", styles["body"]),
         ])
     table = Table(rows, colWidths=[47 * mm, 113 * mm], repeatRows=0)
     table.setStyle(TableStyle([
@@ -1114,8 +1536,12 @@ def _generic_template_pdf(
     if template.signatures or template.stamps:
         story.extend([Spacer(1, 8 * mm), Paragraph("列印後完成", styles["subtitle"])])
         action_rows = []
-        for label in [*template.signatures, *template.stamps]:
-            action_rows.append([Paragraph(html.escape(label), styles["label"]), Paragraph("\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000", styles["body"])])
+        for kind, labels in (("簽名", template.signatures), ("核章", template.stamps)):
+            for label in labels:
+                action_rows.append([
+                    Paragraph(f"{kind}｜{html.escape(label)}", styles["label"]),
+                    Paragraph("\u3000\u3000\u3000\u3000\u3000\u3000\u3000\u3000", styles["body"]),
+                ])
         action_table = Table(action_rows, colWidths=[65 * mm, 95 * mm], rowHeights=[18 * mm] * len(action_rows))
         action_table.setStyle(TableStyle([
             ("BOX", (0, 0), (-1, -1), 0.7, colors.HexColor("#9BAAB6")),
@@ -1296,8 +1722,9 @@ def generate_application_packet_pdf(
     request: ApplicationPacketRequest,
     *,
     raw_files_dir: Path,
+    review_key: bytes | None = None,
 ) -> tuple[bytes, ApplicationPacketManifest]:
-    manifest = build_packet_manifest(request)
+    manifest = build_packet_manifest(request, review_key=review_key)
     if not manifest.items:
         raise ValueError("請至少選擇一份要產生的文件。")
     missing = [
@@ -1307,21 +1734,49 @@ def generate_application_packet_pdf(
     ]
     if missing:
         raise ValueError("仍有必填欄位未完成。" + "；".join(missing))
+    invalid_attachments = [
+        f"{item.title}：{', '.join(item.invalid_attachment_fields)}"
+        for item in manifest.items
+        if item.invalid_attachment_fields
+    ]
+    if invalid_attachments:
+        raise ValueError("仍有附件無法加入列印包。" + "；".join(invalid_attachments))
+    unreviewed = [item.title for item in manifest.items if not item.reviewed]
+    if unreviewed:
+        raise ValueError(
+            "仍有文件尚未完成目前內容的「我已核對」，或核對後資料已變更："
+            + "、".join(unreviewed)
+        )
     applicable = {template.id: template for template in templates_for_context(request.context)}
     writer = PdfWriter()
-    for page in PdfReader(io.BytesIO(_manifest_cover(request, manifest))).pages:
-        writer.add_page(page)
+    # Keep every reader alive until write(). PdfWriter tracks cloned objects by
+    # reader identity; temporary readers can be garbage-collected and have their
+    # ids reused, which can attach the cover's font resources to later pages.
+    source_readers: list[PdfReader] = []
+
+    def append_pdf(pdf_bytes: bytes) -> None:
+        reader = PdfReader(io.BytesIO(pdf_bytes))
+        source_readers.append(reader)
+        for page in reader.pages:
+            writer.add_page(page)
+
+    append_pdf(_manifest_cover(request, manifest))
     for item in manifest.items:
         template = applicable[item.template_id]
         official = _official_template_pdf(template, request, raw_files_dir) if template.official_layout else None
         attachments = _uploaded_pdf_attachments(template, request)
         for copy_number in range(1, item.copies + 1):
             rendered = official or _generic_template_pdf(template, request, copy_number)
-            for page in PdfReader(io.BytesIO(rendered)).pages:
-                writer.add_page(page)
+            append_pdf(rendered)
             for attachment in attachments:
-                for page in PdfReader(io.BytesIO(attachment)).pages:
-                    writer.add_page(page)
+                append_pdf(attachment)
+    writer.add_metadata(
+        {
+            "/Title": "交換申請列印包",
+            "/Author": "台灣大學生交換指南",
+            "/Subject": "待學生核對、列印、簽名與送件的申請文件套件",
+        }
+    )
     output = io.BytesIO()
     writer.write(output)
     return output.getvalue(), manifest

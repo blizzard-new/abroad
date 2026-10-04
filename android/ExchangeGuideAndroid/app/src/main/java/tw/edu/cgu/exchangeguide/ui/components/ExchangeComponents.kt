@@ -2,6 +2,7 @@ package tw.edu.cgu.exchangeguide.ui.components
 
 import android.content.Intent
 import androidx.core.net.toUri
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.RepeatMode
@@ -10,6 +11,7 @@ import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -25,6 +27,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -55,6 +59,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -78,6 +83,19 @@ import androidx.compose.ui.unit.dp
 import tw.edu.cgu.exchangeguide.data.model.PartnerUniversity
 import tw.edu.cgu.exchangeguide.data.model.RuleExplanation
 import tw.edu.cgu.exchangeguide.ui.theme.ExchangeSpacing
+
+data class SnapshotMetric(
+    val value: String,
+    val label: String,
+    val tint: Color,
+)
+
+data class InfoSummaryItem(
+    val label: String,
+    val value: String,
+    val icon: ImageVector,
+    val tint: Color,
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -216,6 +234,136 @@ fun MetricTile(value: String, label: String, icon: ImageVector, tint: Color, mod
 }
 
 @Composable
+fun SnapshotMetricRail(
+    items: List<SnapshotMetric>,
+    modifier: Modifier = Modifier,
+) {
+    if (items.isEmpty()) return
+
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(22.dp),
+        color = MaterialTheme.colorScheme.surface,
+        shadowElevation = 1.dp,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.42f)),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+                .padding(vertical = ExchangeSpacing.md),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            items.forEachIndexed { index, item ->
+                Column(
+                    modifier = Modifier
+                        .widthIn(min = 108.dp, max = 148.dp)
+                        .padding(horizontal = ExchangeSpacing.md)
+                        .semantics { contentDescription = "${item.label}，${item.value}" },
+                    verticalArrangement = Arrangement.spacedBy(3.dp),
+                ) {
+                    Text(
+                        text = item.value,
+                        style = MaterialTheme.typography.titleLarge,
+                        color = item.tint,
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                    Text(
+                        text = item.label,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                    )
+                }
+                if (index < items.lastIndex) {
+                    VerticalDivider(
+                        modifier = Modifier.height(52.dp),
+                        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.55f),
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun InfoSummaryGrid(
+    items: List<InfoSummaryItem>,
+    modifier: Modifier = Modifier,
+) {
+    if (items.isEmpty()) return
+
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(22.dp),
+        color = MaterialTheme.colorScheme.surface,
+        shadowElevation = 1.dp,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.42f)),
+    ) {
+        BoxWithConstraints {
+            val columns = if (maxWidth >= 720.dp) minOf(4, items.size) else minOf(2, items.size)
+            val rows = items.take(4).chunked(columns)
+            Column {
+                rows.forEachIndexed { rowIndex, rowItems ->
+                    Row(Modifier.fillMaxWidth()) {
+                        rowItems.forEachIndexed { columnIndex, item ->
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .heightIn(min = 112.dp)
+                                    .padding(ExchangeSpacing.md)
+                                    .semantics { contentDescription = "${item.label}，${item.value}" },
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(end = 28.dp),
+                                    verticalArrangement = Arrangement.spacedBy(7.dp),
+                                ) {
+                                    Text(
+                                        text = item.label,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                    Text(
+                                        text = item.value,
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = MaterialTheme.colorScheme.onSurface,
+                                        fontWeight = FontWeight.SemiBold,
+                                        maxLines = 3,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                }
+                                Icon(
+                                    imageVector = item.icon,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .align(Alignment.CenterEnd)
+                                        .size(24.dp),
+                                    tint = item.tint,
+                                )
+                            }
+                            if (columnIndex < rowItems.lastIndex) {
+                                VerticalDivider(
+                                    modifier = Modifier.heightIn(min = 112.dp),
+                                    color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.45f),
+                                )
+                            }
+                        }
+                        repeat(columns - rowItems.size) { Spacer(Modifier.weight(1f)) }
+                    }
+                    if (rowIndex < rows.lastIndex) {
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.45f))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
 fun TaskButton(
     title: String,
     detail: String,
@@ -226,31 +374,28 @@ fun TaskButton(
 ) {
     Surface(
         modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = 72.dp)
-            .clickable(role = Role.Button, onClick = onClick),
-        shape = RoundedCornerShape(16.dp),
+            .heightIn(min = 116.dp)
+            .clickable(role = Role.Button, onClick = onClick)
+            .semantics { contentDescription = "$title，$detail" },
+        shape = RoundedCornerShape(24.dp),
         color = MaterialTheme.colorScheme.surface,
-        shadowElevation = 1.dp,
+        shadowElevation = 4.dp,
     ) {
-        Row(
-            modifier = Modifier.padding(horizontal = ExchangeSpacing.md, vertical = ExchangeSpacing.sm),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(ExchangeSpacing.sm),
+        Column(
+            modifier = Modifier.padding(ExchangeSpacing.md),
+            verticalArrangement = Arrangement.spacedBy(ExchangeSpacing.sm),
         ) {
-            Surface(shape = RoundedCornerShape(12.dp), color = tint.copy(alpha = 0.13f)) {
-                Box(Modifier.size(44.dp), contentAlignment = Alignment.Center) {
-                    Icon(icon, contentDescription = null, tint = tint)
+            Surface(shape = CircleShape, color = tint.copy(alpha = 0.13f)) {
+                Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) {
+                    Icon(icon, contentDescription = null, tint = tint, modifier = Modifier.size(25.dp))
                 }
             }
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text(title, style = MaterialTheme.typography.titleMedium)
-                Text(detail, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-            Icon(
-                Icons.AutoMirrored.Filled.ArrowForward,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
         }
     }

@@ -1,0 +1,324 @@
+/* The journal is the page itself, with readable paper laid over the scenery. */
+:root {
+  --journal-content-width: 1120px;
+  --journal-shell-width: 1280px;
+  --journal-sheet: #fffdf5;
+  --journal-sheet-image: url("./assets/journey/paper-texture.webp");
+  --journal-sheet-edge: #dbd3be;
+  --journal-sheet-shadow: 0 5px 14px #473b2512, 0 1px 2px #473b2508;
+}
+html { background: #f7f0e1; }
+body.unified-shell { position: relative; isolation: isolate; background: transparent; }
+body.unified-shell::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: #f7f0e1 url("./assets/journey/journal-canvas.webp") center top / cover no-repeat;
+}
+body.unified-shell.global-home-mode[data-global-feed="all"]::before {
+  background-image: var(--home-canvas-veil), url("./assets/journey/home-canvas-scenery.webp");
+  background-position: center, center 64px;
+  background-size: cover, cover;
+}
+body.unified-shell.global-home-mode[data-global-feed="all"] {
+  --home-canvas-veil: none;
+  --journal-sheet: #fffefb;
+  --journal-sheet-image: none;
+  --journal-sheet-edge: #e2e7e9;
+  --journal-sheet-shadow: 0 4px 18px #17345006;
+}
+body.unified-shell .app-shell,
+body.unified-shell .workspace { background: transparent; }
+body.unified-shell .workspace { padding-bottom: 80px; }
+
+/* Inset paper navigation lets the world continue behind the entire shell. */
+body.unified-shell .topbar {
+  width: calc(100% - 48px); max-width: var(--journal-shell-width); margin: 18px auto 0;
+  padding: 12px 24px; border: 1px solid #fffdf8; border-radius: 18px 18px 6px 6px;
+  background: var(--journal-sheet) var(--journal-sheet-image) center / 640px;
+  box-shadow: var(--journal-sheet-shadow); gap: 16px;
+}
+body.unified-shell .uniway-public-nav { margin-left: 12px; gap: 4px; }
+body.unified-shell .uniway-public-nav a::after { display: none; }
+body.unified-shell .route-toolbar {
+  width: calc(100% - 64px); max-width: calc(var(--journal-shell-width) - 16px);
+  margin: 0 auto; padding: 6px 18px; min-height: 58px; border: 1px solid var(--journal-sheet-edge);
+  border-top: 0; border-radius: 0 0 10px 10px;
+  background: var(--journal-sheet) var(--journal-sheet-image) center / 640px;
+  box-shadow: 0 3px 10px #473b2508;
+}
+body.unified-shell { --nav-toolbar-height: 58px; }
+body.unified-shell :is(.route-back, .route-toolbar #school-switcher) { background: transparent; }
+body.unified-shell .application-tools > summary { background: #fffef9; border-color: var(--journal-sheet-edge); border-radius: 8px; }
+body.unified-shell .application-tools-panel { background: var(--journal-sheet) var(--journal-sheet-image) center / 640px; border-color: var(--journal-sheet-edge); border-radius: 12px; }
+body.unified-shell #dashboard-view > [data-university-page],
+body.unified-shell .school-detail-view,
+body.unified-shell .global-community-section {
+  width: calc(100% - 160px); max-width: var(--journal-content-width); padding-top: 30px;
+}
+
+/* The former rectangular hero is now an open area of the full-page canvas. */
+body.unified-shell.global-home-mode[data-global-feed="all"] .journey-home-intro {
+  min-height: 410px; margin: 0 0 28px; background: transparent; border: 0;
+  border-radius: 0; overflow: visible; isolation: auto;
+}
+body.unified-shell .journey-home-copy {
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
+  align-self: stretch; min-height: inherit; width: 65%; padding: 34px 4% 44px 9%;
+}
+body.unified-shell .journey-home-title { font-size: clamp(42px, 4.5vw, 64px); line-height: 1.26; }
+body.unified-shell .journey-note { color: #274e6c; }
+body.unified-shell .journey-home-caption { margin: 24px 0; }
+body.unified-shell .journey-explore { box-shadow: 0 4px 0 #a8253b; border-radius: 9px; }
+
+/* Paper surfaces replace the old glass and plain dashboard cards. */
+body.unified-shell :is(.featured-board-card, .community-sidebar > *, .global-community-toolbar,
+  .community-post, .global-community-form, .community-main > .empty-state,
+  .journey-filter-drawer, .partner-view-toolbar, .discovery-criteria, .discovery-recents,
+  .discovery-open-workspace, .guide-stage, .guide-plan-link, .guide-faq,
+  .partner-card, .favorite-card, .discovery-candidate, .discovery-ranking,
+  .glass-panel, .compare-panel, .calendar-month-panel, .calendar-agenda-panel,
+  .calendar-sync-panel, .calendar-quick-add, .deadline-reminder-center,
+  .calendar-conflict-center, .calendar-task-schedule-center, .budget-form,
+  .budget-result-panel, .eligibility-form, .eligibility-result, .application-form-guide,
+  .application-document-form, .private-vault, .document-workspace,
+  .school-detail-main, .school-detail-aside, .tracker-card, .source-card) {
+  background: var(--journal-sheet) var(--journal-sheet-image) center / 640px;
+  border-color: var(--journal-sheet-edge); border-radius: 8px;
+  box-shadow: var(--journal-sheet-shadow); backdrop-filter: none;
+}
+body.unified-shell :is(.community-home-heading, .community-feed-tabs) {
+  background: var(--journal-sheet) var(--journal-sheet-image) center / 640px;
+  margin: 0; padding: 18px 22px; border: 0;
+}
+
+/* Solid controls keep the community search and categories clear over the collage. */
+body.unified-shell #community-hub .global-community-toolbar {
+  background: var(--uw-surface); border-color: var(--uw-line-strong);
+  padding: 14px; gap: 16px;
+}
+body.unified-shell .global-community-toolbar .community-search {
+  min-width: 0; min-height: 52px; padding: 0 14px; gap: 10px;
+  background: var(--uw-surface); border: 1px solid var(--uw-line-strong);
+  border-radius: 10px; box-shadow: none; color: var(--uw-navy);
+}
+body.unified-shell .global-community-toolbar .community-search:focus-within {
+  outline: 3px solid var(--uw-blue); outline-offset: 2px;
+}
+body.unified-shell .global-community-toolbar .community-search input {
+  min-width: 0; width: 100%; padding: 0; border: 0; border-radius: 0;
+  background: transparent; color: var(--uw-navy); font-size: 16px;
+  font-weight: 500; line-height: 1.5; box-shadow: none;
+}
+body.unified-shell #global-community-search::placeholder { color: var(--uw-muted); opacity: 1; }
+body.unified-shell .global-community-toolbar .community-topic-chips {
+  flex-wrap: wrap; gap: 8px; padding: 0; overflow: visible; order: 0;
+}
+body.unified-shell .global-community-toolbar .community-topic-chips button {
+  min-height: 46px; padding: 10px 12px; border: 1px solid var(--uw-line-strong);
+  border-radius: 12px; background: var(--uw-surface); color: var(--uw-navy);
+  font-size: 16px; font-weight: 700; line-height: 1.4; white-space: nowrap;
+  text-shadow: none; box-shadow: none; opacity: 1;
+}
+body.unified-shell .global-community-toolbar .community-topic-chips button:not([aria-pressed="true"]):hover {
+  background: var(--uw-blue-soft); border-color: var(--uw-blue);
+}
+body.unified-shell .global-community-toolbar .community-topic-chips button[aria-pressed="true"] {
+  background: var(--uw-navy); border-color: var(--uw-navy); color: var(--uw-surface);
+}
+body.unified-shell .community-home-heading { position: relative; border-radius: 12px 12px 0 0; }
+body.unified-shell .community-feed-tabs { padding-top: 0; padding-bottom: 4px; border-radius: 0 0 12px 12px; }
+
+/* Give the heading, action and tabs one complete surface, with room for focus rings. */
+body.unified-shell #community-hub .community-feed-header {
+  padding: 24px; border: 1px solid var(--uw-line); border-radius: 20px;
+  background: var(--uw-surface); box-shadow: 0 4px 18px #17345006;
+}
+body.unified-shell #community-hub .community-feed-header .community-home-heading {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 16px 24px; padding: 0; margin: 0 0 20px; background: transparent;
+  border: 0; border-radius: 0; overflow: visible;
+}
+body.unified-shell #community-hub .community-home-heading::before { display: none; }
+body.unified-shell #community-hub .community-home-heading h1 {
+  margin: 0; padding: 2px 0; font-size: clamp(22px, 2vw, 28px); line-height: 1.5;
+}
+body.unified-shell #global-community-compose {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  flex-shrink: 0; height: auto; min-height: 48px; padding: 12px 20px;
+  font-size: 16px; line-height: 1.5; border-radius: 12px; white-space: nowrap;
+  box-shadow: none;
+}
+body.unified-shell #global-community-compose > span { display: inline; }
+body.unified-shell #community-feed-tabs {
+  display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 4px;
+  border: 0; border-radius: 0; background: transparent; box-shadow: none; overflow: visible;
+}
+body.unified-shell #community-feed-tabs a {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  flex: 0 0 auto; min-width: 0; min-height: 48px; height: auto; padding: 10px 18px;
+  border: 1px solid transparent; border-radius: 12px; background: var(--uw-page);
+  color: var(--uw-navy); font-size: 16px; font-weight: 700; line-height: 1.5;
+  white-space: nowrap; box-shadow: none; text-decoration: none;
+}
+body.unified-shell #community-feed-tabs a::after { display: none; }
+body.unified-shell #community-feed-tabs a:hover {
+  background: var(--uw-blue-soft); border-color: var(--uw-line-strong); transform: none;
+}
+body.unified-shell #community-feed-tabs a[aria-current="page"] {
+  background: #fff0f2; border-color: #edb4bf; color: #ac2342;
+}
+body.unified-shell #community-feed-tabs a:focus-visible,
+body.unified-shell #global-community-compose:focus-visible {
+  outline: 3px solid var(--uw-blue); outline-offset: 3px;
+}
+body.unified-shell #community-feed-tabs .lucide,
+body.unified-shell #global-community-compose .lucide { flex-shrink: 0; width: 20px; height: 20px; }
+body.unified-shell.global-home-mode[data-global-feed="all"] .community-guidelines {
+  background: var(--uw-surface); border: 1px solid var(--uw-line); box-shadow: none;
+  backdrop-filter: none;
+}
+body.unified-shell .featured-board-grid { gap: 20px; margin: 24px 0 28px; }
+body.unified-shell .featured-board-card { border: 6px solid #fffdf5; overflow: visible; }
+body.unified-shell .featured-board-card > img { border-radius: 3px; }
+body.unified-shell .featured-board-card > div { padding: 16px 10px; }
+body.unified-shell :is(.community-home-heading, .guide-stage, .journey-filter-drawer)::before {
+  content: ""; position: absolute; width: 94px; height: 27px;
+  top: -12px; left: 28px; background: url("./assets/journey/washi-tape.webp") center / 100% 100% no-repeat;
+  pointer-events: none; transform: rotate(-5deg); z-index: 1;
+}
+body.unified-shell .journey-filter-drawer { position: relative; overflow: visible; margin-top: 7px; }
+body.unified-shell .journey-filter-drawer::before { width: 78px; left: calc(50% - 39px); transform: rotate(4deg); }
+body.unified-shell .journey-filter-drawer .filter-panel { background: transparent; box-shadow: none; }
+body.unified-shell .partner-view-toolbar { border: 5px solid #fffdf5; padding: 9px; }
+body.unified-shell .partner-map-panel { border: 7px solid #fffdf5; border-radius: 10px; box-shadow: var(--journal-sheet-shadow); }
+body.unified-shell :is(.partner-map-heading, .partner-map-actions, .partner-map-access) { background: var(--journal-sheet) var(--journal-sheet-image) center / 640px; }
+body.unified-shell .partner-map-preview { background: var(--journal-sheet); border: 5px solid #fffdf5; border-radius: 8px; }
+body.unified-shell .guide-intro { padding-left: 24px; }
+body.unified-shell .guide-stages { gap: 20px; }
+body.unified-shell .guide-stage { margin-top: 10px; border-top: 1px solid var(--journal-sheet-edge); }
+body.unified-shell .guide-stage:nth-child(even)::before { left: auto; right: 24px; transform: rotate(5deg); }
+body.unified-shell .guide-stage-number { color: var(--journal-coral); font-weight: 700; }
+body.unified-shell .school-detail-view .school-detail-header {
+  background: var(--journal-sheet) var(--journal-sheet-image) center / 640px;
+  border: 8px solid #fffdf5; border-radius: 10px; box-shadow: var(--journal-sheet-shadow);
+}
+body.unified-shell .school-detail-view .school-detail-copy { background: transparent; }
+body.unified-shell .school-detail-view .detail-tabs { background: var(--journal-sheet) var(--journal-sheet-image) center / 640px; border-color: var(--journal-sheet-edge); border-radius: 8px; }
+body.unified-shell .school-detail-main { padding: 26px; }
+body.unified-shell .school-detail-aside { padding: 0; }
+body.unified-shell .mobile-nav { background: var(--journal-sheet) var(--journal-sheet-image) center / 640px; border-color: var(--journal-sheet-edge); }
+
+html[data-theme="dark"] {
+  --journal-sheet: #192b3b; --journal-sheet-image: none;
+  --journal-sheet-edge: #486071; --journal-sheet-shadow: 0 4px 16px #020a142b;
+  background: #101f2d;
+}
+html[data-theme="dark"] body.unified-shell::before { filter: brightness(.28) saturate(.7); }
+html[data-theme="dark"] body.unified-shell.global-home-mode[data-global-feed="all"] {
+  --home-canvas-veil: linear-gradient(180deg, #101f2deb, #101f2df7 62%, #101f2d);
+  --journal-sheet: #192b3b; --journal-sheet-edge: #486071;
+}
+html[data-theme="dark"] body.unified-shell.global-home-mode[data-global-feed="all"]::before { filter: none; }
+html[data-theme="dark"] body.unified-shell #community-feed-tabs a[aria-current="page"] {
+  background: #49313f; border-color: #a9697b; color: #ffc2cd;
+}
+html[data-theme="dark"] body.unified-shell .journey-home-copy { background: transparent; }
+html[data-theme="dark"] body.unified-shell .journey-note { color: #f8f1e1; }
+html[data-theme="dark"] body.unified-shell :is(.topbar, .featured-board-card, .partner-view-toolbar, .partner-map-panel, .partner-map-preview, .school-detail-view .school-detail-header) { border-color: #293f50; }
+html[data-theme="dark"] body.unified-shell .application-tools > summary { background: var(--journal-sheet); }
+html[data-theme="dark"] body.unified-shell :is(.community-home-heading, .guide-stage, .journey-filter-drawer)::before { filter: brightness(.75); }
+
+@media (max-width: 1100px) {
+  body.unified-shell.global-home-mode[data-global-feed="all"]::before { background-size: cover, cover; background-position: center, center 130px; }
+  body.unified-shell .topbar { padding-inline: 18px; gap: 10px; }
+  body.unified-shell .uniway-public-nav { margin-left: 0; gap: 0; }
+  body.unified-shell #dashboard-view > [data-university-page], body.unified-shell .school-detail-view,
+  body.unified-shell .global-community-section { width: calc(100% - 96px); }
+  body.unified-shell .journey-home-copy { padding-left: 12%; }
+}
+@media (max-width: 900px) {
+  body.unified-shell .topbar { width: calc(100% - 28px); margin-top: 12px; padding: 8px 16px; gap: 4px 12px; }
+  body.unified-shell .route-toolbar { width: calc(100% - 40px); padding: 6px 12px; }
+  body.unified-shell #dashboard-view > [data-university-page], body.unified-shell .school-detail-view,
+  body.unified-shell .global-community-section { width: calc(100% - 64px); padding-top: 24px; }
+  body.unified-shell.global-home-mode[data-global-feed="all"] .journey-home-intro { min-height: 355px; }
+  body.unified-shell .journey-home-copy { width: 70%; padding-left: 16%; }
+  body.unified-shell .journey-home-title { font-size: 40px; }
+  body.unified-shell .journey-filter-drawer { margin-top: 8px; }
+}
+@media (max-width: 560px) {
+  body.unified-shell::before { background-image: url("./assets/journey/journal-canvas-mobile.webp"); background-size: cover; }
+  body.unified-shell.global-home-mode[data-global-feed="all"]::before { background-image: var(--home-canvas-veil), url("./assets/journey/home-canvas-mobile-scenery.webp"); background-position: center, center top; background-size: cover, cover; }
+  body.unified-shell .topbar { width: calc(100% - 20px); margin-top: 10px; border-radius: 12px 12px 4px 4px; padding-inline: 12px; }
+  body.unified-shell .route-toolbar { width: calc(100% - 28px); padding-inline: 8px; }
+  body.unified-shell #dashboard-view > [data-university-page], body.unified-shell .school-detail-view,
+  body.unified-shell .global-community-section { width: calc(100% - 36px); padding-top: 20px; }
+  body.unified-shell.global-home-mode[data-global-feed="all"] .journey-home-intro { min-height: 460px; margin-bottom: 24px; }
+  body.unified-shell .journey-home-copy { width: 100%; padding: 16px 24px 44px; }
+  body.unified-shell .journey-home-title { font-size: 38px; }
+  body.unified-shell .journey-home-caption { margin: 18px 0; max-width: none; }
+  body.unified-shell .journey-explore { min-height: 46px; }
+  body.unified-shell :is(.community-home-heading, .community-feed-tabs) { padding-left: 15px; padding-right: 15px; }
+  body.unified-shell #community-hub .community-feed-header { padding: 18px 16px; }
+  body.unified-shell #community-hub .community-feed-header .community-home-heading { gap: 12px; margin-bottom: 14px; }
+  body.unified-shell #global-community-compose { width: 100%; }
+  body.unified-shell #community-feed-tabs a { font-size: 15px; padding-inline: 12px; }
+  body.unified-shell .featured-board-grid { gap: 16px; }
+  body.unified-shell .partner-map-panel { border-width: 4px; }
+  body.unified-shell .partner-view-toolbar { border-width: 4px; padding: 7px; }
+  body.unified-shell .guide-intro { padding-left: 12px; }
+  body.unified-shell .school-detail-view .school-detail-header { border-width: 5px; }
+  body.unified-shell .school-detail-view .school-detail-copy { padding-inline: 15px; }
+  body.unified-shell .school-detail-view .detail-primary-facts { margin-inline: 15px; }
+  body.unified-shell .school-detail-main { padding: 18px; }
+}
+@media (forced-colors: active) {
+  body.unified-shell::before, body.unified-shell :is(.community-home-heading, .guide-stage, .journey-filter-drawer)::before { display: none; }
+  body.unified-shell .journey-home-copy, html[data-theme="dark"] body.unified-shell .journey-home-copy { color: CanvasText; background: Canvas; }
+}
+
+/* Give the list every column's space; filters sit above it instead of alongside. */
+body.unified-shell #dashboard-view > #partners:has([data-partner-view="list"][aria-pressed="true"]) {
+  width: calc(100% - 64px); max-width: 1600px;
+}
+#partners:has([data-partner-view="list"][aria-pressed="true"]) .journey-search-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+#partners:has([data-partner-view="list"][aria-pressed="true"]) .journey-filter-drawer { grid-row: 1; }
+body.unified-shell #partners:has([data-partner-view="list"][aria-pressed="true"]) .filter-panel {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto; align-items: end; gap: 16px;
+}
+body.unified-shell #partners .desktop-partner-table { overflow-x: visible; }
+body.unified-shell #partners .partner-table { width: 100%; min-width: 0; table-layout: fixed; }
+body.unified-shell #partners .partner-table :is(th, td) {
+  padding: 16px 10px; white-space: normal; overflow-wrap: anywhere;
+}
+body.unified-shell #partners .partner-table th:nth-child(1) { width: 6%; }
+body.unified-shell #partners .partner-table th:nth-child(2) { width: 28%; }
+body.unified-shell #partners .partner-table th:nth-child(3) { width: 10%; }
+body.unified-shell #partners .partner-table th:nth-child(4) { width: 14%; }
+body.unified-shell #partners .partner-table th:nth-child(5) { width: 21%; }
+body.unified-shell #partners .partner-table th:nth-child(6) { width: calc(21% - 64px); }
+body.unified-shell #partners .partner-table th:nth-child(7) { width: 64px; }
+body.unified-shell #partners .partner-school-cell {
+  grid-template-columns: 88px minmax(0, 1fr); min-width: 0; gap: 12px;
+}
+body.unified-shell #partners .school-photo-table { width: 88px; max-width: 100%; }
+body.unified-shell #partners .partner-school-cell > div { min-width: 0; }
+body.unified-shell #partners .partner-name {
+  width: 100%; min-width: 0; max-width: none; margin: 0; padding: 0;
+  white-space: normal; overflow-wrap: anywhere;
+}
+body.unified-shell #partners :is(.condition-cell, .partner-condition-disclosure[open]) { min-width: 0; max-width: none; }
+body.unified-shell #partners .partner-table .student-point-list.compact { min-width: 0; }
+body.unified-shell #partners .partner-table :is(.coverage-chip, .match-pill) { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+@media (max-width: 1200px) {
+  body.unified-shell #partners .partner-school-cell { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+}
+@media (max-width: 900px) {
+  body.unified-shell #partners:has([data-partner-view="list"][aria-pressed="true"]) .filter-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+  }
+}
+@media (max-width: 560px) {
+  body.unified-shell #dashboard-view > #partners:has([data-partner-view="list"][aria-pressed="true"]) { width: calc(100% - 36px); }
+}

@@ -1,0 +1,52 @@
+/* Self-hosted fonts; Chinese subsets are fetched only when their glyphs appear. */
+@import url("./assets/fonts/genjyuu/GenJyuuGothic-Regular.css");
+@import url("./assets/fonts/genjyuu/GenJyuuGothic-Medium.css");
+@import url("./assets/fonts/genjyuu/GenJyuuGothic-Bold.css");
+
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./assets/fonts/poppins/Poppins-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("./assets/fonts/poppins/Poppins-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("./assets/fonts/poppins/Poppins-Bold.ttf") format("truetype");
+}
+
+:root,
+html[data-theme] {
+  --uw-font-ui: "Poppins", "GenJyuuGothic", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  font-family: var(--uw-font-ui);
+}
+
+body,
+button,
+input,
+select,
+option,
+optgroup,
+textarea,
+.unified-shell .maplibregl-map,
+.unified-shell .maplibregl-popup,
+.unified-shell .map-tooltip {
+  font-family: var(--uw-font-ui);
+}
+
+/* Native controls and generated text must not fall back to a browser UI font. */
+input::placeholder,
+textarea::placeholder,
+::file-selector-button {
+  font-family: var(--uw-font-ui);
+}

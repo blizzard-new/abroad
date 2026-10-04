@@ -328,7 +328,7 @@ class _TopHeader extends StatelessWidget {
             children: [
               Text('目前就讀學校', style: Theme.of(context).textTheme.bodySmall),
               Text(
-                store.account?.homeUniversity ?? '長庚大學',
+                store.account?.homeUniversity ?? '未定大學',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ],

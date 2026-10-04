@@ -6,10 +6,12 @@ Product type: a student-facing exchange application information app. Phase one s
 
 ### iPhone and compact width
 
-- Use a native `TabView` with five persistent destinations: Home, Schools, Deadlines, Support, and Eligibility.
+- Keep a native `TabView` for destination state, hide its system bar, and overlay a five-control floating Liquid Glass dock.
+- Use the same visual order on iOS and Android: Home circle, Deadlines circle, elongated Search/Schools capsule, Support/Documents circle with a compact update badge, and Profile/Eligibility circle.
 - Keep the tab bar visible while moving within each destination so students retain orientation.
 - Do not show a sidebar on iPhone. Apple notes that sidebars consume too much space in compact environments.
-- Put primary task controls in the lower portion of the home content and keep every target at least 44 x 44 pt.
+- Show visible text only in the center Search capsule. Every icon-only control keeps a localized accessibility label and selected state.
+- Keep every destination target at least 44 x 44 pt and above the home indicator.
 
 ### iPad and regular width
 
@@ -21,11 +23,10 @@ Product type: a student-facing exchange application information app. Phase one s
 ## Main Screen
 
 1. **Navigation bar:** compact title, refresh action, native Liquid Glass supplied by the system.
-2. **Campus identity:** real CGU campus image, 190 pt on compact width and 240 pt on regular width.
-3. **Summary metrics:** three standard content cards for schools, schedules, and document summaries.
-4. **Task controls:** four interactive Liquid Glass controls for the student's highest-frequency actions.
-5. **Coverage chart:** a native Swift Charts horizontal bar chart for schools, schedules, documents, and official sources.
-6. **Current information:** standard-material cards for the nearest application period and a featured partner university.
+2. **Campus identity:** real CGU campus image, 150 pt on compact width and 190 pt on regular width.
+3. **Task controls:** a two-column icon-first grid on compact width and four columns on regular width; visible copy is limited to one short title.
+4. **Current information:** the nearest application period uses an inline disclosure; a featured partner university opens a separate detail screen.
+5. **Coverage chart:** a collapsed disclosure that reveals the native Swift Charts summary only on demand.
 
 ## Material Rules
 
@@ -41,13 +42,15 @@ Product type: a student-facing exchange application information app. Phase one s
 | Component | Size | Material | Interaction | Accessibility |
 | --- | --- | --- | --- | --- |
 | Sidebar row | Minimum 52 pt high | System sidebar | Persistent selected state | SF Symbol plus visible label; selected value announced |
-| Tab item | System controlled | System Liquid Glass | Preserves each section's navigation state | Five or fewer items; concise labels |
+| Floating dock item | 54 x 54 pt circles; 110 x 54 pt center capsule | Native Liquid Glass or material fallback | Preserves each section's navigation state | Icon-only items have explicit labels; selected value announced |
 | Toolbar icon | Minimum 44 x 44 pt | System Liquid Glass | Native pressed, hover, focus, and disabled states | Explicit action label |
-| Task control | Minimum 72 pt high | Interactive regular Liquid Glass | Touch and pointer response; subtle hover on iPad | Title and outcome hint combined |
+| Task control | Minimum 116 pt high | Interactive regular Liquid Glass | Touch and pointer response; subtle hover on iPad | Short visible title; outcome kept as accessibility hint |
 | Primary action | Minimum 52 pt high | Prominent Liquid Glass on iOS 26 | Pressed, focused, disabled | Verb-first label; no color-only meaning |
 | Metric card | Flexible width, minimum 88 pt high | Standard content surface | Read-only | Combined metric name and value |
+| Snapshot rail | 108–148 pt per fact, 52 pt dividers | Standard content surface | Horizontal drag on compact width | Each fact combines the short label and value |
+| Information summary grid | 112 pt minimum per cell; 2 x 2 compact, one row regular | Standard content surface | Read-only or whole-card navigation | Icon is decorative; label and value are combined |
 | Information card | Full column width | Standard content surface | Navigation or disclosure | Heading, summary, and source relationship |
-| Coverage chart | 164 pt high | Standard content surface | Read-only in MVP | Combined spoken summary of every value |
+| Coverage chart | Collapsed by default | Standard content surface | Disclosure expands the chart | Combined spoken summary of every value |
 
 ## Thumb Reach and Spacing
 
@@ -55,16 +58,18 @@ Product type: a student-facing exchange application information app. Phase one s
 - Keep primary mobile task controls below the top identity and summary region.
 - Avoid placing the only submission action solely in the top navigation bar.
 - Use 44 pt as the minimum target for icon buttons, clear controls, links, pickers, and segmented controls.
-- Maintain at least 8 pt between adjacent touch targets.
+- Maintain 6–8 pt between adjacent dock targets and at least 8 pt elsewhere.
+- Reserve the four-cell summary for short comparable facts. Put long conditions, deadlines, post bodies, comments, and source notes in disclosures or reading views.
 
 ## Acceptance Checks
 
 - VoiceOver announces the current sidebar destination and every chart value.
-- Dynamic Type does not truncate destination names or primary task labels.
+- Dynamic Type does not truncate the Search label or primary task labels; icon-only destinations remain fully named to VoiceOver.
 - The interface remains usable with Reduce Transparency, Increase Contrast, and Reduce Motion.
 - iPhone portrait has no sidebar and no horizontal scrolling.
 - iPad regular width keeps sidebar selection visible while detail content changes.
 - Liquid Glass never obscures long application text, eligibility rules, or official document summaries.
+- Android and iOS compact layouts preserve the same dock order, icon meaning, short labels, disclosure behavior, and destination structure.
 
 ## Apple References
 

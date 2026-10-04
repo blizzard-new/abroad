@@ -54,7 +54,8 @@ class CguOiaCrawler:
         self.config = config or CrawlerConfig()
         self.paths = ensure_data_dirs(self.config.data_dir)
         self.raw_files_dir = data_paths(self.config.data_dir)["raw_files"]
-        self.session = requests.Session()
+        from .http_client import get_safe_session
+        self.session = get_safe_session(require_https=True)
         self.session.headers.update(
             {
                 "User-Agent": self.config.user_agent,
@@ -109,8 +110,13 @@ class CguOiaCrawler:
         self._rate_limit()
         response = self.session.get(url, timeout=self.config.timeout_seconds)
         response.raise_for_status()
-        response.encoding = response.apparent_encoding or response.encoding
-        return response.text
+        # Guessing the charset misreads short UTF-8 pages (the visa page came out as mojibake),
+        # so a body that decodes as UTF-8 is taken as UTF-8 and only the rest is guessed.
+        try:
+            return response.content.decode("utf-8")
+        except UnicodeDecodeError:
+            response.encoding = response.apparent_encoding or response.encoding
+            return response.text
 
     def fetch_html_with_playwright(self, url: str) -> str:
         self._rate_limit()

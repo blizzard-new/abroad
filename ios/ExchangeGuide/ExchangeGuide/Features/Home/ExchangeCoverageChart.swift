@@ -10,6 +10,7 @@ private struct CoveragePoint: Identifiable {
 
 struct ExchangeCoverageChart: View {
     let dashboard: StudentDashboard
+    @State private var isExpanded = false
 
     private var points: [CoveragePoint] {
         [
@@ -41,9 +42,7 @@ struct ExchangeCoverageChart: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: ExchangeSpacing.md) {
-            ExchangeSectionHeader(title: "整理進度")
-
+        DisclosureGroup(isExpanded: $isExpanded) {
             HStack(spacing: ExchangeSpacing.lg) {
                 ZStack {
                     Chart(points) { point in
@@ -65,7 +64,7 @@ struct ExchangeCoverageChart: View {
                             .foregroundStyle(ExchangeColor.labelSecondary)
                     }
                 }
-                .frame(width: 154, height: 154)
+                .frame(width: 126, height: 126)
 
                 VStack(alignment: .leading, spacing: ExchangeSpacing.sm) {
                     ForEach(points) { point in
@@ -84,7 +83,26 @@ struct ExchangeCoverageChart: View {
             .accessibilityLabel(
                 "資料整理進度：合作校 \(dashboard.partnerUniversities.count) 所，時程 \(dashboard.applicationPeriods.count) 筆，文件 \(dashboard.documentExplanations.count) 份，來源 \(dashboard.sources.count) 筆"
             )
+            .padding(.top, ExchangeSpacing.md)
+        } label: {
+            HStack(spacing: ExchangeSpacing.sm) {
+                Image(systemName: "chart.pie.fill")
+                    .font(.body.weight(.semibold))
+                    .foregroundStyle(ExchangeColor.indigo)
+                    .frame(width: 40, height: 40)
+                    .background(ExchangeColor.indigo.opacity(0.13), in: Circle())
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("資料狀態")
+                        .font(ExchangeTypography.caption)
+                        .foregroundStyle(ExchangeColor.labelSecondary)
+                    Text("\(points.reduce(0) { $0 + $1.value }) 筆重點")
+                        .font(ExchangeTypography.headline)
+                        .foregroundStyle(ExchangeColor.labelPrimary)
+                }
+            }
         }
+        .tint(ExchangeColor.labelSecondary)
         .exchangeCard()
     }
 }

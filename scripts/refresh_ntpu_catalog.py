@@ -64,6 +64,7 @@ def _research_partner(
         try:
             result.destination = collect_destination_profile(
                 partner,
+                home_university=NTPU_NAME,
                 max_pages=max_pages,
                 timeout_seconds=timeout_seconds,
             )

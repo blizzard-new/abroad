@@ -1,15 +1,21 @@
 from __future__ import annotations
 
-from datetime import date, timedelta
+import hashlib
+from datetime import datetime, timedelta, timezone
 from io import BytesIO
 
 from docx import Document
 from fastapi.testclient import TestClient
 
-from exchange_info.advisor import answer_question, build_advisor_plan
+from exchange_info.advisor import _dashboard_deadlines, answer_question, build_advisor_plan
 from exchange_info.api import create_app
 from exchange_info.document_checker import check_document
 from exchange_info.models import (
+    AccountSessionRecord,
+    ApplicationPeriodAudience,
+    ApplicationPeriodDateStatus,
+    ApplicationPeriodItem,
+    ApplicationPeriodStatus,
     AdvisorProfile,
     PageCategory,
     PartnerStudentSummary,
@@ -18,21 +24,60 @@ from exchange_info.models import (
     SourceReference,
     StudentDashboard,
     StudentInfoItem,
+    UserAccount,
+    utc_now,
 )
+from exchange_info.storage import save_account_sessions, save_user_accounts
 
 
 SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject/Detail/123"
 
 
+def _authenticated_client(data_dir) -> TestClient:
+    account = UserAccount(display_name="文件檢查測試學生", student_status_verified=True,
+                          verified_university="長庚大學", school_email_verified=True)
+    token = "advisor-document-check-token"
+    save_user_accounts([account], data_dir)
+    save_account_sessions(
+        [
+            AccountSessionRecord(
+                account_id=account.id,
+                token_hash=hashlib.sha256(token.encode("utf-8")).hexdigest(),
+                expires_at=utc_now() + timedelta(days=1),
+            )
+        ],
+        data_dir,
+    )
+    client = TestClient(create_app(data_dir))
+    client.headers.update({"Authorization": f"Bearer {token}"})
+    return client
+
+
 def _dashboard() -> StudentDashboard:
-    deadline = date.today() + timedelta(days=21)
+    now = datetime.now(timezone.utc)
+    deadline = now + timedelta(days=21)
     return StudentDashboard(
         school_name="長庚大學",
+        academic_score_minimum=70,
+        language_score_minimums={"toeic": 700},
         application_periods=[
-            StudentInfoItem(
+            ApplicationPeriodItem(
                 title="交換學生校內申請",
                 details=[f"截止日期：{deadline.year}年{deadline.month}月{deadline.day}日"],
                 source=SourceReference(title="交換公告", source_url=SOURCE_URL),
+                scope="home_application",
+                program_types=["exchange"],
+                academic_year="116",
+                application_round="第一梯次",
+                audience=ApplicationPeriodAudience.ALL_STUDENTS,
+                opens_at=now - timedelta(days=1),
+                deadline_at=deadline,
+                date_status=ApplicationPeriodDateStatus.VERIFIED_EXACT,
+                status=ApplicationPeriodStatus.OPEN,
+                status_note="本梯次正在受理。",
+                deadline_note="官方校內申請截止時間。",
+                reminder_eligible=True,
+                checked_at=now,
             )
         ],
         eligibility=[
@@ -122,6 +167,98 @@ def test_advisor_returns_grounded_match_tasks_and_no_fake_admission_probability(
     assert "不是錄取機率" in plan.disclaimer
 
 
+def test_advisor_does_not_turn_partner_reference_text_into_a_future_deadline() -> None:
+    dashboard = StudentDashboard(
+        school_name="長庚大學",
+        partner_universities=[
+            PartnerUniversity(
+                program_type="交換學生",
+                country="法國",
+                school_name="參考時程測試大學",
+                application_deadline="秋季 10 月 30 日；適用年度待確認",
+                source_url=SOURCE_URL,
+            )
+        ],
+    )
+
+    assert _dashboard_deadlines(dashboard) == []
+
+
+def test_advisor_unknown_scope_and_threshold_are_not_passed_qualification():
+    dashboard = _dashboard()
+    unknown = dashboard.partner_universities[0].model_copy(update={
+        "colleges": "依當期校際協議確認", "degree_levels": None,
+    })
+    dashboard = dashboard.model_copy(update={"partner_universities": [unknown], "academic_score_minimum": None})
+    plan = build_advisor_plan(AdvisorProfile(college="工學院", degree_level="大學部", academic_score=88,
+                                           language_test="toeic", language_score=900), dashboard, [], [], [])
+    match = plan.recommendations[0]
+    assert match.eligibility_status == "needs_confirmation"
+    assert match.blocking_reasons == []
+    assert any("學院範圍" in item for item in match.confirmation_items)
+    assert "符合學院範圍" not in match.reasons
+    assert not any("達長庚" in item for item in match.reasons)
+    assert any("門檻待確認" in item for item in plan.qualification)
+
+
+def test_advisor_misplaced_degree_in_college_field_is_unknown_not_mismatch():
+    dashboard = _dashboard()
+    partner = dashboard.partner_universities[0].model_copy(update={"colleges":"大學部", "degree_levels":"大學部"})
+    plan = build_advisor_plan(AdvisorProfile(college="法律學院", degree_level="大學部", academic_score=88,
+                                           language_test="toeic", language_score=900),
+                              dashboard.model_copy(update={"partner_universities":[partner]}), [], [], [])
+    assert plan.recommendations[0].eligibility_status == "needs_confirmation"
+    assert plan.recommendations[0].blocking_reasons == []
+
+
+def test_advisor_undergraduate_is_not_a_graduate_match():
+    dashboard = _dashboard()
+    partner = dashboard.partner_universities[0].model_copy(update={"degree_levels":"Undergraduate"})
+    plan = build_advisor_plan(AdvisorProfile(college="工學院", degree_level="研究所", academic_score=88,
+                                           language_test="toeic", language_score=900),
+                              dashboard.model_copy(update={"partner_universities":[partner]}), [], [], [])
+    assert plan.recommendations[0].eligibility_status == "does_not_match"
+    assert any("學制" in item for item in plan.recommendations[0].blocking_reasons)
+
+
+def test_advisor_eligibility_precedes_preference_score_and_keeps_blocking_reasons():
+    dashboard = _dashboard()
+    allowed = dashboard.partner_universities[0]
+    blocked = allowed.model_copy(update={"school_name":"不適用但偏好較高的大學", "colleges":"醫學院", "country":"法國"})
+    plan = build_advisor_plan(AdvisorProfile(college="工學院", degree_level="大學部", academic_score=88,
+                                           language_test="toeic", language_score=900, preferred_country="法國",
+                                           target_school=blocked.school_name),
+                              dashboard.model_copy(update={"partner_universities":[blocked,allowed]}), [], [], [])
+    assert plan.recommendations[0].school_name == allowed.school_name
+    assert plan.recommendations[0].eligibility_status == "matches_known"
+    assert plan.target_match.school_name == blocked.school_name
+    assert plan.target_match.eligibility_status == "does_not_match"
+    assert any("你的學院" in item for item in plan.target_match.blocking_reasons)
+
+
+def test_advisor_home_language_requirement_cannot_be_offset_by_preferences():
+    dashboard = _dashboard()
+    partner = dashboard.partner_universities[0].model_copy(update={"eligibility":"TOEIC 600", "student_summary_zh":PartnerStudentSummary()})
+    plan = build_advisor_plan(AdvisorProfile(college="工學院", degree_level="大學部", academic_score=88,
+                                           language_test="toeic", language_score=650, preferred_country="日本"),
+                              dashboard.model_copy(update={"partner_universities":[partner]}), [], [], [])
+    assert plan.recommendations[0].eligibility_status == "does_not_match"
+    assert any("本校公開門檻" in item for item in plan.recommendations[0].blocking_reasons)
+
+
+def test_advisor_unknown_language_remains_explorable_and_target_outside_top_twenty_is_compared():
+    dashboard = _dashboard()
+    partner = dashboard.partner_universities[0]
+    partners = [partner.model_copy(update={"school_name":f"學校 {index:02}"}) for index in range(25)]
+    plan = build_advisor_plan(AdvisorProfile(college="工學院", degree_level="大學部", academic_score=88,
+                                           target_school=partners[-1].school_name),
+                              dashboard.model_copy(update={"partner_universities":partners}), [], [], [])
+    assert len(plan.recommendations) == 20
+    assert plan.target_match.school_name == partners[-1].school_name
+    assert plan.target_match.eligibility_status == "needs_confirmation"
+    assert plan.target_match.blocking_reasons == []
+
+
 def test_grounded_answer_refuses_when_no_relevant_public_source(monkeypatch) -> None:
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
     answer = answer_question("火星寵物檢疫與火箭燃料規定", _dashboard(), [], [], [])
@@ -192,7 +329,7 @@ def test_advisor_and_document_check_api(tmp_path, monkeypatch) -> None:
         lambda pages, info, **kwargs: dashboard,
     )
     monkeypatch.delenv("OPENAI_API_KEY", raising=False)
-    client = TestClient(create_app(tmp_path / "data"))
+    client = _authenticated_client(tmp_path / "data")
 
     plan = client.post(
         "/advisor/plan",
@@ -211,7 +348,11 @@ def test_advisor_and_document_check_api(tmp_path, monkeypatch) -> None:
     checked = client.post(
         "/document-check",
         files={"file": ("履歷.txt", "教育背景：長庚大學。\n技能：英文。\n經歷：交換社團。" * 8, "text/plain")},
-        data={"document_type": "resume", "require_signature": "false"},
+        data={
+            "document_type": "resume",
+            "require_signature": "false",
+            "consent": "true",
+        },
     )
     assert checked.status_code == 200
     assert checked.json()["file_name"] == "履歷.txt"

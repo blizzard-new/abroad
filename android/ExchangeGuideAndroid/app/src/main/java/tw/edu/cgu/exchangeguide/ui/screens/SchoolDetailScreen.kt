@@ -15,9 +15,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Article
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.AccountBalance
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.EventAvailable
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.Payments
 import androidx.compose.material.icons.filled.PlayCircle
+import androidx.compose.material.icons.filled.Public
+import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.WarningAmber
 import androidx.compose.material3.Icon
@@ -32,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -45,10 +53,14 @@ import tw.edu.cgu.exchangeguide.ui.components.BulletGroup
 import tw.edu.cgu.exchangeguide.ui.components.ErrorState
 import tw.edu.cgu.exchangeguide.ui.components.ExchangeCard
 import tw.edu.cgu.exchangeguide.ui.components.InlineBanner
+import tw.edu.cgu.exchangeguide.ui.components.InfoSummaryGrid
+import tw.edu.cgu.exchangeguide.ui.components.InfoSummaryItem
 import tw.edu.cgu.exchangeguide.ui.components.LoadingState
 import tw.edu.cgu.exchangeguide.ui.components.PageScaffold
 import tw.edu.cgu.exchangeguide.ui.components.ResponsiveContent
 import tw.edu.cgu.exchangeguide.ui.components.SectionHeader
+import tw.edu.cgu.exchangeguide.ui.components.SnapshotMetric
+import tw.edu.cgu.exchangeguide.ui.components.SnapshotMetricRail
 import tw.edu.cgu.exchangeguide.ui.components.SourceLink
 import tw.edu.cgu.exchangeguide.ui.theme.ExchangeSpacing
 
@@ -92,7 +104,7 @@ fun SchoolDetailScreen(
                     }
                 }
                 when (selectedSection) {
-                    0 -> RequirementsSection(university, wide)
+                    0 -> RequirementsSection(university)
                     1 -> WorkflowSection(workflow, isLoading, errorMessage, onRefresh)
                     2 -> LifeInformationSection(experiences, isLoading, errorMessage, onRefresh)
                     3 -> ExperiencesSection(experiences, isLoading, errorMessage, onRefresh, wide)
@@ -146,50 +158,82 @@ private fun SchoolIdentity(university: PartnerUniversity) {
             color = MaterialTheme.colorScheme.primary,
         )
         Text(university.schoolName, style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
-        university.applicationDeadline?.takeIf { it.isNotBlank() }?.let {
-            InlineBanner("申請截止資訊", it, BannerKind.Warning)
-        }
+        SnapshotMetricRail(
+            listOf(
+                SnapshotMetric(university.country?.takeIf { it.isNotBlank() } ?: "未提供", "國家", MaterialTheme.colorScheme.primary),
+                SnapshotMetric(university.programType?.takeIf { it.isNotBlank() } ?: "未提供", "方案", MaterialTheme.colorScheme.secondary),
+                SnapshotMetric(university.quota?.takeIf { it.isNotBlank() } ?: "依公告", "名額", MaterialTheme.colorScheme.tertiary),
+                SnapshotMetric(
+                    if (university.applicationDeadline.isNullOrBlank()) "待確認" else "已整理",
+                    "截止資訊",
+                    if (university.applicationDeadline.isNullOrBlank()) MaterialTheme.colorScheme.error else Color(0xFF2E8B62),
+                ),
+            ),
+        )
     }
 }
 
 @Composable
-private fun RequirementsSection(university: PartnerUniversity, wide: Boolean) {
+private fun RequirementsSection(university: PartnerUniversity) {
     SectionHeader(
         eyebrow = "申請前先確認",
-        title = "限制與條件",
-        detail = "將合作校表格內容整理成可直接比較的欄位；空白欄位代表官方資料目前未提供。",
+        title = "申請摘要",
+        detail = "先掃描四格重點；長條件再個別展開。",
     )
-    val items = listOfNotNull(
-        university.colleges?.takeIf { it.isNotBlank() }?.let { "可申請學院" to it },
-        university.degreeLevels?.takeIf { it.isNotBlank() }?.let { "學制" to it },
-        university.studyPeriod?.takeIf { it.isNotBlank() }?.let { "研修期間" to it },
-        university.quota?.takeIf { it.isNotBlank() }?.let { "名額" to it },
-        university.eligibility?.takeIf { it.isNotBlank() }?.let { "資格與語言條件" to it },
-        university.applicationInfo?.takeIf { it.isNotBlank() }?.let { "申請方式" to it },
-        university.tuitionInfo?.takeIf { it.isNotBlank() }?.let { "學費資訊" to it },
-        university.rankingInfo?.takeIf { it.isNotBlank() }?.let { "其他資訊" to it },
+    val summaryItems = listOfNotNull(
+        university.colleges?.takeIf { it.isNotBlank() }?.let {
+            InfoSummaryItem("可申請學院", it, Icons.Default.AccountBalance, MaterialTheme.colorScheme.primary)
+        },
+        university.degreeLevels?.takeIf { it.isNotBlank() }?.let {
+            InfoSummaryItem("學制", it, Icons.Default.School, MaterialTheme.colorScheme.secondary)
+        },
+        university.studyPeriod?.takeIf { it.isNotBlank() }?.let {
+            InfoSummaryItem("研修期間", it, Icons.Default.CalendarMonth, Color(0xFFC98A3D))
+        },
+        university.tuitionInfo?.takeIf { it.isNotBlank() }?.let {
+            InfoSummaryItem("學費資訊", it, Icons.Default.Payments, Color(0xFF2E8B62))
+        },
     )
-    if (items.isEmpty()) {
+    if (summaryItems.isEmpty()) {
         InlineBanner("尚無完整條件", "可先查看官方來源，系統會在下次資料更新時補齊。", BannerKind.Info)
-    } else if (wide) {
-        items.chunked(2).forEach { row ->
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(ExchangeSpacing.md)) {
-                row.forEach { (label, value) -> InfoCard(label, value, Modifier.weight(1f)) }
-                if (row.size == 1) androidx.compose.foundation.layout.Spacer(Modifier.weight(1f))
-            }
-        }
     } else {
-        items.forEach { (label, value) -> InfoCard(label, value) }
+        InfoSummaryGrid(summaryItems)
+    }
+
+    val details = listOfNotNull(
+        university.eligibility?.takeIf { it.isNotBlank() }?.let { Triple("資格與語言條件", it, Icons.Default.Groups) },
+        university.applicationDeadline?.takeIf { it.isNotBlank() }?.let { Triple("完整截止資訊", it, Icons.Default.EventAvailable) },
+        university.applicationInfo?.takeIf { it.isNotBlank() }?.let { Triple("申請方式", it, Icons.Default.CheckCircle) },
+        university.rankingInfo?.takeIf { it.isNotBlank() }?.let { Triple("其他資訊", it, Icons.Default.Public) },
+    )
+    details.forEach { (label, value, icon) ->
+        DetailDisclosure(label, value, icon)
     }
     if (!university.website.isNullOrBlank()) SourceLink("前往合作校網站", university.website)
     SourceLink("查看長庚大學官方資料", university.sourceUrl)
 }
 
 @Composable
-private fun InfoCard(label: String, value: String, modifier: Modifier = Modifier) {
-    ExchangeCard(modifier) {
-        Text(label, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-        Text(value, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold)
+private fun DetailDisclosure(label: String, value: String, icon: androidx.compose.ui.graphics.vector.ImageVector) {
+    var expanded by remember(label, value) { mutableStateOf(false) }
+    ExchangeCard {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(role = Role.Button) { expanded = !expanded },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(ExchangeSpacing.sm),
+        ) {
+            Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+            Text(label, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+            Icon(
+                if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                contentDescription = if (expanded) "收合" else "展開",
+            )
+        }
+        AnimatedVisibility(expanded) {
+            Text(value, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
     }
 }
 

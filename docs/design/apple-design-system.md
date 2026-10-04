@@ -82,6 +82,14 @@ Primary content uses columns 1–8; contextual details use columns 9–12. Table
 - iPad full width: all 12 columns; 24px gutter and maximum readable text width of 680px.
 - Respect safe areas and keyboard; bottom actions stay above the home indicator.
 
+### Shared native mobile dock
+
+- Android and iOS compact layouts use the same five-control floating dock: Home, Deadlines, an elongated Search/Schools capsule, Support/Documents, and Profile/Eligibility.
+- The four outer controls are circular and icon-only; the center Search control is the sole dock item with visible text. Accessibility labels and selected state remain mandatory for every item.
+- Support/Documents may show one compact green update badge. The badge communicates attention, not the total document count.
+- Dense secondary content stays out of the first viewport. Use a disclosure for quick context and a separate screen for multi-step tasks, long rules, school details, or source-backed documents.
+- Home task entry points use icons plus one short title. Longer outcome text is available to assistive technology and on the destination screen.
+
 ## 8px spacing and geometry
 
 | Token | Value | Use |
@@ -128,7 +136,7 @@ All components below define Normal, Hover, Pressed, Disabled, and accessibility 
 | 6 | **Link**: text + optional external icon | Link color, no underline | Underline | Lower opacity | Tertiary label | External links announce “opens official website” |
 | 7 | **Navigation Bar**: title, context, trailing actions | Glass material, hairline | Actions respond individually | Native button press | N/A | Landmarks; title is current screen heading |
 | 8 | **Sidebar Navigation Item**: icon, label, selection indicator | Secondary label | Quiet fill | Pressed fill | Quaternary | `aria-current`/selected trait; keyboard arrow support |
-| 9 | **Tab Bar Item**: SF Symbol + short label | Secondary | Pointer tint | Native tab press | Quaternary | Selected trait; labels remain visible at large text |
+| 9 | **Floating Dock Item**: circle icon or center Search capsule | Elevated glass/material | Pointer tint | Native tab press | Quaternary | Selected trait; icon-only items expose localized labels |
 | 10 | **Breadcrumb**: hierarchy links + current label | Tertiary/primary | Link underline | Reduced opacity | Quaternary | Ordered navigation; current item not linked |
 | 11 | **Search Field**: search icon, input, clear | Tertiary surface | Stronger border | Focus ring | Lower fill | Native search role; clear button named; supports dictation |
 | 12 | **Text Field**: label, input, assist/error | Tertiary surface | Border emphasis | Accent focus ring | 45% opacity | Persistent visible label; errors associated programmatically |
@@ -166,6 +174,15 @@ All components below define Normal, Hover, Pressed, Disabled, and accessibility 
 | 44 | **Pagination/Load More**: progress + command | Secondary button | Level1 | Pressed | Loading/last page disabled | Announces newly loaded count; focus remains stable |
 | 45 | **Source Link Group**: official links + checked date | Unframed list | Underline | Reduced opacity | Unavailable source labelled | Domain is visible; external behavior announced |
 | 46 | **Student Experience Card**: medium, theme, summary, source | Level1 surface | Level2 | Row press | N/A | Distinguishes personal experience from official rules |
+| 47 | **Snapshot Rail**: value + short label + separators | Horizontally scrollable content surface | Pointer scroll | Native horizontal drag | N/A | Each value-label pair is combined; scrolling is intentional |
+| 48 | **Information Summary Grid**: up to four label/value/icon cells | 2 x 2 on compact, one row on regular width | Level1 | Read-only unless the whole card navigates | N/A | Each cell is one combined fact; icon is decorative |
+
+### Dense information pattern
+
+- Use the Snapshot Rail only for three to five comparable facts that can be understood without paragraphs, such as country, program, quota, deadline status, post count, or reply count.
+- Use the Information Summary Grid for up to four decision-supporting facts. The value is visually stronger than its label, and the icon repeats meaning without replacing text.
+- On compact width the grid is always two columns. Long eligibility rules, application instructions, official-source notes, post bodies, comments, and chat messages never enter the grid; they use disclosures or a separate reading view.
+- School detail and community post cards share this hierarchy on Android and iOS, while retaining native icons, typography, accessibility behavior, and platform-specific interaction feedback.
 
 ## Component state rules
 

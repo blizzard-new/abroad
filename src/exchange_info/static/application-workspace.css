@@ -1,0 +1,105 @@
+#application-workspace { min-width:0; display:grid; gap:20px; }
+/* Published source differences remain readable inside the notification dialog. */
+.notification-changes { margin:12px 0; padding:14px; border:1px solid var(--border, #d4e2ee); border-radius:14px; background:rgba(227,243,251,.42); overflow-wrap:anywhere; }
+.notification-changes details { padding:10px 0; border-top:1px solid var(--border, #d4e2ee); }
+.notification-changes summary { cursor:pointer; font-weight:650; }
+.notification-change-row { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:8px 12px; padding:10px 0; }
+.notification-change-row > strong { grid-column:1/-1; }
+.notification-change-row > div { min-width:0; padding:10px; border-radius:10px; background:var(--surface,rgba(255,255,255,.65)); }
+.notification-change-row span { font-size:12px; color:var(--text-muted,#526b82); }
+.notification-change-row p { margin:4px 0 0; white-space:pre-wrap; }
+.notification-affected-tasks { margin:0 0 12px; padding:12px 14px; border:1px solid #b9d8e6; border-radius:12px; background:#ffffffb8; }
+.notification-affected-tasks h4 { margin:0 0 8px; font-size:15px; }
+.notification-affected-tasks ul { margin:0; padding:0; list-style:none; display:grid; gap:10px; }
+.notification-affected-tasks li { display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; padding-top:10px; border-top:1px solid var(--border,#d4e2ee); }
+.notification-affected-tasks li:first-child { padding-top:0; border-top:0; }
+.notification-affected-tasks li p { flex:1 1 100%; margin:2px 0 0; font-size:13px; line-height:1.65; }
+.notification-affected-badge { padding:2px 8px; border-radius:999px; background:#dff3f8; color:#006b91; font-size:12px; font-weight:650; }
+.notification-affected-badge.warning { background:#fff1d6; color:#8a5200; }
+.notification-affected-note { margin:8px 0 0; font-size:12px; color:var(--muted,#62788c); }
+@media (max-width:600px) { .notification-change-row { grid-template-columns:minmax(0,1fr); } }
+#application-workspace[hidden] { display:none; }
+body.unified-shell #dashboard-view > #application-workspace { width:calc(100% - 144px); max-width:1400px; margin:0 32px 0 112px; padding:28px 0 48px; }
+body.unified-shell #application-workspace > [data-university-page] { width:100%; max-width:none; margin:0; padding:0; }
+.application-workspace-heading { padding:20px 24px 12px; min-width:0; }
+.application-workspace-context { display:flex; justify-content:space-between; align-items:start; gap:24px; }
+.application-workspace-context strong { display:block; font-size:17px; margin-top:5px; }
+.application-workspace-context p { margin:0; max-width:55%; font-size:12px; line-height:1.7; color:var(--muted,#62788c); overflow-wrap:anywhere; }
+.application-workspace-stages { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:18px; }
+.application-workspace-stages a { display:flex; align-items:center; justify-content:center; gap:8px; padding:12px; border:1px solid #d4e3ed; border-radius:12px; color:var(--muted,#62788c); background:#ffffff80; font-size:14px; text-decoration:none; }
+.application-workspace-stages svg { width:18px; height:18px; flex:none; }
+.application-workspace-stages [aria-current] { background:#dff3f8; border-color:#84bfd3; color:#006b91; font-weight:700; }
+.application-workspace-tools { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.application-workspace-tools a { padding:9px 12px; border-radius:9px; font-size:13px; color:var(--muted,#62788c); text-decoration:none; }
+.application-workspace-tools [aria-current] { background:#ffffffb8; color:#006b91; font-weight:700; }
+.application-workspace-heading a:hover { background:#ffffffcf; }
+.application-workspace-heading a:focus-visible { outline:2px solid #0784ad; outline-offset:3px; }
+#application-workspace[data-page=calendar] .application-workspace-heading { padding:16px 20px 10px; }
+#application-workspace[data-page=calendar] .application-workspace-context strong { display:none; }
+#application-workspace[data-page=calendar] .application-workspace-stages { margin-top:12px; }
+.planning-deadline-settings #planning-workspace { margin:0; padding:16px; background:transparent; border:0; box-shadow:none; }
+.planning-deadline-settings #planning-workspace > .concise-heading { margin-bottom:12px; }
+#application-period-fields { min-width:0; margin:0; padding:16px; border:1px solid var(--uw-line); border-radius:14px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+#application-period-fields[hidden] { display:none; }
+#application-period-fields legend { font-weight:700; font-size:13px; padding-inline:6px; }
+#application-period-fields > :is(.application-preference-fields,.application-period-help,p,button) { grid-column:1/-1; }
+.application-period-help { padding:12px 14px; border-radius:12px; background:rgba(219,241,247,.5); min-width:0; }
+.application-period-hint { margin:0; font-size:12px; line-height:1.7; color:var(--muted,#526b82); overflow-wrap:anywhere; }
+.application-period-help > a, .application-period-help > button { margin-top:8px; font-size:12px; }
+#application-period-fields .application-preference-fields { margin:0; min-width:0; }
+#advisor-form[data-mode=eligibility] :is(.advisor-question-field,.advisor-question-chips,.advisor-source-note,#ai-status-chip,#ai-fallback-banner) { display:none; }
+#advisor-form[data-mode=eligibility] .workspace-heading strong::after { content:" · 推薦與核對共用"; font-size:11px; color:var(--uw-muted); font-weight:400; }
+#advisor-form[data-mode=eligibility] #advisor-submit { min-height:46px; }
+[data-theme=dark] .application-workspace-stages a { background:#233548; border-color:#425569; }
+[data-theme=dark] .application-workspace-stages [aria-current], [data-theme=dark] .application-workspace-tools [aria-current] { background:#234757; color:#b0eafa; }
+[data-theme=dark] .application-workspace-heading a:hover { background:#294454; }
+@media (min-width:1600px) {
+  body.unified-shell #dashboard-view > #application-workspace { margin-left:calc(112px + (100% - 1544px) / 2); }
+}
+@media (max-width:900px) {
+  body.unified-shell #dashboard-view > #application-workspace { width:calc(100% - 28px); margin-inline:14px; padding:20px 0 40px; }
+}
+@media (max-width:700px) {
+  #application-workspace { gap:14px; }
+  .application-workspace-heading { padding:16px 12px 10px; }
+  .application-workspace-context { display:block; }
+  .application-workspace-context p { max-width:none; margin-top:8px; }
+  .application-workspace-stages { gap:6px; }
+  .application-workspace-stages a { flex-direction:column; font-size:12px; padding:10px 4px; }
+  .application-workspace-tools a { padding:9px; font-size:12px; }
+  #application-period-fields { grid-template-columns:minmax(0,1fr); }
+  #application-workspace[data-page=calendar] .application-workspace-heading { padding:12px; }
+  body.unified-shell #dashboard-view > #application-workspace[data-page=calendar] { padding-top:12px; gap:10px; }
+  #application-workspace[data-page=calendar] .application-workspace-context strong { display:none; }
+  #application-workspace[data-page=calendar] .application-workspace-context p { margin-top:4px; line-height:1.4; }
+  #application-workspace[data-page=calendar] .application-workspace-stages { margin-top:10px; }
+  #application-workspace[data-page=calendar] .application-workspace-stages a { flex-direction:row; gap:4px; min-height:44px; padding:6px 4px; }
+  #application-workspace[data-page=calendar] .application-workspace-tools { margin-top:6px; gap:2px; }
+  #application-workspace[data-page=calendar] .application-workspace-tools a { padding:7px 8px; }
+  body.unified-shell #application-workspace[data-page=calendar] .calendar-header { padding:12px; gap:8px; margin-bottom:12px; }
+  body.unified-shell #application-workspace[data-page=calendar] .calendar-header p { display:none; }
+  /* The agenda below the month already shows the next task, including its empty state. */
+  body.unified-shell #application-workspace[data-page=calendar] .calendar-next-summary { display:none; }
+  body.unified-shell #application-workspace[data-page=calendar] .calendar-header h2 { font-size:20px; margin:0; }
+  body.unified-shell #application-workspace[data-page=calendar] .calendar-next-summary > span { padding:8px 10px; }
+  body.unified-shell #application-workspace[data-page=calendar] .calendar-action-bar { padding:8px; gap:8px; }
+}
+
+.advisor-fit-details { grid-column:1/-1; }
+.advisor-fit-details ul { margin:8px 0 0; padding:0; list-style:none; display:grid; gap:10px; }
+.advisor-fit-details li { padding:10px 12px; border-radius:10px; background:#ffffffa8; font-size:13px; line-height:1.65; overflow-wrap:anywhere; }
+.advisor-fit-details li p { margin:4px 0; }
+.advisor-fit-details blockquote { margin:6px 0; padding-left:10px; border-left:3px solid #b9d8e6; color:var(--muted,#62788c); }
+.advisor-fit-details li[data-fit-status="over"] strong { color:#9a3b00; }
+.advisor-fit-details li[data-fit-status="within"] strong, .advisor-fit-details li[data-fit-status="listed"] strong { color:#00695c; }
+
+.school-completeness-summary { margin:6px 0 10px; font-size:14px; }
+.school-completeness-list { margin:0; padding:0; list-style:none; display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:8px; }
+.school-completeness-list li { display:flex; gap:10px; padding:10px 12px; border-radius:10px; background:#ffffffa8; overflow-wrap:anywhere; }
+.school-completeness-list svg { flex:none; width:18px; height:18px; margin-top:2px; }
+.school-completeness-list span { display:grid; gap:2px; min-width:0; }
+.school-completeness-list em { font-style:normal; font-size:12px; font-weight:650; color:#006b91; }
+.school-completeness-list li[data-completeness-status="missing"] em { color:#9a3b00; }
+.school-completeness-list li[data-completeness-status="needs_confirmation"] em { color:#8a5200; }
+.school-completeness-list small, .school-completeness-disclaimer { font-size:12px; line-height:1.6; color:var(--muted,#62788c); }
+.school-completeness-disclaimer { display:block; margin-top:10px; }

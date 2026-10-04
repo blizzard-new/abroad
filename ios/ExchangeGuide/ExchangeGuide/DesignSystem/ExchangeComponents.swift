@@ -105,6 +105,128 @@ struct ExchangeMetricTile: View {
     }
 }
 
+struct ExchangeSnapshotMetric: Identifiable {
+    let value: String
+    let label: String
+    let tint: Color
+
+    var id: String { label }
+}
+
+struct ExchangeSnapshotRail: View {
+    let metrics: [ExchangeSnapshotMetric]
+
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 0) {
+                ForEach(Array(metrics.enumerated()), id: \.offset) { index, metric in
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(metric.value)
+                            .font(ExchangeTypography.title3)
+                            .foregroundStyle(metric.tint)
+                            .lineLimit(1)
+                        Text(metric.label)
+                            .font(ExchangeTypography.caption)
+                            .foregroundStyle(ExchangeColor.labelSecondary)
+                            .lineLimit(1)
+                    }
+                    .frame(minWidth: 108, maxWidth: 148, alignment: .leading)
+                    .padding(.horizontal, ExchangeSpacing.md)
+                    .accessibilityElement(children: .combine)
+                    .accessibilityLabel("\(metric.label)，\(metric.value)")
+
+                    if index < metrics.count - 1 {
+                        Divider()
+                            .frame(height: 52)
+                            .overlay(ExchangeColor.separator.opacity(0.72))
+                    }
+                }
+            }
+            .padding(.vertical, ExchangeSpacing.md)
+        }
+        .background(ExchangeColor.backgroundSecondary)
+        .clipShape(RoundedRectangle(cornerRadius: ExchangeRadius.card, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: ExchangeRadius.card, style: .continuous)
+                .stroke(ExchangeColor.separator.opacity(0.72), lineWidth: 1)
+        }
+        .shadow(color: .black.opacity(0.04), radius: 8, y: 3)
+    }
+}
+
+struct ExchangeInfoSummaryItem: Identifiable {
+    let label: String
+    let value: String
+    let symbol: String
+    let tint: Color
+
+    var id: String { label }
+}
+
+struct ExchangeInfoSummaryGrid: View {
+    let items: [ExchangeInfoSummaryItem]
+
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    var body: some View {
+        let visibleItems = Array(items.prefix(4))
+        let columnCount = horizontalSizeClass == .regular ? max(1, visibleItems.count) : min(2, max(1, visibleItems.count))
+        let rows = stride(from: 0, to: visibleItems.count, by: columnCount).map {
+            Array(visibleItems[$0..<min($0 + columnCount, visibleItems.count)])
+        }
+
+        VStack(spacing: 0) {
+            ForEach(Array(rows.enumerated()), id: \.offset) { rowIndex, row in
+                HStack(spacing: 0) {
+                    ForEach(Array(row.enumerated()), id: \.offset) { columnIndex, item in
+                        summaryCell(item)
+                        if columnIndex < row.count - 1 {
+                            Divider().overlay(ExchangeColor.separator.opacity(0.72))
+                        }
+                    }
+                    if row.count < columnCount {
+                        Color.clear.frame(maxWidth: .infinity, minHeight: 112)
+                    }
+                }
+                if rowIndex < rows.count - 1 {
+                    Divider().overlay(ExchangeColor.separator.opacity(0.72))
+                }
+            }
+        }
+        .background(ExchangeColor.backgroundSecondary)
+        .clipShape(RoundedRectangle(cornerRadius: ExchangeRadius.card, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: ExchangeRadius.card, style: .continuous)
+                .stroke(ExchangeColor.separator.opacity(0.72), lineWidth: 1)
+        }
+        .shadow(color: .black.opacity(0.04), radius: 8, y: 3)
+    }
+
+    private func summaryCell(_ item: ExchangeInfoSummaryItem) -> some View {
+        HStack(alignment: .center, spacing: ExchangeSpacing.sm) {
+            VStack(alignment: .leading, spacing: 7) {
+                Text(item.label)
+                    .font(ExchangeTypography.caption)
+                    .foregroundStyle(ExchangeColor.labelSecondary)
+                Text(item.value)
+                    .font(ExchangeTypography.headline)
+                    .foregroundStyle(ExchangeColor.labelPrimary)
+                    .lineLimit(3)
+                    .minimumScaleFactor(0.82)
+            }
+            Spacer(minLength: 0)
+            Image(systemName: item.symbol)
+                .font(.title3.weight(.semibold))
+                .foregroundStyle(item.tint)
+                .accessibilityHidden(true)
+        }
+        .padding(ExchangeSpacing.md)
+        .frame(maxWidth: .infinity, minHeight: 112, alignment: .leading)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(item.label)，\(item.value)")
+    }
+}
+
 struct ExchangeTaskButton: View {
     let title: String
     let detail: String
@@ -119,30 +241,23 @@ struct ExchangeTaskButton: View {
             tapCount += 1
             action()
         } label: {
-            HStack(spacing: ExchangeSpacing.sm) {
+            VStack(alignment: .leading, spacing: ExchangeSpacing.sm) {
                 Image(systemName: symbol)
                     .font(.body.weight(.semibold))
                     .foregroundStyle(tint)
-                    .frame(width: 40, height: 40)
+                    .frame(width: 48, height: 48)
                     .background(
                         tint.opacity(0.13),
-                        in: RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        in: Circle()
                     )
-                VStack(alignment: .leading, spacing: ExchangeSpacing.xxs) {
-                    Text(title)
-                        .font(ExchangeTypography.headline)
-                        .foregroundStyle(ExchangeColor.labelPrimary)
-                    Text(detail)
-                        .font(ExchangeTypography.caption)
-                        .foregroundStyle(ExchangeColor.labelSecondary)
-                }
-                Spacer(minLength: ExchangeSpacing.xs)
-                Image(systemName: "chevron.right")
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(ExchangeColor.labelTertiary)
+                Text(title)
+                    .font(ExchangeTypography.headline)
+                    .foregroundStyle(ExchangeColor.labelPrimary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.82)
             }
             .padding(ExchangeSpacing.md)
-            .frame(maxWidth: .infinity, minHeight: 72, alignment: .leading)
+            .frame(maxWidth: .infinity, minHeight: 116, alignment: .leading)
             .contentShape(RoundedRectangle(cornerRadius: ExchangeRadius.control, style: .continuous))
             .exchangeGlassControl(interactive: true)
         }

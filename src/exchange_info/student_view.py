@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import re
 import zipfile
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from functools import lru_cache
 from html import unescape
 from io import BytesIO
@@ -20,6 +20,10 @@ except ImportError:  # pragma: no cover - dependency is declared, fallback keeps
     PdfReader = None  # type: ignore[assignment]
 
 from .models import (
+    ApplicationPeriodAudience,
+    ApplicationPeriodDateStatus,
+    ApplicationPeriodItem,
+    ApplicationPeriodStatus,
     ExchangeInfo,
     PageCategory,
     PartnerProgramOption,
@@ -39,7 +43,32 @@ EXCHANGE_SHEET_ID = "1EAOsiZkw5oWWUpAyXz-04aQWdSMR9f_c3Jup69LeiuA"
 DOUBLE_DEGREE_SHEET_ID = "1aQiwbtrQu1QOIOkFrOYl9WkzT0mqnZqIwI9KJCXGb4E"
 EXCHANGE_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554"
 DOUBLE_DEGREE_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17533"
+CGU_1152_APPLICATION_NOTICE_URL = (
+    "https://www.cgu.edu.tw/oia-ch/Subject/Detail/77899?nodeId=15817"
+)
+CGU_1152_SELECTION_RESULT_URL = (
+    "https://www.cgu.edu.tw/oia-ch/Subject/Detail/82632?nodeId=15817"
+)
+CGU_APPLICATION_PERIOD_CHECKED_AT = datetime(2026, 7, 29, tzinfo=timezone.utc)
+CGU_SELECTION_GUIDE_URL = "https://www.cgu.edu.tw/oia-ch/Contents?nodeId=15656"
+CGU_FALL_ANNOUNCEMENT_CHECKED_AT = datetime(2026, 10, 3, tzinfo=timezone.utc)
+TAIPEI_TIMEZONE = timezone(timedelta(hours=8))
+CGU_MANAGEMENT_2026_REFERENCE_URL = (
+    "https://www.cgu.edu.tw/Uploads/upload/"
+    "f99d6e28-4248-41e5-98f7-5d89d81161e9.pdf"
+)
+CGU_MANAGEMENT_RENNES_REFERENCE_URL = (
+    "https://id2.cgu.edu.tw/var/file/90/1090/img/2862/903125506.pdf"
+)
 CGU_BASE_URL = "https://www.cgu.edu.tw"
+PARTNER_WEBSITE_CORRECTIONS = {
+    school_identity_key("波蘭華沙醫學大學 Medical University of Warsaw"): (
+        "https://www.wum.edu.pl/en"
+    ),
+    school_identity_key("法國ICD商學院 ICD Business School"): (
+        "https://www.icd-bs.com/"
+    ),
+}
 OFFICIAL_DOCUMENT_SPECS = [
     {
         "slug": "navigator",
@@ -98,15 +127,18 @@ def build_student_dashboard(
     fetch_partner_sheets: bool = True,
     fetch_regulation_rules: bool = True,
     raw_files_dir: Path | None = None,
+    reference_time: datetime | None = None,
 ) -> StudentDashboard:
     page_map = {page.source_url: page for page in pages}
     selection = _page_containing(page_map, "15656")
     preparation = _page_containing(page_map, "18380")
     workflow = _page_containing(page_map, "15680")
-    exchange_schools = _page_containing(page_map, "17554")
-    double_degree_schools = _page_containing(page_map, "17533")
     short_courses = _page_containing(page_map, "15717")
     teep = _page_containing(page_map, "19081")
+    if teep is not None and "TEEP" not in teep.text:
+        # The site reused this node for other content (short-stay housing in Oct 2026).
+        # Unrelated text must not be shown as TEEP rules.
+        teep = None
     subsidy_credit = _page_containing(page_map, "15724")
     subsidy_low_income = _page_containing(page_map, "15725")
 
@@ -146,7 +178,10 @@ def build_student_dashboard(
             "toefl": 72,
             "duolingo": 105,
         },
-        application_periods=_application_periods(exchange_schools, double_degree_schools, short_courses),
+        application_periods=_application_periods(
+            short_courses,
+            reference_time=reference_time,
+        ),
         program_overview=_program_overview(preparation, short_courses, teep),
         eligibility=_eligibility(selection),
         language_requirements=_language_requirements(selection),
@@ -177,7 +212,111 @@ def fetch_partner_universities(timeout_seconds: float = 8.0) -> list[PartnerUniv
             timeout_seconds=timeout_seconds,
         )
     )
+    if rows:
+        current_keys = {school_identity_key(row.school_name) for row in rows}
+        rows.extend(
+            partner
+            for partner in _departmental_reference_partners()
+            if school_identity_key(partner.school_name) not in current_keys
+        )
     return _merge_partner_universities(rows)
+
+
+def _departmental_reference_partners() -> list[PartnerUniversity]:
+    availability_note = (
+        "長庚管理學院近期官方資料仍列此校，但目前國際處中央可申請名單未列；"
+        "請先向管理學院國際辦公室或國際處確認當期是否開放，確認前不能建立正式申請計畫。"
+    )
+    return [
+        PartnerUniversity(
+            program_type="管理學院交換參考",
+            availability_status="departmental_reference",
+            availability_note=availability_note,
+            agreement_type="院級交換參考",
+            agreement_level="管理學院",
+            country="法國",
+            school_name=(
+                "法國艾克斯馬賽大學管理研究所 "
+                "IAE Aix-Marseille Graduate School of Management"
+            ),
+            website=(
+                "https://iae-aix.univ-amu.fr/en/"
+                "profile-and-students-international/programme-echange-entrant"
+            ),
+            colleges="管理學院",
+            degree_levels="大學部三年級以上、研究所",
+            study_period="1 學期或 1 學年（當期需確認）",
+            quota="管理學院資料列 2 名（當期需確認）",
+            eligibility=(
+                "管理學院學生；官方參考資料列 TOEFL iBT 85、TOEIC 800、"
+                "IELTS 6.5 或 Cambridge First Certificate in English，"
+                "實際仍須核對當期公告。"
+            ),
+            application_deadline="未列於中央當期清單，請先確認",
+            application_info=(
+                "管理學院近期官方資料仍列為院級合作校；中央當期可申請名單未列，"
+                "不可直接視為本期開放。"
+            ),
+            tuition_info="管理學院官方參考資料列免繳合作校學雜費；當期條件需確認。",
+            source_url=CGU_MANAGEMENT_2026_REFERENCE_URL,
+            student_summary_zh=PartnerStudentSummary(
+                study_period="1 學期或 1 學年（當期需確認）",
+                application_deadline="未列於中央當期清單，請先確認",
+                eligibility_points=[
+                    "只作為管理學院官方資料的補充參考，不代表中央當期名單已開放。",
+                    "先向管理學院國際辦公室或國際處確認當期名額、資格與提名方式。",
+                    "參考語言門檻為 TOEFL iBT 85、TOEIC 800 或 IELTS 6.5；當期仍須重查。",
+                ],
+                application_steps=[
+                    "確認當期是否開放後，才依國際處與管理學院通知建立申請計畫。"
+                ],
+                tuition_points=["參考資料列免繳合作校學雜費；當期條件待確認。"],
+            ),
+        ),
+        PartnerUniversity(
+            program_type="管理學院交換／雙聯參考",
+            availability_status="departmental_reference",
+            availability_note=availability_note,
+            agreement_type="院級交換／雙聯參考",
+            agreement_level="管理學院",
+            country="法國",
+            school_name="雷恩商學院 Rennes School of Business",
+            website=(
+                "https://www.rennes-sb.com/exchange-programmes/"
+                "incoming-exchange-students/"
+            ),
+            colleges="管理學院",
+            degree_levels="大學部、研究所",
+            study_period="1 學期或 1 學年（當期需確認）",
+            quota="管理學院資料列 2 名（當期需確認）",
+            eligibility=(
+                "管理學院學生；官方參考資料列歷年平均 70 分以上，"
+                "並列 TOEFL iBT 79 等語言條件，實際仍須核對當期公告。"
+            ),
+            application_deadline="未列於中央當期清單，請先確認",
+            application_info=(
+                "管理學院近期官方資料仍列交換與雙聯合作；中央當期可申請名單未列，"
+                "不可直接視為本期開放。"
+            ),
+            tuition_info="交換參考資料列免繳合作校學雜費；雙聯方案與當期費用需另行確認。",
+            source_url=CGU_MANAGEMENT_RENNES_REFERENCE_URL,
+            student_summary_zh=PartnerStudentSummary(
+                study_period="1 學期或 1 學年（當期需確認）",
+                application_deadline="未列於中央當期清單，請先確認",
+                eligibility_points=[
+                    "只作為管理學院官方資料的補充參考，不代表中央當期名單已開放。",
+                    "先向管理學院國際辦公室或國際處確認交換或雙聯方案是否在本期受理。",
+                    "參考資料列歷年平均 70 分以上與 TOEFL iBT 79 等條件；當期仍須重查。",
+                ],
+                application_steps=[
+                    "確認當期方案與名額後，才依國際處與管理學院通知建立申請計畫。"
+                ],
+                tuition_points=[
+                    "交換與雙聯的費用語意不同；確認方案前不可套用免學費或付費結論。"
+                ],
+            ),
+        ),
+    ]
 
 
 def _merge_partner_universities(
@@ -189,7 +328,7 @@ def _merge_partner_universities(
         grouped.setdefault(key, []).append(row)
 
     merged: list[PartnerUniversity] = []
-    for group in grouped.values():
+    for key, group in grouped.items():
         primary = group[0]
         options = [
             PartnerProgramOption(
@@ -210,9 +349,16 @@ def _merge_partner_universities(
         merged.append(
             PartnerUniversity(
                 program_type=_join_partner_values(group, "program_type") or primary.program_type,
+                availability_status=primary.availability_status,
+                availability_note=primary.availability_note,
+                agreement_type=primary.agreement_type,
+                agreement_level=primary.agreement_level,
                 country=_join_partner_values(group, "country"),
                 school_name=primary.school_name,
-                website=next((row.website for row in group if row.website), None),
+                website=(
+                    PARTNER_WEBSITE_CORRECTIONS.get(key)
+                    or next((row.website for row in group if row.website), None)
+                ),
                 colleges=_join_partner_values(group, "colleges"),
                 degree_levels=_join_partner_values(group, "degree_levels"),
                 study_period=_join_partner_values(group, "study_period"),
@@ -786,24 +932,146 @@ def _dedupe_text(items: list[str]) -> list[str]:
 
 
 def _application_periods(
-    exchange_schools: ProcessedPage | None,
-    double_degree_schools: ProcessedPage | None,
     short_courses: ProcessedPage | None,
-) -> list[StudentInfoItem]:
-    items: list[StudentInfoItem] = []
-    for page, title in [
-        (exchange_schools, "交換學生 / 自費研修"),
-        (double_degree_schools, "雙學位"),
-    ]:
-        lines = _lines(page)
-        autumn = _join_after(lines, "秋季班出國研修一學期或一學年", 1)
-        spring = _join_after(lines, "春季班出國研修一學期", 1)
-        details = [
-            _clean_detail(autumn) or "秋季班出國研修一學期或一學年：11/01-12/20",
-            _clean_detail(spring) or "春季班出國研修一學期：4/21-6/06",
-            "申請表可選擇最適合的交換學校 2 所；若合作狀態異動，由國際處與學生協商替代學校。",
-        ]
-        items.append(StudentInfoItem(title=title, details=details, source=_source_ref(page)))
+    *,
+    reference_time: datetime | None = None,
+) -> list[ApplicationPeriodItem]:
+    now = reference_time or datetime.now(timezone.utc)
+    if now.utcoffset() is None:
+        now = now.replace(tzinfo=timezone.utc)
+    application_opens_at = datetime(2026, 4, 21, 0, 0, tzinfo=TAIPEI_TIMEZONE)
+    application_deadline_at = datetime(2026, 6, 6, 23, 59, tzinfo=TAIPEI_TIMEZONE)
+    application_status = _application_period_status(
+        now,
+        opens_at=application_opens_at,
+        deadline_at=application_deadline_at,
+    )
+    application_status_note = {
+        ApplicationPeriodStatus.UPCOMING: "本梯次尚未開放；請先準備校內文件，不要提前送件。",
+        ApplicationPeriodStatus.OPEN: "本梯次正在受理；線上表單與紙本資料都必須在校方期限內完成。",
+        ApplicationPeriodStatus.CLOSED: "本梯次已截止；下一梯次（秋季班）國際處預告自 11/01 開放，見下一項；不能沿用這組日期送件。",
+    }[application_status]
+    items: list[ApplicationPeriodItem] = [
+        ApplicationPeriodItem(
+            title="115學年度第2學期交換／雙聯校內申請",
+            details=[
+                "線上申請表單自 2026/04/21 開放，已於 2026/06/06 23:59 截止。",
+                "紙本申請資料也須於截止日前繳交國際事務處；公告沒有提供獨立的紙本收件時刻，不能直接把線上 23:59 當作紙本收件時間。",
+                "本梯次預計於 2027 年 1–3 月間出國；實際報到與開課時間依合作校行事曆。",
+            ],
+            source=SourceReference(
+                title="115學年度第2學期出國交換及雙聯學位計畫申請公告",
+                source_url=CGU_1152_APPLICATION_NOTICE_URL,
+                category=PageCategory.DEADLINE,
+            ),
+            scope="home_application",
+            program_types=["exchange", "dual_degree"],
+            academic_year="115",
+            application_round="第2學期",
+            audience=ApplicationPeriodAudience.ALL_STUDENTS,
+            opens_at=application_opens_at,
+            deadline_at=application_deadline_at,
+            date_status=ApplicationPeriodDateStatus.VERIFIED_EXACT,
+            status=application_status,
+            status_note=application_status_note,
+            deadline_note=(
+                "線上截止時間已由官方公告確認；紙本只寫明須於截止日前繳交，"
+                "未提供可安全建立提醒的獨立收件時刻。"
+            ),
+            reminder_eligible=False,
+            checked_at=CGU_APPLICATION_PERIOD_CHECKED_AT,
+        )
+    ]
+
+    conditional_deadline_at = datetime(2026, 9, 21, 17, 0, tzinfo=TAIPEI_TIMEZONE)
+    selection_published_at = datetime(2026, 7, 17, 0, 0, tzinfo=TAIPEI_TIMEZONE)
+    follow_up_status = (
+        ApplicationPeriodStatus.UPCOMING
+        if now.astimezone(TAIPEI_TIMEZONE) < selection_published_at
+        else ApplicationPeriodStatus.ACTION_REQUIRED
+        if now.astimezone(TAIPEI_TIMEZONE) <= conditional_deadline_at
+        else ApplicationPeriodStatus.CLOSED
+    )
+    follow_up_note = (
+        "只適用於校內初審名單姓名旁標記＊的申請者；其他學生不能把這個日期當成申請截止日。"
+        if follow_up_status != ApplicationPeriodStatus.CLOSED
+        else "條件式語言證明期限已截止；如有個案問題，請直接聯絡國際事務處。"
+    )
+    items.append(
+        ApplicationPeriodItem(
+            title="115學年度第2學期初審後續：條件式語言證明",
+            details=[
+                "校內初審取得提名資格，不等於合作學校最終錄取。",
+                "接受／放棄選送名額的回覆期限已於 2026/07/24 17:00 截止。",
+                "僅初審名單姓名旁標記＊者，須於 2026/09/21 17:00 前補交符合規定的語言檢定證明。",
+                "合作校後續文件與期限仍須依各校最新通知辦理。",
+            ],
+            source=SourceReference(
+                title="115學年度第2學期校內初審結果與後續作業",
+                source_url=CGU_1152_SELECTION_RESULT_URL,
+                category=PageCategory.DEADLINE,
+            ),
+            scope="post_selection",
+            program_types=["exchange", "dual_degree"],
+            academic_year="115",
+            application_round="第2學期",
+            audience=ApplicationPeriodAudience.CONDITIONAL_APPLICANTS,
+            opens_at=selection_published_at,
+            deadline_at=conditional_deadline_at,
+            date_status=ApplicationPeriodDateStatus.VERIFIED_EXACT,
+            status=follow_up_status,
+            status_note=follow_up_note,
+            deadline_note="此日期只適用於初審名單標記＊者，不會自動加入所有學生的提醒。",
+            reminder_eligible=False,
+            checked_at=CGU_APPLICATION_PERIOD_CHECKED_AT,
+        )
+    )
+
+    # The fall round is announced with an opening day only. The selection guide
+    # lists 11/01-12/20 without a year or a cut-off time and no round-specific
+    # notice exists yet, so the deadline stays unconfirmed and creates no reminder.
+    fall_opens_at = datetime(2026, 11, 1, 0, 0, tzinfo=TAIPEI_TIMEZONE)
+    fall_status = (
+        ApplicationPeriodStatus.UPCOMING
+        if now.astimezone(TAIPEI_TIMEZONE) < fall_opens_at
+        else ApplicationPeriodStatus.NEEDS_CONFIRMATION
+    )
+    items.append(
+        ApplicationPeriodItem(
+            title="116學年度第1學期交換／雙聯校內申請（秋季班）",
+            details=[
+                "國際處公告：秋季班出國研修一學期或一學年（8–9 月出國），自 11/01 開放申請，請提早準備文件。",
+                "選送須知列出秋季班申請期間為 11/01–12/20；須知沒有標示年度與截止時刻。",
+                "預計 2027 年 8–9 月出國；可申請學校與入學要求見國際處官網的合作校名單。",
+                "補助提醒（國際處公告，出國研修補助說明頁同樣載明）：同一學制期間已領取本校短期學分課程補助（例：金澤暑期課程）或其他出國研修／實習補助者，已領金額會自本補助額度中扣除。",
+            ],
+            source=SourceReference(
+                title="長庚大學校內申請選送須知",
+                source_url=CGU_SELECTION_GUIDE_URL,
+                category=PageCategory.DEADLINE,
+            ),
+            scope="home_application",
+            program_types=["exchange", "dual_degree"],
+            academic_year="116",
+            application_round="第1學期",
+            audience=ApplicationPeriodAudience.ALL_STUDENTS,
+            opens_at=fall_opens_at,
+            deadline_at=None,
+            date_status=ApplicationPeriodDateStatus.NEEDS_CONFIRMATION,
+            status=fall_status,
+            status_note=(
+                "本梯次尚未開放；請先準備校內文件，不要提前送件。截止日與送件方式以國際處本梯次公告為準。"
+                if fall_status == ApplicationPeriodStatus.UPCOMING
+                else "已過預告的開放日；請到國際處官網確認本梯次是否開放與正式截止時間，系統不自行判定。"
+            ),
+            deadline_note=(
+                "選送須知列出 12/20 為秋季班申請截止日，但沒有年度與截止時刻；"
+                "本梯次專屬公告發布前，系統不建立提醒也不排進日曆。"
+            ),
+            reminder_eligible=False,
+            checked_at=CGU_FALL_ANNOUNCEMENT_CHECKED_AT,
+        )
+    )
 
     if short_courses:
         details = _extract_matching_lines(
@@ -812,8 +1080,37 @@ def _application_periods(
             limit=4,
         )
         if details:
-            items.append(StudentInfoItem(title="國外寒暑假短期課程", details=details, source=_source_ref(short_courses)))
+            items.append(
+                ApplicationPeriodItem(
+                    title="國外寒暑假短期課程",
+                    details=details,
+                    source=_source_ref(short_courses),
+                    scope="short_course",
+                    program_types=["short_term_credit"],
+                    audience=ApplicationPeriodAudience.ALL_STUDENTS,
+                    date_status=ApplicationPeriodDateStatus.REFERENCE_ONLY,
+                    status=ApplicationPeriodStatus.REFERENCE_ONLY,
+                    status_note="各課程受理時間不同；這裡保留官方頁摘要，不會推算成下一梯次日期。",
+                    deadline_note="請逐一開啟課程公告確認適用年度與精確截止時間。",
+                    reminder_eligible=False,
+                    checked_at=short_courses.crawled_at,
+                )
+            )
     return items
+
+
+def _application_period_status(
+    reference_time: datetime,
+    *,
+    opens_at: datetime,
+    deadline_at: datetime,
+) -> ApplicationPeriodStatus:
+    local_time = reference_time.astimezone(deadline_at.tzinfo)
+    if local_time < opens_at:
+        return ApplicationPeriodStatus.UPCOMING
+    if local_time <= deadline_at:
+        return ApplicationPeriodStatus.OPEN
+    return ApplicationPeriodStatus.CLOSED
 
 
 def _program_overview(
@@ -821,7 +1118,7 @@ def _program_overview(
     short_courses: ProcessedPage | None,
     teep: ProcessedPage | None,
 ) -> list[StudentInfoItem]:
-    return [
+    items = [
         StudentInfoItem(
             title="雙學位",
             details=_slice_details(preparation, 1, 6),
@@ -842,12 +1139,16 @@ def _program_overview(
             details=_slice_details(short_courses, 4, 13),
             source=_source_ref(short_courses),
         ),
-        StudentInfoItem(
-            title="TEEP 研究實習",
-            details=_slice_details(teep, 0, 6),
-            source=_source_ref(teep),
-        ),
     ]
+    if teep is not None:
+        items.append(
+            StudentInfoItem(
+                title="TEEP 研究實習",
+                details=_slice_details(teep, 0, 6),
+                source=_source_ref(teep),
+            )
+        )
+    return items
 
 
 def _eligibility(selection: ProcessedPage | None) -> list[StudentInfoItem]:

@@ -57,3 +57,11 @@ data/raw_files/*
 !data/raw_files/.gitkeep
 data/processed/*
 !data/processed/.gitkeep
+data/private_vault/*
+data/private_auth/*
+
+# Local secrets and scratch output must never be committed
+private_auth/
+tmp/
+private_vault/
+supabase/.temp/

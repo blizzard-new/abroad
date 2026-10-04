@@ -1,0 +1,118 @@
+from __future__ import annotations
+
+import hashlib
+from datetime import timedelta
+
+from fastapi.testclient import TestClient
+
+from exchange_info import storage
+from exchange_info.api import create_app
+from exchange_info.application_rules import select_application_workflow
+from exchange_info.models import (
+    AccountSessionRecord,
+    UserAccount,
+    utc_now,
+    ApplicationRuleContext,
+    DestinationProfile,
+    PartnerUniversity,
+    SourceReference,
+)
+from exchange_info.school_completeness import build_school_completeness
+from exchange_info.storage import save_account_sessions, save_user_accounts
+
+SOURCE = "https://example.edu/source"
+
+
+def by_key(result):
+    return {row.key: row for row in result.items}
+
+
+def partner(**kwargs):
+    return PartnerUniversity(program_type="交換", school_name="測試大學", country="日本", source_url=SOURCE, **kwargs)
+
+
+def test_empty_school_reports_every_gap_without_filling_any():
+    result = build_school_completeness(partner(), None, None)
+    rows = by_key(result)
+    assert result.available_count == 0 and result.score < 0.2
+    assert rows["workflow"].status == "missing" and rows["cost"].status == "missing"
+    assert result.priority_gaps[:2] == ["申請資格與範圍", "申請期限"]
+    assert "不代表學校沒有公開" in result.disclaimer
+
+
+def test_available_partial_and_unpublished_statuses_are_distinguished():
+    profile = DestinationProfile(
+        school_name="測試大學", city="東京",
+        cost_summary="校方建議國際生每月生活費約 JPY 80,000–150,000。",
+        housing_summary="官方網站未公開可核對的住宿費用。",
+        transport_summary="車站步行 10 分鐘，可搭乘地鐵。",
+        campus_life_summary="Student clubs are listed on the official page.",
+        sources=[SourceReference(title="官方", source_url=SOURCE)],
+    )
+    rows = by_key(build_school_completeness(partner(colleges="商學院", degree_levels="大學部", eligibility="IELTS 6.0"), profile, None))
+    assert rows["eligibility"].status == "available"
+    assert rows["cost"].status == "available"
+    assert rows["housing"].status == "missing" and "需向學校確認" in rows["housing"].note
+    assert rows["transport"].status == "available" and rows["city"].status == "available"
+    assert rows["chinese"].status == "partial"
+
+
+def test_bundled_ntpu_school_has_workflow_documents_but_no_exact_deadline():
+    workflows = [row for row in storage.load_bundled_application_workflows() if row.home_university == "國立臺北大學"]
+    workflow = select_application_workflow(workflows, ApplicationRuleContext(
+        home_university="國立臺北大學", partner_university=workflows[0].school_name))
+    rows = by_key(build_school_completeness(partner(), None, workflow))
+    assert rows["workflow"].status in {"available", "needs_confirmation"}
+    assert rows["documents"].status in {"available", "partial"}
+    assert rows["deadline"].status in {"needs_confirmation", "available"}
+
+
+def test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_has():
+    profiles = storage.load_destination_profiles()
+    scores = []
+    for profile in profiles:
+        result = build_school_completeness(
+            PartnerUniversity(program_type="交換", school_name=profile.school_name, source_url=SOURCE), profile, None)
+        assert 0 <= result.score <= 1 and result.total_count == len(result.items) == 10
+        assert by_key(result)["workflow"].status == "missing"
+        scores.append(result.score)
+    assert len(scores) == 283 and max(scores) < 1
+
+
+def test_endpoint_returns_completeness_for_a_supported_partner(tmp_path):
+    account = UserAccount(display_name="北大學生", student_status_verified=True,
+                          verified_university="國立臺北大學", school_email_verified=True)
+    save_user_accounts([account], tmp_path)
+    save_account_sessions([AccountSessionRecord(
+        account_id=account.id, token_hash=hashlib.sha256(b"completeness-token").hexdigest(),
+        expires_at=utc_now() + timedelta(days=1))], tmp_path)
+    client = TestClient(create_app(tmp_path))
+    client.headers.update({"Authorization": "Bearer completeness-token"})
+    assert client.get("/school-data-completeness", params={"school": "x大學"}, headers={"Authorization": ""}).status_code == 404
+    partners = client.get("/student-dashboard", params={"school": "國立臺北大學"}).json()["partner_universities"]
+    name = next(row["school_name"] for row in partners if row.get("availability_status", "open") == "open")
+    response = client.get("/school-data-completeness", params={"school": name, "home_school": "國立臺北大學"})
+    assert response.status_code == 200, response.text
+    body = response.json()
+    assert body["school_name"] == name and body["total_count"] == 10
+    assert {row["key"] for row in body["items"]} >= {"eligibility", "deadline", "workflow", "documents", "cost"}
+    assert client.get("/school-data-completeness", params={"school": "不存在大學", "home_school": "國立臺北大學"}).status_code == 404
+
+
+def test_pdf_extraction_noise_does_not_hide_a_schools_workflow():
+    from exchange_info.ntpu_student_view import fetch_ntpu_partner_universities
+    from exchange_info.school_identity import same_school
+
+    workflows = [row for row in storage.load_bundled_application_workflows() if row.home_university == "國立臺北大學"]
+    context_home = "國立臺北大學"
+    missing = [
+        partner.school_name for partner in fetch_ntpu_partner_universities()
+        if select_application_workflow(workflows, ApplicationRuleContext(
+            home_university=context_home, partner_university=partner.school_name)) is None
+    ]
+    assert missing == []
+    assert same_school("弗羅茨瓦夫大學(University of Wroc ław)", "弗羅茨瓦夫大學(University of Wrocław)")
+    assert same_school("圖里巴大學(Tur ība University)", "圖里巴大學(Turība University)")
+    assert not same_school("越南胡志明市國際大學 Vietnam National University, Ho Chi Minh City",
+                           "越南胡志明市經濟與法律大學(University of Economics and Law)")
+    assert not same_school("University of Economics", "University of Economics and Law")

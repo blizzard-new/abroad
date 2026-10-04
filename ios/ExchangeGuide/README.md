@@ -24,17 +24,17 @@ The app keeps iOS 17 as its deployment target. When built with Xcode 26, iOS 26 
 ## Implemented flows
 
 - Home task dashboard and official-data freshness
-- Adaptive iPhone tab bar and iPad `NavigationSplitView` sidebar
+- Floating icon-first Liquid Glass dock on iPhone and iPad `NavigationSplitView` sidebar
 - Native Swift Charts coverage visualization
 - Searchable partner university list
-- University restrictions, detailed application workflow, and student experiences
+- University snapshot rail, four-cell application summary, expandable restrictions, detailed workflow, and student experiences
 - Deadline list
 - Scholarship and official document summaries
 - Basic eligibility check
 - Dark, light, and system appearance modes
 - Source-backed life information sorted by coverage, with concrete bullet points
-- Anonymous posts, comments, public chat, invitation-only private messages, reports, and blocks
-- Light off-white glass dashboard with greeting header and circular data chart
+- Community snapshot rail, four-cell post summaries, expandable bodies and comments, public chat, invitation-only private messages, reports, and blocks
+- Light off-white glass dashboard with compact task tiles and an on-demand coverage chart
 - Dynamic Type, VoiceOver labels, Reduce Motion, and minimum 44pt targets
 
 The SwiftUI source is complete, but iOS builds still require macOS and Xcode; the Windows workspace cannot run the iOS compiler or Simulator.

@@ -75,6 +75,25 @@ class StudentVerificationResult {
   final bool imagesRetained;
 }
 
+
+enum ProductAccessTier {
+  guest('guest'),
+  free('free'),
+  subscription('subscription'),
+  communityModerator('community_moderator'),
+  platformAdmin('platform_admin'),
+  developer('developer');
+
+  const ProductAccessTier(this.apiValue);
+  final String apiValue;
+
+  static ProductAccessTier parse(dynamic value) =>
+      ProductAccessTier.values.firstWhere(
+        (tier) => tier.apiValue == value?.toString(),
+        orElse: () => ProductAccessTier.guest,
+      );
+}
+
 class AccountProfile {
   const AccountProfile({
     required this.id,
@@ -90,6 +109,8 @@ class AccountProfile {
     required this.studentVerifiedAt,
     required this.providers,
     required this.followedBoards,
+    this.productTier = ProductAccessTier.free,
+    this.emailVerified = false,
   });
 
   factory AccountProfile.fromJson(dynamic value) {
@@ -99,7 +120,7 @@ class AccountProfile {
       email: textValue(json['email']),
       displayName: textValue(json['display_name'], '交換學生'),
       avatarUrl: textValue(json['avatar_url']),
-      homeUniversity: textValue(json['home_university'], '長庚大學'),
+      homeUniversity: textValue(json['home_university'], '未定大學'),
       targetCountries: stringList(json['target_countries']),
       applicationStage: textValue(json['application_stage'], 'exploring'),
       schoolEmailVerified: json['school_email_verified'] == true,
@@ -108,6 +129,8 @@ class AccountProfile {
       studentVerifiedAt: textValue(json['student_verified_at']),
       providers: stringList(json['providers']),
       followedBoards: stringList(json['followed_boards']),
+      productTier: ProductAccessTier.parse(json['product_tier'] ?? 'free'),
+      emailVerified: json['email_verified'] == true,
     );
   }
 
@@ -124,6 +147,8 @@ class AccountProfile {
   final String studentVerifiedAt;
   final List<String> providers;
   final List<String> followedBoards;
+  final ProductAccessTier productTier;
+  final bool emailVerified;
 }
 
 class AccountSession {

@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230078d4'/%3E%3Cpath d='M16 32 32 16l16 16-16 16z' fill='none' stroke='white' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='white'/%3E%3C/svg%3E" />
+    <meta name="color-scheme" content="light dark" />
+    <title>申請流程雙審工作台 | 台灣大學生交換指南</title>
+    <link rel="stylesheet" href="/static/content-review.css?v=20260831-workflow-issue-1" />
+    <link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2" />
+    <script src="/static/content-review.js?v=20260831-workflow-issue-1" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#review-main">跳到審查內容</a>
+    <header class="review-topbar">
+      <div>
+        <a class="back-link" href="/">← 返回學生版</a>
+        <p class="eyebrow">平台內部工具</p>
+        <h1>申請流程雙審工作台</h1>
+        <p>兩個不同管理帳號必須分別核對；核准不足、同一帳號不能重複核准，未參與核准者也不能發布。</p>
+      </div>
+      <aside class="reviewer-card" aria-label="目前審查者">
+        <span>目前審查者</span>
+        <strong id="reviewer-name">載入中…</strong>
+        <small id="reviewer-email"></small>
+      </aside>
+    </header>
+
+    <main id="review-main" class="review-shell">
+      <section class="review-toolbar" aria-labelledby="queue-title">
+        <div>
+          <p class="eyebrow">人工發布閘門</p>
+          <h2 id="queue-title">流程版本佇列</h2>
+          <p>先開啟官方來源逐項核對，再留下可追溯的核准或退回說明；未送出的表單只暫存在目前瀏覽器分頁，不能當成核准證據。</p>
+        </div>
+        <div class="toolbar-actions">
+          <label>
+            <span>清單類型</span>
+            <select id="review-status-filter">
+              <option value="backlog">既有流程待納入雙審</option>
+              <option value="pending_review">待審</option>
+              <option value="published">已發布</option>
+              <option value="rejected">已退回</option>
+              <option value="">全部</option>
+            </select>
+          </label>
+          <label id="workflow-review-owner-filter-field" hidden>
+            <span>我的審查狀態</span>
+            <select id="workflow-review-owner-filter">
+              <option value="">全部待審版本</option>
+              <option value="mine_unreviewed">我的待辦</option>
+              <option value="mine_approved">我已核准</option>
+              <option value="mine_publishable">可由我發布</option>
+            </select>
+          </label>
+          <label id="workflow-review-readiness-filter-field" hidden>
+            <span>資料補正狀態</span>
+            <select id="workflow-review-readiness-filter">
+              <option value="">全部資料狀態</option>
+              <option value="correction_ready">可開始真人核對</option>
+              <option value="correction_blocked">須先補資料</option>
+            </select>
+          </label>
+          <button id="reload-review-queue" type="button">重新整理</button>
+        </div>
+      </section>
+
+      <section class="workflow-issue-report-workbench" aria-labelledby="workflow-issue-report-queue-title">
+        <header class="workflow-issue-report-heading">
+          <div>
+            <p class="eyebrow">學生錯誤回報</p>
+            <h2 id="workflow-issue-report-queue-title">申請規定待核對佇列</h2>
+            <p>先依學生附上的官方來源核對回報是否成立，再標記為已確認或不成立。學生回報不會自動建立 revision、核准或發布；需要更正時仍須回到正式雙審流程。</p>
+          </div>
+          <div class="workflow-issue-report-controls">
+            <label><span>處理狀態</span><select id="workflow-issue-report-status-filter"><option value="pending">待處理</option><option value="resolved">已確認</option><option value="dismissed">不成立</option><option value="">全部</option></select></label>
+            <button id="reload-workflow-issue-reports" class="secondary" type="button">重新整理回報</button>
+          </div>
+        </header>
+        <p class="workflow-issue-report-boundary">這個佇列只能結束學生回報，不能直接修改正式規定。若回報成立，請另外建立 revision，並完成兩位不同管理員核准後才可發布。</p>
+        <div id="workflow-issue-report-queue" class="workflow-issue-report-queue" aria-live="polite" aria-busy="true"><div class="review-loading">正在載入學生錯誤回報…</div></div>
+      </section>
+
+      <div id="workflow-review-focus-filter" class="workflow-deep-link-filter workflow-review-focus-filter" hidden>
+        <span id="workflow-review-focus-description"></span>
+        <div class="workflow-review-focus-actions">
+          <button id="open-next-workflow-review" type="button" hidden>開啟第一筆待辦</button>
+          <button id="show-workflow-review-batch" class="secondary" type="button" hidden>回到此批次待辦</button>
+          <button id="clear-workflow-review-focus" class="secondary" type="button">查看全部待審版本</button>
+        </div>
+      </div>
+
+      <section id="release-readiness" class="release-readiness" data-status="loading" aria-labelledby="release-readiness-title" aria-busy="true">
+        <div class="release-readiness-heading">
+          <div>
+            <p class="eyebrow">即時資料快照</p>
+            <h2 id="release-readiness-title">Web 發布就緒閘門</h2>
+          </div>
+          <strong id="release-readiness-status" class="release-readiness-status" role="status">檢查中…</strong>
+        </div>
+        <p id="release-readiness-description">正在依目前申請流程、生活情報、來源、期限與雙審證據計算發布阻擋。</p>
+        <dl class="release-readiness-metrics">
+          <div><dt>全部流程</dt><dd id="release-readiness-total">—</dd></div>
+          <div><dt>正式發布</dt><dd id="release-readiness-published">—</dd></div>
+          <div><dt>關鍵規定</dt><dd id="release-readiness-rules">—</dd></div>
+          <div><dt>生活情報</dt><dd id="release-readiness-destinations">—</dd></div>
+          <div><dt>生活待審</dt><dd id="release-readiness-destination-pending">—</dd></div>
+          <div><dt>阻擋檢查</dt><dd id="release-readiness-blockers">—</dd></div>
+        </dl>
+        <div class="release-readiness-actions">
+          <a id="review-batch-export" href="/admin/application-workflow-review-batches.csv?batch_size=10" download>下載雙人審查分工 CSV</a>
+          <span>每批 10 筆；同一列保留審查者 A、B、疑義與處置欄位。</span>
+          <a id="review-batch-rule-export" href="#" download hidden>下載目前批次逐規定查核表</a>
+          <span id="review-batch-rule-export-description" hidden>列出目前批次每一個流程、步驟與文件規定及其官方來源。</span>
+        </div>
+        <details id="release-readiness-details" open>
+          <summary id="release-readiness-summary">查看阻擋項目</summary>
+          <ul id="release-readiness-checks"></ul>
+        </details>
+        <p class="release-readiness-snapshot">快照指紋：<code id="release-readiness-fingerprint">—</code> · 產生時間：<span id="release-readiness-generated-at">—</span></p>
+        <p class="release-readiness-boundary">這是唯讀、自動化的 fail-closed 總檢查；不能取代兩位真人逐頁確認申請規定與生活情報來源，也不能自動升級或發布內容。</p>
+      </section>
+
+      <details id="workflow-publication-history" class="destination-review-workbench">
+        <summary>查看申請流程公開版本與安全復原紀錄</summary>
+        <p id="workflow-publication-history-summary" class="destination-review-boundary">正在載入申請流程公開歷程…</p>
+        <div id="workflow-publication-history-items" class="workflow-publication-history-items" aria-live="polite">
+          <div class="review-loading">正在載入申請流程公開歷程…</div>
+        </div>
+      </details>
+
+      <section id="destination-profile-review-summary" class="source-replacement-candidate-summary" aria-labelledby="destination-profile-review-title" aria-busy="true">
+        <div>
+          <p class="eyebrow">DATA-006 人工查核</p>
+          <h3 id="destination-profile-review-title">兩校生活情報獨立雙人審查</h3>
+          <p id="destination-profile-review-description">正在盤點部分查核 profile 與官方來源…</p>
+          <small>CSV 維持唯讀；雙審只保存真人證據，不會自動變更學生資料。兩人核可後，仍須由其中一位核可者明確確認，才會升級學生可見的生活情報狀態。</small>
+        </div>
+        <div class="source-replacement-candidate-actions">
+          <a id="download-destination-profile-review-batches" class="secondary" href="/admin/destination-profile-review-batches.csv" download hidden>下載生活情報雙人分工 CSV</a>
+          <a id="download-destination-profile-review" class="secondary" href="/admin/destination-profile-review-queue.csv" download hidden>下載生活情報唯讀審查 CSV</a>
+        </div>
+      </section>
+
+      <details id="destination-profile-review-workbench" class="destination-review-workbench">
+        <summary>逐筆開啟生活情報並留下真人審查證據</summary>
+        <div class="destination-review-toolbar">
+          <label>
+            <span>母校</span>
+            <select id="destination-review-home-university">
+              <option value="長庚大學">長庚大學</option>
+              <option value="國立臺北大學">國立臺北大學</option>
+            </select>
+          </label>
+          <label>
+            <span>搜尋合作校、國家或城市</span>
+            <input id="destination-review-search" type="search" placeholder="例如：ICD、法國、Paris" autocomplete="off" />
+          </label>
+          <label>
+            <span>雙審進度</span>
+            <select id="destination-review-progress-filter">
+              <option value="">全部待審</option>
+              <option value="mine_unreviewed">我的待辦</option>
+              <option value="mine_reviewed">我已留下結論</option>
+              <option value="unstarted">尚未開始</option>
+              <option value="partial">等待第二位</option>
+              <option value="changes_required">已要求修正</option>
+              <option value="ready_for_promotion">兩人完成</option>
+            </select>
+          </label>
+          <label>
+            <span>核可門檻</span>
+            <select id="destination-review-readiness-filter">
+              <option value="">全部門檻</option>
+              <option value="approval_ready">可選擇核可</option>
+              <option value="approval_blocked">只能要求修正</option>
+            </select>
+          </label>
+        </div>
+        <div id="destination-review-batch-filter" class="workflow-deep-link-filter destination-review-batch-filter" hidden>
+          <span id="destination-review-batch-description"></span>
+          <div class="destination-review-batch-actions">
+            <button id="open-next-destination-review" type="button" hidden>開啟第一筆我的待辦</button>
+            <button id="show-destination-review-batch" class="secondary" type="button" hidden>顯示此批次我的待辦</button>
+            <a id="download-destination-review-batch-checklist" class="secondary" href="#" download hidden>下載目前批次逐項查核表</a>
+            <button id="clear-destination-review-batch" class="secondary" type="button">回到這所母校的完整待辦</button>
+          </div>
+        </div>
+        <p class="destination-review-boundary">每位審查者都必須逐一開啟全部來源、核對所有內容區塊並留下至少 10 字說明。未送出的勾選與說明只暫存在目前瀏覽器分頁工作階段，不能當成審查證據；舊內容的暫存或審查證據都不會套用到修改後的新指紋。升級後若候選內容再改變，學生仍看上一個已核准版本，新候選則重新雙審。</p>
+        <div id="destination-profile-review-items" class="destination-review-items" aria-live="polite">
+          <div class="review-loading">正在載入生活情報審查表…</div>
+        </div>
+      </details>
+
+      <details id="destination-publication-history" class="destination-review-workbench">
+        <summary>查看已升級生活情報的公開版本與復原紀錄</summary>
+        <p id="destination-publication-history-summary" class="destination-review-boundary">正在載入生活情報公開歷程…</p>
+        <div id="destination-publication-history-items" class="destination-publication-history-items" aria-live="polite">
+          <div class="review-loading">正在載入生活情報公開歷程…</div>
+        </div>
+      </details>
+
+      <section id="backlog-filters" class="backlog-filters" aria-label="既有流程篩選">
+        <label class="backlog-search-field">
+          <span>搜尋學校、國家或計畫</span>
+          <input id="backlog-search" type="search" placeholder="例如：日本、交換學生、林肯大學" autocomplete="off" />
+        </label>
+        <label>
+          <span>母校</span>
+          <select id="backlog-home-university">
+            <option value="">全部母校</option>
+          </select>
+        </label>
+        <label>
+          <span>缺口或雙審進度</span>
+          <select id="backlog-gap-filter">
+            <option value="">所有缺口</option>
+            <option value="missing_academic_year">缺適用學年度</option>
+            <option value="missing_effective_round">缺有效申請梯次</option>
+            <option value="no_verified_exact_deadline">缺可驗證精確期限</option>
+            <option value="source_year_missing">官方來源缺適用年度</option>
+            <option value="source_metadata_missing">官方引用缺來源證據資料</option>
+            <option value="review_timestamp_missing">缺最後查核日期</option>
+            <option value="critical_rule_source_missing">關鍵規定缺對應來源</option>
+            <option value="insecure_official_source">含非 HTTPS 官方來源</option>
+            <option value="source_replacement_candidate">已有研究候選來源</option>
+            <option value="needs_confirmation">尚有需人工確認步驟</option>
+            <option value="staged">已建立待審版本</option>
+            <option value="unstaged">尚未建立待審版本</option>
+            <option value="review_unstarted">待第一位核准</option>
+            <option value="review_partial">待第二位核准</option>
+            <option value="review_ready">已達雙審門檻</option>
+          </select>
+        </label>
+        <label>
+          <span>審查順序</span>
+          <select id="backlog-sort">
+            <option value="gaps">缺口最多優先</option>
+            <option value="staged">已建立待審優先</option>
+            <option value="approval">雙審進度優先</option>
+            <option value="confirmation">需確認步驟最多</option>
+            <option value="school">合作校名稱</option>
+          </select>
+        </label>
+        <div id="workflow-deep-link-filter" class="workflow-deep-link-filter" hidden>
+          <span id="workflow-deep-link-description"></span>
+          <button id="stage-workflow-review-batch" type="button" hidden>建立目前批次待審副本</button>
+          <button id="open-workflow-review-batch" type="button" hidden>開始審查此批次</button>
+          <button id="clear-workflow-deep-link" class="secondary" type="button">回到完整待辦</button>
+        </div>
+        <p>系統只盤點已保存的官方資料，不會猜測學年度或截止日。建立待審版本只會複製到審核區；兩位管理者核准並發布前，不會改變學生目前看到的內容。</p>
+      </section>
+
+      <section id="source-replacement-candidate-summary" class="source-replacement-candidate-summary" aria-labelledby="source-replacement-candidate-summary-title" hidden>
+        <div>
+          <p class="eyebrow">已完成初步官方來源研究</p>
+          <h3 id="source-replacement-candidate-summary-title">優先處理候選來源流程</h3>
+          <p id="source-replacement-candidate-summary-description"></p>
+          <small>這些只是人工查核入口；篩選或建立待審版都不會自動套用、核准或發布。</small>
+        </div>
+        <div class="source-replacement-candidate-actions">
+          <a id="download-source-replacement-candidates" class="secondary" href="/admin/application-workflow-source-replacement-review-queue.csv" download>下載唯讀審核 CSV</a>
+          <button id="filter-source-replacement-candidates" class="secondary" type="button">顯示候選流程</button>
+        </div>
+      </section>
+
+      <section id="source-evidence-gap-summary" class="source-evidence-gap-summary" aria-labelledby="source-evidence-gap-title" hidden>
+        <div class="source-evidence-gap-heading">
+          <div>
+            <p class="eyebrow">相同網址集中處理</p>
+            <h3 id="source-evidence-gap-title">來源證據缺口群組</h3>
+          </div>
+          <button id="clear-source-evidence-filter" class="secondary" type="button" hidden>清除網址篩選</button>
+        </div>
+        <p id="source-evidence-gap-description"></p>
+        <div id="source-evidence-gap-groups" class="source-evidence-gap-groups"></div>
+      </section>
+
+      <section class="review-summary" aria-label="審查摘要">
+        <article><span id="review-count-label">目前筆數</span><strong id="review-count">—</strong></article>
+        <article><span id="review-unstarted-label">等待第一位</span><strong id="review-unstarted-count">—</strong></article>
+        <article><span id="review-partial-label">等待第二位</span><strong id="review-partial-count">—</strong></article>
+        <article><span id="review-ready-label">可發布</span><strong id="review-ready-count">—</strong></article>
+      </section>
+
+      <div id="review-announcement" class="review-announcement" role="status" aria-live="polite"></div>
+      <section id="review-queue" class="review-queue" aria-busy="true">
+        <div class="review-loading">正在讀取待審版本…</div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,10 +1,18 @@
 from __future__ import annotations
 
+import os
+
 from exchange_info.ai_gateway import (
+    AI_RUNTIME_PAUSED_REASON,
+    AI_RUNTIME_STATE,
     EMBEDDINGS_URL,
     RESPONSES_URL,
+    OpenAIProvider,
     ai_embedding_model,
+    ai_enabled,
     ai_model,
+    ai_runtime_state,
+    build_local_prototype_provider,
     embed_texts,
     get_provider,
     structured_response,
@@ -38,7 +46,8 @@ def test_openai_provider_supports_model_tiers_and_embeddings(monkeypatch) -> Non
 
     monkeypatch.setattr("exchange_info.ai_gateway.requests.post", fake_post)
 
-    output = structured_response(
+    provider = OpenAIProvider("test-key")
+    output = provider.structured_output(
         schema_name="test",
         schema={
             "type": "object",
@@ -50,12 +59,11 @@ def test_openai_provider_supports_model_tiers_and_embeddings(monkeypatch) -> Non
         input_text="test",
         tier="advanced",
     )
-    vectors = embed_texts(["交換申請"])
+    vectors = provider.embed(["交換申請"])
 
-    assert get_provider() is not None
-    assert ai_model("fast") == "fast-model"
-    assert ai_model("advanced") == "advanced-model"
-    assert ai_embedding_model() == "embedding-model"
+    assert provider.fast_model == "fast-model"
+    assert provider.advanced_model == "advanced-model"
+    assert provider.embedding_model == "embedding-model"
     assert output == {"answer": "ok"}
     assert vectors == [[0.25, 0.75]]
     assert requests[0][0] == RESPONSES_URL
@@ -64,14 +72,48 @@ def test_openai_provider_supports_model_tiers_and_embeddings(monkeypatch) -> Non
     assert requests[1][0] == EMBEDDINGS_URL
 
 
-def test_unknown_provider_disables_ai_without_falling_back(monkeypatch) -> None:
-    monkeypatch.setenv("AI_PROVIDER", "unsupported")
+def test_runtime_stays_paused_even_when_external_ai_environment_is_present(
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AI_PROVIDER", "openai")
     monkeypatch.setenv("OPENAI_API_KEY", "test-key")
+    calls: list[str] = []
 
+    def unexpected_post(url: str, **kwargs):
+        calls.append(url)
+        raise AssertionError("paused runtime must not make an external AI request")
+
+    monkeypatch.setattr("exchange_info.ai_gateway.requests.post", unexpected_post)
+
+    assert AI_RUNTIME_STATE == "paused"
+    assert ai_runtime_state() == "paused"
+    assert "目前暫緩" in AI_RUNTIME_PAUSED_REASON
+    assert ai_enabled() is False
     assert get_provider() is None
+    assert ai_model("fast") == ""
+    assert ai_embedding_model() == ""
     assert structured_response(
         schema_name="test",
         schema={},
         instructions="test",
         input_text="test",
     ) is None
+    assert embed_texts(["交換申請"]) is None
+    assert calls == []
+
+
+def test_local_provider_foundation_activates_product_runtime_in_prototype_mode(
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("EXCHANGE_LOCAL_AI_MODE", "prototype")
+    monkeypatch.setenv("EXCHANGE_ENVIRONMENT", "development")
+    monkeypatch.setenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
+    monkeypatch.setenv("OLLAMA_CHAT_MODEL", "gemma4:12b")
+    monkeypatch.setenv("OLLAMA_EMBEDDING_MODEL", "embeddinggemma")
+
+    provider = build_local_prototype_provider(dict(os.environ))
+
+    assert provider is not None
+    assert provider.name == "ollama_local"
+    assert get_provider() is not None
+    assert ai_enabled() is True

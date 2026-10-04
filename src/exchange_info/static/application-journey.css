@@ -1,0 +1,71 @@
+.journey-workspace { padding: 24px; min-width: 0; }
+.journey-settings { border: 1px solid var(--border, #d4e3ed); border-radius: 16px; margin-top: 14px; background: #ffffff75; }
+.journey-settings > summary { display: flex; justify-content: space-between; align-items: center; padding: 16px; cursor: pointer; font-weight: 700; }
+.journey-settings > summary svg { width: 18px; height: 18px; }
+#journey-availability-form, .journey-task-editor { padding: 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+#journey-availability-form label, .journey-task-editor label { display: grid; gap: 7px; min-width: 0; font-size: 13px; }
+#journey-availability-form fieldset { grid-column: 1 / -1; border: 0; margin: 0; padding: 0; }
+#journey-availability-form p, #journey-settings-status { grid-column: 1 / -1; font-size: 13px; color: var(--muted, #62788c); }
+.journey-workspace input:not([type=checkbox]), .journey-workspace select { width: 100%; box-sizing: border-box; min-width: 0; padding: 10px 12px; border: 1px solid #d4e3ed; border-radius: 10px; background: #ffffffb8; color: inherit; }
+.journey-workspace select[multiple] { min-height: 86px; }
+.journey-weekdays { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+#journey-availability-form .journey-weekdays label { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: #e4f3f8; border-radius: 10px; }
+.journey-task-editors { display: grid; gap: 10px; padding: 12px; }
+.journey-task-row { background: #ffffff85; border: 1px solid #d4e3ed; border-radius: 13px; min-width: 0; }
+.journey-task-row > summary { padding: 14px; cursor: pointer; display: grid; gap: 6px; overflow-wrap: anywhere; }
+.journey-task-row small, .journey-today p { color: var(--muted, #62788c); font-size: 13px; }
+.journey-task-editor button { align-self: end; min-height: 42px; }
+.journey-today { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.journey-today article { padding: 18px; border-radius: 16px; background: #e5f5f7; min-width: 0; }
+.journey-today article:nth-child(2) { background: #f3effe; }
+.journey-today ul { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 10px; }
+.journey-today li { overflow-wrap: anywhere; }
+.journey-schedule-result { margin-top: 16px; }
+.journey-issue-list { display: grid; gap: 8px; margin: 12px 0; padding-left: 20px; color: #924d24; font-size: 13px; }
+.journey-sessions { display: grid; gap: 8px; }
+.journey-session { display: grid; grid-template-columns: 90px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 14px; background: #ffffff90; border: 1px solid #d4e3ed; border-radius: 13px; font-size: 13px; }
+.journey-session strong { overflow-wrap: anywhere; }
+.journey-session time { color: var(--muted, #62788c); }
+.journey-session button { margin-left: 8px; }
+.journey-more-sessions { margin-top: 12px; }
+.journey-more-sessions > summary { padding: 12px; cursor: pointer; }
+[data-theme=dark] .journey-workspace :is(article, .journey-settings, .journey-task-row, .journey-session) { background: #233548; border-color: #425569; }
+[data-theme=dark] .journey-workspace :is(input:not([type=checkbox]), select) { background: #16293a; border-color: #425569; }
+@media (max-width: 700px) {
+  .journey-workspace { padding: 16px; }
+  .journey-today, #journey-availability-form, .journey-task-editor { grid-template-columns: minmax(0, 1fr); }
+  .journey-session { grid-template-columns: 70px minmax(0, 1fr); gap: 10px; }
+  .journey-session > span { grid-column: 2; }
+}
+/* Multi-school preparation uses the same workspace, with compact branches. */
+.multi-plan-preferences { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin:16px 0; }
+.multi-plan-preferences label { display:grid; gap:8px; min-width:0; }
+.multi-plan-preferences select { width:100%; min-width:0; }
+.multi-plan-shared, .multi-plan-branch { margin-top:16px; padding:18px; border:1px solid var(--line,#d6e4ef); border-radius:18px; background:rgba(255,255,255,.35); }
+.multi-plan-shared ul, .multi-plan-branch ul { list-style:none; padding:0; margin:0; }
+.multi-plan-branch summary { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; cursor:pointer; font-weight:700; }
+.multi-plan-branch summary span { overflow-wrap:anywhere; }
+.multi-plan-task { padding:14px 0; border-bottom:1px solid var(--line,#d6e4ef); }
+.multi-plan-task:last-child { border-bottom:0; }
+.multi-plan-task label { display:flex; align-items:flex-start; gap:12px; }
+.multi-plan-task input { flex:none; margin-top:4px; width:18px; height:18px; }
+.multi-plan-task span { display:grid; gap:6px; min-width:0; }
+.multi-plan-task p { margin:8px 0 8px 30px; overflow-wrap:anywhere; }
+.multi-plan-task > a { display:inline-block; margin:6px 0 0 12px; }
+.multi-plan-task small { color:var(--muted,#667b92); }
+.multi-task-settings { margin-top:12px; border:1px solid var(--line,#d6e4ef); border-radius:14px; background:#ffffff65; }
+.multi-task-settings > summary { padding:12px 14px; cursor:pointer; font-size:13px; font-weight:600; }
+.multi-plan-task .multi-task-settings p { margin:8px 16px; font-size:13px; }
+.multi-task-settings input:not([type=checkbox]), .multi-task-settings select { width:100%; min-width:0; box-sizing:border-box; padding:10px; border:1px solid var(--line,#d6e4ef); border-radius:10px; background:#ffffffb8; color:inherit; margin:0; }
+.multi-task-settings select[multiple] { min-height:100px; }
+.multi-task-settings .journey-task-editor label { display:grid; }
+[data-theme=dark] .multi-task-settings, [data-theme=dark] .multi-task-settings :is(input,select) { background:#233548; border-color:#425569; }
+@media(max-width:700px) { .multi-plan-preferences { grid-template-columns:minmax(0,1fr); } }
+
+.multi-plan-estimate-badge { display:inline-block; padding:1px 8px; border-radius:999px; background:#fff1d6; color:#8a5200; font-size:12px; font-weight:650; }
+.multi-plan-document-line { display:grid; gap:6px; margin:6px 0; }
+.multi-plan-document-line .text-action { justify-self:start; }
+.multi-plan-documents { font-size:13px; }
+.multi-plan-documents summary { cursor:pointer; color:var(--muted,#62788c); }
+.multi-plan-documents ul { margin:6px 0; padding-left:20px; }
+.journey-suggested-note { margin:6px 0; font-size:13px; color:var(--muted,#62788c); }

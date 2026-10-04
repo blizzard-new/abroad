@@ -214,6 +214,13 @@ struct ExchangeCommunityView: View {
                     .frame(minHeight: ExchangeLayout.minimumTarget)
             }
 
+            ExchangeSnapshotRail(metrics: [
+                ExchangeSnapshotMetric(value: "\(store.posts.count)", label: "貼文", tint: ExchangeColor.accent),
+                ExchangeSnapshotMetric(value: "\(store.posts.reduce(0) { $0 + $1.comments.count })", label: "回覆", tint: ExchangeColor.indigo),
+                ExchangeSnapshotMetric(value: "\(store.chat.count)", label: "公開訊息", tint: ExchangeColor.success),
+                ExchangeSnapshotMetric(value: "\(store.conversations.count)", label: "私訊", tint: ExchangeColor.warning)
+            ])
+
             Picker("社群功能", selection: $mode) {
                 ForEach(CommunityMode.allCases) { item in
                     Text(item.title).tag(item)
@@ -290,61 +297,26 @@ struct ExchangeCommunityView: View {
             }
 
             ForEach(store.posts) { thread in
-                VStack(alignment: .leading, spacing: ExchangeSpacing.sm) {
-                    Text(thread.post.postType == "question" ? "提問" : thread.post.postType == "experience" ? "經驗" : "討論")
-                        .font(ExchangeTypography.caption)
-                        .foregroundStyle(ExchangeColor.accent)
-                    Text(thread.post.title).font(ExchangeTypography.title3)
-                    Text(thread.post.body)
-                        .font(ExchangeTypography.body)
-                        .foregroundStyle(ExchangeColor.labelSecondary)
-                    HStack {
-                        Text(thread.post.displayName).font(ExchangeTypography.caption)
-                        Spacer()
-                        if thread.post.authorId != store.identity?.id {
-                            Button("邀請私訊", systemImage: "envelope.badge") {
-                                inviteTarget = InviteTarget(id: thread.post.authorId, name: thread.post.displayName)
-                            }
-                            .buttonStyle(ExchangeSecondaryButtonStyle())
+                ExchangeCommunityPostCard(
+                    thread: thread,
+                    currentIdentityID: store.identity?.id,
+                    reply: Binding(
+                        get: { replies[thread.id, default: ""] },
+                        set: { replies[thread.id] = $0 }
+                    ),
+                    onInvite: {
+                        inviteTarget = InviteTarget(id: thread.post.authorId, name: thread.post.displayName)
+                    },
+                    onReport: {
+                        Task { await store.report(resourceType: "post", resourceID: thread.post.id) }
+                    },
+                    onComment: { body in
+                        Task {
+                            await store.publishComment(postID: thread.id, body: body)
+                            replies[thread.id] = ""
                         }
-                        Button {
-                            Task { await store.report(resourceType: "post", resourceID: thread.post.id) }
-                        } label: {
-                            Image(systemName: "flag")
-                                .frame(width: 44, height: 44)
-                        }
-                        .accessibilityLabel("檢舉這篇貼文")
                     }
-                    DisclosureGroup("\(thread.comments.count) 則回覆") {
-                        VStack(alignment: .leading, spacing: ExchangeSpacing.sm) {
-                            ForEach(thread.comments) { comment in
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text(comment.displayName).font(ExchangeTypography.caption)
-                                    Text(comment.body).font(ExchangeTypography.body)
-                                }
-                                Divider()
-                            }
-                            HStack {
-                                TextField("補充具體資訊", text: Binding(
-                                    get: { replies[thread.id, default: ""] },
-                                    set: { replies[thread.id] = $0 }
-                                ))
-                                .textFieldStyle(.roundedBorder)
-                                Button("回覆") {
-                                    let body = replies[thread.id, default: ""]
-                                    Task {
-                                        await store.publishComment(postID: thread.id, body: body)
-                                        replies[thread.id] = ""
-                                    }
-                                }
-                                .buttonStyle(ExchangeSecondaryButtonStyle())
-                                .disabled(replies[thread.id, default: ""].count < 2)
-                            }
-                        }
-                        .padding(.top, ExchangeSpacing.xs)
-                    }
-                }
-                .exchangeCard()
+                )
             }
         }
     }
@@ -461,6 +433,97 @@ struct ExchangeCommunityView: View {
                 .exchangeCard()
             }
         }
+    }
+}
+
+private struct ExchangeCommunityPostCard: View {
+    let thread: CommunityPostThread
+    let currentIdentityID: String?
+    @Binding var reply: String
+    let onInvite: () -> Void
+    let onReport: () -> Void
+    let onComment: (String) -> Void
+
+    @State private var bodyExpanded = false
+
+    private var typeLabel: String {
+        switch thread.post.postType {
+        case "question": "提問"
+        case "experience": "經驗"
+        default: "討論"
+        }
+    }
+
+    private var displayDate: String {
+        String(thread.post.createdAt.prefix(10)).replacingOccurrences(of: "-", with: ".")
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: ExchangeSpacing.sm) {
+            Text(typeLabel)
+                .font(ExchangeTypography.caption)
+                .foregroundStyle(ExchangeColor.accent)
+            Text(thread.post.title)
+                .font(ExchangeTypography.title3)
+
+            HStack {
+                Text("\(thread.post.displayName) · \(displayDate)")
+                    .font(ExchangeTypography.caption)
+                    .foregroundStyle(ExchangeColor.labelSecondary)
+                Spacer()
+                if thread.post.authorId != currentIdentityID {
+                    Button("邀請", systemImage: "envelope.badge", action: onInvite)
+                        .buttonStyle(ExchangeSecondaryButtonStyle())
+                }
+                Button(action: onReport) {
+                    Image(systemName: "flag")
+                        .frame(width: 44, height: 44)
+                }
+                .accessibilityLabel("檢舉這篇貼文")
+            }
+
+            ExchangeInfoSummaryGrid(items: [
+                ExchangeInfoSummaryItem(label: "內容類型", value: typeLabel, symbol: "doc.text.fill", tint: ExchangeColor.accent),
+                ExchangeInfoSummaryItem(label: "回覆", value: "\(thread.comments.count) 則", symbol: "bubble.left.and.bubble.right.fill", tint: ExchangeColor.indigo),
+                ExchangeInfoSummaryItem(label: "發布日期", value: displayDate, symbol: "calendar", tint: ExchangeColor.warning),
+                ExchangeInfoSummaryItem(label: "可見範圍", value: "公開", symbol: "globe", tint: ExchangeColor.success)
+            ])
+
+            Text(thread.post.body)
+                .font(ExchangeTypography.body)
+                .foregroundStyle(ExchangeColor.labelSecondary)
+                .lineLimit(bodyExpanded ? nil : 4)
+
+            if thread.post.body.count > 120 {
+                Button(bodyExpanded ? "收合全文" : "閱讀全文") {
+                    bodyExpanded.toggle()
+                }
+                .font(ExchangeTypography.caption)
+                .buttonStyle(.plain)
+                .foregroundStyle(ExchangeColor.accent)
+            }
+
+            DisclosureGroup("\(thread.comments.count) 則回覆") {
+                VStack(alignment: .leading, spacing: ExchangeSpacing.sm) {
+                    ForEach(thread.comments) { comment in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(comment.displayName).font(ExchangeTypography.caption)
+                            Text(comment.body).font(ExchangeTypography.body)
+                        }
+                        Divider()
+                    }
+                    HStack {
+                        TextField("補充具體資訊", text: $reply)
+                            .textFieldStyle(.roundedBorder)
+                        Button("回覆") { onComment(reply) }
+                            .buttonStyle(ExchangeSecondaryButtonStyle())
+                            .disabled(reply.count < 2)
+                    }
+                }
+                .padding(.top, ExchangeSpacing.xs)
+            }
+        }
+        .exchangeCard()
     }
 }
 

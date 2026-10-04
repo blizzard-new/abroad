@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>首次使用試用記錄表</title>
+<style>
+:root { --bg:#f6f9fb; --card:#fff; --ink:#1e2f3d; --muted:#586b7b; --line:#d5e2ea; --accent:#087d9c; --warn:#8a5200; }
+@media (prefers-color-scheme: dark) { :root { --bg:#10202b; --card:#172a38; --ink:#e6f0f5; --muted:#9fb4c2; --line:#2b4354; --accent:#4cc3df; --warn:#f0b35a; } }
+* { box-sizing:border-box; }
+body { margin:0; padding:16px; background:var(--bg); color:var(--ink); font:16px/1.6 system-ui,"Noto Sans TC","PingFang TC",sans-serif; }
+main { max-width:960px; margin:0 auto; display:grid; gap:16px; }
+h1 { font-size:1.4rem; margin:0; } h2 { font-size:1.05rem; margin:0 0 8px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; }
+.note { color:var(--muted); font-size:.875rem; margin:4px 0 0; }
+.warn { color:var(--warn); }
+label { display:grid; gap:4px; font-size:.875rem; color:var(--muted); }
+input, select, textarea { font:inherit; color:var(--ink); background:transparent; border:1px solid var(--line); border-radius:8px; padding:8px 10px; min-height:40px; }
+textarea { min-height:64px; resize:vertical; }
+.grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); }
+.task { display:grid; gap:10px; }
+.task header { display:flex; flex-wrap:wrap; gap:8px 12px; align-items:baseline; justify-content:space-between; }
+.task p { margin:0; }
+button { font:inherit; min-height:40px; padding:0 14px; border-radius:10px; border:1px solid var(--accent); background:var(--accent); color:#fff; cursor:pointer; }
+button.secondary { background:transparent; color:var(--accent); }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.timer { font-variant-numeric:tabular-nums; min-width:5ch; }
+</style>
+</head>
+<body>
+<main>
+  <header class="card">
+    <h1>首次使用學生試用記錄表</h1>
+    <p class="note">對照 <code>student-first-use-trial.md</code> 的任務 1–9。資料只存在這個瀏覽器（localStorage），不會上傳；請用代號，不要記姓名、學號或證號。錄影前須取得參與者同意。</p>
+    <p class="note warn">這份表只幫你記錄。<strong>沒有真人完成並填入結果前，不能說「已完成真人試用」。</strong></p>
+  </header>
+
+  <section class="card" aria-labelledby="meta-title">
+    <h2 id="meta-title">參與者與環境</h2>
+    <div class="grid">
+      <label>參與者代號<input id="participant" placeholder="例如 P01" autocomplete="off"></label>
+      <label>試用日期<input id="date" type="date"></label>
+      <label>裝置<select id="device"><option value="">請選擇</option><option>手機</option><option>平板</option><option>電腦</option></select></label>
+      <label>視窗寬度（px）<input id="width" type="number" min="200" max="4000" inputmode="numeric"></label>
+      <label>測試帳號的本校<select id="school"><option value="">請選擇</option><option>長庚大學</option><option>國立臺北大學</option></select></label>
+      <label>之前是否用過 UniWay<select id="prior"><option value="">請選擇</option><option>沒用過</option><option>用過</option></select></label>
+    </div>
+    <label style="margin-top:12px"><span><input id="consent" type="checkbox"> 參與者已同意本次記錄（以及錄影，若有）</span></label>
+  </section>
+
+  <div id="tasks" aria-live="polite"></div>
+
+  <section class="card">
+    <h2>匯出</h2>
+    <div class="row">
+      <button id="export-csv" type="button">下載 CSV</button>
+      <button id="export-json" type="button" class="secondary">下載 JSON</button>
+      <button id="clear" type="button" class="secondary">清除這個瀏覽器的記錄</button>
+    </div>
+    <p id="status" class="note" role="status"></p>
+  </section>
+</main>
+<script>
+const TASKS = [
+  "找到兩間值得繼續考慮的學校，說明為什麼適合與還不能確定的條件",
+  "把兩所學校排成準備志願，保留其中一所的官方來源",
+  "每週六小時、週二與週六可用，說出接下來要做什麼",
+  "一項文件工作還剩一小時但要等系辦回覆，更新安排並指出可先做的工作",
+  "從任務繼續填寫對應文件，找到第一個未填必填欄位，再返回準備清單",
+  "重新開啟網站，找回志願、進度與下一項工作，指出須向校方確認的內容",
+  "這份讀書計畫從頭做到可以列印，說出下一步（文件一路完成進度條）",
+  "每月預算約三萬，看哪所學校在預算內，並說出有多確定（預算比對）",
+  "官方公布新版規定後，找出哪些準備工作受影響並決定先做什麼（變更影響）",
+];
+const OUTCOMES = ["未測", "自行完成", "提示後完成", "未完成"];
+const KEY = "uniway-first-use-trial-v1";
+const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } };
+let data = load();
+data.tasks = data.tasks || {};
+data.meta = data.meta || {};
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch { document.getElementById("status").textContent = "無法寫入瀏覽器儲存空間，請立即匯出。"; } };
+const timers = {};
+const fmt = (s) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+
+for (const id of ["participant", "date", "device", "width", "school", "prior"]) {
+  const el = document.getElementById(id);
+  el.value = data.meta[id] || "";
+  el.addEventListener("input", () => { data.meta[id] = el.value; save(); });
+}
+const consent = document.getElementById("consent");
+consent.checked = !!data.meta.consent;
+consent.addEventListener("change", () => { data.meta.consent = consent.checked; save(); });
+
+const host = document.getElementById("tasks");
+TASKS.forEach((title, index) => {
+  const n = index + 1;
+  const row = data.tasks[n] = data.tasks[n] || { outcome: "未測", seconds: 0, hints: "", quote: "", fix: "", retry: "" };
+  const card = document.createElement("section");
+  card.className = "card task";
+  card.innerHTML = `
+    <header><h2>任務 ${n}</h2><span class="note">${title}</span></header>
+    <div class="row">
+      <label>結果<select data-f="outcome">${OUTCOMES.map((o) => `<option${o === row.outcome ? " selected" : ""}>${o}</option>`).join("")}</select></label>
+      <span class="timer" aria-label="任務 ${n} 耗時">${fmt(row.seconds)}</span>
+      <button type="button" data-act="toggle">開始計時</button>
+      <button type="button" class="secondary" data-act="reset">歸零</button>
+    </div>
+    <label>提示內容與時間（沒有提示可留空）<textarea data-f="hints">${row.hints}</textarea></label>
+    <label>學生原話與卡點<textarea data-f="quote">${row.quote}</textarea></label>
+    <label>修正項目<textarea data-f="fix">${row.fix}</textarea></label>
+    <label>修正後重試結果<textarea data-f="retry">${row.retry}</textarea></label>`;
+  host.append(card);
+  const timer = card.querySelector(".timer");
+  const toggle = card.querySelector('[data-act="toggle"]');
+  card.addEventListener("input", (e) => {
+    const f = e.target.dataset.f;
+    if (f) { row[f] = e.target.value; save(); }
+  });
+  toggle.addEventListener("click", () => {
+    if (timers[n]) { clearInterval(timers[n]); timers[n] = null; toggle.textContent = "繼續計時"; save(); return; }
+    toggle.textContent = "停止計時";
+    timers[n] = setInterval(() => { row.seconds += 1; timer.textContent = fmt(row.seconds); if (row.seconds % 5 === 0) save(); }, 1000);
+  });
+  card.querySelector('[data-act="reset"]').addEventListener("click", () => {
+    clearInterval(timers[n]); timers[n] = null; row.seconds = 0; timer.textContent = fmt(0); toggle.textContent = "開始計時"; save();
+  });
+});
+
+function download(name, type, text) {
+  const url = URL.createObjectURL(new Blob(["﻿" + text], { type }));
+  const a = Object.assign(document.createElement("a"), { href: url, download: name });
+  document.body.append(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
+const q = (v) => `"${String(v ?? "").replaceAll('"', '""')}"`;
+document.getElementById("export-csv").addEventListener("click", () => {
+  const m = data.meta;
+  const header = ["參與者", "日期", "裝置", "視窗寬度", "本校", "用過UniWay", "已同意", "任務", "任務內容", "結果", "耗時", "提示", "原話與卡點", "修正項目", "修正後重試"];
+  const lines = TASKS.map((title, i) => {
+    const r = data.tasks[i + 1];
+    return [m.participant, m.date, m.device, m.width, m.school, m.prior, m.consent ? "是" : "否", i + 1, title, r.outcome, fmt(r.seconds), r.hints, r.quote, r.fix, r.retry].map(q).join(",");
+  });
+  download(`trial-${m.participant || "participant"}.csv`, "text/csv;charset=utf-8", [header.map(q).join(","), ...lines].join("\r\n"));
+  document.getElementById("status").textContent = "已下載 CSV。";
+});
+document.getElementById("export-json").addEventListener("click", () => {
+  download(`trial-${data.meta.participant || "participant"}.json`, "application/json", JSON.stringify(data, null, 2));
+  document.getElementById("status").textContent = "已下載 JSON。";
+});
+document.getElementById("clear").addEventListener("click", () => {
+  if (!confirm("確定清除這個瀏覽器中的所有試用記錄？此動作無法復原。")) return;
+  try { localStorage.removeItem(KEY); } catch {}
+  location.reload();
+});
+</script>
+</body>
+</html>

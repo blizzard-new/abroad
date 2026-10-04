@@ -13,6 +13,11 @@ from exchange_info.storage import (
     load_partner_research,
     write_jsonl,
 )
+from exchange_info.workflow_structuring import (
+    structure_application_workflow,
+    workflow_structure_issues,
+    workflow_structure_summary,
+)
 
 
 NTPU_NAME = "國立臺北大學"
@@ -44,14 +49,16 @@ def main() -> int:
     partner_names = {normalize_school(row.school_name) for row in partners}
     partner_identities = {school_identity_key(row.school_name) for row in partners}
     workflows = [
-        row
+        structure_application_workflow(row)
         for row in load_application_workflows()
         if row.home_university == NTPU_NAME
         and normalize_school(row.school_name) in partner_names
     ]
     destinations = [
-        row
+        row.model_copy(update={"home_university": NTPU_NAME})
         for row in load_destination_profiles()
+        if normalize_school(row.home_university or "長庚大學")
+        == normalize_school(NTPU_NAME)
         if school_identity_key(row.school_name) in partner_identities
     ]
 
@@ -92,6 +99,9 @@ def main() -> int:
                     partner.ranking_info and partner.ranking_source_url
                 ),
                 "workflow_steps": len(workflow.steps) if workflow else 0,
+                "structured_workflow": bool(
+                    workflow and not workflow_structure_issues(workflow)
+                ),
                 "housing": bool(destination and destination.housing_summary),
                 "cost": bool(destination and destination.cost_summary),
                 "transport": bool(destination and destination.transport_summary),
@@ -125,12 +135,14 @@ def main() -> int:
                 "cost",
                 "transport",
                 "campus_life",
+                "structured_workflow",
             )
         },
         "verified_image_count": sum(
             row["image_status"] == "verified" for row in rows
         ),
         "workflow_count": sum(row["workflow_steps"] > 0 for row in rows),
+        "workflow_structure": workflow_structure_summary(workflows),
         "destination_count": sum(
             row["housing"] and row["cost"] for row in rows
         ),

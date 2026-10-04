@@ -1299,6 +1299,7 @@ def test_destination_profile_upserts_across_chinese_name_aliases(tmp_path) -> No
     ensure_data_dirs(tmp_path)
     upsert_destination_profile(
         DestinationProfile(
+            home_university="長庚大學",
             school_name="諾歐商學院 NEOMA Business School",
             country="法國",
             city="Rouen",
@@ -1307,6 +1308,7 @@ def test_destination_profile_upserts_across_chinese_name_aliases(tmp_path) -> No
     )
     upsert_destination_profile(
         DestinationProfile(
+            home_university="長庚大學",
             school_name="法國諾歐商學院 NEOMA Business School",
             country="法國",
             city="Rouen / Reims",
@@ -1317,6 +1319,64 @@ def test_destination_profile_upserts_across_chinese_name_aliases(tmp_path) -> No
     profiles = load_destination_profiles(tmp_path)
     assert len(profiles) == 1
     assert profiles[0].city == "Rouen / Reims"
+
+
+def test_destination_profile_storage_preserves_same_partner_for_two_home_schools(
+    tmp_path,
+) -> None:
+    ensure_data_dirs(tmp_path)
+    for home, city in (
+        ("長庚大學", "CGU research"),
+        ("國立臺北大學", "NTPU research"),
+    ):
+        upsert_destination_profile(
+            DestinationProfile(
+                home_university=home,
+                school_name="共同合作校 Shared University",
+                city=city,
+            ),
+            tmp_path,
+        )
+
+    profiles = load_destination_profiles(tmp_path)
+
+    assert len(profiles) == 2
+    assert {
+        (row.home_university, row.city)
+        for row in profiles
+    } == {
+        ("長庚大學", "CGU research"),
+        ("國立臺北大學", "NTPU research"),
+    }
+
+
+def test_ambiguous_legacy_destination_profile_fails_closed(tmp_path) -> None:
+    ensure_data_dirs(tmp_path)
+    school_name = "共同合作校 Shared University"
+    save_destination_profiles(
+        [
+            DestinationProfile(
+                school_name=school_name,
+                city="Ambiguous legacy research",
+            )
+        ],
+        tmp_path,
+    )
+    for home in ("長庚大學", "國立臺北大學"):
+        upsert_collection_audit(
+            CollectionAudit(
+                home_university=home,
+                school_name=school_name,
+                collector="destinations",
+                status="official_partial",
+            ),
+            tmp_path,
+        )
+
+    profiles = load_destination_profiles(tmp_path)
+
+    assert len(profiles) == 1
+    assert profiles[0].home_university is None
 
 
 def test_experience_api_reads_cache_and_refreshes_selected_school(tmp_path, monkeypatch) -> None:
@@ -1406,6 +1466,59 @@ def test_destination_profile_api_returns_verified_official_summary(tmp_path, mon
     assert response.status_code == 200
     assert response.json()["city"] == "Lincoln, Canterbury"
     assert list_response.status_code == 200
-    assert list_response.json()[0]["city"] == "Lincoln, Canterbury"
+    listed = next(
+        row
+        for row in list_response.json()
+        if row["school_name"] == partner.school_name
+    )
+    assert listed["city"] == "Lincoln, Canterbury"
     assert coverage["destination_profile_count"] == 1
     assert coverage["partners"][0]["destination_status"] == "official_verified"
+
+
+def test_destination_profile_api_never_shares_research_between_home_schools(
+    tmp_path,
+    monkeypatch,
+) -> None:
+    ensure_data_dirs(tmp_path)
+    partner = _partner()
+    save_destination_profiles(
+        [
+            DestinationProfile(
+                home_university="長庚大學",
+                school_name=partner.school_name,
+                city="CGU scoped",
+                coverage_status="official_verified",
+            ),
+            DestinationProfile(
+                home_university="國立臺北大學",
+                school_name=partner.school_name,
+                city="NTPU scoped",
+                coverage_status="official_partial",
+            ),
+        ],
+        tmp_path,
+    )
+    monkeypatch.setattr(
+        "exchange_info.api.fetch_partner_universities",
+        lambda: [partner],
+    )
+    monkeypatch.setattr(
+        "exchange_info.api.fetch_ntpu_partner_universities",
+        lambda: [partner],
+    )
+    client = TestClient(create_app(tmp_path))
+
+    cgu = client.get(
+        "/destination-profile",
+        params={"school": partner.school_name, "home_school": "長庚大學"},
+    ).json()
+    ntpu = client.get(
+        "/destination-profile",
+        params={"school": partner.school_name, "home_school": "國立臺北大學"},
+    ).json()
+
+    assert cgu["city"] == "CGU scoped"
+    assert cgu["home_university"] == "長庚大學"
+    assert ntpu["city"] == "NTPU scoped"
+    assert ntpu["home_university"] == "國立臺北大學"

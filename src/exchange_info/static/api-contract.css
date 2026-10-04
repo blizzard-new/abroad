@@ -1,0 +1,198 @@
+:root {
+  color-scheme: light dark;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC",
+    "Microsoft JhengHei", sans-serif;
+  background: #f2f6f8;
+  color: #17212b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  padding: 32px 18px;
+  background:
+    radial-gradient(circle at top right, rgba(8, 124, 140, 0.16), transparent 34%),
+    #f2f6f8;
+}
+
+main {
+  width: min(760px, 100%);
+  padding: clamp(28px, 6vw, 56px);
+  border: 1px solid rgba(70, 92, 111, 0.2);
+  border-radius: 22px;
+  background: #ffffff;
+  box-shadow: 0 24px 70px rgba(37, 58, 82, 0.14);
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 16px;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  line-height: 1.05;
+}
+
+h2 {
+  margin-bottom: 18px;
+  font-size: 1.15rem;
+}
+
+.eyebrow {
+  margin-bottom: 10px;
+  color: #087c8c;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lead,
+aside p,
+dd {
+  color: #526174;
+  line-height: 1.7;
+}
+
+section {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(70, 92, 111, 0.16);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid rgba(8, 124, 140, 0.3);
+  border-radius: 10px;
+  color: #075e6a;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+  border-color: #087c8c;
+  outline: 3px solid rgba(8, 124, 140, 0.18);
+  outline-offset: 2px;
+}
+
+a.primary {
+  border-color: #087c8c;
+  background: #087c8c;
+  color: #ffffff;
+}
+
+dl {
+  display: grid;
+  gap: 12px;
+  margin: 26px 0 0;
+}
+
+dl div {
+  display: grid;
+  grid-template-columns: minmax(100px, 0.32fr) 1fr;
+  gap: 12px;
+}
+
+dt {
+  font-weight: 800;
+}
+
+dd {
+  min-width: 0;
+  margin: 0;
+}
+
+code {
+  overflow-wrap: anywhere;
+}
+
+aside {
+  margin-top: 30px;
+  padding: 18px 20px;
+  border-left: 4px solid #087c8c;
+  border-radius: 4px 12px 12px 4px;
+  background: #e8f5f6;
+}
+
+aside p {
+  margin: 6px 0 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    background: #0d1720;
+    color: #edf4f7;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at top right, rgba(45, 194, 208, 0.16), transparent 34%),
+      #0d1720;
+  }
+
+  main {
+    border-color: rgba(180, 206, 220, 0.2);
+    background: #15232e;
+    box-shadow: none;
+  }
+
+  .eyebrow,
+  a {
+    color: #70d6de;
+  }
+
+  .lead,
+  aside p,
+  dd {
+    color: #b9c8d1;
+  }
+
+  a.primary {
+    color: #082127;
+    background: #70d6de;
+  }
+
+  aside {
+    background: #17343a;
+  }
+}
+
+@media (max-width: 560px) {
+  body {
+    padding: 16px;
+  }
+
+  main {
+    padding: 26px 22px;
+    border-radius: 16px;
+  }
+
+  .actions,
+  .actions a {
+    width: 100%;
+  }
+
+  dl div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}

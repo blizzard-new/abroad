@@ -14,6 +14,7 @@ from exchange_info.models import (
     StudentDashboard,
 )
 from exchange_info.storage import ensure_data_dirs, save_exchange_info, save_processed_pages
+from exchange_info.student_view import build_student_dashboard
 
 
 def test_api_reads_processed_data_without_full_text(tmp_path, monkeypatch) -> None:
@@ -72,13 +73,14 @@ def test_api_reads_processed_data_without_full_text(tmp_path, monkeypatch) -> No
     frontend = client.get("/")
     assert frontend.status_code == 200
     assert frontend.headers["cache-control"] == "no-store"
-    assert "台灣大學生交換指南" in frontend.text
+    assert "UniWay｜臺灣大學生留學與交換平台" in frontend.text
 
     assert client.get("/health").json()["pages"] == 1
     monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [])
     universities = client.get("/universities").json()
     assert universities[0]["school_name"] == "長庚大學"
     assert universities[0]["supported"] is True
+    assert universities[0]["support_level"] == "full"
     assert client.get("/exchange-info", params={"school": "長庚大學"}).json()[
         "program_type"
     ] == ["交換學生"]
@@ -96,6 +98,36 @@ def test_api_reads_processed_data_without_full_text(tmp_path, monkeypatch) -> No
     assert client.get("/student-dashboard", params={"school": "長庚大學"}).json()[
         "school_name"
     ] == "長庚大學"
+
+
+def test_cgu_dashboard_api_exposes_structured_cycle_status_and_audience(
+    tmp_path,
+    monkeypatch,
+) -> None:
+    data_dir = tmp_path / "data"
+    ensure_data_dirs(data_dir)
+    dashboard = build_student_dashboard(
+        [],
+        fetch_partner_sheets=False,
+        fetch_regulation_rules=False,
+        reference_time=datetime(2026, 7, 29, tzinfo=timezone.utc),
+    )
+    monkeypatch.setattr(
+        "exchange_info.api.build_student_dashboard",
+        lambda *args, **kwargs: dashboard,
+    )
+    client = TestClient(create_app(data_dir))
+
+    response = client.get("/student-dashboard", params={"school": "長庚大學"})
+
+    assert response.status_code == 200
+    periods = response.json()["application_periods"]
+    assert periods[0]["status"] == "closed"
+    assert periods[0]["deadline_at"] == "2026-06-06T23:59:00+08:00"
+    assert periods[0]["date_status"] == "verified_exact"
+    assert periods[0]["reminder_eligible"] is False
+    assert periods[1]["status"] == "action_required"
+    assert periods[1]["audience"] == "conditional_applicants"
 
 
 def test_dashboard_attaches_verified_official_school_image() -> None:

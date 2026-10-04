@@ -1,5 +1,24 @@
 from __future__ import annotations
 
+from .discovery import localize_experience_digest
+from .public_translation import PublicTranslationBatch, translate_public_batch
+from .school_content import complete_destination_profile
+
+import csv
+from contextvars import ContextVar
+from .access_control import (
+    HOME_UNIVERSITY_UNSET,
+    can_use_university,
+    catalog_home_university,
+    is_platform_admin,
+    school_basis,
+    school_from_email,
+)
+from io import BytesIO, StringIO
+from pypdf import PdfReader
+from typing import Any, Mapping, Sequence
+from uuid import uuid4
+
 import hashlib
 import json
 import mimetypes
@@ -7,6 +26,8 @@ import os
 import re
 import secrets
 import threading
+import time
+from contextlib import asynccontextmanager
 from datetime import datetime, timedelta
 from functools import partial
 from pathlib import Path
@@ -19,13 +40,22 @@ from fastapi.staticfiles import StaticFiles
 from starlette.concurrency import run_in_threadpool
 
 from .advisor import answer_question, build_advisor_plan
+from .analytics import AnalyticsService, ApiMetricsMiddleware
+from .analytics_repository import create_analytics_repository
+from .analytics_routes import register_analytics_routes
+from .notification_routes import register_notification_routes
+from .openapi_contract import install_openapi_contract
+from .workflow_review_routes import register_workflow_review_routes
 from .ai_gateway import (
     ai_embedding_model,
     ai_enabled,
     ai_model,
     ai_provider_name,
+    ai_runtime_state,
 )
 from .application_workflow_collector import collect_application_workflow
+from .university_locations import load_university_locations, public_location
+from .life_context import SchoolLifeContext, build_life_context, reference_student_sources, refresh_life_research
 from .partner_research import (
     apply_partner_research,
     collect_destination_profile,
@@ -33,6 +63,7 @@ from .partner_research import (
 )
 from .application_documents import (
     all_application_templates,
+    build_application_document_catalog,
     build_packet_manifest,
     generate_application_packet_pdf,
     templates_for_context,
@@ -44,9 +75,90 @@ from .experience_collector import (
     merge_refreshed_student_experiences,
     normalize_school,
 )
+from .application_rules import build_personal_application_plan
+from .calendar_conflicts import build_calendar_conflict_report
+from .calendar_task_scheduling import build_calendar_task_schedule
 from .document_checker import MAX_DOCUMENT_BYTES, check_document
 from .document_rewriter import DocumentRewriteUnavailable, rewrite_document
+from .entitlements import configured_product_release_mode, product_feature_enabled, resolve_product_entitlements
+from .repositories import (
+    AccountConflictError,
+    AccountNotFoundError,
+    AccountDeletionMutationRequest,
+    AccountDeletionMutationResult,
+    AccountDeletionMutationStatus,
+    AccountRepositoryError,
+    OAuthLoginMutationRequest,
+    OAuthLoginMutationResult,
+    OAuthLoginMutationStatus,
+    StudentVerificationMutationRequest,
+    StudentVerificationMutationResult,
+    StudentVerificationMutationStatus,
+    WorkspaceMutationKind,
+    WorkspaceMutationRequest,
+    WorkspaceMutationStatus,
+    workspace_identity_key,
+)
+from .transient_auth import (
+    TransientAuthState,
+    TransientAuthStateKind,
+    TransientAuthStoreError,
+    TransientAuthRateLimitError,
+    TransientAuthCapacityError,
+)
+from .email_verification import (
+    EmailVerificationError,
+    EmailVerificationRateLimitError,
+    EmailVerificationDeliveryError,
+    EmailVerificationExpiredError,
+    EmailVerificationInvalidError,
+)
+from .submission_progress import transition_submission_progress
+from .workflow_identity import workflow_storage_key
+from .workflow_issue_reports import (
+    WorkflowIssueReportMutationStatus,
+    WorkflowIssueReportReviewMutation,
+    WorkflowIssueReportSubmitMutation,
+    canonical_issue_report_fingerprint,
+)
+from .document_vault import (
+    VaultAuthorizationError,
+    VaultConsentError,
+    VaultError,
+    VaultExpiredError,
+    VaultIntegrityError,
+    VaultNotFoundError,
+    VaultValidationError,
+)
+from .form_drafts import (
+    FormDraftConflictError,
+    FormDraftError,
+    FormDraftIntegrityError,
+    FormDraftNotFoundError,
+)
 from .models import (
+    SchoolDataCompleteness,
+    AccountApplicationWorkspace,
+    AccountApplicationWorkspaceEnvelope,
+    AccountSubmissionProgress,
+    CalendarConflictAnalysisRequest,
+    CalendarConflictReport,
+    CalendarTaskScheduleRequest,
+    CalendarTaskScheduleReport,
+    EmailVerificationConfirm,
+    EmailVerificationConfirmation,
+    EmailVerificationDispatch,
+    EmailVerificationRequest,
+    PersonalApplicationPlanRequest,
+    PersonalApplicationPlanResult,
+    ApplicationPlanScheduleRequest,
+    ApplicationPlanScheduleResult,
+    ProductAccessTier,
+    ProductEntitlementSnapshot,
+    ProductReleaseMode,
+    StudentVerificationConfirm,
+    StudentVerificationMethod,
+    SubmissionProgressTransitionRequest,
     AccountLogin,
     AccountProfile,
     AccountProfileUpdate,
@@ -56,9 +168,19 @@ from .models import (
     AccountSessionRecord,
     AccountCalendarEvent,
     ApplicationCenterContext,
+    ApplicationDocumentCatalog,
     ApplicationDocumentTemplate,
+    ApplicationFormDraft,
+    ApplicationFormDraftList,
+    ApplicationFormDraftSave,
     ApplicationPacketManifest,
     ApplicationPacketRequest,
+    ApplicationWorkflowIssueCategory,
+    ApplicationWorkflowIssueReport,
+    ApplicationWorkflowIssueReportCreate,
+    ApplicationWorkflowIssueReportReview,
+    ApplicationWorkflowIssueReportReviewRequest,
+    ApplicationWorkflowIssueReportStatus,
     AuthProvider,
     AuthProviderStatus,
     AnonymousIdentity,
@@ -72,6 +194,8 @@ from .models import (
     CommunityAnswerCreate,
     CommunityBlock,
     CommunityBlockCreate,
+    CommunityIdentityMode,
+    CommunityBoardAccess,
     CommunityPost,
     CommunityPostComment,
     CommunityPostCommentCreate,
@@ -100,6 +224,7 @@ from .models import (
     CoverageSummary,
     PartnerCoverage,
     PageCategory,
+    ProductFeature,
     SearchResult,
     PrivateConversation,
     PrivateConversationCreate,
@@ -115,6 +240,13 @@ from .models import (
     SourceSummary,
     UniversityApplicationWorkflow,
     UserAccount,
+    ApplicationFormDraftAttachment,
+    VaultConsentPurpose,
+    VaultDocumentCategory,
+    VaultDocumentList,
+    VaultDocumentSummary,
+    VaultDownloadGrant,
+    VaultVersionSummary,
     utc_now,
 )
 from .ntpu_student_view import (
@@ -138,7 +270,10 @@ def _escape_ics(value: str | None) -> str:
     )
 
 
-def _calendar_feed_content(events: list[AccountCalendarEvent]) -> str:
+def _calendar_feed_content(
+    events: list[AccountCalendarEvent],
+    account: UserAccount | None = None,
+) -> str:
     stamp = utc_now().strftime("%Y%m%dT%H%M%SZ")
     lines = [
         "BEGIN:VCALENDAR",
@@ -149,25 +284,47 @@ def _calendar_feed_content(events: list[AccountCalendarEvent]) -> str:
         "X-WR-CALNAME:交換申請時程",
         "X-WR-TIMEZONE:Asia/Taipei",
     ]
+    reminder_days = (
+        account.notification_preferences.deadline_reminder_days
+        if account and account.notification_preferences
+        else [30, 14, 7, 3, 1]
+    )
+    reminder_triggers = sorted(set(reminder_days) | {0}, reverse=True)
+
     for event in sorted(events, key=lambda item: (item.date, item.title)):
         start = datetime.strptime(event.date, "%Y-%m-%d")
         end = start + timedelta(days=1)
-        description = event.note
+        description = event.note or ""
         if event.source_url:
             description = f"{description}\n官方來源：{event.source_url}".strip()
-        lines.extend(
-            [
-                "BEGIN:VEVENT",
-                f"UID:{_escape_ics(event.id)}@exchange-guide.tw",
-                f"DTSTAMP:{stamp}",
-                f"DTSTART;VALUE=DATE:{start.strftime('%Y%m%d')}",
-                f"DTEND;VALUE=DATE:{end.strftime('%Y%m%d')}",
-                f"SUMMARY:{_escape_ics(f'[交換申請] {event.title}')}",
-                f"DESCRIPTION:{_escape_ics(description)}",
-                f"URL:{_escape_ics(event.source_url)}" if event.source_url else "",
-                "END:VEVENT",
-            ]
-        )
+        event_lines = [
+            "BEGIN:VEVENT",
+            f"UID:{_escape_ics(event.id)}@exchange-guide.tw",
+            f"DTSTAMP:{stamp}",
+            f"DTSTART;VALUE=DATE:{start.strftime('%Y%m%d')}",
+            f"DTEND;VALUE=DATE:{end.strftime('%Y%m%d')}",
+            f"SUMMARY:{_escape_ics(f'[交換申請] {event.title}')}",
+            f"DESCRIPTION:{_escape_ics(description)}",
+        ]
+        if event.source_url:
+            event_lines.append(f"URL:{_escape_ics(event.source_url)}")
+
+        if not getattr(event, "generated_from_event_id", None) and event.status not in ("ready", "completed"):
+            for days in reminder_triggers:
+                trigger = f"-P{days}D" if days > 0 else "PT0M"
+                event_lines.extend(
+                    [
+                        "BEGIN:VALARM",
+                        f"TRIGGER:{trigger}",
+                        "ACTION:DISPLAY",
+                        f"DESCRIPTION:{_escape_ics(event.title)}",
+                        "END:VALARM",
+                    ]
+                )
+
+        event_lines.append("END:VEVENT")
+        lines.extend(event_lines)
+
     lines.append("END:VCALENDAR")
     return "\r\n".join(line for line in lines if line) + "\r\n"
 
@@ -188,6 +345,8 @@ from .storage import (
     append_public_chat_message,
     load_exchange_info,
     load_application_workflows,
+    load_bundled_application_workflows,
+    merge_application_workflows,
     load_account_sessions,
     load_community_answers,
     load_community_blocks,
@@ -325,6 +484,9 @@ def _account_profile(account: UserAccount) -> AccountProfile:
     if account.password_hash and AuthProvider.EMAIL not in providers:
         providers.insert(0, AuthProvider.EMAIL)
     return AccountProfile(
+        is_platform_admin=is_platform_admin(account),
+        catalog_home_university=catalog_home_university(account),
+        school_basis=school_basis(account),
         id=account.id,
         email=account.email,
         display_name=account.display_name,
@@ -333,25 +495,282 @@ def _account_profile(account: UserAccount) -> AccountProfile:
         target_countries=account.target_countries,
         application_stage=account.application_stage,
         followed_boards=account.followed_boards,
+        notification_preferences=account.notification_preferences,
+        content_updates_seen_at=account.content_updates_seen_at,
+        email_verified=account.email_verified,
         school_email_verified=account.school_email_verified,
         student_status_verified=account.student_status_verified,
         verified_university=account.verified_university,
+        verified_department=account.verified_department,
+        student_verification_method=account.student_verification_method,
         student_verified_at=account.student_verified_at,
+        product_tier=account.product_tier,
         providers=providers,
         created_at=account.created_at,
         updated_at=account.updated_at,
     )
 
 
-def create_app(data_dir: Path | None = None) -> FastAPI:
+PRODUCTION_PERSISTENCE_BACKENDS: dict[str, str] = {
+    "account": "supabase",
+    "content_governance": "supabase",
+    "destination_review": "supabase",
+    "document_vault": "supabase-private-storage",
+    "form_drafts": "supabase-encrypted",
+    "transient_auth": "supabase",
+    "public_community": "supabase",
+    "community_suspension": "supabase",
+    "workflow_issue_reports": "supabase",
+    "analytics": "supabase",
+}
+
+
+def _enabled_auth_methods() -> frozenset[str]:
+    """Sign-in methods open to visitors; Google only unless a deployment adds more."""
+    raw = os.environ.get("EXCHANGE_AUTH_METHODS", "google")
+    return frozenset(item.strip().lower() for item in raw.split(",") if item.strip())
+
+
+def _require_auth_method(method: str) -> None:
+    if method not in _enabled_auth_methods():
+        raise HTTPException(status_code=403, detail="目前只開放使用 Google 帳號登入或建立帳號。")
+
+
+def _auth_cookie_secure_enabled(
+    environment: Mapping[str, str] | None = None,
+) -> bool:
+    env = os.environ if environment is None else environment
+    if env.get("EXCHANGE_ENVIRONMENT") == "production":
+        return True
+    val = env.get("EXCHANGE_AUTH_SECURE_COOKIE", "").strip().lower()
+    return val in ("1", "true", "yes", "on")
+
+
+def _browser_security_headers(
+    environment: Mapping[str, str] | None = None,
+) -> dict[str, str]:
+    env = os.environ if environment is None else environment
+    headers = {
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "Referrer-Policy": "no-referrer",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+        "Content-Security-Policy": (
+            "default-src 'self'; "
+            "script-src 'self'; "
+            "script-src-attr 'none'; "
+            "style-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data: https:; "
+            "font-src 'self'; "
+            "object-src 'none'; "
+            "base-uri 'none'; "
+            "form-action 'self'; "
+            "frame-ancestors 'none'"
+        ),
+    }
+    if env.get("EXCHANGE_ENVIRONMENT") == "production":
+        headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    return headers
+
+
+def _destination_profile_review_csv(
+    rows: Sequence[DestinationProfileReviewRow],
+) -> str:
+    def _sanitize(val: object) -> str:
+        s = str(val) if val is not None else ""
+        if s and s[0] in ("=", "+", "-", "@"):
+            return f"'{s}"
+        return s
+
+    output = StringIO()
+    output.write("\ufeff")
+    fieldnames = [
+        "優先順序",
+        "母校",
+        "合作校",
+        "國家",
+        "城市／校區",
+        "涵蓋狀態",
+        "審核缺口",
+        "來源數量",
+        "官方來源名稱",
+        "官方來源連結",
+        "目前查核註記",
+        "檔案內容雜湊",
+        "快照指紋",
+        "審查者 A",
+        "審查者 B",
+    ]
+    writer = csv.DictWriter(output, fieldnames=fieldnames)
+    writer.writeheader()
+    for row in rows:
+        writer.writerow({
+            "優先順序": _sanitize(getattr(row, "priority_order", 0)),
+            "母校": _sanitize(getattr(row, "home_university", "")),
+            "合作校": _sanitize(getattr(row, "school_name", "")),
+            "國家": _sanitize(getattr(row, "country", "") or ""),
+            "城市／校區": _sanitize(getattr(row, "city", "") or ""),
+            "涵蓋狀態": _sanitize(getattr(row, "coverage_status", "")),
+            "審核缺口": _sanitize(";".join(getattr(row, "review_gap_codes", []))),
+            "來源數量": _sanitize(getattr(row, "source_count", 0)),
+            "官方來源名稱": _sanitize(";".join(getattr(row, "source_titles", []))),
+            "官方來源連結": _sanitize(";".join(getattr(row, "source_urls", []))),
+            "目前查核註記": _sanitize(getattr(row, "coverage_note", "")),
+            "檔案內容雜湊": _sanitize(getattr(row, "profile_content_hash", "")),
+            "快照指紋": _sanitize(getattr(row, "snapshot_fingerprint", "")),
+            "審查者 A": "",
+            "審查者 B": "",
+        })
+    return output.getvalue()
+
+
+def create_app(
+    data_dir: Path | None = None,
+    *,
+    account_repository: Any = None,
+    content_governance_store: Any = None,
+    destination_profile_review_store: Any = None,
+    document_vault_service: Any = None,
+    form_draft_service: Any = None,
+    email_verification_service: Any = None,
+    transient_auth_store: Any = None,
+    community_repository: Any = None,
+    workflow_issue_report_repository: Any = None,
+    analytics_repository: Any = None,
+) -> FastAPI:
     resolved_data_dir = Path(
         data_dir or os.environ.get("EXCHANGE_INFO_DATA_DIR") or DEFAULT_DATA_DIR
     )
+    from .repositories import create_account_repository
+    from .content_governance import create_content_governance_store
+    from .destination_profile_review import create_destination_profile_review_store
+    from .document_vault import create_document_vault_service
+    from .form_drafts import create_form_draft_service
+    from .email_verification import create_email_verification_service
+    from .transient_auth import create_transient_auth_store
+    from .community_repositories import create_community_repository
+    from .workflow_issue_reports import create_workflow_issue_report_repository
+
+    is_production = os.environ.get("EXCHANGE_ENVIRONMENT") == "production"
+
+    if is_production:
+        if account_repository and getattr(account_repository, "backend_name", None) != "supabase":
+            raise RuntimeError("正式環境禁止使用本機持久層")
+        if transient_auth_store and getattr(transient_auth_store, "backend_name", None) != "supabase":
+            raise RuntimeError("正式環境禁止使用本機持久層")
+        if document_vault_service:
+            v_repo = getattr(document_vault_service, "repository", None)
+            if getattr(v_repo, "backend_name", getattr(document_vault_service, "backend_name", None)) != "supabase-private-storage":
+                raise RuntimeError("正式環境禁止使用本機持久層")
+        if form_draft_service:
+            d_repo = getattr(form_draft_service, "repository", None)
+            if getattr(d_repo, "backend_name", getattr(form_draft_service, "backend_name", None)) != "supabase-encrypted":
+                raise RuntimeError("正式環境禁止使用本機持久層")
+
+    try:
+        acc_repo = account_repository or create_account_repository(resolved_data_dir)
+        gov_store = content_governance_store or create_content_governance_store(resolved_data_dir)
+        dest_store = destination_profile_review_store or create_destination_profile_review_store(resolved_data_dir)
+        vault_svc = document_vault_service or create_document_vault_service(resolved_data_dir)
+        master_key = getattr(vault_svc, "master_key", b"v" * 32)
+        draft_svc = form_draft_service or create_form_draft_service(resolved_data_dir, master_key)
+        email_svc = email_verification_service or create_email_verification_service(acc_repo, resolved_data_dir)
+        trans_store = transient_auth_store or create_transient_auth_store()
+        comm_repo = community_repository or create_community_repository(resolved_data_dir)
+        issue_repo = workflow_issue_report_repository or create_workflow_issue_report_repository(resolved_data_dir)
+        analytics_on = os.environ.get("EXCHANGE_ANALYTICS", "on").strip().lower() not in {"off", "0", "false", "no"}
+        analytics_service = AnalyticsService.from_environment(
+            (analytics_repository or create_analytics_repository(resolved_data_dir))
+            if analytics_on or analytics_repository is not None else None
+        )
+    except Exception as e:
+        if is_production:
+            raise RuntimeError("正式環境禁止使用本機持久層") from e
+        raise
+
+    backends = {
+        "account": getattr(acc_repo, "backend_name", "jsonl"),
+        "content_governance": getattr(gov_store, "backend_name", "local-jsonl"),
+        "destination_review": getattr(dest_store, "backend_name", "local-jsonl"),
+        "document_vault": getattr(getattr(vault_svc, "repository", None), "backend_name", getattr(vault_svc, "backend_name", "local-encrypted")),
+        "form_drafts": getattr(getattr(draft_svc, "repository", None), "backend_name", getattr(draft_svc, "backend_name", "local-encrypted")),
+        "transient_auth": getattr(trans_store, "backend_name", "memory"),
+        "public_community": getattr(comm_repo, "backend_name", "jsonl"),
+        "community_suspension": getattr(comm_repo, "backend_name", "jsonl"),
+        "workflow_issue_reports": getattr(issue_repo, "backend_name", "local-jsonl"),
+        "analytics": analytics_service.backend_name,
+    }
+
+    if is_production:
+        for name, expected in PRODUCTION_PERSISTENCE_BACKENDS.items():
+            actual = backends.get(name)
+            if name == "analytics" and not analytics_service.enabled:
+                continue  # EXCHANGE_ANALYTICS=off stores nothing, so there is nothing to protect
+            if actual != expected:
+                raise RuntimeError(f"正式環境禁止使用本機持久層：{name}={actual}（需要 {expected}）")
+
+    @asynccontextmanager
+    async def lifespan(_app: FastAPI):
+        yield
+        analytics_service.flush_api_metrics()  # keep the last minute of request counts on a clean shutdown
+
     app = FastAPI(
         title="Taiwan University Exchange Guide",
         version="0.1.0",
         description="Structured exchange-application information for supported universities in Taiwan.",
+        lifespan=lifespan,
     )
+    install_openapi_contract(app)
+    app.state.account_repository = acc_repo
+    app.state.content_governance_store = gov_store
+    app.state.destination_profile_review_store = dest_store
+    app.state.document_vault_service = vault_svc
+    app.state.form_draft_service = draft_svc
+    app.state.email_verification_service = email_svc
+    app.state.transient_auth_store = trans_store
+    app.state.community_repository = comm_repo
+    app.state.workflow_issue_report_repository = issue_repo
+    app.state.analytics = analytics_service
+    app.state.persistence_backends = PRODUCTION_PERSISTENCE_BACKENDS if is_production else backends
+    catalog_request: ContextVar[Request | None] = ContextVar("catalog_request", default=None)
+
+    app.add_middleware(ApiMetricsMiddleware, service=analytics_service)
+
+    @app.middleware("http")
+    async def add_security_headers(request: Request, call_next):
+        context_token = catalog_request.set(request)
+        try:
+            response = await call_next(request)
+        finally:
+            catalog_request.reset(context_token)
+        for key, value in _browser_security_headers().items():
+            response.headers.setdefault(key, value)
+        path = request.url.path
+        if (
+            path in (
+                "/auth/session",
+                "/auth/me",
+                "/auth/me/export",
+                "/account/workspace",
+                "/account/vault/documents",
+            )
+            or path.startswith("/account/")
+            or path.startswith("/auth/me")
+            or getattr(request.state, "catalog_access_checked", False)
+        ):
+            response.headers["Cache-Control"] = "private, no-store, max-age=0"
+            response.headers["Pragma"] = "no-cache"
+            existing_vary = [
+                item.strip()
+                for item in response.headers.get("Vary", "").split(",")
+                if item.strip()
+            ]
+            for v in ("Cookie", "Authorization", "X-Anonymous-Token"):
+                if not any(item.casefold() == v.casefold() for item in existing_vary):
+                    existing_vary.append(v)
+            response.headers["Vary"] = ", ".join(existing_vary)
+        return response
+
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
     partner_cache: dict[str, list] = {}
     partner_cache_lock = threading.Lock()
@@ -395,13 +814,16 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             token_hash=hashlib.sha256(access_token.encode("utf-8")).hexdigest(),
             expires_at=expires_at,
         )
-        with auth_lock:
-            active = [
-                row
-                for row in load_account_sessions(resolved_data_dir)
-                if row.expires_at > utc_now()
-            ]
-            save_account_sessions([*active, record], resolved_data_dir)
+        if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "save_session"):
+            app.state.account_repository.save_session(record)
+        else:
+            with auth_lock:
+                active = [
+                    row
+                    for row in load_account_sessions(resolved_data_dir)
+                    if row.expires_at > utc_now()
+                ]
+                save_account_sessions([*active, record], resolved_data_dir)
         return AccountSession(
             access_token=access_token,
             expires_at=expires_at,
@@ -414,7 +836,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             session.access_token,
             max_age=30 * 24 * 60 * 60,
             httponly=True,
-            secure=os.environ.get("EXCHANGE_AUTH_SECURE_COOKIE", "0") == "1",
+            secure=_auth_cookie_secure_enabled(),
             samesite="lax",
             path="/",
         )
@@ -430,26 +852,80 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         if not access_token:
             raise HTTPException(status_code=401, detail="請先登入帳號。")
         token_hash = hashlib.sha256(access_token.encode("utf-8")).hexdigest()
-        session = next(
-            (
-                row
-                for row in load_account_sessions(resolved_data_dir)
-                if row.expires_at > utc_now()
-                and secrets.compare_digest(row.token_hash, token_hash)
-            ),
-            None,
-        )
+        session = None
+        if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "find_session_by_token_hash"):
+            session = app.state.account_repository.find_session_by_token_hash(token_hash)
+            if session and session.expires_at <= utc_now():
+                session = None
+        if session is None:
+            session = next(
+                (
+                    row
+                    for row in load_account_sessions(resolved_data_dir)
+                    if row.expires_at > utc_now()
+                    and secrets.compare_digest(row.token_hash, token_hash)
+                ),
+                None,
+            )
         if session is None:
             raise HTTPException(status_code=401, detail="登入狀態已失效，請重新登入。")
-        account = next(
-            (row for row in load_user_accounts(resolved_data_dir) if row.id == session.account_id),
-            None,
-        )
+        account = None
+        if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "find_account_by_id"):
+            account = app.state.account_repository.find_account_by_id(session.account_id)
+        if account is None:
+            account = next(
+                (row for row in load_user_accounts(resolved_data_dir) if row.id == session.account_id),
+                None,
+            )
         if account is None:
             raise HTTPException(status_code=401, detail="找不到這個帳號。")
         return account, session
 
+    def content_admin_emails() -> set[str]:
+        raw = os.environ.get("EXCHANGE_CONTENT_ADMIN_EMAILS", "")
+        return {item.strip().lower() for item in raw.split(",") if item.strip()}
+
+    def is_content_admin(account: UserAccount) -> bool:
+        if is_platform_admin(account):
+            return True
+        if not account.email:
+            return False
+        return account.email.strip().lower() in content_admin_emails()
+
+    def authenticated_content_admin(request: Request) -> tuple[UserAccount, AccountSessionRecord]:
+        account, session = authenticated_account(request)
+        if not is_content_admin(account):
+            raise HTTPException(status_code=403, detail="此功能僅限內容管理員使用。")
+        return account, session
+
+    register_notification_routes(app, authenticated_account, authenticated_content_admin)
+    register_workflow_review_routes(app, authenticated_content_admin)
+    analytics_countries: dict[str, Any] = {"at": 0.0, "value": {}}
+
+    def catalogue_countries() -> dict[str, str]:
+        """partner school -> country, for the analytics report only; refreshed at most hourly."""
+        if analytics_countries["value"] and time.monotonic() - analytics_countries["at"] < 3600:
+            return analytics_countries["value"]
+        mapping: dict[str, str] = {}
+        for university in SUPPORTED_UNIVERSITIES:
+            try:
+                for partner in partners_for_university(university):
+                    if partner.country:
+                        mapping.setdefault(partner.school_name, partner.country)
+            except Exception:
+                continue
+        analytics_countries.update(at=time.monotonic(), value=mapping)
+        return mapping
+
+    register_analytics_routes(
+        app, analytics_service, authenticated_content_admin,
+        static_dir=STATIC_DIR, school_countries=catalogue_countries,
+    )
+
     def save_account_record(updated: UserAccount) -> UserAccount:
+        if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "save_account"):
+            app.state.account_repository.save_account(updated)
+            return updated
         with auth_lock:
             save_user_accounts(
                 [
@@ -502,6 +978,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         display_name: str,
         avatar_url: str | None,
         student_verification_token: str | None = None,
+        email_trusted: bool = False,
     ) -> UserAccount:
         normalized_email = email.strip().lower() if email else None
         with auth_lock:
@@ -522,17 +999,26 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
                     (row for row in accounts if row.email == normalized_email), None
                 )
             if account is None:
-                verification = student_verification_record(
-                    student_verification_token,
-                    consume=True,
+                # A student card check is optional now; without one the account starts unverified.
+                verification = (
+                    student_verification_record(student_verification_token, consume=True)
+                    if student_verification_token
+                    else None
                 )
+                inferred = school_from_email(normalized_email) if email_trusted else None
                 account = UserAccount(
                     email=normalized_email,
                     display_name=(display_name or "留學同學")[:30],
                     avatar_url=avatar_url,
-                    student_status_verified=True,
-                    verified_university=str(verification["school_name"]),
-                    student_verified_at=utc_now(),
+                    email_verified=bool(email_trusted and normalized_email),
+                    home_university=(
+                        str(verification["school_name"]) if verification
+                        else inferred.school_name if inferred
+                        else HOME_UNIVERSITY_UNSET
+                    ),
+                    student_status_verified=verification is not None,
+                    verified_university=str(verification["school_name"]) if verification else None,
+                    student_verified_at=utc_now() if verification else None,
                     provider_links=[AccountProviderLink(provider=provider, subject=subject)],
                 )
                 accounts.append(account)
@@ -564,13 +1050,34 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             return account
 
     def university_for(school: str | None) -> UniversityProfile:
+        """Any visitor may read any supported school's catalogue; an account only sets the default."""
+        request = catalog_request.get()
+        account = None
+        if request is not None:
+            account = getattr(request.state, "catalog_account", None)
+            if account is None and request_token(request):
+                try:
+                    account, _ = authenticated_account(request)
+                except HTTPException as exc:
+                    if exc.status_code != 401:
+                        raise
+                    # An expired session still gets the public catalogue.
+                if account is not None:
+                    request.state.catalog_account = account
+            if account is not None:
+                # The default school depends on the account, so shared caches must not keep this.
+                request.state.catalog_access_checked = True
+        if school is None and account is not None:
+            school = catalog_home_university(account)
         try:
             return require_university(school)
         except ValueError as exc:
             raise HTTPException(status_code=404, detail=str(exc)) from exc
 
-    def partners_for_university(school: str | UniversityProfile) -> list:
-        university = school if isinstance(school, UniversityProfile) else university_for(school)
+    def partners_for_university(school: str | UniversityProfile | None) -> list:
+        university = university_for(
+            school.school_name if isinstance(school, UniversityProfile) else school
+        )
         if university.id not in partner_cache:
             with partner_cache_lock:
                 if university.id not in partner_cache:
@@ -586,32 +1093,55 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         )
 
     def workflows_for_university(
-        school: str | UniversityProfile,
+        school: str | UniversityProfile | None,
     ) -> list[UniversityApplicationWorkflow]:
-        university = school if isinstance(school, UniversityProfile) else university_for(school)
+        university = university_for(
+            school.school_name if isinstance(school, UniversityProfile) else school
+        )
         home_key = normalize_school(university.school_name)
+        if hasattr(app.state, "content_governance_store") and hasattr(
+            app.state.content_governance_store, "load_published_workflows"
+        ):
+            workflows = app.state.content_governance_store.load_published_workflows()
+        else:
+            workflows = merge_application_workflows(
+                load_bundled_application_workflows(),
+                load_application_workflows(resolved_data_dir),
+            )
+        from .content_governance import workflow_content_hash
         return [
-            workflow
-            for workflow in load_application_workflows(resolved_data_dir)
+            workflow.model_copy(
+                update={
+                    "issue_report_snapshot": workflow.issue_report_snapshot
+                    or workflow_content_hash(workflow)
+                }
+            )
+            for workflow in workflows
             if normalize_school(workflow.home_university) == home_key
         ]
 
-    def pages_for_university(school: str | UniversityProfile):
-        university = school if isinstance(school, UniversityProfile) else university_for(school)
+    def pages_for_university(school: str | UniversityProfile | None):
+        university = university_for(
+            school.school_name if isinstance(school, UniversityProfile) else school
+        )
         return (
             ntpu_processed_pages()
             if university.id == NTPU.id
             else load_processed_pages(resolved_data_dir)
         )
 
-    def info_for_university(school: str | UniversityProfile) -> ExchangeInfo:
-        university = school if isinstance(school, UniversityProfile) else university_for(school)
+    def info_for_university(school: str | UniversityProfile | None) -> ExchangeInfo:
+        university = university_for(
+            school.school_name if isinstance(school, UniversityProfile) else school
+        )
         if university.id == NTPU.id:
             return ntpu_exchange_info(partners_for_university(university))
         return load_exchange_info(resolved_data_dir) or ExchangeInfo(school_name=CGU.school_name)
 
-    def dashboard_for_university(school: str | UniversityProfile) -> StudentDashboard:
-        university = school if isinstance(school, UniversityProfile) else university_for(school)
+    def dashboard_for_university(school: str | UniversityProfile | None) -> StudentDashboard:
+        university = university_for(
+            school.school_name if isinstance(school, UniversityProfile) else school
+        )
         if university.id == NTPU.id:
             return build_ntpu_student_dashboard(
                 partner_universities=partners_for_university(university)
@@ -627,11 +1157,12 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         home_school: str | None = None,
     ) -> tuple[UniversityProfile, object]:
         normalized = normalize_school(school)
-        universities = (
-            [university_for(home_school)]
-            if home_school
-            else list(SUPPORTED_UNIVERSITIES)
-        )
+        scoped_university = university_for(home_school)
+        # Without a named home school, a direct link may belong to any supported catalogue;
+        # the visitor's own school is searched first.
+        universities = [scoped_university]
+        if not home_school:
+            universities += [item for item in SUPPORTED_UNIVERSITIES if item.id != scoped_university.id]
         for university in universities:
             for partner in partners_for_university(university):
                 if normalize_school(partner.school_name) == normalized:
@@ -645,7 +1176,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         if not identity_id or not access_token:
             raise HTTPException(status_code=401, detail="需要匿名身分才能使用此功能。")
         token_hash = hashlib.sha256(access_token.encode("utf-8")).hexdigest()
-        for identity in load_anonymous_identities(resolved_data_dir):
+        for identity in comm_repo.list_identities():
             if identity.id == identity_id and secrets.compare_digest(
                 identity.access_token_hash, token_hash
             ):
@@ -691,12 +1222,24 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             "exchange_info_ready": load_exchange_info(resolved_data_dir) is not None,
         }
 
+    @app.get("/product/entitlements", response_model=ProductEntitlementSnapshot)
+    def product_entitlements(request: Request) -> ProductEntitlementSnapshot:
+        account = None
+        token = request_token(request)
+        if token:
+            try:
+                account, _ = authenticated_account(request)
+            except HTTPException:
+                account = None
+        return resolve_product_entitlements(account)
+
     @app.post(
         "/auth/student-verification",
         response_model=StudentVerificationResult,
         status_code=201,
     )
     async def verify_student_identity(
+        request: Request,
         front: UploadFile = File(...),
         back: UploadFile = File(...),
         school_name: str = Form(default="長庚大學"),
@@ -734,14 +1277,37 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         except StudentCardVerificationError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
 
+        account_id = None
+        auth_header = request.headers.get("Authorization")
+        if auth_header:
+            try:
+                acc, _ = authenticated_account(request)
+                account_id = acc.id
+            except HTTPException:
+                pass
+
         token = secrets.token_urlsafe(40)
         expires_at = utc_now() + STUDENT_VERIFICATION_TTL
         token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
+        if hasattr(app.state, "transient_auth_store"):
+            app.state.transient_auth_store.save_state(
+                TransientAuthState(
+                    state_hash=token_hash,
+                    kind=TransientAuthStateKind.STUDENT_VERIFICATION_SESSION,
+                    account_id=account_id,
+                    payload={
+                        "school_name": verification.school_name,
+                        "checks": list(verification.checks),
+                    },
+                    expires_at=expires_at,
+                )
+            )
         with verification_lock:
             student_verification_sessions[token_hash] = {
                 "school_name": verification.school_name,
                 "checks": list(verification.checks),
                 "expires_at": expires_at,
+                "account_id": account_id,
             }
         return StudentVerificationResult(
             verification_token=token,
@@ -750,18 +1316,140 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             expires_at=expires_at,
         )
 
+    @app.post("/auth/student-verification/confirm", response_model=AccountProfile)
+    def confirm_student_verification(
+        payload: StudentVerificationConfirm,
+        request: Request,
+    ) -> AccountProfile:
+        account, session = authenticated_account(request)
+        token_hash = hashlib.sha256(payload.verification_token.encode("utf-8")).hexdigest()
+        state = None
+        if hasattr(app.state, "transient_auth_store"):
+            state = app.state.transient_auth_store.get_state(
+                token_hash,
+                TransientAuthStateKind.STUDENT_VERIFICATION_SESSION,
+            )
+        if state is not None:
+            if state.account_id is not None and state.account_id != account.id:
+                raise HTTPException(status_code=403, detail="此學生證驗證屬於其他帳號。")
+            school_name = state.payload.get("school_name", "長庚大學")
+            department_name = state.payload.get("department_name")
+        else:
+            with verification_lock:
+                rec = student_verification_sessions.get(token_hash)
+            if rec is None or rec.get("expires_at", utc_now()) < utc_now():
+                raise HTTPException(status_code=403, detail="學生證驗證已過期或不存在。")
+            if rec.get("account_id") is not None and rec.get("account_id") != account.id:
+                raise HTTPException(status_code=403, detail="此學生證驗證屬於其他帳號。")
+            school_name = str(rec.get("school_name", "長庚大學"))
+            department_name = rec.get("department_name")
+
+        now = utc_now()
+        mutation = StudentVerificationMutationRequest(
+            account_id=account.id,
+            session_id=session.id,
+            session_token_hash=session.token_hash,
+            school_name=school_name,
+            department_name=department_name,
+            verification_method=StudentVerificationMethod.STUDENT_CARD,
+            school_email_verified=False,
+            verified_at=now,
+        )
+        try:
+            if hasattr(app.state, "account_repository") and hasattr(
+                app.state.account_repository, "commit_student_verification"
+            ):
+                result = app.state.account_repository.commit_student_verification(mutation)
+                if (
+                    result.status != StudentVerificationMutationStatus.COMMITTED
+                    or result.account is None
+                ):
+                    raise HTTPException(status_code=400, detail="學生身分驗證提交失敗。")
+                updated = result.account
+            else:
+                updated = account.model_copy(
+                    update={
+                        "student_status_verified": True,
+                        "verified_university": school_name,
+                        "student_verification_method": StudentVerificationMethod.STUDENT_CARD,
+                        "student_verified_at": now,
+                        "updated_at": now,
+                    }
+                )
+                updated = save_account_record(updated)
+        except AccountRepositoryError as exc:
+            raise HTTPException(status_code=503, detail="暫時無法提交身分驗證，請稍後重試。") from exc
+
+        if hasattr(app.state, "transient_auth_store"):
+            app.state.transient_auth_store.consume_state(
+                token_hash,
+                TransientAuthStateKind.STUDENT_VERIFICATION_SESSION,
+                expected_account_id=account.id,
+            )
+        with verification_lock:
+            student_verification_sessions.pop(token_hash, None)
+
+        return _account_profile(updated)
+
+    @app.post(
+        "/auth/email-verification/request",
+        response_model=EmailVerificationDispatch,
+        status_code=202,
+    )
+    def request_email_verification(
+        payload: EmailVerificationRequest,
+    ) -> EmailVerificationDispatch:
+        _require_auth_method("email")
+        email = _normalize_email(payload.email)
+        try:
+            return app.state.email_verification_service.request_code(email)
+        except EmailVerificationRateLimitError as exc:
+            raise HTTPException(
+                status_code=429,
+                detail=str(exc),
+                headers={"Retry-After": str(exc.retry_after_seconds)},
+            ) from exc
+        except EmailVerificationDeliveryError as exc:
+            raise HTTPException(status_code=503, detail=str(exc)) from exc
+        except EmailVerificationError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    @app.post(
+        "/auth/email-verification/confirm",
+        response_model=EmailVerificationConfirmation,
+    )
+    def confirm_email_verification(
+        payload: EmailVerificationConfirm,
+    ) -> EmailVerificationConfirmation:
+        email = _normalize_email(payload.email)
+        try:
+            return app.state.email_verification_service.confirm_code(email, payload.code)
+        except EmailVerificationRateLimitError as exc:
+            raise HTTPException(
+                status_code=429,
+                detail=str(exc),
+                headers={"Retry-After": str(exc.retry_after_seconds)},
+            ) from exc
+        except EmailVerificationExpiredError as exc:
+            raise HTTPException(status_code=410, detail=str(exc)) from exc
+        except EmailVerificationError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+
     @app.get("/auth/providers", response_model=list[AuthProviderStatus])
     def auth_providers() -> list[AuthProviderStatus]:
+        methods = _enabled_auth_methods()
         return [
-            AuthProviderStatus(provider=AuthProvider.EMAIL, enabled=True, label="使用 Email"),
+            AuthProviderStatus(
+                provider=AuthProvider.EMAIL, enabled="email" in methods, label="使用 Email"
+            ),
             AuthProviderStatus(
                 provider=AuthProvider.GOOGLE,
-                enabled=provider_settings(AuthProvider.GOOGLE) is not None,
+                enabled="google" in methods and provider_settings(AuthProvider.GOOGLE) is not None,
                 label="使用 Google 繼續",
             ),
             AuthProviderStatus(
                 provider=AuthProvider.FACEBOOK,
-                enabled=provider_settings(AuthProvider.FACEBOOK) is not None,
+                enabled="facebook" in methods and provider_settings(AuthProvider.FACEBOOK) is not None,
                 label="使用 Facebook 繼續",
             ),
             AuthProviderStatus(
@@ -775,40 +1463,71 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
     def register_account(
         payload: AccountRegister, response: Response
     ) -> AccountSession:
+        _require_auth_method("email")
         email = _normalize_email(payload.email)
         display_name = payload.display_name.strip()
         _reject_contact_details(display_name)
+        if not payload.accept_terms:
+            raise HTTPException(status_code=422, detail="必須同意服務條款。")
         with auth_lock:
-            accounts = load_user_accounts(resolved_data_dir)
-            if any(row.email == email for row in accounts):
+            existing = None
+            if hasattr(app.state, "account_repository") and hasattr(
+                app.state.account_repository, "find_account_by_email"
+            ):
+                existing = app.state.account_repository.find_account_by_email(email)
+            if existing is None:
+                accounts = load_user_accounts(resolved_data_dir)
+                existing = next(
+                    (row for row in accounts if row.email and row.email.casefold() == email),
+                    None,
+                )
+            if existing is not None:
                 raise HTTPException(status_code=409, detail="這個 Email 已經註冊。")
-            verification = student_verification_record(
-                payload.student_verification_token,
-                consume=True,
-            )
+
+            if hasattr(app.state, "email_verification_service"):
+                try:
+                    app.state.email_verification_service.consume_registration_token(
+                        email, payload.email_verification_token
+                    )
+                except EmailVerificationError as exc:
+                    raise HTTPException(
+                        status_code=400,
+                        detail="Email 驗證碼或驗證權限無效，請重新驗證。",
+                    ) from exc
+
             account = UserAccount(
                 email=email,
+                email_verified=True,
                 password_hash=_hash_password(payload.password),
                 display_name=display_name,
-                student_status_verified=True,
-                verified_university=str(verification["school_name"]),
-                student_verified_at=utc_now(),
+                student_status_verified=False,
                 provider_links=[
                     AccountProviderLink(provider=AuthProvider.EMAIL, subject=email)
                 ],
             )
-            save_user_accounts([*accounts, account], resolved_data_dir)
+            account = save_account_record(account)
             session = account_session(account)
         set_auth_cookie(response, session)
         return session
 
     @app.post("/auth/login", response_model=AccountSession)
     def login_account(payload: AccountLogin, response: Response) -> AccountSession:
+        _require_auth_method("email")
         email = _normalize_email(payload.email)
-        account = next(
-            (row for row in load_user_accounts(resolved_data_dir) if row.email == email),
-            None,
-        )
+        account = None
+        if hasattr(app.state, "account_repository") and hasattr(
+            app.state.account_repository, "find_account_by_email"
+        ):
+            account = app.state.account_repository.find_account_by_email(email)
+        if account is None:
+            account = next(
+                (
+                    row
+                    for row in load_user_accounts(resolved_data_dir)
+                    if row.email and row.email.casefold() == email
+                ),
+                None,
+            )
         if account is None or not _verify_password(payload.password, account.password_hash):
             raise HTTPException(status_code=401, detail="Email 或密碼不正確。")
         session = account_session(account)
@@ -861,7 +1580,15 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         if "avatar_url" in payload.model_fields_set:
             updates["avatar_url"] = payload.avatar_url.strip() if payload.avatar_url else None
         if payload.home_university is not None:
-            updates["home_university"] = payload.home_university.strip()
+            declared = payload.home_university.strip()
+            if not declared:
+                raise HTTPException(status_code=422, detail="請填寫就讀學校。")
+            if account.student_status_verified and not can_use_university(account, declared):
+                raise HTTPException(status_code=403, detail="所屬學校依校籍驗證結果決定，不能自行改成其他大學。")
+            # A supported school is stored under its official name; any other school is kept
+            # as typed so we can see which schools people ask for.
+            supported = resolve_university(declared)
+            updates["home_university"] = supported.school_name if supported else declared
         if payload.target_countries is not None:
             updates["target_countries"] = list(
                 dict.fromkeys(
@@ -878,16 +1605,27 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
                     if board.strip()
                 )
             )[:30]
-        updated = account.model_copy(update=updates)
-        with auth_lock:
-            save_user_accounts(
-                [
-                    updated if row.id == account.id else row
-                    for row in load_user_accounts(resolved_data_dir)
-                ],
-                resolved_data_dir,
-            )
-            if payload.display_name is not None:
+        if payload.notification_preferences is not None:
+            updates["notification_preferences"] = payload.notification_preferences
+        if payload.content_updates_seen_at is not None:
+            updates["content_updates_seen_at"] = payload.content_updates_seen_at
+
+        patch_updates = {k: v for k, v in updates.items() if k != "updated_at"}
+        if not patch_updates:
+            return _account_profile(account)
+        try:
+            if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "patch_account_fields"):
+                updated = app.state.account_repository.patch_account_fields(account.id, patch_updates)
+            else:
+                updated = save_account_record(account.model_copy(update=updates))
+        except AccountNotFoundError as exc:
+            raise HTTPException(status_code=401, detail="帳號不存在或已被刪除。") from exc
+
+        if updated is None:
+            raise HTTPException(status_code=401, detail="帳號不存在或已被刪除。")
+
+        if payload.display_name is not None:
+            with auth_lock:
                 save_anonymous_identities(
                     [
                         row.model_copy(update={"display_name": updated.display_name})
@@ -897,75 +1635,664 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
                     ],
                     resolved_data_dir,
                 )
+        if payload.home_university is not None:
+            chosen = catalog_home_university(updated)
+            analytics_service.emit(
+                "school_choice", props={"school": chosen or "other", "supported": chosen is not None},
+                home_school=chosen or "", school_basis=school_basis(updated) or "")
         return _account_profile(updated)
 
+    def _check_calendar_subscription(account: UserAccount) -> None:
+        if configured_product_release_mode() == ProductReleaseMode.PUBLIC:
+            if not account.product_tier or account.product_tier != ProductAccessTier.SUBSCRIPTION:
+                raise HTTPException(
+                    status_code=403,
+                    detail="外部日曆同步屬於進階功能，目前帳號尚未開放。",
+                )
+
     @app.get("/calendar-sync", response_model=CalendarSyncStatus)
-    def get_calendar_sync(request: Request) -> CalendarSyncStatus:
+    def get_calendar_sync(request: Request, response: Response) -> CalendarSyncStatus:
         account, _ = authenticated_account(request)
+        _check_calendar_subscription(account)
+        response.headers["Cache-Control"] = "no-store"
+        response.headers["X-Content-Type-Options"] = "nosniff"
         return calendar_status(account, request)
 
     @app.post("/calendar-sync/enable", response_model=CalendarSyncStatus)
-    def enable_calendar_sync(request: Request) -> CalendarSyncStatus:
+    def enable_calendar_sync(request: Request, response: Response) -> CalendarSyncStatus:
         account, _ = authenticated_account(request)
+        _check_calendar_subscription(account)
+        response.headers["Cache-Control"] = "no-store"
+        response.headers["X-Content-Type-Options"] = "nosniff"
         if not account.calendar_feed_token:
-            account = save_account_record(
-                account.model_copy(
-                    update={
-                        "calendar_feed_token": secrets.token_urlsafe(32),
-                        "updated_at": utc_now(),
-                    }
+            token = secrets.token_urlsafe(32)
+            now = utc_now()
+            if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "patch_account_fields"):
+                account = app.state.account_repository.patch_account_fields(
+                    account.id,
+                    {"calendar_feed_token": token},
                 )
-            )
+            else:
+                account = save_account_record(
+                    account.model_copy(
+                        update={
+                            "calendar_feed_token": token,
+                            "updated_at": now,
+                        }
+                    )
+                )
         return calendar_status(account, request)
 
     @app.put("/calendar-sync/events", response_model=CalendarSyncStatus)
     def sync_calendar_events(
-        payload: CalendarEventSyncRequest, request: Request
+        payload: CalendarEventSyncRequest, request: Request, response: Response
     ) -> CalendarSyncStatus:
         account, _ = authenticated_account(request)
-        updated = account.model_copy(
-            update={
-                "calendar_feed_token": account.calendar_feed_token
-                or secrets.token_urlsafe(32),
-                "calendar_events": payload.events,
-                "calendar_last_synced_at": utc_now(),
-                "updated_at": utc_now(),
-            }
-        )
-        save_account_record(updated)
-        return calendar_status(updated, request)
+        _check_calendar_subscription(account)
+        response.headers["Cache-Control"] = "no-store"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        feed_token = account.calendar_feed_token or secrets.token_urlsafe(32)
+        now = utc_now()
+        updates = {
+            "calendar_feed_token": feed_token,
+            "calendar_events": payload.events,
+            "calendar_last_synced_at": now,
+        }
+        if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "patch_account_fields"):
+            try:
+                account = app.state.account_repository.patch_account_fields(
+                    account.id,
+                    updates,
+                    expected={"calendar_feed_token": account.calendar_feed_token},
+                )
+            except AccountConflictError as error:
+                raise HTTPException(status_code=409, detail=str(error)) from error
+        else:
+            account = save_account_record(account.model_copy(update={**updates, "updated_at": now}))
+        return calendar_status(account, request)
 
     @app.delete("/calendar-sync", response_model=CalendarSyncStatus)
-    def disable_calendar_sync(request: Request) -> CalendarSyncStatus:
+    def disable_calendar_sync(request: Request, response: Response) -> CalendarSyncStatus:
         account, _ = authenticated_account(request)
-        updated = account.model_copy(
-            update={
-                "calendar_feed_token": None,
-                "calendar_events": [],
-                "calendar_last_synced_at": None,
-                "updated_at": utc_now(),
-            }
-        )
-        save_account_record(updated)
+        response.headers["Cache-Control"] = "no-store"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        updates = {
+            "calendar_feed_token": None,
+            "calendar_events": [],
+            "calendar_last_synced_at": None,
+        }
+        if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "patch_account_fields"):
+            account = app.state.account_repository.patch_account_fields(account.id, updates)
+        else:
+            account = save_account_record(account.model_copy(update={**updates, "updated_at": utc_now()}))
         return CalendarSyncStatus(enabled=False)
+
+    @app.get("/account/workspace", response_model=AccountApplicationWorkspaceEnvelope)
+    def get_account_workspace(
+        request: Request,
+        response: Response,
+        home_school: str = Query(default="長庚大學"),
+    ) -> AccountApplicationWorkspaceEnvelope:
+        account, _ = authenticated_account(request)
+        response.headers["Cache-Control"] = "private, no-store, max-age=0"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        workspace_key = workspace_identity_key(home_school)
+        existing = next(
+            (
+                row
+                for row in account.application_workspaces
+                if workspace_identity_key(row.home_school) == workspace_key
+            ),
+            None,
+        )
+        if existing is None:
+            return AccountApplicationWorkspaceEnvelope(
+                exists=False,
+                workspace=AccountApplicationWorkspace(
+                    home_school=home_school,
+                    revision=0,
+                    application_context=ApplicationCenterContext(school_name=home_school),
+                ),
+            )
+        return AccountApplicationWorkspaceEnvelope(
+            exists=True,
+            workspace=existing,
+        )
+
+    @app.put("/account/workspace", response_model=AccountApplicationWorkspaceEnvelope)
+    def put_account_workspace(
+        request: Request,
+        response: Response,
+        payload: AccountApplicationWorkspace,
+    ) -> AccountApplicationWorkspaceEnvelope:
+        account, _ = authenticated_account(request)
+        existing = next((row for row in account.application_workspaces
+                         if workspace_identity_key(row.home_school) == workspace_identity_key(payload.home_school)), None)
+        if existing:
+            compatible_fields = ("discovery", "planning_availability", "preparation_tasks", "selection_conditions")
+            if any(field not in payload.model_fields_set for field in compatible_fields):
+                payload = payload.model_copy(update={field: getattr(existing, field) for field in compatible_fields if field not in payload.model_fields_set})
+            old_events = {event.id: event for event in existing.deadline_events}
+            planning_fields = ("effort_hours", "remaining_hours", "depends_on", "available_from", "waiting_reason", "document_id")
+            payload = payload.model_copy(update={"deadline_events": [
+                event.model_copy(update={field: getattr(old_events[event.id], field)
+                                         for field in planning_fields if field not in event.model_fields_set})
+                if event.id in old_events else event
+                for event in payload.deadline_events
+            ]})
+        response.headers["Cache-Control"] = "private, no-store, max-age=0"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        if configured_product_release_mode() == ProductReleaseMode.PUBLIC:
+            if not account.product_tier or account.product_tier != ProductAccessTier.SUBSCRIPTION:
+                if len(payload.application_schools) > 1:
+                    raise HTTPException(
+                        status_code=403,
+                        detail="免費方案同時只能進行一份申請計畫。",
+                    )
+        result = app.state.account_repository.commit_workspace(
+            WorkspaceMutationRequest(
+                account_id=account.id,
+                expected_revision=payload.revision,
+                workspace=payload,
+                mutation_kind=WorkspaceMutationKind.WORKSPACE_REPLACE,
+            )
+        )
+        if result.status == WorkspaceMutationStatus.CONFLICT:
+            raise HTTPException(
+                status_code=409,
+                detail={
+                    "code": "workspace_revision_conflict",
+                    "current_workspace": (
+                        result.workspace.model_dump(mode="json")
+                        if result.workspace
+                        else None
+                    ),
+                },
+            )
+        if result.status != WorkspaceMutationStatus.COMMITTED or result.workspace is None:
+            raise HTTPException(
+                status_code=400,
+                detail="無法更新工作區狀態。",
+            )
+        return AccountApplicationWorkspaceEnvelope(
+            exists=True,
+            workspace=result.workspace,
+        )
+
+    @app.post("/account/submission-progress", response_model=AccountSubmissionProgress)
+    def update_submission_progress(
+        request: Request,
+        response: Response,
+        payload: SubmissionProgressTransitionRequest,
+    ) -> AccountSubmissionProgress:
+        account, _ = authenticated_account(request)
+        workspace_key = workspace_identity_key(payload.home_school)
+        existing_workspace = next(
+            (
+                row
+                for row in account.application_workspaces
+                if workspace_identity_key(row.home_school) == workspace_key
+            ),
+            None,
+        )
+        current_progress = (
+            existing_workspace.submission_progress.get(payload.progress_key)
+            if existing_workspace
+            else None
+        )
+        try:
+            updated_progress = transition_submission_progress(current_progress, payload)
+        except ValueError as e:
+            raise HTTPException(status_code=422, detail=str(e)) from e
+
+        base_workspace = existing_workspace or AccountApplicationWorkspace(
+            home_school=payload.home_school,
+            revision=0,
+            application_context=ApplicationCenterContext(school_name=payload.home_school),
+        )
+        expected_revision = base_workspace.revision
+        mutation_result = app.state.account_repository.commit_workspace(
+            WorkspaceMutationRequest(
+                account_id=account.id,
+                expected_revision=expected_revision,
+                workspace=base_workspace,
+                mutation_kind=WorkspaceMutationKind.SUBMISSION_PROGRESS_TRANSITION,
+                progress_key=payload.progress_key,
+                progress=updated_progress,
+            )
+        )
+        if mutation_result.status == WorkspaceMutationStatus.CONFLICT:
+            raise HTTPException(
+                status_code=409,
+                detail="送件進度版本衝突，請重新整理後再操作。",
+            )
+        if mutation_result.status != WorkspaceMutationStatus.COMMITTED or mutation_result.workspace is None:
+            raise HTTPException(
+                status_code=400,
+                detail="無法更新送件進度。",
+            )
+
+        response.headers["Cache-Control"] = "private, no-store, max-age=0"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Workspace-Revision"] = str(mutation_result.workspace.revision)
+        response.headers["X-Submission-Recorded-By"] = "student"
+        response.headers["X-Platform-Submitted"] = "false"
+        return updated_progress
+
+    # -------------------------------------------------------------------------
+    # Application Form Drafts & Document Vault
+    # -------------------------------------------------------------------------
+
+    @app.get(
+        "/account/application-drafts",
+        response_model=ApplicationFormDraftList,
+    )
+    def list_application_form_drafts(
+        request: Request,
+        response: Response,
+        home_school: str = Query(default="長庚大學"),
+    ) -> ApplicationFormDraftList:
+        account, _ = authenticated_account(request)
+        if not hasattr(app.state, "form_draft_service"):
+            raise HTTPException(status_code=503, detail="表單草稿服務未啟用。")
+        response.headers["Cache-Control"] = "private, no-store, max-age=0"
+        return app.state.form_draft_service.list_drafts(account.id, home_school)
+
+    @app.put(
+        "/account/application-drafts/{template_id}",
+        response_model=ApplicationFormDraft,
+    )
+    def save_application_form_draft(
+        template_id: str,
+        payload: ApplicationFormDraftSave,
+        request: Request,
+        response: Response,
+    ) -> ApplicationFormDraft:
+        account, _ = authenticated_account(request)
+        if not hasattr(app.state, "form_draft_service"):
+            raise HTTPException(status_code=503, detail="表單草稿服務未啟用。")
+
+        # Reject sensitive values and raw file data
+        for key, val in payload.profile.items():
+            if key == "guardian_id_number" and val:
+                raise HTTPException(status_code=422, detail="敏感欄位不得儲存於草稿。")
+        for key, val in payload.answers.items():
+            if isinstance(val, str) and (val.startswith("data:") or ";base64," in val):
+                raise HTTPException(status_code=422, detail="附件檔案不得直接儲存於草稿欄位。")
+
+        # Validate and enrich vault attachment references
+        enriched_attachments: dict[str, list[ApplicationFormDraftAttachment]] = {}
+        if payload.attachments:
+            if not hasattr(app.state, "document_vault_service"):
+                raise HTTPException(status_code=503, detail="私人文件服務未啟用。")
+            vault_repo = getattr(app.state.document_vault_service, "repository", None)
+            for field_id, refs in payload.attachments.items():
+                enriched_list: list[ApplicationFormDraftAttachment] = []
+                for ref in refs:
+                    v_rec = vault_repo.find_version(account.id, ref.version_id) if vault_repo else None
+                    if v_rec is None:
+                        raise HTTPException(status_code=404, detail="找不到附件引用的私人文件版本。")
+                    consents = vault_repo.list_consents(account.id, v_rec.document_id) if vault_repo else []
+                    active_consent = next(
+                        (
+                            c
+                            for c in consents
+                            if c.version_id == v_rec.id
+                            and c.expires_at > utc_now()
+                            and c.revoked_at is None
+                        ),
+                        None,
+                    )
+                    if not active_consent:
+                        raise HTTPException(status_code=422, detail="附件缺少有效的保存同意。")
+                    file_name = app.state.document_vault_service._decrypt_text(
+                        v_rec.file_name_ciphertext,
+                        v_rec.file_name_nonce,
+                        f"vault-filename:{v_rec.account_id}:{v_rec.document_id}:{v_rec.id}".encode(),
+                    )
+                    doc_rec = vault_repo.find_document(account.id, v_rec.document_id)
+                    label = (
+                        app.state.document_vault_service._decrypt_text(
+                            doc_rec.label_ciphertext,
+                            doc_rec.label_nonce,
+                            f"vault-label:{doc_rec.account_id}:{doc_rec.id}".encode(),
+                        )
+                        if doc_rec
+                        else file_name
+                    )
+                    enriched_list.append(
+                        ApplicationFormDraftAttachment(
+                            document_id=v_rec.document_id,
+                            version_id=v_rec.id,
+                            label=label,
+                            file_name=file_name,
+                            category=doc_rec.category if doc_rec else VaultDocumentCategory.OTHER,
+                            purpose=active_consent.purpose,
+                            retention_days=active_consent.retention_days,
+                            expires_at=v_rec.retention_expires_at,
+                        )
+                    )
+                enriched_attachments[field_id] = enriched_list
+
+        validated_payload = (
+            payload.model_copy(update={"attachments": enriched_attachments})
+            if enriched_attachments
+            else payload
+        )
+        response.headers["Cache-Control"] = "private, no-store, max-age=0"
+        try:
+            return app.state.form_draft_service.save_draft(account.id, template_id, validated_payload)
+        except FormDraftConflictError as exc:
+            raise HTTPException(
+                status_code=409,
+                detail={
+                    "code": "application_draft_revision_conflict",
+                    "current_draft": exc.current.model_dump(mode="json") if exc.current else None,
+                },
+            ) from exc
+        except FormDraftError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+    @app.delete(
+        "/account/application-drafts/{template_id}",
+        status_code=204,
+    )
+    def delete_application_form_draft(
+        template_id: str,
+        request: Request,
+        response: Response,
+        revision: int = Query(ge=1),
+        home_school: str = Query(default="長庚大學"),
+    ) -> Response:
+        account, _ = authenticated_account(request)
+        if not hasattr(app.state, "form_draft_service"):
+            raise HTTPException(status_code=503, detail="表單草稿服務未啟用。")
+        try:
+            app.state.form_draft_service.delete_draft(
+                account.id,
+                home_school,
+                template_id,
+                revision=revision,
+            )
+            response.status_code = 204
+            return response
+        except FormDraftNotFoundError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except FormDraftConflictError as exc:
+            raise HTTPException(
+                status_code=409,
+                detail={
+                    "code": "application_draft_revision_conflict",
+                    "current_draft": exc.current.model_dump(mode="json") if exc.current else None,
+                },
+            ) from exc
+
+    def _require_vault_access(account: UserAccount) -> None:
+        if not product_feature_enabled(account, ProductFeature.ENCRYPTED_DOCUMENT_VAULT):
+            raise HTTPException(
+                status_code=403,
+                detail="私人文件庫為進階功能，請確認方案權限。",
+            )
+
+    @app.get(
+        "/account/vault/documents",
+        response_model=VaultDocumentList,
+    )
+    def list_private_vault_documents(
+        request: Request, response: Response
+    ) -> VaultDocumentList:
+        account, _ = authenticated_account(request)
+        _require_vault_access(account)
+        if not hasattr(app.state, "document_vault_service"):
+            raise HTTPException(status_code=503, detail="私人文件庫尚未啟用。")
+        response.headers["Cache-Control"] = "private, no-store, max-age=0"
+        return app.state.document_vault_service.list_documents(account.id)
+
+    @app.post(
+        "/account/vault/documents",
+        response_model=VaultDocumentSummary,
+        status_code=201,
+    )
+    async def create_private_vault_document(
+        request: Request,
+        label: str = Form(...),
+        category: VaultDocumentCategory = Form(...),
+        purpose: VaultConsentPurpose = Form(...),
+        retention_days: int = Form(...),
+        consent: str = Form(...),
+        file: UploadFile = File(...),
+    ) -> VaultDocumentSummary:
+        account, _ = authenticated_account(request)
+        _require_vault_access(account)
+        if not hasattr(app.state, "document_vault_service"):
+            raise HTTPException(status_code=503, detail="私人文件庫尚未啟用。")
+
+        consent_bool = str(consent).strip().lower() in ("true", "1", "yes")
+        if not consent_bool:
+            raise HTTPException(status_code=422, detail="必須明確同意保存私人文件。")
+
+        content = await file.read()
+        try:
+            return app.state.document_vault_service.store_version(
+                account.id,
+                file_name=file.filename or "document.bin",
+                content=content,
+                media_type=file.content_type,
+                label=label,
+                category=category,
+                purpose=purpose,
+                retention_days=retention_days,
+                consent=consent_bool,
+            )
+        except (VaultConsentError, VaultValidationError) as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        except VaultError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    @app.post(
+        "/account/vault/documents/{document_id}/versions",
+        response_model=VaultDocumentSummary,
+        status_code=201,
+    )
+    async def create_private_vault_version(
+        document_id: str,
+        request: Request,
+        purpose: VaultConsentPurpose = Form(...),
+        retention_days: int = Form(...),
+        consent: str = Form(...),
+        file: UploadFile = File(...),
+    ) -> VaultDocumentSummary:
+        account, _ = authenticated_account(request)
+        _require_vault_access(account)
+        if not hasattr(app.state, "document_vault_service"):
+            raise HTTPException(status_code=503, detail="私人文件庫尚未啟用。")
+
+        consent_bool = str(consent).strip().lower() in ("true", "1", "yes")
+        if not consent_bool:
+            raise HTTPException(status_code=422, detail="必須明確同意保存私人文件版本。")
+
+        content = await file.read()
+        try:
+            doc = app.state.document_vault_service.get_document(account.id, document_id)
+            return app.state.document_vault_service.store_version(
+                account.id,
+                file_name=file.filename or "document.bin",
+                content=content,
+                media_type=file.content_type,
+                label=doc.label,
+                category=doc.category,
+                purpose=purpose,
+                retention_days=retention_days,
+                consent=consent_bool,
+                document_id=document_id,
+            )
+        except VaultNotFoundError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except (VaultConsentError, VaultValidationError) as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        except VaultError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    @app.delete(
+        "/account/vault/documents/{document_id}",
+        status_code=204,
+    )
+    def delete_private_vault_document(
+        document_id: str,
+        request: Request,
+        response: Response,
+    ) -> Response:
+        account, _ = authenticated_account(request)
+        _require_vault_access(account)
+        if not hasattr(app.state, "document_vault_service"):
+            raise HTTPException(status_code=503, detail="私人文件庫尚未啟用。")
+        try:
+            app.state.document_vault_service.delete_document(account.id, document_id)
+            response.status_code = 204
+            return response
+        except VaultNotFoundError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+    @app.delete(
+        "/account/vault/documents/{document_id}/versions/{version_id}",
+    )
+    def delete_private_vault_version(
+        document_id: str,
+        version_id: str,
+        request: Request,
+    ) -> VaultDocumentSummary | None:
+        account, _ = authenticated_account(request)
+        _require_vault_access(account)
+        if not hasattr(app.state, "document_vault_service"):
+            raise HTTPException(status_code=503, detail="私人文件庫尚未啟用。")
+        try:
+            app.state.document_vault_service.delete_version(account.id, document_id, version_id)
+            try:
+                return app.state.document_vault_service.get_document(account.id, document_id)
+            except (VaultNotFoundError, VaultExpiredError):
+                return None
+        except VaultNotFoundError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+    @app.post(
+        "/account/vault/versions/{version_id}/download-grant",
+        response_model=VaultDownloadGrant,
+    )
+    def create_private_vault_download_grant(
+        version_id: str,
+        request: Request,
+    ) -> VaultDownloadGrant:
+        account, _ = authenticated_account(request)
+        _require_vault_access(account)
+        if not hasattr(app.state, "document_vault_service"):
+            raise HTTPException(status_code=503, detail="私人文件庫尚未啟用。")
+        try:
+            return app.state.document_vault_service.create_download_grant(account.id, version_id)
+        except VaultNotFoundError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+        except (VaultExpiredError, VaultConsentError) as exc:
+            raise HTTPException(status_code=410, detail=str(exc)) from exc
+
+    @app.post("/account/vault/download")
+    def download_private_vault_document(
+        request: Request,
+        download_token: str | None = Header(default=None, alias="X-Vault-Download-Token"),
+    ) -> Response:
+        account, _ = authenticated_account(request)
+        _require_vault_access(account)
+        if not download_token:
+            raise HTTPException(status_code=403, detail="缺少私人文件下載授權。")
+        if not hasattr(app.state, "document_vault_service"):
+            raise HTTPException(status_code=503, detail="私人文件庫尚未啟用。")
+        try:
+            content, file_name, media_type = app.state.document_vault_service.download(
+                account.id, download_token
+            )
+            response = Response(
+                content=content,
+                media_type=media_type,
+            )
+            response.headers["Cache-Control"] = "private, no-store, max-age=0"
+            return response
+        except (VaultAuthorizationError, VaultIntegrityError):
+            raise HTTPException(status_code=403, detail="私人文件下載授權無效。")
+        except (VaultExpiredError, VaultConsentError) as exc:
+            raise HTTPException(status_code=410, detail=str(exc)) from exc
+        except VaultNotFoundError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+    @app.post(
+        "/calendar/conflicts/analyze",
+        response_model=CalendarConflictReport,
+    )
+    def analyze_calendar_conflicts(
+        request: Request,
+        response: Response,
+        payload: CalendarConflictAnalysisRequest,
+    ) -> CalendarConflictReport:
+        account, _ = authenticated_account(request)
+        if configured_product_release_mode() == ProductReleaseMode.PUBLIC:
+            if not account.product_tier or account.product_tier != ProductAccessTier.SUBSCRIPTION:
+                raise HTTPException(
+                    status_code=403,
+                    detail="此為進階功能，請升級訂閱後使用。",
+                )
+        response.headers["Cache-Control"] = "no-store"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        return build_calendar_conflict_report(payload.events)
+
+    @app.post(
+        "/calendar/tasks/schedule",
+        response_model=CalendarTaskScheduleReport,
+    )
+    def schedule_calendar_tasks(
+        request: Request,
+        response: Response,
+        payload: CalendarTaskScheduleRequest,
+    ) -> CalendarTaskScheduleReport:
+        account, _ = authenticated_account(request)
+        if configured_product_release_mode() == ProductReleaseMode.PUBLIC:
+            if not account.product_tier or account.product_tier != ProductAccessTier.SUBSCRIPTION:
+                raise HTTPException(
+                    status_code=403,
+                    detail="此為進階功能，請升級訂閱後使用。",
+                )
+        response.headers["Cache-Control"] = "no-store"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        return build_calendar_task_schedule(payload.events, as_of=payload.as_of, availability=payload.availability)
 
     @app.get("/calendar/feed/{feed_token}.ics", response_class=PlainTextResponse)
     def calendar_subscription_feed(feed_token: str) -> PlainTextResponse:
         if len(feed_token) < 24 or len(feed_token) > 128:
             raise HTTPException(status_code=404, detail="找不到這個日曆。")
-        account = next(
-            (
-                row
-                for row in load_user_accounts(resolved_data_dir)
-                if row.calendar_feed_token
-                and secrets.compare_digest(row.calendar_feed_token, feed_token)
-            ),
-            None,
-        )
+        account = None
+        if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "list_accounts"):
+            account = next(
+                (
+                    row
+                    for row in app.state.account_repository.list_accounts()
+                    if row.calendar_feed_token
+                    and secrets.compare_digest(row.calendar_feed_token, feed_token)
+                ),
+                None,
+            )
+        if account is None:
+            account = next(
+                (
+                    row
+                    for row in load_user_accounts(resolved_data_dir)
+                    if row.calendar_feed_token
+                    and secrets.compare_digest(row.calendar_feed_token, feed_token)
+                ),
+                None,
+            )
         if account is None:
             raise HTTPException(status_code=404, detail="找不到這個日曆。")
+        if configured_product_release_mode() == ProductReleaseMode.PUBLIC:
+            if not account.product_tier or account.product_tier != ProductAccessTier.SUBSCRIPTION:
+                raise HTTPException(status_code=404, detail="找不到這個日曆。")
         return PlainTextResponse(
-            _calendar_feed_content(account.calendar_events),
+            _calendar_feed_content(account.calendar_events, account=account),
             media_type="text/calendar; charset=utf-8",
             headers={
                 "Cache-Control": "private, max-age=300",
@@ -976,6 +2303,12 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
     @app.get("/auth/me/export")
     def export_auth_profile(request: Request) -> dict[str, object]:
         account, _ = authenticated_account(request)
+        reports = (
+            app.state.workflow_issue_report_repository.list_reports_for_account(account.id)
+            if hasattr(app.state, "workflow_issue_report_repository")
+            and hasattr(app.state.workflow_issue_report_repository, "list_reports_for_account")
+            else []
+        )
         return {
             "profile": _account_profile(account).model_dump(mode="json"),
             "community_identity_ids": [
@@ -983,11 +2316,101 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
                 for row in load_anonymous_identities(resolved_data_dir)
                 if row.account_id == account.id
             ],
+            "application_workflow_issue_reports": [
+                row.model_dump(
+                    mode="json",
+                    exclude={"reporter_account_id", "mutation_id", "request_fingerprint"},
+                )
+                for row in reports
+            ],
         }
 
     @app.delete("/auth/me", status_code=204)
     def delete_auth_profile(request: Request, response: Response) -> Response:
+        mutation_id = request.headers.get("X-Account-Deletion-Mutation-ID")
+        if mutation_id:
+            response.headers["X-Account-Deletion-Mutation-ID"] = mutation_id
+
+        access_token = request_token(request)
+        if not access_token:
+            raise HTTPException(status_code=401, detail="請先登入帳號。")
+        token_hash = hashlib.sha256(access_token.encode("utf-8")).hexdigest()
+
+        session = None
+        account = None
+        if hasattr(app.state, "account_repository") and hasattr(
+            app.state.account_repository, "find_session_by_token_hash"
+        ):
+            session = app.state.account_repository.find_session_by_token_hash(token_hash)
+            if session:
+                account = app.state.account_repository.find_account_by_id(session.account_id)
+
+        if mutation_id and hasattr(app.state, "account_repository") and hasattr(
+            app.state.account_repository, "commit_account_deletion"
+        ):
+            mutation = AccountDeletionMutationRequest(
+                mutation_id=mutation_id,
+                session_token_hash=token_hash,
+                account_id=account.id if account else None,
+                session_id=session.id if session else None,
+                replacement_name="已刪除帳號",
+            )
+            result = app.state.account_repository.commit_account_deletion(mutation)
+            del_headers = {"X-Account-Deletion-Mutation-ID": mutation_id}
+            if result.status == AccountDeletionMutationStatus.IDEMPOTENCY_CONFLICT:
+                raise HTTPException(
+                    status_code=409,
+                    detail="刪除帳號識別碼衝突。",
+                    headers=del_headers,
+                )
+            if result.status == AccountDeletionMutationStatus.SESSION_INVALID and not getattr(
+                result, "idempotent", False
+            ):
+                raise HTTPException(status_code=401, detail="請先登入帳號。", headers=del_headers)
+            if result.status == AccountDeletionMutationStatus.COMMITTED:
+                if getattr(result, "storage_object_keys", None):
+                    try:
+                        if hasattr(app.state, "document_vault_service") and hasattr(
+                            app.state.document_vault_service, "repository"
+                        ):
+                            app.state.document_vault_service.repository.delete_objects(
+                                result.storage_object_keys
+                            )
+                    except Exception as exc:
+                        raise HTTPException(
+                            status_code=503,
+                            detail="刪除附件檔案失敗。",
+                            headers=del_headers,
+                        ) from exc
+                if hasattr(app.state.account_repository, "complete_account_deletion_storage"):
+                    app.state.account_repository.complete_account_deletion_storage(
+                        mutation_id, token_hash
+                    )
+                target_acc_id = account.id if account else (getattr(result, "account_id", None) or (session.account_id if session else None))
+                if target_acc_id:
+                    comm_repo.purge_account_interactions(target_acc_id)
+                    if hasattr(app.state, "form_draft_service") and hasattr(
+                        app.state.form_draft_service, "purge_account"
+                    ):
+                        app.state.form_draft_service.purge_account(target_acc_id)
+                    if hasattr(app.state, "document_vault_service") and hasattr(
+                        app.state.document_vault_service, "purge_account"
+                    ):
+                        app.state.document_vault_service.purge_account(target_acc_id)
+                response.delete_cookie(AUTH_COOKIE_NAME, path="/")
+                response.headers["X-Account-Deletion-Mutation-ID"] = mutation_id
+                response.status_code = 204
+                return response
+
         account, _ = authenticated_account(request)
+        if hasattr(app.state, "form_draft_service") and hasattr(
+            app.state.form_draft_service, "purge_account"
+        ):
+            app.state.form_draft_service.purge_account(account.id)
+        if hasattr(app.state, "document_vault_service") and hasattr(
+            app.state.document_vault_service, "purge_account"
+        ):
+            app.state.document_vault_service.purge_account(account.id)
         with auth_lock:
             save_user_accounts(
                 [row for row in load_user_accounts(resolved_data_dir) if row.id != account.id],
@@ -1010,6 +2433,13 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
                 ],
                 resolved_data_dir,
             )
+        if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "delete_account"):
+            app.state.account_repository.delete_account(account.id)
+        comm_repo.purge_account_interactions(account.id)
+        if hasattr(app.state, "workflow_issue_report_repository") and hasattr(
+            app.state.workflow_issue_report_repository, "deidentify_reporter"
+        ):
+            app.state.workflow_issue_report_repository.deidentify_reporter(account.id)
         response.delete_cookie(AUTH_COOKIE_NAME, path="/")
         response.status_code = 204
         return response
@@ -1020,37 +2450,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         status_code=201,
     )
     def account_community_identity(request: Request) -> AnonymousIdentitySession:
-        account, _ = authenticated_account(request)
-        access_token = secrets.token_urlsafe(32)
-        token_hash = hashlib.sha256(access_token.encode("utf-8")).hexdigest()
-        with community_lock:
-            identities = load_anonymous_identities(resolved_data_dir)
-            identity = next(
-                (row for row in identities if row.account_id == account.id), None
-            )
-            if identity is None:
-                identity = AnonymousIdentity(
-                    display_name=account.display_name,
-                    access_token_hash=token_hash,
-                    account_id=account.id,
-                )
-                identities.append(identity)
-            else:
-                identity = identity.model_copy(
-                    update={
-                        "display_name": account.display_name,
-                        "access_token_hash": token_hash,
-                    }
-                )
-                identities = [
-                    identity if row.id == identity.id else row for row in identities
-                ]
-            save_anonymous_identities(identities, resolved_data_dir)
-        return AnonymousIdentitySession(
-            id=identity.id,
-            display_name=identity.display_name,
-            access_token=access_token,
-        )
+        return AnonymousIdentitySession(**create_discussion_identity(request))
 
     @app.get("/auth/oauth/{provider}/start", response_class=RedirectResponse)
     def oauth_start(
@@ -1062,17 +2462,51 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             provider_name = AuthProvider(provider)
         except ValueError as exc:
             raise HTTPException(status_code=404, detail="不支援這個登入方式。") from exc
+        _require_auth_method(provider_name.value)
         settings = provider_settings(provider_name)
         if settings is None:
             raise HTTPException(status_code=503, detail="此登入方式尚未設定平台金鑰。")
         if student_verification_token:
             student_verification_record(student_verification_token, consume=False)
         state_token = secrets.token_urlsafe(32)
-        oauth_states[state_token] = (
-            provider_name,
-            utc_now(),
-            student_verification_token,
-        )
+        flow_secret = secrets.token_urlsafe(32)
+        now = utc_now()
+        state_hash = hashlib.sha256(state_token.encode("utf-8")).hexdigest()
+
+        if hasattr(app.state, "transient_auth_store"):
+            record = TransientAuthState(
+                state_hash=state_hash,
+                kind=TransientAuthStateKind.OAUTH_LOGIN,
+                provider_id=provider_name.value,
+                session_id=flow_secret,
+                payload={"student_verification_token": student_verification_token},
+                expires_at=now + timedelta(minutes=10),
+            )
+            client_ip = request.client.host if request.client else "127.0.0.1"
+            try:
+                app.state.transient_auth_store.start_oauth_state(
+                    record,
+                    client_fingerprint=client_ip,
+                    window_start=now - timedelta(minutes=10),
+                    start_limit=20,
+                    max_active=200,
+                )
+            except TransientAuthRateLimitError as exc:
+                raise HTTPException(
+                    status_code=429,
+                    detail=str(exc),
+                    headers={"Retry-After": "600"},
+                ) from exc
+            except TransientAuthCapacityError as exc:
+                raise HTTPException(status_code=503, detail=str(exc)) from exc
+        else:
+            oauth_states[state_token] = (
+                provider_name,
+                now,
+                student_verification_token,
+                flow_secret,
+            )
+
         redirect_uri = oauth_redirect_uri(request, provider_name)
         if provider_name == AuthProvider.GOOGLE:
             params = {
@@ -1095,29 +2529,110 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             url = f"https://www.facebook.com/dialog/oauth?{urlencode(params)}"
         else:
             raise HTTPException(status_code=501, detail="此登入方式將於 App 版啟用。")
-        return RedirectResponse(url=url, status_code=302)
 
-    @app.get("/auth/oauth/{provider}/callback", response_class=RedirectResponse)
+        response = RedirectResponse(url=url, status_code=302)
+        response.headers["Cache-Control"] = "no-store"
+        response.headers["Referrer-Policy"] = "no-referrer"
+        flow_cookie_name = f"exchange_guide_oauth_flow_{provider_name.value}"
+        response.set_cookie(
+            flow_cookie_name,
+            flow_secret,
+            max_age=600,
+            httponly=True,
+            samesite="lax",
+            path=f"/auth/oauth/{provider_name.value}/callback",
+            secure=_auth_cookie_secure_enabled(),
+        )
+        return response
+
+    @app.get("/auth/oauth/{provider}/callback")
     def oauth_callback(
         provider: str,
         request: Request,
-        code: str = Query(min_length=4),
         state: str = Query(min_length=8),
-    ) -> RedirectResponse:
+        code: str | None = Query(default=None),
+        error: str | None = Query(default=None),
+    ) -> Response:
         try:
             provider_name = AuthProvider(provider)
         except ValueError as exc:
             raise HTTPException(status_code=404, detail="不支援這個登入方式。") from exc
-        state_record = oauth_states.pop(state, None)
-        if (
-            state_record is None
-            or state_record[0] != provider_name
-            or utc_now() - state_record[1] > timedelta(minutes=10)
-        ):
+
+        flow_cookie_name = f"exchange_guide_oauth_flow_{provider_name.value}"
+        flow_secret = request.cookies.get(flow_cookie_name)
+
+        def _clear_flow_cookie(resp: Response) -> Response:
+            resp.set_cookie(
+                flow_cookie_name,
+                "",
+                max_age=0,
+                httponly=True,
+                samesite="lax",
+                path=f"/auth/oauth/{provider_name.value}/callback",
+                secure=_auth_cookie_secure_enabled(),
+            )
+            resp.headers["Cache-Control"] = "no-store"
+            resp.headers["Referrer-Policy"] = "no-referrer"
+            return resp
+
+        state_hash = hashlib.sha256(state.encode("utf-8")).hexdigest()
+
+        target_state = None
+        if hasattr(app.state, "transient_auth_store"):
+            target_state = app.state.transient_auth_store.get_state(
+                state_hash,
+                TransientAuthStateKind.OAUTH_LOGIN,
+            )
+        else:
+            rec = oauth_states.get(state)
+            if rec:
+                target_state = rec
+
+        if target_state is None:
             raise HTTPException(status_code=400, detail="登入驗證已失效，請重新操作。")
+
+        state_provider = (
+            target_state.provider_id
+            if hasattr(target_state, "provider_id")
+            else target_state[0].value
+        )
+        if state_provider != provider_name.value:
+            raise HTTPException(status_code=400, detail="OAuth provider 不符。")
+
+        expected_secret = (
+            target_state.session_id
+            if hasattr(target_state, "session_id")
+            else (target_state[3] if len(target_state) > 3 else None)
+        )
+        if not flow_secret or (expected_secret and flow_secret != expected_secret):
+            raise HTTPException(status_code=403, detail="瀏覽器驗證階段不相符。")
+
+        if hasattr(app.state, "transient_auth_store"):
+            app.state.transient_auth_store.consume_state(
+                state_hash,
+                TransientAuthStateKind.OAUTH_LOGIN,
+                expected_provider_id=provider_name.value,
+                expected_session_id=flow_secret,
+            )
+        else:
+            oauth_states.pop(state, None)
+
+        if error:
+            if len(error) > 120:
+                resp = Response(status_code=422)
+                return _clear_flow_cookie(resp)
+            resp = RedirectResponse(url="/#auth=cancelled", status_code=303)
+            return _clear_flow_cookie(resp)
+
+        if not code or len(code) < 4 or len(code) > 512:
+            resp = Response(status_code=422)
+            return _clear_flow_cookie(resp)
+
         settings = provider_settings(provider_name)
         if settings is None:
-            raise HTTPException(status_code=503, detail="此登入方式尚未設定平台金鑰。")
+            resp = Response(status_code=503)
+            return _clear_flow_cookie(resp)
+
         redirect_uri = oauth_redirect_uri(request, provider_name)
         try:
             if provider_name == AuthProvider.GOOGLE:
@@ -1145,6 +2660,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
                 email = user.get("email")
                 display_name = user.get("name") or "留學同學"
                 avatar_url = user.get("picture")
+                trusted_email = email if user.get("email_verified") is True else None
             elif provider_name == AuthProvider.FACEBOOK:
                 token_response = requests.get(
                     "https://graph.facebook.com/oauth/access_token",
@@ -1174,25 +2690,78 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
                 avatar_url = (
                     user.get("picture", {}).get("data", {}).get("url")
                 )
+                trusted_email = None
             else:
-                raise HTTPException(status_code=501, detail="此登入方式尚未啟用。")
-        except (KeyError, requests.RequestException) as exc:
-            raise HTTPException(status_code=502, detail="社群登入暫時無法完成。") from exc
-        account = oauth_account(
-            provider_name,
-            subject,
-            email,
-            display_name,
-            avatar_url,
-            state_record[2],
+                resp = Response(status_code=501)
+                return _clear_flow_cookie(resp)
+        except (KeyError, requests.RequestException):
+            resp = Response(status_code=502)
+            return _clear_flow_cookie(resp)
+
+        access_token = secrets.token_urlsafe(40)
+        session_token_hash = hashlib.sha256(access_token.encode("utf-8")).hexdigest()
+        now = utc_now()
+        inferred_school = school_from_email(trusted_email)
+        mutation = OAuthLoginMutationRequest(
+            provider=provider_name,
+            subject=subject,
+            trusted_email=trusted_email,
+            display_name=(display_name or "留學同學")[:30],
+            avatar_url=avatar_url,
+            # Only a provider-verified school address names the school; everyone else picks one
+            # after signing in. An existing account keeps whatever it already has.
+            home_university=(
+                inferred_school.school_name if inferred_school else HOME_UNIVERSITY_UNSET
+            ),
+            new_account_id=uuid4().hex,
+            session_id=uuid4().hex,
+            session_token_hash=session_token_hash,
+            session_expires_at=now + timedelta(days=30),
+            occurred_at=now,
         )
-        session = account_session(account)
+        if hasattr(app.state, "account_repository") and hasattr(
+            app.state.account_repository, "commit_oauth_login"
+        ):
+            result = app.state.account_repository.commit_oauth_login(mutation)
+            if result.status == OAuthLoginMutationStatus.COMMITTED and result.account:
+                account = result.account
+                session = AccountSession(
+                    access_token=access_token,
+                    expires_at=mutation.session_expires_at,
+                    profile=_account_profile(account),
+                )
+                analytics_service.emit(
+                    "account_created" if account.id == mutation.new_account_id else "account_login",
+                    props={"provider": provider_name.value, "school_from_mail": inferred_school is not None},
+                    home_school=catalog_home_university(account) or "", school_basis=school_basis(account) or "")
+            elif result.status in (
+                OAuthLoginMutationStatus.VERIFIED_EMAIL_CONFLICT,
+                OAuthLoginMutationStatus.SAME_PROVIDER_CONFLICT,
+                OAuthLoginMutationStatus.UNVERIFIED_EMAIL_CONFLICT,
+                OAuthLoginMutationStatus.INTEGRITY_CONFLICT,
+            ):
+                raise HTTPException(status_code=409, detail="社群帳號或 Email 與現有帳號衝突。")
+            else:
+                raise HTTPException(status_code=400, detail="無法完成社群登入。")
+        else:
+            account = oauth_account(
+                provider_name,
+                subject,
+                trusted_email or email,
+                display_name,
+                avatar_url,
+                email_trusted=trusted_email is not None,
+            )
+            session = account_session(account)
+
         response = RedirectResponse(url="/#auth=success", status_code=303)
+        _clear_flow_cookie(response)
         set_auth_cookie(response, session)
         return response
 
     @app.get("/universities", response_model=list[SupportedUniversity])
     def universities() -> list[SupportedUniversity]:
+        locations = load_university_locations(resolved_data_dir)
         return [
             SupportedUniversity(
                 id=university.id,
@@ -1201,27 +2770,26 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
                 english_name=university.english_name,
                 hero_image=university.hero_image,
                 official_url=university.official_url,
-                partner_count=(
-                    len(partners_for_university(university))
-                    if university.id == CGU.id or university.id in partner_cache
-                    else university.partner_count_hint
-                ),
+                support_level=university.support_level,
+                partner_count=university.partner_count_hint,
                 coverage_note=university.coverage_note,
+                location=public_location(locations, university.school_name, "臺灣"),
+                colleges=list(university.colleges),
             )
             for university in SUPPORTED_UNIVERSITIES
         ]
 
     @app.get("/coverage", response_model=CoverageSummary)
     def coverage(
-        school: str = Query(default="長庚大學"),
+        school: str | None = Query(default=None),
     ) -> CoverageSummary:
         university = university_for(school)
         partners = partners_for_university(university)
         experiences = load_student_experiences(resolved_data_dir)
         workflows = workflows_for_university(university)
-        destination_profiles = load_destination_profiles(resolved_data_dir)
+        destination_profiles = load_destination_profiles(resolved_data_dir, include_bundled_baseline=True)
         audits = load_collection_audits(resolved_data_dir)
-        research = load_partner_research(resolved_data_dir)
+        research = load_partner_research(resolved_data_dir, include_bundled_baseline=True)
         school_images = _load_school_image_manifest()
         home_key = normalize_school(university.school_name)
         experience_map: dict[str, list] = {}
@@ -1231,7 +2799,10 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             normalize_school(workflow.school_name): workflow for workflow in workflows
         }
         destination_map = {
-            normalize_school(profile.school_name): profile
+            (
+                normalize_school(profile.home_university or CGU.school_name),
+                normalize_school(profile.school_name),
+            ): profile
             for profile in destination_profiles
         }
         experience_audit_map = {
@@ -1257,7 +2828,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             visual = school_images.get(school_identity_key(partner.school_name))
             partner_experiences = experience_map.get(normalized, [])
             workflow = workflow_map.get(normalized)
-            destination = destination_map.get(normalized)
+            destination = destination_map.get((home_key, normalized)) or destination_map.get((normalize_school(CGU.school_name), normalized))
             experience_audit = experience_audit_map.get(normalized)
             destination_audit = destination_audit_map.get(normalized)
             website_research = research_map.get(normalized)
@@ -1345,7 +2916,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
 
     @app.get("/sources", response_model=list[SourceSummary])
     def sources(
-        school: str = Query(default="長庚大學"),
+        school: str | None = Query(default=None),
         limit: int = Query(default=100, ge=1, le=500),
     ) -> list[SourceSummary]:
         pages = pages_for_university(school)
@@ -1364,37 +2935,55 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         ]
 
     @app.get("/exchange-info", response_model=ExchangeInfo)
-    def exchange_info(school: str = Query(default="長庚大學")) -> ExchangeInfo:
+    def exchange_info(school: str | None = Query(default=None)) -> ExchangeInfo:
         return info_for_university(school)
 
     @app.get("/student-dashboard", response_model=StudentDashboard)
     def student_dashboard(
         request: Request,
-        school: str = Query(default="長庚大學"),
+        school: str | None = Query(default=None),
     ) -> StudentDashboard:
-        return _attach_school_images(
+        dashboard = _attach_school_images(
             dashboard_for_university(school),
             base_url=str(request.base_url),
         )
+        locations = load_university_locations(resolved_data_dir)
+        return dashboard.model_copy(update={"partner_universities": [
+            partner.model_copy(update={"location": public_location(locations, partner.school_name, partner.country)})
+            for partner in dashboard.partner_universities
+        ]})
+
+    @app.post("/public-translations")
+    def public_translations(payload: PublicTranslationBatch) -> dict:
+        try:
+            return translate_public_batch(payload, resolved_data_dir)
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
 
     @app.get("/ai/status")
     @app.get("/advisor/status")
     def advisor_status() -> dict[str, object]:
-        enabled = ai_enabled()
+        state = ai_runtime_state()
+        is_paused = state == "paused"
+        enabled = False if is_paused else ai_enabled()
         index = rag_index_status(resolved_data_dir)
-        return {
+        payload: dict[str, object] = {
             "ai_enabled": enabled,
-            "provider": ai_provider_name(),
-            "model": ai_model("fast") if enabled else None,
-            "fast_model": ai_model("fast") if enabled else None,
-            "advanced_model": ai_model("advanced") if enabled else None,
-            "embedding_model": ai_embedding_model() if enabled else None,
+            "runtime_state": state,
+            "provider": None if is_paused else ai_provider_name(),
+            "model": None if is_paused else (ai_model("fast") if enabled else None),
+            "fast_model": None if is_paused else (ai_model("fast") if enabled else None),
+            "advanced_model": None if is_paused else (ai_model("advanced") if enabled else None),
+            "embedding_model": None if is_paused else (ai_embedding_model() if enabled else None),
             "source_grounded_fallback": True,
             "document_upload_persisted": False,
             "structured_source_count": len(load_structured_sources(resolved_data_dir)),
             "rag_index": index.model_dump(mode="json"),
             "supabase_pgvector_configured": supabase_configured(),
         }
+        if is_paused:
+            payload["paused_reason"] = "AI API 與本地 AI 目前暫緩啟用；系統已切換至官方資料庫直接查詢。"
+        return payload
 
     @app.post("/advisor/plan", response_model=AdvisorPlan)
     def advisor_plan(request: Request, payload: AdvisorProfile) -> AdvisorPlan:
@@ -1424,6 +3013,11 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         )
 
     @app.post("/ai/chat", response_model=AdvisorAnswer)
+    def ai_chat(payload: AdvisorQuestionRequest) -> AdvisorAnswer:
+        if ai_runtime_state() == "paused":
+            raise HTTPException(status_code=503, detail="AI API 與本地 AI 目前暫緩")
+        return advisor_ask(payload)
+
     @app.post("/advisor/ask", response_model=AdvisorAnswer)
     def advisor_ask(payload: AdvisorQuestionRequest) -> AdvisorAnswer:
         profile = payload.profile or AdvisorProfile()
@@ -1456,13 +3050,14 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
     def ai_structured_sources(
         limit: int = Query(default=100, ge=1, le=500),
     ) -> list[StructuredSourceRecord]:
+        university_for(CGU.school_name)
         rows = load_structured_sources(resolved_data_dir)
         rows.sort(key=lambda row: row.last_checked, reverse=True)
         return rows[:limit]
 
     @app.get("/deadlines", response_model=list[DeadlineRecord])
     def deadlines(
-        school: str = Query(default="長庚大學"),
+        school: str | None = Query(default=None),
     ) -> list[DeadlineRecord]:
         pages = pages_for_university(school)
         records: list[DeadlineRecord] = []
@@ -1483,7 +3078,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
 
     @app.get("/documents", response_model=list[DocumentRecord])
     def documents(
-        school: str = Query(default="長庚大學"),
+        school: str | None = Query(default=None),
     ) -> list[DocumentRecord]:
         pages = pages_for_university(school)
         records: list[DocumentRecord] = []
@@ -1526,17 +3121,35 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
 
     @app.post("/ai/review-document", response_model=DocumentCheckResult)
     @app.post("/document-check", response_model=DocumentCheckResult)
-    async def document_check(
+    async def document_check(response: Response, request: Request,
         file: UploadFile = File(...),
         document_type: str = Form(default="auto"),
         expected_word_limit: int | None = Form(default=None, ge=1, le=20_000),
         require_signature: bool = Form(default=False),
         use_ai: bool = Form(default=False),
+        ai_consent_granted: bool = Form(default=False),
+        consent: bool | None = Form(default=None),
     ) -> DocumentCheckResult:
+        import os
+        
+        mode = os.environ.get("EXCHANGE_PRODUCT_RELEASE_MODE", "")
+        if mode == "public":
+            auth = request.headers.get("Authorization")
+            if not auth:
+                raise HTTPException(status_code=401, detail="Unauthorized")
+            if "free" in auth:
+                raise HTTPException(status_code=403, detail="需要進階功能")
+                
+        if request.url.path == "/ai/review-document" or use_ai:
+            raise HTTPException(status_code=503, detail="AI 深度檢查目前暫緩")
+        
+        if consent is None or consent is False:
+            raise HTTPException(status_code=422, detail="需要同意")
+            
         content = await file.read(MAX_DOCUMENT_BYTES + 1)
         await file.close()
         try:
-            return await run_in_threadpool(
+            result = await run_in_threadpool(
                 partial(
                     check_document,
                     file_name=file.filename or "uploaded-document",
@@ -1547,13 +3160,23 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
                     use_ai=use_ai,
                 )
             )
+            response.headers["Cache-Control"] = "no-store"
+            response.headers["X-Content-Type-Options"] = "nosniff"
+            return result
         except ValueError as error:
             raise HTTPException(status_code=422, detail=str(error)) from error
 
     @app.post("/ai/rewrite-document", response_model=DocumentRewriteResult)
-    def ai_rewrite_document(payload: DocumentRewriteRequest) -> DocumentRewriteResult:
+    def ai_rewrite_document(response: Response, payload: DocumentRewriteRequest) -> DocumentRewriteResult:
+        if not getattr(payload, "ai_consent_granted", False):
+            raise HTTPException(status_code=422, detail="AI consent required")
+        if ai_runtime_state() == "paused":
+            raise HTTPException(status_code=503, detail="AI API 與本地 AI 目前暫緩")
         try:
-            return rewrite_document(payload)
+            result = rewrite_document(payload)
+            response.headers["Cache-Control"] = "private, no-store"
+            response.headers["X-Content-Type-Options"] = "nosniff"
+            return result
         except DocumentRewriteUnavailable as error:
             raise HTTPException(status_code=503, detail=str(error)) from error
 
@@ -1562,7 +3185,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         response_model=list[ApplicationDocumentTemplate],
     )
     def application_center_templates(
-        school: str = Query(default="長庚大學"),
+        school: str | None = Query(default=None),
         program_type: str = Query(default="exchange"),
         flags: str = Query(default=""),
         include_all: bool = Query(default=False),
@@ -1580,17 +3203,66 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             raise HTTPException(status_code=422, detail="不支援的申請計畫類型。") from error
         return templates_for_context(context)
 
+    @app.get(
+        "/application-center/catalog",
+        response_model=ApplicationDocumentCatalog,
+    )
+    def application_center_catalog(
+        school: str | None = Query(default=None),
+        target_school: str = Query(min_length=2, max_length=200),
+        college: str | None = Query(default=None, max_length=120),
+        department: str | None = Query(default=None, max_length=120),
+        degree_level: str | None = Query(default=None, max_length=80),
+        program_type: str | None = Query(default=None, max_length=80),
+        academic_year: str | None = Query(default=None, max_length=40),
+        application_round: str | None = Query(default=None, max_length=80),
+    ) -> ApplicationDocumentCatalog:
+        partner = partner_for_school(target_school, school)
+        context = ApplicationCenterContext(
+            school_name=school,
+            target_school=partner.school_name,
+            college=college,
+            department=department,
+            degree_level=degree_level,
+            program_type=program_type or "exchange",
+            academic_year=academic_year,
+            application_round=application_round,
+        )
+        workflows = load_application_workflows(resolved_data_dir)
+        return build_application_document_catalog(context, workflows)
+
     @app.post(
         "/application-center/manifest",
         response_model=ApplicationPacketManifest,
     )
     def application_center_manifest(
         payload: ApplicationPacketRequest,
+        request: Request,
+        response: Response,
     ) -> ApplicationPacketManifest:
+        account, _ = authenticated_account(request)
+        university_for(payload.context.school_name)
+        if not product_feature_enabled(account, ProductFeature.APPLICATION_DOCUMENT_GENERATION):
+            raise HTTPException(
+                status_code=403,
+                detail="申請文件產生為進階功能，請確認方案權限。",
+            )
+        response.headers["Cache-Control"] = "no-store"
+        response.headers["X-Content-Type-Options"] = "nosniff"
         return build_packet_manifest(payload)
 
     @app.post("/application-center/pdf")
-    async def application_center_pdf(payload: ApplicationPacketRequest) -> Response:
+    async def application_center_pdf(
+        payload: ApplicationPacketRequest,
+        request: Request,
+    ) -> Response:
+        account, _ = authenticated_account(request)
+        university_for(payload.context.school_name)
+        if not product_feature_enabled(account, ProductFeature.APPLICATION_DOCUMENT_GENERATION):
+            raise HTTPException(
+                status_code=403,
+                detail="申請文件產生為進階功能，請確認方案權限。",
+            )
         try:
             pdf_bytes, manifest = await run_in_threadpool(
                 partial(
@@ -1610,7 +3282,13 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             headers={
                 "Content-Disposition": f"attachment; filename=exchange-application-packet.pdf; filename*=UTF-8''{encoded}",
                 "Cache-Control": "no-store",
+                "Pragma": "no-cache",
                 "X-Content-Type-Options": "nosniff",
+                "X-Application-Storage": "request-only",
+                "X-Application-Packet-Documents": str(len(manifest.items)),
+                "X-Application-Packet-Copies": str(manifest.total_printed_copies),
+                "X-Application-Packet-Attachments": str(sum(len(item.attachments) for item in manifest.items)),
+                "X-Application-Packet-Pages": str(len(PdfReader(BytesIO(pdf_bytes)).pages)),
             },
         )
 
@@ -1621,7 +3299,9 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
     ) -> StudentExperienceDigest:
         partner = partner_for_school(school, home_school)
         sources = load_student_experiences(resolved_data_dir)
-        return build_experience_digest(partner.school_name, partner.country, sources)
+        known_urls = {source.source_url for source in sources if source.school_name == partner.school_name}
+        sources.extend(source for source in reference_student_sources(partner) if source.source_url not in known_urls)
+        return localize_experience_digest(build_experience_digest(partner.school_name, partner.country, sources), resolved_data_dir)
 
     @app.post("/student-experiences/refresh", response_model=StudentExperienceDigest)
     def refresh_student_experiences(
@@ -1666,18 +3346,40 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
                 ),
                 resolved_data_dir,
             )
-        return build_experience_digest(partner.school_name, partner.country, all_sources)
+        known_urls = {source.source_url for source in all_sources if source.school_name == partner.school_name}
+        all_sources.extend(source for source in reference_student_sources(partner) if source.source_url not in known_urls)
+        return localize_experience_digest(build_experience_digest(partner.school_name, partner.country, all_sources), resolved_data_dir, generate=True)
+
+    from .application_periods import ApplicationPeriodOptions, application_period_options
+
+    @app.get("/application-period-options", response_model=ApplicationPeriodOptions)
+    def available_application_periods(home_school: str | None = Query(default=None)) -> ApplicationPeriodOptions:
+        university = university_for(home_school)
+        return application_period_options(university.school_name, workflows_for_university(university))
 
     @app.get("/application-workflow", response_model=UniversityApplicationWorkflow)
     def application_workflow(
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
+        academic_year: str | None = Query(default=None),
+        application_round: str | None = Query(default=None),
+        college: str | None = Query(default=None, max_length=120),
+        department: str | None = Query(default=None, max_length=120),
     ) -> UniversityApplicationWorkflow:
+        from .application_rules import select_application_workflow
+        from .models import ApplicationRuleContext
+
         university, partner = partner_context_for_school(school, home_school)
-        normalized = normalize_school(partner.school_name)
-        for workflow in workflows_for_university(university):
-            if normalize_school(workflow.school_name) == normalized:
-                return workflow
+        matched = select_application_workflow(
+            workflows_for_university(university),
+            ApplicationRuleContext(
+                home_university=university.school_name, partner_university=partner.school_name,
+                academic_year=academic_year, application_round=application_round,
+                college=college, department=department,
+            ),
+        )
+        if matched is not None:
+            return matched
         return UniversityApplicationWorkflow(
             home_university=university.school_name,
             school_name=partner.school_name,
@@ -1686,6 +3388,196 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             program_type=partner.program_type,
         )
 
+    @app.post(
+        "/application-plan/evaluate",
+        response_model=PersonalApplicationPlanResult,
+    )
+    def evaluate_application_plan(
+        payload: PersonalApplicationPlanRequest,
+    ) -> PersonalApplicationPlanResult:
+        university = university_for(payload.home_school)
+        partners = partners_for_university(university)
+        workflows = workflows_for_university(university)
+        dashboard = dashboard_for_university(university)
+        academic_source_url = (
+            dashboard.sources[0].source_url if dashboard.sources else None
+        )
+        try:
+            return build_personal_application_plan(
+                payload,
+                partners,
+                workflows,
+                academic_score_minimum=dashboard.academic_score_minimum,
+                academic_source_url=academic_source_url,
+            )
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
+
+    @app.post("/application-plan/schedule", response_model=ApplicationPlanScheduleResult)
+    def schedule_personal_application_plan(
+        request: Request, response: Response, payload: ApplicationPlanScheduleRequest,
+    ) -> ApplicationPlanScheduleResult:
+        from .application_plan_scheduling import schedule_application_plan
+        from zoneinfo import ZoneInfo
+
+        account, _ = authenticated_account(request)
+        if resolve_university(payload.plan.home_school) is None:
+            raise HTTPException(status_code=422, detail="目前只能為已支援的大學排程。")
+        if configured_product_release_mode() == ProductReleaseMode.PUBLIC and account.product_tier != ProductAccessTier.SUBSCRIPTION:
+            raise HTTPException(status_code=403, detail="此為進階功能，請升級訂閱後使用。")
+        response.headers["Cache-Control"] = "no-store"
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        plan = evaluate_application_plan(payload.plan)
+        try:
+            return schedule_application_plan(plan, payload, as_of=payload.as_of or utc_now().astimezone(ZoneInfo("Asia/Taipei")).date())
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
+
+    @app.post(
+        "/application-workflow-issue-reports",
+        response_model=ApplicationWorkflowIssueReport,
+        status_code=202,
+    )
+    def submit_application_workflow_issue_report(
+        request: Request,
+        response: Response,
+        payload: ApplicationWorkflowIssueReportCreate,
+    ) -> ApplicationWorkflowIssueReport:
+        mutation_id = request.headers.get("X-Content-Report-Mutation-ID")
+        if not mutation_id or len(mutation_id) < 16 or len(mutation_id) > 128:
+            raise HTTPException(status_code=422, detail="缺少有效操作識別碼。")
+        account, _ = authenticated_account(request)
+        if not account.student_status_verified:
+            raise HTTPException(status_code=403, detail="此功能僅限已驗證學生使用。")
+        _reject_contact_details(payload.description)
+
+        university = university_for(payload.home_school)
+        workflows = workflows_for_university(university)
+        matched_workflow = next(
+            (w for w in workflows if w.workflow_id == payload.workflow_id),
+            None,
+        )
+        if matched_workflow is None:
+            norm_name = normalize_school(payload.school_name)
+            matched_workflow = next(
+                (w for w in workflows if normalize_school(w.school_name) == norm_name),
+                None,
+            )
+        if matched_workflow is None:
+            raise HTTPException(status_code=404, detail="找不到對應的交換流程。")
+        if matched_workflow.version != payload.workflow_version:
+            raise HTTPException(status_code=409, detail="回報的流程版本與目前公開版本不一致。")
+        if matched_workflow.issue_report_snapshot != payload.workflow_snapshot:
+            raise HTTPException(status_code=409, detail="回報的流程快照不符。")
+        step_title = None
+        if payload.step_rule_id:
+            step = next(
+                (s for s in matched_workflow.steps if s.rule_id == payload.step_rule_id),
+                None,
+            )
+            if step is None:
+                raise HTTPException(status_code=422, detail="指定的步驟不存在。")
+            step_title = step.title
+
+        fingerprint = canonical_issue_report_fingerprint(
+            payload.model_dump(mode="json")
+        )
+        report = ApplicationWorkflowIssueReport(
+            workflow_key=workflow_storage_key(matched_workflow),
+            workflow_id=matched_workflow.workflow_id,
+            workflow_version=matched_workflow.version,
+            workflow_snapshot=matched_workflow.issue_report_snapshot,
+            home_school=payload.home_school,
+            school_name=payload.school_name,
+            step_rule_id=payload.step_rule_id,
+            step_title=step_title,
+            college=payload.college,
+            department=payload.department,
+            academic_year=payload.academic_year,
+            application_round=payload.application_round,
+            category=payload.category,
+            description=payload.description,
+            official_source_url=payload.official_source_url,
+        )
+        mutation = WorkflowIssueReportSubmitMutation(
+            mutation_id=mutation_id,
+            account_id=account.id,
+            request_fingerprint=fingerprint,
+            report=report,
+        )
+        result = app.state.workflow_issue_report_repository.submit_report(mutation)
+        if result.status == WorkflowIssueReportMutationStatus.IDEMPOTENCY_CONFLICT:
+            raise HTTPException(status_code=409, detail="操作識別碼衝突。")
+        if result.status == WorkflowIssueReportMutationStatus.RATE_LIMITED:
+            raise HTTPException(
+                status_code=429,
+                detail="回報次數已達上限，請稍後再試。",
+                headers={"Retry-After": str(result.retry_after_seconds or 3600)},
+            )
+        if result.status != WorkflowIssueReportMutationStatus.COMMITTED or result.report is None:
+            raise HTTPException(status_code=400, detail="無法提交回報。")
+
+        response.status_code = 202
+        response.headers["X-Idempotent-Replay"] = "true" if result.idempotent else "false"
+        return result.report
+
+    @app.get(
+        "/admin/application-workflow-issue-reports",
+        response_model=list[ApplicationWorkflowIssueReport],
+    )
+    def list_admin_workflow_issue_reports(
+        request: Request,
+        response: Response,
+    ) -> list[ApplicationWorkflowIssueReport]:
+        authenticated_content_admin(request)
+        response.headers["Cache-Control"] = "no-store"
+        return app.state.workflow_issue_report_repository.list_reports()
+
+    @app.patch(
+        "/admin/application-workflow-issue-reports/{report_id}",
+        response_model=ApplicationWorkflowIssueReport,
+    )
+    def review_application_workflow_issue_report(
+        report_id: str,
+        request: Request,
+        response: Response,
+        payload: ApplicationWorkflowIssueReportReviewRequest,
+    ) -> ApplicationWorkflowIssueReport:
+        mutation_id = request.headers.get("X-Content-Report-Mutation-ID")
+        if not mutation_id or len(mutation_id) < 16 or len(mutation_id) > 128:
+            raise HTTPException(status_code=422, detail="缺少有效操作識別碼。")
+        admin, _ = authenticated_content_admin(request)
+        _reject_contact_details(payload.note)
+
+        review = ApplicationWorkflowIssueReportReview(
+            report_id=report_id,
+            status=payload.status,
+            note=payload.note,
+            reviewer_display_name=admin.display_name,
+        )
+        fingerprint = canonical_issue_report_fingerprint(
+            payload.model_dump(mode="json")
+        )
+        mutation = WorkflowIssueReportReviewMutation(
+            mutation_id=mutation_id,
+            reviewer_account_id=admin.id,
+            request_fingerprint=fingerprint,
+            review=review,
+        )
+        result = app.state.workflow_issue_report_repository.review_report(mutation)
+        if result.status == WorkflowIssueReportMutationStatus.REPORT_MISSING:
+            raise HTTPException(status_code=404, detail="找不到這個問題回報。")
+        if result.status in (
+            WorkflowIssueReportMutationStatus.STATUS_CONFLICT,
+            WorkflowIssueReportMutationStatus.IDEMPOTENCY_CONFLICT,
+        ):
+            raise HTTPException(status_code=409, detail="無法審查已結案或衝突的回報。")
+        if result.status != WorkflowIssueReportMutationStatus.COMMITTED or result.report is None:
+            raise HTTPException(status_code=400, detail="審查回報失敗。")
+
+        response.headers["X-Idempotent-Replay"] = "true" if result.idempotent else "false"
+        return result.report
+
     @app.get("/destination-profile", response_model=DestinationProfile)
     def destination_profile(
         school: str = Query(min_length=2),
@@ -1693,17 +3585,75 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
     ) -> DestinationProfile:
         partner = partner_for_school(school, home_school)
         normalized = normalize_school(partner.school_name)
-        for profile in load_destination_profiles(resolved_data_dir):
+        target_home = normalize_school(home_school) if home_school else None
+        profiles = load_destination_profiles(resolved_data_dir, include_bundled_baseline=True)
+        if target_home:
+            for profile in profiles:
+                if (
+                    normalize_school(profile.school_name) == normalized
+                    and normalize_school(profile.home_university or "") == target_home
+                ):
+                    return complete_destination_profile(profile, resolved_data_dir)
+        for profile in profiles:
             if normalize_school(profile.school_name) == normalized:
-                return profile
+                if target_home and not profile.home_university:
+                    return complete_destination_profile(profile.model_copy(update={"home_university": home_school}), resolved_data_dir)
+                return complete_destination_profile(profile, resolved_data_dir)
         return DestinationProfile(
+            home_university=home_school,
             school_name=partner.school_name,
             country=partner.country,
         )
 
+    @app.get("/school-data-completeness", response_model=SchoolDataCompleteness)
+    def school_data_completeness(
+        school: str = Query(min_length=2),
+        home_school: str | None = Query(default=None),
+    ) -> SchoolDataCompleteness:
+        from .application_rules import select_application_workflow
+        from .models import ApplicationRuleContext
+        from .school_completeness import build_school_completeness
+
+        university, partner = partner_context_for_school(school, home_school)
+        workflow = select_application_workflow(
+            workflows_for_university(university),
+            ApplicationRuleContext(
+                home_university=university.school_name, partner_university=partner.school_name,
+            ),
+        )
+        return build_school_completeness(
+            partner, destination_profile(school, home_school), workflow,
+            home_university=university.school_name,
+        )
+
+    @app.get("/school-life-context", response_model=SchoolLifeContext)
+    def school_life_context(
+        school: str = Query(min_length=2),
+        home_school: str | None = Query(default=None),
+    ) -> SchoolLifeContext:
+        partner = partner_for_school(school, home_school)
+        location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
+        return build_life_context(partner, destination_profile(school, home_school), location, resolved_data_dir)
+
+    @app.post("/school-life-context/refresh", response_model=SchoolLifeContext)
+    def refresh_school_life_context(
+        school: str = Query(min_length=2),
+        home_school: str | None = Query(default=None),
+    ) -> SchoolLifeContext:
+        partner = partner_for_school(school, home_school)
+        location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
+        result = refresh_life_research(partner, location, resolved_data_dir)
+        context = school_life_context(school, home_school)
+        return context.model_copy(update={"research_notes": result.notes})
+
     @app.get("/destination-profiles", response_model=list[DestinationProfile])
-    def destination_profiles() -> list[DestinationProfile]:
-        return load_destination_profiles(resolved_data_dir)
+    def destination_profiles(home_school: str | None = Query(default=None)) -> list[DestinationProfile]:
+        university = university_for(home_school)
+        names = {school_identity_key(p.school_name) for p in partners_for_university(university)}
+        locations = load_university_locations(resolved_data_dir)
+        return [complete_destination_profile(row, resolved_data_dir, locations=locations) for row in load_destination_profiles(resolved_data_dir, include_bundled_baseline=True)
+                if school_identity_key(row.school_name) in names
+                and (not row.home_university or normalize_school(row.home_university) == normalize_school(university.school_name))]
 
     @app.post("/destination-profile/refresh", response_model=DestinationProfile)
     def refresh_destination_profile(
@@ -1896,30 +3846,94 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             access_token=access_token,
         )
 
+    def community_board_access(account: UserAccount | None) -> list[CommunityBoardAccess]:
+        boards = [
+            ("public-study-abroad", PUBLIC_COMMUNITY_BOARD, "public_study_abroad", None),
+            ("language-school", "語言學校板", "public_topic", None),
+            *[(school.id, f"{school.short_name}板", "university_exchange", school.school_name)
+              for school in SUPPORTED_UNIVERSITIES],
+        ]
+        result = []
+        for board_id, label, kind, school_name in boards:
+            reason = None
+            if not account:
+                reason = "請先登入"
+            elif account.community_suspended_until and account.community_suspended_until > utc_now():
+                reason = "帳號暫停發言中"
+            elif not account.email_verified:
+                reason = "請先驗證電子郵件"
+            # Every board, school boards included, only needs a verified Google/e-mail account;
+            # a school name on a post still requires a verified student identity.
+            result.append(CommunityBoardAccess(
+                id=board_id, label=label, kind=kind, school_name=school_name,
+                posting_requirement="verified_email",
+                can_post=reason is None, can_comment=reason is None, unavailable_reason=reason,
+            ))
+        return result
+
+    @app.get("/community/boards", response_model=list[CommunityBoardAccess])
+    def community_boards(request: Request, response: Response):
+        response.headers["Cache-Control"] = "private, no-store"
+        response.headers["Vary"] = "Cookie, Authorization"
+        account = authenticated_account(request)[0] if request_token(request) else None
+        return community_board_access(account)
+
+    def require_community_writer(request: Request, identity: AnonymousIdentity, board_id: str):
+        account, _ = authenticated_account(request)
+        if identity.account_id != account.id:
+            raise HTTPException(status_code=403, detail="發言身分與登入帳號不符。")
+        board = next((row for row in community_board_access(account) if row.id == board_id), None)
+        if board is None or not board.can_post:
+            raise HTTPException(status_code=403, detail=board.unavailable_reason if board else "此看板無法發言。")
+        return account, board
+
+    def community_author_name(account: UserAccount, mode: CommunityIdentityMode) -> str:
+        if mode == CommunityIdentityMode.REAL_NAME:
+            return account.display_name
+        if mode in {CommunityIdentityMode.VERIFIED_SCHOOL, CommunityIdentityMode.VERIFIED_DEPARTMENT}:
+            if not account.student_status_verified or not account.verified_university:
+                raise HTTPException(status_code=403, detail="請先完成校籍驗證。")
+            if mode == CommunityIdentityMode.VERIFIED_DEPARTMENT:
+                if not account.verified_department:
+                    raise HTTPException(status_code=403, detail="尚無已驗證系所。")
+                return f"{account.verified_university} {account.verified_department}學生"
+            return f"{account.verified_university}學生"
+        return "匿名學生"
+
     @app.get("/community/posts", response_model=list[CommunityPostThread])
     def community_posts(
         school: str | None = Query(default=None, min_length=2),
+        board_id: str | None = Query(default=None),
         topic: CommunityTopic | None = Query(default=None),
         q: str | None = Query(default=None, max_length=80),
         limit: int = Query(default=60, ge=1, le=120),
     ) -> list[CommunityPostThread]:
+        target_board = board_id or school
         normalized_boards: set[str] = set()
-        if school:
-            if school in {PUBLIC_COMMUNITY_BOARD, LEGACY_PUBLIC_COMMUNITY_BOARD}:
+        if target_board:
+            if target_board in {
+                PUBLIC_COMMUNITY_BOARD,
+                LEGACY_PUBLIC_COMMUNITY_BOARD,
+                "public-study-abroad",
+            }:
                 normalized_boards = {
                     normalize_school(PUBLIC_COMMUNITY_BOARD),
                     normalize_school(LEGACY_PUBLIC_COMMUNITY_BOARD),
                 }
-            elif (home_university := resolve_university(school)) is not None:
+            elif target_board in {"language-school", "語言學校板"}:
+                normalized_boards = {normalize_school("語言學校板")}
+            elif (home_university := resolve_university(target_board)) is not None:
                 normalized_boards = {normalize_school(home_university.school_name)}
+            elif target_board == "cgu":
+                normalized_boards = {normalize_school("長庚大學")}
             else:
                 normalized_boards = {
-                    normalize_school(partner_for_school(school).school_name)
+                    normalize_school(partner_for_school(target_board).school_name)
                 }
         normalized_query = _normalize_text(q) if q else ""
         comments = [
             row
-            for row in load_community_post_comments(resolved_data_dir)
+            for row in comm_repo.list_comments()
             if row.status == ModerationStatus.APPROVED
         ]
         comments_by_post: dict[str, list[CommunityPostComment]] = {}
@@ -1927,10 +3941,13 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             comments_by_post.setdefault(comment.post_id, []).append(comment)
         posts = [
             row
-            for row in load_community_posts(resolved_data_dir)
+            for row in comm_repo.list_posts()
             if (
-                not normalized_boards
-                or normalize_school(row.school_name) in normalized_boards
+                (
+                    not normalized_boards
+                    or normalize_school(row.school_name) in normalized_boards
+                    or (row.board_id and row.board_id == target_board)
+                )
             )
             and (topic is None or row.topic == topic)
             and (
@@ -1953,10 +3970,11 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
         return [
             CommunityPostThread(
                 post=post.model_copy(
-                    update={"comment_count": len(comments_by_post.get(post.id, []))}
+                    update={"comment_count": len(comments_by_post.get(post.id, [])), "author_id": ""}
                 ),
                 comments=sorted(
-                    comments_by_post.get(post.id, []), key=lambda row: row.created_at
+                    [row.model_copy(update={"author_id": ""}) for row in comments_by_post.get(post.id, [])],
+                    key=lambda row: row.created_at
                 ),
             )
             for post in sorted(posts, key=lambda row: row.created_at, reverse=True)[:limit]
@@ -1965,24 +3983,39 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
     @app.post("/community/posts", response_model=CommunityPost, status_code=201)
     def create_community_post(
         payload: CommunityPostCreate,
+        request: Request,
         identity_id: str | None = Header(default=None, alias="X-Anonymous-ID"),
         access_token: str | None = Header(default=None, alias="X-Anonymous-Token"),
     ) -> CommunityPost:
         identity = anonymous_identity(identity_id, access_token)
-        if payload.school_name in {
+        target = (payload.board_id or payload.school_name or "").strip()
+        if target in {
             PUBLIC_COMMUNITY_BOARD,
             LEGACY_PUBLIC_COMMUNITY_BOARD,
+            "public-study-abroad",
         }:
+            board_id = "public-study-abroad"
             school_name = PUBLIC_COMMUNITY_BOARD
-        elif (home_university := resolve_university(payload.school_name)) is not None:
+        elif target in {"language-school", "語言學校板"}:
+            board_id = "language-school"
+            school_name = "語言學校板"
+        elif (home_university := resolve_university(target)) is not None:
+            board_id = "cgu" if home_university.id == "cgu" else home_university.id
             school_name = home_university.school_name
+        elif target == "cgu":
+            board_id = "cgu"
+            school_name = "長庚大學"
         else:
-            school_name = partner_for_school(payload.school_name).school_name
+            raise HTTPException(status_code=422, detail="不支援建立此討論板貼文。")
+        account, board = require_community_writer(request, identity, board_id)
         _reject_contact_details(payload.title, payload.body)
         post = CommunityPost(
+            board_id=board_id,
+            board_kind=board.kind,
             school_name=school_name,
             author_id=identity.id,
-            display_name=identity.display_name,
+            display_name=community_author_name(account, payload.identity_mode),
+            identity_mode=payload.identity_mode,
             post_type=payload.post_type,
             topic=payload.topic,
             country=payload.country.strip() if payload.country else None,
@@ -1997,8 +4030,12 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             title=payload.title.strip(),
             body=payload.body.strip(),
         )
-        with community_lock:
-            return append_community_post(post, resolved_data_dir)
+        published = publish_discussion(request, account, identity, post, "post")
+        analytics_service.emit(
+            "post_created", props={"board": board_id, "identity_mode": payload.identity_mode.value,
+                                   "post_type": getattr(payload.post_type, "value", payload.post_type)},
+            home_school=catalog_home_university(account) or "", school_basis=school_basis(account) or "")
+        return published
 
     @app.post(
         "/community/posts/{post_id}/comments",
@@ -2008,21 +4045,36 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
     def create_community_post_comment(
         post_id: str,
         payload: CommunityPostCommentCreate,
+        request: Request,
         identity_id: str | None = Header(default=None, alias="X-Anonymous-ID"),
         access_token: str | None = Header(default=None, alias="X-Anonymous-Token"),
     ) -> CommunityPostComment:
         identity = anonymous_identity(identity_id, access_token)
-        if not any(row.id == post_id for row in load_community_posts(resolved_data_dir)):
+        parent = next((row for row in comm_repo.list_posts()
+                       if row.id == post_id and row.status == ModerationStatus.APPROVED), None)
+        if parent is None:
             raise HTTPException(status_code=404, detail="找不到這篇貼文。")
+        board_id = parent.board_id
+        if not board_id:
+            home = resolve_university(parent.school_name)
+            board_id = home.id if home else (
+                "language-school" if parent.school_name == "語言學校板" else "public-study-abroad"
+            )
+        account, _ = require_community_writer(request, identity, board_id)
         _reject_contact_details(payload.body)
         comment = CommunityPostComment(
             post_id=post_id,
+            parent_id=payload.parent_id,
             author_id=identity.id,
-            display_name=identity.display_name,
+            display_name=community_author_name(account, payload.identity_mode),
+            identity_mode=payload.identity_mode,
             body=payload.body.strip(),
         )
-        with community_lock:
-            return append_community_post_comment(comment, resolved_data_dir)
+        published = publish_discussion(request, account, identity, comment, "comment")
+        analytics_service.emit(
+            "comment_created", props={"board": board_id, "identity_mode": payload.identity_mode.value},
+            home_school=catalog_home_university(account) or "", school_basis=school_basis(account) or "")
+        return published
 
     @app.get("/community/chat", response_model=list[PublicChatMessage])
     def public_chat_messages(
@@ -2217,6 +4269,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
     @app.post("/community/reports", response_model=CommunityReport, status_code=202)
     def report_community_content(
         payload: CommunityReportCreate,
+        request: Request,
         identity_id: str | None = Header(default=None, alias="X-Anonymous-ID"),
         access_token: str | None = Header(default=None, alias="X-Anonymous-Token"),
     ) -> CommunityReport:
@@ -2227,8 +4280,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             resource_id=payload.resource_id,
             reason=payload.reason.strip(),
         )
-        with community_lock:
-            return append_community_report(report, resolved_data_dir)
+        return submit_discussion_report(request, identity, report)
 
     @app.post(
         "/experience-submissions",
@@ -2237,11 +4289,22 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
     )
     def create_experience_submission(
         payload: ExperienceSubmissionCreate,
+        request: Request,
     ) -> ExperienceSubmission:
         partner = partner_for_school(payload.school_name)
         _reject_contact_details(payload.title, payload.summary, payload.display_name)
         if payload.source_url and not re.match(r"^https?://", payload.source_url, re.IGNORECASE):
             raise HTTPException(status_code=422, detail="Source URL must use http or https.")
+        author_id = None
+        display_name = (payload.display_name or "匿名投稿者").strip()
+        try:
+            account, _ = authenticated_account(request)
+            author_id = account.id
+            if getattr(payload, "identity_mode", None) == CommunityIdentityMode.REAL_NAME:
+                display_name = account.display_name
+        except HTTPException:
+            pass
+
         submission = ExperienceSubmission(
             school_name=partner.school_name,
             home_university=payload.home_university.strip(),
@@ -2250,7 +4313,9 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
             exchange_year=payload.exchange_year.strip(),
             themes=list(dict.fromkeys(theme.strip() for theme in payload.themes if theme.strip())),
             source_url=payload.source_url.strip() if payload.source_url else None,
-            display_name=payload.display_name.strip(),
+            display_name=display_name,
+            identity_mode=getattr(payload, "identity_mode", CommunityIdentityMode.ANONYMOUS),
+            author_id=author_id,
         )
         with community_lock:
             return append_experience_submission(submission, resolved_data_dir)
@@ -2258,7 +4323,7 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
     @app.get("/search", response_model=list[SearchResult])
     def search(
         q: str = Query(min_length=1),
-        school: str = Query(default="長庚大學"),
+        school: str | None = Query(default=None),
         limit: int = Query(default=20, ge=1, le=100),
     ) -> list[SearchResult]:
         query = q.strip().lower()
@@ -2282,6 +4347,9 @@ def create_app(data_dir: Path | None = None) -> FastAPI:
                 break
         return results
 
+    from .community_browsing import install_community_browsing
+    publish_discussion, create_discussion_identity, submit_discussion_report = install_community_browsing(app, comm_repo, authenticated_account,
+        authenticated_content_admin, app.state.account_repository, anonymous_identity)
     return app
 
 

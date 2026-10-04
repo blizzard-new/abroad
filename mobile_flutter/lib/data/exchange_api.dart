@@ -331,6 +331,7 @@ class ExchangeApi {
     int? expectedWordLimit,
     bool requireSignature = false,
     bool useAi = false,
+    bool aiConsentGranted = false,
   }) async {
     final request = http.MultipartRequest('POST', _uri('ai/review-document'))
       ..fields['document_type'] = documentType
@@ -347,6 +348,7 @@ class ExchangeApi {
     if (expectedWordLimit != null) {
       request.fields['expected_word_limit'] = expectedWordLimit.toString();
     }
+    request.fields['ai_consent_granted'] = aiConsentGranted.toString();
     final response = await http.Response.fromStream(
       await _client.send(request),
     );
@@ -359,6 +361,7 @@ class ExchangeApi {
     required String documentType,
     int? targetWordLimit,
     String schoolContext = '',
+    bool aiConsentGranted = false,
   }) async {
     final response = await _client.post(
       _uri('ai/rewrite-document'),
@@ -368,6 +371,7 @@ class ExchangeApi {
         'action': action,
         'document_type': documentType,
         'target_word_limit': ?targetWordLimit,
+        'ai_consent_granted': aiConsentGranted,
         if (schoolContext.trim().isNotEmpty)
           'school_context': schoolContext.trim(),
       }),

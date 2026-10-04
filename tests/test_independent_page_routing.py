@@ -46,7 +46,16 @@ def test_route_assets_are_cache_busted_together() -> None:
     html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
     script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
 
-    assert "product-v2.css?v=20260721-student-survival-5" in html
-    assert "app.js?v=20260721-student-survival-5" in html
+    assert "styles.css?v=20260729-b306-progress-2" in html
+    assert "product-v2.css?v=20260929-scholarship-height-1" in html
+    assert "app.js?v=20260929-chinese-1" in html
+    assert "discovery-core.js?v=20260924-selection-1" in html
+    assert "discovery-ui.js?v=20260929-chinese-1" in html
+    assert "uniway.css?v=20260820-uniway-1" in html
+    assert "advisor-mascot.css?v=20260820-advisor-mascot-1" in html
     assert "function resetRouteScroll()" in script
     assert "window.requestAnimationFrame(scrollToTop)" in script
+    assert (
+        "const canInvite = Boolean(message.author_id) && "
+        "message.author_id !== state.anonymousIdentity?.id;"
+    ) in script

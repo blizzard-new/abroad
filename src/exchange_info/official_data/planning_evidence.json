@@ -1,0 +1,38 @@
+[
+  {
+    "school_name_zh": "明斯特大學",
+    "school_name_en": "University of Münster",
+    "official_domain": "uni-muenster.de",
+    "checked_on": "2026-10-02",
+    "human_reviewed": false,
+    "cost": {
+      "currency": "EUR",
+      "period": "month",
+      "living_reference": 1000,
+      "kind": "approximate_official_reference",
+      "applicable_academic_year": null,
+      "scope": "官方頁面提供在明斯特就學的一般生活費參考；不是個別交換方案的完整費用報價。",
+      "semester_fee_reference": 370,
+      "extra_costs": ["住宿押金", "初期生活用品", "適用時的居留相關費用", "部分語言課程費用"],
+      "source_url": "https://www.uni-muenster.de/international/en/studierende/general-information/cost-and-funding.html",
+      "comparison_constraints": ["未確認適用年度", "原幣 EUR；不得直接與新臺幣預算相比", "一次性費用與個人需求需另列", "未承諾可取得補助"]
+    },
+    "courses": {
+      "status": "coordinator_confirmation_required",
+      "catalog_verified": false,
+      "scope": "各學科協調員可說明課程、學分與協助安排修課；交換生應於出發前確認。尚未據此確認特定科系、學期或授課語言的可選課清單。",
+      "source_url": "https://www.uni-muenster.de/studieninteressierte/en/austausch/ansprechpartner.html"
+    },
+    "application": {
+      "scheme": "worldwide_partner_universities",
+      "academic_year": null,
+      "steps": [
+        {"key": "home_nomination", "title": "本校正式提名", "predecessors": [], "winter_month_day": "04-01", "summer_month_day": "10-01", "actor": "home_university"},
+        {"key": "partner_application", "title": "收到提名後申請通知，再完成合作校申請", "predecessors": ["home_nomination"], "winter_month_day": "05-01", "summer_month_day": "11-01", "actor": "student"},
+        {"key": "enrolment", "title": "收到錄取及註冊通知後，依通知準備註冊", "predecessors": ["partner_application"], "actor": "student"}
+      ],
+      "source_url": "https://www.uni-muenster.de/studieninteressierte/en/austausch/bewerbung.html",
+      "constraints": ["尚未確認個人當期申請年度", "月日為官方通用說明，不自行推定年份或產生截止日", "合作校提名與學生申請是不同期限", "台灣校級交換不套用 Erasmus 期限", "正式申請表連結由校方於收到提名後提供"]
+    }
+  }
+]

@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 
 from .ai_gateway import structured_response
+from exchange_info.redaction import redact_pii
 from .models import DocumentRewriteRequest, DocumentRewriteResult
 
 
@@ -52,7 +53,7 @@ def rewrite_document(payload: DocumentRewriteRequest) -> DocumentRewriteResult:
             f"文件類型：{payload.document_type}\n"
             f"目標字數：{word_limit if word_limit else '未指定'}\n"
             f"目標學校／情境：{payload.school_context or '未提供'}\n\n"
-            f"學生原文：\n{payload.text}"
+            f"學生原文：\n{redact_pii(payload.text)}"
         ),
         tier="advanced",
         timeout=50,

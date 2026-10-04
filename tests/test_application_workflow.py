@@ -5,6 +5,7 @@ from fastapi.testclient import TestClient
 from exchange_info.api import create_app
 from exchange_info.application_workflow_collector import (
     LINCOLN_INCOMING_URL,
+    build_cgu_reference_workflow,
     collect_application_workflow,
     clean_official_page_title,
     discover_official_partner_pages,
@@ -12,7 +13,18 @@ from exchange_info.application_workflow_collector import (
     normalize_official_url,
 )
 from exchange_info.models import (
+    ApplicationApplicabilityStatus,
+    ApplicationCopyType,
+    ApplicationDeadlineStatus,
+    ApplicationDocumentRequirement,
+    ApplicationRuleScope,
+    ApplicationSourceAuthority,
     ApplicationStep,
+    ApplicationSubmissionDetails,
+    ApplicationSubmissionMethod,
+    ApplicationSupportStatus,
+    ApplicationWorkflowReviewStatus,
+    ApplicationWorkflowSource,
     PartnerUniversity,
     UniversityApplicationWorkflow,
 )
@@ -21,6 +33,7 @@ from exchange_info.storage import (
     load_application_workflows,
     replace_application_workflow,
 )
+from exchange_info.workflow_structuring import structure_application_workflow
 
 
 def _partner() -> PartnerUniversity:
@@ -56,6 +69,111 @@ def _workflow(
         last_checked=datetime(2026, 7, 11, tzinfo=timezone.utc),
         coverage_status="official_verified",
     )
+
+
+def test_legacy_workflow_populates_structured_document_requirements() -> None:
+    step = ApplicationStep(
+        order=1,
+        phase="校內準備",
+        title="繳交申請文件",
+        responsible_party="學生",
+        summary="依公告備妥文件。",
+        required_documents=["申請表", "歷年成績單"],
+        needs_confirmation=True,
+    )
+
+    assert [item.name for item in step.document_requirements] == [
+        "申請表",
+        "歷年成績單",
+    ]
+    assert step.support_status == ApplicationSupportStatus.NEEDS_CONFIRMATION
+    assert step.submission.method == ApplicationSubmissionMethod.UNKNOWN
+
+
+def test_structured_workflow_captures_scope_submission_and_review_metadata() -> None:
+    checked_at = datetime(2026, 7, 28, tzinfo=timezone.utc)
+    workflow = UniversityApplicationWorkflow(
+        workflow_id="ntpu-116-fall-round-1",
+        home_university="國立臺北大學",
+        school_name="交換合作校",
+        academic_year="116",
+        application_round="第一梯次",
+        version=2,
+        review_status=ApplicationWorkflowReviewStatus.PUBLISHED,
+        published_at=checked_at,
+        last_checked=checked_at,
+        steps=[
+            ApplicationStep(
+                rule_id="ntpu-school-submit",
+                order=1,
+                phase="校內申請",
+                title="送交系辦",
+                responsible_party="學生",
+                responsible_unit="所屬學系辦公室",
+                summary="列印後親送系辦。",
+                scope=ApplicationRuleScope(
+                    home_universities=["國立臺北大學"],
+                    departments=["資訊工程學系"],
+                    academic_years=["116"],
+                    application_rounds=["第一梯次"],
+                ),
+                submission=ApplicationSubmissionDetails(
+                    method=ApplicationSubmissionMethod.PAPER,
+                    office="資訊工程學系辦公室",
+                    receiving_hours="週一至週五 09:00–16:30",
+                    send_by_at=datetime(2026, 9, 27, 16, 30, tzinfo=timezone.utc),
+                    arrival_deadline_at=datetime(
+                        2026, 9, 30, 16, 30, tzinfo=timezone.utc
+                    ),
+                    deadline_note="以系辦實際收件時間為準。",
+                ),
+                document_requirements=[
+                    ApplicationDocumentRequirement(
+                        name="校內交換申請表",
+                        copies=2,
+                        copy_type=ApplicationCopyType.ORIGINAL_AND_COPY,
+                        signatures=["本人", "系主任"],
+                    )
+                ],
+                source_urls=["https://example.edu/official-notice"],
+                checked_at=checked_at,
+                support_status=ApplicationSupportStatus.VERIFIED,
+            )
+        ],
+        sources=[
+            ApplicationWorkflowSource(
+                title="116 學年度交換甄選簡章",
+                source_url="https://example.edu/official-notice",
+                role="home_university",
+                authority=ApplicationSourceAuthority.HOME_OFFICIAL_NOTICE,
+                priority=1,
+                effective_academic_year="116",
+                application_round="第一梯次",
+                checked_at=checked_at,
+            )
+        ],
+    )
+
+    workflow = structure_application_workflow(workflow)
+    payload = workflow.model_dump(mode="json")
+    assert payload["steps"][0]["submission"]["method"] == "paper"
+    assert payload["steps"][0]["submission"]["send_by_at"] == "2026-09-27T16:30:00Z"
+    assert (
+        payload["steps"][0]["submission"]["arrival_deadline_at"]
+        == "2026-09-30T16:30:00Z"
+    )
+    assert payload["steps"][0]["submission"]["deadline_note"] == "以系辦實際收件時間為準。"
+    assert payload["steps"][0]["deadline_status"] == "verified_exact"
+    assert payload["steps"][0]["deadline_reminder_eligible"] is True
+    assert payload["steps"][0]["deadline_source_url"] == "https://example.edu/official-notice"
+    assert payload["steps"][0]["deadline_checked_at"] == "2026-07-28T00:00:00Z"
+    assert payload["steps"][0]["document_requirements"][0]["copies"] == 2
+    assert payload["steps"][0]["scope"]["departments"] == ["資訊工程學系"]
+    assert payload["sources"][0]["priority"] == 1
+    assert payload["review_status"] == "published"
+    assert workflow.applicability_status == ApplicationApplicabilityStatus.VERIFIED
+    assert workflow.effective_application_rounds == ["第一梯次"]
+    assert workflow.steps[0].deadline_status == ApplicationDeadlineStatus.VERIFIED_EXACT
 
 
 def test_official_url_filter_rejects_third_party_hosts() -> None:
@@ -288,6 +406,46 @@ def test_lincoln_workflow_has_detailed_official_stages(monkeypatch) -> None:
     assert workflow.coverage_status == "official_verified"
 
 
+def test_cgu_reference_workflow_stays_unpublished_and_confirmation_gated() -> None:
+    checked_at = datetime(2026, 7, 29, tzinfo=timezone.utc)
+    partner = PartnerUniversity(
+        program_type="交換學生 / 自費研修",
+        country="巴西",
+        school_name="巴西聖保羅聯邦大學 Universidade Federal de São Paulo",
+        website="https://www.unifesp.br/",
+        source_url="https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554",
+    )
+    official_url = (
+        "https://www.unifesp.br/world/images/arquivos/"
+        "Undergraduate_students_Institutional_procedures.pdf"
+    )
+
+    workflow = build_cgu_reference_workflow(
+        partner,
+        partner_sources=[("UNIFESP institutional procedures", official_url)],
+        partner_application_summary=(
+            "由母校完成校際程序後，依 UNIFESP 官方說明以電子郵件送交申請文件。"
+        ),
+        partner_application_details=["各學期與文件版本仍須由兩校國際處確認。"],
+        required_documents=["申請表", "英文或葡萄牙文歷年成績單"],
+        submission_method=ApplicationSubmissionMethod.EMAIL,
+        submission_email="international@unifesp.br",
+        checked_at=checked_at,
+    )
+
+    assert len(workflow.steps) == 6
+    assert workflow.review_status == ApplicationWorkflowReviewStatus.LEGACY
+    assert workflow.published_at is None
+    assert workflow.coverage_status == "official_partial"
+    partner_step = workflow.steps[3]
+    assert partner_step.submission.method == ApplicationSubmissionMethod.EMAIL
+    assert partner_step.submission.email == "international@unifesp.br"
+    assert partner_step.deadline_status == ApplicationDeadlineStatus.REFERENCE_ONLY
+    assert not partner_step.deadline_reminder_eligible
+    assert all(item.needs_confirmation for item in partner_step.document_requirements)
+    assert all(official_url in item.source_urls for item in partner_step.document_requirements)
+
+
 def test_replace_workflow_preserves_other_schools(tmp_path) -> None:
     ensure_data_dirs(tmp_path)
     replace_application_workflow(_workflow("其他大學 Other University"), tmp_path)
@@ -317,15 +475,11 @@ def test_replace_workflow_consolidates_chinese_name_aliases(tmp_path) -> None:
     assert rows[0].steps[0].title == "交換與雙聯流程"
 
 
-def test_workflow_api_reads_cache_and_refreshes_selected_school(tmp_path, monkeypatch) -> None:
+def test_workflow_api_reads_cache_and_rejects_public_refresh(tmp_path, monkeypatch) -> None:
     ensure_data_dirs(tmp_path)
     partner = _partner()
     replace_application_workflow(_workflow(), tmp_path)
     monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
-    monkeypatch.setattr(
-        "exchange_info.api.collect_application_workflow",
-        lambda partner, **kwargs: _workflow(title="重新查核流程"),
-    )
     client = TestClient(create_app(tmp_path))
 
     cached = client.get("/application-workflow", params={"school": partner.school_name})
@@ -335,6 +489,77 @@ def test_workflow_api_reads_cache_and_refreshes_selected_school(tmp_path, monkey
     refreshed = client.post(
         "/application-workflow/refresh", params={"school": partner.school_name}
     )
-    assert refreshed.status_code == 200
-    assert refreshed.json()["steps"][0]["title"] == "重新查核流程"
-    assert load_application_workflows(tmp_path)[0].steps[0].title == "重新查核流程"
+    assert refreshed.status_code == 401
+    assert load_application_workflows(tmp_path)[0].steps[0].title == "確認資格"
+
+
+def test_workflow_api_applies_department_override(tmp_path, monkeypatch) -> None:
+    ensure_data_dirs(tmp_path)
+    partner = _partner()
+    workflow = _workflow().model_copy(
+        update={
+            "steps": [
+                ApplicationStep(
+                    rule_id="submit",
+                    order=1,
+                    phase="校內申請",
+                    title="校級預設送件",
+                    responsible_party="學生",
+                    summary="依校級規定送件。",
+                ),
+                ApplicationStep(
+                    overrides_rule_id="submit",
+                    order=1,
+                    phase="校內申請",
+                    title="資工系紙本送件",
+                    responsible_party="學生",
+                    summary="送到資工系辦。",
+                    scope=ApplicationRuleScope(departments=["資訊工程學系"]),
+                ),
+            ]
+        }
+    )
+    replace_application_workflow(workflow, tmp_path)
+    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    client = TestClient(create_app(tmp_path))
+
+    response = client.get(
+        "/application-workflow",
+        params={"school": partner.school_name, "department": "資訊工程學系"},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert [step["title"] for step in payload["steps"]] == ["資工系紙本送件"]
+    assert payload["applied_context"]["department"] == "資訊工程學系"
+
+
+def test_workflow_api_selects_the_requested_published_round(tmp_path, monkeypatch) -> None:
+    ensure_data_dirs(tmp_path)
+    partner = _partner()
+    replace_application_workflow(
+        _workflow(title="第一梯次流程").model_copy(
+            update={"academic_year": "116", "application_round": "第一梯次"}
+        ),
+        tmp_path,
+    )
+    replace_application_workflow(
+        _workflow(title="第二梯次流程").model_copy(
+            update={"academic_year": "116", "application_round": "第二梯次"}
+        ),
+        tmp_path,
+    )
+    monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+    client = TestClient(create_app(tmp_path))
+
+    response = client.get(
+        "/application-workflow",
+        params={
+            "school": partner.school_name,
+            "academic_year": "116",
+            "application_round": "第二梯次",
+        },
+    )
+
+    assert response.status_code == 200
+    assert response.json()["steps"][0]["title"] == "第二梯次流程"

@@ -7,7 +7,8 @@ from pathlib import Path
 from docx import Document
 from pypdf import PdfReader
 
-from .ai_gateway import structured_response
+from exchange_info.ai_gateway import structured_response
+from exchange_info.redaction import redact_pii
 from .models import DocumentCheckIssue, DocumentCheckResult
 
 
@@ -155,7 +156,7 @@ def check_document(
             ),
             input_text=(
                 f"文件類型：{resolved_type}\n字數上限：{expected_word_limit or '未設定'}\n"
-                f"需要簽名：{'是' if require_signature else '否'}\n\n文件內容：\n{compact[:16_000]}"
+                f"需要簽名：{'是' if require_signature else '否'}\n\n文件內容：\n{redact_pii(compact[:16_000])}"
             ),
             tier="advanced",
         )

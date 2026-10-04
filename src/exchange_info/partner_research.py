@@ -3373,12 +3373,14 @@ def _apply_curated_destination_details(
 def collect_destination_profile(
     partner: PartnerUniversity,
     *,
+    home_university: str | None = None,
     max_pages: int = 6,
     timeout_seconds: float = 20.0,
 ) -> DestinationProfile:
     checked_at = datetime.now(timezone.utc)
     if not partner.website:
         return DestinationProfile(
+            home_university=home_university,
             school_name=partner.school_name,
             country=partner.country,
             last_checked=checked_at,
@@ -3474,6 +3476,7 @@ def collect_destination_profile(
     else:
         status = "not_found"
     profile = DestinationProfile(
+        home_university=home_university,
         school_name=partner.school_name,
         country=partner.country,
         cost_summary=cost,

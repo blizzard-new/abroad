@@ -1,18 +1,22 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+import hashlib
+from datetime import datetime, timedelta, timezone
 
 from fastapi.testclient import TestClient
 
 from exchange_info.api import create_app
 from exchange_info.document_rewriter import rewrite_document
 from exchange_info.models import (
+    AccountSessionRecord,
     DocumentRewriteRequest,
     PageCategory,
     ProcessedPage,
     SourceReference,
     StudentDashboard,
     StudentInfoItem,
+    UserAccount,
+    utc_now,
 )
 from exchange_info.rag import (
     build_document_chunks,
@@ -20,7 +24,11 @@ from exchange_info.rag import (
     search_document_chunks,
     split_document_text,
 )
-from exchange_info.storage import save_processed_pages
+from exchange_info.storage import (
+    save_account_sessions,
+    save_processed_pages,
+    save_user_accounts,
+)
 from exchange_info.structured_sources import (
     build_structured_source_index,
     structure_source,
@@ -28,6 +36,25 @@ from exchange_info.structured_sources import (
 
 
 SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject/Detail/rag-test"
+
+
+def _authenticated_client(data_dir) -> TestClient:
+    account = UserAccount(display_name="RAG 文件檢查測試學生")
+    token = "rag-document-check-token"
+    save_user_accounts([account], data_dir)
+    save_account_sessions(
+        [
+            AccountSessionRecord(
+                account_id=account.id,
+                token_hash=hashlib.sha256(token.encode("utf-8")).hexdigest(),
+                expires_at=utc_now() + timedelta(days=1),
+            )
+        ],
+        data_dir,
+    )
+    client = TestClient(create_app(data_dir))
+    client.headers.update({"Authorization": f"Bearer {token}"})
+    return client
 
 
 def _page(text: str = "申請文件包含申請表、成績單、讀書計畫與語言證明。") -> ProcessedPage:
@@ -151,8 +178,19 @@ def test_document_rewrite_is_labeled_and_does_not_require_file_storage(monkeypat
     assert result.warnings == ["課程名稱仍需由學生核對"]
 
 
-def test_ai_compatibility_endpoints_use_rag_and_return_source_dates(tmp_path, monkeypatch) -> None:
-    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+def test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused(
+    tmp_path,
+    monkeypatch,
+) -> None:
+    monkeypatch.setenv("AI_PROVIDER", "openai")
+    monkeypatch.setenv("OPENAI_API_KEY", "must-not-enable-ai")
+    ai_requests: list[str] = []
+
+    def unexpected_ai_post(url: str, **kwargs):
+        ai_requests.append(url)
+        raise AssertionError("paused runtime must not make an external AI request")
+
+    monkeypatch.setattr("exchange_info.ai_gateway.requests.post", unexpected_ai_post)
     page = _page()
     data_dir = tmp_path / "data"
     save_processed_pages([page], data_dir)
@@ -172,14 +210,15 @@ def test_ai_compatibility_endpoints_use_rag_and_return_source_dates(tmp_path, mo
         "exchange_info.api.build_student_dashboard",
         lambda pages, info, **kwargs: dashboard,
     )
-    client = TestClient(create_app(data_dir))
+    client = _authenticated_client(data_dir)
 
-    answer = client.post("/ai/chat", json={"question": "交換需要哪些申請文件？"})
+    answer = client.post("/advisor/ask", json={"question": "交換需要哪些申請文件？"})
+    paused_chat = client.post("/ai/chat", json={"question": "交換需要哪些申請文件？"})
     status = client.get("/ai/status")
     review = client.post(
         "/ai/review-document",
         files={"file": ("讀書計畫.txt", "申請動機與學習計畫。" * 30, "text/plain")},
-        data={"document_type": "study_plan"},
+        data={"document_type": "study_plan", "consent": "true"},
     )
     rewrite = client.post(
         "/ai/rewrite-document",
@@ -191,6 +230,14 @@ def test_ai_compatibility_endpoints_use_rag_and_return_source_dates(tmp_path, mo
     assert answer.json()["sources"][0]["last_checked"].startswith("2026-07-19")
     assert status.json()["rag_index"]["source_count"] == 1
     assert status.json()["structured_source_count"] == 1
-    assert review.status_code == 200
-    assert review.json()["completeness_score"] >= 0
+    assert status.json()["ai_enabled"] is False
+    assert status.json()["runtime_state"] == "paused"
+    assert status.json()["provider"] is None
+    assert status.json()["model"] is None
+    assert "AI API 與本地 AI 目前暫緩" in status.json()["paused_reason"]
+    assert paused_chat.status_code == 503
+    assert review.status_code == 503
+    assert "AI 深度檢查目前暫緩" in review.json()["detail"]
     assert rewrite.status_code == 503
+    assert "AI API 與本地 AI 目前暫緩" in rewrite.json()["detail"]
+    assert ai_requests == []

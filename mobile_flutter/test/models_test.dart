@@ -161,4 +161,24 @@ void main() {
     expect(school.applicationSteps, ['由長庚大學提名。']);
     expect(school.studentSummaryZh.translatedFromEnglish, isTrue);
   });
+
+  test('account session parses profile product tier and providers', () {
+    final profile = AccountProfile.fromJson({
+      'id': 'account-2',
+      'email': 'pro@example.edu.tw',
+      'display_name': 'Pro User',
+      'home_university': '台大',
+      'target_countries': ['US'],
+      'application_stage': 'documents',
+      'school_email_verified': true,
+      'providers': ['email', 'google'],
+      'followed_boards': [],
+      'product_tier': 'subscription',
+      'email_verified': true,
+    });
+
+    expect(profile.productTier, ProductAccessTier.subscription);
+    expect(profile.providers, ['email', 'google']);
+    expect(profile.emailVerified, isTrue);
+  });
 }

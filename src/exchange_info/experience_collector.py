@@ -9,6 +9,7 @@ from typing import Any
 from urllib.parse import parse_qsl, urlencode, urlparse, urlunparse
 
 from .content_summary import fetch_page_content, summarize_student_link
+from .life_sources import read_life_page
 from .models import (
     ExperienceHighlight,
     ExperienceInsight,
@@ -186,6 +187,21 @@ THEME_PATTERNS = {
     "challenges": r"challenge|difficult|homesick|isolat|rural|quiet|lonely|agricultur|farm|land-based|limited|stress|poor|bad|困難|偏遠|安靜|孤單|不便|農業|有限|壓力|不佳|昂貴|自求多福",
 }
 
+# Public exchange reports are not limited to Chinese or English authors.
+for _theme, _terms in {
+    "housing": r"wohnheim|unterkunft|logement|résidence|기숙사|寮|住居",
+    "cost": r"lebenshaltungskosten|miete|coût|loyer|생활비|物価|生活費",
+    "food": r"mensa|lebensmittel|nourriture|repas|식당|음식|食事|学食|スーパー",
+    "transport": r"verkehr|bahnhof|transports|교통|통학|通学|最寄り",
+    "academics": r"vorlesung|prüfung|enseignement|수업|강의|授業|履修",
+    "climate": r"wetter|hiver|날씨|気候|天候",
+    "social": r"freundschaften|amis|동아리|친구|サークル|友達",
+    "safety": r"krankenhaus|krankenversicherung|hôpital|médecin|병원|보험|診療所|病院|保険",
+    "campus_culture": r"kulturschock|culturel|문화|異文化|文化交流",
+    "travel": r"ausflug|voyage|여행|旅行",
+}.items():
+    THEME_PATTERNS[_theme] += "|" + _terms
+
 THEME_DIGEST_SUMMARIES = {
     "academics": "來源談到課程內容、學習方式或課業安排；不同科系的實際感受可能差很多。",
     "campus_culture": "來源談到校園規模、整體氛圍與學生互動；應比較不同年份和學生身分。",
@@ -286,7 +302,7 @@ LEGACY_EXPERIENCE_INSIGHTS = {
 }
 
 EXPERIENCE_TERMS = re.compile(
-    r"student life|student experience|my experience|exchange|study abroad|review|blog|vlog|campus|housing|dorm|心得|留學|交換|校園|住宿",
+    r"student life|student experience|my experience|exchange|study abroad|review|blog|vlog|campus|housing|dorm|心得|留學|交換|校園|住宿|Erfahrungsbericht|Auslandssemester|témoignage|utveksling|교환학생|체험|交換留学|留学体験",
     re.IGNORECASE,
 )
 
@@ -420,12 +436,12 @@ REVIEW_HOSTS = {
 }
 
 STRONG_EXPERIENCE_TERMS = re.compile(
-    r"\bmy\b|\bi\b|life at|why i chose|culture shock|student voice|student story|testimonial|review|vlog|day in the life|hall tour|dorm tour|past review|year in|心得|感想|親身|經驗分享",
+    r"\bmy\b|\bi\b|life at|why i chose|culture shock|students?.? voice|student story|testimonial|review|vlog|day in the life|hall tour|dorm tour|past review|year in|experience report|Erfahrungsbericht|témoignage|utveksling|교환학생|체험|留学体験|心得|感想|親身|經驗分享",
     re.IGNORECASE,
 )
 
 OFFICIAL_STUDENT_STORY_TERMS = re.compile(
-    r"student[-_/ ]?(?:voice|story|stories|experience|experiences|testimonial)"
+    r"students?[-_/'’ ]*(?:voice|story|stories|experience|experiences|testimonial)"
     r"|alumni[-_/ ]?(?:voice|story|stories|experience)"
     r"|why[-_/ ]?i[-_/ ]?chose|day[-_/ ]?in[-_/ ]?the[-_/ ]?life"
     r"|reflections?[-_/ ]?of[-_/ ]?an?[-_/ ]?exchange[-_/ ]?student"
@@ -513,6 +529,8 @@ def build_experience_queries(partner: PartnerUniversity) -> list[tuple[str, str]
         (f"{name}{country_part} reddit student life exchange", "text"),
         (f"{name}{country_part} study abroad student review", "text"),
         (f"{name}{country_part} exchange student blog", "text"),
+        (f'"{name}" Erasmus exchange experience report filetype:pdf', "text"),
+        (f'"{name}" Erfahrungsbericht témoignage 교환학생 留学体験', "text"),
         (f"{name}{country_part} youtube student life exchange", "text"),
         (f"{name}{country_part} life at university student review", "text"),
         (f'{name} {country} international student experience campus vlog'.strip(), "video"),
@@ -690,7 +708,7 @@ def _candidate_to_source(
     host = parsed.netloc.lower().removeprefix("www.")
     if not host or any(host == item or host.endswith(f".{item}") for item in EXCLUDED_HOSTS):
         return None
-    if parsed.path.lower().endswith((".pdf", ".doc", ".docx", ".ppt", ".pptx")):
+    if parsed.path.lower().endswith((".doc", ".docx", ".ppt", ".pptx")):
         return None
     if host in {"instagram.com", "facebook.com"} and not is_video:
         return None
@@ -776,7 +794,8 @@ def _summarize_link_content(
     """Open a result and summarize its body; search snippets are only a fallback."""
     if source.source_type == ExperienceSourceType.VIDEO:
         return source.model_copy(update={"content_status": "metadata_only"})
-    fetched = fetch_page_content(
+    reader = read_life_page if urlparse(source.source_url).path.lower().endswith(".pdf") else fetch_page_content
+    fetched = reader(
         source.source_url,
         timeout_seconds=min(timeout_seconds, 20.0),
     )
@@ -1373,6 +1392,10 @@ def detect_language(text: str) -> str:
         return "ko"
     if re.search(r"[\u4e00-\u9fff]", text):
         return "zh"
+    if re.search(r"\b(?:Erfahrungsbericht|Auslandssemester|Wohnheim|Vorlesungen)\b", text, re.I):
+        return "de"
+    if re.search(r"\b(?:témoignage|logement|étudiants|université)\b", text, re.I):
+        return "fr"
     if re.search(r"[A-Za-z]", text):
         return "en"
     return "unknown"

@@ -6,10 +6,17 @@ from typing import Any, Literal, Protocol, Sequence
 
 import requests
 
+from .local_ai import LocalGemmaProvider, create_local_prototype_provider
+
 
 RESPONSES_URL = "https://api.openai.com/v1/responses"
 EMBEDDINGS_URL = "https://api.openai.com/v1/embeddings"
 ModelTier = Literal["fast", "advanced"]
+AI_RUNTIME_STATE = "paused"
+AI_RUNTIME_PAUSED_REASON = (
+    "AI API 與本地 AI 目前暫緩；本機 provider 基礎已建立但尚未接入產品，"
+    "伺服器仍只執行規則與來源整理。"
+)
 
 
 class LLMProvider(Protocol):
@@ -151,23 +158,45 @@ class OpenAIProvider:
 
 
 def get_provider() -> LLMProvider | None:
-    provider_name = os.environ.get("AI_PROVIDER", "openai").strip().casefold()
-    if provider_name != "openai":
-        return None
-    api_key = os.environ.get("OPENAI_API_KEY", "").strip()
-    return OpenAIProvider(api_key) if api_key else None
+    return build_local_prototype_provider(os.environ)
+
+
+def build_local_prototype_provider(
+    environment: dict[str, str] | None = None,
+) -> LocalGemmaProvider | None:
+    """Build the isolated LAI-00 through LAI-03 adapter without activating it.
+
+    The product runtime continues to call :func:`get_provider`, which remains
+    paused until the separately gated Advisor integration work begins.
+    """
+
+    return create_local_prototype_provider(environment)
+
+
+def ai_runtime_state() -> str:
+    mode = os.environ.get("EXCHANGE_LOCAL_AI_MODE", "").strip().lower()
+    env = os.environ.get("EXCHANGE_ENVIRONMENT", "").strip().lower()
+    if mode == "prototype" and env in ("development", "test"):
+        return "prototype"
+    return AI_RUNTIME_STATE
 
 
 def ai_enabled() -> bool:
+    if ai_runtime_state() == "paused":
+        return False
     return get_provider() is not None
 
 
 def ai_provider_name() -> str | None:
+    if ai_runtime_state() == "paused":
+        return None
     provider = get_provider()
     return provider.name if provider else None
 
 
 def ai_model(tier: ModelTier = "fast") -> str:
+    if ai_runtime_state() == "paused":
+        return ""
     provider = get_provider()
     if provider is None:
         return ""
@@ -175,6 +204,8 @@ def ai_model(tier: ModelTier = "fast") -> str:
 
 
 def ai_embedding_model() -> str:
+    if ai_runtime_state() == "paused":
+        return ""
     provider = get_provider()
     return provider.embedding_model if provider else ""
 

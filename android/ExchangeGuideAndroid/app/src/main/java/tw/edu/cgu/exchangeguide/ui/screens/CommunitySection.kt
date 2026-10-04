@@ -1,5 +1,6 @@
 package tw.edu.cgu.exchangeguide.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,7 +11,13 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.filled.Block
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.ChatBubble
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.filled.Public
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
@@ -33,7 +40,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -56,8 +66,12 @@ import tw.edu.cgu.exchangeguide.data.network.ExchangeApi
 import tw.edu.cgu.exchangeguide.ui.components.BannerKind
 import tw.edu.cgu.exchangeguide.ui.components.ExchangeCard
 import tw.edu.cgu.exchangeguide.ui.components.InlineBanner
+import tw.edu.cgu.exchangeguide.ui.components.InfoSummaryGrid
+import tw.edu.cgu.exchangeguide.ui.components.InfoSummaryItem
 import tw.edu.cgu.exchangeguide.ui.components.LoadingState
 import tw.edu.cgu.exchangeguide.ui.components.SectionHeader
+import tw.edu.cgu.exchangeguide.ui.components.SnapshotMetric
+import tw.edu.cgu.exchangeguide.ui.components.SnapshotMetricRail
 import tw.edu.cgu.exchangeguide.ui.theme.ExchangeSpacing
 
 private class CommunityController(
@@ -199,6 +213,14 @@ fun CommunitySection(schoolName: String) {
     controller.identity?.let {
         InlineBanner("你的匿名代號", it.displayName, BannerKind.Info)
     }
+    SnapshotMetricRail(
+        listOf(
+            SnapshotMetric(controller.posts.size.toString(), "貼文", MaterialTheme.colorScheme.primary),
+            SnapshotMetric(controller.posts.sumOf { it.comments.size }.toString(), "回覆", MaterialTheme.colorScheme.secondary),
+            SnapshotMetric(controller.chat.size.toString(), "公開訊息", Color(0xFF2E8B62)),
+            SnapshotMetric(controller.conversations.size.toString(), "私訊", Color(0xFFC98A3D)),
+        ),
+    )
     SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
         listOf("貼文", "聊天室", "私訊").forEachIndexed { index, label ->
             SegmentedButton(
@@ -322,35 +344,85 @@ private fun PostsPane(
     }
     if (controller.posts.isEmpty()) InlineBanner("還沒有公開貼文", "分享第一個申請問題或交換經驗。", BannerKind.Info)
     controller.posts.forEach { thread ->
+        val typeLabel = when (thread.post.postType) {
+            "question" -> "提問"
+            "experience" -> "經驗"
+            else -> "討論"
+        }
+        var bodyExpanded by remember(thread.post.id) { mutableStateOf(false) }
+        var repliesExpanded by remember("replies-${thread.post.id}") { mutableStateOf(false) }
         ExchangeCard {
+            Text(typeLabel, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
             Text(thread.post.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-            Text(thread.post.body, style = MaterialTheme.typography.bodyLarge)
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Text(thread.post.displayName, style = MaterialTheme.typography.labelMedium, modifier = Modifier.weight(1f))
+                Text(
+                    "${thread.post.displayName} · ${communityDate(thread.post.createdAt)}",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.weight(1f),
+                )
                 if (thread.post.authorId != controller.identity?.id) {
-                    Button(onClick = { onInvite(thread.post.authorId, thread.post.displayName) }) { Text("邀請私訊") }
+                    Button(onClick = { onInvite(thread.post.authorId, thread.post.displayName) }) { Text("邀請") }
                 }
                 IconButton(onClick = { onReport(thread.post.id) }) {
                     Icon(Icons.Default.Flag, contentDescription = "檢舉這篇貼文")
                 }
             }
-            thread.comments.forEach { comment ->
-                Text("${comment.displayName}：${comment.body}", style = MaterialTheme.typography.bodyMedium)
-            }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                OutlinedTextField(
-                    value = comments[thread.post.id].orEmpty(),
-                    onValueChange = { comments[thread.post.id] = it },
-                    modifier = Modifier.weight(1f),
-                    label = { Text("回覆") },
+            InfoSummaryGrid(
+                listOf(
+                    InfoSummaryItem("內容類型", typeLabel, Icons.Default.Description, MaterialTheme.colorScheme.primary),
+                    InfoSummaryItem("回覆", "${thread.comments.size} 則", Icons.Default.ChatBubble, MaterialTheme.colorScheme.secondary),
+                    InfoSummaryItem("發布日期", communityDate(thread.post.createdAt), Icons.Default.CalendarMonth, Color(0xFFC98A3D)),
+                    InfoSummaryItem("可見範圍", "公開", Icons.Default.Public, Color(0xFF2E8B62)),
+                ),
+            )
+            Text(
+                text = thread.post.body,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = if (bodyExpanded) Int.MAX_VALUE else 4,
+                overflow = TextOverflow.Ellipsis,
+            )
+            if (thread.post.body.length > 120) {
+                Text(
+                    text = if (bodyExpanded) "收合全文" else "閱讀全文",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable(role = Role.Button) { bodyExpanded = !bodyExpanded },
                 )
-                IconButton(onClick = { onComment(thread.post.id) }, enabled = comments[thread.post.id].orEmpty().length >= 2) {
-                    Icon(Icons.Default.Send, contentDescription = "送出回覆")
+            }
+            Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                Text("${thread.comments.size} 則回覆", style = MaterialTheme.typography.titleSmall, modifier = Modifier.weight(1f))
+                IconButton(onClick = { repliesExpanded = !repliesExpanded }) {
+                    Icon(
+                        if (repliesExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                        contentDescription = if (repliesExpanded) "收合回覆" else "展開回覆",
+                    )
+                }
+            }
+            androidx.compose.animation.AnimatedVisibility(repliesExpanded) {
+                Column(verticalArrangement = Arrangement.spacedBy(ExchangeSpacing.sm)) {
+                    thread.comments.forEach { comment ->
+                        Text("${comment.displayName}：${comment.body}", style = MaterialTheme.typography.bodyMedium)
+                    }
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        OutlinedTextField(
+                            value = comments[thread.post.id].orEmpty(),
+                            onValueChange = { comments[thread.post.id] = it },
+                            modifier = Modifier.weight(1f),
+                            label = { Text("回覆") },
+                        )
+                        IconButton(onClick = { onComment(thread.post.id) }, enabled = comments[thread.post.id].orEmpty().length >= 2) {
+                            Icon(Icons.Default.Send, contentDescription = "送出回覆")
+                        }
+                    }
                 }
             }
         }
     }
 }
+
+private fun communityDate(value: String): String = value.take(10).replace('-', '.')
 
 @Composable
 private fun ChatPane(

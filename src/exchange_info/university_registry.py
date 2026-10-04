@@ -3,6 +3,7 @@ from __future__ import annotations
 import re
 import unicodedata
 from dataclasses import dataclass
+from typing import Literal
 
 
 @dataclass(frozen=True)
@@ -15,9 +16,11 @@ class UniversityProfile:
     hero_image: str
     official_url: str
     coverage_note: str
+    support_level: Literal["full", "basic", "pending"]
     partner_count_hint: int
     academic_score_minimum: float
     student_card_signals: tuple[str, ...]
+    colleges: tuple[str, ...] = ()
 
 
 CGU = UniversityProfile(
@@ -28,10 +31,14 @@ CGU = UniversityProfile(
     aliases=("長庚大學", "長庚", "CGU", "Chang Gung University"),
     hero_image="/static/assets/cgu-campus.jpg",
     official_url="https://www.cgu.edu.tw/oia-ch",
-    coverage_note="已整理長庚大學交換、補助、文件與合作校資訊。",
-    partner_count_hint=62,
+    coverage_note="完整支援試點：已整理長庚大學交換、補助、文件與合作校申請流程。",
+    support_level="full",
+    partner_count_hint=75,
     academic_score_minimum=70,
     student_card_signals=("長庚大學", "CHANGGUNGUNIVERSITY", "CGU"),
+    # Official academic units, checked 2026-09-29:
+    # https://www.cgu.edu.tw/academic/Contents?nodeId=17720
+    colleges=("醫學院", "工學院", "管理學院", "智慧運算學院"),
 )
 
 
@@ -50,8 +57,9 @@ NTPU = UniversityProfile(
     ),
     hero_image="/static/assets/ntpu-campus.jpg",
     official_url="https://new.ntpu.edu.tw/oia",
-    coverage_note="已套用完整交換申請流程，並接入 115 學年度三語組官方名額表。",
-    partner_count_hint=155,
+    coverage_note="完整支援試點：已套用交換申請流程與 116 學年度三語組官方名額表。",
+    support_level="full",
+    partner_count_hint=169,
     academic_score_minimum=75,
     student_card_signals=(
         "國立臺北大學",
@@ -59,6 +67,12 @@ NTPU = UniversityProfile(
         "台北大學",
         "NATIONALTAIPEIUNIVERSITY",
         "NTPU",
+    ),
+    # Official college directory, checked 2026-09-29:
+    # https://udb.moe.edu.tw/ulist/Institution?id=000021E714C0
+    colleges=(
+        "法律學院", "商學院", "公共事務學院", "社會科學學院",
+        "人文學院", "電機資訊學院", "永續創新國際學院",
     ),
 )
 

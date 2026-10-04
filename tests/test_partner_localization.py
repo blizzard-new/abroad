@@ -5,6 +5,14 @@ from exchange_info.partner_localization import (
 )
 
 
+def test_bilingual_ntpu_conditions_keep_thresholds_in_chinese():
+    points = localize_points("限大學部學生(For Undergraduate Students Only) IELTS minimum overall band score of 6.0 (no sub-score bellow 5.5)")
+    result = " ".join(points)
+    assert result.count("限大學部學生") == 1
+    assert "6.0" in result and "各單項不得低於 5.5" in result
+    assert "For Undergraduate" not in result and "minimum" not in result
+
+
 def test_lincoln_summary_translates_deadline_scores_and_course_options() -> None:
     summary = build_partner_student_summary(
         study_period="1 semester",

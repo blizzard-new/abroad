@@ -1,0 +1,366 @@
+{
+  "schema_version": 2,
+  "review_status": "human_review_required",
+  "publication_effect": "none",
+  "approvals_created": false,
+  "public_student_data_changed": false,
+  "expected_candidate_count": 13,
+  "expected_verified_https_candidate_count": 11,
+  "expected_transport_blocked_candidate_count": 2,
+  "items": [
+    {
+      "batch_id": "DATA-003-BATCH-001",
+      "checked_at": "2026-08-13",
+      "workflow_id": "workflow-6889039f2433b41365efba62",
+      "current_url": "https://www.istudy.sdu.edu.cn/__local/C/1B/28/02857EA761292B8A6B2A4F8025C_BFE025DD_28DAE.pdf",
+      "candidate_url": "https://www.istudy.sdu.edu.cn/PDF/251201jiaohuanshengzhaoshengjianzhangxianshangban.pdf",
+      "candidate_status": "strong_candidate",
+      "transport_status": "verified_https",
+      "transport_checked_at": "2026-08-29",
+      "transport_final_url": "https://www.istudy.sdu.edu.cn/PDF/251201jiaohuanshengzhaoshengjianzhangxianshangban.pdf",
+      "transport_http_status": 200,
+      "automated_evidence": [
+        "山東大學交換生官方列表將此文件列為 AY2026-2027 交換生計畫。",
+        "HTTPS PDF 共 8 頁，內容明列 2026 秋季與 2027 春季、提名與申請日期、資格及申請文件。"
+      ],
+      "required_human_checks": [
+        "從山東大學官方交換生列表親自開啟文件，確認列表與 PDF 是同一正式版本。",
+        "確認臺北大學學生實際獲提名的校區與學院，不得混用濟南／青島、威海或經濟學院規定。",
+        "逐條比較舊來源支援的規定後，才可在待審版本替換網址。"
+      ],
+      "supporting_urls": [
+        "https://www.istudy.sdu.edu.cn/English/Programs/Non_Degree_Programs/Exchange_Student_Programs.htm"
+      ]
+    },
+    {
+      "batch_id": "DATA-010-BATCH-001",
+      "checked_at": "2026-08-30",
+      "workflow_id": "workflow-e7823f7764c62954887ae1db",
+      "current_url": "http://lobachevsky.university/",
+      "candidate_url": "https://eng.unn.ru/",
+      "candidate_status": "conditional_candidate",
+      "transport_status": "downgrades_to_http",
+      "transport_checked_at": "2026-08-30",
+      "transport_final_url": "http://eng.unn.ru/",
+      "transport_http_status": 200,
+      "automated_evidence": [
+        "2026-08-30 查核顯示 eng.unn.ru 的 HTTPS 請求會轉回 HTTP；semester exchange 精確路徑也會同樣降級，目前不能作為安全替代來源。",
+        "原 lobachevsky.university HTTPS 頁偏向一般招生與付費流程，未提供足夠交換生規定證據。",
+        "int.unn.ru 的安全 Academic exchanges 頁與 2026 mobility 指南都描述 UNN 在校生赴外交換，不是外校學生 incoming 申請規定。",
+        "int.unn.ru 的安全聯絡頁可確認外籍學生與 academic mobility 承辦窗口，但沒有提名、期限、文件或臺北大學適用證據。"
+      ],
+      "required_human_checks": [
+        "由臺北大學承辦確認 eng.unn.ru 是否為目前合作校正式入口。",
+        "找到可支援現有交換步驟與文件的精確 incoming exchange 頁；不足時不得替換。"
+      ],
+      "supporting_urls": [],
+      "research_leads": [
+        {
+          "label": "UNN 外校學生官方入口",
+          "url": "https://int.unn.ru/studentu-inostrannogo-vuza/",
+          "relationship": "official_context",
+          "transport_status": "verified_https",
+          "transport_checked_at": "2026-08-30",
+          "transport_final_url": "https://int.unn.ru/studentu-inostrannogo-vuza/",
+          "transport_http_status": 200,
+          "eligible_as_replacement": false,
+          "reason_not_equivalent": "此頁是外校學生官方入口，但學期交換詳情仍連到會降級為 HTTP 的 eng.unn.ru，頁面本身不足以證明臺北大學當期 incoming exchange 規定。"
+        },
+        {
+          "label": "UNN Academic exchanges 官方頁",
+          "url": "https://int.unn.ru/obrazovanie/student_exchange/",
+          "relationship": "adjacent_program",
+          "transport_status": "verified_https",
+          "transport_checked_at": "2026-08-30",
+          "transport_final_url": "https://int.unn.ru/obrazovanie/student_exchange/",
+          "transport_http_status": 200,
+          "eligible_as_replacement": false,
+          "reason_not_equivalent": "此頁明確描述 UNN 在校生到海外合作校交換及校內甄選，方向與臺北大學學生前往 UNN 的 incoming 申請相反，不能支援 incoming 文件、期限或提名規定。"
+        },
+        {
+          "label": "UNN 國際事務與外籍學生官方聯絡頁",
+          "url": "https://int.unn.ru/kontakty/",
+          "relationship": "official_context",
+          "transport_status": "verified_https",
+          "transport_checked_at": "2026-08-30",
+          "transport_final_url": "https://int.unn.ru/kontakty/",
+          "transport_http_status": 200,
+          "eligible_as_replacement": false,
+          "reason_not_equivalent": "此頁可確認 UNN 國際合作、academic mobility 與外籍學生承辦窗口，但沒有 incoming exchange 的合作校提名、申請期限、文件、錄取或臺北大學當期適用規定。"
+        }
+      ]
+    },
+    {
+      "batch_id": "DATA-010-BATCH-001",
+      "checked_at": "2026-08-30",
+      "workflow_id": "workflow-36508fa323666a9b5f5f8305",
+      "current_url": "http://sis.ruc.edu.cn/en/internationalExchange/studentexchange/exchange_application/index.htm",
+      "candidate_url": "https://sis.ruc.edu.cn/en/internationalExchange/studentexchange/exchange_application/index.htm",
+      "candidate_status": "strong_candidate",
+      "transport_status": "downgrades_to_http",
+      "transport_checked_at": "2026-08-30",
+      "transport_final_url": "http://sis.ruc.edu.cn/en/internationalExchange/studentexchange/exchange_application/index.htm",
+      "transport_http_status": 200,
+      "automated_evidence": [
+        "2026-08-30 查核顯示同網域同路徑的 HTTPS 請求會轉回 HTTP；index.htm、目錄版及無尾斜線路徑都不能作為安全替代來源。",
+        "頁面明列 partner nomination、fall/spring deadline、申請文件、錄取與官方聯絡方式。",
+        "人民大學商學院另有最終 HTTPS 200 的 incoming exchange 頁，但它屬不同學院且期限不同，不能替代 SIS 規定。"
+      ],
+      "required_human_checks": [
+        "HTTPS 實際請求目前會轉回 HTTP；搜尋索引中的 HTTPS 內容不能視為安全頁，須等待校方修正或找到另一個最終 HTTPS 正式頁。",
+        "核對此 School of International Studies 規定是否適用臺北大學目前合作單位與梯次。"
+      ],
+      "supporting_urls": [],
+      "research_leads": [
+        {
+          "label": "中國人民大學國際學生現行申請系統",
+          "url": "https://international.ruc.edu.cn/application",
+          "relationship": "application_system",
+          "transport_status": "verified_https",
+          "transport_checked_at": "2026-08-30",
+          "transport_final_url": "https://international.ruc.edu.cn/application",
+          "transport_http_status": 200,
+          "eligible_as_replacement": false,
+          "reason_not_equivalent": "此頁只證明目前存在一般國際學生申請系統，沒有重現 SIS 合作交換的提名、期限、文件與錄取規定，也沒有證明適用臺北大學。"
+        },
+        {
+          "label": "中國人民大學現行擔保書",
+          "url": "https://international.ruc.edu.cn/template/GaranteeLetter.pdf",
+          "relationship": "official_context",
+          "transport_status": "verified_https",
+          "transport_checked_at": "2026-08-30",
+          "transport_final_url": "https://international.ruc.edu.cn/template/GaranteeLetter.pdf",
+          "transport_http_status": 200,
+          "eligible_as_replacement": false,
+          "reason_not_equivalent": "此 PDF 只證明中國人民大學目前有通用國際學生擔保書；它沒有 SIS 合作交換的 nomination、期限、完整文件與錄取流程，也不能證明與原頁所連範本完全相同。"
+        },
+        {
+          "label": "中國人民大學商學院 Incoming Exchange 申請頁",
+          "url": "https://international.rmbs.ruc.edu.cn/incoming/web/admissions_application.php",
+          "relationship": "adjacent_program",
+          "transport_status": "verified_https",
+          "transport_checked_at": "2026-08-30",
+          "transport_final_url": "https://international.rmbs.ruc.edu.cn/incoming/web/admissions_application.php",
+          "transport_http_status": 200,
+          "eligible_as_replacement": false,
+          "reason_not_equivalent": "此頁是人民大學商學院的 incoming exchange 流程，雖列出提名、期限、文件與錄取，但承辦單位及日期都不同於 School of International Studies，不能跨學院替代 SIS 規定。"
+        }
+      ]
+    },
+    {
+      "batch_id": "DATA-010-BATCH-001",
+      "checked_at": "2026-08-13",
+      "workflow_id": "workflow-7b1b70e53babafd419aa36fb",
+      "current_url": "http://www.ustb.edu.cn",
+      "candidate_url": "https://oia.ustb.edu.cn/StudywithUs/ExchangeStudentPrograms/index.htm",
+      "candidate_status": "strong_candidate",
+      "transport_status": "verified_https",
+      "transport_checked_at": "2026-08-29",
+      "transport_final_url": "https://oia.ustb.edu.cn/StudywithUs/ExchangeStudentPrograms/index.htm",
+      "transport_http_status": 200,
+      "automated_evidence": [
+        "北京科技大學國際處 HTTPS 頁明列 Exchange Student Programs。",
+        "頁面涵蓋 partner nomination、申請步驟、文件、住宿、簽證及交換生承辦聯絡方式，比校級首頁精確。"
+      ],
+      "required_human_checks": [
+        "確認頁面規定仍適用目前梯次與臺北大學協議。",
+        "逐條比對現有文件需求，不能因頁面較精確就自動視為完整等價。"
+      ],
+      "supporting_urls": []
+    },
+    {
+      "batch_id": "DATA-010-BATCH-001",
+      "checked_at": "2026-08-13",
+      "workflow_id": "workflow-501c4458037f3f1bcc175167",
+      "current_url": "http://oia.ewha.ac.kr/oia/1165/subview.do",
+      "candidate_url": "https://oia.ewha.ac.kr/oia/1148/subview.do",
+      "candidate_status": "strong_candidate",
+      "transport_status": "verified_https",
+      "transport_checked_at": "2026-08-29",
+      "transport_final_url": "https://oia.ewha.ac.kr/oia/1148/subview.do",
+      "transport_http_status": 200,
+      "automated_evidence": [
+        "原 1165 路徑是 Ewha 本校生 outbound program 概覽，不是 incoming 申請頁。",
+        "incoming notice 頁目前列有 Fall 2026 application、nomination、文件及費用資訊。"
+      ],
+      "required_human_checks": [
+        "確認要以當期 notice、長期 eligibility 頁或 2026 factsheet 分別支援哪些規定。",
+        "不得用 outbound 內容或單一 notice 支援未涵蓋的住宿、課程、簽證等規定。"
+      ],
+      "supporting_urls": [
+        "https://oia.ewha.ac.kr/oia/1142/subview.do",
+        "https://oia.ewha.ac.kr/sites/oia/download/Fall%202026%20Fact%20Sheet%20%28Ewha%20Womans%20University%29.pdf"
+      ]
+    },
+    {
+      "batch_id": "DATA-010-BATCH-001",
+      "checked_at": "2026-08-13",
+      "workflow_id": "workflow-64d67ab9382868f1801d920a",
+      "current_url": "http://www.mun.ca/",
+      "candidate_url": "https://www.mun.ca/goabroad/visiting-students-inbound/",
+      "candidate_status": "strong_candidate",
+      "transport_status": "verified_https",
+      "transport_checked_at": "2026-08-29",
+      "transport_final_url": "https://www.mun.ca/goabroad/visiting-students-inbound/",
+      "transport_http_status": 200,
+      "automated_evidence": [
+        "Memorial University Go Abroad HTTPS 頁專門涵蓋 inbound course-based exchange、eligibility、nomination、application、housing、visa 與 academics。",
+        "頁面說明 home institution nomination 後才提供申請指引，符合平台不得替代提名信的邊界。"
+      ],
+      "required_human_checks": [
+        "確認臺北大學協議對應的 campus、faculty 與當期 deadline。",
+        "逐條核對現有規定；未在公開頁明列的資料保持待確認。"
+      ],
+      "supporting_urls": []
+    },
+    {
+      "batch_id": "DATA-010-BATCH-001",
+      "checked_at": "2026-08-13",
+      "workflow_id": "workflow-d2170bc4fceccbde9cfdb6e3",
+      "current_url": "http://study.ecupl.edu.cn/",
+      "candidate_url": "https://study.ecupl.edu.cn/",
+      "candidate_status": "conditional_candidate",
+      "transport_status": "verified_https",
+      "transport_checked_at": "2026-08-29",
+      "transport_final_url": "https://study.ecupl.edu.cn/",
+      "transport_http_status": 200,
+      "automated_evidence": [
+        "同網域 HTTPS International Education 入口可用，並提供含 exchange program 選項的官方申請表。",
+        "目前找到的 2026 招生頁主要是學位生資訊，不能直接視為交換生當期規定。"
+      ],
+      "required_human_checks": [
+        "找到並確認目前校際交換的精確申請頁、年度、梯次與文件清單。",
+        "若只確認入口安全，仍不得把全部流程標為已查核。"
+      ],
+      "supporting_urls": [
+        "https://study.ecupl.edu.cn/_upload/article/files/60/0f/0e40313c4412b6d72a9452bdee5d/3338b35b-41f8-47cc-8007-170f3a303e0b.pdf"
+      ]
+    },
+    {
+      "batch_id": "DATA-010-BATCH-001",
+      "checked_at": "2026-08-13",
+      "workflow_id": "workflow-d2170bc4fceccbde9cfdb6e3",
+      "current_url": "http://www.ecupl.edu.cn/",
+      "candidate_url": "https://www.ecupl.edu.cn/",
+      "candidate_status": "conditional_candidate",
+      "transport_status": "verified_https",
+      "transport_checked_at": "2026-08-29",
+      "transport_final_url": "https://www.ecupl.edu.cn/",
+      "transport_http_status": 200,
+      "automated_evidence": [
+        "同校級網域 HTTPS 是較安全入口，但目前自動查核沒有證明它支援交換申請規定。",
+        "國際教育入口比校級首頁更接近目前規定脈絡。"
+      ],
+      "required_human_checks": [
+        "真人確認校級 HTTPS 頁可用及其與國際教育入口的正式關係。",
+        "只有中繼資料與引用脈絡完全一致時，才能把兩個舊入口合併。"
+      ],
+      "supporting_urls": ["https://study.ecupl.edu.cn/"]
+    },
+    {
+      "batch_id": "DATA-010-BATCH-001",
+      "checked_at": "2026-08-13",
+      "workflow_id": "workflow-2ac3786339a9b11b73467120",
+      "current_url": "http://intl-nondegree.tsinghua.edu.cn/b/yzlxs/yz_sys_xxfjb/download/file?id=392029",
+      "candidate_url": "https://is.tsinghua.edu.cn/GettingStarted/adm/ns.htm",
+      "candidate_status": "conditional_candidate",
+      "transport_status": "verified_https",
+      "transport_checked_at": "2026-08-29",
+      "transport_final_url": "https://is.tsinghua.edu.cn/GettingStarted/adm/ns.htm",
+      "transport_http_status": 200,
+      "automated_evidence": [
+        "清華大學 International Students & Scholars Center HTTPS 頁明列 Non-degree、Visiting 與 Student Exchange Programs。",
+        "舊附件的 HTTPS 版本無法證明可用，現行概覽也沒有重現舊附件的全部內容。"
+      ],
+      "required_human_checks": [
+        "找到舊附件的現行正式版本或逐條確認概覽及其他現行頁足以取代哪些規定。",
+        "不能只因同屬清華大學網域，就把不同範圍的頁面視為等價附件。"
+      ],
+      "supporting_urls": []
+    },
+    {
+      "batch_id": "DATA-010-BATCH-001",
+      "checked_at": "2026-08-13",
+      "workflow_id": "workflow-ea3fce1b797d826f7c1676f2",
+      "current_url": "http://cob.rikkyo.ac.jp/en/",
+      "candidate_url": "https://english.rikkyo.ac.jp/exchange/index.html",
+      "candidate_status": "conditional_candidate",
+      "transport_status": "verified_https",
+      "transport_checked_at": "2026-08-29",
+      "transport_final_url": "https://english.rikkyo.ac.jp/exchange/index.html",
+      "transport_http_status": 200,
+      "automated_evidence": [
+        "立教大學中央 Student Exchange Program HTTPS 頁專供 incoming exchange，包含 application、academics、housing 與承辦聯絡。",
+        "中央頁明示學部間協議申請須洽對應學部，因此不能自動取代商學院專屬規定。"
+      ],
+      "required_human_checks": [
+        "由長庚或立教商學院確認此合作是校級或學部級協議。",
+        "若為學部級協議，取得商學院目前 factsheet 或正式通知後再替換。"
+      ],
+      "supporting_urls": ["https://www.rikkyo.ac.jp/target/foreign/exchange/"]
+    },
+    {
+      "batch_id": "DATA-010-BATCH-001",
+      "checked_at": "2026-08-13",
+      "workflow_id": "workflow-2cc1fd97a606e98ed115db22",
+      "current_url": "http://www.bba.tbs.tu.ac.th/",
+      "candidate_url": "https://cia.tbs.tu.ac.th/exchange-program/incoming-exchange-program",
+      "candidate_status": "strong_candidate",
+      "transport_status": "verified_https",
+      "transport_checked_at": "2026-08-29",
+      "transport_final_url": "https://cia.tbs.tu.ac.th/exchange-program/incoming-exchange-program",
+      "transport_http_status": 200,
+      "automated_evidence": [
+        "TBS Center for International Affairs HTTPS 頁專門涵蓋 incoming exchange。",
+        "頁面提供 AY 2026/2027 factsheet、course、visa、accommodation 與 incoming 聯絡方式。"
+      ],
+      "required_human_checks": [
+        "確認三個舊入口在目前 workflow 的中繼資料與引用脈絡可合併。",
+        "逐條核對 2026/2027 factsheet 後才可在 pending revision 合併替換。"
+      ],
+      "supporting_urls": []
+    },
+    {
+      "batch_id": "DATA-010-BATCH-001",
+      "checked_at": "2026-08-13",
+      "workflow_id": "workflow-2cc1fd97a606e98ed115db22",
+      "current_url": "http://www.bba.tbs.tu.ac.th/index.php",
+      "candidate_url": "https://cia.tbs.tu.ac.th/exchange-program/incoming-exchange-program",
+      "candidate_status": "strong_candidate",
+      "transport_status": "verified_https",
+      "transport_checked_at": "2026-08-29",
+      "transport_final_url": "https://cia.tbs.tu.ac.th/exchange-program/incoming-exchange-program",
+      "transport_http_status": 200,
+      "automated_evidence": [
+        "同一現行 TBS CIA incoming exchange 頁比舊 BBA 首頁精確。",
+        "公開頁明列 AY 2026/2027 factsheet。"
+      ],
+      "required_human_checks": [
+        "確認三個舊入口可依工作台規則合併，任何中繼資料衝突都必須停止。",
+        "兩位審查者各自確認規定與來源後才能核准。"
+      ],
+      "supporting_urls": []
+    },
+    {
+      "batch_id": "DATA-010-BATCH-001",
+      "checked_at": "2026-08-13",
+      "workflow_id": "workflow-2cc1fd97a606e98ed115db22",
+      "current_url": "http://inter.tbs.tu.ac.th/",
+      "candidate_url": "https://cia.tbs.tu.ac.th/exchange-program/incoming-exchange-program",
+      "candidate_status": "strong_candidate",
+      "transport_status": "verified_https",
+      "transport_checked_at": "2026-08-29",
+      "transport_final_url": "https://cia.tbs.tu.ac.th/exchange-program/incoming-exchange-program",
+      "transport_http_status": 200,
+      "automated_evidence": [
+        "TBS CIA 現行 incoming exchange HTTPS 頁是舊 international affairs 入口的精確候選。",
+        "頁面提供 2026/2027 factsheet 與 incoming@tbs.tu.ac.th 等承辦資訊。"
+      ],
+      "required_human_checks": [
+        "確認舊 inter.tbs 內容與現行 CIA 頁的正式承接關係。",
+        "完成三入口合併前後差異檢查，確保沒有規定失去直接來源。"
+      ],
+      "supporting_urls": []
+    }
+  ]
+}

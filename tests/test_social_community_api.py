@@ -1,8 +1,21 @@
+import hashlib
+from datetime import timedelta
+
 from fastapi.testclient import TestClient
 
 from exchange_info.api import create_app
-from exchange_info.models import PartnerUniversity
-from exchange_info.storage import ensure_data_dirs
+from exchange_info.models import AccountSessionRecord, PartnerUniversity, UserAccount, utc_now
+from exchange_info.storage import (
+    ensure_data_dirs,
+    load_account_sessions,
+    load_anonymous_identities,
+    load_private_conversations,
+    load_private_messages,
+    load_user_accounts,
+    save_account_sessions,
+    save_anonymous_identities,
+    save_user_accounts,
+)
 
 
 def _partner() -> PartnerUniversity:
@@ -14,11 +27,27 @@ def _partner() -> PartnerUniversity:
     )
 
 
-def _identity(client: TestClient, name: str) -> tuple[dict, dict[str, str]]:
-    session = client.post(
-        "/community/identities", json={"display_name": name}
-    ).json()
+def _identity(data_dir, client: TestClient, name: str) -> tuple[dict, dict[str, str]]:
+    account = UserAccount(
+        display_name=name,
+        email_verified=True,
+        student_status_verified=True,
+        verified_university="長庚大學",
+    )
+    access_token = f"account-token-{account.id}"
+    session_record = AccountSessionRecord(
+        account_id=account.id,
+        token_hash=hashlib.sha256(access_token.encode("utf-8")).hexdigest(),
+        expires_at=utc_now() + timedelta(days=1),
+    )
+    save_user_accounts([*load_user_accounts(data_dir), account], data_dir)
+    save_account_sessions(
+        [*load_account_sessions(data_dir), session_record], data_dir
+    )
+    auth_headers = {"Authorization": f"Bearer {access_token}"}
+    session = client.post("/auth/community-identity", headers=auth_headers).json()
     return session, {
+        **auth_headers,
         "X-Anonymous-ID": session["id"],
         "X-Anonymous-Token": session["access_token"],
     }
@@ -31,14 +60,14 @@ def test_posts_chat_and_invitation_only_private_messages(tmp_path, monkeypatch) 
         "exchange_info.api.fetch_partner_universities", lambda: [partner]
     )
     client = TestClient(create_app(tmp_path))
-    first, first_headers = _identity(client, "匿名海風")
-    second, second_headers = _identity(client, "匿名書桌")
+    first, first_headers = _identity(tmp_path, client, "匿名海風")
+    second, second_headers = _identity(tmp_path, client, "匿名書桌")
 
     post_response = client.post(
         "/community/posts",
         headers=first_headers,
         json={
-            "school_name": partner.school_name,
+            "board_id": "public-study-abroad",
             "post_type": "discussion",
             "title": "想問林肯的住宿選擇",
             "body": "比較在意通勤時間與是否容易認識其他交換學生。",
@@ -50,11 +79,14 @@ def test_posts_chat_and_invitation_only_private_messages(tmp_path, monkeypatch) 
     comment_response = client.post(
         f"/community/posts/{post['id']}/comments",
         headers=second_headers,
-        json={"body": "我也想知道宿舍申請通常何時開放。"},
+        json={
+            "body": "我也想知道宿舍申請通常何時開放。",
+            "identity_mode": "real_name",
+        },
     )
     assert comment_response.status_code == 201
     threads = client.get(
-        "/community/posts", params={"school": partner.school_name}
+        "/community/posts", params={"school": "公共留學板"}
     ).json()
     assert threads[0]["post"]["comment_count"] == 1
     assert threads[0]["comments"][0]["display_name"] == "匿名書桌"
@@ -129,6 +161,49 @@ def test_posts_chat_and_invitation_only_private_messages(tmp_path, monkeypatch) 
         f"/community/conversations/{conversation['id']}/messages",
         headers=second_headers,
     ).json() == []
+
+
+def test_private_conversation_retry_replays_generated_resources(
+    tmp_path, monkeypatch
+) -> None:
+    ensure_data_dirs(tmp_path)
+    partner = _partner()
+    monkeypatch.setattr(
+        "exchange_info.api.fetch_partner_universities", lambda: [partner]
+    )
+    client = TestClient(create_app(tmp_path))
+    _, sender_headers = _identity(tmp_path, client, "匿名海風")
+    recipient, _ = _identity(tmp_path, client, "匿名書桌")
+    mutation_headers = {
+        **sender_headers,
+        "X-Community-Mutation-ID": "private-api-retry-0001",
+    }
+    payload = {
+        "school_name": partner.school_name,
+        "recipient_id": recipient["id"],
+        "initial_message": "相同請求重送時，只能建立一組私訊資料。",
+    }
+
+    first = client.post(
+        "/community/conversations", headers=mutation_headers, json=payload
+    )
+    save_anonymous_identities(
+        [
+            row
+            for row in load_anonymous_identities(tmp_path)
+            if row.id != recipient["id"]
+        ],
+        tmp_path,
+    )
+    replay = client.post(
+        "/community/conversations", headers=mutation_headers, json=payload
+    )
+
+    assert first.status_code == 201
+    assert replay.status_code == 201
+    assert replay.json() == first.json()
+    assert len(load_private_conversations(tmp_path)) == 1
+    assert len(load_private_messages(tmp_path)) == 1
 
 
 def test_social_post_requires_a_valid_anonymous_identity(tmp_path, monkeypatch) -> None:

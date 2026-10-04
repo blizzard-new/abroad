@@ -1,0 +1,83 @@
+services:
+  postgres:
+    image: supabase/postgres:17.6.1.136@sha256:f371b5f3f2ac0a05703f33d6e6134515fb2498cab708fb948a0aeb7481467c00
+    environment:
+      POSTGRES_PASSWORD: ${EXCHANGE_RUNTIME_DB_PASSWORD:-exchange-runtime-validation-only}
+      POSTGRES_DB: postgres
+      JWT_SECRET: ${EXCHANGE_RUNTIME_JWT_SECRET:-exchange-runtime-validation-jwt-secret-32-bytes}
+    ports:
+      - "127.0.0.1:${EXCHANGE_RUNTIME_POSTGRES_PORT:-55433}:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -h localhost"]
+      interval: 2s
+      timeout: 3s
+      retries: 60
+    restart: "no"
+
+  postgrest:
+    image: postgrest/postgrest:v14.12@sha256:54000f24847d01a2c2302e0041cf0618b875c57fb48507d743cfa9aaa50bf43c
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGRST_DB_URI: postgres://authenticator:${EXCHANGE_RUNTIME_DB_PASSWORD:-exchange-runtime-validation-only}@postgres:5432/postgres
+      PGRST_DB_SCHEMAS: public
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: ${EXCHANGE_RUNTIME_JWT_SECRET:-exchange-runtime-validation-jwt-secret-32-bytes}
+      PGRST_DB_USE_LEGACY_GUCS: "false"
+    ports:
+      - "127.0.0.1:${EXCHANGE_RUNTIME_POSTGREST_PORT:-53002}:3000"
+    restart: "no"
+
+  postgrest_secondary:
+    image: postgrest/postgrest:v14.12@sha256:54000f24847d01a2c2302e0041cf0618b875c57fb48507d743cfa9aaa50bf43c
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGRST_DB_URI: postgres://authenticator:${EXCHANGE_RUNTIME_DB_PASSWORD:-exchange-runtime-validation-only}@postgres:5432/postgres
+      PGRST_DB_SCHEMAS: public
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: ${EXCHANGE_RUNTIME_JWT_SECRET:-exchange-runtime-validation-jwt-secret-32-bytes}
+      PGRST_DB_USE_LEGACY_GUCS: "false"
+    ports:
+      - "127.0.0.1:${EXCHANGE_RUNTIME_POSTGREST_SECONDARY_PORT:-53003}:3000"
+    restart: "no"
+
+  storage:
+    image: supabase/storage-api:v1.60.4@sha256:c8eb9858eafec891a97c27125470aaad54703c3f4eb4d55ca7f1bf6c6411febf
+    depends_on:
+      postgres:
+        condition: service_healthy
+      postgrest:
+        condition: service_started
+    environment:
+      ANON_KEY: ${EXCHANGE_RUNTIME_ANON_KEY}
+      SERVICE_KEY: ${EXCHANGE_RUNTIME_SERVICE_KEY}
+      POSTGREST_URL: http://postgrest:3000
+      AUTH_JWT_SECRET: ${EXCHANGE_RUNTIME_JWT_SECRET:-exchange-runtime-validation-jwt-secret-32-bytes}
+      DATABASE_URL: postgres://supabase_storage_admin:${EXCHANGE_RUNTIME_DB_PASSWORD:-exchange-runtime-validation-only}@postgres:5432/postgres
+      STORAGE_PUBLIC_URL: http://storage:5000
+      REQUEST_ALLOW_X_FORWARDED_PATH: "true"
+      FILE_SIZE_LIMIT: "10485760"
+      STORAGE_BACKEND: file
+      GLOBAL_S3_BUCKET: exchange-runtime-storage
+      FILE_STORAGE_BACKEND_PATH: /var/lib/storage
+      TENANT_ID: exchange-runtime-storage
+      REGION: local
+      ENABLE_IMAGE_TRANSFORMATION: "false"
+    ports:
+      - "127.0.0.1:${EXCHANGE_RUNTIME_STORAGE_PORT:-55000}:5000"
+    volumes:
+      - storage-data:/var/lib/storage
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/status"]
+      interval: 2s
+      timeout: 3s
+      retries: 60
+    restart: "no"
+
+volumes:
+  storage-data:

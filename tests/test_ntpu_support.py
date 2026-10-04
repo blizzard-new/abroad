@@ -4,7 +4,7 @@ from exchange_info.api import create_app
 from exchange_info.application_documents import all_application_templates
 from exchange_info.models import PartnerUniversity
 from exchange_info.ntpu_student_view import (
-    NTPU_EXCHANGE_AGREEMENTS_WITHOUT_115_QUOTA,
+    NTPU_EXCHANGE_AGREEMENTS_WITHOUT_QUOTA,
     fetch_ntpu_partner_universities,
 )
 from exchange_info.school_identity import school_identity_key
@@ -35,9 +35,11 @@ def test_bundled_official_ntpu_lists_are_available_offline(monkeypatch) -> None:
         row for row in partners if row.availability_status == "agreement_only"
     ]
 
-    assert len(partners) == 203
-    assert len(open_partners) == 155
-    assert len(agreement_only) == 48
+    # 116 academic-year sheets: 133 + 16 + 21 rows (169 distinct open schools) and the
+    # 37 agreements that still have no quota; eleven 115 agreements gained quotas.
+    assert len(partners) == 206
+    assert len(open_partners) == 169
+    assert len(agreement_only) == 37
     assert {"英語組", "日語組", "中文組"}.issubset(
         {
             row.program_type.removeprefix("交換學生（").removesuffix("）")
@@ -54,14 +56,14 @@ def test_bundled_official_ntpu_lists_are_available_offline(monkeypatch) -> None:
         row.school_name for row in agreement_only
     } == {
         school_name
-        for _, school_name, _, _ in NTPU_EXCHANGE_AGREEMENTS_WITHOUT_115_QUOTA
+        for _, school_name, _, _ in NTPU_EXCHANGE_AGREEMENTS_WITHOUT_QUOTA
     }
     assert all(
         row.source_url == "https://new.ntpu.edu.tw/oia/sister-schools"
         for row in agreement_only
     )
     assert all(row.quota == "本期未開放交換名額" for row in agreement_only)
-    assert all("未列入 115 學年度交換名額表" in row.availability_note for row in agreement_only)
+    assert all("未列入 116 學年度交換名額表" in row.availability_note for row in agreement_only)
 
 
 def test_ntpu_application_templates_do_not_leak_cgu_copy() -> None:
@@ -96,6 +98,7 @@ def test_ntpu_web_api_exposes_dashboard_rules_documents_and_search(tmp_path, mon
     ntpu = next(row for row in universities if row["id"] == "ntpu")
     assert ntpu["school_name"] == "國立臺北大學"
     assert ntpu["hero_image"] == "/static/assets/ntpu-campus.jpg"
+    assert ntpu["support_level"] == "full"
 
     dashboard = client.get(
         "/student-dashboard", params={"school": "國立臺北大學"}
@@ -104,6 +107,19 @@ def test_ntpu_web_api_exposes_dashboard_rules_documents_and_search(tmp_path, mon
     assert dashboard["academic_score_minimum"] == 75
     assert dashboard["partner_universities"][0]["school_name"].startswith("測試合作大學")
     assert any("5,000" in row["details"][2] for row in dashboard["required_documents"])
+    current, *recurring = dashboard["application_periods"]
+    assert current["academic_year"] == "116" and current["date_status"] == "verified_exact"
+    assert current["opens_at"].startswith("2026-10-01T00:00:00+08:00")
+    assert current["deadline_at"].startswith("2026-10-23T17:00:00+08:00")
+    assert current["reminder_eligible"] is False
+    assert current["source"]["source_url"].startswith("https://new.ntpu.edu.tw/oia/news/")
+    assert all(
+        row["status"] == "reference_only"
+        and row["date_status"] == "reference_only"
+        and row["reminder_eligible"] is False
+        for row in recurring
+    )
+    assert {row["application_round"] for row in recurring} == {"秋季／全學年梯次", "春季梯次"}
 
     templates = client.get(
         "/application-center/templates",
@@ -116,3 +132,37 @@ def test_ntpu_web_api_exposes_dashboard_rules_documents_and_search(tmp_path, mon
         "/search", params={"school": "國立臺北大學", "q": "75分"}
     ).json()
     assert results and results[0]["title"].startswith("臺北大學")
+
+
+def test_ntpu_116_round_status_follows_the_announced_window_without_guessing() -> None:
+    from datetime import datetime, timezone
+
+    from exchange_info.models import ApplicationPeriodStatus
+    from exchange_info.ntpu_student_view import build_ntpu_student_dashboard
+
+    def current(moment: datetime):
+        return build_ntpu_student_dashboard(
+            partner_universities=[], reference_time=moment
+        ).application_periods[0]
+
+    assert current(datetime(2026, 9, 30, tzinfo=timezone.utc)).status == ApplicationPeriodStatus.UPCOMING
+    assert current(datetime(2026, 10, 3, tzinfo=timezone.utc)).status == ApplicationPeriodStatus.OPEN
+    # 17:00 Taiwan time is 09:00 UTC; one minute later the round is closed.
+    assert current(datetime(2026, 10, 23, 8, 59, tzinfo=timezone.utc)).status == ApplicationPeriodStatus.OPEN
+    assert current(datetime(2026, 10, 23, 9, 1, tzinfo=timezone.utc)).status == ApplicationPeriodStatus.CLOSED
+    assert "116 學年度名額表" in " ".join(current(datetime(2026, 10, 3, tzinfo=timezone.utc)).details)
+
+
+def test_116_quota_sheets_replace_the_115_lists_and_keep_every_continuing_school() -> None:
+    partners = fetch_ntpu_partner_universities()
+    open_partners = [row for row in partners if row.availability_status == "open"]
+    assert all(row.country != "未標示" for row in partners)
+    # The three newly listed schools and a school promoted from agreement-only.
+    names = " ".join(row.school_name for row in open_partners)
+    for expected in ("烏迪內大學", "里昂商學院", "同濟大學", "百麗宮國際大學", "多倫多都會大學"):
+        assert expected in names, expected
+    agreements = {row.school_name for row in partners if row.availability_status != "open"}
+    assert not agreements & {"中央財經大學", "百麗宮國際大學", "拉脫維亞大學"}
+    assert all("116" in row.application_deadline for row in open_partners)
+    assert all(row.source_url.endswith(("116_0924_da1dafe9d0.pdf", "116_26b28374db.pdf", "116_6524fec218.pdf"))
+               for row in open_partners)

@@ -1,0 +1,287 @@
+/* Travel journal: shared paper, ink and coral; the artwork is decorative. */
+.partner-match-disclosure { margin: 5px 0; }
+.partner-match-disclosure > summary { cursor: pointer; width: fit-content; }
+.partner-match-disclosure > summary::after { content: " ▾"; }
+.partner-match-disclosure[open] > summary::after { content: " ▴"; }
+.partner-match-disclosure > div { margin-top: 8px; font-size: 12px; line-height: 1.65; }
+.partner-match-disclosure ul { margin: 0; padding-left: 18px; }
+.partner-match-disclosure p { margin: 8px 0; color: var(--uw-muted); }
+.school-image-credit { display: block; flex-basis: 100%; font-size: 12px; line-height: 1.6; }
+:root {
+  --uw-page: #faf8f2;
+  --uw-surface: #fffefa;
+  --uw-surface-soft: #f6f4eb;
+  --uw-navy: #102956;
+  --uw-text: #233654;
+  --uw-muted: #626d7c;
+  --uw-blue: #1263e6;
+  --uw-blue-strong: #0753c7;
+  --uw-blue-soft: #edf5ff;
+  --uw-cyan-soft: #eef8fc;
+  --uw-line: #d6e1e7;
+  --uw-line-strong: #b4cddd;
+  --uw-radius-sm: 12px;
+  --uw-radius: 16px;
+  --uw-radius-lg: 22px;
+  --uw-shadow: 0 14px 36px #1639550d;
+  --uw-shadow-soft: 0 5px 18px #16395508;
+  --journal-coral: #d93852;
+  --journal-coral-hover: #bb2942;
+  --journal-coral-wash: #fff0ee;
+  --journal-yellow: #f5ce63;
+  --journal-sky: #9cd4ef;
+  --journal-paper: url("./assets/journey/paper-texture.webp");
+  --travel-ink: #b7344d;
+  --travel-tint: #fff1e5;
+  --travel-perforation: #e1cbae;
+}
+html[data-theme="dark"] {
+  --uw-page: #111c2b;
+  --uw-surface: #19283a;
+  --uw-surface-soft: #203145;
+  --uw-navy: #f3eddf;
+  --uw-text: #e9e5dc;
+  --uw-muted: #bac4ce;
+  --uw-blue: #8bbfff;
+  --uw-blue-strong: #a7cfff;
+  --uw-blue-soft: #223c58;
+  --uw-cyan-soft: #213f49;
+  --uw-line: #384b5e;
+  --uw-line-strong: #567089;
+  --journal-coral: #ff8293;
+  --journal-coral-hover: #ffa1ac;
+  --journal-coral-wash: #422c39;
+  --journal-sky: #567b96;
+  --journal-paper: none;
+  --travel-ink: #f3ba9c;
+  --travel-tint: #342d35;
+  --travel-perforation: #776170;
+}
+html, body.unified-shell, body.school-detail-open .workspace {
+  background: var(--uw-page) var(--journal-paper) repeat;
+  background-size: 640px 640px;
+  color: var(--uw-text);
+}
+.unified-shell .workspace { padding-bottom: 72px; }
+.unified-shell :is(button, input, select, textarea) { accent-color: var(--journal-coral); }
+.unified-shell :is(.primary-button, .guide-plan-link) { box-shadow: none; }
+.unified-shell .primary-button {
+  background: var(--journal-coral); border-color: var(--journal-coral); color: #fff;
+  border-radius: 12px; box-shadow: none; text-decoration: none;
+}
+.unified-shell .primary-button:hover { background: var(--journal-coral-hover); border-color: var(--journal-coral-hover); }
+html[data-theme="dark"] .unified-shell .primary-button { color: #172333; }
+.unified-shell :is(.secondary-button, .icon-button, .account-button, .text-action, .route-back) {
+  background: var(--uw-surface); color: var(--uw-navy); border: 1px solid var(--uw-line);
+  box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+.unified-shell :is(.secondary-button, .icon-button, .text-action):hover { background: var(--uw-blue-soft); border-color: var(--journal-sky); }
+.unified-shell :is(button, a, input, select, textarea, summary):focus-visible { outline: 3px solid var(--uw-blue); outline-offset: 3px; }
+.unified-shell input:not([type="checkbox"]):not([type="radio"]), .unified-shell select, .unified-shell textarea {
+  border-color: var(--uw-line-strong); border-radius: 10px; background: var(--uw-surface); box-shadow: none;
+}
+
+/* One continuous shell; only menus need to float above the paper. */
+.unified-shell .topbar {
+  background: var(--uw-surface); border-color: var(--journal-sky); box-shadow: none;
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+.unified-shell .uniway-header-brand { gap: 8px; font-size: 24px; letter-spacing: -.06em; }
+.unified-shell .uniway-header-brand .brand-mark { background: transparent; color: var(--uw-blue); box-shadow: none; border: 0; }
+.unified-shell .uniway-header-brand .brand-mark .lucide { height: 33px; width: 33px; fill: currentColor; stroke-width: 1.4; }
+.unified-shell .uniway-public-nav { margin-left: 18px; gap: 8px; }
+.unified-shell .uniway-public-nav a { border-radius: 0; border-bottom: 3px solid transparent; font-weight: 700; color: var(--uw-navy); background: transparent; }
+.unified-shell .uniway-public-nav a.active,
+.unified-shell .uniway-public-nav a[aria-current="page"] { background: transparent; color: var(--uw-navy); border-bottom-color: var(--journal-coral); }
+.unified-shell .account-button { border-radius: 22px; }
+.unified-shell .route-toolbar { background: var(--uw-page); border-color: var(--uw-line); backdrop-filter: none; }
+.unified-shell .route-back { border: 0; background: transparent; }
+.unified-shell .application-tools > summary { background: var(--uw-surface); border-color: var(--uw-line); }
+.unified-shell .application-tools-panel { border-color: var(--journal-sky); box-shadow: 0 14px 40px #1639551c; }
+.unified-shell #dashboard-view > [data-university-page] {
+  border: 0; box-shadow: none; background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+.unified-shell .global-community-section { background: transparent; border: 0; box-shadow: none; backdrop-filter: none; }
+.unified-shell .section-heading :is(h1, h2) { color: var(--uw-navy); }
+.unified-shell .count-badge { color: var(--uw-blue-strong); background: var(--uw-blue-soft); border: 1px solid var(--uw-line); border-radius: 999px; }
+
+/* Home illustration. The removed boarding-pass form stays removed. */
+.journey-home-intro { display: none; }
+body.global-home-mode[data-global-feed="all"] .journey-home-intro {
+  display: grid; position: relative; isolation: isolate; min-height: 390px;
+  margin: 0 0 36px; border: 1px solid var(--journal-sky); border-radius: 24px;
+  overflow: hidden; background: #faf5e9;
+}
+.journey-home-art { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: right top; }
+.journey-home-copy { align-self: center; padding: 40px 4.5%; width: 53%; }
+.journey-note { margin: 0 0 15px; color: #36597d; font-family: var(--uw-font-ui); font-size: 17px; letter-spacing: .04em; }
+.journey-home-title { margin: 0; width: fit-content; padding-bottom: 15px; font-family: var(--uw-font-ui); font-weight: 700; color: #0c2b61; font-size: clamp(38px, 4.1vw, 56px); line-height: 1.25; letter-spacing: -.035em; background: url("./assets/journey/marker-underline.webp") left bottom / 100% 15px no-repeat; }
+.journey-home-caption { margin: 20px 0 22px; color: #29476c; font-size: 15px; }
+.journey-explore { display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 12px 22px; }
+.journey-explore .lucide { width: 19px; height: 19px; }
+.unified-shell .community-home-heading { padding-top: 0; margin-top: 0; border: 0; align-items: center; }
+.unified-shell .community-home-heading h1 { font-size: 24px; }
+.unified-shell .community-feed-tabs { padding: 0; border: 0; border-bottom: 1px solid var(--uw-line-strong); border-radius: 0; background: transparent; box-shadow: none; gap: 18px; }
+.unified-shell .community-feed-tabs a { min-height: 48px; border: 0; border-bottom: 3px solid transparent; border-radius: 0; background: transparent; color: var(--uw-muted); }
+.unified-shell .community-feed-tabs a[aria-current="page"] { color: var(--journal-coral); border-bottom-color: var(--journal-coral); background: transparent; }
+.unified-shell .featured-board-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 22px 0 28px; }
+.unified-shell .featured-board-card { display: grid; grid-template-columns: 104px minmax(0, 1fr); min-height: 180px; border: 1px solid var(--uw-line); border-radius: 14px; box-shadow: var(--uw-shadow-soft); background: var(--uw-surface); overflow: hidden; }
+.unified-shell .featured-board-card > img { width: 104px; height: 100%; min-height: 180px; object-fit: cover; }
+.unified-shell .featured-board-card > div { padding: 18px 14px; min-width: 0; }
+.unified-shell .featured-board-card h2 { margin: 6px 0; font-size: 18px; }
+.unified-shell .featured-board-card p { font-size: 12px; line-height: 1.7; margin: 0 0 10px; }
+.unified-shell .featured-board-card .board-label { color: var(--uw-muted); font-size: 10px; }
+.unified-shell .featured-board-card .text-action { padding: 4px 0; min-height: 36px; border: 0; background: transparent; color: var(--uw-blue-strong); font-size: 12px; }
+.unified-shell .board-card-actions { flex-wrap: wrap; gap: 6px; }
+.unified-shell .board-card-actions :is(button, a) { font-size: 11px; padding: 6px 9px; min-height: 36px; }
+.unified-shell .language-board-card { grid-column: auto; }
+.unified-shell :is(.community-main, .community-sidebar > *, .global-community-toolbar, .community-post, .global-community-form) { background: var(--uw-surface); border: 1px solid var(--uw-line); box-shadow: none; border-radius: 16px; }
+.unified-shell .community-main > .empty-state { min-height: 170px; padding: 28px; }
+
+/* Search controls and guide content use the shared journal surfaces. */
+.unified-shell .partner-view-toolbar { margin-bottom: 18px; padding: 10px; border: 1px solid var(--uw-line); border-radius: 14px; background: var(--uw-surface); }
+.partner-view-toolbar .search-field { flex: 1; min-width: 0; margin: 0; }
+.partner-view-toolbar .search-field > span:first-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.partner-view-toolbar .control-with-icon { display: flex; align-items: center; position: relative; }
+.partner-view-toolbar .control-with-icon > .lucide { position: absolute; left: 13px; height: 20px; width: 20px; color: var(--uw-blue); pointer-events: none; }
+.partner-view-toolbar #partner-search { padding-left: 42px; min-height: 48px; width: 100%; }
+.journey-search-layout { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 20px; align-items: start; }
+.journey-search-results { min-width: 0; }
+.journey-filter-drawer { border: 1px solid var(--uw-line); border-radius: 15px; background: var(--uw-surface); overflow: clip; }
+.journey-filter-drawer > summary { display: flex; align-items: center; gap: 9px; padding: 17px 18px; min-height: 52px; font-weight: 700; color: var(--uw-navy); list-style: none; cursor: pointer; }
+.journey-filter-drawer > summary::-webkit-details-marker { display: none; }
+.journey-filter-drawer > summary .lucide { width: 17px; height: 17px; }
+.journey-filter-drawer > summary .lucide:last-child { margin-left: auto; }
+.journey-filter-drawer[open] > summary .lucide:last-child { transform: rotate(180deg); }
+.unified-shell .journey-filter-drawer .filter-panel { display: grid; grid-template-columns: 1fr; gap: 20px; border: 0; border-radius: 0; margin: 0; padding: 0 18px 18px; box-shadow: none; }
+.journey-filter-drawer select { width: 100%; min-width: 0; }
+.journey-search-results .discovery-search-tools { margin-top: 0; }
+.unified-shell .partner-view-switch { padding: 4px; border-color: var(--uw-line-strong); background: var(--uw-surface); }
+.unified-shell .partner-view-switch button[aria-pressed="true"] { background: var(--uw-blue); color: #fff; }
+.unified-shell .filter-panel { background: var(--uw-surface); border: 1px solid var(--uw-line); padding: 18px; border-radius: 16px; box-shadow: var(--uw-shadow-soft); }
+.unified-shell :is(.discovery-criteria, .discovery-recents, .discovery-open-workspace) { border-radius: 12px; background: var(--uw-surface); }
+.unified-shell .partner-map-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; border: 1px solid var(--journal-sky); border-radius: 20px; box-shadow: var(--uw-shadow-soft); }
+.unified-shell .partner-map-heading { background: var(--uw-surface); border: 0; padding: 16px 18px; }
+.unified-shell .partner-map-heading h3 { font-size: 17px; margin: 0; }
+.unified-shell .partner-map-heading p { display: none; }
+.unified-shell .partner-map-actions { padding: 8px 12px; border: 0; }
+.unified-shell .partner-map-panel > :is(.partner-map-stage, .partner-map-footer, .partner-map-access) { grid-column: 1 / -1; }
+.unified-shell .partner-map-stage { background: #dceef6; }
+.unified-shell .partner-map-preview { border-color: var(--journal-sky); background: var(--uw-surface); border-radius: 15px; box-shadow: 0 10px 28px #16395520; }
+.unified-shell .map-preview-top { background: var(--uw-surface); }
+.unified-shell .partner-map-footer { background: var(--uw-cyan-soft); }
+.unified-shell .map-home-marker { background: #fff0d5; border-color: #b98b42; color: #6d512b; }
+.unified-shell :is(.partner-card, .favorite-card, .discovery-candidate) { background: var(--uw-surface); border-color: var(--uw-line); border-radius: 16px; box-shadow: var(--uw-shadow-soft); }
+.unified-shell .guide-intro { position: relative; min-height: 270px; padding: 26px 24px 36px; }
+.unified-shell .guide-intro h1 { font-family: var(--uw-font-ui); font-size: clamp(34px, 4vw, 50px); font-weight: 700; }
+.journey-guide-art { width: 360px; height: 240px; object-fit: contain; flex-shrink: 0; }
+.unified-shell .guide-stage { background: var(--uw-surface); box-shadow: none; border-radius: 16px; border-color: var(--uw-line); border-top: 3px solid var(--stage-tint); }
+.unified-shell .guide-plan-link { background: var(--uw-cyan-soft); border: 1px solid var(--uw-line); }
+.unified-shell .guide-faq { border-radius: 16px; background: var(--uw-surface); }
+.unified-shell #favorites-title { font-family: var(--uw-font-ui); font-size: 42px; }
+.unified-shell .discovery-ranking { background: var(--uw-cyan-soft); border-color: var(--uw-line); color: var(--uw-text); border-radius: 16px; box-shadow: none; }
+.unified-shell .discovery-ranking li { background: var(--uw-surface); border-color: var(--uw-line); }
+
+/* School detail reads like a photo postcard with a real destination stamp. */
+.unified-shell .school-detail-view { --detail-glass: var(--uw-surface); --detail-paper: var(--uw-surface); --detail-edge: var(--uw-line); --detail-shadow: none; }
+.unified-shell .school-detail-view .school-detail-header { display: block; background: var(--uw-surface); border: 1px solid var(--journal-sky); border-radius: 20px; box-shadow: var(--uw-shadow-soft); }
+.unified-shell .school-detail-header::after { display: none; }
+.unified-shell .school-detail-view .school-detail-photo { position: relative; height: 290px; min-height: 0; inset: auto; opacity: 1; transform: none; filter: none; background: var(--uw-cyan-soft); }
+.unified-shell .school-detail-view .school-detail-copy { padding: 28px 34px 20px; background: var(--uw-surface); border-radius: 0; }
+.unified-shell .school-detail-view .school-detail-copy .eyebrow { border: 0; padding: 0; background: transparent; color: var(--journal-coral); font-size: 14px; }
+.unified-shell .school-detail-view .school-detail-copy h1 { color: var(--uw-navy); text-shadow: none; font-size: clamp(26px, 3.1vw, 38px); max-width: calc(100% - 130px); margin: 8px 0 0; line-height: 1.4; text-wrap: pretty; }
+.unified-shell .school-detail-view .school-detail-copy p { color: var(--uw-muted); }
+.unified-shell .travel-destination-stamp { position: absolute; right: 32px; top: -44px; width: 106px; min-height: 106px; background: var(--uw-surface); color: var(--journal-coral); border-color: currentColor; outline-color: currentColor; box-shadow: 0 4px 12px #1434520a; }
+.unified-shell .school-detail-view .detail-primary-facts { margin: 0 34px; padding: 20px 0 26px; background: transparent; border: 0; border-top: 1px solid var(--uw-line); border-radius: 0; box-shadow: none; backdrop-filter: none; }
+.unified-shell .school-detail-view .detail-tabs { padding: 0 18px; gap: 14px; border-radius: 14px; background: var(--uw-surface); border: 1px solid var(--uw-line); box-shadow: none; backdrop-filter: none; }
+.unified-shell .school-detail-view .detail-tabs button { background: transparent; border: 0; border-bottom: 3px solid transparent; border-radius: 0; color: var(--uw-muted); box-shadow: none; padding: 15px 8px; }
+.unified-shell .school-detail-view .detail-tabs button[aria-selected="true"] { color: var(--journal-coral); border-bottom-color: var(--journal-coral); background: transparent; box-shadow: none; }
+.unified-shell .school-detail-view .detail-tabs button:hover { color: var(--journal-coral); background: var(--journal-coral-wash); }
+.unified-shell .detail-top-actions .favorite-button { color: var(--journal-coral); border-color: var(--uw-line); background: var(--uw-surface); }
+.unified-shell :is(.school-detail-main, .school-detail-aside, .school-detail-section, .detail-section, .tracker-card, .source-card) { box-shadow: none; }
+.unified-shell :is(.life-summary-card, .readiness-card, .application-lane, .application-track, .tracker-card, .official-source-card) { border-radius: 16px; }
+.unified-shell .mobile-nav { background: var(--uw-surface); border-top: 1px solid var(--journal-sky); box-shadow: 0 -4px 18px #16395508; backdrop-filter: none; }
+.unified-shell .mobile-nav :is(a.active, a[aria-current="page"]) { color: var(--journal-coral); background: var(--journal-coral-wash); }
+
+html[data-theme="dark"] .journey-home-art { opacity: .9; }
+html[data-theme="dark"] .journey-home-copy { border-radius: 18px; background: #112237ed; margin: 20px; padding: 24px; width: calc(53% - 20px); }
+html[data-theme="dark"] .journey-home-copy :is(.journey-note, .journey-home-title, .journey-home-caption) { color: #f8f1e1; }
+html[data-theme="dark"] .unified-shell .partner-map-stage { background: #1b3348; }
+html[data-theme="dark"] .unified-shell .partner-view-switch button[aria-pressed="true"] { color: #102956; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .journey-explore:hover { transform: translateY(-2px); }
+  .unified-shell .featured-board-card:hover { border-color: var(--journal-sky); }
+}
+@media (max-width: 1100px) {
+  .unified-shell .uniway-public-nav { gap: 1px; margin-left: 0; }
+  .unified-shell .featured-board-grid { gap: 12px; }
+  .unified-shell .featured-board-card { grid-template-columns: 80px minmax(0, 1fr); }
+  .unified-shell .featured-board-card > img { width: 80px; }
+  .unified-shell .featured-board-card > div { padding: 15px 12px; }
+  .unified-shell .featured-board-card h2 { font-size: 16px; }
+}
+@media (max-width: 900px) {
+  .unified-shell .uniway-public-nav { margin: 0; gap: 4px; }
+  .unified-shell .uniway-header-brand { font-size: 22px; }
+  body.global-home-mode[data-global-feed="all"] .journey-home-intro { min-height: 330px; margin-bottom: 28px; }
+  .journey-home-copy { width: 56%; padding: 28px 24px; }
+  .journey-home-title { font-size: 40px; }
+  .journey-note { font-size: 14px; }
+  .journey-home-caption { max-width: 240px; font-size: 13px; }
+  .unified-shell .featured-board-grid { grid-template-columns: 1fr; }
+  .unified-shell .featured-board-card { grid-template-columns: 120px minmax(0, 1fr); min-height: 155px; }
+  .unified-shell .featured-board-card > img { width: 120px; min-height: 155px; }
+  .unified-shell .featured-board-card > div { padding: 18px; }
+  .unified-shell .featured-board-card h2 { font-size: 18px; }
+  .unified-shell .board-card-actions :is(button, a) { min-height: 44px; }
+  .unified-shell .featured-board-card .text-action { min-height: 44px; }
+  .unified-shell .guide-intro { padding: 16px 4px 24px; min-height: 230px; }
+  .journey-guide-art { width: 270px; height: 200px; }
+  .journey-search-layout { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .journey-filter-drawer { grid-row: 1; }
+  .unified-shell .journey-filter-drawer .filter-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+}
+@media (max-width: 560px) {
+  body.global-home-mode[data-global-feed="all"] .journey-home-intro { min-height: 440px; display: flex; flex-direction: column; justify-content: flex-start; border-radius: 18px; }
+  .journey-home-art { height: 230px; top: auto; bottom: 0; object-fit: cover; object-position: 81% center; }
+  .journey-home-copy { width: 100%; padding: 26px 24px 242px; }
+  .journey-note { font-size: 13px; margin-bottom: 10px; }
+  .journey-home-title { font-size: 35px; line-height: 1.2; }
+  .journey-home-caption { margin: 14px 0; max-width: none; font-size: 12px; }
+  .journey-explore { padding: 10px 16px; min-height: 44px; font-size: 13px; }
+  .unified-shell .filter-panel { padding: 14px; }
+  .unified-shell .partner-view-toolbar { flex-direction: row; flex-wrap: wrap; gap: 8px; padding: 8px; }
+  .partner-view-toolbar .search-field { flex-basis: 100%; }
+  .unified-shell .partner-view-toolbar .partner-view-switch { width: 100%; }
+  .unified-shell .journey-filter-drawer .filter-panel { padding: 0 14px 14px; }
+  .unified-shell .partner-map-heading { display: none; }
+  .unified-shell .partner-map-actions { grid-column: 1 / -1; justify-content: center; }
+  .unified-shell .community-feed-tabs { gap: 8px; margin: 12px 0; }
+  .unified-shell .community-home-heading h1 { font-size: 21px; }
+  .unified-shell .featured-board-card { grid-template-columns: 100px minmax(0, 1fr); }
+  .unified-shell .featured-board-card > img { width: 100px; }
+  .unified-shell .featured-board-card > div { padding: 14px; }
+  .unified-shell .guide-intro { min-height: 210px; align-items: flex-start; }
+  .unified-shell .guide-intro > div:first-child { max-width: 76%; z-index: 1; }
+  .unified-shell .guide-intro h1 { font-size: 30px; }
+  .unified-shell .guide-intro p { max-width: 220px; }
+  .journey-guide-art { position: absolute; width: 155px; height: 135px; right: -8px; bottom: 0; }
+  .unified-shell .school-detail-view .school-detail-photo { height: 210px; }
+  .unified-shell .school-detail-view .school-detail-copy { padding: 22px 20px; }
+  .unified-shell .school-detail-view .school-detail-copy h1 { max-width: calc(100% - 72px); font-size: 25px; }
+  .unified-shell .travel-destination-stamp { width: 82px; min-height: 82px; padding: 10px; right: 16px; top: -28px; }
+  .unified-shell .travel-destination-stamp strong { font-size: 13px; }
+  .unified-shell .school-detail-view .detail-primary-facts { margin: 0 20px; gap: 16px; grid-template-columns: minmax(0, 1fr); }
+  .unified-shell .school-detail-view .detail-tabs { gap: 8px; padding: 0 8px; }
+  .unified-shell .school-detail-view .detail-tabs button { padding: 13px 10px; font-size: 13px; }
+  .unified-shell .school-detail-view .detail-tabs button .lucide { display: none; }
+  html[data-theme="dark"] .journey-home-copy { margin: 0 0 230px; border-radius: 0; width: 100%; background: #14283c; padding: 26px 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey-explore { transition: none; transform: none; }
+}
+@media (forced-colors: active) {
+  .journey-home-art, .journey-guide-art { display: none; }
+  .journey-home-intro, .journey-home-copy { background: Canvas !important; color: CanvasText; }
+  .journey-home-copy p { color: CanvasText; }
+}

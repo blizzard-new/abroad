@@ -477,7 +477,8 @@ def collect_school_images(
             partners=partners,
             workers=workers,
         )
-    session = requests.Session()
+    from .http_client import get_safe_session
+    session = get_safe_session(require_https=True)
     session.headers.update({"User-Agent": USER_AGENT, "Accept-Language": "en,zh-TW;q=0.8"})
     partners = (
         [partner.model_copy(deep=True) for partner in partners]
@@ -592,7 +593,8 @@ def _collect_school_images_parallel(
     def fetch_one(
         partner: PartnerUniversity, official_url: str
     ) -> SchoolImageRecord:
-        session = requests.Session()
+        from .http_client import get_safe_session
+        session = get_safe_session(require_https=True)
         session.headers.update(
             {"User-Agent": USER_AGENT, "Accept-Language": "en,zh-TW;q=0.8"}
         )

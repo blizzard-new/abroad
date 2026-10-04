@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>使用統計 | UniWay</title>
+    <link rel="stylesheet" href="/static/analytics-dashboard.css?v=20261003-1" />
+  </head>
+  <body>
+    <header class="top">
+      <div>
+        <p class="eyebrow">UniWay 管理</p>
+        <h1>使用統計</h1>
+        <p class="sub" id="range-label">載入中…</p>
+      </div>
+      <form class="controls" id="controls" aria-label="統計範圍">
+        <label>期間
+          <select id="days">
+            <option value="7">最近 7 天</option>
+            <option value="14">最近 14 天</option>
+            <option value="30" selected>最近 30 天</option>
+            <option value="90">最近 90 天</option>
+            <option value="180">最近 180 天</option>
+            <option value="365">最近 365 天</option>
+          </select>
+        </label>
+        <label>檢視學校
+          <select id="school">
+            <option value="">全部</option>
+            <option value="長庚大學">長庚大學</option>
+            <option value="國立臺北大學">國立臺北大學</option>
+          </select>
+        </label>
+        <label class="check"><input type="checkbox" id="bots" /> 含機器人流量</label>
+        <button type="submit">重新整理</button>
+        <a id="export" class="button" href="#">匯出原始事件 CSV</a>
+      </form>
+    </header>
+
+    <main id="main" aria-live="polite">
+      <p class="notice" id="status">正在讀取統計…</p>
+    </main>
+
+    <footer class="foot">
+      <p>時間一律為台北時間。只收集匿名資料：不存 IP、電子郵件、姓名或表單內容，也不使用 cookie。定義與隱私說明見 docs/analytics.md。</p>
+    </footer>
+    <script src="/static/analytics-dashboard.js?v=20261003-1" defer></script>
+  </body>
+</html>

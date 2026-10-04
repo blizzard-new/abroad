@@ -27,10 +27,10 @@ enum ExchangeRootTab: String, CaseIterable, Hashable, Identifiable {
     var symbol: String {
         switch self {
         case .home: "house.fill"
-        case .schools: "building.columns.fill"
-        case .deadlines: "calendar.badge.clock"
-        case .support: "banknote.fill"
-        case .eligibility: "person.crop.circle.badge.checkmark"
+        case .schools: "magnifyingglass"
+        case .deadlines: "calendar"
+        case .support: "doc.text.fill"
+        case .eligibility: "person.crop.circle"
         }
     }
 }
@@ -63,6 +63,13 @@ struct ExchangeRootView: View {
                 .tabItem { Label(tab.compactTitle, systemImage: tab.symbol) }
                 .tag(tab)
             }
+        }
+        .toolbar(.hidden, for: .tabBar)
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            ExchangeLiquidTabBar(
+                selection: $selectedTab,
+                documentCount: store.dashboard?.documentExplanations.count ?? 0
+            )
         }
     }
 
@@ -181,6 +188,128 @@ struct ExchangeRootView: View {
             ExchangeSupportView()
         case .eligibility:
             ExchangeEligibilityView()
+        }
+    }
+}
+
+private struct ExchangeLiquidTabBar: View {
+    @Binding var selection: ExchangeRootTab
+    let documentCount: Int
+
+    private let visualOrder: [ExchangeRootTab] = [
+        .home,
+        .deadlines,
+        .schools,
+        .support,
+        .eligibility
+    ]
+
+    var body: some View {
+        HStack(spacing: 6) {
+            ForEach(visualOrder) { tab in
+                ExchangeLiquidTabButton(
+                    tab: tab,
+                    isSelected: selection == tab,
+                    badgeCount: tab == .support ? documentCount : 0
+                ) {
+                    selection = tab
+                }
+            }
+        }
+        .padding(.horizontal, 10)
+        .padding(.top, 8)
+        .padding(.bottom, 6)
+        .frame(maxWidth: .infinity)
+    }
+}
+
+private struct ExchangeLiquidTabButton: View {
+    let tab: ExchangeRootTab
+    let isSelected: Bool
+    let badgeCount: Int
+    let action: () -> Void
+
+    private var isSearch: Bool { tab == .schools }
+
+    var body: some View {
+        Button(action: action) {
+            Group {
+                if isSearch {
+                    HStack(spacing: 9) {
+                        Image(systemName: tab.symbol)
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundStyle(isSelected ? ExchangeColor.labelPrimary : ExchangeColor.labelSecondary.opacity(0.74))
+                        Text("搜尋")
+                            .font(.headline.weight(.semibold))
+                            .foregroundStyle(isSelected ? ExchangeColor.labelPrimary : ExchangeColor.labelPrimary.opacity(0.70))
+                            .lineLimit(1)
+                    }
+                } else {
+                    Image(systemName: tab.symbol)
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundStyle(isSelected ? ExchangeColor.labelPrimary : ExchangeColor.labelSecondary.opacity(0.74))
+                }
+            }
+            .frame(width: isSearch ? 110 : 54, height: 54)
+            .modifier(ExchangeLiquidTabSurface(isSearch: isSearch, isSelected: isSelected))
+            .overlay(alignment: .topTrailing) {
+                if badgeCount > 0 {
+                    Text("1")
+                        .font(.caption2.weight(.bold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 6)
+                        .frame(minWidth: 22, minHeight: 22)
+                        .background(ExchangeColor.success, in: Capsule())
+                        .offset(x: 3, y: -4)
+                        .accessibilityHidden(true)
+                }
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(tab.title)
+        .accessibilityValue(isSelected ? "已選取" : "未選取")
+    }
+}
+
+private struct ExchangeLiquidTabSurface: ViewModifier {
+    let isSearch: Bool
+    let isSelected: Bool
+
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if reduceTransparency {
+            fallback(content: content, opaque: true)
+        } else if #available(iOS 26.0, *) {
+            if isSearch {
+                content.glassEffect(
+                    .regular.interactive(true),
+                    in: .capsule
+                )
+            } else {
+                content.glassEffect(
+                    .regular.interactive(true),
+                    in: .circle
+                )
+            }
+        } else {
+            fallback(content: content, opaque: false)
+        }
+    }
+
+    @ViewBuilder
+    private func fallback(content: Content, opaque: Bool) -> some View {
+        if isSearch {
+            content
+                .background(opaque ? AnyShapeStyle(ExchangeColor.backgroundSecondary) : AnyShapeStyle(.ultraThinMaterial), in: Capsule())
+                .overlay(Capsule().stroke(ExchangeColor.separator.opacity(0.7), lineWidth: 1))
+                .shadow(color: .black.opacity(0.10), radius: isSelected ? 12 : 9, y: 5)
+        } else {
+            content
+                .background(opaque ? AnyShapeStyle(ExchangeColor.backgroundSecondary) : AnyShapeStyle(.ultraThinMaterial), in: Circle())
+                .overlay(Circle().stroke(ExchangeColor.separator.opacity(0.7), lineWidth: 1))
+                .shadow(color: .black.opacity(0.10), radius: isSelected ? 12 : 9, y: 5)
         }
     }
 }

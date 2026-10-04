@@ -27,6 +27,19 @@ DEADLINE_OVERRIDES = {
 
 
 PHRASE_TRANSLATIONS: tuple[tuple[str, str], ...] = (
+    ("or at least 2 undergraduate Korean language classes completed", "或已修畢至少 2 門大學部韓語課程"),
+    ("Restricted to third-year and above students majoring in Information, Science, or Engineering-related fields.", "限資訊、科學或工程相關科系大三以上學生。"),
+    ("For Undergraduate Students Only", "限大學部學生"),
+    ("for master's course and doctoral course", "碩士班與博士班"),
+    ("for undergraduate", "大學部"),
+    ("Japanese Language and Culture", "日本語言與文化"),
+    ("Global Business program", "全球商務學程"),
+    ("Ceramics", "陶藝"),
+    ("undergraduate Korean language classes completed", "門大學部韓語課程修畢"),
+    ("minimum overall band score of", "總分至少"),
+    ("minimum score of", "至少"),
+    ("no sub-score bellow", "各單項不得低於"),
+    ("no sub-score below", "各單項不得低於"),
     ("Option A", "方案 A"),
     ("Option B", "方案 B"),
     (
@@ -407,7 +420,10 @@ def translate_partner_text(text: str) -> str:
         value = re.sub(pattern, target, value, flags=re.IGNORECASE)
 
     for month, translated in MONTHS.items():
-        value = re.sub(rf"\b{re.escape(month)}\b", translated, value, flags=re.IGNORECASE)
+        # "may be requested" is a possibility, not a reference to May.
+        pattern = (r"(?:(?<=\d )May\b|(?<=mid-)May\b|\bMay(?=\s+\d))"
+                   if month == "May" else rf"\b{re.escape(month)}\b")
+        value = re.sub(pattern, translated, value, flags=re.IGNORECASE)
 
     value = re.sub(
         r"\b(\d{1,2})(?:st|nd|rd|th)?\s+(1|2|3|4|5|6|7|8|9|10|11|12)\s+月\b",
@@ -429,6 +445,8 @@ def translate_partner_text(text: str) -> str:
     value = re.sub(r"(?<!\d)[.](?!\d)", "。", value)
     value = re.sub(r"(?<!\d)(\d+)\s*(學期|學年)", r"\1 \2", value)
     value = re.sub(r"\s{2,}", " ", value).strip(" ;")
+    value = re.sub(r"(限大學部(?:學生)?)\s*\(限大學部學生\)", r"\1", value)
+    value = re.sub(r"限大學部\s*限大學部學生", "限大學部學生", value)
     return _restore_urls(value, urls)
 
 

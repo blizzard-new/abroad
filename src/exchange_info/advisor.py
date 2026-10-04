@@ -7,7 +7,17 @@ from datetime import date, datetime
 from typing import Iterable
 
 from .ai_gateway import structured_response
+from .fit_signals import course_interest_fit, school_budget_fit, teaching_language_fit
+from .qualification_scopes import (
+    college_scope_needs_confirmation as _college_scope_needs_confirmation,
+    degree_scope_needs_confirmation as _degree_scope_needs_confirmation,
+    college_scope_matches as _scope_matches,
+    degree_scope_matches as _degree_matches,
+)
+
+
 from .models import (
+    ApplicationPeriodDateStatus,
     AdvisorAnswer,
     AdvisorCitation,
     AdvisorPlan,
@@ -74,10 +84,13 @@ def build_advisor_plan(
         )
         for partner in open_partners
     ]
-    matches.sort(
-        key=lambda item: (-item.match_score, item.school_name.casefold())
-    )
-    recommendations = matches[:20]
+    eligibility_order = {"matches_known": 0, "needs_confirmation": 1, "does_not_match": 2}
+    matches.sort(key=lambda item: (
+        eligibility_order[item.eligibility_status], -item.match_score, item.school_name.casefold()
+    ))
+    # Keep a small set of mismatches visible without letting them displace candidates.
+    recommendations = [item for item in matches if item.eligibility_status != "does_not_match"][:20]
+    recommendations += [item for item in matches if item.eligibility_status == "does_not_match"][:5]
     qualification = _qualification_summary(profile, dashboard)
     tasks = _build_tasks(profile, dashboard, recommendations)
     answer = None
@@ -92,7 +105,7 @@ def build_advisor_plan(
         )
 
     ready_count = sum(
-        item.fit_label in {"條件高度相符", "值得進一步確認"}
+        item.eligibility_status == "matches_known"
         for item in recommendations
     )
     missing = _missing_profile_fields(profile)
@@ -109,6 +122,7 @@ def build_advisor_plan(
         summary=summary,
         qualification=qualification,
         recommendations=recommendations,
+        target_match=next((item for item in matches if item.school_name == profile.target_school), None),
         tasks=tasks,
         answer=answer,
     )
@@ -220,51 +234,83 @@ def _score_partner(
     reasons: list[str] = []
     gaps: list[str] = []
     blocked = False
+    blocking_reasons: list[str] = []
+    confirmation_items: list[str] = []
 
     if profile.college:
-        if _scope_matches(partner.colleges, profile.college):
+        if _college_scope_needs_confirmation(partner.colleges):
+            confirmation_items.append("合作校學院範圍尚待確認")
+            gaps.append(confirmation_items[-1])
+        elif _scope_matches(partner.colleges, profile.college):
             score += 20
             reasons.append("符合學院範圍")
         else:
             gaps.append("公開學院範圍可能不符")
+            blocking_reasons.append(f"公開學院範圍：{partner.colleges}；你的學院：{profile.college}")
             blocked = True
     else:
         gaps.append("尚未填所屬學院")
+        confirmation_items.append(gaps[-1])
 
     if profile.degree_level:
-        if _degree_matches(partner.degree_levels, profile.degree_level):
+        if _degree_scope_needs_confirmation(partner.degree_levels):
+            confirmation_items.append("合作校學制範圍尚待確認")
+            gaps.append(confirmation_items[-1])
+        elif _degree_matches(partner.degree_levels, profile.degree_level):
             score += 15
             reasons.append("符合目前學制")
         else:
             gaps.append("公開學制範圍可能不符")
+            blocking_reasons.append(f"公開學制範圍：{partner.degree_levels}；你的學制：{profile.degree_level}")
             blocked = True
     else:
         gaps.append("尚未填目前學制")
+        confirmation_items.append(gaps[-1])
 
-    academic_minimum = dashboard.academic_score_minimum or 70
+    academic_minimum = dashboard.academic_score_minimum
     if profile.academic_score is None:
         gaps.append("尚未填學業平均")
+        confirmation_items.append(gaps[-1])
+    elif academic_minimum is None:
+        gaps.append("本校學業平均門檻尚待確認")
+        confirmation_items.append(gaps[-1])
     elif profile.academic_score >= academic_minimum:
         score += 15
         reasons.append(f"達{dashboard.school_name}公開基本成績門檻")
     else:
         gaps.append(f"學業平均未達{dashboard.school_name}公開基本門檻 {academic_minimum:g} 分")
+        blocking_reasons.append(gaps[-1])
         blocked = True
 
     threshold = _partner_language_threshold(partner, profile.language_test)
     if not profile.language_test or profile.language_test == "other":
         gaps.append("語言證明需逐校確認")
+        confirmation_items.append(gaps[-1])
     elif profile.language_score is None:
         gaps.append("尚未填語言成績")
+        confirmation_items.append(gaps[-1])
     elif threshold is None:
         score += 7
         gaps.append("合作校語言門檻需核對官方來源")
+        confirmation_items.append(gaps[-1])
     elif profile.language_score >= threshold:
         score += 20
         reasons.append(f"{LANGUAGE_LABELS[profile.language_test]} 達公開門檻 {threshold:g}")
     else:
         gaps.append(f"{LANGUAGE_LABELS[profile.language_test]} 未達公開門檻 {threshold:g}")
+        blocking_reasons.append(gaps[-1])
         blocked = True
+
+    home_language_minimum = dashboard.language_score_minimums.get(profile.language_test or "")
+    if home_language_minimum is None:
+        confirmation_items.append("本校語言資格需核對官方來源")
+    elif profile.language_score is not None and profile.language_score < home_language_minimum:
+        blocking_reasons.append(f"{LANGUAGE_LABELS[profile.language_test]} 未達本校公開門檻 {home_language_minimum:g}")
+        gaps.append(blocking_reasons[-1])
+        blocked = True
+
+    # College matching cannot establish department-specific eligibility.
+    confirmation_items.append("科系、年度與梯次仍須核對當期規定")
 
     if profile.preferred_country:
         if _normal(profile.preferred_country) == _normal(partner.country):
@@ -281,30 +327,69 @@ def _score_partner(
     if destination and destination.coverage_status != "not_collected":
         score += 5
         reasons.append("生活費與住宿已有來源")
-    elif profile.monthly_budget:
-        gaps.append("生活成本資料不足，暫時無法比對預算")
+    budget = school_budget_fit(destination, profile.monthly_budget)
+    if budget is not None:
+        if budget.status == "within":
+            score += 8
+            reasons.append(
+                f"來源記載的每月生活費約 NT${budget.low_twd:,}–{budget.high_twd:,}（概估），在你的預算內"
+            )
+        elif budget.status == "partly_within":
+            gaps.append(f"來源記載的每月生活費上限約 NT${budget.high_twd:,}，可能高於你的預算")
+        elif budget.status == "over":
+            score = max(0, score - 10)
+            gaps.append(f"來源記載的每月生活費約 NT${budget.low_twd:,}–{budget.high_twd:,}（概估），高於你的預算")
+        else:
+            gaps.append(f"無法比對預算：{budget.reason}")
+    language = teaching_language_fit(partner, profile.preferred_teaching_language)
+    if language is not None and profile.preferred_teaching_language:
+        if language.status == "listed":
+            score += 6
+            reasons.append("語組或語言要求與你偏好的授課語言相符")
+        elif language.status == "not_listed":
+            score = max(0, score - 6)
+            gaps.append("公開資料的語組／語言要求不是你偏好的授課語言")
+    course = course_interest_fit(partner, destination, profile.course_interests)
+    if course is not None:
+        if course.status == "mentioned":
+            reasons.append(f"公開資料提到你想修的領域：{'、'.join(course.matched_terms)}")
+        else:
+            gaps.append("沒有逐校課程目錄可比對你想修的領域")
     if profile.needs_scholarship:
         gaps.append("補助須另依身分與計畫審查")
 
     score = max(0, min(100, score))
     if blocked:
-        fit_label = "需先補齊條件"
+        fit_label = "目前條件不符"
+        eligibility_status = "does_not_match"
+    elif len(confirmation_items) > 1:
+        fit_label = "資格待確認"
+        eligibility_status = "needs_confirmation"
     elif score >= 78:
         fit_label = "條件高度相符"
+        eligibility_status = "matches_known"
     elif score >= 52:
         fit_label = "值得進一步確認"
+        eligibility_status = "matches_known"
     else:
         fit_label = "公開資料不足"
+        eligibility_status = "needs_confirmation"
     source_urls = _unique_strings([partner.source_url, partner.website])
     return AdvisorSchoolMatch(
         school_name=partner.school_name,
         country=partner.country,
         match_score=score,
         fit_label=fit_label,
+        eligibility_status=eligibility_status,
+        blocking_reasons=blocking_reasons,
+        confirmation_items=confirmation_items,
         reasons=reasons[:4],
         gaps=gaps[:4],
         source_urls=source_urls,
         image_url=partner.image_url,
+        budget_fit=budget,
+        teaching_language=language,
+        course_interest=course,
     )
 
 
@@ -313,9 +398,11 @@ def _qualification_summary(
     dashboard: StudentDashboard,
 ) -> list[str]:
     rows: list[str] = []
-    academic_minimum = dashboard.academic_score_minimum or 70
+    academic_minimum = dashboard.academic_score_minimum
     if profile.academic_score is None:
         rows.append("學業平均尚未填寫")
+    elif academic_minimum is None:
+        rows.append("本校學業平均門檻待確認")
     elif profile.academic_score >= academic_minimum:
         rows.append(f"學業平均達{dashboard.school_name}公開基本門檻 {academic_minimum:g} 分")
     else:
@@ -358,8 +445,8 @@ def _build_tasks(
                 priority="high",
             )
         )
-    academic_minimum = dashboard.academic_score_minimum or 70
-    if profile.academic_score is not None and profile.academic_score < academic_minimum:
+    academic_minimum = dashboard.academic_score_minimum
+    if academic_minimum is not None and profile.academic_score is not None and profile.academic_score < academic_minimum:
         tasks.append(
             _task(
                 title="先向國際處確認成績資格",
@@ -384,7 +471,7 @@ def _build_tasks(
         )
 
     candidate_names = {item.school_name for item in recommendations[:5]}
-    deadline_rows = _dashboard_deadlines(dashboard, candidate_names)
+    deadline_rows = _dashboard_deadlines(dashboard)
     for title, deadline, source_url, detail in deadline_rows[:6]:
         remaining = (deadline - date.today()).days
         priority = "high" if remaining <= 30 else "medium" if remaining <= 90 else "low"
@@ -425,60 +512,27 @@ def _build_tasks(
 
 def _dashboard_deadlines(
     dashboard: StudentDashboard,
-    candidate_names: set[str],
 ) -> list[tuple[str, date, str | None, str]]:
     rows: list[tuple[str, date, str | None, str]] = []
     for period in dashboard.application_periods:
-        for detail in period.details:
-            dates = _dates_from_text(detail)
-            for deadline in dates[-1:]:
-                rows.append(
-                    (
-                        period.title,
-                        deadline,
-                        period.source.source_url if period.source else None,
-                        _compact_text(detail, 180),
-                    )
-                )
-    for partner in dashboard.partner_universities:
-        if partner.school_name not in candidate_names:
+        if (
+            not period.reminder_eligible
+            or period.date_status != ApplicationPeriodDateStatus.VERIFIED_EXACT
+            or period.deadline_at is None
+        ):
             continue
-        for deadline in _dates_from_text(partner.application_deadline or ""):
-            rows.append(
-                (
-                    f"核對 {partner.school_name} 截止日",
-                    deadline,
-                    partner.source_url,
-                    _compact_text(partner.application_deadline or "合作校公開期限", 180),
-                )
+        deadline = period.deadline_at.date()
+        if deadline < date.today():
+            continue
+        rows.append(
+            (
+                period.title,
+                deadline,
+                period.source.source_url if period.source else None,
+                _compact_text(period.deadline_note or period.status_note, 180),
             )
+        )
     return sorted(rows, key=lambda item: item[1])
-
-
-def _dates_from_text(text: str) -> list[date]:
-    value = str(text or "")
-    explicit_year = re.search(r"(20\d{2})\s*年?", value)
-    pairs = [
-        (int(match.group(1)), int(match.group(2)))
-        for match in re.finditer(r"(\d{1,2})\s*月\s*(\d{1,2})\s*日", value)
-    ]
-    pairs.extend(
-        (int(match.group(1)), int(match.group(2)))
-        for match in re.finditer(r"(?<!\d)(\d{1,2})\s*[/.-]\s*(\d{1,2})(?!\d)", value)
-    )
-    today = date.today()
-    dates: list[date] = []
-    for month, day_value in pairs:
-        year = int(explicit_year.group(1)) if explicit_year else today.year
-        try:
-            candidate = date(year, month, day_value)
-            if not explicit_year and candidate < today:
-                candidate = date(year + 1, month, day_value)
-        except ValueError:
-            continue
-        if candidate >= today:
-            dates.append(candidate)
-    return sorted(set(dates))
 
 
 def _task(
@@ -801,36 +855,6 @@ def _partner_language_threshold(
     }
     match = re.search(patterns[language_test], text, re.IGNORECASE)
     return float(match.group(1)) if match else None
-
-
-def _scope_matches(scope: str | None, target: str) -> bool:
-    if not scope:
-        return True
-    normalized = _normal(scope)
-    if any(term in normalized for term in ["不限", "全校", "all", "各學院"]):
-        return True
-    target_value = _normal(target)
-    aliases = {
-        "醫學院": ["醫學", "medicine", "medical"],
-        "工學院": ["工學", "工程", "engineering"],
-        "管理學院": ["管理", "商學", "business", "management"],
-        "資訊工程學系": ["資訊", "電腦", "computer", "informatics"],
-    }
-    candidates = [target_value, *aliases.get(target, [])]
-    return any(candidate and _normal(candidate) in normalized for candidate in candidates)
-
-
-def _degree_matches(scope: str | None, target: str) -> bool:
-    if not scope:
-        return True
-    normalized = _normal(scope)
-    aliases = {
-        "大學部": ["大學部", "學士", "undergraduate", "bachelor"],
-        "碩士班": ["碩士", "研究所", "master", "graduate"],
-        "博士班": ["博士", "研究所", "doctoral", "phd", "graduate"],
-    }
-    values = aliases.get(target, [target])
-    return any(_normal(value) in normalized for value in values)
 
 
 def _missing_profile_fields(profile: AdvisorProfile) -> list[str]:

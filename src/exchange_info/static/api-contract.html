@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230078d4'/%3E%3Cpath d='M16 32 32 16l16 16-16 16z' fill='none' stroke='white' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='white'/%3E%3C/svg%3E" />
+    <title>OpenAPI 契約 | UniWay</title>
+    <link rel="stylesheet" href="/static/api-contract.css?v=20260821-1" />
+    <link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2" />
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Developer contract</p>
+      <h1>UniWay OpenAPI 契約</h1>
+      <p class="lead">
+        這個頁面不載入第三方 CDN 或執行 inline JavaScript。即時 API schema
+        與專案內的凍結快照必須保持完全一致。
+      </p>
+
+      <section aria-labelledby="contract-links-title">
+        <h2 id="contract-links-title">檢視與驗證</h2>
+        <div class="actions">
+          <a class="primary" href="/openapi.json">開啟即時 OpenAPI JSON</a>
+          <a href="/">回到 UniWay</a>
+        </div>
+        <dl>
+          <div>
+            <dt>凍結快照</dt>
+            <dd><code>docs/api/openapi.json</code></dd>
+          </div>
+          <div>
+            <dt>漂移檢查</dt>
+            <dd><code>python scripts/export_openapi.py --check</code></dd>
+          </div>
+        </dl>
+      </section>
+
+      <aside aria-label="安全說明">
+        <strong>安全邊界</strong>
+        <p>
+          互動式 Swagger／ReDoc 不在 production runtime 載入，避免第三方腳本、
+          inline script 或放寬產品的 Content Security Policy。
+        </p>
+      </aside>
+    </main>
+  </body>
+</html>

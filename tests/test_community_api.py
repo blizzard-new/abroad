@@ -1,14 +1,27 @@
+import hashlib
+from datetime import timedelta
+
 from fastapi.testclient import TestClient
 
 from exchange_info.api import create_app
-from exchange_info.models import ModerationStatus, PartnerUniversity
+from exchange_info.models import (
+    AccountSessionRecord,
+    ModerationStatus,
+    PartnerUniversity,
+    UserAccount,
+    utc_now,
+)
 from exchange_info.storage import (
     ensure_data_dirs,
+    load_account_sessions,
     load_community_answers,
     load_community_questions,
     load_experience_submissions,
+    load_user_accounts,
+    save_account_sessions,
     save_community_answers,
     save_community_questions,
+    save_user_accounts,
 )
 
 
@@ -21,6 +34,34 @@ def _partner() -> PartnerUniversity:
     )
 
 
+def _community_headers(data_dir, client: TestClient) -> dict[str, str]:
+    account = UserAccount(
+        display_name="已驗證學生",
+        student_status_verified=True,
+        verified_university="長庚大學",
+    )
+    access_token = f"account-token-{account.id}"
+    save_user_accounts([*load_user_accounts(data_dir), account], data_dir)
+    save_account_sessions(
+        [
+            *load_account_sessions(data_dir),
+            AccountSessionRecord(
+                account_id=account.id,
+                token_hash=hashlib.sha256(access_token.encode("utf-8")).hexdigest(),
+                expires_at=utc_now() + timedelta(days=1),
+            ),
+        ],
+        data_dir,
+    )
+    auth_headers = {"Authorization": f"Bearer {access_token}"}
+    identity = client.post("/auth/community-identity", headers=auth_headers).json()
+    return {
+        **auth_headers,
+        "X-Anonymous-ID": identity["id"],
+        "X-Anonymous-Token": identity["access_token"],
+    }
+
+
 def test_question_answer_and_experience_submission_are_moderated(
     tmp_path, monkeypatch
 ) -> None:
@@ -28,9 +69,11 @@ def test_question_answer_and_experience_submission_are_moderated(
     partner = _partner()
     monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
     client = TestClient(create_app(tmp_path))
+    headers = _community_headers(tmp_path, client)
 
     question_response = client.post(
         "/community/questions",
+        headers=headers,
         json={
             "school_name": partner.school_name,
             "home_university": "長庚大學",
@@ -56,6 +99,7 @@ def test_question_answer_and_experience_submission_are_moderated(
 
     answer_response = client.post(
         f"/community/questions/{question['id']}/answers",
+        headers=headers,
         json={
             "body": "我交換的那一年收到入學信後就立刻申請，建議不要等到截止日前。",
             "display_name": "匿名學長姐",
@@ -78,6 +122,7 @@ def test_question_answer_and_experience_submission_are_moderated(
 
     submission_response = client.post(
         "/experience-submissions",
+        headers=headers,
         json={
             "school_name": partner.school_name,
             "home_university": "長庚大學",
@@ -99,9 +144,11 @@ def test_community_submission_rejects_contact_details(tmp_path, monkeypatch) -> 
     partner = _partner()
     monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
     client = TestClient(create_app(tmp_path))
+    headers = _community_headers(tmp_path, client)
 
     response = client.post(
         "/community/questions",
+        headers=headers,
         json={
             "school_name": partner.school_name,
             "topic": "life",

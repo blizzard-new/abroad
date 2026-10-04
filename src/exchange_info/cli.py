@@ -8,6 +8,12 @@ from pathlib import Path
 from .application_workflow_collector import collect_application_workflow
 from .ai_gateway import ai_enabled
 from .cleaner import process_pages
+from .content_governance import (
+    create_content_governance_store,
+    stage_workflow_refresh,
+)
+from .document_vault import create_document_vault_service
+from .destination_profile_review import create_destination_profile_review_store
 from .crawler import CguOiaCrawler, CrawlerConfig
 from .experience_collector import (
     collect_student_experiences,
@@ -16,6 +22,7 @@ from .experience_collector import (
 )
 from .extractor import build_exchange_info
 from .models import CollectionAudit, ProcessedPage, utc_now
+from .notifications import NotificationService, email_sender_from_env
 from .ntpu_student_view import fetch_ntpu_partner_universities
 from .partner_research import (
     apply_partner_research,
@@ -23,7 +30,9 @@ from .partner_research import (
     discover_partner_official_site,
     enrich_partner_ranking,
 )
+from .release_readiness import build_web_release_readiness
 from .rag import build_rag_index
+from .repositories import create_account_repository
 from .school_image_collector import (
     DEFAULT_IMAGE_MANIFEST,
     DEFAULT_IMAGE_OUTPUT_DIR,
@@ -39,7 +48,6 @@ from .storage import (
     load_student_experiences,
     load_raw_pages,
     load_processed_pages,
-    replace_application_workflow,
     replace_school_experiences,
     save_exchange_info,
     save_processed_pages,
@@ -50,7 +58,7 @@ from .storage import (
 )
 from .structured_sources import build_structured_source_index
 from .student_view import fetch_partner_universities
-from .university_registry import NTPU, require_university
+from .university_registry import CGU, NTPU, require_university
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -143,6 +151,53 @@ def main(argv: list[str] | None = None) -> int:
     )
     research_parser.set_defaults(func=cmd_research_partners)
 
+    notification_parser = subparsers.add_parser(
+        "run-notifications",
+        help="Create due Web reminders and dispatch opted-in Email reminders.",
+    )
+    notification_parser.set_defaults(func=cmd_run_notifications)
+
+    release_audit_parser = subparsers.add_parser(
+        "audit-web-release",
+        help="Read workflows and destination profiles, then fail closed while any Web release blocker remains.",
+    )
+    release_audit_parser.set_defaults(func=cmd_audit_web_release)
+
+    completeness_parser = subparsers.add_parser(
+        "audit-data-completeness",
+        help="Report which public facts are still missing per partner school; reads stored data only.",
+    )
+    completeness_parser.add_argument("--csv", type=Path, help="Also write one row per school to this CSV file.")
+    completeness_parser.set_defaults(func=cmd_audit_data_completeness)
+
+    task_documents_parser = subparsers.add_parser(
+        "audit-task-documents",
+        help="Report which official steps open a preparation tool and which only list required documents.",
+    )
+    task_documents_parser.set_defaults(func=cmd_audit_task_documents)
+
+    vault_cleanup_parser = subparsers.add_parser(
+        "cleanup-document-vault",
+        help="Permanently remove expired encrypted versions and orphaned vault objects.",
+    )
+    vault_cleanup_parser.set_defaults(func=cmd_cleanup_document_vault)
+
+    analytics_parser = subparsers.add_parser(
+        "analytics-report",
+        help="Print a text summary of the anonymous usage analytics (the dashboard shows the full report).",
+    )
+    analytics_parser.add_argument("--days", type=int, default=30, help="Window length in Taipei days, ending today.")
+    analytics_parser.add_argument("--include-bots", action="store_true", help="Count automated traffic too.")
+    analytics_parser.add_argument("--json", action="store_true", help="Print the whole report as JSON instead.")
+    analytics_parser.set_defaults(func=cmd_analytics_report)
+
+    analytics_purge_parser = subparsers.add_parser(
+        "purge-analytics",
+        help="Delete analytics rows older than the given number of days (minimum 30).",
+    )
+    analytics_purge_parser.add_argument("--days", type=int, required=True)
+    analytics_purge_parser.set_defaults(func=cmd_purge_analytics)
+
     args = parser.parse_args(argv)
     return args.func(args)
 
@@ -206,6 +261,168 @@ def cmd_build_ai_index(args: argparse.Namespace) -> int:
         print("No processed pages found. Run crawl or build-index first.")
         return 2
     _build_ai_indexes(pages, args.data_dir, rules_only=args.rules_only)
+    return 0
+
+
+def cmd_run_notifications(args: argparse.Namespace) -> int:
+    repository = create_account_repository(args.data_dir)
+    service = NotificationService(
+        repository,
+        email_sender=email_sender_from_env(),
+        content_store=create_content_governance_store(args.data_dir),
+    )
+    result = service.run_due()
+    print(result.model_dump_json())
+    return 0
+
+
+def cmd_audit_web_release(args: argparse.Namespace) -> int:
+    report = build_web_release_readiness(
+        create_content_governance_store(args.data_dir),
+        load_destination_profiles(
+            args.data_dir,
+            include_bundled_baseline=True,
+        ),
+        create_destination_profile_review_store(args.data_dir),
+    )
+    print(report.model_dump_json())
+    return 0 if report.release_ready else 2
+
+
+def cmd_audit_task_documents(args: argparse.Namespace) -> int:
+    import json
+
+    from .storage import load_application_workflows
+    from .task_documents import audit_task_document_links
+
+    report = audit_task_document_links(load_application_workflows(args.data_dir))
+    print(json.dumps(report, ensure_ascii=False, indent=2))
+    return 0
+
+
+def cmd_audit_data_completeness(args: argparse.Namespace) -> int:
+    import csv
+    import json
+    from collections import Counter
+
+    from .application_rules import select_application_workflow
+    from .models import ApplicationRuleContext, PartnerUniversity
+    from .ntpu_student_view import fetch_ntpu_partner_universities
+    from .school_completeness import build_school_completeness
+    from .school_content import complete_destination_profile
+    from .school_identity import school_identity_key
+    from .storage import load_application_workflows
+    from .university_registry import NTPU as NTPU_PROFILE
+
+    workflows = load_application_workflows(args.data_dir)
+    profiles = load_destination_profiles(args.data_dir, include_bundled_baseline=True)
+    # CGU's partner list is a live crawl, so this offline audit covers it through the
+    # stored destination profiles; NTPU's list is read from the bundled official PDFs.
+    homes = {
+        CGU.school_name: [],
+        NTPU_PROFILE.school_name: fetch_ntpu_partner_universities(),
+    }
+    rows: list[dict[str, str]] = []
+    totals: Counter[tuple[str, str]] = Counter()
+    schools = 0
+    for home, partners in homes.items():
+        known = {school_identity_key(row.school_name) for row in partners}
+        partners = list(partners) + [
+            PartnerUniversity(program_type="交換", school_name=row.school_name, country=row.country, source_url="")
+            for row in profiles
+            if normalize_school(row.home_university or "") == normalize_school(home)
+            and school_identity_key(row.school_name) not in known
+        ]
+        scoped = [row for row in workflows if normalize_school(row.home_university) == normalize_school(home)]
+        for partner in partners:
+            profile = next((row for row in profiles if school_identity_key(row.school_name) == school_identity_key(partner.school_name)
+                            and normalize_school(row.home_university or home) == normalize_school(home)), None)
+            profile = complete_destination_profile(profile, args.data_dir) if profile else None
+            workflow = select_application_workflow(scoped, ApplicationRuleContext(
+                home_university=home, partner_university=partner.school_name))
+            result = build_school_completeness(
+                partner, profile, workflow, home_university=home,
+                include_eligibility=bool(partner.source_url),
+            )
+            schools += 1
+            row = {"母校": home, "合作校": partner.school_name, "國家": partner.country or "",
+                   "完整項目": f"{result.available_count}/{result.total_count}",
+                   "優先缺口": "、".join(result.priority_gaps)}
+            for item in result.items:
+                totals[(item.label, item.status)] += 1
+                row[item.label] = {"available": "完整", "partial": "部分", "needs_confirmation": "待確認", "missing": "缺"}[item.status]
+            rows.append(row)
+    summary = {
+        "schools": schools,
+        "by_item": {
+            label: {status: totals[(label, status)] for status in ("available", "partial", "needs_confirmation", "missing")}
+            for label in dict.fromkeys(label for label, _ in totals)
+        },
+    }
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+    if args.csv and rows:
+        args.csv.parent.mkdir(parents=True, exist_ok=True)
+        with args.csv.open("w", encoding="utf-8-sig", newline="") as handle:
+            fieldnames = list(dict.fromkeys(key for row in rows for key in row))
+            writer = csv.DictWriter(handle, fieldnames=fieldnames, restval="")
+            writer.writeheader()
+            writer.writerows(rows)
+    return 0
+
+
+def cmd_cleanup_document_vault(args: argparse.Namespace) -> int:
+    service = create_document_vault_service(args.data_dir)
+    result = service.cleanup()
+    print(result.model_dump_json())
+    return 0
+
+
+def cmd_analytics_report(args: argparse.Namespace) -> int:
+    import json
+    from datetime import datetime, timezone
+
+    from .analytics_report import build_report
+    from .analytics_repository import MAX_FETCH_ROWS, create_analytics_repository
+    from .analytics_routes import resolve_window
+
+    repository = create_analytics_repository(args.data_dir)
+    start_at, end_at = resolve_window(max(1, min(args.days, 400)), None, None)
+    span = end_at - start_at
+    events, truncated = repository.fetch_events(start_at - span, end_at, MAX_FETCH_ROWS)
+    report = build_report(
+        [e for e in events if e.occurred_at >= start_at], repository.fetch_api_metrics(start_at, end_at),
+        start=start_at, end=end_at, previous_events=[e for e in events if e.occurred_at < start_at],
+        include_bots=args.include_bots, truncated=truncated, now=datetime.now(timezone.utc),
+    )
+    if args.json:
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        return 0
+    current = report["overview"]["current"]
+    change = report["overview"]["change_pct"]
+    print(f"UniWay usage, last {report['range']['days']} days (Taipei time), backend={repository.backend_name}")
+    print(f"  visitors {current['visitors']} ({change['visitors']}% vs previous), sessions {current['sessions']}, "
+          f"pageviews {current['pageviews']}, bounce {current['bounce_rate']}%")
+    print("  funnel: " + " > ".join(f"{row['step']} {row['visitors']}" for row in report["funnel"]))
+    print("  top pages: " + ", ".join(f"{row['route']} {row['views']}" for row in report["pages"][:5]))
+    print("  top schools: " + ", ".join(f"{row['school']} {row['opens']}" for row in report["schools"]["top"][:5]))
+    print("  top searches: " + ", ".join(f"{row['term']} {row['searches']}" for row in report["search"]["top_terms"][:5]))
+    print(f"  new accounts (server): {report['signup']['accounts_created_by_server']}, "
+          f"posts: {report['community']['posts']}, js errors: {report['errors']['js_errors']}")
+    if truncated:
+        print("  note: more events exist than were read; numbers are low.")
+    return 0
+
+
+def cmd_purge_analytics(args: argparse.Namespace) -> int:
+    from datetime import timedelta
+
+    from .analytics_repository import create_analytics_repository
+
+    if args.days < 30:
+        print("Refusing to purge data newer than 30 days.", file=sys.stderr)
+        return 2
+    removed = create_analytics_repository(args.data_dir).purge(utc_now() - timedelta(days=args.days))
+    print(removed)
     return 0
 
 
@@ -346,6 +563,7 @@ def cmd_collect_experiences(args: argparse.Namespace) -> int:
 
 def cmd_collect_workflows(args: argparse.Namespace) -> int:
     ensure_data_dirs(args.data_dir)
+    content_store = create_content_governance_store(args.data_dir)
     home, partners = _partners_for_home_school(args.home_school, args.data_dir)
     if args.school:
         selected, missing = _select_requested_partners(partners, args.school)
@@ -383,18 +601,22 @@ def cmd_collect_workflows(args: argparse.Namespace) -> int:
                 partner,
                 home_university=home.school_name,
             )
-            replace_application_workflow(workflow, args.data_dir)
+            result = stage_workflow_refresh(content_store, workflow, detected_by="cli")
             upsert_collection_audit(
                 CollectionAudit(
                     school_name=partner.school_name,
                     collector="workflows",
-                    status=workflow.coverage_status,
+                    status=("pending_review" if result.change_detected else "unchanged"),
                     home_university=home.school_name,
                     result_count=len(workflow.steps),
                 ),
                 args.data_dir,
             )
-            print(f"{partner.school_name}: {len(workflow.steps)} official application steps")
+            state = "pending review" if result.change_detected else "unchanged"
+            print(
+                f"{partner.school_name}: {len(workflow.steps)} official application "
+                f"steps ({state})"
+            )
         except Exception as exc:
             upsert_collection_audit(
                 CollectionAudit(
@@ -409,7 +631,10 @@ def cmd_collect_workflows(args: argparse.Namespace) -> int:
             print(f"{partner.school_name}: workflow collection failed ({exc})")
 
     print(f"Collected workflows for {len(selected)} partner schools.")
-    print(f"Wrote {args.data_dir / 'processed' / 'application_workflows.jsonl'}")
+    print(
+        "Wrote review candidates to "
+        f"{args.data_dir / 'processed' / 'application_workflow_revisions.jsonl'}"
+    )
     return 0
 
 
@@ -425,6 +650,7 @@ def _destination_quality(status: str) -> int:
 def cmd_research_partners(args: argparse.Namespace) -> int:
     """Run the complete, resumable research pass for selected partner schools."""
     ensure_data_dirs(args.data_dir)
+    content_store = create_content_governance_store(args.data_dir)
     home, partners = _partners_for_home_school(args.home_school, args.data_dir)
     home_key = normalize_school(home.school_name)
     current_research = {
@@ -490,6 +716,7 @@ def cmd_research_partners(args: argparse.Namespace) -> int:
     existing_destinations = {
         normalize_school(row.school_name): row
         for row in load_destination_profiles(args.data_dir)
+        if normalize_school(row.home_university or CGU.school_name) == home_key
     }
     stage_successes = 0
     stage_failures = 0
@@ -601,12 +828,12 @@ def cmd_research_partners(args: argparse.Namespace) -> int:
                 partner,
                 home_university=home.school_name,
             )
-            replace_application_workflow(workflow, args.data_dir)
+            result = stage_workflow_refresh(content_store, workflow, detected_by="cli")
             upsert_collection_audit(
                 CollectionAudit(
                     school_name=partner.school_name,
                     collector="workflows",
-                    status=workflow.coverage_status,
+                    status=("pending_review" if result.change_detected else "unchanged"),
                     home_university=home.school_name,
                     result_count=len(workflow.steps),
                     note=workflow.coverage_note,
@@ -614,7 +841,8 @@ def cmd_research_partners(args: argparse.Namespace) -> int:
                 ),
                 args.data_dir,
             )
-            print(f"  workflow: {workflow.coverage_status} ({len(workflow.steps)} steps)")
+            state = "pending review" if result.change_detected else "unchanged"
+            print(f"  workflow: {state} ({len(workflow.steps)} steps)")
             stage_successes += 1
         except Exception as exc:
             stage_failures += 1
@@ -631,7 +859,10 @@ def cmd_research_partners(args: argparse.Namespace) -> int:
             print(f"  workflow: failed ({exc})")
 
         try:
-            profile = collect_destination_profile(partner)
+            profile = collect_destination_profile(
+                partner,
+                home_university=home.school_name,
+            )
             previous = existing_destinations.get(normalize_school(partner.school_name))
             if previous and _destination_quality(previous.coverage_status) > _destination_quality(
                 profile.coverage_status

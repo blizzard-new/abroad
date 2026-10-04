@@ -11,6 +11,10 @@ from pypdf import PdfReader
 from pypdf.errors import PdfReadError
 
 from .models import (
+    ApplicationPeriodAudience,
+    ApplicationPeriodDateStatus,
+    ApplicationPeriodItem,
+    ApplicationPeriodStatus,
     Attachment,
     ExchangeInfo,
     PageCategory,
@@ -22,7 +26,8 @@ from .models import (
     StudentDashboard,
     StudentInfoItem,
 )
-from .student_view import _merge_partner_universities
+from .student_view import TAIPEI_TIMEZONE, _application_period_status, _merge_partner_universities
+from .partner_localization import contains_english_prose, localize_points
 
 
 NTPU_OIA_URL = "https://new.ntpu.edu.tw/oia"
@@ -51,26 +56,38 @@ NTPU_115_SCHOLARSHIP_URL = (
     "%E5%8F%97%E7%90%86%E8%87%B3115%E5%B9%B43%E6%9C%886%E6%97%A5%E4%BA%9417%3A00%EF%BC%81"
 )
 NTPU_SOURCE_CHECKED_AT = datetime(2026, 7, 27, tzinfo=timezone.utc)
+NTPU_116_ANNOUNCEMENT_URL = (
+    "https://new.ntpu.edu.tw/oia/news/6ab396bf7085cb4f0c81831f"
+)
+NTPU_116_GUIDELINES_URL = "https://cms-carrier.ntpu.edu.tw/uploads/116_16e535159d.pdf"
+NTPU_116_GUIDELINES_EN_URL = (
+    "https://cms-carrier.ntpu.edu.tw/uploads/"
+    "Guidelines_for_the_Selection_of_Outbound_Exchange_Students_for_Academic_Year_2027_4dc2483feb.pdf"
+)
+NTPU_116_ENGLISH_PARTNERS_URL = "https://cms-carrier.ntpu.edu.tw/uploads/116_0924_da1dafe9d0.pdf"
+NTPU_116_JAPANESE_PARTNERS_URL = "https://cms-carrier.ntpu.edu.tw/uploads/116_26b28374db.pdf"
+NTPU_116_CHINESE_PARTNERS_URL = "https://cms-carrier.ntpu.edu.tw/uploads/116_6524fec218.pdf"
+NTPU_116_CHECKED_AT = datetime(2026, 10, 3, tzinfo=timezone.utc)
 
 
 NTPU_OFFICIAL_DATA_DIR = Path(__file__).resolve().parent / "official_data" / "ntpu"
 
 
+# The current cycle's quota sheets. The 115 sheets stay bundled for history.
 PARTNER_PDFS = (
-    ("英語組", NTPU_115_ENGLISH_PARTNERS_URL, 121, "115-english-partners.pdf"),
-    ("日語組", NTPU_115_JAPANESE_PARTNERS_URL, 16, "115-japanese-partners.pdf"),
-    ("中文組", NTPU_115_CHINESE_PARTNERS_URL, 19, "115-chinese-partners.pdf"),
+    ("英語組", NTPU_116_ENGLISH_PARTNERS_URL, 133, "116-english-partners.pdf"),
+    ("日語組", NTPU_116_JAPANESE_PARTNERS_URL, 16, "116-japanese-partners.pdf"),
+    ("中文組", NTPU_116_CHINESE_PARTNERS_URL, 21, "116-chinese-partners.pdf"),
 )
 
 
-# The 115 academic-year quota sheets list schools that students may apply to
-# in that cycle.  NTPU's current sister-school database (updated 2026-07-03)
-# also lists the following student-exchange agreements, but those schools do
-# not appear in the 115 quota sheets.  Keep them visible without presenting
-# them as currently open application choices.
-NTPU_EXCHANGE_AGREEMENTS_WITHOUT_115_QUOTA = (
+# The quota sheets list the schools that students may apply to in that cycle.
+# NTPU's sister-school database (updated 2026-07-03) also lists the following
+# student-exchange agreements, but those schools do not appear in the 116
+# quota sheets.  Keep them visible without presenting them as open choices.
+# (Eleven agreements that appeared here for 115 now have 116 quotas.)
+NTPU_EXCHANGE_AGREEMENTS_WITHOUT_QUOTA = (
     ("大陸地區", "山東大學", "學術交流、學生交換", "校級"),
-    ("大陸地區", "中央財經大學", "學術交流、學生交換", "校級"),
     ("大陸地區", "北京科技大學", "學術交流、學生交換", "校級"),
     ("大陸地區", "西南政法大學", "學術交流、學生交換", "校級"),
     ("大陸地區", "東華理工大學", "學術交流、學生交換", "校級"),
@@ -82,7 +99,6 @@ NTPU_EXCHANGE_AGREEMENTS_WITHOUT_115_QUOTA = (
     ("日本", "東北大學", "學術交流、學生交換", "院級"),
     ("日本", "金澤大學", "學術交流、學生交換", "院級"),
     ("韓國", "梨花女子大學", "學術交流、學生交換", "校級"),
-    ("韓國", "高麗大學世宗校區", "學術交流、學生交換", "校級"),
     ("越南", "越南融促大學", "學術交流、學生交換", "校級"),
     ("越南", "芹苴大學－經濟學院", "學術交流、學生交換", "校級／院級"),
     ("泰國", "泰國東方大學", "學術交流、學生交換", "校級"),
@@ -92,35 +108,31 @@ NTPU_EXCHANGE_AGREEMENTS_WITHOUT_115_QUOTA = (
     ("印度", "卡倫亞技術與科學研究所", "學術交流、學生交換", "校級"),
     ("印尼", "印尼迪安努斯萬托羅大學", "學術交流、學生交換", "校級"),
     ("菲律賓", "黎剎系統大學", "學生交換", "校級"),
-    ("柬埔寨", "百麗宮國際大學", "學術交流、學生交換", "校級"),
     ("香港", "香港理工大學", "學術交流、學生交換", "系級"),
-    ("捷克", "俄斯特拉發大學", "學術交流、學生交換", "校級"),
     ("美國", "北愛荷華大學", "學術交流、學生交換", "校級"),
     ("美國", "密蘇里大學藝術與科學學院", "學術交流、學生交換", "院級／系級"),
     ("美國", "新墨西哥州立大學", "學生交換", "校級"),
     ("加拿大", "勞倫森大學", "學術交流、學生交換", "院級"),
-    ("加拿大", "加拿大多倫多都會大學", "學術交流、學生交換", "校級"),
     ("加拿大", "英屬哥倫比亞大學", "學術交流、學生交換", "校級"),
     ("巴西", "高等廣告與行銷學院", "學術交流、學生交換", "校級"),
     ("羅馬尼亞", "奧維第烏斯大學", "學術交流、學生交換", "校級"),
     ("羅馬尼亞", "蒂米什拉西部大學", "師生交換", "校級"),
-    ("立陶宛", "立陶宛維塔斯．馬格努斯大學", "學術交流、學生交換", "校級"),
     ("波蘭", "格但斯克科技大學", "學術交流、學生交換", "校級"),
     ("德國", "明斯特大學", "學術交流、學生交換", "院級"),
-    ("德國", "霍夫應用科技大學", "學術交流、學生交換", "校級"),
     ("法國", "女性高等綜合理工學院", "學生交換", "校級"),
-    ("法國", "里爾政治大學", "學術交流、學生交換", "校級"),
     ("挪威", "奧斯陸大學（犯罪學與社會學法系）", "學術交流、學生交換", "校級"),
     ("土耳其", "阿提巴斯大學", "學術交流、學生交換", "校級"),
     ("土耳其", "埃斯基謝希爾技術大學", "學術交流、學生交換", "校級"),
-    ("拉脫維亞", "拉脫維亞大學", "學術交流、學生交換", "校級"),
-    ("斯洛伐克", "布拉提斯拉瓦斯洛伐克工業大學", "學術交流、學生交換", "校級"),
     ("摩洛哥", "卡薩布蘭卡管理學院", "學術交流、學生交換", "校級"),
-    ("匈牙利", "埃斯特哈茲天主教大學", "學術交流、學生交換", "校級"),
 )
 
 
+NTPU_EXCHANGE_AGREEMENTS_WITHOUT_115_QUOTA = NTPU_EXCHANGE_AGREEMENTS_WITHOUT_QUOTA  # backward-compatible name
+
+
 COUNTRY_PREFIXES = (
+    (r"柬埔寨(?:\s*Cambodia)?", "柬埔寨"),
+    (r"匈牙利(?:\s*Hungary)?", "匈牙利"),
     (r"馬來西亞\s*Malaysia", "馬來西亞"),
     (r"新加坡\s*Singapore", "新加坡"),
     (r"哈薩克\s*Republic\s*of\s*Kazakhstan", "哈薩克"),
@@ -271,7 +283,7 @@ def _partner_from_block(
         degree_levels = "大學部、研究所（依合作校規定）"
     college_match = re.search(r"限(.{2,80}?)(?:學生|申請)", details)
     colleges = college_match.group(1).strip(" ：:，,") if college_match else "依合作校規定"
-    eligibility = details[:1200] or "申請資格、語言與名額依 115 學年度官方名額表。"
+    eligibility = details[:1200] or "申請資格、語言與名額依 116 學年度官方名額表。"
     return PartnerUniversity(
         program_type=f"交換學生（{language_group}）",
         country=country,
@@ -281,14 +293,15 @@ def _partner_from_block(
         study_period=study_period,
         quota=quota,
         eligibility=eligibility,
-        application_deadline="校內甄選原則於每年 10/1–10/31 或 4/1–4/30；以當期公告為準。",
+        application_deadline="116 學年度校內申請 2026/10/01–10/23 17:00（國際處公告）；之後梯次以當期公告為準。",
         application_info="同一梯次擇一語組，最多填列 5 個志願；通過校內甄選後仍須經合作校審查。",
         tuition_info="交換期間須保留臺北大學學籍並依規定繳費；合作校學費是否免繳以個別協議為準。",
         source_url=source_url,
         student_summary_zh=PartnerStudentSummary(
             study_period=study_period,
             application_deadline="每年 10 月或 4 月受理，依當期公告。",
-            eligibility_points=[eligibility[:360]],
+            eligibility_points=localize_points(eligibility),
+            translated_from_english=contains_english_prose(eligibility),
             application_steps=["校內線上申請與文件上傳", "書審與語組面試", "依總成績及志願分發", "合作校複審"],
             tuition_points=["交換期間須保留臺北大學學籍", "住宿、生活、保險與交通費由學生負擔"],
         ),
@@ -321,9 +334,9 @@ def parse_ntpu_partner_pdf(
 
 def _fallback_partner_universities() -> list[PartnerUniversity]:
     source_by_group = {
-        "英語組": NTPU_115_ENGLISH_PARTNERS_URL,
-        "日語組": NTPU_115_JAPANESE_PARTNERS_URL,
-        "中文組": NTPU_115_CHINESE_PARTNERS_URL,
+        "英語組": NTPU_116_ENGLISH_PARTNERS_URL,
+        "日語組": NTPU_116_JAPANESE_PARTNERS_URL,
+        "中文組": NTPU_116_CHINESE_PARTNERS_URL,
     }
     return [
         PartnerUniversity(
@@ -333,7 +346,7 @@ def _fallback_partner_universities() -> list[PartnerUniversity]:
             colleges="依合作校規定",
             degree_levels="大學部、研究所（依合作校規定）",
             study_period="1 學期或 1 學年（依名額表）",
-            eligibility="離線備援摘要；請開啟官方 115 學年度名額表核對資格、語言與名額。",
+            eligibility="離線備援摘要；請開啟官方 116 學年度名額表核對資格、語言與名額。",
             application_deadline="校內甄選原則於每年 10 月或 4 月受理；以當期公告為準。",
             application_info="同一梯次擇一語組，最多填列 5 個志願。",
             tuition_info="交換期間須保留臺北大學學籍並依規定繳費。",
@@ -345,7 +358,7 @@ def _fallback_partner_universities() -> list[PartnerUniversity]:
 
 def _agreement_only_partner_universities() -> list[PartnerUniversity]:
     availability_note = (
-        "臺北大學現行合作學校資料庫列有學生交換合約，但未列入 115 學年度交換名額表；"
+        "臺北大學現行合作學校資料庫列有學生交換合約，但未列入 116 學年度交換名額表；"
         "是否開放、名額與資格須以當期赴外交換簡章為準。"
     )
     return [
@@ -362,7 +375,7 @@ def _agreement_only_partner_universities() -> list[PartnerUniversity]:
             study_period="本期未公告",
             quota="本期未開放交換名額",
             eligibility=availability_note,
-            application_deadline="目前未列入 115 學年度交換名額表；請留意下一期公告。",
+            application_deadline="目前未列入 116 學年度交換名額表；請留意下一期公告。",
             application_info=(
                 "這是合作關係備查資料，不代表目前可直接申請；"
                 "請先確認臺北大學國際事務處最新赴外交換名額表。"
@@ -371,7 +384,7 @@ def _agreement_only_partner_universities() -> list[PartnerUniversity]:
             source_url=NTPU_CURRENT_SISTER_SCHOOLS_URL,
             student_summary_zh=PartnerStudentSummary(
                 study_period="本期未公告",
-                application_deadline="目前未列入 115 學年度交換名額表。",
+                application_deadline="目前未列入 116 學年度交換名額表。",
                 eligibility_points=[availability_note],
                 application_steps=[
                     "先確認最新赴外交換名額表是否已開放這所學校",
@@ -381,7 +394,7 @@ def _agreement_only_partner_universities() -> list[PartnerUniversity]:
             ),
         )
         for country, school_name, agreement_type, agreement_level in (
-            NTPU_EXCHANGE_AGREEMENTS_WITHOUT_115_QUOTA
+            NTPU_EXCHANGE_AGREEMENTS_WITHOUT_QUOTA
         )
     ]
 
@@ -436,10 +449,35 @@ def _item(title: str, details: list[str], source: SourceReference) -> StudentInf
     return StudentInfoItem(title=title, details=details, source=source)
 
 
+def _period(
+    title: str,
+    details: list[str],
+    source: SourceReference,
+    *,
+    application_round: str,
+) -> ApplicationPeriodItem:
+    return ApplicationPeriodItem(
+        title=title,
+        details=details,
+        source=source,
+        scope="recurring_reference",
+        program_types=["exchange"],
+        academic_year="115",
+        application_round=application_round,
+        audience=ApplicationPeriodAudience.ALL_STUDENTS,
+        date_status=ApplicationPeriodDateStatus.REFERENCE_ONLY,
+        status=ApplicationPeriodStatus.REFERENCE_ONLY,
+        status_note="這是 115 學年度簡章所列的原則性時程，不是下一梯次的精確日期。",
+        deadline_note="等待國際處發布下一梯次公告後，才能建立精確期限與提醒。",
+        reminder_eligible=False,
+        checked_at=NTPU_SOURCE_CHECKED_AT,
+    )
+
+
 def ntpu_document_explanations() -> list[RuleExplanation]:
     guidelines = _reference(
-        "臺北大學 115 學年度赴外交換生申請簡章",
-        NTPU_115_ANNOUNCEMENT_URL,
+        "臺北大學 116 學年度赴外交換生申請簡章",
+        NTPU_116_GUIDELINES_URL,
         PageCategory.EXCHANGE_APPLICATION,
     )
     scholarship = _reference(
@@ -449,7 +487,7 @@ def ntpu_document_explanations() -> list[RuleExplanation]:
     )
     return [
         RuleExplanation(
-            title="臺北大學 115 學年度赴外交換生申請簡章",
+            title="臺北大學 116 學年度赴外交換生申請簡章",
             summary="校內甄選的資格、文件、語組、面試、志願分發，以及錄取後到返國的完整流程。",
             key_points=[
                 "大學部二年級以上、碩博士班及進修學士班二年級以上可申請。",
@@ -460,37 +498,37 @@ def ntpu_document_explanations() -> list[RuleExplanation]:
             ],
             applies_to=["赴外交換", "校內甄選", "英語組", "日語組", "中文組"],
             source=guidelines,
-            document_url=NTPU_115_GUIDELINES_URL,
+            document_url=NTPU_116_GUIDELINES_URL,
             document_type="甄選簡章",
             full_text_extracted=True,
         ),
         RuleExplanation(
-            title="115 學年度交換名額一覽表（英語組）",
+            title="116 學年度交換名額一覽表（英語組）",
             summary="英語組合作校的科系限制、語言門檻、GPA、名額與交換期程。",
             key_points=["各校門檻不同，申請前須逐校核對。", "CEFR B2 約對應 TOEIC 785、IELTS 5.5、TOEFL iBT 72 或 Duolingo 100。", "宿舍不保證提供。"],
             applies_to=["英語組", "合作校", "語言門檻", "交換名額"],
             source=guidelines,
-            document_url=NTPU_115_ENGLISH_PARTNERS_URL,
+            document_url=NTPU_116_ENGLISH_PARTNERS_URL,
             document_type="合作校名額表",
             full_text_extracted=True,
         ),
         RuleExplanation(
-            title="115 學年度交換名額一覽表（日語組）",
+            title="116 學年度交換名額一覽表（日語組）",
             summary="日語組合作校的 JLPT、科系限制、GPA、名額與交換期程。",
             key_points=["各校多以 JLPT N1 至 N4 設定門檻。", "部分學程另有限定學院或學制。", "接待學校保有最後審查及調整名額的權利。"],
             applies_to=["日語組", "合作校", "JLPT", "交換名額"],
             source=guidelines,
-            document_url=NTPU_115_JAPANESE_PARTNERS_URL,
+            document_url=NTPU_116_JAPANESE_PARTNERS_URL,
             document_type="合作校名額表",
             full_text_extracted=True,
         ),
         RuleExplanation(
-            title="115 學年度交換名額一覽表（中文組）",
+            title="116 學年度交換名額一覽表（中文組）",
             summary="中文組合作校的地區、申請限制、名額與交換期程。",
             key_points=["以當期公告列出的學校與名額為準。", "部分學校限臺籍生、日間部或特定年級與專業。", "大陸地區交換期程依公告辦理。"],
             applies_to=["中文組", "合作校", "交換名額"],
             source=guidelines,
-            document_url=NTPU_115_CHINESE_PARTNERS_URL,
+            document_url=NTPU_116_CHINESE_PARTNERS_URL,
             document_type="合作校名額表",
             full_text_extracted=True,
         ),
@@ -512,13 +550,57 @@ def ntpu_document_explanations() -> list[RuleExplanation]:
     ]
 
 
+def _ntpu_116_period(reference_time: datetime | None = None) -> ApplicationPeriodItem:
+    """The 116 round dates, taken only from the announcement's own title."""
+
+    now = reference_time or datetime.now(timezone.utc)
+    if now.utcoffset() is None:
+        now = now.replace(tzinfo=timezone.utc)
+    opens_at = datetime(2026, 10, 1, 0, 0, tzinfo=TAIPEI_TIMEZONE)
+    deadline_at = datetime(2026, 10, 23, 17, 0, tzinfo=TAIPEI_TIMEZONE)
+    status = _application_period_status(now, opens_at=opens_at, deadline_at=deadline_at)
+    return ApplicationPeriodItem(
+        title="116學年度赴外交換校內申請",
+        details=[
+            "國際處 2026/09/24 公告 116 學年度赴外交換簡章；申請日期自 2026/10/01 起至 2026/10/23 17:00 止。",
+            "簡章、英文版選送辦法與英語、日語、中文三組名額一覽表已隨公告發布。",
+            "合作校名單與名額已更新為 116 學年度名額表（英語 133 列、日語 16 列、中文 21 列）；各校資格與限制仍以名額表原文為準。",
+            "簡章載明：線上申請送出後，須於 2026/10/23 17:00 前將簽名申請表上傳至指定 Google 表單，逾期視為申請未完成。",
+            "面試通常於 11 月下旬、分發結果於 12 月下旬公告；以國際處當期公告為準。",
+        ],
+        source=SourceReference(
+            title="116學年度赴外交換簡章公告",
+            source_url=NTPU_116_ANNOUNCEMENT_URL,
+            category=PageCategory.EXCHANGE_APPLICATION,
+        ),
+        scope="home_application",
+        program_types=["exchange"],
+        academic_year="116",
+        application_round="秋季／全學年梯次",
+        audience=ApplicationPeriodAudience.ALL_STUDENTS,
+        opens_at=opens_at,
+        deadline_at=deadline_at,
+        date_status=ApplicationPeriodDateStatus.VERIFIED_EXACT,
+        status=status,
+        status_note={
+            ApplicationPeriodStatus.UPCOMING: "本梯次尚未開放；請先準備校內文件，不要提前送件。",
+            ApplicationPeriodStatus.OPEN: "本梯次正在受理；請在截止前完成線上申請與文件上傳。",
+            ApplicationPeriodStatus.CLOSED: "本梯次已截止；不能沿用這組日期送件。",
+        }[status],
+        deadline_note="截止時間載於 116 學年度簡章與公告標題；流程尚待人工審核發布，因此暫不建立提醒，請另行記下日期。",
+        reminder_eligible=False,
+        checked_at=NTPU_116_CHECKED_AT,
+    )
+
+
 def build_ntpu_student_dashboard(
     *,
     partner_universities: list[PartnerUniversity] | None = None,
+    reference_time: datetime | None = None,
 ) -> StudentDashboard:
     guidelines = _reference(
-        "臺北大學 115 學年度赴外交換生申請簡章",
-        NTPU_115_ANNOUNCEMENT_URL,
+        "臺北大學 116 學年度赴外交換生申請簡章",
+        NTPU_116_GUIDELINES_URL,
         PageCategory.EXCHANGE_APPLICATION,
     )
     files = _reference("臺北大學國際事務處檔案下載", NTPU_FILES_URL, PageCategory.EXCHANGE_APPLICATION)
@@ -531,20 +613,23 @@ def build_ntpu_student_dashboard(
     documents = ntpu_document_explanations()
     return StudentDashboard(
         school_name="國立臺北大學",
-        last_checked=NTPU_SOURCE_CHECKED_AT,
+        last_checked=NTPU_116_CHECKED_AT,
         academic_score_minimum=75,
         academic_score_rule="前一學年平均 75 分以上；大學部亦可用班排前 50% 符合基本門檻。",
         language_score_minimums={},
         application_periods=[
-            _item(
+            _ntpu_116_period(reference_time),
+            _period(
                 "秋季／全學年交換校內甄選",
-                ["原則於每年 9 月底公告。", "線上申請與文件上傳通常為 10 月 1 日至 10 月 31 日。", "面試通常於 11 月下旬，結果於 12 月公告。", "下一梯次仍須以國際處最新公告為準。"],
+                ["原則於每年 9 月底公告。", "115 學年度簡章的線上申請與文件上傳為 10 月 1 日至 10 月 31 日；116 學年度已公告為 10 月 1 日至 10 月 23 日 17 時，以上一項為準。", "面試通常於 11 月下旬，結果於 12 月公告。", "下一梯次仍須以國際處最新公告為準。"],
                 guidelines,
+                application_round="秋季／全學年梯次",
             ),
-            _item(
+            _period(
                 "春季交換校內甄選",
                 ["原則於每年 3 月底公告。", "線上申請與文件上傳通常為 4 月 1 日至 4 月 30 日。", "面試通常於 5 月下旬，結果於 6 月公告。", "歐美學校春季可能於 1 月上旬開學，應先核對課程與學籍安排。"],
                 guidelines,
+                application_round="春季梯次",
             ),
         ],
         program_overview=[
@@ -581,30 +666,30 @@ def ntpu_exchange_info(partners: list[PartnerUniversity] | None = None) -> Excha
     return ExchangeInfo(
         school_name="國立臺北大學",
         program_type=["校級赴外交換", "英語組", "日語組", "中文組", "學海飛颺", "學海惜珠"],
-        academic_year=["115學年度"],
+        academic_year=["116學年度"],
         semester=["秋季", "春季", "一學期", "一學年"],
-        application_period=["秋季／全學年：原則 10 月 1 日至 10 月 31 日", "春季：原則 4 月 1 日至 4 月 30 日", "確切期限依國際處當期公告"],
+        application_period=["116 學年度（秋季／全學年）：2026/10/01 至 2026/10/23 17:00", "春季：原則 4 月，確切期限依國際處當期公告"],
         eligibility=["大學部二年級以上或研究生", "前一學年平均 75 分以上；大學部亦可用班排前 50%", "須符合合作校個別規定"],
         language_requirement=["同一梯次擇一語組", "英語組與日語組須檢附有效官方語言成績", "門檻依合作校名額表"],
         required_documents=["線上申請表", "有效語言證明", "交換研修計畫書", "歷年正式成績單"],
         scholarship_info=["教育部學海飛颺／惜珠；日期與條件依當年度公告"],
         partner_universities=[row.school_name for row in partner_rows],
-        source_urls=[NTPU_115_ANNOUNCEMENT_URL, NTPU_115_GUIDELINES_URL, NTPU_FILES_URL],
-        last_checked=NTPU_SOURCE_CHECKED_AT,
+        source_urls=[NTPU_116_ANNOUNCEMENT_URL, NTPU_116_GUIDELINES_URL, NTPU_FILES_URL],
+        last_checked=NTPU_116_CHECKED_AT,
     )
 
 
 def ntpu_processed_pages() -> list[ProcessedPage]:
     rows = [
         (
-            "臺北大學 115 學年度赴外交換生申請簡章",
-            NTPU_115_ANNOUNCEMENT_URL,
+            "臺北大學 116 學年度赴外交換生申請簡章",
+            NTPU_116_ANNOUNCEMENT_URL,
             PageCategory.EXCHANGE_APPLICATION,
-            "115學年度校內申請期間為2025年10月1日9時至10月31日16時。秋季或全學年交換通常於10月受理，春季交換通常於4月受理。申請資格為大學部二年級以上、碩博士班及進修學士班二年級以上，前一學年平均75分以上；大學部亦可用班排前50%。同一梯次只能選英語、日語或中文一組，最多填列5個志願。應繳文件包括線上申請表、有效官方語言成績、交換研修計畫書及正式成績單。書審30%、研修計畫30%、面試40%，總分低於70分不予推薦。",
+            "116學年度校內申請期間為2026年10月1日至10月23日17時；線上申請送出後，須於2026年10月23日下午5時前將簽名申請表上傳至指定Google表單，逾期視為申請未完成。春季交換通常於4月受理。申請資格為大學部二年級以上、碩博士班及進修學士班二年級以上，前一學年平均75分以上；大學部亦可用班排前50%。同一梯次只能選英語、日語或中文一組，最多填列5個志願。應繳文件包括線上申請表、有效官方語言成績、交換研修計畫書及正式成績單。書審30%、研修計畫30%、面試40%，總分低於70分不予推薦。",
         ),
         (
             "臺北大學交換生錄取後與返國流程",
-            NTPU_115_GUIDELINES_URL,
+            NTPU_116_GUIDELINES_URL,
             PageCategory.EXCHANGE_APPLICATION,
             "校內推薦不等同合作校錄取。獲推薦後須依期限繳交錄取確認書及家長同意書，再依合作校要求送件。出國前完成選課行前申請表與離校程序；抵達合作校一個月內回報當地聯絡資料；返國一個月內繳交交換心得，並憑正式成績單與課程大綱申請學分採認。",
         ),
@@ -621,12 +706,12 @@ def ntpu_processed_pages() -> list[ProcessedPage]:
             ProcessedPage(
                 title=title,
                 source_url=url,
-                published_at="2025/09/26" if category == PageCategory.EXCHANGE_APPLICATION else "2026/03/03",
+                published_at="2026/09/24" if category == PageCategory.EXCHANGE_APPLICATION else "2026/03/03",
                 text=text,
                 summary=text[:220],
                 category=category,
-                attachments=[Attachment(url=NTPU_115_GUIDELINES_URL, filename="臺北大學115學年度赴外交換生申請簡章.pdf", content_type="application/pdf")] if category == PageCategory.EXCHANGE_APPLICATION else [],
-                crawled_at=NTPU_SOURCE_CHECKED_AT,
+                attachments=[Attachment(url=NTPU_116_GUIDELINES_URL, filename="臺北大學116學年度赴外交換生申請簡章.pdf", content_type="application/pdf")] if category == PageCategory.EXCHANGE_APPLICATION else [],
+                crawled_at=NTPU_116_CHECKED_AT,
                 content_hash=hashlib.sha256(f"{title}\n{text}".encode("utf-8")).hexdigest(),
             )
         )

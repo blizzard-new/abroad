@@ -1489,7 +1489,9 @@ details[open] > summary > svg:last-child {
 
 .workflow-step-body > p,
 .workflow-warning,
-.workflow-action {
+.workflow-rule-meta,
+.workflow-action,
+.workflow-progress {
   grid-column: 1 / -1;
 }
 
@@ -1502,6 +1504,205 @@ details[open] > summary > svg:last-child {
 .workflow-step-body h4 {
   margin: 0 0 6px;
   font-size: 13px;
+}
+
+.workflow-rule-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.workflow-rule-meta > strong {
+  margin-right: 2px;
+  font-size: 12px;
+}
+
+.workflow-rule-meta > span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 27px;
+  padding: 3px 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface-soft);
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.workflow-submission {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+}
+
+.workflow-submission.is-pending {
+  border-color: #e3c26d;
+  background: #fffaf0;
+}
+
+.workflow-submission > strong {
+  display: block;
+  color: var(--brand-dark);
+  font-size: 14px;
+}
+
+.workflow-submission > p {
+  margin: 4px 0 0;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+.workflow-submission ul {
+  margin-top: 5px;
+}
+
+.workflow-progress {
+  display: grid;
+  gap: 12px;
+  padding: 15px;
+  border: 1px solid color-mix(in srgb, var(--brand) 26%, var(--line));
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--brand-soft) 42%, var(--surface));
+}
+
+.workflow-progress.status-completed {
+  border-color: color-mix(in srgb, #14804a 36%, var(--line));
+  background: color-mix(in srgb, #e7f8ee 72%, var(--surface));
+}
+
+.workflow-progress.is-disabled {
+  color: var(--ink-soft);
+  background: var(--surface-soft);
+}
+
+.workflow-progress-heading,
+.workflow-progress-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.workflow-progress-heading h4,
+.workflow-progress-heading strong {
+  display: block;
+  margin: 0;
+}
+
+.workflow-progress-heading strong {
+  margin-top: 2px;
+  color: var(--brand-dark);
+  font-size: 17px;
+}
+
+.workflow-progress-heading > span {
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: var(--brand-dark);
+  background: var(--surface);
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.workflow-progress dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.workflow-progress dl div {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 8px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.workflow-progress dl div:nth-child(odd) {
+  padding-right: 16px;
+}
+
+.workflow-progress dt {
+  color: var(--ink-faint);
+  font-size: 12px;
+}
+
+.workflow-progress dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.workflow-progress dd > span {
+  display: block;
+}
+
+.workflow-progress dd > span + span {
+  margin-top: 2px;
+  color: var(--ink-soft);
+}
+
+.workflow-proof-fields {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(220px, 1.2fr);
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.workflow-proof-fields label,
+.workflow-proof-fields label > span {
+  display: grid;
+  gap: 5px;
+}
+
+.workflow-proof-fields label > span,
+.workflow-proof-fields > small {
+  color: var(--ink-faint);
+  font-size: 12px;
+}
+
+.workflow-proof-fields select,
+.workflow-proof-fields input {
+  min-height: 44px;
+}
+
+.workflow-proof-fields > small {
+  grid-column: 1 / -1;
+}
+
+.workflow-progress-actions {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.workflow-progress-actions button {
+  min-height: 44px;
+}
+
+.workflow-progress > p {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.workflow-progress > p svg {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  margin-top: 1px;
+  color: var(--brand-dark);
 }
 
 .workflow-step-body ul {
@@ -1525,6 +1726,28 @@ details[open] > summary > svg:last-child {
   gap: 7px;
 }
 
+.workflow-documents li > span,
+.workflow-documents li > span > b,
+.workflow-documents li > span > small {
+  display: block;
+}
+
+.workflow-documents li > span > b {
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.workflow-documents li > span > small {
+  margin-top: 1px;
+  color: var(--ink-faint);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.workflow-documents li.needs-confirmation > svg {
+  color: #946200;
+}
+
 .workflow-documents svg {
   flex: 0 0 auto;
   width: 16px;
@@ -1542,6 +1765,21 @@ details[open] > summary > svg:last-child {
   background: #fff8e8;
   color: #6d4a00;
   font-size: 13px;
+}
+
+.workflow-warning strong,
+.workflow-warning span {
+  display: block;
+}
+
+.workflow-warning span {
+  margin-top: 2px;
+}
+
+.workflow-warning.is-verified {
+  border-left-color: #2f7d5c;
+  background: #edf8f2;
+  color: #245f47;
 }
 
 .workflow-action {
@@ -1579,6 +1817,23 @@ details[open] > summary > svg:last-child {
   font-weight: 700;
 }
 
+.workflow-sources a span,
+.workflow-sources a b,
+.workflow-sources a small {
+  display: block;
+}
+
+.workflow-sources a b {
+  font-size: 13px;
+}
+
+.workflow-sources a small {
+  margin-top: 2px;
+  color: var(--ink-faint);
+  font-size: 11px;
+  font-weight: 650;
+}
+
 .workflow-sources a svg {
   flex: 0 0 auto;
   width: 16px;
@@ -1589,6 +1844,39 @@ details[open] > summary > svg:last-child {
   margin: 10px 0 0;
   color: var(--ink-faint);
   font-size: 12px;
+}
+
+.profile-entitlement-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  margin: 0.15rem 0 1rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid color-mix(in srgb, var(--blue) 34%, var(--line));
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--blue) 8%, var(--card));
+}
+
+.profile-entitlement-status[hidden] {
+  display: none;
+}
+
+.profile-entitlement-status > svg {
+  flex: 0 0 auto;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-top: 0.1rem;
+  color: var(--blue);
+}
+
+.profile-entitlement-status span {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.profile-entitlement-status small {
+  color: var(--ink-faint);
+  line-height: 1.45;
 }
 
 .experience-heading {
@@ -2181,6 +2469,19 @@ details[open] > summary > svg:last-child {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  .workflow-progress dl,
+  .workflow-proof-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .workflow-progress dl div:nth-child(odd) {
+    padding-right: 0;
+  }
+
+  .workflow-proof-fields > small {
+    grid-column: auto;
+  }
+
   .university-overview {
     gap: 22px;
   }
@@ -2264,3 +2565,12 @@ details[open] > summary > svg:last-child {
     transition-duration: 0.01ms !important;
   }
 }
+/* Partner catalog access follows the authenticated account's verified university. */
+#partners[data-catalog-locked="true"] > :not(#partner-access-gate) { display: none !important; }
+#partner-access-gate { padding: 3rem 1.5rem; text-align: center; }
+#partner-access-gate h2 { margin-bottom: 1.25rem; }
+#partner-access-gate[hidden] { display: none; }
+
+/* Every school's catalogue is public; the gate rules above only apply to a locked section. */
+.site-data-note { display: flex; gap: .5rem; align-items: flex-start; max-width: 60rem; margin: 2rem auto 1rem; padding: 0 1rem; font-size: .8125rem; line-height: 1.5; color: var(--muted, #6b7280); }
+.site-data-note svg, .site-data-note i { flex: none; width: 1rem; height: 1rem; margin-top: .125rem; }

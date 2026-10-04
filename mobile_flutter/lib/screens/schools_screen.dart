@@ -59,8 +59,8 @@ class _SchoolsScreenState extends State<SchoolsScreen> {
           padding: const EdgeInsets.fromLTRB(20, 18, 20, 110),
           children: [
             if (widget.showPageHeader) ...[
-              const ExchangeSectionHeader(
-                eyebrow: '長庚大學合作校',
+              ExchangeSectionHeader(
+                eyebrow: store.account?.homeUniversity != null ? '${store.account!.homeUniversity}合作校' : '合作校',
                 title: '找到適合你的學校',
               ),
               const SizedBox(height: 14),

@@ -1,0 +1,91 @@
+/* UniWay motion: depart, arrive, confirm. No content depends on an animation. */
+:root {
+  --uw-motion-press: 110ms;
+  --uw-motion-fast: 160ms;
+  --uw-motion-standard: 240ms;
+  --uw-motion-arrive: 320ms;
+  --uw-motion-map: 700ms;
+  --uw-motion-ease: cubic-bezier(.2, .75, .25, 1);
+  --uw-motion-out: cubic-bezier(.16, 1, .3, 1);
+  --icon-motion-interaction-duration: var(--uw-motion-fast);
+  --icon-motion-ease: var(--uw-motion-ease);
+  --icon-motion-emphasized-ease: var(--uw-motion-out);
+  --travel-duration: var(--uw-motion-standard);
+}
+
+/* The route coordinator replaces the older independent page entrances. */
+.uw-motion-ready body.unified-shell [data-university-page]:not([hidden]),
+.uw-motion-ready .partner-map-panel,
+.uw-motion-ready .partner-map-preview,
+.uw-motion-ready .icon-motion-enter { animation: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  body.unified-shell :is(button, .primary-button, .secondary-button, .text-action, .guide-action, .guide-plan-link, .uniway-public-nav a, .mobile-nav a, summary) {
+    transition: color var(--uw-motion-fast) ease, background-color var(--uw-motion-fast) ease,
+      border-color var(--uw-motion-fast) ease, box-shadow var(--uw-motion-standard) ease,
+      translate var(--uw-motion-fast) var(--uw-motion-out), scale var(--uw-motion-press) var(--uw-motion-ease);
+  }
+  body.unified-shell :is(button, .primary-button, .secondary-button, .guide-plan-link, .mobile-nav a):not(:disabled):not([aria-disabled="true"]):active {
+    scale: .975;
+  }
+  body.unified-shell :is(input, select, textarea) {
+    transition: border-color var(--uw-motion-fast) ease, box-shadow var(--uw-motion-fast) ease, background-color var(--uw-motion-fast) ease;
+  }
+  body.unified-shell :is(.guide-stage, .travel-saved-ticket, .discovery-experience-card, .featured-board-card, .partner-card) {
+    transition: translate var(--uw-motion-standard) var(--uw-motion-out), border-color var(--uw-motion-fast) ease, box-shadow var(--uw-motion-standard) ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    body.unified-shell :is(.guide-stage, .travel-saved-ticket, .discovery-experience-card, .featured-board-card, .partner-card):hover {
+      translate: 0 -2px;
+      box-shadow: var(--uw-shadow);
+    }
+    body.unified-shell :is(.primary-button, .guide-plan-link):not(:disabled):hover { translate: 0 -1px; }
+  }
+  .unified-shell .uniway-public-nav a { position: relative; }
+  .unified-shell .uniway-public-nav a::after {
+    content: ""; position: absolute; left: calc(50% - 9px); bottom: 5px; height: 2px; width: 18px;
+    border-radius: 2px; background: currentColor; transform: scaleX(0); opacity: 0;
+    transition: transform var(--uw-motion-standard) var(--uw-motion-out), opacity var(--uw-motion-fast) ease;
+  }
+  .unified-shell .uniway-public-nav a[aria-current="page"]::after { transform: scaleX(1); opacity: .65; }
+  .unified-shell .detail-tabs [aria-selected="true"] { transition-duration: var(--uw-motion-standard); }
+  .unified-shell summary > .lucide { transition: transform var(--uw-motion-standard) var(--uw-motion-out); }
+
+  /* Native disclosure semantics and closing behavior remain browser-owned. */
+  @supports (interpolate-size: allow-keywords) and selector(::details-content) {
+    .unified-shell details:not(#application-tools):not([data-university-page]) { interpolate-size: allow-keywords; }
+    .unified-shell details:not(#application-tools):not([data-university-page])::details-content {
+      block-size: 0; overflow: clip; opacity: 0;
+      transition: block-size var(--uw-motion-standard) var(--uw-motion-ease),
+        opacity var(--uw-motion-fast) ease, content-visibility var(--uw-motion-standard) allow-discrete;
+    }
+    .unified-shell details[open]:not(#application-tools):not([data-university-page])::details-content { block-size: auto; opacity: 1; }
+  }
+
+  /* A calm pulse conveys real loading without a moving stripe across the page. */
+  .unified-shell .skeleton { animation: uw-loading 1.6s ease-in-out infinite; background-size: auto; }
+  .unified-shell .map-home-marker::after { animation-iteration-count: 2; }
+  .unified-shell .advisor-assistant[data-state="success"] .advisor-mascot-image[data-mascot-pose="complete"] {
+    animation-duration: var(--uw-motion-arrive); animation-timing-function: var(--uw-motion-out);
+  }
+  .unified-shell .advisor-assistant[data-state="insufficient"] .advisor-mascot-image[data-mascot-pose="insufficient"] { animation-duration: var(--uw-motion-standard); }
+  .unified-shell .advisor-assistant[data-state="error"] .advisor-mascot-image,
+  .unified-shell .advisor-assistant .advisor-mascot-confetti { animation: none; }
+}
+@keyframes uw-loading { 0%, 100% { opacity: .55; } 50% { opacity: .9; } }
+
+/* Stop decorative CSS work off-tab; WAAPI work is canceled by motion.js. */
+.uw-motion-ready[data-motion-suspended] *,
+.uw-motion-ready[data-motion-suspended] *::before,
+.uw-motion-ready[data-motion-suspended] *::after { animation-play-state: paused !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  body.unified-shell *, body.unified-shell *::before, body.unified-shell *::after,
+  body.unified-shell details::details-content {
+    animation: none !important; transition: none !important; scroll-behavior: auto !important;
+  }
+}
+@media print {
+  body.unified-shell *, body.unified-shell *::before, body.unified-shell *::after { animation: none !important; transition: none !important; }
+}
