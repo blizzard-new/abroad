@@ -132,8 +132,8 @@ def test_api_contract_page_does_not_depend_on_csp_blocked_assets(tmp_path) -> No
 
     favicon = client.get("/favicon.ico")
     assert favicon.status_code == 200
-    assert favicon.headers["content-type"].startswith("image/svg+xml")
-    assert b"<script" not in favicon.content.lower()
+    assert favicon.headers["content-type"].startswith("image/x-icon")
+    assert favicon.content[:4] == b"\x00\x00\x01\x00", "a real .ico file, which cannot carry script"
 
 
 def test_calendar_conflict_contract_preserves_application_plan_identity(tmp_path) -> None:

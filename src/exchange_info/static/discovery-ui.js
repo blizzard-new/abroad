@@ -75,15 +75,42 @@ function discoveryChineseSummary(source) {
   const value = source.summary || "";
   return window.UniWayChinese && !window.UniWayChinese.needsTranslation(value) ? window.UniWayChinese.normalizeTerms(value) : "";
 }
+const DISCOVERY_FILLER = /^(這個來源主要談到|這個公開來源|來源談到|\d+\s*個來源)/;
+const DISCOVERY_KIND_LABELS = { personal_story: "學生分享", review_collection: "評論彙整頁", community_thread: "社群討論串", video: "影片", directory: "學校介紹、排名或課程目錄", other: "其他來源" };
+const discoveryDigestCache = new Map();
+// A sentence that only says which topics a source mentions tells the student nothing, so it is never shown as a summary.
+function discoveryUsefulSummary(source) {
+  const value = discoveryChineseSummary(source);
+  return value && !DISCOVERY_FILLER.test(value) ? value : "";
+}
+async function discoveryDigestFor(source) {
+  if (source.digest_zh) return source.digest_zh;
+  const url = UniWayDiscovery.safeUrl(source.source_url);
+  if (!url) return null;
+  if (discoveryDigestCache.has(url)) return discoveryDigestCache.get(url);
+  let digest = null;
+  try { digest = await fetchJson(`/experience-digest?source_url=${encodeURIComponent(url)}`); } catch (_) { digest = null; }
+  discoveryDigestCache.set(url, digest);
+  return digest;
+}
 function discoverySourceCard(source, { theme = "all" } = {}) {
   const key = registerDiscoverySource(source);
-  const summary = (theme !== "all" && source.theme_summaries_zh?.[theme]) || discoveryChineseSummary(source);
-  return `<article class="discovery-experience-card" data-experience-key="${escapeHtml(key)}">
-    <small>${escapeHtml(source.exchange_term || "交換學期未標示")}${source.published_at ? ` · 發表 ${escapeHtml(source.published_at)}` : ""}</small>
-    <h4><button type="button" data-read-experience="${escapeHtml(key)}">${escapeHtml(source.title)}</button></h4>
-    <p>${escapeHtml(truncate(summary || "中文摘要待補，請查看來源。", 150))}</p>
-    <div class="discovery-source-footer"><span class="discovery-tags">${(source.themes || []).slice(0,3).map(t => `<span>${escapeHtml(UniWayDiscovery.THEMES[t] || t)}</span>`).join("")}</span>${discoveryBookmarkButton(source)}</div>
+  const digest = source.digest_zh;
+  const summary = digest ? digest.overview : (theme !== "all" && source.theme_summaries_zh?.[theme]) || discoveryUsefulSummary(source);
+  const kind = DISCOVERY_KIND_LABELS[source.source_kind] || "";
+  return `<article class="discovery-experience-card${digest ? " has-digest" : ""}" data-experience-key="${escapeHtml(key)}">
+    <small>${digest ? '<span class="discovery-digest-badge">中文整理</span> ' : ""}${escapeHtml(source.exchange_term || "交換學期未標示")}${source.published_at ? ` · 發表 ${escapeHtml(source.published_at)}` : ""}</small>
+    <h4><button type="button" data-read-experience="${escapeHtml(key)}">${escapeHtml(digest ? digest.title_zh : source.title)}</button></h4>
+    ${digest && digest.title_zh !== source.title ? `<p class="discovery-original-title">原標題：${escapeHtml(source.title)}</p>` : ""}
+    <p>${escapeHtml(truncate(summary || "這篇還沒有中文整理，可以先看原文。", digest ? 200 : 150))}</p>
+    <div class="discovery-source-footer"><span class="discovery-tags">${kind && !digest ? `<span>${escapeHtml(kind)}</span>` : ""}${(source.themes || []).slice(0,3).map(t => `<span>${escapeHtml(UniWayDiscovery.THEMES[t] || t)}</span>`).join("")}</span>${discoveryBookmarkButton(source)}</div>
   </article>`;
+}
+function discoveryOtherSources(sources) {
+  if (!sources.length) return "";
+  const groups = Object.keys(DISCOVERY_KIND_LABELS).map(kind => [kind, sources.filter(s => (DISCOVERY_KIND_LABELS[s.source_kind] ? s.source_kind : "other") === kind)]).filter(([, rows]) => rows.length);
+  return `<details class="discovery-other-sources"><summary>其他參考來源 <span>${sources.length}</span></summary><p class="discovery-muted">這些網頁還沒有中文整理，或不是學生本人寫的心得（例如排名、課程目錄）。</p>
+    ${groups.map(([kind, rows]) => `<section><h4>${escapeHtml(DISCOVERY_KIND_LABELS[kind])} <span>${rows.length}</span></h4><ul>${rows.map(s => `<li><a href="${escapeHtml(UniWayDiscovery.safeUrl(s.source_url))}" target="_blank" rel="noreferrer">${escapeHtml(truncate(s.title, 90))}</a><small>${escapeHtml(s.platform || "")}${s.language && s.language !== "unknown" ? ` · ${escapeHtml(String(s.language).toUpperCase())}` : ""}</small></li>`).join("")}</ul></section>`).join("")}</details>`;
 }
 function renderDiscoveryRecents() {
   const rows = discoveryData().recent_views;
@@ -132,6 +159,8 @@ async function renderSavedDiscoveryExperiences() {
   const scope = discoveryKey();
   let sources = Object.values(discoveryData().saved_experiences);
   if (window.UniWayChinese) sources = (await window.UniWayChinese.localize("/student-experiences", { sources })).sources;
+  // Saved copies keep only a short snapshot, so each one's Chinese write-up is looked up by its address.
+  sources = await Promise.all(sources.map(async s => ({ ...s, digest_zh: (await discoveryDigestFor(s)) || undefined })));
   if (!host.isConnected || scope !== discoveryKey()) return;
   const countries = unique(sources.map(s => s.country || "未標示國家"));
   const inCountry = sources.filter(s => !discoverySavedCountry || (s.country || "未標示國家") === discoverySavedCountry);
@@ -146,11 +175,17 @@ async function renderSavedDiscoveryExperiences() {
 function renderDiscoveryExperiences(digest) {
   const host = $("#experience-content"); if (!host) return;
   host.setAttribute("aria-busy", "false");
-  const sources = digest.sources || [], themes = Object.keys(UniWayDiscovery.THEMES).filter(t => sources.some(s => s.themes?.includes(t)));
+  const all = digest.sources || [];
+  // A student's account is shown as an experience when we wrote it up in Chinese, or when it is a personal story with a summary
+  // that says something. Ranking pages, review listings, threads and videos with nothing to read are references.
+  const isStory = s => Boolean(s.digest_zh) || ((!s.source_kind || s.source_kind === "personal_story") && Boolean(discoveryUsefulSummary(s)));
+  const sources = all.filter(isStory), others = all.filter(s => !isStory(s));
+  const themes = Object.keys(UniWayDiscovery.THEMES).filter(t => sources.some(s => s.themes?.includes(t)));
   if (discoveryTheme !== "all" && !themes.includes(discoveryTheme)) discoveryTheme = "all";
   const filtered = sources.filter(s => discoveryTheme === "all" || s.themes?.includes(discoveryTheme));
   host.innerHTML = `<div class="discovery-topic-bar" role="group" aria-label="心得主題"><button type="button" data-experience-theme="all" aria-pressed="${discoveryTheme === "all"}">全部 ${sources.length}</button>${themes.map(t => `<button type="button" data-experience-theme="${t}" aria-pressed="${discoveryTheme === t}">${UniWayDiscovery.THEMES[t]}</button>`).join("")}<button type="button" id="refresh-experiences" class="discovery-refresh">更新心得</button></div>
-    ${sources.length ? `<div class="discovery-experience-grid">${filtered.map(source => discoverySourceCard(source, { theme: discoveryTheme })).join("")}</div>` : '<div class="discovery-empty"><p>還沒有公開學生心得。</p><button type="button" data-open-life>查看生活情報</button></div>'}
+    ${sources.length ? `<div class="discovery-experience-grid">${filtered.map(source => discoverySourceCard(source, { theme: discoveryTheme })).join("")}</div>` : `<div class="discovery-empty"><p>${others.length ? "這所學校還沒有整理成中文的學生心得。下方有找到的參考網頁，可以先看原文。" : "還沒有公開學生心得。"}</p><button type="button" data-open-life>查看生活情報</button></div>`}
+    ${discoveryOtherSources(others)}
     <details class="discovery-source-note"><summary>資料與來源</summary><p>${escapeHtml(digest.disclaimer || "學生個人經驗，依年份與科系而異。")}</p><p>${escapeHtml(digest.coverage_note || "")}</p></details>`;
   initIcons();
 }
@@ -159,14 +194,24 @@ async function openDiscoveryReader(source) {
   const scope = discoveryKey();
   if (window.UniWayChinese) source = (await window.UniWayChinese.localize("/student-experiences", { sources: [source] })).sources[0];
   if (scope !== discoveryKey()) return;
+  const digest = await discoveryDigestFor(source);
+  if (scope !== discoveryKey()) return;
   discoveryReaderSource = source; discoveryReaderReturn = document.activeElement;
   rememberDiscovery("experience", source);
   const dialog = $("#discovery-reader");
-  dialog.innerHTML = `<div class="discovery-reader-heading"><div><small>${escapeHtml(source.school_name)}</small><h2 id="discovery-reader-title">${escapeHtml(source.title)}</h2></div><button type="button" data-close-reader aria-label="關閉心得">×</button></div>
-    <div class="discovery-reader-meta"><span>${escapeHtml(source.exchange_term || "交換學期未標示")}</span>${source.published_at ? `<span>發表 ${escapeHtml(source.published_at)}</span>` : ""}${discoveryBookmarkButton(source)}</div>
-    ${source.translation_status === "machine" ? '<span class="life-kind">機器翻譯</span>' : ""}<p class="discovery-reader-summary">${escapeHtml(discoveryChineseSummary(source) || "中文摘要待補，請查看來源。")}</p>
-    <div class="discovery-reader-themes">${Object.entries(source.theme_summaries_zh || {}).filter(([,v]) => v).map(([t,v]) => `<section><h3>${escapeHtml(UniWayDiscovery.THEMES[t] || t)}</h3><p>${escapeHtml(v)}</p></section>`).join("")}</div>
-    <details class="discovery-reader-original"><summary>資料來源</summary><p>內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。</p></details>
+  const heading = digest ? digest.title_zh : source.title;
+  const byline = [source.platform, source.author_name, source.language && source.language !== "unknown" ? `原文 ${String(source.language).toUpperCase()}` : ""].filter(Boolean).join(" · ");
+  const body = digest
+    ? `<p class="discovery-reader-summary">${escapeHtml(digest.overview)}</p>
+      <div class="discovery-reader-themes">${digest.sections.map(section => `<section><h3>${escapeHtml(section.heading)}</h3><ul>${section.points.map(point => `<li>${escapeHtml(point)}</li>`).join("")}</ul></section>`).join("")}
+      ${digest.tips.length ? `<section class="discovery-reader-tips"><h3>給之後要去的人</h3><ul>${digest.tips.map(point => `<li>${escapeHtml(point)}</li>`).join("")}</ul></section>` : ""}</div>
+      <details class="discovery-reader-original" open><summary>這份中文整理怎麼來的</summary><p>${escapeHtml(digest.basis)}${digest.written_at ? ` 整理日期：${escapeHtml(digest.written_at)}。` : ""}${heading !== source.title ? ` 原標題：${escapeHtml(source.title)}。` : ""}</p></details>`
+    : `${source.translation_status === "machine" ? '<span class="life-kind">機器翻譯</span>' : ""}<p class="discovery-reader-summary">${escapeHtml(discoveryUsefulSummary(source) || "這篇還沒有中文整理，請先看原文。")}</p>
+      <div class="discovery-reader-themes">${Object.entries(source.theme_summaries_zh || {}).filter(([,v]) => v && !DISCOVERY_FILLER.test(v)).map(([t,v]) => `<section><h3>${escapeHtml(UniWayDiscovery.THEMES[t] || t)}</h3><p>${escapeHtml(v)}</p></section>`).join("")}</div>
+      <details class="discovery-reader-original"><summary>資料來源</summary><p>內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。</p></details>`;
+  dialog.innerHTML = `<div class="discovery-reader-heading"><div><small>${escapeHtml(source.school_name)}</small><h2 id="discovery-reader-title">${escapeHtml(heading)}</h2></div><button type="button" data-close-reader aria-label="關閉心得">×</button></div>
+    <div class="discovery-reader-meta"><span>${escapeHtml(source.exchange_term || "交換學期未標示")}</span>${source.published_at ? `<span>發表 ${escapeHtml(source.published_at)}</span>` : ""}${byline ? `<span>${escapeHtml(byline)}</span>` : ""}${discoveryBookmarkButton(source)}</div>
+    ${body}
     <a class="primary-button" data-experience-original href="${escapeHtml(UniWayDiscovery.safeUrl(source.source_url))}" target="_blank" rel="noreferrer">${source.source_type === "video" ? "觀看原始影片" : "閱讀完整原文"} ↗</a>`;
   if (!dialog.open) dialog.showModal();
   dialog.querySelector("[data-close-reader]").focus(); initIcons();

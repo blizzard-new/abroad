@@ -1012,6 +1012,22 @@ class ExperienceSourceType(str, Enum):
     COMMUNITY = "community"
 
 
+class ExperienceDigestSection(BaseModel):
+    heading: str
+    points: list[str] = Field(default_factory=list)
+
+
+class ExperienceDigestZh(BaseModel):
+    """A Traditional Chinese write-up of what one source says, in our own words; never a full translation."""
+
+    title_zh: str
+    overview: str
+    sections: list[ExperienceDigestSection] = Field(default_factory=list)
+    tips: list[str] = Field(default_factory=list)
+    basis: str = "依原文內容用繁體中文整理，不是全文翻譯，可能有遺漏；請以原文為準。"
+    written_at: str = ""
+
+
 class StudentExperienceSource(BaseModel):
     school_name: str
     country: str | None = None
@@ -1034,6 +1050,8 @@ class StudentExperienceSource(BaseModel):
     original_summary: str = ""
     theme_summaries_zh: dict[str, str] = Field(default_factory=dict)
     translation_status: str = "original"
+    source_kind: str = "other"
+    digest_zh: ExperienceDigestZh | None = None
 
 
 class ExperienceHighlight(BaseModel):

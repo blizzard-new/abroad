@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+from .destination_tips import DestinationGuide, DestinationGuideSummary, guide_for_country, guide_summaries
 from .discovery import localize_experience_digest
+from .experience_digests import attach_digests, load_digests, with_bundled_sources
 from .public_translation import PublicTranslationBatch, translate_public_batch
 from .school_content import complete_destination_profile
 
@@ -137,6 +139,7 @@ from .form_drafts import (
     FormDraftNotFoundError,
 )
 from .models import (
+    ExperienceDigestZh,
     SchoolDataCompleteness,
     AccountApplicationWorkspace,
     AccountApplicationWorkspaceEnvelope,
@@ -1209,6 +1212,15 @@ def create_app(
         return FileResponse(
             STATIC_DIR / "index.html",
             headers={"Cache-Control": "no-store"},
+        )
+
+    @app.get("/favicon.ico", response_class=FileResponse, include_in_schema=False)
+    def favicon() -> FileResponse:
+        # Browsers, search crawlers and link previews request this path directly, even for pages without a <link rel="icon">.
+        return FileResponse(
+            STATIC_DIR / "assets" / "brand" / "favicon.ico",
+            media_type="image/x-icon",
+            headers={"Cache-Control": "public, max-age=86400"},
         )
 
     @app.get("/health")
@@ -3301,7 +3313,9 @@ def create_app(
         sources = load_student_experiences(resolved_data_dir)
         known_urls = {source.source_url for source in sources if source.school_name == partner.school_name}
         sources.extend(source for source in reference_student_sources(partner) if source.source_url not in known_urls)
-        return localize_experience_digest(build_experience_digest(partner.school_name, partner.country, sources), resolved_data_dir)
+        digest = localize_experience_digest(build_experience_digest(partner.school_name, partner.country, sources), resolved_data_dir)
+        digest = with_bundled_sources(digest, partner.school_name)
+        return digest.model_copy(update={"sources": attach_digests(digest.sources)})
 
     @app.post("/student-experiences/refresh", response_model=StudentExperienceDigest)
     def refresh_student_experiences(
@@ -3348,7 +3362,27 @@ def create_app(
             )
         known_urls = {source.source_url for source in all_sources if source.school_name == partner.school_name}
         all_sources.extend(source for source in reference_student_sources(partner) if source.source_url not in known_urls)
-        return localize_experience_digest(build_experience_digest(partner.school_name, partner.country, all_sources), resolved_data_dir, generate=True)
+        digest = localize_experience_digest(build_experience_digest(partner.school_name, partner.country, all_sources), resolved_data_dir, generate=True)
+        digest = with_bundled_sources(digest, partner.school_name)
+        return digest.model_copy(update={"sources": attach_digests(digest.sources)})
+
+    @app.get("/experience-digest", response_model=ExperienceDigestZh)
+    def experience_digest(source_url: str = Query(min_length=8, max_length=2000)) -> ExperienceDigestZh:
+        digest = load_digests().get(source_url)
+        if digest is None:
+            raise HTTPException(status_code=404, detail="這篇心得還沒有中文整理。")
+        return digest
+
+    @app.get("/destination-tips/countries", response_model=list[DestinationGuideSummary])
+    def destination_tip_countries() -> list[DestinationGuideSummary]:
+        return guide_summaries()
+
+    @app.get("/destination-tips", response_model=DestinationGuide)
+    def destination_tips(country: str = Query(min_length=1, max_length=40)) -> DestinationGuide:
+        guide = guide_for_country(country)
+        if guide is None:
+            raise HTTPException(status_code=404, detail="這個國家的出發前提醒還在整理中。")
+        return guide
 
     from .application_periods import ApplicationPeriodOptions, application_period_options
 

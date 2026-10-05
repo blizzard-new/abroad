@@ -736,7 +736,12 @@ def test_school_detail_uses_accessible_real_tabs() -> None:
 
     assert 'role="tablist"' in html
     detail_tabs = html.split('<nav class="detail-tabs"', 1)[1].split("</nav>", 1)[0]
-    assert detail_tabs.count('role="tab"') == 5
+    assert detail_tabs.count('role="tab"') == 6, "快速了解、申請方式、生活情報、出發前提醒、學生心得、學生社群"
+    assert detail_tabs.index("detail-tab-life") < detail_tabs.index("detail-tab-prep") < detail_tabs.index("detail-tab-experiences")
+    for panel in ("detail-overview", "detail-application", "detail-life", "detail-prep", "detail-experiences", "detail-community"):
+        assert f'aria-controls="{panel}"' in detail_tabs
+        assert f'<section id="{panel}"' in script, panel
+    assert 'aria-labelledby="detail-tab-prep"' in script and "window.UniWayDestinationTips?.load(item)" in script
     assert 'role="tabpanel"' in script
     assert "activateDetailTab" in script
     assert 'event.key === "ArrowRight"' in script

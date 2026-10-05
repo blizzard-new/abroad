@@ -4,7 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta id="theme-color" name="theme-color" content="#f4f7fb" />
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230078d4'/%3E%3Cpath d='M16 32 32 16l16 16-16 16z' fill='none' stroke='white' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='5' fill='white'/%3E%3C/svg%3E" />
+    <link rel="icon" href="/static/assets/brand/favicon.ico?v=20261004-logo-2" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/assets/brand/favicon-32.png?v=20261004-logo-2" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/brand/favicon-16.png?v=20261004-logo-2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/assets/brand/apple-touch-icon.png?v=20261004-logo-2" />
     <title>UniWay｜臺灣大學生留學與交換平台</title>
     <link rel="stylesheet" href="/static/styles.css?v=20261003-open-1" />
     <link rel="stylesheet" href="/static/design-system.css?v=20260716-platform-12" />
@@ -15,7 +18,7 @@
     <link rel="stylesheet" href="/static/uniway.css?v=20260820-uniway-1" />
     <link rel="stylesheet" href="/static/partner-map.css?v=20260923-no-lines-3" />
     <link rel="stylesheet" href="/static/school-detail.css?v=20260924-concise-zh-1" />
-    <link rel="stylesheet" href="/static/discovery.css?v=20260924-selection-1" />
+    <link rel="stylesheet" href="/static/discovery.css?v=20261004-digest-1" />
     <link rel="stylesheet" href="/static/navigation.css?v=20260929-tools-headings-1" />
     <link rel="stylesheet" href="/static/travel.css?v=20260927-home-1" />
     <link rel="stylesheet" href="/static/motion.css?v=20260926-motion-1" />
@@ -29,6 +32,8 @@
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/application-workspace.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/document-workbench.css?v=20261002-flow-1" />
+    <link rel="stylesheet" href="/static/destination-tips.css?v=20261004-tips-2" />
+    <link rel="stylesheet" href="/static/brand.css?v=20261004-logo-2" />
   </head>
   <body class="global-home-mode unified-shell">
     <a class="skip-link" href="#main-content">跳到主要內容</a>
@@ -36,7 +41,7 @@
       <button id="glass-menu-close" type="button" class="icon-button glass-menu-close" aria-label="關閉功能選單"><i data-lucide="x" aria-hidden="true"></i></button>
         <header class="topbar">
           <a class="uniway-header-brand" href="#home" aria-label="UniWay 首頁">
-            <span class="brand-mark" aria-hidden="true"><i data-lucide="send"></i></span>
+            <span class="brand-mark" aria-hidden="true"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="40" height="40" decoding="async" /></span>
             <strong>UniWay</strong>
           </a>
           <nav class="uniway-public-nav" aria-label="公開探索導覽">
@@ -45,7 +50,7 @@
             <a href="#guide" data-public-route="guide"><i data-lucide="book-open" aria-hidden="true"></i><span>申請指南</span></a>
             <details id="application-tools" class="application-tools application-nav-group">
               <summary>
-                <a href="#overview" data-public-route="overview" data-requires-home-school><i data-lucide="clipboard-list" aria-hidden="true"></i><span>我的申請</span></a>
+                <a href="#advisor" data-public-route="overview" data-requires-home-school><i data-lucide="clipboard-list" aria-hidden="true"></i><span>我的申請</span></a>
                 <span class="application-nav-chevron" aria-hidden="true"><i data-lucide="chevron-down"></i></span>
               </summary>
               <nav class="application-tools-panel" aria-label="我的申請工具">
@@ -67,7 +72,7 @@
             <span><small>全台學生共用</small><strong id="global-topbar-label">全部留學貼文</strong></span>
           </div>
           <a id="back-to-global-home" class="icon-button board-home-button" href="#home" aria-label="返回留學首頁" data-tooltip="留學首頁"><i data-lucide="arrow-left" aria-hidden="true"></i></a>
-          <div class="mobile-brand"><span class="brand-mark" aria-hidden="true"><i data-lucide="graduation-cap"></i></span><span><strong>UniWay</strong><small id="mobile-school-label">選擇就讀學校</small></span></div>
+          <div class="mobile-brand"><span class="brand-mark" aria-hidden="true"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="40" height="40" decoding="async" /></span><span><strong>UniWay</strong><small id="mobile-school-label">選擇就讀學校</small></span></div>
         </header>
 <div class="route-toolbar" aria-label="頁面操作">
           <div class="route-back-slot">
@@ -103,7 +108,7 @@
       <div class="onboarding-backdrop"></div>
       <div class="onboarding-shell">
         <div class="onboarding-heading">
-          <span class="platform-mark" aria-hidden="true"><i data-lucide="compass"></i></span>
+          <span class="platform-mark" aria-hidden="true"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="48" height="48" decoding="async" /></span>
           <div>
             <span class="eyebrow">UniWay</span>
             <h1 id="onboarding-title">你目前就讀哪一所台灣大學？</h1>
@@ -148,7 +153,7 @@
       <div class="account-dialog-shell">
         <button type="button" class="icon-button dialog-close" data-close-auth aria-label="關閉"><i data-lucide="x" aria-hidden="true"></i></button>
         <div class="account-dialog-intro">
-          <span class="platform-mark" aria-hidden="true"><i data-lucide="compass"></i></span>
+          <span class="platform-mark" aria-hidden="true"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="48" height="48" decoding="async" /></span>
           <div><span class="eyebrow">UniWay 帳號</span><h1 id="auth-title">把申請進度帶著走</h1><p>登入以保存收藏與申請進度。</p></div>
         </div>
         <details class="discovery-recents" data-discovery-recents hidden></details>
@@ -296,11 +301,11 @@
     <div class="app-shell">
       <aside class="sidebar" aria-label="主要導覽">
         <a class="brand global-brand" href="#home" aria-label="UniWay 首頁">
-          <span class="brand-mark" aria-hidden="true"><i data-lucide="graduation-cap"></i></span>
+          <span class="brand-mark" aria-hidden="true"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="40" height="40" decoding="async" /></span>
           <span><strong>UniWay</strong><small>探索世界 · 完成申請</small></span>
         </a>
         <a class="brand university-brand" href="#home" aria-label="返回 UniWay 首頁">
-          <span class="brand-mark" aria-hidden="true"><i data-lucide="graduation-cap"></i></span>
+          <span class="brand-mark" aria-hidden="true"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="40" height="40" decoding="async" /></span>
           <span><strong>UniWay</strong><small>個人申請工作區</small></span>
         </a>
 
@@ -354,7 +359,7 @@
       <main id="main-content" class="workspace">
         <header class="glass-mobile-header">
           <button id="glass-menu-toggle" type="button" class="icon-button" aria-label="開啟功能選單" aria-controls="glass-navigation" aria-expanded="false"><i data-lucide="menu" aria-hidden="true"></i></button>
-          <a href="#home" aria-label="UniWay 首頁"><i data-lucide="send" aria-hidden="true"></i><strong>UniWay</strong></a>
+          <a href="#home" aria-label="UniWay 首頁"><span class="brand-mark" aria-hidden="true"><img src="/static/assets/brand/uniway-mark.webp?v=20261004-logo-2" alt="" width="40" height="40" decoding="async" /></span><strong>UniWay</strong></a>
         </header>
 
         <div id="page-status" class="page-status" role="status" aria-live="polite"></div>
@@ -1056,6 +1061,7 @@
             <button id="detail-tab-overview" type="button" role="tab" aria-selected="true" aria-controls="detail-overview" data-detail-target="detail-overview"><i data-lucide="compass" aria-hidden="true"></i>快速了解</button>
             <button id="detail-tab-application" type="button" role="tab" aria-selected="false" aria-controls="detail-application" data-detail-target="detail-application" tabindex="-1"><i data-lucide="route" aria-hidden="true"></i>申請方式</button>
             <button id="detail-tab-life" type="button" role="tab" aria-selected="false" aria-controls="detail-life" data-detail-target="detail-life" tabindex="-1"><i data-lucide="coffee" aria-hidden="true"></i>生活情報</button>
+            <button id="detail-tab-prep" type="button" role="tab" aria-selected="false" aria-controls="detail-prep" data-detail-target="detail-prep" tabindex="-1"><i data-lucide="luggage" aria-hidden="true"></i>出發前提醒</button>
             <button id="detail-tab-experiences" type="button" role="tab" aria-selected="false" aria-controls="detail-experiences" data-detail-target="detail-experiences" tabindex="-1"><i data-lucide="book-open" aria-hidden="true"></i>學生心得</button>
             <button id="detail-tab-community" type="button" role="tab" aria-selected="false" aria-controls="detail-community" data-detail-target="detail-community" tabindex="-1"><i data-lucide="messages-square" aria-hidden="true"></i>學生社群</button>
           </nav>
@@ -1090,7 +1096,7 @@
     <dialog id="discussion-moderation" aria-labelledby="discussion-moderation-title"><header class="discussion-reader-header"><h2 id="discussion-moderation-title">討論管理</h2><button id="discussion-moderation-close" type="button" class="secondary-button">返回討論</button></header><div class="discussion-article"><label>內容狀態<select id="discussion-moderation-filter"><option value="pending">待審核</option><option value="approved">已公開</option><option value="hidden">已隱藏</option></select></label><div id="discussion-moderation-body"></div></div></dialog>
     <script src="/static/public-content-zh.js?v=20261001-school-content-1" defer></script>
     <script src="/static/discovery-core.js?v=20260924-selection-1" defer></script>
-    <script src="/static/discovery-ui.js?v=20261002-preferences-1" defer></script>
+    <script src="/static/discovery-ui.js?v=20261004-digest-2" defer></script>
     <script src="/static/navigation.js?v=20261001-planning-workspace-1" defer></script>
     <script src="/static/motion.js?v=20260927-home-1" defer></script>
     <script src="/static/community-reader.js?v=20260930-forum-1" defer></script>
@@ -1103,6 +1109,7 @@
     <script src="/static/application-workspace.js?v=20261002-flow-2" defer></script>
     <script src="/static/application-journey.js?v=20261002-flow-2" defer></script>
     <script src="/static/document-workbench.js?v=20261002-flow-2" defer></script>
+    <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
     <script src="/static/analytics.js?v=20261003-analytics-1" defer></script>
     <script src="/static/app.js?v=20261003-analytics-1" defer></script>
   </body>

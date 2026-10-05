@@ -1,0 +1,25 @@
+/* The UniWay logo (transparent) wherever the brand mark appears: header, side rail, phone bar and the sign-in / school dialogs.
+   Loaded last; each selector is one class heavier than the older .brand-mark / .platform-mark rules so it wins without !important. */
+body.unified-shell .brand-mark,
+body.unified-shell .platform-mark {
+  aspect-ratio: 1 / 1;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  flex: none; /* older rules set flex-basis 40px against a 34px height, which stretched the box */
+  padding: 0;
+}
+
+body.unified-shell .glass-mobile-header .brand-mark {
+  height: 38px;
+  width: 38px;
+}
+
+body.unified-shell .brand-mark img,
+body.unified-shell .platform-mark img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}

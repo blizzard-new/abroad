@@ -99,11 +99,11 @@ $env:EXCHANGE_EMAIL_VERIFICATION_BACKEND = "disabled"        # 只用 Google 登
 
 ```powershell
 $key = New-Object byte[] 32
-[Security.Cryptography.RandomNumberGenerator]::Fill($key)
+[Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($key)
 $env:EXCHANGE_VAULT_MASTER_KEY = [Convert]::ToBase64String($key)
 
 $secret = New-Object byte[] 32
-[Security.Cryptography.RandomNumberGenerator]::Fill($secret)
+[Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($secret)
 $env:EXCHANGE_EMAIL_VERIFICATION_SECRET = [Convert]::ToBase64String($secret).TrimEnd('=').Replace('+','-').Replace('/','_')
 ```
 

@@ -1,0 +1,29 @@
+/* 出發前提醒 */
+.tips-banner { border:1px solid var(--uw-line,#dce4ee); border-radius:16px; padding:14px 18px; background:var(--uw-surface-soft,#eef3fa); }
+.tips-banner.is-draft { border-color:#e3c27a; background:#fff8e8; color:#4a3a12; }
+[data-theme="dark"] .tips-banner.is-draft { background:#3a321c; border-color:#7d6a3a; color:#f1e3b8; }
+.tips-banner p { margin:6px 0 0; line-height:1.7; font-size:14px; }
+.tips-banner small { display:block; margin-top:6px; opacity:.8; }
+.tips-intro { margin:16px 0 0; line-height:1.85; }
+.tips-topic-nav { display:flex; flex-wrap:wrap; gap:8px; margin:18px 0 4px; }
+.tips-topic-nav button { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border:1px solid var(--uw-line,#dce4ee); border-radius:999px; background:transparent; color:inherit; font:inherit; font-size:14px; cursor:pointer; }
+.tips-topic-nav button:hover, .tips-topic-nav button:focus-visible { background:var(--uw-blue-soft,#e4f0ff); }
+.tips-topic-nav button span { font-size:12px; opacity:.7; }
+.tips-topic { margin-top:26px; scroll-margin-top:90px; }
+.tips-topic > h3 { margin:0 0 10px; font-size:19px; outline-offset:4px; }
+.tip { border:1px solid var(--uw-line,#dce4ee); border-left:4px solid var(--uw-line,#dce4ee); border-radius:14px; padding:13px 16px; margin:10px 0; background:var(--uw-surface,#fff); }
+.tip[data-importance="must"] { border-left-color:#d4543a; }
+.tip[data-importance="should"] { border-left-color:var(--uw-blue,#1d6fdc); }
+.tip[data-importance="good_to_know"] { border-left-color:#7a8aa0; }
+.tip-head { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 10px; }
+.tip-head h4 { margin:0; font-size:16px; line-height:1.5; }
+.tip-level { padding:1px 9px; border-radius:999px; font-size:12px; font-weight:700; background:var(--uw-surface-soft,#eef3fa); }
+.tip[data-importance="must"] .tip-level { background:#fde6e1; color:#8c2a16; }
+[data-theme="dark"] .tip[data-importance="must"] .tip-level { background:#4a2a24; color:#ffc9bd; }
+.tip p { margin:8px 0 0; line-height:1.85; overflow-wrap:anywhere; }
+.tip .tip-sources { font-size:13px; color:var(--uw-muted,#526279); }
+.tip .tip-sources span { margin-left:12px; white-space:nowrap; }
+.tips-empty { display:flex; gap:16px; align-items:flex-start; border:1px dashed var(--uw-line,#dce4ee); border-radius:16px; padding:20px; }
+.tips-empty > .lucide { flex:none; width:28px; height:28px; opacity:.7; }
+.tips-empty p { margin:6px 0 12px; line-height:1.75; }
+@media (max-width:640px) { .tip { padding:12px 13px; } .tip .tip-sources span { display:block; margin:4px 0 0; } }

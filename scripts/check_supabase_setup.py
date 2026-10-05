@@ -29,6 +29,11 @@ from exchange_info.supabase_keys import supabase_key_headers  # noqa: E402
 MIGRATIONS = ROOT / "supabase" / "migrations"
 DEFAULT_BUCKET = "exchange-private-vault"
 TABLE_PATTERN = re.compile(r"create table (?:if not exists )?public\.([a-z0-9_]+)", re.IGNORECASE)
+# Tables the migrations hide from every API role (even the secret key), so a direct read always looks like
+# "not found". Each is confirmed through a read-only function that selects from it instead.
+FUNCTION_ONLY_TABLES = {
+    "exchange_account_deletion_receipts": ("exchange_list_pending_account_deletion_storage", {"p_limit": 1}),
+}
 
 
 @dataclass
@@ -61,6 +66,15 @@ def key_role(key: str) -> str:
         except ValueError:
             return "unknown"
     return "unknown"
+
+
+def decode_key(value: str) -> bytes:
+    """The bytes behind a url-safe or standard base64 value, or b"" when it is not base64."""
+    value = value.strip()
+    try:
+        return base64.urlsafe_b64decode(value + "=" * (-len(value) % 4)) if value else b""
+    except ValueError:
+        return b""
 
 
 def expected_tables() -> list[str]:
@@ -111,8 +125,15 @@ def check_project(
     missing = []
     for name in names:
         try:
+            if name in FUNCTION_ONLY_TABLES:
+                function, arguments = FUNCTION_ONLY_TABLES[name]
+                reply = call("POST", f"/rest/v1/rpc/{function}", json=arguments,
+                             headers={**supabase_key_headers(key), "Content-Type": "application/json"})
+                if reply.status_code != 200 or (reply.json() or {}).get("status") != "committed":
+                    missing.append(name)
+                continue
             response = call("GET", f"/rest/v1/{name}", params={"select": "*", "limit": "0"})
-        except requests.RequestException:
+        except (requests.RequestException, ValueError, AttributeError):
             missing.append(name)
             continue
         if response.status_code == 404 or response.status_code >= 500 or response.status_code in (401, 403):
@@ -169,19 +190,22 @@ def check_environment(env: Mapping[str, str]) -> list[Result]:
         results.append(Result("ok", "EXCHANGE_ENVIRONMENT=production"))
     else:
         results.append(Result("warn", "EXCHANGE_ENVIRONMENT 不是 production", "正式上線要設成 production，才會強制使用 Supabase 與安全 Cookie。"))
-    master = env.get("EXCHANGE_VAULT_MASTER_KEY", "").strip()
-    try:
-        decoded = base64.urlsafe_b64decode(master + "=" * (-len(master) % 4)) if master else b""
-    except ValueError:
-        decoded = b""
-    if len(decoded) == 32:
+    regenerate = "用指南第 5 步的指令重新產生（要用 GetBytes 那一版）；產生後要另外備份，遺失就無法解密已存的文件。"
+    master = decode_key(env.get("EXCHANGE_VAULT_MASTER_KEY", ""))
+    if len(master) != 32:
+        results.append(Result("fail", "EXCHANGE_VAULT_MASTER_KEY 不是 32 位元組的 base64 金鑰", regenerate))
+    elif len(set(master)) == 1:
+        results.append(Result("fail", "EXCHANGE_VAULT_MASTER_KEY 是全部相同的位元組（沒有隨機產生）", "產生指令失敗時變數會留下全 0 的值，這種金鑰等於沒有加密。" + regenerate))
+    else:
         results.append(Result("ok", "文件庫加密金鑰 EXCHANGE_VAULT_MASTER_KEY 格式正確"))
-    else:
-        results.append(Result("fail", "EXCHANGE_VAULT_MASTER_KEY 不是 32 位元組的 base64 金鑰", "用指南第 5 步的指令產生，產生後要另外備份；遺失就無法解密已存的文件。"))
-    if env.get("EXCHANGE_EMAIL_VERIFICATION_SECRET", "").strip():
-        results.append(Result("ok", "EXCHANGE_EMAIL_VERIFICATION_SECRET 已設定"))
-    else:
+    verification = env.get("EXCHANGE_EMAIL_VERIFICATION_SECRET", "").strip()
+    decoded_secret = decode_key(verification)
+    if not verification:
         results.append(Result("fail", "缺 EXCHANGE_EMAIL_VERIFICATION_SECRET", "正式環境一定要有（即使只開放 Google 登入）；用 32 位元組隨機值產生。"))
+    elif len(decoded_secret) == 32 and len(set(decoded_secret)) == 1:
+        results.append(Result("fail", "EXCHANGE_EMAIL_VERIFICATION_SECRET 是全部相同的位元組（沒有隨機產生）", regenerate))
+    else:
+        results.append(Result("ok", "EXCHANGE_EMAIL_VERIFICATION_SECRET 已設定"))
     if env.get("GOOGLE_OAUTH_CLIENT_ID", "").strip() and env.get("GOOGLE_OAUTH_CLIENT_SECRET", "").strip():
         results.append(Result("ok", "Google 登入金鑰已設定"))
     else:

@@ -101,3 +101,21 @@
 @media (max-width:1000px) { .discovery-workspace-grid { grid-template-columns:minmax(0,1fr); }.discovery-ranking { position:static; } }
 @media (max-width:700px) { #discovery-criteria-form { grid-template-columns:repeat(2,minmax(0,1fr)); }.discovery-form-actions { grid-column:1/-1; }.discovery-experience-grid { grid-template-columns:minmax(0,1fr); }.discovery-search-tools>* { width:100%; }.discovery-shelf-tabs a { font-size:12px; }.discovery-shelf-tabs button { padding:10px 12px; }#discovery-reader { padding:20px; }.discovery-candidate { padding:16px; }.discovery-saved-filters { flex-direction:column; }.discovery-ranking { padding:18px; }.discovery-ranking li { padding:10px; } }
 @media (prefers-reduced-motion:reduce) { .discovery-candidate, #discovery-reader { scroll-behavior:auto; } }
+
+/* Chinese write-ups of student experiences */
+.discovery-digest-badge { display:inline-block; padding:2px 9px; border-radius:999px; background:var(--uw-blue-soft,#e4f0ff); color:var(--uw-blue-strong,#0a4a9c); font-size:12px; font-weight:700; letter-spacing:.02em; }
+.discovery-experience-card.has-digest { border-color:color-mix(in srgb,var(--uw-blue,#1d6fdc) 30%,var(--uw-line,#dce4ee)); }
+.discovery-original-title { margin:2px 0 6px; font-size:12px; color:var(--uw-muted,#526279); overflow-wrap:anywhere; }
+.discovery-reader-themes ul { margin:8px 0 0; padding-left:1.3em; line-height:1.85; }
+.discovery-reader-themes li { margin:4px 0; overflow-wrap:anywhere; }
+.discovery-reader-tips { background:var(--uw-surface-soft,#eef3fa); border-radius:16px; padding:14px 18px !important; }
+.discovery-reader-tips h3 { margin-top:0; }
+.discovery-other-sources { margin-top:22px; border:1px solid var(--uw-line,#dce4ee); border-radius:16px; padding:12px 16px; }
+.discovery-other-sources > summary { cursor:pointer; font-weight:700; }
+.discovery-other-sources > summary span, .discovery-other-sources h4 span { margin-left:6px; padding:1px 8px; border-radius:999px; background:var(--uw-surface-soft,#eef3fa); font-size:12px; font-weight:600; }
+.discovery-other-sources section { margin-top:14px; }
+.discovery-other-sources h4 { margin:0 0 6px; font-size:14px; }
+.discovery-other-sources ul { margin:0; padding:0; list-style:none; display:grid; gap:6px; }
+.discovery-other-sources li { display:flex; flex-wrap:wrap; gap:4px 12px; align-items:baseline; font-size:14px; }
+.discovery-other-sources li a { overflow-wrap:anywhere; }
+.discovery-other-sources small { color:var(--uw-muted,#526279); }

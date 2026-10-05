@@ -7684,6 +7684,8 @@ function openUniversityDetail(item, { updateHistory = true } = {}) {
   if (cachedDestination) renderDestinationProfile(item, cachedDestination);
   else loadDestinationProfile(item);
 
+  window.UniWayDestinationTips?.load(item);
+
   const cachedCompleteness = state.completenessCache.get(item.school_name);
   if (cachedCompleteness) renderSchoolCompleteness(cachedCompleteness);
   else loadSchoolCompleteness(item);
@@ -7975,6 +7977,11 @@ function renderUniversityOverview(item) {
         <div id="life-research-status" class="life-research-status" aria-live="polite"></div>
         <details class="life-official-guide"><summary>官方生活指南</summary><div id="destination-official-content" class="destination-official" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-card"></div></div></details>
         <div id="life-content" class="life-grid" aria-live="polite" aria-busy="true">${renderLifeLoading()}</div>
+      </section>
+
+      <section id="detail-prep" class="detail-section prep-section" role="tabpanel" tabindex="0" aria-labelledby="detail-tab-prep" hidden>
+        <div class="detail-section-heading"><h2 id="destination-prep-title">出發前提醒</h2></div>
+        <div id="prep-content" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-card"></div></div>
       </section>
 
       <section id="detail-experiences" class="detail-section experience-section" role="tabpanel" tabindex="0" aria-labelledby="detail-tab-experiences" hidden>

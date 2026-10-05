@@ -250,7 +250,7 @@ Google Workspace、Microsoft Entra、校方 SSO 與校方 Email OTP 採學校別
 
 ```powershell
 $secret = New-Object byte[] 32
-[Security.Cryptography.RandomNumberGenerator]::Fill($secret)
+[Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($secret)
 $env:EXCHANGE_EMAIL_VERIFICATION_SECRET=([Convert]::ToBase64String($secret).TrimEnd('=').Replace('+','-').Replace('/','_'))
 $env:EXCHANGE_EMAIL_VERIFICATION_BACKEND='smtp'
 $env:EXCHANGE_SMTP_HOST='smtp.example.com'
@@ -264,6 +264,8 @@ $env:EXCHANGE_SMTP_STARTTLS='1'
 2026-10-03 起，兩校官方資料不需登入即可瀏覽，帳號只開放 Google：`EXCHANGE_AUTH_METHODS` 預設 `google`（Email 註冊與登入、Facebook 都關閉）；本機要用 Email 登入可設成 `email,google`。Google 已驗證信箱的網域是 `cgu.edu.tw` 或 `ntpu.edu.tw` 時自動帶入學校，其他信箱登入後再選；這兩種都不算驗證在學，學校板發文仍須驗證學生身分。所有討論板（含兩校板）的發文、留言與按讚只需 email 已驗證的帳號，用校名署名仍須驗證在學身分；功能全部免費。上線前清單見 [`docs/launch-plan-2026-10-03.md`](docs/launch-plan-2026-10-03.md)。
 
 網站內建匿名使用統計（不用 cookie、不存 IP 與個資），管理員打開 `/admin/analytics` 看儀表板，也可用 `exchange-info analytics-report` 或匯出 CSV；`EXCHANGE_ANALYTICS=off` 可關閉。蒐集項目、指標定義與隱私說明見 [`docs/analytics.md`](docs/analytics.md)。
+
+學校頁的「出發前提醒」分頁提供各國的共通提醒（中國大陸、日本、韓國、法國、美國有較完整的內容），「學生心得」分頁的心得附有繁體中文整理；兩者都是隨程式發布的離線資料，每項附來源，預設為待審核草稿，心得是整理而不是全文翻譯。維護方式見 [`docs/country-tips-and-experience-digests.md`](docs/country-tips-and-experience-digests.md)。
 
 Google 與 Facebook 登入按鈕已完成 OAuth 流程，但需要先在各平台建立應用程式並設定環境變數；未設定時按鈕會顯示為暫不可用（Facebook 另需把 `facebook` 加進 `EXCHANGE_AUTH_METHODS` 才會啟用）：
 
@@ -491,7 +493,7 @@ $env:EXCHANGE_WORKFLOW_ISSUE_REPORT_BACKEND="supabase"
 $env:EXCHANGE_ENVIRONMENT="production"
 $env:EXCHANGE_CONTENT_ADMIN_EMAILS="admin@example.com"
 $key = New-Object byte[] 32
-[Security.Cryptography.RandomNumberGenerator]::Fill($key)
+[Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($key)
 $env:EXCHANGE_VAULT_MASTER_KEY=[Convert]::ToBase64String($key)
 ```
 

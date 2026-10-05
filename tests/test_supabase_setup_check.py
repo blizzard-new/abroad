@@ -20,7 +20,7 @@ spec.loader.exec_module(checker)
 
 URL = "https://abcdxyz.supabase.co"
 SECRET = "sb_secret_testtesttesttest"
-MASTER = base64.urlsafe_b64encode(b"m" * 32).decode()
+MASTER = base64.urlsafe_b64encode(bytes(range(32))).decode()
 GOOD_ENV = {
     "EXCHANGE_SUPABASE_URL": URL, "EXCHANGE_SUPABASE_SECRET_KEY": SECRET, "EXCHANGE_ENVIRONMENT": "production",
     "EXCHANGE_VAULT_MASTER_KEY": MASTER, "EXCHANGE_EMAIL_VERIFICATION_SECRET": MASTER,
@@ -52,8 +52,12 @@ class FakeSupabase:
         self.calls.append((method, url, dict(headers or {})))
         path = url.removeprefix(URL)
         anon = (headers or {}).get("apikey", "").startswith("sb_publishable_")
+        if path.startswith("/rest/v1/rpc/exchange_list_pending_account_deletion_storage"):
+            return Reply(200, {"status": "committed", "jobs": []}) if self.rpc else Reply(404)
         if path.startswith("/rest/v1/rpc/"):
             return Reply(204 if self.rpc else 404)
+        if path.endswith("/exchange_account_deletion_receipts"):
+            return Reply(404)  # the migration revokes every API role, so the REST API never lists it
         if path.startswith("/rest/v1/"):
             if anon:
                 return Reply(200, [{"id": "x"}] if self.anon_reads else None) if self.anon_reads else Reply(401)
@@ -157,6 +161,47 @@ def test_environment_check_flags_what_production_needs():
     failed = [r.title for r in bad if r.level == "fail"]
     assert any("MASTER_KEY" in t for t in failed) and any("VERIFICATION_SECRET" in t for t in failed)
     assert any(r.level == "warn" and "production" in r.title for r in bad)
+
+
+def test_tables_hidden_from_the_api_are_confirmed_through_their_function():
+    tables = ["exchange_accounts", "exchange_account_deletion_receipts"]
+
+    def check(**kwargs):
+        fake = FakeSupabase(**kwargs)
+        return checker.check_project(GOOD_ENV, tables=tables, request_func=fake), fake
+
+    results, fake = check()
+    assert next(r for r in results if "資料表" in r.title).level == "ok", "the revoked table is not reported missing"
+    assert any(url.endswith("/rpc/exchange_list_pending_account_deletion_storage") for _, url, _ in fake.calls)
+    assert not any(url.endswith("/rest/v1/exchange_account_deletion_receipts") for _, url, _ in fake.calls)
+    broken, _ = check(rpc=False)
+    assert any(r.level == "fail" and "exchange_account_deletion_receipts" in r.title for r in broken)
+
+
+def test_every_function_only_table_is_one_the_migrations_really_hide_from_service_role():
+    root = Path(__file__).resolve().parents[1] / "supabase" / "migrations"
+    text = "\n".join(path.read_text(encoding="utf-8") for path in sorted(root.glob("*.sql")))
+    for table, (function, _) in checker.FUNCTION_ONLY_TABLES.items():
+        assert table in checker.expected_tables()
+        assert f"create or replace function public.{function}" in text
+        assert f"revoke all on table public.{table}" in text and "service_role" in text.split(f"revoke all on table public.{table}")[1][:120]
+
+
+def test_all_zero_keys_left_by_a_failed_generator_are_rejected():
+    zeros = base64.b64encode(bytes(32)).decode()
+    bad = checker.check_environment(dict(GOOD_ENV, EXCHANGE_VAULT_MASTER_KEY=zeros, EXCHANGE_EMAIL_VERIFICATION_SECRET=zeros.rstrip("=")))
+    failed = [r.title for r in bad if r.level == "fail"]
+    assert any("MASTER_KEY" in t and "相同" in t for t in failed) and any("VERIFICATION_SECRET" in t and "相同" in t for t in failed)
+    assert all(r.level != "fail" for r in checker.check_environment(GOOD_ENV))
+
+
+def test_the_documented_key_generator_works_in_windows_powershell():
+    """Windows PowerShell 5.1 has no RandomNumberGenerator.Fill; the guides must use GetBytes."""
+    root = Path(__file__).resolve().parents[1]
+    for name in ("README.md", "docs/supabase-setup-guide.md"):
+        text = (root / name).read_text(encoding="utf-8")
+        assert "RandomNumberGenerator]::Fill" not in text, name
+        assert "RandomNumberGenerator]::Create().GetBytes" in text, name
 
 
 def test_the_checker_knows_every_table_the_migrations_create():

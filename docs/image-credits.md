@@ -26,3 +26,8 @@
 新增 14 張人工核對的校園／校園生活照片，另補上 4 個同校名稱別名。Toulouse INP 使用其所屬 ENSEEIHT 校區的官方照片，並在清冊註明校區；VSB 使用原有同校素材，未混用 University of Ostrava。
 
 華沙醫學大學教學中心照片來自 [Wikimedia Commons 原始檔案頁](https://commons.wikimedia.org/wiki/File:Centrum_Dydaktyczne_Warszawskiego_Uniwersytetu_Medycznego.jpg)，作者為華沙醫學大學（Warszawski Uniwersytet Medyczny），2013 年拍攝，採 [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/) 授權。本地版本裁切為 16:9，沿用同一授權；網站圖片來源區與校園照片說明保留作者、裁切說明與授權連結。其餘新增照片的官方來源及原圖網址逐筆保留於清冊。
+
+
+## UniWay 標誌
+
+`src/exchange_info/static/assets/brand/uniway-logo.webp` 是專案擁有者提供的去背標誌（透明背景），專案內所有標誌圖示都從這一個檔案產生：頁面品牌方塊與登入／選校視窗的 `uniway-mark.webp`、分頁圖示 `favicon.ico`／`favicon-16.png`／`favicon-32.png`、iOS 主畫面圖示 `apple-touch-icon.png`（白底）。要換標誌時，覆蓋原始檔後執行 `python scripts/build_brand_assets.py` 即可重建。`uniway-logo-glow.webp` 是較早的黑底發光版本，只留作參考，網站不使用。

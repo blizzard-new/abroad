@@ -7760,6 +7760,99 @@
         "title": "DeadlineRecord",
         "type": "object"
       },
+      "DestinationGuide": {
+        "properties": {
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "disclaimer": {
+            "default": "這份整理來自公開的官方資料與常用參考，尚未經過兩位審核者逐項確認。簽證、入境與法規會變動，出發前請點進每一項的來源，並以當地官方公告與駐外館處最新資訊為準。",
+            "title": "Disclaimer",
+            "type": "string"
+          },
+          "display_name": {
+            "title": "Display Name",
+            "type": "string"
+          },
+          "intro": {
+            "default": "",
+            "title": "Intro",
+            "type": "string"
+          },
+          "last_checked": {
+            "default": "",
+            "title": "Last Checked",
+            "type": "string"
+          },
+          "review_status": {
+            "default": "draft",
+            "enum": [
+              "draft",
+              "reviewed"
+            ],
+            "title": "Review Status",
+            "type": "string"
+          },
+          "reviewers": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Reviewers",
+            "type": "array"
+          },
+          "topics": {
+            "items": {
+              "$ref": "#/components/schemas/DestinationTipTopic"
+            },
+            "title": "Topics",
+            "type": "array"
+          }
+        },
+        "required": [
+          "country",
+          "display_name"
+        ],
+        "title": "DestinationGuide",
+        "type": "object"
+      },
+      "DestinationGuideSummary": {
+        "properties": {
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "display_name": {
+            "title": "Display Name",
+            "type": "string"
+          },
+          "last_checked": {
+            "title": "Last Checked",
+            "type": "string"
+          },
+          "review_status": {
+            "enum": [
+              "draft",
+              "reviewed"
+            ],
+            "title": "Review Status",
+            "type": "string"
+          },
+          "tip_count": {
+            "title": "Tip Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "country",
+          "display_name",
+          "tip_count",
+          "last_checked",
+          "review_status"
+        ],
+        "title": "DestinationGuideSummary",
+        "type": "object"
+      },
       "DestinationProfile": {
         "properties": {
           "buy_after_arrival": {
@@ -7912,6 +8005,71 @@
           "school_name"
         ],
         "title": "DestinationProfile",
+        "type": "object"
+      },
+      "DestinationTip": {
+        "properties": {
+          "checked_at": {
+            "title": "Checked At",
+            "type": "string"
+          },
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "importance": {
+            "default": "should",
+            "enum": [
+              "must",
+              "should",
+              "good_to_know"
+            ],
+            "title": "Importance",
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/TipSource"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "detail",
+          "checked_at"
+        ],
+        "title": "DestinationTip",
+        "type": "object"
+      },
+      "DestinationTipTopic": {
+        "properties": {
+          "tips": {
+            "items": {
+              "$ref": "#/components/schemas/DestinationTip"
+            },
+            "title": "Tips",
+            "type": "array"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "topic": {
+            "title": "Topic",
+            "type": "string"
+          }
+        },
+        "required": [
+          "topic",
+          "title"
+        ],
+        "title": "DestinationTipTopic",
         "type": "object"
       },
       "DiscoveryWorkspace": {
@@ -8560,6 +8718,69 @@
           "school_name"
         ],
         "title": "ExperienceBookmark",
+        "type": "object"
+      },
+      "ExperienceDigestSection": {
+        "properties": {
+          "heading": {
+            "title": "Heading",
+            "type": "string"
+          },
+          "points": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Points",
+            "type": "array"
+          }
+        },
+        "required": [
+          "heading"
+        ],
+        "title": "ExperienceDigestSection",
+        "type": "object"
+      },
+      "ExperienceDigestZh": {
+        "description": "A Traditional Chinese write-up of what one source says, in our own words; never a full translation.",
+        "properties": {
+          "basis": {
+            "default": "依原文內容用繁體中文整理，不是全文翻譯，可能有遺漏；請以原文為準。",
+            "title": "Basis",
+            "type": "string"
+          },
+          "overview": {
+            "title": "Overview",
+            "type": "string"
+          },
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/ExperienceDigestSection"
+            },
+            "title": "Sections",
+            "type": "array"
+          },
+          "tips": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tips",
+            "type": "array"
+          },
+          "title_zh": {
+            "title": "Title Zh",
+            "type": "string"
+          },
+          "written_at": {
+            "default": "",
+            "title": "Written At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title_zh",
+          "overview"
+        ],
+        "title": "ExperienceDigestZh",
         "type": "object"
       },
       "ExperienceHighlight": {
@@ -11268,6 +11489,16 @@
             ],
             "title": "Country"
           },
+          "digest_zh": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExperienceDigestZh"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "discovered_at": {
             "format": "date-time",
             "title": "Discovered At",
@@ -11316,6 +11547,11 @@
           },
           "school_name": {
             "title": "School Name",
+            "type": "string"
+          },
+          "source_kind": {
+            "default": "other",
+            "title": "Source Kind",
             "type": "string"
           },
           "source_type": {
@@ -12003,6 +12239,24 @@
           "detail"
         ],
         "title": "TeachingLanguageFit",
+        "type": "object"
+      },
+      "TipSource": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "url"
+        ],
+        "title": "TipSource",
         "type": "object"
       },
       "UnifiedApplicationTask": {
@@ -17470,6 +17724,69 @@
         "summary": "Destination Profiles"
       }
     },
+    "/destination-tips": {
+      "get": {
+        "operationId": "destination_tips_destination_tips_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "country",
+            "required": true,
+            "schema": {
+              "maxLength": 40,
+              "minLength": 1,
+              "title": "Country",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DestinationGuide"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Destination Tips"
+      }
+    },
+    "/destination-tips/countries": {
+      "get": {
+        "operationId": "destination_tip_countries_destination_tips_countries_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/DestinationGuideSummary"
+                  },
+                  "title": "Response Destination Tip Countries Destination Tips Countries Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Destination Tip Countries"
+      }
+    },
     "/document-check": {
       "post": {
         "operationId": "document_check_document_check_post",
@@ -17602,6 +17919,47 @@
           }
         },
         "summary": "Exchange Info"
+      }
+    },
+    "/experience-digest": {
+      "get": {
+        "operationId": "experience_digest_experience_digest_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "source_url",
+            "required": true,
+            "schema": {
+              "maxLength": 2000,
+              "minLength": 8,
+              "title": "Source Url",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExperienceDigestZh"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Experience Digest"
       }
     },
     "/experience-submissions": {

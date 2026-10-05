@@ -1,0 +1,313 @@
+"""Write ``official_data/experience_digests_zh.json`` from the write-ups below.
+
+    python scripts/build_experience_digests.py
+
+Each entry is a Traditional Chinese write-up of ONE first-person student account, in our own words, read on
+2026-10-04. They are summaries (a few hundred characters of the facts the author gives), not translations: the
+validator refuses anything long enough to be mistaken for one, or containing a whole paragraph of the original
+language. Sources that were not a student's own account (course directories, rankings, review-site listings,
+promotional pages, login walls) were read and deliberately left out.
+
+``SOURCE`` carries the metadata each write-up needs to be listed under its school on any deployment, even one
+that never crawled the web.
+"""
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from exchange_info.experience_digests import DIGESTS_FILE, validate_digests  # noqa: E402
+
+WRITTEN = "2026-10-04"
+ENTRIES: list[dict] = []
+
+
+def entry(url, *, school, country, title, platform, language, themes, title_zh, overview, sections, tips=(), published_at=None):
+    ENTRIES.append({
+        "url": url,
+        "source": {"school_name": school, "country": country, "title": title, "platform": platform, "language": language,
+                   "source_type": "article", "themes": themes, **({"published_at": published_at} if published_at else {})},
+        "digest": {"title_zh": title_zh, "overview": overview,
+                   "sections": [{"heading": heading, "points": points} for heading, points in sections],
+                   "tips": list(tips), "written_at": WRITTEN},
+    })
+
+
+entry(
+    "https://bryanhogan.com/blog/hanyang-erica-exchange",
+    school="韓國漢陽大學Erica校區 Hanyang University ERICA", country="韓國", title="Exchange Semester At Hanyang University ERICA",
+    platform="bryanhogan.com", language="en", themes=["housing", "academics", "cost", "food", "transport", "social", "visa"],
+    title_zh="在漢陽大學 ERICA 校區交換一學期：宿舍費用、課程與在安山生活的提醒",
+    overview="作者是德國科隆應用科技大學的學生，2023 年春季學期（2 月起）到韓國安山市的漢陽大學 ERICA 校區交換一學期。他覺得宿舍生活、社團和各國朋友是最大的收穫，對上課方式則有不少批評；之後還到首爾大學做了冬季學期交換。",
+    sections=[
+        ("住宿與費用", ["住在校內的 CHANGEI 宿舍，雙人房（3 樓），室友是法國人。",
+                      "宿舍費用：4 個月 1,223,600 韓元、6 個月 1,835,600 韓元。",
+                      "宿舍裡有餐廳、便利商店、KTV 和運動空間；宿舍餐廳用餐時間固定（早餐 07:50–09:00、午餐 11:30–13:20、晚餐 17:10–18:40）。",
+                      "宿舍男女分區，並有一些特別規定。"]),
+        ("課程", ["修了視覺傳達、生存韓語、遊戲開發、運動生理學和使用者體驗設計。",
+                "作者認為課程偏重背誦、互動不多，學習效率不高，但上課是認識朋友的好機會（這是他的個人看法）。"]),
+        ("生活與花費", ["每個月花費和在德國差不多，吃飯和外食相對便宜。",
+                      "校門外有很多餐廳，走路約 20 分鐘，也可以搭接駁車。",
+                      "導航用 Naver 或 Kakao 地圖；作者說 Google 地圖在韓國不好用。"]),
+        ("社團與活動", ["加入學生社團要繳 10,000–15,000 韓元。",
+                      "學校有 Hanmille 夥伴計畫，把交換生和韓國學生配對。",
+                      "校慶連續 3 天，有美食街、表演和遊戲攤位。"]),
+        ("行政與準備", ["簽證和各種文件要處理不少。", "作者出發前兩個月開始學韓文字母，覺得很有幫助。"]),
+    ],
+    tips=["先弄清楚：漢陽大學 ERICA 在安山，不是首爾校區，兩個校區的教學是分開的。",
+          "盡量住校內宿舍，比較容易融入，也方便出去玩。", "出發前先學會韓文字母。"],
+)
+
+entry(
+    "https://tsaiyiting1012.blogspot.com/2020/02/blog-post.html",
+    school="廈門大學", country="大陸地區", title="廈門大學交換生活分享及心得", platform="tsaiyiting1012.blogspot.com", language="zh",
+    themes=["visa", "cost", "transport", "housing", "academics", "support"],
+    title_zh="廈門大學交換一學期（2016–2017）：行前準備、網路、手機、銀行與選課",
+    overview="作者是台灣學生，2016 年 9 月到 2017 年 1 月在廈門大學經濟與貿易學系交換一學期。文章把行前準備、報到、上網、辦手機與銀行帳戶、宿舍和選課整理成給學弟妹的實用清單；文章是幾年前寫的，金額與規定請以現在為準。",
+    sections=[
+        ("行前準備", ["要帶錄取通知書，當成進出校門的憑證。", "建議買含突發狀況的旅行平安險。",
+                    "台胞證是進出大陸的必要證件，在當地買票、開戶等也會用到。", "行李可以精簡，日用品到了再買；先準備一小筆現金應急。"]),
+        ("網路與 App", ["必須裝微信和 QQ，班級通知用 QQ。",
+                      "作者建議至少準備兩個 VPN，因為台灣常用的社群軟體在當地用不了。",
+                      "建議裝百度、支付寶、美團等當地 App。"]),
+        ("往返交通", ["可以走金廈小三通（作者寫單程約新臺幣 3,250 元），或搭直飛航班到廈門。",
+                    "小三通還要另外付碼頭清潔費。", "直飛有廈門航空、華信航空等。"]),
+        ("手機與銀行", ["到了馬上辦手機門號；作者選中國移動月費人民幣 48 元，建議順便問有沒有附寬頻。",
+                      "要在校內銀行開戶，並把學生卡和銀行卡綁在一起，之後轉帳比較方便。"]),
+        ("宿舍與選課", ["宿舍一開始沒有電，要先儲值電費才能用。", "報到時領學生證和學生卡。",
+                      "要找系上的教學秘書拿課程清單；熱門課常常額滿，可以請秘書幫忙加簽，或到教務處詢問。"]),
+    ],
+    tips=["證件和銀行帳戶最重要，先處理好。", "主動弄清楚校內各單位在哪、要辦什麼手續。"],
+)
+
+entry(
+    "https://note.com/chito1000n/n/nf7dbdec4a963?hl=en",
+    school="誠信女子大學 (Sungshin Women's University)", country="韓國",
+    title="Korean Universities are Amazing: A Report on Sungshin Women's University｜Chitose", platform="note.com", language="ja",
+    themes=["housing", "cost", "campus_culture"],
+    title_zh="誠信女子大學兩週暑期計畫（2025）：校園設施與宿舍",
+    overview="作者是日本學生（目前在英國紐卡索大學交換），2025 年 6 月參加韓國政府辦的暑期交換計畫，在誠信女子大學首爾的 Woonjung 校區進修兩週。這個計畫專為日本學生設計，內容是韓國美妝與造型課程，所以和一般學期交換不太一樣。",
+    sections=[
+        ("校園設施", ["校園整體乾淨、現代化，作者印象很深。",
+                    "美容產業系教室有鏡子、化妝桌、皮膚檢測儀等設備，另有實驗室可以製作化妝品。",
+                    "校內有自助餐廳、咖啡廳、便利商店和美術館。"]),
+        ("宿舍", ["國際學生宿舍是雙人房，配雙層床和書桌，浴室是開放式淋浴間。",
+                "房內有洗衣機、冷氣、冰箱、微波爐、電熱水壺和衣櫃，清潔用品可以補充。", "作者覺得宿舍舒適整潔。"]),
+        ("費用", ["這個計畫的食宿和機票都由韓國教育部負擔，作者實際支出是零，只有自由時間買紀念品和觀光花了錢。"]),
+    ],
+    tips=["作者推薦這類短期計畫，覺得教育環境品質很高，也想再參加。"],
+)
+
+entry(
+    "https://blogs.qut.edu.au/gone-global/2023/06/16/discovering-joy-and-friendship-at-meiji-university-japan",
+    school="明治大學 (Meiji University) 無", country="日本", title="Discovering Joy and Friendship at Meiji University, Japan - QUT Gone Global",
+    platform="blogs.qut.edu.au", language="en", themes=["housing", "academics", "social", "travel"],
+    title_zh="在明治大學交換一學期（2022 下學期）：全球村宿舍與出缺席規定",
+    overview="作者是澳洲昆士蘭科技大學法律與會計雙學位的學生，2022 年第二學期到明治大學交換六個月。他覺得這是人生中最充實的經驗之一，尤其是在宿舍認識了來自世界各地的朋友。",
+    sections=[
+        ("住宿", ["住在明治全球村宿舍，一半住戶是日本學生，一半是各國交換生。",
+                "宿舍有公共空間，並提供早晚餐，作者認為是省錢的好選擇。"]),
+        ("課程", ["修了八個單位以符合原校的學分要求。", "多數課程在早上 9 點上課；出缺席規定很嚴格，缺席或遲到累積到一定次數可能不及格。",
+                "課程以英文授課，日語課除外。"]),
+        ("日本生活", ["作者喜歡攝影，覺得日本是他去過最好拍的地方。", "他覺得當地人非常親切，便利商店很多，生活非常方便。",
+                    "假期和週末和新朋友到各地旅行，也看到了季節變化。"]),
+    ],
+    tips=["作者認為交換最值得的是朋友和回憶。"],
+)
+
+entry(
+    "https://stuex.nju.edu.cn/en_/64/92/c23304a353426/page.htm",
+    school="南京大學", country="大陸地區", title="Reflections of an Exchange Student at Nanjing University", platform="stuex.nju.edu.cn",
+    language="en", themes=["academics", "housing", "food", "transport", "support", "social"], published_at="2018-07-23",
+    title_zh="南京大學交換一學期（2018 春）：課程、宿舍、食堂與校內支援",
+    overview="作者 2018 年春季到南京大學交換一學期，選這裡是因為學校的國際聲譽和南京的歷史文化。他認真修課、學中文並參加社團，強調要認真看待課業和跨文化交流。",
+    sections=[
+        ("課程", ["修了五門課（和當地學生一樣的課量）。", "曾和中國同學一起為來訪的教授做報告，感受到當地學生的認真。"]),
+        ("語言與活動", ["作者強調一定要學中文。", "課外活動資訊靠微信和校園公告取得。", "參加跆拳道社，也去了學生辦的舞會和詩歌朗誦會。"]),
+        ("住宿與飲食", ["國際學生宿舍離教室比較遠，但設施齊全（洗手台、淋浴、洗衣機、飲水機）。", "食堂餐點非常便宜，作者推薦第 4、6、9 號食堂。"]),
+        ("交通", ["仙林校區離市中心很遠，搭地鐵要 45 分鐘。"]),
+        ("校內支援", ["AIC 和 SIECA 兩個學生組織辦活動、安排旅遊。", "學校配有夥伴（buddy），國際處的人員也會協助解決問題。"]),
+    ],
+    tips=["平衡學業和玩樂。", "放下刻板印象，融入中文環境。", "把握學習機會，多旅行、多交朋友。"],
+)
+
+entry(
+    "https://macromedia.de/blog/kwangwoon-university-the-first-month-in-review",
+    school="光云大學Kwangwoon University", country="韓國", title="Kwangwoon University: The first month in review - Macromedia Blog",
+    platform="macromedia.de", language="en", themes=["housing", "academics", "safety", "social", "visa"],
+    title_zh="光云大學交換的第一個月（2019）：宿舍、課程與在首爾的生活",
+    overview="作者是德國 Macromedia 大學的學生，2019 年 9 月寫下到首爾光云大學交換的第一個月。他分享剛到韓國的印象、校園與宿舍、上課安排，以及在首爾四處走走的心得。",
+    sections=[
+        ("住宿與校園", ["住在學校宿舍，租金由國際處協助處理。", "校園規模介於他的德國校區和韓國大型大學之間。"]),
+        ("課程", ["每週只有星期四和星期五上課。", "一開始被誤分到韓語授課的班，後來改成英語版本。", "有參加語言課程與師生配對計畫。"]),
+        ("生活", ["去了弘大、江南等地，拍照和拍影片。", "他覺得首爾治安好、很乾淨，什麼時間出門都覺得安全（個人感受）。",
+                "他覺得韓國學生很懂社交聚會，建議多和韓國人一起喝酒交流。"]),
+        ("行政與適應", ["簽證手續在他寫文章時還在辦理中。", "剛到時，時差影響了睡眠。"]),
+    ],
+)
+
+entry(
+    "https://utsthinkglobal.com/2024/01/25/life-as-an-exchange-student-at-chuo-university",
+    school="中央大學 (Chuo University)", country="日本", title="Life as an Exchange Student at Chuo University", platform="utsthinkglobal.com",
+    language="en", themes=["academics", "transport", "campus_culture"],
+    title_zh="中央大學交換一學期（2023 秋）：法律課程、校區與通勤",
+    overview="作者是雪梨科技大學（UTS）法律與國際研究學生，2023 年秋季到中央大學交換。她選了 8 門課（4 門法律課）換取 24 個 UTS 學分，覺得課堂參與很重要，而且幾乎每天都有課。",
+    sections=[
+        ("課程", ["8 門課中有 4 門是法律課，共換取 24 個 UTS 學分。", "修了「日本觀點的國際法」等課，授課老師曾擔任國際刑事法院法官。",
+                "課堂參與佔成績比重大；閱讀量比 UTS 少，但課堂上禁止使用電子設備。", "課程幾乎每天都要上課。"]),
+        ("校區", ["主校區在丘陵上，有射箭館、運動場等設施，校園古老而寬廣，櫻花很美。", "法學院在當年 4 月於目白台開設新校區。"]),
+        ("通勤", ["從宿舍到目白台校區約要 1 小時 20 分鐘，學生可以申請買通勤定期票來省錢。"]),
+    ],
+    tips=["學校以紙本為主，要有心理準備。", "課堂參與很重要。", "作者覺得因為 UTS 的課業量大，自己比較容易適應。"],
+)
+
+entry(
+    "https://jaswdc.org/my-semester-at-hitotsubashi-university",
+    school="一橋大學 (Hitotsubashi University) 無", country="日本", title="My Semester at Hitotsubashi University", platform="jaswdc.org",
+    language="en", themes=["housing", "academics", "social", "career", "challenges"],
+    title_zh="一橋大學交換一學期：日語課程、交友與意外的工作機會",
+    overview="作者是半個日本人的美國學生，在東京的一橋大學交換約五個月（文章寫於 2022 年 2 月）。剛到時覺得孤單害怕，很快就融入；期間日語進步、通過 JLPT N1，還在東京的求職活動中拿到十月開始的工作機會。",
+    sections=[
+        ("住宿與適應", ["住在一橋大學的宿舍。", "剛到時很孤單，透過認識一位曾到弗吉尼亞大學交換的學生，情況很快改善。"]),
+        ("課程", ["日語課 4 門：會話、寫作、速讀、近代日文閱讀。", "選修 3 門：文化心理學、國際關係、難民與強制遷移研究。", "班級約 10–20 人，以討論為主。"]),
+        ("生活與交友", ["很快交到朋友，一起逛街、看展覽、去居酒屋和打保齡球。", "去了環球影城、東京迪士尼樂園和沖繩。"]),
+        ("求職", ["她意外參加了東京的求職活動，面試三輪（日語）後拿到十月開始的工作機會。"]),
+        ("困難", ["剛到時擔心會被歧視，但後來覺得這個擔心沒有想像中嚴重（個人感受）。"]),
+    ],
+    tips=["作者強烈推薦交換，覺得就算一開始害怕，長期的收穫很大。"],
+)
+
+entry(
+    "https://fundforeducationabroad.org/journal/studying-in-south-korea-the-story-of-learning-at-yonsei-university",
+    school="韓國延世大學 Yonsei University", country="韓國", title="Studying in South Korea: The Story of Learning at Yonsei University",
+    platform="fundforeducationabroad.org", language="en", themes=["academics", "challenges", "support"],
+    title_zh="延世大學的上課文化（2024 年 6 月）：大班講課、很少互動、辦公時間用韓語",
+    overview="作者來自美國加州的小型公立大學，2024 年 6 月在延世大學修課。文章主要談她怎麼適應韓國頂尖大學的上課方式：大班講課、老師與學生互動少、能用的輔助資源也比她原本的學校少。",
+    sections=[
+        ("上課方式", ["課程是 100 多人的大班講課，老師和學生的互動很少。", "文中提到，在課堂上提問可能被看成是在質疑老師的能力。",
+                    "她修了統計課，覺得學校提供的額外輔助資源有限。"]),
+        ("適應的難處", ["她原本的學校有免費家教、寫作工作坊等資源，到延世要習慣獨立學習。",
+                      "雖然課程用英語授課，老師的辦公時間（office hours）卻用韓語進行。"]),
+    ],
+    tips=["接受新的學術文化。", "準備好參加辦公時間的討論。", "多利用線上課堂討論和同學的資源。", "不要放棄、主動聯絡別人，培養獨立學習和解決問題的能力。"],
+)
+
+entry(
+    "https://nmbuutveksling.blogspot.com/2024/03/lincoln-university-new-zealand.html",
+    school="林肯大學 Lincoln University", country="紐西蘭", title="Lincoln University, New Zealand", platform="nmbuutveksling.blogspot.com",
+    language="en", themes=["visa", "academics", "housing", "cost", "food", "social", "support"],
+    title_zh="林肯大學交換兩學期（2023）：簽證與申請、課程、宿舍與生活費",
+    overview="作者 25 歲，2023 年到紐西蘭林肯大學交換兩個學期（景觀建築碩士第四、五年），原本只打算一學期，後來延長。她稱讚教授投入、校園安靜、自然風景優美，也坦白寫了簽證要求、宿舍條件和花費。",
+    sections=[
+        ("申請與簽證", ["文件作業很繁重：10 月開始報名、辦簽證和訂機票，到 12 月底每週要花一到兩小時。",
+                      "學費很高，她靠挪威貸款局補助；移民局要求財力證明要和貸款同步，時間很緊，但最後處理好了。"]),
+        ("課程", ["第一學期修基礎課（DESN101、RECN341、LASC410），第二學期修進階課（DESN698、DESN603），工作量大，要和紐西蘭同學花一樣的時數。",
+                "作業和期末考並行，整學期平均用功，不是考前臨時抱佛腳。", "到校後調整課程很容易，彈性很大。"]),
+        ("住宿", ["住校內的 Farmroad 宿舍：約 80 位住客，四人一戶，是交換生和外籍生聚集的地方，社交活動多（烤肉、運動）。",
+                "缺點：隔音差、簡陋昏暗，6–8 月暖氣不足，電費超出預算；租金偏高，但作者認為社交價值值得。",
+                "The Junction 宿舍品質較好，但更貴。"]),
+        ("生活費與交通", ["公共交通便宜；週末和假期買 Intercity 巴士彈性票，價格和挪威當地巴士差不多。",
+                        "蔬菜水果比挪威貴，英式料理單調，但亞洲餐廳選擇很多。"]),
+        ("語言與社交", ["多數課堂只有她一位外籍生，英語進步很快，也適應了紐西蘭俚語。",
+                      "校內社團很多（陶藝、登山、國際、衝浪、毛利、LGBTQ），都容易加入；林肯小鎮很安靜。",
+                      "登山社第一學期很活躍，第二學期沒有活動。"]),
+        ("健康與福利", ["學校福祉團隊提供免費心理諮詢，學生保險涵蓋看診。"]),
+    ],
+    tips=["作者推薦兩學期的交換，才有時間深入適應。", "工作量大的工作室課程，建議放在第二年規劃。", "善用校內免費的福祉諮詢與保險。"],
+)
+
+entry(
+    "https://nmbuutveksling.blogspot.com/2018/05/erfaringsrapport-lincoln-university-new.html",
+    school="林肯大學 Lincoln University", country="紐西蘭", title="Erfaringsrapport Lincoln University, New Zealand - Blogger",
+    platform="nmbuutveksling.blogspot.com", language="no", themes=["academics", "housing", "visa", "cost"], published_at="2018-05",
+    title_zh="林肯大學交換一學期（2018 年發表）：課程、宿舍與簽證的錢",
+    overview="作者是挪威的景觀建築碩士生，在紐西蘭林肯大學交換一學期（文章 2018 年 5 月發表）。她覺得這次經驗大幅提升了自信和英語能力，也體驗了當地獨特的自然環境。",
+    sections=[
+        ("課程", ["修 3 門課，包括農業環境景觀管理、進階設計研究；作者特別推薦後者，內容涵蓋水災管理、地震與污染處理。",
+                "課程以小組和個人專案為主，定期交作業。"]),
+        ("住宿", ["住校方提供的 Farm Road Flats，四人共住一棟小屋；設施不錯但老舊、隔熱差，冬天要掛毛毯保暖。", "電費不含在租金裡，相對貴。"]),
+        ("簽證與時程", ["要先繳 40,000 挪威克朗學費才能拿到學生簽證，造成經濟壓力。", "秋季班 7 月開始（紐西蘭的冬天），申請要提早進行。"]),
+    ],
+    tips=["作者強烈推薦其他學生參加。", "紐西蘭生活成本高，但獎學金足夠支應。", "建議參加戶外活動社團，回程可順道到亞洲旅行。"],
+)
+
+entry(
+    "https://linkedin.com/posts/tran-duong-94199b378_i-recently-completed-my-spring-2026-exchange-activity-7473713216385314816-bu1H",
+    school="科茲明斯基大學 (Kozminski University)", country="波蘭", title="Spring 2026 exchange program at Kozminski University, Poland (Tran Duong)",
+    platform="linkedin.com", language="en", themes=["academics", "career", "social"],
+    title_zh="科茲明斯基大學交換（2026 春）：八門課與創業競賽",
+    overview="作者 2026 年春季在波蘭華沙的科茲明斯基大學完成一學期交換，修了行銷與專案管理等八門課，也參加創業活動並拿到第一名。",
+    sections=[
+        ("課程", ["修了 8 門課，包括行銷策略、品牌管理、專案管理、敏捷方法；主修創業與營運管理、副修行銷。", "作者說透過這些課更了解人工智慧如何改變商業。"]),
+        ("課外活動", ["參加了 AI 相關的高峰會和創新永續的集訓營。",
+                    "和科茲明斯基大學、昆尼皮亞克大學合辦的新創學院合作，團隊做出名為 Rentio 的租賃安全平台，拿下第一名。"]),
+        ("融入", ["交換計畫有迎新活動和夥伴制度，幫助交換生融入國際社群、建立長久的人脈。"]),
+    ],
+)
+
+entry(
+    "https://ssp.jst.go.jp/sns/mentor/03hoang/vol6.html",
+    school="關西學院大學 (Kwansei Gakuin University)", country="日本",
+    title="Student Life at Kwansei Gakuin University: Things I Miss After Graduation | Sakura Mentor | Sakura Science Club",
+    platform="ssp.jst.go.jp", language="en", themes=["campus_culture", "social"],
+    title_zh="關西學院大學的生活回憶：圖書館與聖誕活動",
+    overview="作者是一位在關西學院大學就讀的國際學生，文章在 2021 年更新。她回頭寫下當年沒有好好利用、現在很懷念的校園生活，主要是圖書館的英文藏書和校園裡的聖誕活動；內容偏回憶，沒有談費用或手續。",
+    sections=[
+        ("圖書館", ["作者起初以為圖書館只有日文書，後來發現有很多英文小說，之後成了常客。", "她對圖書館的電動書架印象深刻。"]),
+        ("校園活動", ["學校在主校區鐘塔舉辦投影藝術展（2014–2016 年），主題是聖誕節，由學生志願者製作。",
+                    "每年的點燈典禮約有一千人參加，包括學生、教職員和社區居民，大家點蠟燭唱詩歌。"]),
+    ],
+    tips=["作者建議珍惜學生身分，多用大學圖書館。", "多參加校園特色活動並記錄下來。"],
+)
+
+entry(
+    "https://ciee.org/go-abroad/college-study-abroad/blog/my-time-south-korea-attending-yonsei-university-life-changing-chapter",
+    school="韓國延世大學 Yonsei University", country="韓國", title="My Time in South Korea Attending Yonsei University: A Life-Changing Chapter",
+    platform="ciee.org", language="en", themes=["academics", "food", "social", "travel"],
+    title_zh="透過 CIEE 到延世大學（2025 年 10 月發表）：課程與在首爾的文化體驗",
+    overview="作者透過 CIEE 計畫到首爾延世大學，2025 年 10 月發表心得。她是家中第一代大學生，在陌生語言環境生活讓她變得更能適應、更有耐心；文章偏個人成長，沒有談費用、住宿或簽證。",
+    sections=[
+        ("課程", ["修了韓語、飲食文化、跨文化溝通、藝術史等課。", "她覺得老師學識豐富，重視批判性思考和開放討論。"]),
+        ("生活與文化", ["去了景福宮等古蹟，逛了弘大、仁寺洞。", "吃了拌飯、炸雞、拉麵等，特別愛韓式炸雞。", "和其他國際學生交到很深的朋友。"]),
+    ],
+    tips=["作者鼓勵有意願的人勇敢踏出第一步。"],
+)
+
+entry(
+    "http://michelleseoulsearching.blogspot.com/2011/06/why-yonsei-university.html",
+    school="韓國延世大學 Yonsei University", country="韓國", title="Why Yonsei University? - Michelle's Seoul Searching",
+    platform="michelleseoulsearching.blogspot.com", language="en", themes=["academics", "social", "visa", "challenges"], published_at="2011-06",
+    title_zh="為什麼選延世大學交換（2011 年行前文）：韓語密集班與選課",
+    overview="作者是加拿大西門菲莎大學的學生，2011 年 6 月寫下自己選擇到延世大學交換一學期的原因：國際化的學習環境、活躍的社交生活，以及靠近首爾熱鬧的區域。這是出發前的計畫文，不是交換後的心得，內容年代也較早。",
+    sections=[
+        ("課程", ["延世有 10 週的密集晨間韓語課，每週一到五每天 4 小時。", "學校也開很多英語授課的課程，交換生和本地生都能選，學分可以轉回原校。"]),
+        ("生活", ["交換生和韓國學生會透過課程、社團、戶外活動和夥伴計畫互動。", "學校位在新村、弘大、梨大一帶，周邊有餐廳、購物中心、夜店和 SPA。"]),
+        ("行政與擔心", ["作者打算同時申請學生簽證和旅遊簽證，方便到鄰近國家旅行。", "她容易想家，所以很重視建立穩固的友誼；簽證申請也被她視為挑戰之一。"]),
+    ],
+)
+
+
+def build() -> dict:
+    return {
+        "version": 1,
+        "digests": {item["url"]: item["digest"] for item in ENTRIES},
+        "sources": {item["url"]: item["source"] for item in ENTRIES},
+    }
+
+
+def main() -> None:
+    payload = build()
+    problems = validate_digests(payload)
+    if problems:
+        raise SystemExit("資料未通過驗證：\n- " + "\n- ".join(problems))
+    DIGESTS_FILE.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    sizes = [sum(len(point) for section in item["digest"]["sections"] for point in section["points"]) + len(item["digest"]["overview"]) for item in ENTRIES]
+    print(f"{len(ENTRIES)} 篇心得整理已寫入 {DIGESTS_FILE.relative_to(ROOT)}（每篇 {min(sizes)}–{max(sizes)} 字）")
+
+
+if __name__ == "__main__":
+    main()
