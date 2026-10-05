@@ -13,7 +13,8 @@ services:
     branch: main
     autoDeployTrigger: commit
     buildCommand: pip install .
-    # 只能跑 1 個 worker：登入狀態的限流、統計緩衝都在程式記憶體裡。
+    # 先只跑 1 個 worker／1 個實例：使用統計的限流與請求計數緩衝放在程式記憶體裡（登入狀態在 Supabase，不受影響）；
+    # 開多個會讓這兩項各算各的。需要擴充時要先把它們搬出記憶體。
     startCommand: uvicorn exchange_info.api:app --host 0.0.0.0 --port $PORT --workers 1
     healthCheckPath: /health
     envVars:
