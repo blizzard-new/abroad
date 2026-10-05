@@ -5,10 +5,12 @@
 Every item names the public page it was taken from, and the output must pass ``validate_guides`` before it is
 written. Nothing here is marked reviewed: guides stay ``draft`` until two reviewers sign off.
 
-Research date for every item: pages were opened on 2026-10-04 (``CHECKED``). Pages that refused automated access
-(陸委會 403, IEC 403) are cited only for statements another opened page also supports, or for the page's own title.
-Deeper, country-specific notes exist for 中國大陸, 日本, 韓國, 法國 and 美國 so far; every other country carries the shared
-notes, its local emergency numbers and the mains voltage. Add a country by extending ``DEEP`` and re-running this script.
+Research date for every item: pages were opened on 2026-10-04 (``CHECKED``), or on 2026-10-05 for the ten countries in
+``destination_tips_batch2.py``. Pages that refused automated access (陸委會 403, IEC 403, 泰國移民局 403) are cited only for
+statements another opened page also supports, or for the page's own title.
+Deeper, country-specific notes exist for 中國大陸, 日本, 韓國, 法國, 美國 and the ten batch-2 countries (德國, 波蘭, 越南, 捷克, 泰國,
+香港, 印度, 西班牙, 瑞典, 加拿大); every other country carries the shared notes, its local emergency numbers and the mains
+voltage. Add a country by extending ``DEEP`` (or the batch-2 module) and re-running this script.
 """
 from __future__ import annotations
 
@@ -472,6 +474,23 @@ USA = {
 
 DEEP_ADDITIONS = {"日本": JAPAN, "韓國": KOREA, "法國": FRANCE, "美國": USA}
 
+# Ten more countries live in their own data module (pages opened on 2026-10-05); each row there is (title, detail, importance, keys).
+from destination_tips_batch2 import CHECKED as CHECKED_BATCH2, COUNTRIES as BATCH2, SOURCES as SOURCES_BATCH2  # noqa: E402
+
+SOURCES.update(SOURCES_BATCH2)
+
+
+def batch2_tip(row: tuple) -> dict:
+    title, detail, importance, keys = row
+    item = tip(title, detail, importance, *keys)
+    item["checked_at"] = CHECKED_BATCH2
+    return item
+
+
+for _country, _spec in BATCH2.items():
+    assert _country not in DEEP_ADDITIONS, f"{_country} is already in the first batch"
+    DEEP_ADDITIONS[_country] = {"intro": _spec["intro"], "topics": {key: [batch2_tip(row) for row in rows] for key, rows in _spec["topics"].items()}}
+
 
 def merge_deep(guide: dict, extra: dict) -> dict:
     """Put a country's deeper notes in front of the shared ones, topic by topic, in the usual topic order."""
@@ -523,7 +542,7 @@ def build() -> dict:
     for guide in guides.values():
         guide.setdefault("review_status", "draft")
         guide["reviewers"] = []
-        guide["last_checked"] = CHECKED
+        guide["last_checked"] = max(item["checked_at"] for entry in guide["topics"] for item in entry["tips"])
     return {"version": 1, "guides": dict(sorted(guides.items()))}
 
 

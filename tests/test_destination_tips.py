@@ -57,7 +57,7 @@ def test_every_tip_names_an_https_source_and_the_date_it_was_checked():
         for topic in guide.topics:
             for tip in topic.tips:
                 assert tip.sources and all(source.url.startswith("https://") and source.name for source in tip.sources), (guide.country, tip.title)
-                assert tip.checked_at == "2026-10-04"
+                assert tip.checked_at in {"2026-10-04", "2026-10-05"}, "the two research days"
 
 
 def test_china_carries_the_hidden_details_a_student_would_otherwise_look_up():
@@ -76,8 +76,8 @@ def test_other_countries_share_the_basics_and_say_the_details_are_still_coming()
     titles = [tip.title for topic in japan.topics for tip in topic.tips]
     assert any("簽證與入境" in title for title in titles) and any("緊急聯絡中心" in title for title in titles)
     assert any("110" in tip.detail and "119" in tip.detail for topic in japan.topics for tip in topic.tips)
-    germany = load_guides()["德國"]
-    assert "還在整理" in germany.intro and "110" in "".join(tip.detail for topic in germany.topics for tip in topic.tips)
+    indonesia = load_guides()["印尼"]  # still only the shared notes
+    assert "還在整理" in indonesia.intro and "110" in "".join(tip.detail for topic in indonesia.topics for tip in topic.tips)
     hong_kong = load_guides()["香港"]
     assert any("陸委會" in tip.title for topic in hong_kong.topics for tip in topic.tips), "港澳 register with 陸委會, not 外交部"
 
@@ -232,3 +232,141 @@ def test_every_overseas_country_explains_what_a_representative_office_can_and_ca
         assert has_note == (country not in {"大陸地區", "香港"}), country
     tip = next(tip for topic in load_guides()["法國"].topics for tip in topic.tips if "駐外館處能幫什麼" in tip.title)
     assert "不代墊" in tip.detail and "領事探視" in tip.detail
+
+
+# ----------------------------------------------------------------------------- 德國、波蘭、越南、捷克、泰國、香港、印度、西班牙、瑞典、加拿大
+
+BATCH2 = ("德國", "波蘭", "越南", "捷克", "泰國", "香港", "印度", "西班牙", "瑞典", "加拿大")
+OFFICE_HOSTS = {"www.mofa.gov.tw", "www.roc-taiwan.org", "www.teco-hk.org"}
+
+
+def find_tip(country: str, needle: str):
+    return next(tip for topic in load_guides()[country].topics for tip in topic.tips if needle in tip.title)
+
+
+def test_the_bundled_file_is_exactly_what_the_builder_script_writes():
+    import importlib.util
+    import sys
+
+    scripts = str(ROOT / "scripts")
+    sys.path.insert(0, scripts)
+    try:
+        spec = importlib.util.spec_from_file_location("build_destination_tips", ROOT / "scripts" / "build_destination_tips.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        built = module.build()
+    finally:
+        sys.path.remove(scripts)
+    assert built == json.loads(destination_tips.GUIDES_FILE.read_text(encoding="utf-8")), "re-run scripts/build_destination_tips.py"
+
+
+def test_the_ten_batch2_countries_go_well_beyond_the_shared_notes():
+    for country in BATCH2:
+        guide = load_guides()[country]
+        count = sum(len(topic.tips) for topic in guide.topics)
+        assert count >= 12, (country, count)
+        assert guide.last_checked == "2026-10-05" and guide.review_status == "draft", country
+        assert "還在整理" not in guide.intro, f"{country}: the shared 'still being written' intro was replaced"
+
+
+def test_germany_carries_visa_blocked_account_registration_insurance_and_broadcast_fee():
+    text = guide_text("德國")
+    for needle in ("2026 年 5 月 1 日", "Auslandsportal", "992 歐元", "11,904", "2 週內", "Wohnungsgeberbestätigung", "§ 551", "18.36",
+                   "120 個全天", "240 個半天", "+49-171 3898257", "§ 172"):
+        assert needle in text, needle
+    assert "151 1105 6641" not in text and "1713147552" not in text, "Frankfurt's number differed between sources, so it is left out"
+    assert "沒有查到說明" in find_tip("德國", "健康保險").detail, "whether Taiwan's NHI is accepted is stated as unknown"
+
+
+def test_poland_carries_the_taipei_visa_route_the_residence_card_and_prepaid_registration():
+    text = guide_text("波蘭")
+    for needle in ("本人到辦事處", "e-konsulat", "6 個月", "15 個曆日", "45 日", "7,492", "30,000 歐元", "karta pobytu", "390",
+                   "15 個月", "NFZ", "668-027-574", "2017 年 2 月 1 日"):
+        assert needle in text, needle
+    assert "沒有日期" in find_tip("波蘭", "價格量級").detail, "undated price pages are called undated"
+
+
+def test_vietnam_carries_evisa_registration_sim_vaccine_and_licence_warnings_without_guessing():
+    text = guide_text("越南")
+    for needle in ("evisa.gov.vn", "拒絕入境", "DH", "prearrival.immigration.gov.vn", "5,000 美元", "公安", "2026 年 4 月 15 日",
+                   "臉部生物特徵", "瘧疾", "+84-913219986", "+84-903927019"):
+        assert needle in text, needle
+    assert "請不要假設可以" in find_tip("越南", "駕照").detail
+    assert "不寫小時數" in find_tip("越南", "住宿一定要").detail, "the residence-declaration deadline we could not confirm is not given"
+    assert "沒有寫外國護照持有人怎麼辦" in find_tip("越南", "手機卡").detail
+
+
+def test_czech_republic_carries_visa_documents_police_report_and_the_expired_insurer_monopoly():
+    text = guide_text("捷克")
+    for needle in ("2024 年 1 月 8 日", "Taipei.Visa@mzv.gov.cz", "180,000", "3 個工作日", "60 天", "90 天", "603-166-707",
+                   "2026 年 8 月 2 日", "Pojišťovna VZP", "ISIC", "233-320-606"):
+        assert needle in text, needle
+    insurance = find_tip("捷克", "保險要涵蓋全程")
+    assert "之後的規定我沒查到" in insurance.detail, "what replaced the VZP-only period is not guessed"
+    assert "舊文件" in find_tip("捷克", "就學簽證").detail
+
+
+def test_thailand_carries_the_2026_visa_free_rule_tdac_exchange_visa_and_overstay_penalties():
+    text = guide_text("泰國")
+    for needle in ("2026 年 9 月 15 日", "30 天", "TDAC", "72 小時", "2 萬泰銖", "eVisa", "學校對學校", "2,300", "200,000", "500 銖",
+                   "20,000 銖", "5 年內禁止再入境", "10 年內禁止再入境", "081-6664006"):
+        assert needle in text, needle
+    unread = find_tip("泰國", "住宿通報")
+    assert unread.importance == "good_to_know" and "沒能讀到" in unread.title and "拒絕自動讀取" in unread.detail
+
+
+def test_hong_kong_says_visitors_cannot_study_and_keeps_the_shared_mainland_registration_note():
+    text = guide_text("香港")
+    for needle in ("不得在香港就讀", "ID 995A", "ID 995B", "六星期", "戶籍謄本", "多次入境許可證", "180 天", "30 天內", "2,100", "7,400",
+                   "八號", "70 毫米", "852-61439012"):
+        assert needle in text, needle
+    documents = next(topic for topic in load_guides()["香港"].topics if topic.topic == "documents")
+    assert any("陸委會" in tip.title for tip in documents.tips), "the 陸委會 registration reminder is still there"
+
+
+def test_india_states_the_conflicting_visa_sources_instead_of_choosing_one():
+    text = guide_text("印度")
+    for needle in ("14 天內", "180 天", "FRRO", "e-FRRO", "bonafide", "HIV", "9810-642-658", "11-46077777"):
+        assert needle in text, needle
+    visa = find_tip("印度", "台灣護照怎麼申請學生簽證")
+    assert "矛盾" in visa.detail and "印度台北協會" in visa.detail
+    assert "核對" in find_tip("印度", "緊急電話").detail, "the emergency number must be checked against the page"
+
+
+def test_spain_carries_visa_tie_padron_and_the_missing_social_security_agreement():
+    text = guide_text("西班牙")
+    for needle in ("90 天", "兩個月", "sutramiteconsular.maec.es", "IPREM", "180 天", "一個月內", "TIE", "Padrón", "沒有簽署社會保障協議",
+                   "639384883", "esp@mofa.gov.tw"):
+        assert needle in text, needle
+
+
+def test_sweden_carries_permit_funds_insurance_and_coordination_number():
+    text = guide_text("瑞典")
+    for needle in ("90 天", "10,656", "4,736", "2,960", "75%", "全面健康保險", "samordningsnummer", "個人號碼", "+46-70-675 5089"):
+        assert needle in text, needle
+
+
+def test_canada_carries_permit_length_eta_work_limit_and_provincial_insurance():
+    text = guide_text("加拿大")
+    for needle in ("6 個月", "eTA", "身分證字號", "PAL", "24 小時", "SIN", "UHIP", "75 加幣", "MSP", "(613) 762-6090", "(416) 587-8111",
+                   "(604) 377-8730"):
+        assert needle in text, needle
+    assert "原文指南" in find_tip("加拿大", "eTA").detail, "a summary that contradicted the primary text is called out"
+
+
+def test_batch2_emergency_numbers_come_from_the_representative_offices_own_pages():
+    for country in BATCH2:
+        guide = load_guides()[country]
+        emergency = next(topic for topic in guide.topics if topic.topic == "emergency")
+        first = emergency.tips[0]
+        assert first.importance == "must" and any(ch.isdigit() for ch in first.detail), country
+        hosts = {source.url.split("/")[2] for source in first.sources}
+        assert hosts <= OFFICE_HOSTS, (country, hosts)
+
+
+def test_batch2_tips_name_a_page_for_everything_and_never_claim_review():
+    for country in BATCH2:
+        for topic in load_guides()[country].topics:
+            for tip in topic.tips:
+                assert tip.sources and all(source.name.strip() and source.url.startswith("https://") for source in tip.sources), (country, tip.title)
+        assert load_guides()[country].reviewers == []
