@@ -23,7 +23,26 @@ Google 登入：瀏覽器 ──▶ Google ──▶ 回到你的網站 /auth/oa
 | --- | --- | --- |
 | 主機方案 | 先用 **Free** 試，正式對外前改 **Starter** | Free：閒置 15 分鐘會休眠，下一位訪客要等約 1 分鐘。Starter 目前約每月 7 美元（以 [Render 定價頁](https://render.com/pricing) 為準），不休眠。這個網站實測只用約 100 MB 記憶體，512 MB 的方案夠用。 |
 | 網址 | 先用 Render 送的 `https://xxx.onrender.com` | 能完整測試。有自己的網域再看第 8 步。 |
-| Supabase 方案 | 正式對外請用付費方案 | 免費專案閒置約一週會被暫停，整個網站會壞掉，也沒有每日備份。 |
+| Supabase 方案 | 先用 **Free**，有真實使用者內容後再升 **Pro** | Free 閒置 1 週會被暫停（網站會整個壞掉）、沒有備份、資料庫只有 500 MB。見下面「$0 起步」。 |
+
+### $0 起步：現在完全免費，付錢的時機看這裡
+
+GitHub、Render Free、Supabase Free、Google 登入、`onrender.com` 網址，全部是 0 元。代價是這幾件事（依 [Supabase 定價頁](https://supabase.com/pricing) 與 [Render 免費方案說明](https://render.com/docs/free)）：
+
+| 免費的限制 | 影響 | 免費的解法 |
+| --- | --- | --- |
+| Render Free 閒置 15 分鐘會休眠 | 下一位訪客要等約 1 分鐘 | 測試期告訴使用者「第一次開比較慢」 |
+| Supabase Free 閒置 1 週會暫停 | 整個網站壞掉，要到後台按 Restore | 每週至少有人開一次；每週看一眼後台 |
+| Supabase Free **沒有備份** | 資料庫出事就沒了 | 每週自己備份一次：`npx supabase@latest db dump -f backup.sql` |
+| Supabase Free 資料庫只有 500 MB、流量 5 GB／月 | 使用統計是最可能先塞滿的表（實測一筆事件約 0.6 KB，資料庫裡含索引會更大） | 在 Render 的 Environment 加 `EXCHANGE_ANALYTICS_RETENTION_DAYS` = `30`（程式的最小值就是 30，預設是 400） |
+
+**什麼時候才付錢**（每一項都是出現徵兆才升級，不用預先付）：
+
+1. **使用者開始發文、存申請進度** → 先升 Supabase Pro（約每月 25 美元起，預設開花費上限）。理由是備份與不暫停：資料掉了就找不回來，這是最大的風險。
+2. **有人抱怨第一次載入太慢** → Render 升 Starter（約每月 7 美元）。
+3. **想在 Google 登入畫面放隱私權政策、標誌** → 買自己的網域（`.com` 通常每年約 10 美元）。
+
+全部都升上去，最多大約每月 32 美元加網域每年約 10 美元。
 
 ## 第 1 步：確認程式在 GitHub 上是最新的
 
