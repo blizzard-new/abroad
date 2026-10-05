@@ -1,0 +1,51 @@
+# Render Blueprint：一個網頁服務，資料全部放在 Supabase（主機本身不存任何資料）。
+# 一步一步的做法見 docs/deploy-render-guide.md。
+#
+# 標示 sync: false 的是機密，Render 建立服務時會請你在網頁上貼；不要寫進這個檔案，也不要貼進聊天室。
+services:
+  - type: web
+    name: uniway
+    runtime: python
+    # free：閒置 15 分鐘會休眠，下一位訪客要等約 1 分鐘；正式對外前改成 starter（目前約每月 7 美元，Render 新命名是 0.5c-512mb）。
+    plan: free
+    # 離台灣最近的區域。若你的 Supabase 專案在別的區域，兩邊盡量選近的。
+    region: singapore
+    branch: main
+    autoDeployTrigger: commit
+    buildCommand: pip install .
+    # 只能跑 1 個 worker：登入狀態的限流、統計緩衝都在程式記憶體裡。
+    startCommand: uvicorn exchange_info.api:app --host 0.0.0.0 --port $PORT --workers 1
+    healthCheckPath: /health
+    envVars:
+      # 正式環境：程式會強制 HTTPS Cookie 與 Supabase，缺任何一項就拒絕啟動（寧可起不來，也不偷偷存在本機）。
+      - key: EXCHANGE_ENVIRONMENT
+        value: production
+      - key: EXCHANGE_ACCOUNT_REPOSITORY
+        value: supabase
+      - key: EXCHANGE_VAULT_BACKEND
+        value: supabase
+      - key: EXCHANGE_FORM_DRAFT_BACKEND
+        value: supabase
+      - key: EXCHANGE_EMAIL_VERIFICATION_BACKEND
+        value: disabled   # 只用 Google 登入，不寄驗證信
+      # Render 前面有 Cloudflare 與負載平衡器，程式只看得到它們。Cloudflare 會自己寫入並覆蓋 CF-Connecting-IP，
+      # 所以只信這一個標頭；沒設的話全站訪客會被當成同一個人，登入限流（10 分鐘 20 次）會讓所有人一起被擋。
+      - key: EXCHANGE_CLIENT_IP_HEADER
+        value: CF-Connecting-IP
+      - key: EXCHANGE_SUPABASE_URL
+        sync: false
+      - key: EXCHANGE_SUPABASE_SECRET_KEY
+        sync: false
+      # 兩把 32 bytes 的密鑰，產生方式見部署指南第 3 步。VAULT 那把一旦有人上傳文件就不能換。
+      - key: EXCHANGE_VAULT_MASTER_KEY
+        sync: false
+      - key: EXCHANGE_EMAIL_VERIFICATION_SECRET
+        sync: false
+      # 看統計儀表板的人（Gmail），逗號分隔；可以之後再設。
+      - key: EXCHANGE_CONTENT_ADMIN_EMAILS
+        sync: false
+      # 這裡刻意沒有列出的變數（等需要時在 Render 的 Environment 頁面加）：
+      #   GOOGLE_OAUTH_CLIENT_ID、GOOGLE_OAUTH_CLIENT_SECRET：Google 登入，建好 OAuth 用戶端後再加（指南第 6 步）。
+      #     沒加時登入按鈕是灰的，其餘功能正常；填了假值反而會讓按鈕可按但登入失敗。
+      #   EXCHANGE_PUBLIC_BASE_URL：自己的網域（指南第 8 步）。沒設時用 Render 自動提供的 RENDER_EXTERNAL_URL，也就是
+      #     https://xxx.onrender.com；綁了自己的網域之後要設成新網址，否則 Google 登入返回網址與學校照片連結還會指向舊網址。

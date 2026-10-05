@@ -380,6 +380,7 @@ from .storage import (
 from .student_view import build_student_dashboard, fetch_partner_universities
 from .student_verification import StudentCardVerificationError, verify_student_cards
 from .rag import rag_index_status, search_document_chunks, supabase_configured
+from .request_origin import client_address, public_base_url
 from .university_registry import (
     CGU,
     NTPU,
@@ -942,9 +943,7 @@ def create_app(
     def calendar_status(account: UserAccount, request: Request) -> CalendarSyncStatus:
         if not account.calendar_feed_token:
             return CalendarSyncStatus(enabled=False, event_count=len(account.calendar_events))
-        public_base = os.environ.get("EXCHANGE_PUBLIC_BASE_URL", "").strip().rstrip("/")
-        if not public_base:
-            public_base = str(request.base_url).rstrip("/")
+        public_base = public_base_url(request)
         subscription_url = (
             f"{public_base}/calendar/feed/{account.calendar_feed_token}.ics"
         )
@@ -969,10 +968,7 @@ def create_app(
         return None
 
     def oauth_redirect_uri(request: Request, provider: AuthProvider) -> str:
-        public_base = os.environ.get("EXCHANGE_PUBLIC_BASE_URL", "").strip().rstrip("/")
-        if not public_base:
-            public_base = str(request.base_url).rstrip("/")
-        return f"{public_base}/auth/oauth/{provider.value}/callback"
+        return f"{public_base_url(request)}/auth/oauth/{provider.value}/callback"
 
     def oauth_account(
         provider: AuthProvider,
@@ -2494,7 +2490,7 @@ def create_app(
                 payload={"student_verification_token": student_verification_token},
                 expires_at=now + timedelta(minutes=10),
             )
-            client_ip = request.client.host if request.client else "127.0.0.1"
+            client_ip = client_address(request, default="127.0.0.1")
             try:
                 app.state.transient_auth_store.start_oauth_state(
                     record,
@@ -2957,7 +2953,7 @@ def create_app(
     ) -> StudentDashboard:
         dashboard = _attach_school_images(
             dashboard_for_university(school),
-            base_url=str(request.base_url),
+            base_url=public_base_url(request),
         )
         locations = load_university_locations(resolved_data_dir)
         return dashboard.model_copy(update={"partner_universities": [
@@ -3003,7 +2999,7 @@ def create_app(
         pages = pages_for_university(university)
         dashboard = _attach_school_images(
             dashboard_for_university(university),
-            base_url=str(request.base_url),
+            base_url=public_base_url(request),
         )
         retrieved_chunks = (
             search_document_chunks(

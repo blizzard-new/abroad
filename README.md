@@ -477,6 +477,8 @@ LAI-00～LAI-03 已建立 `LocalGemmaProvider`、固定 loopback／model 設定�
 
 第一次設定 Supabase 請照 [`docs/supabase-setup-guide.md`](docs/supabase-setup-guide.md) 一步一步做，最後用 `scripts/check_supabase_setup.py` 檢查。後端金鑰新舊兩種格式（`sb_secret_...` 與舊的 `service_role`）都支援。
 
+把網站放上主機（Render）請照 [`docs/deploy-render-guide.md`](docs/deploy-render-guide.md)；`render.yaml` 是對應的部署設定。主機前面有代理時，程式靠 `EXCHANGE_CLIENT_IP_HEADER` 與 `EXCHANGE_PUBLIC_BASE_URL`（Render 上沒設時退回 `RENDER_EXTERNAL_URL`）取得真實訪客位址與對外網址，見 `src/exchange_info/request_origin.py`。
+
 本機開發不設定雲端服務也能運作。非 AI 階段的正式環境需依 migration 檔名順序套用 `supabase/migrations/`，包含內容治理、帳號工作區、通知、文件庫、Email 驗證、表單草稿、雙人流程審查、revision 修正歷程、生活情報審查／升級／復原、申請流程復原、暫態 OAuth／學生驗證 state、原子帳號驗證提交、`20260823130000_atomic_workspace_and_suspension.sql`、`20260823160000_atomic_public_community.sql`、`20260824100000_atomic_private_community.sql`、`20260829100000_atomic_account_deletion.sql`、`20260830100000_application_workflow_issue_reports.sql`，以及 `20260819170000_application_workflow_publication_integrity.sql` 的同流程自我參照與復原事件唯一性約束；`202607190001_ai_rag.sql` 留到本地 AI／RAG 階段再評估。帳號、工作區、session、正規化 provider link、通知、Email 驗證 challenge、私人文件 metadata、表單草稿密文、暫態驗證資料、公開／私人社群內容、申請規定錯誤回報與內容核准／修正紀錄都開啟 RLS，並撤銷瀏覽器角色的直接 mutation 權限；Web 與未來 Flutter 都只能經由 FastAPI 存取。
 
 正式環境必須明確選用 Supabase repository。API 會集中核對帳號、內容治理、生活情報審查、私人文件庫、加密表單草稿、暫態驗證 state、公開社群、社群停權稽核與申請規定錯誤回報九個 backend identity；社群停權稽核與帳號共用 repository，但仍有獨立的啟動檢查。若任一仍是 JSONL／local encrypted／memory、缺少 URL 或後端 secret，就拒絕啟動。明確設定 `EXCHANGE_ACCOUNT_REPOSITORY=jsonl`、`EXCHANGE_COMMUNITY_REPOSITORY=jsonl`、`EXCHANGE_TRANSIENT_AUTH_BACKEND=memory`、`EXCHANGE_WORKFLOW_ISSUE_REPORT_BACKEND=jsonl` 或以依賴注入傳入本機 service 也不能繞過；development／test 的隔離 fallback 維持可用：

@@ -21,6 +21,7 @@ from .analytics import (
 )
 from .analytics_report import TAIPEI, build_report, events_to_csv_rows
 from .analytics_repository import MAX_FETCH_ROWS
+from .request_origin import client_address
 
 MAX_RANGE_DAYS = 400
 EXPORT_LIMIT = 100_000
@@ -69,7 +70,7 @@ def register_analytics_routes(
             batch = ClientBatch.model_validate(json.loads(body))
         except (ValueError, ValidationError) as exc:
             raise HTTPException(status_code=422, detail="格式不正確。") from exc
-        client = request.client.host if request.client else "unknown"
+        client = client_address(request)
         try:
             result = await run_in_threadpool(
                 service.ingest, batch,
