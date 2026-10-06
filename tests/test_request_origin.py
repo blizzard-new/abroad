@@ -7,6 +7,7 @@ from types import SimpleNamespace
 import pytest
 from fastapi.testclient import TestClient
 
+from exchange_info.legal_pages import TERMS_VERSION
 from exchange_info.api import create_app
 from exchange_info.request_origin import client_address, public_base_url
 
@@ -100,7 +101,7 @@ def test_the_sign_in_return_address_is_the_public_one(monkeypatch):
     monkeypatch.setenv("GOOGLE_OAUTH_CLIENT_ID", "id-for-test")
     monkeypatch.setenv("GOOGLE_OAUTH_CLIENT_SECRET", "secret-for-test")
     client = TestClient(create_app(), base_url="http://internal-host:10000", follow_redirects=False)
-    response = client.get("/auth/oauth/google/start")
+    response = client.get(f"/auth/oauth/google/start?terms={TERMS_VERSION}")
     location = response.headers.get("location", "")
     assert response.status_code in (302, 303, 307), response.text[:200]
     assert "redirect_uri=https%3A%2F%2Funiway.example.com%2Fauth%2Foauth%2Fgoogle%2Fcallback" in location
@@ -112,7 +113,7 @@ def test_on_render_the_sign_in_return_address_comes_from_render_itself(monkeypat
     monkeypatch.setenv("GOOGLE_OAUTH_CLIENT_ID", "id-for-test")
     monkeypatch.setenv("GOOGLE_OAUTH_CLIENT_SECRET", "secret-for-test")
     client = TestClient(create_app(), base_url="http://internal-host:10000", follow_redirects=False)
-    location = client.get("/auth/oauth/google/start").headers.get("location", "")
+    location = client.get(f"/auth/oauth/google/start?terms={TERMS_VERSION}").headers.get("location", "")
     assert "redirect_uri=https%3A%2F%2Funiway.onrender.com%2Fauth%2Foauth%2Fgoogle%2Fcallback" in location
 
 
@@ -155,6 +156,6 @@ def test_sign_in_start_gives_the_store_a_value_the_database_will_accept(monkeypa
     monkeypatch.setenv("GOOGLE_OAUTH_CLIENT_ID", "id-for-test")
     monkeypatch.setenv("GOOGLE_OAUTH_CLIENT_SECRET", "secret-for-test")
     client = TestClient(create_app(transient_auth_store=RecordingStore()), follow_redirects=False)
-    response = client.get("/auth/oauth/google/start")
+    response = client.get(f"/auth/oauth/google/start?terms={TERMS_VERSION}")
     assert response.status_code in (302, 303, 307), response.text[:200]
     assert len(seen) == 1 and _re.fullmatch(r"[0-9a-f]{64}", seen[0]), seen

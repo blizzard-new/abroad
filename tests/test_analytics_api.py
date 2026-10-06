@@ -11,6 +11,7 @@ from urllib.parse import parse_qs, urlparse
 import pytest
 from fastapi.testclient import TestClient
 
+from exchange_info.legal_pages import TERMS_VERSION
 from exchange_info.analytics import RateLimiter
 from exchange_info.analytics_repository import JsonlAnalyticsRepository
 from exchange_info.api import create_app
@@ -255,7 +256,7 @@ def test_google_sign_in_records_new_accounts_and_returning_logins(tmp_path, monk
             return self.data
 
     def sign_in(browser):
-        start = browser.get("/auth/oauth/google/start", follow_redirects=False)
+        start = browser.get(f"/auth/oauth/google/start?terms={TERMS_VERSION}", follow_redirects=False)
         state = parse_qs(urlparse(start.headers["location"]).query)["state"][0]
         user = {"sub": "sub-1", "name": "測試同學", "email": "b1128003@cgu.edu.tw", "email_verified": True}
         with (patch("exchange_info.api.requests.post", return_value=Json({"access_token": "t"})),

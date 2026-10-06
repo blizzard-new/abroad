@@ -8,6 +8,7 @@ import requests
 from fastapi.testclient import TestClient
 from PIL import Image
 
+from exchange_info.legal_pages import TERMS_VERSION
 from exchange_info.api import (
     _auth_cookie_secure_enabled,
     _browser_security_headers,
@@ -41,7 +42,7 @@ class _JsonResponse:
 
 def _start_oauth(client: TestClient, provider: str) -> str:
     response = client.get(
-        f"/auth/oauth/{provider}/start",
+        f"/auth/oauth/{provider}/start?terms={TERMS_VERSION}",
         follow_redirects=False,
     )
     assert response.status_code == 302
@@ -688,7 +689,7 @@ def test_google_oauth_state_is_bound_to_initiating_browser_cookie(
     other_browser = TestClient(app)
 
     start = initiating_browser.get(
-        "/auth/oauth/google/start",
+        f"/auth/oauth/google/start?terms={TERMS_VERSION}",
         follow_redirects=False,
     )
     assert start.status_code == 302
@@ -918,12 +919,12 @@ def test_google_oauth_start_rate_limit_bounds_state_creation(
 
     for _ in range(20):
         response = browser.get(
-            "/auth/oauth/google/start",
+            f"/auth/oauth/google/start?terms={TERMS_VERSION}",
             follow_redirects=False,
         )
         assert response.status_code == 302
     limited = browser.get(
-        "/auth/oauth/google/start",
+        f"/auth/oauth/google/start?terms={TERMS_VERSION}",
         follow_redirects=False,
     )
     assert limited.status_code == 429
@@ -1268,7 +1269,7 @@ def test_facebook_unverified_email_does_not_link_or_persist_by_email(
     ]
     with patch("exchange_info.api.requests.get", side_effect=responses) as get:
         first_start = facebook_browser.get(
-            "/auth/oauth/facebook/start",
+            f"/auth/oauth/facebook/start?terms={TERMS_VERSION}",
             follow_redirects=False,
         )
         assert first_start.status_code == 302
@@ -1285,7 +1286,7 @@ def test_facebook_unverified_email_does_not_link_or_persist_by_email(
 
         assert facebook_browser.post("/auth/logout").status_code == 204
         second_start = facebook_browser.get(
-            "/auth/oauth/facebook/start",
+            f"/auth/oauth/facebook/start?terms={TERMS_VERSION}",
             follow_redirects=False,
         )
         assert second_start.status_code == 302

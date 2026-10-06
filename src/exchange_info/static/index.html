@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/static/styles.css?v=20261003-open-1" />
     <link rel="stylesheet" href="/static/design-system.css?v=20260716-platform-12" />
     <link rel="stylesheet" href="/static/platform.css?v=20260721-student-survival-4" />
-    <link rel="stylesheet" href="/static/product-v2.css?v=20260929-scholarship-height-1" />
+    <link rel="stylesheet" href="/static/product-v2.css?v=20261006-terms-1" />
     <link rel="stylesheet" href="/static/icon-motion.css?v=20260820-icon-motion-1" />
     <link rel="stylesheet" href="/static/advisor-mascot.css?v=20260820-advisor-mascot-1" />
     <link rel="stylesheet" href="/static/uniway.css?v=20260820-uniway-1" />
@@ -160,6 +160,10 @@
         <div class="auth-mode-switch" role="tablist" aria-label="登入或建立帳號">
           <button type="button" role="tab" aria-selected="true" data-auth-mode="login">登入</button>
           <button type="button" role="tab" aria-selected="false" data-auth-mode="register">建立帳號</button>
+        </div>
+        <div class="terms-consent-row">
+          <label class="terms-consent"><input type="checkbox" id="terms-consent" data-terms-version="2026-10-06" aria-describedby="terms-consent-hint" /><span>我已閱讀並同意<a href="/terms" target="_blank" rel="noopener">使用條款</a>與<a href="/privacy" target="_blank" rel="noopener">隱私權政策</a>（新視窗開啟）</span></label>
+          <p id="terms-consent-hint" class="terms-consent-hint" role="alert" hidden>建立帳號或登入前，請先勾選同意。</p>
         </div>
         <div id="oauth-provider-list" class="oauth-provider-list" aria-label="快速登入方式">
           <button type="button" class="oauth-button" data-oauth-provider="google"><span class="provider-mark google-mark">G</span><span>使用 Google 繼續</span></button>
@@ -1111,6 +1115,6 @@
     <script src="/static/document-workbench.js?v=20261002-flow-2" defer></script>
     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
     <script src="/static/analytics.js?v=20261003-analytics-1" defer></script>
-    <script src="/static/app.js?v=20261003-analytics-1" defer></script>
+    <script src="/static/app.js?v=20261006-terms-1" defer></script>
   </body>
 </html>

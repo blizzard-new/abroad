@@ -380,7 +380,7 @@ from .storage import (
 from .student_view import build_student_dashboard, fetch_partner_universities
 from .student_verification import StudentCardVerificationError, verify_student_cards
 from .rag import rag_index_status, search_document_chunks, supabase_configured
-from .legal_pages import register_legal_pages
+from .legal_pages import TERMS_VERSION, register_legal_pages
 from .request_origin import client_fingerprint, public_base_url
 from .university_registry import (
     CGU,
@@ -2467,6 +2467,11 @@ def create_app(
         provider: str,
         request: Request,
         student_verification_token: str | None = Query(default=None),
+        terms: str | None = Query(
+            default=None,
+            max_length=32,
+            description="The version of the terms and privacy policy the visitor ticked; sign-in does not start without it.",
+        ),
     ) -> RedirectResponse:
         try:
             provider_name = AuthProvider(provider)
@@ -2476,6 +2481,10 @@ def create_app(
         settings = provider_settings(provider_name)
         if settings is None:
             raise HTTPException(status_code=503, detail="此登入方式尚未設定平台金鑰。")
+        if terms != TERMS_VERSION:
+            # No state is created and nothing leaves for the provider: an account can only be created after the visitor
+            # ticked the current terms. The page opens the sign-in dialog again with a reminder.
+            return RedirectResponse(url="/#auth=terms", status_code=303)
         if student_verification_token:
             student_verification_record(student_verification_token, consume=False)
         state_token = secrets.token_urlsafe(32)

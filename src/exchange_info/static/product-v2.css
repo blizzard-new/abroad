@@ -988,6 +988,47 @@ body.cgu-community-mode .featured-board-grid {
   margin-top: 18px;
 }
 
+.terms-consent-row {
+  margin-top: 16px;
+}
+
+.terms-consent {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.terms-consent input {
+  width: 18px;
+  height: 18px;
+  margin: 3px 0 0;
+  accent-color: var(--accent, #0b6f8a);
+}
+
+.terms-consent a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.terms-consent-hint {
+  margin: 6px 0 0 30px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--red-soft);
+  color: var(--red);
+  font-size: 13px;
+}
+
+.terms-consent-hint[hidden] {
+  display: none;
+}
+
 .oauth-button {
   display: grid;
   grid-template-columns: 26px minmax(0, 1fr) auto;

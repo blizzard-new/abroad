@@ -1763,9 +1763,27 @@ function handleStudentVerificationReturn() {
   if (state.account) openProfileDialog();
 }
 
-function openAuthDialog(mode = "login") {
+const TERMS_STORAGE_KEY = "uniway-terms-accepted";
+
+function rememberAcceptedTerms(version) {
+  try { window.localStorage.setItem(TERMS_STORAGE_KEY, version); } catch (_) { /* private mode: the tick just is not remembered */ }
+}
+
+// A returning visitor on the same browser finds the box already ticked for the version they accepted; a new version of the
+// terms starts unticked again.
+function syncTermsConsent({ remind = false } = {}) {
+  const consent = $("#terms-consent");
+  if (!consent) return;
+  let remembered = null;
+  try { remembered = window.localStorage.getItem(TERMS_STORAGE_KEY); } catch (_) { remembered = null; }
+  consent.checked = remembered !== null && remembered === consent.dataset.termsVersion;
+  $("#terms-consent-hint").hidden = !(remind && !consent.checked);
+}
+
+function openAuthDialog(mode = "login", { remindTerms = false } = {}) {
   renderDiscoveryRecents();
   setAuthMode(mode);
+  syncTermsConsent({ remind: remindTerms });
   state.dialogReturnFocus = document.activeElement;
   $("#auth-dialog").hidden = false;
   document.body.classList.add("account-dialog-open");
@@ -3432,6 +3450,11 @@ async function restoreAccount({ quiet = false } = {}) {
     state.account ? loadNotifications({ quiet: true }) : Promise.resolve(),
   ]);
   if (state.account) await hydrateAccountWorkspace();
+  if (window.location.hash === "#auth=terms") {
+    // The server turned a sign-in away because the terms were not ticked: show the dialog again with the reminder.
+    window.UniWayNavigation.replaceState({}, "", "#home");
+    openAuthDialog("register", { remindTerms: true });
+  }
   if (window.location.hash === "#auth=success") {
     window.UniWayNavigation.replaceState({}, "", "#home");
     if (state.account) {
@@ -12206,8 +12229,21 @@ function bindEvents() {
   document.querySelectorAll("[data-auth-mode]").forEach((button) => button.addEventListener("click", () => setAuthMode(button.dataset.authMode)));
   document.querySelectorAll("[data-oauth-provider]").forEach((button) => button.addEventListener("click", () => {
     if (button.disabled) return;
-    window.location.href = `/auth/oauth/${encodeURIComponent(button.dataset.oauthProvider)}/start`;
+    // Nobody leaves for the provider (and so nobody creates an account) without ticking the current terms; the server
+    // checks the same version again, so skipping this script does not skip the tick.
+    const consent = $("#terms-consent");
+    if (consent && !consent.checked) {
+      $("#terms-consent-hint").hidden = false;
+      consent.focus();
+      return;
+    }
+    const version = consent?.dataset.termsVersion || "";
+    rememberAcceptedTerms(version);
+    window.location.href = `/auth/oauth/${encodeURIComponent(button.dataset.oauthProvider)}/start?terms=${encodeURIComponent(version)}`;
   }));
+  $("#terms-consent")?.addEventListener("change", (event) => {
+    if (event.currentTarget.checked) $("#terms-consent-hint").hidden = true;
+  });
   $("#request-email-verification").addEventListener("click", requestEmailVerification);
   $("#confirm-email-verification").addEventListener("click", confirmEmailVerification);
   $("#registration-email").addEventListener("input", (event) => {

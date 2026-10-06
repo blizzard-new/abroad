@@ -7,6 +7,7 @@ from urllib.parse import parse_qs, urlparse
 import pytest
 from fastapi.testclient import TestClient
 
+from exchange_info.legal_pages import TERMS_VERSION
 from exchange_info.access_control import (
     HOME_UNIVERSITY_UNSET,
     catalog_home_university,
@@ -76,7 +77,7 @@ def google(tmp_path, monkeypatch):
 
     def sign_in(subject: str, email: str | None, *, verified: bool = True, client: TestClient | None = None):
         browser = client or TestClient(create_app(tmp_path))
-        start = browser.get("/auth/oauth/google/start", follow_redirects=False)
+        start = browser.get(f"/auth/oauth/google/start?terms={TERMS_VERSION}", follow_redirects=False)
         assert start.status_code == 302
         state = parse_qs(urlparse(start.headers["location"]).query)["state"][0]
         user = {"sub": subject, "name": "測試同學", "email_verified": verified}
@@ -145,8 +146,8 @@ def test_google_is_the_only_way_to_sign_up_unless_a_deployment_adds_more(tmp_pat
     assert client.post("/auth/register", json=register).status_code == 403
     assert client.post("/auth/login", json={"email": "someone@example.com", "password": "correct-horse-battery"}).status_code == 403
     assert client.post("/auth/email-verification/request", json={"email": "someone@example.com"}).status_code == 403
-    assert client.get("/auth/oauth/facebook/start", follow_redirects=False).status_code == 403
-    assert client.get("/auth/oauth/google/start", follow_redirects=False).status_code == 302
+    assert client.get(f"/auth/oauth/facebook/start?terms={TERMS_VERSION}", follow_redirects=False).status_code == 403
+    assert client.get(f"/auth/oauth/google/start?terms={TERMS_VERSION}", follow_redirects=False).status_code == 302
 
     monkeypatch.setenv("EXCHANGE_AUTH_METHODS", "email,google")
     both = {row["provider"]: row["enabled"] for row in TestClient(create_app(tmp_path)).get("/auth/providers").json()}

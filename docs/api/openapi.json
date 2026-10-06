@@ -15512,6 +15512,25 @@
               ],
               "title": "Student Verification Token"
             }
+          },
+          {
+            "description": "The version of the terms and privacy policy the visitor ticked; sign-in does not start without it.",
+            "in": "query",
+            "name": "terms",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 32,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "The version of the terms and privacy policy the visitor ticked; sign-in does not start without it.",
+              "title": "Terms"
+            }
           }
         ],
         "responses": {
