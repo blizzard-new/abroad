@@ -33,6 +33,10 @@ services:
       # 所以只信這一個標頭；沒設的話全站訪客會被當成同一個人，登入限流（10 分鐘 20 次）會讓所有人一起被擋。
       - key: EXCHANGE_CLIENT_IP_HEADER
         value: CF-Connecting-IP
+      # 全免費版：Supabase Free 的資料庫只有 500 MB，使用統計是最可能先塞滿的表。保留天數預設是 400，先縮到 30（程式允許的最小值）；
+      # 升級 Supabase 付費方案後可以調回更長。
+      - key: EXCHANGE_ANALYTICS_RETENTION_DAYS
+        value: "30"
       - key: EXCHANGE_SUPABASE_URL
         sync: false
       - key: EXCHANGE_SUPABASE_SECRET_KEY
