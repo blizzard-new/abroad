@@ -6,7 +6,7 @@ import json
 import time
 from datetime import date, timedelta
 from io import StringIO
-from urllib.parse import parse_qs, urlencode, urlparse
+from urllib.parse import parse_qs, urlparse
 from uuid import uuid4
 
 import requests
@@ -464,99 +464,6 @@ def test_advisor_waits_for_login_and_clears_private_conditions_on_logout(
     assert page.evaluate(
         "window.localStorage.getItem('exchange-guide-eligibility-profile')"
     ) is None
-
-
-def test_student_oauth_state_rejects_another_browser_session_without_consuming_it(
-    browser: Browser,
-    live_server: LiveServer,
-    monkeypatch,
-) -> None:
-    monkeypatch.setenv(
-        "EXCHANGE_NTPU_STUDENT_ENTRA_CLIENT_ID",
-        "e2e-ntpu-client-id",
-    )
-    monkeypatch.setenv(
-        "EXCHANGE_NTPU_STUDENT_ENTRA_CLIENT_SECRET",
-        "e2e-ntpu-client-secret",
-    )
-    monkeypatch.setenv(
-        "EXCHANGE_NTPU_STUDENT_ENTRA_TENANT_ID",
-        "11111111-2222-3333-4444-555555555555",
-    )
-    owner = live_server.register(_email("oauth-state-owner"), "OAuth state owner A")
-    other = live_server.register(_email("oauth-state-other"), "OAuth wrong session B")
-    context_a = browser.new_context(viewport={"width": 1280, "height": 900})
-    context_b = browser.new_context(viewport={"width": 1280, "height": 900})
-    try:
-        context_a.add_cookies(
-            [
-                {
-                    "name": "exchange_guide_session",
-                    "value": owner["access_token"],
-                    "url": live_server.base_url,
-                }
-            ]
-        )
-        context_b.add_cookies(
-            [
-                {
-                    "name": "exchange_guide_session",
-                    "value": other["access_token"],
-                    "url": live_server.base_url,
-                }
-            ]
-        )
-        page_a = context_a.new_page()
-        page_b = context_b.new_page()
-        start_response = context_a.request.get(
-            f"{live_server.base_url}"
-            "/auth/student-verification/oauth/ntpu-entra/start",
-            max_redirects=0,
-        )
-        assert start_response.status == 302
-        authorization_url = start_response.headers["location"]
-        authorization_query = parse_qs(urlparse(authorization_url).query)
-        state = authorization_query["state"][0]
-        assert state
-        assert "e2e-ntpu-client-secret" not in authorization_url
-
-        callback_url = (
-            f"{live_server.base_url}"
-            "/auth/student-verification/oauth/ntpu-entra/callback"
-        )
-        cancelled_query = urlencode(
-            {"state": state, "error": "access_denied"}
-        )
-        wrong_session_response = page_b.goto(
-            f"{callback_url}?{cancelled_query}",
-            wait_until="domcontentloaded",
-        )
-        assert wrong_session_response is not None
-        assert wrong_session_response.status == 403
-
-        with page_a.expect_response(
-            lambda response: response.url.startswith(callback_url)
-        ) as owner_callback_info:
-            page_a.goto(
-                f"{callback_url}?{cancelled_query}",
-                wait_until="domcontentloaded",
-            )
-        assert owner_callback_info.value.status == 303
-        cancelled_location = urlparse(page_a.url)
-        assert parse_qs(cancelled_location.query)["student_verification"] == [
-            "cancelled"
-        ]
-        assert cancelled_location.fragment == "home"
-
-        replay_response = page_a.goto(
-            f"{callback_url}?{cancelled_query}",
-            wait_until="domcontentloaded",
-        )
-        assert replay_response is not None
-        assert replay_response.status == 400
-    finally:
-        context_b.close()
-        context_a.close()
 
 
 def test_partial_destination_profile_is_not_rendered_as_fully_verified(

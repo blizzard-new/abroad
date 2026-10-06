@@ -113,6 +113,7 @@
             <span class="eyebrow">UniWay</span>
             <h1 id="onboarding-title">你目前就讀哪一所台灣大學？</h1>
             <p>選擇後，我們會顯示你真正能申請的學校、資格與申請時程；也可以先略過直接瀏覽。</p>
+            <p id="onboarding-lock-note" hidden><strong>請選你實際就讀的學校：</strong>學校會顯示在你的帳號與貼文上，選定後 3 天內不能更換。</p>
           </div>
         </div>
 
@@ -162,7 +163,7 @@
           <button type="button" role="tab" aria-selected="false" data-auth-mode="register">建立帳號</button>
         </div>
         <div class="terms-consent-row">
-          <label class="terms-consent"><input type="checkbox" id="terms-consent" data-terms-version="2026-10-06" aria-describedby="terms-consent-hint" /><span>我已閱讀並同意<a href="/terms" target="_blank" rel="noopener">使用條款</a>與<a href="/privacy" target="_blank" rel="noopener">隱私權政策</a>（新視窗開啟）</span></label>
+          <label class="terms-consent"><input type="checkbox" id="terms-consent" data-terms-version="2026-10-07" aria-describedby="terms-consent-hint" /><span>我已閱讀並同意<a href="/terms" target="_blank" rel="noopener">使用條款</a>與<a href="/privacy" target="_blank" rel="noopener">隱私權政策</a>（新視窗開啟）</span></label>
           <p id="terms-consent-hint" class="terms-consent-hint" role="alert" hidden>建立帳號或登入前，請先勾選同意。</p>
         </div>
         <div id="oauth-provider-list" class="oauth-provider-list" aria-label="快速登入方式">
@@ -201,7 +202,7 @@
             <button type="submit" class="primary-button full-width" disabled><span>完成 電子郵件 驗證後建立帳號</span><i data-lucide="arrow-right" aria-hidden="true"></i></button>
           </section>
         </form>
-        <small class="account-privacy"><i data-lucide="shield-check" aria-hidden="true"></i>電子郵件 不會顯示在公開貼文中；學生證只有在你登入後主動驗證校籍時才會處理。</small>
+        <small class="account-privacy"><i data-lucide="shield-check" aria-hidden="true"></i>電子郵件 不會顯示在公開貼文中。</small>
       </div>
     </section>
 
@@ -236,34 +237,9 @@
           </div>
           <div id="profile-email-verification-status" class="form-status" role="status"></div>
         </section>
-        <section id="student-verification-step" class="student-verification-step profile-student-verification" aria-labelledby="student-verification-title">
-          <div class="verification-heading">
-            <span class="verification-step-number"><i data-lucide="badge-check" aria-hidden="true"></i></span>
-            <div><strong id="student-verification-title">驗證在學身分</strong><small>只有完成對應學校驗證，才能在該校交換板發文或留言。</small></div>
-          </div>
-          <label><span>要驗證的學校</span><select id="student-verification-school"><option value="長庚大學">長庚大學</option><option value="國立臺北大學">國立臺北大學</option></select></label>
-          <section class="student-verification-provider-panel" aria-labelledby="student-verification-provider-title">
-            <div><strong id="student-verification-provider-title">校方帳號驗證方式</strong><small>只會使用正式重新導向或校方 電子郵件一次性驗證碼；不會要求你把校務密碼輸入本平台。</small></div>
-            <div id="student-verification-provider-list" class="student-verification-provider-list" aria-live="polite"><p>正在讀取這所學校的驗證方式…</p></div>
-          </section>
-          <div class="student-card-upload-grid">
-            <label class="student-card-upload" for="student-card-front">
-              <input id="student-card-front" name="student_card_front" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" />
-              <span class="student-card-preview" data-card-preview="front"><i data-lucide="scan-line" aria-hidden="true"></i><strong>學生證正面</strong><small>校名與學生證文字需清楚</small></span>
-            </label>
-            <label class="student-card-upload" for="student-card-back">
-              <input id="student-card-back" name="student_card_back" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" />
-              <span class="student-card-preview" data-card-preview="back"><i data-lucide="credit-card" aria-hidden="true"></i><strong>學生證反面</strong><small>完整拍攝，不裁切卡片邊緣</small></span>
-            </label>
-          </div>
-          <div class="verification-privacy-strip"><i data-lucide="shield-check" aria-hidden="true"></i><span><strong>不保存證件照片</strong><small>只留下驗證狀態、學校、卡面可明確辨識的系所、驗證方式與時間；不保存姓名、學號、OCR 全文或原圖。</small></span></div>
-          <label class="consent-row verification-consent"><input id="student-verification-consent" type="checkbox" /><span>我同意系統僅為確認學生身分進行一次性辨識。</span></label>
-          <div id="student-verification-status" class="form-status" role="status" aria-live="polite"></div>
-          <button id="verify-student-card" type="button" class="secondary-button full-width"><i data-lucide="scan-face" aria-hidden="true"></i><span>開始安全驗證</span></button>
-        </section>
         <form id="profile-form" class="account-form profile-form">
           <label><span>公開暱稱</span><input name="display_name" minlength="2" maxlength="30" required /></label>
-          <label><span>目前就讀學校</span><input name="home_university" maxlength="80" value="長庚大學" /></label>
+          <label><span>目前就讀學校</span><input name="home_university" maxlength="80" value="長庚大學" aria-describedby="profile-school-note" /><small id="profile-school-note"></small></label>
           <label><span>目標國家</span><input name="target_countries" maxlength="160" placeholder="日本、德國、澳洲" /><small>以頓號或逗號分隔</small></label>
           <label><span>目前階段</span><select name="application_stage"><option value="exploring">探索學校</option><option value="eligibility">確認資格</option><option value="documents">準備文件</option><option value="submitted">已送出申請</option><option value="accepted">準備出發</option><option value="abroad">正在海外</option><option value="returned">已完成交換</option></select></label>
           <fieldset class="profile-notification-settings">
@@ -1115,6 +1091,6 @@
     <script src="/static/document-workbench.js?v=20261002-flow-2" defer></script>
     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
     <script src="/static/analytics.js?v=20261003-analytics-1" defer></script>
-    <script src="/static/app.js?v=20261006-terms-1" defer></script>
+    <script src="/static/app.js?v=20261007-school-1" defer></script>
   </body>
 </html>

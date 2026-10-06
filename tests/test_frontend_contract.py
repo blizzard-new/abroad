@@ -1364,7 +1364,7 @@ def test_application_forms_encrypt_general_drafts_and_require_per_file_consent()
     assert ".application-file-preview-row.is-encrypted" in styles
 
 
-def test_workflow_issue_reporting_uses_verified_student_gate_and_separate_admin_queue() -> None:
+def test_workflow_issue_reporting_uses_school_gate_and_separate_admin_queue() -> None:
     html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
     script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
     styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
@@ -1378,7 +1378,7 @@ def test_workflow_issue_reporting_uses_verified_student_gate_and_separate_admin_
     assert "不要填寫姓名、電子郵件、電話、學號或其他聯絡資料" in html
     assert "回報不會直接修改學生看到的正式規定" in html
     assert "data-workflow-issue-report" in script
-    assert "state.account?.student_status_verified" in script
+    assert "state.account?.catalog_home_university" in script
     assert "openWorkflowIssueReport" in script
     assert "submitWorkflowIssueReport" in script
     assert '"/application-workflow-issue-reports"' in script
@@ -1481,29 +1481,29 @@ def test_application_pages_keep_primary_actions_visible_and_move_explanations_in
     assert ".application-compact-help > summary" in styles
 
 
-def test_registration_uses_email_first_and_student_verification_is_an_account_upgrade() -> None:
+def test_registration_uses_email_first_and_the_school_is_shown_and_locked_instead_of_verified() -> None:
     html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
     script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
     styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
 
-    assert 'id="student-card-front"' in html
-    assert 'id="student-card-back"' in html
     assert 'name="email_verification_token"' in html
     assert 'id="request-email-verification"' in html
     assert 'id="profile-dialog"' in html
-    assert "不保存證件照片" in html
-    assert 'id="student-verification-provider-list"' in html
-    assert "不會要求你把校務密碼輸入本平台" in html
-    assert 'fetchJson("/auth/student-verification"' in script
-    assert 'fetchJson("/auth/student-verification/confirm"' in script
-    assert 'fetchJson(\n      `/auth/student-verification/providers?' in script
-    assert "data-student-verification-provider" in script
-    assert 'params.get("student_verification")' in script
     assert 'fetchJson("/auth/email-verification/request"' in script
-    assert "clearStudentCardFiles" in script
-    assert ".student-card-upload-grid" in styles
-    assert ".student-verification-provider-list" in styles
     assert ".profile-verification-summary" in styles
+    # The student card check is gone: no upload panel, no calls to the removed endpoints.
+    for gone in ('id="student-card-front"', 'id="student-card-back"', 'id="student-verification-step"',
+                 'id="verify-student-card"', "不保存證件照片"):
+        assert gone not in html, gone
+    for gone in ("/auth/student-verification", "verifyStudentCard", "clearStudentCardFiles",
+                 "data-student-verification-provider", "student_verification"):
+        assert gone not in script, gone
+    # The school is shown, and the field is switched off while the 3-day lock runs.
+    assert 'id="profile-school-note"' in html
+    assert "school_change_locked_until" in script
+    assert "form.elements.home_university.disabled = Boolean(lockedUntil)" in script
+    assert "學校選定後 3 天內不能更換" in script
+    assert 'id="onboarding-lock-note"' in html and "state.chooseSchoolForAccount" in script
 
 
 def test_account_workspace_sync_has_conflict_merge_offline_retry_and_sensitive_boundary() -> None:

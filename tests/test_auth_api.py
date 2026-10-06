@@ -22,7 +22,6 @@ from exchange_info.repositories import (
     JsonlAccountRepository,
 )
 from exchange_info.storage import ensure_data_dirs
-from exchange_info.student_verification import StudentCardVerification
 from exchange_info.transient_auth import (
     LocalTransientAuthStore,
     TransientAuthStateKind,
@@ -59,12 +58,6 @@ def _persisted_account_rows(data_dir) -> list[dict]:
     ]
 
 
-def _card_image(color: tuple[int, int, int]) -> bytes:
-    stream = BytesIO()
-    Image.new("RGB", (900, 560), color).save(stream, format="JPEG")
-    return stream.getvalue()
-
-
 def _email_verification_token(client: TestClient, email: str) -> str:
     dispatched = client.post(
         "/auth/email-verification/request",
@@ -81,37 +74,10 @@ def _email_verification_token(client: TestClient, email: str) -> str:
     return confirmed.json()["verification_token"]
 
 
-def _student_verification_token(
-    client: TestClient,
-    headers: dict[str, str],
-) -> str:
-    result = StudentCardVerification(
-        school_name="長庚大學",
-        checks=("正反面不同", "校名可辨識", "學生證文字可辨識"),
-    )
-    with patch("exchange_info.api.verify_student_cards", return_value=result):
-        response = client.post(
-            "/auth/student-verification",
-            headers=headers,
-            data={"school_name": "長庚大學", "consent": "true"},
-            files={
-                "front": ("front.jpg", _card_image((230, 238, 246)), "image/jpeg"),
-                "back": ("back.jpg", _card_image((210, 222, 232)), "image/jpeg"),
-            },
-        )
-    assert response.status_code == 201
-    assert response.json()["images_retained"] is False
-    assert response.json()["ocr_text_retained"] is False
-    assert response.json()["student_number_retained"] is False
-    assert response.json()["verification_method"] == "student_card"
-    return response.json()["verification_token"]
-
-
 def _register(
     client: TestClient,
     *,
     email: str = "student@example.com",
-    verify_student: bool = True,
 ) -> dict:
     email_verification_token = _email_verification_token(client, email)
     response = client.post(
@@ -128,17 +94,6 @@ def _register(
     session = response.json()
     assert session["profile"]["email_verified"] is True
     assert session["profile"]["student_status_verified"] is False
-    if not verify_student:
-        return session
-    headers = {"Authorization": f"Bearer {session['access_token']}"}
-    student_token = _student_verification_token(client, headers)
-    confirmed = client.post(
-        "/auth/student-verification/confirm",
-        headers=headers,
-        json={"verification_token": student_token},
-    )
-    assert confirmed.status_code == 200
-    session["profile"] = confirmed.json()
     return session
 
 
@@ -268,10 +223,7 @@ def test_email_account_profile_and_account_linked_community_identity(tmp_path) -
     assert profile.status_code == 200
     assert profile.json()["display_name"] == "準備交換的小林"
     assert profile.json()["providers"] == ["email"]
-    assert profile.json()["student_status_verified"] is True
-    assert profile.json()["verified_university"] == "長庚大學"
-    assert profile.json()["student_verification_method"] == "student_card"
-    assert profile.json()["student_verified_at"]
+    assert profile.json()["student_status_verified"] is False, "nobody checks enrolment any more"
 
     updated = client.patch(
         "/auth/me",
@@ -345,7 +297,6 @@ def test_supabase_account_deletion_replays_after_session_cascade(tmp_path) -> No
     first = _register(
         client,
         email="atomic-delete@example.com",
-        verify_student=False,
     )
     mutation_id = "account-delete-replay-0001"
     headers = {
@@ -402,7 +353,7 @@ def test_login_rejects_wrong_password_and_accepts_correct_password(tmp_path) -> 
     assert valid.json()["profile"]["email"] == "student@example.com"
 
 
-def test_email_verification_is_required_and_student_upgrade_is_single_use(tmp_path) -> None:
+def test_registration_without_a_verified_email_is_rejected(tmp_path) -> None:
     ensure_data_dirs(tmp_path)
     client = TestClient(create_app(tmp_path))
 
@@ -416,122 +367,6 @@ def test_email_verification_is_required_and_student_upgrade_is_single_use(tmp_pa
         },
     )
     assert missing.status_code == 422
-
-    first = _register(
-        client,
-        email="verified@example.com",
-        verify_student=False,
-    )
-    first_headers = {"Authorization": f"Bearer {first['access_token']}"}
-    verification_token = _student_verification_token(client, first_headers)
-    second_client = TestClient(client.app)
-    second = _register(
-        second_client,
-        email="second@example.com",
-        verify_student=False,
-    )
-    second_headers = {"Authorization": f"Bearer {second['access_token']}"}
-
-    confirmed = client.post(
-        "/auth/student-verification/confirm",
-        headers=first_headers,
-        json={"verification_token": verification_token},
-    )
-    assert confirmed.status_code == 200
-    assert confirmed.json()["student_status_verified"] is True
-
-    reused = second_client.post(
-        "/auth/student-verification/confirm",
-        headers=second_headers,
-        json={"verification_token": verification_token},
-    )
-    assert reused.status_code == 403
-
-
-def test_student_card_verification_can_finish_on_another_app_instance(tmp_path) -> None:
-    ensure_data_dirs(tmp_path)
-    shared_store = LocalTransientAuthStore()
-    upload_client = TestClient(
-        create_app(tmp_path, transient_auth_store=shared_store)
-    )
-    session = _register(
-        upload_client,
-        email="cross-instance-card@example.com",
-        verify_student=False,
-    )
-    headers = {"Authorization": f"Bearer {session['access_token']}"}
-    confirm_client = TestClient(
-        create_app(tmp_path, transient_auth_store=shared_store)
-    )
-    verification_token = _student_verification_token(upload_client, headers)
-
-    confirmed = confirm_client.post(
-        "/auth/student-verification/confirm",
-        headers=headers,
-        json={"verification_token": verification_token},
-    )
-    assert confirmed.status_code == 200
-    assert confirmed.json()["student_status_verified"] is True
-    assert confirmed.json()["student_verification_method"] == "student_card"
-    assert shared_store.get_state(
-        hashlib.sha256(verification_token.encode("utf-8")).hexdigest(),
-        TransientAuthStateKind.STUDENT_VERIFICATION_SESSION,
-    ) is None
-
-
-def test_student_card_evidence_remains_retryable_when_account_commit_fails(
-    tmp_path,
-) -> None:
-    class FailingCommitRepository(JsonlAccountRepository):
-        fail_commit = True
-
-        def commit_student_verification(self, request):
-            if self.fail_commit:
-                raise AccountRepositoryError("temporary failure")
-            return super().commit_student_verification(request)
-
-    ensure_data_dirs(tmp_path)
-    repository = FailingCommitRepository(tmp_path)
-    shared_store = LocalTransientAuthStore()
-    client = TestClient(
-        create_app(
-            tmp_path,
-            account_repository=repository,
-            transient_auth_store=shared_store,
-        )
-    )
-    session = _register(
-        client,
-        email="retryable-card@example.com",
-        verify_student=False,
-    )
-    headers = {"Authorization": f"Bearer {session['access_token']}"}
-    verification_token = _student_verification_token(client, headers)
-    state_hash = hashlib.sha256(verification_token.encode("utf-8")).hexdigest()
-
-    failed = client.post(
-        "/auth/student-verification/confirm",
-        headers=headers,
-        json={"verification_token": verification_token},
-    )
-
-    assert failed.status_code == 503
-    assert shared_store.get_state(
-        state_hash,
-        TransientAuthStateKind.STUDENT_VERIFICATION_SESSION,
-    ) is not None
-    repository.fail_commit = False
-    retried = client.post(
-        "/auth/student-verification/confirm",
-        headers=headers,
-        json={"verification_token": verification_token},
-    )
-    assert retried.status_code == 200
-    assert retried.json()["student_status_verified"] is True
-    assert shared_store.get_state(
-        state_hash,
-        TransientAuthStateKind.STUDENT_VERIFICATION_SESSION,
-    ) is None
 
 
 def test_profile_update_racing_account_delete_never_resurrects_account(
@@ -556,7 +391,6 @@ def test_profile_update_racing_account_delete_never_resurrects_account(
     session = _register(
         client,
         email="deleted-during-update@example.com",
-        verify_student=False,
     )
     repository.delete_before_update = True
 
@@ -971,7 +805,6 @@ def test_google_verified_email_can_link_existing_email_account(
     existing_session = _register(
         existing_account_browser,
         email=verified_email,
-        verify_student=False,
     )
     existing_account_id = existing_session["profile"]["id"]
     state = _start_oauth(google_browser, "google")
@@ -1117,7 +950,6 @@ def test_provider_subject_cannot_claim_verified_email_owned_by_another_account(
     existing_session = _register(
         existing_account_browser,
         email=occupied_email,
-        verify_student=False,
     )
     existing_headers = {
         "Authorization": f"Bearer {existing_session['access_token']}"
@@ -1248,7 +1080,6 @@ def test_facebook_unverified_email_does_not_link_or_persist_by_email(
     existing_session = _register(
         existing_account_browser,
         email=collision_email,
-        verify_student=False,
     )
     existing_headers = {
         "Authorization": f"Bearer {existing_session['access_token']}"

@@ -219,6 +219,9 @@ def names(client):
 
 def test_choosing_a_school_is_recorded_without_the_account(site):
     site.patch("/auth/me", json={"home_university": "北大"}, headers=site.student)
+    # A picked school stays for three days, so let the first pick age before choosing again.
+    site.app.state.account_repository.patch_account_fields(
+        "student-id", {"home_university_changed_at": utc_now() - timedelta(days=4)})
     site.patch("/auth/me", json={"home_university": "國立某某大學"}, headers=site.student)
     assert names(site) == [
         ("school_choice", {"school": "國立臺北大學", "supported": True}),

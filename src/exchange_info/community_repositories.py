@@ -14,7 +14,7 @@ from typing import Any, Generator, Protocol, TypeAlias
 import requests
 from pydantic import BaseModel, Field, field_validator, model_validator
 from .supabase_keys import supabase_key_headers
-from .access_control import is_platform_admin
+from .access_control import catalog_home_university, is_platform_admin
 
 from .models import (
     AnonymousIdentity,
@@ -1132,23 +1132,21 @@ class JsonlCommunityRepository:
             return None, "匿名學生"
         if mode == CommunityIdentityMode.REAL_NAME:
             return None, account.display_name
-        if not account.student_status_verified or not account.verified_university:
+        school = catalog_home_university(account)
+        if not school:
             return PublicCommunityPublicationStatus.STUDENT_VERIFICATION_REQUIRED, None
         if mode == CommunityIdentityMode.VERIFIED_SCHOOL:
-            return None, f"{account.verified_university}學生"
+            return None, f"{school}學生"
         if not account.verified_department:
             return PublicCommunityPublicationStatus.STUDENT_VERIFICATION_REQUIRED, None
-        return None, f"{account.verified_university} {account.verified_department}"
+        return None, f"{school} {account.verified_department}"
 
     @staticmethod
     def _verified_for_school(account: UserAccount, school_name: str) -> bool:
         if is_platform_admin(account):
             return True
-        return bool(
-            account.student_status_verified
-            and account.verified_university
-            and _school_key(account.verified_university) == _school_key(school_name)
-        )
+        own_school = catalog_home_university(account)
+        return bool(own_school and _school_key(own_school) == _school_key(school_name))
 
     def _prepare_content(
         self,
@@ -1224,9 +1222,7 @@ class JsonlCommunityRepository:
                 account, parent_question.home_university
             )
         elif isinstance(content, PublicChatMessage):
-            allowed = bool(
-                account.student_status_verified and account.verified_university
-            )
+            allowed = bool(catalog_home_university(account))
         elif isinstance(content, ExperienceSubmission):
             allowed = self._verified_for_school(account, content.home_university)
         if not allowed:

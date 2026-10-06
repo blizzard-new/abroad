@@ -26,7 +26,13 @@ from .models import (AnonymousIdentity, ModerationStatus, utc_now, CommunityReac
                      CommunityModerationRequest, CommunitySuspensionRequest, CommunityReportReviewRequest, CommunityBookmarkUpdate)
 from .repositories import (CommunitySuspensionMutationRequest, CommunitySuspensionMutationStatus,
                            AccountRepositoryError)
-from .access_control import is_platform_admin
+from .access_control import catalog_home_university, is_platform_admin
+
+# Posting these is tied to the poster's school: Q&A for a school, experience reports, and the school chat.
+SCHOOL_BOUND_RESOURCES = frozenset({
+    PublicCommunityResourceType.QUESTION, PublicCommunityResourceType.ANSWER,
+    PublicCommunityResourceType.CHAT, PublicCommunityResourceType.EXPERIENCE,
+})
 
 
 def install_community_browsing(app: FastAPI, repository, authenticated_account,
@@ -186,7 +192,7 @@ def install_community_browsing(app: FastAPI, repository, authenticated_account,
         if result["status"] == "missing":
             raise HTTPException(404, "內容已移除或尚未公開。")
         if result["status"] != "committed":
-            raise HTTPException(403, "請確認信箱、校籍驗證與停權狀態後再參與。")
+            raise HTTPException(403, "請確認信箱與停權狀態後再參與。")
         return result
 
     def mutation(request):
@@ -359,14 +365,15 @@ def install_community_browsing(app: FastAPI, repository, authenticated_account,
     def identity_options(request: Request, response: Response):
         private_response(response)
         account, _ = authenticated_account(request)
-        school = bool(account.student_status_verified and account.verified_university)
+        school_name = catalog_home_university(account)
+        school = bool(school_name)
         department = bool(school and account.verified_department)
         return {"default_mode": "anonymous", "options": [
             {"mode": "anonymous", "label": "匿名學生", "enabled": True},
             {"mode": "real_name", "label": account.display_name, "enabled": True},
-            {"mode": "verified_school", "label": f"{account.verified_university}學生" if school else "學校身分",
-             "enabled": school, "unavailable_reason": None if school else "完成校籍驗證後可使用"},
-            {"mode": "verified_department", "label": f"{account.verified_university} {account.verified_department}學生" if department else "學校與系所",
+            {"mode": "verified_school", "label": f"{school_name}學生" if school else "學校身分",
+             "enabled": school, "unavailable_reason": None if school else "選擇學校後可使用"},
+            {"mode": "verified_department", "label": f"{school_name} {account.verified_department}學生" if department else "學校與系所",
              "enabled": department, "unavailable_reason": None if department else "尚無已驗證系所"},
         ]}
 
@@ -376,11 +383,19 @@ def install_community_browsing(app: FastAPI, repository, authenticated_account,
         mutation_id = request.headers.get("X-Community-Mutation-ID") or uuid4().hex
         if not 16 <= len(mutation_id) <= 128:
             raise HTTPException(422, "發布識別碼格式錯誤。")
+        kind = PublicCommunityResourceType(resource_type)
+        mode = getattr(content, "identity_mode", None)
+        mode = getattr(mode, "value", mode)
+        # What the account picked as its school is what these are posted under, so it must be one we support: the database
+        # only checks that a school is set, not which ones exist.
+        school_bound = kind in SCHOOL_BOUND_RESOURCES or mode in {"verified_school", "verified_department"}
+        if school_bound and not catalog_home_university(account):
+            raise HTTPException(403, "請先在個人設定選擇學校，再發表這類內容。")
         try:
             result = repository.commit_publication(PublicCommunityPublicationRequest(
                 mutation_id=mutation_id, account_id=account.id, identity_id=identity.id,
                 access_token_hash=identity.access_token_hash,
-                resource_type=PublicCommunityResourceType(resource_type),
+                resource_type=kind,
                 content=content.model_dump(mode="json")))
         except CommunityRepositoryError as error:
             raise HTTPException(503, "發布暫時失敗，請保留內容後重試。") from error

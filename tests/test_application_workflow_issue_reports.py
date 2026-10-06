@@ -16,7 +16,6 @@ from exchange_info.models import (
     ApplicationWorkflowIssueReportCreate,
     ApplicationWorkflowIssueReportReview,
     ApplicationWorkflowIssueReportStatus,
-    StudentVerificationMethod,
     UserAccount,
     utc_now,
 )
@@ -37,19 +36,14 @@ def _session(
     app,
     *,
     email: str,
-    verified_student: bool,
+    has_school: bool,
     display_name: str = "流程回報測試學生",
 ) -> tuple[UserAccount, dict[str, str]]:
     account = UserAccount(
         email=email,
         email_verified=True,
         display_name=display_name,
-        student_status_verified=verified_student,
-        verified_university="長庚大學" if verified_student else None,
-        student_verification_method=(
-            StudentVerificationMethod.STUDENT_CARD if verified_student else None
-        ),
-        student_verified_at=utc_now() if verified_student else None,
+        home_university="長庚大學" if has_school else "尚未選擇",
     )
     token = f"issue-report-token-{account.id}"
     app.state.account_repository.save_account(account)
@@ -119,7 +113,7 @@ def test_issue_report_model_rejects_unsafe_official_source_urls(source_url: str)
         )
 
 
-def test_only_verified_students_can_submit_without_mutating_formal_content(
+def test_only_accounts_with_a_school_can_submit_without_mutating_formal_content(
     tmp_path: Path,
 ) -> None:
     app = create_app(tmp_path)
@@ -137,35 +131,35 @@ def test_only_verified_students_can_submit_without_mutating_formal_content(
         headers={"X-Content-Report-Mutation-ID": "guest-report-mutation-0001"},
         json=payload,
     )
-    _, unverified_headers = _session(
+    _, no_school_headers = _session(
         app,
-        email="unverified-report@example.com",
-        verified_student=False,
+        email="no-school-report@example.com",
+        has_school=False,
     )
-    unverified = client.post(
+    no_school = client.post(
         "/application-workflow-issue-reports",
         headers={
-            **unverified_headers,
-            "X-Content-Report-Mutation-ID": "unverified-report-mutation-0001",
+            **no_school_headers,
+            "X-Content-Report-Mutation-ID": "no-school-report-mutation-0001",
         },
         json=payload,
     )
-    _, verified_headers = _session(
+    _, with_school_headers = _session(
         app,
-        email="verified-report@example.com",
-        verified_student=True,
+        email="school-report@example.com",
+        has_school=True,
     )
     accepted = client.post(
         "/application-workflow-issue-reports",
         headers={
-            **verified_headers,
-            "X-Content-Report-Mutation-ID": "verified-report-mutation-0001",
+            **with_school_headers,
+            "X-Content-Report-Mutation-ID": "school-report-mutation-0001",
         },
         json=payload,
     )
 
     assert guest.status_code == 401
-    assert unverified.status_code == 403
+    assert no_school.status_code == 403
     assert accepted.status_code == 202
     assert accepted.headers["X-Idempotent-Replay"] == "false"
     report = accepted.json()
@@ -194,7 +188,7 @@ def test_submit_is_idempotent_and_rejects_target_or_payload_tampering(
     _, headers = _session(
         app,
         email="idempotent-report@example.com",
-        verified_student=True,
+        has_school=True,
     )
     mutation_headers = {
         **headers,
@@ -252,7 +246,7 @@ def test_report_rejects_contact_details_and_rate_limits_new_submissions(
     _, headers = _session(
         app,
         email="rate-limit-report@example.com",
-        verified_student=True,
+        has_school=True,
     )
 
     sensitive = client.post(
@@ -297,12 +291,12 @@ def test_admin_queue_and_terminal_review_are_protected_and_append_only(
     _, student_headers = _session(
         app,
         email="student-report-queue@example.com",
-        verified_student=True,
+        has_school=True,
     )
     admin, admin_headers = _session(
         app,
         email="content-admin-report@example.com",
-        verified_student=False,
+        has_school=False,
         display_name="內容管理員",
     )
     monkeypatch.setenv("EXCHANGE_CONTENT_ADMIN_EMAILS", admin.email or "")
@@ -383,7 +377,7 @@ def test_local_account_deletion_deidentifies_reporter_without_deleting_report(
     account, headers = _session(
         app,
         email="delete-report-owner@example.com",
-        verified_student=True,
+        has_school=True,
     )
     created = client.post(
         "/application-workflow-issue-reports",
@@ -412,7 +406,7 @@ def test_account_export_includes_only_public_issue_report_fields(tmp_path: Path)
     _, headers = _session(
         app,
         email="export-report-owner@example.com",
-        verified_student=True,
+        has_school=True,
     )
     created = client.post(
         "/application-workflow-issue-reports",
@@ -441,12 +435,12 @@ def test_local_account_deletion_removes_closed_report(tmp_path: Path, monkeypatc
     _, student_headers = _session(
         app,
         email="closed-report-owner@example.com",
-        verified_student=True,
+        has_school=True,
     )
     admin, admin_headers = _session(
         app,
         email="closed-report-admin@example.com",
-        verified_student=False,
+        has_school=False,
     )
     monkeypatch.setenv("EXCHANGE_CONTENT_ADMIN_EMAILS", admin.email or "")
     created = client.post(
@@ -486,12 +480,12 @@ def test_review_of_deidentified_pending_report_is_replayable_during_cleanup_grac
     _, student_headers = _session(
         app,
         email="deleted-pending-report-owner@example.com",
-        verified_student=True,
+        has_school=True,
     )
     admin, admin_headers = _session(
         app,
         email="deleted-pending-report-admin@example.com",
-        verified_student=False,
+        has_school=False,
         display_name="回報核對管理員",
     )
     monkeypatch.setenv("EXCHANGE_CONTENT_ADMIN_EMAILS", admin.email or "")
@@ -548,12 +542,12 @@ def test_reviewer_account_deletion_removes_reviewer_identity(
     _, student_headers = _session(
         app,
         email="reviewer-delete-student@example.com",
-        verified_student=True,
+        has_school=True,
     )
     admin, admin_headers = _session(
         app,
         email="reviewer-delete-admin@example.com",
-        verified_student=False,
+        has_school=False,
         display_name="應被去識別的管理員",
     )
     monkeypatch.setenv("EXCHANGE_CONTENT_ADMIN_EMAILS", admin.email or "")

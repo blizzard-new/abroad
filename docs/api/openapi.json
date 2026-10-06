@@ -885,6 +885,18 @@
             ],
             "title": "School Basis"
           },
+          "school_change_locked_until": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "School Change Locked Until"
+          },
           "school_email_verified": {
             "title": "School Email Verified",
             "type": "boolean"
@@ -5930,36 +5942,6 @@
           "file"
         ],
         "title": "Body_document_check_document_check_post",
-        "type": "object"
-      },
-      "Body_verify_student_identity_auth_student_verification_post": {
-        "properties": {
-          "back": {
-            "contentMediaType": "application/octet-stream",
-            "title": "Back",
-            "type": "string"
-          },
-          "consent": {
-            "title": "Consent",
-            "type": "boolean"
-          },
-          "front": {
-            "contentMediaType": "application/octet-stream",
-            "title": "Front",
-            "type": "string"
-          },
-          "school_name": {
-            "default": "長庚大學",
-            "title": "School Name",
-            "type": "string"
-          }
-        },
-        "required": [
-          "front",
-          "back",
-          "consent"
-        ],
-        "title": "Body_verify_student_identity_auth_student_verification_post",
         "type": "object"
       },
       "BudgetFit": {
@@ -11788,21 +11770,6 @@
         "title": "StudentInfoItem",
         "type": "object"
       },
-      "StudentVerificationConfirm": {
-        "properties": {
-          "verification_token": {
-            "maxLength": 256,
-            "minLength": 24,
-            "title": "Verification Token",
-            "type": "string"
-          }
-        },
-        "required": [
-          "verification_token"
-        ],
-        "title": "StudentVerificationConfirm",
-        "type": "object"
-      },
       "StudentVerificationMethod": {
         "enum": [
           "admin_approval",
@@ -11814,75 +11781,6 @@
         ],
         "title": "StudentVerificationMethod",
         "type": "string"
-      },
-      "StudentVerificationResult": {
-        "properties": {
-          "checks": {
-            "items": {
-              "type": "string"
-            },
-            "title": "Checks",
-            "type": "array"
-          },
-          "department_name": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Department Name"
-          },
-          "expires_at": {
-            "format": "date-time",
-            "title": "Expires At",
-            "type": "string"
-          },
-          "expires_in_minutes": {
-            "default": 15,
-            "title": "Expires In Minutes",
-            "type": "integer"
-          },
-          "images_retained": {
-            "const": false,
-            "default": false,
-            "title": "Images Retained",
-            "type": "boolean"
-          },
-          "ocr_text_retained": {
-            "const": false,
-            "default": false,
-            "title": "Ocr Text Retained",
-            "type": "boolean"
-          },
-          "school_name": {
-            "title": "School Name",
-            "type": "string"
-          },
-          "student_number_retained": {
-            "const": false,
-            "default": false,
-            "title": "Student Number Retained",
-            "type": "boolean"
-          },
-          "verification_method": {
-            "$ref": "#/components/schemas/StudentVerificationMethod",
-            "default": "student_card"
-          },
-          "verification_token": {
-            "title": "Verification Token",
-            "type": "string"
-          }
-        },
-        "required": [
-          "verification_token",
-          "school_name",
-          "expires_at"
-        ],
-        "title": "StudentVerificationResult",
-        "type": "object"
       },
       "SubmissionProgressTransitionRequest": {
         "properties": {
@@ -15498,22 +15396,6 @@
             }
           },
           {
-            "in": "query",
-            "name": "student_verification_token",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Student Verification Token"
-            }
-          },
-          {
             "description": "The version of the terms and privacy policy the visitor ticked; sign-in does not start without it.",
             "in": "query",
             "name": "terms",
@@ -15635,82 +15517,6 @@
           }
         },
         "summary": "Auth Session"
-      }
-    },
-    "/auth/student-verification": {
-      "post": {
-        "operationId": "verify_student_identity_auth_student_verification_post",
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "$ref": "#/components/schemas/Body_verify_student_identity_auth_student_verification_post"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "201": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StudentVerificationResult"
-                }
-              }
-            },
-            "description": "Successful Response"
-          },
-          "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            },
-            "description": "Validation Error"
-          }
-        },
-        "summary": "Verify Student Identity"
-      }
-    },
-    "/auth/student-verification/confirm": {
-      "post": {
-        "operationId": "confirm_student_verification_auth_student_verification_confirm_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StudentVerificationConfirm"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AccountProfile"
-                }
-              }
-            },
-            "description": "Successful Response"
-          },
-          "422": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            },
-            "description": "Validation Error"
-          }
-        },
-        "summary": "Confirm Student Verification"
       }
     },
     "/calendar-sync": {

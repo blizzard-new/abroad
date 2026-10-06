@@ -61,8 +61,6 @@ const state = {
   authRestoreRequestId: 0,
   quarantinedAccountOwnerId: "",
   authProviders: [],
-  studentVerificationProviders: [],
-  studentVerificationProviderSchool: "",
   authMode: "login",
   globalCommunityTopic: "",
   globalCommunityQuery: "",
@@ -171,8 +169,6 @@ const state = {
   updateSeenAt: "",
   emailVerificationToken: "",
   emailVerificationAddress: "",
-  studentVerificationToken: "",
-  verificationPreviewUrls: {},
   dashboardScrollY: 0,
   dashboardHash: "#overview",
   searchReturnHash: "#overview",
@@ -669,7 +665,7 @@ function renderCatalogAccessGate() {
   }
   gate.hidden = !locked;
   if (!locked) return;
-  gate.innerHTML = `<h2>${state.account ? "驗證校籍後查看本校名單" : "登入後查看本校交換機會"}</h2><button type="button" class="primary-button" data-catalog-login>${state.account ? "驗證校籍" : "登入"}</button>`;
+  gate.innerHTML = `<h2>${state.account ? "選擇學校後查看本校名單" : "登入後查看本校交換機會"}</h2><button type="button" class="primary-button" data-catalog-login>${state.account ? "選擇學校" : "登入"}</button>`;
   gate.querySelector("button").addEventListener("click", () => state.account ? openProfileDialog() : openAuthDialog("login"));
 }
 
@@ -1160,6 +1156,7 @@ function openSchoolOnboarding() {
     ? activeElement
     : null;
   onboarding.hidden = false;
+  $("#onboarding-lock-note").hidden = !(state.account && state.chooseSchoolForAccount);
   document.body.classList.add("onboarding-open");
   window.setTimeout(() => $("#school-search")?.focus(), 40);
 }
@@ -1478,38 +1475,6 @@ function setAuthMode(mode) {
   updateAuthProviderAvailability();
 }
 
-function clearVerificationPreviews() {
-  Object.values(state.verificationPreviewUrls).forEach((url) => URL.revokeObjectURL(url));
-  state.verificationPreviewUrls = {};
-  ["front", "back"].forEach((side) => {
-    const preview = document.querySelector(`[data-card-preview="${side}"]`);
-    if (!preview) return;
-    preview.classList.remove("has-image");
-    preview.innerHTML = side === "front"
-      ? '<i data-lucide="scan-line" aria-hidden="true"></i><strong>學生證正面</strong><small>校名與學生證文字需清楚</small>'
-      : '<i data-lucide="credit-card" aria-hidden="true"></i><strong>學生證反面</strong><small>完整拍攝，不裁切卡片邊緣</small>';
-  });
-  initIcons();
-}
-
-function renderStudentCardPreview(input, side) {
-  const file = input.files?.[0];
-  const preview = document.querySelector(`[data-card-preview="${side}"]`);
-  if (!file || !preview) return;
-  if (state.verificationPreviewUrls[side]) URL.revokeObjectURL(state.verificationPreviewUrls[side]);
-  const url = URL.createObjectURL(file);
-  state.verificationPreviewUrls[side] = url;
-  preview.classList.add("has-image");
-  preview.innerHTML = `<img src="${escapeHtml(url)}" alt="學生證${side === "front" ? "正面" : "反面"}預覽" /><span><i data-lucide="check-circle-2" aria-hidden="true"></i><strong>${escapeHtml(file.name)}</strong><small>點擊可重新拍攝</small></span>`;
-  initIcons();
-}
-
-function clearStudentCardFiles() {
-  $("#student-card-front").value = "";
-  $("#student-card-back").value = "";
-  clearVerificationPreviews();
-}
-
 function resetEmailVerificationFlow({ resetForm = false } = {}) {
   state.emailVerificationToken = "";
   state.emailVerificationAddress = "";
@@ -1645,124 +1610,6 @@ async function confirmProfileEmailVerification() {
   }
 }
 
-async function verifyStudentCard() {
-  if (!state.account) {
-    openAuthDialog();
-    return;
-  }
-  const front = $("#student-card-front").files?.[0];
-  const back = $("#student-card-back").files?.[0];
-  const consent = $("#student-verification-consent").checked;
-  const status = $("#student-verification-status");
-  const button = $("#verify-student-card");
-  if (!front || !back) {
-    status.textContent = "請拍攝學生證正面與反面。";
-    return;
-  }
-  if (!consent) {
-    status.textContent = "請先同意一次性辨識說明。";
-    return;
-  }
-  const payload = new FormData();
-  payload.append("front", front);
-  payload.append("back", back);
-  payload.append("school_name", $("#student-verification-school").value);
-  payload.append("consent", "true");
-  button.disabled = true;
-  button.setAttribute("aria-busy", "true");
-  status.textContent = "正在安全辨識，原圖不會保存…";
-  try {
-    const result = await fetchJson("/auth/student-verification", { method: "POST", body: payload });
-    state.studentVerificationToken = result.verification_token;
-    state.account = await fetchJson("/auth/student-verification/confirm", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ verification_token: result.verification_token }),
-    });
-    alignAccountSchool();
-    await refreshHomeUniversityData();
-    state.studentVerificationToken = "";
-    clearStudentCardFiles();
-    $("#student-verification-step").hidden = true;
-    renderProfileVerificationSummary();
-    renderAccountState();
-    await Promise.all([loadCommunityBoards(), loadCommunityIdentityOptions()]);
-    populateGlobalCommunitySchools();
-    announce(`${state.account.verified_university}學生身分已驗證`, "success");
-  } catch (error) {
-    status.textContent = error.message;
-  } finally {
-    button.disabled = false;
-    button.removeAttribute("aria-busy");
-  }
-}
-
-function studentVerificationAvailabilityLabel(provider) {
-  if (provider.enabled) return "目前可用";
-  return {
-    configuration_required: "平台設定中",
-    school_partnership_required: "待校方合作",
-    supporting_only: "僅輔助證明",
-  }[provider.availability] || "目前未開放";
-}
-
-function renderStudentVerificationProviders() {
-  const list = $("#student-verification-provider-list");
-  if (!list) return;
-  const providers = (state.studentVerificationProviders || []).filter(
-    (provider) => provider.method !== "student_card"
-  );
-  if (!providers.length) {
-    list.innerHTML = "<p>這所學校目前以學生證一次性辨識為主。</p>";
-    return;
-  }
-  list.innerHTML = providers.map((provider) => {
-    const action = provider.enabled && provider.redirect_based
-      ? `<button type="button" class="secondary-button student-verification-provider-action" data-student-verification-provider="${escapeHtml(provider.id)}">前往校方驗證</button>`
-      : `<span class="student-verification-provider-state">${escapeHtml(studentVerificationAvailabilityLabel(provider))}</span>`;
-    return `<article class="student-verification-provider-item">
-      <div class="student-verification-provider-copy"><strong>${escapeHtml(provider.label)}</strong><small>${escapeHtml(provider.reason)}</small></div>
-      ${action}
-    </article>`;
-  }).join("");
-  initIcons();
-}
-
-async function loadStudentVerificationProviders(schoolName) {
-  const school = String(schoolName || activeHomeSchool()).trim();
-  const list = $("#student-verification-provider-list");
-  if (list) list.innerHTML = "<p>正在讀取這所學校的驗證方式…</p>";
-  try {
-    state.studentVerificationProviders = await fetchJson(
-      `/auth/student-verification/providers?school_name=${encodeURIComponent(school)}`
-    );
-    state.studentVerificationProviderSchool = school;
-  } catch (error) {
-    state.studentVerificationProviders = [];
-    state.studentVerificationProviderSchool = "";
-    if (list) list.innerHTML = `<p>${escapeHtml(error.message)}</p>`;
-    return;
-  }
-  renderStudentVerificationProviders();
-}
-
-function handleStudentVerificationReturn() {
-  const params = new URLSearchParams(window.location.search);
-  const result = params.get("student_verification");
-  if (!result) return;
-  window.UniWayNavigation.replaceState(
-    {},
-    "",
-    `${window.location.pathname}${window.location.hash || "#home"}`
-  );
-  if (result === "success") {
-    announce("校方帳號已完成在學驗證", "success");
-  } else {
-    announce("已取消校方帳號驗證，帳號權限沒有變更。", "error");
-  }
-  if (state.account) openProfileDialog();
-}
-
 const TERMS_STORAGE_KEY = "uniway-terms-accepted";
 
 function rememberAcceptedTerms(version) {
@@ -1825,11 +1672,15 @@ function openProfileDialog() {
   }
   const form = $("#profile-form");
   form.elements.display_name.value = state.account.display_name || "";
-  // Only a verified school is fixed; a chosen one can be changed, and "not chosen yet" shows blank.
+  // "Not chosen yet" shows blank. A picked school cannot be changed again for 3 days (the server enforces it too).
   form.elements.home_university.value = state.account.catalog_home_university
     || (state.account.home_university === "尚未選擇" ? "" : state.account.home_university)
     || "";
-  form.elements.home_university.readOnly = Boolean(state.account.student_status_verified && !state.account.is_platform_admin);
+  const lockedUntil = schoolLockedUntil();
+  form.elements.home_university.disabled = Boolean(lockedUntil);
+  $("#profile-school-note").textContent = lockedUntil
+    ? `學校選定後 3 天內不能更換，${formatSchoolLock(lockedUntil)} 之後才能修改。`
+    : "選定後 3 天內不能更換，請確認後再儲存。";
   form.elements.target_countries.value = (state.account.target_countries || []).join("、");
   form.elements.application_stage.value = state.account.application_stage || "exploring";
   const notifications = state.account.notification_preferences || {};
@@ -1846,48 +1697,37 @@ function openProfileDialog() {
   state.dialogReturnFocus = document.activeElement;
   $("#profile-dialog").hidden = false;
   document.body.classList.add("account-dialog-open");
-  if (!state.account.student_status_verified) {
-    loadStudentVerificationProviders($("#student-verification-school").value);
-  }
   window.setTimeout(() => form.elements.display_name.focus(), 40);
+}
+
+function schoolLockedUntil() {
+  const raw = state.account?.school_change_locked_until;
+  const until = raw ? new Date(raw) : null;
+  return until && until.getTime() > Date.now() ? until : null;
+}
+
+function formatSchoolLock(until) {
+  return until.toLocaleString("zh-TW", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false });
 }
 
 function renderProfileVerificationSummary() {
   const summary = $("#profile-verification-summary");
   if (!summary || !state.account) return;
   const emailVerified = state.account.email_verified === true;
-  const studentVerified = state.account.student_status_verified === true;
-  const verifiedStudentLabel = [
-    state.account.verified_university,
-    state.account.verified_department,
-  ].filter(Boolean).join(" ");
-  const verificationMethod = {
-    admin_approval: "管理員已開通",
-    student_card: "學生證已驗證",
-    school_email: "校方 電子郵件 已驗證",
-    google_workspace: "Google 校方帳號已驗證",
-    microsoft_entra: "Microsoft 校方帳號已驗證",
-    school_sso: "校方 SSO 已驗證",
-  }[state.account.student_verification_method] || "校籍已驗證";
   const chosenSchool = state.account.catalog_home_university;
-  const unverifiedSchoolLabel = chosenSchool
-    ? (state.account.school_basis === "school_email"
-      ? `${chosenSchool} · 依校內信箱判斷（不代表目前在學）`
-      : `${chosenSchool} · 自行選擇，尚未驗證`)
+  const lockedUntil = schoolLockedUntil();
+  const schoolLabel = chosenSchool
+    ? `${chosenSchool}${state.account.school_basis === "school_email" ? " · 依校內信箱判斷" : ""}${lockedUntil ? ` · ${formatSchoolLock(lockedUntil)} 前不能更換` : ""}`
     : "尚未選擇學校";
   summary.innerHTML = `
     <span class="${emailVerified ? "is-verified" : "is-pending"}"><i data-lucide="${emailVerified ? "badge-check" : "circle-alert"}" aria-hidden="true"></i>${emailVerified ? "電子郵件 已驗證" : "電子郵件 待驗證"}</span>
-    <span class="${studentVerified ? "is-verified" : "is-optional"}"><i data-lucide="${studentVerified ? "graduation-cap" : "school"}" aria-hidden="true"></i>${studentVerified ? `${escapeHtml(verifiedStudentLabel)} · ${escapeHtml(verificationMethod)}` : escapeHtml(`${unverifiedSchoolLabel}；驗證在學身分後才能在學校板發文`)}</span>`;
+    <span class="${chosenSchool ? "is-verified" : "is-optional"}"><i data-lucide="school" aria-hidden="true"></i>${escapeHtml(schoolLabel)}</span>`;
   const emailPanel = $("#profile-email-verification");
   emailPanel.hidden = emailVerified;
   $("#profile-email-verification-address").textContent = state.account.email || "";
   if (emailVerified) {
     $("#profile-email-verification-step").hidden = true;
     $("#profile-email-verification-status").textContent = "";
-  }
-  $("#student-verification-step").hidden = studentVerified;
-  if (!studentVerified) {
-    $("#student-verification-school").value = state.account.catalog_home_university || activeHomeSchool();
   }
   initIcons();
 }
@@ -3315,7 +3155,6 @@ function clearAuthenticatedClientState() {
   state.communityIdentityOptions = null;
   state.communityBoards = [];
   state.entitlements = null;
-  state.studentVerificationToken = "";
   resetPrivatePlanningExperience({ renderRelated: false });
   state.calendarSync = null;
   state.calendarConflictReport = null;
@@ -3334,7 +3173,6 @@ function clearAuthenticatedClientState() {
   state.applicationProfileMemoryEnabled = false;
   resetPrivateVaultForm({ keepCandidate: false });
   resetNotificationState();
-  clearVerificationPreviews();
   applyAccountWorkspace(emptyAccountWorkspace(activeHomeSchool()));
   clearAccountWorkspaceClientState();
   try {
@@ -8725,12 +8563,12 @@ function closeWorkflowIssueReport({ force = false } = {}) {
 
 function openWorkflowIssueReport(button) {
   if (!state.account) {
-    announce("登入並完成學生身分驗證後，才能回報申請規定錯誤。", "info", true);
+    announce("登入後才能回報申請規定錯誤。", "info", true);
     openAuthDialog("register");
     return;
   }
-  if (!state.account?.student_status_verified || !state.account?.verified_university) {
-    announce("請先在個人設定完成學生身分驗證，再送出規定錯誤回報。", "info", true);
+  if (!state.account?.catalog_home_university) {
+    announce("請先在個人設定選擇學校，再送出規定錯誤回報。", "info", true);
     openProfileDialog();
     return;
   }
@@ -8861,9 +8699,9 @@ async function submitWorkflowIssueReport(event) {
   event.preventDefault();
   const form = event.currentTarget;
   if (state.workflowIssueReportSubmitting || !form.reportValidity()) return;
-  if (!state.account?.student_status_verified || !state.account?.verified_university) {
+  if (!state.account?.catalog_home_university) {
     closeWorkflowIssueReport({ force: true });
-    announce("學生身分驗證已失效，請重新驗證後再送出。", "error", true);
+    announce("尚未選擇學校，請先在個人設定選擇後再送出。", "error", true);
     openProfileDialog();
     return;
   }
@@ -9363,9 +9201,7 @@ async function ensureAnonymousIdentity() {
 }
 
 function fallbackCommunityIdentityOptions() {
-  const schoolEnabled = Boolean(
-    state.account?.student_status_verified && state.account?.verified_university
-  );
+  const schoolEnabled = Boolean(state.account?.catalog_home_university);
   const departmentEnabled = Boolean(
     schoolEnabled && state.account?.verified_department
   );
@@ -9376,14 +9212,14 @@ function fallbackCommunityIdentityOptions() {
       { mode: "real_name", label: state.account?.display_name || "本名", enabled: Boolean(state.account) },
       {
         mode: "verified_school",
-        label: schoolEnabled ? `${state.account.verified_university}學生` : "學校身分",
+        label: schoolEnabled ? `${state.account.catalog_home_university}學生` : "學校身分",
         enabled: schoolEnabled,
-        unavailable_reason: schoolEnabled ? null : "完成學生身分驗證後可使用",
+        unavailable_reason: schoolEnabled ? null : "選擇學校後可使用",
       },
       {
         mode: "verified_department",
         label: departmentEnabled
-          ? `${state.account.verified_university} ${state.account.verified_department}`
+          ? `${state.account.catalog_home_university} ${state.account.verified_department}`
           : "學校與系所",
         enabled: departmentEnabled,
         unavailable_reason: departmentEnabled ? null : "驗證資料尚未包含系所",
@@ -12252,17 +12088,6 @@ function bindEvents() {
   });
   $("#request-profile-email-verification").addEventListener("click", requestProfileEmailVerification);
   $("#confirm-profile-email-verification").addEventListener("click", confirmProfileEmailVerification);
-  $("#student-card-front").addEventListener("change", (event) => renderStudentCardPreview(event.currentTarget, "front"));
-  $("#student-card-back").addEventListener("change", (event) => renderStudentCardPreview(event.currentTarget, "back"));
-  $("#student-verification-school").addEventListener("change", (event) => {
-    loadStudentVerificationProviders(event.currentTarget.value);
-  });
-  $("#student-verification-provider-list").addEventListener("click", (event) => {
-    const button = event.target.closest("[data-student-verification-provider]");
-    if (!button) return;
-    window.location.href = `/auth/student-verification/oauth/${encodeURIComponent(button.dataset.studentVerificationProvider)}/start`;
-  });
-  $("#verify-student-card").addEventListener("click", verifyStudentCard);
   $("#login-form").addEventListener("submit", (event) => {
     event.preventDefault();
     submitAccountForm(event.currentTarget, "/auth/login");
@@ -13133,7 +12958,6 @@ async function boot() {
   const sharedHome = new URLSearchParams(window.location.search).get("home");
   if (sharedHome && state.supportedUniversities.some((item) => item.school_name === sharedHome)) setHomeSchool(sharedHome, { reload: false });
   aiStatusManager.start(30000);
-  handleStudentVerificationReturn();
   await loadDashboard();
   await loadApplicationTemplates();
   applyAppRoute({ loadFeed: false, resetScroll: false });

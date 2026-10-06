@@ -69,6 +69,7 @@ ACCOUNT_PROFILE_PATCH_FIELDS = frozenset(
         "display_name",
         "avatar_url",
         "home_university",
+        "home_university_changed_at",
         "target_countries",
         "application_stage",
         "followed_boards",

@@ -1,12 +1,14 @@
 """Server-owned platform access; public profile fields never grant privileges.
 
-Reading the exchange catalogue needs no account. An account only carries a school so the
-app can open on the right catalogue; what the school is based on is reported separately
-(``school_basis``) and never widens what the account may write.
+Reading the exchange catalogue needs no account. An account carries a school: the app opens on that catalogue and the
+school is shown on what the account posts. The school is the one the account holder picked (or the one their school mail
+domain names); nobody checks enrolment, so what it is based on is reported separately (``school_basis``). To keep people
+from hopping between school boards, a picked school cannot be changed again for ``SCHOOL_CHANGE_LOCK``.
 """
 from __future__ import annotations
 
 import os
+from datetime import datetime, timedelta, timezone
 from typing import TYPE_CHECKING, Literal
 
 from .university_registry import SUPPORTED_UNIVERSITIES, UniversityProfile, resolve_university
@@ -83,9 +85,22 @@ def school_basis(account: UserAccount | None) -> SchoolBasis | None:
     return "self_declared"
 
 
-def can_use_university(account: UserAccount | None, school: str) -> bool:
-    """Writing as a student of ``school`` needs a verified school (or the platform admin)."""
-    target = resolve_university(school)
-    return bool(target and (
-        is_platform_admin(account) or verified_university(account) == target.school_name
-    ))
+SCHOOL_CHANGE_LOCK = timedelta(days=3)
+
+
+def school_change_locked_until(account: UserAccount | None, now: datetime | None = None) -> datetime | None:
+    """When the account may pick another school; None when it may do so now.
+
+    Picking a school for the first time is never locked, and neither is an account whose pick was not timestamped
+    (accounts made before the lock existed).
+    """
+    if not account:
+        return None
+    current = (account.home_university or "").strip()
+    changed_at = getattr(account, "home_university_changed_at", None)
+    if not current or current == HOME_UNIVERSITY_UNSET or changed_at is None:
+        return None
+    if changed_at.tzinfo is None:
+        changed_at = changed_at.replace(tzinfo=timezone.utc)
+    until = changed_at + SCHOOL_CHANGE_LOCK
+    return until if until > (now or datetime.now(timezone.utc)) else None

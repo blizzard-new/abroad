@@ -27,6 +27,8 @@ def catalog(tmp_path, monkeypatch):
                     student_status_verified=True, verified_university=CGU, home_university=CGU),
         UserAccount(id="unverified", display_name="臺北大學管理員", email_verified=True,
                     home_university=NTPU),
+        UserAccount(id="no-school", display_name="尚未選校", email_verified=True,
+                    home_university="尚未選擇"),
     ]
     save_user_accounts(accounts, tmp_path)
     save_account_sessions([AccountSessionRecord(
@@ -81,7 +83,6 @@ def test_account_school_is_only_the_default_and_profile_cannot_escalate(catalog)
     assert "no-store" in own.headers["cache-control"]
     other = catalog.get("/student-dashboard", params={"school": CGU}, headers=headers)
     assert other.status_code == 200 and other.json()["school_name"] == CGU
-    assert catalog.patch("/auth/me", json={"home_university": CGU}, headers=headers).status_code == 403
     spoof = catalog.patch("/auth/me", json={"is_platform_admin": True, "catalog_home_university": CGU}, headers=headers)
     assert spoof.status_code == 200
     assert spoof.json()["is_platform_admin"] is False
@@ -99,6 +100,10 @@ def test_unverified_account_opens_on_its_declared_school_and_may_change_it(catal
     assert (changed.json()["home_university"], changed.json()["catalog_home_university"]) == (CGU, CGU)
     assert catalog.get("/student-dashboard", headers=headers).json()["school_name"] == CGU
     assert catalog.patch("/auth/me", json={"home_university": "   "}, headers=headers).status_code == 422
+    # A picked school stays for three days (tests/test_school_choice.py covers the lock itself).
+    assert catalog.patch("/auth/me", json={"home_university": "國立某某大學"}, headers=headers).status_code == 409
+    catalog.app.state.account_repository.patch_account_fields(
+        "unverified", {"home_university_changed_at": utc_now() - timedelta(days=4)})
     other = catalog.patch("/auth/me", json={"home_university": "國立某某大學"}, headers=headers)
     assert other.status_code == 200
     assert other.json()["home_university"] == "國立某某大學"
@@ -175,10 +180,15 @@ def test_every_verified_email_account_can_post_on_every_board(catalog):
 
 
 def test_a_school_byline_still_needs_a_verified_student(catalog):
+    no_school = writer_headers(catalog, "no-school")
     declared = writer_headers(catalog, "unverified")
     verified = writer_headers(catalog, "cgu-student")
     payload = {"title": "交換申請測試問題", "body": "這是隔離資料夾內的交換申請權限測試。", "board_id": "cgu"}
     for mode in ("verified_school", "verified_department"):
-        denied = catalog.post("/community/posts", json={**payload, "identity_mode": mode}, headers=declared)
+        denied = catalog.post("/community/posts", json={**payload, "identity_mode": mode}, headers=no_school)
         assert denied.status_code == 403, (mode, denied.text)
+    # Nobody checks enrolment any more: the school an account picked is what its byline shows.
+    picked = catalog.post("/community/posts", json={**payload, "identity_mode": "verified_school"}, headers=declared)
+    assert picked.status_code == 201, picked.text
+    assert picked.json()["display_name"] == f"{NTPU}學生"
     assert catalog.post("/community/posts", json={**payload, "identity_mode": "verified_school"}, headers=verified).status_code == 201

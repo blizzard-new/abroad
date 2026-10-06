@@ -10,10 +10,10 @@ import csv
 from contextvars import ContextVar
 from .access_control import (
     HOME_UNIVERSITY_UNSET,
-    can_use_university,
     catalog_home_university,
     is_platform_admin,
     school_basis,
+    school_change_locked_until,
     school_from_email,
 )
 from io import BytesIO, StringIO
@@ -30,7 +30,7 @@ import secrets
 import threading
 import time
 from contextlib import asynccontextmanager
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from functools import partial
 from pathlib import Path
 from urllib.parse import quote, urlencode
@@ -89,13 +89,9 @@ from .repositories import (
     AccountDeletionMutationRequest,
     AccountDeletionMutationResult,
     AccountDeletionMutationStatus,
-    AccountRepositoryError,
     OAuthLoginMutationRequest,
     OAuthLoginMutationResult,
     OAuthLoginMutationStatus,
-    StudentVerificationMutationRequest,
-    StudentVerificationMutationResult,
-    StudentVerificationMutationStatus,
     WorkspaceMutationKind,
     WorkspaceMutationRequest,
     WorkspaceMutationStatus,
@@ -159,8 +155,6 @@ from .models import (
     ProductAccessTier,
     ProductEntitlementSnapshot,
     ProductReleaseMode,
-    StudentVerificationConfirm,
-    StudentVerificationMethod,
     SubmissionProgressTransitionRequest,
     AccountLogin,
     AccountProfile,
@@ -237,7 +231,6 @@ from .models import (
     PublicChatMessageCreate,
     StudentExperienceDigest,
     StudentDashboard,
-    StudentVerificationResult,
     StructuredSourceRecord,
     SupportedUniversity,
     SourceSummary,
@@ -378,7 +371,6 @@ from .storage import (
     upsert_partner_research,
 )
 from .student_view import build_student_dashboard, fetch_partner_universities
-from .student_verification import StudentCardVerificationError, verify_student_cards
 from .rag import rag_index_status, search_document_chunks, supabase_configured
 from .legal_pages import TERMS_VERSION, register_legal_pages
 from .request_origin import client_fingerprint, public_base_url
@@ -395,14 +387,13 @@ from .university_registry import (
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 SCHOOL_IMAGE_MANIFEST = STATIC_DIR / "assets" / "school-images.json"
 AUTH_COOKIE_NAME = "exchange_guide_session"
+TAIPEI_TZ = timezone(timedelta(hours=8))  # Taiwan has no daylight saving
 PASSWORD_ITERATIONS = 390_000
 EMAIL_PATTERN = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
 PUBLIC_COMMUNITY_BOARD = "公共留學板"
 LEGACY_PUBLIC_COMMUNITY_BOARD = "一般留學討論"
 CGU_COMMUNITY_BOARD = "長庚大學"
 HOME_UNIVERSITY_BOARDS = {item.school_name for item in SUPPORTED_UNIVERSITIES}
-MAX_STUDENT_CARD_BYTES = 8 * 1024 * 1024
-STUDENT_VERIFICATION_TTL = timedelta(minutes=15)
 
 
 def _load_school_image_manifest() -> dict[str, dict[str, object]]:
@@ -497,6 +488,7 @@ def _account_profile(account: UserAccount) -> AccountProfile:
         display_name=account.display_name,
         avatar_url=account.avatar_url,
         home_university=account.home_university,
+        school_change_locked_until=school_change_locked_until(account),
         target_countries=account.target_countries,
         application_stage=account.application_stage,
         followed_boards=account.followed_boards,
@@ -783,33 +775,7 @@ def create_app(
     workflow_collection_lock = threading.Lock()
     community_lock = threading.Lock()
     auth_lock = threading.RLock()
-    verification_lock = threading.Lock()
-    oauth_states: dict[str, tuple[AuthProvider, datetime, str | None]] = {}
-    student_verification_sessions: dict[str, dict[str, object]] = {}
-
-    def student_verification_record(
-        token: str | None,
-        *,
-        consume: bool,
-    ) -> dict[str, object]:
-        if not token:
-            raise HTTPException(status_code=403, detail="請先完成學生證正反面驗證。")
-        now = utc_now()
-        token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
-        with verification_lock:
-            expired = [
-                key
-                for key, row in student_verification_sessions.items()
-                if row["expires_at"] <= now
-            ]
-            for key in expired:
-                student_verification_sessions.pop(key, None)
-            record = student_verification_sessions.get(token_hash)
-            if record is None:
-                raise HTTPException(status_code=403, detail="學生身分驗證已失效，請重新驗證。")
-            if consume:
-                student_verification_sessions.pop(token_hash, None)
-        return record
+    oauth_states: dict[str, tuple[AuthProvider, datetime, str]] = {}
 
     def account_session(account: UserAccount) -> AccountSession:
         access_token = secrets.token_urlsafe(40)
@@ -978,7 +944,6 @@ def create_app(
         email: str | None,
         display_name: str,
         avatar_url: str | None,
-        student_verification_token: str | None = None,
         email_trusted: bool = False,
     ) -> UserAccount:
         normalized_email = email.strip().lower() if email else None
@@ -1000,26 +965,13 @@ def create_app(
                     (row for row in accounts if row.email == normalized_email), None
                 )
             if account is None:
-                # A student card check is optional now; without one the account starts unverified.
-                verification = (
-                    student_verification_record(student_verification_token, consume=True)
-                    if student_verification_token
-                    else None
-                )
                 inferred = school_from_email(normalized_email) if email_trusted else None
                 account = UserAccount(
                     email=normalized_email,
                     display_name=(display_name or "留學同學")[:30],
                     avatar_url=avatar_url,
                     email_verified=bool(email_trusted and normalized_email),
-                    home_university=(
-                        str(verification["school_name"]) if verification
-                        else inferred.school_name if inferred
-                        else HOME_UNIVERSITY_UNSET
-                    ),
-                    student_status_verified=verification is not None,
-                    verified_university=str(verification["school_name"]) if verification else None,
-                    student_verified_at=utc_now() if verification else None,
+                    home_university=inferred.school_name if inferred else HOME_UNIVERSITY_UNSET,
                     provider_links=[AccountProviderLink(provider=provider, subject=subject)],
                 )
                 accounts.append(account)
@@ -1035,16 +987,6 @@ def create_app(
                     "provider_links": links,
                     "updated_at": utc_now(),
                 }
-                if student_verification_token and not account.student_status_verified:
-                    verification = student_verification_record(
-                        student_verification_token,
-                        consume=True,
-                    )
-                    updates.update(
-                        student_status_verified=True,
-                        verified_university=str(verification["school_name"]),
-                        student_verified_at=utc_now(),
-                    )
                 account = account.model_copy(update=updates)
                 accounts = [account if row.id == account.id else row for row in accounts]
             save_user_accounts(accounts, resolved_data_dir)
@@ -1244,164 +1186,6 @@ def create_app(
         return resolve_product_entitlements(account)
 
     @app.post(
-        "/auth/student-verification",
-        response_model=StudentVerificationResult,
-        status_code=201,
-    )
-    async def verify_student_identity(
-        request: Request,
-        front: UploadFile = File(...),
-        back: UploadFile = File(...),
-        school_name: str = Form(default="長庚大學"),
-        consent: bool = Form(...),
-    ) -> StudentVerificationResult:
-        if not consent:
-            raise HTTPException(status_code=422, detail="請先同意一次性學生證辨識說明。")
-        university = resolve_university(school_name)
-        if university is None:
-            raise HTTPException(status_code=422, detail="目前無法驗證這所學校的學生證。")
-        normalized_school = university.school_name
-        allowed_types = {"image/jpeg", "image/png", "image/webp"}
-        if front.content_type not in allowed_types or back.content_type not in allowed_types:
-            raise HTTPException(status_code=415, detail="學生證照片只支援 JPG、PNG 或 WebP。")
-        try:
-            front_bytes = await front.read(MAX_STUDENT_CARD_BYTES + 1)
-            back_bytes = await back.read(MAX_STUDENT_CARD_BYTES + 1)
-        finally:
-            await front.close()
-            await back.close()
-        if not front_bytes or not back_bytes:
-            raise HTTPException(status_code=422, detail="請上傳學生證正面與反面。")
-        if len(front_bytes) > MAX_STUDENT_CARD_BYTES or len(back_bytes) > MAX_STUDENT_CARD_BYTES:
-            raise HTTPException(status_code=413, detail="每張學生證照片不可超過 8 MB。")
-        try:
-            verification = await run_in_threadpool(
-                partial(
-                    verify_student_cards,
-                    front_bytes,
-                    back_bytes,
-                    expected_school=normalized_school,
-                    school_signals=university.student_card_signals,
-                )
-            )
-        except StudentCardVerificationError as exc:
-            raise HTTPException(status_code=422, detail=str(exc)) from exc
-
-        account_id = None
-        auth_header = request.headers.get("Authorization")
-        if auth_header:
-            try:
-                acc, _ = authenticated_account(request)
-                account_id = acc.id
-            except HTTPException:
-                pass
-
-        token = secrets.token_urlsafe(40)
-        expires_at = utc_now() + STUDENT_VERIFICATION_TTL
-        token_hash = hashlib.sha256(token.encode("utf-8")).hexdigest()
-        if hasattr(app.state, "transient_auth_store"):
-            app.state.transient_auth_store.save_state(
-                TransientAuthState(
-                    state_hash=token_hash,
-                    kind=TransientAuthStateKind.STUDENT_VERIFICATION_SESSION,
-                    account_id=account_id,
-                    payload={
-                        "school_name": verification.school_name,
-                        "checks": list(verification.checks),
-                    },
-                    expires_at=expires_at,
-                )
-            )
-        with verification_lock:
-            student_verification_sessions[token_hash] = {
-                "school_name": verification.school_name,
-                "checks": list(verification.checks),
-                "expires_at": expires_at,
-                "account_id": account_id,
-            }
-        return StudentVerificationResult(
-            verification_token=token,
-            school_name=verification.school_name,
-            checks=list(verification.checks),
-            expires_at=expires_at,
-        )
-
-    @app.post("/auth/student-verification/confirm", response_model=AccountProfile)
-    def confirm_student_verification(
-        payload: StudentVerificationConfirm,
-        request: Request,
-    ) -> AccountProfile:
-        account, session = authenticated_account(request)
-        token_hash = hashlib.sha256(payload.verification_token.encode("utf-8")).hexdigest()
-        state = None
-        if hasattr(app.state, "transient_auth_store"):
-            state = app.state.transient_auth_store.get_state(
-                token_hash,
-                TransientAuthStateKind.STUDENT_VERIFICATION_SESSION,
-            )
-        if state is not None:
-            if state.account_id is not None and state.account_id != account.id:
-                raise HTTPException(status_code=403, detail="此學生證驗證屬於其他帳號。")
-            school_name = state.payload.get("school_name", "長庚大學")
-            department_name = state.payload.get("department_name")
-        else:
-            with verification_lock:
-                rec = student_verification_sessions.get(token_hash)
-            if rec is None or rec.get("expires_at", utc_now()) < utc_now():
-                raise HTTPException(status_code=403, detail="學生證驗證已過期或不存在。")
-            if rec.get("account_id") is not None and rec.get("account_id") != account.id:
-                raise HTTPException(status_code=403, detail="此學生證驗證屬於其他帳號。")
-            school_name = str(rec.get("school_name", "長庚大學"))
-            department_name = rec.get("department_name")
-
-        now = utc_now()
-        mutation = StudentVerificationMutationRequest(
-            account_id=account.id,
-            session_id=session.id,
-            session_token_hash=session.token_hash,
-            school_name=school_name,
-            department_name=department_name,
-            verification_method=StudentVerificationMethod.STUDENT_CARD,
-            school_email_verified=False,
-            verified_at=now,
-        )
-        try:
-            if hasattr(app.state, "account_repository") and hasattr(
-                app.state.account_repository, "commit_student_verification"
-            ):
-                result = app.state.account_repository.commit_student_verification(mutation)
-                if (
-                    result.status != StudentVerificationMutationStatus.COMMITTED
-                    or result.account is None
-                ):
-                    raise HTTPException(status_code=400, detail="學生身分驗證提交失敗。")
-                updated = result.account
-            else:
-                updated = account.model_copy(
-                    update={
-                        "student_status_verified": True,
-                        "verified_university": school_name,
-                        "student_verification_method": StudentVerificationMethod.STUDENT_CARD,
-                        "student_verified_at": now,
-                        "updated_at": now,
-                    }
-                )
-                updated = save_account_record(updated)
-        except AccountRepositoryError as exc:
-            raise HTTPException(status_code=503, detail="暫時無法提交身分驗證，請稍後重試。") from exc
-
-        if hasattr(app.state, "transient_auth_store"):
-            app.state.transient_auth_store.consume_state(
-                token_hash,
-                TransientAuthStateKind.STUDENT_VERIFICATION_SESSION,
-                expected_account_id=account.id,
-            )
-        with verification_lock:
-            student_verification_sessions.pop(token_hash, None)
-
-        return _account_profile(updated)
-
-    @app.post(
         "/auth/email-verification/request",
         response_model=EmailVerificationDispatch,
         status_code=202,
@@ -1593,12 +1377,20 @@ def create_app(
             declared = payload.home_university.strip()
             if not declared:
                 raise HTTPException(status_code=422, detail="請填寫就讀學校。")
-            if account.student_status_verified and not can_use_university(account, declared):
-                raise HTTPException(status_code=403, detail="所屬學校依校籍驗證結果決定，不能自行改成其他大學。")
             # A supported school is stored under its official name; any other school is kept
             # as typed so we can see which schools people ask for.
             supported = resolve_university(declared)
-            updates["home_university"] = supported.school_name if supported else declared
+            new_school = supported.school_name if supported else declared
+            if new_school != (account.home_university or "").strip():
+                # Sending the school it already has changes nothing and does not restart the clock.
+                locked_until = school_change_locked_until(account)
+                if locked_until is not None:
+                    raise HTTPException(
+                        status_code=409,
+                        detail=f"學校選定後 3 天內不能更換，{locked_until.astimezone(TAIPEI_TZ):%Y-%m-%d %H:%M} 之後才能修改。",
+                    )
+                updates["home_university"] = new_school
+                updates["home_university_changed_at"] = utc_now()
         if payload.target_countries is not None:
             updates["target_countries"] = list(
                 dict.fromkeys(
@@ -2466,7 +2258,6 @@ def create_app(
     def oauth_start(
         provider: str,
         request: Request,
-        student_verification_token: str | None = Query(default=None),
         terms: str | None = Query(
             default=None,
             max_length=32,
@@ -2485,8 +2276,6 @@ def create_app(
             # No state is created and nothing leaves for the provider: an account can only be created after the visitor
             # ticked the current terms. The page opens the sign-in dialog again with a reminder.
             return RedirectResponse(url="/#auth=terms", status_code=303)
-        if student_verification_token:
-            student_verification_record(student_verification_token, consume=False)
         state_token = secrets.token_urlsafe(32)
         flow_secret = secrets.token_urlsafe(32)
         now = utc_now()
@@ -2498,7 +2287,6 @@ def create_app(
                 kind=TransientAuthStateKind.OAUTH_LOGIN,
                 provider_id=provider_name.value,
                 session_id=flow_secret,
-                payload={"student_verification_token": student_verification_token},
                 expires_at=now + timedelta(minutes=10),
             )
             try:
@@ -2518,12 +2306,7 @@ def create_app(
             except TransientAuthCapacityError as exc:
                 raise HTTPException(status_code=503, detail=str(exc)) from exc
         else:
-            oauth_states[state_token] = (
-                provider_name,
-                now,
-                student_verification_token,
-                flow_secret,
-            )
+            oauth_states[state_token] = (provider_name, now, flow_secret)
 
         redirect_uri = oauth_redirect_uri(request, provider_name)
         if provider_name == AuthProvider.GOOGLE:
@@ -2620,7 +2403,7 @@ def create_app(
         expected_secret = (
             target_state.session_id
             if hasattr(target_state, "session_id")
-            else (target_state[3] if len(target_state) > 3 else None)
+            else (target_state[2] if len(target_state) > 2 else None)
         )
         if not flow_secret or (expected_secret and flow_secret != expected_secret):
             raise HTTPException(status_code=403, detail="瀏覽器驗證階段不相符。")
@@ -3487,8 +3270,8 @@ def create_app(
         if not mutation_id or len(mutation_id) < 16 or len(mutation_id) > 128:
             raise HTTPException(status_code=422, detail="缺少有效操作識別碼。")
         account, _ = authenticated_account(request)
-        if not account.student_status_verified:
-            raise HTTPException(status_code=403, detail="此功能僅限已驗證學生使用。")
+        if not catalog_home_university(account):
+            raise HTTPException(status_code=403, detail="請先選擇學校後再回報問題。")
         _reject_contact_details(payload.description)
 
         university = university_for(payload.home_school)
@@ -3931,13 +3714,14 @@ def create_app(
         if mode == CommunityIdentityMode.REAL_NAME:
             return account.display_name
         if mode in {CommunityIdentityMode.VERIFIED_SCHOOL, CommunityIdentityMode.VERIFIED_DEPARTMENT}:
-            if not account.student_status_verified or not account.verified_university:
-                raise HTTPException(status_code=403, detail="請先完成校籍驗證。")
+            school = catalog_home_university(account)
+            if not school:
+                raise HTTPException(status_code=403, detail="請先選擇學校。")
             if mode == CommunityIdentityMode.VERIFIED_DEPARTMENT:
                 if not account.verified_department:
                     raise HTTPException(status_code=403, detail="尚無已驗證系所。")
-                return f"{account.verified_university} {account.verified_department}學生"
-            return f"{account.verified_university}學生"
+                return f"{school} {account.verified_department}學生"
+            return f"{school}學生"
         return "匿名學生"
 
     @app.get("/community/posts", response_model=list[CommunityPostThread])

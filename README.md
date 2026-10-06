@@ -240,9 +240,8 @@ http://127.0.0.1:8000
 
 ## 帳號與第三方登入
 
-Email 建立帳號採兩階段流程：先取得六位數驗證碼，再用一次性 token 建立一般帳號。驗證碼 15 分鐘有效、重送至少間隔 60 秒、每小時最多五次，錯誤五次即失效；持久層只保存 Email 的 HMAC 指紋、驗證碼雜湊及 token 雜湊，不保存明碼。建立帳號後才可選擇上傳學生證正反面升級校籍權限；驗證 token 綁定當時登入帳號，不能轉交另一個帳號使用。原圖只在當次請求記憶體處理，帳號只保存學校、卡面可明確辨識的系所、驗證方式、狀態與時間，不保存照片、完整學號、姓名或 OCR 全文。密碼只在後端以 PBKDF2 雜湊儲存，登入狀態同時支援 HttpOnly Cookie 與 API Bearer Token。
+Email 建立帳號採兩階段流程：先取得六位數驗證碼，再用一次性 token 建立一般帳號。驗證碼 15 分鐘有效、重送至少間隔 60 秒、每小時最多五次，錯誤五次即失效；持久層只保存 Email 的 HMAC 指紋、驗證碼雜湊及 token 雜湊，不保存明碼。2026-10-07 起已移除學生證驗證：帳號顯示自己選的學校（或信箱網域所屬學校），不核對是否在學，選定後 3 天內不能更換（`home_university_changed_at`、`school_change_locked_until`）。密碼只在後端以 PBKDF2 雜湊儲存，登入狀態同時支援 HttpOnly Cookie 與 API Bearer Token。
 
-Google Workspace、Microsoft Entra、校方 SSO 與校方 Email OTP 採學校別 provider policy；未完成校方合作或後端設定時預設停用，不得退回讓學生在本平台輸入校務密碼。兩校帳號生命週期、開放狀態、官方來源與 Entra 設定方式見 [`docs/student-verification-provider-matrix.md`](docs/student-verification-provider-matrix.md)。
 
 登入後，收藏、單一／多個申請計畫、文件準備狀態、期限與完成狀態會同步到帳號工作區；未登入時的比較不會被默認匯入收藏。每次寫入都帶版本號；舊裝置若送出過期版本，API 會回傳最新版，Web 合併兩端的非敏感進度後再重試。離線修改會放入該帳號專屬的待同步佇列，網路恢復時重送；同一瀏覽器切換帳號時不會沿用前一個帳號的佇列。工作區 API 採欄位白名單並拒絕未知根欄位，個人表單答案、護照／成績單等敏感資料與附件不會因工作區同步而被隱性保存。帳號 session 一旦建立成功，登入對話框會先關閉；社群身分、看板、權益、工作區、日曆、通知與表單草稿再各自同步，單一非關鍵載入失敗不會把成功登入誤報為失敗，畫面會保留 session 並提示稍後重試。
 
@@ -369,8 +368,6 @@ API:
 - `POST /auth/login`
 - `GET /auth/me`
 - `PATCH /auth/me`
-- `POST /auth/student-verification`（登入後一次性處理學生證影像）
-- `POST /auth/student-verification/confirm`（套用已驗證校籍）
 - `POST /auth/logout`
 - `GET /community/boards`（固定看板與目前帳號權限）
 - `POST /account/submission-progress`（學生手動送件狀態、收件證明 metadata 與工作區版本同步）

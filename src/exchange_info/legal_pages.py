@@ -21,7 +21,7 @@ from fastapi.responses import HTMLResponse
 CONTACT_ENV = "EXCHANGE_CONTACT_EMAIL"
 # The date printed at the top of both pages. Signing in requires the visitor to have ticked this exact version, so
 # changing the pages means changing this too (a test keeps the two in step).
-TERMS_VERSION = "2026-10-06"
+TERMS_VERSION = "2026-10-07"
 PLACEHOLDER = "{{CONTACT}}"
 _EMAIL = re.compile(r"^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$")
 _MISSING = "（營運者尚未設定聯絡信箱）"

@@ -3764,6 +3764,8 @@ class UserAccount(BaseModel):
     display_name: str
     avatar_url: str | None = None
     home_university: str = "長庚大學"
+    # When the school was last picked; the school cannot be changed again for SCHOOL_CHANGE_LOCK after that.
+    home_university_changed_at: datetime | None = None
     target_countries: list[str] = Field(default_factory=list)
     application_stage: str = "exploring"
     followed_boards: list[str] = Field(default_factory=list)
@@ -3800,6 +3802,8 @@ class AccountProfile(BaseModel):
     display_name: str
     avatar_url: str | None = None
     home_university: str
+    # Until when the school cannot be changed; None when it can be changed now.
+    school_change_locked_until: datetime | None = None
     target_countries: list[str] = Field(default_factory=list)
     application_stage: str
     followed_boards: list[str] = Field(default_factory=list)

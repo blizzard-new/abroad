@@ -52,11 +52,13 @@ def _account(
     email_verified: bool = True,
     verified_university: str | None = None,
     verified_department: str | None = None,
+    home_university: str | None = None,
 ) -> tuple[UserAccount, dict[str, str], dict]:
     account = UserAccount(
         email=email,
         display_name=name,
         email_verified=email_verified,
+        **({"home_university": home_university} if home_university else {}),
         student_status_verified=bool(verified_university),
         verified_university=verified_university,
         verified_department=verified_department,
@@ -169,10 +171,10 @@ def test_post_rejects_unknown_or_conflicting_board_identifiers(tmp_path) -> None
     assert "不一致" in conflicting.json()["detail"]
 
 
-def test_unverified_account_posts_anonymously_on_public_and_school_boards(tmp_path) -> None:
+def test_account_without_a_school_posts_anonymously_on_public_and_school_boards(tmp_path) -> None:
     ensure_data_dirs(tmp_path)
     client = TestClient(create_app(tmp_path))
-    _, headers, _ = _account(tmp_path, client, "一般會員")
+    _, headers, _ = _account(tmp_path, client, "一般會員", home_university="尚未選擇")
 
     public_post = client.post(
         "/community/posts",
@@ -183,7 +185,7 @@ def test_unverified_account_posts_anonymously_on_public_and_school_boards(tmp_pa
     assert public_post.json()["display_name"] == "匿名學生"
     assert public_post.json()["identity_mode"] == "anonymous"
 
-    # School boards are open to any account with a verified e-mail; the byline stays anonymous.
+    # School boards are open to any account with a verified e-mail; without a picked school the byline stays anonymous.
     school_post = client.post(
         "/community/posts",
         headers=headers,
