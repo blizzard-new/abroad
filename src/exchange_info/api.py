@@ -380,7 +380,8 @@ from .storage import (
 from .student_view import build_student_dashboard, fetch_partner_universities
 from .student_verification import StudentCardVerificationError, verify_student_cards
 from .rag import rag_index_status, search_document_chunks, supabase_configured
-from .request_origin import client_address, public_base_url
+from .legal_pages import register_legal_pages
+from .request_origin import client_fingerprint, public_base_url
 from .university_registry import (
     CGU,
     NTPU,
@@ -925,6 +926,7 @@ def create_app(
         app, analytics_service, authenticated_content_admin,
         static_dir=STATIC_DIR, school_countries=catalogue_countries,
     )
+    register_legal_pages(app, STATIC_DIR)
 
     def save_account_record(updated: UserAccount) -> UserAccount:
         if hasattr(app.state, "account_repository") and hasattr(app.state.account_repository, "save_account"):
@@ -2490,11 +2492,10 @@ def create_app(
                 payload={"student_verification_token": student_verification_token},
                 expires_at=now + timedelta(minutes=10),
             )
-            client_ip = client_address(request, default="127.0.0.1")
             try:
                 app.state.transient_auth_store.start_oauth_state(
                     record,
-                    client_fingerprint=client_ip,
+                    client_fingerprint=client_fingerprint(request, master_key),
                     window_start=now - timedelta(minutes=10),
                     start_limit=20,
                     max_active=200,

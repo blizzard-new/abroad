@@ -114,3 +114,47 @@ def test_on_render_the_sign_in_return_address_comes_from_render_itself(monkeypat
     client = TestClient(create_app(), base_url="http://internal-host:10000", follow_redirects=False)
     location = client.get("/auth/oauth/google/start").headers.get("location", "")
     assert "redirect_uri=https%3A%2F%2Funiway.onrender.com%2Fauth%2Foauth%2Fgoogle%2Fcallback" in location
+
+
+# ----------------------------------------------------------------------------- the address that reaches the database
+
+import re as _re
+
+from exchange_info.request_origin import client_fingerprint
+
+
+def test_the_fingerprint_is_a_keyed_64_hex_hash_not_the_address():
+    request = fake_request(host="203.0.113.9")
+    value = client_fingerprint(request, b"k" * 32, {})
+    assert _re.fullmatch(r"[0-9a-f]{64}", value), "the database column only accepts 64 hex characters"
+    assert "203" not in value
+    assert value == client_fingerprint(request, b"k" * 32, {}), "stable, so the rate limit can count repeat visits"
+    assert value != client_fingerprint(fake_request(host="203.0.113.10"), b"k" * 32, {}), "another visitor, another value"
+    assert value != client_fingerprint(request, b"j" * 32, {}), "the secret matters: a leaked table alone does not reveal addresses"
+
+
+def test_the_fingerprint_follows_the_trusted_proxy_header_when_configured():
+    env = {"EXCHANGE_CLIENT_IP_HEADER": "CF-Connecting-IP"}
+    behind_proxy = fake_request({"CF-Connecting-IP": "198.51.100.7"}, host="10.0.0.1")
+    direct = fake_request(host="198.51.100.7")
+    assert client_fingerprint(behind_proxy, b"k" * 32, env) == client_fingerprint(direct, b"k" * 32, {})
+
+
+def test_sign_in_start_gives_the_store_a_value_the_database_will_accept(monkeypatch):
+    """The Supabase table rejects anything but 64 hex characters; the raw address used to be sent, so production sign-in failed."""
+    seen: list[str] = []
+
+    class RecordingStore:
+        backend_name = "memory"
+
+        def start_oauth_state(self, record, *, client_fingerprint, window_start, start_limit, max_active, replace_session=False):
+            seen.append(client_fingerprint)
+            return record
+
+    monkeypatch.delenv("EXCHANGE_PUBLIC_BASE_URL", raising=False)
+    monkeypatch.setenv("GOOGLE_OAUTH_CLIENT_ID", "id-for-test")
+    monkeypatch.setenv("GOOGLE_OAUTH_CLIENT_SECRET", "secret-for-test")
+    client = TestClient(create_app(transient_auth_store=RecordingStore()), follow_redirects=False)
+    response = client.get("/auth/oauth/google/start")
+    assert response.status_code in (302, 303, 307), response.text[:200]
+    assert len(seen) == 1 and _re.fullmatch(r"[0-9a-f]{64}", seen[0]), seen

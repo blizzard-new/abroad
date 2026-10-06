@@ -14,6 +14,8 @@ a visitor could forge:
 """
 from __future__ import annotations
 
+import hashlib
+import hmac
 import ipaddress
 import os
 from collections.abc import Mapping
@@ -48,3 +50,15 @@ def client_address(request: Any, environment: Mapping[str, str] | None = None, d
             pass  # missing, a chain of addresses or garbage: fall back to who actually connected
     client = getattr(request, "client", None)
     return client.host if client and client.host else default
+
+
+def client_fingerprint(request: Any, secret: bytes, environment: Mapping[str, str] | None = None) -> str:
+    """A keyed hash of the visitor's address, 64 lowercase hex characters, for rate limits kept in the database.
+
+    The sign-in limiter writes this value to a table whose column only accepts 64 hex characters, and the raw address
+    should not sit in the database anyway. HMAC with a server-side secret (not a bare hash) so the small IPv4 space can not
+    be enumerated back to addresses from a leaked table. The key is derived per purpose from ``secret``.
+    """
+    key = hashlib.sha256(b"uniway-client-fingerprint-v1|" + bytes(secret)).digest()
+    address = client_address(request, environment)
+    return hmac.new(key, address.encode("utf-8"), hashlib.sha256).hexdigest()

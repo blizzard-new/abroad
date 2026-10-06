@@ -52,5 +52,6 @@ services:
       # 這裡刻意沒有列出的變數（等需要時在 Render 的 Environment 頁面加）：
       #   GOOGLE_OAUTH_CLIENT_ID、GOOGLE_OAUTH_CLIENT_SECRET：Google 登入，建好 OAuth 用戶端後再加（指南第 6 步）。
       #     沒加時登入按鈕是灰的，其餘功能正常；填了假值反而會讓按鈕可按但登入失敗。
+      #   EXCHANGE_CONTACT_EMAIL：公開給使用者的聯絡信箱，隱私權政策（/privacy）與使用條款（/terms）會顯示它；沒設時頁面寫「尚未設定聯絡信箱」。
       #   EXCHANGE_PUBLIC_BASE_URL：自己的網域（指南第 8 步）。沒設時用 Render 自動提供的 RENDER_EXTERNAL_URL，也就是
       #     https://xxx.onrender.com；綁了自己的網域之後要設成新網址，否則 Google 登入返回網址與學校照片連結還會指向舊網址。

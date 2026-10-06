@@ -40,7 +40,7 @@ GitHub、Render Free、Supabase Free、Google 登入、`onrender.com` 網址，�
 
 1. **使用者開始發文、存申請進度** → 先升 Supabase Pro（約每月 25 美元起，預設開花費上限）。理由是備份與不暫停：資料掉了就找不回來，這是最大的風險。
 2. **有人抱怨第一次載入太慢** → Render 升 Starter（約每月 7 美元）。
-3. **想在 Google 登入畫面放隱私權政策、標誌** → 買自己的網域（`.com` 通常每年約 10 美元）。
+3. **想在 Google 登入畫面顯示 App 名稱與標誌**（品牌驗證）→ 買自己的網域（`.com` 通常每年約 10 美元）。
 
 全部都升上去，最多大約每月 32 美元加網域每年約 10 美元。
 
@@ -136,9 +136,18 @@ Render 會先安裝（約 1–3 分鐘），再啟動。服務頁面上方會有
    `https://uniway-xxxx.onrender.com/auth/oauth/google/callback`
 3. 建立後拿到 **用戶端 ID** 與 **用戶端密碼**。
 4. Render → 你的服務 → **Environment** → 新增兩個變數：`GOOGLE_OAUTH_CLIENT_ID`、`GOOGLE_OAUTH_CLIENT_SECRET`，存檔。Render 會自動重新部署（約 1–2 分鐘）。
-5. **OAuth 同意畫面**（Google Auth Platform → 目標對象／Audience）：把發布狀態從「測試」改成**「正式版」（Publish app）**。
-   - 網站只要求 `openid email profile` 這三個基本範圍時，依 [Google 的說明](https://support.google.com/cloud/answer/15549945)，發布後任何 Google 帳號都能登入，不需要審核，也不會看到警告。
-   - 想在同意畫面顯示 App 名稱與標誌、放隱私權政策連結，需要另外做「品牌驗證」，而且要有你自己的網域（`onrender.com` 這種不是你的，加不進「已授權網域」）。這可以之後再做。
+5. **先在 Render 加一個變數** `EXCHANGE_CONTACT_EMAIL` = 你要公開給使用者的聯絡信箱。網站的隱私權政策（`/privacy`）與使用條款（`/terms`）會顯示它；沒設的話，頁面會寫「尚未設定聯絡信箱」。
+6. **填 Google 的 Branding 頁**（Google Auth Platform → Branding）。要切到「正式版」，Google **要求**以下欄位（按鈕灰色、滑鼠移上去會寫缺什麼）：
+   - Application home page：`https://uniway-xxxx.onrender.com/`
+   - Application privacy policy link：`https://uniway-xxxx.onrender.com/privacy`
+   - Application terms of service link：`https://uniway-xxxx.onrender.com/terms`
+   - Authorized domains：`uniway-xxxx.onrender.com`（`onrender.com` 在公開網域清單上，所以你的完整子網域本身就是一個頂層私有網域；Google 是否接受要實際試，被拒絕就貼畫面給我）
+   - **App logo 先不要上傳**：頁面警告，上傳後正式版要送審核。
+   - 首頁、隱私權政策、服務條款要在**同一個網域**，首頁要連得到隱私權政策（網站頁尾已有連結）。
+7. **Audience 頁按 Publish app**，狀態變成 In production。
+   - 只要求 `openid email profile` 時，依 [Google 的說明](https://developers.google.com/identity/protocols/oauth2/production-readiness/overview)，發布後任何 Google 帳號都能登入，不受 100 人限制；沒有品牌驗證時，同意畫面**不會顯示 App 名稱與標誌**，這不影響登入。
+   - 想顯示 App 名稱與標誌，需要自己的網域加「品牌驗證」，可以之後再做。
+   - 在你按下 Publish 之前，也可以先停在「測試中」：到 **Audience → Test users** 加入 Gmail，最多 100 位測試使用者可以登入。
 
 **做完怎麼確認**：`你的網址/auth/providers` 的 `google` 變成 `"enabled":true`；用一個沒加進測試名單的 Gmail 登入成功。
 
@@ -161,7 +170,7 @@ Render 會先安裝（約 1–3 分鐘），再啟動。服務頁面上方會有
 
 ## 第 9 步：正式對外前的清單
 
-- [ ] **隱私權政策與服務條款**：Google 登入會取得姓名與信箱，還有匿名使用統計。`docs/closed-beta-privacy-notice.md` 只是空殼，法律文字要你或專業人士決定。
+- [ ] **隱私權政策與服務條款**：網站已有 `/privacy` 與 `/terms`（內容依程式實際行為寫成，**不是律師審過的法律文件**）。公開宣傳前請自己讀過一遍，確認每一句都是你的決定（例如「不用於廣告、不販售」、條款裡的免責範圍），有疑慮請專業人士看過。聯絡信箱靠 `EXCHANGE_CONTACT_EMAIL`。
 - [ ] **誰管留言**：公共板對所有 Google 帳號開放，要有人處理檢舉。管理員用 `EXCHANGE_PLATFORM_ADMIN_ACCOUNT_IDS` 指定。
 - [ ] **用長庚與北大的真實信箱各登入一次**：學校的信箱可能不是 Google 帳號，或被學校擋第三方登入。
 - [ ] **Supabase 升級付費並確認備份**。
