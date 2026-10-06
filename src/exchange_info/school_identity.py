@@ -2,8 +2,12 @@ from __future__ import annotations
 
 import re
 import unicodedata
+from functools import lru_cache
 
 
+# Merging the workflow catalogue asks for the key of the same few hundred names over a million times per request, which
+# kept a request busy for seconds; the key depends only on the text, so remembering it is safe.
+@lru_cache(maxsize=16384)
 def school_identity_key(value: str) -> str:
     """Return a stable institution key across translated display-name variants."""
     normalized = re.sub(r"\s+", " ", unicodedata.normalize("NFKC", value)).strip()
