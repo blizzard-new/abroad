@@ -1,4 +1,4 @@
-"""The home prioritizes real discussion posts and one left navigation."""
+"""The forum prioritizes real discussion posts and one left navigation."""
 import os
 from pathlib import Path
 from uuid import uuid4
@@ -31,7 +31,7 @@ def capture(page, name):
 def test_home_displays_stored_posts_without_destination_sections(page, live_server, width):
     page.set_viewport_size({"width": width, "height": 956})
     marker, posts = seed(live_server, count=3)
-    enter_public_site(page, live_server)
+    enter_public_site(page, live_server, "forum")
     expect(page.locator(".glass-home-intro, .glass-home-overview, .glass-home-destinations, #glass-home-schools")).to_have_count(0)
     search(page, marker)
     expect(page.locator(".discussion-summary")).to_have_count(3)
@@ -115,7 +115,7 @@ def test_glass_navigation_and_responsive_routes(page, live_server, width):
     page.emulate_media(reduced_motion="reduce")
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
-    enter_public_site(page, live_server)
+    enter_public_site(page, live_server, "forum")
     expect(page.locator("#community-hub-title")).to_have_text("最新留學討論")
     nav = page.locator(".uniway-public-nav")
     for theme in ["light", "dark"]:
@@ -125,19 +125,20 @@ def test_glass_navigation_and_responsive_routes(page, live_server, width):
             if page.locator("#glass-menu-close").is_visible():
                 page.locator("#glass-menu-close").click()
         expect(page.locator("html")).to_have_attribute("data-theme", theme)
-        for route in ["home", "guide", "partners", "public-board"]:
+        for route in ["forum", "home", "partners", "public-board"]:
             if route == "public-board":
                 open_navigation(page)
-                nav.locator('[data-public-route="home"]').click()
+                nav.locator('[data-public-route="forum"]').click()
                 page.locator('#community-feed-tabs a[href="#public-board"]').click()
-                expect(nav.locator('[data-public-route="home"]')).to_have_attribute("aria-current", "page")
+                expect(nav.locator('[data-public-route="forum"]')).to_have_attribute("aria-current", "page")
             else:
                 open_navigation(page)
                 nav.locator(f'[data-public-route="{route}"]').click()
-            expect(page.locator("#community-hub" if route in ["home", "public-board"] else f"#{route}")).to_be_visible()
+            page_id = {"forum": "#community-hub", "public-board": "#community-hub", "home": "#guide"}.get(route, f"#{route}")
+            expect(page.locator(page_id)).to_be_visible()
             assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), (width, theme, route)
-            if route == "home":
-                capture(page, f"home-guest-{width}-{theme}.png")
+            if route in ("forum", "home"):
+                capture(page, f"{route}-guest-{width}-{theme}.png")
     assert not errors
 
 
@@ -211,21 +212,21 @@ def test_mobile_navigation_focus_escape_and_login(page, live_server):
 def test_compact_rail_labels_and_tools_follow_pointer_and_keyboard(page, live_server, reduced):
     page.set_viewport_size({"width": 1754, "height": 956})
     page.emulate_media(reduced_motion="reduce" if reduced else "no-preference")
-    enter_public_site(page, live_server)
+    enter_public_site(page, live_server, "forum")
     rail = page.locator("#glass-navigation")
     assert rail.bounding_box()["width"] == 76
     expect(rail.locator('[data-public-route="public-board"]')).to_have_count(0)
-    guide = rail.get_by_role("link", name="申請指南", exact=True)
+    guide = rail.get_by_role("link", name="論壇", exact=True)
     tip = page.locator(".glass-rail-tooltip")
     guide.hover()
     expect(tip).to_have_class("glass-rail-tooltip is-visible")
-    expect(tip).to_have_text("申請指南")
+    expect(tip).to_have_text("論壇")
     duration = tip.evaluate("el => getComputedStyle(el).transitionDuration")
     assert (duration == "0s") == reduced
     page.locator("#community-hub-title").hover()
     expect(tip).not_to_have_class("glass-rail-tooltip is-visible")
     guide.focus()
-    expect(tip).to_have_text("申請指南")
+    expect(tip).to_have_text("論壇")
     expect(tip).to_have_class("glass-rail-tooltip is-visible")
     page.keyboard.press("Escape")
     expect(tip).not_to_have_class("glass-rail-tooltip is-visible")

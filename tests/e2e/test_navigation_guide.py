@@ -14,25 +14,57 @@ def start(page, live_server, route="home"):
     enter_public_site(page, live_server, route)
 
 
+def test_home_is_the_guide_and_the_forum_is_one_click_away(page, live_server):
+    start(page, live_server)
+    nav = page.locator(".uniway-public-nav")
+    expect(nav.get_by_role("link", name="申請指南", exact=True)).to_have_count(0)
+    expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator(".guide-stages > li")).to_have_count(4)
+    expect(page.locator("#community-hub")).to_be_hidden()
+    expect(nav.locator('[data-public-route="home"]')).to_have_attribute("aria-current", "page")
+    expect(page).to_have_title("首頁 | UniWay")
+    nav.get_by_role("link", name="論壇", exact=True).click()
+    expect(page).to_have_url(f"{live_server.base_url}/#forum")
+    expect(page.locator("#community-hub")).to_be_visible()
+    expect(page.locator("#community-hub-title")).to_have_text("最新留學討論")
+    expect(page.locator("#guide")).to_be_hidden()
+    expect(nav.locator('[data-public-route="forum"]')).to_have_attribute("aria-current", "page")
+    expect(nav.locator('[data-public-route="home"]')).not_to_have_attribute("aria-current", "page")
+    expect(page).to_have_title("論壇 | UniWay")
+    page.locator('#community-feed-tabs a[href="#public-board"]').click()
+    expect(nav.locator('[data-public-route="forum"]')).to_have_attribute("aria-current", "page")
+    nav.get_by_role("link", name="首頁", exact=True).click()
+    expect(page).to_have_url(f"{live_server.base_url}/#home")
+    expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#guide-title")).to_be_focused()
+
+
+def test_an_old_guide_link_opens_the_home_page(page, live_server):
+    start(page, live_server, "guide")
+    expect(page).to_have_url(f"{live_server.base_url}/#home")
+    expect(page.locator("#guide")).to_be_visible()
+    expect(page.locator("#page-back")).to_be_disabled()
+
+
+def test_an_old_community_link_opens_the_forum(page, live_server):
+    start(page, live_server, "community-hub")
+    expect(page).to_have_url(f"{live_server.base_url}/#forum")
+    expect(page.locator("#community-hub")).to_be_visible()
+
+
 def test_guide_shared_shell_and_back_forward_without_loops(page, live_server):
     start(page, live_server)
     nav = page.locator(".uniway-public-nav")
-    nav.get_by_role("link", name="申請指南", exact=True).click()
     expect(page.locator("#guide")).to_be_visible()
-    expect(page.locator(".guide-stages > li")).to_have_count(4)
     expect(page.locator("#application-center")).to_be_hidden()
-    expect(page.locator("#guide-title")).to_be_focused()
     page.locator("#guide").get_by_role("link", name="準備申請文件", exact=True).click()
     expect(page.locator("#application-center")).to_be_visible()
     expect(nav).to_be_visible()
     expect(page.locator(".sidebar")).to_be_hidden()
     page.locator("#page-back").click()
     expect(page.locator("#guide")).to_be_visible()
-    page.locator("#page-back").click()
     expect(page).to_have_url(f"{live_server.base_url}/#home")
     expect(page.locator("#page-back")).to_be_disabled()
-    page.go_forward()
-    expect(page.locator("#guide")).to_be_visible()
     page.go_forward()
     expect(page.locator("#application-center")).to_be_visible()
     # Reload must retain the known internal history boundary.
@@ -41,7 +73,7 @@ def test_guide_shared_shell_and_back_forward_without_loops(page, live_server):
     expect(page.locator("#guide")).to_be_visible()
 
 
-@pytest.mark.parametrize("route", ["guide", "application-center", "school=" + LINCOLN])
+@pytest.mark.parametrize("route", ["budget", "application-center", "school=" + LINCOLN])
 def test_direct_entry_back_stays_inside_site(page, live_server, route):
     start(page, live_server, route)
     page.locator(".route-back:visible").click()
@@ -52,7 +84,7 @@ def test_direct_entry_back_stays_inside_site(page, live_server, route):
 
 
 def test_every_tool_has_shared_navigation_and_return(page, live_server):
-    start(page, live_server, "guide")
+    start(page, live_server, "home")
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     routes = ["favorites", "advisor", "application-center", "calendar", "eligibility", "document-check", "documents", "deadlines", "scholarships", "budget"]
@@ -105,11 +137,11 @@ def test_school_return_retains_filters_scroll_and_forward(page, live_server):
 def test_guide_responsive_menu_keyboard_and_theme(page, live_server, width):
     page.set_viewport_size({"width": width, "height": 900})
     page.emulate_media(reduced_motion="reduce")
-    start(page, live_server, "guide")
+    start(page, live_server, "home")
     expect(page.locator("#guide")).to_be_visible()
     page.locator(".skip-link").focus()
     page.keyboard.press("Enter")
-    expect(page).to_have_url(f"{live_server.base_url}/#guide")
+    expect(page).to_have_url(f"{live_server.base_url}/#home")
     expect(page.locator("#main-content")).to_be_focused()
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     open_navigation(page)

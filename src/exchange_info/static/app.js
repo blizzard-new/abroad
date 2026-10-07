@@ -254,7 +254,7 @@ const UNIVERSITY_PAGE_ROUTES = new Set([
   "search",
 ]);
 const UNIVERSITY_PAGE_TITLES = {
-  guide: "申請指南",
+  guide: "首頁",
   overview: "我的申請",
   advisor: "選校規劃",
   partners: "找交換學校",
@@ -11848,7 +11848,7 @@ function showUniversityPage(pageId, { resetScroll = true, focusHeading = true } 
 
 function globalFeedForHash(hash = window.location.hash) {
   return {
-    "#home": "all",
+    "#forum": "all",
     "#following": "following",
     "#public-board": "public",
     "#language-school-board": "language",
@@ -11867,7 +11867,7 @@ function isUniversityBoardRoute(hash = window.location.hash) {
 }
 
 function isPublicExplorationRoute(hash = window.location.hash) {
-  return hash === "#guide" || hash === "#partners" || hash === "#search" || /^#school=/.test(hash);
+  return hash === "#home" || hash === "#partners" || hash === "#search" || /^#school=/.test(hash);
 }
 
 function isPersonalizedRoute(hash = window.location.hash) {
@@ -11878,7 +11878,7 @@ function isPersonalizedRoute(hash = window.location.hash) {
 function updateUniWayPublicNavigation(hash = window.location.hash) {
   window.UniWayMotion?.route(hash);
   const activeRoute = isPersonalizedRoute(hash) ? "overview" : globalFeedForHash(hash)
-    ? "home"
+    ? "forum"
     : (/^#school=/.test(hash) || hash === "#search" ? "partners" : hash.slice(1));
   document.querySelectorAll(".application-tools-panel a").forEach((link) => {
     if (link.getAttribute("href") === hash) link.setAttribute("aria-current", "page");
@@ -11893,7 +11893,12 @@ function updateUniWayPublicNavigation(hash = window.location.hash) {
 }
 
 function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
-  const hash = window.location.hash || "#home";
+  let hash = window.location.hash || "#home";
+  if (hash === "#guide") {
+    // The guide is the home page now; keep links to the old address working.
+    window.UniWayNavigation.replaceState({}, "", "#home");
+    hash = "#home";
+  }
   const globalFeed = globalFeedForHash(hash);
   const isUniversityPosts = hash === "#cgu-posts" || hash === "#university-posts";
   const isPublicExploration = isPublicExplorationRoute(hash);
@@ -11910,7 +11915,7 @@ function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
     renderCommunityPageContext(["cgu", "university"].includes(globalFeed));
     renderGlobalCommunityNavigation();
     setActiveNavigation("");
-    document.title = `${globalFeed === "following" ? "我的追蹤" : globalFeed === "public" ? "公共留學板" : globalFeed === "language" ? LANGUAGE_SCHOOL_COMMUNITY_BOARD : globalFeed === "cgu" ? "長庚大學貼文" : globalFeed === "university" ? `${activeHomeSchool()}貼文` : "首頁"} | UniWay`;
+    document.title = `${globalFeed === "following" ? "我的追蹤" : globalFeed === "public" ? "公共留學板" : globalFeed === "language" ? LANGUAGE_SCHOOL_COMMUNITY_BOARD : globalFeed === "cgu" ? "長庚大學貼文" : globalFeed === "university" ? `${activeHomeSchool()}貼文` : "論壇"} | UniWay`;
     if (!state.activeSchool) {
       $("#dashboard-view").hidden = false;
       $("#school-detail-view").hidden = true;
@@ -11959,7 +11964,7 @@ function applyAppRoute({ loadFeed = true, resetScroll = true } = {}) {
     return;
   }
 
-  const sectionId = hash.slice(1) || "overview";
+  const sectionId = hash === "#home" ? "guide" : hash.slice(1) || "overview";
   showUniversityPage(UNIVERSITY_PAGE_ROUTES.has(sectionId) ? sectionId : "overview", {
     resetScroll,
     focusHeading: resetScroll,
@@ -12928,7 +12933,7 @@ function bindEvents() {
 
 async function boot() {
   if (!window.location.hash || window.location.hash === "#community-hub") {
-    window.UniWayNavigation.replaceState({}, "", new URLSearchParams(window.location.search).has("view") ? "#partners" : "#home");
+    window.UniWayNavigation.replaceState({}, "", new URLSearchParams(window.location.search).has("view") ? "#partners" : window.location.hash ? "#forum" : "#home");
   }
   initializeTheme();
   readStoredState();

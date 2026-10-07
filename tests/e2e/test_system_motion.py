@@ -30,8 +30,8 @@ def test_all_routes_share_motion_and_back_retains_working_history(page, live_ser
     enter_public_site(page, live_server)
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
-    for route in ["guide", "partners", "favorites", "overview", "eligibility", "advisor", "application-center", "document-check", "writing-assistant", "documents", "calendar", "deadlines", "scholarships", "budget", "university-posts"]:
-        if route in ["guide", "partners", "overview"]:
+    for route in ["forum", "partners", "favorites", "overview", "eligibility", "advisor", "application-center", "document-check", "writing-assistant", "documents", "calendar", "deadlines", "scholarships", "budget", "university-posts"]:
+        if route in ["forum", "partners", "overview"]:
             link = page.locator(f'.uniway-public-nav a[href="#{route}"]')
         else:
             page.locator("#application-tools .application-nav-chevron").click()
@@ -65,7 +65,8 @@ def test_dialog_menu_details_tabs_and_mobile_layout(page, live_server, width):
     page.wait_for_function("() => __motionLog.some(x => x.animation.id === 'uniway:dialog')")
     page.locator("#confirm-school").click()
     expect(page.locator("#school-onboarding")).to_be_hidden()
-    page.locator('.uniway-public-nav a[href="#guide"]').click()
+    page.locator('.uniway-public-nav a[href="#forum"]').click()
+    page.locator('.uniway-public-nav a[href="#home"]').click()
     expect(page.locator("#guide").get_by_role("heading", level=1)).to_be_focused()
     summary = page.locator(".guide-faq summary")
     summary.focus()
@@ -100,7 +101,7 @@ def test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion(page
     expect(page.locator(".desktop-partner-table .school-detail-trigger")).to_have_text(MEIJI)
     assert all(x["delay"] <= 90 for x in motions(page, "result"))
     # User navigation may arrive before the previous animation completes.
-    for route in ("home", "guide", "partners", "home"):
+    for route in ("forum", "home", "partners", "forum"):
         page.locator(f'.uniway-public-nav a[href="#{route}"]').first.click()
     expect(page.locator("#community-hub")).to_be_visible()
     page.wait_for_function("() => !document.getAnimations().some(a => a.id.startsWith('uniway:'))")
@@ -111,12 +112,11 @@ def test_reduced_motion_live_change_and_missing_runtime_are_usable(page, live_se
     page.add_init_script(INSTRUMENT)
     page.emulate_media(reduced_motion="reduce")
     enter_public_site(page, live_server)
-    page.locator('.uniway-public-nav a[href="#guide"]').click()
     page.locator(".guide-faq summary").click()
     assert motions(page) == []
     assert page.locator(".guide-faq").evaluate("el => getComputedStyle(el, '::details-content').transitionDuration") == "0s"
     page.emulate_media(reduced_motion="no-preference")
-    page.locator('.uniway-public-nav a[href="#home"]').click()
+    page.locator('.uniway-public-nav a[href="#forum"]').click()
     page.wait_for_function("() => __motionLog.some(x => x.animation.id === 'uniway:route')")
     page.emulate_media(reduced_motion="reduce")
     page.wait_for_function("() => !document.getAnimations().some(a => a.id.startsWith('uniway:'))")
@@ -129,7 +129,7 @@ def test_reduced_motion_live_change_and_missing_runtime_are_usable(page, live_se
     # Progressive enhancement must not become a dependency for using the app.
     page.route("**/motion.js?*", lambda route: route.abort())
     page.reload()
-    page.locator('.uniway-public-nav a[href="#guide"]').click()
+    page.locator('.uniway-public-nav a[href="#home"]').click()
     expect(page.locator("#guide")).to_be_visible()
     page.locator("#page-back").click()
     expect(page.locator("#community-hub")).to_be_visible()

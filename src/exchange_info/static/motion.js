@@ -88,7 +88,7 @@
       if (!window.UniWayNavigation?.isRestoring) {
         const heading = root.querySelector(".school-detail-copy, .guide-intro, .section-heading, .community-home-heading");
         play(heading, backward ? "back" : "arrive");
-        if (hash === "#guide") [...root.querySelectorAll(".guide-stage")].slice(0, 4).forEach((el, i) => play(el, "arrive", i * 25));
+        if (hash === "#home") [...root.querySelectorAll(".guide-stage")].slice(0, 4).forEach((el, i) => play(el, "arrive", i * 25));
       }
     });
   }

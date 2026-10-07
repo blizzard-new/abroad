@@ -83,6 +83,7 @@ def test_quote_draft_and_cookie_reply(page, live_server):
     email = f"discussion-{uuid4().hex[:8]}@example.com"
     session = live_server.register(email)
     login_through_web(page, live_server, email)
+    page.locator('a[href="#forum"]:visible').first.click()
     page.locator('a[href="#public-board"]:visible').first.click()
     search(page, marker)
     page.locator(f'[data-discussion-open="{posts[0].id}"]').first.click()

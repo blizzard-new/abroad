@@ -20,6 +20,7 @@ def test_reply_thread_reaction_retry_persistence_and_author_delete(page, live_se
     root = requests.post(f"{live_server.base_url}/community/posts/{posts[0].id}/comments",
         headers=author, json={"body": "此為我提出的住宿申請問題。"}, timeout=10).json()
     login_through_web(page, live_server, email)
+    page.locator('a[href="#forum"]:visible').first.click()
     page.locator('a[href="#public-board"]:visible').first.click()
     search(page, marker)
     page.locator(f'[data-discussion-open="{posts[0].id}"]').first.click()
@@ -92,6 +93,7 @@ def test_moderator_approve_hide_report_review_and_suspend(page, live_server, mon
     pid = response.json()["id"]
     assert response.json()["status"] == "pending"
     login_through_web(page, live_server, admin_email)
+    page.locator('a[href="#forum"]:visible').first.click()
     page.locator('a[href="#public-board"]:visible').first.click()
     expect(page.locator("#discussion-moderation-open")).to_be_visible()
     page.locator("#discussion-moderation-open").click()

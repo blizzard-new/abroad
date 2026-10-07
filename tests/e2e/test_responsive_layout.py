@@ -3,7 +3,7 @@ fields are big enough that a phone does not zoom in when one is tapped."""
 import pytest
 
 PHONES_AND_TABLETS = [(320, 640), (375, 812), (414, 896), (768, 1024), (812, 375)]
-ROUTES = ["#home", "#partners", "#advisor", "#overview", "#application-center", "#favorites", "#calendar", "#budget", "#eligibility"]
+ROUTES = ["#home", "#forum", "#partners", "#advisor", "#overview", "#application-center", "#favorites", "#calendar", "#budget", "#eligibility"]
 
 AUDIT = """
 async (routes) => {
@@ -58,7 +58,7 @@ def test_every_field_is_at_least_16px_so_phones_do_not_zoom_in(browser, live_ser
 
 def test_the_compose_button_shows_its_words_on_a_tablet(page, live_server):
     page.set_viewport_size({"width": 768, "height": 1024})
-    page.goto(f"{live_server.base_url}/#home")
+    page.goto(f"{live_server.base_url}/#forum")
     page.wait_for_load_state("networkidle", timeout=60_000)
     button = page.locator("#global-community-compose")
     button.wait_for(state="visible")

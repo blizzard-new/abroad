@@ -28,7 +28,7 @@ def test_home_search_navigation_school_switcher_and_responsive(page, live_server
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     open_partners(page, live_server, {"view": "list"})
-    page.locator(".uniway-public-nav").get_by_role("link", name="首頁", exact=True).click()
+    page.locator(".uniway-public-nav").get_by_role("link", name="論壇", exact=True).click()
     home_url = page.url
     expect(page.locator("#travel-home")).to_have_count(0)
     expect(page.locator("#school-switcher-label")).to_have_text("長庚大學")
