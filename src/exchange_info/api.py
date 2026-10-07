@@ -392,6 +392,22 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 SCHOOL_IMAGE_MANIFEST = STATIC_DIR / "assets" / "school-images.json"
 AUTH_COOKIE_NAME = "exchange_guide_session"
 TAIPEI_TZ = timezone(timedelta(hours=8))  # Taiwan has no daylight saving
+# Fonts are named after a hash of their content, so a name never changes meaning.
+_CONTENT_HASHED_FILE = re.compile(r"-[0-9a-f]{64}(?:-\d+)?\.woff2?$")
+
+
+def _static_cache_control(path: str, versioned: bool) -> str:
+    """How long a browser may keep a file from /static without asking again.
+
+    Nothing here had any caching header, so every visit asked the server again about each of the ~200 files of a page
+    (fonts and images alone are about 9 MB). Scripts and styles that the page links without a ``?v=`` are still checked
+    each time, so a forgotten version number cannot leave visitors on an old script.
+    """
+    if _CONTENT_HASHED_FILE.search(path):
+        return "public, max-age=31536000, immutable"
+    if path.endswith((".js", ".css", ".html", ".json", ".webmanifest")) and not versioned:
+        return "no-cache"
+    return "public, max-age=86400"
 DASHBOARD_CACHE_SECONDS = 600.0
 PASSWORD_ITERATIONS = 390_000
 EMAIL_PATTERN = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
@@ -752,6 +768,8 @@ def create_app(
         for key, value in _browser_security_headers().items():
             response.headers.setdefault(key, value)
         path = request.url.path
+        if path.startswith("/static/") and response.status_code == 200:
+            response.headers.setdefault("Cache-Control", _static_cache_control(path, "v" in request.query_params))
         if (
             path in (
                 "/auth/session",
