@@ -174,7 +174,8 @@ body.global-home-mode[data-global-feed="all"] .journey-home-intro {
 .unified-shell :is(.partner-card, .favorite-card, .discovery-candidate) { background: var(--uw-surface); border-color: var(--uw-line); border-radius: 16px; box-shadow: var(--uw-shadow-soft); }
 .unified-shell .guide-intro { position: relative; min-height: 270px; padding: 26px 24px 36px; }
 .unified-shell .guide-intro h1 { font-family: var(--uw-font-ui); font-size: clamp(34px, 4vw, 50px); font-weight: 700; }
-.journey-guide-art { width: 360px; height: 240px; object-fit: contain; flex-shrink: 0; }
+/* The mascot stands where the traveller drawing used to be on the home page. */
+.guide-mascot { --uw-mascot-size: 190px; flex-shrink: 0; margin-right: 28px; }
 .unified-shell .guide-stage { background: var(--uw-surface); box-shadow: none; border-radius: 16px; border-color: var(--uw-line); border-top: 3px solid var(--stage-tint); }
 .unified-shell .guide-plan-link { background: var(--uw-cyan-soft); border: 1px solid var(--uw-line); }
 .unified-shell .guide-faq { border-radius: 16px; background: var(--uw-surface); }
@@ -236,7 +237,7 @@ html[data-theme="dark"] .unified-shell .partner-view-switch button[aria-pressed=
   .unified-shell .board-card-actions :is(button, a) { min-height: 44px; }
   .unified-shell .featured-board-card .text-action { min-height: 44px; }
   .unified-shell .guide-intro { padding: 16px 4px 24px; min-height: 230px; }
-  .journey-guide-art { width: 270px; height: 200px; }
+  .guide-mascot { --uw-mascot-size: 158px; margin-right: 10px; }
   .journey-search-layout { grid-template-columns: minmax(0, 1fr); gap: 14px; }
   .journey-filter-drawer { grid-row: 1; }
   .unified-shell .journey-filter-drawer .filter-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -265,7 +266,7 @@ html[data-theme="dark"] .unified-shell .partner-view-switch button[aria-pressed=
   .unified-shell .guide-intro > div:first-child { max-width: 76%; z-index: 1; }
   .unified-shell .guide-intro h1 { font-size: 30px; }
   .unified-shell .guide-intro p { max-width: 220px; }
-  .journey-guide-art { position: absolute; width: 155px; height: 135px; right: -8px; bottom: 0; }
+  .guide-mascot { position: absolute; --uw-mascot-size: 120px; right: 10px; bottom: 8px; margin: 0; }
   .unified-shell .school-detail-view .school-detail-photo { height: 210px; }
   .unified-shell .school-detail-view .school-detail-copy { padding: 22px 20px; }
   .unified-shell .school-detail-view .school-detail-copy h1 { max-width: calc(100% - 72px); font-size: 25px; }
@@ -277,11 +278,16 @@ html[data-theme="dark"] .unified-shell .partner-view-switch button[aria-pressed=
   .unified-shell .school-detail-view .detail-tabs button .lucide { display: none; }
   html[data-theme="dark"] .journey-home-copy { margin: 0 0 230px; border-radius: 0; width: 100%; background: #14283c; padding: 26px 24px; }
 }
+@media (max-width: 400px) {
+  .guide-mascot { --uw-mascot-size: 84px; right: 6px; bottom: 2px; }
+  .unified-shell .guide-intro { min-height: 232px; }
+  .unified-shell .guide-intro p { max-width: 186px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .journey-explore { transition: none; transform: none; }
 }
 @media (forced-colors: active) {
-  .journey-home-art, .journey-guide-art { display: none; }
+  .journey-home-art, .guide-mascot { display: none; }
   .journey-home-intro, .journey-home-copy { background: Canvas !important; color: CanvasText; }
   .journey-home-copy p { color: CanvasText; }
 }

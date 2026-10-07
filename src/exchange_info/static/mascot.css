@@ -2,6 +2,10 @@
  *
  * The picture is the body only; the two eyes are drawn here so they can blink, look around and wink on their own.
  * Eye size, tilt and place were measured from the supplied animation (see assets/mascot/README.md).
+ *
+ * It is a solid, not a flat sprite: a stack of slightly darker copies of the picture (made by mascot.js) forms its
+ * sides, the full picture is the front, and the whole thing turns in real 3D, so it shows thickness when it tilts,
+ * sways and spins, and a soft highlight slides over it as it turns.
  */
 
 .uw-mascot {
@@ -12,6 +16,11 @@
   width: var(--uw-mascot-size);
   aspect-ratio: 384 / 460;
   vertical-align: middle;
+  perspective: 700px;
+  /* How far the front stands from the back, and the gap between two layers of the sides. */
+  --uw-depth: calc(var(--uw-mascot-size) * 0.26);
+  --uw-layers: 16;
+  --uw-step: calc(var(--uw-depth) / var(--uw-layers));
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -36,21 +45,70 @@
   position: absolute;
   inset: 0;
   transform-origin: 50% 94%;
+  transform-style: preserve-3d;
   animation: uw-mascot-idle 6.4s ease-in-out infinite;
 }
 
+/* The pointer (or a finger) turns the mascot a little towards itself; mascot.js sets --uw-tilt-x/-y and --uw-nx/-ny. */
+.uw-mascot-tilt {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--uw-tilt-x, 0deg)) rotateY(var(--uw-tilt-y, 0deg));
+  transition: transform 160ms ease-out;
+}
+
+/* The sides: mascot.js fills this with 16 layers, each a darker copy of the picture, spaced through the depth. */
+.uw-mascot-slab {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.uw-mascot-slab > i {
+  position: absolute;
+  inset: 0;
+  background: url("assets/mascot/suitcase-side.webp?v=20261007-solid-1") center / 100% 100% no-repeat;
+  transform: translateZ(calc(var(--uw-step) * var(--k, 0) - var(--uw-depth) / 2));
+}
+
 .uw-mascot-picture {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 6px 8px rgba(25, 69, 117, 0.16));
+  transform: translateZ(calc(var(--uw-depth) / 2));
   user-select: none;
   -webkit-user-drag: none;
+}
+
+/* A soft light on the front that stays where the light is while the mascot turns, clipped to its outline. */
+.uw-mascot-sheen {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transform: translateZ(calc(var(--uw-depth) / 2 + 0.5px));
+  -webkit-mask: url("assets/mascot/suitcase.webp?v=20261007-solid-1") center / 100% 100% no-repeat;
+  mask: url("assets/mascot/suitcase.webp?v=20261007-solid-1") center / 100% 100% no-repeat;
+  background:
+    radial-gradient(
+      circle at calc(30% - var(--uw-nx, 0) * 22%) calc(20% - var(--uw-ny, 0) * 14%),
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0) 46%
+    ),
+    linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0) 55%,
+      rgba(20, 50, 110, calc(0.16 + var(--uw-nx, 0) * 0.06))
+    );
 }
 
 .uw-mascot-eyes {
   position: absolute;
   inset: 0;
+  /* `translate` is separate from `transform`, so the looking-around animation does not wipe out the distance forward. */
+  translate: 0 0 calc(var(--uw-depth) / 2 + 1px);
   animation: uw-mascot-look 9s ease-in-out infinite;
 }
 
@@ -72,7 +130,10 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: #2c2c2f;
+  background:
+    radial-gradient(ellipse 34% 22% at 64% 24%, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0)),
+    #2c2c2f;
+  box-shadow: inset -1px -2px 3px rgba(0, 0, 0, 0.35);
   content: "";
   animation: uw-mascot-blink 4.8s ease-in-out infinite;
 }
@@ -226,40 +287,36 @@ html[data-theme="dark"] .uw-mascot-shadow {
   background: rgba(70, 150, 205, 0.26);
 }
 
-html[data-theme="dark"] .uw-mascot-picture {
-  filter: drop-shadow(0 7px 10px rgba(0, 0, 0, 0.34));
-}
-
 /* ---- motion ---- */
 
 @keyframes uw-mascot-idle {
   0%,
   100% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
   }
   12% {
-    transform: perspective(700px) translateY(-1.2%) rotate(-1.2deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(-1.2%) rotate(-1.2deg) rotateY(-16deg) scale(1, 1);
   }
   26% {
-    transform: perspective(700px) translateY(0) rotate(1deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(0) rotate(1deg) rotateY(13deg) scale(1, 1);
   }
   44% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.03, 0.96);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1.03, 0.96);
   }
   50% {
-    transform: perspective(700px) translateY(-9%) rotate(0deg) rotateY(0deg) scale(0.98, 1.04);
+    transform: translateY(-9%) rotate(0deg) rotateY(0deg) scale(0.98, 1.04);
   }
   56% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.04, 0.95);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1.04, 0.95);
   }
   60% {
-    transform: perspective(700px) translateY(-2.5%) rotate(0deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(-2.5%) rotate(0deg) rotateY(0deg) scale(1, 1);
   }
   64% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
   }
   82% {
-    transform: perspective(700px) translateY(-0.8%) rotate(-0.9deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(-0.8%) rotate(-0.9deg) rotateY(-11deg) scale(1, 1);
   }
 }
 
@@ -281,44 +338,44 @@ html[data-theme="dark"] .uw-mascot-picture {
 @keyframes uw-mascot-busy {
   0%,
   100% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
   }
   10% {
-    transform: perspective(700px) translateY(-1.2%) rotate(-1.6deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(-1.2%) rotate(-1.6deg) rotateY(0deg) scale(1, 1);
   }
   20% {
-    transform: perspective(700px) translateY(0) rotate(1.4deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(0) rotate(1.4deg) rotateY(0deg) scale(1, 1);
   }
   25%,
   44% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.04, 0.95);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1.04, 0.95);
   }
   31%,
   50% {
-    transform: perspective(700px) translateY(-10%) rotate(0deg) rotateY(0deg) scale(0.98, 1.04);
+    transform: translateY(-10%) rotate(0deg) rotateY(0deg) scale(0.98, 1.04);
   }
   36%,
   55% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.04, 0.95);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1.04, 0.95);
   }
   40%,
   60% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
   }
   66% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.05, 0.94);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1.05, 0.94);
   }
   76% {
-    transform: perspective(700px) translateY(-13%) rotate(0deg) rotateY(180deg) scale(0.98, 1.04);
+    transform: translateY(-13%) rotate(0deg) rotateY(180deg) scale(0.98, 1.04);
   }
   88% {
-    transform: perspective(700px) translateY(-3%) rotate(0deg) rotateY(330deg) scale(1, 1);
+    transform: translateY(-3%) rotate(0deg) rotateY(330deg) scale(1, 1);
   }
   94% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(360deg) scale(1.04, 0.95);
+    transform: translateY(0) rotate(0deg) rotateY(360deg) scale(1.04, 0.95);
   }
   97% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(360deg) scale(1, 1);
+    transform: translateY(0) rotate(0deg) rotateY(360deg) scale(1, 1);
   }
 }
 
@@ -350,54 +407,54 @@ html[data-theme="dark"] .uw-mascot-picture {
 
 @keyframes uw-mascot-hop {
   0% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
   }
   18% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.05, 0.93);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1.05, 0.93);
   }
   45% {
-    transform: perspective(700px) translateY(-14%) rotate(-2deg) rotateY(0deg) scale(0.97, 1.05);
+    transform: translateY(-14%) rotate(-2deg) rotateY(0deg) scale(0.97, 1.05);
   }
   72% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.05, 0.94);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1.05, 0.94);
   }
   86% {
-    transform: perspective(700px) translateY(-3%) rotate(0deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(-3%) rotate(0deg) rotateY(0deg) scale(1, 1);
   }
   100% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
   }
 }
 
 @keyframes uw-mascot-spin {
   0% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
   }
   16% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.05, 0.94);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1.05, 0.94);
   }
   46% {
-    transform: perspective(700px) translateY(-13%) rotate(0deg) rotateY(190deg) scale(0.98, 1.04);
+    transform: translateY(-13%) rotate(0deg) rotateY(190deg) scale(0.98, 1.04);
   }
   74% {
-    transform: perspective(700px) translateY(-4%) rotate(0deg) rotateY(335deg) scale(1, 1);
+    transform: translateY(-4%) rotate(0deg) rotateY(335deg) scale(1, 1);
   }
   90% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(360deg) scale(1.04, 0.95);
+    transform: translateY(0) rotate(0deg) rotateY(360deg) scale(1.04, 0.95);
   }
   100% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(360deg) scale(1, 1);
+    transform: translateY(0) rotate(0deg) rotateY(360deg) scale(1, 1);
   }
 }
 
 @keyframes uw-mascot-wink-tilt {
   0%,
   100% {
-    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
   }
   30%,
   70% {
-    transform: perspective(700px) translateY(-2%) rotate(-5deg) rotateY(0deg) scale(1, 1);
+    transform: translateY(-2%) rotate(-5deg) rotateY(0deg) scale(1, 1);
   }
 }
 
@@ -498,6 +555,15 @@ html[data-theme="dark"] .uw-mascot-picture {
 /* No movement for people who ask for none. The page's own rule switches every animation off for them, so the loading
    screen is simply shown (still) while it waits; the script takes it away, or gives up after a minute. */
 @media (prefers-reduced-motion: reduce) {
+  .uw-mascot-body {
+    transform: rotateY(-18deg) rotateX(3deg);
+  }
+
+  .uw-mascot-tilt {
+    transform: none;
+    transition: none;
+  }
+
   .uw-mascot *,
   .uw-mascot *::before,
   .uw-mascot *::after,

@@ -16,7 +16,8 @@ def test_the_loading_screen_is_the_first_thing_in_the_body_and_is_announced_poli
     assert re.match(r'<body[^>]*>\s*<div id="boot-splash" class="boot-splash" role="status" aria-live="polite">', BODY)
     screen = BODY[:BODY.index("</div>")]
     assert "正在載入中" in screen
-    assert 'class="uw-mascot" data-mood="busy" data-play aria-hidden="true"' in screen
+    assert 'class="uw-mascot" data-mood="busy" data-play data-tilt aria-hidden="true"' in screen
+    assert 'class="uw-mascot-slab"' in screen and 'class="uw-mascot-sheen"' in screen
     assert screen.count('class="uw-mascot-eye"') == 2
     assert 'src="/static/assets/mascot/suitcase.webp?v=' in screen and 'fetchpriority="high"' in screen
 
@@ -82,7 +83,7 @@ def test_tapping_the_mascot_cycles_hop_spin_wink() -> None:
 def test_the_script_and_style_versions_are_in_the_page() -> None:
     assert re.search(r'/static/mascot\.css\?v=\S+"', HTML) and re.search(r'/static/mascot\.js\?v=\S+"', HTML)
     versions = set(re.findall(r"/static/(?:mascot\.css|mascot\.js|advisor-mascot\.css|assets/mascot/suitcase\.webp)\?v=([\w-]+)", HTML))
-    assert versions == {"20261007-ready-1"}, "bumped together so nobody keeps an old copy"
+    assert versions == {"20261007-solid-1"}, "bumped together so nobody keeps an old copy"
 
 
 def test_it_cannot_show_before_the_saved_theme_is_applied() -> None:
@@ -93,3 +94,25 @@ def test_it_cannot_show_before_the_saved_theme_is_applied() -> None:
     assert ".splash-on .boot-splash.is-leaving" in CSS
     reduced = CSS[CSS.index("@media (prefers-reduced-motion: reduce)"):]
     assert ".splash-on .boot-splash {" in reduced and "opacity: 1;" in reduced, "with no motion it is simply shown"
+
+
+def test_the_mascot_is_a_solid_with_sides_a_front_and_light() -> None:
+    css_layers = int(re.search(r"--uw-layers: (\d+);", CSS).group(1))
+    assert css_layers == int(re.search(r"const LAYERS = (\d+);", MASCOT_JS).group(1)), "the script builds as many layers as the stylesheet spaces"
+    assert re.search(r"\.uw-mascot \{[^}]*perspective: 700px;", CSS), "the mascot has its own perspective"
+    assert "perspective(" not in CSS, "no keyframe carries a second perspective"
+    assert "transform-style: preserve-3d;" in CSS
+    assert re.search(r"\.uw-mascot-picture \{[^}]*translateZ\(calc\(var\(--uw-depth\) / 2\)\)", CSS, re.S), "the front stands at the front"
+    # An animation replaces `transform` wholesale, so the eyes' distance forward is its own property.
+    assert re.search(r"\.uw-mascot-eyes \{[^}]*translate: 0 0 calc\(var\(--uw-depth\) / 2 \+ 1px\);", CSS, re.S)
+    assert "mask:" in CSS and "-webkit-mask:" in CSS, "the highlight is clipped to the mascot's outline"
+    assert (STATIC / "assets/mascot/suitcase-side.webp").stat().st_size < 30 * 1024
+    for markup in re.findall(r'<span class="uw-mascot[ "][^>]*>.*?</span>\s*</span>\s*</span>\s*</span>', HTML, re.S):
+        assert 'class="uw-mascot-slab"' in markup and 'class="uw-mascot-sheen"' in markup and "data-tilt" in markup
+
+
+def test_the_home_page_header_shows_the_mascot_where_the_traveller_drawing_was() -> None:
+    assert "journey-guide-art" not in HTML and "journey/explorer.webp" not in HTML
+    header = HTML[HTML.index('<header class="guide-intro">'):HTML.index("</header>", HTML.index('<header class="guide-intro">'))]
+    assert 'class="uw-mascot guide-mascot" data-play data-tilt' in header
+    assert "journey-guide-art" not in (STATIC / "journey.css").read_text(encoding="utf-8")

@@ -55,6 +55,54 @@
   }
   window.UniWaySplash = { done };
 
+  // ---- the mascot as a solid: the layers that make its sides, and turning towards the pointer ------------------------
+  const LAYERS = 16; // keep in step with --uw-layers in mascot.css
+  const YAW_DEG = 20;
+  const PITCH_DEG = 12;
+  let pointer = null;
+  let tiltFrame = 0;
+
+  function buildSolids() {
+    document.querySelectorAll(".uw-mascot-slab:not([data-built])").forEach((slab) => {
+      slab.dataset.built = "1";
+      for (let k = 0; k < LAYERS; k += 1) {
+        const layer = document.createElement("i");
+        layer.style.setProperty("--k", String(k));
+        slab.append(layer);
+      }
+    });
+  }
+
+  const clamp = (value) => Math.max(-1, Math.min(1, value));
+
+  function tilt() {
+    tiltFrame = 0;
+    document.querySelectorAll(".uw-mascot[data-tilt]").forEach((mascot) => {
+      const box = mascot.getBoundingClientRect();
+      if (!box.width || box.bottom < 0 || box.top > window.innerHeight) return;
+      const nx = pointer ? clamp((pointer.x - (box.left + box.width / 2)) / (window.innerWidth / 2)) : 0;
+      const ny = pointer ? clamp((pointer.y - (box.top + box.height / 2)) / (window.innerHeight / 2)) : 0;
+      mascot.style.setProperty("--uw-nx", nx.toFixed(3));
+      mascot.style.setProperty("--uw-ny", ny.toFixed(3));
+      mascot.style.setProperty("--uw-tilt-y", `${(nx * YAW_DEG).toFixed(1)}deg`);
+      mascot.style.setProperty("--uw-tilt-x", `${(-ny * PITCH_DEG).toFixed(1)}deg`);
+    });
+  }
+
+  const scheduleTilt = () => {
+    if (!tiltFrame) tiltFrame = window.requestAnimationFrame(tilt);
+  };
+
+  buildSolids();
+  document.addEventListener("DOMContentLoaded", buildSolids);
+  window.addEventListener("pointermove", (event) => {
+    if (reduced()) return;
+    pointer = { x: event.clientX, y: event.clientY };
+    scheduleTilt();
+  }, { passive: true });
+  ["pointerup", "pointercancel"].forEach((type) => window.addEventListener(type, () => { pointer = null; scheduleTilt(); }));
+  document.documentElement.addEventListener("pointerleave", () => { pointer = null; scheduleTilt(); });
+
   // ---- tapping the mascot: hop, then a turn, then a wink -------------------------------------------------------
   const MOVES = ["hop", "spin", "wink"];
 
