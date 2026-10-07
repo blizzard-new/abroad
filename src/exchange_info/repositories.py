@@ -4,6 +4,8 @@ import hashlib
 import json
 import os
 import secrets
+import threading
+import time
 from collections.abc import Mapping
 from contextlib import ExitStack, contextmanager
 from datetime import datetime, timedelta
@@ -1406,6 +1408,7 @@ class SupabaseAccountRepository:
         *,
         request_session: _RequestSession | None = None,
         timeout_seconds: float = 10.0,
+        read_cache_seconds: float = 0.0,
     ) -> None:
         normalized_url = url.strip().rstrip("/")
         normalized_key = secret_key.strip()
@@ -1417,6 +1420,13 @@ class SupabaseAccountRepository:
         self._secret_key = normalized_key
         self._session = request_session or requests.Session()
         self._timeout_seconds = timeout_seconds
+        # A signed-in request looks up its session, its account and the account's workspaces: three round trips to the
+        # database (Singapore to Sydney) before any work starts, and a page fires many requests at once. The lookups are
+        # kept for a few seconds and dropped at once when this repository writes anything, so what changes through this
+        # process is never served stale; only a change made behind its back can wait out the time. 0 turns it off.
+        self._read_cache_seconds = max(0.0, float(read_cache_seconds))
+        self._read_cache: dict[tuple[str, str], tuple[float, Any]] = {}
+        self._read_cache_lock = threading.Lock()
 
     @property
     def _headers(self) -> dict[str, str]:
@@ -1438,6 +1448,9 @@ class SupabaseAccountRepository:
         headers = self._headers
         if prefer:
             headers["Prefer"] = prefer
+        writes = method.upper() != "GET"
+        if writes:
+            self._forget_reads()
         try:
             response = self._session.request(
                 method,
@@ -1455,6 +1468,9 @@ class SupabaseAccountRepository:
                 f"Supabase 帳號資料存取失敗{suffix}。",
                 status_code=status,
             ) from error
+        finally:
+            if writes:
+                self._forget_reads()
         if not getattr(response, "content", b""):
             return []
         payload = response.json()
@@ -1462,7 +1478,29 @@ class SupabaseAccountRepository:
             raise AccountRepositoryError("Supabase 回傳了非預期的帳號資料格式。")
         return payload
 
+    def _forget_reads(self) -> None:
+        if self._read_cache_seconds:
+            with self._read_cache_lock:
+                self._read_cache.clear()
+
+    def _remembered(self, kind: str, key: str, load):
+        """``load()`` unless the same lookup was answered a moment ago; callers get their own copy."""
+        if not self._read_cache_seconds:
+            return load()
+        now = time.monotonic()
+        with self._read_cache_lock:
+            hit = self._read_cache.get((kind, key))
+        if hit is not None and now - hit[0] < self._read_cache_seconds:
+            return hit[1].model_copy(deep=True) if hit[1] is not None else None
+        value = load()
+        with self._read_cache_lock:
+            if len(self._read_cache) >= 512:
+                self._read_cache.clear()
+            self._read_cache[(kind, key)] = (now, value)
+        return value.model_copy(deep=True) if value is not None else None
+
     def _rpc(self, function_name: str, payload: Mapping[str, Any]) -> dict[str, Any]:
+        self._forget_reads()
         try:
             response = self._session.request(
                 "POST",
@@ -1479,6 +1517,8 @@ class SupabaseAccountRepository:
                 f"Supabase 原子帳號操作失敗{suffix}。",
                 status_code=status,
             ) from error
+        finally:
+            self._forget_reads()
         try:
             result = response.json()
         except (TypeError, ValueError) as error:
@@ -1539,16 +1579,19 @@ class SupabaseAccountRepository:
         return [self._hydrate_account(row) for row in rows]
 
     def find_account_by_id(self, account_id: str) -> UserAccount | None:
-        rows = self._request(
-            "GET",
-            self._accounts_table,
-            params={
-                "select": "id,email,profile,community_suspended_until,created_at,updated_at",
-                "id": f"eq.{account_id}",
-                "limit": "1",
-            },
-        )
-        return self._hydrate_account(rows[0]) if rows else None
+        def load() -> UserAccount | None:
+            rows = self._request(
+                "GET",
+                self._accounts_table,
+                params={
+                    "select": "id,email,profile,community_suspended_until,created_at,updated_at",
+                    "id": f"eq.{account_id}",
+                    "limit": "1",
+                },
+            )
+            return self._hydrate_account(rows[0]) if rows else None
+
+        return self._remembered("account", account_id, load)
 
     def find_account_by_email(self, email: str) -> UserAccount | None:
         rows = self._request(
@@ -2063,16 +2106,19 @@ class SupabaseAccountRepository:
         )
 
     def find_session_by_token_hash(self, token_hash: str) -> AccountSessionRecord | None:
-        rows = self._request(
-            "GET",
-            self._sessions_table,
-            params={
-                "select": "id,account_id,token_hash,expires_at,created_at",
-                "token_hash": f"eq.{token_hash}",
-                "limit": "1",
-            },
-        )
-        return AccountSessionRecord.model_validate(rows[0]) if rows else None
+        def load() -> AccountSessionRecord | None:
+            rows = self._request(
+                "GET",
+                self._sessions_table,
+                params={
+                    "select": "id,account_id,token_hash,expires_at,created_at",
+                    "token_hash": f"eq.{token_hash}",
+                    "limit": "1",
+                },
+            )
+            return AccountSessionRecord.model_validate(rows[0]) if rows else None
+
+        return self._remembered("session", token_hash, load)
 
     def save_session(self, session: AccountSessionRecord) -> AccountSessionRecord:
         self._request(
@@ -2323,7 +2369,11 @@ def create_account_repository(
     if mode == "supabase" or (url and secret_key):
         if not url or not secret_key:
             raise AccountRepositoryError("Supabase repository 尚未完成伺服器端設定。")
-        return SupabaseAccountRepository(url, secret_key)
+        return SupabaseAccountRepository(
+            url,
+            secret_key,
+            read_cache_seconds=float(environment.get("EXCHANGE_ACCOUNT_READ_CACHE_SECONDS", "20") or 0),
+        )
     if runtime in {"production", "prod"}:
         raise AccountRepositoryError(
             "正式環境禁止使用 JSONL 帳號資料；請設定 Supabase repository。"

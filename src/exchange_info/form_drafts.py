@@ -11,10 +11,10 @@ from collections.abc import Mapping
 from pathlib import Path
 from typing import Any, Protocol
 
-import requests
 from cryptography.exceptions import InvalidTag
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
+from . import supabase_http
 from .supabase_keys import supabase_key_headers
 from .models import (
     ApplicationFormDraft,
@@ -169,7 +169,7 @@ class SupabaseFormDraftRepository:
         }
         if prefer:
             headers["Prefer"] = prefer
-        response = requests.request(
+        response = supabase_http.request(
             method,
             f"{self.url}/rest/v1/{FORM_DRAFT_TABLE}",
             params=params,

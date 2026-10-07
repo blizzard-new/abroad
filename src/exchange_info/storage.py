@@ -151,39 +151,48 @@ def merge_application_workflows(
     competing with it during rule selection.
     """
 
-    merged = list(baseline)
+    # Every row is indexed once by the three things a later override can match it on, so each override removes what it
+    # replaces by lookup instead of re-deriving the keys of every row (that took seconds for the bundled catalogue).
+    rows: dict[int, UniversityApplicationWorkflow] = {}
+    by_key: dict[tuple, set[int]] = {}
+    by_scope: dict[tuple, set[int]] = {}
+    by_storage: dict[str, set[int]] = {}
+    indexed: dict[int, tuple[tuple, tuple, str]] = {}
+    next_id = 0
+
+    def add(row: UniversityApplicationWorkflow) -> None:
+        nonlocal next_id
+        key = _application_workflow_key(row)
+        scope = (key[0], key[1], key[3], key[4])
+        storage = workflow_storage_key(row)
+        rows[next_id] = row
+        indexed[next_id] = (key, scope, storage)
+        by_key.setdefault(key, set()).add(next_id)
+        by_scope.setdefault(scope, set()).add(next_id)
+        by_storage.setdefault(storage, set()).add(next_id)
+        next_id += 1
+
+    def remove(row_id: int) -> None:
+        key, scope, storage = indexed.pop(row_id)
+        del rows[row_id]
+        by_key[key].discard(row_id)
+        by_scope[scope].discard(row_id)
+        by_storage[storage].discard(row_id)
+
+    for row in baseline:
+        add(row)
     for override in overrides:
         override_key = _application_workflow_key(override)
         governance_key = override.governance_key
-        override_scope = (
-            override_key[0],
-            override_key[1],
-            override_key[3],
-            override_key[4],
-        )
-        merged = [
-            row
-            for row in merged
-            if (
-                _application_workflow_key(row) != override_key
-                and not (
-                    governance_key
-                    and workflow_storage_key(row) == governance_key
-                )
-                and (
-                    bool(override_key[2])
-                    or (
-                        _application_workflow_key(row)[0],
-                        _application_workflow_key(row)[1],
-                        _application_workflow_key(row)[3],
-                        _application_workflow_key(row)[4],
-                    )
-                    != override_scope
-                )
-            )
-        ]
-        merged.append(override)
-    return merged
+        replaced = set(by_key.get(override_key, ()))
+        if governance_key:
+            replaced |= by_storage.get(governance_key, set())
+        if not override_key[2]:
+            replaced |= by_scope.get((override_key[0], override_key[1], override_key[3], override_key[4]), set())
+        for row_id in replaced:
+            remove(row_id)
+        add(override)
+    return list(rows.values())
 
 
 def _with_explicit_destination_gaps(profile: DestinationProfile) -> DestinationProfile:
@@ -492,36 +501,96 @@ def replace_school_experiences(
     return ordered
 
 
+# Parsing and structuring the catalogue (about 1,400 workflows) and merging it took seconds on every request, so the result
+# is kept and reused for as long as the files it came from are unchanged. The signature is read before the files are, so a
+# file replaced mid-read is simply read again next time. Callers get their own list; the workflows in it are shared and are
+# only ever copied (model_copy), never edited in place.
+_WORKFLOW_CACHE_LIMIT = 8
+_workflow_cache_lock = threading.Lock()
+_workflow_cache: dict[tuple, list[UniversityApplicationWorkflow]] = {}
+
+
+def _file_signature(path: Path) -> tuple[int, int] | None:
+    try:
+        stat = path.stat()
+    except OSError:
+        return None
+    return (stat.st_mtime_ns, stat.st_size)
+
+
+def file_signature(path: Path) -> tuple[int, int] | None:
+    """Modification time and size, or None when the file is missing; changes whenever the file is rewritten."""
+
+    return _file_signature(path)
+
+
+def _cached_workflows(key: tuple, build) -> list[UniversityApplicationWorkflow]:
+    with _workflow_cache_lock:
+        cached = _workflow_cache.get(key)
+    if cached is None:
+        cached = build()
+        with _workflow_cache_lock:
+            while len(_workflow_cache) >= _WORKFLOW_CACHE_LIMIT:
+                _workflow_cache.pop(next(iter(_workflow_cache)))
+            _workflow_cache[key] = cached
+    return list(cached)
+
+
+def workflow_catalog_token(data_dir: Path = DEFAULT_DATA_DIR) -> tuple:
+    """Changes whenever the files the catalogue for ``data_dir`` is built from change."""
+
+    path = data_paths(data_dir)["application_workflows"]
+    return (str(path), _file_signature(path), _include_bundled_defaults(data_dir), _bundled_workflow_signature())
+
+
+def cached_workflow_catalog(key: tuple, build) -> list[UniversityApplicationWorkflow]:
+    """``build()`` once per ``key``; each caller gets its own list of the same (never edited in place) workflows."""
+
+    return _cached_workflows(key, build)
+
+
+def _bundled_workflow_paths() -> tuple[Path, ...]:
+    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR))
+
+
+def _bundled_workflow_signature() -> tuple:
+    return tuple((str(path), _file_signature(path)) for path in _bundled_workflow_paths())
+
+
 def load_application_workflows(
     data_dir: Path = DEFAULT_DATA_DIR,
 ) -> list[UniversityApplicationWorkflow]:
-    local = [
-        structure_application_workflow(row)
-        for row in read_jsonl(
-            data_paths(data_dir)["application_workflows"],
-            UniversityApplicationWorkflow,
+    path = data_paths(data_dir)["application_workflows"]
+    include_bundled = _include_bundled_defaults(data_dir)
+    key = ("local", str(path), _file_signature(path), include_bundled, _bundled_workflow_signature() if include_bundled else None)
+
+    def build() -> list[UniversityApplicationWorkflow]:
+        local = [
+            structure_application_workflow(row)
+            for row in read_jsonl(path, UniversityApplicationWorkflow)
+        ]
+        if not include_bundled:
+            return local
+        return merge_application_workflows(
+            load_bundled_application_workflows(),
+            local,
         )
-    ]
-    if not _include_bundled_defaults(data_dir):
-        return local
-    return merge_application_workflows(
-        load_bundled_application_workflows(),
-        local,
-    )
+
+    return _cached_workflows(key, build)
 
 
 def load_bundled_application_workflows() -> list[UniversityApplicationWorkflow]:
     """Load the tracked official workflow baseline without runtime data-dir rules."""
 
-    bundled = [
-        row
-        for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR)
-        for row in read_jsonl(
-            directory / "application_workflows.jsonl",
-            UniversityApplicationWorkflow,
-        )
-    ]
-    return [structure_application_workflow(row) for row in bundled]
+    def build() -> list[UniversityApplicationWorkflow]:
+        bundled = [
+            row
+            for path in _bundled_workflow_paths()
+            for row in read_jsonl(path, UniversityApplicationWorkflow)
+        ]
+        return [structure_application_workflow(row) for row in bundled]
+
+    return _cached_workflows(("bundled", _bundled_workflow_signature()), build)
 
 
 def save_application_workflows(

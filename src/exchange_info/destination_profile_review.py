@@ -10,6 +10,7 @@ from urllib.parse import urlencode
 
 import requests
 
+from . import supabase_http
 from .supabase_keys import supabase_key_headers
 from .models import (
     DestinationProfile,
@@ -287,7 +288,7 @@ class SupabaseDestinationProfileReviewStore:
         url: str,
         service_role_key: str,
         *,
-        request_func=requests.request,
+        request_func=supabase_http.request,
     ) -> None:
         if not url.strip().casefold().startswith("https://"):
             raise ValueError("Supabase URL 必須使用 HTTPS。")

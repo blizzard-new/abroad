@@ -10,6 +10,7 @@ from typing import Callable, Mapping
 
 import requests
 
+from . import supabase_http
 from .supabase_keys import supabase_key_headers
 from .analytics import AnalyticsEvent, ApiMetricRow
 
@@ -145,7 +146,7 @@ class SupabaseAnalyticsRepository:
     API_HOURLY = "exchange_analytics_api_hourly"
 
     def __init__(self, url: str, service_role_key: str, *,
-                 request_func: Callable[..., requests.Response] = requests.request) -> None:
+                 request_func: Callable[..., requests.Response] = supabase_http.request) -> None:
         if not url.strip().casefold().startswith("https://"):
             raise AnalyticsRepositoryError("Supabase URL 必須使用 HTTPS。")
         self.url = url.rstrip("/")

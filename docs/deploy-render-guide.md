@@ -31,7 +31,7 @@ GitHub、Render Free、Supabase Free、Google 登入、`onrender.com` 網址，�
 
 | 免費的限制 | 影響 | 免費的解法 |
 | --- | --- | --- |
-| Render Free 閒置 15 分鐘會休眠 | 下一位訪客要等約 1 分鐘 | 測試期告訴使用者「第一次開比較慢」 |
+| Render Free 閒置 15 分鐘會休眠 | 下一位訪客要等約 1 分鐘，醒來後程式還要花一陣子做第一次的準備（`EXCHANGE_WARM_CACHES` 會在背景先做完；在免費的 0.1 顆 CPU 上約要幾分鐘） | 測試期告訴使用者「第一次開比較慢」；想少睡可以用免費的監測服務（例如 UptimeRobot）每 10 分鐘打一次 `/health`。Render 免費方案每月有 750 小時，一個服務整月不休息約 744 小時，剛好在額度內，但請先看過 Render 當時的條款再決定 |
 | Supabase Free 閒置 1 週會暫停 | 整個網站壞掉，要到後台按 Restore | 每週至少有人開一次；每週看一眼後台 |
 | Supabase Free **沒有備份** | 資料庫出事就沒了 | 每週自己備份一次：`npx supabase@latest db dump -f backup.sql` |
 | Supabase Free 資料庫只有 500 MB、流量 5 GB／月 | 使用統計是最可能先塞滿的表（實測一筆事件約 0.6 KB，資料庫裡含索引會更大） | 在 Render 的 Environment 加 `EXCHANGE_ANALYTICS_RETENTION_DAYS` = `30`（程式的最小值就是 30，預設是 400） |

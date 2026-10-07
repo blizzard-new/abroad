@@ -23,6 +23,7 @@ from uuid import uuid4
 
 import hashlib
 import json
+import logging
 import mimetypes
 import os
 import re
@@ -339,6 +340,8 @@ from .storage import (
     append_private_conversation,
     append_private_message,
     append_public_chat_message,
+    data_paths,
+    file_signature,
     load_exchange_info,
     load_application_workflows,
     load_bundled_application_workflows,
@@ -388,6 +391,7 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 SCHOOL_IMAGE_MANIFEST = STATIC_DIR / "assets" / "school-images.json"
 AUTH_COOKIE_NAME = "exchange_guide_session"
 TAIPEI_TZ = timezone(timedelta(hours=8))  # Taiwan has no daylight saving
+DASHBOARD_CACHE_SECONDS = 600.0
 PASSWORD_ITERATIONS = 390_000
 EMAIL_PATTERN = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
 PUBLIC_COMMUNITY_BOARD = "公共留學板"
@@ -706,8 +710,12 @@ def create_app(
             if actual != expected:
                 raise RuntimeError(f"正式環境禁止使用本機持久層：{name}={actual}（需要 {expected}）")
 
+    warm_up: list = []  # filled once the catalogue loaders below exist
+
     @asynccontextmanager
     async def lifespan(_app: FastAPI):
+        if warm_up and os.environ.get("EXCHANGE_WARM_CACHES", "").strip().lower() in {"1", "on", "true", "yes"}:
+            threading.Thread(target=warm_up[0], name="warm-caches", daemon=True).start()
         yield
         analytics_service.flush_api_metrics()  # keep the last minute of request counts on a clean shutdown
 
@@ -1081,6 +1089,9 @@ def create_app(
             return ntpu_exchange_info(partners_for_university(university))
         return load_exchange_info(resolved_data_dir) or ExchangeInfo(school_name=CGU.school_name)
 
+    dashboard_cache: dict[str, tuple[float, tuple, StudentDashboard]] = {}
+    dashboard_cache_lock = threading.Lock()
+
     def dashboard_for_university(school: str | UniversityProfile | None) -> StudentDashboard:
         university = university_for(
             school.school_name if isinstance(school, UniversityProfile) else school
@@ -1089,11 +1100,58 @@ def create_app(
             return build_ntpu_student_dashboard(
                 partner_universities=partners_for_university(university)
             )
-        return build_student_dashboard(
+        # Building this one downloads the partner sheet and parses a dozen official PDFs, so it took 10 to 20 seconds on
+        # the free host for every visitor. It is kept for a few minutes, or until the data files behind it are rewritten.
+        paths = data_paths(resolved_data_dir)
+        signature = (
+            file_signature(paths["processed_pages"]),
+            file_signature(paths["exchange_info"]),
+            id(build_student_dashboard),
+        )
+        with dashboard_cache_lock:
+            cached = dashboard_cache.get(university.id)
+        if cached and cached[1] == signature and time.monotonic() - cached[0] < DASHBOARD_CACHE_SECONDS:
+            return cached[2].model_copy(deep=True)
+        dashboard = build_student_dashboard(
             load_processed_pages(resolved_data_dir),
             load_exchange_info(resolved_data_dir),
             raw_files_dir=resolved_data_dir / "raw_files",
         )
+        with dashboard_cache_lock:
+            dashboard_cache[university.id] = (time.monotonic(), signature, dashboard)
+        return dashboard.model_copy(deep=True)
+
+    def warm_catalogue_caches() -> None:
+        """Do the slow first-time work now, so the first visitor after a restart does not wait for it.
+
+        On the free host that work took close to a minute of CPU (checking thousands of bundled translations, merging the
+        workflow catalogue, building each school's dashboard). It only has to happen once per process.
+        """
+        from . import public_translation
+
+        time.sleep(15)  # let the server start and pass its health check first
+        steps = [
+            public_translation._reference_translations,
+            public_translation._bundled_machine_translations,
+            public_translation._display_patterns,
+            public_translation._identifier_pattern,
+            load_bundled_application_workflows,
+        ]
+        for university in SUPPORTED_UNIVERSITIES:
+            steps += [
+                partial(partners_for_university, university),
+                partial(workflows_for_university, university),
+                partial(dashboard_for_university, university),
+            ]
+        started = time.monotonic()
+        for step in steps:
+            try:
+                step()
+            except Exception:  # a warm-up that fails only means the first visitor pays for that step
+                logging.getLogger(__name__).exception("cache warm-up step failed")
+        logging.getLogger(__name__).info("catalogue caches warmed in %.1f s", time.monotonic() - started)
+
+    warm_up.append(warm_catalogue_caches)
 
     def partner_context_for_school(
         school: str,

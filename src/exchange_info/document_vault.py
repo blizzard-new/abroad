@@ -17,6 +17,7 @@ import requests
 from cryptography.exceptions import InvalidTag
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
+from . import supabase_http
 from .supabase_keys import supabase_key_headers
 from .models import (
     VaultAuditAction,
@@ -327,7 +328,7 @@ class SupabaseDocumentVaultRepository:
         secret_key: str,
         *,
         bucket: str = DEFAULT_VAULT_BUCKET,
-        request_func=requests.request,
+        request_func=supabase_http.request,
     ) -> None:
         if not url.strip().casefold().startswith("https://"):
             raise VaultConfigurationError("Supabase URL 必須使用 HTTPS。")

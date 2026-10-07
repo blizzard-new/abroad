@@ -3,11 +3,14 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import threading
+import time
 from pathlib import Path
 from typing import Protocol
 
 import requests
 
+from . import supabase_http
 from .supabase_keys import supabase_key_headers
 from .models import (
     ApplicationApplicabilityStatus,
@@ -45,12 +48,14 @@ from .review_source_metadata_candidates import (
     source_metadata_research_candidate_for_url,
 )
 from .storage import (
+    cached_workflow_catalog,
     load_bundled_application_workflows,
     load_application_workflow_revisions,
     load_application_workflows,
     merge_application_workflows,
     replace_application_workflow,
     save_application_workflow_revisions,
+    workflow_catalog_token,
 )
 from .workflow_structuring import structure_application_workflow
 from .workflow_identity import workflow_storage_key
@@ -166,14 +171,20 @@ class LocalContentGovernanceStore:
         self.data_dir = Path(data_dir)
         self.include_bundled_baseline = include_bundled_baseline
 
+    def catalog_token(self) -> tuple:
+        return workflow_catalog_token(self.data_dir)
+
     def load_published_workflows(self) -> list[UniversityApplicationWorkflow]:
-        local = load_application_workflows(self.data_dir)
-        if not self.include_bundled_baseline:
-            return local
-        return merge_application_workflows(
-            load_bundled_application_workflows(),
-            local,
-        )
+        def build() -> list[UniversityApplicationWorkflow]:
+            local = load_application_workflows(self.data_dir)
+            if not self.include_bundled_baseline:
+                return local
+            return merge_application_workflows(
+                load_bundled_application_workflows(),
+                local,
+            )
+
+        return cached_workflow_catalog(("published", self.catalog_token(), self.include_bundled_baseline), build)
 
     def list_revisions(self) -> list[ApplicationWorkflowRevision]:
         return load_application_workflow_revisions(self.data_dir)
@@ -211,7 +222,7 @@ class SupabaseContentGovernanceStore:
         service_role_key: str,
         *,
         fallback: LocalContentGovernanceStore | None = None,
-        request_func=requests.request,
+        request_func=supabase_http.request,
     ) -> None:
         if not url.strip().casefold().startswith("https://"):
             raise ValueError("Supabase URL 必須使用 HTTPS。")
@@ -219,6 +230,8 @@ class SupabaseContentGovernanceStore:
         self.service_role_key = service_role_key
         self.fallback = fallback
         self.request_func = request_func
+        self._published_lock = threading.Lock()
+        self._published: tuple[float, tuple, list[UniversityApplicationWorkflow]] | None = None
 
     @property
     def headers(self) -> dict[str, str]:
@@ -227,7 +240,26 @@ class SupabaseContentGovernanceStore:
             "Content-Type": "application/json",
         }
 
+    # Every catalogue request asked Supabase (Sydney) for the published workflows and merged them again. What is published
+    # only changes through this store, so the merged result is kept for a short while and dropped as soon as this store
+    # saves or publishes anything (or the local files behind the fallback change).
+    PUBLISHED_CACHE_SECONDS = 20.0
+
+    def _forget_published(self) -> None:
+        with self._published_lock:
+            self._published = None
+
     def load_published_workflows(self) -> list[UniversityApplicationWorkflow]:
+        token = self.fallback.catalog_token() if hasattr(self.fallback, "catalog_token") else None
+        with self._published_lock:
+            cached = self._published
+        if (
+            cached is not None
+            and token is not None
+            and cached[1] == token
+            and time.monotonic() - cached[0] < self.PUBLISHED_CACHE_SECONDS
+        ):
+            return list(cached[2])
         response = self._request(
             "GET",
             "/rest/v1/application_workflows",
@@ -247,7 +279,11 @@ class SupabaseContentGovernanceStore:
             for row in self.fallback.load_published_workflows()
         }
         merged.update({workflow_storage_key(row): row for row in remote})
-        return list(merged.values())
+        rows = list(merged.values())
+        if token is not None:
+            with self._published_lock:
+                self._published = (time.monotonic(), token, rows)
+        return list(rows)
 
     def list_revisions(self) -> list[ApplicationWorkflowRevision]:
         response = self._request(
@@ -262,6 +298,7 @@ class SupabaseContentGovernanceStore:
     ) -> ApplicationWorkflowRevision:
         workflow = revision.workflow
         row = self._revision_row(revision)
+        self._forget_published()
         self._request(
             "POST",
             "/rest/v1/rpc/exchange_commit_application_workflow_revision",
@@ -302,6 +339,7 @@ class SupabaseContentGovernanceStore:
         *,
         workflow_key: str | None = None,
     ) -> UniversityApplicationWorkflow:
+        self._forget_published()
         self._request(
             "POST",
             "/rest/v1/rpc/exchange_commit_application_workflow_publication",
@@ -332,15 +370,20 @@ class SupabaseContentGovernanceStore:
         **kwargs,
     ):
         merged_headers = {**self.headers, **(headers or {})}
-        response = self.request_func(
-            method,
-            f"{self.url}{path}",
-            headers=merged_headers,
-            timeout=20,
-            **kwargs,
-        )
-        response.raise_for_status()
-        return response
+        try:
+            response = self.request_func(
+                method,
+                f"{self.url}{path}",
+                headers=merged_headers,
+                timeout=20,
+                **kwargs,
+            )
+            response.raise_for_status()
+            return response
+        finally:
+            if method.upper() != "GET":
+                # Also after the write: a reader that cached the old rows while it was in flight must not keep them.
+                self._forget_published()
 
     @staticmethod
     def _revision_row(revision: ApplicationWorkflowRevision) -> dict:

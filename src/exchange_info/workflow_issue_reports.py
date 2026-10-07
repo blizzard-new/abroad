@@ -12,6 +12,7 @@ from uuid import uuid4
 import requests
 from pydantic import BaseModel, Field, ValidationError
 
+from . import supabase_http
 from .supabase_keys import supabase_key_headers
 from .models import (
     ApplicationWorkflowIssueReport,
@@ -367,7 +368,7 @@ class SupabaseWorkflowIssueReportRepository:
         url: str,
         service_role_key: str,
         *,
-        request_func=requests.request,
+        request_func=supabase_http.request,
     ) -> None:
         if not url.strip().casefold().startswith("https://"):
             raise WorkflowIssueReportRepositoryError("Supabase URL 必須使用 HTTPS。")

@@ -37,6 +37,10 @@ services:
       # 升級 Supabase 付費方案後可以調回更長。
       - key: EXCHANGE_ANALYTICS_RETENTION_DAYS
         value: "30"
+      # 啟動後在背景先做完第一位訪客才會觸發的慢工作（檢查上千筆內建翻譯、合併流程資料、建立各校儀表板），
+      # 免費主機只有 0.1 顆 CPU，這些加起來要幾分鐘。每個程序只做一次，之後的請求就是毫秒等級。
+      - key: EXCHANGE_WARM_CACHES
+        value: "1"
       - key: EXCHANGE_SUPABASE_URL
         sync: false
       - key: EXCHANGE_SUPABASE_SECRET_KEY

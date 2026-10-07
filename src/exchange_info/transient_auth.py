@@ -10,6 +10,7 @@ from typing import Any, Protocol
 import requests
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from . import supabase_http
 from .supabase_keys import supabase_key_headers
 from .models import utc_now
 
@@ -248,7 +249,7 @@ class SupabaseTransientAuthStore:
         url: str,
         secret_key: str,
         *,
-        request_func=requests.request,
+        request_func=supabase_http.request,
     ) -> None:
         if not url.strip().casefold().startswith("https://"):
             raise TransientAuthStoreConfigurationError(
