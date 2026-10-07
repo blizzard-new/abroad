@@ -1300,6 +1300,12 @@ def create_app(
             "exchange_info_ready": load_exchange_info(resolved_data_dir) is not None,
         }
 
+    @app.head("/health", include_in_schema=False)
+    def health_head() -> Response:
+        # Uptime monitors (and the free ones that keep a sleeping host awake) ask with HEAD by default; refusing it with 405
+        # makes them report the site as down. Nothing to read for a HEAD, so it answers without touching any file.
+        return Response(status_code=200)
+
     @app.get("/product/entitlements", response_model=ProductEntitlementSnapshot)
     def product_entitlements(request: Request) -> ProductEntitlementSnapshot:
         account = None
