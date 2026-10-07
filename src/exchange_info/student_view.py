@@ -69,6 +69,13 @@ PARTNER_WEBSITE_CORRECTIONS = {
         "https://www.icd-bs.com/"
     ),
 }
+# CGU's own partner sheet files two Hong Kong universities under 大陸地區. Every other part of the site (the destination
+# guides, the map, NTPU's list) calls Hong Kong 香港, so a student choosing mainland China was also being shown them.
+# Matched by name, not by a "香港" rule: a mainland campus of a Hong Kong university must stay where it is.
+PARTNER_COUNTRY_CORRECTIONS = {
+    school_identity_key("香港中文大學 The Chinese University of Hong Kong"): "香港",
+    school_identity_key("香港城市大學 City University of Hong Kong"): "香港",
+}
 OFFICIAL_DOCUMENT_SPECS = [
     {
         "slug": "navigator",
@@ -353,7 +360,7 @@ def _merge_partner_universities(
                 availability_note=primary.availability_note,
                 agreement_type=primary.agreement_type,
                 agreement_level=primary.agreement_level,
-                country=_join_partner_values(group, "country"),
+                country=PARTNER_COUNTRY_CORRECTIONS.get(key) or _join_partner_values(group, "country"),
                 school_name=primary.school_name,
                 website=(
                     PARTNER_WEBSITE_CORRECTIONS.get(key)
