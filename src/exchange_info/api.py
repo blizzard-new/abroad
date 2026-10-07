@@ -1091,6 +1091,40 @@ def create_app(
 
     dashboard_cache: dict[str, tuple[float, tuple, StudentDashboard]] = {}
     dashboard_cache_lock = threading.Lock()
+    dashboard_build_lock = threading.Lock()  # one build at a time: a second visitor waits for it instead of repeating it
+    dashboard_refreshing: set[str] = set()
+
+    def build_cached_dashboard(university: UniversityProfile, signature: tuple) -> StudentDashboard:
+        with dashboard_build_lock:
+            with dashboard_cache_lock:
+                cached = dashboard_cache.get(university.id)
+            if cached and cached[1] == signature and time.monotonic() - cached[0] < DASHBOARD_CACHE_SECONDS:
+                return cached[2]  # another request finished it while this one waited
+            dashboard = build_student_dashboard(
+                load_processed_pages(resolved_data_dir),
+                load_exchange_info(resolved_data_dir),
+                raw_files_dir=resolved_data_dir / "raw_files",
+            )
+            with dashboard_cache_lock:
+                dashboard_cache[university.id] = (time.monotonic(), signature, dashboard)
+            return dashboard
+
+    def refresh_dashboard_in_background(university: UniversityProfile, signature: tuple) -> None:
+        with dashboard_cache_lock:
+            if university.id in dashboard_refreshing:
+                return
+            dashboard_refreshing.add(university.id)
+
+        def refresh() -> None:
+            try:
+                build_cached_dashboard(university, signature)
+            except Exception:  # the visitors keep getting the previous copy
+                logging.getLogger(__name__).exception("dashboard refresh failed")
+            finally:
+                with dashboard_cache_lock:
+                    dashboard_refreshing.discard(university.id)
+
+        threading.Thread(target=refresh, name="dashboard-refresh", daemon=True).start()
 
     def dashboard_for_university(school: str | UniversityProfile | None) -> StudentDashboard:
         university = university_for(
@@ -1100,8 +1134,10 @@ def create_app(
             return build_ntpu_student_dashboard(
                 partner_universities=partners_for_university(university)
             )
-        # Building this one downloads the partner sheet and parses a dozen official PDFs, so it took 10 to 20 seconds on
-        # the free host for every visitor. It is kept for a few minutes, or until the data files behind it are rewritten.
+        # Building this one downloads the partner sheet and parses a dozen official PDFs: 10 to 40 seconds on the free
+        # host. The result is kept; once it is a few minutes old the next visitor still gets it at once while a fresh one
+        # is built in the background. Only when the data files behind it were rewritten (or nothing was built yet) does
+        # a visitor wait for a new one.
         paths = data_paths(resolved_data_dir)
         signature = (
             file_signature(paths["processed_pages"]),
@@ -1110,16 +1146,11 @@ def create_app(
         )
         with dashboard_cache_lock:
             cached = dashboard_cache.get(university.id)
-        if cached and cached[1] == signature and time.monotonic() - cached[0] < DASHBOARD_CACHE_SECONDS:
+        if cached and cached[1] == signature:
+            if time.monotonic() - cached[0] >= DASHBOARD_CACHE_SECONDS:
+                refresh_dashboard_in_background(university, signature)
             return cached[2].model_copy(deep=True)
-        dashboard = build_student_dashboard(
-            load_processed_pages(resolved_data_dir),
-            load_exchange_info(resolved_data_dir),
-            raw_files_dir=resolved_data_dir / "raw_files",
-        )
-        with dashboard_cache_lock:
-            dashboard_cache[university.id] = (time.monotonic(), signature, dashboard)
-        return dashboard.model_copy(deep=True)
+        return build_cached_dashboard(university, signature).model_copy(deep=True)
 
     def warm_catalogue_caches() -> None:
         """Do the slow first-time work now, so the first visitor after a restart does not wait for it.

@@ -42,7 +42,12 @@ def test_the_cgu_dashboard_is_built_once_for_everyone_within_the_window(counted)
     assert calls["dashboard"] == 1
 
 
-def test_the_dashboard_is_built_again_when_its_data_is_rewritten_or_the_window_ends(counted, monkeypatch) -> None:
+def _wait_for_refresh() -> None:
+    for thread in [t for t in threading.enumerate() if t.name == "dashboard-refresh"]:
+        thread.join(timeout=30)
+
+
+def test_the_dashboard_is_built_again_when_its_data_is_rewritten(counted) -> None:
     data_dir, calls = counted
     client = TestClient(api.create_app(data_dir))
     client.get("/student-dashboard", params={"school": CGU})
@@ -52,9 +57,28 @@ def test_the_dashboard_is_built_again_when_its_data_is_rewritten_or_the_window_e
     client.get("/student-dashboard", params={"school": CGU})
     assert calls["dashboard"] == 2, "a refreshed data file is picked up at once"
 
-    monkeypatch.setattr(api, "DASHBOARD_CACHE_SECONDS", 0.0)
+
+def test_an_old_dashboard_is_still_served_at_once_while_a_new_one_is_built_behind_it(counted, monkeypatch) -> None:
+    data_dir, calls = counted
+    client = TestClient(api.create_app(data_dir))
     client.get("/student-dashboard", params={"school": CGU})
-    assert calls["dashboard"] == 3, "and nothing is kept past the window"
+    monkeypatch.setattr(api, "DASHBOARD_CACHE_SECONDS", 0.0)
+
+    answer = client.get("/student-dashboard", params={"school": CGU})
+
+    assert answer.status_code == 200 and answer.json()["partner_universities"], "served from the copy already built"
+    _wait_for_refresh()
+    assert calls["dashboard"] == 2, "and one new copy was built behind it"
+
+
+def test_visitors_arriving_together_share_one_build(counted) -> None:
+    from concurrent.futures import ThreadPoolExecutor
+
+    data_dir, calls = counted
+    client = TestClient(api.create_app(data_dir))
+    with ThreadPoolExecutor(max_workers=6) as pool:
+        statuses = list(pool.map(lambda _: client.get("/student-dashboard", params={"school": CGU}).status_code, range(6)))
+    assert statuses == [200] * 6 and calls["dashboard"] == 1
 
 
 def test_a_caller_cannot_change_what_the_next_visitor_gets(counted) -> None:
