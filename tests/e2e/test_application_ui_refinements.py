@@ -28,7 +28,7 @@ def test_matching_actions_are_readable_and_aligned(page, live_server, width):
     assert all(abs(buttons[index]["y"] - buttons[index+1]["y"]) < 1 for index in range(0,len(buttons),2))
     if width == 1754:
         groups = page.locator('#recommended-match-list .match-group').evaluate_all("""groups=>groups.map(group=>
-          [...group.querySelectorAll('.planning-match-actions')].filter(el=>el.getClientRects().length)
+          [...group.querySelectorAll('.planning-match-actions')].filter(el=>el.getClientRects().length && !el.closest('details:not([open])'))
             .map(el=>el.getBoundingClientRect().y))""")
         assert all(not rows or max(rows)-min(rows) < 1 for rows in groups)
     capture(page, f"recommendations-refined-{width}.png")

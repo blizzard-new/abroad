@@ -9,7 +9,7 @@ const state = {
   country: "",
   college: "",
   degree: "",
-  partnerLimit: window.matchMedia("(max-width: 820px)").matches ? 8 : 20,
+  partnerLimit: window.matchMedia("(max-width: 820px)").matches ? 20 : 30,
   documentType: "全部",
   statusTimer: null,
   hasLoaded: false,
@@ -3650,8 +3650,12 @@ function recommendationGroups(items, renderCard, limit) {
     const rows = items.filter(item=>recommendationStatus(item).status === status);
     if (!rows.length) return "";
     const cards = rows.slice(0, limit).map(renderCard).join("");
+    const rest = rows.slice(limit);
+    const more = rest.length
+      ? `<details class="match-more"><summary><span class="when-closed">再看其他 ${rest.length} 所</span><span class="when-open">收合</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary><div class="match-group-cards">${rest.map((item, index) => renderCard(item, limit + index)).join("")}</div></details>`
+      : "";
     const heading = `<div class="match-group-heading"><strong>${title}<span>${rows.length} 所</span></strong><p>${hint}</p></div>`;
-    return status === "does_not_match" ? `<details class="match-group is-blocked"><summary>目前條件不符 · ${rows.length} 所<i data-lucide="chevron-down" aria-hidden="true"></i></summary>${heading}<div class="match-group-cards">${cards}</div></details>` : `<section class="match-group" data-match-group="${status}">${heading}<div class="match-group-cards">${cards}</div></section>`;
+    return status === "does_not_match" ? `<details class="match-group is-blocked"><summary>目前條件不符 · ${rows.length} 所<i data-lucide="chevron-down" aria-hidden="true"></i></summary>${heading}<div class="match-group-cards">${cards}</div>${more}</details>` : `<section class="match-group" data-match-group="${status}">${heading}<div class="match-group-cards">${cards}</div>${more}</section>`;
   }).join("");
 }
 
@@ -7209,12 +7213,24 @@ function degreeMatches(value, selected) {
   return text.includes(target);
 }
 
+// How many schools one page of the list shows, and how many each "show more" adds.
+function partnerPageSize() {
+  return window.matchMedia("(max-width: 820px)").matches ? 20 : 30;
+}
+
+function renderPartnerCount(total, shown) {
+  const line = $("#partner-result-count");
+  if (!line) return;
+  line.textContent = !total ? "" : shown < total ? `共 ${total} 所，先顯示 ${shown} 所` : `共 ${total} 所`;
+}
+
 function renderPartnerTable() {
   const expandedSchools = new Set([...document.querySelectorAll("#partner-table .partner-card[open]")]
     .map((card) => card.querySelector(".school-detail-trigger")?.dataset.schoolName));
   const partners = filteredPartners();
   const visible = partners.slice(0, state.partnerLimit);
   $("#partner-table").dataset.resultCount = String(partners.length);
+  renderPartnerCount(partners.length, visible.length);
 
   if (!partners.length) {
     renderEmpty("#partner-table", "沒有符合的學校", "調整國家、學院、學制或關鍵字後再試一次。");
@@ -10810,7 +10826,7 @@ function renderPersonalApplicationPlan(plan) {
     }).join("")}</div>
     <div class="eligibility-actions"><button id="view-matched-schools" type="button" class="secondary-button">回到合作校比較</button></div>`;
   $("#view-matched-schools")?.addEventListener("click", () => {
-    state.partnerLimit = window.matchMedia("(max-width: 820px)").matches ? 8 : 20;
+    state.partnerLimit = partnerPageSize();
     renderPartnerFilters();
     renderPartnerTable();
     window.location.hash = "#partners";
@@ -12198,14 +12214,14 @@ function bindEvents() {
 
   $("#partner-search").addEventListener("input", (event) => {
     state.partnerQuery = event.target.value;
-    state.partnerLimit = window.matchMedia("(max-width: 820px)").matches ? 8 : 20;
+    state.partnerLimit = partnerPageSize();
     renderPartnerTable();
   });
 
   ["availability", "country", "college", "degree"].forEach((name) => {
     $(`#${name}-filter`).addEventListener("change", (event) => {
       state[name] = event.target.value;
-      state.partnerLimit = window.matchMedia("(max-width: 820px)").matches ? 8 : 20;
+      state.partnerLimit = partnerPageSize();
       renderPartnerTable();
     });
   });
@@ -12219,14 +12235,14 @@ function bindEvents() {
     state.country = "";
     state.college = "";
     state.degree = "";
-    state.partnerLimit = window.matchMedia("(max-width: 820px)").matches ? 8 : 20;
+    state.partnerLimit = partnerPageSize();
     $("#partner-search").value = "";
     renderPartnerFilters();
     renderPartnerTable();
   });
 
   $("#show-more-partners").addEventListener("click", () => {
-    state.partnerLimit += window.matchMedia("(max-width: 820px)").matches ? 8 : 20;
+    state.partnerLimit += partnerPageSize();
     renderPartnerTable();
   });
 

@@ -159,8 +159,8 @@ def test_advisor_returns_grounded_match_tasks_and_no_fake_admission_probability(
         [],
     )
 
-    assert plan.recommendations[0].school_name == "測試日本大學"
-    assert plan.recommendations[0].match_score > plan.recommendations[1].match_score
+    assert [item.school_name for item in plan.recommendations] == ["測試日本大學"], "only the country the student chose"
+    assert plan.recommendations[0].country == "日本"
     assert plan.answer and plan.answer.sources[0].source_url == SOURCE_URL
     assert any(task.due_date for task in plan.tasks)
     assert "admission_probability" not in plan.model_dump()
@@ -225,15 +225,57 @@ def test_advisor_eligibility_precedes_preference_score_and_keeps_blocking_reason
     dashboard = _dashboard()
     allowed = dashboard.partner_universities[0]
     blocked = allowed.model_copy(update={"school_name":"不適用但偏好較高的大學", "colleges":"醫學院", "country":"法國"})
-    plan = build_advisor_plan(AdvisorProfile(college="工學院", degree_level="大學部", academic_score=88,
-                                           language_test="toeic", language_score=900, preferred_country="法國",
-                                           target_school=blocked.school_name),
-                              dashboard.model_copy(update={"partner_universities":[blocked,allowed]}), [], [], [])
+    both = dashboard.model_copy(update={"partner_universities":[blocked,allowed]})
+    profile = dict(college="工學院", degree_level="大學部", academic_score=88, language_test="toeic", language_score=900,
+                   target_school=blocked.school_name)
+    # With no country chosen, a school the student cannot apply to never outranks one they can.
+    plan = build_advisor_plan(AdvisorProfile(**profile), both, [], [], [])
     assert plan.recommendations[0].school_name == allowed.school_name
     assert plan.recommendations[0].eligibility_status == "matches_known"
     assert plan.target_match.school_name == blocked.school_name
     assert plan.target_match.eligibility_status == "does_not_match"
     assert any("你的學院" in item for item in plan.target_match.blocking_reasons)
+    # With a country chosen, only that country is listed, still marked as not applicable rather than promoted.
+    plan = build_advisor_plan(AdvisorProfile(**profile, preferred_country="法國"), both, [], [], [])
+    assert [item.school_name for item in plan.recommendations] == [blocked.school_name]
+    assert plan.recommendations[0].eligibility_status == "does_not_match"
+    assert any("你的學院" in item for item in plan.recommendations[0].blocking_reasons)
+    assert plan.target_match.school_name == blocked.school_name
+
+
+def test_advisor_lists_only_the_country_the_student_chose_and_says_so():
+    dashboard = _dashboard()
+    japan = dashboard.partner_universities[0]
+    germany = japan.model_copy(update={"school_name": "測試德國大學", "country": "德國"})
+    china = japan.model_copy(update={"school_name": "測試大陸大學", "country": "大陸地區"})
+    everything = dashboard.model_copy(update={"partner_universities": [germany, japan, china]})
+    profile = dict(college="工學院", degree_level="大學部", academic_score=88, language_test="toeic", language_score=900)
+
+    everywhere = build_advisor_plan(AdvisorProfile(**profile), everything, [], [], [])
+    assert {item.country for item in everywhere.recommendations} == {"德國", "日本", "大陸地區"}
+    assert "只列出" not in everywhere.summary
+
+    chosen = build_advisor_plan(AdvisorProfile(**profile, preferred_country="大陸地區"), everything, [], [], [])
+    assert [item.school_name for item in chosen.recommendations] == ["測試大陸大學"], "no German school for a mainland request"
+    assert chosen.summary.startswith("已依你選的「大陸地區」，只列出該地區的 1 所開放合作校")
+    assert "不限國家" in chosen.summary
+
+    absent = build_advisor_plan(AdvisorProfile(**profile, preferred_country="巴西"), everything, [], [], [])
+    assert {item.country for item in absent.recommendations} == {"德國", "日本", "大陸地區"}
+    assert absent.summary.startswith("目前沒有「巴西」的開放合作校")
+
+
+def test_advisor_country_choice_ignores_spacing_and_still_ranks_by_eligibility_inside_the_country():
+    dashboard = _dashboard()
+    japan = dashboard.partner_universities[0]
+    blocked = japan.model_copy(update={"school_name": "日本醫學大學", "colleges": "醫學院"})
+    fine = japan.model_copy(update={"school_name": "日本工學大學"})
+    plan = build_advisor_plan(
+        AdvisorProfile(college="工學院", degree_level="大學部", academic_score=88, preferred_country=" 日本 "),
+        dashboard.model_copy(update={"partner_universities": [blocked, fine]}), [], [], [],
+    )
+    assert [item.school_name for item in plan.recommendations] == ["日本工學大學", "日本醫學大學"]
+    assert plan.recommendations[1].eligibility_status == "does_not_match"
 
 
 def test_advisor_home_language_requirement_cannot_be_offset_by_preferences():

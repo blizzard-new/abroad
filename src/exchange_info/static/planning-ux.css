@@ -86,3 +86,16 @@ body.unified-shell .packet-empty p { margin:0; color:var(--uw-muted); font-size:
 @media(prefers-reduced-motion:reduce) {
   body.unified-shell .application-template-stage-heading .lucide { transition:none; }
 }
+
+/* The rest of a group of schools, one tap away (a native details element, so it needs no script). */
+body.unified-shell .match-more { margin-top:14px; }
+body.unified-shell .match-more > summary { display:flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:0 18px; list-style:none; cursor:pointer; border:1px solid var(--uw-line); border-radius:999px; background:var(--glass-surface); color:var(--uw-blue-strong); font-size:13px; font-weight:600; }
+body.unified-shell .match-more > summary::-webkit-details-marker { display:none; }
+body.unified-shell .match-more > summary .lucide { width:16px; height:16px; }
+body.unified-shell .match-more[open] > summary { margin-bottom:16px; }
+body.unified-shell .match-more[open] > summary .lucide { transform:rotate(180deg); }
+body.unified-shell .match-more:not([open]) .when-open, body.unified-shell .match-more[open] .when-closed { display:none; }
+
+/* How many schools the list holds, so nobody mistakes the first page for all of them. */
+body.unified-shell .partner-result-count { margin:10px 4px; font-size:13px; color:var(--uw-muted); }
+body.unified-shell .partner-result-count:empty { display:none; }

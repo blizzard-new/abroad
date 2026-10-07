@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="/static/community-reader.css?v=20260930-discussion-2b" />
     <link rel="stylesheet" href="/static/community-feed.css?v=20260930-forum-1" />
     <link rel="stylesheet" href="/static/glass-theme.css?v=20261001-ui-refinements-1" />
-    <link rel="stylesheet" href="/static/planning-ux.css?v=20261002-ux-2" />
+    <link rel="stylesheet" href="/static/planning-ux.css?v=20261007-schools-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/application-workspace.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/document-workbench.css?v=20261002-flow-1" />
@@ -522,7 +522,7 @@
                   <label><span>學業平均</span><input id="advisor-academic-score" name="academic_score" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="例如 82" /></label>
                   <label><span>語言測驗</span><select id="advisor-language-test" name="language_test"><option value="">尚未考／尚未決定</option><option value="toeic">TOEIC</option><option value="ielts">IELTS</option><option value="toefl">TOEFL iBT</option><option value="duolingo">Duolingo</option><option value="other">其他</option></select></label>
                   <label><span>語言分數</span><input placeholder="尚未考可留空" id="advisor-language-score" name="language_score" type="number" min="0" step="0.5" inputmode="decimal" /></label>
-                  <label><span>優先國家</span><select id="advisor-country" name="preferred_country"></select></label>
+                  <label><span>想去的國家／地區</span><select id="advisor-country" name="preferred_country"></select></label>
                   <label><span>預計出國學期</span><select id="advisor-target-term" name="target_term"><option value="">尚未決定</option><option value="2027-spring">2027 春季</option><option value="2027-fall">2027 秋季</option><option value="2028-spring">2028 春季</option><option value="2028-fall">2028 秋季</option></select></label>
                 </div>
                 <p class="academic-directory-note"><span id="advisor-department-note">選擇學院後顯示所屬系所。</span><a id="advisor-department-source" target="_blank" rel="noopener noreferrer" hidden>官方名單</a></p>
@@ -620,6 +620,7 @@
               <a class="discovery-open-workspace" href="#favorites"><i data-lucide="bookmark" aria-hidden="true"></i>我的選校 <span id="discovery-selection-count"></span></a>
             </div>
             <p id="discovery-criteria-result" class="discovery-muted" role="status"></p>
+            <p id="partner-result-count" class="partner-result-count"></p>
             <div id="partner-table" class="partner-results" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-table"></div></div>
             <button id="show-more-partners" type="button" class="secondary-button centered-button" hidden>顯示更多學校</button>
             <section id="partner-map-panel" class="partner-map-panel" aria-label="全球交換合作網絡" hidden>
@@ -1109,6 +1110,6 @@
     <script src="/static/document-workbench.js?v=20261002-flow-2" defer></script>
     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
     <script src="/static/analytics.js?v=20261003-analytics-1" defer></script>
-    <script src="/static/app.js?v=20261007-mascot-2" defer></script>
+    <script src="/static/app.js?v=20261007-schools-1" defer></script>
   </body>
 </html>

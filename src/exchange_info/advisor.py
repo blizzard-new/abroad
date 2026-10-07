@@ -88,9 +88,21 @@ def build_advisor_plan(
     matches.sort(key=lambda item: (
         eligibility_order[item.eligibility_status], -item.match_score, item.school_name.casefold()
     ))
+    # A country the student chose is a request to see that country, not a hint: listing other countries above it
+    # (as a small score bonus did) answers "mainland China" with German schools. Eligibility still orders the list.
+    # Every school stays in `matches`, so the chosen target school can be compared whatever its country.
+    country = (profile.preferred_country or "").strip()
+    in_country = [item for item in matches if country and _normal(item.country) == _normal(country)]
+    country_note = ""
+    candidates = matches
+    if country and in_country:
+        candidates = in_country
+        country_note = f"已依你選的「{country}」，只列出該地區的 {len(in_country)} 所開放合作校；改選「不限國家」可看全部。"
+    elif country:
+        country_note = f"目前沒有「{country}」的開放合作校，先列出其他地區。"
     # Keep a small set of mismatches visible without letting them displace candidates.
-    recommendations = [item for item in matches if item.eligibility_status != "does_not_match"][:20]
-    recommendations += [item for item in matches if item.eligibility_status == "does_not_match"][:5]
+    recommendations = [item for item in candidates if item.eligibility_status != "does_not_match"][:20]
+    recommendations += [item for item in candidates if item.eligibility_status == "does_not_match"][:5]
     qualification = _qualification_summary(profile, dashboard)
     tasks = _build_tasks(profile, dashboard, recommendations)
     answer = None
@@ -110,11 +122,13 @@ def build_advisor_plan(
     )
     missing = _missing_profile_fields(profile)
     if missing:
-        summary = f"先補上{'、'.join(missing[:3])}，推薦排序會更準確；目前已依公開資料整理 {len(matches)} 所合作校。"
+        summary = f"先補上{'、'.join(missing[:3])}，推薦排序會更準確；目前已依公開資料整理 {len(candidates)} 所合作校。"
     elif ready_count:
         summary = f"目前有 {ready_count} 所優先候選；先處理高優先任務，再逐校核對最新公告。"
     else:
         summary = "目前條件仍有缺口，先完成下方任務，再重新產生選校方案。"
+    if country_note:
+        summary = f"{country_note}{summary}"
     mode = "ai_enhanced" if answer and answer.ai_enhanced else "source_grounded"
     return AdvisorPlan(
         school_name=dashboard.school_name,
