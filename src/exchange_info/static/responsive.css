@@ -1,0 +1,67 @@
+/* Phone and tablet fixes that sit on top of the page's own breakpoints. Loaded last on purpose. */
+
+/* Keep iOS from enlarging text after a turn to landscape and from slowing taps with its double-tap zoom. */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+a,
+button,
+[role="button"],
+select,
+summary,
+label {
+  touch-action: manipulation;
+}
+
+/* A long address, file name or unbroken word must wrap instead of widening the page. */
+body {
+  overflow-wrap: break-word;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+/* iOS Safari zooms the whole page when a field with text smaller than 16px is tapped, and leaves it zoomed. */
+@media (max-width: 820px), (pointer: coarse) {
+  body input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="hidden"]):not([type="color"]),
+  body select,
+  body textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* The small captions were 10px; keep them readable on a phone. */
+@media (max-width: 820px) {
+  small,
+  .board-label,
+  .advisor-assistant-eyebrow {
+    font-size: max(11.5px, 0.8333em);
+  }
+}
+
+/* Between a large phone and a tablet the compose button was squeezed to an icon-sized box with its words spilling out. */
+@media (min-width: 561px) and (max-width: 820px) {
+  body.unified-shell #global-community-compose,
+  body.unified-shell .community-home-heading .primary-button {
+    width: auto;
+    min-width: 48px;
+  }
+}
+
+/* A text column beside a fixed icon and a button (flex: 1, min-width: 0) shrank to a few pixels wide on a small phone and
+   its words stacked one character per line. Give it a width to hold, so the button drops to the next line instead. */
+@media (max-width: 560px) {
+  body.unified-shell .planning-target-summary > div,
+  body.unified-shell .planning-documents > div {
+    flex: 1 1 12rem;
+    min-width: min(12rem, 100%);
+  }
+
+  body.unified-shell .planning-documents > a {
+    margin-left: 66px;
+  }
+}
