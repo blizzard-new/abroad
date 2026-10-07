@@ -28,6 +28,12 @@ HOSTS = re.compile(r"\b(?:[A-Za-z0-9-]+\.)+(?:edu|ac|com|org|net|cz|jp|se|pl|uk|
 _translation_lock = threading.Lock()
 
 
+# A page load sends a thousand or so source texts through these, again on every load, and each used to run dozens to
+# thousands of regular expressions. They depend only on the text (and on static data files), so each text is worked out once.
+_TEXT_CACHE = 16384
+
+
+@lru_cache(maxsize=_TEXT_CACHE)
 def standardize_terms(text: str) -> str:
     """Display exam names consistently, without changing scores or identifiers."""
     def prose(value):
@@ -43,6 +49,7 @@ def standardize_terms(text: str) -> str:
     return "".join(parts)
 
 
+@lru_cache(maxsize=_TEXT_CACHE)
 def needs_translation(text: str) -> bool:
     value = LINKS.sub("", text)
     value = HOSTS.sub("", value)
@@ -154,6 +161,7 @@ def _display_patterns() -> list:
     return patterns
 
 
+@lru_cache(maxsize=_TEXT_CACHE)
 def translate_display_phrases(value: str) -> str:
     """Translate known phrases without touching a URL or email address."""
     def prose(part: str) -> str:
@@ -176,7 +184,12 @@ def translate_display_phrases(value: str) -> str:
 
 
 def _valid_translation(original: str, value: object) -> bool:
-    if not isinstance(value, str) or not 1 <= len(value) <= 2400 or needs_translation(value):
+    return isinstance(value, str) and _valid_text_translation(original, value)
+
+
+@lru_cache(maxsize=_TEXT_CACHE)
+def _valid_text_translation(original: str, value: str) -> bool:
+    if not 1 <= len(value) <= 2400 or needs_translation(value):
         return False
     if not re.search(r"[\u4e00-\u9fff]", value) or re.search(r"<[^>]+>", value):
         return False

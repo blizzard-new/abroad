@@ -231,6 +231,7 @@ from .models import (
     PublicChatMessage,
     PublicChatMessageCreate,
     StudentExperienceDigest,
+    SourceReference,
     StudentDashboard,
     StructuredSourceRecord,
     SupportedUniversity,
@@ -3559,13 +3560,37 @@ def create_app(
         return context.model_copy(update={"research_notes": result.notes})
 
     @app.get("/destination-profiles", response_model=list[DestinationProfile])
-    def destination_profiles(home_school: str | None = Query(default=None)) -> list[DestinationProfile]:
+    def destination_profiles(
+        home_school: str | None = Query(default=None),
+        compact: bool = Query(
+            default=False,
+            description="Leave out the long guide sections and checklists and the per-source summaries; "
+                        "/destination-profile?school= returns a school's full profile.",
+        ),
+    ) -> list[DestinationProfile]:
         university = university_for(home_school)
         names = {school_identity_key(p.school_name) for p in partners_for_university(university)}
         locations = load_university_locations(resolved_data_dir)
-        return [complete_destination_profile(row, resolved_data_dir, locations=locations) for row in load_destination_profiles(resolved_data_dir, include_bundled_baseline=True)
-                if school_identity_key(row.school_name) in names
-                and (not row.home_university or normalize_school(row.home_university) == normalize_school(university.school_name))]
+        profiles = [complete_destination_profile(row, resolved_data_dir, locations=locations) for row in load_destination_profiles(resolved_data_dir, include_bundled_baseline=True)
+                    if school_identity_key(row.school_name) in names
+                    and (not row.home_university or normalize_school(row.home_university) == normalize_school(university.school_name))]
+        if not compact:
+            return profiles
+        # The partner list, search and budget views only read a profile's summaries, city and source titles and links;
+        # the guide sections and checklists were about two thirds of the 1.8 MB every visitor downloaded on every load.
+        return [
+            profile.model_copy(update={
+                "student_guide_sections": [],
+                "first_72_hours": [],
+                "packing_from_taiwan": [],
+                "buy_after_arrival": [],
+                "sources": [
+                    SourceReference(title=source.title, source_url=source.source_url, category=source.category)
+                    for source in profile.sources
+                ],
+            })
+            for profile in profiles
+        ]
 
     @app.post("/destination-profile/refresh", response_model=DestinationProfile)
     def refresh_destination_profile(

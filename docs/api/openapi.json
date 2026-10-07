@@ -17518,6 +17518,18 @@
               ],
               "title": "Home School"
             }
+          },
+          {
+            "description": "Leave out the long guide sections and checklists and the per-source summaries; /destination-profile?school= returns a school's full profile.",
+            "in": "query",
+            "name": "compact",
+            "required": false,
+            "schema": {
+              "default": false,
+              "description": "Leave out the long guide sections and checklists and the per-source summaries; /destination-profile?school= returns a school's full profile.",
+              "title": "Compact",
+              "type": "boolean"
+            }
           }
         ],
         "responses": {

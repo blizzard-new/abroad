@@ -1013,7 +1013,7 @@ async function loadDestinationProfiles({ homeSchool = activeHomeSchool() } = {})
   let profiles = [];
   try {
     profiles = await fetchJson(
-      `/destination-profiles?home_school=${encodeURIComponent(requestedSchool)}`
+      `/destination-profiles?home_school=${encodeURIComponent(requestedSchool)}&compact=true`
     );
   } catch (_) {
     if (!isCurrentHomeSchool(requestedSchool)) return false;

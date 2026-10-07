@@ -84,6 +84,9 @@
     return targets;
   }
   const cache = new Map();
+  // Texts the server has answered "no translation yet" for. While it cannot generate any, asking again on every page only
+  // repeats the question, so they are not sent again in this visit.
+  const settled = new Set();
   let generationEnabled = true;
   const keyOf = row => JSON.stringify([row.text, row.source_url]);
   async function request(entries, generate) {
@@ -93,11 +96,13 @@
     const result = await response.json();
     if (result.generation_enabled === false) generationEnabled = false;
     result.entries.forEach((row, index) => { if (row.zh && row.status !== "pending") cache.set(keyOf(entries[index]), row); });
+    if (!generationEnabled) entries.forEach(entry => settled.add(keyOf(entry)));
   }
   async function localize(url, data) {
     if (!routes.has(String(url).split("?")[0]) || !data) return data;
     const localized = structuredClone(data), targets = collect(localized);
-    const entries = [...new Map(targets.map(row => [keyOf(row), { text: row.text, source_url: row.source_url }])).values()];
+    const entries = [...new Map(targets.map(row => [keyOf(row), { text: row.text, source_url: row.source_url }])).values()]
+      .filter(row => !cache.has(keyOf(row)) && !settled.has(keyOf(row)));
     try {
       for (let i = 0; i < entries.length; i += 160) {
         const batches = [];
