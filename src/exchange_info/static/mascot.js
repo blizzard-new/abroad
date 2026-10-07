@@ -21,8 +21,9 @@
   // ---- the loading screen -------------------------------------------------------------------------------------
   const SHOW_AFTER_MS = 260; // the CSS keeps it invisible this long, so a load that fast never shows it
   const SHOW_FOR_MS = 700; // once it appears it stays long enough to read, instead of flickering
-  const GIVE_UP_MS = 22000; // matches the CSS, which hides it by itself at this point
+  const GIVE_UP_MS = 60000; // matches the CSS, which hides it by itself at this point (a woken-up server can take ~40 s)
   const SLOW_AFTER_MS = 8000; // after this long, say that the server may just be waking up
+  const STUCK_AFTER_MS = 30000; // after this long, suggest reloading
 
   const splash = document.getElementById("boot-splash");
   let leaving = false;
@@ -49,6 +50,7 @@
 
   if (splash) {
     window.setTimeout(() => splash.classList.add("is-slow"), SLOW_AFTER_MS);
+    window.setTimeout(() => splash.classList.add("is-stuck"), STUCK_AFTER_MS);
     window.setTimeout(done, GIVE_UP_MS);
   }
   window.UniWaySplash = { done };

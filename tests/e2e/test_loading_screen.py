@@ -69,7 +69,7 @@ def test_a_page_that_never_finishes_still_gets_rid_of_it(page, live_server):
     page.clock.install()
     page.goto(f"{live_server.base_url}/#home", wait_until="commit")
     page.wait_for_function("() => window.UniWaySplash", timeout=15_000)  # its give-up timer is set once this script has run
-    page.clock.run_for(23_000)
+    page.clock.run_for(61_000)
     expect(page.locator(SCREEN)).to_have_count(0, timeout=10_000)
 
 
@@ -182,3 +182,22 @@ def test_the_old_puppy_is_not_anywhere_on_the_page(page, live_server):
     sources = page.evaluate("[...document.images].map(img => img.currentSrc || img.src)")
     assert not [src for src in sources if "advisor-mascot" in src], sources
     assert any("assets/mascot/suitcase.webp" in src for src in sources)
+
+
+def test_it_stays_until_the_whole_page_is_ready_not_just_the_first_data(page, live_server):
+    page.add_init_script(PREPARE)
+    held = []
+    page.route("**/destination-profiles**", lambda route: held.append(route))
+    page.goto(f"{live_server.base_url}/#home", wait_until="commit")
+    wait_until_shown(page)
+    page.wait_for_function("() => typeof state !== 'undefined' && !!state.dashboard", timeout=30_000)  # the first data is in...
+    page.wait_for_timeout(2_500)
+    assert page.locator(SCREEN).count() == 1, "...but the destination data is not, so the screen stays"
+    assert held, "the held request was made"
+    for route in held:
+        route.continue_()
+    expect(page.locator(SCREEN)).to_have_count(0, timeout=20_000)
+    # Behind it nothing is still loading.
+    assert page.evaluate("document.querySelector('#page-status').textContent.trim()") == ""
+    assert page.evaluate("[...document.querySelectorAll('[aria-busy=\"true\"]')].filter(el => el.getClientRects().length).length") == 0
+    assert "載入中" not in page.locator("#top-updated").inner_text()

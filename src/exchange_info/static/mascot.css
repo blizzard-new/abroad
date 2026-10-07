@@ -135,9 +135,9 @@
 
 /* mascot.js adds .splash-on once it has applied the saved theme, so the screen never shows in the wrong colours (and
    never shows at all if that script cannot load). It appears after a quarter of a second, so a fast load never flashes
-   it, and it hides itself after 22 s even if the page script never finishes. */
+   it, and it hides itself after a minute even if the page script never finishes. */
 .splash-on .boot-splash {
-  animation: boot-splash-life 22s linear both;
+  animation: boot-splash-life 60s linear both;
 }
 
 .splash-on .boot-splash.is-leaving {
@@ -186,6 +186,28 @@
 .boot-splash.is-slow .boot-splash-hint {
   opacity: 1;
   transform: none;
+}
+
+/* A second line for a very long wait; it takes no room until then. */
+.boot-splash-hint-more {
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  color: #52708f;
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0;
+  transition: opacity 500ms ease-out;
+}
+
+.boot-splash.is-stuck .boot-splash-hint-more {
+  max-height: 4em;
+  margin-top: 6px;
+  opacity: 1;
+}
+
+html[data-theme="dark"] .boot-splash-hint-more {
+  color: #9db4cc;
 }
 
 html[data-theme="dark"] .boot-splash {
@@ -434,11 +456,11 @@ html[data-theme="dark"] .uw-mascot-picture {
 
 @keyframes boot-splash-life {
   0%,
-  1.1% {
+  0.4% {
     opacity: 0;
     visibility: visible;
   }
-  2.4%,
+  0.9%,
   99% {
     opacity: 1;
     visibility: visible;
@@ -474,7 +496,7 @@ html[data-theme="dark"] .uw-mascot-picture {
 }
 
 /* No movement for people who ask for none. The page's own rule switches every animation off for them, so the loading
-   screen is simply shown (still) while it waits; the script takes it away, or gives up after 22 s. */
+   screen is simply shown (still) while it waits; the script takes it away, or gives up after a minute. */
 @media (prefers-reduced-motion: reduce) {
   .uw-mascot *,
   .uw-mascot *::before,

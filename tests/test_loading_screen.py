@@ -52,12 +52,17 @@ def test_a_fast_load_never_shows_it_and_a_shown_one_does_not_flicker() -> None:
     assert int(re.search(r"SHOW_FOR_MS = (\d+)", MASCOT_JS).group(1)) >= 500
 
 
-def test_the_page_tells_it_to_go_when_the_data_is_there_and_whatever_happens() -> None:
+def test_the_page_tells_it_to_go_only_when_everything_is_loaded_and_whatever_happens() -> None:
     boot = APP_JS[APP_JS.index("async function boot()"):]
-    assert boot.index("await loadDashboard()") < boot.index("UniWaySplash?.done()")
-    assert "if (!globalFeedForHash()) window.UniWaySplash?.done();" in boot, "the forum waits for its posts"
+    assert APP_JS.count("UniWaySplash") == 1, "one place, after the whole start-up, takes it away"
     assert APP_JS.rstrip().endswith("boot().finally(() => window.UniWaySplash?.done());")
+    # the last four loads of the start-up are awaited together before it ends: nothing is left "loading" behind the screen
+    assert "await Promise.allSettled([loadGlobalCommunity(), loadCoverage(), loadDestinationProfiles(), state.periodOptionsReady]);" in boot
+    assert boot.index("await loadDashboard()") < boot.index("Promise.allSettled")
+    assert "state.periodOptionsReady = loadApplicationPeriodOptions();" in APP_JS
     assert "window.UniWaySplash = { done };" in MASCOT_JS
+    give_up = int(re.search(r"GIVE_UP_MS = (\d+)", MASCOT_JS).group(1))
+    assert give_up >= 45_000, "a server that has just woken up can take most of a minute"
 
 
 def test_the_motion_includes_blinking_hopping_and_turning_and_stops_for_reduced_motion() -> None:
@@ -77,7 +82,7 @@ def test_tapping_the_mascot_cycles_hop_spin_wink() -> None:
 def test_the_script_and_style_versions_are_in_the_page() -> None:
     assert re.search(r'/static/mascot\.css\?v=\S+"', HTML) and re.search(r'/static/mascot\.js\?v=\S+"', HTML)
     versions = set(re.findall(r"/static/(?:mascot\.css|mascot\.js|advisor-mascot\.css|assets/mascot/suitcase\.webp)\?v=([\w-]+)", HTML))
-    assert versions == {"20261007-mascot-2"}, "bumped together so nobody keeps an old copy"
+    assert versions == {"20261007-ready-1"}, "bumped together so nobody keeps an old copy"
 
 
 def test_it_cannot_show_before_the_saved_theme_is_applied() -> None:

@@ -3470,7 +3470,7 @@ async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool(
     state.dashboard = dashboard;
     state.partnerDataLoading = false;
     renderDashboard();
-    loadApplicationPeriodOptions();
+    state.periodOptionsReady = loadApplicationPeriodOptions(); // never rejects; the first load waits for it
     state.hasLoaded = true;
     if (refreshed) announce("資料已重新整理", "success");
     else clearAnnouncement();
@@ -12983,11 +12983,9 @@ async function boot() {
   await loadApplicationTemplates();
   applyAppRoute({ loadFeed: false, resetScroll: false });
   if (isPersonalizedRoute() && !state.homeSchool) initializeSchoolOnboarding();
-  // The loading screen has done its job once the page has its data; the forum waits for its posts as well.
-  if (!globalFeedForHash()) window.UniWaySplash?.done();
-  await loadGlobalCommunity();
-  window.UniWaySplash?.done();
-  await Promise.all([loadCoverage(), loadDestinationProfiles()]);
+  // The loading screen stays until the page is completely ready, so nothing inside it is still "loading" when it goes.
+  // These four do not depend on each other, so they run together (one failing does not hold the others back).
+  await Promise.allSettled([loadGlobalCommunity(), loadCoverage(), loadDestinationProfiles(), state.periodOptionsReady]);
   const route = window.location.hash.match(/^#school=(.+)$/);
   if (route) {
     const item = partnerByName(decodeURIComponent(route[1]));
@@ -12995,5 +12993,5 @@ async function boot() {
   }
 }
 
-// Whatever goes wrong while starting, the loading screen must not stay in front of the page.
+// The loading screen goes when starting is over, however it ended; it can never stay in front of the page for good.
 boot().finally(() => window.UniWaySplash?.done());
