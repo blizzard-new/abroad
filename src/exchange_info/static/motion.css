@@ -65,11 +65,11 @@
   /* A calm pulse conveys real loading without a moving stripe across the page. */
   .unified-shell .skeleton { animation: uw-loading 1.6s ease-in-out infinite; background-size: auto; }
   .unified-shell .map-home-marker::after { animation-iteration-count: 2; }
-  .unified-shell .advisor-assistant[data-state="success"] .advisor-mascot-image[data-mascot-pose="complete"] {
+  .unified-shell .advisor-assistant[data-state="success"] .uw-mascot-body {
     animation-duration: var(--uw-motion-arrive); animation-timing-function: var(--uw-motion-out);
   }
-  .unified-shell .advisor-assistant[data-state="insufficient"] .advisor-mascot-image[data-mascot-pose="insufficient"] { animation-duration: var(--uw-motion-standard); }
-  .unified-shell .advisor-assistant[data-state="error"] .advisor-mascot-image,
+  .unified-shell .advisor-assistant[data-state="insufficient"] .uw-mascot-body { animation-duration: var(--uw-motion-standard); }
+  .unified-shell .advisor-assistant[data-state="error"] .uw-mascot-body,
   .unified-shell .advisor-assistant .advisor-mascot-confetti { animation: none; }
 }
 @keyframes uw-loading { 0%, 100% { opacity: .55; } 50% { opacity: .9; } }

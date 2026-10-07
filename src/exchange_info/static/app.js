@@ -12967,7 +12967,10 @@ async function boot() {
   await loadApplicationTemplates();
   applyAppRoute({ loadFeed: false, resetScroll: false });
   if (isPersonalizedRoute() && !state.homeSchool) initializeSchoolOnboarding();
+  // The loading screen has done its job once the page has its data; the forum waits for its posts as well.
+  if (!globalFeedForHash()) window.UniWaySplash?.done();
   await loadGlobalCommunity();
+  window.UniWaySplash?.done();
   await Promise.all([loadCoverage(), loadDestinationProfiles()]);
   const route = window.location.hash.match(/^#school=(.+)$/);
   if (route) {
@@ -12976,4 +12979,5 @@ async function boot() {
   }
 }
 
-boot();
+// Whatever goes wrong while starting, the loading screen must not stay in front of the page.
+boot().finally(() => window.UniWaySplash?.done());

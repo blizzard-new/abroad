@@ -1,0 +1,501 @@
+/* The UniWay mascot (a little blue suitcase) and the screen shown while the page loads.
+ *
+ * The picture is the body only; the two eyes are drawn here so they can blink, look around and wink on their own.
+ * Eye size, tilt and place were measured from the supplied animation (see assets/mascot/README.md).
+ */
+
+.uw-mascot {
+  --uw-mascot-size: 160px;
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: var(--uw-mascot-size);
+  aspect-ratio: 384 / 460;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.uw-mascot[data-play] {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.uw-mascot-shadow {
+  position: absolute;
+  right: 12%;
+  bottom: -2%;
+  left: 12%;
+  height: 6%;
+  border-radius: 50%;
+  background: rgba(35, 82, 135, 0.24);
+  filter: blur(5px);
+  animation: uw-mascot-shadow 6.4s ease-in-out infinite;
+}
+
+.uw-mascot-body {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 94%;
+  animation: uw-mascot-idle 6.4s ease-in-out infinite;
+}
+
+.uw-mascot-picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 6px 8px rgba(25, 69, 117, 0.16));
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.uw-mascot-eyes {
+  position: absolute;
+  inset: 0;
+  animation: uw-mascot-look 9s ease-in-out infinite;
+}
+
+.uw-mascot-eye {
+  position: absolute;
+  top: 46.83%;
+  left: 37.011%;
+  width: 8.538%;
+  height: 12.351%;
+  transform: translate(-50%, -50%) rotate(9.2deg);
+}
+
+.uw-mascot-eye + .uw-mascot-eye {
+  top: 48.873%;
+  left: 61.052%;
+}
+
+.uw-mascot-eye::before {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #2c2c2f;
+  content: "";
+  animation: uw-mascot-blink 4.8s ease-in-out infinite;
+}
+
+/* Taps: hop, then turn around, then wink, and again. */
+.uw-mascot.is-hop .uw-mascot-body {
+  animation: uw-mascot-hop 620ms cubic-bezier(0.3, 0.7, 0.3, 1) both;
+}
+
+.uw-mascot.is-spin .uw-mascot-body {
+  animation: uw-mascot-spin 960ms cubic-bezier(0.3, 0.7, 0.3, 1) both;
+}
+
+.uw-mascot.is-wink .uw-mascot-body {
+  animation: uw-mascot-wink-tilt 760ms ease-in-out both;
+}
+
+.uw-mascot.is-wink .uw-mascot-eye + .uw-mascot-eye::before {
+  animation: uw-mascot-wink 760ms ease-in-out both;
+}
+
+/* While a page is loading: two small hops, then a full turn, over and over. */
+.uw-mascot[data-mood="busy"] .uw-mascot-body {
+  animation: uw-mascot-busy 5.6s ease-in-out infinite;
+}
+
+.uw-mascot[data-mood="busy"] .uw-mascot-shadow {
+  animation: uw-mascot-shadow-busy 5.6s ease-in-out infinite;
+}
+
+.uw-mascot[data-mood="busy"] .uw-mascot-eye::before {
+  animation-duration: 3.2s;
+}
+
+.uw-mascot[data-mood="busy"] .uw-mascot-eyes {
+  animation-duration: 4.4s;
+}
+
+/* ---- the loading screen ---- */
+
+.boot-splash {
+  position: fixed;
+  z-index: 10000;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 6px;
+  padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
+  color: #17406a;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(120, 205, 225, 0.42), transparent 46%),
+    radial-gradient(circle at 86% 90%, rgba(255, 205, 175, 0.4), transparent 44%),
+    #f4f8fc;
+  font-family: "Poppins", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* mascot.js adds .splash-on once it has applied the saved theme, so the screen never shows in the wrong colours (and
+   never shows at all if that script cannot load). It appears after a quarter of a second, so a fast load never flashes
+   it, and it hides itself after 22 s even if the page script never finishes. */
+.splash-on .boot-splash {
+  animation: boot-splash-life 22s linear both;
+}
+
+.splash-on .boot-splash.is-leaving {
+  animation: boot-splash-out 320ms ease-out both;
+  pointer-events: none;
+}
+
+.boot-splash .uw-mascot {
+  --uw-mascot-size: clamp(120px, 34vw, 176px);
+  margin-bottom: 18px;
+}
+
+.boot-splash-title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.boot-splash-dots span {
+  display: inline-block;
+  animation: boot-splash-dot 1.2s ease-in-out infinite;
+}
+
+.boot-splash-dots span:nth-child(2) {
+  animation-delay: 160ms;
+}
+
+.boot-splash-dots span:nth-child(3) {
+  animation-delay: 320ms;
+}
+
+.boot-splash-hint {
+  max-width: 22em;
+  margin: 4px 0 0;
+  color: #52708f;
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 500ms ease-out,
+    transform 500ms ease-out;
+}
+
+.boot-splash.is-slow .boot-splash-hint {
+  opacity: 1;
+  transform: none;
+}
+
+html[data-theme="dark"] .boot-splash {
+  color: #dbe9f7;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(40, 110, 140, 0.34), transparent 46%),
+    radial-gradient(circle at 86% 90%, rgba(120, 80, 70, 0.24), transparent 44%),
+    #0b1118;
+}
+
+html[data-theme="dark"] .boot-splash-hint {
+  color: #9db4cc;
+}
+
+html[data-theme="dark"] .uw-mascot-shadow {
+  background: rgba(70, 150, 205, 0.26);
+}
+
+html[data-theme="dark"] .uw-mascot-picture {
+  filter: drop-shadow(0 7px 10px rgba(0, 0, 0, 0.34));
+}
+
+/* ---- motion ---- */
+
+@keyframes uw-mascot-idle {
+  0%,
+  100% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+  }
+  12% {
+    transform: perspective(700px) translateY(-1.2%) rotate(-1.2deg) rotateY(0deg) scale(1, 1);
+  }
+  26% {
+    transform: perspective(700px) translateY(0) rotate(1deg) rotateY(0deg) scale(1, 1);
+  }
+  44% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.03, 0.96);
+  }
+  50% {
+    transform: perspective(700px) translateY(-9%) rotate(0deg) rotateY(0deg) scale(0.98, 1.04);
+  }
+  56% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.04, 0.95);
+  }
+  60% {
+    transform: perspective(700px) translateY(-2.5%) rotate(0deg) rotateY(0deg) scale(1, 1);
+  }
+  64% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+  }
+  82% {
+    transform: perspective(700px) translateY(-0.8%) rotate(-0.9deg) rotateY(0deg) scale(1, 1);
+  }
+}
+
+@keyframes uw-mascot-shadow {
+  0%,
+  100%,
+  44%,
+  56%,
+  64% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scaleX(0.72);
+  }
+}
+
+@keyframes uw-mascot-busy {
+  0%,
+  100% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+  }
+  10% {
+    transform: perspective(700px) translateY(-1.2%) rotate(-1.6deg) rotateY(0deg) scale(1, 1);
+  }
+  20% {
+    transform: perspective(700px) translateY(0) rotate(1.4deg) rotateY(0deg) scale(1, 1);
+  }
+  25%,
+  44% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.04, 0.95);
+  }
+  31%,
+  50% {
+    transform: perspective(700px) translateY(-10%) rotate(0deg) rotateY(0deg) scale(0.98, 1.04);
+  }
+  36%,
+  55% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.04, 0.95);
+  }
+  40%,
+  60% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+  }
+  66% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.05, 0.94);
+  }
+  76% {
+    transform: perspective(700px) translateY(-13%) rotate(0deg) rotateY(180deg) scale(0.98, 1.04);
+  }
+  88% {
+    transform: perspective(700px) translateY(-3%) rotate(0deg) rotateY(330deg) scale(1, 1);
+  }
+  94% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(360deg) scale(1.04, 0.95);
+  }
+  97% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(360deg) scale(1, 1);
+  }
+}
+
+@keyframes uw-mascot-shadow-busy {
+  0%,
+  100%,
+  25%,
+  36%,
+  40%,
+  44%,
+  55%,
+  60%,
+  66%,
+  94%,
+  97% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  31%,
+  50% {
+    opacity: 0.55;
+    transform: scaleX(0.72);
+  }
+  76% {
+    opacity: 0.4;
+    transform: scaleX(0.6);
+  }
+}
+
+@keyframes uw-mascot-hop {
+  0% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+  }
+  18% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.05, 0.93);
+  }
+  45% {
+    transform: perspective(700px) translateY(-14%) rotate(-2deg) rotateY(0deg) scale(0.97, 1.05);
+  }
+  72% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.05, 0.94);
+  }
+  86% {
+    transform: perspective(700px) translateY(-3%) rotate(0deg) rotateY(0deg) scale(1, 1);
+  }
+  100% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+  }
+}
+
+@keyframes uw-mascot-spin {
+  0% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+  }
+  16% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1.05, 0.94);
+  }
+  46% {
+    transform: perspective(700px) translateY(-13%) rotate(0deg) rotateY(190deg) scale(0.98, 1.04);
+  }
+  74% {
+    transform: perspective(700px) translateY(-4%) rotate(0deg) rotateY(335deg) scale(1, 1);
+  }
+  90% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(360deg) scale(1.04, 0.95);
+  }
+  100% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(360deg) scale(1, 1);
+  }
+}
+
+@keyframes uw-mascot-wink-tilt {
+  0%,
+  100% {
+    transform: perspective(700px) translateY(0) rotate(0deg) rotateY(0deg) scale(1, 1);
+  }
+  30%,
+  70% {
+    transform: perspective(700px) translateY(-2%) rotate(-5deg) rotateY(0deg) scale(1, 1);
+  }
+}
+
+@keyframes uw-mascot-blink {
+  0%,
+  90%,
+  100% {
+    transform: scaleY(1);
+  }
+  92.5% {
+    transform: scaleY(0.07);
+  }
+  95% {
+    transform: scaleY(1);
+  }
+  96.5% {
+    transform: scaleY(0.07);
+  }
+  98.5% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes uw-mascot-wink {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  28%,
+  72% {
+    transform: scaleY(0.07);
+  }
+}
+
+@keyframes uw-mascot-look {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  18% {
+    transform: translate(-1.9%, 0.4%);
+  }
+  36% {
+    transform: translate(-1.9%, 0.4%);
+  }
+  54% {
+    transform: translate(1.9%, 0);
+  }
+  72% {
+    transform: translate(1.9%, 0);
+  }
+  86% {
+    transform: translate(0, -0.6%);
+  }
+}
+
+@keyframes boot-splash-life {
+  0%,
+  1.1% {
+    opacity: 0;
+    visibility: visible;
+  }
+  2.4%,
+  99% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes boot-splash-out {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes boot-splash-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+/* No movement for people who ask for none. The page's own rule switches every animation off for them, so the loading
+   screen is simply shown (still) while it waits; the script takes it away, or gives up after 22 s. */
+@media (prefers-reduced-motion: reduce) {
+  .uw-mascot *,
+  .uw-mascot *::before,
+  .uw-mascot *::after,
+  .boot-splash-dots span {
+    animation: none !important;
+  }
+
+  .splash-on .boot-splash {
+    opacity: 1;
+    visibility: visible;
+    animation: none;
+  }
+
+  .boot-splash.is-leaving {
+    display: none;
+  }
+}
+
+@media print {
+  .boot-splash {
+    display: none !important;
+  }
+}

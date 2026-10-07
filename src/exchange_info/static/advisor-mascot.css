@@ -104,79 +104,48 @@
   pointer-events: none;
 }
 
-.advisor-mascot-stage::before {
-  position: absolute;
-  right: 8px;
-  bottom: 2px;
-  left: 8px;
-  height: 20px;
-  border-radius: 50%;
-  opacity: 0.48;
-  background: rgba(43, 108, 174, 0.2);
-  filter: blur(8px);
-  content: "";
-}
-
 .advisor-mascot-frame {
   position: relative;
   z-index: 1;
+  display: grid;
   width: var(--advisor-mascot-size);
   height: var(--advisor-mascot-size);
-  transform-origin: 50% 88%;
+  place-items: end center;
 }
 
-.advisor-mascot-image {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  visibility: hidden;
-  opacity: 0;
-  object-fit: contain;
-  object-position: center;
-  filter: drop-shadow(0 10px 12px rgba(25, 69, 117, 0.16));
-  transform-origin: 50% 88%;
-  user-select: none;
-  -webkit-user-drag: none;
-  transition:
-    opacity 150ms ease,
-    visibility 150ms ease;
+/* The mascot is a little taller than wide; size it by its height so it fills the frame. */
+.advisor-mascot-frame .uw-mascot {
+  --uw-mascot-size: calc(var(--advisor-mascot-size) * 0.8);
+  margin-bottom: 4px;
 }
 
-.advisor-assistant[data-state="idle"]
-  .advisor-mascot-image[data-mascot-pose="idle"],
-.advisor-assistant[data-state="loading"]
-  .advisor-mascot-image[data-mascot-pose="researching"],
-.advisor-assistant[data-state="success"]
-  .advisor-mascot-image[data-mascot-pose="complete"],
-.advisor-assistant[data-state="insufficient"]
-  .advisor-mascot-image[data-mascot-pose="insufficient"],
-.advisor-assistant[data-state="error"]
-  .advisor-mascot-image[data-mascot-pose="insufficient"] {
-  visibility: visible;
-  opacity: 1;
-}
-
-.advisor-assistant[data-state="loading"]
-  .advisor-mascot-image[data-mascot-pose="researching"] {
+/* One mascot, five moods: the same suitcase moves differently for each state of the assistant. */
+.advisor-assistant[data-state="loading"] .uw-mascot-body {
   animation: advisor-mascot-loading-bob 1.9s ease-in-out infinite;
 }
 
-.advisor-assistant[data-state="success"]
-  .advisor-mascot-image[data-mascot-pose="complete"] {
-  animation: advisor-mascot-success-pop 680ms
-    cubic-bezier(0.2, 0.86, 0.28, 1.18) both;
+.advisor-assistant[data-state="loading"] .uw-mascot-eyes {
+  animation-duration: 2.2s;
 }
 
-.advisor-assistant[data-state="insufficient"]
-  .advisor-mascot-image[data-mascot-pose="insufficient"] {
+.advisor-assistant[data-state="success"] .uw-mascot-body {
+  animation: advisor-mascot-success-pop 680ms cubic-bezier(0.2, 0.86, 0.28, 1.18)
+    both;
+}
+
+.advisor-assistant[data-state="insufficient"] .uw-mascot-body {
   animation: advisor-mascot-insufficient-tilt 720ms ease-out both;
 }
 
-.advisor-assistant[data-state="error"]
-  .advisor-mascot-image[data-mascot-pose="insufficient"] {
+.advisor-assistant[data-state="error"] .uw-mascot-body {
   animation: advisor-mascot-error-shake 560ms ease-out both;
+}
+
+/* When there is not enough to answer with, the suitcase looks up and to the side, as if thinking. */
+.advisor-assistant[data-state="insufficient"] .uw-mascot-eyes,
+.advisor-assistant[data-state="error"] .uw-mascot-eyes {
+  transform: translate(-1.9%, -1.5%);
+  animation: none;
 }
 
 .advisor-mascot-scan,
@@ -375,14 +344,6 @@ html[data-theme="dark"] .advisor-assistant[data-state] {
 
 html[data-theme="dark"] .advisor-assistant[data-state]::before {
   opacity: 0.34;
-}
-
-html[data-theme="dark"] .advisor-mascot-stage::before {
-  background: rgba(64, 158, 205, 0.24);
-}
-
-html[data-theme="dark"] .advisor-mascot-image {
-  filter: drop-shadow(0 11px 15px rgba(0, 0, 0, 0.32));
 }
 
 html[data-theme="dark"] .advisor-mascot-paper {

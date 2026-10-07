@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="/static/platform.css?v=20260721-student-survival-4" />
     <link rel="stylesheet" href="/static/product-v2.css?v=20261006-terms-1" />
     <link rel="stylesheet" href="/static/icon-motion.css?v=20260820-icon-motion-1" />
-    <link rel="stylesheet" href="/static/advisor-mascot.css?v=20260820-advisor-mascot-1" />
+    <link rel="stylesheet" href="/static/mascot.css?v=20261007-mascot-2" />
+    <link rel="stylesheet" href="/static/advisor-mascot.css?v=20261007-mascot-2" />
     <link rel="stylesheet" href="/static/uniway.css?v=20260820-uniway-1" />
     <link rel="stylesheet" href="/static/partner-map.css?v=20260923-no-lines-3" />
     <link rel="stylesheet" href="/static/school-detail.css?v=20260924-concise-zh-1" />
@@ -35,8 +36,21 @@
     <link rel="stylesheet" href="/static/destination-tips.css?v=20261004-tips-2" />
     <link rel="stylesheet" href="/static/brand.css?v=20261004-logo-2" />
     <link rel="stylesheet" href="/static/responsive.css?v=20261007-responsive-1" />
+    <noscript><style>.boot-splash { display: none !important; }</style></noscript>
   </head>
   <body class="global-home-mode unified-shell">
+    <div id="boot-splash" class="boot-splash" role="status" aria-live="polite">
+      <span class="uw-mascot" data-mood="busy" data-play aria-hidden="true">
+        <span class="uw-mascot-shadow"></span>
+        <span class="uw-mascot-body">
+          <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261007-mascot-2" alt="" width="384" height="460" decoding="async" fetchpriority="high" draggable="false" />
+          <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
+        </span>
+      </span>
+      <p class="boot-splash-title">正在載入中<span class="boot-splash-dots" aria-hidden="true"><span>.</span><span>.</span><span>.</span></span></p>
+      <p class="boot-splash-hint" aria-hidden="true">伺服器剛醒來，需要多一點時間，再等一下就好。</p>
+    </div>
+    <script src="/static/mascot.js?v=20261007-mascot-2"></script>
     <a class="skip-link" href="#main-content">跳到主要內容</a>
     <aside id="glass-navigation" class="glass-navigation-rail" aria-label="系統功能" tabindex="-1">
       <button id="glass-menu-close" type="button" class="icon-button glass-menu-close" aria-label="關閉功能選單"><i data-lucide="x" aria-hidden="true"></i></button>
@@ -552,10 +566,13 @@
                 <section id="advisor-assistant" class="advisor-assistant" data-state="idle" aria-busy="false" aria-labelledby="advisor-assistant-title">
                   <div class="advisor-mascot-stage" aria-hidden="true">
                     <div class="advisor-mascot-frame">
-                      <img class="advisor-mascot-image" data-mascot-pose="idle" src="/static/assets/advisor-mascot/idle.png?v=20260820-1" alt="" loading="lazy" decoding="async" />
-                      <img class="advisor-mascot-image" data-mascot-pose="researching" src="/static/assets/advisor-mascot/researching.png?v=20260820-1" alt="" loading="lazy" decoding="async" />
-                      <img class="advisor-mascot-image" data-mascot-pose="complete" src="/static/assets/advisor-mascot/complete.png?v=20260820-1" alt="" loading="lazy" decoding="async" />
-                      <img class="advisor-mascot-image" data-mascot-pose="insufficient" src="/static/assets/advisor-mascot/insufficient.png?v=20260820-1" alt="" loading="lazy" decoding="async" />
+                      <span class="uw-mascot" data-play>
+                        <span class="uw-mascot-shadow"></span>
+                        <span class="uw-mascot-body">
+                          <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261007-mascot-2" alt="" width="384" height="460" loading="lazy" decoding="async" draggable="false" />
+                          <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
+                        </span>
+                      </span>
                       <span class="advisor-mascot-scan"></span>
                       <span class="advisor-mascot-paper one"></span>
                       <span class="advisor-mascot-paper two"></span>
@@ -1092,6 +1109,6 @@
     <script src="/static/document-workbench.js?v=20261002-flow-2" defer></script>
     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
     <script src="/static/analytics.js?v=20261003-analytics-1" defer></script>
-    <script src="/static/app.js?v=20261007-forum-1" defer></script>
+    <script src="/static/app.js?v=20261007-mascot-2" defer></script>
   </body>
 </html>

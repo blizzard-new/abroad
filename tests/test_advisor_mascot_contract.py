@@ -1,49 +1,32 @@
 from __future__ import annotations
 
 import re
-import struct
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 STATIC_DIR = ROOT / "src" / "exchange_info" / "static"
-ASSET_DIR = STATIC_DIR / "assets" / "advisor-mascot"
+MASCOT_PICTURE = STATIC_DIR / "assets" / "mascot" / "suitcase.webp"
 HTML = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
 SCRIPT = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
 MASCOT_STYLES = STATIC_DIR / "advisor-mascot.css"
-
-POSE_ASSETS = {
-    "idle": ASSET_DIR / "idle.png",
-    "loading": ASSET_DIR / "researching.png",
-    "success": ASSET_DIR / "complete.png",
-    "insufficient": ASSET_DIR / "insufficient.png",
-}
-
-
-def _png_ihdr(path: Path) -> bytes:
-    payload = path.read_bytes()
-    assert payload.startswith(b"\x89PNG\r\n\x1a\n"), f"{path.name} is not a PNG"
-
-    chunk_length = struct.unpack(">I", payload[8:12])[0]
-    assert payload[12:16] == b"IHDR", f"{path.name} does not start with IHDR"
-    ihdr = payload[16 : 16 + chunk_length]
-    assert len(ihdr) == 13, f"{path.name} has an invalid IHDR"
-    return ihdr
 
 
 def _css_without_comments(source: str) -> str:
     return re.sub(r"/\*.*?\*/", "", source, flags=re.DOTALL)
 
 
-def test_advisor_mascot_assets_are_rgba_pngs_with_transparency_support() -> None:
-    for pose, path in POSE_ASSETS.items():
-        assert path.is_file(), f"missing {pose} pose: {path}"
-        ihdr = _png_ihdr(path)
-        width, height = struct.unpack(">II", ihdr[:8])
-        color_type = ihdr[9]
-
-        assert width > 0 and height > 0
-        assert color_type == 6, f"{path.name} must be an RGBA PNG (color type 6)"
+def test_the_mascot_picture_is_a_small_transparent_webp_and_the_old_pictures_are_gone() -> None:
+    payload = MASCOT_PICTURE.read_bytes()
+    assert payload[:4] == b"RIFF" and payload[8:12] == b"WEBP"
+    assert payload[12:16] == b"VP8X", "an extended WebP, so it can carry transparency"
+    assert payload[20] & 0x10, "the alpha flag is set"
+    width = int.from_bytes(payload[24:27], "little") + 1
+    height = int.from_bytes(payload[27:30], "little") + 1
+    assert (width, height) == (384, 460)
+    assert len(payload) < 60 * 1024, "every visitor downloads it before the page shows"
+    assert not (STATIC_DIR / "assets" / "advisor-mascot").exists(), "the old pictures are no longer shipped"
+    assert "advisor-mascot/" not in HTML and "advisor-mascot-image" not in HTML
 
 
 def test_advisor_markup_keeps_the_assistant_and_result_content_persistent() -> None:
@@ -55,16 +38,12 @@ def test_advisor_markup_keeps_the_assistant_and_result_content_persistent() -> N
         flags=re.IGNORECASE,
     )
 
-    image_tags = re.findall(r"<img\b[^>]*>", HTML, flags=re.IGNORECASE)
-    expected_sources = {
-        f"/static/assets/advisor-mascot/{path.name}" for path in POSE_ASSETS.values()
-    }
-    rendered_sources = {
-        match.group(1).split("?", 1)[0]
-        for tag in image_tags
-        if (match := re.search(r'src=["\']([^"\']+)["\']', tag, flags=re.IGNORECASE))
-    }
-    assert expected_sources <= rendered_sources
+    assistant = HTML[HTML.index('id="advisor-assistant"'):HTML.index('id="advisor-result-content"')]
+    assert assistant.count('class="uw-mascot"') == 1
+    assert assistant.count('class="uw-mascot-eye"') == 2, "two eyes, drawn by the stylesheet"
+    pictures = re.findall(r"<img\b[^>]*>", assistant)
+    assert len(pictures) == 1 and "/static/assets/mascot/suitcase.webp" in pictures[0]
+    assert HTML.index("mascot.css") < HTML.index("advisor-mascot.css"), "the card's rules build on the mascot's"
 
     assert re.search(r'\$\("#advisor-result-content"\)\.innerHTML\s*=', SCRIPT)
     assert not re.search(r'\$\("#advisor-result"\)\.innerHTML\s*=', SCRIPT)

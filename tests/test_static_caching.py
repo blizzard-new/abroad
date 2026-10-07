@@ -42,14 +42,17 @@ def test_only_successful_static_answers_get_the_header_and_nothing_else_changes(
     assert "max-age=86400" not in health.headers.get("cache-control", "")
 
 
-def test_the_advisor_pictures_are_not_downloaded_until_that_part_of_the_page_is_shown() -> None:
+def test_the_advisor_card_picture_waits_for_its_page_but_the_loading_screen_picture_does_not() -> None:
     html = (STATIC / "index.html").read_text(encoding="utf-8")
-    tags = [line for line in html.splitlines() if 'class="advisor-mascot-image"' in line]
-    assert len(tags) == 4 and all('loading="lazy"' in line for line in tags)
+    tags = [line for line in html.splitlines() if 'class="uw-mascot-picture"' in line]
+    assert len(tags) == 2
+    loading_screen, advisor_card = tags
+    assert 'loading="lazy"' not in loading_screen and 'fetchpriority="high"' in loading_screen
+    assert 'loading="lazy"' in advisor_card
 
 
 def test_the_pictures_every_visitor_downloads_first_stay_small() -> None:
     """The CGU campus photo was a 1.9 MB, 1920px file shown as a thumbnail and a card picture."""
     assets = STATIC / "assets"
-    for name, limit_kb in (("cgu-campus.jpg", 400), ("ntpu-campus.jpg", 400), ("journey/explorer.webp", 400)):
+    for name, limit_kb in (("cgu-campus.jpg", 400), ("ntpu-campus.jpg", 400), ("journey/explorer.webp", 400), ("mascot/suitcase.webp", 60)):
         assert (assets / name).stat().st_size < limit_kb * 1024, name
