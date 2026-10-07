@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="/static/document-workbench.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/destination-tips.css?v=20261004-tips-2" />
     <link rel="stylesheet" href="/static/brand.css?v=20261004-logo-2" />
+    <link rel="stylesheet" href="/static/feedback.css?v=20261008-3" />
     <link rel="stylesheet" href="/static/responsive.css?v=20261007-responsive-1" />
     <noscript><style>.boot-splash { display: none !important; }</style></noscript>
   </head>
@@ -68,6 +69,7 @@
             <a href="#home" data-public-route="home"><i data-lucide="house" aria-hidden="true"></i><span>首頁</span></a>
             <a href="#partners" data-public-route="partners"><i data-lucide="search" aria-hidden="true"></i><span>學校搜尋</span></a>
             <a href="#forum" data-public-route="forum"><i data-lucide="messages-square" aria-hidden="true"></i><span>論壇</span></a>
+            <a href="#feedback" data-public-route="feedback"><i data-lucide="message-square-heart" aria-hidden="true"></i><span>用戶評價</span></a>
             <details id="application-tools" class="application-tools application-nav-group">
               <summary>
                 <a href="#advisor" data-public-route="overview" data-requires-home-school><i data-lucide="clipboard-list" aria-hidden="true"></i><span>我的申請</span></a>
@@ -183,7 +185,7 @@
           <button type="button" role="tab" aria-selected="false" data-auth-mode="register">建立帳號</button>
         </div>
         <div class="terms-consent-row">
-          <label class="terms-consent"><input type="checkbox" id="terms-consent" data-terms-version="2026-10-07" aria-describedby="terms-consent-hint" /><span>我已閱讀並同意<a href="/terms" target="_blank" rel="noopener">使用條款</a>與<a href="/privacy" target="_blank" rel="noopener">隱私權政策</a>（新視窗開啟）</span></label>
+          <label class="terms-consent"><input type="checkbox" id="terms-consent" data-terms-version="2026-10-08" aria-describedby="terms-consent-hint" /><span>我已閱讀並同意<a href="/terms" target="_blank" rel="noopener">使用條款</a>與<a href="/privacy" target="_blank" rel="noopener">隱私權政策</a>（新視窗開啟）</span></label>
           <p id="terms-consent-hint" class="terms-consent-hint" role="alert" hidden>建立帳號或登入前，請先勾選同意。</p>
         </div>
         <div id="oauth-provider-list" class="oauth-provider-list" aria-label="快速登入方式">
@@ -390,6 +392,65 @@
               <a class="guide-plan-link" href="#overview" data-requires-home-school><span class="guide-plan-icon"><i data-lucide="route" aria-hidden="true"></i></span><span><strong>已經開始準備了？</strong><small>回到我的交換計畫</small></span><i data-lucide="arrow-right" aria-hidden="true"></i></a>
               <details class="guide-faq"><summary>校內甄選和合作校申請有什麼不同？<i data-lucide="plus" aria-hidden="true"></i></summary><p>一般先由就讀學校甄選與提名，再向合作校申請。兩邊的文件與期限可能不同，請分別確認當期公告。</p><a href="#deadlines" data-requires-home-school>查看官方截止日<i data-lucide="arrow-right" aria-hidden="true"></i></a></details>
             </div>
+          </section>
+          <section id="feedback" class="page-section feedback-page" data-university-page="feedback" aria-labelledby="feedback-title" hidden>
+            <header class="feedback-intro">
+              <div>
+                <span class="section-kicker">用戶評價</span>
+                <h1 id="feedback-title">說說你的想法</h1>
+                <p>UniWay 還在長大。哪裡好用、哪裡卡住、想要什麼新功能，都可以寫在這裡，我們會一則一則看。</p>
+              </div>
+              <span class="uw-mascot feedback-mascot" data-play data-tilt aria-hidden="true">
+                <span class="uw-mascot-shadow"></span>
+                <span class="uw-mascot-body">
+                  <span class="uw-mascot-tilt">
+                    <span class="uw-mascot-slab"></span>
+                    <img class="uw-mascot-picture" src="/static/assets/mascot/suitcase.webp?v=20261007-solid-1" alt="" width="384" height="460" loading="lazy" decoding="async" draggable="false" />
+                    <span class="uw-mascot-sheen"></span>
+                    <span class="uw-mascot-eyes"><span class="uw-mascot-eye"></span><span class="uw-mascot-eye"></span></span>
+                  </span>
+                </span>
+              </span>
+            </header>
+            <form id="feedback-form" class="feedback-form glass-panel" novalidate>
+              <fieldset class="feedback-kinds">
+                <legend>你想說的是</legend>
+                <label><input type="radio" name="kind" value="suggestion" checked /><span>建議</span></label>
+                <label><input type="radio" name="kind" value="bug" /><span>問題回報</span></label>
+                <label><input type="radio" name="kind" value="praise" /><span>稱讚</span></label>
+                <label><input type="radio" name="kind" value="other" /><span>其他</span></label>
+              </fieldset>
+              <fieldset class="feedback-rating">
+                <legend>整體感覺（選填）</legend>
+                <div class="feedback-stars" role="radiogroup" aria-label="整體評分">
+                  <input id="feedback-star-5" type="radio" name="rating" value="5" /><label for="feedback-star-5" aria-label="5 顆星">★</label>
+                  <input id="feedback-star-4" type="radio" name="rating" value="4" /><label for="feedback-star-4" aria-label="4 顆星">★</label>
+                  <input id="feedback-star-3" type="radio" name="rating" value="3" /><label for="feedback-star-3" aria-label="3 顆星">★</label>
+                  <input id="feedback-star-2" type="radio" name="rating" value="2" /><label for="feedback-star-2" aria-label="2 顆星">★</label>
+                  <input id="feedback-star-1" type="radio" name="rating" value="1" /><label for="feedback-star-1" aria-label="1 顆星">★</label>
+                </div>
+                <button id="feedback-clear-rating" type="button" class="text-action" hidden>清除評分</button>
+              </fieldset>
+              <label class="feedback-field">
+                <span>內容</span>
+                <textarea id="feedback-message" name="message" rows="6" minlength="5" maxlength="2000" required placeholder="例如：希望學校搜尋可以直接比較學費；或是某個頁面在手機上看不清楚。"></textarea>
+                <small id="feedback-count" aria-live="off">0 / 2000</small>
+              </label>
+              <label class="feedback-field">
+                <span>聯絡方式（選填）</span>
+                <input name="contact" type="text" maxlength="120" autocomplete="off" placeholder="電子郵件或 LINE ID" />
+                <small class="feedback-hint">只有需要回覆你的時候才會用到；不想被聯絡就留空。</small>
+              </label>
+              <div class="feedback-trap" aria-hidden="true"><label>網站<input name="website" type="text" tabindex="-1" autocomplete="off" /></label></div>
+              <p class="feedback-note"><i data-lucide="shield-check" aria-hidden="true"></i><span>請不要填寫密碼、身分證字號、學號等個人資料。你的留言只有網站管理員看得到。詳見<a href="/privacy">隱私權政策</a>。</span></p>
+              <div id="feedback-status" class="form-status feedback-status" role="status" aria-live="polite"></div>
+              <button id="feedback-submit" type="submit" class="primary-button"><i data-lucide="send" aria-hidden="true"></i><span>送出</span></button>
+            </form>
+            <section id="feedback-thanks" class="feedback-thanks glass-panel" aria-live="polite" hidden>
+              <h2>謝謝你！我們收到了</h2>
+              <p>你的想法會幫助 UniWay 變得更好。</p>
+              <button id="feedback-again" type="button" class="secondary-button">再寫一則</button>
+            </section>
           </section>
           <section id="overview" class="overview-section visual-overview" data-university-page="overview" aria-labelledby="personal-plan-title">
             <section class="personal-plan-board glass-panel" aria-labelledby="personal-plan-title">
@@ -1129,6 +1190,7 @@
     <script src="/static/document-workbench.js?v=20261002-flow-2" defer></script>
     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
     <script src="/static/analytics.js?v=20261003-analytics-1" defer></script>
-    <script src="/static/app.js?v=20261007-solid-1" defer></script>
+    <script src="/static/feedback.js?v=20261008-2" defer></script>
+    <script src="/static/app.js?v=20261008-feedback-1" defer></script>
   </body>
 </html>

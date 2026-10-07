@@ -237,6 +237,7 @@ const WORKFLOW_SOURCE_LABELS = {
 };
 const UNIVERSITY_PAGE_ROUTES = new Set([
   "guide",
+  "feedback",
   "overview",
   "advisor",
   "partners",
@@ -255,6 +256,7 @@ const UNIVERSITY_PAGE_ROUTES = new Set([
 ]);
 const UNIVERSITY_PAGE_TITLES = {
   guide: "首頁",
+  feedback: "用戶評價",
   overview: "我的申請",
   advisor: "選校規劃",
   partners: "找交換學校",
@@ -11883,7 +11885,7 @@ function isUniversityBoardRoute(hash = window.location.hash) {
 }
 
 function isPublicExplorationRoute(hash = window.location.hash) {
-  return hash === "#home" || hash === "#partners" || hash === "#search" || /^#school=/.test(hash);
+  return hash === "#home" || hash === "#feedback" || hash === "#partners" || hash === "#search" || /^#school=/.test(hash);
 }
 
 function isPersonalizedRoute(hash = window.location.hash) {

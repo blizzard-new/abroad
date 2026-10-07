@@ -1,0 +1,264 @@
+/* The 用戶評價 page: a short form for suggestions, problem reports and kind words. */
+
+.feedback-intro {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 26px 24px 12px;
+}
+
+.feedback-intro h1 {
+  margin: 8px 0 12px;
+  font-size: clamp(28px, 3.4vw, 42px);
+  line-height: 1.3;
+}
+
+.feedback-intro p {
+  max-width: 34em;
+  margin: 0;
+  color: var(--uw-muted, #52606d);
+  line-height: 1.8;
+}
+
+.feedback-mascot {
+  --uw-mascot-size: 128px;
+  flex-shrink: 0;
+  margin-right: 12px;
+}
+
+.feedback-form {
+  display: grid;
+  gap: 20px;
+  max-width: 760px;
+  margin: 12px 0 0;
+  padding: 24px;
+}
+
+.feedback-form[hidden] {
+  display: none;
+}
+
+.feedback-form fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.feedback-form legend {
+  margin-bottom: 10px;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.feedback-kinds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+}
+
+.feedback-kinds legend {
+  flex-basis: 100%;
+}
+
+.feedback-kinds label {
+  position: relative;
+}
+
+.feedback-kinds input,
+.feedback-stars input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.feedback-kinds span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--uw-line, #d6dee6);
+  border-radius: 999px;
+  background: var(--glass-surface, rgba(255, 255, 255, 0.7));
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.feedback-kinds input:checked + span {
+  border-color: var(--uw-blue-strong, #0b6e99);
+  background: var(--uw-blue-soft, #e1f3fa);
+  color: var(--uw-blue-strong, #0b6e99);
+  font-weight: 700;
+}
+
+.feedback-kinds input:focus-visible + span,
+.feedback-stars input:focus-visible + label {
+  outline: 3px solid var(--uw-blue-strong, #0b6e99);
+  outline-offset: 2px;
+}
+
+.feedback-rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 14px;
+}
+
+.feedback-rating legend {
+  flex-basis: 100%;
+}
+
+/* The stars are written 5 to 1 and shown 1 to 5, so "this one and every one before it" is a plain sibling selector. */
+.feedback-stars {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.feedback-stars label {
+  padding: 0 3px;
+  color: #c4ccd6;
+  font-size: 34px;
+  line-height: 44px;
+  cursor: pointer;
+  transition: color 120ms ease, transform 120ms ease;
+}
+
+.feedback-stars input:checked ~ label,
+.feedback-stars label:hover,
+.feedback-stars label:hover ~ label {
+  color: #f0a919;
+}
+
+.feedback-stars label:hover {
+  transform: scale(1.12);
+}
+
+.feedback-field {
+  display: grid;
+  gap: 8px;
+}
+
+.feedback-field > span {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.feedback-field textarea,
+.feedback-field input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--uw-line, #d6dee6);
+  border-radius: 14px;
+  background: var(--uw-surface, #fff);
+  color: inherit;
+  font: inherit;
+  line-height: 1.7;
+}
+
+.feedback-field textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.feedback-field :is(textarea, input):focus-visible {
+  border-color: var(--uw-blue-strong, #0b6e99);
+  outline: 3px solid color-mix(in srgb, var(--uw-blue-strong, #0b6e99) 30%, transparent);
+}
+
+.feedback-field .feedback-hint {
+  justify-self: start;
+}
+
+.feedback-field small {
+  justify-self: end;
+  color: var(--uw-muted, #52606d);
+  font-size: 12px;
+}
+
+/* Hidden from people (and from the screen reader); only a bot fills it in. */
+.feedback-trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.feedback-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  color: var(--uw-muted, #52606d);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.feedback-note .lucide {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+}
+
+.feedback-status {
+  min-height: 1.4em;
+  font-size: 14px;
+}
+
+.feedback-status.is-error {
+  color: #a63937;
+}
+
+.feedback-form .primary-button {
+  justify-self: start;
+  min-width: 140px;
+  min-height: 48px;
+}
+
+.feedback-thanks {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  max-width: 760px;
+  margin: 12px 0 0;
+  padding: 28px 24px;
+}
+
+.feedback-thanks[hidden] {
+  display: none;
+}
+
+.feedback-thanks h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.feedback-thanks p {
+  margin: 0 0 12px;
+  color: var(--uw-muted, #52606d);
+}
+
+@media (max-width: 560px) {
+  .feedback-intro {
+    padding: 16px 4px 8px;
+  }
+
+  .feedback-mascot {
+    --uw-mascot-size: 92px;
+    margin-right: 0;
+  }
+
+  .feedback-form {
+    padding: 18px 16px;
+  }
+
+  .feedback-form .primary-button {
+    justify-self: stretch;
+  }
+}

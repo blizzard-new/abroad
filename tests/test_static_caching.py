@@ -42,14 +42,14 @@ def test_only_successful_static_answers_get_the_header_and_nothing_else_changes(
     assert "max-age=86400" not in health.headers.get("cache-control", "")
 
 
-def test_the_advisor_card_picture_waits_for_its_page_but_the_pictures_everyone_sees_first_do_not() -> None:
+def test_pictures_on_pages_nobody_has_opened_yet_wait_but_the_ones_everyone_sees_first_do_not() -> None:
     html = (STATIC / "index.html").read_text(encoding="utf-8")
     tags = [line for line in html.splitlines() if 'class="uw-mascot-picture"' in line]
-    assert len(tags) == 3, "the loading screen, the home page header and the advisor card"
-    loading_screen, home_header, advisor_card = tags
+    assert len(tags) == 4, "the loading screen, the home page header, the user reviews page and the advisor card"
+    loading_screen, home_header, reviews_page, advisor_card = tags
     assert 'loading="lazy"' not in loading_screen and 'fetchpriority="high"' in loading_screen
     assert 'loading="lazy"' not in home_header
-    assert 'loading="lazy"' in advisor_card
+    assert 'loading="lazy"' in reviews_page and 'loading="lazy"' in advisor_card
 
 
 def test_the_pictures_every_visitor_downloads_first_stay_small() -> None:

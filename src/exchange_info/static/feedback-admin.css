@@ -1,0 +1,15 @@
+.feedback-list { display: grid; gap: 0.8rem; }
+.feedback-item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 0.9rem 1.1rem; display: grid; gap: 0.6rem; min-width: 0; }
+.feedback-item[data-status="new"] { border-left: 5px solid var(--accent); }
+.feedback-item[data-status="done"] { opacity: 0.78; }
+.feedback-meta { display: flex; flex-wrap: wrap; gap: 0.4rem 0.8rem; align-items: center; color: var(--muted); font-size: 0.82rem; }
+.feedback-kind { font-weight: 700; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 0.1rem 0.6rem; }
+.feedback-kind[data-kind="bug"] { color: var(--bad); background: color-mix(in srgb, var(--bad) 14%, var(--card)); }
+.feedback-kind[data-kind="praise"] { color: var(--good); background: color-mix(in srgb, var(--good) 14%, var(--card)); }
+.feedback-stars { color: var(--warn); letter-spacing: 0.1em; }
+.feedback-message { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 1rem; }
+.feedback-contact { margin: 0; font-size: 0.86rem; color: var(--muted); overflow-wrap: anywhere; }
+.feedback-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.feedback-actions input { flex: 1 1 14rem; min-width: 0; font: inherit; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 0.4rem 0.7rem; }
+.feedback-saved { color: var(--good); font-size: 0.82rem; }
+.feedback-empty { text-align: center; padding: 2.5rem 1rem; color: var(--muted); }

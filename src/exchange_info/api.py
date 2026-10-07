@@ -46,6 +46,8 @@ from .advisor import answer_question, build_advisor_plan
 from .analytics import AnalyticsService, ApiMetricsMiddleware
 from .analytics_repository import create_analytics_repository
 from .analytics_routes import register_analytics_routes
+from .feedback import FeedbackService, create_feedback_repository
+from .feedback_routes import register_feedback_routes
 from .notification_routes import register_notification_routes
 from .openapi_contract import install_openapi_contract
 from .workflow_review_routes import register_workflow_review_routes
@@ -540,6 +542,7 @@ PRODUCTION_PERSISTENCE_BACKENDS: dict[str, str] = {
     "community_suspension": "supabase",
     "workflow_issue_reports": "supabase",
     "analytics": "supabase",
+    "feedback": "supabase",
 }
 
 
@@ -655,6 +658,7 @@ def create_app(
     community_repository: Any = None,
     workflow_issue_report_repository: Any = None,
     analytics_repository: Any = None,
+    feedback_repository: Any = None,
 ) -> FastAPI:
     resolved_data_dir = Path(
         data_dir or os.environ.get("EXCHANGE_INFO_DATA_DIR") or DEFAULT_DATA_DIR
@@ -701,6 +705,7 @@ def create_app(
             (analytics_repository or create_analytics_repository(resolved_data_dir))
             if analytics_on or analytics_repository is not None else None
         )
+        feedback_service = FeedbackService(feedback_repository or create_feedback_repository(resolved_data_dir))
     except Exception as e:
         if is_production:
             raise RuntimeError("正式環境禁止使用本機持久層") from e
@@ -717,6 +722,7 @@ def create_app(
         "community_suspension": getattr(comm_repo, "backend_name", "jsonl"),
         "workflow_issue_reports": getattr(issue_repo, "backend_name", "local-jsonl"),
         "analytics": analytics_service.backend_name,
+        "feedback": feedback_service.backend_name,
     }
 
     if is_production:
@@ -753,6 +759,7 @@ def create_app(
     app.state.community_repository = comm_repo
     app.state.workflow_issue_report_repository = issue_repo
     app.state.analytics = analytics_service
+    app.state.feedback_service = feedback_service
     app.state.persistence_backends = PRODUCTION_PERSISTENCE_BACKENDS if is_production else backends
     catalog_request: ContextVar[Request | None] = ContextVar("catalog_request", default=None)
 
@@ -918,6 +925,17 @@ def create_app(
     register_analytics_routes(
         app, analytics_service, authenticated_content_admin,
         static_dir=STATIC_DIR, school_countries=catalogue_countries,
+    )
+
+    def optional_account(request: Request) -> UserAccount | None:
+        """Whoever is signed in, or nobody: the feedback form is open to everyone."""
+        try:
+            return authenticated_account(request)[0]
+        except HTTPException:
+            return None
+
+    register_feedback_routes(
+        app, feedback_service, authenticated_content_admin, optional_account, static_dir=STATIC_DIR,
     )
     register_legal_pages(app, STATIC_DIR)
 

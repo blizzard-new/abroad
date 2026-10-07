@@ -9,8 +9,8 @@ from scripts.validate_supabase_migrations import (
 
 def test_all_supabase_migrations_parse_including_nested_function_bodies() -> None:
     summary = validate_migrations(DEFAULT_MIGRATION_DIR.glob("*.sql"))
-    assert len(summary.results) == 27
-    assert summary.statement_count == 546
+    assert len(summary.results) == 28
+    assert summary.statement_count == 553
     assert summary.sql_body_count == 11
     assert summary.plpgsql_unit_count == 66
 

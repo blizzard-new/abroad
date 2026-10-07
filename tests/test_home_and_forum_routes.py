@@ -14,11 +14,12 @@ def _menu_links() -> list[tuple[str, str, str]]:
     return re.findall(r'<a href="(#[^"]+)" data-public-route="([^"]+)"[^>]*>.*?<span>([^<]+)</span></a>', menu, re.S)
 
 
-def test_the_menu_reads_home_search_forum_then_my_application() -> None:
+def test_the_menu_reads_home_search_forum_reviews_then_my_application() -> None:
     assert _menu_links() == [
         ("#home", "home", "首頁"),
         ("#partners", "partners", "學校搜尋"),
         ("#forum", "forum", "論壇"),
+        ("#feedback", "feedback", "用戶評價"),
         ("#advisor", "overview", "我的申請"),
     ]
     assert "申請指南</span></a>" not in re.search(r'<nav class="uniway-public-nav".*?</nav>', HTML, re.S).group(0)

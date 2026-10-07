@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="/static/assets/brand/favicon.ico?v=20261004-logo-2" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/assets/brand/favicon-32.png?v=20261004-logo-2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/assets/brand/apple-touch-icon.png?v=20261004-logo-2" />
+    <title>用戶評價收件匣 | UniWay</title>
+    <link rel="stylesheet" href="/static/analytics-dashboard.css?v=20261003-1" />
+    <link rel="stylesheet" href="/static/feedback-admin.css?v=20261008-1" />
+  </head>
+  <body>
+    <header class="top">
+      <div>
+        <p class="eyebrow">UniWay 管理</p>
+        <h1>用戶評價收件匣</h1>
+        <p class="sub" id="summary-line">載入中…</p>
+      </div>
+      <form class="controls" id="controls" aria-label="篩選">
+        <label>狀態
+          <select id="status-filter">
+            <option value="">全部</option>
+            <option value="new">新的</option>
+            <option value="read">已讀</option>
+            <option value="done">已處理</option>
+          </select>
+        </label>
+        <label>類型
+          <select id="kind-filter">
+            <option value="">全部</option>
+            <option value="suggestion">建議</option>
+            <option value="bug">問題回報</option>
+            <option value="praise">稱讚</option>
+            <option value="other">其他</option>
+          </select>
+        </label>
+        <button type="submit">重新整理</button>
+        <a class="button" href="/admin/feedback/export.csv">匯出 CSV</a>
+      </form>
+    </header>
+
+    <main aria-live="polite">
+      <section class="grid kpis" id="kpis" aria-label="總覽"></section>
+      <p class="notice" id="status">正在讀取…</p>
+      <section id="list" class="feedback-list" aria-label="用戶評價"></section>
+    </main>
+
+    <footer class="foot">
+      <p>時間為台北時間。內容只有管理員看得到；不存 IP、帳號或電子郵件，「聯絡方式」只是留言的人自己選擇填寫的。請不要把這裡的內容轉貼到公開的地方。</p>
+    </footer>
+    <script src="/static/feedback-admin.js?v=20261008-2" defer></script>
+  </body>
+</html>
