@@ -1,7 +1,7 @@
 [project]
 name = "taiwan-exchange-info"
 version = "0.1.0"
-description = "Web-first exchange application guide for Taiwan university students, supporting Chang Gung University, National Taipei University and National Taiwan University."
+description = "Web-first exchange application guide for Taiwan university students, supporting CGU, NTPU, NTU and NCU."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -50,6 +50,7 @@ exchange_info = [
     "official_data/**/*.json",
     "official_data/**/*.json.gz",
     "official_data/**/*.jsonl",
+    "official_data/**/*.csv",
 ]
 
 [tool.pytest.ini_options]

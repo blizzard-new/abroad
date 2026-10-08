@@ -1,0 +1,19 @@
+{
+  "base_commit": "f6ad1b8",
+  "baseline_worktree": "/tmp/abroad-ncu-baseline",
+  "test_module": "tests/test_ntpu_bundled_data.py",
+  "baseline": {
+    "passed": 3,
+    "failed": 1
+  },
+  "branch_initial_run": {
+    "passed": 3,
+    "failed": 1
+  },
+  "same_failure_identifier": "test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+  "actual": "destination_profile_count == 0",
+  "expected": "destination_profile_count == 1",
+  "production_database_accessed": false,
+  "lock_check_baseline": "uv lock --offline --check fails on f6ad1b8: stale pytesseract remains in lock but not pyproject",
+  "lock_check_branch": "offline lock regeneration removes only unreferenced pytesseract; --check passes"
+}

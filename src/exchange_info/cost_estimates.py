@@ -17,6 +17,7 @@ from pathlib import Path
 from typing import Literal
 
 from .models import DestinationProfile
+from .ncu_eligibility import is_ncu
 
 _FX_PATH = Path(__file__).parent / "official_data" / "fx_reference.json"
 
@@ -121,7 +122,8 @@ def extract_monthly_estimates(profile: DestinationProfile) -> list[MonthlyCostEs
                 low, high = high, low
             years = [int(year) for year in _YEAR.findall(sentence)]
             as_of = max(years) if years else None
-            outdated = bool(_HISTORICAL.search(sentence)) or (
+            ncu_unconfirmed = is_ncu(profile.home_university) and profile.coverage_status != "official_verified"
+            outdated = ncu_unconfirmed or bool(_HISTORICAL.search(sentence)) or (
                 as_of is not None and as_of < _MIN_CURRENT_YEAR
             )
             results.append(

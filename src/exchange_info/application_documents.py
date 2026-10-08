@@ -849,10 +849,16 @@ def _ncu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
         return value
     payload = adapt(template.model_dump(mode="json"))
     for field in payload["fields"]:
+        if field["id"] == "degree_level" and field["options"]:
+            field["options"] = list(dict.fromkeys([*field["options"], "在職碩士班"]))
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "中央校內須中文成績名次證明；本欄僅整理資料，不替代正式文件。"
         if field["id"] == "language_test":
             field["options"] = ["TOEFL iBT", "TOEFL ITP（第4頁；與第6頁PBT差異須確認）", "IELTS Academic", "GEPT（複試通過）", "TOEIC（聽讀）", "Linguaskill（實用組）", "BESTEP", "志願校接受之第三外語檢定"]
             field["help_text"] = "校內必繳正式外語檢定成績，不限分數級數；英文檢定须兩年內有效。簡章第4頁列ITP、第6頁列PBT，先向國際處確認。合作校規定之語檢另查，提名前須具備。"
         if field["id"] == "language_result_date":
+            field["label"] = "實際考試日期"
+            field["field_type"] = "date"
             field["help_text"] = "填已發生的實際考試日期；正式英檢在校內申請及外校送件時均須有效。預計日期或網路截圖不能代替校內必繳正式成績。"
     payload.update(description=descriptions[template.id], source_url=NCU_GUIDELINES_URL,
         source_checked_at=NCU_CHECKED_AT, official_layout=False, official_form_number=None,
@@ -868,6 +874,33 @@ def application_field_required(field: ApplicationFormField, values: dict[str, An
         all(str(values.get(key, "")) in allowed for key, allowed in clause.items())
         for clause in field.required_when
     )
+
+
+def _ncu_language_validation(template: ApplicationDocumentTemplate, values: dict[str, Any]) -> dict[str, str]:
+    if template.source_url != NCU_GUIDELINES_URL or template.id != "exchange-application-data":
+        return {}
+    errors = {}
+    test = str(values.get("language_test") or "")
+    allowed = next(field.options for field in template.fields if field.id == "language_test")
+    if test and test not in allowed:
+        errors["language_test"] = "請依中央116-1正式語檢種類選擇；外校接受的其他測驗不能直接取代校內必繳證明。"
+    actual = str(values.get("language_result_date") or "")
+    if actual:
+        try:
+            date = datetime.strptime(actual, "%Y-%m-%d").date()
+            today = datetime.now(timezone.utc).date()
+            if date > today:
+                errors["language_result_date"] = "須填已發生的實際考試日期；預計日期不能代替正式語檢成績。"
+            elif test and test != "志願校接受之第三外語檢定":
+                try:
+                    expiry = date.replace(year=date.year + 2)
+                except ValueError:
+                    expiry = date.replace(year=date.year + 2, day=28)
+                if expiry < today:
+                    errors["language_result_date"] = "英文檢定已超過中央兩年效期；實際送件當日亦須有效，請備妥正式成績。"
+        except ValueError:
+            errors["language_result_date"] = "請填有效的實際考試日期。"
+    return errors
 
 
 def _ntu_language_validation(template: ApplicationDocumentTemplate, values: dict[str, Any]) -> dict[str, str]:
@@ -1271,7 +1304,7 @@ def build_packet_manifest(
             field.id: answer_for_field(field, request.profile, answers)
             for field in template.fields
         }
-        language_errors = _ntu_language_validation(template, field_values)
+        language_errors = {**_ntu_language_validation(template, field_values), **_ncu_language_validation(template, field_values)}
         attachment_payloads: list[_AttachmentPayload] = []
         attachment_errors: dict[str, str] = {}
         for field in _attachment_fields_in_order(template):

@@ -57,7 +57,7 @@ def build_school_completeness(
     include_eligibility: bool = True,
 ) -> SchoolDataCompleteness:
     from .ncu_eligibility import is_ncu
-    if is_ncu(home_university or (workflow.home_university if workflow else "")):
+    if is_ncu(home_university or (destination.home_university if destination else "") or (workflow.home_university if workflow else "")):
         from .ncu_student_view import ncu_field_audit
         audit = ncu_field_audit(partner.school_name)
         if audit:

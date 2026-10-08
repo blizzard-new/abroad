@@ -105,7 +105,7 @@ NCU = UniversityProfile(
     official_url="https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",
     coverage_note="116學年度第一梯次簡章已公告；名額預定2026/10/12公告。115年度合作項目僅供規劃，外校當期條件逐項待核對。",
     support_level="basic",
-    partner_count_hint=0,
+    partner_count_hint=214,
     academic_score_minimum=None,
     student_card_signals=("國立中央大學", "NATIONALCENTRALUNIVERSITY", "NCU"),
     # https://www.ncu.edu.tw/p/412-1000-87.php?Lang=zh-tw — checked 2026-10-08.

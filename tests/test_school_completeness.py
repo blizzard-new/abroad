@@ -73,10 +73,14 @@ def test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_
     for profile in profiles:
         result = build_school_completeness(
             PartnerUniversity(program_type="交換", school_name=profile.school_name, source_url=SOURCE), profile, None)
-        assert 0 <= result.score <= 1 and result.total_count == len(result.items) == 10
-        assert by_key(result)["workflow"].status == "missing"
+        expected_fields = 15 if profile.home_university == "國立中央大學" else 10
+        assert 0 <= result.score <= 1 and result.total_count == len(result.items) == expected_fields
+        if profile.home_university == "國立中央大學":
+            assert by_key(result)["quota"].status == "needs_confirmation"
+        else:
+            assert by_key(result)["workflow"].status == "missing"
         scores.append(result.score)
-    assert len(scores) == 571 and max(scores) < 1
+    assert len(scores) == 785 and max(scores) < 1
 
 
 def test_endpoint_returns_completeness_for_a_supported_partner(tmp_path):

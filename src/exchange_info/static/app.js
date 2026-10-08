@@ -719,6 +719,17 @@ function homeAcademicPass(profile) {
 
 function renderAcademicFields() {
   const ntu = homeSelectionRules().academic_policy === "gpa_or_rank";
+  const ncu = activeHomeSchool() === "國立中央大學";
+  for (const [selector, values] of [["#advisor-degree", ["在職碩士班"]], ["#advisor-current-year", ["大五", "大六"]]]) {
+    const select = $(selector);
+    if (ncu) {
+      for (const value of values) if (!Array.from(select.options).some(option => option.value === value)) {
+        const option = new Option(value, value);
+        option.dataset.ncuOption = "true";
+        select.add(option);
+      }
+    } else select.querySelectorAll("[data-ncu-option]").forEach(option => option.remove());
+  }
   $("#advisor-percent-field").hidden = ntu;
   $("#advisor-academic-score").disabled = ntu;
   document.querySelectorAll("[data-ntu-academic-field]").forEach((label) => {
@@ -1041,7 +1052,7 @@ async function loadSupportedUniversities() {
         official_url: "https://studyabroad.ntu.edu.tw/", supported: true,
         partner_count: 288, coverage_note: "116-1校級甄選、文件與補助；282項名額待公布，6項零名額。",
       },
-      {id:"ncu",school_name:"國立中央大學",short_name:"中央",english_name:"National Central University",hero_image:"/static/assets/ncu-campus.svg",official_url:"https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",supported:true,partner_count:0,coverage_note:"116-1簡章已公告，名額預定2026/10/12公告；115名單僅供參考。"},
+      {id:"ncu",school_name:"國立中央大學",short_name:"中央",english_name:"National Central University",hero_image:"/static/assets/ncu-campus.svg",official_url:"https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",supported:true,partner_count:214,coverage_note:"116-1簡章已公告，名額預定2026/10/12公告；214項115目錄僅供參考。"},
     ];
   }
   renderSchoolOptions();
@@ -5784,6 +5795,10 @@ function refreshApplicationFieldConditions(template) {
     if (english) { date.min = "2025-05-01"; date.max = new Date().toISOString().slice(0, 10); }
     else { date.removeAttribute("min"); date.removeAttribute("max"); }
   }
+  if (date && activeHomeSchool() === "國立中央大學") {
+    date.removeAttribute("min");
+    date.max = new Date().toISOString().slice(0, 10);
+  }
 }
 
 function applicationProfileCompletion() {
@@ -7737,8 +7752,8 @@ function openUniversityDetail(item, { updateHistory = true } = {}) {
       const report = await fetchJson(`/partner-source-audit?school=${encodeURIComponent(item.school_name)}&home_school=${encodeURIComponent(activeHomeSchool())}`);
       if (state.activeSchool !== item.school_name) return;
       body.innerHTML = `<p>查核日：${escapeHtml(report.checked_at)}。附件原文已取得；各來源年度、校區與track的適用性仍須核對。</p>
-        <ul>${Object.values(report.fields).map(row=>`<li><strong>${escapeHtml(row.label)}</strong>：${escapeHtml(row.note)}${row.unresolved ? `<small>${escapeHtml(row.unresolved)}</small>`:""}</li>`).join("")}</ul>
-        ${report.source_evidence.map(src=>`<details><summary>${escapeHtml(src.label)} · ${src.pages.length}頁（來源版本待核對）</summary><p><a href="${escapeHtml(safeSourceUrl(src.url))}" target="_blank" rel="noopener noreferrer">官方公開附件</a> · 查核${escapeHtml(src.checked_at)}</p>${src.pages.map(p=>`<details><summary>原文第${escapeHtml(p.page ?? "未標頁")}頁</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text)}</pre></details>`).join("")}</details>`).join("")}
+        <ul>${Object.values(report.fields).map(row=>`<li><strong>${escapeHtml(row.label)}</strong>：${escapeHtml(row.note)}${row.unresolved ? `<small>${escapeHtml(row.unresolved)}</small>`:""}${row.key.startsWith("home_") || row.key === "quota" ? (row.original_evidence || []).map(p=>`<details><summary>${escapeHtml(p.source_title)} · 原文第${escapeHtml(p.page)}頁</summary><p>${escapeHtml(p.applicability)} · 查核${escapeHtml(p.checked_at)} · <a href="${escapeHtml(safeSourceUrl(p.source_url))}" target="_blank" rel="noopener noreferrer">官方來源</a></p><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text)}</pre></details>`).join("") : ""}</li>`).join("")}</ul>
+        ${report.source_evidence.map(src=>`<details><summary>${escapeHtml(src.label)} · ${src.pages.length}個原文段落</summary><p>${escapeHtml(report.read_sources.find(row=>row.id === src.id)?.applicability || "適用性待核對")}</p><p><a href="${escapeHtml(safeSourceUrl(src.url))}" target="_blank" rel="noopener noreferrer">官方公開來源</a> · 查核${escapeHtml(src.checked_at)}${(src.text_quality_issues || []).length ? `<small>${escapeHtml(src.text_quality_issues.map(x=>`${x.reason}（頁${x.pages.join("、")}）`).join("；"))}</small>` : ""}${(src.non_text_pages || []).length ? `<small>第${escapeHtml(src.non_text_pages.join("、"))}頁無可抽取文字，須看官方原頁，未視為全文核對完成。</small>` : ""}</p>${src.pages.map(p=>`<details><summary>${p.page == null ? "原文（無固定PDF頁碼）" : `原文第${escapeHtml(p.page)}頁`}</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text)}</pre></details>`).join("")}</details>`).join("")}
         ${report.unretrieved_sources.length ? `<p>未取得來源：${report.unretrieved_sources.map(src=>`${escapeHtml(src.id)}：${escapeHtml(src.reason)}`).join("；")}</p>`:""}`;
       element.dataset.loaded = "true";
     } catch (error) { body.textContent = `查核記錄讀取失敗：${error.message}`; }
