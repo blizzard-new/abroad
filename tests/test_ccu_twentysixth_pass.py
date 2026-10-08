@@ -43,6 +43,9 @@ def test_mapua_calendar_dates_do_not_repair_nomination_or_old_costs():
     assert any(e.source_url == "https://fs2.mapua.edu.ph/MapuaWebsite7/ILRAD/Handbook/International%20Hand%20Book.pdf" and e.source_pages == [32] for e in fields["insurance"].evidence)
     amu = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 95)
     assert amu.partner_exchange_details["insurance"].status == "missing"
+    hcmute = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 68)
+    assert hcmute.partner_exchange_details["arrival"].status == "missing"
+    assert any(e["source_id"] == "p68-r17-support-flow" and e["status"] == "needs_confirmation" for r in read("overseas-reviewed-fields.json") if r["ccu_page"] == 68 for e in r["fields"]["program_scope"]["evidence"])
 
 
 def test_actual_uninter_current_form_reaches_document_api_without_claiming_all_attachments(tmp_path):

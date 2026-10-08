@@ -541,14 +541,14 @@
   ],
   "input_sha256": {
     "overseas-source-registry.json": "399a966b37b7d28bac0f996cc133104cb1d5104ccbbea1bc65d8b8f450d54b21",
-    "overseas-reviewed-fields.json": "b6ed4bc86b546c25a0fe7236984dd7d666b976749b8814b6554298f96d90ec5c",
+    "overseas-reviewed-fields.json": "96e61c16ce81e4dbf501b7243e32e3b9c401c51a9820e9ed4e20ac317c358373",
     "profile-reviewed-fields.json": "65c748c083d4e32055973d16272ca5dd0b1a5f0d06e23e38e9829fdeb96a6fc8",
     "partner-document-requirements.json": "c3cc1738e7b38eb1ba4e4226d06e726b4cd4b700de75273703674bbdb6ed9e51",
     "semantic-review-ledger.json": "9bb4b811c577b8b9200b6570d6ab29540e233c6ea75c77c35d1224f0530f44a5",
     "eighteenth-source-review.json": "c070091e0ada00fa375c63df48d2833b32e74da3812d138369ce1859dd1dc490",
     "nineteenth-source-review.json": "a626b74a4876a4cd1446a639eafc496316f0ab89f33729d9158c5380ca043544",
     "twentieth-source-review.json": "e0c1c3c115a50efd0fc1017bf14cc997b754ba3849074c86be641580d4b81a1a",
-    "twentyfifth-source-review.json": "18f64607a3e0f9c487056e7dab5617d6146338aec003498de7359e9773bb262f",
+    "twentyfifth-source-review.json": "697fca49b9ef8f0f40c6eda2eadd07f0b9c5b02c4abcf864cfa62a352fa6cb1f",
     "twentyfirst-source-review.json": "adb7ac6da12e135d74fd8780b53a2ad081a9655423d9849b9408cf5e5467ff98",
     "twentyfourth-source-review.json": "2e9b3b6d57bade3459e1b6fffc83353e3cf6860daa1c43e2bf60bb8b7d85b30a",
     "twentysecond-source-review.json": "d8e7f4e1b45e530c5e40079e6253975451127366247a953e242aacb66e6d0cd5",
@@ -56029,16 +56029,16 @@
             {
               "ledger": "twentyfifth-source-review.json",
               "extent": "necessary_policy_sections",
-              "checked_at": "2026-10-08T23:04:03.015322+00:00",
-              "note": "一般文化/學分/研究等多計畫流程表Inbound/Outbound兩欄不可混；每年至少10是概述非CCU名額，入境宿舍/接機/成績支援待核2027。",
+              "checked_at": "2026-10-08T23:52:26.057367+00:00",
+              "note": "一般未標年多計畫概述（semester credit、internship/thesis、culture、lab、scholarship）；至少10位是校方整體概述，非CCU名額。沒有當期arrival/orientation日期，不補抵達欄。",
               "sha256": "1423db43c04ac73c56f33f64998eb619d790a8d9f1dde4d1171a6fbdbe4b560f"
             }
           ],
           "mapped_fields": [
             {
               "kind": "host",
-              "field": "arrival",
-              "status": "needs_confirmation",
+              "field": "program_scope",
+              "status": "verified_current",
               "evidence_status": "needs_confirmation",
               "source_pages": [
                 1
@@ -56049,28 +56049,28 @@
             "source_id": "p68-r17-support-flow",
             "ccu_page": 68,
             "source_url": "https://en.hcmute.edu.vn/?ArticleId=9ba0eca6-905c-40f8-a62f-fbbcf268caa7",
-            "checked_at": "2026-10-08T23:04:03.015322+00:00",
+            "checked_at": "2026-10-08T23:52:26.057367+00:00",
             "sha256": "1423db43c04ac73c56f33f64998eb619d790a8d9f1dde4d1171a6fbdbe4b560f",
             "text_sha256": "6a1c51b32266591797f600102908755e66fbaf46400d59035f9dea9d3d75902c",
             "source_content_read": true,
             "review_extent": "necessary_policy_sections",
             "disposition": "mapped_scoped_evidence",
-            "review_note": "一般文化/學分/研究等多計畫流程表Inbound/Outbound兩欄不可混；每年至少10是概述非CCU名額，入境宿舍/接機/成績支援待核2027。",
+            "review_note": "一般未標年多計畫概述（semester credit、internship/thesis、culture、lab、scholarship）；至少10位是校方整體概述，非CCU名額。沒有當期arrival/orientation日期，不補抵達欄。",
             "body_evidence": [
               {
                 "source_pages": [
                   1
                 ],
-                "excerpt": "ters to partners for review. Organizing Support immigration procedures and prepare dormitories Support visa application procedures Receiving students, instructing on how to entry to Vietnam, move from the airport to school, exchange money, buy SIM card Connect students with"
+                "excerpt": "Every year, OIA receives at least 10 inbound students, send 10 outbound students following the ways: semester credit exchange, internship projects/thesis, cultural exchanges, lab exchanges, and scholarship programs."
               }
             ],
             "all_policy_review_complete": false,
             "completed_mappings": [
               {
                 "kind": "host",
-                "field": "arrival",
+                "field": "program_scope",
                 "status": "needs_confirmation",
-                "claim": "一般文化/學分/研究等多計畫流程表Inbound/Outbound兩欄不可混；每年至少10是概述非CCU名額，入境宿舍/接機/成績支援待核2027。",
+                "claim": "一般未標年多計畫概述（semester credit、internship/thesis、culture、lab、scholarship）；至少10位是校方整體概述，非CCU名額。沒有當期arrival/orientation日期，不補抵達欄。",
                 "source_pages": [
                   1
                 ]
@@ -56217,25 +56217,9 @@
         },
         {
           "field": "arrival",
-          "status": "needs_confirmation",
-          "reason": "本輪實讀來源可支持這個限定範圍；未核年度的條款保持待確認。",
-          "evidence": [
-            {
-              "source_id": "p68-r17-support-flow",
-              "source_url": "https://en.hcmute.edu.vn/?ArticleId=9ba0eca6-905c-40f8-a62f-fbbcf268caa7",
-              "source_pages": [
-                1
-              ],
-              "academic_year": "一般公開正文未印2027春適用年度",
-              "application_round": "2027春季",
-              "checked_at": "2026-10-08T23:04:03.015322+00:00",
-              "status": "needs_confirmation",
-              "excerpt": "ion of student, nomination letters to partners for review. Organizing Support immigration procedures and prepare dormitories Support visa application procedures Receiving students, instructing on how to entry to Vietnam, move from the airport to school, exchange money, buy SIM card Connect students with the partner school's international student support department for guidance on necessary procedures Arrange meeting between student and faculty to discuss academic issues Post-organizing Support for issues throughout the stay and study proc",
-              "note": "一般文化/學分/研究等多計畫流程表Inbound/Outbound兩欄不可混；每年至少10是概述非CCU名額，入境宿舍/接機/成績支援待核2027。",
-              "content_hash": "1423db43c04ac73c56f33f64998eb619d790a8d9f1dde4d1171a6fbdbe4b560f",
-              "text_sha256": "6a1c51b32266591797f600102908755e66fbaf46400d59035f9dea9d3d75902c"
-            }
-          ]
+          "status": "missing",
+          "reason": "第六輪已查讀公開政策/附件或活動入口，仍無此欄當期適用原文；未取得完整年度/院系/提名後資訊不等官方明示尚未公告，公開替代來源仍可續查。",
+          "evidence": []
         }
       ],
       "public_sources_exhausted": false,

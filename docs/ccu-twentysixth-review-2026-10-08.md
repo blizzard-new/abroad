@@ -8,7 +8,7 @@ Mapúa 實際展開 AY2026–2027 校曆內嵌 JPEG 並目視核讀：第三季�
 
 從實際 ILRAD tab 取得 34 頁 International Handbook，正文版權 ©2026，費用注明 April 2026 估計。保存並閱讀全份抽取文字，但未聲稱每個圖像流程已核讀。第 18 實體頁 inbound 與第 14–16 頁 outbound/SGE 分開；第 19 頁提名區間未標年份／日，不猜 2027 春確切日期。第 32 頁外籍生抵達前、全停留有效的醫療／健康保險新增為待確認與 post_offer；第 22–23 頁不同幣別估計不自行換算為當期一致價格。非學位網頁 SSP／旅遊簽與手冊第 28 頁泛稱 9F，保留身分／國籍／停留別待核；此資料不適用於 AMU 的博士生專屬保險。
 
-最終候選資料：104 所目錄、52 所非零名額、3 所名額空白、49 所灰字參考；55 所工作流程／概要。966 份保存來源。海外 935 欄為 307 current、334 pending、202 missing、71 conflict、20 reference、1 explicit_not_announced；39 校至少一項 current，0 校全 17 欄 current。文件 33 校／250 項：185 current、65 pending、59 conditional；清單完整性仍部分。概要 385 欄仍為 178 current、126 pending、61 missing、20 reference。
+最終候選資料：104 所目錄、52 所非零名額、3 所名額空白、49 所灰字參考；55 所工作流程／概要。966 份保存來源。海外 935 欄為 307 current、333 pending、203 missing、71 conflict、20 reference、1 explicit_not_announced；39 校至少一項 current，0 校全 17 欄 current。文件 33 校／250 項：185 current、65 pending、59 conditional；清單完整性仍部分。概要 385 欄仍為 178 current、126 pending、61 missing、20 reference。
 
 323 筆凍結佇列的分類不變：102 筆指定欄位映射、21 筆完全相同保存文字的指定映射承接、64 筆參考、60 筆範圍排除、69 筆索引、7 筆存取限制。149／149、174／174 都有可核對處置，不聲稱全政策已讀、所有公開來源窮盡，或任何新版官方尚未公告。兩個動態入口已處理，仍待核當期錯年、個別通知、未提供的附件模板及其他政策／圖像。
 
@@ -19,3 +19,5 @@ Mapúa 實際展開 AY2026–2027 校曆內嵌 JPEG 並目視核讀：第三季�
 `73cb7ca` 的完整候選檢查另找到 DNTU 生活摘要混入待核的頁尾時段，以及 wheel 少包八份公開 HTML 與一份 JPEG。保留該次中止證據；DNTU 摘要恢复先前保守內容，詳細時段矛盾仍在 research_note／逐條 evidence，不放寬既有測試。共用 `pyproject.toml` 只追加兩項中正專屬 `public_responses/*.html`、`*.jpg` package-data 規則，使來源檔隨 wheel 一起交付。
 
 本輪新增程式、測試、資料與生成產物皆在 CCU 範圍。沒有額外共用 registry/API/UI/資格邏輯修改；新增共用打包設定及分支既有共享適配仍依交接清單由父 session 統一整合。未 merge、部署、聯絡學校、登入、提交申請或操作其他 session 的工作目錄。
+
+`0765054` 完整回歸為461 passed／7 skipped／1 failed（393.08s），一般HCMUTE多計畫支援頁不構成當期抵達／迎新資訊。後續恢復arrival缺值，限定映射一般program_scope研究註記，不把10位整體概述當CCU名額。保留完整失敗XML／log，瀏覽器中止未報全通過；再固定新SHA重跑。
