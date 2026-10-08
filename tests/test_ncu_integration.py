@@ -1344,3 +1344,69 @@ def test_xmu_actual_2027_images_old_unreviewed_workbook_and_captcha_are_distinct
     browser=byid['host-ccnu-procedure-browser-excerpt']
     assert browser['local_http_status']==403 and not browser.get('sha256')
     assert not browser['content_status']['downloaded'] and not browser['content_status']['all_pages_read']
+
+
+@pytest.mark.parametrize('needle,rowid,initial_count',[
+    ('Beijing University of Posts and Telecommunications','ncu-176',6),
+    ('South China University of Technology','ncu-191',5),
+    ('Guangxi University','ncu-193',6),
+])
+def test_bupt_scut_gxu_reference_packets_keep_missing_forms_and_unknown_116(tmp_path,needle,rowid,initial_count):
+    partner=next(p for p in fetch_ncu_partner_universities() if needle in p.school_name)
+    assert partner.quota is None and partner.degree_levels is None
+    assert partner.availability_status=='agreement_only'
+    client=TestClient(create_app(tmp_path))
+    workflow=client.get('/application-workflow',params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'}).json()
+    initial=next(s for s in workflow['steps']if s['rule_id']==rowid+'-host-apply')
+    assert len(initial['document_requirements'])==initial_count
+    assert all(d['needs_confirmation'] and not d.get('official_form_url')for d in initial['document_requirements'])
+    assert len(next(s for s in workflow['steps']if s['rule_id']=='ncu-116-1-home-3')['document_requirements'])==7
+    assert workflow['review_status']=='pending_review' and workflow['published_at'] is None
+    assert all(not s['deadline_reminder_eligible']for s in workflow['steps'])
+    catalog=client.get('/application-center/catalog',params={'school':'NCU','target_school':partner.school_name,'academic_year':'116'}).json()
+    host_names={d['name']for d in initial['document_requirements']}
+    host_items=[d for d in catalog['items']if d['name']in host_names]
+    assert len(host_items)==initial_count and all(not d['download_available'] and d['needs_confirmation']for d in host_items)
+    audit=ncu_field_audit(partner.school_name)
+    assert len(audit['fields'])==17
+    assert all(f['unresolved'] and f['current_applicability_status']=='unconfirmed'for k,f in audit['fields'].items()if k!='quota'and not k.startswith('home_'))
+    if rowid=='ncu-176':
+        assert '藍底' in audit['fields']['host_documents']['note'] and '白底' in audit['fields']['host_documents']['note']
+        assert '刪掉申請截止' in audit['fields']['host_deadline']['note'] and '2025/10/31' in audit['fields']['host_deadline']['note']
+        assert '碩博另需' in audit['fields']['host_documents']['note']
+        assert not any('保單' in d['name']for d in initial['document_requirements'])
+    elif rowid=='ncu-191':
+        assert '480×640' in audit['fields']['host_documents']['note']
+        assert '無空白表' in audit['fields']['host_documents']['note']
+        assert 'outgoing' in audit['fields']['arrival']['note']
+        assert '600–1500' in audit['fields']['housing']['note']
+    else:
+        assert '每年3月至次年7月' in audit['fields']['study_period']['note']
+        assert '未自行改' in audit['fields']['study_period']['note']
+        assert '2021免試' in audit['fields']['host_documents']['note']
+        assert '普通疾病' in audit['fields']['insurance']['note']
+        step=next(s for s in workflow['steps']if s['rule_id'].endswith('gxu-local-accident-insurance'))
+        assert step['phase']=='抵達後' and not step['document_requirements']
+        assert '原件未列保单提交義務' in step['summary']
+        evidence=next(x for x in audit['fields']['study_period']['original_evidence']if x['page']==2)
+        assert '每年 3 月至次年 7 月' in evidence['text']
+
+
+def test_gxu_visual_photos_scut_outgoing_and_browser_excerpts_are_not_new_host_forms():
+    raw=json.loads(gzip.decompress((BUNDLE/'source-evidence.json.gz').read_bytes()));byid={s['id']:s for s in raw}
+    gxu=byid['1ZXdTqdujPenTWqBuJf1p8uCNixT0e6Gy']
+    assert len(gxu['pages'])==16 and gxu['visual_review']['pdf_pages_reviewed']==list(range(1,17))
+    assert gxu['content_status']['all_pages_read'] and not gxu['content_status']['all_pages_have_text']
+    assert gxu['pages'][3]['text']==''
+    guide=byid['host-scut-hmt-guide-2018-pdf']
+    assert guide['visual_review']['pdf_pages_reviewed']==list(range(1,8))
+    assert not any(p['text']for p in guide['pages'])
+    from exchange_info.ncu_source_coverage import indexable_source_text
+    text=indexable_source_text(guide)
+    assert '不借用' in text and 'Student Handbook' not in text
+    browser=byid['host-gxu-degree-form-entry-browser-excerpt']
+    assert '2021版' in browser['pages'][0]['text'] and not browser.get('sha256')
+    assert not browser['content_status']['all_pages_read'] and not browser['content_status']['downloaded']
+    broken=byid['host-scut-ccu-broken-short-link']
+    assert broken['status']==200 and '轉址失敗' in broken['error']
+    assert broken['content_status']['response_bytes_received'] and not broken['content_status']['downloaded']

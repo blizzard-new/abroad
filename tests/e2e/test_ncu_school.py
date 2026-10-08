@@ -534,6 +534,9 @@ def test_ncu_uny_degree_history_and_empty_exchange_resources_are_visible(page, l
     ("廈門", "漳州3設計類", "Statement of Health Condition", "健康狀況聲明（實際DOCX", "ncu-xmu-health-docx-390.png"),
     ("西南大學", "不能替PG2人房填同價", "第三頁", "藝術等专业作品集", "ncu-swu-major-portfolio-390.png"),
     ("華中師範", "房型不保证", "最近 6个月内体检报告", "到校後交，行前購買", "ncu-ccnu-arrival-insurance-390.png"),
+    ("北京郵電", "不帶淋浴", "二寸藍底", "藍底／白底版本差異待確認", "ncu-bupt-photo-conflict-390.png"),
+    ("華南理工", "600–1500", "申請文件電子檔", "空白附表未取得", "ncu-scut-missing-blank-form-390.png"),
+    ("廣西大學", "普通疾病不賠", "每年 3 月至次年 7 月", "指定意外醫療保險", "ncu-gxu-local-accident-insurance-390.png"),
 ])
 def test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life(page, live_server, school, life_text, source_text, application_text, filename):
     page.set_viewport_size({"width": 390, "height": 956})
