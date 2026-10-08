@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="10" skipped="0" tests="65" time="8.895" timestamp="2026-10-08T22:28:55.133767+00:00" hostname="e412858c778f"><testcase classname="tests.test_ntpu_bundled_data" name="test_bundled_ntpu_catalog_is_complete" time="2.818" /><testcase classname="tests.test_ntpu_bundled_data" name="test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data" time="1.500"><failure message="assert 0 == 1">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f923900a240&gt;
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-168/test_runtime_includes_tracked_0')
+
+    def test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data(
+        monkeypatch,
+        tmp_path,
+    ) -&gt; None:
+        research = storage.read_jsonl(
+            storage.BUNDLED_NTPU_DIR / "partner_research.jsonl",
+            PartnerResearchRecord,
+        )[0]
+        partner = PartnerUniversity(
+            program_type="交換學生（英語組）",
+            country=research.country,
+            school_name=research.school_name,
+            source_url="https://new.ntpu.edu.tw/oia/sister-schools",
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.fetch_ntpu_partner_universities",
+            lambda: [partner],
+        )
+    
+        client = TestClient(create_app(tmp_path))
+        coverage = client.get(
+            "/coverage",
+            params={"school": "國立臺北大學"},
+        ).json()
+        destination = client.get(
+            "/destination-profile",
+            params={
+                "school": partner.school_name,
+                "home_school": "國立臺北大學",
+            },
+        ).json()
+    
+        assert coverage["total_partner_schools"] == 1
+        assert coverage["official_website_count"] == 1
+        assert coverage["partners"][0]["official_website_url"] == research.official_website
+&gt;       assert coverage["destination_profile_count"] == 1
+E       assert 0 == 1
+
+tests/test_ntpu_bundled_data.py:110: AssertionError</failure></testcase><testcase classname="tests.test_ntpu_bundled_data" name="test_bundled_ntpu_completeness_report_has_all_required_fields" time="0.004" /><testcase classname="tests.test_ntpu_bundled_data" name="test_default_loader_structures_local_overrides_before_merging_bundle" time="0.657" /><testcase classname="tests.test_frontend_contract" name="test_content_review_workbench_exposes_dual_review_without_student_navigation" time="0.020" /><testcase classname="tests.test_frontend_contract" name="test_first_visit_school_choice_is_optional_and_current" time="0.008" /><testcase classname="tests.test_frontend_contract" name="test_web_routes_states_and_touch_targets_are_consistent" time="0.008"><failure message="assert 'renderCommunityEmpty(&quot;社群暫時無法載入&quot;, error.message, &quot;error&quot;)' in 'const state = {\n  dashboard: null,\n  query: &quot;&quot;,\n  partnerQuery: &quot;&quot;,\n  partnerView: &quot;list&quot;,\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() =&gt; window.UniWaySplash?.done());\n'">def test_web_routes_states_and_touch_targets_are_consistent() -&gt; None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert '&lt;span&gt;資格與志願&lt;/span&gt;' in html
+        assert 'eligibility: "資格與志願"' in script
+        assert "function focusRouteHeading(selector)" in script
+        assert 'focusRouteHeading("#community-hub-title")' in script
+        assert '? PUBLIC_COMMUNITY_BOARD' in script
+        assert '? "我的追蹤"' in script
+        assert "跨校討論交換申請、簽證、住宿與海外生活。" in script
+        assert 'role="${isError ? "alert" : "status"}"' in script
+&gt;       assert "renderCommunityEmpty(\"社群暫時無法載入\", error.message, \"error\")" in script
+E       assert 'renderCommunityEmpty("社群暫時無法載入", error.message, "error")' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() =&gt; window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:502: AssertionError</failure></testcase><testcase classname="tests.test_frontend_contract" name="test_partner_schools_use_verified_official_photo_manifest" time="0.007" /><testcase classname="tests.test_frontend_contract" name="test_school_onboarding_supports_keyboard_dismissal_and_focus_return" time="0.003" /><testcase classname="tests.test_frontend_contract" name="test_school_detail_does_not_recrawl_empty_experiences_on_open" time="0.004" /><testcase classname="tests.test_frontend_contract" name="test_destination_profiles_follow_the_active_home_university" time="0.004" /><testcase classname="tests.test_frontend_contract" name="test_destination_profiles_distinguish_partial_from_verified_coverage" time="0.004" /><testcase classname="tests.test_frontend_contract" name="test_public_workflow_ui_never_publishes_collected_content_directly" time="0.004" /><testcase classname="tests.test_frontend_contract" name="test_workflow_ui_exposes_structured_submission_and_confirmation_details" time="0.006" /><testcase classname="tests.test_frontend_contract" name="test_web_consumes_shared_entitlement_contract_without_payment" time="0.005" /><testcase classname="tests.test_frontend_contract" name="test_account_workspace_sync_excludes_sensitive_form_content" time="0.004" /><testcase classname="tests.test_frontend_contract" name="test_progressive_login_keeps_device_selection_separate_from_private_plans" time="0.010" /><testcase classname="tests.test_frontend_contract" name="test_ntpu_uses_the_same_dynamic_web_shell" time="0.004" /><testcase classname="tests.test_frontend_contract" name="test_home_school_switch_rejects_stale_dashboard_responses" time="0.003" /><testcase classname="tests.test_frontend_contract" name="test_home_school_switch_closes_an_open_partner_detail" time="0.005" /><testcase classname="tests.test_frontend_contract" name="test_school_detail_uses_accessible_real_tabs" time="0.011" /><testcase classname="tests.test_frontend_contract" name="test_student_life_has_ten_decision_categories_and_progressive_disclosure" time="0.007" /><testcase classname="tests.test_frontend_contract" name="test_student_life_prioritizes_sources_and_uses_concrete_points" time="0.005" /><testcase classname="tests.test_frontend_contract" name="test_direct_school_link_returns_to_partner_list" time="0.005" /><testcase classname="tests.test_frontend_contract" name="test_quick_overview_explains_fit_strengths_and_risks" time="0.007" /><testcase classname="tests.test_frontend_contract" name="test_partner_pages_use_chinese_bullet_summaries_instead_of_raw_english" time="0.007" /><testcase classname="tests.test_frontend_contract" name="test_school_detail_uses_full_background_photo_liquid_panels_and_scroll_motion" time="0.006" /><testcase classname="tests.test_frontend_contract" name="test_school_detail_cards_wrap_highlights_and_replace_long_urls_with_links" time="0.005" /><testcase classname="tests.test_frontend_contract" name="test_premium_web_material_keeps_glass_hierarchy_without_heavy_button_chrome" time="0.002" /><testcase classname="tests.test_frontend_contract" name="test_grounded_advisor_and_document_checker_are_independent_pages" time="0.012" /><testcase classname="tests.test_frontend_contract" name="test_frontend_avoids_inline_script_handlers_for_strict_csp" time="0.006" /><testcase classname="tests.test_frontend_contract" name="test_repeated_information_cards_use_compact_progressive_disclosure" time="0.006" /><testcase classname="tests.test_frontend_contract" name="test_wide_desktop_workspace_fills_the_canvas_without_centered_cut_edges" time="0.001" /><testcase classname="tests.test_frontend_contract" name="test_school_community_has_posts_chat_invitation_only_messages_and_safety" time="0.006" /><testcase classname="tests.test_frontend_contract" name="test_account_and_global_community_web_flows_are_present" time="0.005" /><testcase classname="tests.test_frontend_contract" name="test_community_identity_preview_matches_public_name_and_resets_per_submission" time="0.007"><failure message="assert 'fetchCommunityAuth(url)' in 'const state = {\n  dashboard: null,\n  query: &quot;&quot;,\n  partnerQuery: &quot;&quot;,\n  partnerView: &quot;list&quot;,\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() =&gt; window.UniWaySplash?.done());\n'">def test_community_identity_preview_matches_public_name_and_resets_per_submission() -&gt; None:
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+        assert "這次公開顯示：" in script
+        assert "（每次送出可重新選擇）" in script
+        assert 'aria-live="polite"' in script
+        assert "function resetCommunityIdentityPreviews(container)" in script
+        assert "resetCommunityIdentityPreviews(form);" in script
+        assert "post.viewer_can_delete" in script
+        assert "comment.viewer_can_delete" in script
+&gt;       assert "fetchCommunityAuth(url)" in script
+E       assert 'fetchCommunityAuth(url)' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() =&gt; window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1002: AssertionError</failure></testcase><testcase classname="tests.test_frontend_contract" name="test_community_mutations_reuse_id_only_for_ambiguous_results" time="0.005" /><testcase classname="tests.test_frontend_contract" name="test_web_notification_center_and_explicit_email_opt_in_are_present" time="0.006"><failure message="assert '重新核對申請清單' in 'const state = {\n  dashboard: null,\n  query: &quot;&quot;,\n  partnerQuery: &quot;&quot;,\n  partnerView: &quot;list&quot;,\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() =&gt; window.UniWaySplash?.done());\n'">def test_web_notification_center_and_explicit_email_opt_in_are_present() -&gt; None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert 'id="notification-button"' in html
+        assert 'id="notification-dialog"' in html
+        assert 'id="notification-center-list"' in html
+        assert 'name="email_notifications"' in html
+        assert "只有勾選並儲存後才排入寄送" in html
+        assert 'fetchJson("/account/notifications?limit=50")' in script
+        assert 'fetchJson("/account/notifications/read-all"' in script
+        assert 'values.get("email_notifications") === "on"' in script
+        assert "紙本送件以送達日計算" in html
+        assert "官方規定更新" in script
+&gt;       assert "重新核對申請清單" in script
+E       assert '重新核對申請清單' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() =&gt; window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1054: AssertionError</failure></testcase><testcase classname="tests.test_frontend_contract" name="test_application_calendar_combines_official_and_personal_planning" time="0.009" /><testcase classname="tests.test_frontend_contract" name="test_unverified_partner_deadlines_are_presented_as_reference_schedules" time="0.007" /><testcase classname="tests.test_frontend_contract" name="test_paper_workflow_distinguishes_send_and_arrival_deadlines" time="0.004" /><testcase classname="tests.test_frontend_contract" name="test_workflow_ui_records_manual_submission_progress_without_uploading_proof_files" time="0.007" /><testcase classname="tests.test_frontend_contract" name="test_student_plan_connects_matching_budget_scholarships_and_documents" time="0.004" /><testcase classname="tests.test_frontend_contract" name="test_application_center_turns_each_document_into_an_independent_form_page" time="0.009" /><testcase classname="tests.test_frontend_contract" name="test_application_center_separates_official_requirements_from_preparation_tools" time="0.007"><failure message="assert '不會用其他年度或其他學校的文件代替' in 'const state = {\n  dashboard: null,\n  query: &quot;&quot;,\n  partnerQuery: &quot;&quot;,\n  partnerView: &quot;list&quot;,\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() =&gt; window.UniWaySplash?.done());\n'">def test_application_center_separates_official_requirements_from_preparation_tools() -&gt; None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert 'id="application-requirement-list"' in html
+        assert "當期文件與官方表格" in html
+        assert "可填寫的準備工具" in html
+        assert "不代表當期校方必備文件" in html
+        assert "沒有確認的份數或表格不會被當成正式版本" in html
+        assert "/application-center/catalog" in script
+        assert "renderApplicationDocumentCatalog" in script
+        assert "下載校方正式表格" in script
+        assert "查看官方規定" in script
+        assert "份數待確認" in script
+&gt;       assert "不會用其他年度或其他學校的文件代替" in script
+E       assert '不會用其他年度或其他學校的文件代替' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() =&gt; window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1296: AssertionError</failure></testcase><testcase classname="tests.test_frontend_contract" name="test_application_generation_gate_preserves_progressive_login_and_free_forms" time="0.005" /><testcase classname="tests.test_frontend_contract" name="test_application_forms_remember_shared_fields_without_persisting_sensitive_ids" time="0.004" /><testcase classname="tests.test_frontend_contract" name="test_application_forms_encrypt_general_drafts_and_require_per_file_consent" time="0.006" /><testcase classname="tests.test_frontend_contract" name="test_workflow_issue_reporting_uses_school_gate_and_separate_admin_queue" time="0.012" /><testcase classname="tests.test_frontend_contract" name="test_application_pages_keep_primary_actions_visible_and_move_explanations_into_disclosures" time="0.005" /><testcase classname="tests.test_frontend_contract" name="test_registration_uses_email_first_and_the_school_is_shown_and_locked_instead_of_verified" time="0.006" /><testcase classname="tests.test_frontend_contract" name="test_account_workspace_sync_has_conflict_merge_offline_retry_and_sensitive_boundary" time="0.008" /><testcase classname="tests.test_frontend_contract" name="test_successful_login_closes_before_noncritical_account_hydration" time="0.004"><failure message="assert 'app.js?v=20260929-chinese-1' in '&lt;!doctype html&gt;\n&lt;html lang=&quot;zh-Hant&quot; data-theme=&quot;light&quot;&gt;\n  &lt;head&gt;\n    &lt;meta charset=&quot;utf-8&quot; /&gt;\n    &lt;meta name=&quot;vi...08-2&quot; defer&gt;&lt;/script&gt;\n    &lt;script src=&quot;/static/app.js?v=20261008-ncu-sources-3&quot; defer&gt;&lt;/script&gt;\n  &lt;/body&gt;\n&lt;/html&gt;\n'">def test_successful_login_closes_before_noncritical_account_hydration() -&gt; None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        accept_block = script.split("async function acceptAccountSession(session)", 1)[1].split(
+            "async function restoreAccount", 1
+        )[0]
+        submit_block = script.split("async function submitAccountForm(form, endpoint)", 1)[1].split(
+            "async function saveAccountProfile", 1
+        )[0]
+    
+&gt;       assert "app.js?v=20260929-chinese-1" in html
+E       assert 'app.js?v=20260929-chinese-1' in '&lt;!doctype html&gt;\n&lt;html lang="zh-Hant" data-theme="light"&gt;\n  &lt;head&gt;\n    &lt;meta charset="utf-8" /&gt;\n    &lt;meta name="vi...08-2" defer&gt;&lt;/script&gt;\n    &lt;script src="/static/app.js?v=20261008-ncu-sources-3" defer&gt;&lt;/script&gt;\n  &lt;/body&gt;\n&lt;/html&gt;\n'
+
+tests/test_frontend_contract.py:1659: AssertionError</failure></testcase><testcase classname="tests.test_frontend_contract" name="test_application_template_initialization_does_not_create_a_fake_workspace_write" time="0.002" /><testcase classname="tests.test_frontend_contract" name="test_personal_application_plan_uses_structured_api_and_progressive_login" time="0.003"><failure message="assert 'id=&quot;eligibility-department&quot;' in '&lt;!doctype html&gt;\n&lt;html lang=&quot;zh-Hant&quot; data-theme=&quot;light&quot;&gt;\n  &lt;head&gt;\n    &lt;meta charset=&quot;utf-8&quot; /&gt;\n    &lt;meta name=&quot;vi...08-2&quot; defer&gt;&lt;/script&gt;\n    &lt;script src=&quot;/static/app.js?v=20261008-ncu-sources-3&quot; defer&gt;&lt;/script&gt;\n  &lt;/body&gt;\n&lt;/html&gt;\n'">def test_personal_application_plan_uses_structured_api_and_progressive_login() -&gt; None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        for element_id in (
+            "eligibility-department",
+            "eligibility-academic-year",
+            "eligibility-application-round",
+            "eligibility-preference-1",
+            "eligibility-preference-2",
+            "eligibility-preference-3",
+        ):
+&gt;           assert f'id="{element_id}"' in html
+E           assert 'id="eligibility-department"' in '&lt;!doctype html&gt;\n&lt;html lang="zh-Hant" data-theme="light"&gt;\n  &lt;head&gt;\n    &lt;meta charset="utf-8" /&gt;\n    &lt;meta name="vi...08-2" defer&gt;&lt;/script&gt;\n    &lt;script src="/static/app.js?v=20261008-ncu-sources-3" defer&gt;&lt;/script&gt;\n  &lt;/body&gt;\n&lt;/html&gt;\n'
+
+tests/test_frontend_contract.py:1701: AssertionError</failure></testcase><testcase classname="tests.test_frontend_contract" name="test_global_home_board_routing_and_following_are_present" time="0.009"><failure message="assert '查看學生身分驗證' in 'const state = {\n  dashboard: null,\n  query: &quot;&quot;,\n  partnerQuery: &quot;&quot;,\n  partnerView: &quot;list&quot;,\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() =&gt; window.UniWaySplash?.done());\n'">def test_global_home_board_routing_and_following_are_present() -&gt; None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+        assert 'href="#home"' in html
+        assert 'href="#following"' in html
+        assert 'href="#language-school-board"' in html
+        assert 'href="#board=長庚大學"' in html
+        assert 'data-follow-board="長庚大學"' in html
+        assert '&lt;span&gt;發布看板&lt;/span&gt;' in html
+        assert '&lt;select id="global-community-school" name="board_id"' in html
+        assert 'id="global-community-compose" type="button" class="primary-button" aria-label="發一篇文章"' in html
+        assert '&lt;option value="public-study-abroad"&gt;公共留學板&lt;/option&gt;' in html
+        assert '&lt;option value="language-school"&gt;語言學校板&lt;/option&gt;' in html
+        assert 'fetchJson("/community/boards")' in script
+        assert '"#language-school-board": "language"' in script
+        assert 'const LANGUAGE_SCHOOL_COMMUNITY_BOARD = "語言學校板"' in script
+        assert "function activeCommunityBoardAccess()" in script
+        assert "activeBoard &amp;&amp; !activeBoard.can_post" in script
+        assert "activeBoard.unavailable_reason" in script
+&gt;       assert "查看學生身分驗證" in script
+E       assert '查看學生身分驗證' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() =&gt; window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1734: AssertionError</failure></testcase><testcase classname="tests.test_frontend_contract" name="test_departmental_partner_references_are_visible_but_blocked_from_formal_plans" time="0.005"><failure message="assert '暫不可建立正式申請計畫' in '&lt;!doctype html&gt;\n&lt;html lang=&quot;zh-Hant&quot; data-theme=&quot;light&quot;&gt;\n  &lt;head&gt;\n    &lt;meta charset=&quot;utf-8&quot; /&gt;\n    &lt;meta name=&quot;vi...08-2&quot; defer&gt;&lt;/script&gt;\n    &lt;script src=&quot;/static/app.js?v=20261008-ncu-sources-3&quot; defer&gt;&lt;/script&gt;\n  &lt;/body&gt;\n&lt;/html&gt;\n'">def test_departmental_partner_references_are_visible_but_blocked_from_formal_plans() -&gt; None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert '&lt;option value="departmental_reference"&gt;院級參考／當期需確認&lt;/option&gt;' in html
+&gt;       assert "暫不可建立正式申請計畫" in html
+E       assert '暫不可建立正式申請計畫' in '&lt;!doctype html&gt;\n&lt;html lang="zh-Hant" data-theme="light"&gt;\n  &lt;head&gt;\n    &lt;meta charset="utf-8" /&gt;\n    &lt;meta name="vi...08-2" defer&gt;&lt;/script&gt;\n    &lt;script src="/static/app.js?v=20261008-ncu-sources-3" defer&gt;&lt;/script&gt;\n  &lt;/body&gt;\n&lt;/html&gt;\n'
+
+tests/test_frontend_contract.py:1750: AssertionError</failure></testcase><testcase classname="tests.test_frontend_contract" name="test_home_application_cycles_are_structured_and_distinct_from_reference_dates" time="0.006" /><testcase classname="tests.test_rag" name="test_document_chunking_keeps_source_metadata_and_bounded_passages" time="0.002" /><testcase classname="tests.test_rag" name="test_document_index_excludes_incoming_student_visa_content" time="0.000" /><testcase classname="tests.test_rag" name="test_local_rag_index_falls_back_to_keyword_search_without_api_key" time="0.005" /><testcase classname="tests.test_rag" name="test_semantic_search_can_find_related_meaning_without_same_keywords" time="0.002" /><testcase classname="tests.test_rag" name="test_structured_source_extraction_keeps_official_metadata" time="0.001" /><testcase classname="tests.test_rag" name="test_document_rewrite_is_labeled_and_does_not_require_file_storage" time="0.001" /><testcase classname="tests.test_rag" name="test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused" time="0.418"><failure message="assert 422 == 503&#10; +  where 422 = &lt;Response [422 Unprocessable Content]&gt;.status_code">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-168/test_rules_advisor_works_while0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f923bced5b0&gt;
+
+    def test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused(
+        tmp_path,
+        monkeypatch,
+    ) -&gt; None:
+        monkeypatch.setenv("AI_PROVIDER", "openai")
+        monkeypatch.setenv("OPENAI_API_KEY", "must-not-enable-ai")
+        ai_requests: list[str] = []
+    
+        def unexpected_ai_post(url: str, **kwargs):
+            ai_requests.append(url)
+            raise AssertionError("paused runtime must not make an external AI request")
+    
+        monkeypatch.setattr("exchange_info.ai_gateway.requests.post", unexpected_ai_post)
+        page = _page()
+        data_dir = tmp_path / "data"
+        save_processed_pages([page], data_dir)
+        build_rag_index([page], data_dir, use_embeddings=False)
+        build_structured_source_index([page], data_dir, use_ai=False)
+        dashboard = StudentDashboard(
+            school_name="長庚大學",
+            required_documents=[
+                StudentInfoItem(
+                    title="交換申請文件",
+                    details=["申請表、成績單、讀書計畫與語言證明。"],
+                    source=SourceReference(title="交換公告", source_url=SOURCE_URL),
+                )
+            ],
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.build_student_dashboard",
+            lambda pages, info, **kwargs: dashboard,
+        )
+        client = _authenticated_client(data_dir)
+    
+        answer = client.post("/advisor/ask", json={"question": "交換需要哪些申請文件？"})
+        paused_chat = client.post("/ai/chat", json={"question": "交換需要哪些申請文件？"})
+        status = client.get("/ai/status")
+        review = client.post(
+            "/ai/review-document",
+            files={"file": ("讀書計畫.txt", "申請動機與學習計畫。" * 30, "text/plain")},
+            data={"document_type": "study_plan", "consent": "true"},
+        )
+        rewrite = client.post(
+            "/ai/rewrite-document",
+            json={"text": "這是我自行撰寫且需要調整語氣的交換申請內容。" * 2, "action": "formalize"},
+        )
+    
+        assert answer.status_code == 200
+        assert answer.json()["sources"][0]["published_at"] == "2026-07-01"
+        assert answer.json()["sources"][0]["last_checked"].startswith("2026-07-19")
+        assert status.json()["rag_index"]["source_count"] == 1
+        assert status.json()["structured_source_count"] == 1
+        assert status.json()["ai_enabled"] is False
+        assert status.json()["runtime_state"] == "paused"
+        assert status.json()["provider"] is None
+        assert status.json()["model"] is None
+        assert "AI API 與本地 AI 目前暫緩" in status.json()["paused_reason"]
+        assert paused_chat.status_code == 503
+        assert review.status_code == 503
+        assert "AI 深度檢查目前暫緩" in review.json()["detail"]
+&gt;       assert rewrite.status_code == 503
+E       assert 422 == 503
+E        +  where 422 = &lt;Response [422 Unprocessable Content]&gt;.status_code
+
+tests/test_rag.py:241: AssertionError</failure></testcase></testsuite></testsuites>
