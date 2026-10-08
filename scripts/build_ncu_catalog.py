@@ -129,9 +129,12 @@ def write_json(path, value):
 def validate_document_conditions(conditions, workflows, sources_by_id):
     """An updated original requires a new explicit condition review."""
     for policy in conditions:
-        workflow = next(w for w in workflows if w["school_name"] == policy["school_name"])
-        step = next(s for s in workflow["steps"] if s.get("rule_id") == policy["rule_id"])
-        document = next(d for d in step["document_requirements"] if d["name"] == policy["requirement_name"])
+        try:
+            workflow = next(w for w in workflows if w["school_name"] == policy["school_name"])
+            step = next(s for s in workflow["steps"] if s.get("rule_id") == policy["rule_id"])
+            document = next(d for d in step["document_requirements"] if d["name"] == policy["requirement_name"])
+        except StopIteration as exc:
+            raise ValueError(f"NCU條件文件未對應實際學校／步驟／文件：{policy['school_name']} / {policy['rule_id']} / {policy['requirement_name']}") from exc
         if not set(policy["source_urls"]) <= set(document["source_urls"]):
             raise ValueError("NCU條件文件來源已變更，須重新查核政策。")
         versions = policy.get("source_versions", [])
@@ -1062,13 +1065,13 @@ def build(output):
                             if visual_passage and d.get("visual_review", {}).get("include_native_with_selected_passages")
                             else visual_passage["text"] if visual_passage else p["text"],
                             "text_method": "human_visual_selected_passages"
-                            if visual_passage
+                            if visual_passage or p.get("image")
                             else "converted_native_text"
                             if d.get("conversion_review")
                             else "original_extraction",
                             "source_url": d["url"],
                             "page": p["page"],
-                            "source_title": d["label"] + (f"（原投影片{p['slide']}；無PDF頁碼）" if p.get("slide") else ""),
+                            "source_title": d["label"] + (f"（原文圖片{p['image']}；無PDF頁碼）" if p.get("image") else f"（原投影片{p['slide']}；無PDF頁碼）" if p.get("slide") else ""),
                             "applicability": review["applicability"],
                             "checked_at": CHECKED,
                         }
@@ -1337,6 +1340,10 @@ def build(output):
         partner_universities=partners,
     )
     dashboard = StudentDashboard.model_validate(dashboard)
+    # Fail before writing any bundle files when a reviewed condition no longer
+    # maps to the actual school, workflow step, document, or original bytes.
+    conditions = load_json(SOURCES / "document-conditions.json")
+    validate_document_conditions(conditions, workflows, docs)
     write_json(
         output / "student_dashboard.json",
         dashboard.model_dump(mode="json", exclude={"partner_universities"}),
@@ -1359,8 +1366,6 @@ def build(output):
     write_rows(
         output / "application_workflows.jsonl", workflows, UniversityApplicationWorkflow
     )
-    conditions = load_json(SOURCES / "document-conditions.json")
-    validate_document_conditions(conditions, workflows, docs)
     write_json(output / "document-conditions.json", conditions)
     write_rows(output / "destination_profiles.jsonl", destinations, DestinationProfile)
     write_rows(output / "partner_research.jsonl", research, PartnerResearchRecord)

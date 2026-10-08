@@ -146,3 +146,38 @@ def test_ncu_jsonl_serialization_preserves_source_line_separators(tmp_path):
     rows = target.read_text().splitlines()
     assert len(rows) == 1
     assert ProcessedPage.model_validate_json(rows[0]).text == text
+
+
+@pytest.mark.parametrize('changed', [False, True])
+def test_native_xls_snapshot_does_not_reuse_different_original(tmp_path, monkeypatch, changed):
+    path = Path(__file__).parents[1] / 'scripts/collect_ncu_host_web.py'
+    spec = importlib.util.spec_from_file_location('ncu_native_xls_collector', path)
+    collector = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(collector)
+    original = bytes.fromhex('d0cf11e0a1b11ae1') + b'original-biff-workbook'
+    pages = [{'page': None, 'sheet': '25-26学年第一学期', 'text': 'Course | Campus | Language'}]
+    (tmp_path / 'courses-native-xls.json').write_text(json.dumps({'source_sha256': hashlib.sha256(original).hexdigest(), 'method': 'xlrd original BIFF extraction', 'pages': pages}))
+    monkeypatch.setattr(collector, 'OUT', tmp_path)
+    response = SimpleNamespace(status_code=200,ok=True,content=original+(b'changed' if changed else b''),url='https://example.edu/courses.xls',headers={'content-type':'application/octet-stream'},raise_for_status=lambda:None)
+    monkeypatch.setattr(collector.requests,'get',lambda *a,**k:response)
+    result=collector.fetch({'id':'courses','title':'Historical workbook','url':response.url,'expected_document_format':'xls'})
+    if changed:
+        assert result['pages'] == [] and 'XLS原件已變更' in result['error']
+    else:
+        assert 'error' not in result and result['pages'] == pages
+        assert result['document_format'] == 'xls_native_sheets_no_pdf_pages'
+        assert not result.get('conversion_review')
+
+
+def test_image_reading_is_separate_from_html_text_and_changed_sha():
+    from exchange_info.ncu_source_coverage import source_content_status,indexable_source_text
+    source={'status':200,'sha256':'image-original','pages':[{'page':None,'image':1,'text':'Selected table rows'}], 'source_excerpt_only':True,'reading_review':{'source_sha256':'image-original','pages_reviewed':[None]}}
+    assert not source_content_status(source)['all_pages_read']
+    source['visual_review']={'source_sha256':'image-original','images_reviewed':[1],'ocr_status':'not_performed'}
+    status=source_content_status(source)
+    assert status['all_pages_read'] and status['visual_reviewed_image_count']==1
+    assert status['visual_reviewed_page_count']==0 and not status['all_pages_have_text']
+    assert '原文圖片1／無PDF頁碼' in indexable_source_text(source)
+    source['sha256']='different-image'
+    assert not source_content_status(source)['all_pages_read']
+    assert source_content_status(source)['visual_reviewed_image_count']==0

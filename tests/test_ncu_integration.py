@@ -1252,3 +1252,95 @@ def test_new_originals_keep_slide_sheet_identity_public_excerpts_and_government_
         assert "親友家" in audit["fields"]["visa"]["note"] and "24小時" in audit["fields"]["visa"]["note"]
         assert "不足6個月是五年證可換發條件" in audit["fields"]["visa"]["note"]
         assert "2027/12/31" in audit["fields"]["cost"]["note"] and "2028" in audit["fields"]["cost"]["note"]
+
+
+@pytest.mark.parametrize('needle,rowid,initial_count', [('Xiamen University','ncu-192',4),('SOUTHWEST UNIVERSITY','ncu-179',6),('Central China Normal University','ncu-189',8)])
+def test_xmu_swu_ccnu_new_packets_keep_stage_scope_and_current_year_unknown(tmp_path,needle,rowid,initial_count):
+    partner=next(p for p in fetch_ncu_partner_universities() if needle in p.school_name)
+    assert partner.quota is None and partner.degree_levels is None
+    assert partner.availability_status=='agreement_only'
+    client=TestClient(create_app(tmp_path))
+    response=client.get('/application-workflow',params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'})
+    assert response.status_code==200
+    workflow=response.json()
+    initial=next(s for s in workflow['steps'] if s['rule_id']==rowid+'-host-apply')
+    assert len(initial['document_requirements'])==initial_count
+    assert len(next(s for s in workflow['steps']if s['rule_id']=='ncu-116-1-home-3')['document_requirements'])==7
+    assert workflow['review_status']=='pending_review' and workflow['published_at'] is None
+    assert len({s['order']for s in workflow['steps']})==len(workflow['steps'])
+    assert [s['order']for s in workflow['steps']]==sorted(s['order']for s in workflow['steps'])
+    assert all(not s['deadline_reminder_eligible']for s in workflow['steps'])
+    audit=ncu_field_audit(partner.school_name)
+    assert len(audit['fields'])==17
+    assert all(x['unresolved'] and x['current_applicability_status']=='unconfirmed'for k,x in audit['fields'].items()if not k.startswith('home_')and k!='quota')
+    catalog=client.get('/application-center/catalog',params={'school':'NCU','target_school':partner.school_name,'academic_year':'116','host_admission_status':'accepted','housing_choice':'on_campus'}).json()
+    for item in catalog['items']:
+        if item['name'] in [d['name']for s in workflow['steps'] if '-host-'in(s.get('rule_id')or'')for d in s['document_requirements']]:
+            assert item['needs_confirmation'] and not item['download_available']
+    assert '2028' in audit['fields']['cost']['note'] and '親友' in audit['fields']['visa']['note']
+    if rowid=='ncu-192':
+        assert '漳州' in audit['fields']['city']['note'] and '600' in audit['fields']['cost']['note']
+        assert '8296列' in audit['fields']['courses']['unresolved']
+        assert '本科4／5／6年' in audit['fields']['study_period']['note']
+        assert not any('保單'in d['name'] or '護照'in d['name']for d in initial['document_requirements'])
+        health=next(d for d in initial['document_requirements']if '健康狀況'in d['name'])
+        assert 'DOCX' in health['name'] and health['signatures']==['申請人本人簽名','日期']
+        insurance=next(s for s in workflow['steps']if s['rule_id'].endswith('registration-insurance'))
+        assert insurance['phase']=='行前準備' and '入學報到' in insurance['timing']
+        assert len(insurance['document_requirements'])==1
+        assert not next(s for s in workflow['steps']if s['rule_id'].endswith('health-confirmation'))['document_requirements']
+        image_evidence=[x for x in audit['fields']['city']['original_evidence']if '原文圖片'in x['source_title']]
+        assert len(image_evidence)==6 and all(x['page'] is None and x['text_method']=='human_visual_selected_passages'for x in image_evidence)
+    elif rowid=='ncu-179':
+        assert '不能硬排' in audit['fields']['eligibility']['note'] and '至少4門' in audit['fields']['courses']['note']
+        assert '第2頁' in audit['fields']['host_documents']['note'] and '第三頁' in audit['fields']['host_documents']['note']
+        assert '500–600' in audit['fields']['housing']['note'] and 'PG2人' in audit['fields']['housing']['unresolved']
+        portfolio=next(d for d in catalog['items']if '作品集'in d['name'])
+        assert portfolio['phase']=='合作校申請' and portfolio['applicability']['status']=='needs_confirmation'
+        assert '接收單位通知確認是否適用' in portfolio['applicability']['note']
+        insurance=next(s for s in workflow['steps']if s['rule_id'].endswith('insurance-timing-unconfirmed'))
+        assert '未載' in insurance['timing'] and len(insurance['document_requirements'])==1
+        assert not any('保險'in d['name']for d in initial['document_requirements'])
+    else:
+        assert '2026/11/2' in audit['fields']['host_deadline']['note'] and '12/15' in audit['fields']['host_deadline']['note']
+        assert '本科線上' in audit['fields']['courses']['note'] and '研究生線下' in audit['fields']['courses']['note']
+        assert '6月內' in next(d for d in initial['document_requirements']if '體檢'in d['name'])['name']
+        assert len([d for d in initial['document_requirements']if '申報表'in d['name']])==1
+        assert not any('獨立'in d['name'] or '保單'in d['name']for d in initial['document_requirements'])
+        later=next(s for s in workflow['steps']if s['rule_id'].endswith('host-arrival-documents'))
+        assert later['phase']=='抵達後' and len(later['document_requirements'])==1
+        assert '行前購買'in later['document_requirements'][0]['name']
+        assert '房型' in audit['fields']['housing']['note'] and '不保证' in audit['fields']['housing']['note']
+
+
+def test_xmu_actual_2027_images_old_unreviewed_workbook_and_captcha_are_distinct():
+    raw=json.loads(gzip.decompress((BUNDLE/'source-evidence.json.gz').read_bytes()));byid={x['id']:x for x in raw}
+    for code in ['cn_ba','en_ba','cn_ma','en_ma','cn_dr','en_dr']:
+        html=byid['host-xmu-majors-'+code]
+        assert '2027' in html['pages'][0]['text']
+        image=byid['host-xmu-majors-'+code+'-image']
+        assert image['source_excerpt_only'] and image['pages'][0]['image']==1 and image['pages'][0]['page'] is None
+        assert image['content_status']['all_pages_read'] and image['content_status']['visual_reviewed_image_count']==1
+        assert not image['content_status']['all_pages_have_text']
+    workbook=byid['host-xmu-course-reference-2025-26']
+    assert len(workbook['pages'])==2 and 'native_sheets' in workbook['document_format']
+    assert workbook['content_status']['all_pages_have_text'] and not workbook['content_status']['all_pages_read']
+    assert len(workbook['pages'][0]['text'].splitlines())==4124 and len(workbook['pages'][1]['text'].splitlines())==4174
+    from exchange_info.ncu_source_coverage import indexable_source_text
+    assert '未全文逐列核對' in indexable_source_text(workbook)
+    assert 'Introduction to Flexible Electronics' not in indexable_source_text(workbook)
+    captcha=byid['host-xmu-health-captcha']
+    assert captcha['status']==200 and captcha['content_status']['response_bytes_received']
+    assert not captcha['content_status']['downloaded'] and not captcha['pages'] and '驗證碼' in captcha['error']
+    health=byid['host-xmu-health-declaration']
+    assert health['document_format']=='docx_no_fixed_pdf_pages' and health['content_status']['all_pages_read']
+    assert health['previous_attempts'] and all(p['page'] is None for p in health['pages'])
+    swu=byid['host-swu-mcu2027-1iA5iSLdiHw1hVu0c-UbvSbR9e8rqMZ2Y']
+    assert len(swu['pages'])==11 and swu['visual_review']['pdf_pages_reviewed']==list(range(1,12))
+    assert swu['pages'][6]['text']==swu['pages'][7]['text'] and not swu.get('index_review')
+    ccnu=byid['host-ccnu-mcu2027-16lfKolTxlgxK7TPFF7JcvzsLzOSRE7uY']
+    assert len(ccnu['pages'])==22 and ccnu['content_status']['all_pages_read']
+    assert ccnu['visual_review']['pdf_pages_reviewed']==[5]
+    browser=byid['host-ccnu-procedure-browser-excerpt']
+    assert browser['local_http_status']==403 and not browser.get('sha256')
+    assert not browser['content_status']['downloaded'] and not browser['content_status']['all_pages_read']

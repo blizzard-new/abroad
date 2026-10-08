@@ -105,7 +105,7 @@ def test_explicit_policy_does_not_guess_from_similar_names_or_other_home_school(
         assert document_applicability(home,UOS,docs[0]) is None
 
 
-@pytest.mark.parametrize("change", ["changed_original", "failed_original", "missing_version", "wrong_url"])
+@pytest.mark.parametrize("change", ["changed_original", "failed_original", "missing_version", "wrong_url", "wrong_school", "wrong_step", "wrong_document"])
 def test_changed_condition_source_cannot_reuse_a_reviewed_policy(change):
     root = Path(__file__).resolve().parents[1]
     bundle = root / "src/exchange_info/official_data/ncu"
@@ -124,10 +124,38 @@ def test_changed_condition_source_cannot_reuse_a_reviewed_policy(change):
         sources[version["source_id"]]["error"] = "HTTP 403"
     elif change == "missing_version":
         changed[0]["source_versions"].pop(0)
-    else:
+    elif change == "wrong_url":
         version["url"] = "https://eng.uos.ac.kr/a-different-form"
+    elif change == "wrong_school":
+        changed[0]["school_name"] = "an unreviewed school"
+    elif change == "wrong_step":
+        changed[0]["rule_id"] = "an unreviewed step"
+    else:
+        changed[0]["requirement_name"] = "an unreviewed document"
     with pytest.raises(ValueError, match="NCU條件文件"):
         builder.validate_document_conditions(changed, workflows, sources)
+
+
+def test_invalid_document_policy_does_not_overwrite_existing_bundle(tmp_path, monkeypatch):
+    root = Path(__file__).resolve().parents[1]
+    spec = importlib.util.spec_from_file_location("ncu_atomic_condition_builder", root / "scripts/build_ncu_catalog.py")
+    builder = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(builder)
+    original_load = builder.load_json
+
+    def invalid_policy(path):
+        value = original_load(path)
+        if path.name == "document-conditions.json":
+            value[0]["rule_id"] = "unreviewed-step"
+        return value
+
+    monkeypatch.setattr(builder, "load_json", invalid_policy)
+    existing = tmp_path / "partners.jsonl"
+    existing.write_text("previous reviewed bundle\n")
+    with pytest.raises(ValueError, match="NCU條件文件未對應"):
+        builder.build(tmp_path)
+    assert existing.read_text() == "previous reviewed bundle\n"
+    assert list(tmp_path.iterdir()) == [existing]
 
 
 @pytest.mark.parametrize("admission",["unknown","not_accepted","accepted"])
@@ -147,3 +175,17 @@ def test_seu_reciprocal_health_and_optional_housing_require_institutional_confir
     assert all(not t.document_link.requirement_names and {a.status for a in t.document_applicability}=={"needs_confirmation"} for t in tasks)
     assert any("不由學生自行豁免" in d["applicability"]["note"] for d in conditional)
     assert any("可不填" in d["applicability"]["note"] for d in conditional)
+
+
+@pytest.mark.parametrize('admission',['unknown','not_accepted','accepted'])
+@pytest.mark.parametrize('housing',['unknown','on_campus','off_campus'])
+def test_swu_portfolio_needs_major_confirmation_in_every_saved_state(admission,housing):
+    school='西南大學 SOUTHWEST UNIVERSITY'
+    workflow=next(w for w in storage.load_bundled_application_workflows()if w.home_university==NCU and w.school_name==school)
+    step=next(s for s in workflow.steps if s.rule_id=='ncu-179-host-apply')
+    doc=next(d for d in step.document_requirements if '作品集'in d.name)
+    result=document_applicability(NCU,school,doc,PartnerDocumentPreparationState(host_admission_status=admission,housing_choice=housing))
+    assert result.status=='needs_confirmation' and not result.current_applicability_verified
+    assert '音樂、美術、服裝設計、景觀' in result.note
+    assert '接收單位通知確認是否適用' in result.note
+    assert document_applicability('長庚大學',school,doc,PartnerDocumentPreparationState()) is None

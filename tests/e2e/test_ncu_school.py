@@ -531,6 +531,9 @@ def test_ncu_uny_degree_history_and_empty_exchange_resources_are_visible(page, l
     ("東南大學", "床品先自備", "無須接機服務者", "先由兩校確認體檢對等互免", "ncu-seu-reciprocal-health-390.png"),
     ("浙江大學", "宿位緊張可能跨校區", "保险单扫描件可待收到入学通知后再提交", "可錄取後補，亦可先備", "ncu-zju-insurance-later-390.png"),
     ("重慶大學", "不一定能提供校內宿舍", "2026年10月30日", "最晚開學報到提供", "ncu-cqu-latest-registration-390.png"),
+    ("廈門", "漳州3設計類", "Statement of Health Condition", "健康狀況聲明（實際DOCX", "ncu-xmu-health-docx-390.png"),
+    ("西南大學", "不能替PG2人房填同價", "第三頁", "藝術等专业作品集", "ncu-swu-major-portfolio-390.png"),
+    ("華中師範", "房型不保证", "最近 6个月内体检报告", "到校後交，行前購買", "ncu-ccnu-arrival-insurance-390.png"),
 ])
 def test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life(page, live_server, school, life_text, source_text, application_text, filename):
     page.set_viewport_size({"width": 390, "height": 956})
@@ -545,7 +548,7 @@ def test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life(
     page.locator("#confirm-school").click()
     if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
         page.locator("#glass-menu-toggle").click()
-    wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill(school)
     expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
@@ -560,6 +563,18 @@ def test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life(
     expect(part.locator("pre")).to_contain_text(source_text)
     if school == "北京師範":
         expect(part.locator(":scope > summary")).to_contain_text("原文投影片 3（無PDF頁碼）")
+    if school == "廈門":
+        image_source = page.locator("#ncu-source-audit-body > details").filter(has=page.locator(":scope > summary").filter(has_text="2027國際生en_ba目錄原文圖片")).first
+        expect(image_source.locator(":scope > summary")).to_contain_text("1張原文圖片已視覺查核")
+        image_source.locator(":scope > summary").click()
+        image_part = image_source.locator("details").first
+        expect(image_part.locator(":scope > summary")).to_contain_text("原文圖片 1（無PDF頁碼）")
+        image_part.locator(":scope > summary").click()
+        expect(image_part.locator("pre")).to_contain_text("漳州校区")
+        image_part.locator("pre").scroll_into_view_if_needed()
+        out = Path("/tmp/ncu-audit/browser")
+        out.mkdir(parents=True, exist_ok=True)
+        page.screenshot(path=str(out / "ncu-xmu-2027-image-390.png"))
     page.locator("#detail-tab-life").click()
     page.locator("#detail-life .life-official-guide > summary").click()
     point = page.locator("#destination-official-content li").filter(has_text=life_text).first
@@ -760,6 +775,7 @@ def test_ncu_mother_nomination_and_insurance_alternatives_are_visible_catalog_it
 @pytest.mark.parametrize("school,phase,text,filename", [
     ("Southeast University","合作校申請","健康檢查表（須先由兩校確認對等互免）","ncu-seu-health-condition-catalog-390.png"),
     ("Zhejiang University","合作校申請","交换", "ncu-zju-form-alternatives-catalog-390.png"),
+    ("SOUTHWEST UNIVERSITY","合作校申請","作品集", "ncu-swu-portfolio-condition-catalog-390.png"),
 ])
 def test_ncu_seu_condition_and_zju_alternative_forms_are_visible_in_document_center(page,live_server,school,phase,text,filename):
     session=sign_in_cookie(live_server,school="國立中央大學")
@@ -781,6 +797,12 @@ def test_ncu_seu_condition_and_zju_alternative_forms_are_visible_in_document_cen
         expect(item.locator('[data-document-applicability="needs_confirmation"]')).to_be_visible()
         expect(item).to_contain_text("不由學生自行豁免")
         expect(item).to_contain_text("未標年度")
+    elif school == "SOUTHWEST UNIVERSITY":
+        item=group.locator(".application-requirement-item").filter(has_text=text)
+        expect(item).to_have_count(1)
+        expect(item.locator('[data-document-applicability="needs_confirmation"]')).to_be_visible()
+        expect(item).to_contain_text("依申請專業確認")
+        expect(item).to_contain_text("音樂、美術、服裝設計、景觀")
     else:
         item=group.locator(".application-requirement-item").filter(has_text="交換申請表（依本科／研究生選相應版本）")
         expect(item).to_have_count(1)

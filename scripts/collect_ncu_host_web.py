@@ -151,6 +151,15 @@ def fetch(spec):
             result["pages"] = conversion["pages"]
             result["conversion_review"] = {k: v for k, v in conversion.items() if k != "pages"}
             result["document_format"] = "rtf_converted_docx_no_fixed_pdf_pages"
+        elif (response.content.startswith(bytes.fromhex("d0cf11e0a1b11ae1"))
+              and expected_format == "xls"
+              and (OUT / f"{spec['id']}-native-xls.json").exists()):
+            native = json.loads((OUT / f"{spec['id']}-native-xls.json").read_text())
+            if native["source_sha256"] != result["sha256"]:
+                raise ValueError("XLS原件已變更，既有原生工作表抽取不套用。")
+            result["pages"] = native["pages"]
+            result["extraction_review"] = {k: v for k, v in native.items() if k != "pages"}
+            result["document_format"] = "xls_native_sheets_no_pdf_pages"
         elif response.content.startswith(bytes.fromhex("d0cf11e0a1b11ae1")):
             old_excel = expected_format == "xls"
             converted = None
@@ -198,7 +207,7 @@ def fetch(spec):
                     raise ValueError(
                         "Image differs from manually inspected transcription"
                     )
-                result["pages"] = [{"page": None, "text": visual["text"]}]
+                result["pages"] = [{"page": None, "image": 1, "text": visual["text"]}]
                 result["document_format"] = "image_visual_transcription_no_pdf_pages"
             else:
                 result["error"] = (
