@@ -1,0 +1,49 @@
+{
+  "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+  "remote_heads": {
+    "refs/heads/data/tku-exchange-20261008": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+    "refs/heads/main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59"
+  },
+  "pr": {
+    "number": 2,
+    "html_url": "https://github.com/blizzard-new/abroad/pull/2",
+    "draft": true,
+    "state": "open",
+    "mergeable": true
+  },
+  "pr_head_sha": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+  "actions_check_suite": {
+    "id": 102553333739,
+    "head_sha": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+    "status": "completed",
+    "conclusion": "failure",
+    "latest_check_runs_count": 0
+  },
+  "failed_log_attempt": {
+    "command": "gh run view 37850482294 --repo blizzard-new/abroad --log-failed",
+    "exit_code": 1,
+    "error": "failed to get run log: log not found"
+  },
+  "ci_passed": false,
+  "cause_verified": false,
+  "run": {
+    "id": 37850482294,
+    "head_sha": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+    "status": "completed",
+    "conclusion": "failure",
+    "html_url": "https://github.com/blizzard-new/abroad/actions/runs/37850482294",
+    "created_at": "2026-10-08T21:58:51Z",
+    "updated_at": "2026-10-08T21:58:51Z"
+  },
+  "jobs": {
+    "total_count": 0
+  },
+  "checks": [
+    {
+      "name": "Supabase Preview",
+      "status": "completed",
+      "conclusion": "skipped",
+      "details_url": "https://supabase.com/dashboard/project/wozrsrnkvbokzbbitkxf/branches"
+    }
+  ]
+}

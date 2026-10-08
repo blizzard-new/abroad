@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="1" time="0.547" timestamp="2026-10-08T22:11:02.918015+00:00" hostname="f6ad0b7a0286"><testcase classname="" name="tests.test_content_governance_wrapper" time="0.000"><error message="collection failure">tests/test_content_governance_wrapper.py:11: in &lt;module&gt;
+    spec.loader.exec_module(module)
+&lt;frozen importlib._bootstrap_external&gt;:995: in exec_module
+    ???
+&lt;frozen importlib._bootstrap_external&gt;:1253: in get_code
+    ???
+&lt;frozen importlib._bootstrap_external&gt;:1190: in get_data
+    ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/abroad-tku/tests/__pycache__/test_content_governance.cpython-312-pytest-9.1.1.pyc'</error></testcase></testsuite></testsuites>

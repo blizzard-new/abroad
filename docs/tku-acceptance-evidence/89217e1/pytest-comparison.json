@@ -1,0 +1,112 @@
+{
+  "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+  "baseline_commit": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "candidate_counts": {
+    "passed": 1424,
+    "skipped": 8,
+    "failure": 39
+  },
+  "baseline_counts": {
+    "passed": 1348,
+    "skipped": 8,
+    "failure": 39
+  },
+  "added_failure_ids": [],
+  "resolved_failure_ids": [],
+  "failure_ids": [
+    "tests.test_college_options::test_college_selects_ignore_partner_notes_and_follow_home_university",
+    "tests.test_community_permissions::test_account_deletion_keeps_public_content_but_removes_private_links",
+    "tests.test_community_permissions::test_author_can_delete_own_post_but_not_another_users_post",
+    "tests.test_community_permissions::test_guest_can_read_every_board_but_unverified_email_cannot_publish",
+    "tests.test_community_permissions::test_high_risk_content_waits_for_review_and_sensitive_ids_are_blocked",
+    "tests.test_community_permissions::test_identity_is_selected_per_submission_and_public_name_is_server_derived",
+    "tests.test_community_permissions::test_ntpu_student_can_use_only_ntpu_board_for_posts_and_comments",
+    "tests.test_community_permissions::test_post_rejects_unknown_or_conflicting_board_identifiers",
+    "tests.test_community_permissions::test_public_post_threads_hide_internal_author_ids_but_keep_owner_controls",
+    "tests.test_community_permissions::test_reports_and_blocks_validate_targets_and_report_review_is_audited",
+    "tests.test_experience_collector::test_destination_profile_api_returns_verified_official_summary",
+    "tests.test_experience_collector::test_experience_api_reads_cache_and_refreshes_selected_school",
+    "tests.test_frontend_contract::test_application_center_separates_official_requirements_from_preparation_tools",
+    "tests.test_frontend_contract::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+    "tests.test_frontend_contract::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+    "tests.test_frontend_contract::test_global_home_board_routing_and_following_are_present",
+    "tests.test_frontend_contract::test_personal_application_plan_uses_structured_api_and_progressive_login",
+    "tests.test_frontend_contract::test_successful_login_closes_before_noncritical_account_hydration",
+    "tests.test_frontend_contract::test_web_notification_center_and_explicit_email_opt_in_are_present",
+    "tests.test_frontend_contract::test_web_routes_states_and_touch_targets_are_consistent",
+    "tests.test_http_client::test_safe_session_blocks_private_ips",
+    "tests.test_independent_page_routing::test_hash_router_shows_one_feature_page_without_scroll_spying",
+    "tests.test_independent_page_routing::test_route_assets_are_cache_busted_together",
+    "tests.test_next_phase_contract::test_account_deletion_exposes_dedicated_retry_mutation_header",
+    "tests.test_next_phase_contract::test_ai_compatibility_contract_is_explicitly_paused",
+    "tests.test_next_phase_contract::test_api_contract_page_does_not_depend_on_csp_blocked_assets",
+    "tests.test_next_phase_contract::test_application_document_contract_keeps_official_forms_public_and_gates_generation",
+    "tests.test_next_phase_contract::test_application_workflow_publication_contract_exposes_safe_rollback",
+    "tests.test_next_phase_contract::test_content_review_contract_exposes_nonpublishing_source_candidates",
+    "tests.test_next_phase_contract::test_destination_profile_review_contract_requires_explicit_audited_promotion",
+    "tests.test_next_phase_contract::test_document_completeness_contract_is_subscription_gated_and_ai_stays_paused",
+    "tests.test_next_phase_contract::test_external_calendar_contract_documents_subscription_boundary",
+    "tests.test_next_phase_contract::test_private_community_writes_expose_retry_mutation_header",
+    "tests.test_next_phase_contract::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing",
+    "tests.test_next_phase_contract::test_workflow_issue_report_contract_exposes_retry_and_admin_review_paths",
+    "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+    "tests.test_rag::test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused",
+    "tests.test_school_photo_and_match::test_match_missing_profile_fields_and_real_mismatches",
+    "tests.test_social_community_api::test_private_conversation_retry_replays_generated_resources"
+  ],
+  "skipped": [
+    {
+      "id": "tests.test_application_plan_api::test_application_plan_api_uses_bundled_workflow_with_isolated_runtime_data",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_application_workflow::test_workflow_api_reads_cache_and_rejects_public_refresh",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_application_workflow::test_workflow_api_applies_department_override",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_cgu_bundled_data::test_bundled_cgu_workflows_are_available_without_local_cache",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_cgu_bundled_data::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_cgu_bundled_data::test_bundled_cgu_completeness_report_matches_export",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_cgu_bundled_data::test_backfilled_cgu_workflows_keep_current_details_reference_only",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_ntu_school_board_migration::test_ntu_forum_rpc_migration_preserves_authorization_and_replays",
+      "status": "skipped",
+      "reason": "opt in to isolated Docker PostgreSQL"
+    }
+  ],
+  "baseline_wrapper": {
+    "counts": {
+      "error": 1
+    },
+    "cases": [
+      {
+        "id": "::tests.test_content_governance_wrapper",
+        "status": "error",
+        "reason": "collection failure"
+      }
+    ]
+  },
+  "baseline_wrapper_exit_code": 2
+}

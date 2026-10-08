@@ -1,0 +1,1265 @@
+{
+  "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+  "baseline_commit": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "runner_exit_code": 1,
+  "all_checks_passed": false,
+  "candidate_invariant_passed": true,
+  "candidate_counts": {
+    "passed": 1424,
+    "skipped": 8,
+    "failure": 39
+  },
+  "baseline_counts": {
+    "passed": 1348,
+    "skipped": 8,
+    "failure": 39
+  },
+  "added_failures": [],
+  "resolved_failures": [],
+  "failures": [
+    {
+      "id": "tests.test_college_options::test_college_selects_ignore_partner_notes_and_follow_home_university",
+      "status": "failure",
+      "reason": "AssertionError: <anonymous_script>:11\n    fillRegionSelect(\"#region-filter\", allCountries, state.region);\n    ^\n  \n  ReferenceError: fillRegionSelect is not defined\n      at renderPartnerFilters (eval at <anonymous> ([eval]:27:7), <anonymous>:11:3)\n      at renderAll ([eval]:30:7)\n      at [eval]:35:7\n      at runScriptInThisContext (node:internal/vm:219:10)\n      at node:internal/process/execution:451:12\n      at [eval]-wrapper:6:24\n      at runScriptInContext (node:internal/process/execution:449:60)\n      at evalFunction (node:internal/process/execution:283:30)\n      at evalTypeScript (node:internal/process/execution:295:3)\n      at node:internal/main/eval_string:71:3\n  \n  Node.js v24.19.0\n  \nassert 1 == 0\n +  where 1 = CompletedProcess(args=['node', '-e', \"\\n    const assert = require('node:assert/strict');\\n    const fs = require('nod...lTypeScript (node:internal/process/execution:295:3)\\n    at node:internal/main/eval_string:71:3\\n\\nNode.js v24.19.0\\n').returncode"
+    },
+    {
+      "id": "tests.test_community_permissions::test_guest_can_read_every_board_but_unverified_email_cannot_publish",
+      "status": "failure",
+      "reason": "AssertionError: assert {'cgu', 'lang...broad', 'tku'} == {'language-sc...versity:ntpu'}\n  \n  Extra items in the left set:\n  'tku'\n  'ntpu'\n  'cgu'\n  'ntu'\n  Extra items in the right set:...\n  \n  ...Full output truncated (3 lines hidden), use '-vv' to show"
+    },
+    {
+      "id": "tests.test_community_permissions::test_post_rejects_unknown_or_conflicting_board_identifiers",
+      "status": "failure",
+      "reason": "AssertionError: assert '不存在' in '不支援建立此討論板貼文。'"
+    },
+    {
+      "id": "tests.test_community_permissions::test_ntpu_student_can_use_only_ntpu_board_for_posts_and_comments",
+      "status": "failure",
+      "reason": "KeyError: 'university:ntpu'"
+    },
+    {
+      "id": "tests.test_community_permissions::test_identity_is_selected_per_submission_and_public_name_is_server_derived",
+      "status": "failure",
+      "reason": "AssertionError: assert ['匿名學生', '陳小華...庚大學 資訊工程學系學生'] == ['匿名學生', '陳小華...'長庚大學 資訊工程學系']\n  \n  At index 3 diff: '長庚大學 資訊工程學系學生' != '長庚大學 資訊工程學系'\n  Use -v to get more diff"
+    },
+    {
+      "id": "tests.test_community_permissions::test_public_post_threads_hide_internal_author_ids_but_keep_owner_controls",
+      "status": "failure",
+      "reason": "AssertionError: assert 'd5a7c63aea19...6820e6c108490' == ''\n  \n  + d5a7c63aea1944c297c6820e6c108490"
+    },
+    {
+      "id": "tests.test_community_permissions::test_high_risk_content_waits_for_review_and_sensitive_ids_are_blocked",
+      "status": "failure",
+      "reason": "assert 201 == 422\n +  where 201 = <Response [201 Created]>.status_code"
+    },
+    {
+      "id": "tests.test_community_permissions::test_reports_and_blocks_validate_targets_and_report_review_is_audited",
+      "status": "failure",
+      "reason": "assert 403 == 422\n +  where 403 = <Response [403 Forbidden]>.status_code"
+    },
+    {
+      "id": "tests.test_community_permissions::test_author_can_delete_own_post_but_not_another_users_post",
+      "status": "failure",
+      "reason": "AssertionError: assert 200 == 204\n +  where 200 = <Response [200 OK]>.status_code\n +    where <Response [200 OK]> = delete('/community/posts/b3d71469295a4bccb054c9175c134bf8', headers={'Authorization': 'Bearer account-token-299a48b1184c4b6d8c03f2e83d4f02d5', 'X-Anonymous-ID': 'efd03cef27f640c68997550c4b1e571e', 'X-Anonymous-Token': 'BVKDjhfKtKFrHgahEr4qoRRcoNTIE3Lm5JMeVtH5fzI'})\n +      where delete = <starlette.testclient.TestClient object at 0x7fc58d19d4f0>.delete"
+    },
+    {
+      "id": "tests.test_community_permissions::test_account_deletion_keeps_public_content_but_removes_private_links",
+      "status": "failure",
+      "reason": "AssertionError: assert '準備交換的小林' == '已刪除帳號'\n  \n  - 已刪除帳號\n  + 準備交換的小林"
+    },
+    {
+      "id": "tests.test_experience_collector::test_experience_api_reads_cache_and_refreshes_selected_school",
+      "status": "failure",
+      "reason": "assert 3 == 1"
+    },
+    {
+      "id": "tests.test_experience_collector::test_destination_profile_api_returns_verified_official_summary",
+      "status": "failure",
+      "reason": "AssertionError: assert '林肯, 坎特伯里' == 'Lincoln, Canterbury'\n  \n  - Lincoln, Canterbury\n  + 林肯, 坎特伯里"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_web_routes_states_and_touch_targets_are_consistent",
+      "status": "failure",
+      "reason": "assert 'renderCommunityEmpty(\"社群暫時無法載入\", error.message, \"error\")' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+      "status": "failure",
+      "reason": "assert 'fetchCommunityAuth(url)' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_web_notification_center_and_explicit_email_opt_in_are_present",
+      "status": "failure",
+      "reason": "assert '重新核對申請清單' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_application_center_separates_official_requirements_from_preparation_tools",
+      "status": "failure",
+      "reason": "assert '不會用其他年度或其他學校的文件代替' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_successful_login_closes_before_noncritical_account_hydration",
+      "status": "failure",
+      "reason": "assert 'app.js?v=20260929-chinese-1' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...2\" defer></script>\\n    <script src=\"/static/app.js?v=20261008-tku-acceptance-3\" defer></script>\\n  </body>\\n</html>\\n'"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_personal_application_plan_uses_structured_api_and_progressive_login",
+      "status": "failure",
+      "reason": "assert 'id=\"eligibility-department\"' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...2\" defer></script>\\n    <script src=\"/static/app.js?v=20261008-tku-acceptance-3\" defer></script>\\n  </body>\\n</html>\\n'"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_global_home_board_routing_and_following_are_present",
+      "status": "failure",
+      "reason": "assert '查看學生身分驗證' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+      "status": "failure",
+      "reason": "assert '暫不可建立正式申請計畫' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...2\" defer></script>\\n    <script src=\"/static/app.js?v=20261008-tku-acceptance-3\" defer></script>\\n  </body>\\n</html>\\n'"
+    },
+    {
+      "id": "tests.test_http_client::test_safe_session_blocks_private_ips",
+      "status": "failure",
+      "reason": "AssertionError: Regex pattern did not match.\n  Expected regex: 'SSRF blocked: Host internal resolved to non-public IP'\n  Actual message: 'HTTPSConnectionPool(host=\\'internal\\', port=443): Max retries exceeded with url: / (Caused by ProxyError(\\'Unable to connect to proxy\\', NameResolutionError(\"HTTPSConnection(host=\\'proxy\\', port=8080): Failed to resolve \\'proxy\\' (Name or service not known)\")))'"
+    },
+    {
+      "id": "tests.test_independent_page_routing::test_hash_router_shows_one_feature_page_without_scroll_spying",
+      "status": "failure",
+      "reason": "assert 'window.location.hash = \"#search\"' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+    },
+    {
+      "id": "tests.test_independent_page_routing::test_route_assets_are_cache_busted_together",
+      "status": "failure",
+      "reason": "assert 'styles.css?v=20260729-b306-progress-2' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...2\" defer></script>\\n    <script src=\"/static/app.js?v=20261008-tku-acceptance-3\" defer></script>\\n  </body>\\n</html>\\n'"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_private_community_writes_expose_retry_mutation_header",
+      "status": "failure",
+      "reason": "StopIteration"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_workflow_issue_report_contract_exposes_retry_and_admin_review_paths",
+      "status": "failure",
+      "reason": "KeyError: 'parameters'"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_account_deletion_exposes_dedicated_retry_mutation_header",
+      "status": "failure",
+      "reason": "KeyError: 'parameters'"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_api_contract_page_does_not_depend_on_csp_blocked_assets",
+      "status": "failure",
+      "reason": "assert 'href=\"/openapi.json\"' in '\\n    <!DOCTYPE html>\\n    <html>\\n    <head>\\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1...\\n        SwaggerUIBundle.SwaggerUIStandalonePreset\\n        ],\\n    })\\n    </script>\\n    </body>\\n    </html>\\n    '\n +  where '\\n    <!DOCTYPE html>\\n    <html>\\n    <head>\\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1...\\n        SwaggerUIBundle.SwaggerUIStandalonePreset\\n        ],\\n    })\\n    </script>\\n    </body>\\n    </html>\\n    ' = <Response [200 OK]>.text"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_external_calendar_contract_documents_subscription_boundary",
+      "status": "failure",
+      "reason": "AssertionError: assert '403' in {'200': {'description': 'Successful Response', 'content': {'application/json': {'schema': {'$ref': '#/components/schemas/CalendarSyncStatus'}}}}}"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_application_document_contract_keeps_official_forms_public_and_gates_generation",
+      "status": "failure",
+      "reason": "AssertionError: assert '401' in {'200': {'description': 'Successful Response', 'content': {'application/json': {'schema': {'$ref': '#/components/schem...'Validation Error', 'content': {'application/json': {'schema': {'$ref': '#/components/schemas/HTTPValidationError'}}}}}"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_document_completeness_contract_is_subscription_gated_and_ai_stays_paused",
+      "status": "failure",
+      "reason": "AssertionError: assert '401' in {'200': {'description': 'Successful Response', 'content': {'application/json': {'schema': {'$ref': '#/components/schem...'Validation Error', 'content': {'application/json': {'schema': {'$ref': '#/components/schemas/HTTPValidationError'}}}}}"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_ai_compatibility_contract_is_explicitly_paused",
+      "status": "failure",
+      "reason": "KeyError: 'deprecated'"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_content_review_contract_exposes_nonpublishing_source_candidates",
+      "status": "failure",
+      "reason": "KeyError: 'ApplicationWorkflowSourceReplacementCandidate'"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing",
+      "status": "failure",
+      "reason": "KeyError: '/admin/application-workflow-review-batches/{batch_id}/stage'"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_destination_profile_review_contract_requires_explicit_audited_promotion",
+      "status": "failure",
+      "reason": "KeyError: '/admin/destination-profile-review-queue'"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_application_workflow_publication_contract_exposes_safe_rollback",
+      "status": "failure",
+      "reason": "KeyError: '/admin/application-workflow-publications'"
+    },
+    {
+      "id": "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+      "status": "failure",
+      "reason": "assert 0 == 1"
+    },
+    {
+      "id": "tests.test_rag::test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused",
+      "status": "failure",
+      "reason": "assert 422 == 503\n +  where 422 = <Response [422 Unprocessable Content]>.status_code"
+    },
+    {
+      "id": "tests.test_school_photo_and_match::test_match_missing_profile_fields_and_real_mismatches",
+      "status": "failure",
+      "reason": "AssertionError: <anonymous_script>:24\n    const cycleConfirmed = !homeSelectionRules().partner_requirements_need_confirmation;\n                           ^\n  \n  ReferenceError: homeSelectionRules is not defined\n      at partnerMatch (eval at <anonymous> ([eval]:14:31), <anonymous>:24:26)\n      at [eval]:18:19\n      at runScriptInThisContext (node:internal/vm:219:10)\n      at node:internal/process/execution:451:12\n      at [eval]-wrapper:6:24\n      at runScriptInContext (node:internal/process/execution:449:60)\n      at evalFunction (node:internal/process/execution:283:30)\n      at evalTypeScript (node:internal/process/execution:295:3)\n      at node:internal/main/eval_string:71:3\n  \n  Node.js v24.19.0\n  \nassert 1 == 0\n +  where 1 = CompletedProcess(args=['node', '-e', '\\n    const assert = require(\\'node:assert/strict\\');\\n    const fs = require(\\'...lTypeScript (node:internal/process/execution:295:3)\\n    at node:internal/main/eval_string:71:3\\n\\nNode.js v24.19.0\\n').returncode"
+    },
+    {
+      "id": "tests.test_social_community_api::test_private_conversation_retry_replays_generated_resources",
+      "status": "failure",
+      "reason": "assert 422 == 201\n +  where 422 = <Response [422 Unprocessable Content]>.status_code"
+    }
+  ],
+  "skipped": [
+    {
+      "id": "tests.test_application_plan_api::test_application_plan_api_uses_bundled_workflow_with_isolated_runtime_data",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_application_workflow::test_workflow_api_reads_cache_and_rejects_public_refresh",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_application_workflow::test_workflow_api_applies_department_override",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_cgu_bundled_data::test_bundled_cgu_workflows_are_available_without_local_cache",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_cgu_bundled_data::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_cgu_bundled_data::test_bundled_cgu_completeness_report_matches_export",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_cgu_bundled_data::test_backfilled_cgu_workflows_keep_current_details_reference_only",
+      "status": "skipped",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "id": "tests.test_ntu_school_board_migration::test_ntu_forum_rpc_migration_preserves_authorization_and_replays",
+      "status": "skipped",
+      "reason": "opt in to isolated Docker PostgreSQL"
+    }
+  ],
+  "inherited_wrapper": {
+    "counts": {
+      "error": 1
+    },
+    "cases": [
+      {
+        "id": "::tests.test_content_governance_wrapper",
+        "status": "error",
+        "reason": "collection failure"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "pytest-unit-and-browser",
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_account_read_cache.py",
+        "tests/test_account_workspace_api.py",
+        "tests/test_advisor.py",
+        "tests/test_advisor_mascot_contract.py",
+        "tests/test_ai_gateway.py",
+        "tests/test_ai_privacy.py",
+        "tests/test_analytics_api.py",
+        "tests/test_analytics_core.py",
+        "tests/test_analytics_frontend_contract.py",
+        "tests/test_analytics_report.py",
+        "tests/test_api.py",
+        "tests/test_application_document_catalog.py",
+        "tests/test_application_documents_api.py",
+        "tests/test_application_periods.py",
+        "tests/test_application_plan_api.py",
+        "tests/test_application_plan_schedule_api.py",
+        "tests/test_application_plan_scheduling.py",
+        "tests/test_application_rules.py",
+        "tests/test_application_workflow.py",
+        "tests/test_application_workflow_issue_report_migration.py",
+        "tests/test_application_workflow_issue_reports.py",
+        "tests/test_atomic_account_deletion_migration.py",
+        "tests/test_atomic_auth_mutations.py",
+        "tests/test_atomic_private_community_migration.py",
+        "tests/test_atomic_public_community_api.py",
+        "tests/test_atomic_public_community_migration.py",
+        "tests/test_atomic_workspace_moderation.py",
+        "tests/test_auth_api.py",
+        "tests/test_b4_04_ai_limits.py",
+        "tests/test_brand_assets.py",
+        "tests/test_calendar_conflicts.py",
+        "tests/test_calendar_sync_api.py",
+        "tests/test_calendar_task_scheduling.py",
+        "tests/test_catalog_access.py",
+        "tests/test_catalogue_speed.py",
+        "tests/test_cgu_bundled_data.py",
+        "tests/test_change_impact.py",
+        "tests/test_chinese_public_content.py",
+        "tests/test_classifier.py",
+        "tests/test_cli.py",
+        "tests/test_college_options.py",
+        "tests/test_community_api.py",
+        "tests/test_community_browsing.py",
+        "tests/test_community_permissions.py",
+        "tests/test_community_repositories.py",
+        "tests/test_content_summary.py",
+        "tests/test_dependency_security_baseline.py",
+        "tests/test_destination_tips.py",
+        "tests/test_discovery.py",
+        "tests/test_discussion_round2.py",
+        "tests/test_document_check_entitlements.py",
+        "tests/test_document_vault.py",
+        "tests/test_email_verification.py",
+        "tests/test_entitlements.py",
+        "tests/test_experience_collector.py",
+        "tests/test_experience_digests.py",
+        "tests/test_feedback.py",
+        "tests/test_feedback_migration.py",
+        "tests/test_fit_signals.py",
+        "tests/test_flutter_independent_pages.py",
+        "tests/test_flutter_navigation_hierarchy.py",
+        "tests/test_flutter_production_copy.py",
+        "tests/test_form_drafts.py",
+        "tests/test_frontend_contract.py",
+        "tests/test_health_head.py",
+        "tests/test_home_and_forum_routes.py",
+        "tests/test_hong_kong_country.py",
+        "tests/test_http_client.py",
+        "tests/test_icon_motion_contract.py",
+        "tests/test_independent_page_routing.py",
+        "tests/test_jsonl_storage_integrity.py",
+        "tests/test_lai_10_security_audit.py",
+        "tests/test_legal_pages.py",
+        "tests/test_life_context.py",
+        "tests/test_loading_screen.py",
+        "tests/test_local_ai.py",
+        "tests/test_match_document_chunks_migration.py",
+        "tests/test_multi_application_plan.py",
+        "tests/test_my_application_entry.py",
+        "tests/test_native_app_contract.py",
+        "tests/test_next_phase_contract.py",
+        "tests/test_notification_changes.py",
+        "tests/test_notifications.py",
+        "tests/test_ntpu_bundled_data.py",
+        "tests/test_ntpu_support.py",
+        "tests/test_ntu_audit.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_ntu_school_board_migration.py",
+        "tests/test_open_catalog_signup.py",
+        "tests/test_partner_localization.py",
+        "tests/test_partner_map_geometry.py",
+        "tests/test_partner_research.py",
+        "tests/test_pipeline.py",
+        "tests/test_public_translation.py",
+        "tests/test_qualification_scope_consistency.py",
+        "tests/test_rag.py",
+        "tests/test_regions.py",
+        "tests/test_request_origin.py",
+        "tests/test_requirements_traceability.py",
+        "tests/test_responsive_css.py",
+        "tests/test_review_source_candidates.py",
+        "tests/test_review_source_metadata_candidates.py",
+        "tests/test_rls_auto_enable_migration.py",
+        "tests/test_school_choice.py",
+        "tests/test_school_choice_migration.py",
+        "tests/test_school_completeness.py",
+        "tests/test_school_content.py",
+        "tests/test_school_image_collector.py",
+        "tests/test_school_photo_and_match.py",
+        "tests/test_selection_conditions_sync.py",
+        "tests/test_social_community_api.py",
+        "tests/test_source_applicability_cleanup.py",
+        "tests/test_source_metadata_research_audit.py",
+        "tests/test_source_replacement_transport_audit.py",
+        "tests/test_static_caching.py",
+        "tests/test_student_view.py",
+        "tests/test_submission_progress.py",
+        "tests/test_supabase_migration_syntax.py",
+        "tests/test_supabase_repositories.py",
+        "tests/test_supabase_runtime_validation.py",
+        "tests/test_supabase_setup_check.py",
+        "tests/test_task_documents_and_reference_plan.py",
+        "tests/test_terms_consent.py",
+        "tests/test_tku_acceptance_runner.py",
+        "tests/test_tku_support.py",
+        "tests/test_transient_auth.py",
+        "tests/test_translation_requests.py",
+        "tests/test_university_locations.py",
+        "tests/test_uniway_ui_contract.py",
+        "tests/test_web_review_findings_contract.py",
+        "tests/test_workflow_catalog_cache.py",
+        "tests/test_workflow_context_api.py",
+        "tests/test_workflow_structuring.py",
+        "tests/test_workload_planning.py",
+        "tests/test_workload_planning_api.py",
+        "tests/e2e/test_tku_acceptance.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/e2e/test_application_workspace.py",
+        "tests/e2e/test_application_ui_refinements.py",
+        "tests/e2e/test_application_periods.py",
+        "tests/e2e/test_fit_and_completeness_ui.py",
+        "tests/e2e/test_planning_workspace.py",
+        "tests/e2e/test_web_next_phase.py::test_application_form_sync_review_and_pdf_download",
+        "-q",
+        "-ra",
+        "--junitxml=/tmp/tku-acceptance-89217e1/suite.xml"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 764.79,
+      "log": "/tmp/tku-acceptance-89217e1/pytest-unit-and-browser.log",
+      "before": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "tku-switching-and-details",
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/check_tku_target_switching.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 110.16,
+      "log": "/tmp/tku-acceptance-89217e1/tku-switching-and-details.log",
+      "before": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "openapi",
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.48,
+      "log": "/tmp/tku-acceptance-89217e1/openapi.log",
+      "before": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "javascript-shared",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/app.js"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.05,
+      "log": "/tmp/tku-acceptance-89217e1/javascript-shared.log",
+      "before": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "javascript-tku",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/tku-academic-units.js"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.04,
+      "log": "/tmp/tku-acceptance-89217e1/javascript-tku.log",
+      "before": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.01,
+      "log": "/tmp/tku-acceptance-89217e1/diff-check.log",
+      "before": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "inherited-wrapper-collection",
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_content_governance_wrapper.py",
+        "--collect-only",
+        "-q",
+        "--junitxml=/tmp/tku-acceptance-89217e1/wrapper.xml"
+      ],
+      "exit_code": 2,
+      "elapsed_seconds": 0.89,
+      "log": "/tmp/tku-acceptance-89217e1/inherited-wrapper-collection.log",
+      "before": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "lockfile",
+      "command": [
+        "uv",
+        "lock",
+        "--check"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 1.38,
+      "log": "/tmp/tku-acceptance-89217e1/lockfile.log",
+      "before": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+        "worktree_status": "",
+        "valid": true
+      }
+    }
+  ],
+  "school_hash_preservation": {
+    "count": 851,
+    "candidate_count": 851,
+    "differences": [],
+    "counts": {
+      "國立臺北大學": 409,
+      "長庚大學": 154,
+      "國立臺灣大學": 288
+    }
+  },
+  "tku_unit_runner_counts": {
+    "passed": 29
+  },
+  "relevant_browser_counts": {
+    "passed": 47
+  },
+  "tku_browser": [
+    {
+      "status": "passed",
+      "viewport": 1280,
+      "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+      "scenario": "conditional-catalog-persistence",
+      "page_errors": [],
+      "schools_checked": [
+        "立命館大學 Ritsumeikan University",
+        "長崎外國語大學 Nagasaki University of Foreign Studies",
+        "成蹊大學 Seikei University",
+        "電氣通信大學 University of Electro-Communications"
+      ],
+      "nominated_host_scope_preserved": true,
+      "exact_deadline_events": 0,
+      "reload_preserved": true,
+      "preparation_target_reload_preserved": true,
+      "closed_choice_schedule_preview_disabled": true
+    },
+    {
+      "status": "passed",
+      "viewport": 390,
+      "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+      "scenario": "conditional-catalog-persistence",
+      "page_errors": [],
+      "schools_checked": [
+        "立命館大學 Ritsumeikan University",
+        "長崎外國語大學 Nagasaki University of Foreign Studies",
+        "成蹊大學 Seikei University",
+        "電氣通信大學 University of Electro-Communications"
+      ],
+      "nominated_host_scope_preserved": true,
+      "exact_deadline_events": 0,
+      "reload_preserved": true,
+      "preparation_target_reload_preserved": true,
+      "closed_choice_schedule_preview_disabled": true
+    },
+    {
+      "status": "passed",
+      "viewport": 1280,
+      "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+      "scenario": "conditions-native-years",
+      "page_errors": [],
+      "colleges": 9,
+      "department": "資訊工程學系",
+      "years": [
+        "2029-2030",
+        "2028-2029",
+        "2027-2028"
+      ],
+      "closed_schools_not_formal_preferences": true,
+      "conditions_reload_preserved": true
+    },
+    {
+      "status": "passed",
+      "viewport": 390,
+      "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+      "scenario": "conditions-native-years",
+      "page_errors": [],
+      "colleges": 9,
+      "department": "資訊工程學系",
+      "years": [
+        "2029-2030",
+        "2028-2029",
+        "2027-2028"
+      ],
+      "closed_schools_not_formal_preferences": true,
+      "conditions_reload_preserved": true
+    },
+    {
+      "status": "passed",
+      "viewport": 1280,
+      "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+      "scenario": "filters-favorites-comparison",
+      "page_errors": [],
+      "listed": 4,
+      "open": 0,
+      "saved_favorites": [
+        "立命館大學 Ritsumeikan University",
+        "長崎外國語大學 Nagasaki University of Foreign Studies"
+      ],
+      "reload_preserved": true
+    },
+    {
+      "status": "passed",
+      "viewport": 390,
+      "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+      "scenario": "filters-favorites-comparison",
+      "page_errors": [],
+      "listed": 4,
+      "open": 0,
+      "saved_favorites": [
+        "立命館大學 Ritsumeikan University",
+        "長崎外國語大學 Nagasaki University of Foreign Studies"
+      ],
+      "reload_preserved": true
+    },
+    {
+      "status": "passed",
+      "viewport": 1280,
+      "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+      "scenario": "shared-home-query-navigation",
+      "page_errors": [],
+      "query_follows_explicit_choice": true,
+      "navigation_preserves_choice": true,
+      "reload_preserved": true,
+      "returned_to_tku": true,
+      "tku_document_context_preserved": true
+    },
+    {
+      "status": "passed",
+      "viewport": 390,
+      "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+      "scenario": "shared-home-query-navigation",
+      "page_errors": [],
+      "query_follows_explicit_choice": true,
+      "navigation_preserves_choice": true,
+      "reload_preserved": true,
+      "returned_to_tku": true,
+      "tku_document_context_preserved": true
+    },
+    {
+      "status": "passed",
+      "viewport": 1280,
+      "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+      "scenario": "tku-autobiography-preparation",
+      "page_errors": [],
+      "official_layout": false,
+      "templates": 2,
+      "actual_pdf": "/tmp/tku-acceptance-89217e1/browser/tku-autobiography-preparation-1280.pdf",
+      "mother_school_name_correct": true,
+      "draft_reload_preserved": true,
+      "rendered_pages": [
+        "/tmp/tku-acceptance-89217e1/browser/tku-autobiography-preparation-1280-render-1.png",
+        "/tmp/tku-acceptance-89217e1/browser/tku-autobiography-preparation-1280-render-2.png"
+      ],
+      "pdf_contains_both_answers": true,
+      "official_source": "https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/09/更新2027-28日語組二甄簡章.pdf#page=4"
+    },
+    {
+      "status": "passed",
+      "viewport": 390,
+      "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+      "scenario": "tku-autobiography-preparation",
+      "page_errors": [],
+      "official_layout": false,
+      "templates": 2,
+      "actual_pdf": "/tmp/tku-acceptance-89217e1/browser/tku-autobiography-preparation-390.pdf",
+      "mother_school_name_correct": true,
+      "draft_reload_preserved": true,
+      "rendered_pages": [
+        "/tmp/tku-acceptance-89217e1/browser/tku-autobiography-preparation-390-render-1.png",
+        "/tmp/tku-acceptance-89217e1/browser/tku-autobiography-preparation-390-render-2.png"
+      ],
+      "pdf_contains_both_answers": true,
+      "official_source": "https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/09/更新2027-28日語組二甄簡章.pdf#page=4"
+    },
+    {
+      "status": "passed",
+      "viewport": 1280,
+      "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+      "scenario": "tku-study-plan-preparation",
+      "page_errors": [],
+      "official_layout": false,
+      "templates": 2,
+      "actual_pdf": "/tmp/tku-acceptance-89217e1/browser/tku-study-plan-preparation-1280.pdf",
+      "mother_school_name_correct": true,
+      "draft_reload_preserved": true,
+      "rendered_pages": [
+        "/tmp/tku-acceptance-89217e1/browser/tku-study-plan-preparation-1280-render-1.png",
+        "/tmp/tku-acceptance-89217e1/browser/tku-study-plan-preparation-1280-render-2.png"
+      ],
+      "pdf_contains_both_answers": true,
+      "official_source": "https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/09/更新2027-28日語組二甄簡章.pdf#page=4"
+    },
+    {
+      "status": "passed",
+      "viewport": 390,
+      "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+      "scenario": "tku-study-plan-preparation",
+      "page_errors": [],
+      "official_layout": false,
+      "templates": 2,
+      "actual_pdf": "/tmp/tku-acceptance-89217e1/browser/tku-study-plan-preparation-390.pdf",
+      "mother_school_name_correct": true,
+      "draft_reload_preserved": true,
+      "rendered_pages": [
+        "/tmp/tku-acceptance-89217e1/browser/tku-study-plan-preparation-390-render-1.png",
+        "/tmp/tku-acceptance-89217e1/browser/tku-study-plan-preparation-390-render-2.png"
+      ],
+      "pdf_contains_both_answers": true,
+      "official_source": "https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/09/更新2027-28日語組二甄簡章.pdf#page=4"
+    }
+  ],
+  "switch": {
+    "status": "passed",
+    "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+    "checks": [
+      {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "checks": [
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "電氣通信大學 University of Electro-Communications",
+            "academic_year": "2027-2028",
+            "visible_documents": 25,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "電氣通信大學 University of Electro-Communications",
+            "academic_year": "2027-2028",
+            "visible_documents": 25,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "電氣通信大學 University of Electro-Communications",
+            "academic_year": "2027-2028",
+            "visible_documents": 25,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "國立臺北大學",
+            "target": "關西學院大學 (Kwansei Gakuin University)",
+            "academic_year": "115",
+            "visible_documents": 20,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "長庚大學",
+            "target": "林肯大學 Lincoln University",
+            "academic_year": "116",
+            "visible_documents": 27,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "國立臺灣大學",
+            "target": "聖保羅大學",
+            "academic_year": "116",
+            "visible_documents": 12,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          }
+        ],
+        "detail_checks": [
+          {
+            "school": "立命館大學 Ritsumeikan University",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          },
+          {
+            "school": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          },
+          {
+            "school": "成蹊大學 Seikei University",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          },
+          {
+            "school": "電氣通信大學 University of Electro-Communications",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          }
+        ],
+        "cancel_keeps_original": true,
+        "stale_response_ignored": true,
+        "wrong_year_does_not_reuse_documents": true,
+        "page_errors": []
+      },
+      {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "checks": [
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "電氣通信大學 University of Electro-Communications",
+            "academic_year": "2027-2028",
+            "visible_documents": 25,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "電氣通信大學 University of Electro-Communications",
+            "academic_year": "2027-2028",
+            "visible_documents": 25,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "電氣通信大學 University of Electro-Communications",
+            "academic_year": "2027-2028",
+            "visible_documents": 25,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "國立臺北大學",
+            "target": "關西學院大學 (Kwansei Gakuin University)",
+            "academic_year": "115",
+            "visible_documents": 20,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "長庚大學",
+            "target": "林肯大學 Lincoln University",
+            "academic_year": "116",
+            "visible_documents": 27,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "國立臺灣大學",
+            "target": "聖保羅大學",
+            "academic_year": "116",
+            "visible_documents": 12,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          }
+        ],
+        "detail_checks": [
+          {
+            "school": "立命館大學 Ritsumeikan University",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          },
+          {
+            "school": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          },
+          {
+            "school": "成蹊大學 Seikei University",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          },
+          {
+            "school": "電氣通信大學 University of Electro-Communications",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          }
+        ],
+        "cancel_keeps_original": true,
+        "stale_response_ignored": true,
+        "wrong_year_does_not_reuse_documents": true,
+        "page_errors": []
+      }
+    ]
+  },
+  "not_run": [
+    "tests/integration/test_local_ai_runtime.py: unrelated Ollama hardware/runtime integration",
+    "E2E files outside the seven selected suites and the specified CGU PDF node; not counted as passed"
+  ],
+  "data_scope": {
+    "records": 128,
+    "current_round": 4,
+    "reference_rows": 124,
+    "current_quota": 7,
+    "open_new_applications": 0,
+    "matrix_fields": 152,
+    "verified": 85,
+    "verified_percent": 55.9,
+    "unresolved_source_conflicts": 13,
+    "host_documents": 53,
+    "official_exchange_attachments": 28,
+    "registration_colleges": 9,
+    "registration_units": 44
+  },
+  "human_acceptance": "Limited TKU UI/data review can start if no added failures/hash drift; full current-year application readiness remains blocked by missing official data and inherited/CI failures."
+}
