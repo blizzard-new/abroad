@@ -148,13 +148,22 @@ def enrich_documents(workflow, partner):
                 "申請期間結束後由校方另發財力表，未載確切補件日；不以錄取通知當作起點"
             )
     if any(item["stage"] == "second_submission" for item in row["requirements"]):
+        khu_followup = partner.source_pages[0] == 45
         second = ApplicationStep(
             order=6,
             phase="合作校第二次文件送件",
             title="依提名後通知完成第二次文件送件",
             responsible_party="學生／合作校",
-            summary="2027春季factsheet分第一、第二次送件；第二次日期與啟動條件未載。",
-            timing="第二次繳韓國簽證copy、航班及銀行證明；未載確切補件日，不猜錄取前後",
+            summary=(
+                "2026–2027 factsheet分KHU平台與Google Form提交；財力、英文保險另交，未明示須等錄取。"
+                if khu_followup else
+                "2027春季factsheet分第一、第二次送件；第二次日期與啟動條件未載。"
+            ),
+            timing=(
+                "Google Form確切期限TBA；銀行證明開立日另通知，不猜錄取前後或統一發證日"
+                if khu_followup else
+                "第二次繳韓國簽證copy、航班及銀行證明；未載確切補件日，不猜錄取前後"
+            ),
             scope=application.scope,
             support_status="needs_confirmation",
             needs_confirmation=True,
@@ -162,6 +171,12 @@ def enrich_documents(workflow, partner):
             confirmation_contact=application.confirmation_contact,
         )
         workflow.steps.insert(5, second)
+        if khu_followup:
+            second.submission = second.submission.model_copy(update={
+                "method": ApplicationSubmissionMethod.MIXED,
+                "office": "慶熙國際處Google Form；非OECD國籍另繳銀行紙本，依個別通知",
+                "portal_url": None,
+            })
         targets["second_submission"] = second
     for item in row["requirements"]:
         requirement = ApplicationDocumentRequirement.model_validate(
@@ -196,7 +211,13 @@ def enrich_documents(workflow, partner):
             dict.fromkeys([*target.source_urls, *requirement.source_urls])
         )
     application.details.append(row["review_note"])
-    if row.get("submission_method") == "home_compiled_email":
+    if partner.source_pages[0] == 45:
+        application.submission = application.submission.model_copy(update={
+            "method": ApplicationSubmissionMethod.MIXED,
+            "office": "KHU Online Platform上傳；非OECD國籍另繳認證在學紙本，依個別通知",
+            "portal_url": None,
+        })
+    elif row.get("submission_method") == "home_compiled_email":
         nomination = targets["nomination"]
         nomination.title = "母校彙整七項提名資料，以email寄合作校"
         nomination.responsible_party = "學生準備／母校國際事務處彙整與email送件"

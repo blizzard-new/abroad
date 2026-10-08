@@ -1,5 +1,7 @@
 # 中正大學 2027 春季校級薦外交換資料交接
 
+第二十二輪更新：943份來源、55份official_partial流程、32校230項外校要求（50附條件、28實開官方文件連結），17欄305當期／327待／211缺／20舊／71矛盾／1明示未公告。新增慶熙分階段GoogleForm、EPITA泛用政策差異、Jena三份後續表、DIT原費章與兩次修正；生活通知email誤推送件方法已修。424完整回歸416pass／7skip／1同main既知NTPUfail，桌機／手機12項pass。合併影響及逐byte／hash／wheel證據見[twentysecond-validation-summary](ccu-validation-2026-10-08/twentysecond-validation-summary.json)與[twentysecond-merge-scope](ccu-validation-2026-10-08/twentysecond-merge-scope.json)。工作繼續，公開來源未稱耗盡；十三個第二十三輪必要來源已取得並持續讀正文。
+
 查核日：2026-10-08。Repository：`blizzard-new/abroad`。
 獨立 clone：`/workspace/abroad-ccu-20261008`；分支：`data/ccu-exchange-20261008`。
 基準：從 GitHub 最新 main 取得 `f741d540f546d6ddbbf3174c9a34b5ef103c8816`，建分支前未發現同名遠端分支。

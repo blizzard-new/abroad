@@ -10,28 +10,28 @@
 | --- | ---: | ---: |
 | Dashboard條目 | 77 | 104 |
 | 目的地指南 | 77 | 55 |
-| city | 77 | 55 |
+| city | 38 | 14 | 3 | 0 |
 | transport_summary | 77 | 53 |
 | campus_life_summary | 77 | 55 |
 | guide_photos | 0 | 0 |
 | first_72_hours | 0 | 0 |
 | packing_from_taiwan | 0 | 0 |
 | buy_after_arrival | 0 | 0 |
-| website | 77 | 55 |
+| website | 55 | 0 | 0 | 0 |
 | location_with_city | 47 | 55 |
 | location_with_source | 47 | 55 |
 | 可確定的學術篩選：colleges | 77 | 3 |
 | 可確定的學術篩選：degree_levels | 77 | 10 |
-| 流程文件：requirements | 1469 | 1157 |
-| 流程文件：requirements_with_form | 77 | 136 |
+| 流程文件：requirements | 1469 | 1165 |
+| 流程文件：requirements_with_form | 77 | 139 |
 | 流程文件：schools_with_requirements | 77 | 55 |
 | 流程文件：schools_with_signature_detail | 3 | 55 |
 
-長庚指定115已發布基準有1238項文件、0項form URL及3校簽章細節；未指定年度116 legacy則1469項文件、77項form URL及3校簽章細節。兩個年度不得混用。中正1157項含母校通用及逐校準備要求，不可與222項已逐份實讀的host清單等同。
+長庚指定115已發布基準有1238項文件、0項form URL及3校簽章細節；未指定年度116 legacy則1469項文件、77項form URL及3校簽章細節。兩個年度不得混用。中正1165項含母校通用及逐校準備要求，不可與230項已逐份實讀的host清單等同。
 
 城市／校址55筆有來源；未標年或交換校區仍待確認；地圖經緯度全部pending。55個網站核實身分入口，不保證全站2027規定已核實。照片、抵達72小時、行李及到校採購兩校均為0。
 
-母校第一階9類準備文件、37筆當期逐校第二階要求、29校222項外校文件分開。222項均partial_not_exhaustive；42項附條件，25個已取得且hash核實的官方文件連結可開啟，含申請指引，不全部是空白表。55流程中52筆7步驟，忠南／HUFS／首爾科技三筆8步驟。忠南／HUFS的after_application表示補件不等錄取；首爾科技三項改為中性second_submission，逐項顯示時點待確認。其他26校沒有製造完整外校清單。
+母校第一階9類準備文件、37筆當期逐校第二階要求、32校230項外校文件分開。230項均partial_not_exhaustive；50項附條件，28個已取得且hash核實的官方文件連結可開啟，含申請指引，不全部是空白表。55流程中51筆7步驟，忠南／HUFS／首爾科技／慶熙四筆8步驟。忠南／HUFS的after_application表示補件不等錄取；首爾科技及慶熙的second_submission逐項顯示時點待確認。其他23校沒有製造完整外校清單。
 
 待確認學院／學制的API及前端均不加符合分、不硬性排除。名古屋教育／法學以學院學制配對篩選；法學限碩士。ZHAW工學院改由母校當期p103核實。可確定學院是3筆。
 
@@ -43,11 +43,11 @@ HCMUT當期公開公告及Updated August 2026 factsheet一致：2026-09-30提名
 
 | 17類海外接收欄位（55×17＝935） | 數量 |
 | --- | ---: |
-| 核 | 309 |
-| 缺 | 212 |
-| 待 | 326 |
+| 核 | 305 |
+| 缺 | 211 |
+| 待 | 327 |
 | 舊 | 20 |
-| 矛 | 67 |
+| 矛 | 71 |
 | 未公告 | 1 |
 
 39校至少一項當期外校事實已核實；0校17項全核實、0校完整外校文件集合，`functional_parity_complete=false`。僅HUFS到校前TB窗口是官方明示尚未公告。
@@ -83,7 +83,7 @@ HCMUT當期公開公告及Updated August 2026 factsheet一致：2026-09-30提名
 | 39 | Tokiwa University 常磐大學 | 0/3/4/0/10 | 舊/待/舊 | 0／未建個別外校清單 |
 | 42 | Dong-A University 東亞大學 | 0/5/9/2/1 | 核/舊/待 | 0／未建個別外校清單 |
 | 43 | Pusan National University 釜山國立大學 | 14/1/2/0/0 | 核/核/核 | 8／student_application:7、post_offer:1 |
-| 45 | Kyung Hee University 慶熙大學 | 14/2/1/0/0 | 核/核/核 | 11／student_application:9、post_offer:2 |
+| 45 | Kyung Hee University 慶熙大學 | 11/2/1/3/0 | 核/核/核 | 14／student_application:9、second_submission:3、after_dorm_assignment:2 |
 | 47 | Hankuk University of Foreign Studies 韓國外國語大學 | 11/3/0/2/0 | 核/待/核 | 12／student_application:9、after_dorm_assignment:1、after_application:2 |
 | 48 | Seoul National University of Science and Technology 國立首爾科技大學 | 13/2/1/1/0 | 待/待/核 | 12／student_application:7、second_submission:3、conditional_program:2 |
 | 49 | Sungshin Women's University 誠信女子大學 | 12/0/2/3/0 | 核/核/核 | 9／student_application:9 |
@@ -103,13 +103,13 @@ HCMUT當期公開公告及Updated August 2026 factsheet一致：2026-09-30提名
 | 80 | Presidency University 總統大學 | 1/9/2/1/4 | 核/待/待 | 6／student_application:6 |
 | 83 | Mapua University 瑪普爾大學 | 7/2/6/2/0 | 核/核/核 | 7／student_application:7 |
 | 85 | Bordeaux Montaigne University 蒙田波爾多大學 | 3/9/3/2/0 | 核/待/待 | 0／未建個別外校清單 |
-| 86 | EPITA (School of engineering & computer science) 法國高等工程技術學院 | 10/3/3/1/0 | 核/核/核 | 7／student_application:7 |
+| 86 | EPITA (School of engineering & computer science) 法國高等工程技術學院 | 9/4/2/2/0 | 核/核/核 | 9／student_application:8、post_offer:1 |
 | 87 | University of Strasbourg 史特拉斯堡大學 | 2/10/4/1/0 | 待/待/待 | 0／未建個別外校清單 |
 | 88 | Faculty of Management, Economics & Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院) | 10/1/6/0/0 | 核/核/核 | 1／student_application:1 |
 | 89 | University of Southern Denmark 南丹麥大學 | 0/12/4/1/0 | 核/待/待 | 1／after_dorm_assignment:1 |
 | 95 | Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學 | 2/6/6/0/3 | 核/舊/舊 | 0／未建個別外校清單 |
 | 98 | Ludwigshafen University of Business and Society 路德維希港社會應用科技大學 | 6/2/9/0/0 | 核/核/核 | 5／student_application:5 |
-| 99 | Friedrich Schiller Universität Jena 耶拿大學 | 9/5/0/3/0 | 舊/待/舊 | 0／未建個別外校清單 |
+| 99 | Friedrich Schiller Universität Jena 耶拿大學 | 9/5/0/3/0 | 舊/待/舊 | 3／post_offer:3 |
 | 100 | Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學 | 1/13/3/0/0 | 核/待/待 | 0／未建個別外校清單 |
 | 101 | Deggendorf Institute of Technology 德根多夫應用科技大學 | 0/12/1/4/0 | 核/待/待 | 7／student_application:6、post_offer:1 |
 | 102 | Augsburg University of Applied Sciences 奧格斯堡應用科技大學 | 7/8/2/0/0 | 核/核/核 | 10／student_application:10 |
@@ -163,3 +163,15 @@ HUFS一般頁的宿舍分配約1月／2月及Global付款方式差異保留confl
 本輪共用核心、API、UI、校別adapter無程式變更；110API paths及OpenAPI與第十九／二十輪分支相同。對main的6個既有schema optional／enum變更及4個新增component仍見合併清冊，完整OpenAPI不相同。回歸412項完整跑後6項CCU修正重查15項全通過，最終唯一案例404pass/7skip/1既知NTPUfail；瀏覽器6項通過。六建置22輸出可重現，876原始來源與46個main既有資料檔均byte-identical。
 
 第二十二輪23份精確來源已取得，仍須讀其餘正文及必要附件；不以checkpoint結束工作、不宣稱公開來源耗盡。另由實際瀏覽器畫面定位生活階段email通知可能被共用推定器解讀為送件方法，下一輪核對並修正，不能以既有寬泛推定替代NASIC／租約個人通知。
+
+第二十二輪：48份匿名取得結果、24份必要來源保留、21份導覽／其他對象正文排除、3份hash證明同正文複查。33項欄位證據補充、8項新增逐項要求；919既有來源不修改。Jena首次／續居留PDF及交換延期DOC分開；延期學生签名、母校與Jena International Office雙方簽名核章，6/30及11/30僅下一學期延期提名，不套本期首次申請。三份表可開但未核2027模板適用。
+
+慶熙2026–2027現行factsheet將平台初次文件與Google Form財力／英文保險另交分開，未明示須等錄取；另父母帳戶才附親屬關係。宿舍TB／麻疹證明在分配後、採檢日TBA，不能先做；未年頁住宿1330000對當期1290000KRW、健保72000对80000有差異，三欄改conflict。EPITA一般頁degree certificates與健康保險條件不同於2026/27 PDF；新增未年條件式項目及行前LA三方簽核，當期7件不隨一般頁刪改。
+
+DIT已讀2023原費章、2023首修正與2025第二修正全部條文鏈。原章物理第4頁§6(3)交換生免該章費用，兩次修正只動§9及§2／§4；不宣稱StudentUnion等其他費全免，82對87矛盾保留。龍谷2026/7協議CCU1入/1出不是2027當期名額；interfaculty未列CCU不推所有研究生不合格。HUFS GKS2024八名只舊參考；FHNW德文Business同核B2親簽能力函、provisionalLA及錄取後行前GrantAgreement，補助身分及保證分開。
+
+已修前輪生活email通知誤推送件方式：共用workflow_structuring只對CCU「合作校行前與生活」保留unknown，仍保留明示已核方式，其他母校推定行為不改。校別ccu_documents將慶熙第二次送件改中性GoogleForm，平台上傳及非OECD条件式紙本顯示mixed。合併清冊明列此1個共用檔及1個CCU adapter；無新API／schema，本輪OpenAPI與第十九輪分支相同，完整OpenAPI仍不同main。
+
+424項完整回歸416pass／7skip／1既知NTPUfail，並非宣稱全套綠燈；該失敗已在同main獨立重現。新舊兩輪瀏覽器12項全部通過，首跑因漏Chromium路径失敗已保留。六builder可重現1135檔，46份main資料逐byte相同，77筆CGU published內容hash與獨立main執行相同。
+
+171個剩餘href只依父頁label／URL作範圍篩選，目標正文未讀明列source_content_read=false；其中30個SDU項目是可選Master交換研究project，未誤稱無關研究。仍有19個待篩查候選、13個必要精確來源已於第二十三輪取得並持續讀正文；不稱全校公開来源耗盡。

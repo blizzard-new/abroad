@@ -139,6 +139,7 @@ def test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate():
             review = c["content_review"]
             assert review and review["review_extent"] in {
                 "necessary_policy_sections", "role_and_relevant_sections",
+                "recipient_and_relevant_body_sections", "statute_link_list_only",
             }
             assert review["sha256"] and review["text_sha256"] and review["checked_at"]
             assert c["source_availability"] != "unrequested"

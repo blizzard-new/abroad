@@ -9,7 +9,6 @@ from .models import (
     ApplicationCopyType,
     ApplicationDeadlineStatus,
     ApplicationDocumentRequirement,
-    ApplicationRuleScope,
     ApplicationSourceAuthority,
     ApplicationSourceRole,
     ApplicationStep,
@@ -20,7 +19,6 @@ from .models import (
     ApplicationWorkflowSource,
     UniversityApplicationWorkflow,
 )
-
 
 ACADEMIC_YEAR_PATTERN = re.compile(r"(?<!\d)(\d{3})\s*學年度")
 COPY_COUNT_PATTERN = re.compile(r"(?<!\d)(\d{1,2})\s*份")
@@ -276,7 +274,15 @@ def _structure_step(
     publication_eligible: bool,
 ) -> ApplicationStep:
     method = step.submission.method
-    if method == ApplicationSubmissionMethod.UNKNOWN:
+    # This CCU step combines housing, visa and arrival notices from several
+    # host offices. A notice sent by email does not establish how a later form
+    # must be submitted. Keep the collector's unknown method until explicit
+    # delivery instructions are available; preserve any verified method.
+    ccu_host_life = (
+        workflow.home_university == "國立中正大學"
+        and step.phase == "合作校行前與生活"
+    )
+    if method == ApplicationSubmissionMethod.UNKNOWN and not ccu_host_life:
         method = _infer_submission_method(step)
     submission = step.submission.model_copy(
         update={
