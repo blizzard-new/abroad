@@ -123,7 +123,8 @@ def test_transport_and_life_references_do_not_promote_year_or_anomalous_page(tmp
     assert rows[16]["fields"]["campus_life"]["status"] == "reference_only"
     assert rows[68]["fields"]["campus_life"]["status"] == "reference_only"
     assert rows[26]["fields"]["campus_life"]["status"] == "needs_confirmation"
-    assert rows[71]["fields"]["campus_life"]["value"] is None
+    assert rows[71]["fields"]["campus_life"]["status"] == "needs_confirmation"
+    assert "啟用" in rows[71]["fields"]["campus_life"]["value"]
     anomaly = json.loads((BUNDLE / "overseas_sources/p71-r16-campus2026.json").read_text())
     assert anomaly["access_result"] == "unrelated_content_anomaly"
     for profile in rows.values():

@@ -4401,7 +4401,7 @@
           }
         ],
         "conditional": false,
-        "stage": "student_application"
+        "stage": "nomination"
       },
       {
         "requirement": {
@@ -4434,7 +4434,7 @@
           }
         ],
         "conditional": false,
-        "stage": "student_application"
+        "stage": "nomination"
       },
       {
         "requirement": {
@@ -4467,7 +4467,7 @@
           }
         ],
         "conditional": false,
-        "stage": "student_application"
+        "stage": "nomination"
       },
       {
         "requirement": {
@@ -4500,7 +4500,7 @@
           }
         ],
         "conditional": false,
-        "stage": "student_application"
+        "stage": "nomination"
       },
       {
         "requirement": {
@@ -4533,7 +4533,7 @@
           }
         ],
         "conditional": false,
-        "stage": "student_application"
+        "stage": "nomination"
       },
       {
         "requirement": {
@@ -4566,7 +4566,7 @@
           }
         ],
         "conditional": true,
-        "stage": "student_application"
+        "stage": "nomination"
       },
       {
         "requirement": {
@@ -4599,10 +4599,12 @@
           }
         ],
         "conditional": true,
-        "stage": "student_application"
+        "stage": "nomination"
       }
     ],
-    "review_note": "清單按實讀要求拆成逐項；conditional與分期文字保留，整個workflow仍需覆核。已取得模板才設official_form_url，不是全部附件或可代送申請。"
+    "review_note": "2027 factsheet明載母校彙整所有mandatory／optional資料並email寄送提名信；5mandatory、2optional分開，不誤作學生自行申請；公開表完整讀，但個案附加要求未核，仍partial。",
+    "submission_method": "home_compiled_email",
+    "checked_at": "2026-10-08T14:08:01.965209+00:00"
   },
   {
     "ccu_page": 83,
@@ -6118,5 +6120,910 @@
       }
     ],
     "review_note": "清單按實讀要求拆成逐項；conditional與分期文字保留，整個workflow仍需覆核。已取得模板才設official_form_url，不是全部附件或可代送申請。"
+  },
+  {
+    "ccu_page": 98,
+    "school_name": "Ludwigshafen University of Business and Society 路德維希港社會應用科技大學",
+    "status": "needs_confirmation",
+    "list_completeness": "partial_not_exhaustive",
+    "requirements": [
+      {
+        "requirement": {
+          "name": "證件照掃描（JPEG only）",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1/your-application"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p98-r17-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              98
+            ],
+            "academic_year": "115學年度2027春季；正文2026.09.17",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T13:57:08.825006+00:00",
+            "status": "verified_current",
+            "excerpt": "a scanned identity photo (JPEG only) and passport(PDF) 相關資料 (Other documents) In",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "bb2ae5ce6b82070b1424261c976ff966d721b6b0ea4e4a1e50d4cd4bf574e962",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p98-r3-application-web",
+            "source_url": "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1/your-application",
+            "source_pages": [],
+            "academic_year": "未標年度；當期2026/27 factsheet所連Your application頁",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:22:01.394979+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "a scanned identity photo (JPEG only) * a scanned photocopy of your passport (PDF) Please fill out the online a",
+            "content_hash": "cbe5d9b58efd04ef713553fa149ecebfcd18345155aad50edbcff0c875ceff4c",
+            "text_sha256": "16cd2806ce508a5d1f50d0dc16d4b9a66226e19933d9fbe3f463e8dd7424ab80",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": false,
+        "condition": null,
+        "applicability_status": "verified_current",
+        "applicability_year": "115學年度2027春季；正文2026.09.17",
+        "applicability_note": "母校當期p98明載JPEG證件照；其他個人online欄位仍未核。"
+      },
+      {
+        "requirement": {
+          "name": "護照掃描（PDF）",
+          "copies": null,
+          "copy_type": "copy",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1/your-application"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p98-r17-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              98
+            ],
+            "academic_year": "115學年度2027春季；正文2026.09.17",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T13:57:08.825006+00:00",
+            "status": "verified_current",
+            "excerpt": "a scanned identity photo (JPEG only) and passport(PDF) 相關資料 (Other documents) In",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "bb2ae5ce6b82070b1424261c976ff966d721b6b0ea4e4a1e50d4cd4bf574e962",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p98-r3-application-web",
+            "source_url": "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1/your-application",
+            "source_pages": [],
+            "academic_year": "未標年度；當期2026/27 factsheet所連Your application頁",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:22:01.394979+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "a scanned photocopy of your passport (PDF) Please fill out the online application. Please make ",
+            "content_hash": "cbe5d9b58efd04ef713553fa149ecebfcd18345155aad50edbcff0c875ceff4c",
+            "text_sha256": "16cd2806ce508a5d1f50d0dc16d4b9a66226e19933d9fbe3f463e8dd7424ab80",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": false,
+        "condition": null,
+        "applicability_status": "verified_current",
+        "applicability_year": "115學年度2027春季；正文2026.09.17",
+        "applicability_note": "母校當期p98明載護照PDF；不推其他證件可取代。"
+      },
+      {
+        "requirement": {
+          "name": "online送出後產生申請PDF；列印由母校coordinator簽名，再掃描email",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [
+            "母校coordinator"
+          ],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1/your-application"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p98-r3-application-web",
+            "source_url": "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1/your-application",
+            "source_pages": [],
+            "academic_year": "未標年度；當期2026/27 factsheet所連Your application頁",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:22:01.394979+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "STEP 2 After you have submitted the application form, please wait until the application file is generated; then please click on “download your application form (PDF)” and print it out. The application form must be signed by the coordinator at your home university. STEP 3 Once you have obtained the necessary signature, please send the scanned application form together with the other required documents to the following E-Mail address: alexandra.ege@hwg-lu.de Required documents: * Signed application form * learning agreement * accommodation request Nach oben Image: Logo: Vielfalt Gestalten - Diversity Audit des Stifterverbandes - Zertifikat 2024 Image: Charta der Vielfalt Image: Land Rheinland-Pfalz Fami",
+            "content_hash": "cbe5d9b58efd04ef713553fa149ecebfcd18345155aad50edbcff0c875ceff4c",
+            "text_sha256": "16cd2806ce508a5d1f50d0dc16d4b9a66226e19933d9fbe3f463e8dd7424ab80",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": false,
+        "condition": null,
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "未標年度；當期2026/27 factsheet所連Your application頁",
+        "applicability_note": "個人PDF須建立帳號及online提交才生成；本次未登入／提交，不製造通用空白表。"
+      },
+      {
+        "requirement": {
+          "name": "Learning Agreement（學生及兩校負責人簽名／日期）",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [
+            "學生",
+            "母校負責人",
+            "接收校負責人"
+          ],
+          "stamps": [],
+          "official_form_url": "https://www.hwg-lu.de/fileadmin/Archiv/international/Learning_Agreement_studies-Before_the_mobility.docx",
+          "source_urls": [
+            "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1/your-application",
+            "https://www.hwg-lu.de/fileadmin/Archiv/international/Learning_Agreement_studies-Before_the_mobility.docx"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p98-r3-application-web",
+            "source_url": "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1/your-application",
+            "source_pages": [],
+            "academic_year": "未標年度；當期2026/27 factsheet所連Your application頁",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:22:01.394979+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Required documents: * Signed application form * learning agreement * accommodation request Nach oben Image: Logo: Vielfalt Gestalten - Diversity Audit des Stifterverbandes - Zertif",
+            "content_hash": "cbe5d9b58efd04ef713553fa149ecebfcd18345155aad50edbcff0c875ceff4c",
+            "text_sha256": "16cd2806ce508a5d1f50d0dc16d4b9a66226e19933d9fbe3f463e8dd7424ab80",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p98-r3-learning-agreement",
+            "source_url": "https://www.hwg-lu.de/fileadmin/Archiv/international/Learning_Agreement_studies-Before_the_mobility.docx",
+            "source_pages": [],
+            "academic_year": "未標年度；Before the mobility共用DOCX",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:14:03.017858+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Commitment By signing this document, the student, the Sending Institution and the Receiving Institution confirm that they approve the Learning Agreement and that they will comply with all the arrangements agreed by all parties. Sending and Receiving Institutions undertake to apply all the principles of the Erasmus Charter for Higher Education relating to mobility for studies (or the principles agreed in the Inter-Institutional Agreement for institutions located in Partner Countries). The Beneficiary Institution and the student should also commit to what is set out in the Erasmus+ grant agreement. The Receiving Institution confirms that the educational components listed in Table A are in line with its course catalogue and should be available to the student. The Sending Institution commits to recognise all the credits or equivalent units gained at the Receiving Institution for the successf",
+            "content_hash": "df3d53fb5a8398c12fcd0c2e98e006572c76702f5abb2436098ca5914f4da74d",
+            "text_sha256": "fbccd6c5b129d16118d23bd6f4a3d23e688b7f921fd6b2b2219e19ae77e46f0d",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": false,
+        "condition": null,
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "未標年度；當期2026/27 factsheet所連Your application頁",
+        "applicability_note": "未標年度Before the mobility共用DOCX；含Erasmus+條款，不推中正雙邊有grant或全部條款適用。"
+      },
+      {
+        "requirement": {
+          "name": "Accommodation Request（填Yes／No，偏好住宿不保證）",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": "https://www.hwg-lu.de/fileadmin/Archiv/international/incomings/Bewerbungsformulare/Accommodation_Request_2026.pdf",
+          "source_urls": [
+            "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1/your-application",
+            "https://www.hwg-lu.de/fileadmin/Archiv/international/incomings/Bewerbungsformulare/Accommodation_Request_2026.pdf"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p98-r3-application-web",
+            "source_url": "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1/your-application",
+            "source_pages": [],
+            "academic_year": "未標年度；當期2026/27 factsheet所連Your application頁",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:22:01.394979+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Required documents: * Signed application form * learning agreement * accommodation request Nach oben Image: Logo: Vielfalt Gestalten - Diversity Audit des Stifterverbandes - Zertif",
+            "content_hash": "cbe5d9b58efd04ef713553fa149ecebfcd18345155aad50edbcff0c875ceff4c",
+            "text_sha256": "16cd2806ce508a5d1f50d0dc16d4b9a66226e19933d9fbe3f463e8dd7424ab80",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p98-r3-accommodation-form",
+            "source_url": "https://www.hwg-lu.de/fileadmin/Archiv/international/incomings/Bewerbungsformulare/Accommodation_Request_2026.pdf",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "正文summer semester 2027；move-in 22–25 February 2027",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T05:14:03.018291+00:00",
+            "status": "verified_current",
+            "excerpt": "Would you like to make use of our accommodation service (a room in a flat-sharing community with exchange students? Yes No Is there a student you would like to share your apartment with? (Name) The International Office of Ludwigshafen University will assist you with accommodation. You can indicate a wish for your stay, but there is no guarantee for your preferred choice of apartment . If you would like to find an accommodation by yourself, please let us know, if you don’t need any assistance. Please note that for summer semester 2027 the accommodation will be available from the 22nd of February 2027 on and the move-in dates are from 22nd – 25th February 2027.",
+            "content_hash": "055ad25897d4e79404c3eeb38cb208e26834b3625877ecb4a733217791c1fb6c",
+            "text_sha256": "f5e669d8d08740089239d407f2af990bba5f912ab4a3f8370e4ceecb4e13a312",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": false,
+        "condition": null,
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "未標年度；當期2026/27 factsheet所連Your application頁",
+        "applicability_note": "一般申請頁將此表列required；表內Yes／No是是否使用住宿協助，不擅改成只有住校者才交。正文2027移入日已核，一般申請流程年份仍未核。"
+      }
+    ],
+    "review_note": "公開Your application三步及兩份模板已讀；一般頁／LA未標年；个人online完整欄位及2027附加要求未核，不判官方沒有文件。",
+    "checked_at": "2026-10-08T14:08:01.965209+00:00",
+    "submission_method": "online_generated_pdf_then_home_signature_email"
+  },
+  {
+    "ccu_page": 102,
+    "school_name": "Augsburg University of Applied Sciences 奧格斯堡應用科技大學",
+    "status": "needs_confirmation",
+    "list_completeness": "partial_not_exhaustive",
+    "requirements": [
+      {
+        "requirement": {
+          "name": "提名後Mobility-Online申請",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p102-r3-exchange-en",
+            "source_url": "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "source_pages": [],
+            "academic_year": "未標年度；一般交換英語版",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:12:22.312434+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "2. You apply online After you are nominated, you will receive the information you need to apply. Fill out the online application form (for EPS, use this form ) on Mobility-Online. 3. Upload your documents These include, among other things: a passport",
+            "content_hash": "0635d0f82a3256cbb68ca18ba615c75f2d917c90b786b680dbc772c6c1688e36",
+            "text_sha256": "3dbeb877923844b6d130b54191cbe0a72e1f57e2f95fc7233057ea0158285d07",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": false,
+        "condition": null,
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "未標年度；一般交換英語版",
+        "applicability_note": "提名後收到申請資訊；未登入或提交，未知個人online附加欄位。"
+      },
+      {
+        "requirement": {
+          "name": "護照／證件照片（無戳記，max500×500pixels）",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p102-r3-exchange-en",
+            "source_url": "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "source_pages": [],
+            "academic_year": "未標年度；一般交換英語版",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:12:22.312434+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "3. Upload your documents These include, among other things: a passport or ID photo (no stamps or markings; max. 500x500 pixels) the Learning Agreement (EU students should use the Erasmus+ form from their home university; non-EU students should use this form ) a resume in German or English (including your proficiency level in German and English) a transcript of records from your home university showing your academic performance prior to your stay a copy of your passport or ID card (both sides) and residence permit (if required) proof of your health insurance Depending on your degree program or country of origin, additional documents may be required. Students from the Faculty of Design and the Faculty of Architecture and Civil Engineering should also attach a portfolio or include a link to it in their resume. Please note the following regarding health insurance : European students need the",
+            "content_hash": "0635d0f82a3256cbb68ca18ba615c75f2d917c90b786b680dbc772c6c1688e36",
+            "text_sha256": "3dbeb877923844b6d130b54191cbe0a72e1f57e2f95fc7233057ea0158285d07",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p102-r17-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              102
+            ],
+            "academic_year": "115學年度2027春季；正文2026.09.17",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T13:57:08.825006+00:00",
+            "status": "verified_current",
+            "excerpt": "Online Application Form* (請點此處填寫表單) 2. Passport/identity photo(no stamps and marks, max. 500x500 pxls) 3. Learning Agreement (non-eramus) 4. CV in English or German (for the students of the Faculty of Design with a link to the portfolio) 5. Transcript of records 6. Copy of your national ID-card or passport (both sides), as well as residency permit (if necessary) 7. Valid health insurance** 相關資料 (Other documents) 學校網站：https://www.tha.de/en/ 英文授課課程連結：https://www.tha.de/en/International/Course-offer 交換生可選的課: https://www.tha.de/en/International/Exchange-Students/Course-Catalogue.html Course Offer: https://www.tha.de/en/International/Exchange-Students/Course- offer.html 備註(Notes) Application deadline申請截止日: 2026/11/15 學期期間: 2027/03/15 - 2027/09/30 建議修習學分:12至 30ECTS",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "4988766ec98d077a2816a0fcafb7e21ae5b1c2e63ba205e6dc64d727a52fd85c",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": false,
+        "condition": null,
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "未標年度；一般交換英語版",
+        "applicability_note": "公開正文已讀；2027適用性、個人追加要求及清單完整度未核。"
+      },
+      {
+        "requirement": {
+          "name": "Learning Agreement – NON ERASMUS（學生簽名及兩校signature／STAMP）",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [
+            "學生",
+            "母校",
+            "接收校"
+          ],
+          "stamps": [
+            "母校STAMP",
+            "接收校STAMP"
+          ],
+          "official_form_url": "https://backend.tha.de/fileadmin/tha_gruppen/abt_6_io/Exchange_Students/Learning-Agreement-Incoming.pdf",
+          "source_urls": [
+            "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "https://backend.tha.de/fileadmin/tha_gruppen/abt_6_io/Exchange_Students/Learning-Agreement-Incoming.pdf"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p102-r3-exchange-en",
+            "source_url": "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "source_pages": [],
+            "academic_year": "未標年度；一般交換英語版",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:12:22.312434+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "3. Upload your documents These include, among other things: a passport or ID photo (no stamps or markings; max. 500x500 pixels) the Learning Agreement (EU students should use the Erasmus+ form from their home university; non-EU students should use this form ) a resume in German or English (including your proficiency level in German and English) a transcript of records from your home university showing your academic performance prior to your stay a copy of your passport or ID card (both sides) and residence permit (if required) proof of your health insurance Depending on your degree program or country of origin, additional documents may be required. Students from the Faculty of Design and the Faculty of Architecture and Civil Engineering should also attach a portfolio or include a link to it in their resume. Please note the following regarding health insurance : European students need the",
+            "content_hash": "0635d0f82a3256cbb68ca18ba615c75f2d917c90b786b680dbc772c6c1688e36",
+            "text_sha256": "3dbeb877923844b6d130b54191cbe0a72e1f57e2f95fc7233057ea0158285d07",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p102-r17-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              102
+            ],
+            "academic_year": "115學年度2027春季；正文2026.09.17",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T13:57:08.825006+00:00",
+            "status": "verified_current",
+            "excerpt": "Online Application Form* (請點此處填寫表單) 2. Passport/identity photo(no stamps and marks, max. 500x500 pxls) 3. Learning Agreement (non-eramus) 4. CV in English or German (for the students of the Faculty of Design with a link to the portfolio) 5. Transcript of records 6. Copy of your national ID-card or passport (both sides), as well as residency permit (if necessary) 7. Valid health insurance** 相關資料 (Other documents) 學校網站：https://www.tha.de/en/ 英文授課課程連結：https://www.tha.de/en/International/Course-offer 交換生可選的課: https://www.tha.de/en/International/Exchange-Students/Course-Catalogue.html Course Offer: https://www.tha.de/en/International/Exchange-Students/Course- offer.html 備註(Notes) Application deadline申請截止日: 2026/11/15 學期期間: 2027/03/15 - 2027/09/30 建議修習學分:12至 30ECTS",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "4988766ec98d077a2816a0fcafb7e21ae5b1c2e63ba205e6dc64d727a52fd85c",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p102-r3-learning-agreement-web",
+            "source_url": "https://backend.tha.de/fileadmin/tha_gruppen/abt_6_io/Exchange_Students/Learning-Agreement-Incoming.pdf",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "未標年度；LEARNING AGREEMENT – NON ERASMUS 共用模板",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:23:30.207073+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Student’s signature: Date: Signature and STAMP of Sending Institution We confirm that the proposed programme of study/learning agreement is approved. Date Signature and STAMP of Receiving Institution We confirm that the proposed programme of study/learning agreement is approved. Date: LEARNING AGREEMENT – NON ERASMUS",
+            "content_hash": "fea8b06c8834d158434baeca8f8c20802f7c4411248a6e3f0832a994a70af918",
+            "text_sha256": "fea7936cd7f7acbb0355ebf87384576ef7a2e4e52171019267fca95865eac026",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": false,
+        "condition": null,
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "未標年度；一般交換英語版",
+        "applicability_note": "中正当期要求LA；無年non-Erasmus模板內容已讀但原檔下載重試429，未核實2027版本或成功下載。"
+      },
+      {
+        "requirement": {
+          "name": "CV（德文／英文，附德語及英語程度）",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p102-r3-exchange-en",
+            "source_url": "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "source_pages": [],
+            "academic_year": "未標年度；一般交換英語版",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:12:22.312434+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "3. Upload your documents These include, among other things: a passport or ID photo (no stamps or markings; max. 500x500 pixels) the Learning Agreement (EU students should use the Erasmus+ form from their home university; non-EU students should use this form ) a resume in German or English (including your proficiency level in German and English) a transcript of records from your home university showing your academic performance prior to your stay a copy of your passport or ID card (both sides) and residence permit (if required) proof of your health insurance Depending on your degree program or country of origin, additional documents may be required. Students from the Faculty of Design and the Faculty of Architecture and Civil Engineering should also attach a portfolio or include a link to it in their resume. Please note the following regarding health insurance : European students need the",
+            "content_hash": "0635d0f82a3256cbb68ca18ba615c75f2d917c90b786b680dbc772c6c1688e36",
+            "text_sha256": "3dbeb877923844b6d130b54191cbe0a72e1f57e2f95fc7233057ea0158285d07",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p102-r17-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              102
+            ],
+            "academic_year": "115學年度2027春季；正文2026.09.17",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T13:57:08.825006+00:00",
+            "status": "verified_current",
+            "excerpt": "Online Application Form* (請點此處填寫表單) 2. Passport/identity photo(no stamps and marks, max. 500x500 pxls) 3. Learning Agreement (non-eramus) 4. CV in English or German (for the students of the Faculty of Design with a link to the portfolio) 5. Transcript of records 6. Copy of your national ID-card or passport (both sides), as well as residency permit (if necessary) 7. Valid health insurance** 相關資料 (Other documents) 學校網站：https://www.tha.de/en/ 英文授課課程連結：https://www.tha.de/en/International/Course-offer 交換生可選的課: https://www.tha.de/en/International/Exchange-Students/Course-Catalogue.html Course Offer: https://www.tha.de/en/International/Exchange-Students/Course- offer.html 備註(Notes) Application deadline申請截止日: 2026/11/15 學期期間: 2027/03/15 - 2027/09/30 建議修習學分:12至 30ECTS",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "4988766ec98d077a2816a0fcafb7e21ae5b1c2e63ba205e6dc64d727a52fd85c",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": false,
+        "condition": null,
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "未標年度；一般交換英語版",
+        "applicability_note": "公開正文已讀；2027適用性、個人追加要求及清單完整度未核。"
+      },
+      {
+        "requirement": {
+          "name": "母校成績紀錄",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p102-r3-exchange-en",
+            "source_url": "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "source_pages": [],
+            "academic_year": "未標年度；一般交換英語版",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:12:22.312434+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "3. Upload your documents These include, among other things: a passport or ID photo (no stamps or markings; max. 500x500 pixels) the Learning Agreement (EU students should use the Erasmus+ form from their home university; non-EU students should use this form ) a resume in German or English (including your proficiency level in German and English) a transcript of records from your home university showing your academic performance prior to your stay a copy of your passport or ID card (both sides) and residence permit (if required) proof of your health insurance Depending on your degree program or country of origin, additional documents may be required. Students from the Faculty of Design and the Faculty of Architecture and Civil Engineering should also attach a portfolio or include a link to it in their resume. Please note the following regarding health insurance : European students need the",
+            "content_hash": "0635d0f82a3256cbb68ca18ba615c75f2d917c90b786b680dbc772c6c1688e36",
+            "text_sha256": "3dbeb877923844b6d130b54191cbe0a72e1f57e2f95fc7233057ea0158285d07",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p102-r17-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              102
+            ],
+            "academic_year": "115學年度2027春季；正文2026.09.17",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T13:57:08.825006+00:00",
+            "status": "verified_current",
+            "excerpt": "Online Application Form* (請點此處填寫表單) 2. Passport/identity photo(no stamps and marks, max. 500x500 pxls) 3. Learning Agreement (non-eramus) 4. CV in English or German (for the students of the Faculty of Design with a link to the portfolio) 5. Transcript of records 6. Copy of your national ID-card or passport (both sides), as well as residency permit (if necessary) 7. Valid health insurance** 相關資料 (Other documents) 學校網站：https://www.tha.de/en/ 英文授課課程連結：https://www.tha.de/en/International/Course-offer 交換生可選的課: https://www.tha.de/en/International/Exchange-Students/Course-Catalogue.html Course Offer: https://www.tha.de/en/International/Exchange-Students/Course- offer.html 備註(Notes) Application deadline申請截止日: 2026/11/15 學期期間: 2027/03/15 - 2027/09/30 建議修習學分:12至 30ECTS",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "4988766ec98d077a2816a0fcafb7e21ae5b1c2e63ba205e6dc64d727a52fd85c",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": false,
+        "condition": null,
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "未標年度；一般交換英語版",
+        "applicability_note": "公開正文已讀；2027適用性、個人追加要求及清單完整度未核。"
+      },
+      {
+        "requirement": {
+          "name": "護照或國民身分證copy（雙面）",
+          "copies": null,
+          "copy_type": "copy",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p102-r3-exchange-en",
+            "source_url": "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "source_pages": [],
+            "academic_year": "未標年度；一般交換英語版",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:12:22.312434+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "3. Upload your documents These include, among other things: a passport or ID photo (no stamps or markings; max. 500x500 pixels) the Learning Agreement (EU students should use the Erasmus+ form from their home university; non-EU students should use this form ) a resume in German or English (including your proficiency level in German and English) a transcript of records from your home university showing your academic performance prior to your stay a copy of your passport or ID card (both sides) and residence permit (if required) proof of your health insurance Depending on your degree program or country of origin, additional documents may be required. Students from the Faculty of Design and the Faculty of Architecture and Civil Engineering should also attach a portfolio or include a link to it in their resume. Please note the following regarding health insurance : European students need the",
+            "content_hash": "0635d0f82a3256cbb68ca18ba615c75f2d917c90b786b680dbc772c6c1688e36",
+            "text_sha256": "3dbeb877923844b6d130b54191cbe0a72e1f57e2f95fc7233057ea0158285d07",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p102-r17-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              102
+            ],
+            "academic_year": "115學年度2027春季；正文2026.09.17",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T13:57:08.825006+00:00",
+            "status": "verified_current",
+            "excerpt": "Online Application Form* (請點此處填寫表單) 2. Passport/identity photo(no stamps and marks, max. 500x500 pxls) 3. Learning Agreement (non-eramus) 4. CV in English or German (for the students of the Faculty of Design with a link to the portfolio) 5. Transcript of records 6. Copy of your national ID-card or passport (both sides), as well as residency permit (if necessary) 7. Valid health insurance** 相關資料 (Other documents) 學校網站：https://www.tha.de/en/ 英文授課課程連結：https://www.tha.de/en/International/Course-offer 交換生可選的課: https://www.tha.de/en/International/Exchange-Students/Course-Catalogue.html Course Offer: https://www.tha.de/en/International/Exchange-Students/Course- offer.html 備註(Notes) Application deadline申請截止日: 2026/11/15 學期期間: 2027/03/15 - 2027/09/30 建議修習學分:12至 30ECTS",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "4988766ec98d077a2816a0fcafb7e21ae5b1c2e63ba205e6dc64d727a52fd85c",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": false,
+        "condition": null,
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "未標年度；一般交換英語版",
+        "applicability_note": "公開正文已讀；2027適用性、個人追加要求及清單完整度未核。"
+      },
+      {
+        "requirement": {
+          "name": "健康保險證明",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p102-r3-exchange-en",
+            "source_url": "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "source_pages": [],
+            "academic_year": "未標年度；一般交換英語版",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:12:22.312434+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "3. Upload your documents These include, among other things: a passport or ID photo (no stamps or markings; max. 500x500 pixels) the Learning Agreement (EU students should use the Erasmus+ form from their home university; non-EU students should use this form ) a resume in German or English (including your proficiency level in German and English) a transcript of records from your home university showing your academic performance prior to your stay a copy of your passport or ID card (both sides) and residence permit (if required) proof of your health insurance Depending on your degree program or country of origin, additional documents may be required. Students from the Faculty of Design and the Faculty of Architecture and Civil Engineering should also attach a portfolio or include a link to it in their resume. Please note the following regarding health insurance : European students need the",
+            "content_hash": "0635d0f82a3256cbb68ca18ba615c75f2d917c90b786b680dbc772c6c1688e36",
+            "text_sha256": "3dbeb877923844b6d130b54191cbe0a72e1f57e2f95fc7233057ea0158285d07",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p102-r17-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              102
+            ],
+            "academic_year": "115學年度2027春季；正文2026.09.17",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T13:57:08.825006+00:00",
+            "status": "verified_current",
+            "excerpt": "Online Application Form* (請點此處填寫表單) 2. Passport/identity photo(no stamps and marks, max. 500x500 pxls) 3. Learning Agreement (non-eramus) 4. CV in English or German (for the students of the Faculty of Design with a link to the portfolio) 5. Transcript of records 6. Copy of your national ID-card or passport (both sides), as well as residency permit (if necessary) 7. Valid health insurance** 相關資料 (Other documents) 學校網站：https://www.tha.de/en/ 英文授課課程連結：https://www.tha.de/en/International/Course-offer 交換生可選的課: https://www.tha.de/en/International/Exchange-Students/Course-Catalogue.html Course Offer: https://www.tha.de/en/International/Exchange-Students/Course- offer.html 備註(Notes) Application deadline申請截止日: 2026/11/15 學期期間: 2027/03/15 - 2027/09/30 建議修習學分:12至 30ECTS",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "4988766ec98d077a2816a0fcafb7e21ae5b1c2e63ba205e6dc64d727a52fd85c",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": false,
+        "condition": null,
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "未標年度；一般交換英語版",
+        "applicability_note": "無年一般頁要求上傳；non-European抵達後取得German insurance另述，不猜提前保單或免除中正當期要求。"
+      },
+      {
+        "requirement": {
+          "name": "作品集或CV作品集連結",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p102-r3-exchange-en",
+            "source_url": "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "source_pages": [],
+            "academic_year": "未標年度；一般交換英語版",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:12:22.312434+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Students from the Faculty of Design and the Faculty of Architecture and Civil Engineering should also attach a portfolio or include a link to it in their resume. Please note the following regarding health insurance : European students need the European Health Insurance Card (EHIC",
+            "content_hash": "0635d0f82a3256cbb68ca18ba615c75f2d917c90b786b680dbc772c6c1688e36",
+            "text_sha256": "3dbeb877923844b6d130b54191cbe0a72e1f57e2f95fc7233057ea0158285d07",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": true,
+        "condition": "一般host頁僅設計及建築／土木學生；中正當期只提設計，2027範圍差異待確認。",
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "未標年度；一般交換英語版",
+        "applicability_note": "公開正文已讀；2027適用性、個人追加要求及清單完整度未核。"
+      },
+      {
+        "requirement": {
+          "name": "居留許可copy（if required）",
+          "copies": null,
+          "copy_type": "copy",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p102-r3-exchange-en",
+            "source_url": "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "source_pages": [],
+            "academic_year": "未標年度；一般交換英語版",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:12:22.312434+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "3. Upload your documents These include, among other things: a passport or ID photo (no stamps or markings; max. 500x500 pixels) the Learning Agreement (EU students should use the Erasmus+ form from their home university; non-EU students should use this form ) a resume in German or English (including your proficiency level in German and English) a transcript of records from your home university showing your academic performance prior to your stay a copy of your passport or ID card (both sides) and residence permit (if required) proof of your health insurance Depending on your degree program or country of origin, additional documents may be required. Students from the Faculty of Design and the Faculty of Architecture and Civil Engineering should also attach a portfolio or include a link to it in their resume. Please note the following regarding health insurance : European students need the",
+            "content_hash": "0635d0f82a3256cbb68ca18ba615c75f2d917c90b786b680dbc772c6c1688e36",
+            "text_sha256": "3dbeb877923844b6d130b54191cbe0a72e1f57e2f95fc7233057ea0158285d07",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p102-r17-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              102
+            ],
+            "academic_year": "115學年度2027春季；正文2026.09.17",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T13:57:08.825006+00:00",
+            "status": "verified_current",
+            "excerpt": "Online Application Form* (請點此處填寫表單) 2. Passport/identity photo(no stamps and marks, max. 500x500 pxls) 3. Learning Agreement (non-eramus) 4. CV in English or German (for the students of the Faculty of Design with a link to the portfolio) 5. Transcript of records 6. Copy of your national ID-card or passport (both sides), as well as residency permit (if necessary) 7. Valid health insurance** 相關資料 (Other documents) 學校網站：https://www.tha.de/en/ 英文授課課程連結：https://www.tha.de/en/International/Course-offer 交換生可選的課: https://www.tha.de/en/International/Exchange-Students/Course-Catalogue.html Course Offer: https://www.tha.de/en/International/Exchange-Students/Course- offer.html 備註(Notes) Application deadline申請截止日: 2026/11/15 學期期間: 2027/03/15 - 2027/09/30 建議修習學分:12至 30ECTS",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "4988766ec98d077a2816a0fcafb7e21ae5b1c2e63ba205e6dc64d727a52fd85c",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": true,
+        "condition": "僅需居留許可的個人情況，不套全部學生。",
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "未標年度；一般交換英語版",
+        "applicability_note": "公開正文已讀；2027適用性、個人追加要求及清單完整度未核。"
+      },
+      {
+        "requirement": {
+          "name": "無EHIC歐盟學生的簽名保險聲明",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [
+            "學生"
+          ],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p102-r3-exchange-en",
+            "source_url": "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/",
+            "source_pages": [],
+            "academic_year": "未標年度；一般交換英語版",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T05:12:22.312434+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "If you are an EU student and do not have a valid EHIC, please upload a signed letter containing the following statement: “I hereby declare that I do not have a European Health Insurance Card (EHIC). I confirm that I will apply for valid German health insurance upon my arrival.” 4. Submit your application Upload all req",
+            "content_hash": "0635d0f82a3256cbb68ca18ba615c75f2d917c90b786b680dbc772c6c1688e36",
+            "text_sha256": "3dbeb877923844b6d130b54191cbe0a72e1f57e2f95fc7233057ea0158285d07",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": true,
+        "condition": "僅EU且無有效EHIC者；不套非EU台灣學生。",
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "未標年度；一般交換英語版",
+        "applicability_note": "公開正文已讀；2027適用性、個人追加要求及清單完整度未核。"
+      }
+    ],
+    "review_note": "母校當期7類與一般host六附件＋條件件分來源逐項呈現；未年流程／non-Erasmus模板內容可讀但下載429，當期適用仍待確認，清單partial。",
+    "checked_at": "2026-10-08T14:08:01.965209+00:00"
+  },
+  {
+    "ccu_page": 23,
+    "school_name": "Xiamen University 廈門大學",
+    "status": "needs_confirmation",
+    "list_completeness": "partial_not_exhaustive",
+    "requirements": [
+      {
+        "requirement": {
+          "name": "臺灣／港澳對應來往通行證（效期覆盖交換）",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://visiting.xmu.edu.cn/Web/Info/e3d294da-f1f5-4a89-bd9f-c6848f4a17b8"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p23-r17-hmt-procedure",
+            "source_url": "https://visiting.xmu.edu.cn/Web/Info/e3d294da-f1f5-4a89-bd9f-c6848f4a17b8",
+            "source_pages": [],
+            "academic_year": "正文2026-03-03台港澳交換一般辦法；未明示2027春季",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T13:36:56.301999+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "三、申请必备文件 申请人登录网上报名系统前请准备好以下文件电子版用于上传： 1. 《台湾居民来往大陆通行证》或《港澳居民来往内地通行证》（证件有效期需覆盖交换期间） 2 . 在学阶段成绩单（须由原属学校出具，并加盖学校公章）； 3 . 学习计划书（800字以上，须用中文或英文书写）； 4. 《 健康状况声明 .pdf 》 （由申请人本人签字）； 注： （ 1）申请人须对所提交材料的真实性和完整性负责。申请材料不实、缺漏者，我校概不予受理。 （ 2）申请人应保持通讯畅通，并定期查阅邮箱信件和报名系统，我校将根据实际情况与申请人保持联系。 四、申请时间 春季学期： 系统申请时间： 9月15日-10月31日 ； 提名截止日期： 10月15日 。 秋季学期： 系统申请时间： 3 月 1日-4月30日 ； 提名截止日期： 4月15日 。 注：申请人须严格遵照规定的申请时间，网上报名系统将于申请截止日期当天 24时关闭，逾期我校概不予受理。 五、专业设置及校区分布 专业设置：交流生可根据原就读年级和学分要求，进入我校相应的年级和专业学习，详细专业课程信息请点击下方链接查看（港澳台地区高校学生请参照国际学生专业目录）： 1.本科层次交流项目专业列表： https://admissions.xmu.edu.cn/cn/Majors/CN_BA.htm ? (中文授课) https://admissions.xmu.edu.cn/cn/M",
+            "content_hash": "a81e54a684fae5ca18c51e8455f207a9b75a7f47d82a9888ad3801027e2989b3",
+            "text_sha256": "6a092a3e42bc7031842ef4d0010d54a4fee3e85ccfb5e386c5870fec8465d021",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "conditional_program",
+        "conditional": true,
+        "condition": "僅台港澳交換程序；依實際地區證件，未核一般外籍incoming。",
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "正文2026-03-03台港澳交換一般辦法；未明示2027春季",
+        "applicability_note": "公開正文已讀；2027適用性、個人追加要求及清單完整度未核。"
+      },
+      {
+        "requirement": {
+          "name": "在學階段成績單（母校公章）",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [],
+          "stamps": [
+            "母校公章"
+          ],
+          "official_form_url": null,
+          "source_urls": [
+            "https://visiting.xmu.edu.cn/Web/Info/e3d294da-f1f5-4a89-bd9f-c6848f4a17b8"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p23-r17-hmt-procedure",
+            "source_url": "https://visiting.xmu.edu.cn/Web/Info/e3d294da-f1f5-4a89-bd9f-c6848f4a17b8",
+            "source_pages": [],
+            "academic_year": "正文2026-03-03台港澳交換一般辦法；未明示2027春季",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T13:36:56.301999+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "三、申请必备文件 申请人登录网上报名系统前请准备好以下文件电子版用于上传： 1. 《台湾居民来往大陆通行证》或《港澳居民来往内地通行证》（证件有效期需覆盖交换期间） 2 . 在学阶段成绩单（须由原属学校出具，并加盖学校公章）； 3 . 学习计划书（800字以上，须用中文或英文书写）； 4. 《 健康状况声明 .pdf 》 （由申请人本人签字）； 注： （ 1）申请人须对所提交材料的真实性和完整性负责。申请材料不实、缺漏者，我校概不予受理。 （ 2）申请人应保持通讯畅通，并定期查阅邮箱信件和报名系统，我校将根据实际情况与申请人保持联系。 四、申请时间 春季学期： 系统申请时间： 9月15日-10月31日 ； 提名截止日期： 10月15日 。 秋季学期： 系统申请时间： 3 月 1日-4月30日 ； 提名截止日期： 4月15日 。 注：申请人须严格遵照规定的申请时间，网上报名系统将于申请截止日期当天 24时关闭，逾期我校概不予受理。 五、专业设置及校区分布 专业设置：交流生可根据原就读年级和学分要求，进入我校相应的年级和专业学习，详细专业课程信息请点击下方链接查看（港澳台地区高校学生请参照国际学生专业目录）： 1.本科层次交流项目专业列表： https://admissions.xmu.edu.cn/cn/Majors/CN_BA.htm ? (中文授课) https://admissions.xmu.edu.cn/cn/M",
+            "content_hash": "a81e54a684fae5ca18c51e8455f207a9b75a7f47d82a9888ad3801027e2989b3",
+            "text_sha256": "6a092a3e42bc7031842ef4d0010d54a4fee3e85ccfb5e386c5870fec8465d021",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "conditional_program",
+        "conditional": true,
+        "condition": "僅台港澳交換程序。",
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "正文2026-03-03台港澳交換一般辦法；未明示2027春季",
+        "applicability_note": "公開正文已讀；2027適用性、個人追加要求及清單完整度未核。"
+      },
+      {
+        "requirement": {
+          "name": "學習計畫（800字以上，中文或英文）",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://visiting.xmu.edu.cn/Web/Info/e3d294da-f1f5-4a89-bd9f-c6848f4a17b8"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p23-r17-hmt-procedure",
+            "source_url": "https://visiting.xmu.edu.cn/Web/Info/e3d294da-f1f5-4a89-bd9f-c6848f4a17b8",
+            "source_pages": [],
+            "academic_year": "正文2026-03-03台港澳交換一般辦法；未明示2027春季",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T13:36:56.301999+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "三、申请必备文件 申请人登录网上报名系统前请准备好以下文件电子版用于上传： 1. 《台湾居民来往大陆通行证》或《港澳居民来往内地通行证》（证件有效期需覆盖交换期间） 2 . 在学阶段成绩单（须由原属学校出具，并加盖学校公章）； 3 . 学习计划书（800字以上，须用中文或英文书写）； 4. 《 健康状况声明 .pdf 》 （由申请人本人签字）； 注： （ 1）申请人须对所提交材料的真实性和完整性负责。申请材料不实、缺漏者，我校概不予受理。 （ 2）申请人应保持通讯畅通，并定期查阅邮箱信件和报名系统，我校将根据实际情况与申请人保持联系。 四、申请时间 春季学期： 系统申请时间： 9月15日-10月31日 ； 提名截止日期： 10月15日 。 秋季学期： 系统申请时间： 3 月 1日-4月30日 ； 提名截止日期： 4月15日 。 注：申请人须严格遵照规定的申请时间，网上报名系统将于申请截止日期当天 24时关闭，逾期我校概不予受理。 五、专业设置及校区分布 专业设置：交流生可根据原就读年级和学分要求，进入我校相应的年级和专业学习，详细专业课程信息请点击下方链接查看（港澳台地区高校学生请参照国际学生专业目录）： 1.本科层次交流项目专业列表： https://admissions.xmu.edu.cn/cn/Majors/CN_BA.htm ? (中文授课) https://admissions.xmu.edu.cn/cn/M",
+            "content_hash": "a81e54a684fae5ca18c51e8455f207a9b75a7f47d82a9888ad3801027e2989b3",
+            "text_sha256": "6a092a3e42bc7031842ef4d0010d54a4fee3e85ccfb5e386c5870fec8465d021",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "conditional_program",
+        "conditional": true,
+        "condition": "僅台港澳交換程序。",
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "正文2026-03-03台港澳交換一般辦法；未明示2027春季",
+        "applicability_note": "公開正文已讀；2027適用性、個人追加要求及清單完整度未核。"
+      },
+      {
+        "requirement": {
+          "name": "健康狀況聲明（本人簽字；空白PDF連結未取得）",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [
+            "申請人"
+          ],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://visiting.xmu.edu.cn/Web/Info/e3d294da-f1f5-4a89-bd9f-c6848f4a17b8"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p23-r17-hmt-procedure",
+            "source_url": "https://visiting.xmu.edu.cn/Web/Info/e3d294da-f1f5-4a89-bd9f-c6848f4a17b8",
+            "source_pages": [],
+            "academic_year": "正文2026-03-03台港澳交換一般辦法；未明示2027春季",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T13:36:56.301999+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "三、申请必备文件 申请人登录网上报名系统前请准备好以下文件电子版用于上传： 1. 《台湾居民来往大陆通行证》或《港澳居民来往内地通行证》（证件有效期需覆盖交换期间） 2 . 在学阶段成绩单（须由原属学校出具，并加盖学校公章）； 3 . 学习计划书（800字以上，须用中文或英文书写）； 4. 《 健康状况声明 .pdf 》 （由申请人本人签字）； 注： （ 1）申请人须对所提交材料的真实性和完整性负责。申请材料不实、缺漏者，我校概不予受理。 （ 2）申请人应保持通讯畅通，并定期查阅邮箱信件和报名系统，我校将根据实际情况与申请人保持联系。 四、申请时间 春季学期： 系统申请时间： 9月15日-10月31日 ； 提名截止日期： 10月15日 。 秋季学期： 系统申请时间： 3 月 1日-4月30日 ； 提名截止日期： 4月15日 。 注：申请人须严格遵照规定的申请时间，网上报名系统将于申请截止日期当天 24时关闭，逾期我校概不予受理。 五、专业设置及校区分布 专业设置：交流生可根据原就读年级和学分要求，进入我校相应的年级和专业学习，详细专业课程信息请点击下方链接查看（港澳台地区高校学生请参照国际学生专业目录）： 1.本科层次交流项目专业列表： https://admissions.xmu.edu.cn/cn/Majors/CN_BA.htm ? (中文授课) https://admissions.xmu.edu.cn/cn/M",
+            "content_hash": "a81e54a684fae5ca18c51e8455f207a9b75a7f47d82a9888ad3801027e2989b3",
+            "text_sha256": "6a092a3e42bc7031842ef4d0010d54a4fee3e85ccfb5e386c5870fec8465d021",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "stage": "conditional_program",
+        "conditional": true,
+        "condition": "僅台港澳交換程序。",
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "正文2026-03-03台港澳交換一般辦法；未明示2027春季",
+        "applicability_note": "公開正文已讀；2027適用性、個人追加要求及清單完整度未核。"
+      }
+    ],
+    "review_note": "2026-03-03一般HMT正文列四類，上傳前準備；未明示2027春年度。健康PDF只見文字無可讀href，不猜連結；提名網址由email寄母校，不登入。",
+    "checked_at": "2026-10-08T14:08:01.965209+00:00"
   }
 ]

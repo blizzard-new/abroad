@@ -14,6 +14,29 @@ def partner_scope_needs_confirmation(partner: object, field: str) -> bool:
     return check(scope)
 
 
+def coupled_academic_scope_matches(partner: object, college: str | None, degree: str | None) -> bool | None:
+    """Apply complete, sourced college/degree pairs instead of their cross product."""
+    options = getattr(partner, "program_options", [])
+    evidence = getattr(partner, "field_evidence", {})
+    if not college or not degree or not options:
+        return None
+    if any(evidence.get(k) is None or evidence[k].status != "verified_current" for k in ["colleges", "degree_levels"]):
+        return None
+    urls = {evidence[k].source_url for k in ["colleges", "degree_levels"]}
+    if any(
+        option.source_url not in urls
+        or college_scope_needs_confirmation(option.colleges)
+        or degree_scope_needs_confirmation(option.degree_levels)
+        for option in options
+    ):
+        return None
+    return any(
+        college_scope_matches(option.colleges, college)
+        and degree_scope_matches(option.degree_levels, degree)
+        for option in options
+    )
+
+
 def _normal(value: object) -> str:
     return " ".join(unicodedata.normalize("NFKC", str(value or "")).strip().casefold().split())
 

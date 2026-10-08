@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="16" time="161.807" timestamp="2026-10-08T14:25:29.996516+00:00" hostname="e5e438874453"><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_real_browser_and_both_apis_keep_pending_scope_neutral[104-390]" time="15.954" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_real_browser_and_both_apis_keep_pending_scope_neutral[104-1440]" time="11.090" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_real_browser_and_both_apis_keep_pending_scope_neutral[37-390]" time="9.683" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_real_browser_and_both_apis_keep_pending_scope_neutral[37-1440]" time="10.426" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_actual_template_clicks_and_document_center_stages[390]" time="8.737" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_actual_template_clicks_and_document_center_stages[1440]" time="9.650" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_seoultech_new_housing_costs_and_second_submission_are_visible[390]" time="9.562" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_seoultech_new_housing_costs_and_second_submission_are_visible[1440]" time="10.643" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_hcmut_current_deadlines_and_nomination_template_click[390]" time="10.414"><failure message="AssertionError: Locator expected to have count '1'&#10;Actual value: 3 &#10;Call log:&#10;  - Expect &quot;to_have_count&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;details.workflow-step&quot;).filter(has=locator(&quot;.workflow-documents li&quot;).filter(has_text=&quot;提名信&quot;))&#10;    5 × locator resolved to 0 elements&#10;      - unexpected value &quot;0&quot;&#10;    9 × locator resolved to 3 elements&#10;      - unexpected value &quot;3&quot;">page = &lt;Page url='http://127.0.0.1:58053/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Ho%20Chi%20Min...%E5%BF%97%E6%98%8E%E5%B8%82%E5%9C%8B%E5%AE%B6%E5%A4%A7%E5%AD%B8%E6%89%80%E5%B1%AC%E7%99%BE%E7%A7%91%E5%A4%A7%E5%AD%B8'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:58053', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-90/web-e2e-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_hcmut_current_deadlines_and_nomination_template_click(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        partner = at(67)
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+        section = page.locator("#detail-overview .ccu-receiving-school-details")
+        expect(section).to_be_visible(timeout=30_000)
+        for key, value in [("nomination_deadline", "2026-09-30"), ("application_deadline", "2026-10-15")]:
+            field = section.locator(f'[data-ccu-field="{key}"]')
+            field.locator("&gt; summary").click()
+            expect(field).to_contain_text(value)
+        page.locator("#detail-tab-application").click()
+        step = page.locator("details.workflow-step").filter(
+            has=page.locator(".workflow-documents li").filter(has_text="提名信")
+        )
+&gt;       expect(step).to_have_count(1)
+E       AssertionError: Locator expected to have count '1'
+E       Actual value: 3 
+E       Call log:
+E         - Expect "to_have_count" with timeout 5000ms
+E         - waiting for locator("details.workflow-step").filter(has=locator(".workflow-documents li").filter(has_text="提名信"))
+E           5 × locator resolved to 0 elements
+E             - unexpected value "0"
+E           9 × locator resolved to 3 elements
+E             - unexpected value "3"
+
+tests/e2e/test_ccu_scope_documents.py:279: AssertionError</failure></testcase><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_hcmut_current_deadlines_and_nomination_template_click[1440]" time="11.336"><failure message="AssertionError: Locator expected to have count '1'&#10;Actual value: 3 &#10;Call log:&#10;  - Expect &quot;to_have_count&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;details.workflow-step&quot;).filter(has=locator(&quot;.workflow-documents li&quot;).filter(has_text=&quot;提名信&quot;))&#10;    4 × locator resolved to 0 elements&#10;      - unexpected value &quot;0&quot;&#10;    9 × locator resolved to 3 elements&#10;      - unexpected value &quot;3&quot;">page = &lt;Page url='http://127.0.0.1:58053/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Ho%20Chi%20Min...%E5%BF%97%E6%98%8E%E5%B8%82%E5%9C%8B%E5%AE%B6%E5%A4%A7%E5%AD%B8%E6%89%80%E5%B1%AC%E7%99%BE%E7%A7%91%E5%A4%A7%E5%AD%B8'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:58053', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-90/web-e2e-data0'))
+width = 1440
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_hcmut_current_deadlines_and_nomination_template_click(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        partner = at(67)
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+        section = page.locator("#detail-overview .ccu-receiving-school-details")
+        expect(section).to_be_visible(timeout=30_000)
+        for key, value in [("nomination_deadline", "2026-09-30"), ("application_deadline", "2026-10-15")]:
+            field = section.locator(f'[data-ccu-field="{key}"]')
+            field.locator("&gt; summary").click()
+            expect(field).to_contain_text(value)
+        page.locator("#detail-tab-application").click()
+        step = page.locator("details.workflow-step").filter(
+            has=page.locator(".workflow-documents li").filter(has_text="提名信")
+        )
+&gt;       expect(step).to_have_count(1)
+E       AssertionError: Locator expected to have count '1'
+E       Actual value: 3 
+E       Call log:
+E         - Expect "to_have_count" with timeout 5000ms
+E         - waiting for locator("details.workflow-step").filter(has=locator(".workflow-documents li").filter(has_text="提名信"))
+E           4 × locator resolved to 0 elements
+E             - unexpected value "0"
+E           9 × locator resolved to 3 elements
+E             - unexpected value "3"
+
+tests/e2e/test_ccu_scope_documents.py:279: AssertionError</failure></testcase><testcase classname="tests.e2e.test_ccu_seventeenth_pass" name="test_nagoya_pair_filters_use_one_option[390]" time="11.947"><failure message="AssertionError: Locator expected to contain text '教育'&#10;Actual value: 我的資格條件待補齊，校內收件已截止，須確認已有申請或提名資格合作校申請截止當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。語言門檻English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)生活費參考住宿與生活費用 · 當期已核實：2026/27簡章生活費估租金水電JPY30000–40000/月、伙食30000、個人30000，僅估算。官網住房費表As of June2026、不同宿舍付费/寢具及修繕费不同，未核2027確定帳單；一般财务頁租金20–4…交換名額共 1名研修期間一學期(one semester) / 一學年(one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。 &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;#school-detail-primary-facts&quot;)&#10;    11 × locator resolved to &lt;div class=&quot;detail-primary-facts&quot; id=&quot;school-detail-primary-facts&quot;&gt;…&lt;/div&gt;&#10;       - unexpected value &quot;我的資格條件待補齊，校內收件已截止，須確認已有申請或提名資格合作校申請截止當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。語言門檻English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)生活費參考官方費用待查核交換名額共 1名研修期間一學期(one semester) / 一學年(one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。&quot;&#10;    3 × locator resolved to &lt;div class=&quot;detail-primary-facts&quot; id=&quot;school-detail-primary-facts&quot;&gt;…&lt;/div&gt;&#10;      - unexpected value &quot;我的資格條件待補齊，校內收件已截止，須確認已有申請或提名資格合作校申請截止當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。語言門檻English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)生活費參考住宿與生活費用 · 當期已核實：2026/27簡章生活費估租金水電JPY30000–40000/月、伙食30000、個人30000，僅估算。官網住房費表As of June2026、不同宿舍付费/寢具及修繕费不同，未核2027確定帳單；一般财务頁租金20–4…交換名額共 1名研修期間一學期(one semester) / 一學年(one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。&quot;&#10;&#10;Aria snapshot:&#10;- text: 我的資格&#10;- strong: 條件待補齊，校內收件已截止，須確認已有申請或提名資格&#10;- text: 合作校申請截止&#10;- strong: 當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。&#10;- text: 語言門檻&#10;- strong: &quot;English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)&quot;&#10;- text: 生活費參考&#10;- strong: 住宿與生活費用 · 當期已核實：2026/27簡章生活費估租金水電JPY30000–40000/月、伙食30000、個人30000，僅估算。官網住房費表As of June2026、不同宿舍付费/寢具及修繕费不同，未核2027確定帳單；一般财务頁租金20–4…&#10;- text: 交換名額&#10;- strong: 共 1名&#10;- text: 研修期間&#10;- strong:&#10;  - strong: 一學期&#10;  - text: (one semester) /&#10;  - strong: 一學年&#10;  - text: (one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。">page = &lt;Page url='http://127.0.0.1:47631/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&amp;view=list#partners'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:47631', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-90/web-e2e-data1'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_nagoya_pair_filters_use_one_option(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        session = sign_in_cookie(live_server, school=HOME)
+        live_server.verify_student(session["profile"]["id"], university=HOME)
+        attach_session(page, live_server, session)
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        enter_public_site(page, live_server, "partners")
+        wait_until(page, "state.dashboard?.school_name === '國立中正大學'")
+        for college, degree, allowed in [
+            ("法學院", "大學部", False), ("法學院", "博士班", False),
+            ("法學院", "碩士班", True), ("教育學院", "大學部", True),
+            ("教育學院", "博士班", True),
+        ]:
+            result = page.evaluate("""({name,college,degree}) =&gt; {
+                const item=state.dashboard.partner_universities.find(p=&gt;p.school_name===name);
+                const profile={college,degree,academicScore:85,academicGpa:3.5,languageTest:'',languageScore:0};
+                state.eligibilityProfile=profile;state.college=college;state.degree=degree;
+                openUniversityDetail(item,{updateHistory:false});
+                return {match:partnerMatch(item,profile),included:filteredPartners().some(p=&gt;p.school_name===name)};
+            }""", {"name": at(34).school_name, "college": college, "degree": degree})
+            assert result["included"] is allowed
+            assert ("符合目前學制" in result["match"]["reasons"]) is allowed
+&gt;           expect(page.locator("#school-detail-primary-facts")).to_contain_text("教育")
+E           AssertionError: Locator expected to contain text '教育'
+E           Actual value: 我的資格條件待補齊，校內收件已截止，須確認已有申請或提名資格合作校申請截止當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。語言門檻English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)生活費參考住宿與生活費用 · 當期已核實：2026/27簡章生活費估租金水電JPY30000–40000/月、伙食30000、個人30000，僅估算。官網住房費表As of June2026、不同宿舍付费/寢具及修繕费不同，未核2027確定帳單；一般财务頁租金20–4…交換名額共 1名研修期間一學期(one semester) / 一學年(one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。 
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#school-detail-primary-facts")
+E               11 × locator resolved to &lt;div class="detail-primary-facts" id="school-detail-primary-facts"&gt;…&lt;/div&gt;
+E                  - unexpected value "我的資格條件待補齊，校內收件已截止，須確認已有申請或提名資格合作校申請截止當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。語言門檻English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)生活費參考官方費用待查核交換名額共 1名研修期間一學期(one semester) / 一學年(one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。"
+E               3 × locator resolved to &lt;div class="detail-primary-facts" id="school-detail-primary-facts"&gt;…&lt;/div&gt;
+E                 - unexpected value "我的資格條件待補齊，校內收件已截止，須確認已有申請或提名資格合作校申請截止當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。語言門檻English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)生活費參考住宿與生活費用 · 當期已核實：2026/27簡章生活費估租金水電JPY30000–40000/月、伙食30000、個人30000，僅估算。官網住房費表As of June2026、不同宿舍付费/寢具及修繕费不同，未核2027確定帳單；一般财务頁租金20–4…交換名額共 1名研修期間一學期(one semester) / 一學年(one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。"
+E           
+E           Aria snapshot:
+E           - text: 我的資格
+E           - strong: 條件待補齊，校內收件已截止，須確認已有申請或提名資格
+E           - text: 合作校申請截止
+E           - strong: 當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。
+E           - text: 語言門檻
+E           - strong: "English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)"
+E           - text: 生活費參考
+E           - strong: 住宿與生活費用 · 當期已核實：2026/27簡章生活費估租金水電JPY30000–40000/月、伙食30000、個人30000，僅估算。官網住房費表As of June2026、不同宿舍付费/寢具及修繕费不同，未核2027確定帳單；一般财务頁租金20–4…
+E           - text: 交換名額
+E           - strong: 共 1名
+E           - text: 研修期間
+E           - strong:
+E             - strong: 一學期
+E             - text: (one semester) /
+E             - strong: 一學年
+E             - text: (one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。
+
+tests/e2e/test_ccu_seventeenth_pass.py:46: AssertionError</failure></testcase><testcase classname="tests.e2e.test_ccu_seventeenth_pass" name="test_nagoya_pair_filters_use_one_option[1440]" time="12.020"><failure message="AssertionError: Locator expected to contain text '教育'&#10;Actual value: 我的資格條件待補齊，校內收件已截止，須確認已有申請或提名資格合作校申請截止當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。語言門檻English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)生活費參考官方費用待查核交換名額共 1名研修期間一學期(one semester) / 一學年(one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。 &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;#school-detail-primary-facts&quot;)&#10;    13 × locator resolved to &lt;div class=&quot;detail-primary-facts&quot; id=&quot;school-detail-primary-facts&quot;&gt;…&lt;/div&gt;&#10;       - unexpected value &quot;我的資格條件待補齊，校內收件已截止，須確認已有申請或提名資格合作校申請截止當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。語言門檻English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)生活費參考官方費用待查核交換名額共 1名研修期間一學期(one semester) / 一學年(one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。&quot;&#10;&#10;Aria snapshot:&#10;- text: 我的資格&#10;- strong: 條件待補齊，校內收件已截止，須確認已有申請或提名資格&#10;- text: 合作校申請截止&#10;- strong: 當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。&#10;- text: 語言門檻&#10;- strong: &quot;English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)&quot;&#10;- text: 生活費參考&#10;- strong: 官方費用待查核&#10;- text: 交換名額&#10;- strong: 共 1名&#10;- text: 研修期間&#10;- strong:&#10;  - strong: 一學期&#10;  - text: (one semester) /&#10;  - strong: 一學年&#10;  - text: (one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。">page = &lt;Page url='http://127.0.0.1:47631/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&amp;view=list#partners'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:47631', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-90/web-e2e-data1'))
+width = 1440
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_nagoya_pair_filters_use_one_option(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        session = sign_in_cookie(live_server, school=HOME)
+        live_server.verify_student(session["profile"]["id"], university=HOME)
+        attach_session(page, live_server, session)
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        enter_public_site(page, live_server, "partners")
+        wait_until(page, "state.dashboard?.school_name === '國立中正大學'")
+        for college, degree, allowed in [
+            ("法學院", "大學部", False), ("法學院", "博士班", False),
+            ("法學院", "碩士班", True), ("教育學院", "大學部", True),
+            ("教育學院", "博士班", True),
+        ]:
+            result = page.evaluate("""({name,college,degree}) =&gt; {
+                const item=state.dashboard.partner_universities.find(p=&gt;p.school_name===name);
+                const profile={college,degree,academicScore:85,academicGpa:3.5,languageTest:'',languageScore:0};
+                state.eligibilityProfile=profile;state.college=college;state.degree=degree;
+                openUniversityDetail(item,{updateHistory:false});
+                return {match:partnerMatch(item,profile),included:filteredPartners().some(p=&gt;p.school_name===name)};
+            }""", {"name": at(34).school_name, "college": college, "degree": degree})
+            assert result["included"] is allowed
+            assert ("符合目前學制" in result["match"]["reasons"]) is allowed
+&gt;           expect(page.locator("#school-detail-primary-facts")).to_contain_text("教育")
+E           AssertionError: Locator expected to contain text '教育'
+E           Actual value: 我的資格條件待補齊，校內收件已截止，須確認已有申請或提名資格合作校申請截止當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。語言門檻English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)生活費參考官方費用待查核交換名額共 1名研修期間一學期(one semester) / 一學年(one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。 
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#school-detail-primary-facts")
+E               13 × locator resolved to &lt;div class="detail-primary-facts" id="school-detail-primary-facts"&gt;…&lt;/div&gt;
+E                  - unexpected value "我的資格條件待補齊，校內收件已截止，須確認已有申請或提名資格合作校申請截止當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。語言門檻English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)生活費參考官方費用待查核交換名額共 1名研修期間一學期(one semester) / 一學年(one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。"
+E           
+E           Aria snapshot:
+E           - text: 我的資格
+E           - strong: 條件待補齊，校內收件已截止，須確認已有申請或提名資格
+E           - text: 合作校申請截止
+E           - strong: 當期已核實：Early April Admission2027：NUPACE online申請及全套文件上傳截止2026-10-15。沒有明示時區/鐘點，不能補造23:59；本校提名2026-10-01另列。
+E           - text: 語言門檻
+E           - strong: "English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CET-6 485 Japanese: 要上全日文授課課程需有日檢 N1 (JLPT)"
+E           - text: 生活費參考
+E           - strong: 官方費用待查核
+E           - text: 交換名額
+E           - strong: 共 1名
+E           - text: 研修期間
+E           - strong:
+E             - strong: 一學期
+E             - text: (one semester) /
+E             - strong: 一學年
+E             - text: (one year)；來源差異未解：中正2026.09.17當期表第34頁轉載學期2027-04-12至08-06；NUPACE2026/27官方簡章PDF第6頁暫定授課2027-04-09至08-06，並明示日程可能微調。未取得兩者先後修訂/差異說明，不任選開課日。04-01起抵達日本參加課前orientation另為獨立要求，不是授課開始或宿舍入住保證。
+
+tests/e2e/test_ccu_seventeenth_pass.py:46: AssertionError</failure></testcase><testcase classname="tests.e2e.test_ccu_seventeenth_pass" name="test_unyear_templates_have_separate_applicability_warning[98-390]" time="8.353" /><testcase classname="tests.e2e.test_ccu_seventeenth_pass" name="test_unyear_templates_have_separate_applicability_warning[98-1440]" time="7.855" /><testcase classname="tests.e2e.test_ccu_seventeenth_pass" name="test_unyear_templates_have_separate_applicability_warning[102-390]" time="6.006"><failure message="playwright._impl._errors.Error: Locator.click: Error: strict mode violation: locator(&quot;details.workflow-step&quot;).filter(has_text=&quot;Learning Agreement&quot;).locator(&quot;&gt; summary&quot;) resolved to 2 elements:&#10;    1) &lt;summary&gt;…&lt;/summary&gt; aka get_by_text(&quot;4 錄取及提名 · 國立中正大學國際事務處 回覆交換意願並等待提名&quot;)&#10;    2) &lt;summary&gt;…&lt;/summary&gt; aka get_by_text(&quot;5 合作校申請 · 學生／合作校 依提名信辦理合作校申請 合作校申請截止 · 當期已核實：2027summer：2026-11-15線上完成；時刻未載。（&quot;)&#10;&#10;Call log:&#10;  - waiting for locator(&quot;details.workflow-step&quot;).filter(has_text=&quot;Learning Agreement&quot;).locator(&quot;&gt; summary&quot;)">page = &lt;Page url='http://127.0.0.1:47631/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Augsburg%20Uni...0of%20Applied%20Sciences%20%E5%A5%A7%E6%A0%BC%E6%96%AF%E5%A0%A1%E6%87%89%E7%94%A8%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:47631', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-90/web-e2e-data1'))
+width = 390, source_page = 102
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page", [98, 102])
+    def test_unyear_templates_have_separate_applicability_warning(page, live_server, width, source_page):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        partner = at(source_page)
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+        expect(page.locator("#detail-tab-application")).to_be_visible(timeout=30_000)
+        page.locator("#detail-tab-application").click()
+        step = page.locator("details.workflow-step").filter(has_text="Learning Agreement")
+&gt;       step.locator("&gt; summary").click()
+
+tests/e2e/test_ccu_seventeenth_pass.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7f43fc0ecbc0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7f43bf7b1c60&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Locator.click: Error: strict mode violation: locator("details.workflow-step").filter(has_text="Learning Agreement").locator("&gt; summary") resolved to 2 elements:
+E               1) &lt;summary&gt;…&lt;/summary&gt; aka get_by_text("4 錄取及提名 · 國立中正大學國際事務處 回覆交換意願並等待提名")
+E               2) &lt;summary&gt;…&lt;/summary&gt; aka get_by_text("5 合作校申請 · 學生／合作校 依提名信辦理合作校申請 合作校申請截止 · 當期已核實：2027summer：2026-11-15線上完成；時刻未載。（")
+E           
+E           Call log:
+E             - waiting for locator("details.workflow-step").filter(has_text="Learning Agreement").locator("&gt; summary")
+
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error</failure></testcase><testcase classname="tests.e2e.test_ccu_seventeenth_pass" name="test_unyear_templates_have_separate_applicability_warning[102-1440]" time="6.913"><failure message="playwright._impl._errors.Error: Locator.click: Error: strict mode violation: locator(&quot;details.workflow-step&quot;).filter(has_text=&quot;Learning Agreement&quot;).locator(&quot;&gt; summary&quot;) resolved to 2 elements:&#10;    1) &lt;summary&gt;…&lt;/summary&gt; aka get_by_text(&quot;4 錄取及提名 · 國立中正大學國際事務處 回覆交換意願並等待提名&quot;)&#10;    2) &lt;summary&gt;…&lt;/summary&gt; aka get_by_text(&quot;5 合作校申請 · 學生／合作校 依提名信辦理合作校申請 合作校申請截止 · 當期已核實：2027summer：2026-11-15線上完成；時刻未載。（&quot;)&#10;&#10;Call log:&#10;  - waiting for locator(&quot;details.workflow-step&quot;).filter(has_text=&quot;Learning Agreement&quot;).locator(&quot;&gt; summary&quot;)">page = &lt;Page url='http://127.0.0.1:47631/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Augsburg%20Uni...0of%20Applied%20Sciences%20%E5%A5%A7%E6%A0%BC%E6%96%AF%E5%A0%A1%E6%87%89%E7%94%A8%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%B8'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:47631', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-90/web-e2e-data1'))
+width = 1440, source_page = 102
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page", [98, 102])
+    def test_unyear_templates_have_separate_applicability_warning(page, live_server, width, source_page):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        partner = at(source_page)
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+        expect(page.locator("#detail-tab-application")).to_be_visible(timeout=30_000)
+        page.locator("#detail-tab-application").click()
+        step = page.locator("details.workflow-step").filter(has_text="Learning Agreement")
+&gt;       step.locator("&gt; summary").click()
+
+tests/e2e/test_ccu_seventeenth_pass.py:63: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7f43fc0ecbc0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7f43c97a8f40&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Locator.click: Error: strict mode violation: locator("details.workflow-step").filter(has_text="Learning Agreement").locator("&gt; summary") resolved to 2 elements:
+E               1) &lt;summary&gt;…&lt;/summary&gt; aka get_by_text("4 錄取及提名 · 國立中正大學國際事務處 回覆交換意願並等待提名")
+E               2) &lt;summary&gt;…&lt;/summary&gt; aka get_by_text("5 合作校申請 · 學生／合作校 依提名信辦理合作校申請 合作校申請截止 · 當期已核實：2027summer：2026-11-15線上完成；時刻未載。（")
+E           
+E           Call log:
+E             - waiting for locator("details.workflow-step").filter(has_text="Learning Agreement").locator("&gt; summary")
+
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error</failure></testcase></testsuite></testsuites>

@@ -139,7 +139,12 @@ def test_hokkaido_program_evidence_and_old_documents_stay_separate():
     for page in (16, 23, 42, 80, 95, 99, 105):
         partner = at(page)
         flow = next(f for f in flows if f.school_name == partner.school_name)
-        assert not flow.steps[4].required_documents
+        if page == 23:
+            assert len(flow.steps[4].document_requirements) == 4
+            assert all(r.conditional and r.applicability_status == "needs_confirmation"
+                       for r in flow.steps[4].document_requirements)
+        else:
+            assert not flow.steps[4].required_documents
     assert any(
         "if available" in item
         for item in next(f for f in flows if f.school_name == at(32).school_name)

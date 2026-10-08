@@ -28,7 +28,7 @@ def at(page):
 def test_profile_review_covers_source_backed_geography_and_distinct_life():
     rows = reviewed_profiles()
     assert len(rows) == 55
-    assert len(reviewed_documents()) == 23
+    assert len(reviewed_documents()) == 26
     for page, row in rows.items():
         partner = at(page)
         if row["fields"]["city"]["value"]:
@@ -45,7 +45,8 @@ def test_profile_review_covers_source_backed_geography_and_distinct_life():
     assert at(85).location.city == "Pessac"
     assert at(103).location.city == "Winterthur"
     assert at(111).location.city == "Karviná"
-    assert at(71).location is None
+    assert "Đồng Nai" in at(71).location.city
+    assert at(71).field_evidence["city"].status == "needs_confirmation"
     anomaly = json.loads(
         (BUNDLE / "overseas_sources/p71-profile-root.json").read_text()
     )
@@ -141,11 +142,10 @@ def test_runtime_preserves_city_and_separates_reference_life_status(tmp_path):
         "/destination-profile",
         params={"home_school": HOME, "school": at(71).school_name},
     ).json()
-    assert (
-        missing["city"] is None
-        and missing["transport_summary"] is None
-        and missing["campus_life_summary"] is None
-    )
+    assert "Đồng Nai" in missing["city"]
+    assert missing["transport_summary"] is None
+    assert "訓練" in missing["campus_life_summary"]
+    assert "2027交換" in missing["campus_life_summary"]
 
 
 def test_api_host_documents_have_individual_forms_conditions_and_later_stages(tmp_path):
@@ -160,7 +160,12 @@ def test_api_host_documents_have_individual_forms_conditions_and_later_stages(tm
         registry = reviewed_documents()[page]
         requirements = [r for s in flow["steps"] for r in s["document_requirements"] if r["stage"]]
         assert len(requirements) == len(registry["requirements"])
-        assert len(host["document_requirements"]) > 1
+        if page == 68:
+            assert not host["document_requirements"]
+            assert len([r for r in requirements if r["stage"] == "nomination"]) == 7
+            assert "母校彙整" in host["title"]
+        else:
+            assert len(host["document_requirements"]) > 1
         assert all(len(r["name"]) < 240 for r in host["document_requirements"])
         if page == 32:
             assert any(
@@ -185,7 +190,7 @@ def test_api_host_documents_have_individual_forms_conditions_and_later_stages(tm
                 for detail in flow["steps"][3]["details"]
             )
         if page == 68:
-            assert any("optional" in r["name"] for r in host["document_requirements"])
+            assert len([r for r in requirements if r["conditional"] and "optional" in r["name"]]) == 2
         if page == 108:
             assert any(
                 "不得自行套中正" in r["name"] for r in host["document_requirements"]

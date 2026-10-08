@@ -139,7 +139,7 @@
   {
     "ccu_page": 16,
     "school_name": "Chongqing University 重慶大學",
-    "checked_at": "2026-10-08T12:59:36.346342+00:00",
+    "checked_at": "2026-10-08T14:16:15.376468+00:00",
     "fields": {
       "city": {
         "value": "重慶",
@@ -241,10 +241,26 @@
         "reason": "接收學制／學院與母校資格分開。待確認、排除或逐計畫條件不自動通過全校資格篩選。"
       },
       "colleges": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+        "value": "所有學院原則要求相關專業；跨系需說明專業性，不能把全校無條件通過。",
+        "status": "needs_confirmation",
+        "evidence": [
+          {
+            "source_id": "p0-profile-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              16
+            ],
+            "academic_year": "115學年度2027春季；中正當期PDF正文2026.09.17",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T14:16:15.376468+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "所有學院原則上要求所學專業與本專業相似 可跨系申請(但不建議，除非能説明具備申請該科系要求的專業性 不可跨學制選課 語言能力 (Language Proficiency) 無 姊妹校簡章 (Fact Sheet) https://drive.google.com/file/d/1636c6Cscwbtc7585TvNXe7Um9ah8nisk/view?usp=drive_ link 第二階繳交 資料(Submit relevant documents _Second Section) 必須先經過第一階段校內申請通過，且經過國際處向姐妹校提名後，才有資格進行 第二階段(姊妹校)申請。 以下資料檔僅須電子檔，按照以下順序，合併成一個 PDF， 繳交電子檔至 : outbound@ccu.edu.tw 1.重慶大學港澳臺學生訪學申請表（附件）（推薦負責老師簽字同意） 2 歷年成績單（有學校蓋章） 3 教師推薦函 4 自傳及履歷 5 學習計畫 6 學生證和身份證影本 7 臺胞證影本 8 在學證明 9 两寸標準照片電子照*1 （JPG格式單獨提供） 10健康檢查表（最晚在開學報到時提供） 11 醫療及意外保險證明（需包含醫療險和意外險，最晚在開學報到時提供） 相關資料 (Other documents) 在線課程查詢 大學 http://jwc.cqu.edu.cn 研究所 http://yz.cqu.edu.cn 學校網址：http://www.cqu.edu.cn 備註(Notes) 申請截止日：2026/10/30 學期期間: 2027/02/08~2027/7 月 大學生至少 10學分，研究生最低要修習 2門課程 校園宿舍緊張不一定能提供校內宿舍",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "4c5c624798e4f3ab52633a60d2c53582b33fcfb0edf6a553344a6e6ca66c043e",
+            "note": "母校當期實際逐校申請資格；學院範圍与院系／校區限制及學制分開，未核映射不通過篩選。"
+          }
+        ],
+        "reason": "母校當期已有實質原文，補上profile範圍；跨系／校區／科系耦合尚未核保持needs_confirmation，p103母校明確工學院可核。"
       },
       "transport": {
         "value": "未年參考指南列公交單程2–3元、校區交通車6元；不是2027票價或完整路線。",
@@ -316,7 +332,7 @@
   {
     "ccu_page": 23,
     "school_name": "Xiamen University 廈門大學",
-    "checked_at": "2026-10-08T12:26:31.033064+00:00",
+    "checked_at": "2026-10-08T14:08:01.965209+00:00",
     "fields": {
       "city": {
         "value": "廈門",
@@ -381,24 +397,24 @@
         "reason": "官方網站／國際處入口；個別HTTP故障另記來源取得結果，並不宣稱全站政策適用2027。"
       },
       "degree_levels": {
-        "value": "待確認：大學部、碩士班、博士班",
+        "value": "2026-03-03台港澳交換一般辦法明載本科／碩士／博士，排除本科一年級；未明示2027春季適用，中正母校年級規定另適用。",
         "status": "needs_confirmation",
         "evidence": [
           {
-            "source_id": "p23-r8-visiting",
+            "source_id": "p23-r17-hmt-procedure",
             "source_url": "https://visiting.xmu.edu.cn/Web/Info/e3d294da-f1f5-4a89-bd9f-c6848f4a17b8",
             "source_pages": [],
-            "academic_year": "正文發布2026-03-03，一般台港澳校際exchange；未明示Spring2027梯次",
-            "application_round": "正文發布2026-03-03，一般台港澳校際exchange；未明示Spring2027梯次",
-            "checked_at": "2026-10-08T08:26:35.863196+00:00",
+            "academic_year": "正文2026-03-03台港澳交換一般辦法；未明示2027春季",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T13:36:56.301999+00:00",
             "status": "needs_confirmation",
-            "excerpt": "澳地区高校的在读本科生、硕士生或博士生（本科一年级学生除外），身体健康。 2. 交流生名额依照两校协议而定，交流期限原则上为一学期，如有交流一学年者，将占用下学期交流名额。 二、申请及录取程序 1. 符合申请资格者，先向原属学校提出交流申请。 2. 申请者获原属学校同意推荐后，登录我校网上报名系统（http:// visiting .xmu.edu.cn ， 以常用邮箱注册）报名，按要求填写所需信息并上传所需文件。 3. 我校将通过邮件向合作院校的交流项目负责人发送提名网址， 请 经办人 于提名截止日期前填写 提交， 并协助 确认 学生于系统申请截止日期前完成网申。 4. 我校台港澳办和相应院系对交流生的申请进行审核。 注：申请者须慎重选择交流专业，我校原则上不予受理专业变更的申请。 三、申请必备文件 申请人登录网上报名系统前请准备好以下文件电子版用",
-            "note": "第八輪實讀公開正文，逐欄分母校/接收校、校曆/申請期限、本科/研究所、主校/分校、交換/degree/專案、當期/舊年；未核新版不是官方明示尚未公告。列四項vs中正當期六項；在學證/推薦函仍須母校繳件，不自行豁免。",
+            "excerpt": "与我校签署校际学生交流协议的台港澳地区高校的在读本科生、硕士生或博士生（本科一年级学生除外），身体健康。 2. 交流生名额依照两校协议而定，交流期限原则上为一学期，如有交流一学年者，将占用下学期交流名额。 二、申请及录取程序 1. 符合申请资格者，先向原属学校提出交流申请。 2. 申请者获原属学校同意推荐后，登录我校网",
             "content_hash": "a81e54a684fae5ca18c51e8455f207a9b75a7f47d82a9888ad3801027e2989b3",
-            "text_sha256": "6a092a3e42bc7031842ef4d0010d54a4fee3e85ccfb5e386c5870fec8465d021"
+            "text_sha256": "6a092a3e42bc7031842ef4d0010d54a4fee3e85ccfb5e386c5870fec8465d021",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
           }
         ],
-        "reason": "接收學制／學院與母校資格分開。待確認、排除或逐計畫條件不自動通過全校資格篩選。"
+        "reason": "明確保留可讀一般接收學制；沒有把2026一般办法升級成2027全部核實。"
       },
       "colleges": {
         "value": null,
@@ -1370,7 +1386,7 @@
   {
     "ccu_page": 34,
     "school_name": "Nagoya University 名古屋大學",
-    "checked_at": "2026-10-08T09:36:20.774194+00:00",
+    "checked_at": "2026-10-08T14:08:01.965209+00:00",
     "fields": {
       "city": {
         "value": "名古屋",
@@ -1439,62 +1455,48 @@
         "reason": "官方網站／國際處入口；個別HTTP故障另記來源取得結果，並不宣稱全站政策適用2027。"
       },
       "degree_levels": {
-        "value": "大學部、研究所",
+        "value": "大學部、研究所（教育）；僅碩士班（法學）",
         "status": "verified_current",
         "evidence": [
           {
-            "source_id": "p34-r5-prospectus",
-            "source_url": "https://nupace.iee.nagoya-u.ac.jp/en/pdf/nupace2026-27.pdf",
+            "source_id": "p34-r6-ccu-calendar",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
             "source_pages": [
-              32
+              34
             ],
-            "academic_year": "正文2026–2027 NUPACE；Spring2027",
+            "academic_year": "115學年度2027春季；中正當期學校資訊physical p34",
             "application_round": "2027春季",
-            "checked_at": "2026-10-08T06:19:39.756931+00:00",
+            "checked_at": "2026-10-08T07:40:03.548627+00:00",
             "status": "verified_current",
-            "excerpt": "tional Chengchi University *U National Chung Cheng University *U National Chung Hsing University, College of Agriculture and Natural Resources Agricultural Sciences National Taiwan University *U National Taiwan University of Science and Technology (Taiwan Tech) *Ctr for Low-Temperature Plasma Sciences/Engineering National Tsing Hua University *U National Yang Ming Chiao Tung University, ",
-            "note": "已逐頁核對申請/學制/語言/保險/住房/簽證政策頁1–29及協議29–38；校園圖只作位置資料，不將歷年接收數當當期名額。",
-            "content_hash": "7bf6c7b95fcf1b85344760c0fd58f37f987a2409c9e706e66002b1d0099ace0f",
-            "text_sha256": "1352b8d41e5ccb44f2b3a5550a03ffc5c9af592a4bd4de0b369366ff995bd553"
-          },
-          {
-            "source_id": "p34-r5-prospectus",
-            "source_url": "https://nupace.iee.nagoya-u.ac.jp/en/pdf/nupace2026-27.pdf",
-            "source_pages": [
-              29
-            ],
-            "academic_year": "正文2026–2027 NUPACE；Spring2027",
-            "application_round": "2027春季",
-            "checked_at": "2026-10-08T06:19:39.756931+00:00",
-            "status": "verified_current",
-            "excerpt": "ow. Region Location Institute Inter-university (U)/Inter-school Africa Egypt Assiut University, Faculty of Science *Science Cairo University U Tanta University, Faculty of Engineering *Engineering Ghana University of Ghana, Faculty of Social Studies International Development Kenya African Institute for Capacity Development (AICAD) ICREA Kenya Agricultural and Livestock Research Organisat",
-            "note": "已逐頁核對申請/學制/語言/保險/住房/簽證政策頁1–29及協議29–38；校園圖只作位置資料，不將歷年接收數當當期名額。",
-            "content_hash": "7bf6c7b95fcf1b85344760c0fd58f37f987a2409c9e706e66002b1d0099ace0f",
-            "text_sha256": "1352b8d41e5ccb44f2b3a5550a03ffc5c9af592a4bd4de0b369366ff995bd553"
-          },
-          {
-            "source_id": "p34-r5-prospectus",
-            "source_url": "https://nupace.iee.nagoya-u.ac.jp/en/pdf/nupace2026-27.pdf",
-            "source_pages": [
-              5
-            ],
-            "academic_year": "正文2026–2027 NUPACE；Spring2027",
-            "application_round": "2027春季",
-            "checked_at": "2026-10-08T06:19:39.756931+00:00",
-            "status": "verified_current",
-            "excerpt": "st (JLPT), or the equivalent. Student Status 1. Undergraduate Students: (1) Undergraduate students, who are admitted to the NUPACE programme to complete taught courses with the aim of earning credits, shall hold Spe- cial Undergraduate Student status. (2) Undergraduate students, who are admitted to the NUPACE programme to participate in in a medical clerkship at the School of Medicine, s",
-            "note": "已逐頁核對申請/學制/語言/保險/住房/簽證政策頁1–29及協議29–38；校園圖只作位置資料，不將歷年接收數當當期名額。",
-            "content_hash": "7bf6c7b95fcf1b85344760c0fd58f37f987a2409c9e706e66002b1d0099ace0f",
-            "text_sha256": "1352b8d41e5ccb44f2b3a5550a03ffc5c9af592a4bd4de0b369366ff995bd553"
+            "excerpt": "僅限教育學院與法學院申請 教育學院：大學部、研究生皆可申請 法學院：限碩士生申請 GPA: Minimum 3.0 on a 4.0 scale, or the equivalent 語言能力 (Language Proficiency) English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CE",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "c2c0978dfad3270da30147d33a4bc59ca8d4afc9eca1113aef0fb0c788856531",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
           }
         ],
-        "reason": "接收學制／學院與母校資格分開。待確認、排除或逐計畫條件不自動通過全校資格篩選。"
+        "reason": "接收限制以中正當期p34為準；兩個學院學制選項分開，法學不含大學部／博士。"
       },
       "colleges": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+        "value": "教育學院、法學院（學制依各學院配對）",
+        "status": "verified_current",
+        "evidence": [
+          {
+            "source_id": "p34-r6-ccu-calendar",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              34
+            ],
+            "academic_year": "115學年度2027春季；中正當期學校資訊physical p34",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T07:40:03.548627+00:00",
+            "status": "verified_current",
+            "excerpt": "僅限教育學院與法學院申請 教育學院：大學部、研究生皆可申請 法學院：限碩士生申請 GPA: Minimum 3.0 on a 4.0 scale, or the equivalent 語言能力 (Language Proficiency) English : TOEFL iBT 79, IELTS 6.0, TOEIC 780, CEFR B2, or CE",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "c2c0978dfad3270da30147d33a4bc59ca8d4afc9eca1113aef0fb0c788856531",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "reason": "母校當期p34已明載；教育／法學學院與學制耦合，不能做笛卡兒組合。"
       },
       "transport": {
         "value": "當期NUPACE指南列Daiko宿舍約20分鐘地鐵、Ohmeikan／Yamate步行通勤；實際宿舍及醫學Tsurumai等校區依計畫確認。",
@@ -1554,6 +1556,34 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:09.153703+00:00"
+      }
+    ],
+    "academic_scope_options": [
+      {
+        "program_type": "教育學院交換",
+        "colleges": "教育學院",
+        "degree_levels": "大學部、研究所",
+        "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+        "eligibility": "教育學院大學部、研究生；中正當期PDF physical p34。",
+        "application_info": "全校共用名額，不按兩個學院另加名額。",
+        "student_summary_zh": {
+          "eligibility_points": [
+            "教育學院大學部、研究生皆可；母校GPA及平均資格另適用。"
+          ]
+        }
+      },
+      {
+        "program_type": "法學院交換",
+        "colleges": "法學院",
+        "degree_levels": "碩士班",
+        "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+        "eligibility": "法學院僅碩士生；中正當期PDF physical p34。",
+        "application_info": "全校共用名額，不按兩個學院另加名額。",
+        "student_summary_zh": {
+          "eligibility_points": [
+            "僅法學院碩士生，不把教育研究生條件套到法學博士／本科。"
+          ]
+        }
       }
     ]
   },
@@ -2422,7 +2452,7 @@
   {
     "ccu_page": 45,
     "school_name": "Kyung Hee University 慶熙大學",
-    "checked_at": "2026-10-08T09:36:20.774194+00:00",
+    "checked_at": "2026-10-08T14:16:15.376468+00:00",
     "fields": {
       "city": {
         "value": "首爾；龍仁（依校區）",
@@ -2513,10 +2543,26 @@
         "reason": "接收學制／學院與母校資格分開。待確認、排除或逐計畫條件不自動通過全校資格篩選。"
       },
       "colleges": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+        "value": "待確認：母校當期限定Seoul／Global兩校區列舉院系；本科選課限制不等於排除碩士申請，院系與校區逐計畫核對。",
+        "status": "needs_confirmation",
+        "evidence": [
+          {
+            "source_id": "p0-profile-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              45
+            ],
+            "academic_year": "115學年度2027春季；中正當期PDF正文2026.09.17",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T14:16:15.376468+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "只能研修姐妹校大學部課程，可跨院系 交換生僅可申請以下校區的特定科系 Seoul Campus College of Humanities, Politics& Economics, Business Administration, Hotel& Toursim Management, Sciencs, Human Ecology and Humanitas College(General Elective) Global Campus College of Engineering, Software, Electronics&Information, Applied Science, Life Sciences, International Studies, Foreign Language&Literature, Art&Design(Korean Track Only) and Humanitas College(General Elective) 語言能力 (Language Proficiency) Korean Track：TOPIK 5 (含)以上，限大二或以上資格 English Track： TOEFL IBT 82 / IELTS 6.5 or higher recommended 姊妹校簡章 (Fact Sheet) https://drive.google.com/file/d/1lq3S91s3pVFENYIpjhbYPhJq7e0WKvCC/view?usp=drive_link 第二階繳交 資料(Submit relevant documents _Second Section) 必須先經過第一階段校內申請通過，且經過國際處向姐妹校提名後，才有資格進行第二 階段(姊妹校)申請。 (1) Submission via KHU Online Platform 1) Full-size colour Copy of Passport(including the signature page) 2) Scanned ID Photo (3.5x4.",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "4c5c624798e4f3ab52633a60d2c53582b33fcfb0edf6a553344a6e6ca66c043e",
+            "note": "母校當期實際逐校申請資格；學院範圍与院系／校區限制及學制分開，未核映射不通過篩選。"
+          }
+        ],
+        "reason": "母校當期已有實質原文，補上profile範圍；跨系／校區／科系耦合尚未核保持needs_confirmation，p103母校明確工學院可核。"
       },
       "transport": {
         "value": "當期兩校區平日有校車，首爾／Global車程估1.5–2小時；機場車程是估計，未保接送。",
@@ -4303,7 +4349,7 @@
   {
     "ccu_page": 68,
     "school_name": "Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學",
-    "checked_at": "2026-10-08T12:59:36.346342+00:00",
+    "checked_at": "2026-10-08T14:08:01.965209+00:00",
     "fields": {
       "city": {
         "value": "胡志明市",
@@ -4384,10 +4430,24 @@
         "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
       },
       "transport": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+        "value": "一般CS1通勤／停車指引鼓勵搭公車，車位有限且满位或不守規則不收車；原頁稱05:45開門、06:50–07:15尖峰。僅CS1、未標年度，時間不當2027保證；未載機場路線／接送，不推成接機服務。",
+        "status": "needs_confirmation",
+        "evidence": [
+          {
+            "source_id": "p68-r17-cs1-parking",
+            "source_url": "https://ssc.hcmute.edu.vn/ArticleId/01da14a9-f784-42bd-8c63-b390ad36d2b7/so-do-huong-dan-gui-xe-cs1-danh-cho-sinh-vien",
+            "source_pages": [],
+            "academic_year": "未標2027交換適用年度；一般服務／程序參考",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T13:36:54.023933+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Do số lượng bãi giữ xe có hạn nên các bạn sinh viên cố gắng sắp xếp thời gian đi học sớm nhé, vì nhà xe đã bắt đầu mở cửa giữ xe từ 5h45 hằng ngày, tránh gửi xe khung giờ cao điểm từ 6h50 đến 7h15. 👉Nhà trường đặc biệt khuyến khích các bạn sinh viên sử dụng xe buýt khi đến trường nhằm đảm bảo yếu tố an toàn, nhanh chóng, tiện lợi và tiết kiệm chi phí. Đặc biệt, khi các bạn chọn “buýt” đến trường chính là đang góp phần bảo vệ môi trường, giảm thiểu kẹt xe trên địa bàn thành phố.🚌🚌🚌 👉Nhà xe ko nhận gửi xe các trường hợp các bạn không chấp hành nội quy bãi giữ xe hoặc khi ban quảy lý nhà xe thông báo bãi đã hết chỗ. Mong các bạn thông cảm và di chuyển đến những địa điểm xung quan trường để gửi nhé.😉 🫰Các bạn sinh viên cố gắng sắp xếp thời gian đi học sớm để tránh tình trạng kẹt xe và ảnh hưởng tới việc học. Trung tâm Dịch vụ rất cảm ơn sự phối hợp của các bạn! Các tin khác Góp ý Họ và tên: * Email: * Tiêu đề: * Mã xác nhận: RadEditor - HTML WYSIWYG Editor. MS Word-like content editing",
+            "content_hash": "55a367721c7974514d2eab3429e877c2462fcb26a55de1ee9b40ab0ca480a4f5",
+            "text_sha256": "897f4dde6b7afc3a13e07cc7645e0ce5d2667118dd7f9d2b713cfb68f071aa24",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "reason": "已讀官方SSC指定CS1通勤正文；非2027交換交通保證，沒有猜巴士號／票價。"
       },
       "campus_life": {
         "value": "2026-08-13官方新聞介紹LastMinute／GS25／Highlands等校園服務及VNU-HCM宿舍支援合作；2025醫療站新聞列primarycare、firstaid、consultation。均作舊年度／一般服務參考，未確認2027交換生資格、實際床位、免費醫療、地址或營業時間。",
@@ -4437,19 +4497,47 @@
   {
     "ccu_page": 71,
     "school_name": "Dong Nai Technology University (DNTU) 同奈科技大學",
-    "checked_at": "2026-10-08T09:36:20.774194+00:00",
+    "checked_at": "2026-10-08T14:08:01.965209+00:00",
     "fields": {
       "city": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "同奈公開root正文有無關內容異常，其他已查資料未核實正式校址；城市保持空值，不由校名猜邊和。"
+        "value": "Đồng Nai（官方圖書館所在地；2027交換校區未另核）",
+        "status": "needs_confirmation",
+        "evidence": [
+          {
+            "source_id": "p71-r17-library-root",
+            "source_url": "https://lib.dntu.edu.vn/",
+            "source_pages": [],
+            "academic_year": "一般圖書館服務；未載2027交換生資格",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T13:36:54.025993+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "206, Đường Nguyễn Khuyến, Khu phố 5, Phường Trảng Dài, Thành phố Đồng Nai. (0251) 382 2028 thuvien@dntu.edu.vn Facebook ",
+            "content_hash": "2a9f98967b4faa2e258adcdffa071baf84e9a674bacca9bb12e396703616df9c",
+            "text_sha256": "a653c3fccb010173f45799ad6e21cfe1c0c1de7d3dbe31e03a727c0e2f9dfdae",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "reason": "圖書館官方校址可核對身分／地區；交換實際校區仍待確認。"
       },
       "location": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+        "value": "圖書館官方校址：206, Đường Nguyễn Khuyến, Khu phố 5, Phường Trảng Dài, Thành phố Đồng Nai；不作交換住宿地址或個人校區保證。",
+        "status": "needs_confirmation",
+        "evidence": [
+          {
+            "source_id": "p71-r17-library-root",
+            "source_url": "https://lib.dntu.edu.vn/",
+            "source_pages": [],
+            "academic_year": "一般圖書館服務；未載2027交換生資格",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T13:36:54.025993+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "206, Đường Nguyễn Khuyến, Khu phố 5, Phường Trảng Dài, Thành phố Đồng Nai. (0251) 382 2028 thuvien@dntu.edu.vn Facebook ",
+            "content_hash": "2a9f98967b4faa2e258adcdffa071baf84e9a674bacca9bb12e396703616df9c",
+            "text_sha256": "a653c3fccb010173f45799ad6e21cfe1c0c1de7d3dbe31e03a727c0e2f9dfdae",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "reason": "圖書館官方校址可核對身分／地區；交換實際校區仍待確認。"
       },
       "website": {
         "value": "https://dntu.edu.vn/",
@@ -4492,10 +4580,50 @@
         "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
       },
       "campus_life": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+        "value": "獨立官方圖書館列借閱展延、查找支援、團體研讀室、電腦借用與Internet等一般服務；學生須先參加圖書館訓練才能啟用。未確認2027交換生帳號／借閱／房間使用资格，不保證免費或可直接預約。root頁尾與開館公告時段不一致，未寫確定開館時間或住宿資訊。",
+        "status": "needs_confirmation",
+        "evidence": [
+          {
+            "source_id": "p71-r17-library-root",
+            "source_url": "https://lib.dntu.edu.vn/",
+            "source_pages": [],
+            "academic_year": "一般圖書館服務；未載2027交換生資格",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T13:36:54.025993+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Các dịch vụ tiện ích dành cho bạn đọc Kiểm tra trùng lặp tài liệu Kiểm tra trùng lặp nội dung cho luận văn, báo cáo khoa học trước khi nộp. Gia hạn tài liệu Gia hạn thời gian mượn tài liệu trực tuyến thông qua trang cá nhân của bạn. Hỗ trợ tra cứu tài liệu Cán bộ thư viện hỗ trợ trực tiếp hoặc trực tuyến trong việc tìm kiếm tài liệu. Cung cấp phòng học nhóm Đặt phòng học nhóm trực tuyến để phục vụ học tập và nghiên cứu hiệu quả. Thư viện hình ảnh Khám phá ngay Giới thiệu tài liệu Khám phá ngay Khám phá cá",
+            "content_hash": "2a9f98967b4faa2e258adcdffa071baf84e9a674bacca9bb12e396703616df9c",
+            "text_sha256": "a653c3fccb010173f45799ad6e21cfe1c0c1de7d3dbe31e03a727c0e2f9dfdae",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p71-r17-library-service",
+            "source_url": "https://lib.dntu.edu.vn/trangtindichvuchitiet.aspx?Id=1",
+            "source_pages": [],
+            "academic_year": "一般圖書館服務；未載2027交換生資格",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T13:36:54.027897+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Sinh viên là các đối tượng người học tại Trường Đại học Công nghệ Đồng Nai, bao gồm cả người học theo chương trình đào tạo từ xa. Sinh viên được yêu cầu tham gia các nội dung tập huấn của Thư viện để được kích hoạt quyền sử dụng Trung tâm Thông tin - Thư viện. Các dịch vụ hỗ trợ: Dịch vụ Các liên kết Hỗ trợ nhanh Liên hệ qua điện thoại Liên hệ qua FanPage Hỗ trợ trực tiếp Hướng dẫn cần thiết Nội quy Thư viện Thẻ và tài khoản Hướng dẫn sử dụng Thư viện Dịch",
+            "content_hash": "bf49727d6c1fc997deb5f2b9447f4bb59c121669324784657079fcc21dfefe51",
+            "text_sha256": "dd215ee486e145afd81add6bfe48a0bf56c66013d7eb53bdb237d83116c4e1af",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          },
+          {
+            "source_id": "p71-r17-library-service",
+            "source_url": "https://lib.dntu.edu.vn/trangtindichvuchitiet.aspx?Id=1",
+            "source_pages": [],
+            "academic_year": "一般圖書館服務；未載2027交換生資格",
+            "application_round": "一般程序／服務參考；2027適用待確認",
+            "checked_at": "2026-10-08T13:36:54.027897+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Các dịch vụ khác Phòng học nhóm Mượn máy tính Internet miễn phí THƯ VIỆN DNTU – TRƯỜNG ĐẠI HỌC CÔNG NGHỆ ĐỒNG NAI 206, Đ",
+            "content_hash": "bf49727d6c1fc997deb5f2b9447f4bb59c121669324784657079fcc21dfefe51",
+            "text_sha256": "dd215ee486e145afd81add6bfe48a0bf56c66013d7eb53bdb237d83116c4e1af",
+            "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+          }
+        ],
+        "reason": "由乾淨的官方圖書館子網頁補一般服務；未採不相關內容主站。時間差異另記，不複製root為2027確定時段。"
       }
     },
     "source_checks": [
@@ -6197,7 +6325,7 @@
   {
     "ccu_page": 98,
     "school_name": "Ludwigshafen University of Business and Society 路德維希港社會應用科技大學",
-    "checked_at": "2026-10-08T09:36:20.774194+00:00",
+    "checked_at": "2026-10-08T14:16:15.376468+00:00",
     "fields": {
       "city": {
         "value": "Ludwigshafen am Rhein",
@@ -6272,10 +6400,26 @@
         "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
       },
       "colleges": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+        "value": "待確認：Business Administration主修領域；尚未核對中正科系對應，不把管理學院全院當作符合。",
+        "status": "needs_confirmation",
+        "evidence": [
+          {
+            "source_id": "p0-profile-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              98
+            ],
+            "academic_year": "115學年度2027春季；中正當期PDF正文2026.09.17",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T14:16:15.376468+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Students should study in the field of Business Administration 語言能力 (Language Proficiency) 英文 CEFR B2-level 姊妹校簡章 (Fact Sheet) https://drive.google.com/file/d/1IEYuWfXdj8nNvlF8gz-Gvvo0LwPTYdfy/view?usp=drive_link 第二階繳交資料 (Submit relevant documents _Second Section) 必須先經過第一階段校內申請通過，且經過國際處向姐妹校提名後，才有資格進行第 二階段(姊妹校)申請。 https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before- mobility-1/your-application a scanned identity photo (JPEG only) and passport(PDF) 相關資料 (Other documents) Institution’s web sitewww.hwg-lu.de Course Offer: https://www.hwg-lu.de/en/international/exchange-students-from-partner- institutions/before-mobility/course-offer Web site for Incoming Students https://www.hwg-lu.de/en/international/exchange-students- from-partner-institutions.html 備註(Notes) Application deadline申請截止日: 2026/11/15 學期時間: 2027/03/01 ~2027/07/15 一學期(one semester)最少修習 20 ECTS",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "4c5c624798e4f3ab52633a60d2c53582b33fcfb0edf6a553344a6e6ca66c043e",
+            "note": "母校當期實際逐校申請資格；學院範圍与院系／校區限制及學制分開，未核映射不通過篩選。"
+          }
+        ],
+        "reason": "母校當期已有實質原文，補上profile範圍；跨系／校區／科系耦合尚未核保持needs_confirmation，p103母校明確工學院可核。"
       },
       "transport": {
         "value": "當期factsheet列Deutschlandticket63EUR／月，只是該文件估價；2027政府售價未核，最近Frankfurt機場原文時間未獨立核實。",
@@ -6950,7 +7094,7 @@
   {
     "ccu_page": 103,
     "school_name": "ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院",
-    "checked_at": "2026-10-08T09:36:20.774194+00:00",
+    "checked_at": "2026-10-08T14:16:15.376468+00:00",
     "fields": {
       "city": {
         "value": "Winterthur",
@@ -7038,25 +7182,25 @@
       },
       "colleges": {
         "value": "工學院",
-        "status": "needs_confirmation",
+        "status": "verified_current",
         "evidence": [
           {
-            "source_id": "p103-host0",
-            "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/ZHAW_School_of_Engineering_Factsheet_-_Incoming_Exchange.pdf",
+            "source_id": "p0-profile-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
             "source_pages": [
-              1
+              103
             ],
-            "academic_year": "內容日期2026-04-22；未標適用年",
-            "application_round": "內容日期2026-04-22；未標適用年",
-            "checked_at": "2026-10-08T00:00:00Z",
-            "status": "needs_confirmation",
-            "excerpt": " ZHAW SoE 22.04.2026 Seite 1 von 5 FACT SHEET - INCOMING SEMESTER STUDENTS University Information Portrait The ZHAW School of Engineering, one of the leading Engineering Faculties in Switzerland, focuses on top",
-            "note": "直連合作校SoE新版內容2026-04-22，學士及碩士、TOEFL新舊量尺不同；未明載2027春季年度，保留待確認。碩士春季intro week37疑似錯置。",
-            "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
-            "text_sha256": "5748881ec85c92d1bc0c76f0ae48d70c0829652e2e8d439f37051d7c5232df2d"
+            "academic_year": "115學年度2027春季；中正當期PDF正文2026.09.17",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T14:16:15.376468+00:00",
+            "status": "verified_current",
+            "excerpt": "限工學院學生申請 語言能力 (Language Proficiency) For Bachelor Programmes: English: Level B2 (for courses in English) （ TOEIC L&R 785 / TOEIC S&W 310 / TOEFL iBT 72 / IELTS 5.5 ） German: Level B2 (for courses in German) For Master Programmes: English: Level C1 （ TOEIC L&R 945 / TOEIC S&W 360 / TOEFL iBT 95 / IELTS 7.0 ） 以上證書之考試日期須在 2024/11/01之後 姊妹校簡章 (Fact Sheet) 通用 fact sheet 第二階繳交資 料(Submit relevant documents Second Section) 必須先經過第一階段校內申請通過，且經過國際處向姐妹校提名後，才有資格進行第 二階段(姊妹校)申請。 相關資料 (Other documents) ⚫ https://www.zhaw.ch/en/engineering/study/international-office/incoming- exchange-students/ ⚫ https://www.zhaw.ch/en/engineering/study/international-office/studying- in-switzerland/living-in-switzerland/ ⚫ https://www.zhaw.ch/en/engineering/study/international-office/studying- in-switzerland/campus-and-infrastructure/ ⚫ Bachelor courses spring 2027 ⚫ https://www.zhaw.ch/de/engineering/studium/internationa",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "4c5c624798e4f3ab52633a60d2c53582b33fcfb0edf6a553344a6e6ca66c043e",
+            "note": "母校當期實際逐校申請資格；學院範圍与院系／校區限制及學制分開，未核映射不通過篩選。"
           }
         ],
-        "reason": "接收學制／學院與母校資格分開。待確認、排除或逐計畫條件不自動通過全校資格篩選。"
+        "reason": "母校當期已有實質原文，補上profile範圍；跨系／校區／科系耦合尚未核保持needs_confirmation，p103母校明確工學院可核。"
       },
       "transport": {
         "value": "SoE Winterthur校區在Winterthur中央車站步行範圍；一般生活頁另列Winterthur到Zurich約15–20分鐘火車，实际課程校址與票價另核。",
@@ -7950,7 +8094,7 @@
   {
     "ccu_page": 109,
     "school_name": "University of West Bohemia 西波希米亞大學",
-    "checked_at": "2026-10-08T12:11:02.975143+00:00",
+    "checked_at": "2026-10-08T14:35:49.044340+00:00",
     "fields": {
       "city": {
         "value": "Plzeň（院系校區待確認）",
@@ -8031,9 +8175,24 @@
         "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
       },
       "transport": {
-        "value": "教育學院incoming FAQ列Plzeň電車、巴士、無軌電車與學生月票、售票／app方式；一般城市路線可參考。頁面未標2027且為教育學院，其他院系／Cheb校區及當期票價未核，不套ArtCamp暑校票。",
+        "value": "教育學院一般FAQ列Plzeň市內公共交通；新增未標年度PDF列Prague機場搭100號公車至Zličín，再轉直達巴士、metro或火車至Pilsen，另列宿舍電車4號站點。僅學院一般指引，2027路線／班次／票價及其他院系／Cheb校區未核，不當接機保證。",
         "status": "needs_confirmation",
         "evidence": [
+          {
+            "source_id": "p109-r17-discovery-3",
+            "source_url": "https://www.fpe.zcu.cz/en/Admission/incoming_students_doc/How-to-get-from-Prague-airport-to-Pilsen.pdf",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "未標交換年度；公開一般incoming服務／程序",
+            "application_round": "一般incoming服務；2027個人適用尚未核實",
+            "checked_at": "2026-10-08T14:29:38.037786+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "How to get from Prague airport to Pilsen: Take a public bus number 100 (details) from the airport to Zličín. There you can: a. take a direct bus to Pilsen (flixbus.cz), duration 1 hour b. take the underground (metro), line B, to Florenc, then take a bus to Pilsen from there (also flixbus.cz or idos.cz), duration 1 hour 30 minutes c. take the underground (metro), line B, to Florenc, change to line C and go one stop to Hlavní Nádraží = Main Railway Station and take direct train to Pilsen (idos.cz), duration 1 hour 20 minutes You can check Pilsen's public transportation system here. The dormitories are close to tram line 4. • To get there, take tram number 1 or 2 from the railway station, go to \"Hlavní Pošta\" and then change to line 4. • From CAN (bus station), it's better to walk via Husova Street to Klatovská třída (tram stop called \"U Práce\") and then take tram number 4. Dorm Bolevecká: tram stop \"Pod Záhorskem\" Dorm Borská: tram stop \"Dobrovského\" Dorm Máchova 14,16, 20 and Klatovská: tram stop \"Borský park\"",
+            "content_hash": "64fb4f534529655146140b4b507c28a9859086d8f5922dcf278a24051aee9aae",
+            "text_sha256": "fc69a69f3c6e77486a379a098cfc7859acc85dd22ad8e6e209c155f8aa8f6b13",
+            "note": "一頁PDF實際可開啟並全文讀；未標年、院系與身份適用不推成當期保證。"
+          },
           {
             "source_id": "p109-r14-faculty-life-transport",
             "source_url": "https://www.fpe.zcu.cz/en/Admission/incoming_students.html",
@@ -8048,13 +8207,27 @@
             "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
           }
         ],
-        "reason": "公開學院FAQ實質交通，不把約12–15EUR月票當2027保證價格或交換全校學院資格。"
+        "reason": "獨立交通／buddy原檔內容補入，不把全校Erasmus條件與母校CCU雙邊交換混用。"
       },
       "campus_life": {
-        "value": "官方buddy頁限定Erasmus路徑，開學前約1個月通知申請，並非自動配對；志工可協助Pilsen車站到住宿與行政，CCU雙邊交換適用及2027日期待核。",
+        "value": "教育學院未標年度incoming指南列ESN UWB自願buddy，須自行註冊Buddy Database並選Foreign student，使用與Portal申請相同姓名／email，配對後由buddy聯絡，並非自動。另一校級buddy頁為Erasmus路徑；CCU雙邊身分適用、2027通知與配對結果未核，不保證名額或接送。",
         "status": "needs_confirmation",
-        "reason": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
         "evidence": [
+          {
+            "source_id": "p109-r17-discovery-4",
+            "source_url": "https://www.fpe.zcu.cz/en/Admission/incoming_students_doc/ESN-UWB-Pilsen.pdf",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "未標交換年度；公開一般incoming服務／程序",
+            "application_round": "一般incoming服務；2027個人適用尚未核實",
+            "checked_at": "2026-10-08T14:29:38.038153+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ESN UWB Pilsen Erasmus Student Network UWB Pilsen ESN UWB Pilsen, a student organization, is dedicated to assisting incoming exchange students. The students who serve as Buddies do so voluntarily, demonstrating their commitment to helping you settle in. If you want to get a Buddy, please register into a Buddy Database: https://buddy.zcu.cz/ (click on \"SIGN UP\", choose the option \"Foreign student,\" and use your name and email which you registered into the online registration on Portal to avoid confusions). When a Buddy is assigned to you, they will contact you by email, WhatsApp, or FB messenger (you indicate your contact information in your profile in the database). Here are some helpful links: Please fill in this form about your area of interest: https://forms.gle/9pTSF44Epa3ZWQkv9 Whatsapp community: https://chat.whatsapp.com/GR3OGfL2OxE1RhjJ9VEssv Instagram: https://www.instagram.com/esnuwbpilsen Facebook: https://www.facebook.com/esnuwbpilsen Web: https://buddy.zcu.cz",
+            "content_hash": "1b54aede9a9fd68eca198147a7791aa77997f52d71b1a2c7a8ad8c72e7b6470c",
+            "text_sha256": "9136dcaf227e0484981eeaa6540556363e47d51fa11e7da38a646b450faca088",
+            "note": "一頁PDF實際可開啟並全文讀；未標年、院系與身份適用不推成當期保證。"
+          },
           {
             "source_id": "p109-r10-buddy",
             "source_url": "https://www.international.zcu.cz/en/Exchange_Student/buddy_program.html",
@@ -8067,7 +8240,8 @@
             "content_hash": "7a5ac4d717946ca60d2cbe23cfb2c8659cb99cf7a798ab69bf19a3751f75d1cd",
             "text_sha256": "d02fec3d51f6ad357ff50e14dd11708c1499d7aaea1080d85f3cefc7b6f7d601"
           }
-        ]
+        ],
+        "reason": "獨立交通／buddy原檔內容補入，不把全校Erasmus條件與母校CCU雙邊交換混用。"
       }
     },
     "source_checks": [

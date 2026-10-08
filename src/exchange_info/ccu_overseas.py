@@ -349,8 +349,7 @@ def enrich_workflow(workflow, partner: PartnerUniversity):
         confirmation_contact="國立中正大學國際事務處及合作校提名窗口",
     )
     workflow.steps.insert(5, life_step)
-    if document.status == "verified_current" and document.value:
-        enrich_documents(workflow, partner)
+    enrich_documents(workflow, partner)
     refs = {ev.source_url: ev for field in fields.values() for ev in field.evidence}
     workflow.sources.extend(
         ApplicationWorkflowSource(

@@ -20,6 +20,13 @@ def reviewed_documents() -> dict[int, dict]:
     for row in rows:
         names = set()
         for item in row["requirements"]:
+            applicability = item.get("applicability_status", row["status"])
+            if applicability not in {"verified_current", "needs_confirmation", "reference_only"}:
+                raise ValueError("Invalid CCU document applicability")
+            if applicability == "verified_current" and not any(
+                ev["status"] == "verified_current" for ev in item["evidence"]
+            ):
+                raise ValueError("Current CCU document requires current evidence")
             requirement = ApplicationDocumentRequirement.model_validate(
                 item["requirement"]
             )
@@ -32,6 +39,10 @@ def reviewed_documents() -> dict[int, dict]:
                         BUNDLE / "overseas_sources" / (ev["source_id"] + ".json")
                     ).read_text()
                 )
+                if source.get("access_result") in {
+                    "unrelated_content_anomaly", "challenge_page", "captcha_required", "empty_response"
+                }:
+                    raise ValueError("CCU document evidence is not readable official content")
                 text_hash = hashlib.sha256(
                     json.dumps(
                         source.get("text_pages", []), ensure_ascii=False
@@ -60,7 +71,7 @@ def reviewed_documents() -> dict[int, dict]:
                     ev.get(k) for k in ["source_url", "academic_year", "checked_at"]
                 ):
                     raise ValueError("Missing CCU document provenance")
-                if ev["status"] != row["status"]:
+                if ev["status"] not in {"verified_current", "needs_confirmation", "reference_only"}:
                     raise ValueError("CCU document status disagreement")
             url = requirement.official_form_url
             if url and not re.match(r"https?://", url):
@@ -94,9 +105,9 @@ def enrich_documents(workflow, partner):
         return
     if row["school_name"] != partner.school_name:
         raise ValueError("CCU document school identity mismatch")
-    if partner.partner_exchange_details["documents"].status != "verified_current":
+    if row["status"] not in {"verified_current", "needs_confirmation", "reference_only"}:
         raise ValueError(
-            "Do not turn historical CCU documents into current requirements"
+            "CCU documents require a reviewed applicability status"
         )
     application = workflow.steps[4]
     application.document_requirements = []
@@ -161,6 +172,9 @@ def enrich_documents(workflow, partner):
                     and unquote(item["requirement"]["official_form_url"].split("#")[0])
                     in verified_form_urls()
                 ),
+                applicability_status=item.get("applicability_status", row["status"]),
+                applicability_year=item.get("applicability_year", item["evidence"][0]["academic_year"]),
+                applicability_note=item.get("applicability_note"),
             )
         )
         target = targets[item["stage"]]
@@ -178,6 +192,14 @@ def enrich_documents(workflow, partner):
             dict.fromkeys([*target.source_urls, *requirement.source_urls])
         )
     application.details.append(row["review_note"])
+    if row.get("submission_method") == "home_compiled_email":
+        application.title = "準備資料交母校彙整，由母校以email送件"
+        application.summary = "合作校公開factsheet由母校彙整學生整包資料並寄送提名信；未載學生自行線上申請步驟。"
+        application.responsible_party = "學生準備／母校彙整與email送件"
+    elif row.get("submission_method") == "online_generated_pdf_then_home_signature_email":
+        application.title = "線上申請後列印PDF，由母校簽名再掃描email"
+        application.summary = "公開程序依序要求online申請、列印自動產生的PDF交母校coordinator簽名，再掃描email；流程年度及個人欄位待確認。"
+        application.responsible_party = "學生申請／母校coordinator簽名／學生掃描email"
     for order, step in enumerate(workflow.steps, 1):
         step.order = order
         step.required_documents = [r.name for r in step.document_requirements]

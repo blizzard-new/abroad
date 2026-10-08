@@ -8,7 +8,12 @@ import re
 from functools import lru_cache
 
 from .ccu_sources import BUNDLE
-from .models import ExchangeFieldEvidence, PartnerUniversity, StudentGuideSection
+from .models import (
+    ExchangeFieldEvidence,
+    PartnerProgramOption,
+    PartnerUniversity,
+    StudentGuideSection,
+)
 from .university_locations import UniversityLocation
 
 LABELS = {
@@ -94,6 +99,11 @@ def apply_profile(partner: PartnerUniversity) -> PartnerUniversity:
     if row["school_name"] != partner.school_name:
         raise ValueError("CCU profile school identity disagreement")
     fields = row["fields"]
+    if row.get("academic_scope_options"):
+        partner.program_options = [
+            PartnerProgramOption.model_validate(option)
+            for option in row["academic_scope_options"]
+        ]
     for key in ["website", "colleges", "degree_levels"]:
         field = fields[key]
         if field["value"]:

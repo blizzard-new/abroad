@@ -992,6 +992,9 @@ def build_application_document_catalog(
                     conditional=requirement.conditional,
                     condition=requirement.condition,
                     official_form_verified=requirement.official_form_verified,
+                    applicability_status=requirement.applicability_status,
+                    applicability_year=requirement.applicability_year,
+                    applicability_note=requirement.applicability_note,
                     download_available=bool(
                         official_form_url and (
                             not needs_confirmation or (

@@ -2482,6 +2482,44 @@
       },
       "ApplicationDocumentCatalogItem": {
         "properties": {
+          "applicability_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Note"
+          },
+          "applicability_status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "verified_current",
+                  "needs_confirmation",
+                  "reference_only"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Status"
+          },
+          "applicability_year": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Year"
+          },
           "condition": {
             "anyOf": [
               {
@@ -2643,6 +2681,44 @@
       },
       "ApplicationDocumentRequirement": {
         "properties": {
+          "applicability_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Note"
+          },
+          "applicability_status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "verified_current",
+                  "needs_confirmation",
+                  "reference_only"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Status"
+          },
+          "applicability_year": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Year"
+          },
           "condition": {
             "anyOf": [
               {

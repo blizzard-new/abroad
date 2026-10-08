@@ -274,12 +274,12 @@ def test_hcmut_current_deadlines_and_nomination_template_click(page, live_server
         expect(field).to_contain_text(value)
     page.locator("#detail-tab-application").click()
     step = page.locator("details.workflow-step").filter(
-        has=page.locator(".workflow-documents li").filter(has_text="提名信")
+        has=page.locator(".workflow-documents li").filter(has=page.locator("b").filter(has_text="提名信"))
     )
     expect(step).to_have_count(1)
     if not step.evaluate("node=>node.open"):
         step.locator("> summary").click()
-    nomination = step.locator(".workflow-documents li").filter(has_text="提名信")
+    nomination = step.locator(".workflow-documents li").filter(has=page.locator("b").filter(has_text="提名信"))
     expect(nomination).to_contain_text("Seal")
     source = json.loads((BUNDLE / "overseas_sources/p67-r16-nomination-template.json").read_text())
     url = source["source_url"]

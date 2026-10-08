@@ -11,6 +11,7 @@ from .school_identity import same_school
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
 from .task_documents import document_link_for_step
 from .qualification_scopes import (
+    coupled_academic_scope_matches,
     college_scope_matches as _partner_scope_matches,
     degree_scope_matches as _partner_degree_matches,
     partner_scope_needs_confirmation,
@@ -480,16 +481,23 @@ def _eligibility_checks(
         degree_matches = _partner_degree_matches(
             partner.degree_levels, request.degree_level
         )
+        coupled_match = coupled_academic_scope_matches(
+            partner, request.college or request.department, request.degree_level
+        )
+        if coupled_match is not None:
+            degree_matches = coupled_match
+        degree_detail = (
+            f"你的學制符合公開範圍：{partner.degree_levels}。"
+            if degree_matches else f"你的學制不在公開範圍：{partner.degree_levels}。"
+        )
+        if coupled_match is not None:
+            degree_detail = f"你的學院／學制配對{'符合' if coupled_match else '不符'}公開範圍：{request.college or request.department}／{request.degree_level}；{partner.degree_levels}。"
         checks.append(
             _check(
                 "degree_level",
                 "pass" if degree_matches else "fail",
                 "學制",
-                (
-                    f"你的學制符合公開範圍：{partner.degree_levels}。"
-                    if degree_matches
-                    else f"你的學制不在公開範圍：{partner.degree_levels}。"
-                ),
+                degree_detail,
                 source_url=partner_source,
                 contact_unit=None if degree_matches else contact_unit,
             )

@@ -6,7 +6,7 @@
 交付前遠端 main 已前進至 `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`（第一批交付時為 `293546e807294dc0812f390b240a4cfb68e86cd0`）；第一批交付保留開工基準；第二輪依使用者要求安全整合此最新main，保留臺大與既有資料，未寫入其他session工作目錄。
 本 clone 未找到 AGENTS.md 或適用 `.agents/skills`。未寫入其他學校 session 的工作目錄。
 
-最新數量、功能對照與實際驗證見末節第十六輪及 [55筆功能對照](ccu-functional-parity-2026-10-08.md)；前節保留歷史檢查點，不能取代最新數字。
+最新數量、功能對照與實際驗證見末節第十七輪及 [55筆功能對照](ccu-functional-parity-2026-10-08.md)；前節保留歷史檢查點，不能取代最新數字。
 
 ## 已核實適用範圍
 
@@ -494,3 +494,31 @@ UBM、EPITA、SDU的新接收資料顯示替代語言證明／program分流或�
 
 
 公開交通尚缺HCMUTE／DNTU／UNINTER三校，生活尚缺DNTU；學制32、學院44校仍未載，另有無年／國籍／校區適用性、個人表及60項矛盾。沒有把所有公開查核缺口當作只能問承辦。資料、API、UI適配可供整合，但不能宣稱外校完整功能已齊。遠端main查核仍f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59；未merge main、部署、登入校方、聯絡承辦、送件或修改憑證／存取／付款／安全設定。
+
+## 第十七輪：學院學制配對、待確認文件及逐校續查
+
+以已推送 `15270145ea93fab2c4d72a7112fe72cdcff5c6a3` 為前一檢查點，最新 main 仍為 `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`。全部在同一獨立 clone／分支作業，保留臺大、長庚及臺北大學原始資料。
+
+名古屋當期母校PDF physical p34明載教育學院大學部／研究生、法學院僅碩士，建立兩組 program_options 並接通兩支資格API及前端配對／篩選。法學本科／博士不能由教育條件組合通過，兩組不另增加共同名額。ZHAW工學院由當期母校p103核實；重慶相關專業、慶熙校區限制與Ludwigshafen Business Administration文字補入profile，不能把未核對院系映射當作全院通過。
+
+Ludwigshafen 5項、Augsburg 10項及廈門台港澳4項文件新增逐項結構。解除兩層「整體documents必須verified_current才可顯示」門檻，改按每項 applicability_status／year／note 呈現。母校當期的Ludwigshafen照片JPEG／護照PDF與未標年online→生成個人PDF→母校coordinator簽名→掃描email流程分開；LA／住宿表原檔hash可核，住宿表2027移入日期已讀但不保証住宿。Augsburg非Erasmus LA正文可讀、原檔重試429，顯示待核实來源，不當作下載成功；EU無EHIC聲明及作品集／居留證保留各自條件。廈門HMT正文2026-03-03四類只作未核2027適用的條件清單，健康PDF未取得href，不猜連結。
+
+HCMUTE2027 factsheet的5 mandatory／2 optional資料由母校整包彙整email寄提名信，七項均移至nomination，未誤作學生自行online申請。CS1停車／通勤只保留一般校區指引，不推成接機。DNTU乾淨的獨立官方圖書館服務可讀，借閱展延、查找支援、研讀室及先訓練啟用可作一般參考；2027交換生資格、住宿與保障未核。2026-01-19生效公告08:00–17:00與同頁／root頁尾07:30–17:00差異另存，不把root當確定時段；本轮HTTP服務頁亦為07:30–17:00，與web舊快取不同。主站實際含phpshells.net內容的八份新／舊來源僅標異常，原文及hash保留，不作政策。
+
+本輪從實際href續查廈門商學院、TBU與西波希米亞來源。廈門索引仍是2015–2019歷史訊息，不稱官方明示尚未公告；TBU一般faculty導航不當作允許，母校排除物流／危機管理限制保留。西波希米亞交通／buddy兩份一頁PDF已開啟並讀正文，分開補一般路線及自行註冊，2027身分／班次／結果仍待核。UNINTER三個替代官方入口／指南仍503。
+
+最新為697個唯一來源／697請求紀錄：本輪16次匿名網路候選取得＋2份既有母校PDF物理p98／p102重新抽取實讀，不能稱後兩份是新的HTTP取得。89份合作校附件＝66 PDF、18 DOCX、3 XLSX、1 XLS、1 DOC，全部保存檔案hash吻合；679份既有來源的hash及抽取正文未變。當期／參考／灰字／空白名額分開仍為104條、52已列名額、49全筆灰字未開放、3空白及0明示零；母校三梯次收件已截止。
+
+55流程保持legacy／official_partial，26校197項外校文件全部partial_not_exhaustive，33項有條件，21個已驗證文件直連（含指引，非全是空白表）。1132項流程需求包含母校通用準備，不能等同197項host清單。城市／校址55、交通53、生活55是有來源可呈現；當期／身分核實狀態另列，不代表全數2027完整或座標已核。935個host欄位312當期、229缺、313待、20參考、60矛盾及1明示未公告，39校至少一项當期事實，0校17項全核／0校完整host集合，functional_parity_complete=false。
+
+[逐校缺口清冊](ccu-remaining-gaps-2026-10-08.md)與remaining-gaps.json逐校保存學院／學制／文件／交通／生活缺口、官方URL／原文年度／查核時間、HTTP及未映射附件狀態。提名／個人表限制僅廈門、Augsburg、Ludwigshafen相應步驟具逐字依據，不把全校公開缺值歸為承辦阻塞。尚列593個候選href；全部public_sources_exhausted=false，不能宣称所有公開來源已查完。其餘新版尚未核實，只有HUFS到校前TB窗口可稱官方明示尚未公告。
+
+必要共用變更：models.py兩個文件模型各加3個可選適用性欄位；application_documents.py傳遞至catalog；qualification_scopes.py／advisor.py／application_rules.py增加有當期來源的學院學制配對；content_governance.py僅對None預設值省略以保既有發布hash；app.js／index.html呈現配對、年份／適用性及未核下載來源並更新cache版本。沒有新增API路徑或required欄位。整個分支相對main的14個共用程式檔與本輪8檔列於seventeenth-merge-scope.json，供其他session統一合併。
+
+驗證：最終四校選定回歸336 passed、5 skipped、1個NTPU既有失敗（目的地1對預期0，前輪已在main重現）；CCU相關全部通過。瀏覽器完整同次16 passed，手機390／桌面1440核對配對排除、官方表格／待核標示與HCMUT保存真實DOCX回放下載；即時取得HTTP與hash另存，回放不冒稱新外網取得。初次focused81 passed／2舊斷言失敗，初次四校333 passed／3 failed／5 skipped及瀏覽器10 passed／6定位或等待失敗保留；修正後完整結果如上。文件個別metadata不複製整校review_note，避免把提名Seal等條件混入护照等項目。
+
+20生成檔重建一致，49份原main學校資料hash保留，110 API路徑與required欄位不變、OpenAPI完整snapshot一致。校別程式／新增測試Ruff通過，6個共用Python檔56項既有診斷在同pyproject設定下與1527014一致、無新增診斷；Node語法通過。實際log、XML、截圖、來源／附件、套件及重建證據位於ccu-validation-2026-10-08/seventeenth-*。未merge main、部署、登入外校系統、提交學生資料、聯絡承辦或改動存取／帳號／安全設定。
+
+第十七輪 wheel SHA-256：`f5979b7f307ca4f225bdfdb11e93fe15db31a665da6f6b6f8a9f73eab9704076`；841份CCU檔案及13個關鍵程式／靜態檔与工作樹逐byte一致。
+
+封存清冊時再核對分類：source_checks僅代表取得／查核紀錄，不計作已映射政策；只以各欄evidence及逐項文件證據判定mapped。此報告分類修正後的獨立測試1 passed，未改runtime資料／API／UI。

@@ -3953,13 +3953,14 @@ function partnerMatch(item, profile = state.eligibilityProfile) {
   const collegeKnown = Boolean(cycleConfirmed && college && !academicScopeNeedsConfirmation(item, "colleges"));
   const degreeKnown = Boolean(cycleConfirmed && profile.degree && !academicScopeNeedsConfirmation(item, "degree_levels"));
   const collegePass = collegeKnown && collegeMatches(item.colleges, college);
-  const degreePass = degreeKnown && degreeMatches(item.degree_levels, profile.degree);
+  const coupledMatch = coupledAcademicScopeMatches(item, college, profile.degree);
+  const degreePass = degreeKnown && (coupledMatch === null ? degreeMatches(item.degree_levels, profile.degree) : coupledMatch);
   if (!collegeKnown) risks.push(college ? "合作校學院範圍待確認" : "尚未填寫學院");
   else if (collegePass) { score += 30; reasons.push("符合學院範圍"); }
   else { mismatches.push("學院範圍待確認"); risks.push(`你的學院：${college}；學校範圍：${item.colleges}`); }
   if (!degreeKnown) risks.push(profile.degree ? "合作校學制範圍待確認" : "尚未填寫學制");
   else if (degreePass) { score += 20; reasons.push("符合目前學制"); }
-  else { mismatches.push("學制範圍待確認"); risks.push(`你的學制：${profile.degree}；學校範圍：${item.degree_levels}`); }
+  else { mismatches.push("學制範圍待確認"); risks.push(coupledMatch === false ? `學院／學制配對不符：${college}／${profile.degree}；學校配對：${item.degree_levels}` : `你的學制：${profile.degree}；學校範圍：${item.degree_levels}`); }
   if (profile.preferredCountry && item.country === profile.preferredCountry) { score += 15; reasons.push(`位於優先國家 ${item.country}`); }
   const threshold = languageThresholdFromPartner(item, profile.languageTest, profile.degree);
   const hasLanguageScore = Boolean(profile.languageTest) && Number.isFinite(Number(profile.languageScore)) && Number(profile.languageScore) > 0;
@@ -6092,7 +6093,11 @@ function applicationRequirementMeta(item) {
   if (item.signatures?.length) parts.push(`簽名：${item.signatures.join("、")}`);
   if (item.stamps?.length) parts.push(`核章：${item.stamps.join("、")}`);
   if (item.conditional) parts.push(`適用條件：${item.condition || item.name}`);
+  if (item.applicability_status) parts.push(`適用性：${({verified_current:"當期依據已核",needs_confirmation:"當期適用待確認",reference_only:"歷史參考"})[item.applicability_status]}`);
+  if (item.applicability_year) parts.push(item.applicability_year);
+  if (item.applicability_note) parts.push(item.applicability_note);
   if (item.official_form_verified && item.needs_confirmation) parts.push("官方文件已核實可開啟；適用性、完整清單及送件細節仍待確認");
+  else if (item.applicability_status && item.official_form_url) parts.push("原檔下載未核實；版本適用性待確認");
   return parts.join(" · ");
 }
 
@@ -6141,8 +6146,9 @@ function renderApplicationDocumentCatalog() {
       <summary><span><strong>${escapeHtml(group.phase)}</strong><small>${group.items.length} 項</small></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
       <div>${group.items.map((item) => {
         const sourceUrl = item.source_urls?.[0] || "";
-        const sourceLabel = item.official_form_verified ? "開啟已核實官方表格／文件" : item.download_available ? "下載校方正式表格" : "查看官方規定";
-        const sourceHref = item.download_available ? item.official_form_url : sourceUrl;
+        const pendingForm = item.applicability_status && safeSourceUrl(item.official_form_url);
+        const sourceLabel = item.official_form_verified ? "開啟已核實官方表格／文件" : item.download_available ? "下載校方正式表格" : pendingForm ? "查看官方表格來源（待核實）" : "查看官方規定";
+        const sourceHref = item.download_available || pendingForm ? item.official_form_url : sourceUrl;
         const checkedAt = item.source_checked_at ? formatDate(item.source_checked_at) : "查核日待補";
         return `
           <article class="application-requirement-item ${item.needs_confirmation ? "needs-confirmation" : "is-confirmed"}">
@@ -7367,7 +7373,8 @@ function filteredPartners() {
       window.UniWayRegions.inRegion(item.country, state.region) &&
       (!state.country || item.country === state.country) &&
       (!state.college || academicScopeNeedsConfirmation(item, "colleges") || collegeMatches(item.colleges, state.college)) &&
-      (!state.degree || academicScopeNeedsConfirmation(item, "degree_levels") || degreeMatches(item.degree_levels, state.degree)) && discoveryCriteriaMatch(item)
+      (!state.degree || academicScopeNeedsConfirmation(item, "degree_levels") || degreeMatches(item.degree_levels, state.degree)) &&
+      coupledAcademicScopeMatches(item, state.college, state.degree) !== false && discoveryCriteriaMatch(item)
     );
   });
   if (state.eligibilityProfile) {
@@ -7386,6 +7393,15 @@ function academicScopeNeedsConfirmation(item, key) {
     ? ["學院", "全校", "不限", "四院皆可", "工程", "工學", "管理", "商", "人文", "法律", "法學", "理學", "社科", "社會", "醫", "生命", "資訊", "藝術", "engineering", "business", "management", "law", "science", "humanities", "arts", "medicine", "faculty", "college"]
     : ["大學部", "學士", "本科", "研究所", "碩士", "博士", "不限", "全校", "undergraduate", "bachelor", "graduate", "master", "doctoral", "phd"];
   return !terms.some(term => text.includes(term)) && !(key === "colleges" && /\ball\b/i.test(text));
+}
+
+function coupledAcademicScopeMatches(item, college, degree) {
+  const options = item.program_options || [];
+  if (!college || !degree || !options.length) return null;
+  if (["colleges", "degree_levels"].some(key => item.field_evidence?.[key]?.status !== "verified_current")) return null;
+  const urls = new Set([item.field_evidence.colleges.source_url, item.field_evidence.degree_levels.source_url]);
+  if (options.some(option => !urls.has(option.source_url) || academicScopeNeedsConfirmation(option, "colleges") || academicScopeNeedsConfirmation(option, "degree_levels"))) return null;
+  return options.some(option => collegeMatches(option.colleges, college) && degreeMatches(option.degree_levels, degree));
 }
 
 function collegeMatches(value, selected) {
@@ -9342,6 +9358,9 @@ function renderWorkflowDocumentRequirement(requirement) {
   const metadata = [];
   const stages = {nomination:"提名",student_application:"申請",after_application:"申請後補件（不等錄取）",second_submission:"第二次文件送件（時點待確認）",post_offer:"錄取後",after_dorm_assignment:"宿舍分配後",conditional_program:"特定計畫文件"};
   if (requirement.stage) metadata.push(`階段：${stages[requirement.stage] || requirement.stage}`);
+  if (requirement.applicability_status) metadata.push(`適用性：${({verified_current:"當期依據已核",needs_confirmation:"當期適用待確認",reference_only:"歷史參考"})[requirement.applicability_status]}`);
+  if (requirement.applicability_year) metadata.push(requirement.applicability_year);
+  if (requirement.applicability_note) metadata.push(requirement.applicability_note);
   if (requirement.conditional) metadata.push(`適用條件：${requirement.condition || requirement.name}`);
   if (requirement.copies) metadata.push(`${requirement.copies} 份`);
   metadata.push(WORKFLOW_COPY_LABELS[requirement.copy_type] || "文件形式待確認");
@@ -9350,7 +9369,7 @@ function renderWorkflowDocumentRequirement(requirement) {
   return `
     <li class="${requirement.needs_confirmation ? "needs-confirmation" : ""}">
       <i data-lucide="${requirement.needs_confirmation ? "circle-help" : "file-check-2"}" aria-hidden="true"></i>
-      <span><b>${highlightHtml(requirement.name)}</b><small>${metadata.map(escapeHtml).join(" · ")}${requirement.needs_confirmation ? " · 適用性及送件細節待確認" : ""}</small>${requirement.official_form_verified && safeSourceUrl(requirement.official_form_url) ? `<a href="${escapeHtml(requirement.official_form_url)}" target="_blank" rel="noreferrer">開啟已核實官方表格／文件</a><small>官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。</small>` : ""}</span>
+      <span><b>${highlightHtml(requirement.name)}</b><small>${metadata.map(escapeHtml).join(" · ")}${requirement.needs_confirmation ? " · 適用性及送件細節待確認" : ""}</small>${safeSourceUrl(requirement.official_form_url) ? (requirement.official_form_verified ? `<a href="${escapeHtml(requirement.official_form_url)}" target="_blank" rel="noreferrer">開啟已核實官方表格／文件</a><small>官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。</small>` : `<a href="${escapeHtml(requirement.official_form_url)}" target="_blank" rel="noreferrer">查看官方表格來源（待核實）</a><small>原檔下載未核實，適用年度仍待確認。</small>`) : ""}</span>
     </li>`;
 }
 

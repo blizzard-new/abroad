@@ -1302,6 +1302,9 @@ class ApplicationDocumentRequirement(BaseModel):
     conditional: bool = False
     condition: str | None = None
     official_form_verified: bool = False
+    applicability_status: Literal["verified_current", "needs_confirmation", "reference_only"] | None = None
+    applicability_year: str | None = None
+    applicability_note: str | None = None
 
 
 class ApplicationWorkflowSource(BaseModel):
@@ -1562,6 +1565,9 @@ class ApplicationDocumentCatalogItem(BaseModel):
     conditional: bool = False
     condition: str | None = None
     official_form_verified: bool = False
+    applicability_status: Literal["verified_current", "needs_confirmation", "reference_only"] | None = None
+    applicability_year: str | None = None
+    applicability_note: str | None = None
 
 
 class ApplicationDocumentCatalog(BaseModel):

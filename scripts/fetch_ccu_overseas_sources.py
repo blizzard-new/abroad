@@ -354,12 +354,17 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
                 result["extraction_method"] = (
                     "html_body_and_public_content_blocks_no_script_execution"
                 )
+        if b"phpshells.net" in body.lower() or any(
+            "phpshells.net" in page.casefold() for page in result["text_pages"]
+        ):
+            result["access_result"] = "unrelated_content_anomaly"
+            result["review_note"] = "Unrelated injected footer observed; do not map this page as policy evidence."
         result["text_sha256"] = hashlib.sha256(
             json.dumps(result["text_pages"], ensure_ascii=False).encode()
         ).hexdigest()
-        result["review_note"] = (
+        result.setdefault("review_note", (
             "Fetch succeeded; applicable year, round, program and field semantics still require review."
-        )
+        ))
     except Exception as exc:  # noqa: BLE001
         # Preserve arbitrary parser/network failures as candidate acquisition
         # records; a single malformed public document must not abort the batch.
