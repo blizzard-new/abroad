@@ -68,7 +68,7 @@ def reviewed_profiles() -> dict[int, dict]:
                     "challenge_page",
                     "captcha_required",
                     "empty_response",
-                    "unrelated_content_anomaly",
+                    "unrelated_content_anomaly", "password_protected",
                 }:
                     raise ValueError(
                         "Unread or anomalous page cannot support CCU profile facts"

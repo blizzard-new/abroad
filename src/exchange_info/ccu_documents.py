@@ -44,7 +44,7 @@ def reviewed_documents() -> dict[int, dict]:
                     ).read_text()
                 )
                 if source.get("access_result") in {
-                    "unrelated_content_anomaly", "challenge_page", "captcha_required", "empty_response"
+                    "unrelated_content_anomaly", "password_protected", "challenge_page", "captcha_required", "empty_response"
                 }:
                     raise ValueError("CCU document evidence is not readable official content")
                 text_hash = hashlib.sha256(

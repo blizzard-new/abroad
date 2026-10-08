@@ -135,7 +135,15 @@ def test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate():
     assert len({c["url"] for c in report["candidates"]}) == report["unique_url_count"]
     assert len(report["schools"]) == 55 and all(not r["public_sources_exhausted"] for r in report["schools"])
     for c in report["candidates"]:
-        assert not c["source_content_read"]  # Screening does not claim whole-document review.
+        if c["source_content_read"]:
+            review = c["content_review"]
+            assert review and review["review_extent"] in {
+                "necessary_policy_sections", "role_and_relevant_sections",
+            }
+            assert review["sha256"] and review["text_sha256"] and review["checked_at"]
+            assert c["source_availability"] != "unrequested"
+        else:
+            assert c["source_content_read"] in (False, None)
         if c["disposition"] == "already_requested":
             assert c["source_availability"] != "unrequested" and c["source_content_read"] is None
         if "caslogin" in c["url"] or "?authTarget" in c["url"]:

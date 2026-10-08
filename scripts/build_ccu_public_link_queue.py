@@ -78,6 +78,16 @@ def build(output):
     requests = json.loads((BUNDLE / "overseas-source-requests.json").read_text())
     sources = {r["source_id"]: r for r in json.loads((BUNDLE / "overseas-source-registry.json").read_text())}
     requested = {canonical_url(r["url"]): r["source_id"] for r in requests}
+    aliases = {}
+    for source in sources.values():
+        for key in ("source_url", "requested_url", "final_url"):
+            if source.get(key):
+                aliases.setdefault(canonical_url(source[key]), source["source_id"])
+    review_path = BUNDLE / "public-link-reviews.json"
+    reviews = {
+        canonical_url(r["url"]): r
+        for r in json.loads(review_path.read_text())
+    } if review_path.exists() else {}
     grouped = {}
     for row in report["schools"]:
         for link in row["unrequested_discovered_links"]:
@@ -89,8 +99,14 @@ def build(output):
         pages = sorted({o["ccu_page"] for o in occurrences})
         labels = list(dict.fromkeys(o["label"] for o in occurrences))
         disposition, reason, fields = screen(pages[0], url, labels)
-        if url in requested:
+        known_id = requested.get(url) or aliases.get(url)
+        review = reviews.get(url)
+        if known_id:
             disposition, reason = "already_requested", "同一去fragment／tracking href已有取得紀錄；不重抓，結果與限制見source registry。"
+            if url not in requested:
+                reason = "既有取得紀錄的requested_url／final_url已證明同頁；依實際轉址排除，未推定其他URL別名。"
+        if review:
+            disposition, reason = review["disposition"], review["review_note"]
         gaps = {r["ccu_page"]: r["gaps"] for r in report["schools"] if r["ccu_page"] in pages}
         target_fields = sorted({f for page in pages for f in fields if f in gaps[page]})
         priority = sum(5 if f in {"documents", "application_forms"} else 3 if "scope" in f else 1 for f in target_fields)
@@ -101,9 +117,14 @@ def build(output):
             "url": url, "ccu_pages": pages, "labels": labels, "occurrences": occurrences,
             "disposition": disposition, "screening_reason": reason,
             "target_gap_fields": target_fields, "priority_score": priority,
-            "source_content_read": None if url in requested else False,
-            "source_availability": sources[requested[url]]["status"] if url in requested else "unrequested",
-            "already_requested_source_id": requested.get(url),
+            "source_content_read": review.get("source_content_read") if review else None if known_id else False,
+            "source_availability": (
+                sources[known_id]["status"] if known_id else
+                review.get("acquisition_status", "reviewed_acquisition") if review else
+                "unrequested"
+            ),
+            "already_requested_source_id": known_id,
+            "content_review": review,
         })
     candidates.sort(key=lambda c: (-c["priority_score"], c["ccu_pages"], c["url"]))
     for row in report["schools"]:
@@ -122,7 +143,8 @@ def build(output):
     result = {
         "checked_date": "2026-10-08", "scope": "CCU2027春季55校學生必要資料；候選href篩查非正文政策查核。",
         "input_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
-        "canonicalization": "移除fragment/utm，排序query，空白path編碼；HTTP/HTTPS、尾slash、index及語言不同不當已證同頁。",
+        "canonicalization": "移除fragment/utm，排序query，空白path編碼；只用已取得requested_url/final_url證明別名，其他HTTP/HTTPS、尾slash、index及語言不同不推定同頁。",
+        "review_input_sha256": hashlib.sha256(review_path.read_bytes()).hexdigest() if review_path.exists() else None,
         "raw_href_count": sum(len(c["occurrences"]) for c in candidates),
         "unique_url_count": len(candidates),
         "collapsed_href_count": sum(len(c["occurrences"]) - 1 for c in candidates),

@@ -143,6 +143,10 @@ def test_hokkaido_program_evidence_and_old_documents_stay_separate():
             assert len(flow.steps[4].document_requirements) == 4
             assert all(r.conditional and r.applicability_status == "needs_confirmation"
                        for r in flow.steps[4].document_requirements)
+        elif page == 80:
+            assert len(flow.steps[4].document_requirements) == 6
+            assert all(r.applicability_status == "needs_confirmation"
+                       for r in flow.steps[4].document_requirements)
         else:
             assert not flow.steps[4].required_documents
     assert any(

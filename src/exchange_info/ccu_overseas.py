@@ -82,7 +82,10 @@ def reviewed_rows() -> dict[int, dict]:
                 )
                 if ev["status"] == "verified_current" and source.get(
                     "access_result"
-                ) in {"challenge_page", "captcha_required", "empty_response"}:
+                ) in {
+                    "challenge_page", "captcha_required", "empty_response",
+                    "unrelated_content_anomaly", "password_protected",
+                }:
                     raise ValueError(
                         "Unread CCU access response cannot support current policy"
                     )

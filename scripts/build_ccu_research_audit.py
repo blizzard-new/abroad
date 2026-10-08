@@ -51,7 +51,7 @@ def source_check(source, field, used, semantically_reviewed=(), partially_review
         "challenge_page",
         "captcha_required",
         "empty_response",
-        "unrelated_content_anomaly",
+        "unrelated_content_anomaly", "password_protected",
     }:
         result = (
             f"未取得政策正文；{source['access_result']}；"

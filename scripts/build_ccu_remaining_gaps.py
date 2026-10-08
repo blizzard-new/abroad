@@ -12,7 +12,7 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 BUNDLE = ROOT / "src/exchange_info/official_data/ccu"
 OUTPUT = BUNDLE / "remaining-gaps.json"
-ACCESS_LIMITATIONS = {"empty_response", "challenge_page", "captcha_required", "unrelated_content_anomaly"}
+ACCESS_LIMITATIONS = {"empty_response", "challenge_page", "captcha_required", "unrelated_content_anomaly", "password_protected"}
 
 
 def read(name):
@@ -108,6 +108,7 @@ def main():
                 "access_limited_not_policy_content" if source.get("access_result") in ACCESS_LIMITATIONS else
                 "mapped_field_evidence_not_whole_document_completion" if sid in mapped else
                 "existing_field_review_ledger_not_all_fields_complete" if sid in read_ids else
+                "necessary_sections_reviewed_no_current_field_mapping" if source.get("content_review_extent") == "necessary_policy_sections" else
                 "extracted_content_not_yet_mapped_requires_scope_year_review" if any(source.get("text_pages", [])) else
                 "content_not_obtained"
             )

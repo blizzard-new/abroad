@@ -146,7 +146,7 @@ def main():
                     "challenge_page",
                     "captcha_required",
                     "empty_response",
-                    "unrelated_content_anomaly",
+                    "unrelated_content_anomaly", "password_protected",
                 }
             )
         ),

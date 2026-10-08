@@ -344,6 +344,12 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
                 status="html",
                 text_pages=[soup.get_text("\n", strip=True)] + embeds + public_blocks,
             )
+            if soup.select_one('form.post-password-form input[type="password"]'):
+                result["access_result"] = "password_protected"
+                result["review_note"] = (
+                    "Public page exposes a password prompt; protected policy content "
+                    "was not obtained. No password, login or bypass was attempted."
+                )
             if embeds:
                 result["embedded_content_count"] = len(embeds)
                 result["extraction_method"] = (

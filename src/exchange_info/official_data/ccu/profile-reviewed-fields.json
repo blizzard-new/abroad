@@ -99,9 +99,9 @@
         "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。"
       },
       "campus_life": {
-        "value": "舊外籍生頁介紹BNU Debate Team的prepared／impromptu辯論形式，案例含2011、頁尾2016；僅歷史校園活動參考，2027招募與台港澳參與資格尚未核。",
+        "value": "舊外籍生頁介紹BNU Debate Team的prepared／impromptu辯論形式，案例含2011、頁尾2016；僅歷史校園活動參考，2027招募與台港澳參與資格尚未核。 一般頁食堂以campuscard付款、校内商店/醫院/銀行/洗衣等；未年時段與台籍入住條件不保證。",
         "status": "reference_only",
-        "reason": "只核對指定官方活動正文；歷史例子及未年服務不推定2027適用。",
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。",
         "evidence": [
           {
             "source_id": "p10-r11-clubs",
@@ -114,6 +114,19 @@
             "excerpt": "Credentials Verification BNU Debate team is a unique and dynamic form of debate. It format combining the concepts of “prepared” topics with “impromptu” topics, encouraging debaters to focus on specified issues rather than debate theory or procedural arguments. This highly interactive style of debate allows debaters to engage each other, even during speeches. This challenging format requires good teamwork and in-depth quality argumentation. DEBATE TEAM Meet the BNU Debate Team Dong Hyun Park Dong Hyun has participated in debate since sophomore. He won several prizes and now he is the leader in BNU debate team. Mari Ikeda Mari has participated in International students Debate since her freshman year, and won second prize in 2011 Beijing International student debate. Outside of debate, she is studying in counseling psychology, About us About Beijing About BNU About ISO Famous Professors Study & Life Orientation Students Association Facilities Internship & Employment Copyright © 2016 Beijing Normal University. All rights reserved Technical Support: CUCAS",
             "content_hash": "96c06b666223e495b53852fa2fa35b0e5613eb8d3f69e70feb136125dea36ab7",
             "text_sha256": "026e0c0c32ed52ea2117510e070e2fc6d5547c90bb94945315520e701e9d40c9"
+          },
+          {
+            "source_id": "p10-r19-6a33644ec3",
+            "source_url": "https://iso.bnu.edu.cn/en/pages?cid=486&pid=184",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:28.665355+00:00",
+            "status": "reference_only",
+            "excerpt": "Lifestyle Facilities There’s a variety of cafeterias and restaurants in school. All dinning on campus accepts payment by campus card. There are supermarkets and stores on campus where students can get groceries and necessities. The campus is well equipped with different varieties of facilities such as hospital, post office, banks, bookstore, laundry store, gym. On campus supermarkets ☆ Staff Supermarket：Located near the Staff Cafeteria, it sells groceries, meat and all other basic necessities. Opening hours: 8:30AM ~ 21:30PM ☆Student Supermarket：Located on the east side of No 5 Cafeteria, it sells food and other basic necessities Malls and supermarkets Cuiwei Department Store, Mudanyuan Store Tel：62053045 Address：North West corner of Mudanyuan Road intersection. Bus 22 from school goes there directly. Guo Mei Electronics Tel：62072505 Address: No 40 Bei Tai Ping Zhuang Third Ring Road, Haidian District It is an electronics mega store. 20 mins walk from school Suning Electronics Tel：82255558 Located north of Bei Tai Ping Bridge, beside Wu Mei supermarket. 20 mins walk from school Feng ",
+            "content_hash": "895ef6d5b6fdcebbe426b7a0d5437519a6a439f86ed9d8389f205550cf2c8689",
+            "text_sha256": "1397178cfd449f49a63ddc85729fe3f79bbd5931a4ae5970df9fe6ad98056f02",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ]
       }
@@ -133,6 +146,26 @@
         "result": "html",
         "http_status": 200,
         "checked_at": "2026-10-08T10:10:11.128957+00:00"
+      },
+      {
+        "source_id": "p10-r19-977d3343c8",
+        "source_url": "http://iso.bnu.edu.cn/en/accommodation?cid=13&pid=3",
+        "checked_at": "2026-10-08T16:09:26.497841+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p10-r19-6a33644ec3",
+        "source_url": "https://iso.bnu.edu.cn/en/pages?cid=486&pid=184",
+        "checked_at": "2026-10-08T16:09:28.665355+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -583,7 +616,7 @@
         "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。"
       },
       "campus_life": {
-        "value": "2026年9月外國新生welcome pack含student guide、handbook、campus ID、迎新與校圖；Weijin／Peiyangyuan分校區办理SIM／銀行／住宿支援。只作2026舊生活參考，未核2027春或臺籍HMT交換適用；degree入學文件及學費不套中正交換。",
+        "value": "2026年9月外國新生welcome pack含student guide、handbook、campus ID、迎新與校圖；Weijin／Peiyangyuan分校區办理SIM／銀行／住宿支援。只作2026舊生活參考，未核2027春或臺籍HMT交換適用；degree入學文件及學費不套中正交換。 一般圖書館分WeijinNorth/South及PeiyangZhengdong，不能同視一個校區；交換生借閱權限與2027時段另核。",
         "status": "reference_only",
         "evidence": [
           {
@@ -598,9 +631,22 @@
             "content_hash": "55f1367ec7366948f4f7d0951a0cca1b543bc4d46b1fecdfdf96b34732bbf8aa",
             "text_sha256": "99d954308a8e51376f578000ec27a1e62a5d4acdcbdd53e0aa1df532ab0fbb01",
             "note": "仅核指定生活段落及适用范围；没有填过期价格或强迫缺值成为2027事实。"
+          },
+          {
+            "source_id": "p24-r19-cae42d68e7",
+            "source_url": "https://en.tju.edu.cn/Campus_Life1/Library.htm",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:31.551998+00:00",
+            "status": "reference_only",
+            "excerpt": "Library Structure In its current form, the Tianjin University Library includes three architecturally distinct buildings: · North Library A bastion of knowledge, the North Library originally rose in 1958 under the visionary design of Professor Xu Zhong , a distinguished construction expert and esteemed founder of the Architecture Department at Tianjin University. This stately edifice covers an impressive area of 9,853 square meters . To accommodate its growing importance, the North Library expanded significantly in 1986 , adding a sprawling eight-story book warehouse that spans an additional 4,500 square meters . · Science Library The remarkable Science Library opened in 1990 , thanks to the generous contribution from Mr. Run Run Shaw , whose philanthropic spirit has left an indelible mark. This facility spans a vast construction area of 10,968 square meters , providing ample space for cultivating knowledge. · Zhengdong Library In September 2015 , the university inaugurated the Zhengdong Library on the Peiyang Park Campus. Zhou Kai , a celebrated alumnus of Tianjin University and a na",
+            "content_hash": "11869b18c799396dd9c321520d4b3c797562fac231d475c98749a5524b546e1e",
+            "text_sha256": "9f3e2e899a8ddb392e188ef8b7076be93f63d8346e818680f424df332fcf3834",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ],
-        "reason": "正文明确2026及foreign／degree新生；未将旧迎新日、护照签证、十张照片或缴学费泛化为台湾校际交换。"
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。"
       }
     },
     "source_checks": [
@@ -611,6 +657,26 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T09:10:08.969847+00:00"
+      },
+      {
+        "source_id": "p24-r19-133f2e7741",
+        "source_url": "https://en.tju.edu.cn/Campus_Life1/Housing___Dining.htm",
+        "checked_at": "2026-10-08T16:09:29.387304+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p24-r19-cae42d68e7",
+        "source_url": "https://en.tju.edu.cn/Campus_Life1/Library.htm",
+        "checked_at": "2026-10-08T16:09:31.551998+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -1338,9 +1404,9 @@
         ]
       },
       "campus_life": {
-        "value": "官方學生團體頁區分學生自治會、體育會及文化團體聯合會，並有近期部活資訊；2027交換生參與、費用與招募另核。",
+        "value": "官方學生團體頁區分學生自治會、體育會及文化團體聯合會，並有近期部活資訊；2027交換生參與、費用與招募另核。 未年buddy制度支援新留學生校內外生活；學生故事是2015舊期，2027招募/配對未核。",
         "status": "needs_confirmation",
-        "reason": "只核對指定官方活動正文；歷史例子及未年服務不推定2027適用。",
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。",
         "evidence": [
           {
             "source_id": "p33-r11-clubs",
@@ -1353,6 +1419,19 @@
             "excerpt": "部活動紹介 大学生活をより一層充実させる部活動。 CUC千葉商科大学の学生自治会 体育会、文化団体連合会、本部団体を一挙紹介！ 活動内容や試合情報など近況を発信していきます。 興味ある団体を見つけたら是非参加してみよう！ 学生自治会 議事録・資料 2025年度 議事録・資料 2024年度 議事録・資料 2023年度 議事録・資料 2022年度 議事録・資料 最新情報 一覧 RSS アメリカンフットボール部 2026年10月2日 10月の練習試合・公式試合日程 弓道部 2026年10月2日 10月の練習試合・公式試合日程 ボウリング部 2026年10月2日 10月の公式試合日程 バスケットボール部 2026年10月2日 10月の練習試合・公式試合日程 バレーボール部 2026年9月18日 10月の公式試合・練習試合日程 バスケットボール部 2026年9月15日 【結果】関東大学バスケットボールリーグ戦 ラグビーフットボール部 2026年9月15日 10月の公式試合・練習試合日程 少林寺拳法部 2026年9月15日 9月の公式試合日程 弓道部 2026年9月15日 【結果】練習試合を行いました(千葉工業大学、埼玉大学) 学生団体・部活動 一覧 学生団体・部活動 紹介動画 千葉商科大学 MIRAI Times CUCビデオ 大学概要 基本情報 学長室 教育方針 学生支援に関する方針 将来構想・経営計画 大学の取組み コンプライアンス 大学評価 情報公開 インフラ・設備 付属図書館 教育/学部・大学院 全学共通の学び 商経学部 総合政策学部 サービス創造学部 人間社会学部 2024年度以前入学者(学部) 大学院 博士課程 政策研究科 修士課程 商学研究科 専門職学位課程 会計ファイナンス研究科 特長ある教育・学び 他大学との単位互換 科目等履修生・聴講生 転部・転学科 学生生活 シラバス・時間割 行事カレンダー インターネットサービス 学費・支援制度 学びのサポート 生活のサポート 学生団体・部活動紹介 瑞穂祭 各種手続き・申請 証明書の発行 よくある質問(FAQ) 国際交流 国際交流・海外プログラム 体験レポート CUC協定校 ダブル・ディグリーのプログラム 外国人留学生の方へ キャリア 資格取得 就職サポート 就活カレンダー 就職実績 企業との取組み 調査・報告 採用ご担当者さまへ 研究 研究活動 研究活動に関する管理体制 個人研究実績・成果報告書 論叢・紀要 CUCマガジン 社会連携 生涯学習 CUC地域連携フォーラム 地域志向活動助成金制度 産官学連携 学生ボランティア 地域連携推進体制 サイトマップ このサイトについて サイトのプライバシーポリシー 学校法人千葉学園 資料請求 採用情報 学校法人千葉学園 千葉商科大学 千葉県市川市国府台(こうのだい)1-3-1 アクセス Copyright Chiba U",
             "content_hash": "88f8f2987c0956a9f5176bfab5a8bacded5586dbe3ba9106c903085b669ef50d",
             "text_sha256": "c48f1c51e9cf224b7182bad2913f93da1198ac066130f4f74dde4a42a479b35f"
+          },
+          {
+            "source_id": "p33-r19-4f2e2c1ac3",
+            "source_url": "https://www.cuc.ac.jp/global_edu/program/exchange_meeting/buddy/index.html",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:41.437311+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "CUCバディーズは、新入留学生が慣れない日本での生活に早く馴染み、充実した留学生活を送るために留学生をサポートする学生グループです。CUCバディーズは、良き友人、相談相手として新入留学生の学内外の生活をサポートします。留学生との交流を通して、異文化コミュニケーション能力を磨き、海外の目から見た日本を知ることができます。 国際課で企画する留学生との交流イベントのほかに、CUCバディーズが自らが企画したイベントの開催も行っています。 CUCバディーズの募集については国際課にお問い合わせください。 バディーと留学生の声 大学で日本人以外の学生と交流をしたいと思い、バディー制度に応募しました。 担当したシさんの母国である中国の文化や言葉を学ぶことができ、とても興味深い体験ができました。中国語の単語などを教えてもらえるだけでなく、発音やアクセントまで学ぶことができました。私も日本の文化や日本語を教えてあげました。こうした交流を重ねるうちに、私はバディーから「友人」に変わっていきました。今では、シさんは仲の良い友人の1人です。私が中国に行く機会があれば、逆にバディーになってもらい様々なことを学びたいです。 商経学部商学科2年 松崎 巧 初めて会った時から松崎さんは礼儀が正しく、とても優しい印象で「良い友達になれる」という手応えがありました。松崎さんは本当に面白い人で、私と共通の趣味があったので、頻繁に会って一緒にお昼ご飯を食べました。ある時、日本の醤油の種類があまりに多いため、どの銘柄を選べば良いのか分からなかった時には一緒にスーパーに行ってくれました。料理が得意な彼は醤油のことをよく知っていて、良いものを選んでくれました。私が興味があった日本の学生の生活についても、彼が丁寧に教えてくれたおかげで、いろいろなことが分かるようになりました。 2015年度秋学期交換留学生 シ ジユ 新しい制度なので前例が無く、最初は不安もありましたが担当したクさんとは共通の趣味や明るい性格に助けられ楽しく交流できました。クさんだけでは無くクさんの友人や同じ学部の留学生など友達の輪が大きく広がりました。一緒にランチをたべたり、買い物をしたり、国際センター主催の卓球大会に参加したり、楽しい思い出を作ることができました。このCUC新入留学生バディー制度は国籍という垣根を取り払うことができる制度です。今後はもっと留学生との交流の機会を増やし、留学生が安心して過ごせる雰囲気作りを私達から始めていきたいと思っています。 人間社会学部2年 楠 佳憲 一番思い出に残っていることは卓球大会に参加して、バディーの",
+            "content_hash": "e90ce951e8704bc4e886966c7f7962dc6e5859b28ba132059166bbe4c5c895b6",
+            "text_sha256": "d2188099d69d158b9f3e70a8e60f557cafc7bc81ef8d8f0864276f0729b63932",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ]
       }
@@ -1380,6 +1459,16 @@
         "result": "html",
         "http_status": 200,
         "checked_at": "2026-10-08T10:10:11.129497+00:00"
+      },
+      {
+        "source_id": "p33-r19-4f2e2c1ac3",
+        "source_url": "https://www.cuc.ac.jp/global_edu/program/exchange_meeting/buddy/index.html",
+        "checked_at": "2026-10-08T16:09:41.437311+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -1556,6 +1645,16 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:09.153703+00:00"
+      },
+      {
+        "source_id": "p34-r19-79225f1b0a",
+        "source_url": "https://nupace.iee.nagoya-u.ac.jp/en/apply/online.html",
+        "checked_at": "2026-10-08T16:07:00.459295+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ],
     "academic_scope_options": [
@@ -1752,9 +1851,9 @@
         ]
       },
       "campus_life": {
-        "value": "國際支援中心提供社團與circles介紹及PDF手冊，供文化交流與興趣活動；未核2027各社團招募、費用及資格。",
+        "value": "國際支援中心提供社團與circles介紹及PDF手冊，供文化交流與興趣活動；未核2027各社團招募、費用及資格。 一般支援國際學生辦區公所/銀行等，申請至少 desired date前3businessdays仍不保slot；是支援服務申請非交換入學表。",
         "status": "needs_confirmation",
-        "reason": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。",
         "evidence": [
           {
             "source_id": "p35-r10-clubs",
@@ -1767,6 +1866,19 @@
             "excerpt": "es for International Students Tohoku University offers a wide range of clubs and circles from which you can choose. If you want to get an insight into Japanese culture and interact with Japanese students, or just wish to practice your hobby, we hope this booklet helps you find a group that fits your interests. Clubs, Circles & Associations Booklet (PDF) SNS 東北大学国際サポートセンター（ISC） International Support Center (ISC) Tohoku University CONTACT US Copyright (C) Tohoku University All Rights Reserved.",
             "content_hash": "4596d61216e44a2aeac8c9cf2d6d0e44b7e8b54d4b952dfa618381922b114f81",
             "text_sha256": "2249f3d71e48b094ccdeb4a819de67e928375743884065ee9cdd9cbafe5ebb0b"
+          },
+          {
+            "source_id": "p35-r19-6cfe4c0311",
+            "source_url": "https://sup.bureau.tohoku.ac.jp/en/application-main-e/",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:07:00.457850+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Who can use our services Our Support Services How to Apply for Support Services Apply for Support Services Inquiries or Assistance ISC Call Center Who can use our services International researchers, international students, their family members, and visitors to Tohoku University are welcome to use our services. INTERNATIONAL STUDENTS (including special visiting trainees) INTERNATIONAL RESEARCHERS TEMPORARY VISITORS (including visitors, conference participants, invited researcher) Our Support Services The International Support Center provides various support services including assistance with ward office procedures and opening a bank account. To see the available support services, please refer to the image below. Please note that if you apply after the deadline of three business days prior to the desired support date, we may not be able to provide support at your preferred time. If you have a specific date and time in mind for support, please apply as early as possible. Even if you apply three business days in advance, due to the reservation acceptance limits of our banking and/or othe",
+            "content_hash": "b84e57de22a18b329db71161a3ad3e86f4c5be20ddd379175288d07a605460c9",
+            "text_sha256": "1f1ff8c83b6c09205c4d90c461ef3d1eeec9b41121a063da40e1a20e5506885f",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ]
       }
@@ -1813,6 +1925,86 @@
         "content_academic_year": "正文October2026住宿申請；期間段仍October2024–2026，不適用2027春季",
         "content_applicability": "reference_only",
         "content_review_note": "已讀4頁；不是交換學術申請指南。住宿room availability非CCU交換名額；第3頁舊期間與2026標題不一致，不套2027。"
+      },
+      {
+        "source_id": "p35-r19-6cfe4c0311",
+        "source_url": "https://sup.bureau.tohoku.ac.jp/en/application-main-e/",
+        "checked_at": "2026-10-08T16:07:00.457850+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p35-r19-339169bb82",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/form2visa/",
+        "checked_at": "2026-10-08T16:07:00.461248+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "公開password-protected頁，保護正文及年度未取得",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "頁僅指JYPE/IPLA/COLABS/DEEP並要求密碼，未取得guarantor/reference內容；未登入或繞過。"
+      },
+      {
+        "source_id": "p35-r19-28e1de3a77",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/deep-u/",
+        "checked_at": "2026-10-08T16:07:09.507846+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p35-r19-375a642a90",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/ipla/ipla_curriculum_1/",
+        "checked_at": "2026-10-08T16:09:17.456532+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文IPLA2026–27 Fall與歷年course archive；未讀到2027Spring清單",
+        "content_applicability": "reference_only",
+        "content_review_note": "已讀必要政策正文；明確舊期／年，僅參考，不加入當期學生必繳表。"
+      },
+      {
+        "source_id": "p35-r19-77efa24da3",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/jype/2-course-description/",
+        "checked_at": "2026-10-08T16:09:19.823366+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文JYPE表是2021Fall–2022Spring，其他研究規則未年",
+        "content_applicability": "reference_only",
+        "content_review_note": "已讀必要政策正文；明確舊期／年，僅參考，不加入當期學生必繳表。"
+      },
+      {
+        "source_id": "p35-r19-84666b8697",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/jype/5-syllabus-elective-courses/",
+        "checked_at": "2026-10-08T16:09:20.009278+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文CurrentJYPE2026Fall/JLPK2026Fall及歷年archive；2027Spring尚未核實新版",
+        "content_applicability": "reference_only",
+        "content_review_note": "已讀必要政策正文；明確舊期／年，僅參考，不加入當期學生必繳表。"
+      },
+      {
+        "source_id": "p35-r19-d8e9db93bb",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/getting_started_in_japan/",
+        "checked_at": "2026-10-08T16:09:26.123905+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文GettingStartedFall2026；不套2027Spring日期/費率",
+        "content_applicability": "reference_only",
+        "content_review_note": "已讀必要政策正文；明確舊期／年，僅參考，不加入當期學生必繳表。"
+      },
+      {
+        "source_id": "p35-r19-961a1999c5",
+        "source_url": "https://sup.bureau.tohoku.ac.jp/en/pre-arrival-e/find-a-place-e/",
+        "checked_at": "2026-10-08T16:09:32.469678+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -2456,6 +2648,16 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T04:31:35.534487+00:00"
+      },
+      {
+        "source_id": "p43-r19-c13dbbaca2",
+        "source_url": "https://international.pusan.ac.kr/international/15217/subview.do",
+        "checked_at": "2026-10-08T16:09:41.451255+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -2698,16 +2900,44 @@
         "reason": "官方網站／國際處入口；個別HTTP故障另記來源取得結果，並不宣稱全站政策適用2027。"
       },
       "degree_levels": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+        "value": "待確認：一般FAQ有研究生線下選課程序，但不代表所有碩／博士具交換申請資格。",
+        "status": "needs_confirmation",
+        "evidence": [
+          {
+            "source_id": "p47-r19-3cd8d8ed7c",
+            "source_url": "https://exchange.hufs.ac.kr/Frequently-Asked-Questions/Course-Registration-FAQ",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:07:10.458803+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "I am a graduate student, Why can't I register for Graduate classes? Similar to \"major\" classes, you have to register for graduate classes in person when you are on campus the first week of the semester. Please have a backup plan as well since spots are not guaranteed. Nevertheless, spaces in graduate classes typically are not a problem unlike undergraduate classes. OKAY, I need to ask for permission, but how can I find out the e-mail address of a teacher? It can be difficult to register for classes when you need permission, and often you might miss a class that only meets once a week. You can contact professors in advance to begin asking for permission, even if you have to wait until the 2nd round of course registration. The easiest way to search for HUFS faculty is through E-Class or Google. This is more complicated now, however, due to COVID-19 and face-to-face/online delivery. Please consult with the OIAM. Login to HUFS Web Information System (WIS: https://wis.hufs.ac.kr/ ) After you are logged in, you can open the course syllabuses and see the email addresses of the instructors o",
+            "content_hash": "69f3b09de456108a9868203223884c975034e90fb6a9c498968bb47ae8bf3706",
+            "text_sha256": "a6a83fe81ce49dbc9b3932f6183d8bb43d8be8178cd720458fd870ed25e98436",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
+          }
+        ],
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。"
       },
       "colleges": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+        "value": "待確認：一般incoming頁禁LawMA、LanguageDiplomacy/TradeBA、Education、InterpretationTranslation；完整CCU適用開放院系與學制未核，college catalog不當開放清單。",
+        "status": "needs_confirmation",
+        "evidence": [
+          {
+            "source_id": "p47-r19-4d54fb900e",
+            "source_url": "https://exchange.hufs.ac.kr/Course-Information/Special-and-Restricted-Courses",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:07:10.114913+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Restricted Schools/Colleges/Divisions Exchange/Visiting Students are not allowed to take courses in the following: Law School (MA level) Department of Language & Diplomacy (BA level) Department of Language & Trade (BA level) College of Education (Department of English Education/French Education/German Education/Chinese Education/Korean Education) Graduate School of Interpretation and Translation Even for departments that generally have no restrictions, course availability may vary. Please check the syllabus and course notes carefully. Communicative language Course Restrictions Communicative Languages (Liberal Arts - Practical Foreign Languages) What does this mean? This means that you are restricted from taking language-learning classes in your native language as it can make the class too difficult for local HUFS students who are second-language learners. For example, if your native language is German, you will not be allowed to take Beginner German, or Basic German Conversation. Liberal arts courses Students cannot enroll in Liberal Arts courses during the 2nd Round of Course Regist",
+            "content_hash": "fd522df6c223b51c5d0348c67aebd421abcb72b8fa1c16fe10c0c67bb5fc0f52",
+            "text_sha256": "a017f11b44af992b9ae858cbad8c33b0bd3d17976d4237ec13b993957ba8bd9d",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
+          }
+        ],
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。"
       },
       "transport": {
         "value": "首爾校區可經首爾站转地鐵1號線至外大前，或機場6002至清涼里；Global校區官方另列機場5400／5400-1至亭子站後轉計程車。路線未標2027年度，班次／價格需行前再查。",
@@ -2765,6 +2995,96 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:11.819651+00:00"
+      },
+      {
+        "source_id": "p47-r19-af89746f07",
+        "source_url": "https://exchange.hufs.ac.kr/Overview/Pre-Arrival-Timeline",
+        "checked_at": "2026-10-08T16:07:00.458619+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文明示SPRING2027；2026-08-01至10-30提名／申請，December2026寄admissions packet",
+        "content_applicability": "verified_current",
+        "content_review_note": "2027春季時間線；GoogleForm文件提交亦須期間內完成；exchangeD-2-6與visitingD-2-8分開。"
+      },
+      {
+        "source_id": "p47-r19-f90256eda8",
+        "source_url": "https://exchange.hufs.ac.kr/Frequently-Asked-Questions/Application-FAQ",
+        "checked_at": "2026-10-08T16:07:01.647372+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p47-r19-a29e3b7993",
+        "source_url": "https://exchange.hufs.ac.kr/Overview/Application-Portal",
+        "checked_at": "2026-10-08T16:07:03.368849+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p47-r19-043a14fe0e",
+        "source_url": "https://exchange.hufs.ac.kr/Student-Visas/Required-Documents",
+        "checked_at": "2026-10-08T16:07:04.569432+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p47-r19-225758e036",
+        "source_url": "https://exchange.hufs.ac.kr/Student-Visas/Visa-Application",
+        "checked_at": "2026-10-08T16:07:04.710741+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p47-r19-b15a5cff21",
+        "source_url": "https://exchange.hufs.ac.kr/Course-Information/How-to-Register/Colleges-and-Majors",
+        "checked_at": "2026-10-08T16:07:09.822365+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p47-r19-4d54fb900e",
+        "source_url": "https://exchange.hufs.ac.kr/Course-Information/Special-and-Restricted-Courses",
+        "checked_at": "2026-10-08T16:07:10.114913+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p47-r19-3cd8d8ed7c",
+        "source_url": "https://exchange.hufs.ac.kr/Frequently-Asked-Questions/Course-Registration-FAQ",
+        "checked_at": "2026-10-08T16:07:10.458803+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p47-r19-course-registration",
+        "source_url": "https://exchange.hufs.ac.kr/Course-Information/How-to-Register",
+        "checked_at": "2026-10-08T16:16:09.176763+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文Fall2026選課與PermissionForm；不是Spring2027空白表",
+        "content_applicability": "reference_only",
+        "content_review_note": "已讀必要政策正文；明確舊期／年，僅參考，不加入當期學生必繳表。"
       }
     ]
   },
@@ -2912,6 +3232,26 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T09:10:17.761835+00:00"
+      },
+      {
+        "source_id": "p48-r19-7a0e6aa5a6",
+        "source_url": "https://en.seoultech.ac.kr/adm/exch",
+        "checked_at": "2026-10-08T16:07:15.640375+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p48-r19-57c01fc319",
+        "source_url": "https://irt.seoultech.ac.kr/inbound/exchange_tab/exchange_course",
+        "checked_at": "2026-10-08T16:07:15.823991+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -3260,6 +3600,26 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T09:10:18.366338+00:00"
+      },
+      {
+        "source_id": "p50-r19-4e15b18a26",
+        "source_url": "https://oia.cau.ac.kr/cauoia/exchange/notice.do?article.offset=0&articleLimit=10+&articleNo=47939&mode=view",
+        "checked_at": "2026-10-08T16:07:05.374686+00:00",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "content_academic_year": "未取得正文，年度未核",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "匿名GET失敗，逐份保存HTTP/error；其他URL取得結果分開，不猜政策。"
+      },
+      {
+        "source_id": "p50-r19-factsheet-notice",
+        "source_url": "https://oia.cau.ac.kr/cauoia/exchange/notice.do?articleNo=47939&mode=view",
+        "checked_at": "2026-10-08T16:09:43.561217+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文2026InternationalBrochure／2026FallFactSheet，posted2026-02-19",
+        "content_applicability": "reference_only",
+        "content_review_note": "不是Spring2027新版；附件其他來源已有取得，未重複新增。"
       }
     ]
   },
@@ -3423,7 +3783,7 @@
         "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。"
       },
       "campus_life": {
-        "value": "一般資料按語言組分配buddy支援；2027個人配對與可修主修範圍另外確認。",
+        "value": "一般資料按語言組分配buddy支援；2027個人配對與可修主修範圍另外確認。 一般buddy自動匹配、學期初聯絡，无独立申請；未年2027個案未核。",
         "status": "needs_confirmation",
         "evidence": [
           {
@@ -3440,9 +3800,22 @@
             "content_hash": "5428afd8cea42bb0775ab74dcdec53faf1994ad7a757b97c9ecf7365235adc89",
             "text_sha256": "5b0c8435f9e7b3ec159cafee9c2c787134a835997e3f642fe5f510d0f3b06f90",
             "note": "指定段原文；不由其他年份、全校學位或下載成功推定交換資格。"
+          },
+          {
+            "source_id": "p52-r19-e236293756",
+            "source_url": "https://sites.google.com/gachon.ac.kr/gachon-exchange/post-arrival/buddy-program",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:33.047092+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "There is no seperate application process - Korean student buddies are matched automatically, and they will contact you at the beginning of the semester. Throughout the semester, you can ask your buddy for help with both campus life and daily life in Korea. Report abuse Page details Page updated Report abuse",
+            "content_hash": "b0a48bdf073da682f3e7869db6787f23a1f89dfd1048b734272b47c049f79fc2",
+            "text_sha256": "d479063baf8ac91005c886d29175c9fecba3320c9b01f1e2e7cc3538b117cfcf",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ],
-        "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。"
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。"
       }
     },
     "source_checks": [
@@ -3453,6 +3826,16 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T09:10:19.532168+00:00"
+      },
+      {
+        "source_id": "p52-r19-e236293756",
+        "source_url": "https://sites.google.com/gachon.ac.kr/gachon-exchange/post-arrival/buddy-program",
+        "checked_at": "2026-10-08T16:09:33.047092+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -4888,9 +5271,9 @@
         ]
       },
       "campus_life": {
-        "value": "一般頁列體育活動及Simthesis、Nakshatra、Samyukta、Shristi四種校園festival／project活動；不能當2027實際舉辦日期或交換生報名資格。",
+        "value": "一般頁列體育活動及Simthesis、Nakshatra、Samyukta、Shristi四種校園festival／project活動；不能當2027實際舉辦日期或交換生報名資格。 一般中央館服務學生/研究者/職員，含科學工技與人文資料；未核中正incoming借閱帳戶、費用及2027資格。",
         "status": "needs_confirmation",
-        "reason": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。",
         "evidence": [
           {
             "source_id": "p74-r10-life",
@@ -4903,6 +5286,19 @@
             "excerpt": " many accolades to Saintgits. There are four national level fests which are held at the campus every year Simthesis: is the national level management fest held by the college for undergraduate and postgraduate students Nakshatra: is the annual techno-cultural festival of the college, usually held at the beginning of every year. Over 4500 students from engineering colleges across India arrive at the campus to attend this mega event to perform and showcase their artistic and technical excellence in the competitions and cultural events. Samyukta: is the national level inter-collegiate techno-cultural fest which includes various technical and managerial activities, workshops, seminars and competitions both at intra and inter-collegiate level to illuminate the talents of the students in co-curricular and in technical domains Shristi: is a National Level Technical Project Exhibition and Competition in collaboration with various Multinational Organizations like National Instruments, ANSYS etc. Quick Links Affiliations and Accreditations Anti-ragging policy Careers Discover the campus Mandatory Disclosure Fee payment Feedback & Grievance Redressal NIRF Patron Saint and Founding entity Policies and Procedures Saintgits Center for Innovation and Entrepreneurship Saintgits Laurels AICTE status update on Students Well Being Quick Contact SAINTGITS GROUP OF INSTITUTIONS Kottukulam Hills, Pathamuttom P.O, Kottayam, Pin – 686532, Kerala Email: mail@saintgits.org Phone no : +91 481 2436169 / 2436170 For Admission please contact: Anju Anna Jacob, Admissions Officer, +91 9895903278, +91 8129702585, anjukakkad@saintgits.org © 2026 Saintgits Group of Institutions Admissions – Enquire Now! ♿ High Contrast Dyslexia-Friendly Font A+ A- Highlight Links Large Cursor Line Height Text Spacing Reset",
             "content_hash": "546a947f1634cf1ecf98d8b027a501e932e296e5f06301d16b54119795841909",
             "text_sha256": "af009b99a3e16a81b8043cd734816cd67e7836827a2b05541a8015c41d536a55"
+          },
+          {
+            "source_id": "p74-r19-8d8f05c6a6",
+            "source_url": "https://saintgits.org/resources/main-library/",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:33.787308+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "The Central Library, functioning as an information disseminating centre catering to the needs of students, researchers and staff community, has a major role in paving the way for better academic excellence. The Central library spreads over two floors with an area of 1120 sqm. Specialized collections of Books, Journals & Non-book materials are available in Basic Sciences, Engineering and Technology, Applied Science and Humanities. There is a collection of 56100 Volumes of Books, 153 Print Journals, magazines and AICTE mandatory subscription of e journals packages of Under graduate and post graduate programs. The SAINTGITS – Central Library has access to e-resources of Science Direct & EBSCO. We also have collections of Indian Standards Codes on DVDs. The Library has a collection of NPTEL video courses in different fields of education. The aim of the Library is to acquire, organize, utilize and preserve the information sources and to extend effective and efficient service to the students, research scholars and faculty members of the colleges. Platform URL Login Details E-content EBSCO ",
+            "content_hash": "83927d19b5801a94af141ffa3dbcf28cafdbc87e4d7b106b9a9adf00a9aec62e",
+            "text_sha256": "1a5b5fe62d896353a5c595c441d44774c97d149584866f75e09b32734bf4182b",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ]
       }
@@ -4931,6 +5327,16 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:13.964398+00:00"
+      },
+      {
+        "source_id": "p74-r19-8d8f05c6a6",
+        "source_url": "https://saintgits.org/resources/main-library/",
+        "checked_at": "2026-10-08T16:09:33.787308+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -5072,7 +5478,7 @@
         "reason": "接收學制／學院與母校資格分開。待確認、排除或逐計畫條件不自動通過全校資格篩選。"
       },
       "transport": {
-        "value": "一般FAQ要求抵達前至少7工作天提供航班，校方人員可能協助接機；未年度／個別確認，不保2027接送。",
+        "value": "一般FAQ要求抵達前至少7工作天提供航班，校方人員可能協助接機；未年度／個別確認，不保2027接送。 一般schoolbus網絡連Chennai與郊區，可透過TransportManagementSystem查路線並預約；route表未年，2027席次/費用/班表及交換資格未核。",
         "status": "needs_confirmation",
         "evidence": [
           {
@@ -5087,12 +5493,25 @@
             "content_hash": "60f5e4bb589fc360a7486430ab219b684408d6cb5eac0377927e2ad78c83072c",
             "text_sha256": "e958c08569ce1f59d8cf72175575d6545af5882feeceb675b46a47cb9332a10d",
             "note": "指定段原文；不由其他年份、全校學位或下載成功推定交換資格。"
+          },
+          {
+            "source_id": "p77-r19-8409c86b86",
+            "source_url": "https://www.veltech.edu.in/transport/",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:35.198559+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Vel Tech provides a reliable and convenient transportation facility to support the daily commuting needs of students and staff. Our transport network connects the university campus with various locations across Chennai and its surrounding areas, making travel to and from the campus convenient and accessible. The university operates a fleet of buses covering multiple routes and strategically located boarding points. The transport service is designed with a focus on safety, punctuality, comfort, and convenience , ensuring a smooth commuting experience for the Vel Tech community. Students can access the available routes, boarding points, and transport-related information through the university’s Transport Management System , which also enables convenient online transport booking. With well-organized routes and a technology-enabled booking process, Vel Tech’s transport facility aims to provide students with a safe, efficient, and hassle-free commuting experience throughout their academic journey. Book now Transport Incharge Dr. Lenin Nagarajan Professor & Dean School of Mechanical and Co",
+            "content_hash": "e27cf0f3165f37a84bd1473ea27c410465678660e89c0b469b9f5a0f673e02ce",
+            "text_sha256": "e369f621de0d2cacb2f8907e7add8af8322c71be83faf4def5a9ab57484fb00e",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ],
-        "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。"
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。"
       },
       "campus_life": {
-        "value": "一般FAQ列國際處支援與活動安排；個別活動、醫療與住宿費用仍須另核，未保2027全部免費。",
+        "value": "一般FAQ列國際處支援與活動安排；個別活動、醫療與住宿費用仍須另核，未保2027全部免費。 一般借閱須有效ID，館內借閱6本/期限依身分；開館段對周末07:30–20:00 vs09:00–16:00內部差異，未當2027確定時段。",
         "status": "needs_confirmation",
         "evidence": [
           {
@@ -5107,9 +5526,22 @@
             "content_hash": "60f5e4bb589fc360a7486430ab219b684408d6cb5eac0377927e2ad78c83072c",
             "text_sha256": "e958c08569ce1f59d8cf72175575d6545af5882feeceb675b46a47cb9332a10d",
             "note": "指定段原文；不由其他年份、全校學位或下載成功推定交換資格。"
+          },
+          {
+            "source_id": "p77-r19-ac042db9fd",
+            "source_url": "https://veltech.edu.in/central-library/",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:34.629517+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "MEMBERSHIP The Central Library is following Open Access System. All the Students, Faculty Members, Research Scholars and Non-teaching staff are privileged to borrow books from the Central Library. The borrowing privileges are as follows: SL. NO. MEMBER DETAILS NO. OF BOOKS PERIOD 1 UG STUDENTS 6 14 DAYS 2 PG STUDENTS 6 28 DAYS 3 RESEARCH SCHOLARS 6 42 DAYS 4 TEACHING STAFF 6 42 DAYS 5 NON-TEACHING STAFF 5 28 DAYS WORKING HOURS The Central Library is kept open throughout the year except Public Holidays. The working hours of the Central Library is as follows: ALL WORKING DAYS 7.30 a.m. – 8.00 p.m. 3rd SATURDAYS & ALL SUNDAYS 9.00 a.m. – 4.00 p.m. RULES & REGULATIONS Members are requested to keep their belongings / bags (other than valuables) at the shelves provided. Register your Gate Entry in the Computer System kept near the entrance of the Library. Members are asked to maintain silence in the Library. Do not use mobile phone to speak inside the Library. Avoid mutilation, scribbling, marking or cause damage on any resources of the library. If found, members should to pay the penalty ",
+            "content_hash": "c59ad8bdf7715f49a82394a9c141ab8b19b1171d768844f711cd342fc7b91191",
+            "text_sha256": "5b85f41131962fdb8fc27e6063dea77478703913e2b1ba1237ff5858c1814e37",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ],
-        "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。"
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。"
       }
     },
     "source_checks": [
@@ -5120,6 +5552,26 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T09:10:26.553513+00:00"
+      },
+      {
+        "source_id": "p77-r19-ac042db9fd",
+        "source_url": "https://veltech.edu.in/central-library/",
+        "checked_at": "2026-10-08T16:09:34.629517+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p77-r19-8409c86b86",
+        "source_url": "https://www.veltech.edu.in/transport/",
+        "checked_at": "2026-10-08T16:09:35.198559+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -5191,7 +5643,7 @@
         "reason": "官方網站／國際處入口；個別HTTP故障另記來源取得結果，並不宣稱全站政策適用2027。"
       },
       "degree_levels": {
-        "value": "待確認：大學部、碩士班",
+        "value": "待確認：大學部、碩士班 待確認：未年Inbound表Level of Study只有Bachelor／Master；不能把Outbound表的Doctoral套incoming。",
         "status": "needs_confirmation",
         "evidence": [
           {
@@ -5206,9 +5658,24 @@
             "note": "政策/入口正文已讀，來源年和交換適用性未明；未載不推定官方尚未公告。",
             "content_hash": "e82efe8c53d27c9979d218f71268fe0c9cacd0dfad7bf7e2785047915d117e9b",
             "text_sha256": "bf8fdb85d47e8943006b59699df1854c28390434f92623cc026510db03e53550"
+          },
+          {
+            "source_id": "p80-r6-incoming-form",
+            "source_url": "https://presidencyuniversity.in/uploads/images/6818985ddb4fe1746442333.pdf",
+            "source_pages": [
+              2
+            ],
+            "academic_year": "正文InboundStudentExchange；未印年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T07:08:53.608717+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Level of Study:Bachelor Master Left to student’s choice& to be mutually decided Emergency Contact Person Name Contact No. and Email ID Relationship This is to Certify that: *Students have registered for a regular degree Program in the Home University *Courses / Project Work taken at Presidency University is part of the degree pursued at Home University Signature of the Head of the Department Name: Signature of the International Office at Home Uni. Name: Date: Date: Project Work",
+            "content_hash": "aba45c96c04a76c125a6e1370c558898414bad8bcac60f1ba86c472cf66746b2",
+            "text_sha256": "e777ce9e19c7db3bce9c114ed160b436668e21139a51bf9906f7411c01438644",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ],
-        "reason": "接收學制／學院與母校資格分開。待確認、排除或逐計畫條件不自動通過全校資格篩選。"
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。"
       },
       "colleges": {
         "value": null,
@@ -5236,9 +5703,9 @@
         ]
       },
       "campus_life": {
-        "value": "一般設施頁列圖書館／實驗室、auditorium／amphitheatre、cafeterias、Wi-Fi與數位學生服務；不代表2027交換生全數免費或名額已開。",
+        "value": "一般設施頁列圖書館／實驗室、auditorium／amphitheatre、cafeterias、Wi-Fi與數位學生服務；不代表2027交換生全數免費或名額已開。 一般LKRC借閱須註冊會員及UniversityID，學術館不保每位交換自動開通；2027時段另核。",
         "status": "needs_confirmation",
-        "reason": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。",
         "evidence": [
           {
             "source_id": "p80-r10-life",
@@ -5251,6 +5718,19 @@
             "excerpt": "dent Life / Campus Facilities A Campus Built Around You Nearly 100 acres of learning, creativity, collaboration, sport and student life. Learn Create Collaborate Play Connect Learning, Beyond Classrooms From smart classrooms and advanced laboratories to libraries and specialised centres, our learning spaces are designed to support curiosity, collaboration and hands-on learning. Explore Learning Spaces → Smart Classrooms Interactive spaces designed for a better tomorrow. ❯ Libraries / Knowledge Centres A world of knowledge at your fingertips. ❯ Laboratories Hands-on learning and real-world innovation. ❯ Centres of Excellence Driving research, innovation and industry collaboration. ❯ Spaces to Create & Connect From cultural events and performances to media spaces and student activity hubs, these spaces bring the campus community together. Auditorium For ideas, performances and university events. Amphitheatre An open-air space for conversations and campus life. Podcast / Media Spaces An open-air space for conversations and campus life. Student Activity Spaces Where communities, clubs and ideas come together. More Than a Classroom It’s where you build friendships, discover interests and create experiences that stay with you. Explore Campus Life → Cafeterias & Food Courts Sports Facilities Hostel Transportation Technology That Keeps You Ahead From high-speed Wi-Fi to ERP and essential services, our digital infrastructure ensures a seamless and connected campus experience. Explore All Services → Campus Wi-Fi Reliable connectivity across campus. Digital Infrastructure Technology-enabled learning & collaboration. ERP Integrated digital student services. Printing / Reprography Convenient printing and academic support. ATM Everyday financial convenience on campus. Essential Student Services Support designed a",
             "content_hash": "5747a9bc7c967a2f1a822c7787a1a90b8fc7a6d7b65b7ed42757c8d5853a51da",
             "text_sha256": "eb8ad39fa838b48a5ba3082778f6feb424b846db083856e8f9cb906a101fa1dc"
+          },
+          {
+            "source_id": "p80-r19-0ba82a8268",
+            "source_url": "https://presidencyuniversity.in/student-life/academic-facilities/library",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:35.694526+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "How to borrow books? Registered members can borrow books by presenting their University ID card at the circulation desk. Loan limits and durations depend on the member category (students, faculty, or staff). What is research support? The library offers research assistance through plagiarism checking, reference management tools, citation guidance, and access to scholarly databases for academic publishing. Are there e-resources? Yes. The library provides access to e-books, e-journals, databases, and open-access resources through platforms like EBSCO, Knimbus, and PULOAR. How to access OPAC? Users can search, locate, and check the availability of library materials through the Online Public Access Catalogue (OPAC) at http://182.72.188.195 . Discover Our Latest Library Publications! Stay informed with our newsletters, new arrivals listing, news bites, and manuals. Hyper link to new Publication Page Read A Journey Through Our Library's Milestones Our library has evolved significantly over the years. Discover the key milestones that have shaped our institution. 2015 Foundation Established I",
+            "content_hash": "97d309008a2b80b9adf9fe785395357286957b8dc3f981fcdb19ee5f598394a4",
+            "text_sha256": "79da63f9494a1fcee344dc5928de37cd505164f2a958d648b01efa1c582cabe7",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ]
       }
@@ -5279,6 +5759,26 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:14.792301+00:00"
+      },
+      {
+        "source_id": "p80-r19-96a55846f7",
+        "source_url": "https://presidencyuniversity.in/life-at-presidency/international-engagement/student-exchange-program/",
+        "checked_at": "2026-10-08T16:09:22.891902+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p80-r19-0ba82a8268",
+        "source_url": "https://presidencyuniversity.in/student-life/academic-facilities/library",
+        "checked_at": "2026-10-08T16:09:35.694526+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -5517,9 +6017,9 @@
         "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
       },
       "transport": {
-        "value": "Pessac-Talence-Gradignan校區可搭TBM電車B線至Montaigne-Montesquieu，另列31／35巴士和腳踏車選項；2027班次及優惠資格未核。",
+        "value": "Pessac-Talence-Gradignan校區可搭TBM電車B線至Montaigne-Montesquieu，另列31／35巴士和腳踏車選項；2027班次及優惠資格未核。 法文一般WelcomeDesk確認campus tramB與bus31/35等；票價/班次/solidarity discount按TBM個案，未套2027。",
         "status": "needs_confirmation",
-        "reason": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。",
         "evidence": [
           {
             "source_id": "p85-r10-transport",
@@ -5532,13 +6032,26 @@
             "excerpt": "ou can get to the university: By tramway : the B line runs from 5am to midnight on weekdays (and up to 1am on Thursdays, Fridays and Saturdays), with trams running every 10 minutes on average. The university is located right next to the \"Montaigne-Montesquieu\" tram stop. By bus : you can get from the train station to Bordeaux Montaigne University on lines 31 and 35 . The night line, TBNight , also serves the campus (Talence, Pessac and Gradignan) on Thursday, Friday and Saturday from 1.30am to 6.30am. By bike : the TBM network provides more than 2,000 self-service bikes, including 1,000 electric ones. You can also access TBM \" vélo'c \" bike loan, hire and parking service. By car : you can check the rules for the use of foreign licences at https://www.service-public.fr/particuliers/vosdroits/N19126?lang=en Useful information At Étu’Recup ’s « Maison du vélo », you can buy refurbished bikes at very reasonable prices. The association also offers bike repair workshops, where volunteers and technicians are on hand to help all participants with their diagnostics and repairs. There, you can also find low-cost second-hand parts. 5 intercity bus routes serve the Talence campus: lines 406, 502, 503, 504 and 505. Bus line 602 (Hôpital Pellegrin - Pieces de Choisy) stops at Bordeaux Montaigne campus (Unitec). Depending on your income or circumstances, you may be eligible for the TBM Solidarity Fare scheme, which offers significant discounts (or even free travel) on your travel pass. Medias Instagram Bluesky Scoop.it Youtube LinkedIn SoundCloud Help Accessibility: non-compliant Sitemap Legal notice Contact us Université Bordeaux Montaigne Bordeaux Montaigne University Access map Domaine Universitaire F33607 Pessac Cedex Contact university Partners footer-script",
             "content_hash": "f2686916a25dbf771fd7647c152a9b9b98a1894e256960bca953b37d83f528af",
             "text_sha256": "a9a7654d8b3a01a54b7a8ab853ad0ad49a5e3d703a7c642e8edbbac1bbfc3e92"
+          },
+          {
+            "source_id": "p85-r19-8cdcd38ba1",
+            "source_url": "https://www.u-bordeaux-montaigne.fr/fr/international/venir-a-l-universite-bordeaux-montaigne/international-welcome-desk/transport.html",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:37.774910+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Comment se rendre à l’université ? L’Université Bordeaux Montaigne est située sur le campus Pessac-Talence-Gradignan, à 6 km du centre-ville de Bordeaux. Vous pouvez vous rendre à l’université : En tram : la ligne B circule de 5h du matin à minuit en semaine (ou jusqu'à 1h les jeudi, vendredi et samedi). Le tramway passe en moyenne toutes les 10 minutes. En bus : vous pouvez vous rendre à l'Université Bordeaux Montaigne grâce aux lignes 31 et 35 (depuis la gare). La ligne de nuit, TBNight , dessert également le campus (Talence, Pessac et Gradignan) de jeudi à samedi soir de 1h30 du matin à 6h30. À vélo : le réseau TBM met à disposition plus de 2000 vélos en libre-service (VCub), dont 1000 électriques. Vous pouvez également accéder à leur offre de prêt, location et stationnement de vélos « le vélo’c ». En voiture : pour vérifier les conditions d’utilisation des permis étrangers consultez le site https :// service-public.fr/particuliers/vosdroits/N19126 Bon à savoir ! À la Maison du vélo de l’association Étu’Recup , vous pouvez acheter des vélos reconditionnés à des prix très attractif",
+            "content_hash": "71b1b37e7a4b5cf5e20e783e0ad33ffa4216886d21de918d72d20ef428a00f42",
+            "text_sha256": "d7282329996da0390416a5adb7f12b379b6418a1bd1f4359008ccf839efe6f4c",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ]
       },
       "campus_life": {
-        "value": "TANDEM需學生登記期待／偏好，由International Welcome Desk配對後雙方自行安排，並有社交文化活動；未核2027招募時段，不是自動配對。",
+        "value": "TANDEM需學生登記期待／偏好，由International Welcome Desk配對後雙方自行安排，並有社交文化活動；未核2027招募時段，不是自動配對。 未年arrival頁exchange Aquipass可借BU書/打印/食堂支付；校方mail須啟用/常查，registration文字偏9月，不套2027January日。 未年頁exchange學生可免費DAPS活動；individual/freemover CVEC另制，醫療/社團/回收商店有服務但2027可用時間另核。",
         "status": "needs_confirmation",
-        "reason": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。",
         "evidence": [
           {
             "source_id": "p85-r10-buddy",
@@ -5551,6 +6064,32 @@
             "excerpt": "eaux Montaigne’s buddy system TANDEM is an online platform where international and local students from Bordeaux Montaigne University can register in order to participate in our buddy system. The International Welcome Desk is responsible for coordinating the matching of pairs. When registering on the platform, each student can specify their expectations and preferences, and once the matching process is complete, the students are free to meet and begin the mentoring relationship. It is up to each pair to decide how they wish to work together. Register directly on the TANDEM platform The buddy system's objectives The objectives of TANDEM are: To facilitate the integration of international students by offering them personalised support from their peers upon arrival; To promote solidarity among students at Bordeaux Montaigne University by fostering mutual support; Encourage exchanges, enabling students at Bordeaux Montaigne University to enjoy an experience of openness and internationalisation within their own institution. The International Welcome Desk will be there to assist you at every step of the process. Furthermore, social and cultural events are organised throughout the academic year for students taking part in the TANDEM programme. Medias Instagram Bluesky Scoop.it Youtube LinkedIn SoundCloud Help Accessibility: non-compliant Sitemap Legal notice Contact us Université Bordeaux Montaigne Bordeaux Montaigne University Access map Domaine Universitaire F33607 Pessac Cedex Contact university Partners footer-script",
             "content_hash": "1fb4a60e08a69843f69404ab5894f6f3b11bdd782993a6934f3eea7cbe6ce997",
             "text_sha256": "7da04f4375d6da759490d034b5bce2604166333cd0548392f8c5c1086540eb61"
+          },
+          {
+            "source_id": "p85-r19-3724342adb",
+            "source_url": "https://www.u-bordeaux-montaigne.fr/en/study/application/exchange-program/organize-your-stay/preparing-for-your-stay.html",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:07:19.421365+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Student ID Card (Aquipass) Bordeaux Montaigne University provides their international students with an “Aquipass” card. This is a pass card that enables students to identify themselves on campus, at the administration of their faculty, in the university libraries, etc. In the city centre, the card will enable you to benefit from student prices, for example at the cinema, for newspaper subscriptions and so on. With the Aquipass card, you can: Enter examination rooms, Borrow books from university libraries, known as the “BU”, Photocopy and print, Pay electronically for your meals in the university restaurants, known as the “RU”, Pay for other services provided by the CROUS. More information on http://www.izly.fr Email account Exchange students get an email account at Bordeaux Montaigne University which you have to activate first. That is the unique email address the university is going to use for all communications. Therefore, you should check the account regularly not to miss any important information. footer-script",
+            "content_hash": "36ba60ffda2bcbb24aa25b645a2480bc37fefff9f1aebc5962e3cfa729e2ad44",
+            "text_sha256": "b249730628361d5f7f51128ff769fe63b82301ad23913c60dd91a8662d342fa6",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
+          },
+          {
+            "source_id": "p85-r19-9a75730ea7",
+            "source_url": "https://www.u-bordeaux-montaigne.fr/en/study/application/exchange-program/nouvelle-page.html",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:41.815464+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "International students participating in an exchange program have free access to the activities of DAPS. However, international students registered by themselves or free movers are subject to the CVEC which includes the contribution, therefore giving them access. Student jobs While you are studying here, you can take a part time job to have a little extra money for your expenses. Here are some webpages, where you can find job offers for students: https://jobetudiant.net/ http://www.jobaviz.fr/ http://www.info-jeune.net/accueil/ Cultural Activities One of the benefits of being a student is that you get a lot of discounts on campus, but also in the city center, just by showing your student card. Thanks to our partners in the metropole, you will get the chance to attend events and shows, and get access to discounted price… Students under 26 who reside in and near Bordeaux can get the city's “Carte Jeune”. This card will get you discounts in sports events, museums, cinemas, festivals and much more. For more information visit: http://www.bordeaux.fr/p45001 1. File an application 2. Organiz",
+            "content_hash": "69e92dbfb35ebff0be21d8b2d4d7d760f53d836b80a9b334104e4111d4b5c249",
+            "text_sha256": "43c4b597c2504dfcd2b5aa331ae76eb51d9a507c28169d69a6d7d80bce0c2073",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ]
       }
@@ -5579,6 +6118,66 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:15.545142+00:00"
+      },
+      {
+        "source_id": "p85-r19-e57ef8ddd1",
+        "source_url": "https://www.u-bordeaux-montaigne.fr/en/study/application/exchange-program.html",
+        "checked_at": "2026-10-08T16:07:11.910558+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p85-r19-cd9ffae29e",
+        "source_url": "https://www.u-bordeaux-montaigne.fr/_attachment/nouvelle-liste-de-liens-3/depliant_logement_EN.pdf?download=true",
+        "checked_at": "2026-10-08T16:07:19.151930+00:00",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "PDF第11頁Juin2022；11頁住房指南",
+        "content_applicability": "reference_only",
+        "content_review_note": "已讀全部11頁；非2027新版，CAF補助等舊規定只參考。"
+      },
+      {
+        "source_id": "p85-r19-3724342adb",
+        "source_url": "https://www.u-bordeaux-montaigne.fr/en/study/application/exchange-program/organize-your-stay/preparing-for-your-stay.html",
+        "checked_at": "2026-10-08T16:07:19.421365+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p85-r19-915f1b901a",
+        "source_url": "https://www.u-bordeaux-montaigne.fr/en/study/application/exchange-program/organize-your-stay/your-arrival.html",
+        "checked_at": "2026-10-08T16:07:19.863235+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p85-r19-8cdcd38ba1",
+        "source_url": "https://www.u-bordeaux-montaigne.fr/fr/international/venir-a-l-universite-bordeaux-montaigne/international-welcome-desk/transport.html",
+        "checked_at": "2026-10-08T16:09:37.774910+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p85-r19-9a75730ea7",
+        "source_url": "https://www.u-bordeaux-montaigne.fr/en/study/application/exchange-program/nouvelle-page.html",
+        "checked_at": "2026-10-08T16:09:41.815464+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -5826,9 +6425,9 @@
         "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
       },
       "transport": {
-        "value": "一般交通頁列CTS電車／巴士、Vélhop自行車、car-sharing与步行；票種、年齡／收入優惠需個別核，不把2021未成年免費規則套一般交換生。",
+        "value": "一般交通頁列CTS電車／巴士、Vélhop自行車、car-sharing与步行；票種、年齡／收入優惠需個別核，不把2021未成年免費規則套一般交換生。 一般Strasbourg機場→市區可TER接火車站及tram/bus；9分鐘/3.20EUR/每小時4班是未年估示，未當2027確定價/班。",
         "status": "needs_confirmation",
-        "reason": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。",
         "evidence": [
           {
             "source_id": "p87-r10-transport",
@@ -5841,6 +6440,19 @@
             "excerpt": "rites Getting Around the City Strasbourg has an excellent transportation network. Tram (1st tram network in France), bus , bicycle (1st bike paths network in France), car-sharing or walking ... There are various possibilites for you to get around Strasbourg. Getting around in Strasbourg is easy because the city has a very good transportation system. Trams and buses spread over more than 77 kilometers. The tram system in Strasbourg is the longest one in France, and it even goes into Germany, all the way to Kehl. Around 375,000 people use the tram to get around anyway. There are also 39 different bus lines in the city, including 3 that run at night, 1 shuttle service, 5 taxibuses, and a service you can book in advance if you need it. CTS (Compagnie des Transports Strasbourgeois) website (in English) Upload the 'CTS transports Strasbourg' App on Google Play Upload the 'CTS transports Strasbourg' App on Store (Apple) Get the Pass Mobilité: just one card for all your travels! The Mobility Pass grants you access to all the mobility solutions in the Eurometropolis of Strasbourg. It includes: Your s ubscription for the CTS bus and tram network and the option to park your personal vehicle, either occasionally or for extended periods of time, at one of the 10 park-and-ride facilities in the Strasbourg metropolitan area. A subscription to the Vélhop service and 24/7 access to 17 bike parks for securely parking your Vélhop or personal bicycle. A subscription to the Citiz car-sharing service , in Alsace and in over 80 cities across France. You can also choose one of the 30 Yea self-service cars (without designated stations) available without reservations. ( http://alsace.citiz.coop ) You can combine TER trains, buses, and trams throughout the entire Eurometropolis territory! Please note that this program is not ",
             "content_hash": "3456b292a71c898101e80697ba0c8ba05c47823244dd28e825052e54bf54306c",
             "text_sha256": "a01cc12af7abfb671cd627db0d2ef68f5c805a554886da13ef95f16894adbd23"
+          },
+          {
+            "source_id": "p87-r19-34b1fb84b6",
+            "source_url": "https://international-welcome.unistra.fr/transportation/by-plane-or-train/",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:42.462769+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "The airport is about 10 kilometers away from the center of Strasbourg. Taxis are available there until 11 pm, which is when the last flight arrives. If you want an affordable option to get to the Strasbourg train station quickly, you can take the TER shuttle. It only takes about 9 minutes, and it runs about 4 times per hour. The cost is €3.20 ( information ) Route de Strasbourg, 67960 Entzheim 03 88 64 67 67 information(@)strasbourg.aeroport(.)fr www.strasbourg.aeroport.fr 130 km away from Strasbourg B.P. 120, 68304 SAINT-LOUIS CEDEX 03 89 90 31 11 www.euroairport.com 490 km away from Strasbourg, or a 1h45 en TGV-ride. 291 boulevard Raspail, 75675 PARIS CEDEX 14 08 92 68 15 15 www.aeroportsdeparis.fr 58 km away from Strasbourg Baden-Airpark GmbH – Flughafen Karlsruhe / Baden-Baden Victoria Boulevard A 106 D-77836 RHEINMÜNSTER (49) 72 29 66 2000 info(@)badenairpark(.)de www.baden-airpark.de 210 km away from Strasbourg Fraport AG – Frankfurt Airport Services Worldwide D-60547 FRANKFURT/MAIN www.airportcity-frankfurt.de The Strasbourg TGV train station is located a few minutes away from",
+            "content_hash": "4f145ab965fb92c0d1cb872b9de13086cd31a319b42d2df461c8259c4c59774a",
+            "text_sha256": "b7a7a78163d2dc5a696039e7f6794e8207ebb8c84e52fdb749819c403901437b",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ]
       },
@@ -5888,6 +6500,26 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:16.666748+00:00"
+      },
+      {
+        "source_id": "p87-r19-5a6372841a",
+        "source_url": "https://international-welcome.unistra.fr/housing-in-strasbourg/preparing-your-housing-search/",
+        "checked_at": "2026-10-08T16:09:37.857856+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p87-r19-34b1fb84b6",
+        "source_url": "https://international-welcome.unistra.fr/transportation/by-plane-or-train/",
+        "checked_at": "2026-10-08T16:09:42.462769+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -6130,16 +6762,44 @@
         "reason": "官方網站／國際處入口；個別HTTP故障另記來源取得結果，並不宣稱全站政策適用2027。"
       },
       "degree_levels": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+        "value": "待確認：incoming/guest提供本科與碩士英文課程入口；這是選課範圍，2027協議可提名學制／博士未核。",
+        "status": "needs_confirmation",
+        "evidence": [
+          {
+            "source_id": "p89-r19-a4d0eeb752",
+            "source_url": "https://www.sdu.dk/en/uddannelse/exchange/bachelor",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:07:13.166906+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Bachelor courses Explore a wide range of bachelor courses taught in English across SDU's faculties and campuses. Courses by faculty Find bachelor courses by faculty Click on a faculty to see the bachelor's courses offered for exchange and guest students in English in the Autumn and the Spring semester. Autumn Spring Faculty of Humanities Faculty of Science Faculty of Business and Social Sciences Faculty of Health Sciences Faculty of Engineering Faculty of Humanities Faculty of Science Faculty of Business and Social Sciences Faculty of Health Sciences Faculty of Engineering Other study options SDU Summer School Study at SDU during the summer Want to make the most of your summer? SDU Summer School offers short, intensive courses taught in English. Earn ECTS, meet students from around the world and experience academic life in a flexible format. Explore SDU Summer School Nordic students Courses in Danish for Health Science students If you speak Danish and you can document your Danish language proficiency, you can apply for courses taught in Danish at SDU’s Faculty of Health Sciences. Thi",
+            "content_hash": "ab13fac4679fa4a83074d8677c0f6ccdc0a3efbb4ec4160a618ba3c10479d17e",
+            "text_sha256": "b56ad80398c4b0b8ecd2f8e3263b17adc54f76e25a5ac326e6222a19986c3432",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
+          }
+        ],
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。"
       },
       "colleges": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+        "value": "待確認：incoming/guest課程入口列Humanities、Science、Business/Social、Health、Engineering；須本院提名及院系/課程先修，不推CCU可申請全院。",
+        "status": "needs_confirmation",
+        "evidence": [
+          {
+            "source_id": "p89-r19-f1407b1749",
+            "source_url": "https://www.sdu.dk/en/uddannelse/exchange/master",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:07:13.476055+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Courses by faculty Find master courses by faculty Click on a faculty to see the master's courses offered for exchange and guest students in English in the Autumn and the Spring semester. Autumn Spring Faculty of Humanities Faculty of Science Faculty of Business and Social Sciences Faculty of Health Sciences Faculty of Engineering Faculty of Humanities Faculty of Science Faculty of Business and Social Sciences Faculty of Health Sciences Faculty of Engineering Other study options SDU International Summer School Study at SDU during the summer Want to make the most of your summer? SDU International Summer School offers two-week, intensive courses taught in English. Earn ECTS, meet students from around the world and experience academic life in a flexible format. Explore SDU International Summer School Study EPICUR courses at SDU Study EPICUR courses at SDU As a student from an EPICUR partner university, you can enrol in an EPICUR course at SDU. The courses may be either online, blended, or on-site. Find out more about EPICUR courses, who can apply, and how to apply. Explore your EPICUR op",
+            "content_hash": "50fe3ac12cd6f5f12dc35225a9c6f12bb474871b84e656a663aa6840be446ae0",
+            "text_sha256": "f4ff684859abfd064a08ee74d49277b81d7845dc2e48a6821a60c3f730e229a1",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
+          }
+        ],
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。"
       },
       "transport": {
         "value": "未年費用表公共交通約50EUR／月；五城市校區路線及2027票價未核。",
@@ -6194,6 +6854,36 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T09:10:30.023373+00:00"
+      },
+      {
+        "source_id": "p89-r19-68e7be4e19",
+        "source_url": "https://www.sdu.dk/resources/net/ansskema.aspx?l=178&s=en",
+        "checked_at": "2026-10-08T16:07:05.637386+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p89-r19-a4d0eeb752",
+        "source_url": "https://www.sdu.dk/en/uddannelse/exchange/bachelor",
+        "checked_at": "2026-10-08T16:07:13.166906+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p89-r19-f1407b1749",
+        "source_url": "https://www.sdu.dk/en/uddannelse/exchange/master",
+        "checked_at": "2026-10-08T16:07:13.476055+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -6659,6 +7349,16 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:16.685025+00:00"
+      },
+      {
+        "source_id": "p99-r19-25080273d1",
+        "source_url": "https://www.uni-jena.de/en/2155/documents-and-forms",
+        "checked_at": "2026-10-08T16:07:05.685002+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -6823,6 +7523,16 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:17.198731+00:00"
+      },
+      {
+        "source_id": "p100-r19-d3e64a3db1",
+        "source_url": "https://www.ostfalia.de/en/university/campus-facilities/library",
+        "checked_at": "2026-10-08T16:09:37.916856+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -6928,9 +7638,9 @@
         "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。"
       },
       "campus_life": {
-        "value": "一般校園生活頁列myTHD課表／成績／食堂資訊、student associations及國際學生buddy協助找房與行政；不同校區與2027申請安排待核。",
+        "value": "一般校園生活頁列myTHD課表／成績／食堂資訊、student associations及國際學生buddy協助找房與行政；不同校區與2027申請安排待核。 一般学生借閱需簽名user application+validated IDemail、OPAC自註冊及讀規則，非交換入學表；DEG/ITC2/Pfarrkirchen分館/時段不同，2027通知未核。",
         "status": "needs_confirmation",
-        "reason": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。",
         "evidence": [
           {
             "source_id": "p101-r10-life",
@@ -6943,6 +7653,19 @@
             "excerpt": "l students is very important. The student Buddys support with the apartment search, with official visits and give first information in advance. In addition, events are to be organized for the public. Contact: yllka.ninaj@stud.th-deg.de Students educate students Free tutoring by student volunteers for financially disadvantaged children For all students Website by students educate students Instagram page: sbs.deggendorf Email: info.deggendorf@studenten-bilden-schueler.de Founded in 2012, the association can now be found in over 50 locations and since April 2022 also here in Deggendorf. In total, it has around 2,900 members and over 3200 students and also offers 6 scholarships. We support financially disadvantaged children and young people in receiving individual tutoring and also facilitate cultural and leisure activities for our tutoring couples. Join us and become part of our community as a tutor or site manager. In this way, you can make your contribution to equal opportunities in the education system. Our values include political and denominational independence as well as honest and open communication with a respectful and tolerant approach to each other. If you would like to learn more about us, please take a look at our website and our Instagram profile or send us an e-mail. TEDx CLUB e. V. - association for the organization of TEDx events For all students Facebook E-mail: tedxdit@gmail.com The association TEDx Club e.V. consists of students of all disciplines. We mainly deal with the organization of TEDx conferences under the official license of TED. In addition, we have made it our mission to create a worldwide network of students, professors and external influencers from various industries. United AI e. V. United AI e. V. for all students Website United AI Instagram United AI LinkedIn United ",
             "content_hash": "be59fde4cc034933ee926203bfa5fdb6437bf527dcbb43b3ac17367f6c0f7f96",
             "text_sha256": "ef732454f749b83a024ace88fc8e78656d87624e73bf5b08cbd02e1e89a0d90c"
+          },
+          {
+            "source_id": "p101-r19-a1bb2c5e05",
+            "source_url": "https://th-deg.de/en/students/library",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:38.843915+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Opening a library account\", can also be submitted by e-mail with a scanned or digitally inserted signature. Borrowing is only possible with a library user account and library card. In addition, the following guidelines apply: DIT house rules Privacy Policy of the library terms of use for electronic offers (databases, e-books, e-journals) Terms and conditions of those providers, which can be found on their websites, apply Generally speaking: Conditions regarding downloads and printing are determined by the provider Transfer of content to third parties is not allowed The use is only permitted for own, scientific purposes Systematic download is prohibited copyright / data protection in electronic offers (databases, e-books, journals) The use of our electronic offers (e-books, e-journals, databases) is possible within the framework of copyright law. In addition, the licence agreements of the respective provider apply. The applicable licence conditions can be viewed on our homepage ( E-books / Research & Databases ) and on the providers' pages. The electronic offers can be accessed via th",
+            "content_hash": "5ed70744c96a63b89b9961501565b5080aa749ccfd0c0cf668f40870d577e15b",
+            "text_sha256": "f0b444d104798c72a838e9260de47dea7458db683d318d26741a85e98326f73e",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ]
       }
@@ -6973,6 +7696,16 @@
         "content_academic_year": "未標年度的一般incoming exchange申請程序",
         "content_applicability": "needs_confirmation",
         "content_review_note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
+      },
+      {
+        "source_id": "p101-r19-a1bb2c5e05",
+        "source_url": "https://th-deg.de/en/students/library",
+        "checked_at": "2026-10-08T16:09:38.843915+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -7050,10 +7783,24 @@
         "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
       },
       "colleges": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+        "value": "待確認：incoming英文課入口含建築土木、電機、設計、資訊、機械與Business等；並明示非每學期開課，須IFC准入，非全院名額或2027保證。",
+        "status": "needs_confirmation",
+        "evidence": [
+          {
+            "source_id": "p102-r19-86e99ba785",
+            "source_url": "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/courses-in-english/",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:07:14.247151+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Overview of Courses in English Liberal Arts and Sciences General Elective Courses Course Title ECTS Semester General Elective 1 2 WS/SS General Elective 2 2 WS/SS General Elective 3 2 WS/SS These courses serve as placeholders for a general elective. The selection of general electives varies from year to year. The idea is that you will replace this placeholder in your Learning Agreement with an actual general elective offered during your stay in Augsburg. To do so, please contact the International Faculty Coordinator in your host department. To get an idea of the courses offered as part of the General Elective program, click here . Architecture and Civil Engineering You can find the English-language courses for the Architecture program (BA and MA) here . You can find the English-language courses for the E2D program (BA and MA) here . Electrical Engineering CODE Course Title ECTS Semester 1660264 Smart Grid Fundamentals 2 WS 1710170 Interdisciplinary Application (lab course) 5 WS 2812030 Computer Science 5 WS 2812000 Electronics 5 WS 2310302 Embedded Security 5 WS 2812090 Economics and",
+            "content_hash": "694fcd828edd8e0644902920c5a7785edef7d0187cd06bb6c759b50488e79c53",
+            "text_sha256": "df6c0dd03045be9dfd6ca80823cae68beed6fcdfbfaef9e2c26ffd861a1c22cf",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
+          }
+        ],
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。"
       },
       "transport": {
         "value": "當期文件列AVV／avg學期公共交通與CampusCard，但新費用來源另有差異；按學期通知核實，不作唯一2027金額。",
@@ -7118,6 +7865,16 @@
         "content_academic_year": "原檔HTTP429，年度仍未核",
         "content_applicability": "needs_confirmation",
         "content_review_note": "遵循一次合理間隔重試，仍HTTP429；不重試循環或繞過。已有網頁抽取的1頁一般LA文字，未取得原始binary仍不宣稱下載已核。"
+      },
+      {
+        "source_id": "p102-r19-86e99ba785",
+        "source_url": "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/exchange-students/courses-in-english/",
+        "checked_at": "2026-10-08T16:07:14.247151+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -7501,7 +8258,7 @@
         "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。"
       },
       "campus_life": {
-        "value": "一般FHNW商學院學生組織／ESN志工辦社交活動、旅行與buddy；各校區與2027費用另核。",
+        "value": "一般FHNW商學院學生組織／ESN志工辦社交活動、旅行與buddy；各校區與2027費用另核。 一般FHNW library5locations有學習/工作資源；非10schools全作CCU開放，也未核Business交換借閱帳戶。",
         "status": "needs_confirmation",
         "evidence": [
           {
@@ -7518,9 +8275,22 @@
             "content_hash": "1eec0e08d5256f540303f5c33bdf1d63d153f9058fefb722ab9999d7592b87a0",
             "text_sha256": "3370161d71bd260ba68f9398b01a8d18a2573adf45d1385e5458898301e75b0e",
             "note": "指定段原文；不由其他年份、全校學位或下載成功推定交換資格。"
+          },
+          {
+            "source_id": "p104-r19-7a757d8391",
+            "source_url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:39.181544+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Searching and using We provide access to analogue and digital sources of knowledge for study, research, work and continuing education. Learning and working We pass on our expertise and act as a learning space and workplace for students, teachers, researchers and other interested parties. Researching and publishing We provide support in terms of research, data management and publication and are committed to open science and the open dissemination of knowledge. Subject areas We are happy to help you find your way through the wealth of information sources. About us The FHNW Library connects, guides and helps. Locations We are easily accessible at five locations near you.",
+            "content_hash": "d73900e6b33eb8b7b50ff02363204d4227dc905533e59b2d74e564ecc7ab48e4",
+            "text_sha256": "480d19f47247cb09c658e6b4a6af2bd0cafd57374d73800dcf380409e9b265a6",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ],
-        "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。"
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。"
       }
     },
     "source_checks": [
@@ -7541,6 +8311,16 @@
         "content_academic_year": "正文Course Offers Spring2027；僅課程入口",
         "content_applicability": "verified_current",
         "content_review_note": "正文2027春季課程入口已讀；子頁及三份課程PDF是已查registry同URL，沒有重複新增。Basel舊2026課程、Brugg2027及Olten provisional2027差異維持，不升級學院學制。"
+      },
+      {
+        "source_id": "p104-r19-7a757d8391",
+        "source_url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library",
+        "checked_at": "2026-10-08T16:09:39.181544+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -7842,6 +8622,26 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T09:10:33.721392+00:00"
+      },
+      {
+        "source_id": "p106-r19-3c10048b92",
+        "source_url": "https://international.cu.edu.tr/cu/exchange-programs/overseas-exchange-program",
+        "checked_at": "2026-10-08T16:09:24.386582+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p106-r19-incoming",
+        "source_url": "https://international.cu.edu.tr/cu/exchange-programs/overseas-exchange-program/incoming-student",
+        "checked_at": "2026-10-08T16:16:09.176446+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -7923,10 +8723,24 @@
         "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
       },
       "colleges": {
-        "value": null,
-        "status": "missing",
-        "evidence": [],
-        "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+        "value": "待確認：incoming ECTS入口列7faculty及language centre，每位可另選最多2門其他faculty；CCU此列空白名額及協議可提名範圍未核。",
+        "status": "needs_confirmation",
+        "evidence": [
+          {
+            "source_id": "p107-r19-e416ff9e18",
+            "source_url": "https://www.upce.cz/en/study/exchange-programmes/ects-catalogue.html",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:07:14.669257+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Each faculty of the university offers its exchange students a number of subjects they can choose from. Every exchange student can also choose up to two subjects from any other faculty. Faculty of Economics and Administration Faculty of Transport Engineering Faculty of Arts and Philosophy Faculty of Chemical Technology Faculty of Health Studies Faculty of Electrical Engineering and Informatics Faculty of Restoration Language Center - courses University of Pardubice Map Contacts ​ Contacts Faculties and Central Services and Facilites Panoramic view Exchange/Erasmus+ International students Magazine MY UPCE Website feedback Services Accommodation Library Department of Physical Education and Sports Nostrification E-shop The Centre for Technology and Knowledge Transfer Language Centre Guidebook for Internationals European University Alliance © 2023 University of Pardubice , Studentská 95 , 532 10 Pardubice 2 Phone: +420 466 036 111, 466 036 112, 466 036 113 Webmaster , RSS Data box ID: f5vj9hu Accessibility Statement CC BY-NC-ND 4.0",
+            "content_hash": "ae3ad20689e70ca0bf10a453f9cb9721aa2abe49d649a3b3e2c8ef4a519b0618",
+            "text_sha256": "734af66d68f949f83c05b970c67be7c716f9dcb1f4da369acbf9908790500241",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
+          }
+        ],
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。"
       },
       "transport": {
         "value": "一般交通頁列宿舍至課堂步行／騎車，校外可搭city buses至Polabiny,Hradecká或Univerzita；2027路線／票價另核，不推定母校空白名額為可申請。",
@@ -7948,9 +8762,9 @@
         ]
       },
       "campus_life": {
-        "value": "學生組織頁列SRUPa學生議會、ESN buddy協助國際生初到及活動、校合唱團等；2027招募、費用及中正資格未核。",
+        "value": "學生組織頁列SRUPa學生議會、ESN buddy協助國際生初到及活動、校合唱團等；2027招募、費用及中正資格未核。 一般館有教材/學習室/掃描及校內gallery；未核2027國際交換開通/時段。",
         "status": "needs_confirmation",
-        "reason": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。",
         "evidence": [
           {
             "source_id": "p107-r10-organizations",
@@ -7963,6 +8777,19 @@
             "excerpt": " Facebook: studentskaradaupce Erasmus Student Network (Buddy Programme) The Buddy Programme is the initiative of University students focusing on providing assistance to international students at the University of Pardubice. The students organise parties and trips for international students, help them with their first steps in Pardubice, and more. Contact us: hr@esn.upce.cz University choir If you have a passion for music, performing and socialising, the University choir is for you. With a repertoire spanning classical, jazz, soul, gospel and pop there is never a dull moment. The choir is made up of students, faculty, alumni and members of the public and performs several times per year. They also spend time in the recording studio, having already recorded 4 albums. New members are welcome. If you'd like to join, email vus@vus.upce.cz The Duke of Edinburgh's International Award This educational programme for young people was founded by Prince Philip, the Duke of Edinburgh. Participating in the Award is, above all, a personal challenge. Each participant has the opportunity to see themselves as a unique personality, which we all undoubtedly all are. The participant is guided to set personal goals and then to meet a number of pre-determined challenges under the leadership of experienced leaders or trainers of the programme. For more information visit DofE website or contact the university coordinator . International Union of Students of Business and Economic Schools (AIESEC) The International Union of Students of Business and Economic Schools (AIESEC) - is the world’s largest student, non-profit educational organisation. AIESEC organises events for students. Newsletter pro uchazeče Email Vaše e-mailová adresa. Mějte přehled o našich novinkách! Leave this field blank Univerzita Pardubice Fakulty Univerzit",
             "content_hash": "0b347cd7962efcf9796af3b68163cf9df538ea5f1a60f5ffbc1562abcb66189b",
             "text_sha256": "b2cf283a5d869f7aae2cefa9ef7c316b68673276eeff4b8d247002101ef1354a"
+          },
+          {
+            "source_id": "p107-r19-94feebe36c",
+            "source_url": "https://www.upce.cz/en/upce/library",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:40.007910+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Come and borrow textbooks or monographs. Sit back and read a newspaper or journals. Make arrangements with classmates and use our study rooms for tutoring or project preparation. Write your term paper in a quiet place. Scan an entire book quickly, copy lecture notes. Or just come and relax... We'd love to see you. First time in the library | Univerzita Pardubice Opening hours Monday-Wednesday 8 am - 8 pm Thursday 8 am - 6 pm Friday 8 am - 4 pm Contact: knihovna@upce.cz +420 466 036 543 +420 466 036 535 Auditorium This venue regularly hosts academic ceremonies, conferences, cultural events such as concerts, as well as lectures and seminars. Gallery The University of Pardubice invites you to visit its gallery located right on campus. University of Pardubice Map Contacts ​ Contacts Faculties and Central Services and Facilites Panoramic view Exchange/Erasmus+ International students Magazine MY UPCE Website feedback Services Accommodation Library Department of Physical Education and Sports Nostrification E-shop The Centre for Technology and Knowledge Transfer Language Centre Guidebook for",
+            "content_hash": "fc9a1f3d15b1c517d7614c5ca243627b6f63b05d8dcf5de0ea2edf39368017e9",
+            "text_sha256": "7a3f2be6d44a014bf75195587fa6514013ec788fc0ec788b3f25f923ad34fbb8",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ]
       }
@@ -7991,6 +8818,76 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:04:41.904292+00:00"
+      },
+      {
+        "source_id": "p107-r19-f9bbc969d1",
+        "source_url": "https://www.upce.cz/en/fact-sheet",
+        "checked_at": "2026-10-08T16:07:07.241166+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p107-r19-928eac8513",
+        "source_url": "https://www.upce.cz/en/study/exchange-programmes.html",
+        "checked_at": "2026-10-08T16:07:14.425825+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p107-r19-e416ff9e18",
+        "source_url": "https://www.upce.cz/en/study/exchange-programmes/ects-catalogue.html",
+        "checked_at": "2026-10-08T16:07:14.669257+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p107-r19-b6d932a287",
+        "source_url": "https://www.upce.cz/sites/default/files/public/anpi3189/proof_of_accommodation_140338.pdf",
+        "checked_at": "2026-10-08T16:07:20.606225+00:00",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p107-r19-e3634c7694",
+        "source_url": "https://www.upce.cz/en/accomodation",
+        "checked_at": "2026-10-08T16:09:39.423575+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p107-r19-94feebe36c",
+        "source_url": "https://www.upce.cz/en/upce/library",
+        "checked_at": "2026-10-08T16:09:40.007910+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p107-r19-factsheet2027",
+        "source_url": "https://www.upce.cz/sites/default/files/global/2026-09/8589/Fact%20sheet_2026-2027_142016.pdf",
+        "checked_at": "2026-10-08T16:09:42.914547+00:00",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "官方index標2026/2027且PDF內連2026/2027calendar；deadline月份未附年",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀2頁；visa/EU提名與申請分流，B2，LA核准後acceptance/付deposit後housingproof寄母校。提名旧頁正文2025/26矛盾仍保留，不以檔名單獨定年。"
       }
     ]
   },
@@ -8163,6 +9060,86 @@
         "content_academic_year": "一般incoming application未標適用年度",
         "content_applicability": "needs_confirmation",
         "content_review_note": "正文已讀；all applicants與Erasmus/freemover分開。Portfolio寫Visual/Audiovisual Arts specialization，與2026/27factsheet指定FMC課範圍差異待核。Faculty導航不推開放名單。"
+      },
+      {
+        "source_id": "p108-r19-a86f60cb1d",
+        "source_url": "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/courses/",
+        "checked_at": "2026-10-08T16:07:16.328126+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p108-r19-9b3552733e",
+        "source_url": "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/courses/courses-at-faculty-of-applied-informatics/",
+        "checked_at": "2026-10-08T16:07:16.825171+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文academic year2026/2027；AppliedInformatics updated08/10/2026",
+        "content_applicability": "verified_current",
+        "content_review_note": "逐條讀incoming課程表；MachineVision AE8SV明示本學年不開課；推薦先修與硬性限制分開。"
+      },
+      {
+        "source_id": "p108-r19-9220ea9c14",
+        "source_url": "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/courses/courses-at-faculty-of-logistics-and-crisis-management/",
+        "checked_at": "2026-10-08T16:07:17.911091+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文academic year2023/2024；UherskéHradiště",
+        "content_applicability": "reference_only",
+        "content_review_note": "課表舊年且CCU當期p108排除Logistics/Crisis；不當開放學院。"
+      },
+      {
+        "source_id": "p108-r19-af1a7aea22",
+        "source_url": "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/courses/courses-at-faculty-of-management-and-economics/",
+        "checked_at": "2026-10-08T16:07:18.075991+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文academic year2026/2027；FaME updated15/06/2026",
+        "content_applicability": "verified_current",
+        "content_review_note": "逐條讀incoming課程表；1PE3E仅Master且有BusinessEconomics1/2先修；容量15為課程席次非CCU交換名額。"
+      },
+      {
+        "source_id": "p108-r19-9436527567",
+        "source_url": "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/courses/courses-at-faculty-of-multimedia-communications/",
+        "checked_at": "2026-10-08T16:07:18.236021+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文academic year2026/2027；FMC updated01/04/2026",
+        "content_applicability": "verified_current",
+        "content_review_note": "逐條讀incoming課程表；Portfolio限標記課，UG/MA課程level不當申請者學制；practical shoemaking等無portfolio標記不增必繳。"
+      },
+      {
+        "source_id": "p108-r19-45ae437b64",
+        "source_url": "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/courses/courses-at-faculty-of-technology/",
+        "checked_at": "2026-10-08T16:07:18.348095+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文academic year2026/2027；Technology updated02/06/2026",
+        "content_applicability": "verified_current",
+        "content_review_note": "逐條讀incoming課程表；研究thesis須導師先同意，部分lab成對及化學/食品先修；不是全院任選或全系申請保證。"
+      },
+      {
+        "source_id": "p108-r19-7ed2faf796",
+        "source_url": "https://www.utb.cz/mdocs-posts/manual-for-exchange-students/",
+        "checked_at": "2026-10-08T16:07:18.985995+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p108-r19-manual-preview",
+        "source_url": "https://www.utb.cz/?mdocs-preview=9379&_mdocs-preview=bc94261ebe",
+        "checked_at": "2026-10-08T16:16:09.175893+00:00",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "PDF第8頁預選academic year2025/2026；18頁一般exchange manual",
+        "content_applicability": "reference_only",
+        "content_review_note": "已讀18頁；Taiwan協議Other short-term路徑、SAF/LA於faculty批准後生成/學生簽/LA母校簽/email分檔；不是2027空白模板。新版未核實，不稱未公告。"
       }
     ]
   },
@@ -8285,7 +9262,7 @@
         "reason": "獨立交通／buddy原檔內容補入，不把全校Erasmus條件與母校CCU雙邊交換混用。"
       },
       "campus_life": {
-        "value": "教育學院未標年度incoming指南列ESN UWB自願buddy，須自行註冊Buddy Database並選Foreign student，使用與Portal申請相同姓名／email，配對後由buddy聯絡，並非自動。另一校級buddy頁為Erasmus路徑；CCU雙邊身分適用、2027通知與配對結果未核，不保證名額或接送。",
+        "value": "教育學院未標年度incoming指南列ESN UWB自願buddy，須自行註冊Buddy Database並選Foreign student，使用與Portal申請相同姓名／email，配對後由buddy聯絡，並非自動。另一校級buddy頁為Erasmus路徑；CCU雙邊身分適用、2027通知與配對結果未核，不保證名額或接送。 一般Bory map把Library/Canteen/Gym及HelpDesk標出；校區Univerzitní22國際處與Univerzitní8校本部不同，未推Cheb課程所在地。",
         "status": "needs_confirmation",
         "evidence": [
           {
@@ -8314,9 +9291,22 @@
             "excerpt": "lps Erasmus incoming student. A buddy is not assigned automatically, each Erasmus student must apply for them. As soon as a buddy is assigned, he/she contacts the Erasmus student and starts the communication. What can a buddy do for you? - help you to find your way in a new environment (show you the city of Pilsen, nearest shopping mall and other facilites) - wait for your at the station upon your arrival in Pilsen to guide you to the accommodation (dormitory, flat...) - arrange necessary formalities (at the dormitory office, International Office, faculty etc.) - accompany you to a doctor / hospital - help with the communication at various places (dorm manager, bank, post office, exchange office, police station ...) Contact and social media Website: https://www.esnuwbpilsen.cz/ E-mail: board@esnuwbpilsen.com Social media: Facebook: www.facebook.com/buddyuwb Instagram: https://www.instagram.com/esnuwbpilsen/ © ZČU 1991–Thu Oct 08 10:02:20 UTC 2026 CS EN Cookies",
             "content_hash": "7a5ac4d717946ca60d2cbe23cfb2c8659cb99cf7a798ab69bf19a3751f75d1cd",
             "text_sha256": "d02fec3d51f6ad357ff50e14dd11708c1499d7aaea1080d85f3cefc7b6f7d601"
+          },
+          {
+            "source_id": "p109-r19-f72a13e688",
+            "source_url": "https://www.fpe.zcu.cz/en/Admission/incoming_students_doc/Bory-campus-map.pdf",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:07:20.862364+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "International Office address: Univerzitní 22, Plzeň 301 00 (through main entrance, turn right and go around 50 metres) legend: FEL: Faculty of Electrical Engineering RICE: Regional Innovation Centre for Electrical Engineering RTI: Regional Technological Institute FDULS: Ladislav Sutnar Faculty of Design and Arts FST: Faculty of Mechanical Engineering FEK: Faculty of Economics UJP: Institute of Applied Language Studies CIV: Centre for Informatics and Computer Science (HelpDesk = JIS cards) FAV+NTIS: Faculty of Applied Sciences + New Technologies for the Information Society LIBRARY CANTEEN GYM Main entrance – International office RECTORATE",
+            "content_hash": "be90381b34ababcb77029944bf0ffc408760db14de9c313a0f9ac84dd47fd86a",
+            "text_sha256": "2d8cf1c7ca3798fa92284dea7903b5475e91def85bc1510eed6d6d022f5377f3",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ],
-        "reason": "獨立交通／buddy原檔內容補入，不把全校Erasmus條件與母校CCU雙邊交換混用。"
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。"
       }
     },
     "source_checks": [
@@ -8335,6 +9325,36 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:18.865977+00:00"
+      },
+      {
+        "source_id": "p109-r19-4934fc5fb4",
+        "source_url": "https://www.international.zcu.cz/en/Exchange_Student/",
+        "checked_at": "2026-10-08T16:07:15.537793+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p109-r19-f72a13e688",
+        "source_url": "https://www.fpe.zcu.cz/en/Admission/incoming_students_doc/Bory-campus-map.pdf",
+        "checked_at": "2026-10-08T16:07:20.862364+00:00",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p109-r19-35bb765405",
+        "source_url": "https://www.skm.zcu.cz/cs/Erasmus/index.html",
+        "checked_at": "2026-10-08T16:09:40.351771+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
@@ -8592,9 +9612,9 @@
         ]
       },
       "campus_life": {
-        "value": "一般學生生活頁區分Halden HSS與Fredrikstad FSS，列quiz、party與團隊活動；另有buddy支援，但2027活動與exchange個人資格另核。",
+        "value": "一般學生生活頁區分Halden HSS與Fredrikstad FSS，列quiz、party與團隊活動；另有buddy支援，但2027活動與exchange個人資格另核。 一般館有Oria/資料庫及學生助理寫作協助，不保交換個案時段/權限。",
         "status": "needs_confirmation",
-        "reason": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
+        "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。",
         "evidence": [
           {
             "source_id": "p114-r10-life",
@@ -8607,6 +9627,19 @@
             "excerpt": "ssociations and organizations Halden Student Society (HSS) Halden Student Society (HSS) is the welfare organization for students in Halden. All students at the Halden campus are members of HSS. The Student Society must contribute to our students having an active and social life during their studies. This is done through, among other things: Quiz Parties Events Teams and organisations Here you can read more about Halden Student Society Fredrikstad Student Society (FSS) Fredrikstad Student Society (FSS) is the welfare organization for students in Fredrikstad. All students at the Fredrikstad campus are members of FSS. The Student Society must contribute to our students having an active and social life during their studies. This is done through, among other things: Quiz Parties Events Teams and organisations Here you can read more about Fredrikstad Student Society Østfold University College Postal address Høgskolen i Østfold P.O.Box 700 NO-1757 Halden Norway Contact Phone: +47 69 60 80 00 Email: postmottak@hiof.no Full contact information Accessibility statement (in Norwegian only) Responsible for this page Web editor Log in",
             "content_hash": "b8d501f5bae182ac07df0349aeb5ec562cb80063b2908edf2bc57dfa0b01b745",
             "text_sha256": "b4a1a9b019be3de384e22cfed7bb7391eb8d7040afc2651a087355822068653a"
+          },
+          {
+            "source_id": "p114-r19-9ac848ba5f",
+            "source_url": "https://www.hiof.no/bibliotek/english/",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:09:40.503347+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "The Academic Writing Centre Contact us About the library The Academic Writing Centre Get help with your writing assignments from our student assistants. More about the service News Participate in the library's survey and win a pizza gift card Mar. 5, 2026 3:15 PM Are you a student? Help us improve and enter the draw for a pizza gift card! Do you need access from home? Feb. 13, 2026 12:08 PM During the holidays, you might need electronic access from home or the cabin. Here you will find useful tips and links to resources you can use from the home office. Oria - new and improved version Dec. 17, 2025 9:54 AM On 12 January, Oria will be upgraded to a new version, providing a more modern and efficient solution. Read what this means for you. Events Want to know more? Recieve the latest news and information via social media! Follow us",
+            "content_hash": "cf7792c95c0b423ab6bc5caaafbb6d317ffb6baf1179ddea710a72a4e8fa2eb6",
+            "text_sha256": "2710f0ace3f12c7604ace0c6c4dd5cbbdff38b3d88d59b57e2588cfe0fe202a7",
+            "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
           }
         ]
       }
@@ -8645,6 +9678,76 @@
         "content_academic_year": "Erasmus+2021–2027框架；EU/associated countries mobility；個人academic year空白",
         "content_applicability": "needs_confirmation",
         "content_review_note": "已讀DOCX正文全部段落與表格（merged cells重複另去重供閱讀）；study LA分long-term/short-term/doctoral及三方approval。模板對Erasmus國家間mobility，中正bilateral適用未核，不當現行bilateral申請表。"
+      },
+      {
+        "source_id": "p114-r19-d9ff77a342",
+        "source_url": "https://www.hiof.no/english/studies/exchange-students/how-to-apply/",
+        "checked_at": "2026-10-08T16:07:08.354375+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p114-r19-6563496249",
+        "source_url": "https://www.hiof.no/english/studies/exchange-students/how-to-apply/nomination-process/index.html",
+        "checked_at": "2026-10-08T16:07:08.410720+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文明示spring2027；modified2026-07-29",
+        "content_applicability": "verified_current",
+        "content_review_note": "推薦提名10/15、申請11/1及nomination portal先由母校授權agreement；不註冊/登入/發email。"
+      },
+      {
+        "source_id": "p114-r19-5fef8f87b6",
+        "source_url": "https://www.hiof.no/english/studies/exchange-students/how-to-apply/online-application/",
+        "checked_at": "2026-10-08T16:07:08.755669+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
+      },
+      {
+        "source_id": "p114-r19-8df6035f6f",
+        "source_url": "https://www.hiof.no/english/studies/exchange-students/how-to-apply/online-application/online-learning-agreement",
+        "checked_at": "2026-10-08T16:07:09.353704+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文2026/2027但專屬Erasmus+ OLA",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "OLA三方簽署順序及faculty contact已讀；CCU bilateral不直接套Erasmus，沒有新增必繳項。"
+      },
+      {
+        "source_id": "p114-r19-98fcae7ba4",
+        "source_url": "https://www.hiof.no/english/studies/exchange-students/arrival/",
+        "checked_at": "2026-10-08T16:07:21.999140+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文FallSemester2026 startAug10",
+        "content_applicability": "reference_only",
+        "content_review_note": "僅2026Fall mandatoryinfo，2027Spring抵達資訊未核，不能套日期。"
+      },
+      {
+        "source_id": "p114-r19-637b03c272",
+        "source_url": "https://www.hiof.no/english/studies/exchange-students/how-to-apply/required-documentation/index.html",
+        "checked_at": "2026-10-08T16:07:23.340535+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般必要文件正文未年；modified2026-05-12",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "bilateral4項、ErasmusLA、healthplacement敏感文件分開；與既有同正文頁年度範圍相同，不由修改日升2027。"
+      },
+      {
+        "source_id": "p114-r19-9ac848ba5f",
+        "source_url": "https://www.hiof.no/bibliotek/english/",
+        "checked_at": "2026-10-08T16:09:40.503347+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方incoming／生活／課程頁未明示2027適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。"
       }
     ]
   },
