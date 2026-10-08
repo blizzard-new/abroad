@@ -72,15 +72,15 @@ def test_ncu_tju_application_and_arrival_files_and_conversion_note_reach_mobile_
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
     page.locator("#detail-tab-application").click()
     workflow = page.locator("#detail-application")
-    application = workflow.locator(".workflow-step").filter(has_text="2025臺灣參考：個人簡歷").first
+    application = workflow.locator(".workflow-step").filter(has_text="2027春臺灣參考：個人簡歷").first
     application.locator(":scope > summary").click()
-    expect(application.get_by_text("2025臺灣參考：個人簡歷", exact=False).first).to_be_visible()
+    expect(application.get_by_text("2027春臺灣參考：個人簡歷", exact=False).first).to_be_visible()
     arrival = workflow.locator(".workflow-step").filter(has_text="依外校報到通知繳交到校文件").first
     arrival.locator(":scope > summary").click()
     expect(arrival).to_contain_text("來校報到後才提交，非初次host附件")
     out = Path("/tmp/ncu-audit/browser")
     out.mkdir(parents=True, exist_ok=True)
-    insurance = arrival.get_by_text("2025臺灣參考：保險單據影本（來校報到後才提交，非初次host附件）", exact=False).first
+    insurance = arrival.get_by_text("2027春臺灣參考：保險單據影本（來校報到後才提交，非初次host附件）", exact=False).first
     expect(insurance).to_be_visible()
     insurance.scroll_into_view_if_needed()
     page.screenshot(path=str(out / "ncu-tju-arrival-390.png"))
@@ -138,7 +138,7 @@ def test_ncu_chd_workbook_and_tju_document_catalog_are_visible(page, live_server
     host = groups.filter(has=page.locator(":scope > summary").filter(has_text="合作校申請"))
     host.locator(":scope > summary").click()
     expect(host.locator(".application-requirement-item")).to_have_count(7)
-    expect(host).to_contain_text("2025臺灣參考：個人簡歷")
+    expect(host).to_contain_text("2027春臺灣參考：個人簡歷")
     arrival = groups.filter(has=page.locator(":scope > summary").filter(has_text="抵達後"))
     arrival.locator(":scope > summary").click()
     item = arrival.locator(".application-requirement-item").filter(has_text="非初次host附件")
@@ -574,5 +574,56 @@ def test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life(
     if school == "南京大學":
         expect(step).to_contain_text("11/20、早於邀請函")
         expect(step).to_contain_text("胸透必檢")
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors
+
+
+def test_ncu_nuist_image_packet_documents_and_taiwan_life_reach_mobile_ui(page, live_server):
+    page.set_viewport_size({"width": 390, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    enter_public_site(page, live_server, "partners")
+    open_navigation(page)
+    page.locator("#school-switcher").click()
+    page.locator('[data-home-school="國立中央大學"]').click()
+    page.locator("#confirm-school").click()
+    if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+        page.locator("#glass-menu-toggle").click()
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
+    page.locator('[data-partner-view="list"]').click()
+    page.locator("#partner-search").fill("南京信息工程")
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+    page.locator("#partner-table .partner-card > summary").first.click()
+    page.locator("#partner-table .school-detail-trigger:visible").first.click()
+    page.locator("#ncu-source-audit > summary").click()
+    source = page.locator("#ncu-source-audit-body > details").filter(has=page.locator(":scope > summary").filter(has_text="南京信息工程大学2027春季学期交换学生招生")).first
+    expect(source.locator(":scope > summary")).to_contain_text("0頁有文字")
+    expect(source.locator(":scope > summary")).to_contain_text("8頁已視覺查核")
+    source.locator(":scope > summary").click()
+    passage = source.locator(".ncu-visual-passage").filter(has_text="750").first
+    passage.locator(":scope > summary").click()
+    expect(passage.locator("pre")).to_be_visible()
+    expect(passage.locator("pre")).to_contain_text("750")
+    passage.locator("pre").scroll_into_view_if_needed()
+    out = Path("/tmp/ncu-audit/browser")
+    out.mkdir(parents=True, exist_ok=True)
+    page.screenshot(path=str(out / "ncu-nuist-2027-source-390.png"))
+    page.locator("#detail-tab-application").click()
+    workflow = page.locator("#detail-application .workflow-step").filter(has_text="在學證明（三個月內開立）").first
+    workflow.locator(":scope > summary").click()
+    proof = workflow.get_by_text("2027春港澳臺參考：在學證明（三個月內開立）", exact=False).first
+    expect(proof).to_be_visible()
+    expect(workflow).to_contain_text("母校交換生資訊匯總表")
+    proof.scroll_into_view_if_needed()
+    page.screenshot(path=str(out / "ncu-nuist-2027-documents-390.png"))
+    page.locator("#detail-tab-life").click()
+    page.locator("#detail-life .life-official-guide > summary").click()
+    insurance = page.locator("#destination-official-content li").filter(has_text="2027春學校為港澳臺籍交換生購買綜合醫療保險").first
+    expect(insurance).to_be_visible()
+    expect(page.locator("#detail-life")).to_contain_text("750 RMB/學期")
+    expect(page.locator("#detail-life")).to_contain_text("完整總生活費")
+    insurance.scroll_into_view_if_needed()
+    page.screenshot(path=str(out / "ncu-nuist-2027-life-390.png"))
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors

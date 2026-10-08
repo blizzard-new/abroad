@@ -136,6 +136,44 @@ def write_rows(path, values, model):
     )
 
 
+def indexed_source_pages(sources, school_name):
+    """Keep successful readable attempts; failures remain in source-evidence.
+
+    URL identity must never make a later failed request replace a successful
+    browser excerpt. Blank extraction markers alone are not source content.
+    """
+    candidates = []
+    for item in sources:
+        if item.get("error"):
+            continue
+        text = indexable_source_text(item)
+        if not re.sub(r"【(?:第\d+頁|網頁／無PDF頁碼)】", "", text).strip():
+            continue
+        candidates.append(dict(
+            title=f"{school_name}：{item['label']}（116適用性待查）",
+            source_url=item["url"],
+            text=text,
+            summary="中央公開參考附件，原始年份／方案與116年度適用性尚待確認。",
+            category="partner_school",
+            crawled_at=CHECKED,
+            content_hash=hashlib.sha256(text.encode()).hexdigest(),
+        ))
+    return deduplicate_index_pages(candidates)
+
+
+def deduplicate_index_pages(pages):
+    """Select nonempty content by URL independently of attempt ordering."""
+    selected = {}
+    for page in pages:
+        key = page["source_url"]
+        # The final tie break makes equal-length successful excerpts stable too.
+        rank = (bool(page.get("text", "").strip()), len(page.get("text", "").strip()), page.get("text", ""), page.get("title", ""))
+        previous = selected.get(key)
+        if previous is None or rank > previous[0]:
+            selected[key] = (rank, page)
+    return [item[1] for item in selected.values()]
+
+
 def source(title, url=NOTICE, summary=None):
     return dict(title=title, source_url=url, summary=summary)
 
@@ -1012,25 +1050,14 @@ def build(output):
                 == "partner_university"
                 and fid != "host-fr-housing"
             )
-        for d in {
+        indexed_sources = {
             d["id"]: d
             for d in [
                 *introductions,
                 *([docs[fid] for fid in review["source_ids"]] if review else []),
             ]
-        }.values():
-            text = indexable_source_text(d)
-            pages.append(
-                dict(
-                    title=f"{zh}：{d['label']}（116適用性待查）",
-                    source_url=d["url"],
-                    text=text,
-                    summary="中央公開參考附件，原始年份／方案與116年度適用性尚待確認。",
-                    category="partner_school",
-                    crawled_at=CHECKED,
-                    content_hash=hashlib.sha256(text.encode()).hexdigest(),
-                )
-            )
+        }.values()
+        pages.extend(indexed_source_pages(indexed_sources, zh))
     # Home pages retain exact source text and original page markers.
     from pypdf import PdfReader
 
@@ -1231,7 +1258,7 @@ def build(output):
     write_rows(output / "partner_research.jsonl", research, PartnerResearchRecord)
     write_rows(
         output / "pages.jsonl",
-        list({p["source_url"]: p for p in pages}.values()),
+        deduplicate_index_pages(pages),
         ProcessedPage,
     )
     write_json(output / "field-audit.json", audit)
