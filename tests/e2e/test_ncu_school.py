@@ -68,6 +68,61 @@ def test_ncu_hiroshima_fee_image_coe_and_departure_stages_reach_mobile_ui(page,l
     assert not errors
 
 
+def test_ncu_omu_optional_english_and_iwing_health_reach_mobile_program_and_life(page, live_server):
+    page.set_viewport_size({'width': 390, 'height': 956})
+    page.emulate_media(reduced_motion='reduce')
+    errors = []; page.on('pageerror', lambda error: errors.append(str(error)))
+    enter_public_site(page, live_server, 'partners')
+    expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+    open_navigation(page); page.locator('#school-switcher').click()
+    page.locator('[data-home-school="國立中央大學"]').click(); page.locator('#confirm-school').click()
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
+    if page.locator('#glass-menu-toggle').get_attribute('aria-expanded') == 'true':
+        page.locator('#glass-menu-toggle').click()
+    page.locator('[data-partner-view="list"]').click(); page.locator('#partner-search').fill('大阪公立')
+    expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+    page.locator('#partner-table .partner-card > summary').first.click()
+    page.locator('#partner-table .school-detail-trigger:visible').first.click()
+    language = page.locator('#detail-overview .partner-student-summary li').filter(has_text='N2總分90–111對應B1').first
+    expect(language).to_be_visible(); expect(language).to_contain_text('112以上B2')
+    expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('每semester至少兩門且一專業')
+    expect(page.locator('#detail-application .workflow-step').first).to_be_attached(timeout=60_000)
+    page.locator('#ncu-source-audit > summary').click()
+    expect(page.locator('#ncu-source-audit-body')).to_contain_text('官方轉址非預期資料頁', timeout=60_000)
+    checklist = page.locator('#ncu-source-audit-body > details').filter(has_text='00_提出書類チェックシート').first
+    expect(checklist.locator(':scope > summary')).to_contain_text('1頁已視覺查核')
+    checklist.locator(':scope > summary').click(); checklist.locator('details > summary').first.click()
+    expect(checklist.locator('pre').first).to_contain_text('Please submit if you have one')
+    out = Path('/tmp/ncu-audit/browser'); out.mkdir(parents=True, exist_ok=True)
+    checklist.locator(':scope > summary').scroll_into_view_if_needed()
+    page.screenshot(path=str(out / 'ncu-omu-optional-english-source-390.png'))
+    page.locator('#detail-tab-life').click(); page.locator('#detail-life .life-official-guide > summary').click()
+    cost = page.locator('#destination-official-content li').filter(has_text='月46000JPY').first
+    expect(cost).to_be_visible(); expect(cost).to_contain_text('抵最後月房租')
+    expect(page.locator('#destination-official-content')).to_contain_text('資格資訊通知書單獨不能看診')
+    cost.scroll_into_view_if_needed(); page.screenshot(path=str(out / 'ncu-omu-iwing-cost-scope-390.png'))
+    page.locator('#detail-tab-application').click()
+    def step(title):
+        return page.locator('#detail-application .workflow-step').filter(has=page.locator('summary').filter(has_text=title)).first
+    initial = step('核對外校當期文件並依通知申請'); initial.locator(':scope > summary').click()
+    expect(initial.locator('.workflow-documents > li')).to_have_count(8)
+    expect(initial).to_contain_text('近三月JPG彩色脫帽清晰照')
+    expect(initial).to_contain_text('不同於護照照片，用於COE／學生證；尺寸待核')
+    expect(initial).to_contain_text('近三個月拍攝、彩色脫帽清晰')
+    expect(initial).to_contain_text('不是指定在籍表的替代')
+    expect(initial).not_to_contain_text('住宿健康診斷書')
+    english = step('英文證明僅持有者提交'); english.locator(':scope > summary').click()
+    expect(english.locator('.workflow-documents > li')).to_have_count(1)
+    expect(english).to_contain_text('日語B2與母校語檢另必須')
+    health = step('僅LOA後實際申請I-wing Nakamozu'); health.locator(':scope > summary').click()
+    expect(health.locator('.workflow-documents > li')).to_have_count(1)
+    expect(health).to_contain_text('共用初次八件沒有健康')
+    expect(health).to_contain_text('指定blank／檢查效期／回覆deadline未取得')
+    health.scroll_into_view_if_needed(); page.screenshot(path=str(out / 'ncu-omu-iwing-health-later-390.png'))
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
+    assert not errors
+
+
 @pytest.mark.parametrize("school,life_text,source_text,filename", [
     ("南京信息工程", "中文「僅限」", "Twin Room | 2,000—2,500 CNY per year", "ncu-nuist-versions-390.png"),
     ("濟南大學", "不能住國際生宿舍", "31/10/2024", "ncu-ujn-hk-scope-390.png"),
@@ -715,11 +770,12 @@ def test_ncu_nuist_image_packet_documents_and_taiwan_life_reach_mobile_ui(page, 
     assert not errors
 
 
-def test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scoped(page, live_server):
+@pytest.mark.parametrize("width", [390, 1440])
+def test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scoped(page, live_server, width):
     session = sign_in_cookie(live_server, school="國立中央大學")
     live_server.verify_student(session["profile"]["id"], university="國立中央大學")
     attach_session(page, live_server, session)
-    page.set_viewport_size({"width": 390, "height": 956})
+    page.set_viewport_size({"width": width, "height": 956})
     page.emulate_media(reduced_motion="reduce")
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
@@ -749,7 +805,7 @@ def test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scope
     condition.scroll_into_view_if_needed()
     out = Path("/tmp/ncu-audit/browser")
     out.mkdir(parents=True, exist_ok=True)
-    page.screenshot(path=str(out / "ncu-uos-off-campus-390.png"))
+    page.screenshot(path=str(out / f"ncu-uos-off-campus-{width}.png"))
     wait_until(page, "document.querySelector('#account-workspace-sync-label').textContent === '已同步'")
     import requests
     saved = requests.get(f"{live_server.base_url}/account/workspace",headers={"Authorization":f"Bearer {session['access_token']}"},params={"home_school":"國立中央大學"},timeout=10).json()["workspace"]
@@ -776,7 +832,7 @@ def test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scope
     expect(deferred).to_be_visible()
     expect(deferred).to_contain_text("近三月健康報告")
     deferred.scroll_into_view_if_needed()
-    page.screenshot(path=str(out / "ncu-hust-deferred-health-390.png"))
+    page.screenshot(path=str(out / f"ncu-hust-deferred-health-{width}.png"))
     assert page.locator("#application-requirement-list").get_by_text("下載校方正式表格", exact=True).count() == 0
     page.evaluate("location.hash='#overview'")
     expect(page.locator("#multi-plan-workspace")).to_be_visible()
@@ -793,7 +849,7 @@ def test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scope
     expect(health).to_contain_text("錄取後再準備")
     expect(branch).to_contain_text("116當期來源適用性仍待核實")
     health.scroll_into_view_if_needed()
-    page.screenshot(path=str(out / "ncu-hust-deferred-task-390.png"))
+    page.screenshot(path=str(out / f"ncu-hust-deferred-task-{width}.png"))
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors
 

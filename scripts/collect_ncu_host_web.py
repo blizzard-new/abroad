@@ -20,8 +20,24 @@ SPEC = OUT / "host-web-checks.json"
 def fetch(spec):
     url = spec["url"]
     result = {**spec, "label": spec["title"], "checked_at": "2026-10-08", "pages": []}
+    authority = {
+        "host_official": "partner_university",
+        "other_official": "official_other_home_university",
+        "government_official": "government",
+        "language_test_official": "official_language_test_provider",
+    }.get(spec.get("kind"))
+    if authority:
+        result.setdefault("authority_kind", authority)
     try:
-        response = requests.get(url, timeout=35)
+        request = requests.get
+        if spec.get("public_share_context_url"):
+            # Establish only the supplied public sharing link's read context.
+            # No login, OAuth credentials, or access to other folders is used.
+            session = requests.Session()
+            context = session.get(spec["public_share_context_url"], timeout=35)
+            context.raise_for_status()
+            request = session.get
+        response = request(url, timeout=35)
         if (
             spec.get("expected_document_format") == "pdf"
             and urlparse(url).hostname == "drive.google.com"
@@ -56,6 +72,8 @@ def fetch(spec):
             raise ValueError("公開下载回應不是PDF原件；不當成文件已取得或登入限定。")
         if expected_format == "docx" and not response.content.startswith(b"PK"):
             raise ValueError("公開下載回應不是Word原件；不當成文件已取得或登入限定。")
+        if expected_format == "xlsx" and not response.content.startswith(b"PK"):
+            raise ValueError("公開下載回應不是Excel原件；不當成文件已取得或登入限定。")
         if expected_format == "json":
             # Public partner search data is an original JSON document, not an
             # HTML page. Validate its bytes before applying any reviewed excerpt.
@@ -70,6 +88,9 @@ def fetch(spec):
             ]
         elif response.content.startswith(b"PK"):
             archive = zipfile.ZipFile(io.BytesIO(response.content))
+            required_part = {"xlsx": "xl/workbook.xml", "docx": "word/document.xml"}.get(expected_format)
+            if required_part and required_part not in archive.namelist():
+                raise ValueError("公開下載ZIP不是所求Office原件；不當成指定表格已取得。")
             if "word/document.xml" in archive.namelist():
                 root = ElementTree.fromstring(archive.read("word/document.xml"))
                 ns = {
@@ -238,6 +259,14 @@ def fetch(spec):
                 {"label": a.get_text(" ", strip=True), "href": a.get("href")}
                 for a in main.select("a[href]")
             ]
+        expected_url = spec.get("expected_final_url_prefix")
+        if expected_url and not response.url.startswith(expected_url):
+            # Keep the observed response for audit, while rejecting it as the
+            # requested page. An official outage portal can itself return 200.
+            raise ValueError(
+                "官方轉址非預期資料頁；保留實際回應原文及final_url，"
+                "不視為所求program／住宿／文件原頁已取得。"
+            )
         incomplete = [p["page"] for p in result["pages"] if "\x00" in p["text"]]
         if incomplete:
             result["text_quality_issues"] = [

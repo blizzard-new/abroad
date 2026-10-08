@@ -1637,3 +1637,223 @@ def test_chiba_native_years_partial_read_and_complete_insurance_visual_evidence(
     science = ncu_field_audit('東京科學大學 Institute of Science Tokyo')
     assert '未核對中央這列' not in science['fields']['eligibility']['unresolved']
     assert '不是262伙伴全文已讀' in science['fields']['tuition']['note']
+
+
+def test_omu_2027_spring_optional_documents_and_later_housing_keep_116_blocked(tmp_path):
+    partner = next(p for p in fetch_ncu_partner_universities() if 'Osaka Metropolitan' in p.school_name)
+    assert partner.quota is None and partner.degree_levels is None
+    client = TestClient(create_app(tmp_path))
+    workflow = client.get('/application-workflow', params={'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116'}).json()
+    steps = {s['rule_id']: s for s in workflow['steps']}
+    initial = steps['ncu-132-host-apply']
+    assert len(initial['document_requirements']) == 8
+    assert len(steps['ncu-116-1-home-3']['document_requirements']) == 7
+    assert sum(d['name'].startswith('母校承辦另出') for d in initial['document_requirements']) == 3
+    assert not any(any(word in d['name'] for word in ['COE指定', '住宿健康', '英文能力']) for d in initial['document_requirements'])
+    photo = next(d for d in initial['document_requirements'] if 'JPG' in d['name'])
+    assert '不同於護照照片' in photo['name'] and '近三月' in photo['name']
+    assert 'COE／學生證' in photo['name'] and '尺寸待核' in photo['name']
+    assert '近三個月拍攝、彩色脫帽清晰' in '\n'.join(initial['details'])
+    assert not set(photo) & {'photo_specs', 'copies_required', 'notes'}
+    pledge = next(d for d in initial['document_requirements'] if '誓約' in d['name'])
+    assert pledge['signatures'] == ['申請人']
+    enrollment = next(d for d in initial['document_requirements'] if '指定英文在籍' in d['name'])
+    assert not enrollment['signatures'] and not enrollment['stamps']
+    for suffix in ['mother-nomination', 'degree-specific-plan', 'english-if-held', 'consideration-if-requested']:
+        assert steps['ncu-132-host-' + suffix]['order'] < initial['order']
+    assert len(steps['ncu-132-host-degree-specific-plan']['document_requirements']) == 2
+    assert '不是兩件都交' in steps['ncu-132-host-degree-specific-plan']['summary']
+    assert '持有才交' in steps['ncu-132-host-english-if-held']['summary']
+    for suffix in ['post-selection-coe', 'i-wing-health']:
+        step = steps['ncu-132-host-' + suffix]
+        assert initial['order'] < step['order'] and len(step['document_requirements']) == 1
+        assert not step['document_requirements'][0]['official_form_url']
+    assert '日本籍含雙重' in steps['ncu-132-host-post-selection-coe']['summary']
+    assert workflow['review_status'] == 'pending_review' and workflow['published_at'] is None
+    assert not any(s['deadline_reminder_eligible'] for s in workflow['steps'])
+    audit = ncu_field_audit(partner.school_name)
+    assert '不因外校申請未到' in audit['fields']['host_deadline']['note']
+    assert '不能以Graduate' in audit['fields']['eligibility']['note']
+    assert '創藥科學碩士明列' in audit['fields']['eligibility']['note']
+    assert 'N2總分90–111對應B1' in audit['fields']['language']['note']
+    assert '112以上B2' in audit['fields']['language']['note']
+    assert '每semester至少兩門且一專業' in audit['fields']['courses']['note']
+    assert '不能忽略或regex直接不合格' in audit['fields']['courses']['note']
+    assert '全系自動通過' in audit['fields']['eligibility']['unresolved']
+    assert '不強制普通臺灣交換生' in audit['fields']['visa']['note']
+    assert '資格資訊通知書單獨不能看診' in audit['fields']['insurance']['note']
+    summary = json.dumps(partner.student_summary_zh.model_dump(mode='json'), ensure_ascii=False)
+    assert '專業課' in summary and '46000' in summary and '健康診斷書' in summary
+    catalog = client.get('/application-center/catalog', params={'school': 'NCU', 'target_school': partner.school_name, 'academic_year': '116'}).json()
+    scoped = [d for d in catalog['items'] if d['applicability']]
+    assert len(scoped) == 7 and all(d['applicability']['status'] == 'needs_confirmation' for d in scoped)
+    assert all(not d['download_available'] for d in scoped)
+
+
+def test_existing_ncu_document_counts_and_scope_notes_reach_workflow_api(tmp_path):
+    client = TestClient(create_app(tmp_path))
+    for english, count in [('Chiba University', 8), ('Institute of Science Tokyo', 1)]:
+        partner = next(p for p in fetch_ncu_partner_universities() if english in p.school_name)
+        workflow = client.get('/application-workflow', params={
+            'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116',
+        }).json()
+        initial = next(s for s in workflow['steps'] if s['rule_id'].endswith('-host-apply'))
+        assert sum(d['copies'] == 1 for d in initial['document_requirements']) == count
+        visa = next(s for s in workflow['steps'] if s['rule_id'].endswith('-host-japan-student-visa'))
+        assert next(d for d in visa['document_requirements'] if d['name'] == '臺灣護照持COE：六個月內2吋白底照一張')['copies'] == 1
+    for english, note in [
+        ('University of Manitoba', '由exchange coordinator或supervisor提供；僅研究所適用。'),
+        ('Shinshu University', '原文if available，非全體強制JLPT。'),
+        ('Shibaura Institute of Technology', 'track限定規定；本附件未列全部申請文件。'),
+    ]:
+        partner = next(p for p in fetch_ncu_partner_universities() if english.casefold() in p.school_name.casefold())
+        workflow = client.get('/application-workflow', params={
+            'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116',
+        }).json()
+        initial = next(s for s in workflow['steps'] if s['rule_id'].endswith('-host-apply'))
+        assert note in '\n'.join(initial['details'])
+
+
+def test_omu_originals_optional_rows_old_sheet_isolation_and_outage_provenance():
+    from exchange_info.ncu_source_coverage import indexable_source_text
+    sources = {s['id']: s for s in json.loads(gzip.decompress((BUNDLE / 'source-evidence.json.gz').read_bytes()))}
+    for ident in ['host-science-tiec-form1', 'host-science-tiec-form3']:
+        form = sources[ident]
+        assert form['source_excerpt_only'] and not form['content_status']['all_pages_read']
+        assert form['excerpt_original_scope']['sheet_count'] == 2
+        assert len(form['excerpt_original_scope']['sheets_reviewed']) == 1
+    for official, copy in [('host-omu-form-8', '10cGEuPHH8cAUUOVXLpymWpIPpRNeWvso'), ('host-omu-form-1', '1zGwlUemomIiix-oI9B4d11Kj_sdO-QjN')]:
+        assert sources[official]['sha256'] == sources[copy]['sha256']
+        assert len(sources[official]['pages']) == 4 and sources[official]['content_status']['all_pages_read']
+    checklist = sources['host-omu-form-5']
+    assert checklist['content_status']['all_pages_read'] and checklist['content_status']['visual_reviewed_page_count'] == 1
+    assert 'Please submit if you have one' in checklist['pages'][0]['text']
+    assert 'Please do NOT convert Word or Excel' in checklist['pages'][0]['text']
+    assert len(checklist['visual_review']['artifacts']) == 1
+    blank = sources['host-omu-form-2']
+    assert blank['source_excerpt_only'] and not blank['content_status']['all_pages_have_text']
+    assert len(blank['pages']) == 1 and blank['pages'][0]['sheet'] == 'xl/worksheets/sheet1.xml'
+    assert blank['reading_review']['original_sheet_count'] == 3
+    text = '\n'.join(p['text'] for p in blank['pages'])
+    assert 'OSAKA' not in text and 'xxxx@xxx.ac.jp' not in text and '37,800' not in text
+    assert '37800' in blank['privacy_note'] and '37,800' not in indexable_source_text(blank)
+    ja = sources['host-omu-form-9']
+    assert len(ja['pages']) == 2 and ja['content_status']['all_pages_read']
+    assert all(p['page'] is None and p['sheet'] for p in ja['pages'])
+    course = sources['host-omu-course-list2026']
+    assert course['content_status']['all_pages_read'] and len(course['pages']) == 1
+    assert '2026' in course['pages'][0]['text'] and '文学部専門科目' in course['pages'][0]['text']
+    assert '文学部専門科目' not in indexable_source_text(course)
+    old = sources['18V9vNjSgs4HCh9YSLlzmQYs_qXvLn9yK']
+    assert old['reading_review']['pages_reviewed'] == [1, 2, 3] and not old['content_status']['all_pages_read']
+    assert 'by April 10, 2025' not in indexable_source_text(old)
+    for sid in ['host-omu-exchangeprogram', 'host-omu-i-wing', 'host-omu-housing-index', 'host-omu-campus-access', 'host-omu-graduate-timetable']:
+        outage = sources[sid]
+        assert outage['status'] == 200 and outage['final_url'] == 'https://www.omu.moe'
+        assert outage['content_status']['response_bytes_received'] and not outage['content_status']['downloaded']
+        assert not outage['content_status']['any_text'] and not outage['content_status']['all_pages_read']
+        assert '公式ウェブサイトが復旧' in outage['pages'][0]['text']
+    assert sources['host-omu-syllabus-search']['status'] == 503
+    assert not sources['host-omu-temporary-course-catalog']['content_status']['any_text']
+    assert sources['test-jlpt-japanese-cefr-reference']['authority_kind'] == 'official_language_test_provider'
+    assert sources['government-sakai-nhi-current-card']['authority_kind'] == 'government'
+    assert sources['host-omu-i-dorm-provider']['authority_kind'] == 'official_housing_provider'
+    assert sources['host-chiba-outline2026-cau']['authority_kind'] == 'official_other_home_university'
+    assert sources['government-chiba-city-nhi2026-card']['authority_kind'] == 'government'
+
+
+def test_niigata_iec_grad_finance_and_initial_coe_reach_real_api(tmp_path):
+    partner = next(p for p in fetch_ncu_partner_universities() if 'Niigata' in p.school_name)
+    assert partner.quota is None and partner.degree_levels is None
+    client = TestClient(create_app(tmp_path))
+    response = client.get('/application-workflow', params={
+        'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116',
+    })
+    assert response.status_code == 200
+    workflow = response.json(); steps = {s['rule_id']: s for s in workflow['steps']}
+    assert len(steps['ncu-116-1-home-3']['document_requirements']) == 7
+    assert not steps['ncu-131-host-apply']['document_requirements']
+    iec = steps['ncu-131-host-iec-original-application']
+    assert len(iec['document_requirements']) == 6
+    assert all(d['copies'] == 1 for d in iec['document_requirements'])
+    assert any('COE' in d['name'] and '初次' in d['name'] for d in iec['document_requirements'])
+    health = next(d for d in iec['document_requirements'] if '胸部X光' in d['name'])
+    assert health['signatures'] == ['檢查醫師'] and '半年' in health['name']
+    grad = steps['ncu-131-host-graduate-basic-info']
+    assert len(grad['document_requirements']) == 1 and '非入學申請書' in grad['document_requirements'][0]['name']
+    assert '只交此表' in grad['summary']
+    assert len(steps['ncu-131-host-iec-self-finance']['document_requirements']) == 1
+    assert len(steps['ncu-131-host-iec-sponsor-finance']['document_requirements']) == 4
+    mother = steps['ncu-131-host-mother-iec-nomination']['document_requirements'][0]
+    assert '簽名或公印擇一' in mother['name'] and not mother['signatures'] and not mother['stamps']
+    assert '網站成功不用此表' in steps['ncu-131-host-iec-web-failure']['summary']
+    assert '電子COE' in steps['ncu-131-host-after-acceptance-travel']['summary']
+    assert workflow['review_status'] == 'pending_review' and workflow['published_at'] is None
+    assert not any(s['deadline_reminder_eligible'] for s in workflow['steps'])
+    catalog = client.get('/application-center/catalog', params={
+        'school': 'NCU', 'target_school': partner.school_name, 'academic_year': '116',
+        'host_admission_status': 'accepted', 'housing_choice': 'off_campus',
+    }).json()
+    conditional = [d for d in catalog['items'] if d['applicability']]
+    assert len(conditional) == 19
+    assert all(d['applicability']['status'] == 'needs_confirmation' for d in conditional)
+    assert all(d['needs_confirmation'] and not d['download_available'] for d in conditional)
+    audit = ncu_field_audit(partner.school_name)
+    assert '不是一般GPA2.3' in audit['fields']['eligibility']['note']
+    assert '不能推固定5/10' in audit['fields']['host_deadline']['note']
+    assert '2028閏日' in audit['fields']['study_period']['note']
+    assert '臺灣國籍不是所列對象' in audit['fields']['host_documents']['note']
+    assert '2027/1/4' in audit['fields']['host_documents']['note']
+    assert '家屬' in audit['fields']['housing']['note'] and '不能覆蓋2027春IEC' in audit['fields']['housing']['note']
+    summary = json.dumps(partner.student_summary_zh.model_dump(mode='json'), ensure_ascii=False)
+    assert '89000' in summary and '67500' in summary and 'to be announced' in summary
+    assert 'login' not in audit['fields']['transport']['note']
+
+
+def test_niigata_original_sheet_scope_blank_forms_and_year_isolation():
+    from exchange_info.ncu_source_coverage import indexable_source_text
+    sources = {s['id']: s for s in json.loads(gzip.decompress((BUNDLE / 'source-evidence.json.gz').read_bytes()))}
+    blank = sources['host-niigata-application2027']
+    assert blank['source_excerpt_only'] and not blank['content_status']['all_pages_read']
+    assert blank['excerpt_original_scope']['sheet_count'] == 4
+    assert len(blank['excerpt_original_scope']['sheets_reviewed']) == 3
+    assert len(blank['pages']) == 1 and '2027年度春期' in blank['pages'][0]['text']
+    assert '6th year / 6年ネン' not in blank['pages'][0]['text']
+    mother = sources['host-niigata-recommendation2027']
+    assert mother['content_status']['all_pages_read']
+    assert 'NIIGATA Taro' not in mother['pages'][0]['text'] and 'IKARASHI Jiro' not in mother['pages'][0]['text']
+    assert 'Signature or' in mother['pages'][0]['text']
+    assert len(sources['host-niigata-coe-blank']['pages']) == 3
+    assert sources['host-niigata-coe-blank']['content_status']['all_pages_read']
+    calendar = sources['host-niigata-calendar2027']
+    assert calendar['content_status']['all_pages_read'] and calendar['content_status']['visual_reviewed_page_count'] == 1
+    gate = sources['host-niigata-guidebook-gate']
+    assert gate['status'] == 401 and gate['error'] and not gate['content_status']['all_pages_read']
+    for ident in ['host-niigata-foreign-courses2026', 'host-niigata-spring-courses2026', 'host-niigata-fall-courses2026-guideurl']:
+        source = sources[ident]
+        assert len(source['pages']) == 3 and source['content_status']['all_pages_read']
+        assert '2026' in source['pages'][0]['text'] and 'Courses' not in indexable_source_text(source)
+    jpets = sources['host-niigata-government-jpets']
+    assert jpets['authority_kind'] == 'government' and not jpets['content_status']['all_pages_read']
+    assert 'January 4, 2027' in jpets['pages'][0]['text']
+    old = sources['1DsvER9HIqXMnQZ0ukT0cGFQwKqWHiBw2']
+    assert 'Fall) Semester of 2026 (beginning October of 2025)' in old['pages'][0]['text']
+    assert 'November 10, 2024' not in indexable_source_text(old)
+
+
+def test_ncu_runtime_preserves_all_explicit_document_unknowns_and_alternatives():
+    from exchange_info.models import UniversityApplicationWorkflow
+    raw = [UniversityApplicationWorkflow.model_validate(json.loads(line))
+           for line in (BUNDLE / 'application_workflows.jsonl').read_text().splitlines()]
+    runtime = {w.school_name: w for w in storage.load_bundled_application_workflows()
+               if w.home_university == '國立中央大學'}
+    for workflow in raw:
+        actual_steps = {step.rule_id: step for step in runtime[workflow.school_name].steps}
+        for step in workflow.steps:
+            actual = actual_steps[step.rule_id]
+            assert actual.submission.method == step.submission.method
+            assert actual.scope.application_rounds == step.scope.application_rounds
+            assert len(actual.document_requirements) == len(step.document_requirements)
+            for source, document in zip(step.document_requirements, actual.document_requirements):
+                for key in ['name', 'copies', 'copy_type', 'signatures', 'stamps', 'official_form_url']:
+                    assert getattr(document, key) == getattr(source, key), (workflow.school_name, source.name, key)

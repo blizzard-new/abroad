@@ -158,6 +158,39 @@ def test_invalid_document_policy_does_not_overwrite_existing_bundle(tmp_path, mo
     assert list(tmp_path.iterdir()) == [existing]
 
 
+@pytest.mark.parametrize("unsupported", ["notes", "copies_required", "photo_specs"])
+@pytest.mark.parametrize("placement", [
+    "host_documents", "host_nomination_documents", "host_followup_documents",
+    "host_predeparture_documents", "host_arrival_documents", "host_insurance_documents", "later_stage",
+])
+def test_unsupported_document_field_fails_before_overwriting_bundle(tmp_path, monkeypatch, unsupported, placement):
+    root = Path(__file__).resolve().parents[1]
+    spec = importlib.util.spec_from_file_location("ncu_document_shape_builder", root / "scripts/build_ncu_catalog.py")
+    builder = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(builder)
+    original_load = builder.load_json
+
+    def invalid_document(path):
+        value = original_load(path)
+        if path.name == "reviewed-host-records.json":
+            record = value["ncu-132"]
+            docs = (
+                record["host_document_stages"][0]["document_requirements"]
+                if placement == "later_stage"
+                else record.setdefault(placement, [{"name": "reviewed document"}])
+            )
+            docs[0][unsupported] = "unsupported value"
+        return value
+
+    monkeypatch.setattr(builder, "load_json", invalid_document)
+    existing = tmp_path / "partners.jsonl"
+    existing.write_text("previous reviewed bundle\n")
+    with pytest.raises(ValueError, match="NCU外校文件含未支援欄位"):
+        builder.build(tmp_path)
+    assert existing.read_text() == "previous reviewed bundle\n"
+    assert list(tmp_path.iterdir()) == [existing]
+
+
 @pytest.mark.parametrize("admission",["unknown","not_accepted","accepted"])
 @pytest.mark.parametrize("housing",["unknown","on_campus","off_campus"])
 def test_seu_reciprocal_health_and_optional_housing_require_institutional_confirmation(tmp_path,admission,housing):
@@ -244,4 +277,27 @@ def test_chiba_language_coe_and_guarantor_scope_is_not_inferred_from_saved_state
     assert any('空白表未取得' in item.note for item in scoped)
     initial = next(s for s in workflow.steps if s.rule_id == 'ncu-127-host-apply')
     assert any('初次申請即繳' in d.name for d in initial.document_requirements)
+    assert all(document_applicability(NCU, school, d, state) is None for d in initial.document_requirements)
+
+
+@pytest.mark.parametrize('admission', ['unknown', 'not_accepted', 'accepted'])
+@pytest.mark.parametrize('housing', ['unknown', 'on_campus', 'off_campus'])
+def test_omu_degree_optional_english_coe_and_iwing_are_not_inferred_from_saved_state(admission, housing):
+    school = '大阪公立大學 Osaka Metropolitan University'
+    workflow = next(w for w in storage.load_bundled_application_workflows() if w.home_university == NCU and w.school_name == school)
+    state = PartnerDocumentPreparationState(host_admission_status=admission, housing_choice=housing)
+    scoped = []
+    for step in workflow.steps:
+        for doc in step.document_requirements:
+            result = document_applicability(NCU, school, doc, state)
+            if result:
+                scoped.append(result)
+                assert result.status == 'needs_confirmation' and not result.current_applicability_verified
+                assert document_applicability('國立臺灣大學', school, doc, state) is None
+    assert len(scoped) == 7
+    assert any('選其中一件' in item.note for item in scoped)
+    assert any('僅持有英文成績' in item.note for item in scoped)
+    assert any('雙重日本籍' in item.note for item in scoped)
+    assert any('一般校內住宿／錄取不能證明' in item.note for item in scoped)
+    initial = next(s for s in workflow.steps if s.rule_id == 'ncu-132-host-apply')
     assert all(document_applicability(NCU, school, d, state) is None for d in initial.document_requirements)

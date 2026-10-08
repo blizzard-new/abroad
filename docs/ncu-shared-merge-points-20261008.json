@@ -1,6 +1,6 @@
 {
   "main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
-  "ncu_checkpoint": "0b10d31562176fb204bac0d8e44905dfa59fb20b",
+  "ncu_checkpoint": "1bddf5a154e2283e17cbb5c1ab554089385e033c",
   "compared_branches": [
     {
       "branch": "origin/data/ccu-exchange-20261008",
@@ -17,6 +17,7 @@
         "src/exchange_info/static/index.html",
         "src/exchange_info/storage.py",
         "src/exchange_info/university_registry.py",
+        "src/exchange_info/workflow_structuring.py",
         "tests/e2e/test_ntu_school.py",
         "tests/test_ntu_integration.py"
       ]
@@ -42,6 +43,34 @@
       ]
     }
   ],
-  "note_zh": "唯讀fetch與列共享交集，未合併、未切換或覆寫CCU/TKU。NCU工作樹未推變更亦計入交集。合併需保留各校loader／registry、模型、文件中心source_urls策略／條件欄位、前端來源顯示，聯集後重建OpenAPI与各校契約測試。NCU builder Unicode JSONL跳脫只在本校輸出。",
-  "checked_at": "2026-10-08"
+  "note_zh": "唯讀fetch與列共享交集，未合併、未切換或覆寫CCU/TKU。NCU未推工作樹亦計入交集；ncu_checkpoint為最近已推SHA而非未提交候選結果。整合先在獨立worktree保留各校registry／loader／storage／schema、home與host文件source_urls、條件文件及UI分支，再重建OpenAPI；於同整合SHA重跑API與手機桌面選校、母校切換、配對、收藏比較、正式模板、條件文件與計畫重載。各校既有CI失敗仍為阻礙，0 jobs或未跑不算通過。不得整檔覆蓋，不合併main或部署。",
+  "checked_at": "2026-10-08T20:58:00Z",
+  "working_tree_changes_included": true,
+  "shared_runtime_review_points": [
+    {
+      "path": "src/exchange_info/workflow_structuring.py",
+      "ncu_change": "NCU只保留明示送法、梯次、份數與簽章；其他學校保持既有文字推導",
+      "merge_check": "在整合候選SHA重跑所有學校流程與851份main資料同schema比較"
+    },
+    {
+      "path": "src/exchange_info/static/app.js",
+      "ncu_change": "NCU原件閱讀範圍、語檢名稱分數及本校文件中心條件顯示",
+      "merge_check": "保留各校switch/source_urls分支；手機桌面匹配、文件及重載實測"
+    },
+    {
+      "path": "src/exchange_info/static/discovery-ui.js",
+      "ncu_change": "workspace帶母校標記",
+      "merge_check": "多校切換、收藏與比較仍隔離"
+    },
+    {
+      "path": "src/exchange_info/static/discovery.css",
+      "ncu_change": "僅NCU願望卡取消sticky避免遮住比較",
+      "merge_check": "手機與桌面實際比較表未遮擋"
+    },
+    {
+      "path": "src/exchange_info/models.py",
+      "ncu_change": "既有條件文件共享schema",
+      "merge_check": "按校保留擴充欄位，重建OpenAPI並測未知值及機構確認"
+    }
+  ]
 }

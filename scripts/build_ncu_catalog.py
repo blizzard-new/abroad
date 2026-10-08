@@ -20,6 +20,7 @@ from exchange_info.models import (
     UniversityApplicationWorkflow,
     DestinationProfile,
     PartnerResearchRecord,
+    ApplicationDocumentRequirement,
 )
 from exchange_info.ncu_eligibility import SCORE_MINIMUMS, EXCLUDED_YEARS
 from exchange_info.ncu_source_coverage import attach_public_field_excerpt, attach_visual_review, indexable_source_text, source_content_status
@@ -124,6 +125,32 @@ def write_json(path, value):
     path.write_text(
         json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
+
+
+def validate_reviewed_host_documents(reviewed):
+    """Reject fields that the shared document model would silently discard."""
+    supported = set(ApplicationDocumentRequirement.model_fields)
+    for row_id, record in reviewed.items():
+        groups = [
+            (key, record.get(key, []))
+            for key in (
+                "host_documents", "host_nomination_documents", "host_followup_documents",
+                "host_predeparture_documents", "host_arrival_documents", "host_insurance_documents",
+            )
+        ]
+        groups.extend(
+            (stage["id"], stage.get("document_requirements", []))
+            for stage in record.get("host_document_stages", [])
+        )
+        for group, documents in groups:
+            for document in documents:
+                unsupported = set(document) - supported
+                if unsupported:
+                    raise ValueError(
+                        f"NCU外校文件含未支援欄位：{row_id} / {group} / "
+                        f"{document.get('name')} / {sorted(unsupported)}"
+                    )
+                ApplicationDocumentRequirement.model_validate(document)
 
 
 def validate_document_conditions(conditions, workflows, sources_by_id):
@@ -272,6 +299,7 @@ def build(output):
             d["index_review"] = load_json(index_review_path)
         d["content_status"] = source_content_status(d)
     reviewed = load_json(SOURCES / "reviewed-host-records.json")
+    validate_reviewed_host_documents(reviewed)
     from pypdf import PdfReader
 
     home_pages = {
@@ -483,10 +511,10 @@ def build(output):
                 for r in rs
             ]
 
-        def reviewed_points(key):
+        def reviewed_points(key, include_applicability=True):
             return (
                 [
-                    f"【{review['applicability']}】{text}"
+                    f"【{review['applicability']}】{text}" if include_applicability else text
                     for text in review["fields"].get(key, {}).get("points", [])
                 ]
                 if review
@@ -824,9 +852,10 @@ def build(output):
                 phase=stage["phase"],
                 title=stage["title"],
                 responsible_party=stage["responsible_party"],
+                submission=stage.get("submission", {"method": "unknown"}),
                 timing=stage["timing"],
                 summary=stage["summary"],
-                details=reviewed_points(stage["field"]),
+                details=stage.get("details", reviewed_points(stage["field"])),
                 document_requirements=requirements,
                 official_form_urls=[d["official_form_url"] for d in requirements if d.get("official_form_url")],
                 source_urls=stage.get("source_urls") or list(dict.fromkeys(u for d in requirements for u in d["source_urls"])),
@@ -917,7 +946,7 @@ def build(output):
                     if key == "courses"
                     else [key]
                 )
-                pts = sum((reviewed_points(k) for k in keys), [])
+                pts = sum((reviewed_points(k, include_applicability=False) for k in keys), [])
                 if pts:
                     section = next(
                         (x for x in destination_sections if x["key"] == key), None
@@ -984,7 +1013,7 @@ def build(output):
                 ("housing_summary", ["housing"]),
                 ("campus_life_summary", ["city", "transport", "arrival", "courses", "study_period"]),
             ]:
-                pts = sum((reviewed_points(k) for k in keys), [])
+                pts = sum((reviewed_points(k, include_applicability=False) for k in keys), [])
                 if pts:
                     dest[name_key] = "\n".join(pts)
             dest["sources"].extend(
@@ -1004,7 +1033,7 @@ def build(output):
                     "detail": p,
                     "source_urls": [docs[fid]["url"] for fid in review["source_ids"]],
                 }
-                for p in reviewed_points("arrival")
+                for p in reviewed_points("arrival", include_applicability=False)
             )
         byfield = {}
         categories = {

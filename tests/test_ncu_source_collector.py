@@ -11,6 +11,125 @@ from types import SimpleNamespace
 import pytest
 
 
+@pytest.mark.parametrize("reviewed_sheets,expected", [
+    (["blank"], False), (["blank", "example"], True), (["blank", "blank"], False),
+])
+def test_public_blank_sheet_excerpt_cannot_turn_unread_original_sheets_into_full_read(reviewed_sheets, expected):
+    from exchange_info.ncu_source_coverage import attach_public_field_excerpt, source_content_status
+    source = {
+        "sha256": "reviewed-original", "status": 200,
+        "pages": [{"page": None, "sheet": "blank", "text": "Blank application field"}],
+        "reading_review": {"source_sha256": "reviewed-original", "sheets_reviewed": ["blank"]},
+    }
+    attach_public_field_excerpt(source, {
+        "source_sha256": "reviewed-original", "public_pages": source["pages"],
+        "note_zh": "Publish only blank sheet; example is not published.",
+        "original_sheet_count": 2, "original_sheets_reviewed": reviewed_sheets,
+    })
+    status = source_content_status(source)
+    assert status["downloaded"] and status["any_text"]
+    assert not status["all_pages_have_text"]
+    assert status["all_pages_read"] == expected
+    source["sha256"] = "changed-original"
+    assert not source_content_status(source)["all_pages_read"]
+
+
+@pytest.mark.parametrize("context_available", [True, False])
+def test_public_shared_file_uses_only_supplied_anonymous_context(monkeypatch, context_available):
+    path = Path(__file__).parents[1] / "scripts/collect_ncu_host_web.py"
+    spec = importlib.util.spec_from_file_location("ncu_public_share_test", path)
+    collector = importlib.util.module_from_spec(spec); spec.loader.exec_module(collector)
+    context_url = "https://example.edu/public-sharing-link"
+    file_url = "https://example.edu/public-folder/blank.json"
+    original = b'{"public_blank_field":"Study period"}'
+    calls = []
+
+    def context_status():
+        if not context_available:
+            raise collector.requests.HTTPError("Public sharing context unavailable")
+
+    def read(url, **kwargs):
+        calls.append((url, kwargs))
+        return SimpleNamespace(status_code=200, ok=True,
+            content=b"<main>Public folder</main>" if url == context_url else original,
+            url=url, headers={"content-type": "application/json"},
+            raise_for_status=context_status if url == context_url else lambda: None)
+
+    monkeypatch.setattr(collector.requests, "Session", lambda: SimpleNamespace(get=read))
+    monkeypatch.setattr(collector.requests, "get", lambda *a, **k: pytest.fail("Shared file must use supplied context"))
+    result = collector.fetch({"id": "public-form", "title": "Public blank file", "url": file_url,
+        "public_share_context_url": context_url, "expected_document_format": "json"})
+    assert [url for url, _ in calls] == ([context_url, file_url] if context_available else [context_url])
+    assert all(kwargs == {"timeout": 35} for _, kwargs in calls)
+    if context_available:
+        assert "error" not in result and result["sha256"] == hashlib.sha256(original).hexdigest()
+        assert result["pages"][0]["text"] == original.decode()
+    else:
+        assert "context unavailable" in result["error"] and result["pages"] == []
+        assert "sha256" not in result
+
+
+@pytest.mark.parametrize("wrong_container", [False, True])
+def test_expected_excel_does_not_accept_html_shell_or_word_container(monkeypatch, wrong_container):
+    path = Path(__file__).parents[1] / "scripts/collect_ncu_host_web.py"
+    spec = importlib.util.spec_from_file_location("ncu_excel_original_test", path)
+    collector = importlib.util.module_from_spec(spec); spec.loader.exec_module(collector)
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w") as archive:
+        archive.writestr("word/document.xml", "<document/>")
+    original = buffer.getvalue() if wrong_container else b"<main>OneDrive workbook viewer</main>"
+    response = SimpleNamespace(status_code=200, ok=True, content=original,
+        url="https://example.edu/public.xlsx", headers={"content-type": "text/html"}, raise_for_status=lambda: None)
+    monkeypatch.setattr(collector.requests, "get", lambda *a, **k: response)
+    result = collector.fetch({"id": "excel-form", "title": "Expected workbook", "url": response.url,
+        "expected_document_format": "xlsx"})
+    assert result["status"] == 200 and result["sha256"] == hashlib.sha256(original).hexdigest()
+    assert result["error"] and not result["pages"]
+    from exchange_info.ncu_source_coverage import source_content_status
+    assert not source_content_status(result)["downloaded"]
+
+
+@pytest.mark.parametrize("redirected", [False, True])
+def test_explicit_page_url_review_rejects_200_outage_redirect_and_retains_observed_body(monkeypatch, redirected):
+    from exchange_info.ncu_source_coverage import source_content_status
+    path = Path(__file__).parents[1] / "scripts/collect_ncu_host_web.py"
+    spec = importlib.util.spec_from_file_location("ncu_redirect_collector_test", path)
+    collector = importlib.util.module_from_spec(spec); spec.loader.exec_module(collector)
+    requested = "https://example.edu/exchange/"
+    body = b"<main>Official temporary system outage announcement</main>" if redirected else b"<main>Exchange instructions</main>"
+    response = SimpleNamespace(status_code=200, ok=True, content=body,
+        url="https://notice.example.edu/" if redirected else requested,
+        headers={"content-type": "text/html"}, raise_for_status=lambda: None)
+    monkeypatch.setattr(collector.requests, "get", lambda *a, **k: response)
+    result = collector.fetch({"id": "exchange", "title": "Exchange page", "url": requested,
+        "expected_final_url_prefix": requested})
+    assert result["status"] == 200 and result["sha256"] == hashlib.sha256(body).hexdigest()
+    assert result["pages"][0]["page"] is None
+    if redirected:
+        assert "官方轉址非預期" in result["error"] and "outage" in result["pages"][0]["text"]
+        status = source_content_status(result)
+        assert status["response_bytes_received"] and not status["downloaded"] and not status["all_pages_read"]
+    else:
+        assert "error" not in result and source_content_status(result)["downloaded"]
+
+
+@pytest.mark.parametrize("kind,authority", [
+    ("other_official", "official_other_home_university"),
+    ("government_official", "government"),
+    ("language_test_official", "official_language_test_provider"),
+])
+def test_explicit_publisher_kind_is_preserved_without_defaulting_to_host(monkeypatch, kind, authority):
+    path = Path(__file__).parents[1] / "scripts/collect_ncu_host_web.py"
+    spec = importlib.util.spec_from_file_location("ncu_publisher_collector_test", path)
+    collector = importlib.util.module_from_spec(spec); spec.loader.exec_module(collector)
+    response = SimpleNamespace(status_code=200, ok=True, content=b"<main>Official reference</main>",
+        url="https://example.edu/reference", headers={"content-type": "text/html"}, raise_for_status=lambda: None)
+    monkeypatch.setattr(collector.requests, "get", lambda *a, **k: response)
+    item = {"id": "reference", "title": "Official reference", "url": response.url, "kind": kind}
+    assert collector.fetch(item)["authority_kind"] == authority
+    assert collector.fetch({**item, "authority_kind": "explicitly_reviewed_issuer"})["authority_kind"] == "explicitly_reviewed_issuer"
+
+
 @pytest.mark.parametrize("changed", [False, True])
 def test_public_partner_json_excerpt_is_validated_and_bound_to_original_bytes(tmp_path, monkeypatch, changed):
     path = Path(__file__).parents[1] / "scripts/collect_ncu_host_web.py"

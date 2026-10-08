@@ -74,6 +74,12 @@ def attach_public_field_excerpt(source: dict, excerpt: dict) -> None:
     ]
     source["source_excerpt_only"] = True
     source["privacy_note"] = excerpt["note_zh"]
+    if "original_sheet_count" in excerpt:
+        source["excerpt_original_scope"] = {
+            "source_sha256": source["sha256"],
+            "sheet_count": excerpt["original_sheet_count"],
+            "sheets_reviewed": excerpt.get("original_sheets_reviewed", []),
+        }
 
 
 def source_content_status(source: dict) -> dict:
@@ -111,6 +117,17 @@ def source_content_status(source: dict) -> dict:
         if sheet_ids
         else page_ids <= read_pages
     )
+    original_scope = source.get("excerpt_original_scope", {})
+    if original_scope:
+        # A public blank-sheet excerpt cannot hide unread example sheets.
+        all_parts_read = bool(
+            all_parts_read and reading_valid
+            and original_scope.get("source_sha256") == sha
+            and isinstance(original_scope.get("sheet_count"), int)
+            and original_scope["sheet_count"] > 0
+            and len(set(original_scope.get("sheets_reviewed", [])))
+            == original_scope["sheet_count"]
+        )
     status = source.get("status")
     response_received = bool(isinstance(status, int) and 200 <= status < 300 and sha)
     return {
