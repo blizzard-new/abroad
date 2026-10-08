@@ -973,5 +973,104 @@
       42,
       54
     ]
+  },
+  "seventh_pass": {
+    "base_commit": "b0655e0d4350b48d8535fb54ef5060d707a35536",
+    "latest_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "ccu_tests": {
+      "passed": 141,
+      "failed": 0,
+      "log": "docs/ccu-validation-2026-10-08/seventh-pass-four-school.txt",
+      "count_method": "CCU testcases from final four-school JUnit XML"
+    },
+    "four_school_tests": {
+      "passed": 262,
+      "skipped": 5,
+      "failed": 1,
+      "seconds": 65.99,
+      "known_failure": "tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+      "log": "docs/ccu-validation-2026-10-08/seventh-pass-four-school.txt"
+    },
+    "browser_tests": {
+      "existing_cases": {
+        "passed": 22,
+        "log": "docs/ccu-validation-2026-10-08/seventh-pass-initial-browser.txt",
+        "note": "Same run had four new assertions fail because two valid source links were rendered; existing cases all passed"
+      },
+      "new_cases": {
+        "passed": 4,
+        "failed": 0,
+        "seconds": 25.08,
+        "log": "docs/ccu-validation-2026-10-08/seventh-pass-new-browser.txt"
+      }
+    },
+    "integrity": {
+      "rebuild": {
+        "identical": true,
+        "files_compared": 16,
+        "sha256": {
+          "partners.jsonl": "ced1ece7164a50679cb92e11273798c5b78bc38e5037dbb0e0232e25fd70f5b6",
+          "application_workflows.jsonl": "5006fbd41547ef69c8ffc85f18afca7b6f995b484a4210275b663c4d9047c418",
+          "destination_profiles.jsonl": "735c0bb57af53b15eccb10519ca56129f422e00c994edd7551ab24192b706745",
+          "field-audit.json": "e2eaf37d5df8c7f577c9bfbf6c328b93b38f640ed32b35810dd1be8ce2e4d32c",
+          "completeness.json": "faf8497420ab280ba458d0982a10a8cd82aaf8ccf63c5945e9c43af077a4836d",
+          "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
+          "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
+          "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
+          "field-completeness-matrix.json": "1d84abe401ef193a78b23be08103d2fcdf3785004f72e5aba456c95efe10d6cf",
+          "confirmation-questions.json": "e2b7bd3638ce9daa3f0652615ec6bdca5f26769fee3aa590b896156a82e69ca4",
+          "overseas-completeness.json": "d4b9e8c1c5326039628e7bd78ef4fef1ce71000a85c483a14f6a35c5957cc50c",
+          "overseas-conflicts.json": "04e463e95302ac81165dcc9af6822c577e30e9cb7a0b6bdd9f54a8e65a3271bc",
+          "research-gap-audit.json": "c245e65a74a178f2a79b17f4f526f7fcf4b88f3a4f63fd2c7e76b7b20aaa7855",
+          "acquired-content-review.json": "427bc9b321f18509a8399aad4606430ec3e528a92b2d0eebbfc5d74c8024c54c",
+          "source-failure-followup.json": "d86430e3be10503eb79818449266f5db2526417958bb1cf57b601abfd279804e",
+          "overseas-reviewed-fields.json": "90f5b1bec1010ea73a3c9dddc3cbc7375bd62bf09e610c0dcfcb25b26286252e"
+        }
+      },
+      "existing_main_files_compared": 49,
+      "existing_main_files_changed": 0,
+      "api_paths": 110,
+      "api_routes_changed": false,
+      "api_required_fields_changed": false
+    },
+    "source_count": 461,
+    "new_source_count": 72,
+    "new_network_acquisition_records": 65,
+    "reread_existing_bundled_sources": 7,
+    "field_changes": 60,
+    "previously_missing_filled": 29,
+    "overseas_field_status_counts": {
+      "verified_current": 306,
+      "missing": 285,
+      "needs_confirmation": 257,
+      "reference_only": 31,
+      "conflict": 55,
+      "explicit_not_announced": 1
+    },
+    "complete_research_claimed": false,
+    "initial_validation_errors": [
+      "HUSTEP document summary exceeded existing 240-character workflow-name limit; shortened school-specific wording without changing the shared model limit; rebuilt successfully",
+      "First integration preflight found metadata ccupage missing in reread alias and exact excerpt needles absent; corrected from actual source contents before field data was written",
+      "Focused quota assertion expected an integer, while quota correctly retains official text 共 5名; corrected",
+      "Existing Hokkaido test tied evidence to five-page old mirror; updated to actual official three-page SA/SRS and one-page HUSTEP factsheets",
+      "Four new browser assertions expected exactly one identical URL; renderer has two valid evidence links. Corrected to presence and reran four passing cases",
+      "Syntax command mistyped ccu-language.js, causing MODULE_NOT_FOUND before wheel build; reran actual ccu-language-conditions.js and ccu-academic-units.js successfully"
+    ],
+    "common_file_changes_this_pass": [
+      "pyproject.toml: one CCU-specific legacy-XLS package-data glob"
+    ],
+    "school_only_code_changes": [
+      "scripts/fetch_ccu_overseas_sources.py: optional read-only xlrd legacy-XLS extraction",
+      "scripts/requirements-ccu-research.txt: optional xlrd dependency for research extraction only",
+      "src/exchange_info/ccu_overseas.py: preserve new language program/alternative notes and Ryukoku document disagreement"
+    ],
+    "next_research_pages": [
+      16,
+      23,
+      61,
+      77,
+      87,
+      105
+    ]
   }
 }

@@ -214,3 +214,41 @@ def test_ccu_new_public_forms_and_source_conflict_categories(
     page.screenshot(path=str(output / f"ccu-public-{source_page}-{width}.png"))
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors
+
+
+@pytest.mark.parametrize("width", [390, 1440])
+@pytest.mark.parametrize("source_page", [32, 37])
+def test_ccu_seventh_current_templates_and_program_deadlines(page, live_server, width, source_page):
+    page.set_viewport_size({"width": width, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+    partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == source_page)
+    page.goto(live_server.base_url + "/?school=" + quote(CCU) + "#school=" + quote(partner.school_name))
+    section = page.locator("#detail-overview .ccu-receiving-school-details")
+    expect(section).to_be_visible(timeout=30_000)
+    expect(section.locator("[data-ccu-field]")).to_have_count(17)
+    deadline = section.locator('[data-ccu-field="application_deadline"]')
+    deadline.locator("> summary").click()
+    if source_page == 32:
+        expect(deadline).to_contain_text("2026-11-09 23:59 JST")
+        expect(deadline).to_contain_text("2026-11-15")
+        expect(deadline).to_contain_text("來源矛盾")
+        assert deadline.locator('a[href$="s_exchange_02.html"]').count() >= 1
+    else:
+        expect(deadline).to_contain_text("2026-10-23")
+        expect(deadline).to_contain_text("2026-11-13")
+        expect(deadline).to_contain_text("SA/SRS")
+        forms = section.locator('[data-ccu-field="application_forms"]')
+        forms.locator("> summary").click()
+        expect(forms).to_contain_text("表內SpringSemester2027")
+        expect(forms).to_contain_text("2026Spring課表tentative")
+        assert forms.locator('a[href$="HU-Study-Plan_Half-Year_2027-Spring.xls"]').count() >= 1
+        assert page.evaluate("item => window.UniWayCcuLanguage.assess(item, 'toefl', '大學部').threshold", partner.model_dump(mode="json")) is None
+    deadline.scroll_into_view_if_needed()
+    output = Path("/tmp/ccu-seventh-pass-browser")
+    output.mkdir(exist_ok=True)
+    page.screenshot(path=str(output / f"ccu-seventh-{source_page}-{width}.png"))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors

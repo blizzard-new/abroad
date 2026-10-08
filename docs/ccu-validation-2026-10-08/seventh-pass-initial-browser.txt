@@ -1,0 +1,159 @@
+CONFTEST LOADED!
+...............FFFF.......                                               [100%]
+=================================== FAILURES ===================================
+_______ test_ccu_seventh_current_templates_and_program_deadlines[32-390] _______
+
+page = <Page url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Ryukoku%20University%20%E9%BE%8D%E8%B0%B7%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:39325', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-51/web-e2e-data0'))
+width = 390, source_page = 32
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page", [32, 37])
+    def test_ccu_seventh_current_templates_and_program_deadlines(page, live_server, width, source_page):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == source_page)
+        page.goto(live_server.base_url + "/?school=" + quote(CCU) + "#school=" + quote(partner.school_name))
+        section = page.locator("#detail-overview .ccu-receiving-school-details")
+        expect(section).to_be_visible(timeout=30_000)
+        expect(section.locator("[data-ccu-field]")).to_have_count(17)
+        deadline = section.locator('[data-ccu-field="application_deadline"]')
+        deadline.locator("> summary").click()
+        if source_page == 32:
+            expect(deadline).to_contain_text("2026-11-09 23:59 JST")
+            expect(deadline).to_contain_text("2026-11-15")
+            expect(deadline).to_contain_text("來源矛盾")
+>           assert deadline.locator('a[href$="s_exchange_02.html"]').count() == 1
+E           assert 2 == 1
+E            +  where 2 = count()
+E            +    where count = <Locator frame=<Frame name= url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8...il-overview .ccu-receiving-school-details >> [data-ccu-field="application_deadline"] >> a[href$="s_exchange_02.html"]'>.count
+E            +      where <Locator frame=<Frame name= url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8...il-overview .ccu-receiving-school-details >> [data-ccu-field="application_deadline"] >> a[href$="s_exchange_02.html"]'> = locator('a[href$="s_exchange_02.html"]')
+E            +        where locator = <Locator frame=<Frame name= url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8...%A4%A7%E5%AD%B8'> selector='#detail-overview .ccu-receiving-school-details >> [data-ccu-field="application_deadline"]'>.locator
+
+tests/e2e/test_ccu_school.py:238: AssertionError
+______ test_ccu_seventh_current_templates_and_program_deadlines[32-1440] _______
+
+page = <Page url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Ryukoku%20University%20%E9%BE%8D%E8%B0%B7%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:39325', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-51/web-e2e-data0'))
+width = 1440, source_page = 32
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page", [32, 37])
+    def test_ccu_seventh_current_templates_and_program_deadlines(page, live_server, width, source_page):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == source_page)
+        page.goto(live_server.base_url + "/?school=" + quote(CCU) + "#school=" + quote(partner.school_name))
+        section = page.locator("#detail-overview .ccu-receiving-school-details")
+        expect(section).to_be_visible(timeout=30_000)
+        expect(section.locator("[data-ccu-field]")).to_have_count(17)
+        deadline = section.locator('[data-ccu-field="application_deadline"]')
+        deadline.locator("> summary").click()
+        if source_page == 32:
+            expect(deadline).to_contain_text("2026-11-09 23:59 JST")
+            expect(deadline).to_contain_text("2026-11-15")
+            expect(deadline).to_contain_text("來源矛盾")
+>           assert deadline.locator('a[href$="s_exchange_02.html"]').count() == 1
+E           assert 2 == 1
+E            +  where 2 = count()
+E            +    where count = <Locator frame=<Frame name= url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8...il-overview .ccu-receiving-school-details >> [data-ccu-field="application_deadline"] >> a[href$="s_exchange_02.html"]'>.count
+E            +      where <Locator frame=<Frame name= url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8...il-overview .ccu-receiving-school-details >> [data-ccu-field="application_deadline"] >> a[href$="s_exchange_02.html"]'> = locator('a[href$="s_exchange_02.html"]')
+E            +        where locator = <Locator frame=<Frame name= url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8...%A4%A7%E5%AD%B8'> selector='#detail-overview .ccu-receiving-school-details >> [data-ccu-field="application_deadline"]'>.locator
+
+tests/e2e/test_ccu_school.py:238: AssertionError
+_______ test_ccu_seventh_current_templates_and_program_deadlines[37-390] _______
+
+page = <Page url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Hokkaido%20University%20%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:39325', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-51/web-e2e-data0'))
+width = 390, source_page = 37
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page", [32, 37])
+    def test_ccu_seventh_current_templates_and_program_deadlines(page, live_server, width, source_page):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == source_page)
+        page.goto(live_server.base_url + "/?school=" + quote(CCU) + "#school=" + quote(partner.school_name))
+        section = page.locator("#detail-overview .ccu-receiving-school-details")
+        expect(section).to_be_visible(timeout=30_000)
+        expect(section.locator("[data-ccu-field]")).to_have_count(17)
+        deadline = section.locator('[data-ccu-field="application_deadline"]')
+        deadline.locator("> summary").click()
+        if source_page == 32:
+            expect(deadline).to_contain_text("2026-11-09 23:59 JST")
+            expect(deadline).to_contain_text("2026-11-15")
+            expect(deadline).to_contain_text("來源矛盾")
+            assert deadline.locator('a[href$="s_exchange_02.html"]').count() == 1
+        else:
+            expect(deadline).to_contain_text("2026-10-23")
+            expect(deadline).to_contain_text("2026-11-13")
+            expect(deadline).to_contain_text("SA/SRS")
+            forms = section.locator('[data-ccu-field="application_forms"]')
+            forms.locator("> summary").click()
+            expect(forms).to_contain_text("表內SpringSemester2027")
+            expect(forms).to_contain_text("2026Spring課表tentative")
+>           assert forms.locator('a[href$="HU-Study-Plan_Half-Year_2027-Spring.xls"]').count() == 1
+E           assert 2 == 1
+E            +  where 2 = count()
+E            +    where count = <Locator frame=<Frame name= url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8...eceiving-school-details >> [data-ccu-field="application_forms"] >> a[href$="HU-Study-Plan_Half-Year_2027-Spring.xls"]'>.count
+E            +      where <Locator frame=<Frame name= url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8...eceiving-school-details >> [data-ccu-field="application_forms"] >> a[href$="HU-Study-Plan_Half-Year_2027-Spring.xls"]'> = locator('a[href$="HU-Study-Plan_Half-Year_2027-Spring.xls"]')
+E            +        where locator = <Locator frame=<Frame name= url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8...%E5%A4%A7%E5%AD%B8'> selector='#detail-overview .ccu-receiving-school-details >> [data-ccu-field="application_forms"]'>.locator
+
+tests/e2e/test_ccu_school.py:247: AssertionError
+______ test_ccu_seventh_current_templates_and_program_deadlines[37-1440] _______
+
+page = <Page url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Hokkaido%20University%20%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:39325', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-51/web-e2e-data0'))
+width = 1440, source_page = 37
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page", [32, 37])
+    def test_ccu_seventh_current_templates_and_program_deadlines(page, live_server, width, source_page):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == source_page)
+        page.goto(live_server.base_url + "/?school=" + quote(CCU) + "#school=" + quote(partner.school_name))
+        section = page.locator("#detail-overview .ccu-receiving-school-details")
+        expect(section).to_be_visible(timeout=30_000)
+        expect(section.locator("[data-ccu-field]")).to_have_count(17)
+        deadline = section.locator('[data-ccu-field="application_deadline"]')
+        deadline.locator("> summary").click()
+        if source_page == 32:
+            expect(deadline).to_contain_text("2026-11-09 23:59 JST")
+            expect(deadline).to_contain_text("2026-11-15")
+            expect(deadline).to_contain_text("來源矛盾")
+            assert deadline.locator('a[href$="s_exchange_02.html"]').count() == 1
+        else:
+            expect(deadline).to_contain_text("2026-10-23")
+            expect(deadline).to_contain_text("2026-11-13")
+            expect(deadline).to_contain_text("SA/SRS")
+            forms = section.locator('[data-ccu-field="application_forms"]')
+            forms.locator("> summary").click()
+            expect(forms).to_contain_text("表內SpringSemester2027")
+            expect(forms).to_contain_text("2026Spring課表tentative")
+>           assert forms.locator('a[href$="HU-Study-Plan_Half-Year_2027-Spring.xls"]').count() == 1
+E           assert 2 == 1
+E            +  where 2 = count()
+E            +    where count = <Locator frame=<Frame name= url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8...eceiving-school-details >> [data-ccu-field="application_forms"] >> a[href$="HU-Study-Plan_Half-Year_2027-Spring.xls"]'>.count
+E            +      where <Locator frame=<Frame name= url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8...eceiving-school-details >> [data-ccu-field="application_forms"] >> a[href$="HU-Study-Plan_Half-Year_2027-Spring.xls"]'> = locator('a[href$="HU-Study-Plan_Half-Year_2027-Spring.xls"]')
+E            +        where locator = <Locator frame=<Frame name= url='http://127.0.0.1:39325/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8...%E5%A4%A7%E5%AD%B8'> selector='#detail-overview .ccu-receiving-school-details >> [data-ccu-field="application_forms"]'>.locator
+
+tests/e2e/test_ccu_school.py:247: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ccu_school.py::test_ccu_seventh_current_templates_and_program_deadlines[32-390]
+FAILED tests/e2e/test_ccu_school.py::test_ccu_seventh_current_templates_and_program_deadlines[32-1440]
+FAILED tests/e2e/test_ccu_school.py::test_ccu_seventh_current_templates_and_program_deadlines[37-390]
+FAILED tests/e2e/test_ccu_school.py::test_ccu_seventh_current_templates_and_program_deadlines[37-1440]
+4 failed, 22 passed in 167.45s (0:02:47)

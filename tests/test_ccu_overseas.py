@@ -133,10 +133,8 @@ def test_hokkaido_program_evidence_and_old_documents_stay_separate():
         1,
         2,
         3,
-        4,
-        5,
     }
-    assert "不授予學分" in fields["course_restrictions"].value
+    assert "SRS純研究不修課無credits" in fields["course_restrictions"].value
     flows = read_jsonl(
         BUNDLE / "application_workflows.jsonl", UniversityApplicationWorkflow
     )

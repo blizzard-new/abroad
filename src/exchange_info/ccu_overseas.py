@@ -168,6 +168,23 @@ def apply_overseas_review(partner: PartnerUniversity) -> PartnerUniversity:
         if home_evidence:
             home_evidence.status = "conflict"
             home_evidence.note = calendar.value
+    if partner.source_pages[0] in {32, 35, 37}:
+        detail = partner.partner_exchange_details["language"]
+        partner.language_review_note = detail.value or detail.reason
+        for condition in partner.language_conditions:
+            condition.scope_choice_required = True
+            condition.additional_conditions.append(partner.language_review_note)
+            condition.evidence.note = partner.language_review_note
+        partner.student_summary_zh.eligibility_points.append(
+            partner.language_review_note
+        )
+    if partner.source_pages[0] == 32:
+        # The Spring 2027 host list is now readable, but its optional JLPT
+        # certificate differs from the mother's required-document list.
+        document = partner.partner_exchange_details["documents"]
+        home_evidence = partner.field_evidence["partner_documents"]
+        home_evidence.status = "needs_confirmation"
+        home_evidence.note = document.value or document.reason
     if partner.source_pages[0] == 95:
         detail = partner.partner_exchange_details["language"]
         partner.language_review_note = detail.value or detail.reason

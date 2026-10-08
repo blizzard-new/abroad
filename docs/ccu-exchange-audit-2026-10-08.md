@@ -342,3 +342,16 @@ UBM、EPITA、SDU的新接收資料顯示替代語言證明／program分流或�
 實際驗證：最終四校選定測試251 passed、5 skipped、1既有NTPU destination_profile_count失敗（58.00s）；其中130個CCU案例全部passed。初次三個新增測試斷言錯誤的原始log保留，修正後重跑。手機390／桌面1440及NTU四校瀏覽器22 passed（150.50s），含名古屋雙開課日、HCMUTE三截止日與AMU替代函提示；六張實際截圖保存在本批驗證目錄。16輸出離線重建hash一致，49個最新main既有CGU/NTPU/NTU資料檔hash不變，110條API路由及required欄位不變。Python編譯、改動檔ruff、JS語法及OpenAPI contract檢查成功；完整wheel附件包裝證據另見sixth-pass-final-wheel-proof.json。
 
 本批唯一新增共用檔變更是 `pyproject.toml` 的CCU partner_forms XLSX glob。資料／fetcher、AMU與名古屋適配均在CCU獨立檔；共用registry/API/UI等先前分支改動仍按本文件既有整合清單協調。未merge或部署，沒有改NTU工作、憑證、權限、付款或安全設定。第七批已開始龍谷、東北、北海道、常磐、東亞、慶星公開来源續查；本批推送是可複核檢查點，不能當研究完成。
+
+## 第七輪：龍谷、東北、北海道、常磐、東亞、慶星
+
+新增72筆來源紀錄：65次匿名公開網路取得，7筆離線重讀既有官方附件（六校母校表頁及慶星2027春表）。60欄更新、29個原missing填入有證據資訊；截至本輪935海外欄為306當期已核、257待確認、31參考、55矛盾、285missing、1官方明示未公告。461來源中59fetch_failed、另10個challenge/captcha/空回應不作政策依據。24校有語義查核帳本；沒有任何學校宣稱17欄全部本期完整。
+
+- 龍谷當期官方Spring2027申請頁與16頁指南、六指定項目/實表已開啟。接收端11/9 23:59JST vs母校11/15及JLPT ifavailable vs母校必附保留差異；推薦/醫師胸檢替代要求按實表，模板舊JEP標籤不擅改。寢具1960/1980、required/optional及退宿5日/7日、獎助扣除說法另待確認。
+- 東北COLABS事前接受10/15 15:00JST與TAO Oct1–Nov15分段，事前接受不当母校nomination截止或入學；masters checkbox/graduate範圍仍待核。IPLA/COLABS Spring2027校曆與JYPE Fallonly、DEEP舊Spring2026分開。英授在學函替代、ECTS等量與TU學分不亂轉。
+- 北海道HUSTEP 10/23、SA/SRS nomination9/25/application11/13及學制/學籍末日分開；新iBT4.5只2028起、JASSO畢業日限制只獎助段。四個HUSTEP實表含Spring2027舊XLS已讀原儲存值，不執行宏/公式；TAO完整個人字段未取得。10/10.5小時及寢具價格/稅別矛盾保留，普通宿舍招租不套HUSTEP截止。
+- 常磐公開Fall交換與2026FallPartTime（收學費）不是2027春新簡章；中正當期日期仍待接收端核。東亞Outbound/degree/韓語研修條件不填CCUincoming缺值，一般保險30%off算式與未年住宿價差另列。慶星Spring表內Fall住宿價不當春帳單，英文學位招生門檻不套交換。
+
+實際驗證：141項CCU測試全過；四校選定回歸262 passed、5 skipped、1既有NTPU目的地計數失敗（已於main重現）。瀏覽器同次22項既有通過；四個新案例因重複有效URL數量假設失敗後修正，單獨重跑4 passed/25.08s。16輸出離線重建雜湊一致；49個CGU/NTPU/NTU main資料雜湊不變；110 API路徑及必填schema不變。最終wheel562份CCU檔案逐byte一致、實際XLS已包含，SHA見seventh-pass-final-wheel-proof.json。初始指令/測試問題、真實日誌與截圖保留於validation和本目錄。
+
+本輪共用處變更僅pyproject.toml的CCU legacy-XLS package-data glob；校別程式新增optional xlrd研究依賴及唯讀XLS擷取，CCU adapter補語言計畫/替代說明、龍谷文件待確認。累計核心registry/storage/API/UI/資格與文件協調改動見此前檔案清單。下一輪公開源續查p16/23/61/77/87/105；此仍是可整合檢查點，未標整體研究已耗盡。

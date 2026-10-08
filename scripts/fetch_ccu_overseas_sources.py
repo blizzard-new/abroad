@@ -181,10 +181,45 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
                 )
                 (output / (item["source_id"] + ".docx")).write_bytes(body)
         elif body.startswith(b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1"):
-            # A legacy Word binary is not HTML. Preserve it for a real DOC
-            # converter rather than treating decoded binary strings as evidence.
-            result.update(status="downloaded_doc_unextracted", text_pages=[])
-            (output / (item["source_id"] + ".doc")).write_bytes(body)
+            if urlsplit(response.url).path.lower().endswith(".xls") or (
+                response.headers.get("Content-Type", "").split(";")[0]
+                == "application/vnd.ms-excel"
+            ):
+                (output / (item["source_id"] + ".xls")).write_bytes(body)
+                result.update(status="downloaded_xls_unextracted", text_pages=[])
+                try:
+                    import xlrd
+                except ImportError:
+                    result["extraction_error"] = (
+                        "Install scripts/requirements-ccu-research.txt to read legacy XLS"
+                    )
+                else:
+                    book = xlrd.open_workbook(file_contents=body)
+                    pages = []
+                    for sheet in book.sheets():
+                        lines = [sheet.name]
+                        for row in range(sheet.nrows):
+                            values = [
+                                f"R{row + 1}C{column + 1}: {sheet.cell_value(row, column)}"
+                                for column in range(sheet.ncols)
+                                if sheet.cell_value(row, column) != ""
+                            ]
+                            if values:
+                                lines.append(" | ".join(values))
+                        pages.append("\n".join(lines))
+                    result.update(
+                        status="xls",
+                        text_pages=pages,
+                        spreadsheet_extraction_note=(
+                            "xlrd reads stored cell values, including cached formula results; "
+                            "it does not execute formulas, macros or external links"
+                        ),
+                    )
+            else:
+                # A legacy Word binary is not HTML. Preserve it for a real DOC
+                # converter rather than treating binary strings as evidence.
+                result.update(status="downloaded_doc_unextracted", text_pages=[])
+                (output / (item["source_id"] + ".doc")).write_bytes(body)
         else:
             soup = BeautifulSoup(body, "html.parser")
             public_blocks = list(public_content_blocks(soup))

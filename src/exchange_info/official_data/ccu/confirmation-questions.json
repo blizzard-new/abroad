@@ -1741,261 +1741,351 @@
     "school_name": "Ryukoku University 龍谷大學",
     "ccu_page": 32,
     "quota_status": "published",
-    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。",
+    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。；第七輪六校公開重要政策/指定模板與母校逐欄交叉核對，歷史梯次/方向/計畫與語言替代不混入當期。",
     "questions": [
       {
-        "field": "program_scope",
-        "label": "接收計畫、學制及校區",
-        "status": "reference_only",
-        "question": "請確認Ryukoku University 龍谷大學中正2027春季的接收計畫、學制及校區，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "未載適用2027春季年，尚未核實新版。",
-        "reference_value": "參考：JSP與院系協議兩種，日/英track申請後不可轉；申請程序為Fall2026，未核實Spring2027新版。",
+        "field": "language",
+        "label": "合作校語言條件與替代證明",
+        "status": "needs_confirmation",
+        "question": "請確認Ryukoku University 龍谷大學中正2027春季的合作校語言條件與替代證明，提供明載年度／計畫的官方文件或提名通知。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "當期JSP可英文修讀、無日語先修也可；JapaneseTrack推薦300小時或JLPTN4，TOEFLPBT500為recommended非硬最低。中正p32寫PBL500與N4/300小時較硬，檢定名稱/母校核准路徑仍需確認；所有人交日語評估/自評/SPOT，JLPT證書接收校ifavailable，母校清單列必附，不自動豁免。",
         "evidence": [
           {
-            "source_id": "p32-mirror",
-            "source_url": "https://drive.google.com/file/d/16YIDw4i2o1ZgT1KkUOewJW4BvzhjC7sp/view?usp=drive_link",
+            "source_id": "p32-r7-guide",
+            "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+            "source_pages": [
+              7
+            ],
+            "academic_year": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "application_round": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "checked_at": "2026-10-08T08:03:26.183244+00:00",
+            "status": "needs_confirmation",
+            "excerpt": ", and you have (the recommended) TOEFL PBT 500 or higher OR if… ●you want to study Japanese ●want to take classes taught in Japanese ●you have studied Japanese for 300 hours or more, and have (the recommended) JLPT N4 score or higher ●it is possible, you would like to take regular subjects taught in Japanese Submit your SPOT Test results and Self-Assessment of Japanese Language",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+            "text_sha256": "0945334e23d7726d20d42ac0fb06a14036824515804ca79a7d9ec8078d8ba653"
+          },
+          {
+            "source_id": "p32-r7-guide",
+            "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
             "source_pages": [
               5
             ],
-            "academic_year": "2026秋季申請；部分2027春季校曆",
-            "application_round": "2026秋季申請；部分2027春季校曆",
-            "checked_at": "2026-10-08T00:00:00Z",
-            "status": "reference_only",
-            "excerpt": "aduate Schools, the student may be limited to registering for subjects only within a specific major. ● If the student selects the English Track, they will not be able to register for subjects conducted in Japanese. Careful consideration should be given to this choice, as the student will not be able to change their selection after ",
-            "note": "未載適用2027春季年，尚未核實新版。",
-            "content_hash": "fd78b7688fc9fb9eb80db563bc583331f30787c3e33a853a88c6b7550167df79",
-            "text_sha256": "c02f7f979f0a6a5cae1edf691aba7b385470fa518363c307f3ff1347b770ccf3"
+            "academic_year": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "application_round": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "checked_at": "2026-10-08T08:03:26.183244+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "panese track, it is recommended that the student has completed at least 300 hours of Japanese language study or has Japanese proficiency equivalent to JLPT N4 or higher. ●Based on the results of the Japanese placement test, if the student’s Japanese level is determined to be lower than that required for entry into JSP-II, they may be reassigned to JSP-I (English Track) IMPORTAN",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+            "text_sha256": "0945334e23d7726d20d42ac0fb06a14036824515804ca79a7d9ec8078d8ba653"
+          },
+          {
+            "source_id": "p32-r7-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              32
+            ],
+            "academic_year": "正文中正2027春季名額表2026.09.17版，物理第32頁",
+            "application_round": "正文中正2027春季名額表2026.09.17版，物理第32頁",
+            "checked_at": "2026-10-08T08:16:21.827202+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "iciency) 英語課程：TOEFL PBL 500或同等程度以上 日語課程：N4或同等程度以上；日語學習時間 300小時以上 姊妹校簡章 (Fact Sheet) https://drive.google.com/file/d/16YIDw4i2o1ZgT1KkUOewJW4BvzhjC7sp/view?usp=dri ve_link 第二階繳交 資料 (Submit relevant documents _Second Section) 必須先經過第一階段校內申請通過，且經過國際處向姐妹校提名後，才有資格進行 第二階段(姊妹校)申請。 1. Passport-style ID Photo 2. Image of your Passport Photo Page 3. Official Transcript 4. Japanese Languag",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "408bb6a2a6f9054bee0f8ec85895eda0ed3ac1f6d416f2b9ec68e19f3eeebb90"
+          },
+          {
+            "source_id": "p32-r7-application-index",
+            "source_url": "https://intl.ryukoku.ac.jp/english/html/s_exchange_02.html",
+            "source_pages": [],
+            "academic_year": "正文Spring2027Entry；截止2026-11-09 23:59JST",
+            "application_round": "正文Spring2027Entry；截止2026-11-09 23:59JST",
+            "checked_at": "2026-10-08T08:02:50.489757+00:00",
+            "status": "needs_confirmation",
+            "excerpt": " Score Certificate, if available]. For details, please follow the instructions of the person in charge at your Home University. Pagetop",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "72bddea4cfa294f84cc1f420ceabd805cb59defb5935aad74bf2edd27a06b067",
+            "text_sha256": "f81606669a223fcaf26d9c62f2ba6f4f426f6c87474d9d61b6c0389293d91a01"
           }
         ]
       },
       {
-        "field": "eligibility",
-        "label": "合作校接收資格",
-        "status": "missing",
-        "question": "請確認Ryukoku University 龍谷大學中正2027春季的合作校接收資格，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "language",
-        "label": "合作校語言條件與替代證明",
-        "status": "missing",
-        "question": "請確認Ryukoku University 龍谷大學中正2027春季的合作校語言條件與替代證明，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "nomination_deadline",
-        "label": "合作校提名截止",
-        "status": "missing",
-        "question": "請確認Ryukoku University 龍谷大學中正2027春季的合作校提名截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
         "field": "application_deadline",
         "label": "合作校申請截止",
-        "status": "reference_only",
+        "status": "conflict",
         "question": "請確認Ryukoku University 龍谷大學中正2027春季的合作校申請截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "未載適用2027春季年，尚未核實新版。",
-        "reference_value": "歷史Fall2026：2026-05-13 23:59 JapanTime；不能作2027春季申請截止。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "來源矛盾：龍谷Spring2027官方頁/新版指南，學生申請2026-10-06至2026-11-09 23:59 JST；中正2026.09.17表p32仍列2026-11-15。未取得官方延期/修訂解釋，不採較晚日、不設定確定提醒。",
         "evidence": [
           {
-            "source_id": "p32-mirror",
-            "source_url": "https://drive.google.com/file/d/16YIDw4i2o1ZgT1KkUOewJW4BvzhjC7sp/view?usp=drive_link",
+            "source_id": "p32-r7-guide",
+            "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
             "source_pages": [
               2
             ],
-            "academic_year": "2026秋季申請；部分2027春季校曆",
-            "application_round": "2026秋季申請；部分2027春季校曆",
-            "checked_at": "2026-10-08T00:00:00Z",
-            "status": "reference_only",
-            "excerpt": " titled <Exchange Application Fall 2026 Entry> and complete the form within the following period: Application Period: April 6th ~ May 13th, 2026 23:59 (Japan Time) ① Notification of Acceptance or Non-Acceptance Those who have completed the above procedures by the deadline will be notified of their acceptance or non- acceptance in approxim",
-            "note": "未載適用2027春季年，尚未核實新版。",
-            "content_hash": "fd78b7688fc9fb9eb80db563bc583331f30787c3e33a853a88c6b7550167df79",
-            "text_sha256": "c02f7f979f0a6a5cae1edf691aba7b385470fa518363c307f3ff1347b770ccf3"
+            "academic_year": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "application_round": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "checked_at": "2026-10-08T08:03:26.183244+00:00",
+            "status": "conflict",
+            "excerpt": "e following period: Application Period: October 6th ~ November 9th, 2026 23:59 (Japan Time) ① Notification of Acceptance or Non-Acceptance Those who have completed the above procedures by the deadline will be notified of their acceptance or non- acceptance in approximately the middle of December. ② Issuance of the Official Acceptance Letter and COE (Certificate of Eligibility) ",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+            "text_sha256": "0945334e23d7726d20d42ac0fb06a14036824515804ca79a7d9ec8078d8ba653"
+          },
+          {
+            "source_id": "p32-r7-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              32
+            ],
+            "academic_year": "正文中正2027春季名額表2026.09.17版，物理第32頁",
+            "application_round": "正文中正2027春季名額表2026.09.17版，物理第32頁",
+            "checked_at": "2026-10-08T08:16:21.827202+00:00",
+            "status": "conflict",
+            "excerpt": "ml 備註(Notes) 申請截止日: 2026/11/15 學期時間：2027/04/01~2027/9月 最少需修習學分數: 15 credits",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "408bb6a2a6f9054bee0f8ec85895eda0ed3ac1f6d416f2b9ec68e19f3eeebb90"
+          },
+          {
+            "source_id": "p32-r7-application-index",
+            "source_url": "https://intl.ryukoku.ac.jp/english/html/s_exchange_02.html",
+            "source_pages": [],
+            "academic_year": "正文Spring2027Entry；截止2026-11-09 23:59JST",
+            "application_round": "正文Spring2027Entry；截止2026-11-09 23:59JST",
+            "checked_at": "2026-10-08T08:02:50.489757+00:00",
+            "status": "conflict",
+            "excerpt": "ubmission Deadline: November 9, 2026 (Monday), 23:59 Japan Standard Time (JST) ] The Applicant should retain a copy of all data and prescribed forms for their own records. In addition to the above items (1) through (6), you must also provide a [Passport-style ID Photo], [Image of your Passport Photo Page], an [Official Transcript], and a [Japanese Language Proficiency Test (JLP",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "72bddea4cfa294f84cc1f420ceabd805cb59defb5935aad74bf2edd27a06b067",
+            "text_sha256": "f81606669a223fcaf26d9c62f2ba6f4f426f6c87474d9d61b6c0389293d91a01"
           }
         ]
       },
       {
         "field": "documents",
         "label": "合作校文件要求（僅列已核實項目）",
-        "status": "reference_only",
+        "status": "needs_confirmation",
         "question": "請確認Ryukoku University 龍谷大學中正2027春季的合作校文件要求（僅列已核實項目），提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "未載適用2027春季年，尚未核實新版。",
-        "reference_value": "參考：日語自評與SPOT結果所有人須提交；完整Spring2027申請表/清單未核實。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "當期指定六項：研究計畫、日語能力評估（教員/合格者，需institutionalstamp）、指定推薦表（另附推薦函仍必交）、醫師健康表、自評表、SPOT結果PDF；加照片/護照頁/正式成績。JLPTScore接收校ifavailable vs母校p32必附待確認。推薦表申請人姓名地址電話與簽名、推薦人簽名日期各別；健康胸檢無法X光可醫師其他肺結核檢測附正式結果。",
         "evidence": [
           {
-            "source_id": "p32-mirror",
-            "source_url": "https://drive.google.com/file/d/16YIDw4i2o1ZgT1KkUOewJW4BvzhjC7sp/view?usp=drive_link",
-            "source_pages": [
-              3
-            ],
-            "academic_year": "2026秋季申請；部分2027春季校曆",
-            "application_round": "2026秋季申請；部分2027春季校曆",
-            "checked_at": "2026-10-08T00:00:00Z",
-            "status": "reference_only",
-            "excerpt": "he Graduate Schools of Ryukoku University. In addition to the [Certificate of Japanese Language Proficiency], it is necessary for ALL Exchange Applicants to submit the following: ◆[Grid for Self-Assessment of Japanese Language Skills ] Before filling out this document, please first read the “Explanation for Self-Assessment of Japanese Langua",
-            "note": "未載適用2027春季年，尚未核實新版。",
-            "content_hash": "fd78b7688fc9fb9eb80db563bc583331f30787c3e33a853a88c6b7550167df79",
-            "text_sha256": "c02f7f979f0a6a5cae1edf691aba7b385470fa518363c307f3ff1347b770ccf3"
-          }
-        ]
-      },
-      {
-        "field": "application_forms",
-        "label": "合作校申請表取得方式",
-        "status": "missing",
-        "question": "請確認Ryukoku University 龍谷大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "course_restrictions",
-        "label": "課程與學分限制",
-        "status": "reference_only",
-        "question": "請確認Ryukoku University 龍谷大學中正2027春季的課程與學分限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "未載適用2027春季年，尚未核實新版。",
-        "reference_value": "參考：每期至少15學分；JSP級別決定英/日可修課，seminar/先修限制需許可。",
-        "evidence": [
+            "source_id": "p32-r7-application-index",
+            "source_url": "https://intl.ryukoku.ac.jp/english/html/s_exchange_02.html",
+            "source_pages": [],
+            "academic_year": "正文Spring2027Entry；截止2026-11-09 23:59JST",
+            "application_round": "正文Spring2027Entry；截止2026-11-09 23:59JST",
+            "checked_at": "2026-10-08T08:02:50.489757+00:00",
+            "status": "needs_confirmation",
+            "excerpt": " our online system. All documents above (from 1 to 6) must be submitted. Applicants must also be sure to complete the input of their basic information. All basic data input and prescribed document submission must be completed by the final submission deadline. [Submission Deadline: November 9, 2026 (Monday), 23:59 Japan Standard Time (JST) ] The Applicant should retain a copy of",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "72bddea4cfa294f84cc1f420ceabd805cb59defb5935aad74bf2edd27a06b067",
+            "text_sha256": "f81606669a223fcaf26d9c62f2ba6f4f426f6c87474d9d61b6c0389293d91a01"
+          },
           {
-            "source_id": "p32-mirror",
-            "source_url": "https://drive.google.com/file/d/16YIDw4i2o1ZgT1KkUOewJW4BvzhjC7sp/view?usp=drive_link",
+            "source_id": "p32-r7-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
             "source_pages": [
-              7
+              32
             ],
-            "academic_year": "2026秋季申請；部分2027春季校曆",
-            "application_round": "2026秋季申請；部分2027春季校曆",
-            "checked_at": "2026-10-08T00:00:00Z",
-            "status": "reference_only",
-            "excerpt": "ts for one semester of enrollment or a minimum of 30 credits for two semesters of enrollment. ●You are required to register for a minimum of 15 credits per semester (30 credits per year). (Please note that this minimum registered credit requirement is subject to change.) Be sure to confirm with the responsible staff or faculty member at your home unive",
-            "note": "未載適用2027春季年，尚未核實新版。",
-            "content_hash": "fd78b7688fc9fb9eb80db563bc583331f30787c3e33a853a88c6b7550167df79",
-            "text_sha256": "c02f7f979f0a6a5cae1edf691aba7b385470fa518363c307f3ff1347b770ccf3"
+            "academic_year": "正文中正2027春季名額表2026.09.17版，物理第32頁",
+            "application_round": "正文中正2027春季名額表2026.09.17版，物理第32頁",
+            "checked_at": "2026-10-08T08:16:21.827202+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "e Proficiency Test (JLPT) Score Certificate 5. Plan of Study at Ryukoku University 6. Evaluation of Japanese Language Proficiency 7. Letter of Recommendation(s) 8. Certificate of Health 9. Grid for Self-Assessment of Japanese Language Skills 10. SPOT Test (Japanese Placement Test) 相關資料 (Other documents) JSP - https://intl.ryukoku.ac.jp/english/examination/exp/rjsp/index.html 備註",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "408bb6a2a6f9054bee0f8ec85895eda0ed3ac1f6d416f2b9ec68e19f3eeebb90"
+          },
+          {
+            "source_id": "p32-r7-health-form",
+            "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/04_certificate_of_health.pdf",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "模板正文未印2027；當期Spring2027官方頁指定，舊JEP標籤不自行改寫",
+            "application_round": "模板正文未印2027；當期Spring2027官方頁指定，舊JEP標籤不自行改寫",
+            "checked_at": "2026-10-08T08:03:26.968567+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "hysical Disability] A chest examination is compulsory. If the student is unable to undergo an X-ray examination,another Pulmonary Tuberculosis test must be performed by a doctor, and the official results should be submitted as an attachment to this form.",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。與Spring2027申請索引逐項對照；指定表實開，不代表提名後全部portal欄位已取。PDF原圖核對醫師签署與胸檢：無法X光可醫師執行其他肺結核檢查並附正式結果，不代作醫療判斷。",
+            "content_hash": "7119d07b8eabc25867043d3e97bf0cf030923d37b85dcc38c5ecb29ab3276b0d",
+            "text_sha256": "9787e55987998534323248380fb4a6807b11c7af48e36a5306ce83edfb3f4c4a"
+          },
+          {
+            "source_id": "p32-r7-recommendation-form",
+            "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/03_letter.pdf",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "模板正文未印2027；當期Spring2027官方頁指定，舊JEP標籤不自行改寫",
+            "application_round": "模板正文未印2027；當期Spring2027官方頁指定，舊JEP標籤不自行改寫",
+            "checked_at": "2026-10-08T08:03:26.187533+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ommendation letter, this form is required. LETTER OF RECOMMENDATION ■■■■■■■■■■■□ ■■ ■■■■■■■■■■ ■ ■■■■■■■■■■■■■■■■■■■■■■■■ ■■ ■■■■■ ■ (Applicant)",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。與Spring2027申請索引逐項對照；指定表實開，不代表提名後全部portal欄位已取。PDF两頁文字與第1頁圖像核對，申請人姓名/地址/電話/簽名與推薦人簽名分開；另附推薦函不能免指定表。",
+            "content_hash": "eb7efbb79b22c4f7e6ca8d096776856b60e7e75864d7f7c2d3dadadf0e43ce40",
+            "text_sha256": "dbdb5643aa1790e577a78452fcfa4db1f2ef8fa827520fbb35a0be1e18e62438"
           }
         ]
       },
       {
         "field": "housing",
         "label": "住宿與床位",
-        "status": "reference_only",
+        "status": "conflict",
         "question": "請確認Ryukoku University 龍谷大學中正2027春季的住宿與床位，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "未載適用2027春季年，尚未核實新版。",
-        "reference_value": "歷史：宿舍床品租用1960JPY/月；InternationalHouse單人房租35000+水電10000，Mitra45000+10000（tentative）；2027新版未核實。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "當期Mitra/InternationalHouse由校方配房，medicalneeds可考量、一般不可改。p8寢具required不可取消 vs p13FirstPayment bedding(optional)，未任選；p9房租說已扣housingSupportScholarship，是否中正個人適用及最終帳單待確認，無保證全額免宿。",
         "evidence": [
           {
-            "source_id": "p32-mirror",
-            "source_url": "https://drive.google.com/file/d/16YIDw4i2o1ZgT1KkUOewJW4BvzhjC7sp/view?usp=drive_link",
+            "source_id": "p32-r7-guide",
+            "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+            "source_pages": [
+              8
+            ],
+            "academic_year": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "application_round": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "checked_at": "2026-10-08T08:03:26.183244+00:00",
+            "status": "conflict",
+            "excerpt": "r a dormitory room. Rental Bedding is required for all dormitory residents. It is not possible to cancel this service. Expense: 1,960 JPY/month (subject to change) ◎Please note that dormitory assignments are decided by the university and, in principle, cannot be changed. Campuses Accommodations (Dormitories)",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+            "text_sha256": "0945334e23d7726d20d42ac0fb06a14036824515804ca79a7d9ec8078d8ba653"
+          },
+          {
+            "source_id": "p32-r7-guide",
+            "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+            "source_pages": [
+              13
+            ],
+            "academic_year": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "application_round": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "checked_at": "2026-10-08T08:03:26.183244+00:00",
+            "status": "conflict",
+            "excerpt": "s [Rent, Utilities, Bedding (optional)] at the nearest convenience store shortly after your arrival. This payment must be made in cash. IT IS NOT POSSIBLE TO PAY BY CREDI T OR DEBIT CARD. Also, please note t hat Yucho Ginko (Japan Post Bank) does not offer online banking services. ④ Security Deposit In principle, the security deposit will be returned when you check-out of the d",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+            "text_sha256": "0945334e23d7726d20d42ac0fb06a14036824515804ca79a7d9ec8078d8ba653"
+          },
+          {
+            "source_id": "p32-r7-guide",
+            "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
             "source_pages": [
               9
             ],
-            "academic_year": "2026秋季申請；部分2027春季校曆",
-            "application_round": "2026秋季申請；部分2027春季校曆",
-            "checked_at": "2026-10-08T00:00:00Z",
-            "status": "reference_only",
-            "excerpt": "ssary) Security Deposit: (A) 80,000JPY (one-time payment upon entering the dormitory) Monthly Rent and Utilities Costs: (A) Rent: 35,000JPY Utilities: 10,000JPY (Fixed) (Tentative) (B) Rent: 23,000JPY Utilities: 6,000JPY (Fixed) (Tentative) ※Dormitory fees are subject to change. Access: 5 minutes on foot to Fukakusa Campus 7 mi",
-            "note": "未載適用2027春季年，尚未核實新版。",
-            "content_hash": "fd78b7688fc9fb9eb80db563bc583331f30787c3e33a853a88c6b7550167df79",
-            "text_sha256": "c02f7f979f0a6a5cae1edf691aba7b385470fa518363c307f3ff1347b770ccf3"
+            "academic_year": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "application_round": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "checked_at": "2026-10-08T08:03:26.183244+00:00",
+            "status": "conflict",
+            "excerpt": "e the fees required after deducting the International Student Accommodation Support Scholarship (single ¥10,000/month, twin ¥5,000/month). ↑ Map ↑ ↑ Map ↑",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+            "text_sha256": "0945334e23d7726d20d42ac0fb06a14036824515804ca79a7d9ec8078d8ba653"
           }
         ]
       },
       {
         "field": "housing_deadline",
         "label": "住宿申請／付款截止",
-        "status": "missing",
+        "status": "conflict",
         "question": "請確認Ryukoku University 龍谷大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "Spring2027住房申請/抵達回覆以NASIC個別email指定日，未核固定申請截止。離宿prorate通知p14/p15前月5日 vs p14LeavingForm前月7日矛盾，另至少提前一個月；這是退宿規則，不是申請deadline。",
+        "evidence": [
+          {
+            "source_id": "p32-r7-guide",
+            "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+            "source_pages": [
+              14
+            ],
+            "academic_year": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "application_round": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "checked_at": "2026-10-08T08:03:26.183244+00:00",
+            "status": "conflict",
+            "excerpt": "e Dormitory Manager by the 5th of the month preceding the month in which you are leaving the dormitory. If you submit the notice after the due date, you will be charged one month's rent, even if you leave within 14 days. If a [SINGLE] room at Ryukoku International House is occupied for the first eight days of the month, he/she will be charged according to the following: (Intern",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+            "text_sha256": "0945334e23d7726d20d42ac0fb06a14036824515804ca79a7d9ec8078d8ba653"
+          },
+          {
+            "source_id": "p32-r7-guide",
+            "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+            "source_pages": [
+              14
+            ],
+            "academic_year": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "application_round": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "checked_at": "2026-10-08T08:03:26.183244+00:00",
+            "status": "conflict",
+            "excerpt": "r Dormitory Manager by the 7 th of the month previous to the month you plan to depart. If you fail to turn in the form by that time, even if you plan to reside in your room for only 14 days or less in the following month, you will be charged the full rent amount. ② Clean your room and remove your belongings before checking out. ③ Approximately One Week before Checkout: Your Res",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+            "text_sha256": "0945334e23d7726d20d42ac0fb06a14036824515804ca79a7d9ec8078d8ba653"
+          }
+        ]
       },
       {
         "field": "costs",
         "label": "住宿與生活費用",
-        "status": "missing",
+        "status": "conflict",
         "question": "請確認Ryukoku University 龍谷大學中正2027春季的住宿與生活費用，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "insurance",
-        "label": "保險",
-        "status": "reference_only",
-        "question": "請確認Ryukoku University 龍谷大學中正2027春季的保險，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "未載適用2027春季年，尚未核實新版。",
-        "reference_value": "參考：超3月加入日本NHI約1500–2000JPY/月，出發前海外/意外保險；不是已確認2027費率。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "當期指南p9InternationalHouse單人depositJPY80000，租35000+util10000/月；雙人租23000+6000，p9未列雙人押金（一般宿舍頁列50000，未年）；Mitra押100000租45000+10000。指南說已扣單人10000/雙人5000住房獎助，不再自行扣一次。寢具指南1960/月 vs一般宿舍頁1980/月，必租/選租亦矛盾；個人2027帳單待確認，非完整生活預算。",
         "evidence": [
           {
-            "source_id": "p32-mirror",
-            "source_url": "https://drive.google.com/file/d/16YIDw4i2o1ZgT1KkUOewJW4BvzhjC7sp/view?usp=drive_link",
+            "source_id": "p32-r7-guide",
+            "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
             "source_pages": [
-              11
+              8
             ],
-            "academic_year": "2026秋季申請；部分2027春季校曆",
-            "application_round": "2026秋季申請；部分2027春季校曆",
-            "checked_at": "2026-10-08T00:00:00Z",
-            "status": "reference_only",
-            "excerpt": "and one day or longer) are required to enroll in Japan’s National Health Insurance system. The insurance premium is approximately 1,500 to 2,000 yen per month. Enrollment procedures must be completed at the ward office near the university after admission. Before traveling to Japan, you must enroll in overseas travel insurance or acciden",
-            "note": "未載適用2027春季年，尚未核實新版。",
-            "content_hash": "fd78b7688fc9fb9eb80db563bc583331f30787c3e33a853a88c6b7550167df79",
-            "text_sha256": "c02f7f979f0a6a5cae1edf691aba7b385470fa518363c307f3ff1347b770ccf3"
-          }
-        ]
-      },
-      {
-        "field": "visa",
-        "label": "簽證與居留",
-        "status": "reference_only",
-        "question": "請確認Ryukoku University 龍谷大學中正2027春季的簽證與居留，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "未載適用2027春季年，尚未核實新版。",
-        "reference_value": "參考：校方代申請COE約6–8周，拿COE+acceptance向使館申請；Spring2027COE截止未核實。",
-        "evidence": [
+            "academic_year": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "application_round": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "checked_at": "2026-10-08T08:03:26.183244+00:00",
+            "status": "conflict",
+            "excerpt": "s service. Expense: 1,960 JPY/month (subject to change) ◎Please note that dormitory assignments are decided by the university and, in principle, cannot be changed. Campuses Accommodations (Dormitories)",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+            "text_sha256": "0945334e23d7726d20d42ac0fb06a14036824515804ca79a7d9ec8078d8ba653"
+          },
           {
-            "source_id": "p32-mirror",
-            "source_url": "https://drive.google.com/file/d/16YIDw4i2o1ZgT1KkUOewJW4BvzhjC7sp/view?usp=drive_link",
+            "source_id": "p32-r7-dorm-house",
+            "source_url": "https://intl.ryukoku.ac.jp/english/dormitory/kokusai_h.html",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T08:02:50.490862+00:00",
+            "status": "conflict",
+            "excerpt": "ee Free Bedding Fee 1,980JPY/Month (fixed rate) Kakebuton (heavy blanket), Shikibuton (mattress), pillow, wool blanket, towel blanket and sheets, kakebuton covers and pillow covers. Rental Term 1 semester *Exchange Students from Ryukoku University's Partner Universities should refer to the designated move-out date in the \"Ryukoku University Guide for Exchange Students”. The int",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "1fd9f870bbe2269a062b21372ae7e1a5445b15dd9d62591b741996d0b5b70767",
+            "text_sha256": "57f394812dd3f8bc3beaa069c17546d0fcee19227b63db0fa5c3e52eceb60086"
+          },
+          {
+            "source_id": "p32-r7-guide",
+            "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
             "source_pages": [
-              2
+              9
             ],
-            "academic_year": "2026秋季申請；部分2027春季校曆",
-            "application_round": "2026秋季申請；部分2027春季校曆",
-            "checked_at": "2026-10-08T00:00:00Z",
-            "status": "reference_only",
-            "excerpt": "fice will apply for this (in Japan) on your behalf, after we rece ive all your required application documents. It generally takes six to eight weeks for the Certificate to be issued, so be sure to submit all your materials as soon as possible to avoid any possible delay. Once we receive the Certificate of Eligibility, we will send it to",
-            "note": "未載適用2027春季年，尚未核實新版。",
-            "content_hash": "fd78b7688fc9fb9eb80db563bc583331f30787c3e33a853a88c6b7550167df79",
-            "text_sha256": "c02f7f979f0a6a5cae1edf691aba7b385470fa518363c307f3ff1347b770ccf3"
+            "academic_year": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "application_round": "正文第2頁Spring2027；第3–4頁2027春校曆",
+            "checked_at": "2026-10-08T08:03:26.183244+00:00",
+            "status": "conflict",
+            "excerpt": "e the fees required after deducting the International Student Accommodation Support Scholarship (single ¥10,000/month, twin ¥5,000/month). ↑ Map ↑ ↑ Map ↑",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+            "text_sha256": "0945334e23d7726d20d42ac0fb06a14036824515804ca79a7d9ec8078d8ba653"
           }
         ]
-      },
-      {
-        "field": "arrival",
-        "label": "抵達與迎新",
-        "status": "missing",
-        "question": "請確認Ryukoku University 龍谷大學中正2027春季的抵達與迎新，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
       },
       {
         "field": "host_tuition",
         "label": "合作校學費",
         "status": "missing",
         "question": "請確認Ryukoku University 龍谷大學中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "exchange_duration",
-        "label": "交換期間及延長限制",
-        "status": "missing",
-        "question": "請確認Ryukoku University 龍谷大學中正2027春季的交換期間及延長限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       }
@@ -2008,6 +2098,168 @@
         "content_academic_year": "2026秋季申請；部分2027春季校曆",
         "content_review_note": "未載適用2027春季年，尚未核實新版。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p32-r7-application-index",
+        "source_url": "https://intl.ryukoku.ac.jp/english/html/s_exchange_02.html",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文Spring2027Entry；截止2026-11-09 23:59JST",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:02:50.489757+00:00"
+      },
+      {
+        "source_id": "p32-r7-ccu-list",
+        "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+        "status": "pdf",
+        "content_academic_year": "正文中正2027春季名額表2026.09.17版，物理第32頁",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:16:21.827202+00:00"
+      },
+      {
+        "source_id": "p32-r7-cefr-reference",
+        "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/08_1_jpl_skill_eng.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "模板正文未印2027；當期Spring2027官方頁指定，舊JEP標籤不自行改寫",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。與Spring2027申請索引逐項對照；指定表實開，不代表提名後全部portal欄位已取。",
+        "checked_at": "2026-10-08T08:03:28.031920+00:00"
+      },
+      {
+        "source_id": "p32-r7-dorm-house",
+        "source_url": "https://intl.ryukoku.ac.jp/english/dormitory/kokusai_h.html",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:02:50.490862+00:00"
+      },
+      {
+        "source_id": "p32-r7-dorm-mitra",
+        "source_url": "https://intl.ryukoku.ac.jp/english/dormitory/mitrakan.html",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:02:50.494017+00:00"
+      },
+      {
+        "source_id": "p32-r7-english",
+        "source_url": "https://www.ryukoku.ac.jp/english2/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:30.001162+00:00"
+      },
+      {
+        "source_id": "p32-r7-exchange",
+        "source_url": "https://intl.ryukoku.ac.jp/english/examination/exp/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:18.935736+00:00"
+      },
+      {
+        "source_id": "p32-r7-guide",
+        "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "正文第2頁Spring2027；第3–4頁2027春校曆",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:03:26.183244+00:00"
+      },
+      {
+        "source_id": "p32-r7-health-form",
+        "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/04_certificate_of_health.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "模板正文未印2027；當期Spring2027官方頁指定，舊JEP標籤不自行改寫",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。與Spring2027申請索引逐項對照；指定表實開，不代表提名後全部portal欄位已取。PDF原圖核對醫師签署與胸檢：無法X光可醫師執行其他肺結核檢查並附正式結果，不代作醫療判斷。",
+        "checked_at": "2026-10-08T08:03:26.968567+00:00"
+      },
+      {
+        "source_id": "p32-r7-international-root",
+        "source_url": "https://intl.ryukoku.ac.jp/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:30.001684+00:00"
+      },
+      {
+        "source_id": "p32-r7-international",
+        "source_url": "https://www.ryukoku.ac.jp/english2/international/",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://www.ryukoku.ac.jp/english2/international/",
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:45:36.774829+00:00"
+      },
+      {
+        "source_id": "p32-r7-jclp",
+        "source_url": "https://www.ryukoku.ac.jp/english2/prog/jclp.html",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文JCLP最後2025入學，2026-03結束；不同計畫",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:18.936201+00:00"
+      },
+      {
+        "source_id": "p32-r7-jp-evaluation-form",
+        "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/02_evaluation_w.docx",
+        "status": "docx",
+        "http_status": 200,
+        "content_academic_year": "模板正文未印2027；當期Spring2027官方頁指定，舊JEP標籤不自行改寫",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。與Spring2027申請索引逐項對照；指定表實開，不代表提名後全部portal欄位已取。",
+        "checked_at": "2026-10-08T08:03:26.186070+00:00"
+      },
+      {
+        "source_id": "p32-r7-jsp",
+        "source_url": "https://intl.ryukoku.ac.jp/english/examination/exp/rjsp/index.html",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:02:50.490426+00:00"
+      },
+      {
+        "source_id": "p32-r7-plan-form",
+        "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/01_plan_of_Study_w.docx",
+        "status": "docx",
+        "http_status": 200,
+        "content_academic_year": "模板正文未印2027；當期Spring2027官方頁指定，舊JEP標籤不自行改寫",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。與Spring2027申請索引逐項對照；指定表實開，不代表提名後全部portal欄位已取。",
+        "checked_at": "2026-10-08T08:03:26.184949+00:00"
+      },
+      {
+        "source_id": "p32-r7-recommendation-form",
+        "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/03_letter.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "模板正文未印2027；當期Spring2027官方頁指定，舊JEP標籤不自行改寫",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。與Spring2027申請索引逐項對照；指定表實開，不代表提名後全部portal欄位已取。PDF两頁文字與第1頁圖像核對，申請人姓名/地址/電話/簽名與推薦人簽名分開；另附推薦函不能免指定表。",
+        "checked_at": "2026-10-08T08:03:26.187533+00:00"
+      },
+      {
+        "source_id": "p32-r7-selfassessment-form",
+        "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/07_1_sag_eng_jp_w.docx",
+        "status": "docx",
+        "http_status": 200,
+        "content_academic_year": "模板正文未印2027；當期Spring2027官方頁指定，舊JEP標籤不自行改寫",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。與Spring2027申請索引逐項對照；指定表實開，不代表提名後全部portal欄位已取。",
+        "checked_at": "2026-10-08T08:03:27.288570+00:00"
+      },
+      {
+        "source_id": "p32-r7-spot-instructions",
+        "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/spot_test_ex.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。SPOT指引文字已讀；截圖操作細節未逐張核，不建立測驗帳號或代考。",
+        "checked_at": "2026-10-08T08:03:27.531370+00:00"
       }
     ]
   },
@@ -2916,151 +3168,232 @@
     "school_name": "Tohoku University 東北大學",
     "ccu_page": 35,
     "quota_status": "published",
-    "review_note": "現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
+    "review_note": "現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。；第七輪六校公開重要政策/指定模板與母校逐欄交叉核對，歷史梯次/方向/計畫與語言替代不混入當期。",
     "questions": [
       {
         "field": "program_scope",
         "label": "接收計畫、學制及校區",
         "status": "needs_confirmation",
         "question": "請確認Tohoku University 東北大學中正2027春季的接收計畫、學制及校區，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": "現行总頁：JYPE仅秋、IPLA春仅指定partner、DEEP本科日語與COLABS研究生英語可春。未核實中正是否IPLA指定伙伴。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "Spring2027COLABS自然科學研究所SpecialResearchStudent；IPLA人文社會大2–4春季僅指定partners，中正是否指定未核；JYPE大3–4理工農且Fallonly，不當本輪春季可直入；DEEP本科自然科學日授N1另計畫，研究所人文DirectExchange院系流程另行，不能跨計畫套條件。",
         "evidence": [
           {
-            "source_id": "p35-host0",
+            "source_id": "p35-r7-exchange",
             "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/",
             "source_pages": [],
-            "academic_year": "未標示",
-            "application_round": "未標示",
-            "checked_at": "2026-10-08T00:00:00Z",
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:45:36.775257+00:00",
             "status": "needs_confirmation",
-            "excerpt": "r Humanities/Social Sciences. IPLA has incorporated DEEp-Bridge effective from the AY 2020 Fall enrollment. ※2 Only students from designated partner universities are eligible to apply for the IPLA Spring Semester. JYPE Program Junior Year Program in English Agreement Level University/Department Fields Science, Engineering, Agriculture Duration (Enro",
-            "note": "現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
+            "excerpt": "ach program's page. JYPE IPLA COLABS DEEP Exchange Programs for undergraduate students (non-degree seeking) F: Fall (Oct.- Feb.)/S: Spring (Apr.- Aug.) Program Agreement Level Ｕ: University D: Department Fields Duration (Enrollment) Language JYPE Junior Year Program in English U/D Science, Engineering, Agriculture (3rd or 4th year only) 2 Semesters (F+S) 1 Semester (F) English ",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
             "content_hash": "1f81ef9c3341ee28b2d5e8c0950cdbabc2042668c8f3d6b81ae3a043c787f6e8",
             "text_sha256": "8722ba1d633b05087e1f36e14e2f1c691e31f2810d2f5e596437c1d418cdae9b"
+          },
+          {
+            "source_id": "p35-r7-ipla",
+            "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/ipla/",
+            "source_pages": [],
+            "academic_year": "正文SpringSemester2027校曆；其他一般/2026秋內容按段別",
+            "application_round": "正文SpringSemester2027校曆；其他一般/2026秋內容按段別",
+            "checked_at": "2026-10-08T08:05:44.218238+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "licants through the Department Direct Exchange Scheme. The guidelines for the Department Direct Exchange Scheme can be found below. Application method differs depending on each Faculty/Graduate School. Graduate School Contact / How to Apply Education How to Apply NOTE STEP 1: Applicants are only allowed to contact one prospective supervisor at a time. Law Intercultural Studies ",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "930c5c82ca51329c905ed4617677f1ff1d0b50d734cb531fd7cb5cde64785e10",
+            "text_sha256": "60e63a481e09acdf7e19a9be151db0f3602ac2bb04f57f3d36525c955ecb1b05"
           }
         ]
       },
       {
         "field": "eligibility",
         "label": "合作校接收資格",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Tohoku University 東北大學中正2027春季的合作校接收資格，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "COLABS須母校fulltime自然科學graduate及預定提名，交換前中後仍在學、優良成績；公開consentfield條件5寫masterdegree-seeking duringandafter，COLABS主頁泛稱graduate含其他level的適用未核。博士/母校應屆畢業不得自行推通過；IPLA/JYPE本科年級和院系另判。",
+        "evidence": [
+          {
+            "source_id": "p35-r7-consent-fields",
+            "source_url": "https://www.insc.tohoku.ac.jp/english/item-list-of-the-consent-of-acceptance-request-form-colabs/",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:54:18.938461+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "lled as a full-time master's degree seeking student with excellent grades at my home university. * Consent of Acceptance Request Form If you are ready to start filling in the form, click the link below to open the form. The Consent of Acceptance Request Form",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "434ac70899aaffe48dcbf6570539b81bb175da7f9f65dc781ee1ad8e4d1f3c81",
+            "text_sha256": "c96dcbb8fd6f47486e003402d129eab350f9dc335262ebd03ee1ad3d8d265448"
+          },
+          {
+            "source_id": "p35-r7-colabs",
+            "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/colabs/",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:45:36.777362+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "licant must be: - a full-time registered degree seeking student, during participating in COLABS, at graduate level with excellent grades at the home university which has a partnership agreement with Tohoku University - remained as a full-time registered degree seeking student at graduate level at the home university after completing the COLABS program at Tohoku University How t",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "4aba48a96cd07bbcc657a68da7f95247a90ba456ca14d473ce74631339dd9009",
+            "text_sha256": "389314303e4181cfa37237cc5fca3ae57b281783ed72d1323a66fb0b11310da0"
+          }
+        ]
       },
       {
         "field": "language",
         "label": "合作校語言條件與替代證明",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Tohoku University 東北大學中正2027春季的合作校語言條件與替代證明，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "一般官方英檢對照（頁未年度）：JYPE/COLABS/IPLA iBT79、PBT550、IELTS6、TOEIC730、CEFRB2等，須有效期；Duolingo/EFSET/ITP不接受。英授學程在學母校CERTIFICATE可替代、特定英語國家在學/畢業可豁免；中正2027表列分數與两年證照校內要求另需核函路徑，不把替代直接算校內豁免。DEEPN1且IPLA日本檢定不能替英證。",
+        "evidence": [
+          {
+            "source_id": "p35-r7-language-equivalence",
+            "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/english-requirement-for-exchange-program/",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T08:05:44.217729+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ucted in English, a CERTIFICATE issued by their home university which verifies their enrollment will be validated as a language certificate.",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "a4b0a9405fdc41f0149e8a48b35bc14b76a876727c27eeb7afbe3e8f5673e265",
+            "text_sha256": "c248a035bd68c1e5d89e065d1b6d5d8de70cb25b75520f7b7d7bef3f878fe390"
+          },
+          {
+            "source_id": "p35-r7-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              35
+            ],
+            "academic_year": "正文中正2027春季名額表2026.09.17版，物理第35頁",
+            "application_round": "正文中正2027春季名額表2026.09.17版，物理第35頁",
+            "checked_at": "2026-10-08T08:16:21.827202+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "50/IELTS 6(overall)/TOEIC 730/ CEFR B2 IPLA：日語 JLPT（複選）***有日文檢定同學， 一樣需檢附以上一項英文檢定(英文檢定 必附上)*** DEEP：JLPT N1 語文檢定要求對照表請見以下連結： https://www.insc.tohoku.ac.jp/english/exchange/english-requirement-for-exchange- program/ 姊妹校簡章 (Fact Sheet) 第二階繳交 資料 (Submit relevant documents _Second Section) 必須先經過第一階段校內申請通過，且經過國際處向姐妹校提名後，才有資格進行第 二階段(姊妹校)申請。 Supporting Documents for Application ⚫ Copy ",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "910b804820b923b4ea849d3db41632cf0455b7d4c92cca094b6a357eaae27a7a"
+          }
+        ]
       },
       {
         "field": "nomination_deadline",
         "label": "合作校提名截止",
         "status": "missing",
         "question": "請確認Tohoku University 東北大學中正2027春季的合作校提名截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
-      },
-      {
-        "field": "application_deadline",
-        "label": "合作校申請截止",
-        "status": "needs_confirmation",
-        "question": "請確認Tohoku University 東北大學中正2027春季的合作校申請截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": "一般春季受理10/1–11/15，未明示2027適用；JYPE/IPLA入學限制須先确认。",
-        "evidence": [
-          {
-            "source_id": "p35-host0",
-            "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/",
-            "source_pages": [],
-            "academic_year": "未標示",
-            "application_round": "未標示",
-            "checked_at": "2026-10-08T00:00:00Z",
-            "status": "needs_confirmation",
-            "excerpt": "ot accepted after selection due to the complicated processes required. Admission Spring (April) Fall (October) Application Period October 1 - November 15 January 10 - February 20 Screening November - January February - April Results Notification February Middle of May Visa and Dormitory Applications February - March (Instructions will be sen",
-            "note": "現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-            "content_hash": "1f81ef9c3341ee28b2d5e8c0950cdbabc2042668c8f3d6b81ae3a043c787f6e8",
-            "text_sha256": "8722ba1d633b05087e1f36e14e2f1c691e31f2810d2f5e596437c1d418cdae9b"
-          }
-        ]
       },
       {
         "field": "documents",
         "label": "合作校文件要求（僅列已核實項目）",
         "status": "needs_confirmation",
         "question": "請確認Tohoku University 東北大學中正2027春季的合作校文件要求（僅列已核實項目），提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": "現行總頁支持文件：英文official成績、語言證明、護照；TAO與各計畫另列要求，不宣稱清單完整。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "COLABS事前接受表公開字段已讀：合併本科/研究所正式英文成績與grading、研究背景/教育高中起含6月gap、英文能力、目標研究所及教授、250–400words研究proposal與≤5keywords；接受結果emailPDF交TAO。一般exchange英成績/語言證/護照另要求；完整TAO個人字段/院系追加文件未取得，欄位清單不當正式申請完成。",
         "evidence": [
           {
-            "source_id": "p35-host0",
-            "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/",
+            "source_id": "p35-r7-consent-fields",
+            "source_url": "https://www.insc.tohoku.ac.jp/english/item-list-of-the-consent-of-acceptance-request-form-colabs/",
             "source_pages": [],
-            "academic_year": "未標示",
-            "application_round": "未標示",
-            "checked_at": "2026-10-08T00:00:00Z",
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:54:18.938461+00:00",
             "status": "needs_confirmation",
-            "excerpt": "rding the time of enrollment (some programs accept Fall enrollment only), and students cannot change their program once enrolled. Supporting Documents for Application Copy of Official Academic Transcript in English Copy of a Certificate of Language Proficiency Photocopy of Passport (name page) Our Global Network Minimum Language Proficiency Requirements ",
-            "note": "現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-            "content_hash": "1f81ef9c3341ee28b2d5e8c0950cdbabc2042668c8f3d6b81ae3a043c787f6e8",
-            "text_sha256": "8722ba1d633b05087e1f36e14e2f1c691e31f2810d2f5e596437c1d418cdae9b"
+            "excerpt": "Research Interests (250 - 400 words) * Terms and Conditions 1) I understand that it is mandatory for COLABS applicants to obtain Consent of Acceptance from one prospective academic advisor beforehand as it is a research-oriented program. * 2) I understand that obtaining the above-mentioned consent does not guarantee acceptance to the COLABS program. * 3) I understand that failu",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "434ac70899aaffe48dcbf6570539b81bb175da7f9f65dc781ee1ad8e4d1f3c81",
+            "text_sha256": "c96dcbb8fd6f47486e003402d129eab350f9dc335262ebd03ee1ad3d8d265448"
+          },
+          {
+            "source_id": "p35-r7-colabs-application",
+            "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/colabs/colabs-application-procedures/",
+            "source_pages": [],
+            "academic_year": "正文Spring2027；updatedJune2026",
+            "application_round": "正文Spring2027；updatedJune2026",
+            "checked_at": "2026-10-08T07:45:36.775732+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ohoku University in PDF format. You will need it in step 7. (Step 7) Submit the essential documents to the online application system (TAO) to complete the COLABS application. Important Note: - Each COLABS applicant must obtain consent from one prospective academic advisor beforehand as it is a research-oriented program. - Obtaining consent from a prospective academic advisor do",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "79bf3d04b28ace3949823f3a6881922a5222187ad775c7edef14336a09431740",
+            "text_sha256": "c989605396924e2ae60b7faf85bb9436a5a69039631976ceabcbf8d642e082d6"
           }
         ]
       },
       {
         "field": "application_forms",
         "label": "合作校申請表取得方式",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Tohoku University 東北大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "academic_calendar",
-        "label": "合作校校曆及考試",
-        "status": "missing",
-        "question": "請確認Tohoku University 東北大學中正2027春季的合作校校曆及考試，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "course_restrictions",
-        "label": "課程與學分限制",
-        "status": "missing",
-        "question": "請確認Tohoku University 東北大學中正2027春季的課程與學分限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "COLABS priorconsent公開字段索引實開，申請頁有GoogleForm入口但未建/送申請；正式TAO另於交換申請窗口完成、不可用教授email允諾取代。全套個人TAO/CoE/住房表未取得；IPLA/DEEP另程序，沒有公開表不稱尚未公告。",
+        "evidence": [
+          {
+            "source_id": "p35-r7-colabs-application",
+            "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/colabs/colabs-application-procedures/",
+            "source_pages": [],
+            "academic_year": "正文Spring2027；updatedJune2026",
+            "application_round": "正文Spring2027；updatedJune2026",
+            "checked_at": "2026-10-08T07:45:36.775732+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "re applying through TAO. The number of COLABS applicants has been increasing and it has become quite a competitive program. With that in mind, placing your students in a suitable laboratory has also become a challenge for us. In order to assign your students to the most suitable laboratory, our committee has decided to adopt this additional requirement. Instructions Prior Conse",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "79bf3d04b28ace3949823f3a6881922a5222187ad775c7edef14336a09431740",
+            "text_sha256": "c989605396924e2ae60b7faf85bb9436a5a69039631976ceabcbf8d642e082d6"
+          },
+          {
+            "source_id": "p35-r7-consent-fields",
+            "source_url": "https://www.insc.tohoku.ac.jp/english/item-list-of-the-consent-of-acceptance-request-form-colabs/",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:54:18.938461+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Item List of the Consent of Acceptance Request Form (COLABS) | Tohoku University Item List of the Consent of Acceptance Request Form (COLABS) TOP > For International Students > Item List of the Consent of Acceptance Request Form (COLABS) Please make sure to prepare the required information below before filling out the Consent of Acceptance Request Form. *Required Applicant I",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "434ac70899aaffe48dcbf6570539b81bb175da7f9f65dc781ee1ad8e4d1f3c81",
+            "text_sha256": "c96dcbb8fd6f47486e003402d129eab350f9dc335262ebd03ee1ad3d8d265448"
+          }
+        ]
       },
       {
         "field": "housing",
         "label": "住宿與床位",
         "status": "needs_confirmation",
         "question": "請確認Tohoku University 東北大學中正2027春季的住宿與床位，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": "交換必住大学宿舍，錄取後通知，不保證志願；行前頁的2026-07-16宿舍截止僅Fall2026參考。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "一般exchange頁須申請校方宿舍、偏好不保證，不是所有國際生普通流程。COLABS當期程序表moveoutEarlyAugust vsmandatorypresentationAug4–6與舊FAQmidAug；正式個人租期/2027床位仍待通知，不能預定8/1返程。",
         "evidence": [
           {
-            "source_id": "p35-host0",
-            "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/",
+            "source_id": "p35-r7-colabs-application",
+            "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/colabs/colabs-application-procedures/",
             "source_pages": [],
-            "academic_year": "未標示",
-            "application_round": "未標示",
-            "checked_at": "2026-10-08T00:00:00Z",
+            "academic_year": "正文Spring2027；updatedJune2026",
+            "application_round": "正文Spring2027；updatedJune2026",
+            "checked_at": "2026-10-08T07:45:36.775732+00:00",
             "status": "needs_confirmation",
-            "excerpt": "ts Admitted Acceptance Rate JYPE 132 82 62% COLABS 71 70 99%* IPLA 109 105 96% DEEP 11 8 73% Accommodations Exchange students are required to live in the university dormitories. Tohoku University International House (1&2) , University House Aobayama, and University House Sanjo (A/B/II/III) are available for exchange students. Information on the dormitory applicati",
-            "note": "現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-            "content_hash": "1f81ef9c3341ee28b2d5e8c0950cdbabc2042668c8f3d6b81ae3a043c787f6e8",
-            "text_sha256": "8722ba1d633b05087e1f36e14e2f1c691e31f2810d2f5e596437c1d418cdae9b"
+            "excerpt": "ogram) Final day of Moving out Last day of February Early August * ¹ Necessary instructions will be provided for all the successful applicants by email. * ² Mandatory Q&A Q1. Is there any specific period when I should contact professors to obtain consent? A : Yes. Please refer to the Consent Request Period in the table above. Q2. I have not heard anything from the professor, wh",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "79bf3d04b28ace3949823f3a6881922a5222187ad775c7edef14336a09431740",
+            "text_sha256": "c989605396924e2ae60b7faf85bb9436a5a69039631976ceabcbf8d642e082d6"
+          },
+          {
+            "source_id": "p35-r7-colabs-curriculum",
+            "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/colabs/colabs_curriculum_1/",
+            "source_pages": [],
+            "academic_year": "正文SpringSemester2027；updatedMarch25,2026",
+            "application_round": "正文SpringSemester2027；updatedMarch25,2026",
+            "checked_at": "2026-10-08T07:51:30.002009+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "2027 ★ Presentation August 4-6 , 2027 NOTE: - Dates are subject to change. (Detailed COLABS schedules available in early March/September) - Presentations are to be held in early February for the Fall semester and early August for the Spring semester.",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "f1923371cf77c807e435e3e789c0a04207f996032cf603b6f4c411c440457014",
+            "text_sha256": "51a3e7a67afe63a8e3fc9c856e0a2b1e0a33e59b15bd5c3c4a3c639435b0e380"
           }
         ]
       },
@@ -3069,27 +3402,81 @@
         "label": "住宿申請／付款截止",
         "status": "missing",
         "question": "請確認Tohoku University 東北大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
       {
         "field": "costs",
         "label": "住宿與生活費用",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Tohoku University 東北大學中正2027春季的住宿與生活費用，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "一般未年學生支援頁估studentdormJPY13000–33900/月、生活80000–150000/月，非2027固定帳單；exchange頁80000/月是財力預期，不是保證完整花費。舊FAQ健康保險20000/年仅2023參考，住房押金/2027各program個人價未核。",
+        "evidence": [
+          {
+            "source_id": "p35-r7-living-costs",
+            "source_url": "https://sup.bureau.tohoku.ac.jp/en/life-e/cost-e/",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:54:21.113912+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Student Dormitory : 13,000 yen to 33,900 yen/month Staff Housing Rental (Unfurnished) : 7,200yen ~ 39,000yen International House Rental (Furnished) : 14,000yen ~ 46,000yen Private Apartments (Unfurnished) : Studio Unit (1DK) : 30,000yen ~ 80,000 yen 1 Bedroom (1LDK) : 40,000yen ~ 120,000yen 2 Bedroom (2LDK) : 50,000 yen ~ 200,000yen (price greatly differs based on location, acc",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "5c26db58681b9884953da5a794286084c2f3e04194323513d99d5adf16cca54f",
+            "text_sha256": "1eb8582d9451d6324cc69339078095e7e0689c3ac42c68ca705f7899aa84a0ef"
+          },
+          {
+            "source_id": "p35-r7-exchange",
+            "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:45:36.775257+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ll have funds of JPY80,000 per month for their student visa applications. JASSO Scholarship JASSO Scholarship The JASSO Scholarship is available for a limited number of qualified international students. Note that we are not able to ensure that all applicants will receive the scholarship. Even if you have been selected as a JASSO scholarship awardee, you will not receive it if y",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "1f81ef9c3341ee28b2d5e8c0950cdbabc2042668c8f3d6b81ae3a043c787f6e8",
+            "text_sha256": "8722ba1d633b05087e1f36e14e2f1c691e31f2810d2f5e596437c1d418cdae9b"
+          }
+        ]
       },
       {
         "field": "insurance",
         "label": "保險",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Tohoku University 東北大學中正2027春季的保險，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "一般未年校方頁全internationalstudents要GAKKENSAI教育活動accident與InboundFutaiGakuso疾病/責任等，國民健康保險studentstatus>3m另段；Coop與GAKKENBAI自選計畫不混成全必須。當期保費/臺籍最新法規未核；FAQ2023年估值不升本期帳單。",
+        "evidence": [
+          {
+            "source_id": "p35-r7-insurance",
+            "source_url": "https://sup.bureau.tohoku.ac.jp/en/arrival-e/student-insurance-e/",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:54:18.939347+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "tional students are required to enroll in both of the following types of insurance. You can get application forms at your department office. 1. Personal Accident Insurance for Student Pursuing Education and Research “GAKKENSAI” This is an accident compensation insurance covering unforeseen disasters and accidents during regular curricular activities, school events, extracurricu",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "f516728c4f27a405fdddf646d8242f771d34eb2d9f8c4c23acb42596a53252f4",
+            "text_sha256": "13199d5c7060b6e963c28ab2f07edc3396e59a111265e3ffac7f28a6af9e3326"
+          },
+          {
+            "source_id": "p35-r7-national-insurance",
+            "source_url": "https://sup.bureau.tohoku.ac.jp/en/arrival-e/pre-e/insurance-e/",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:54:20.387809+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "o stay in Japan for more than 3 months, you will be required to enter the National Health Insurance system. You can register for the insurance system when you undergo registration at your Ward office. If you are to be employed by Tohoku University as a full-time faculty member, you are required to join the Ministry of Education, Culture, Sports, Science and Technology Mutual Ai",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "6f792909902ac2b5424f888408728d990c8b9c8c8a39486e8efea01f9324c864",
+            "text_sha256": "f385dc895e4d54bcabc345077af6ffa9614b37cbd19360a4a1e36cfc0cfd8f09"
+          }
+        ]
       },
       {
         "field": "visa",
@@ -3115,31 +3502,27 @@
         ]
       },
       {
-        "field": "arrival",
-        "label": "抵達與迎新",
-        "status": "missing",
-        "question": "請確認Tohoku University 東北大學中正2027春季的抵達與迎新，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
         "field": "host_tuition",
         "label": "合作校學費",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Tohoku University 東北大學中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "exchange_duration",
-        "label": "交換期間及延長限制",
-        "status": "missing",
-        "question": "請確認Tohoku University 東北大學中正2027春季的交換期間及延長限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "一般exchange頁JYPE/IPLA/COLABS/DEEP免接收校tuition，但保險/其他費另需；依正式agreement與個人通知，中正母校學費仍保留。未明2027各附加費，不以學位學生費表套incoming免學費。",
+        "evidence": [
+          {
+            "source_id": "p35-r7-exchange",
+            "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:45:36.775257+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ing and Scholarship Tuition for exchange students enrolled in JYPE, IPLA, COLABS, and DEEP is waived, but all exchange students are required to pay necessary fees including several types of insurances , etc. Approximate monthly expenses for students can be found in the Cost of Living in Sendai . Note that all exchange students must be able to show that they will have funds of J",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "1f81ef9c3341ee28b2d5e8c0950cdbabc2042668c8f3d6b81ae3a043c787f6e8",
+            "text_sha256": "8722ba1d633b05087e1f36e14e2f1c691e31f2810d2f5e596437c1d418cdae9b"
+          }
+        ]
       }
     ],
     "source_acquisition": [
@@ -3187,6 +3570,158 @@
         "content_academic_year": "未標示",
         "content_review_note": "現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p35-r7-ccu-list",
+        "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+        "status": "pdf",
+        "content_academic_year": "正文中正2027春季名額表2026.09.17版，物理第35頁",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:16:21.827202+00:00"
+      },
+      {
+        "source_id": "p35-r7-colabs-application",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/colabs/colabs-application-procedures/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文Spring2027；updatedJune2026",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:45:36.775732+00:00"
+      },
+      {
+        "source_id": "p35-r7-colabs-curriculum",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/colabs/colabs_curriculum_1/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文SpringSemester2027；updatedMarch25,2026",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:30.002009+00:00"
+      },
+      {
+        "source_id": "p35-r7-colabs",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/colabs/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:45:36.777362+00:00"
+      },
+      {
+        "source_id": "p35-r7-consent-fields",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/item-list-of-the-consent-of-acceptance-request-form-colabs/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:18.938461+00:00"
+      },
+      {
+        "source_id": "p35-r7-deep-calendar",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/deep-u/academic-calendar-for-deep/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文Spring2026，非Spring2027",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:05:44.220423+00:00"
+      },
+      {
+        "source_id": "p35-r7-exchange",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:45:36.775257+00:00"
+      },
+      {
+        "source_id": "p35-r7-faq",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/exchange_faq/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文UpdatedAugust2,2023；一般舊版exchangeFAQ",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:30.003560+00:00"
+      },
+      {
+        "source_id": "p35-r7-first-meeting",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/incomingstudents_information/first-online-meeting/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:31.431343+00:00"
+      },
+      {
+        "source_id": "p35-r7-insurance",
+        "source_url": "https://sup.bureau.tohoku.ac.jp/en/arrival-e/student-insurance-e/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:18.939347+00:00"
+      },
+      {
+        "source_id": "p35-r7-ipla",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/ipla/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文SpringSemester2027校曆；其他一般/2026秋內容按段別",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:05:44.218238+00:00"
+      },
+      {
+        "source_id": "p35-r7-jype-calendar",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/jype/1-academic-calendar/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文Fall2026/Spring2026；春欄非2027",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:05:44.221236+00:00"
+      },
+      {
+        "source_id": "p35-r7-language-equivalence",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/english-requirement-for-exchange-program/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:05:44.217729+00:00"
+      },
+      {
+        "source_id": "p35-r7-living-costs",
+        "source_url": "https://sup.bureau.tohoku.ac.jp/en/life-e/cost-e/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:21.113912+00:00"
+      },
+      {
+        "source_id": "p35-r7-national-insurance",
+        "source_url": "https://sup.bureau.tohoku.ac.jp/en/arrival-e/pre-e/insurance-e/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:20.387809+00:00"
+      },
+      {
+        "source_id": "p35-r7-news-application",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/news/application/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:33.110837+00:00"
+      },
+      {
+        "source_id": "p35-r7-support",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/exchange-program-support/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:31.337095+00:00"
       }
     ]
   },
@@ -3194,68 +3729,196 @@
     "school_name": "Hokkaido University 北海道大學",
     "ccu_page": 37,
     "quota_status": "published",
-    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。",
+    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。；第七輪六校公開重要政策/指定模板與母校逐欄交叉核對，歷史梯次/方向/計畫與語言替代不混入當期。",
     "questions": [
       {
         "field": "application_forms",
         "label": "合作校申請表取得方式",
         "status": "needs_confirmation",
         "question": "請確認Hokkaido University 北海道大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-        "reference_value": "HUSTEP/JLCSP由母校提供TAO連結；SA/SRS提名後才發onlineform。已查取得程序，實際本期表格與各學部差異需提名通知核對。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "HUSTEP當期官方鏈接四個公開模板已實開保存：Consent/Enrollment/Recommendation DOCX，StudyPlan舊式XLS表內SpringSemester2027（非只看檔名）。XLS只讀儲存/公式cached值不執行macro/formula/links；表以2026Spring課表tentative參考、至少7classes、halfyear不能IndependentStudy。全套TAO需母校邀請及帳號未建立；SA/SRS提名後個別發TAO/CoE/nomination表，公開清單不等全表取得。",
         "evidence": [
           {
-            "source_id": "p37-mirror",
-            "source_url": "https://drive.google.com/file/d/1yxYubWpQ5lXhVFqczKHQofRsKhozJSGz/view?usp=drive_link",
-            "source_pages": [
-              3
-            ],
-            "academic_year": "2026–2027各交換計畫",
-            "application_round": "2026–2027各交換計畫",
-            "checked_at": "2026-10-08T00:00:00Z",
+            "source_id": "p37-r7-studyplan-form",
+            "source_url": "https://isc.high.hokudai.ac.jp/wp25/wp-content/uploads/2026/07/HU-Study-Plan_Half-Year_2027-Spring.xls",
+            "source_pages": [],
+            "academic_year": "表內SpringSemester2027；Spring2026syllabus僅tentative參考",
+            "application_round": "表內SpringSemester2027；Spring2026syllabus僅tentative參考",
+            "checked_at": "2026-10-08T07:54:23.894723+00:00",
             "status": "needs_confirmation",
-            "excerpt": "Hokkaido University Student Exchange Programs 2026-2027 As of January 2026 Special Auditor (Undergraduate) Application Form Issued on nomination basis Application Deadline [Fall Semester 2 026] April 17, 2026 [Spring Semester 2027] November 13, 2026 Nomination Deadline [Fall Semester 2026] February 27, 2026 [Spring Semester 2027] Septemb ",
-            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-            "content_hash": "32fa69f8b9639e6a259b700f386c277c23dcb3995ad7483f91f93756983d62ee",
-            "text_sha256": "128b729e333f11d6b8c5a0618fedc5c600a83903a0143fb30d60d10978134b75"
+            "excerpt": "ndent Study. R13C2: Spring Semester, 2027 | R13C5: class name | R13C26: credit R14C4: 1.0 R15C4: 2.0 R16C4: 3.0 R17C4: 4.0 R18C4: 5.0 R19C4: 6.0 R20C4: 7.0 R21C4: 8.0 R22C4: 9.0 R23C4: *Please fill in at least 7 classes to the list. R27C25: HUSTEP core courses: 1 or 2 credits R28C2: Each class is 90 minutes long and held once a week. | R28C25: Japanese Language: 1 or 2 credits",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "40e263edadd2c0a882d9943912b37f59646a6b8ec0bedd8cc8452eb6e4a3881b",
+            "text_sha256": "2a20df6537de999c2674d8376aca4f60964fcf55c1a4aa8fe8d8715c61b30fd7"
+          },
+          {
+            "source_id": "p37-r7-hustep-current",
+            "source_url": "https://www.global.hokudai.ac.jp/admissions/short-term-exchange/",
+            "source_pages": [],
+            "academic_year": "正文HUSTEP2027Springopen；updatedSeptember17,2026",
+            "application_round": "正文HUSTEP2027Springopen；updatedSeptember17,2026",
+            "checked_at": "2026-10-08T07:51:33.467729+00:00",
+            "status": "needs_confirmation",
+            "excerpt": " post or email. The access link for the TAO will be individually sent to the home institution’s exchange coordinator before the application period begins. 【IMPORTANT】 Applicants from countries subject to the Pre-Entry Tuberculosis (TB) Screening requirement (Philippines, Vietnam and Nepal) must submit a TB Clearance Certificate by email in addition to the necessary documents li",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "8379c93e69c5621752963c9770fa574c60b91c1c1a3d3c25f4b83bda0c995801",
+            "text_sha256": "96c0c421083a42504f121b4c778eeba48dfdd42a1597397ffddf82bce1418beb"
+          },
+          {
+            "source_id": "p37-r7-auditor-research",
+            "source_url": "https://www.global.hokudai.ac.jp/admissions/special-auditor-special-research-student",
+            "source_pages": [],
+            "academic_year": "正文SA/SRS2027Springopen；updatedAugust20,2026",
+            "application_round": "正文SA/SRS2027Springopen；updatedAugust20,2026",
+            "checked_at": "2026-10-08T07:54:25.418845+00:00",
+            "status": "needs_confirmation",
+            "excerpt": ". Application Form: Sent on a nomination basis Scholarship: Not Applicable Accommodation: University dormitory. Room assignment is decided by Hokkaido University. Eligibility Eligibility Requirements 1.Special Auditor (SA) Undergraduates Exchange students have a high academic record at their home university in the field of desired faculty. Equivalent to JLPT level N2 or higher ",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "b87b17ff9952b59d8d8a1cc663748e7b29b1f0462b5e0dc5b843caf12abe1681",
+            "text_sha256": "daff6fb06eecc47967d9bd6208c395f6e57998ac8b9ba40210229be8f63ccb51"
+          }
+        ]
+      },
+      {
+        "field": "course_restrictions",
+        "label": "課程與學分限制",
+        "status": "conflict",
+        "question": "請確認Hokkaido University 北海道大學中正2027春季的課程與學分限制，提供明載年度／計畫的官方文件或提名通知。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "HUSTEP當期網頁至少10.5classhours（about7classes）/週，正式指南與Spring2027StudyPlan寫至少10hours/7classes，90min×7雖10.5，未有官方更正不自統一。halfyear不能IndependentStudy，英授本科不接grad；SA至少7本school課/週、日語補助课不算、跨school須例外；SRS純研究不修課無credits。2026syllabus為參考不保2027開。",
+        "evidence": [
+          {
+            "source_id": "p37-r7-hustep-current",
+            "source_url": "https://www.global.hokudai.ac.jp/admissions/short-term-exchange/",
+            "source_pages": [],
+            "academic_year": "正文HUSTEP2027Springopen；updatedSeptember17,2026",
+            "application_round": "正文HUSTEP2027Springopen；updatedSeptember17,2026",
+            "checked_at": "2026-10-08T07:51:33.467729+00:00",
+            "status": "conflict",
+            "excerpt": "gister for at least 10.5 class hours (about 7 classes) per week to meet the visa requirements. Q. Will the courses in last year’s syllabus also be taught this year? A. It’s not guaranteed. Many of the courses from the last year’s syllabus are offered, but depending on the teacher’s availability, they are subject to change. The timetable for the Fall semester will be finalized i",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "8379c93e69c5621752963c9770fa574c60b91c1c1a3d3c25f4b83bda0c995801",
+            "text_sha256": "96c0c421083a42504f121b4c778eeba48dfdd42a1597397ffddf82bce1418beb"
+          },
+          {
+            "source_id": "p37-r7-studyplan-form",
+            "source_url": "https://isc.high.hokudai.ac.jp/wp25/wp-content/uploads/2026/07/HU-Study-Plan_Half-Year_2027-Spring.xls",
+            "source_pages": [],
+            "academic_year": "表內SpringSemester2027；Spring2026syllabus僅tentative參考",
+            "application_round": "表內SpringSemester2027；Spring2026syllabus僅tentative參考",
+            "checked_at": "2026-10-08T07:54:23.894723+00:00",
+            "status": "conflict",
+            "excerpt": "tudents must take a minimum of 10 hours (around 7 classes) per week to meet visa requirement. R6C2: For class details, please refer the website below. R7C2: HUSTEP course syllabus (Spring) | R7C4: https://isc.high.hokudai.ac.jp/wp25/wp-content/uploads/2026/02/HUSTEP-Course-Syllabus-2026-Spring.pdf R8C2: Japanese Language Courses | R8C4: https://jpncourse.oia.hokudai.ac.jp/sylla",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "40e263edadd2c0a882d9943912b37f59646a6b8ec0bedd8cc8452eb6e4a3881b",
+            "text_sha256": "2a20df6537de999c2674d8376aca4f60964fcf55c1a4aa8fe8d8715c61b30fd7"
+          },
+          {
+            "source_id": "p37-r7-sasrs-faq",
+            "source_url": "https://www.global.hokudai.ac.jp/wp/wp-content/uploads/2025/02/sasrs-qa.pdf",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T08:02:51.704896+00:00",
+            "status": "conflict",
+            "excerpt": ". These courses are not counted as 10 hour/week requirement to fulfill visa status. You have to take courses from the school you are applying. To apply for General Japanese Language Courses, please refer to the following link and follow directions. https://isc.high.hokudai.ac.jp/general_ja_lang/ 5. I major in science but during my exchange I want to try something new. Can I app",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "8a55d1e485255f8f00516e67e1286d89540d76fc7afa02fc3975bda27503ccb1",
+            "text_sha256": "45780975464f5ae971b89c78cd4a4aae19ed910e4a5f2f643c3004c44e0e648c"
           }
         ]
       },
       {
         "field": "housing_deadline",
         "label": "住宿申請／付款截止",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Hokkaido University 北海道大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "HUSTEP正式指南明示accepted後housinginstructions、程序不同一般國際生；普通宿舍midJanuary/midJulyrecruitment不移作HUSTEP截止。SA/SRS亦individualinstructions，2027各program固定申請/繳費日仍未核，不稱官方尚未公告。",
+        "evidence": [
+          {
+            "source_id": "p37-r7-guidelines",
+            "source_url": "https://isc.high.hokudai.ac.jp/wp25/wp-content/uploads/2025/12/9de218909fbbd35e0a6d9e070e06aebc.pdf",
+            "source_pages": [
+              3
+            ],
+            "academic_year": "正文HUSTEP2026–2027；第2頁Spring2027申請日期",
+            "application_round": "正文HUSTEP2026–2027；第2頁Spring2027申請日期",
+            "checked_at": "2026-10-08T07:54:23.313098+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "lication process is different from other international students. Detailed information will be provided to accepted students. 5. I mportant Notes 1) Incomplete or late application will not be accepted. 2) There is a screening process and not all students who apply will be accepted. 3) Please note that due to a limited number of scholarships offered, only a few students will be a",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "5280ea9f9c21dcba6387576e54bb7271a206562539a4b42a2bc6a00b66be698b",
+            "text_sha256": "8b0ba149b6ab3e4cd5a4db9f5ef01fff6f5f6e1c1f014d7bdccc571ab80beccf"
+          },
+          {
+            "source_id": "p37-r7-housing",
+            "source_url": "https://www.oia.hokudai.ac.jp/cier/housing/?wovn=en",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:54:24.654327+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ents takes place in mid-January and mid-July. The recruitment periods will be announced through respective departments and offices on each occasion. The outline of the dormitory is as follows. *The dormitories marked with * are also available for researchers if there are vacancies. For share houses, 2 people of the same sex can move in. Internet is available in all dormitories.",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "859fd11458220234130ca31c1513efea3e6ec4d720976f3e8be9962ae2727053",
+            "text_sha256": "e4b66601fb08ad7b3945163249992da596253629b648b2292c5b5d106b002d65"
+          }
+        ]
       },
       {
         "field": "costs",
         "label": "住宿與生活費用",
-        "status": "missing",
+        "status": "conflict",
         "question": "請確認Hokkaido University 北海道大學中正2027春季的住宿與生活費用，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "insurance",
-        "label": "保險",
-        "status": "missing",
-        "question": "請確認Hokkaido University 北海道大學中正2027春季的保險，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "visa",
-        "label": "簽證與居留",
-        "status": "missing",
-        "question": "請確認Hokkaido University 北海道大學中正2027春季的簽證與居留，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "HUSTEP Spring2027官方頁估生活至少JPY100000–120000/月；一般宿舍原XLSX正文2026.6.1起可變，單身租4700–39000/月，Kita8/Kita23押50000，utilities/cleaningtax各房另列。HUSTEP網頁寢具估1400+tax/月 vs2026-07-01Kita8/Kita23正式寢具租2300+tax/月或購入13000+tax/自備仍床墊2200+tax；處理費4000日/中含稅但英+tax矛盾。非2027個人帳單、不造所有宿舍免費/獎助保證。",
+        "evidence": [
+          {
+            "source_id": "p37-r7-bedding-selection",
+            "source_url": "https://www.oia.hokudai.ac.jp/cier/wp/wp-content/uploads/2026/07/64fe6a42b59a58ea5d6ff27e3e495caa.pdf",
+            "source_pages": [
+              3
+            ],
+            "academic_year": "正文2026-07-01；僅Kita8/Kita23寢具",
+            "application_round": "正文2026-07-01；僅Kita8/Kita23寢具",
+            "checked_at": "2026-10-08T08:02:52.079089+00:00",
+            "status": "conflict",
+            "excerpt": "0 yen (+tax) Total :2,300 yen (+tax) ■Optional Fees Cover Change: 450 yen (+tax) ※Available once a month upon request ■Bedding Set Contents Comforter (with cover), pillow (with cover), sheet, blanket • The bedding set can be returned starting from the second month of residence, but the bed pad must be used until you move-out. <If you purchase from BeGood Japan> ■Purchase Price:",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。5頁全文已讀；4000處理費日/中含稅與英+tax不同，與HUSTEP網頁寢具估計亦不同。",
+            "content_hash": "9737b8db426538b69dd37c0ec0dc52431ecd6ed5d6b7c8f4f62a9f80351a2f03",
+            "text_sha256": "119c12b73c30cf684c104c60cc9103f1569c8b8a78b63853c5ffb47325050ddb"
+          },
+          {
+            "source_id": "p37-r7-hustep-current",
+            "source_url": "https://www.global.hokudai.ac.jp/admissions/short-term-exchange/",
+            "source_pages": [],
+            "academic_year": "正文HUSTEP2027Springopen；updatedSeptember17,2026",
+            "application_round": "正文HUSTEP2027Springopen；updatedSeptember17,2026",
+            "checked_at": "2026-10-08T07:51:33.467729+00:00",
+            "status": "conflict",
+            "excerpt": "month Bed linen: JPY1,400+tax/month (In case of purchase) JPY10,000 – 14,000 +tax Food cost Approx. JPY50,000/month National Health Care Insurance Approx. JPY2,000/month Mobile phone Depends on individual Miscellaneous Room cleaning charge (when leaving dormitory) JPY11,000 – 14,000 (one-time payment) Transportation (if applicable) JPY5,000 – 10,000/month Internet connection (O",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "8379c93e69c5621752963c9770fa574c60b91c1c1a3d3c25f4b83bda0c995801",
+            "text_sha256": "96c0c421083a42504f121b4c778eeba48dfdd42a1597397ffddf82bce1418beb"
+          },
+          {
+            "source_id": "p37-r7-dorm-fees-xlsx",
+            "source_url": "https://www.oia.hokudai.ac.jp/cier/wp/wp-content/uploads/2026/09/55cb7074539d979a3e58b7bb19067361.xlsx",
+            "source_pages": [],
+            "academic_year": "工作表正文2026.6.1起；資訊asofJune2026可變，不保证2027帳單",
+            "application_round": "工作表正文2026.6.1起；資訊asofJune2026可變，不保证2027帳單",
+            "checked_at": "2026-10-08T08:02:51.860967+00:00",
+            "status": "conflict",
+            "excerpt": "re required to pay \\50,000 as a deposit at the time of first payment. This deposit is used to settle the final dormitory fees and to cover any repair costs should damage be discovered. A38: If residents do not have any payment unpaid and repair point of their rooms when they leave the dormitory, they can get a refund after they leave the dormitories. A39: ※ Room cleaning charge",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。兩語工作表44/45列全文已讀；標準庫ZIP/XML取值，不執行公式/外部連結；日租Kita23-1兩語806/807不同，未猜值。",
+            "content_hash": "cec0f9575f7f3829b8e2231f7abaa6faacf5018d50b3e3e30d7e85292dc2ccc2",
+            "text_sha256": "e5d6e5b60f6b3953b99ef800c620de9f765b814b24bc2e8eebc1a00d1e47aed2"
+          }
+        ]
       },
       {
         "field": "host_tuition",
@@ -3291,6 +3954,159 @@
         "content_academic_year": "2026–2027各交換計畫",
         "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p37-r7-auditor-research",
+        "source_url": "https://www.global.hokudai.ac.jp/admissions/special-auditor-special-research-student",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文SA/SRS2027Springopen；updatedAugust20,2026",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:25.418845+00:00"
+      },
+      {
+        "source_id": "p37-r7-bedding-selection",
+        "source_url": "https://www.oia.hokudai.ac.jp/cier/wp/wp-content/uploads/2026/07/64fe6a42b59a58ea5d6ff27e3e495caa.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "正文2026-07-01；僅Kita8/Kita23寢具",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。5頁全文已讀；4000處理費日/中含稅與英+tax不同，與HUSTEP網頁寢具估計亦不同。",
+        "checked_at": "2026-10-08T08:02:52.079089+00:00"
+      },
+      {
+        "source_id": "p37-r7-calendar",
+        "source_url": "https://www.global.hokudai.ac.jp/admissions/short-term-exchange/hustep-calendar",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般tentativeHUSTEPcalendar；未年日期不作精確2027校曆",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:22.072298+00:00"
+      },
+      {
+        "source_id": "p37-r7-ccu-list",
+        "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+        "status": "pdf",
+        "content_academic_year": "正文中正2027春季名額表2026.09.17版，物理第37頁",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:16:21.827202+00:00"
+      },
+      {
+        "source_id": "p37-r7-consent-form",
+        "source_url": "https://isc.high.hokudai.ac.jp/wp-content/uploads/2024/08/HUSTEP-Consent-to-Transfer-and-Process-Personal-Data.docx",
+        "status": "docx",
+        "http_status": 200,
+        "content_academic_year": "模板正文未印年；Spring2027HUSTEP官方頁指定",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。表內簽名/日期/母校職員章及推薦人角色已核；學生與母校TAO提交角色分開。",
+        "checked_at": "2026-10-08T07:54:23.629195+00:00"
+      },
+      {
+        "source_id": "p37-r7-dorm-fees-xlsx",
+        "source_url": "https://www.oia.hokudai.ac.jp/cier/wp/wp-content/uploads/2026/09/55cb7074539d979a3e58b7bb19067361.xlsx",
+        "status": "xlsx",
+        "http_status": 200,
+        "content_academic_year": "工作表正文2026.6.1起；資訊asofJune2026可變，不保证2027帳單",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。兩語工作表44/45列全文已讀；標準庫ZIP/XML取值，不執行公式/外部連結；日租Kita23-1兩語806/807不同，未猜值。",
+        "checked_at": "2026-10-08T08:02:51.860967+00:00"
+      },
+      {
+        "source_id": "p37-r7-enrollment-form",
+        "source_url": "https://isc.high.hokudai.ac.jp/wp-content/uploads/2024/08/HUSTEP-Certificate-of-Enrollment.docx",
+        "status": "docx",
+        "http_status": 200,
+        "content_academic_year": "模板正文未印年；Spring2027HUSTEP官方頁指定",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。表內簽名/日期/母校職員章及推薦人角色已核；學生與母校TAO提交角色分開。",
+        "checked_at": "2026-10-08T07:54:24.312488+00:00"
+      },
+      {
+        "source_id": "p37-r7-exchange",
+        "source_url": "https://www.global.hokudai.ac.jp/admissions/exchange-student-admissions/",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://www.global.hokudai.ac.jp/admissions/exchange-student-admissions/",
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:45:39.503136+00:00"
+      },
+      {
+        "source_id": "p37-r7-factsheet",
+        "source_url": "https://isc.high.hokudai.ac.jp/wp25/wp-content/uploads/2025/12/HUSTEP_factsheet_2026-2027.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "正文HUSTEP2026–2027；asofDecember2025",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:22.925081+00:00"
+      },
+      {
+        "source_id": "p37-r7-guidelines",
+        "source_url": "https://isc.high.hokudai.ac.jp/wp25/wp-content/uploads/2025/12/9de218909fbbd35e0a6d9e070e06aebc.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "正文HUSTEP2026–2027；第2頁Spring2027申請日期",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:23.313098+00:00"
+      },
+      {
+        "source_id": "p37-r7-housing",
+        "source_url": "https://www.oia.hokudai.ac.jp/cier/housing/?wovn=en",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:24.654327+00:00"
+      },
+      {
+        "source_id": "p37-r7-hustep-current",
+        "source_url": "https://www.global.hokudai.ac.jp/admissions/short-term-exchange/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文HUSTEP2027Springopen；updatedSeptember17,2026",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:33.467729+00:00"
+      },
+      {
+        "source_id": "p37-r7-hustep",
+        "source_url": "https://www.oia.hokudai.ac.jp/hustep/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。旧入口HTTP200重導首頁，沒有HUSTEP政策；不把取得200當核實。",
+        "checked_at": "2026-10-08T07:45:38.948522+00:00"
+      },
+      {
+        "source_id": "p37-r7-recommendation-form",
+        "source_url": "https://isc.high.hokudai.ac.jp/wp-content/uploads/2024/08/HUSTEP-Recommendation-Letter.docx",
+        "status": "docx",
+        "http_status": 200,
+        "content_academic_year": "模板正文未印年；Spring2027HUSTEP官方頁指定",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。表內簽名/日期/母校職員章及推薦人角色已核；學生與母校TAO提交角色分開。",
+        "checked_at": "2026-10-08T07:54:24.406117+00:00"
+      },
+      {
+        "source_id": "p37-r7-sasrs-factsheet",
+        "source_url": "https://isc.high.hokudai.ac.jp/wp25/wp-content/uploads/2026/08/Hokkaido-University-Factsheet_Spring-2027-SA-and-SRS.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "正文2026–2027；asofAugust2026；Spring2027SA/SRS",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:02:51.462507+00:00"
+      },
+      {
+        "source_id": "p37-r7-sasrs-faq",
+        "source_url": "https://www.global.hokudai.ac.jp/wp/wp-content/uploads/2025/02/sasrs-qa.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:02:51.704896+00:00"
+      },
+      {
+        "source_id": "p37-r7-studyplan-form",
+        "source_url": "https://isc.high.hokudai.ac.jp/wp25/wp-content/uploads/2026/07/HU-Study-Plan_Half-Year_2027-Spring.xls",
+        "status": "xls",
+        "http_status": 200,
+        "content_academic_year": "表內SpringSemester2027；Spring2026syllabus僅tentative參考",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:23.894723+00:00"
       }
     ]
   },
@@ -3298,28 +4114,43 @@
     "school_name": "Tokiwa University 常磐大學",
     "ccu_page": 39,
     "quota_status": "published",
-    "review_note": "官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
+    "review_note": "官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。；第七輪六校公開重要政策/指定模板與母校逐欄交叉核對，歷史梯次/方向/計畫與語言替代不混入當期。",
     "questions": [
       {
         "field": "program_scope",
         "label": "接收計畫、學制及校區",
-        "status": "reference_only",
+        "status": "needs_confirmation",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的接收計畫、學制及校區，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "官網現行連結的文件內容僅FALL且未標年度，清楚作其他梯次參考。",
-        "reference_value": "僅Fall交換（9月中至1月初），未標年份；不是中正2027春季簡章。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "中正2027表列Spring可申請及N2/4月2–8月4，但常磐公開ExchangeGuidelines全文僅FallmidSep–earlyJan，另2026FallPartTime有收tuition的不同計畫。未取得校方2027Spring對應，不把其他計畫作當期简章或稱官方尚未公告。",
         "evidence": [
           {
-            "source_id": "p39-r2-guidelines",
+            "source_id": "p39-r7-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              39
+            ],
+            "academic_year": "正文中正2027春季名額表2026.09.17版，物理第39頁",
+            "application_round": "正文中正2027春季名額表2026.09.17版，物理第39頁",
+            "checked_at": "2026-10-08T08:16:21.827202+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ncy) 秋季班 ：JLPT N5 / 春季班 ；JLPT N2 姊妹校簡章 (Fact Sheet) 第二階繳交資 料 (Submit relevant documents _Second Section) 必須先經過第一階段校內申請通過，且經過國際處向姐妹校提名後，才有資格進行第 二階段(姊妹校)申請。 ・Application Form ・Essay theme & requirements ・Two separate Letter of Recommendation forms (校內初選請直接用姊妹校格式) ・Certificate of Health Form Please read each form carefully and fill them out as necessary. A form for each Letter of ",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "dd42abc22ecbb47afa77ee8b0bf74d14acd9ed00a89c14eb18785b48b1b82fc6"
+          },
+          {
+            "source_id": "p39-r7-guidelines",
             "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
             "source_pages": [
               1
             ],
-            "academic_year": "未標年；僅FALL計畫",
-            "application_round": "未標年；僅FALL計畫",
-            "checked_at": "2026-10-08T04:40:21.339992+00:00",
-            "status": "reference_only",
-            "excerpt": "1 TOKIWA UNIVERSITY STUDENT EXCHANGE PROGRAM-FALL This document contains the guidelines for the Tokiwa University Student Exchange Program, which is held during the Fall Semester, from mid-September to early January . Eligible students are encouraged to apply for the program through the relevant department at their home institution. 1. COURSES Exchange students s",
-            "note": "當前官網交換頁所連，但正文只載FALL，無2027春季；作其他梯次參考，不套中正當期。",
+            "academic_year": "正文STUDENTEXCHANGEPROGRAM-FALL；未年度",
+            "application_round": "正文STUDENTEXCHANGEPROGRAM-FALL；未年度",
+            "checked_at": "2026-10-08T07:51:34.189463+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "TY STUDENT EXCHANGE PROGRAM-FALL This document contains the guidelines for the Tokiwa University Student Exchange Program, which is held during the Fall Semester, from mid-September to early January . Eligible students are encouraged to apply for the program through the relevant department at their home institution. 1. COURSES Exchange students study at Tokiwa University campus",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
             "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
             "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db"
           }
@@ -3380,7 +4211,7 @@
         "label": "合作校提名截止",
         "status": "missing",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的合作校提名截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
@@ -3437,29 +4268,92 @@
       {
         "field": "application_forms",
         "label": "合作校申請表取得方式",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "公開Fall交換指南列Application/Essay/健康（SelfReport後補正式）及JapaneseInstructor+AcademicAdvisor兩推薦，但未取得全部2027Spring實表。2026FallPartTime12項/學費表不是交換新表；中正p39兩封需校方格式，個別取得仍待確認。",
+        "evidence": [
+          {
+            "source_id": "p39-r7-guidelines",
+            "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+            "source_pages": [
+              5
+            ],
+            "academic_year": "正文STUDENTEXCHANGEPROGRAM-FALL；未年度",
+            "application_round": "正文STUDENTEXCHANGEPROGRAM-FALL；未年度",
+            "checked_at": "2026-10-08T07:51:34.189463+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ficate of Health OR Self Report Health Form* (forms provided); (4) A letter of recommendation from a Japanese language instructor; and (5) A letter of recommendation from a mentor or academic advisor. *please note that if you submit a Self-Report Health Form you will be asked to complete a Certificate of Health at a later date. [HOW TO APPLY] Applications must be sent via email",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
+            "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db"
+          },
+          {
+            "source_id": "p39-r7-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              39
+            ],
+            "academic_year": "正文中正2027春季名額表2026.09.17版，物理第39頁",
+            "application_round": "正文中正2027春季名額表2026.09.17版，物理第39頁",
+            "checked_at": "2026-10-08T08:16:21.827202+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "tion forms (校內初選請直接用姊妹校格式) ・Certificate of Health Form Please read each form carefully and fill them out as necessary. A form for each Letter of Recommendation (one academic advisor; one Japanese instructor OR other faculty member closely associated with you) should be handed to the corresponding faculty after obtaining permission as necessary. As per the application guidelines",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "dd42abc22ecbb47afa77ee8b0bf74d14acd9ed00a89c14eb18785b48b1b82fc6"
+          }
+        ]
       },
       {
         "field": "academic_calendar",
         "label": "合作校校曆及考試",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的合作校校曆及考試，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "中正p39当期列2027-04-02至08-04，接收校本輪公開交換指南僅Fall、不印2027Spring校曆。這是母校所載待接收端確認；2026FallPartTimeSep日期不混入本期。",
+        "evidence": [
+          {
+            "source_id": "p39-r7-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              39
+            ],
+            "academic_year": "正文中正2027春季名額表2026.09.17版，物理第39頁",
+            "application_round": "正文中正2027春季名額表2026.09.17版，物理第39頁",
+            "checked_at": "2026-10-08T08:16:21.827202+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "止日: 2026/10/15 學期期間:2027/04/02-2027/08/04 一學期(one semester)最少修 18學分",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "dd42abc22ecbb47afa77ee8b0bf74d14acd9ed00a89c14eb18785b48b1b82fc6"
+          }
+        ]
       },
       {
         "field": "course_restrictions",
         "label": "課程與學分限制",
-        "status": "missing",
+        "status": "reference_only",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的課程與學分限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "公開Fall未年指南：日語分班Course1或2+四JapaneseAffairs/JapanStudy（其中JA-I必修），1course15×90min；母校2027Spring列至少18credits，未有同Spring校方核實，不能用Fallcoursecount換算本期18。",
+        "evidence": [
+          {
+            "source_id": "p39-r7-guidelines",
+            "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "正文STUDENTEXCHANGEPROGRAM-FALL；未年度",
+            "application_round": "正文STUDENTEXCHANGEPROGRAM-FALL；未年度",
+            "checked_at": "2026-10-08T07:51:34.189463+00:00",
+            "status": "reference_only",
+            "excerpt": "ent Test ; and (ii) four Japanese Affairs/Japan Studies courses. [JAPANESE LANGUAGE COURSES] Each student will take a Japanese language course (Course 1 or Course 2) consisting of five 90-minute classes of different subjects per week over fifteen weeks for a total of 112.5 hours of Japanese language instruction. [JAPANESE AFFAIRS/ JAPAN STUDY COURSES] Several courses about diff",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
+            "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db"
+          }
+        ]
       },
       {
         "field": "housing",
@@ -3491,7 +4385,7 @@
         "label": "住宿申請／付款截止",
         "status": "missing",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
@@ -3550,7 +4444,7 @@
         "label": "簽證與居留",
         "status": "missing",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的簽證與居留，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
@@ -3559,7 +4453,7 @@
         "label": "抵達與迎新",
         "status": "missing",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的抵達與迎新，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
@@ -3697,6 +4591,50 @@
         "content_academic_year": "未標年；僅FALL計畫",
         "content_review_note": "當前官網交換頁所連，但正文只載FALL，無2027春季；作其他梯次參考，不套中正當期。",
         "checked_at": "2026-10-08T04:40:21.339992+00:00"
+      },
+      {
+        "source_id": "p39-r7-ccu-list",
+        "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+        "status": "pdf",
+        "content_academic_year": "正文中正2027春季名額表2026.09.17版，物理第39頁",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:16:21.827202+00:00"
+      },
+      {
+        "source_id": "p39-r7-exchange",
+        "source_url": "https://www.tokiwa.ac.jp/en/about/exchange/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般FallExchangeProgram；沒有2027春正文",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:45:39.852263+00:00"
+      },
+      {
+        "source_id": "p39-r7-guidelines",
+        "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "正文STUDENTEXCHANGEPROGRAM-FALL；未年度",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:34.189463+00:00"
+      },
+      {
+        "source_id": "p39-r7-parttime-enpdf",
+        "source_url": "https://www.tokiwa.ac.jp/en/media/English_version.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "正文TOKIWAUNIVERSITY2026FALLPART-TIME；非校際交換新版",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:33.555204+00:00"
+      },
+      {
+        "source_id": "p39-r7-parttime",
+        "source_url": "https://www.tokiwa.ac.jp/en/admission/290126/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文September2026FallPartTime；非2027春交換",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:45:40.063070+00:00"
       }
     ]
   },
@@ -3704,23 +4642,52 @@
     "school_name": "Dong-A University 東亞大學",
     "ccu_page": 42,
     "quota_status": "published",
-    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。",
+    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。；第七輪六校公開重要政策/指定模板與母校逐欄交叉核對，歷史梯次/方向/計畫與語言替代不混入當期。",
     "questions": [
       {
         "field": "program_scope",
         "label": "接收計畫、學制及校區",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Dong-A University 東亞大學中正2027春季的接收計畫、學制及校區，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "母校2027p42赴東亞交換與官方網站OutboundExchangeI/II不同方向：其TOEIC750/IELTS6.5與CCU住房支持是東亞學生出國，不套中正Incoming。公開degree2027/韓語研修亦不同program；接收端Spring2027新版交換简章未取得，舊2026Fall仍參考。",
+        "evidence": [
+          {
+            "source_id": "p42-r7-exchange-ii",
+            "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Contents/Contents.do?mCode=MN051",
+            "source_pages": [],
+            "academic_year": "正文OutboundStudentExchangeII；東亞學生赴外校",
+            "application_round": "正文OutboundStudentExchangeII；東亞學生赴外校",
+            "checked_at": "2026-10-08T08:02:53.041459+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "rnational Affairs > Outbound Programs > Student Exchange Ⅱ 스킵네비게이션 본문바로가기 주메뉴바로가기 International Relations Programs DONG-A UNIVERSITY, WHERE WE MAKE YOUR HISTORY 메인으로 이동 International Relations Programs Office of International Affairs Admission Global Network International Relations Programs International Student Support Bulletin Boards 닫기 Outbound Programs Outbound Programs In-",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "b535658e8469bbe4caa88bd26339218293eb8eb78b45b82b9218ec982a9e7714",
+            "text_sha256": "65a1fbdd134d3ddf4e5a629f9d71b4dbd7bc043313b5a3742a2d6d2092d263c9"
+          },
+          {
+            "source_id": "p42-r7-ccu-list",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              42
+            ],
+            "academic_year": "正文中正2027春季名額表2026.09.17版，物理第42頁",
+            "application_round": "正文中正2027春季名額表2026.09.17版，物理第42頁",
+            "checked_at": "2026-10-08T08:16:21.827202+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "00 / TOEFL iBT 70 / IELTS 5.5 or above A certain level of Korean Language Proficiency is required for the better course selections. 姊妹校簡章 (Fact Sheet) https://drive.google.com/file/d/1CJzpD6obOaKSHMx3KEkkkxP0nLKW7BoO/view?usp=drive_link 第二階繳交資 料 (Submit relevant documents _Second Section) 必須先經過第一階段校內申請通過，且經過國際處向姐妹校提名後，才有資格進行第 二階段(姊妹校)申請。 ⚫ 所有的繳交資料統一整合成一個 PDF檔 (一個學生一個 PDF檔) +ID ",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "e78c589284590e5de67cf1f84979b4cf7cb15451a32d3042a732d8af625421e6"
+          }
+        ]
       },
       {
         "field": "eligibility",
         "label": "合作校接收資格",
         "status": "missing",
         "question": "請確認Dong-A University 東亞大學中正2027春季的合作校接收資格，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
@@ -3729,7 +4696,7 @@
         "label": "合作校語言條件與替代證明",
         "status": "missing",
         "question": "請確認Dong-A University 東亞大學中正2027春季的合作校語言條件與替代證明，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
@@ -3813,7 +4780,7 @@
         "label": "合作校申請表取得方式",
         "status": "missing",
         "question": "請確認Dong-A University 東亞大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
@@ -3822,7 +4789,7 @@
         "label": "合作校校曆及考試",
         "status": "missing",
         "question": "請確認Dong-A University 東亞大學中正2027春季的合作校校曆及考試，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
@@ -3831,18 +4798,31 @@
         "label": "課程與學分限制",
         "status": "missing",
         "question": "請確認Dong-A University 東亞大學中正2027春季的課程與學分限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
       {
         "field": "housing",
         "label": "住宿與床位",
-        "status": "reference_only",
+        "status": "needs_confirmation",
         "question": "請確認Dong-A University 東亞大學中正2027春季的住宿與床位，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "未載適用2027春季年，尚未核實新版。",
-        "reference_value": "Fall2026參考Seunghak双人：男新宿約950000、女舊宿900000KRW/4月，OIA分配；不沿用2027價。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "一般未年intlstudent頁：SeokdangGlobalHouse Bumin旁2人/room，HanlimSeunghak2人/room；交換舊Fall2026分配由IO、无外宿協助。一般page房型/容量不是2027中正分配保證或免宿，母校協議待遇待核。",
         "evidence": [
+          {
+            "source_id": "p42-r7-dormitory",
+            "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Contents/Contents.do?mCode=MN060",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:54:25.434509+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "loors to 15 floors, double occupancy rooms (2 students per room) Facilities 92 rooms, maximum capacity of 184 people Cost Approximately 850,000 won per semester (for a 4-month period) Key Facilities Laundry room, lounge, cafeteria. Included in Each Room Bathroom, single bed, desk, chair, drawers, shoe rack, LAN cable, telephone. Hanrim Dormitory Hanlim Dormitory, which opened i",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "721c1d2694450e68e5f1acd90900169389d867276d3486eee58cf94585dfaf13",
+            "text_sha256": "fcc11e32844358500c7600d1c925cdbf96fae4173223a261bef4cb8dce4d6e9b"
+          },
           {
             "source_id": "p42-mirror",
             "source_url": "https://drive.google.com/file/d/1CJzpD6obOaKSHMx3KEkkkxP0nLKW7BoO/view?usp=drive_link",
@@ -3852,8 +4832,8 @@
             "academic_year": "2026秋季",
             "application_round": "2026秋季",
             "checked_at": "2026-10-08T00:00:00Z",
-            "status": "reference_only",
-            "excerpt": "s in one room Fees of on-campus dormitory - Seunghak Campus [(amount for a semester(4 months)] ·Male students(New dorm) : approx. 950,000 KRW ·Female students(Old dorm) : approx. 900,000 KRW Off-campus housing assistance is provided? No Maximum beds offered to every partner school? Yes Any limitation or suggestion on accommodatio",
+            "status": "needs_confirmation",
+            "excerpt": "n on accommodation? Dormitory is allocated by Office of International Affairs VI. Expense (in local currency) Insurance Students will be required to have Korean National Health Insurance. This will cost about 55,000KRW~70,000KRW/month starting from April/October Students should have personal international insurance that can cover the students’ medical fee in Korea from the date",
             "note": "未載適用2027春季年，尚未核實新版。",
             "content_hash": "714de59ed0eb4ac7d89d6fb5a0977a4b879cae7c5e4ef15aad968daaa2c8db05",
             "text_sha256": "671294a75fd2656761d9dded9d1073733d9d636014cc2d79454ddfe1f3180511"
@@ -3865,27 +4845,31 @@
         "label": "住宿申請／付款截止",
         "status": "missing",
         "question": "請確認Dong-A University 東亞大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
       {
         "field": "costs",
         "label": "住宿與生活費用",
-        "status": "missing",
+        "status": "conflict",
         "question": "請確認Dong-A University 東亞大學中正2027春季的住宿與生活費用，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "insurance",
-        "label": "保險",
-        "status": "reference_only",
-        "question": "請確認Dong-A University 東亞大學中正2027春季的保險，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "未載適用2027春季年，尚未核實新版。",
-        "reference_value": "Fall2026參考NHIS55000–70000KRW/月自Apr/Oct，抵達至3/9月底需私人保險；本期費率/加入時間未核。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "一般未年intlstudent頁估SeokdangKRW850000/4months，HanlimSeunghak600000/4months；舊Fall2026交換表Seunghak男950000女900000/4months不同，未核2027交換適用、房型/年度/餐費不自合併。保險一般頁143840說30%off但71920為半價算術矛盾，未把任何一組當2027確定費。",
         "evidence": [
+          {
+            "source_id": "p42-r7-dormitory",
+            "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Contents/Contents.do?mCode=MN060",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:54:25.434509+00:00",
+            "status": "conflict",
+            "excerpt": " Cost Approximately 600,000 won per semester (for a 4-month period).s Key Facilities Cafeteria, study rooms, internet cafe, fitness center, meeting rooms, lounge, laundry, and ironing rooms, etc Included in Each Room Single bed, desk, chair, drawers (including a mirror and shoe rack), LAN cable, telephone",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "721c1d2694450e68e5f1acd90900169389d867276d3486eee58cf94585dfaf13",
+            "text_sha256": "fcc11e32844358500c7600d1c925cdbf96fae4173223a261bef4cb8dce4d6e9b"
+          },
           {
             "source_id": "p42-mirror",
             "source_url": "https://drive.google.com/file/d/1CJzpD6obOaKSHMx3KEkkkxP0nLKW7BoO/view?usp=drive_link",
@@ -3895,8 +4879,59 @@
             "academic_year": "2026秋季",
             "application_round": "2026秋季",
             "checked_at": "2026-10-08T00:00:00Z",
-            "status": "reference_only",
-            "excerpt": "ncy) Insurance Students will be required to have Korean National Health Insurance. This will cost about 55,000KRW~70,000KRW/month starting from April/October Students should have personal international insurance that can cover the students’ medical fee in Korea from the date of arrival until the end of March/September Meal Approx..",
+            "status": "conflict",
+            "excerpt": "New dorm) : approx. 950,000 KRW ·Female students(Old dorm) : approx. 900,000 KRW Off-campus housing assistance is provided? No Maximum beds offered to every partner school? Yes Any limitation or suggestion on accommodation? Dormitory is allocated by Office of International Affairs VI. Expense (in local currency) Insurance Students will be required to have Korean National Health",
+            "note": "未載適用2027春季年，尚未核實新版。",
+            "content_hash": "714de59ed0eb4ac7d89d6fb5a0977a4b879cae7c5e4ef15aad968daaa2c8db05",
+            "text_sha256": "671294a75fd2656761d9dded9d1073733d9d636014cc2d79454ddfe1f3180511"
+          },
+          {
+            "source_id": "p42-r7-insurance",
+            "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Contents/Contents.do?mCode=MN061",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:51:36.733292+00:00",
+            "status": "conflict",
+            "excerpt": "sulting in a fee of 71,920 won. Payment Deadline Pay the insurance premium for the following month by the 25th of each month in advance. Payment Methods Payment can be made through various methods including direct debit, virtual account, banks, electronic payment, National Health Insurance Corporation offices (credit card), and collection portals. Applying for automatic debit o",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "de18d8dc6d70063109050f954d4ad502b5a260a78d001ce8a2b9cc2eab405a91",
+            "text_sha256": "2081d77f9816f332e19091a26f603e356a35d860214b510b886319648029db01"
+          }
+        ]
+      },
+      {
+        "field": "insurance",
+        "label": "保險",
+        "status": "conflict",
+        "question": "請確認Dong-A University 東亞大學中正2027春季的保險，提供明載年度／計畫的官方文件或提名通知。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "校方一般頁混2019NHIS自動加入及D2sixmonthdelay，143840標30%off卻列71920不同算法；舊Fall2026交換頁Apr/Oct起55–70k/月及抵達至Mar/Sep末自購internationalinsurance另文。2027交換/臺籍最新NHIS起算及保費未核，不推6m豁免或保證全coverage。",
+        "evidence": [
+          {
+            "source_id": "p42-r7-insurance",
+            "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Contents/Contents.do?mCode=MN061",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:51:36.733292+00:00",
+            "status": "conflict",
+            "excerpt": " average premium of 143,840 won, resulting in a fee of 71,920 won. Payment Deadline Pay the insurance premium for the following month by the 25th of each month in advance. Payment Methods Payment can be made through various methods including direct debit, virtual account, banks, electronic payment, National Health Insurance Corporation offices (credit card), and collection port",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "de18d8dc6d70063109050f954d4ad502b5a260a78d001ce8a2b9cc2eab405a91",
+            "text_sha256": "2081d77f9816f332e19091a26f603e356a35d860214b510b886319648029db01"
+          },
+          {
+            "source_id": "p42-mirror",
+            "source_url": "https://drive.google.com/file/d/1CJzpD6obOaKSHMx3KEkkkxP0nLKW7BoO/view?usp=drive_link",
+            "source_pages": [
+              3
+            ],
+            "academic_year": "2026秋季",
+            "application_round": "2026秋季",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "conflict",
+            "excerpt": "his will cost about 55,000KRW~70,000KRW/month starting from April/October Students should have personal international insurance that can cover the students’ medical fee in Korea from the date of arrival until the end of March/September Meal Approx.. 6,500KRW~8,000KRW/lunch in university Public Transport 60,000KW/month(estimated)",
             "note": "未載適用2027春季年，尚未核實新版。",
             "content_hash": "714de59ed0eb4ac7d89d6fb5a0977a4b879cae7c5e4ef15aad968daaa2c8db05",
             "text_sha256": "671294a75fd2656761d9dded9d1073733d9d636014cc2d79454ddfe1f3180511"
@@ -3906,18 +4941,47 @@
       {
         "field": "visa",
         "label": "簽證與居留",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Dong-A University 東亞大學中正2027春季的簽證與居留，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "舊2026Fall交換表acceptanceletter可supportvisa；目前校方一般頁含延簽、D4轉D2、GPA分流銀行餘額/工作時數，不是首次Spring2027CCUincomingvisa表。30k/60k/130k費與住址14日等未年不能當臺籍2027法律最新結論；當期實表及政府規則未核。",
+        "evidence": [
+          {
+            "source_id": "p42-r7-visa",
+            "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Contents/Contents.do?mCode=MN062",
+            "source_pages": [],
+            "academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "application_round": "一般官方頁/模板未印2027適用年；不推定本期已核",
+            "checked_at": "2026-10-08T07:54:26.530023+00:00",
+            "status": "needs_confirmation",
+            "excerpt": " of 16,000,000 KRW) Changing from D-4 to D-2 Visa Application form (refer to attached file) One passport-sized photo with a white background (4x5 cm) –> This should be a new photo, different from the one on your existing alien registration card and passport. Copy of your passport Original alien registration card (if applicable) Certificate of residence (refer to attached file) ",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "2b804c53354d7519478804814cca4a87c23c5107dc1e65a0f31b0c55c47bae03",
+            "text_sha256": "05d976cb6e0a6b58b79680d25716e03a8c373598e3b2c9080701b8f833852dd9"
+          },
+          {
+            "source_id": "p42-mirror",
+            "source_url": "https://drive.google.com/file/d/1CJzpD6obOaKSHMx3KEkkkxP0nLKW7BoO/view?usp=drive_link",
+            "source_pages": [
+              2
+            ],
+            "academic_year": "2026秋季",
+            "application_round": "2026秋季",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "needs_confirmation",
+            "excerpt": "ng for student visa Acceptance letter can be used as a supporting document for your visa and you can take it to the nearest Korean Embassy.",
+            "note": "未載適用2027春季年，尚未核實新版。",
+            "content_hash": "714de59ed0eb4ac7d89d6fb5a0977a4b879cae7c5e4ef15aad968daaa2c8db05",
+            "text_sha256": "671294a75fd2656761d9dded9d1073733d9d636014cc2d79454ddfe1f3180511"
+          }
+        ]
       },
       {
         "field": "arrival",
         "label": "抵達與迎新",
         "status": "missing",
         "question": "請確認Dong-A University 東亞大學中正2027春季的抵達與迎新，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
@@ -3926,7 +4990,7 @@
         "label": "合作校學費",
         "status": "missing",
         "question": "請確認Dong-A University 東亞大學中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
@@ -3935,7 +4999,7 @@
         "label": "交換期間及延長限制",
         "status": "missing",
         "question": "請確認Dong-A University 東亞大學中正2027春季的交換期間及延長限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       }
@@ -3966,6 +5030,86 @@
         "content_academic_year": "未標示",
         "content_review_note": "已讀取官方頁面，但適用2027春季年度未核實。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p42-r7-academic",
+        "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Contents/Contents.do?mCode=MN095",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文GraduateDegreeAdmission；非IncomingExchange",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:35.005064+00:00"
+      },
+      {
+        "source_id": "p42-r7-application",
+        "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Contents/Contents.do?mCode=MN032",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文KoreanLanguageCourse；非IncomingExchange",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:34.363841+00:00"
+      },
+      {
+        "source_id": "p42-r7-ccu-list",
+        "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+        "status": "pdf",
+        "content_academic_year": "正文中正2027春季名額表2026.09.17版，物理第42頁",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:16:21.827202+00:00"
+      },
+      {
+        "source_id": "p42-r7-dormitory",
+        "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Contents/Contents.do?mCode=MN060",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:25.434509+00:00"
+      },
+      {
+        "source_id": "p42-r7-exchange-ii",
+        "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Contents/Contents.do?mCode=MN051",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文OutboundStudentExchangeII；東亞學生赴外校",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:02:53.041459+00:00"
+      },
+      {
+        "source_id": "p42-r7-exchange",
+        "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Contents/Contents.do?mCode=MN050",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文OutboundStudentExchangeI；東亞學生赴外校",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:45:41.021977+00:00"
+      },
+      {
+        "source_id": "p42-r7-insurance",
+        "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Contents/Contents.do?mCode=MN061",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:36.733292+00:00"
+      },
+      {
+        "source_id": "p42-r7-notices",
+        "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Board/Board.do?mCode=MN064",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "公告Spring2027DegreeAdmission；非交換簡章",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:25.431190+00:00"
+      },
+      {
+        "source_id": "p42-r7-visa",
+        "source_url": "https://dongaoia.donga.ac.kr/dongaoia/CMS/Contents/Contents.do?mCode=MN062",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:26.530023+00:00"
       }
     ]
   },
@@ -5826,14 +6970,14 @@
     "school_name": "Kyungsung University 慶星大學",
     "ccu_page": 54,
     "quota_status": "published",
-    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。；第三輪已讀的新入口/深層附件與既有PDF重新核對，見third-pass-changes；未載與未標年保留，不宣稱所有官方入口已查完。",
+    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。；第三輪已讀的新入口/深層附件與既有PDF重新核對，見third-pass-changes；未載與未標年保留，不宣稱所有官方入口已查完。；第七輪六校公開重要政策/指定模板與母校逐欄交叉核對，歷史梯次/方向/計畫與語言替代不混入當期。",
     "questions": [
       {
         "field": "eligibility",
         "label": "合作校接收資格",
         "status": "missing",
         "question": "請確認Kyungsung University 慶星大學中正2027春季的合作校接收資格，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
@@ -5842,7 +6986,7 @@
         "label": "合作校語言條件與替代證明",
         "status": "missing",
         "question": "請確認Kyungsung University 慶星大學中正2027春季的合作校語言條件與替代證明，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
@@ -5874,32 +7018,48 @@
       {
         "field": "application_forms",
         "label": "合作校申請表取得方式",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Kyungsung University 慶星大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "當期Spring2027FactSheet規定nomination/applicationemail截止2026-11-27且不必internationalpost，但沒有實際申請表/簽章/完整文件清單。degree2026FallIELTS5.5/iBT71招生頁不是incomingexchangeform，不能據其補滿空值；仍待母校/接收校指定實表。",
+        "evidence": [
+          {
+            "source_id": "p54-r7-mirror-reread",
+            "source_url": "https://drive.google.com/file/d/1d_-lVcJPFqJlRlRv1joRS7PzlV64fPVb/view?usp=drive_link",
+            "source_pages": [
+              4
+            ],
+            "academic_year": "正文2027SpringSemester；宿舍頁錯混9/1–12/21秋期",
+            "application_round": "正文2027SpringSemester；宿舍頁錯混9/1–12/21秋期",
+            "checked_at": "2026-10-08T08:16:21.827202+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "s.ac.kr) • There is no need to submit application documents by international mail. • Dates are subject to change NOTICE Semester Schedule Recommended arrival date 2027/02/24 ~ 2027/03/01 Orientation 2027/02/25 (The date may vary by 2 to 3 days.) Beginning of the semester 2027/03/02 End of the semester 2027/06/21 (The date may vary by 2 to 3 days.) Nomination & Application Nomin",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "d612106bb417cfdf411129488c14a772f1da1ab847f052be95308b27a6d938b0",
+            "text_sha256": "0f00886aff3c05c49ca0f54d06a0175f97ffe97dc171180033081f6378c7cf5d"
+          }
+        ]
       },
       {
         "field": "housing",
         "label": "住宿與床位",
         "status": "conflict",
         "question": "請確認Kyungsung University 慶星大學中正2027春季的住宿與床位，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-        "reference_value": "雙人900000、三人700000KRW/期，但住宿期間仍列9/1–12/21，與春季標題矛盾；當期費率/入住待確認。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "當期2027Spring表Dormdouble900000/triple700000KRW/sem，但period寫Sept1–Dec21、16weeks是秋期，spring適用矛盾；沒有取得2027Spring住宿contract或申請截止/床位保證。雙人/三人費不轉成春確定帳單。",
         "evidence": [
           {
-            "source_id": "p54-mirror",
+            "source_id": "p54-r7-mirror-reread",
             "source_url": "https://drive.google.com/file/d/1d_-lVcJPFqJlRlRv1joRS7PzlV64fPVb/view?usp=drive_link",
             "source_pages": [
               5
             ],
-            "academic_year": "2027春季",
-            "application_round": "2027春季",
-            "checked_at": "2026-10-08T00:00:00Z",
+            "academic_year": "正文2027SpringSemester；宿舍頁錯混9/1–12/21秋期",
+            "application_round": "正文2027SpringSemester；宿舍頁錯混9/1–12/21秋期",
+            "checked_at": "2026-10-08T08:16:21.827202+00:00",
             "status": "conflict",
-            "excerpt": "uri Dormitory • In dormitory: 900,000 KRW (Double room) / 700,000 KRW (Triple room) for 1 semester • Period of staying: 16 weeks, September 1st to December 21st ▪ Entertainment • Movie: 12,000 ~ 13,000 KRW • 3D movies : 15,000 ~ 20,000 KRW ",
-            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+            "excerpt": " staying: 16 weeks, September 1st to December 21st ▪ Entertainment • Movie: 12,000 ~ 13,000 KRW • 3D movies : 15,000 ~ 20,000 KRW",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
             "content_hash": "d612106bb417cfdf411129488c14a772f1da1ab847f052be95308b27a6d938b0",
             "text_sha256": "0f00886aff3c05c49ca0f54d06a0175f97ffe97dc171180033081f6378c7cf5d"
           }
@@ -5910,16 +7070,41 @@
         "label": "住宿申請／付款截止",
         "status": "missing",
         "question": "請確認Kyungsung University 慶星大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
+      },
+      {
+        "field": "costs",
+        "label": "住宿與生活費用",
+        "status": "conflict",
+        "question": "請確認Kyungsung University 慶星大學中正2027春季的住宿與生活費用，提供明載年度／計畫的官方文件或提名通知。",
+        "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+        "reference_value": "2027Spring表食堂5000KRW/餐、外食7000–12000、bus1550/subway1600–1800、taxi4800base，保險70000–80000/月maychange為估值；dorm900000double/700000triple每sem仍寫FallSept1–Dec21，住房價適用矛盾。budget不是個人2027帳單、buddy/fieldtrip可另外收費或取消。",
+        "evidence": [
+          {
+            "source_id": "p54-r7-mirror-reread",
+            "source_url": "https://drive.google.com/file/d/1d_-lVcJPFqJlRlRv1joRS7PzlV64fPVb/view?usp=drive_link",
+            "source_pages": [
+              5
+            ],
+            "academic_year": "正文2027SpringSemester；宿舍頁錯混9/1–12/21秋期",
+            "application_round": "正文2027SpringSemester；宿舍頁錯混9/1–12/21秋期",
+            "checked_at": "2026-10-08T08:16:21.827202+00:00",
+            "status": "conflict",
+            "excerpt": "ory • In dormitory: 900,000 KRW (Double room) / 700,000 KRW (Triple room) for 1 semester • Period of staying: 16 weeks, September 1st to December 21st ▪ Entertainment • Movie: 12,000 ~ 13,000 KRW • 3D movies : 15,000 ~ 20,000 KRW",
+            "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+            "content_hash": "d612106bb417cfdf411129488c14a772f1da1ab847f052be95308b27a6d938b0",
+            "text_sha256": "0f00886aff3c05c49ca0f54d06a0175f97ffe97dc171180033081f6378c7cf5d"
+          }
+        ]
       },
       {
         "field": "visa",
         "label": "簽證與居留",
         "status": "missing",
         "question": "請確認Kyungsung University 慶星大學中正2027春季的簽證與居留，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       },
@@ -5928,7 +7113,7 @@
         "label": "合作校學費",
         "status": "missing",
         "question": "請確認Kyungsung University 慶星大學中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已讀所列公開資料，仍未取得此欄Spring2027相符接收條件；未核實新版不等官方明示尚未公告。個人提名後表/院系適用與公共替代來源按證據另查。",
         "reference_value": null,
         "evidence": []
       }
@@ -5941,6 +7126,59 @@
         "content_academic_year": "2027春季",
         "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p54-r7-application",
+        "source_url": "https://kscms.ks.ac.kr/eng/CMS/Contents/Contents.do?mCode=MN047",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文2026FallUndergraduateDegreeAdmission；非IncomingExchange",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:36.988457+00:00"
+      },
+      {
+        "source_id": "p54-r7-ccu-list",
+        "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+        "status": "pdf",
+        "content_academic_year": "正文中正2027春季名額表2026.09.17版，物理第54頁",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:16:21.827202+00:00"
+      },
+      {
+        "source_id": "p54-r7-exchange",
+        "source_url": "https://kscms.ks.ac.kr/eng/CMS/Contents/Contents.do?mCode=MN081",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:51:36.750530+00:00"
+      },
+      {
+        "source_id": "p54-r7-international",
+        "source_url": "https://kscms.ks.ac.kr/eng/Contents.do?mCode=MN0265",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://kscms.ks.ac.kr/eng/Contents.do?mCode=MN0265",
+        "content_academic_year": "一般官方頁/模板未印2027適用年；不推定本期已核",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:45:41.276447+00:00"
+      },
+      {
+        "source_id": "p54-r7-mirror-reread",
+        "source_url": "https://drive.google.com/file/d/1d_-lVcJPFqJlRlRv1joRS7PzlV64fPVb/view?usp=drive_link",
+        "status": "downloaded_extracted_pdf",
+        "content_academic_year": "正文2027SpringSemester；宿舍頁錯混9/1–12/21秋期",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T08:16:21.827202+00:00"
+      },
+      {
+        "source_id": "p54-r7-undergraduate-calendar",
+        "source_url": "https://kscms.ks.ac.kr/eng/CMS/Contents/Contents.do?mCode=MN053",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文AcademicYear2026，2027二月預選/典禮；不是Spring2027全校曆",
+        "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
+        "checked_at": "2026-10-08T07:54:27.041557+00:00"
       }
     ]
   },

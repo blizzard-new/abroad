@@ -104,7 +104,7 @@ def test_reviewed_mandatory_scores_remain_comparable():
     "page,status",
     [
         (26, "missing"),
-        (32, "reference_only"),
+        (32, "needs_confirmation"),
         (33, "reference_only"),
         (39, "reference_only"),
         (71, "missing"),

@@ -187,7 +187,7 @@ def test_uwb_formal_calendar_and_dorm_documents_keep_faculty_and_fee_components(
 def test_sixth_ledger_and_counts_preserve_partial_review_and_actual_acquisition_mode():
     ledger = json.loads((BUNDLE / "semantic-review-ledger.json").read_text())
     assert {33, 68, 71, 80, 99, 109}.issubset(x["ccu_page"] for x in ledger)
-    assert len(ledger) == 18 and all(not x["complete_research_claimed"] for x in ledger)
+    assert len(ledger) >= 18 and all(not x["complete_research_claimed"] for x in ledger)
     j = next(x for x in ledger if x["ccu_page"] == 99)
     assert "p99-r6-application-compass" in j["fields"]["language"]["partially_reviewed_source_ids"]
     c = json.loads((BUNDLE / "sixth-pass-changes.json").read_text())
