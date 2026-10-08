@@ -4,6 +4,15 @@ from exchange_info.http_client import get_safe_session, SSRFError
 import socket
 import json
 
+
+@pytest.fixture(autouse=True)
+def isolate_dns_guard_from_machine_proxy_settings(monkeypatch):
+    # These socket/DNS unit tests exercise direct connections. A machine proxy
+    # resolves a different host and would bypass the mocked destination lookup.
+    # This changes only each test's environment, never runtime proxy settings.
+    for key in ['HTTPS_PROXY', 'HTTP_PROXY', 'ALL_PROXY', 'https_proxy', 'http_proxy', 'all_proxy']:
+        monkeypatch.delenv(key, raising=False)
+
 def test_safe_session_blocks_http():
     session = get_safe_session(require_https=True)
     with pytest.raises(SSRFError, match="HTTP is disabled"):

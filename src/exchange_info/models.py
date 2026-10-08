@@ -1418,6 +1418,7 @@ class PersonalApplicationPlanRequest(BaseModel):
     class_rank_percent: float | None = Field(default=None, gt=0, le=100)
     language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
+    jlpt_level: Literal['N1', 'N2', 'N3', 'N4', 'N5'] | None = None
     academic_year: str | None = Field(default=None, max_length=20)
     application_round: str | None = Field(default=None, max_length=80)
     preferences: list[ApplicationPlanPreference] = Field(min_length=1, max_length=5)
@@ -2586,6 +2587,9 @@ class AdvisorProfile(BaseModel):
     class_rank_percent: float | None = Field(default=None, gt=0, le=100)
     language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
+    jlpt_level: Literal['N1', 'N2', 'N3', 'N4', 'N5'] | None = None
+    academic_year: str | None = Field(default=None, max_length=20)
+    application_round: str | None = Field(default=None, max_length=80)
     target_term: str | None = Field(default=None, max_length=40)
     preferred_country: str | None = Field(default=None, max_length=80)
     monthly_budget: float | None = Field(default=None, ge=0, le=10_000_000)
@@ -3715,6 +3719,7 @@ class AccountSelectionProfile(BaseModel):
     class_rank_percent: float | None = Field(default=None, gt=0, le=100)
     language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
+    jlpt_level: Literal['N1', 'N2', 'N3', 'N4', 'N5'] | None = None
     target_term: str = Field(default="", max_length=40)
     preferred_country: str = Field(default="", max_length=80)
     monthly_budget: float | None = Field(default=None, ge=0, le=10_000_000)

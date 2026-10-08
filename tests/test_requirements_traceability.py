@@ -96,7 +96,8 @@ def test_quality_workflow_runs_isolated_web_checks_and_contract_guard() -> None:
     workflow = QUALITY_WORKFLOW_PATH.read_text(encoding="utf-8")
 
     for required in (
-        "EXCHANGE_INFO_DATA_DIR: ${{ runner.temp }}/exchange-info-tests",
+        "EXCHANGE_INFO_DATA_DIR={os.environ['RUNNER_TEMP']}/exchange-info-tests",
+        'Path(os.environ["GITHUB_ENV"]).open("a")',
         "python -m pip install --disable-pip-version-check uv==0.11.26",
         "uv lock --check",
         "uv sync --frozen --extra dev",
@@ -110,6 +111,7 @@ def test_quality_workflow_runs_isolated_web_checks_and_contract_guard() -> None:
         "git diff --exit-code -- src/exchange_info/official_data",
     ):
         assert required in workflow
+    assert 'EXCHANGE_INFO_DATA_DIR: ${{ runner.temp }}' not in workflow
     runtime_step = "- name: Validate isolated Supabase runtime"
     runtime_command = "uv run --frozen python scripts/validate_supabase_runtime.py"
     assert workflow.count(runtime_step) == 1

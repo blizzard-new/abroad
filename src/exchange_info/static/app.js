@@ -2393,6 +2393,7 @@ function sanitizeSelectionConditions(value) {
     academic_gpa:number(profile.academic_gpa,4.3), class_rank_percent:number(profile.class_rank_percent,100),
     language_test:["toeic","ielts","toefl","toefl_new","duolingo","other"].includes(profile.language_test) ? profile.language_test : null,
     language_score:number(profile.language_score,1000),
+    jlpt_level:['N1','N2','N3','N4','N5'].includes(profile.jlpt_level) ? profile.jlpt_level : null,
     target_term:text(profile.target_term,40), preferred_country:text(profile.preferred_country,80),
     monthly_budget:number(profile.monthly_budget,10000000), needs_scholarship:profile.needs_scholarship === true,
     academic_year:text(profile.academic_year,20), application_round:text(profile.application_round,80),
@@ -2407,6 +2408,7 @@ function selectionConditionsPayload(profile = state.eligibilityProfile) {
     degree_level:profile.degree, academic_score:profile.academicScore,
     academic_gpa:profile.academicGpa, class_rank_percent:profile.classRankPercent,
     language_test:profile.languageTest, language_score:profile.languageScore,
+    jlpt_level:profile.jlptLevel || null,
     target_term:profile.targetTerm, preferred_country:profile.preferredCountry,
     monthly_budget:profile.monthlyBudget, needs_scholarship:profile.scholarshipNeeded,
     academic_year:profile.academicYear, application_round:profile.applicationRound,
@@ -2423,6 +2425,7 @@ function selectionProfileFromWorkspace(conditions) {
     degree:profile.degree_level, academicScore:profile.academic_score,
     academicGpa:profile.academic_gpa, classRankPercent:profile.class_rank_percent,
     languageTest:profile.language_test || "", languageScore:profile.language_score,
+    jlptLevel:profile.jlpt_level || '',
     languageLabel:threshold ? `${threshold.label} ${profile.language_score ?? "待補"}` : "語言能力待確認",
     targetTerm:profile.target_term, preferredCountry:profile.preferred_country,
     monthlyBudget:profile.monthly_budget, scholarshipNeeded:profile.needs_scholarship,
@@ -4063,7 +4066,7 @@ async function refreshPlanningRecommendations() {
   try {
     const plan = await fetchJson("/advisor/plan", {
       method:"POST", headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({school_name:activeHomeSchool(),target_school:targetSchool || null,college:profile.college,department:profile.department || null,current_year:profile.currentYear || null,degree_level:profile.degree,academic_score:profile.academicScore ?? null,academic_gpa:profile.academicGpa ?? null,class_rank_percent:profile.classRankPercent ?? null,language_test:profile.languageTest,language_score:profile.languageScore ?? null,target_term:profile.targetTerm || null,preferred_country:profile.preferredCountry || null,monthly_budget:profile.monthlyBudget || null,needs_scholarship:Boolean(profile.scholarshipNeeded),preferred_teaching_language:profile.teachingLanguage || null,course_interests:profile.courseInterests || null}),
+      body:JSON.stringify({school_name:activeHomeSchool(),target_school:targetSchool || null,college:profile.college,department:profile.department || null,current_year:profile.currentYear || null,degree_level:profile.degree,academic_score:profile.academicScore ?? null,academic_gpa:profile.academicGpa ?? null,class_rank_percent:profile.classRankPercent ?? null,language_test:profile.languageTest,language_score:profile.languageScore ?? null,jlpt_level:profile.jlptLevel || null,academic_year:profile.academicYear || null,application_round:profile.applicationRound || null,target_term:profile.targetTerm || null,preferred_country:profile.preferredCountry || null,monthly_budget:profile.monthlyBudget || null,needs_scholarship:Boolean(profile.scholarshipNeeded),preferred_teaching_language:profile.teachingLanguage || null,course_interests:profile.courseInterests || null}),
     });
     if (planningProfileKey() !== profileKey || state.applicationContext.target_school !== targetSchool || state.advisorLoading) return;
     state.advisorPlan = plan;
@@ -11112,6 +11115,7 @@ async function checkEligibility(event) {
   const classRankPercent = ntu ? optionalNumber($("#advisor-class-rank").value) : null;
   const languageTest = $("#advisor-language-test").value;
   const languageScore = Number($("#advisor-language-score").value);
+  const jlptLevel = activeHomeSchool() === '淡江大學' ? $('#advisor-jlpt-level').value : '';
   const targetTerm = $("#advisor-target-term").value;
   const preferredCountry = $("#advisor-country").value;
   const monthlyBudget = Number($("#advisor-monthly-budget").value) || 0;
@@ -11124,7 +11128,7 @@ async function checkEligibility(event) {
     .filter((item) => item.school_name)
     .map((item, index) => ({ ...item, rank: index + 1 }));
 
-  if (!college || !department || !degree || !academicYear || !applicationRound || (!ntu && (academicScore === null || !Number.isFinite(academicScore))) || !languageTest || !preferences.length) {
+  if (!college || !department || !degree || !academicYear || !applicationRound || (!ntu && (academicScore === null || !Number.isFinite(academicScore))) || (!languageTest && !jlptLevel) || !preferences.length) {
     announce("請完成所有必填欄位", "error");
     return;
   }
@@ -11157,6 +11161,7 @@ async function checkEligibility(event) {
     classRankPercent,
     languageTest,
     languageScore,
+    jlptLevel,
     languageLabel: languageScore > 0 ? `${languageTest.toUpperCase()} ${languageScore}` : "語言能力待確認",
     academicYear,
     applicationRound,
@@ -11176,8 +11181,9 @@ async function checkEligibility(event) {
     academic_score: ntu ? null : academicScore,
     academic_gpa: academicGpa,
     class_rank_percent: classRankPercent,
-    language_test: languageTest,
+    language_test: languageTest || null,
     language_score: Number.isFinite(languageScore) && languageScore > 0 ? languageScore : null,
+    jlpt_level: jlptLevel || null,
     academic_year: academicYear,
     application_round: applicationRound,
     preferences,
@@ -11323,7 +11329,7 @@ function renderAdvisorForm() {
   if (!state.dashboard) return;
   const form = $("#advisor-form");
   const owner = JSON.stringify([state.account?.id || "",activeHomeSchool()]);
-  if (form.dataset.draftOwner === owner) { renderAdvisorAccessState(); return; }
+  if (form.dataset.draftOwner === owner) { renderAdvisorAccessState(); window.UniWayTKU?.renderEligibility?.(activeHomeSchool(), null); return; }
   delete form.dataset.draftOwner;
   const profile = state.eligibilityProfile || {};
   const partners = state.dashboard.partner_universities || [];
@@ -11346,6 +11352,7 @@ function renderAdvisorForm() {
   $("#advisor-course-interests").value = profile.courseInterests || "";
   $("#advisor-scholarship").checked = Boolean(profile.scholarshipNeeded);
   renderAdvisorAccessState();
+  window.UniWayTKU?.renderEligibility?.(activeHomeSchool(), profile);
 }
 
 function renderAdvisorAccessState() {
@@ -11569,6 +11576,9 @@ async function submitAdvisorPlan(event) {
     class_rank_percent: optionalNumber(formData.get("class_rank_percent")),
     language_test: formData.get("language_test") || null,
     language_score: optionalNumber(formData.get("language_score")),
+    jlpt_level: formData.get('jlpt_level') || null,
+    academic_year: $('#eligibility-academic-year').value || null,
+    application_round: $('#eligibility-application-round').value || null,
     target_term: formData.get("target_term") || null,
     preferred_country: formData.get("preferred_country") || null,
     monthly_budget: optionalNumber(formData.get("monthly_budget")),
@@ -11604,7 +11614,7 @@ async function submitAdvisorPlan(event) {
     }
     state.advisorPlan = plan;
     delete form.dataset.draftOwner;
-    if (payload.college || payload.degree_level || payload.academic_score !== null || payload.language_test) {
+    if (payload.college || payload.degree_level || payload.academic_score !== null || payload.language_test || payload.jlpt_level) {
       const threshold = languageThreshold(payload.language_test);
       state.eligibilityProfile = {
         academicYear,
@@ -11618,6 +11628,7 @@ async function submitAdvisorPlan(event) {
         classRankPercent: payload.class_rank_percent,
         languageTest: payload.language_test,
         languageScore: payload.language_score,
+        jlptLevel: payload.jlpt_level || '',
         languageLabel: threshold ? `${threshold.label} ${payload.language_score || "待補"}` : "語言能力待確認",
         targetTerm: payload.target_term || "",
         preferredCountry: payload.preferred_country || "",

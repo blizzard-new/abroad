@@ -38,6 +38,7 @@ def test_match_missing_profile_fields_and_real_mismatches():
     const destinationProfileForSchool = () => null;
     const homeCollegeValue = value => ['工學院', '管理學院', '醫學院'].includes(value) ? value : '';
     const partnerSummaryPoints = item => item.eligibility_points || [];
+    const homeSelectionRules = () => ({partner_requirements_need_confirmation:false});
     for (const name of ['normalize', 'escapeHtml', 'collegeMatches', 'degreeMatches',
       'languageThresholdFromPartner', 'partnerAvailabilityMeta', 'partnerMatch',
       'renderPartnerMatchExplanation', 'schoolImageFor', 'renderSchoolPhoto']) {

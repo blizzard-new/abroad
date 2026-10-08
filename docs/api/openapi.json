@@ -1226,6 +1226,24 @@
             "title": "Department",
             "type": "string"
           },
+          "jlpt_level": {
+            "anyOf": [
+              {
+                "enum": [
+                  "N1",
+                  "N2",
+                  "N3",
+                  "N4",
+                  "N5"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jlpt Level"
+          },
           "language_score": {
             "anyOf": [
               {
@@ -1691,6 +1709,30 @@
             ],
             "title": "Academic Score"
           },
+          "academic_year": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Year"
+          },
+          "application_round": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Round"
+          },
           "class_rank_percent": {
             "anyOf": [
               {
@@ -1763,6 +1805,24 @@
               }
             ],
             "title": "Department"
+          },
+          "jlpt_level": {
+            "anyOf": [
+              {
+                "enum": [
+                  "N1",
+                  "N2",
+                  "N3",
+                  "N4",
+                  "N5"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jlpt Level"
           },
           "language_score": {
             "anyOf": [
@@ -6075,15 +6135,8 @@
             "type": "boolean"
           },
           "consent": {
-            "anyOf": [
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Consent"
+            "title": "Consent",
+            "type": "boolean"
           },
           "document_type": {
             "default": "auto",
@@ -6120,7 +6173,8 @@
           }
         },
         "required": [
-          "file"
+          "file",
+          "consent"
         ],
         "title": "Body_document_check_ai_review_document_post",
         "type": "object"
@@ -6133,15 +6187,8 @@
             "type": "boolean"
           },
           "consent": {
-            "anyOf": [
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Consent"
+            "title": "Consent",
+            "type": "boolean"
           },
           "document_type": {
             "default": "auto",
@@ -6178,7 +6225,8 @@
           }
         },
         "required": [
-          "file"
+          "file",
+          "consent"
         ],
         "title": "Body_document_check_document_check_post",
         "type": "object"
@@ -10314,6 +10362,24 @@
             "title": "Home School",
             "type": "string"
           },
+          "jlpt_level": {
+            "anyOf": [
+              {
+                "enum": [
+                  "N1",
+                  "N2",
+                  "N3",
+                  "N4",
+                  "N5"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jlpt Level"
+          },
           "language_score": {
             "anyOf": [
               {
@@ -12404,6 +12470,99 @@
         "title": "SupportedUniversity",
         "type": "object"
       },
+      "TKUEligibilityRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "academic_average": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Average"
+          },
+          "degree_level": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Degree Level"
+          },
+          "department_top_percent": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 100.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Department Top Percent"
+          },
+          "jlpt_level": {
+            "anyOf": [
+              {
+                "enum": [
+                  "N1",
+                  "N2",
+                  "N3",
+                  "N4",
+                  "N5"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jlpt Level"
+          },
+          "partner_id": {
+            "default": "seikei",
+            "enum": [
+              "ritsumeikan",
+              "nagasaki",
+              "seikei",
+              "uec"
+            ],
+            "title": "Partner Id",
+            "type": "string"
+          },
+          "round_id": {
+            "default": "jp-2027-2028-round-2",
+            "maxLength": 160,
+            "title": "Round Id",
+            "type": "string"
+          },
+          "year_of_study": {
+            "anyOf": [
+              {
+                "maximum": 6.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Year Of Study"
+          }
+        },
+        "title": "TKUEligibilityRequest",
+        "type": "object"
+      },
       "TaskDocumentLink": {
         "description": "Which preparation tool matches an official step; never a completeness claim.",
         "properties": {
@@ -13934,6 +14093,17 @@
               "title": "Report Id",
               "type": "string"
             }
+          },
+          {
+            "in": "header",
+            "name": "X-Content-Report-Mutation-ID",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 16,
+              "title": "X-Content-Report-Mutation-Id",
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
@@ -14579,6 +14749,7 @@
     },
     "/ai/chat": {
       "post": {
+        "deprecated": true,
         "operationId": "ai_chat_ai_chat_post",
         "requestBody": {
           "content": {
@@ -14610,6 +14781,9 @@
               }
             },
             "description": "Validation Error"
+          },
+          "503": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           }
         },
         "summary": "Ai Chat"
@@ -14639,6 +14813,12 @@
             },
             "description": "Successful Response"
           },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
           "422": {
             "content": {
               "application/json": {
@@ -14648,6 +14828,9 @@
               }
             },
             "description": "Validation Error"
+          },
+          "503": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           }
         },
         "summary": "Document Check"
@@ -14655,6 +14838,7 @@
     },
     "/ai/rewrite-document": {
       "post": {
+        "deprecated": true,
         "operationId": "ai_rewrite_document_ai_rewrite_document_post",
         "requestBody": {
           "content": {
@@ -14686,6 +14870,9 @@
               }
             },
             "description": "Validation Error"
+          },
+          "503": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           }
         },
         "summary": "Ai Rewrite Document"
@@ -14940,6 +15127,12 @@
             },
             "description": "Successful Response"
           },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
           "422": {
             "content": {
               "application/json": {
@@ -14975,6 +15168,12 @@
               }
             },
             "description": "Successful Response"
+          },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           },
           "422": {
             "content": {
@@ -15351,6 +15550,19 @@
     "/application-workflow-issue-reports": {
       "post": {
         "operationId": "submit_application_workflow_issue_report_application_workflow_issue_reports_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Content-Report-Mutation-ID",
+            "required": true,
+            "schema": {
+              "maxLength": 128,
+              "minLength": 16,
+              "title": "X-Content-Report-Mutation-Id",
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -15604,9 +15816,39 @@
     "/auth/me": {
       "delete": {
         "operationId": "delete_auth_profile_auth_me_delete",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "X-Account-Deletion-Mutation-ID",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 128,
+                  "minLength": 16,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Account-Deletion-Mutation-Id"
+            }
+          }
+        ],
         "responses": {
           "204": {
             "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
           }
         },
         "summary": "Delete Auth Profile"
@@ -15929,6 +16171,12 @@
               }
             },
             "description": "Successful Response"
+          },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           }
         },
         "summary": "Get Calendar Sync"
@@ -15947,6 +16195,12 @@
               }
             },
             "description": "Successful Response"
+          },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           }
         },
         "summary": "Enable Calendar Sync"
@@ -15975,6 +16229,12 @@
               }
             },
             "description": "Successful Response"
+          },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           },
           "422": {
             "content": {
@@ -18029,6 +18289,12 @@
             },
             "description": "Successful Response"
           },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
           "422": {
             "content": {
               "application/json": {
@@ -18038,6 +18304,9 @@
               }
             },
             "description": "Validation Error"
+          },
+          "503": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           }
         },
         "summary": "Document Check"
@@ -18768,6 +19037,42 @@
         "summary": "Refresh Student Experiences"
       }
     },
+    "/tku/eligibility-check": {
+      "post": {
+        "operationId": "eligibility_check_tku_eligibility_check_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TKUEligibilityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Eligibility Check"
+      }
+    },
     "/universities": {
       "get": {
         "operationId": "universities_universities_get",
@@ -18798,7 +19103,7 @@
     "resource_not_found": 404,
     "validation_failed": 422
   },
-  "x-contract-version": "2026-10-08.3",
+  "x-contract-version": "2026-10-08.4",
   "x-product-boundaries": {
     "account_routes_require_bearer_session": true,
     "ai_features": "paused",

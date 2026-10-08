@@ -7,7 +7,7 @@ from typing import Any
 from fastapi import FastAPI
 
 
-OPENAPI_CONTRACT_VERSION = "2026-10-08.3"
+OPENAPI_CONTRACT_VERSION = "2026-10-08.4"
 
 _CONTRACT_BOUNDARIES = {
     "public_read_without_login": True,
@@ -35,6 +35,25 @@ def apply_openapi_contract_metadata(schema: dict[str, Any]) -> dict[str, Any]:
     schema["x-contract-version"] = OPENAPI_CONTRACT_VERSION
     schema["x-product-boundaries"] = dict(_CONTRACT_BOUNDARIES)
     schema["x-common-error-status"] = dict(_COMMON_ERROR_STATUS)
+    # Document errors already raised by these handlers; never invent a route or
+    # a retry capability that its runtime has not implemented.
+    errors = {
+        ('/calendar-sync', 'get'): (401, 403),
+        ('/calendar-sync/enable', 'post'): (401, 403),
+        ('/calendar-sync/events', 'put'): (401, 403),
+        ('/application-center/manifest', 'post'): (401, 403),
+        ('/application-center/pdf', 'post'): (401, 403),
+        ('/document-check', 'post'): (401, 403, 422, 503),
+        ('/ai/review-document', 'post'): (401, 403, 422, 503),
+        ('/ai/chat', 'post'): (503,),
+        ('/ai/rewrite-document', 'post'): (503,),
+    }
+    for (path, method), statuses in errors.items():
+        operation = schema.get('paths', {}).get(path, {}).get(method)
+        if operation:
+            for status in statuses:
+                operation.setdefault('responses', {}).setdefault(str(status), {
+                    'description': 'Existing runtime error; access also depends on release mode and request validation.'})
     return schema
 
 

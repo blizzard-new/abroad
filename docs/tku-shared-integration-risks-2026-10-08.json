@@ -11,9 +11,11 @@
       "shared_overlap": [
         "docs/api/openapi.json",
         "pyproject.toml",
+        "src/exchange_info/advisor.py",
         "src/exchange_info/api.py",
         "src/exchange_info/application_documents.py",
         "src/exchange_info/models.py",
+        "src/exchange_info/openapi_contract.py",
         "src/exchange_info/static/app.js",
         "src/exchange_info/static/index.html",
         "src/exchange_info/storage.py",
@@ -22,7 +24,8 @@
         "tests/test_fit_signals.py",
         "tests/test_ntu_integration.py",
         "tests/test_school_completeness.py",
-        "tests/test_task_documents_and_reference_plan.py"
+        "tests/test_task_documents_and_reference_plan.py",
+        "uv.lock"
       ]
     },
     {
@@ -32,6 +35,7 @@
       "shared_overlap": [
         "docs/api/openapi.json",
         "pyproject.toml",
+        "src/exchange_info/advisor.py",
         "src/exchange_info/api.py",
         "src/exchange_info/application_documents.py",
         "src/exchange_info/models.py",
@@ -40,25 +44,39 @@
         "src/exchange_info/storage.py",
         "src/exchange_info/university_registry.py",
         "tests/e2e/test_ntu_school.py",
-        "tests/test_ntu_integration.py"
+        "tests/test_ntu_integration.py",
+        "tests/test_school_photo_and_match.py",
+        "uv.lock"
       ]
     }
   ],
   "own_shared_files": [
+    ".github/workflows/quality.yml",
     "docs/api/openapi.json",
     "pyproject.toml",
+    "src/exchange_info/account_community_cleanup.py",
+    "src/exchange_info/advisor.py",
     "src/exchange_info/api.py",
     "src/exchange_info/application_documents.py",
     "src/exchange_info/models.py",
+    "src/exchange_info/openapi_contract.py",
     "src/exchange_info/static/app.js",
     "src/exchange_info/static/index.html",
     "src/exchange_info/storage.py",
     "src/exchange_info/university_registry.py",
     "tests/e2e/test_ntu_school.py",
+    "tests/test_college_options.py",
+    "tests/test_content_governance_wrapper.py",
     "tests/test_fit_signals.py",
+    "tests/test_http_client.py",
     "tests/test_ntu_integration.py",
+    "tests/test_rag.py",
+    "tests/test_requirements_traceability.py",
     "tests/test_school_completeness.py",
-    "tests/test_task_documents_and_reference_plan.py"
+    "tests/test_school_photo_and_match.py",
+    "tests/test_selection_conditions_sync.py",
+    "tests/test_task_documents_and_reference_plan.py",
+    "uv.lock"
   ],
   "protected_files_changed": [],
   "rules": [
@@ -70,7 +88,10 @@
     "TKU與最新CCU都補 explicit choice 的home query同步；保留此行為，勿在hash導航時還原舊分享網址。NCU selectionLanguageLabel與CCU degreeFilterOptions亦需並存。",
     "TKU原生2027-2028年度／日語第二次甄選不能被ROC115/116或generic梯次覆蓋。",
     "NTU新增journey/workbench不修改；選校卡片總數、workflows與destination總数要按合併後實際catalog更新。",
-    "OpenAPI待所有欄位合併完成後重產；pyproject學校附件包裝項合併保留；不改uv.lock掩蓋既有失敗。"
+    "OpenAPI待所有欄位合併完成後重產；pyproject學校附件包裝項合併保留。uv.lock只刪除pyproject早已移除的pytesseract遺留項，其他套件未升級。",
+    "workflow修正jobs.env無效runner.temp context，由step寫入GITHUB_ENV；permissions、secrets與action pins未變。",
+    "合成資料隱私修復包括刪帳去識別化與證件號碼發文防護；Supabase沿用既有原子RPC，未改DB或權限。",
+    "profile增加可空jlpt_level；JLPT序位與英語數值分開；app保存、還原及TKU查核hook合併時逐段保留。"
   ],
   "protected_bundle_workflows": {
     "國立臺北大學": 409,

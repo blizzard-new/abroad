@@ -1168,11 +1168,11 @@
       "checked_at": "2026-10-08T00:00:00+00:00",
       "programme_caution": "官方合作名單列淡江（2004/5/17）；2027春NICS按交流協議收交換生且以日語授課，與淡江本輪時點相符。但淡江表未寫NICS，最終提名track須承辦確認；以下為NICS條件。",
       "field_states": {
-        "verified": 22,
+        "verified": 23,
         "missing_in_source": 6,
         "needs_confirmation": 6,
         "not_verified_new": 2,
-        "reference_only": 2
+        "reference_only": 1
       },
       "fields": [
         {
@@ -2024,15 +2024,25 @@
         {
           "key": "living_costs",
           "label": "生活費用",
-          "status": "reference_only",
-          "value": "Form C估學費以外住宿、食物、交通、水電每月需60,000日圓以上；並非2027完整實支預算，需依房型及其他支出準備。",
-          "reason": "無年度財務表的支弁基準，不是保證足夠的生活費總額。",
+          "status": "verified",
+          "value": "2027春NICS公告直接引用的Form C要求支弁學費以外住宿、食物、交通、水電每月60,000日圓以上。這是本期財務證明下限，不是完整實支預算或保證足夠金額；依房型及其他支出另準備。",
+          "reason": "表單本身無學年度；適用本期的依據是2027春NICS公告直接連結。僅核實支弁基準，非實際總費用。",
           "evidence": [
             {
               "source_id": "nagasaki-form-c",
               "source_url": "https://www.nagasaki-gaigo.ac.jp/cms/wp-content/uploads/2024/09/5_FormC_Financial_Statement.pdf",
-              "locator": "PDF p.2 Financial Support Details",
+              "locator": "PDF p.2 Financial Support Details; 2027 NICS notice 提出書類5",
               "applicable_year": "undated form currently linked by 2027 Spring NICS notice",
+              "application_round": "2027春季外校申請／淡江日語二甄後續",
+              "role": "host_incoming",
+              "checked_at": "2026-10-08T00:00:00Z",
+              "quote": "more than 60,000 JPY will be needed per month"
+            },
+            {
+              "source_id": "nagasaki-nics-2027",
+              "source_url": "https://www.nagasaki-gaigo.ac.jp/studying-abroad/receiving_program/nics_program/",
+              "locator": "提出書類5 経費支弁書 Form C",
+              "applicable_year": "2027 Spring",
               "application_round": "2027春季外校申請／淡江日語二甄後續",
               "role": "host_incoming",
               "checked_at": "2026-10-08T00:00:00Z",
@@ -2043,6 +2053,13 @@
             {
               "source_id": "nagasaki-form-c",
               "url": "https://www.nagasaki-gaigo.ac.jp/cms/wp-content/uploads/2024/09/5_FormC_Financial_Statement.pdf",
+              "checked_at": "2026-10-08T00:00:00Z",
+              "result": "verified_open",
+              "scope": "field evidence"
+            },
+            {
+              "source_id": "nagasaki-nics-2027",
+              "url": "https://www.nagasaki-gaigo.ac.jp/studying-abroad/receiving_program/nics_program/",
               "checked_at": "2026-10-08T00:00:00Z",
               "result": "verified_open",
               "scope": "field evidence"
@@ -2285,9 +2302,9 @@
       "checked_at": "2026-10-08T00:00:00+00:00",
       "programme_caution": "2027春交換生information sheet；由母校提名／送外校，名單頁亦列淡江。",
       "field_states": {
-        "verified": 26,
-        "missing_in_source": 5,
-        "needs_confirmation": 5,
+        "verified": 28,
+        "missing_in_source": 4,
+        "needs_confirmation": 4,
         "reference_only": 1,
         "not_verified_new": 1
       },
@@ -2799,19 +2816,19 @@
         {
           "key": "host_study_period",
           "label": "外校計畫期間",
-          "status": "needs_confirmation",
-          "value": "一學期或一學年；2027春住宿約3月中旬至8月初、秋季9月初至次年2月初；確切期間依外校通知。",
-          "reason": "2027 sheet只列近似時段，精確calendar链接仍是AY2026；與淡江全年期間須確認。",
+          "status": "verified",
+          "value": "2027交換計畫接受一學期或一學年；淡江本輪仍列一學年，不能自行縮短。外校春季住宿約3月中旬至8月初、秋季9月初至次年2月初；精確calendar及指定抵達日仍未核實，分列待確認。",
+          "reason": "此欄僅核實外校接受的學期數；不以近似schedule推定精確日期。",
           "evidence": [
             {
               "source_id": "seikei-2027-sheet",
               "source_url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
-              "locator": "PDF p.1 Semester Schedule",
+              "locator": "PDF p.1 Duration of Study / Semester Schedule",
               "applicable_year": "2027 Spring",
               "application_round": "2027春季外校申請／淡江日語二甄後續",
               "role": "host_incoming",
               "checked_at": "2026-10-08T00:00:00Z",
-              "quote": ""
+              "quote": "One semester / One academic year"
             }
           ],
           "checked_entries": [
@@ -3264,19 +3281,19 @@
         {
           "key": "transport",
           "label": "接送／通勤",
-          "status": "missing_in_source",
-          "value": null,
-          "reason": "sheet未載接機或2027交通票價；不能借用其他學校方案。",
+          "status": "verified",
+          "value": "2027/8前Dormy：井之頭公園站步行12分、吉祥寺站15分、校園單車12分（2.9km）；國際交流會館：吉祥寺站步行20分、校園1分。2027/9起MICHI至校園步行5分。sheet未載接機服務或交通票價；床位與實際路線依外校安排。",
+          "reason": "已核實本期住宿通勤；接機及票價仍未知，不能把通勤資料解讀為有機場接送。",
           "evidence": [
             {
               "source_id": "seikei-2027-sheet",
               "source_url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
-              "locator": "PDF p.1–6; no arrival transfer policy",
+              "locator": "PDF p.3–4 Accommodation <Access>",
               "applicable_year": "2027 Spring",
               "application_round": "2027春季外校申請／淡江日語二甄後續",
               "role": "host_incoming",
               "checked_at": "2026-10-08T00:00:00Z",
-              "quote": ""
+              "quote": "12-minute bicycle ride from Seikei University (2.9km)"
             }
           ],
           "checked_entries": [
@@ -3383,11 +3400,11 @@
       "application_round": "日語組第二次甄選",
       "selection_status": "listed",
       "checked_at": "2026-10-08T00:00:00+00:00",
-      "programme_caution": "淡江本期名額表明載JUSST；外校目前公開為一般JUSST規則，2027專屬簡章／表單尚未核實。",
+      "programme_caution": "淡江2027–2028日語二甄名額表row4明載參加JUSST program。僅核實本梯計畫名稱；外校2027專屬規則、學制及表單仍各自待核實，不能由名稱推定。",
       "field_states": {
-        "verified": 11,
+        "verified": 12,
         "missing_in_source": 2,
-        "reference_only": 14,
+        "reference_only": 13,
         "needs_confirmation": 4,
         "not_verified_new": 7
       },
@@ -4039,25 +4056,25 @@
         {
           "key": "host_programme_mapping",
           "label": "本梯外校計畫對應",
-          "status": "reference_only",
-          "value": "淡江本期名額表明載JUSST；外校目前公開為一般JUSST規則，2027專屬簡章／表單尚未核實。",
-          "reason": "計畫對應已核實，公開外校規則更新2025/10/28，尚未確認2027個別變更。",
+          "status": "verified",
+          "value": "淡江2027–2028日語二甄名額表row4明載參加JUSST program。僅核實本梯計畫名稱；外校2027專屬規則、學制及表單仍各自待核實，不能由名稱推定。",
+          "reason": "當期母校直接明示JUSST；外校一般規則適用年度與本欄分開。",
           "evidence": [
             {
-              "source_id": "uec-application-recheck",
-              "source_url": "https://www.fedu.uec.ac.jp/en/future_students/jusst/application/",
-              "locator": "JUSST application heading",
-              "applicable_year": "general JUSST application, updated 2025-10-28; 2027 not verified",
-              "application_round": "2027春季外校申請／淡江日語二甄後續",
-              "role": "host_incoming",
+              "source_id": "jp-revision-attachment-2",
+              "source_url": "https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/09/更新2027-2028日語組第二次甄選姊妹校一覽表.pdf",
+              "locator": "PDF p.1 row4 注意事項1",
+              "applicable_year": "2027-2028",
+              "application_round": "日語組第二次甄選",
+              "role": "home_outbound",
               "checked_at": "2026-10-08T00:00:00Z",
-              "quote": ""
+              "quote": "JUSST program"
             }
           ],
           "checked_entries": [
             {
-              "source_id": "uec-application-recheck",
-              "url": "https://www.fedu.uec.ac.jp/en/future_students/jusst/application/",
+              "source_id": "jp-revision-attachment-2",
+              "url": "https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/09/更新2027-2028日語組第二次甄選姊妹校一覽表.pdf",
               "checked_at": "2026-10-08T00:00:00Z",
               "result": "verified_open",
               "scope": "field evidence"

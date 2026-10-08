@@ -18,7 +18,7 @@ def assess_tku_eligibility(*, round_id: str, academic_average: float | None = No
         return {"academic_status":"needs_confirmation","home_status":"needs_confirmation",
                 "application_status":"not_verified_new","notes":["未核實此年度梯次的規定，不能沿用舊版。"]}
     japanese = round_id == "jp-2027-2028-round-2"
-    notes=[]; checks=[]
+    notes=[]; checks=[]; language_status='needs_confirmation'; minimum=None
     if academic_average is not None and academic_average >= 75:
         academic="pass"
     elif not japanese and department_top_percent is not None and department_top_percent <= 40:
@@ -40,12 +40,13 @@ def assess_tku_eligibility(*, round_id: str, academic_average: float | None = No
             checks.append("needs_confirmation")
             notes.append("JUSST須分開核對80分、GPA3.0與英語證明；電機／資工為優先。研究所英語課N1豁免未明示。")
         else:
-            minimum="N1" if degree_level=="碩士班" or (partner_id or "").endswith("-ritsumeikan") else "N2"
+            minimum="N1" if degree_level in {"研究所", "碩士班", "博士班"} or (partner_id or "").endswith("-ritsumeikan") else "N2"
             rank={"N1":1,"N2":2,"N3":3,"N4":4,"N5":5}
-            checks.append("needs_confirmation" if jlpt_level not in rank else "pass" if rank[jlpt_level]<=rank[minimum] else "fail")
+            language_status="needs_confirmation" if jlpt_level not in rank else "pass" if rank[jlpt_level]<=rank[minimum] else "fail"
+            checks.append(language_status)
         notes.append("系所院推薦、外校GPA與在校修業期間須另查；學業達75不等於全部資格通過。")
     else:
         checks.append("needs_confirmation");notes.append("只核對舊期學業條件；其餘學制、國籍、語言及當期名額未作自動認定。")
     home="fail" if "fail" in checks else "needs_confirmation" if "needs_confirmation" in checks else "pass"
-    return {"academic_status":academic,"home_status":home,
+    return {"academic_status":academic,"home_status":home,'language_status':language_status,'jlpt_minimum':minimum,
             "application_status":"closed" if japanese else "reference_only","notes":notes}

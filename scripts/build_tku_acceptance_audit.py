@@ -91,9 +91,13 @@ def build():
             if field["key"] == "latest_forms":
                 next_step = "逐表取得並讀取原檔；僅已具官方提供方式證據的項目可標提名／錄取後提供。"
             gaps.append(dict(school_name=school["school_name"], **field, next_step=next_step))
-    assert len(gaps) == 67 and len(document_access) == 53
+    triage=json.loads((BUNDLE/'gap_triage.json').read_text())
+    assert len(gaps) == triage['remaining_count'] and len(document_access) == 53
     audit = dict(checked_at="2026-10-08", scope="本批針對缺口；沿用已讀內容，不重跑公告全索引。",
         field_gap_count=len(gaps), field_gap_states=dict(Counter(g["status"] for g in gaps)),
+        original_67_gap_triage_file='gap_triage.json', original_gap_count=triage['original_gap_count'],
+        resolved_original_gaps=triage['resolved_count'], category_counts=triage['after_review_counts'],
+        department_schedule_review=triage['department_schedule_review'],
         official_not_announced_claims=[], access_rules=access_rules, documents=document_access, field_gaps=gaps,
         targeted_public_searches=[
             dict(query='site.fedu.uec.ac.jp/en "JUSST" "2027"', checked_at="2026-10-08", result="本次索引搜尋無結果；不足以證明官方尚未公告。"),
@@ -106,8 +110,9 @@ def build():
             department="財務金融學系", applicable_year="2027-2028日語二甄／9月9日原時程轉知", checked_at="2026-10-08",
             index_read_status="HTTP 200；僅擷取相符連結標題，不是公告全文核實。",
             detail_source_url="https://calligraphy.tku.edu.tw/bf/?tkuisotope=【國際處】027-2028年赴日本姊妹校日語組-交換生第二次",
-            detail_http_status=502, detail_error="502 Server Error: Bad Gateway", status="needs_confirmation",
-            promoted_to_field=False, reason="內文未讀到；標題日期早於校級9/16更正公告，不當作更正後當期期限，不外推到所有系所。"),
+            detail_http_status=200, previous_attempt=dict(http_status=502,error="502 Server Error: Bad Gateway"), status="needs_confirmation",
+            detail_source_id='tku-finance-department-original', promoted_to_field=False,
+            reason="續查已讀全文，原時程財金9/16中午收件；更正後系所時程未核實，不能套用到更新梯次或全部系所。"),
         excluded_new_hits=[dict(url="https://www.seikei.ac.jp/gakuen/siis/intl/mext_scholarship.html", reason="MEXT 2027健康表／大使館推薦流程不能當交換申請表。")],
         unresolved_exchange_conflict_count=len(json.loads((BUNDLE / "conflicts.json").read_text())))
     write(BUNDLE / "acceptance_gap_audit.json", audit)
@@ -138,13 +143,14 @@ def build():
             snapshot_destination_statuses=cgu_report["destination_profile_status"], actual_destination_statuses=comparison[0]["actual_destination_statuses"],
             note="既有摘要與實際資料不一致，本批未覆寫CGU資料／審查狀態；不能以official_verified標籤聲稱當期完整。"),
         tku_acceptance_scope="4個已截止日語二甄校的瀏覽、既有提名者文件查核與準備稿；0個可新申請，124舊列尚非當期完整。",
-        tku_unresolved="無JLPT專用UI自動比對；系所提前截止、13矛盾、長崎track／研究生、UEC2027等逐項見缺口表。"))
+        tku_unresolved="已增加獨立JLPT N1–N5欄位、已知母校條件查核与按校保存；系所更正時程、13矛盾、長崎track／研究生、UEC2027及63剩餘缺口仍阻擋當期完整申請準備。"))
 
-    shared = {"docs/api/openapi.json", "pyproject.toml", "src/exchange_info/api.py", "src/exchange_info/application_documents.py",
+    shared = {".github/workflows/quality.yml", "uv.lock", "tests/test_content_governance_wrapper.py", "tests/test_requirements_traceability.py", "tests/test_college_options.py", "tests/test_http_client.py", "tests/test_rag.py", "tests/test_school_photo_and_match.py", "tests/test_selection_conditions_sync.py", "src/exchange_info/openapi_contract.py", "src/exchange_info/advisor.py", "src/exchange_info/account_community_cleanup.py", "docs/api/openapi.json", "pyproject.toml", "src/exchange_info/api.py", "src/exchange_info/application_documents.py",
         "src/exchange_info/models.py", "src/exchange_info/static/app.js", "src/exchange_info/static/index.html",
         "src/exchange_info/storage.py", "src/exchange_info/university_registry.py", "tests/test_fit_signals.py",
         "tests/test_ntu_integration.py", "tests/test_school_completeness.py", "tests/test_task_documents_and_reference_plan.py", "tests/e2e/test_ntu_school.py"}
     own = set(git("diff", "--name-only", "origin/main").splitlines())
+    own.update(git('ls-files', '--others', '--exclude-standard').splitlines())
     branches = []
     for name in ["ncu", "ccu"]:
         ref = f"origin/data/{name}-exchange-20261008"
@@ -166,7 +172,10 @@ def build():
             "TKU與最新CCU都補 explicit choice 的home query同步；保留此行為，勿在hash導航時還原舊分享網址。NCU selectionLanguageLabel與CCU degreeFilterOptions亦需並存。",
             "TKU原生2027-2028年度／日語第二次甄選不能被ROC115/116或generic梯次覆蓋。",
             "NTU新增journey/workbench不修改；選校卡片總數、workflows與destination總数要按合併後實際catalog更新。",
-            "OpenAPI待所有欄位合併完成後重產；pyproject學校附件包裝項合併保留；不改uv.lock掩蓋既有失敗。"],
+            "OpenAPI待所有欄位合併完成後重產；pyproject學校附件包裝項合併保留。uv.lock只刪除pyproject早已移除的pytesseract遺留項，其他套件未升級。",
+            "workflow修正jobs.env無效runner.temp context，由step寫入GITHUB_ENV；permissions、secrets與action pins未變。",
+            "合成資料隱私修復包括刪帳去識別化與證件號碼發文防護；Supabase沿用既有原子RPC，未改DB或權限。",
+            "profile增加可空jlpt_level；JLPT序位與英語數值分開；app保存、還原及TKU查核hook合併時逐段保留。"],
         protected_bundle_workflows=dict(Counter(w.home_university for w in workflows)),
         protected_bundle_destinations=dict(Counter(p.home_university for p in profiles))))
     print(json.dumps(dict(gaps=len(gaps), documents=len(document_access), access_rules=len(access_rules), branch_overlaps=branches), ensure_ascii=False))

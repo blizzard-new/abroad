@@ -42,6 +42,38 @@ def record(page, name, width, errors, **facts):
         tested_commit=TESTED_COMMIT, scenario=name, page_errors=errors, **facts), ensure_ascii=False, indent=2) + "\n")
 
 
+@pytest.mark.parametrize('width', [390,1280])
+def test_tku_jlpt_comparison_persistence_and_closed_cycle(page, live_server, width):
+    session, errors = start(page, live_server, width, 'advisor')
+    expect(page.locator('#advisor-jlpt-level')).to_be_visible()
+    page.locator('#advisor-college').select_option('工學院')
+    page.locator('#advisor-department').select_option('資訊工程學系')
+    page.locator('#advisor-degree').select_option('大學部')
+    page.locator('#advisor-academic-score').fill('85')
+    page.locator('#advisor-jlpt-level').select_option('N2')
+    result = page.locator('#tku-eligibility-result')
+    expect(result).to_have_attribute('data-language-status', 'pass')
+    page.locator('#tku-eligibility-partner').select_option('ritsumeikan')
+    expect(result).to_have_attribute('data-language-status', 'fail')
+    page.locator('#advisor-jlpt-level').select_option('N1')
+    expect(result).to_have_attribute('data-language-status', 'pass')
+    page.locator('#tku-eligibility-partner').select_option('uec')
+    expect(result).to_have_attribute('data-language-status', 'needs_confirmation')
+    expect(result).to_have_attribute('data-application-status', 'closed')
+    with page.expect_response(lambda r:r.url.endswith('/advisor/plan') and r.request.method=='POST') as response:
+        page.locator('#advisor-submit').click()
+    assert response.value.request.post_data_json['jlpt_level'] == 'N1'
+    assert response.value.json()['recommendations'] == []
+    saved = _wait_for_workspace(live_server, session, lambda r:
+        (r['workspace'].get('selection_conditions',{}).get('profile') or {}).get('jlpt_level') == 'N1', home_school=HOME)
+    assert saved['workspace']['selection_conditions']['profile']['language_score'] is None
+    page.reload()
+    expect(page.locator('#advisor-jlpt-level')).to_have_value('N1')
+    assert page.evaluate('state.eligibilityProfile.jlptLevel') == 'N1'
+    record(page, 'jlpt-home-check-and-persistence', width, errors, saved_jlpt='N1',
+        n1_stronger_than_n2=True, uec_requires_confirmation=True, open_recommendations=0, reload_preserved=True)
+
+
 @pytest.mark.parametrize("width", [390,1280])
 def test_tku_shared_home_query_follows_explicit_school_choice_and_navigation(page, live_server, width):
     _, errors = start(page, live_server, width, "application-center")

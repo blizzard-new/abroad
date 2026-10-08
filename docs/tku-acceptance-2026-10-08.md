@@ -1,51 +1,51 @@
-# TKU 使用者驗收候選與重現方式
+# TKU 驗收與續查紀錄（2026-10-08）
 
-本文件取代第四批文件的「最新交接」說法；第四批及更早測試數字是歷史結果。最終完整測試的 SHA、實際通過／失敗／跳過數、遠端推送與 CI 結果，在同一 [draft PR #2](https://github.com/blizzard-new/abroad/pull/2) 交付。不能把先前 c602ec3 runner 的退出碼 0 當作整套通過。
+本分支為 `data/tku-exchange-20261008`，基準 main `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`。使用獨立 worktree，未合併其他学校分支、未改 CGU／NTPU／NTU bundled 資料、未部署或修改正式資料庫。
 
-## 可開始驗收的範圍
+## 原候選與原始證據保留
 
-128 個計畫列中，當期可核實名單只有 **2027–2028 日語第二次甄選 4 校、7 名**；校內 2026/9/30 12:00 臺北時間已截止，**0 個可新申請選項**。124 個英歐／中文舊列仍是參考，新版為「尚未核實」，沒有任何官方「尚未公告」宣稱。四校 152 格只有 85 格 verified（55.9%），67 格保留原缺口狀態及來源。不能以此宣稱全學校／全年度申請可用。
+`89217e19d55f3ff615964594e5f83eeb6156ba85` 的完整執行為 **1424 passed、39 failed、8 skipped**；未改 main unit 基準為 **1348 passed、39 failed、8 skipped**。wrapper collection error、lock failure、CI failure／0 jobs 均是失敗，不能因與 main 相同而當作驗收通過。
 
-驗收可涵蓋瀏覽、篩選、比較、條件與收藏保存、既有提名者文件查核及兩種準備稿。已截止選項不進入新申請志願，沒有正式期限提醒。流程未發布，當期公開表格可開啟不等於資格或流程已審查。兩份 PDF 是平台準備稿，沒有冒充官方格式。
+[原證據資料夾（不可變 commit）](https://github.com/blizzard-new/abroad/tree/1159874b7a3d3f48299d18c810646f38396c6ad9/docs/tku-acceptance-evidence/89217e1) 保留原 JUnit、逐步 exit code、瀏覽器、PDF、ZIP 與雜湊。續查結果另綁新的固定 SHA，不覆寫此證據。
 
-## 人工驗收清單
+## 67 個缺口的逐項續查
 
-使用隔離本機測試帳號，在 390px 與 1280px 各走一次：
+[gap_triage.json](../src/exchange_info/official_data/tku/gap_triage.json) 保留原 SHA 的全部 67 個欄位與原文位置，逐項記錄初始分類、查核入口、適用年度、日期、補正後狀態及下一步。初始分類：47 項仍可查、14 項矛盾、2 項官方材料提供途徑、4 項未映射。新增 12 個全文快照並執行限定官方網域的搜尋後，補正 4 項映射；仍有 **45 項在列出的公開範圍內未取得足夠當期內容、18 項矛盾／更正後適用性待確認**。不以搜尋無結果推定「官方尚未公告」。
 
-- [ ] TKU → 臺北大學 → 長庚 → 臺大 → TKU：標題、名單、原生年度、目標文件與來源各自正確。
-- [ ] 從 `?home=淡江大學` 的文件中心網址進入，改選臺北大學後導航及重載仍為臺北大學；返回 TKU 後 query 與文件中心也跟著更新，不被舊分享網址切回。
-- [ ] 名單 4 校；只選開放時 0 校。日本／東亞／名稱篩選、收藏 2 校、比較名額及重載保存。
-- [ ] 九學院、44 學籍單位可選；學籍目錄來源可開啟，但不當作交換資格白名單。學業條件與科系重載保存，沒有閉期推薦。
-- [ ] 四校文件清單分別 23／19／18／25 項；條件、年度、待確認／參考狀態及原檔／來源連結可見。
-- [ ] 立命館 COE 是「外校申請後」，**11 月上旬至 12 月上旬、早於 12 月下旬 offer**；行政書士另通知，沒有虛構確切截止。官方 2027 春簡章 PDF p.2／p.20；實際 workflow 與目錄一致。
-- [ ] 成蹊一般表格寫聯絡母校承辦，只有 COE 依官方 p.2 明示向 nominated students 另通知。長崎 NICS／研究生對應仍待確認；UEC 表格為一般參考、2027 版未核實。
-- [ ] 六組校對 A→B→A、取消、延遲舊回應、未知年度清空，均不殘留前校文件。既有準備目標重載保存；閉期正式計畫預覽停用。
-- [ ] 自傳及研習計畫各填 `chinese_text`／`japanese_text`，重載保存後下載；PDF 母校、準備稿標示、中日文內容、字型與頁面均可讀。省略日文時 manifest 確實列缺值。
-- [ ] 四校詳頁的 workflow、14 個生活區塊、38 個完整度欄及來源連結可查；沒有 page error 或橫向溢出。
+四項補正為成蹊本期住宿通勤（接機仍未知）、成蹊接受的學期數（精確日仍未知）、淡江當期表直接明示的 JUSST 名稱（2027 外校規則未核實）、2027 NICS 公告直接引用 Form C 的每月60,000日圓以上支弁下限（不是完整實支預算）。每項保留官方 URL、頁碼／原文與限定範圍。逐欄 **89／152 核實，58.6%**，不是完整當期申請就緒。
 
-## 這次補正與保障
+財金原公告重新開啟為 HTTP200，原502失敗作歷史保留。另讀資管、保險、人工智慧、資傳全文；各系原收件／轉送日期早於中央9/16更正。當期系所期限仍為 null／待確認，未把原公告日期套到更正後梯次。原表空白科系或學制仍為缺值，不改成全系可申請。
 
-COE 原本因粗粒度「行前」分組被誤投影成 post_offer，已改 explicit after_application，保留 approximate range／通知方式，不製造時間戳。外校收件与母校甄選維持分開。
+128 列（4 本梯名額列、124 舊期參考）、7 名額、本梯校內9/30中午已截止／0 可新申請；53 外校文件、28 原有交換附件與1另補2026參考行事曆。舊英歐／中文清單不是當期開放校名單；新版仍「尚未核實」。
 
-新增文件 metadata 曾改變三個原母校 851 筆內容雜湊。空預設 metadata 現在沿用舊序列化；有效 TKU metadata 仍加入內容雜湊。完整比對器讀未改 main f6ad 的 851 個實際雜湊，記錄差異，不只比較資料檔名或數量。
+## 平台適配與實際缺陷修復
 
-PDF 實際渲染發現既有外部 CJK CMap 字型路徑在本機只顯示表格，文字擷取卻能成功。TKU 準備稿改用內嵌 Noto Sans CJK TC 完整中日文字形字型；只作用於 TKU，CGU／NTPU／NTU 仍走原字型路徑。[原字型版本、來源雜湊、衍生方法](../src/exchange_info/official_data/tku/fonts/provenance.json) 與 OFL 授權隨校別資產保存；不是交換附件。兩個模板 × 兩個寬度都驗證實際內容、內嵌字型、render stderr、頁數及深色字形像素，避免表格框線造成假通過。
+新增獨立 JLPT N1–N5 欄位，與英語數值分開；API、按母校工作區保存與重載、行為查核一併處理。N1 強於 N2；立命館需N1、一般日語大學部N2、研究所N1；JUSST英語／80分／GPA與研究所豁免保持待確認。未核實年度不借用本梯規則，母校語言通過不能取消「校內已截止」。
 
-Runner 現在任何子檢查非零就非零退出；SHA 不符或工作樹變動會中止後續項目。四個隔離 Git repository 測試確實造成子程序失敗、dirty、clean commit 變動與錯誤起始 SHA，確認不能報綠。
+`/coverage` 原先只將CGU／NTU既有生活資料納入統計。改以資料母校相符條件計入，修復 NTPU／TKU 已有資料卻報0的情況；保留各校原有資料狀態，不升級來源年份或完整度。
 
-最新 CCU 差異的 `?home=` 修正提示另一條路徑：本候選 a6035e3 曾實際重現從 TKU 分享網址改選臺北大學後，hash 導航又被舊 query 切回 TKU。登入帳號還原亦會覆寫已選分享網址，兩個新案例實際重現此 reload 問題。因此獨立補正 explicit school choice 的網址同步，以及 account restore 對有效公開校目錄選校的保留；帳號學校身分與後端授權未修改。增加兩個真 UI 案例，没有合併 CCU 分支。先前不帶 home query 的切換通過，不等於這條路徑已覆蓋。此補正後須用新 SHA 重新完整驗證。
+合成、隔離資料確認兩項實際隱私缺陷：證件型內容以201且approved進入訪客GET；刪帳後訪客GET仍保留本名及作者關聯。修復為送出前422阻擋、刪除所有連結身分前先去識別化／清除私人資料，失敗保留帳號可重試。自身POST回應移除author_id屬回應契約修復；原訪客GET已隱藏ID，不能把自身POST當作原訪客洩漏證據。
 
-## 最終完整測試與誠實限制
+Supabase 沿用既有原子刪帳RPC；未帶重試header亦走RPC，未完成則503且不落回本機刪除。新增模擬路由與失敗測試；沒有查寫正式Supabase。原SQL去識別化以唯讀原碼與既有遷移測試核對，未把模擬測試宣稱正式DB驗證。
 
-固定乾淨候選 HEAD 後，一次 pytest 跑全部頂層 unit 檔（只有既有缺失 pyc wrapper 另試）、七個相關 E2E 檔與 CGU PDF node。再依序跑跨校／詳頁 switching、OpenAPI、兩個 JavaScript 語法、diff、wrapper collection、uv lock。每步前後核對同 SHA／乾淨工作樹，證據出到 `/tmp`。
+`/docs` 改為不依賴CSP阻擋的CDN資源之OpenAPI下載入口，`/redoc`轉向；補現有路由錯誤回應及已實作重試header的OpenAPI文件，明確同意欄位與AI暫緩標記。沒有把尚未實作的private重試／管理功能加成虛構API。
 
-未改 main f6ad 完整 unit 基準實際 **1348 passed、39 failed、8 skipped**。已有 39 項失敗不能算本分支通過；最後結果逐 case ID 比較新增／消除失敗。root conftest 的「Phase C data reviewed」跳過與 Docker opt-in 跳過均保留原因。缺失 pyc wrapper 的 collection error 獨立列為 error。未選的其他 E2E、Ollama 整合沒有執行，不能宣稱全專案瀏覽器驗收。
+## wrapper、lock 與 CI
 
-`uv lock --check` 在本分支與基準已實際指出 lockfile 需更新；不改 uv.lock 掩蓋問題。UV cache 使用 `/tmp`，避免唯讀 home cache 錯誤干擾診斷。先前遠端 quality run failure／jobs 0、Supabase Preview skipped 不是 CI 通過；最終 SHA 會另核對。
+wrapper 原依賴未追蹤 pyc，main／可讀其他分支／歷史均找不到來源。恢復 tracked wrapper 中唯一可還原的RPC回歸為可讀原碼，納入主pytest；未知bytecode測試不能還原，不能宣稱已覆蓋。
+
+uv.lock 只移除 pyproject 早已移除的 pytesseract 遺留套件與root兩項引用；其他套件版本未升級。`uv lock --check --offline`已實際exit0。環境代理只在DNS模擬單元測試內隔離，正式網路／安全設定未改。
+
+quality.yml 的 `jobs.test.env` 使用不支援的runner context。官方文件及已驗release checksum的actionlint重現；改由step將RUNNER_TEMP寫入GITHUB_ENV後lint exit0。與[中正只讀診斷](https://github.com/blizzard-new/abroad/blob/1959d160d6abbce24226396e648777f2c2b55d0b/docs/ccu-validation-2026-10-08/ci-readonly/README.md)一致。permissions、secrets、action pins未動；不證明CI僅有此原因，遠端新SHA的jobs與實際失敗需另記錄。
+
+## 固定 SHA 驗收與合併界線
+
+所有頂層單元檔（含恢復wrapper）、七個相關E2E檔及CGU PDF node在一次pytest執行；逐步包含跨校／詳頁切換、OpenAPI、三個JavaScript、diff、wrapper collection、lock、actionlint。每步前後檢查同SHA與乾淨工作樹，實際exit code、失敗和skip輸出到獨立證據目錄。未選的其他E2E與Ollama整合不算通過。新固定候選結果與39案例逐項診斷由PR與新證據提交記錄。
 
 ```bash
 PLAYWRIGHT_BROWSERS_PATH=/tmp/tku-browsers .venv/bin/python scripts/run_tku_acceptance_suite.py \
-  --candidate-sha "$(git rev-parse HEAD)" --output /tmp/tku-final-candidate
+  --candidate-sha "$(git rev-parse HEAD)" --output /tmp/tku-final-candidate \
+  --actionlint-binary /tmp/tku-continuation-20261008/actionlint/actionlint
 PYTHONPATH=src .venv/bin/python scripts/report_tku_acceptance.py \
   --output /tmp/tku-final-candidate \
   --baseline-suite /tmp/tku-acceptance-baseline-f6ad/suite.xml \
@@ -53,10 +53,6 @@ PYTHONPATH=src .venv/bin/python scripts/report_tku_acceptance.py \
   --baseline-commit f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59
 ```
 
-## 資料與合併阻礙
+[CGU實際比較](tku-cgu-acceptance-comparison-2026-10-08.json)讀77校實際資料，不用測試替身20校或舊摘要冒充完整。新版文件、系所更正時程、NICS／研究生、UEC2027、13組來源矛盾仍是資料阻礙。private重試與多項管理API在現行app未實作，既有看板政策／OpenAPI及UI字面契約未對齊亦需統一整合判定。不能以與main同失敗當作可接受，也不為變綠而擴權或刪除要求。
 
-缺口包括英歐／中文新版、系所較早截止、長崎 NICS／研究生映射、UEC 2027 專屬文件、13 組來源矛盾及 JLPT 專用 UI 自動比對。系所轉知頁只核到標題，內文 HTTP 502，未提升成當期適用證據。逐欄／逐文件原文與狀態在 [acceptance_gap_audit.json](../src/exchange_info/official_data/tku/acceptance_gap_audit.json)。
-
-CGU 對照讀實際 77 校流程，不用 E2E 替身 20 校或舊摘要冒充全目錄；見 [實際對照 JSON](tku-cgu-acceptance-comparison-2026-10-08.json)。NCU／CCU 只讀差異，沒有合併新分支；共用 14 檔重疊與處理原則見 [整合風險 JSON](tku-shared-integration-risks-2026-10-08.json)。其中 registry/API/storage dispatch、文件 metadata／public-form 例外、年度／梯次與 UI handlers 必須各校保留；完整合併後重產 OpenAPI。
-
-可開始有限 TKU UI／證據人工驗收；完整當期申請與整體 release ready 仍受上述資料、既有測試與 CI 阻礙。本分支維持 draft，沒有合併 main 或部署。
+[共用變更與只讀分支比較](tku-shared-integration-risks-2026-10-08.json)列出registry/API/storage/templates、JLPT profile、UI hook、隱私cleanup、OpenAPI、workflow、lock及測試支架。逐段保留各校dispatch，合併後重產OpenAPI；未修改其他學校資料或worktree。維持draft，不merge main、不部署。

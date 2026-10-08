@@ -1,8 +1,8 @@
 """Run the final candidate checks together, retaining actual failures and skips.
 
 All top-level Python tests plus relevant real-browser suites run in one pytest
-invocation. The inherited missing-pyc wrapper is attempted separately, recorded
-as a collection error, and never counted as passing. No source refresh or deploy.
+invocation, including the source-recovered historical wrapper. Its collection is
+also recorded separately. Unknown historical bytecode tests are not claimed.
 """
 from __future__ import annotations
 
@@ -76,8 +76,7 @@ def run(args):
     env = dict(os.environ, PYTHONPATH=str(ROOT / "src"),
         TKU_ACCEPTANCE_OUTPUT=str(out / "browser"), TKU_SWITCH_OUTPUT=str(out / "switch.json"),
         UV_CACHE_DIR=str(out / "uv-cache"))
-    units = [str(p.relative_to(ROOT)) for p in sorted((ROOT / "tests").glob("test_*.py"))
-        if p.name != "test_content_governance_wrapper.py"]
+    units = [str(p.relative_to(ROOT)) for p in sorted((ROOT / "tests").glob("test_*.py"))]
     browser = [f"tests/e2e/{name}" for name in BROWSERS]
     browser += ["tests/e2e/test_web_next_phase.py::test_application_form_sync_review_and_pdf_download"]
     checks = [
@@ -86,10 +85,13 @@ def run(args):
         ("openapi", [sys.executable, "scripts/export_openapi.py", "--check"]),
         ("javascript-shared", ["node", "--check", "src/exchange_info/static/app.js"]),
         ("javascript-tku", ["node", "--check", "src/exchange_info/static/tku-academic-units.js"]),
+        ("javascript-tku-eligibility", ["node", "--check", "src/exchange_info/static/tku-eligibility.js"]),
         ("diff-check", ["git", "diff", "--check"]),
-        ("inherited-wrapper-collection", [sys.executable, "-m", "pytest", "tests/test_content_governance_wrapper.py", "--collect-only", "-q", f"--junitxml={out / 'wrapper.xml'}"]),
+        ("recovered-wrapper-collection", [sys.executable, "-m", "pytest", "tests/test_content_governance_wrapper.py", "--collect-only", "-q", f"--junitxml={out / 'wrapper.xml'}"]),
         ("lockfile", ["uv", "lock", "--check"]),
     ]
+    if args.actionlint_binary:
+        checks.append(('actionlint', [str(args.actionlint_binary.resolve()), '.github/workflows/quality.yml']))
     report = dict(browser_files=BROWSERS,
         unit_file_count=len(units), deliberately_not_run=["tests/integration/test_local_ai_runtime.py: unrelated Ollama hardware/runtime integration"], checks=[])
     exit_code = execute_checks(ROOT, out, commit, checks, env, report)
@@ -101,4 +103,5 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--candidate-sha", required=True, help="Exact full HEAD SHA; requires a clean unchanged worktree")
+    parser.add_argument('--actionlint-binary', type=Path, help='Explicit locally verified actionlint binary')
     sys.exit(run(parser.parse_args()))

@@ -30,6 +30,7 @@ import re
 import secrets
 import threading
 import time
+import unicodedata
 from contextlib import asynccontextmanager
 from datetime import datetime, timedelta, timezone
 from functools import partial
@@ -38,11 +39,13 @@ from urllib.parse import quote, urlencode
 
 import requests
 from fastapi import FastAPI, File, Form, Header, HTTPException, Query, Request, Response, UploadFile
-from fastapi.responses import FileResponse, PlainTextResponse, RedirectResponse
+from fastapi.responses import FileResponse, HTMLResponse, PlainTextResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.concurrency import run_in_threadpool
 
 from .advisor import answer_question, build_advisor_plan
+from .account_community_cleanup import cleanup_local_account_community
+from .community_repositories import CommunityRepositoryError
 from .analytics import AnalyticsService, ApiMetricsMiddleware
 from .analytics_repository import create_analytics_repository
 from .analytics_routes import register_analytics_routes
@@ -51,6 +54,7 @@ from .feedback_routes import register_feedback_routes
 from .notification_routes import register_notification_routes
 from .openapi_contract import install_openapi_contract
 from .workflow_review_routes import register_workflow_review_routes
+from .tku_eligibility_routes import register_tku_eligibility_routes
 from .ai_gateway import (
     ai_embedding_model,
     ai_enabled,
@@ -758,8 +762,17 @@ def create_app(
         version="0.1.0",
         description="Structured exchange-application information for supported universities in Taiwan.",
         lifespan=lifespan,
+        docs_url=None,
+        redoc_url=None,
     )
     install_openapi_contract(app)
+    @app.get('/docs', response_class=HTMLResponse, include_in_schema=False)
+    def api_contract_page():
+        return HTMLResponse('<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>API contract</title></head><body><main><h1>API contract</h1><p>機器可讀取的 API 結構、欄位及限制。</p><a href="/openapi.json">下載 OpenAPI JSON</a></main></body></html>')
+
+    @app.get('/redoc', include_in_schema=False)
+    def legacy_api_contract_page():
+        return RedirectResponse('/docs', status_code=307)
     app.state.account_repository = acc_repo
     app.state.content_governance_store = gov_store
     app.state.destination_profile_review_store = dest_store
@@ -916,6 +929,7 @@ def create_app(
 
     register_notification_routes(app, authenticated_account, authenticated_content_admin)
     register_workflow_review_routes(app, authenticated_content_admin)
+    register_tku_eligibility_routes(app)
     analytics_countries: dict[str, Any] = {"at": 0.0, "value": {}}
 
     def catalogue_countries() -> dict[str, str]:
@@ -2293,8 +2307,13 @@ def create_app(
         }
 
     @app.delete("/auth/me", status_code=204)
-    def delete_auth_profile(request: Request, response: Response) -> Response:
-        mutation_id = request.headers.get("X-Account-Deletion-Mutation-ID")
+    def delete_auth_profile(request: Request, response: Response,
+        mutation_id: str | None = Header(default=None, alias='X-Account-Deletion-Mutation-ID', min_length=16, max_length=128),
+    ) -> Response:
+        if getattr(app.state.account_repository, "backend_name", None) == "supabase":
+            # The production repository owns deletion and de-identification in
+            # one existing RPC, including clients without a retry header.
+            mutation_id = mutation_id or secrets.token_hex(16)
         if mutation_id:
             response.headers["X-Account-Deletion-Mutation-ID"] = mutation_id
 
@@ -2322,6 +2341,12 @@ def create_app(
                 session_id=session.id if session else None,
                 replacement_name="已刪除帳號",
             )
+            if account and getattr(comm_repo, "backend_name", None) == "jsonl":
+                authenticated_account(request)
+                try:
+                    cleanup_local_account_community(comm_repo, account.id)
+                except CommunityRepositoryError as exc:
+                    raise HTTPException(503, "社群資料清理尚未完成，請重試刪除帳號。") from exc
             result = app.state.account_repository.commit_account_deletion(mutation)
             del_headers = {"X-Account-Deletion-Mutation-ID": mutation_id}
             if result.status == AccountDeletionMutationStatus.IDEMPOTENCY_CONFLICT:
@@ -2369,7 +2394,15 @@ def create_app(
                 response.status_code = 204
                 return response
 
+            # An incomplete atomic deletion must remain retriable. Falling
+            # through to legacy local deletion would bypass its cleanup result.
+            raise HTTPException(503, '帳號刪除尚未完成，請保留操作識別碼後重試。', headers=del_headers)
+
         account, _ = authenticated_account(request)
+        try:
+            cleanup_local_account_community(comm_repo, account.id)
+        except CommunityRepositoryError as exc:
+            raise HTTPException(503, "社群資料清理尚未完成，請重試刪除帳號。") from exc
         if hasattr(app.state, "form_draft_service") and hasattr(
             app.state.form_draft_service, "purge_account"
         ):
@@ -2388,15 +2421,6 @@ def create_app(
                     row
                     for row in load_account_sessions(resolved_data_dir)
                     if row.account_id != account.id
-                ],
-                resolved_data_dir,
-            )
-            save_anonymous_identities(
-                [
-                    row.model_copy(update={"account_id": None})
-                    if row.account_id == account.id
-                    else row
-                    for row in load_anonymous_identities(resolved_data_dir)
                 ],
                 resolved_data_dir,
             )
@@ -2818,7 +2842,7 @@ def create_app(
                 if destination_audit
                 else (
                     destination.coverage_status
-                    if university.id in {CGU.id, NTU.id} and destination
+                    if destination and normalize_school(destination.home_university or CGU.school_name) == home_key
                     else "not_collected"
                 )
             )
@@ -2858,7 +2882,7 @@ def create_app(
                         destination_audit.checked_at
                         if destination_audit
                         else destination.last_checked
-                        if university.id in {CGU.id, NTU.id} and destination
+                        if destination and normalize_school(destination.home_university or CGU.school_name) == home_key
                         else None
                     ),
                 )
@@ -2979,7 +3003,7 @@ def create_app(
             retrieved_chunks=retrieved_chunks,
         )
 
-    @app.post("/ai/chat", response_model=AdvisorAnswer)
+    @app.post("/ai/chat", response_model=AdvisorAnswer, deprecated=True)
     def ai_chat(payload: AdvisorQuestionRequest) -> AdvisorAnswer:
         if ai_runtime_state() == "paused":
             raise HTTPException(status_code=503, detail="AI API 與本地 AI 目前暫緩")
@@ -3095,7 +3119,7 @@ def create_app(
         require_signature: bool = Form(default=False),
         use_ai: bool = Form(default=False),
         ai_consent_granted: bool = Form(default=False),
-        consent: bool | None = Form(default=None),
+        consent: bool = Form(...),
     ) -> DocumentCheckResult:
         import os
         
@@ -3133,7 +3157,7 @@ def create_app(
         except ValueError as error:
             raise HTTPException(status_code=422, detail=str(error)) from error
 
-    @app.post("/ai/rewrite-document", response_model=DocumentRewriteResult)
+    @app.post("/ai/rewrite-document", response_model=DocumentRewriteResult, deprecated=True)
     def ai_rewrite_document(response: Response, payload: DocumentRewriteRequest) -> DocumentRewriteResult:
         if not getattr(payload, "ai_consent_granted", False):
             raise HTTPException(status_code=422, detail="AI consent required")
@@ -3436,8 +3460,8 @@ def create_app(
         request: Request,
         response: Response,
         payload: ApplicationWorkflowIssueReportCreate,
+        mutation_id: str = Header(alias='X-Content-Report-Mutation-ID', min_length=16, max_length=128),
     ) -> ApplicationWorkflowIssueReport:
-        mutation_id = request.headers.get("X-Content-Report-Mutation-ID")
         if not mutation_id or len(mutation_id) < 16 or len(mutation_id) > 128:
             raise HTTPException(status_code=422, detail="缺少有效操作識別碼。")
         account, _ = authenticated_account(request)
@@ -3536,8 +3560,8 @@ def create_app(
         request: Request,
         response: Response,
         payload: ApplicationWorkflowIssueReportReviewRequest,
+        mutation_id: str = Header(alias='X-Content-Report-Mutation-ID', min_length=16, max_length=128),
     ) -> ApplicationWorkflowIssueReport:
-        mutation_id = request.headers.get("X-Content-Report-Mutation-ID")
         if not mutation_id or len(mutation_id) < 16 or len(mutation_id) > 128:
             raise HTTPException(status_code=422, detail="缺少有效操作識別碼。")
         admin, _ = authenticated_content_admin(request)
@@ -3924,12 +3948,18 @@ def create_app(
 
     @app.get("/community/posts", response_model=list[CommunityPostThread])
     def community_posts(
+        request: Request,
+        response: Response,
         school: str | None = Query(default=None, min_length=2),
         board_id: str | None = Query(default=None),
         topic: CommunityTopic | None = Query(default=None),
         q: str | None = Query(default=None, max_length=80),
         limit: int = Query(default=60, ge=1, le=120),
     ) -> list[CommunityPostThread]:
+        response.headers["Cache-Control"] = "private, no-store"
+        response.headers["Vary"] = "Cookie, Authorization"
+        account = authenticated_account(request)[0] if request_token(request) else None
+        own_ids = {row.id for row in comm_repo.list_identities() if account and row.account_id == account.id} if account else set()
         target_board = board_id or school
         normalized_boards: set[str] = set()
         if target_board:
@@ -3992,10 +4022,12 @@ def create_app(
         return [
             CommunityPostThread(
                 post=post.model_copy(
-                    update={"comment_count": len(comments_by_post.get(post.id, [])), "author_id": ""}
+                    update={"comment_count": len(comments_by_post.get(post.id, [])), "author_id": "",
+                            "viewer_can_delete": post.author_id in own_ids and not getattr(post, "deleted", False)}
                 ),
                 comments=sorted(
-                    [row.model_copy(update={"author_id": ""}) for row in comments_by_post.get(post.id, [])],
+                    [row.model_copy(update={"author_id": "", "viewer_can_delete": row.author_id in own_ids and not row.deleted})
+                     for row in comments_by_post.get(post.id, [])],
                     key=lambda row: row.created_at
                 ),
             )
@@ -4057,7 +4089,7 @@ def create_app(
             "post_created", props={"board": board_id, "identity_mode": payload.identity_mode.value,
                                    "post_type": getattr(payload.post_type, "value", payload.post_type)},
             home_school=catalog_home_university(account) or "", school_basis=school_basis(account) or "")
-        return published
+        return published.model_copy(update={"author_id": "", "viewer_can_delete": True})
 
     @app.post(
         "/community/posts/{post_id}/comments",
@@ -4096,7 +4128,7 @@ def create_app(
         analytics_service.emit(
             "comment_created", props={"board": board_id, "identity_mode": payload.identity_mode.value},
             home_school=catalog_home_university(account) or "", school_basis=school_basis(account) or "")
-        return published
+        return published.model_copy(update={"author_id": "", "viewer_can_delete": True})
 
     @app.get("/community/chat", response_model=list[PublicChatMessage])
     def public_chat_messages(
@@ -4399,7 +4431,14 @@ def _snippet(text: str, query: str, radius: int = 90) -> str:
 
 
 def _reject_contact_details(*values: str) -> None:
-    text = " ".join(values)
+    text = unicodedata.normalize("NFKC", " ".join(values))
+    identity_pattern = re.compile(
+        r"(?:護照(?:號碼|編號)?|身[分份]證(?:字號|號碼)?|"
+        r"passport(?:\s*(?:number|no\.?))?|(?:national\s+)?id(?:entification)?(?:\s*(?:number|no\.?))?)"
+        r"\s*[:#]?\s*[A-Z]{0,3}\d{6,12}(?![A-Z0-9])", re.IGNORECASE,
+    )
+    if identity_pattern.search(text):
+        raise HTTPException(422, "請不要填寫護照號碼或身分證字號等敏感身分資料。")
     contact_pattern = re.compile(
         r"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}|"
         r"(?:\+?886[-\s]?)?0?9\d{2}[-\s]?\d{3}[-\s]?\d{3}|"

@@ -148,12 +148,14 @@ def test_registration_directory_and_native_year_options_are_official_and_reprodu
 
 def test_acceptance_gap_audit_does_not_promote_missing_forms_or_department_metadata():
     audit=json.loads((BUNDLE/'acceptance_gap_audit.json').read_text())
-    assert len(audit['field_gaps'])==67 and len(audit['documents'])==53
+    assert audit['original_gap_count']==67 and audit['resolved_original_gaps']==4
+    assert len(audit['field_gaps'])==63 and len(audit['documents'])==53
     assert audit['official_not_announced_claims']==[]
     assert all(row['evidence'] and row['status']!='verified' for row in audit['field_gaps'])
     assert len(audit['access_rules'])==7 and all(r['source_url'].startswith('https://') and r['locator'] and r['quote'] and r['applicable_year'] and r['checked_at'] for r in audit['access_rules'])
     candidate=audit['department_candidate']
-    assert candidate['detail_http_status']==502 and candidate['promoted_to_field'] is False
+    assert candidate['detail_http_status']==200 and candidate['previous_attempt']['http_status']==502
+    assert candidate['promoted_to_field'] is False
     seikei=[d for d in audit['documents'] if 'Seikei' in d['school_name']]
     assert all(d['form_access'] in ['contact_home_coordinator','own_document','provided_to_nominated_students'] for d in seikei)
     assert not any(d['original_form_contents_verified'] for d in seikei)

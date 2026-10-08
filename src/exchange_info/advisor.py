@@ -443,6 +443,20 @@ def _qualification_summary(
     dashboard: StudentDashboard,
 ) -> list[str]:
     rows: list[str] = []
+    if dashboard.school_name == '淡江大學':
+        if profile.academic_year != '2027-2028' or profile.application_round != '日語組第二次甄選':
+            return ['此年度／梯次尚未核實新版；不能沿用2027–2028日語二甄資格。',
+                    '請先確認明確年度、梯次及對應官方規定；JLPT成績僅保存為個人條件。']
+        from .tku_eligibility import assess_tku_eligibility
+        year = {'大一': 1, '大二': 2, '大三': 3, '大四': 4}.get(profile.current_year or '')
+        result = assess_tku_eligibility(round_id='jp-2027-2028-round-2', academic_average=profile.academic_score,
+            department_top_percent=profile.class_rank_percent, degree_level=profile.degree_level,
+            year_of_study=year, jlpt_level=profile.jlpt_level)
+        labels = {'pass': '符合已知門檻', 'fail': '未達已知門檻', 'needs_confirmation': '待確認'}
+        return [f"2027–2028日語二甄學業：{labels[result['academic_status']]}",
+            f"日語課程JLPT {profile.jlpt_level or '待補'}；母校門檻{result['jlpt_minimum'] or '待確認'}：{labels[result['language_status']]}",
+            '立命館另需N1；JUSST須另核對英語與80分／GPA3.0，研究所豁免未核實。',
+            '本梯校內申請已截止；語言通過不等於外校錄取或可新申請。', *result['notes']]
     academic_minimum = dashboard.academic_score_minimum
     if is_ntu(dashboard.school_name):
         rows.append(ntu_academic_check(profile.degree_level, profile.academic_gpa, profile.class_rank_percent)[1])
