@@ -16,6 +16,7 @@ import sys
 import time
 import zipfile
 from concurrent.futures import ThreadPoolExecutor
+from datetime import UTC, datetime
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from xml.etree import ElementTree
@@ -113,6 +114,7 @@ def main():
     output.mkdir(parents=True, exist_ok=True)
     (output / "temp").mkdir(exist_ok=True)
     candidate = git("rev-parse", "HEAD")
+    save(output / "git-boundary-start.json", {"captured_at": datetime.now(UTC).isoformat(), "head_stdout": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True), "status_porcelain_stdout": subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True), "gate_source_sha256": sha(Path(__file__))})
     save(output / "environment-proof.json", {"candidate_sha": candidate, "python": sys.version, "optional_research_xlrd": xls_reader_version, "research_requirements_sha256": sha(ROOT / "scripts/requirements-ccu-research.txt"), "ci_uv_version_used": "0.11.26"})
     environment = {**os.environ, "UV_CACHE_DIR": "/tmp/ccu-uv-cache", "UV_TOOL_DIR": "/tmp/ccu-uv-tools", "UV_TOOL_BIN_DIR": "/tmp/ccu-uv-bin", "PLAYWRIGHT_BROWSERS_PATH": "/tmp/ccu-playwright", "CCU_ACCEPTANCE_OUTPUT": str(output / "browser-evidence"), "TMPDIR": str(output / "temp")}
     results = []
@@ -127,7 +129,7 @@ def main():
         return row
 
     before = {str(p.relative_to(BUNDLE)): sha(p) for p in BUNDLE.rglob("*") if p.is_file()}
-    for script in ["build_ccu_research_audit", "build_ccu_catalog", "build_ccu_source_audit", "build_ccu_overseas", "build_ccu_remaining_gaps", "build_ccu_public_link_queue"]:
+    for script in ["build_ccu_research_audit", "build_ccu_catalog", "build_ccu_source_audit", "build_ccu_overseas", "build_ccu_remaining_gaps", "build_ccu_public_link_queue", "build_ccu_body_triage"]:
         results.append(run(script, [sys.executable, "scripts/" + script + ".py"]))
     after = {str(p.relative_to(BUNDLE)): sha(p) for p in BUNDLE.rglob("*") if p.is_file()}
     assert before == after, "Offline builders changed candidate data"
@@ -136,13 +138,14 @@ def main():
     quick = [("lock", ["uvx", "--from", "uv==0.11.26", "uv", "lock", "--check"]), ("openapi", [sys.executable, "scripts/export_openapi.py", "--check"]), ("python-syntax", [sys.executable, "-m", "compileall", "-q", "src", "scripts/validate_ccu_candidate.py"]), ("ruff", ["uvx", "ruff", "check", "scripts/fetch_ccu_overseas_sources.py", "scripts/validate_ccu_candidate.py", "src/exchange_info/ccu_overseas.py", "src/exchange_info/ccu_profile.py", "tests/test_ccu_twentythird_pass.py", "tests/e2e/test_ccu_candidate_acceptance.py", "tests/e2e/test_ccu_school.py"])]
     for path in ["app.js", "ccu-academic-units.js", "ccu-language-conditions.js", "ccu-partner-details.js"]:
         quick.append(("js-" + path, ["node", "--check", "src/exchange_info/static/" + path]))
+    quick.append(("ruff-followup", ["uvx", "ruff", "check", "scripts/build_ccu_body_triage.py", "tests/test_ccu_followup_validation.py", "tests/e2e/test_ccu_delayed_switching.py"]))
     for label, command in quick:
         results.append(run(label, command))
     regression = sorted({str(p.relative_to(ROOT)) for p in (ROOT / "tests").glob("test_ccu*.py")} | {"tests/" + name for name in ["test_advisor.py", "test_application_document_catalog.py", "test_application_documents_api.py", "test_application_rules.py", "test_application_workflow.py", "test_cgu_bundled_data.py", "test_ntpu_bundled_data.py", "test_ntpu_support.py", "test_ntu_audit.py", "test_ntu_integration.py", "test_ntu_school_board_migration.py", "test_qualification_scope_consistency.py", "test_school_photo_and_match.py", "test_selection_conditions_sync.py", "test_workflow_structuring.py", "test_account_workspace_api.py"]})
     browser = sorted({str(p.relative_to(ROOT)) for p in (ROOT / "tests/e2e").glob("test_ccu*.py")} | {"tests/e2e/test_ntu_school.py", "tests/e2e/test_school_lists.py", "tests/e2e/test_open_catalog.py"})
     browser_groups = [browser[::2], browser[1::2]]
     assert sorted(browser_groups[0] + browser_groups[1]) == browser
-    save(output / "test-selection.json", {"regression": regression, "browser": browser, "browser_groups": browser_groups, "true_bundled_four_school_browser_file": "tests/e2e/test_ccu_candidate_acceptance.py", "other_browser_fixtures": "Existing e2e conftest replaces CGU partner list; CCU data/API is real. New acceptance file has an independent real production-data server and no response/state mocks."})
+    save(output / "test-selection.json", {"regression": regression, "browser": browser, "browser_groups": browser_groups, "true_bundled_four_school_browser_file": "tests/e2e/test_ccu_candidate_acceptance.py", "delayed_real_api_file": "tests/e2e/test_ccu_delayed_switching.py", "delayed_api_method": "Same independent bundled-data server. GET responses are fetched from actual API and delivered unchanged later; one draft test controls browser clock. No fabricated policy data or injected application state.", "other_browser_fixtures": "Existing e2e conftest replaces CGU partner list; CCU data/API is real. New acceptance file has an independent real production-data server and no response/state mocks."})
     long = [("regression", [sys.executable, "-m", "pytest", "-q", *regression, "--basetemp=" + str(output / "temp/regression"), "--junitxml=" + str(output / "regression.xml")])]
     for index, group in enumerate(browser_groups, start=1):
         label = "browser-group-" + str(index)
@@ -172,6 +175,7 @@ def main():
         if (output / (label + ".xml")).exists():
             next(r for r in results if r["label"] == label)["junit"] = suite_stats(output / (label + ".xml"))
     final = git("status", "--porcelain")
+    save(output / "git-boundary-end.json", {"captured_at": datetime.now(UTC).isoformat(), "head_stdout": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True), "status_porcelain_stdout": subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True), "gate_source_sha256": sha(Path(__file__))})
     assert git("rev-parse", "HEAD") == candidate and not final, "Candidate changed during gate"
     summary = {"repository": "blizzard-new/abroad", "branch": git("branch", "--show-current"), "candidate_sha": candidate, "main_sha": git("rev-parse", "origin/main"), "same_sha_before_and_after": True, "working_tree_clean_before_and_after": True, "results": results, "all_executed_commands_passed": all(r["returncode"] == 0 for r in results), "not_run": ["other-school combined branch integration", "delayed-response race across unmerged TKU/NCU/NTU heads", "Supabase isolated runtime", "dependency vulnerability audit", "deployment"], "functional_parity_complete": json.loads((output / "functional-parity.json").read_text())["status_summary"]["functional_parity_complete"], "external_browser_template_checks": [json.loads(p.read_text()) for p in (output / "browser-evidence").glob("external-template-*.json")]}
     summary["ready_for_release"] = False

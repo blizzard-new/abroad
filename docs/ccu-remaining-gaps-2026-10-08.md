@@ -65,3 +65,10 @@
 公開連結queue涵蓋628原始href／602唯一URL，當前public_candidate_requires_content_review=0：已取得正文的必要候選完成範圍／年度讀取，其他候選依父頁label／URL篩查列為選擇性服務、其他計畫、其他收件身分、導覽或參考；target_content_read=false者並未宣稱目標正文已讀。這不代表所有官方公開來源已查盡。慶熙政府索引重新GET的本文與已讀來源相同；6個新可選圖書館連結僅範圍篩查。
 
 HCMUT私人表401、Tohoku密碼頁、Augsburg附件429、UNINTER部分503只表示該URL限制。NASIC／SDU租約／FHNW個人合約要個人通知，未取得個人實表或期限。Jena後續延長表已讀但2027身分待確認；慶熙住宿／ARC費與EPITA期限真實來源不同保留conflict。政府整合表2022.4.12修訂和2025-01-01起35000KRW ARC費不能當2027完整入境要求。
+
+
+## 後續驗收修正與逐校正文清冊（第二十四輪）
+
+海外17欄935個更新為306當期、331待核、206缺、20參考、71矛盾、1官方明示未公告；源956、host附件131及母校附件5均未新增或覆蓋。完整讀4份已保存官方正文，新映射誠信女子學費減免／韓語另費、路德維希港母校先提名資格。0校17欄全當期、0完整host文件集合仍保留。細項見 [55校正文查核清冊](ccu-body-review-triage-2026-10-08.md) 與body-review-triage.json。
+
+新增修復coverage排除NTPU/CCU已載入guide、顯式母校誤回其他校guide，以及快速母校／目標／detail晚回應與草稿排隊儲存跨母校問題。工作目錄focused 10項回歸與8項瀏覽器通過，尚須在提交後同一SHA最終gate重跑，不能沿用e838307的437/445結果。[原始probe](ccu-validation-2026-10-08/followup-probes/README.md)與[CI唯讀診斷](ccu-validation-2026-10-08/ci-readonly/README.md)可審查；CI正式workflow未修改。Jena外部TLS阻礙不繞過，已保存官方文件與正常TLS HTTP取得證據可供對照，但不代表瀏覽器點擊成功。

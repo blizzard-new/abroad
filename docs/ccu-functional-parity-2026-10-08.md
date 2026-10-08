@@ -112,3 +112,10 @@
 | 111 | SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院) | 6/3/5/3/0 | 核/核/核 | 0／{} |
 | 114 | Ø stfold University of Applied Sciences 厄斯特福德應用科學大學 | 5/7/4/1/0 | 核/待/待 | 5／{"student_application": 5} |
 | 119 | Universidad Internacional 墨西哥國際大學 | 6/2/6/3/0 | 核/缺/核 | 8／{"student_application": 6, "post_offer": 2} |
+
+
+## 後續驗收修正與逐校正文清冊（第二十四輪）
+
+海外17欄935個更新為306當期、331待核、206缺、20參考、71矛盾、1官方明示未公告；源956、host附件131及母校附件5均未新增或覆蓋。完整讀4份已保存官方正文，新映射誠信女子學費減免／韓語另費、路德維希港母校先提名資格。0校17欄全當期、0完整host文件集合仍保留。細項見 [55校正文查核清冊](ccu-body-review-triage-2026-10-08.md) 與body-review-triage.json。
+
+新增修復coverage排除NTPU/CCU已載入guide、顯式母校誤回其他校guide，以及快速母校／目標／detail晚回應與草稿排隊儲存跨母校問題。工作目錄focused 10項回歸與8項瀏覽器通過，尚須在提交後同一SHA最終gate重跑，不能沿用e838307的437/445結果。[原始probe](ccu-validation-2026-10-08/followup-probes/README.md)與[CI唯讀診斷](ccu-validation-2026-10-08/ci-readonly/README.md)可審查；CI正式workflow未修改。Jena外部TLS阻礙不繞過，已保存官方文件與正常TLS HTTP取得證據可供對照，但不代表瀏覽器點擊成功。

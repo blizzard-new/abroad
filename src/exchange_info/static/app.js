@@ -176,6 +176,8 @@ const state = {
   onboardingReturnFocus: null,
   dialogReturnFocus: null,
   homeSchoolRequestId: 0,
+  schoolContextVersion: 0,
+  schoolDataRequestIds: {},
 };
 
 const $ = (selector) => document.querySelector(selector);
@@ -676,6 +678,24 @@ function isCurrentHomeSchool(schoolName) {
   return normalize(activeHomeSchool()) === normalize(schoolName);
 }
 
+function captureSchoolContext(homeSchool = activeHomeSchool()) {
+  return { homeSchool, version: state.schoolContextVersion };
+}
+
+function schoolContextIsCurrent(context) {
+  return context.version === state.schoolContextVersion && isCurrentHomeSchool(context.homeSchool);
+}
+
+function beginSchoolDataRequest(kind, homeSchool = activeHomeSchool()) {
+  const id = (state.schoolDataRequestIds[kind] || 0) + 1;
+  state.schoolDataRequestIds[kind] = id;
+  return { ...captureSchoolContext(homeSchool), kind, id };
+}
+
+function schoolDataRequestIsCurrent(request) {
+  return schoolContextIsCurrent(request) && state.schoolDataRequestIds[request.kind] === request.id;
+}
+
 function activeUniversityProfile() {
   return state.supportedUniversities.find(
     (item) => normalize(item.school_name) === normalize(activeHomeSchool())
@@ -1050,13 +1070,14 @@ async function loadSupportedUniversities() {
 async function loadCoverage({ homeSchool = activeHomeSchool() } = {}) {
   if (!canAccessPartnerCatalog()) return false;
   const requestedSchool = homeSchool;
+  const request = beginSchoolDataRequest("coverage", requestedSchool);
   let coverage = null;
   try {
     coverage = await fetchJson(`/coverage?school=${encodeURIComponent(requestedSchool)}`);
   } catch (_) {
-    if (!isCurrentHomeSchool(requestedSchool)) return false;
+    if (!schoolDataRequestIsCurrent(request)) return false;
   }
-  if (!isCurrentHomeSchool(requestedSchool)) return false;
+  if (!schoolDataRequestIsCurrent(request)) return false;
   state.coverage = coverage;
   const total = state.coverage?.total_partner_schools || state.dashboard?.partner_universities?.length || 0;
   const imageCount = state.coverage?.image_count || 0;
@@ -1076,15 +1097,16 @@ async function loadCoverage({ homeSchool = activeHomeSchool() } = {}) {
 async function loadDestinationProfiles({ homeSchool = activeHomeSchool() } = {}) {
   if (!canAccessPartnerCatalog()) return false;
   const requestedSchool = homeSchool;
+  const request = beginSchoolDataRequest("destinations", requestedSchool);
   let profiles = [];
   try {
     profiles = await fetchJson(
       `/destination-profiles?home_school=${encodeURIComponent(requestedSchool)}&compact=true`
     );
   } catch (_) {
-    if (!isCurrentHomeSchool(requestedSchool)) return false;
+    if (!schoolDataRequestIsCurrent(request)) return false;
   }
-  if (!isCurrentHomeSchool(requestedSchool)) return false;
+  if (!schoolDataRequestIsCurrent(request)) return false;
   state.destinationProfiles = profiles;
   if (state.dashboard) {
     renderPartnerTable();
@@ -1312,6 +1334,7 @@ function setHomeSchool(schoolName, { reload = true } = {}) {
     closeUniversityDetail({ updateHistory: false });
   }
   if (changed) {
+    state.schoolContextVersion += 1;
     state.pendingBudgetDraft = null;
     window.UniWayAnalytics?.track("home_school_change", { from: previousSchool, to: nextSchool });
   }
@@ -1338,6 +1361,12 @@ function setHomeSchool(schoolName, { reload = true } = {}) {
     state.applicationContext.target_school = "";
     state.applicationContext.target_country = "";
     state.coverage = null;
+    state.destinationProfiles = [];
+    state.applicationTemplates = [];
+    state.applicationDocumentCatalog = null;
+    state.applicationDocumentCatalogError = "";
+    state.activeApplicationTemplateId = "";
+    state.activeWorkflow = null;
     state.advisorPlan = null;
     state.planningRecommendationKey = "";
     state.planningPreview = null;
@@ -1354,6 +1383,10 @@ function setHomeSchool(schoolName, { reload = true } = {}) {
   }
   if (needsRefresh && window.location.hash.startsWith("#school=")) {
     window.UniWayNavigation.replaceState({}, "", "#partners");
+  }
+  if (needsRefresh && window.location.hash.startsWith("#application-form=")) {
+    window.UniWayNavigation.replaceState({}, "", "#application-center");
+    applyAppRoute({ loadFeed: false, resetScroll: false });
   }
   try {
     window.localStorage.setItem(STORAGE_KEYS.homeSchool, nextSchool);
@@ -3537,6 +3570,7 @@ async function deleteAccount() {
 async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool() } = {}) {
   if (!canAccessPartnerCatalog()) { clearProtectedCatalog(); setRefreshState(false); return false; }
   const requestedSchool = homeSchool;
+  const request = beginSchoolDataRequest("dashboard", requestedSchool);
   state.partnerDataLoading = true;
   state.partnerDataError = false;
   syncPartnerView();
@@ -3544,7 +3578,7 @@ async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool(
   try {
     const school = encodeURIComponent(requestedSchool);
     const dashboard = await fetchJson(`/student-dashboard?school=${school}`);
-    if (!isCurrentHomeSchool(requestedSchool)) return false;
+    if (!schoolDataRequestIsCurrent(request)) return false;
     state.dashboard = dashboard;
     state.partnerDataLoading = false;
     renderDashboard();
@@ -3554,14 +3588,14 @@ async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool(
     else clearAnnouncement();
     return true;
   } catch (error) {
-    if (!isCurrentHomeSchool(requestedSchool)) return false;
+    if (!schoolDataRequestIsCurrent(request)) return false;
     state.partnerDataLoading = false;
     state.partnerDataError = true;
     syncPartnerView();
     showLoadError(error);
     return false;
   } finally {
-    if (isCurrentHomeSchool(requestedSchool)) setRefreshState(false);
+    if (schoolDataRequestIsCurrent(request)) setRefreshState(false);
   }
 }
 
@@ -5542,9 +5576,11 @@ function applyApplicationFormDrafts(drafts, { preserveLocal = true } = {}) {
 
 async function loadApplicationFormDrafts({ homeSchool = activeHomeSchool() } = {}) {
   if (!state.account) return;
+  const request = beginSchoolDataRequest("drafts", homeSchool);
+  const accountContext = captureAuthenticatedRequestContext();
   try {
     const result = await fetchJson(`/account/application-drafts?home_school=${encodeURIComponent(homeSchool)}`);
-    if (!isCurrentHomeSchool(homeSchool)) return;
+    if (!schoolDataRequestIsCurrent(request) || !authenticatedRequestContextIsCurrent(accountContext)) return;
     state.applicationFormDraftSyncSuspended = true;
     applyApplicationFormDrafts(result.items || []);
     state.applicationFormDraftLoadedSchool = homeSchool;
@@ -5555,63 +5591,81 @@ async function loadApplicationFormDrafts({ homeSchool = activeHomeSchool() } = {
     }
   } catch (error) {
     if (error.staleSession) return;
-    if (isCurrentHomeSchool(homeSchool)) announce(`表單草稿同步暫時無法使用：${error.message}`, "error");
+    if (schoolDataRequestIsCurrent(request) && authenticatedRequestContextIsCurrent(accountContext)) announce(`表單草稿同步暫時無法使用：${error.message}`, "error");
   } finally {
-    state.applicationFormDraftSyncSuspended = false;
-    renderApplicationDraftSyncStatus();
+    if (schoolDataRequestIsCurrent(request) && authenticatedRequestContextIsCurrent(accountContext)) {
+      state.applicationFormDraftSyncSuspended = false;
+      renderApplicationDraftSyncStatus();
+    }
   }
 }
 
 async function saveApplicationFormDraft(templateId, { payload = null, retryConflict = true } = {}) {
   const template = applicationTemplateById(templateId);
-  if (!state.account || !template || state.applicationFormDraftSyncSuspended) return null;
+  if (!state.account || (!payload && (!template || state.applicationFormDraftSyncSuspended))) return null;
+  const accountContext = captureAuthenticatedRequestContext();
   const outgoing = payload || applicationFormDraftPayload(template);
-  const key = applicationDraftKey(template.id, outgoing.home_school);
+  const key = applicationDraftKey(templateId, outgoing.home_school);
+  outgoing.revision = Math.max(Number(outgoing.revision || 0), Number(state.applicationFormDrafts[key]?.revision || 0));
   state.applicationFormDraftPending[key] = outgoing;
-  renderApplicationDraftSyncStatus(template);
+  const renderCurrent = () => {
+    if (outgoing.home_school === activeHomeSchool() && authenticatedRequestContextIsCurrent(accountContext)) renderApplicationDraftSyncStatus();
+  };
+  renderCurrent();
   if (navigator.onLine === false) return null;
   try {
-    const saved = await fetchJson(`/account/application-drafts/${encodeURIComponent(template.id)}`, {
+    const saved = await fetchJson(`/account/application-drafts/${encodeURIComponent(templateId)}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(outgoing),
     });
-    state.applicationFormDrafts[key] = saved;
-    state.applicationFileVaultLinks[template.id] = saved.attachments || {};
-    delete state.applicationFormDraftPending[key];
-    renderApplicationDraftSyncStatus(template);
+    if (!authenticatedRequestContextIsCurrent(accountContext)) return null;
+    if (Number(saved.revision || 0) >= Number(state.applicationFormDrafts[key]?.revision || 0)) {
+      state.applicationFormDrafts[key] = saved;
+      if (outgoing.home_school === activeHomeSchool()) state.applicationFileVaultLinks[templateId] = saved.attachments || {};
+    }
+    if (state.applicationFormDraftPending[key] === outgoing) delete state.applicationFormDraftPending[key];
+    renderCurrent();
     return saved;
   } catch (error) {
+    if (error.staleSession || !authenticatedRequestContextIsCurrent(accountContext)) return null;
     const current = error.payload?.detail?.current_draft;
-    if (error.status === 409 && retryConflict && current) {
+    if (error.status === 409 && retryConflict && current && state.applicationFormDraftPending[key] === outgoing) {
       const merged = mergeApplicationFormDraft(current, outgoing);
       state.applicationFormDrafts[key] = current;
-      return saveApplicationFormDraft(template.id, {
+      return saveApplicationFormDraft(templateId, {
         payload: merged,
         retryConflict: false,
       });
     }
-    renderApplicationDraftSyncStatus(template);
+    renderCurrent();
     return null;
   }
 }
 
 function scheduleApplicationFormDraftSync(templateId = state.activeApplicationTemplateId) {
   if (!state.account || !templateId || state.applicationFormDraftSyncSuspended) return;
+  const template = applicationTemplateById(templateId);
+  if (!template) return;
+  const outgoing = applicationFormDraftPayload(template);
+  const accountContext = captureAuthenticatedRequestContext();
+  state.applicationFormDraftPending[applicationDraftKey(templateId, outgoing.home_school)] = outgoing;
   window.clearTimeout(state.applicationFormDraftSyncTimer);
   state.applicationFormDraftSyncTimer = window.setTimeout(
-    () => saveApplicationFormDraft(templateId),
+    () => {
+      if (authenticatedRequestContextIsCurrent(accountContext)) retryPendingApplicationFormDrafts();
+    },
     650,
   );
 }
 
 async function retryPendingApplicationFormDrafts() {
   if (!state.account || navigator.onLine === false) return;
+  const accountContext = captureAuthenticatedRequestContext();
   for (const [key, payload] of Object.entries(state.applicationFormDraftPending || {})) {
-    const template = state.applicationTemplates.find(
-      (item) => applicationDraftKey(item.id, payload.home_school) === key,
-    );
-    if (template) await saveApplicationFormDraft(template.id, { payload });
+    if (!authenticatedRequestContextIsCurrent(accountContext)) return;
+    const prefix = `${payload.home_school}::`;
+    if (key.startsWith(prefix)) await saveApplicationFormDraft(key.slice(prefix.length), { payload });
   }
 }
 
@@ -5945,11 +5999,15 @@ function initializeApplicationSelections() {
 async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}) {
   if (!canAccessPartnerCatalog()) return false;
   const requestedSchool = homeSchool;
+  const request = beginSchoolDataRequest("templates", requestedSchool);
+  const context = { ...state.applicationContext, flags: [...(state.applicationContext.flags || [])] };
+  const contextKey = JSON.stringify(context);
+  const requestIsCurrent = () => schoolDataRequestIsCurrent(request)
+    && contextKey === JSON.stringify(state.applicationContext);
   const container = $("#application-template-list");
   if (container) container.innerHTML = '<div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>';
   state.applicationLoading = true;
   try {
-    const context = state.applicationContext;
     const params = new URLSearchParams({
       school: requestedSchool,
       program_type: context.program_type || "exchange",
@@ -5972,13 +6030,14 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}
         catalogError = error.message;
       }
     }
-    if (!isCurrentHomeSchool(requestedSchool)) return false;
+    if (!requestIsCurrent()) return false;
     state.applicationTemplates = templates;
     state.applicationDocumentCatalog = catalog;
     state.applicationDocumentCatalogError = catalogError;
     if (state.account && state.applicationFormDraftLoadedSchool !== requestedSchool) {
       await loadApplicationFormDrafts({ homeSchool: requestedSchool });
     }
+    if (!requestIsCurrent()) return false;
     initializeApplicationSelections();
     renderApplicationCenter();
     refreshSelectedApplicationPreviews();
@@ -5991,11 +6050,11 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}
     }
     return true;
   } catch (error) {
-    if (!isCurrentHomeSchool(requestedSchool)) return false;
+    if (!requestIsCurrent()) return false;
     if (container) renderEmpty("#application-template-list", "暫時無法取得申請文件", error.message, "error");
     return false;
   } finally {
-    if (isCurrentHomeSchool(requestedSchool)) state.applicationLoading = false;
+    if (schoolDataRequestIsCurrent(request)) state.applicationLoading = false;
   }
 }
 
@@ -8231,13 +8290,14 @@ function renderSchoolCompleteness(report) {
 
 async function loadSchoolCompleteness(item) {
   const requestId = ++state.completenessRequestId;
+  const context = captureSchoolContext();
   try {
     const report = await fetchJson(`/school-data-completeness?school=${encodeURIComponent(item.school_name)}&home_school=${encodeURIComponent(activeHomeSchool())}`);
-    if (requestId !== state.completenessRequestId || state.activeSchool !== item.school_name) return;
+    if (requestId !== state.completenessRequestId || !schoolContextIsCurrent(context) || state.activeSchool !== item.school_name) return;
     state.completenessCache.set(item.school_name, report);
     renderSchoolCompleteness(report);
   } catch (error) {
-    if (requestId !== state.completenessRequestId) return;
+    if (requestId !== state.completenessRequestId || !schoolContextIsCurrent(context) || state.activeSchool !== item.school_name) return;
     const body = $("#school-data-completeness-body");
     if (body) { body.setAttribute("aria-busy", "false"); body.textContent = `資料完整度暫時無法載入：${error.message}`; }
   }
@@ -8245,13 +8305,14 @@ async function loadSchoolCompleteness(item) {
 
 async function loadDestinationProfile(item) {
   const requestId = ++state.destinationRequestId;
+  const context = captureSchoolContext();
   try {
     const profile = await fetchJson(`/destination-profile?school=${encodeURIComponent(item.school_name)}&home_school=${encodeURIComponent(activeHomeSchool())}`);
-    if (requestId !== state.destinationRequestId || state.activeSchool !== item.school_name) return;
+    if (requestId !== state.destinationRequestId || !schoolContextIsCurrent(context) || state.activeSchool !== item.school_name) return;
     state.destinationCache.set(item.school_name, profile);
     renderDestinationProfile(item, profile);
   } catch (error) {
-    if (requestId !== state.destinationRequestId) return;
+    if (requestId !== state.destinationRequestId || !schoolContextIsCurrent(context) || state.activeSchool !== item.school_name) return;
     const container = $("#destination-official-content");
     if (container) {
       container.setAttribute("aria-busy", "false");
@@ -8445,35 +8506,39 @@ function renderLifeResearchStatus(context, { loading = false, error = "" } = {})
 
 async function loadSchoolLifeContext(item, { refresh = false } = {}) {
   if (!item) return;
+  const requestContext = captureSchoolContext();
   const key = lifeContextKey();
-  if (state.lifeContextLoading.has(key)) return;
+  const loadingKey = `${requestContext.version}::${key}`;
+  if (state.lifeContextLoading.has(loadingKey)) return;
   const cached = state.lifeContextCache.get(key);
   if (cached && !refresh) {
     renderLifeResearchStatus(cached);
     renderStudentLife(state.experienceCache.get(item.school_name) || { highlights: [] });
     return;
   }
-  state.lifeContextLoading.add(key);
+  state.lifeContextLoading.add(loadingKey);
   renderLifeResearchStatus(cached, { loading: true });
   const query = `school=${encodeURIComponent(item.school_name)}&home_school=${encodeURIComponent(activeHomeSchool())}`;
   try {
     let context = cached || await fetchJson(`/school-life-context?${query}`);
+    if (!schoolContextIsCurrent(requestContext) || lifeContextKey() !== key) return;
     state.lifeContextCache.set(key, context);
     if (lifeContextKey() === key) renderStudentLife(state.experienceCache.get(item.school_name) || { highlights: [] });
     const needsTranslation = context.can_refresh && context.categories.some(category => category.evidence.some(row => row.translation_status === "pending"));
     if (refresh || context.research_status === "not_collected" || needsTranslation) {
       context = await fetchJson(`/school-life-context/refresh?${query}`, { method: "POST", signal: AbortSignal.timeout(60000) });
+      if (!schoolContextIsCurrent(requestContext) || lifeContextKey() !== key) return;
       state.lifeContextCache.set(key, context);
     }
-    if (lifeContextKey() !== key) return;
+    if (!schoolContextIsCurrent(requestContext) || lifeContextKey() !== key) return;
     renderLifeResearchStatus(context);
     renderStudentLife(state.experienceCache.get(item.school_name) || { highlights: [] });
   } catch (error) {
-    if (lifeContextKey() !== key) return;
+    if (!schoolContextIsCurrent(requestContext) || lifeContextKey() !== key) return;
     renderLifeResearchStatus(state.lifeContextCache.get(key), { error: "補查暫時未完成，已保留可用資料；可稍後重試。" });
     renderStudentLife(state.experienceCache.get(item.school_name) || { highlights: [] });
   } finally {
-    state.lifeContextLoading.delete(key);
+    state.lifeContextLoading.delete(loadingKey);
   }
 }
 
@@ -8662,6 +8727,11 @@ function workflowRequestParams(item) {
 
 async function loadApplicationWorkflow(item, { forceRefresh = false } = {}) {
   const requestId = ++state.workflowRequestId;
+  const context = captureSchoolContext();
+  const cacheKey = workflowContextKey(item.school_name);
+  const requestIsCurrent = () => requestId === state.workflowRequestId
+    && schoolContextIsCurrent(context) && state.activeSchool === item.school_name
+    && cacheKey === workflowContextKey(item.school_name);
   const content = $("#workflow-content");
   if (!content) return;
   content.setAttribute("aria-busy", "true");
@@ -8673,14 +8743,14 @@ async function loadApplicationWorkflow(item, { forceRefresh = false } = {}) {
       `/application-workflow?${params.toString()}`,
       forceRefresh ? { cache: "no-store" } : {},
     );
-    if (requestId !== state.workflowRequestId || state.activeSchool !== item.school_name) return;
-    state.workflowCache.set(workflowContextKey(item.school_name), workflow);
+    if (!requestIsCurrent()) return;
+    state.workflowCache.set(cacheKey, workflow);
     renderApplicationWorkflow(workflow);
     renderApplicationCalendar();
     scheduleCalendarConflictAnalysis();
     if (calendarSyncFeatureEnabled() && state.calendarSync?.enabled) syncCalendarEvents({ quiet: true });
   } catch (error) {
-    if (requestId !== state.workflowRequestId) return;
+    if (!requestIsCurrent()) return;
     content.setAttribute("aria-busy", "false");
     content.innerHTML = `
       <div class="experience-error">

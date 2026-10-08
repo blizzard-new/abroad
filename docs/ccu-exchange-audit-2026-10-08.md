@@ -559,3 +559,10 @@ HCMUTE2027 factsheet的5 mandatory／2 optional資料由母校整包彙整email�
 第二十三輪首個固定候選 `659d6d9938d307e4bac5f4dab31f40e6b224c93b` 全套實際結果：445回歸＝436passed／8skipped／1既有NTPU fail（326.66s）；94瀏覽器＝92passed／2較早HCMUT斷言fail（804.86s），原始logs／XML及summary以candidate-659d6d9-*保存。兩個斷言仍要求新版已取代的March截止矛盾與泛稱抵達日；改為當期2026-10-15、舊10/01僅參考、公告迎新2027-01-08與未載接機／入住限制，修正後手機桌面2passed／26.67s。未改官方數據來遷就舊斷言。補裝研究用xlrd2.0.2後實讀XLS個案1passed；其餘7skip為6項既有PhaseC與1個Docker opt-in，詳見XML。
 
 新的固定候選需再次完整跑同一gate，不沿用659結果。執行環境先按CI的uv0.11.26 frozen sync，再 `uv pip install --python .venv/bin/python -r scripts/requirements-ccu-research.txt`。gate明確要求實讀XLS依賴並記錄版本；不改runtime依賴。94瀏覽器檔案交錯分成兩组，各自隔離server／account／basetemp，union檢查不漏檔、合併JUnit保留每個case；其他回歸同時另跑。暫存資料放clone外workspace，避免/tmp容量限制。最終同SHA結果在clone外帶SHA路徑及draft PR，提交後不再改candidate來塞入測試結果。
+
+
+## 後續驗收修正與逐校正文清冊（第二十四輪）
+
+海外17欄935個更新為306當期、331待核、206缺、20參考、71矛盾、1官方明示未公告；源956、host附件131及母校附件5均未新增或覆蓋。完整讀4份已保存官方正文，新映射誠信女子學費減免／韓語另費、路德維希港母校先提名資格。0校17欄全當期、0完整host文件集合仍保留。細項見 [55校正文查核清冊](ccu-body-review-triage-2026-10-08.md) 與body-review-triage.json。
+
+新增修復coverage排除NTPU/CCU已載入guide、顯式母校誤回其他校guide，以及快速母校／目標／detail晚回應與草稿排隊儲存跨母校問題。工作目錄focused 10項回歸與8項瀏覽器通過，尚須在提交後同一SHA最終gate重跑，不能沿用e838307的437/445結果。[原始probe](ccu-validation-2026-10-08/followup-probes/README.md)與[CI唯讀診斷](ccu-validation-2026-10-08/ci-readonly/README.md)可審查；CI正式workflow未修改。Jena外部TLS阻礙不繞過，已保存官方文件與正常TLS HTTP取得證據可供對照，但不代表瀏覽器點擊成功。
