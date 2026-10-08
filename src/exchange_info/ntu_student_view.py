@@ -7,6 +7,7 @@ from pathlib import Path
 from .models import ApplicationPeriodStatus, ExchangeInfo, PartnerUniversity, ProcessedPage, StudentDashboard
 from .student_view import _application_period_status
 from .ntu_eligibility import ntu_home_rules, ntu_selection_rules
+from .ntu_partner_summary import with_ntu_partner_summary
 
 
 NTU_OFFICIAL_DATA_DIR = Path(__file__).resolve().parent / "official_data" / "ntu"
@@ -20,7 +21,7 @@ def _payload(filename: str):
 def fetch_ntu_partner_universities() -> list[PartnerUniversity]:
     """Use the reviewed source snapshot offline, keeping unpublished quotas pending."""
     return [
-        PartnerUniversity.model_validate_json(line)
+        with_ntu_partner_summary(PartnerUniversity.model_validate_json(line))
         for line in (NTU_OFFICIAL_DATA_DIR / "partners.jsonl").read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
@@ -50,7 +51,7 @@ def build_ntu_student_dashboard(
         "selection_rules": ntu_selection_rules(),
         "language_score_minimums": ntu_home_rules()["language_score_minimums"],
         "application_periods": periods,
-        "partner_universities": partner_universities if partner_universities is not None else fetch_ntu_partner_universities(),
+        "partner_universities": [with_ntu_partner_summary(p) for p in partner_universities] if partner_universities is not None else fetch_ntu_partner_universities(),
     })
 
 

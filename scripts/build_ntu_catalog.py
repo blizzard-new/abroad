@@ -10,6 +10,7 @@ import hashlib
 import gzip
 import json
 import re
+from collections import Counter
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -17,12 +18,14 @@ from exchange_info.models import (
     DestinationProfile, ExchangeInfo, PartnerResearchRecord, PartnerUniversity,
     ProcessedPage, StudentDashboard, UniversityApplicationWorkflow,
 )
+from exchange_info.ntu_partner_summary import with_ntu_partner_summary
 
 SCHOOL = "國立臺灣大學"
 GUIDELINES = "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/07/116-1-Selection-Guidelines_CH.pdf"
 LIST_URL = "https://oia.ntu.edu.tw/outgoing/school.list/semester/1"
 OUTPUT = Path(__file__).resolve().parents[1] / "src/exchange_info/official_data/ntu"
 SNAPSHOT = Path(__file__).resolve().parents[1] / "sources/ntu/2026-10-08-import.json.gz"
+AUDIT = SNAPSHOT.with_name("2026-10-08-audit.json")
 BUILD_INPUTS: dict[str, str] = {}
 FIELD_LABELS = {"eligibility": "申請資格／成績", "language": "語言條件", "deadlines": "合作校收件期限",
                 "calendar": "學期行事曆", "documents": "提名／申請文件", "housing": "住宿",
@@ -44,6 +47,8 @@ def write(name: str, value):
 
 def write_rows(name: str, values, model):
     validated = [model.model_validate(value) for value in values]
+    if model is PartnerUniversity:
+        validated = [with_ntu_partner_summary(row) for row in validated]
     compact = name == "application_workflows.jsonl"
     (OUTPUT / name).write_text("".join(row.model_dump_json(exclude_defaults=compact) + "\n" for row in validated), encoding="utf-8")
 
@@ -105,6 +110,8 @@ def main():
     write("import_provenance.json", {
         "source_snapshot": args.snapshot.name,
         "source_snapshot_sha256": hashlib.sha256(args.snapshot.read_bytes()).hexdigest(),
+        "supplemental_audit": AUDIT.name,
+        "supplemental_audit_sha256": hashlib.sha256(AUDIT.read_bytes()).hexdigest(),
         "original_home_flags": {key: original_home.get(key) for key in ("candidate_only", "user_integration_approval", "publication_status")},
         "platform_integration_authorized_at": "2026-10-08",
         "content_verification_status": "partial_current_cycle",
@@ -112,6 +119,13 @@ def main():
     })
     wrappers = rows(latest / "partners-116-1-updated-candidates.jsonl")
     manual = read(latest / "manually-reviewed-current-evidence.json")
+    audit = json.loads(AUDIT.read_text(encoding="utf-8"))
+    for portal_id, update in audit["partners"].items():
+        reviewed = manual.setdefault(portal_id, {"checked_fields": {}, "scope": "", "remaining": []})
+        reviewed["scope"] += "\n" + update["scope"]
+        reviewed.setdefault("source_url", update["source_url"])
+        reviewed["checked_fields"].update(update["fields"])
+        reviewed["remaining"] = list(dict.fromkeys(reviewed["remaining"] + update["remaining"]))
     partner_rows, ledger = [], []
     manual_notes = {}
     for wrapper in wrappers:
@@ -131,7 +145,9 @@ def main():
         note = ""
         if reviewed:
             note = "【補充來源查核】\n" + reviewed["scope"] + "\n" + "\n".join(
-                f"{FIELD_LABELS.get(key, key)}：{field['value']}（來源第{','.join(map(str, field.get('pdf_pages', [])))}頁）"
+                f"{FIELD_LABELS.get(key, key)}：{field['value']}" +
+                (f"（來源第{','.join(map(str, field['pdf_pages']))}頁）" if field.get("pdf_pages") else "") +
+                ("\n欄位來源：" + "；".join(field["source_urls"]) if field.get("source_urls") else "")
                 for key, field in reviewed["checked_fields"].items()
             ) + "\n來源：" + reviewed["source_url"] + "\n待確認：" + "；".join(reviewed["remaining"])
             partner["application_info"] = (partner.get("application_info") or "") + "\n\n" + note
@@ -151,6 +167,13 @@ def main():
             } for key, field in verification.get("fields", {}).items()},
             "manual_review": reviewed,
         })
+        if portal_id in audit["partners"]:
+            for key, field in audit["partners"][portal_id]["fields"].items():
+                ledger[-1]["fields"][key] = {
+                    "status": field["status"], "label": FIELD_LABELS.get(key, key),
+                    "reviewed_partial_value": field,
+                    "remaining_questions": field["remaining_questions"], "source_urls": field["source_urls"],
+                }
     assert len(partner_rows) == 288
     assert sum(row["quota"] is None for row in partner_rows) == 282
     write_rows("partners.jsonl", partner_rows, PartnerUniversity)
@@ -161,6 +184,7 @@ def main():
     dashboard["academic_score_minimum"] = None  # GPA/rank is not a percentage score.
     dashboard["language_score_minimums"] = home_rules["language_score_minimums"]
     dashboard["selection_rules"] = home_rules["selection_rules"]
+    dashboard["scholarship_info"].append(audit["scholarship_explanation"])
     overview = next(item for item in dashboard["program_overview"] if item["title"] == "116-1校級出國交換")
     overview["details"] = [detail for detail in overview["details"] if not detail.startswith("2027年9月起")]
     overview["details"].insert(0, "116學年度第1學期出國（2027年秋季），交換一學期或一學年；實際出國與開學日期依合作校。")
@@ -182,6 +206,8 @@ def main():
     StudentDashboard.model_validate(dashboard)
     write("student_dashboard.json", dashboard)
     info = clean(read(base / "exchange-info-candidate.json"))
+    info["language_requirement"] = audit["language_requirement"]
+    info["scholarship_info"].extend(audit["scholarship_explanation"]["details"])
     ExchangeInfo.model_validate(info)
     write("exchange_info.json", info)
     workflows = clean(rows(base / "application-workflows-116-1-candidates.jsonl"))
@@ -192,6 +218,10 @@ def main():
             note, reviewed = manual_notes[workflow["school_name"]]
             workflow["steps"][0]["details"].append(note)
             workflow["steps"][0]["source_urls"].append(reviewed["source_url"])
+            workflow["steps"][0]["source_urls"].extend(
+                url for field in reviewed["checked_fields"].values() for url in field.get("source_urls", [])
+                if url not in workflow["steps"][0]["source_urls"]
+            )
         # Integration authorization does not constitute source/content approval.
         workflow["review_status"] = "pending_review"
         workflow["published_at"] = None
@@ -242,7 +272,10 @@ def main():
         ("scholarships.json", "scholarships.json"),
         ("documents.json", "documents.json"), ("student-experience-directory.json", "student_experience_directory.json"),
     ]:
-        write(target, clean(read(base / source)))
+        payload = clean(read(base / source))
+        if target == "scholarships.json":
+            payload.update(audit["scholarship_updates"])
+        write(target, payload)
     write("home_rules.json", home_rules)
     write("college_programmes.json", colleges)
     if args.list_verification:
@@ -259,6 +292,9 @@ def main():
         "guidelines_url": GUIDELINES, "checked_at": dashboard["last_checked"],
         "limitations": ["合作校本期名額、資格及生活資訊仍待更新與確認。", "校級與院級甄選分開；學生心得目錄尚未逐篇匯入。"],
         "build_inputs": ["NTU candidate collection 2026-10-07", "NTU current verification 2026-10-07"],
+        "supplemental_audit": AUDIT.name,
+        "documents_status_counts": dict(Counter(row["fields"].get("documents", {}).get("status", "missing") for row in ledger)),
+        "missing_information_note": "缺文字證據或尚未找到新版，不等於官方未公告；288校名單核對不代表全部欄位完成當期確認。",
     })
     print(f"NTU: {len(partner_rows)} partners, {len(workflows)} workflows, {len(destinations)} destinations; 282 pending / 6 zero quotas")
 

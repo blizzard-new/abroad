@@ -5692,6 +5692,7 @@ function rememberApplicationField(template, input) {
     state.applicationAnswers[template.id][field.id] = value;
   }
   persistApplicationDraft();
+  refreshApplicationFieldConditions(template);
   restoreApplicationProfileForm();
   renderApplicationAutofillStatus(template);
   scheduleApplicationReviewPreview(template.id);
@@ -5716,7 +5717,7 @@ function applicationFieldHasValue(template, field) {
 }
 
 function applicationTemplateCompletion(template) {
-  const required = template.fields.filter((field) => field.required);
+  const required = template.fields.filter((field) => applicationFieldRequired(template, field));
   if (!required.length) return { completed: 0, total: 0, percent: 100, ready: true };
   const completed = required.filter((field) => applicationFieldHasValue(template, field)).length;
   return {
@@ -5725,6 +5726,55 @@ function applicationTemplateCompletion(template) {
     percent: Math.round((completed / required.length) * 100),
     ready: completed === required.length,
   };
+}
+
+function applicationFieldRequired(template, field) {
+  return field.required || (field.required_when || []).some((clause) =>
+    Object.entries(clause).every(([id, values]) => {
+      const dependency = template.fields.find((item) => item.id === id);
+      return dependency && values.includes(String(applicationValue(template, dependency) || ""));
+    })
+  );
+}
+
+function applicationFieldOptions(template, field) {
+  for (const [id, groups] of Object.entries(field.options_by_field || {})) {
+    const dependency = template.fields.find((item) => item.id === id);
+    const options = dependency && groups[String(applicationValue(template, dependency) || "")];
+    if (options) return options;
+  }
+  return field.options || [];
+}
+
+function refreshApplicationFieldConditions(template) {
+  const form = $("#application-document-form");
+  if (!form || state.activeApplicationTemplateId !== template.id) return;
+  for (const field of template.fields) {
+    if (!(field.required_when?.length || Object.keys(field.options_by_field || {}).length)) continue;
+    const input = form.elements[field.id];
+    if (!input) continue;
+    input.required = applicationFieldRequired(template, field);
+    const label = form.querySelector(`label[for="${input.id}"]`);
+    if (label) label.textContent = `${field.label}${input.required ? " *" : ""}`;
+    if (field.field_type === "select" && Object.keys(field.options_by_field || {}).length) {
+      const options = applicationFieldOptions(template, field);
+      const value = input.value;
+      if (JSON.stringify(Array.from(input.options).slice(1).map((option) => option.value)) !== JSON.stringify(options)) {
+        input.innerHTML = '<option value="">請選擇</option>' + options.map((option) => `<option value="${escapeHtml(option)}">${escapeHtml(option)}</option>`).join("");
+        input.value = options.includes(value) ? value : "";
+        state.applicationAnswers[template.id] ||= {};
+        state.applicationAnswers[template.id][field.id] = input.value;
+        persistApplicationDraft();
+      }
+    }
+  }
+  const date = form.elements.language_result_date;
+  if (date && activeHomeSchool() === "國立臺灣大學") {
+    const test = form.elements.language_test?.value;
+    const english = ["TOEFL iBT（舊制120分）", "TOEFL iBT（新制6分）", "IELTS Academic", "GEPT", "BESTEP"].includes(test);
+    if (english) { date.min = "2025-05-01"; date.max = new Date().toISOString().slice(0, 10); }
+    else { date.removeAttribute("min"); date.removeAttribute("max"); }
+  }
 }
 
 function applicationProfileCompletion() {
@@ -6201,7 +6251,7 @@ async function handleApplicationContextChange(event) {
 
 function applicationFieldInput(template, field, inputId = "") {
   const value = applicationValue(template, field);
-  const required = field.required ? "required" : "";
+  const required = applicationFieldRequired(template, field) ? "required" : "";
   const maxLength = field.max_length ? `maxlength="${field.max_length}"` : "";
   const placeholder = field.placeholder ? `placeholder="${escapeHtml(field.placeholder)}"` : "";
   const common = `id="${escapeHtml(inputId)}" name="${escapeHtml(field.id)}" data-application-field="${escapeHtml(field.id)}" ${required} ${maxLength} ${placeholder}`;
@@ -6209,7 +6259,7 @@ function applicationFieldInput(template, field, inputId = "") {
     return `<textarea ${common}>${escapeHtml(value || "")}</textarea>`;
   }
   if (field.field_type === "select") {
-    return `<select ${common}><option value="">請選擇</option>${(field.options || []).map((option) => `<option value="${escapeHtml(option)}" ${String(value) === option ? "selected" : ""}>${escapeHtml(option)}</option>`).join("")}</select>`;
+    return `<select ${common}><option value="">請選擇</option>${applicationFieldOptions(template, field).map((option) => `<option value="${escapeHtml(option)}" ${String(value) === option ? "selected" : ""}>${escapeHtml(option)}</option>`).join("")}</select>`;
   }
   if (field.field_type === "checkbox") {
     return `<label class="application-checkbox-field"><input type="checkbox" ${common} ${value === true ? "checked" : ""} /><span>${escapeHtml(field.label)}</span></label>`;
@@ -6408,7 +6458,7 @@ function renderApplicationFormPage(template) {
         : "";
       return `
         <div class="application-document-field ${["textarea", "files"].includes(field.field_type) ? "is-wide" : ""} ${field.sensitive ? "is-sensitive" : ""}">
-          ${showHeading ? `<div class="application-field-heading"><label for="${escapeHtml(inputId)}">${escapeHtml(field.label)}${field.required ? " *" : ""}</label>${help}</div>` : ""}
+          ${showHeading ? `<div class="application-field-heading"><label for="${escapeHtml(inputId)}">${escapeHtml(field.label)}${applicationFieldRequired(template, field) ? " *" : ""}</label>${help}</div>` : ""}
           ${applicationFieldInput(template, field, inputId)}
         </div>`;
     }).join("");
@@ -6424,6 +6474,7 @@ function renderApplicationFormPage(template) {
       else if (input.value !== String(value ?? "")) input.value = String(value ?? "");
     });
   }
+  refreshApplicationFieldConditions(template);
   renderApplicationAutofillStatus(template);
   window.UniWayDocumentWorkbench?.open(template);
   window.UniWayJourney.focusDocumentGap(template);
@@ -7464,6 +7515,10 @@ function partnerDeadlineReference(item) {
 function partnerSummaryPoints(item, key) {
   const points = partnerStudentSummary(item)[key];
   if (Array.isArray(points) && points.length) return points.filter(Boolean);
+  if (activeHomeSchool() === "國立臺灣大學") {
+    const rawKey = { eligibility_points: "eligibility", application_steps: "application_info", tuition_points: "tuition_info" }[key];
+    if (rawKey && item[rawKey]) return ["官方參考資料；116-1適用年度及身分仍待確認。", item[rawKey], `來源：${item.source_url}`];
+  }
   return [];
 }
 

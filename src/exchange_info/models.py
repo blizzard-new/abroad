@@ -175,6 +175,9 @@ class ApplicationFormField(BaseModel):
     label: str
     field_type: ApplicationFieldType = ApplicationFieldType.TEXT
     required: bool = False
+    # OR between clauses; AND between the field/value tests in each clause.
+    required_when: list[dict[str, list[str]]] = Field(default_factory=list)
+    options_by_field: dict[str, dict[str, list[str]]] = Field(default_factory=dict)
     reusable_profile_key: str | None = None
     placeholder: str | None = None
     help_text: str | None = None

@@ -3300,6 +3300,19 @@
             "title": "Options",
             "type": "array"
           },
+          "options_by_field": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "type": "object"
+            },
+            "title": "Options By Field",
+            "type": "object"
+          },
           "placeholder": {
             "anyOf": [
               {
@@ -3315,6 +3328,19 @@
             "default": false,
             "title": "Required",
             "type": "boolean"
+          },
+          "required_when": {
+            "items": {
+              "additionalProperties": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "type": "object"
+            },
+            "title": "Required When",
+            "type": "array"
           },
           "reusable_profile_key": {
             "anyOf": [
@@ -18577,7 +18603,7 @@
     "resource_not_found": 404,
     "validation_failed": 422
   },
-  "x-contract-version": "2026-10-08.2",
+  "x-contract-version": "2026-10-08.3",
   "x-product-boundaries": {
     "account_routes_require_bearer_session": true,
     "ai_features": "paused",

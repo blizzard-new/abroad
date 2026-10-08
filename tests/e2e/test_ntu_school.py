@@ -31,10 +31,21 @@ def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server
     expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
     if width < 700:
         page.locator("#partner-table .partner-card > summary").first.click()
+        expect(page.locator("#partner-table .partner-card-summary")).to_contain_text("GPA")
+    else:
+        page.locator("#partner-table .partner-condition-disclosure > summary").first.click()
+        expect(page.locator("#partner-table .condition-cell")).to_contain_text("GPA")
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
     expect(page.locator("#school-detail-view")).to_be_visible()
     expect(page.locator("#school-detail-view")).to_contain_text("蒙大拿州立大學")
     expect(page.locator("#school-detail-view")).to_contain_text("待確認")
+    expect(page.locator("#school-detail-view .partner-student-summary")).to_contain_text("GPA")
+    expect(page.locator("#school-detail-view .partner-student-summary")).to_contain_text("免繳")
+    expect(page.locator("#school-detail-view .partner-student-summary")).to_contain_text("My Global Connection")
+    expect(page.locator("#school-detail-view .partner-student-summary")).to_contain_text("兩封推薦信")
+    from pathlib import Path
+    output=Path('/tmp/ntu-audit/browser'); output.mkdir(parents=True,exist_ok=True)
+    page.screenshot(path=str(output/f'ntu-summary-{width}.png'),full_page=True)
     page.locator("#detail-tab-application").click()
     expect(page.locator("#detail-application")).to_be_visible()
     expect(page.locator("#detail-application")).to_contain_text("臺大")
@@ -122,3 +133,46 @@ def test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools(page, liv
     assert result["threshold"] is None
     assert "NaN" not in str(result["match"])
     assert "合作校語言門檻需另查" in result["match"]["risks"]
+
+
+@pytest.mark.parametrize('width',[390,1440])
+def test_ntu_document_language_conditions_change_in_real_form(page,live_server,width):
+    page.set_viewport_size({'width':width,'height':956})
+    page.emulate_media(reduced_motion='reduce')
+    session=sign_in_cookie(live_server,school='國立臺灣大學')
+    live_server.verify_student(session['profile']['id'],university='國立臺灣大學')
+    attach_session(page,live_server,session)
+    enter_public_site(page,live_server,'application-center')
+    page.locator('[data-open-application-template="exchange-application-data"]').first.click()
+    expect(page.locator('#application-document-form')).to_be_visible()
+    group=page.locator('#application-field-language_group')
+    identity=page.locator('#application-field-international_degree_student')
+    test=page.locator('#application-field-language_test')
+    actual=page.locator('#application-field-language_result_date')
+    group.select_option('中語組'); identity.select_option('否')
+    assert not test.evaluate('node=>node.required')
+    assert not actual.evaluate('node=>node.required')
+    identity.select_option('是')
+    assert test.evaluate('node=>node.required') and actual.evaluate('node=>node.required')
+    assert test.locator('option').all_text_contents()==['請選擇','TOCFL','HSK']
+    test.select_option('TOCFL')
+    group.select_option('日語組')
+    assert test.input_value()==''
+    assert 'JLPT' in test.locator('option').all_text_contents()
+    assert 'IELTS Academic' not in test.locator('option').all_text_contents()
+    group.select_option('一般組')
+    options=test.locator('option').all_text_contents()
+    assert 'GEPT' in options and 'BESTEP' in options
+    assert 'TOEIC' not in options and 'Duolingo' not in options
+    test.select_option('GEPT')
+    expect(actual).to_have_attribute('min','2025-05-01')
+    page.locator('#application-field-language_planned_result_date').fill('2026-11-01')
+    assert actual.input_value()=='' and actual.evaluate('node=>node.validity.valueMissing')
+    actual.fill('2025-04-30')
+    assert actual.evaluate('node=>node.validity.rangeUnderflow')
+    actual.fill('2025-05-01')
+    assert actual.evaluate('node=>node.validity.valid')
+    from pathlib import Path
+    output=Path('/tmp/ntu-audit/browser'); output.mkdir(parents=True,exist_ok=True)
+    page.screenshot(path=str(output/f'ntu-language-form-{width}.png'),full_page=True)
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
