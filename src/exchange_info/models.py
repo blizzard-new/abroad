@@ -1298,6 +1298,10 @@ class ApplicationDocumentRequirement(BaseModel):
     official_form_url: str | None = None
     source_urls: list[str] = Field(default_factory=list)
     needs_confirmation: bool = False
+    stage: Literal["nomination", "student_application", "after_application", "post_offer", "after_dorm_assignment", "conditional_program"] | None = None
+    conditional: bool = False
+    condition: str | None = None
+    official_form_verified: bool = False
 
 
 class ApplicationWorkflowSource(BaseModel):
@@ -1554,6 +1558,10 @@ class ApplicationDocumentCatalogItem(BaseModel):
     needs_confirmation: bool = False
     download_available: bool = False
     contact_unit: str | None = None
+    stage: Literal["nomination", "student_application", "after_application", "post_offer", "after_dorm_assignment", "conditional_program"] | None = None
+    conditional: bool = False
+    condition: str | None = None
+    official_form_verified: bool = False
 
 
 class ApplicationDocumentCatalog(BaseModel):

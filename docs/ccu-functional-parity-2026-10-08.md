@@ -1,12 +1,12 @@
 # 中正與長庚實際 API／逐校功能對照（2026-10-08）
 
-此表由 `scripts/build_ccu_functional_parity.py` 讀取本機公開 API 產生。55 筆逐校欄位的原文、URL、PDF 頁碼、年度、查核時間、hash、條件與文件階段完整保存於 `official_data/ccu/functional-parity.json`。本表的非空值是功能呈現，不代表當期完整申請規定。
+由 `scripts/build_ccu_functional_parity.py` 逐校讀取公開 API。完整原文、URL、PDF物理頁碼、年度、查核時間、hash、條件及文件階段保存在 `official_data/ccu/functional-parity.json`。非空值不代表當期完整申請規定。
 
 ## 實際基準
 
-最新 main `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59` 的長庚原始流程 154 筆＝77 筆 115 年 published＋77 筆 116 年 legacy。實際未指定年度 API 回傳 77 筆 legacy，指定 `academic_year=115` 回傳 77 筆 published；以獨立 main 解包的 API 再次重現，見 `ccu-validation-2026-10-08/cgu-main-year-baseline-proof.json`。中正 55 筆維持 legacy／official_partial，未假冒發布。
+最新 main `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59` 的長庚原始154流程＝77筆115年published＋77筆116年legacy。未指定年度API回傳77筆legacy；指定 `academic_year=115` 回傳77筆published，已以獨立main解包API重現。中正55筆維持legacy／official_partial。
 
-| 實際功能／欄位 | 長庚 API | 中正 API |
+| 功能／欄位 | 長庚未指定年度 API | 中正 API |
 | --- | ---: | ---: |
 | Dashboard條目 | 77 | 104 |
 | 目的地指南 | 77 | 55 |
@@ -20,12 +20,20 @@
 | website | 77 | 55 |
 | location_with_city | 47 | 54 |
 | location_with_source | 47 | 54 |
-| 可確定的學術filter：colleges | 77 | 2 |
-| 可確定的學術filter：degree_levels | 77 | 8 |
+| 可確定的學術篩選：colleges | 77 | 1 |
+| 可確定的學術篩選：degree_levels | 77 | 9 |
+| 流程文件：requirements | 1469 | 1110 |
+| 流程文件：requirements_with_form | 77 | 128 |
+| 流程文件：schools_with_requirements | 77 | 55 |
+| 流程文件：schools_with_signature_detail | 3 | 55 |
 
-城市／校址 54 筆有公開原文，1 筆未核實；55 個地圖定位物件包含 pending 缺值，沒有捏造經緯度。網站 55 筆核實身分入口，不代表全站 2027 接收規定已核實。長庚與中正的照片、抵達72小時、行李及到校採購欄均為0，不能把共同未建功能只算中正退步。
+長庚指定115已發布基準有1238項文件、0項form URL及3校簽章細節；未指定年度116 legacy則1469項文件、77項form URL及3校簽章細節。兩個年度不得混用。中正1110項含母校通用及逐校準備要求，不可與175項已逐份實讀的host清單等同。
 
-中正的母校第一階9類個別準備文件、37筆當期母校逐校第二階要求及23校175项獨立查核外校文件分開。175項均標 `partial_not_exhaustive`，包含 student_application、post_offer、conditional_program；簽章、份數、正本要求及可開啟模板只依原文設值。其他32校沒有製造外校逐項清單。
+城市／校址54筆有來源，1筆未核實；地圖經緯度全部pending，沒有猜座標。55個網站核實身分入口，不保證全站2027規定已核實。照片、抵達72小時、行李及到校採購兩校均為0。
+
+中正母校第一階9類準備文件、37筆當期逐校第二階要求、23校175項外校文件分開。175項均partial_not_exhaustive，26項附條件，18個已取得且hash核實的官方文件連結可直接開啟，同時保留適用性及清單完整性待確認。18個含申請指引，不全部稱作空白表單。實際55校文件目錄均保留175項host階段；55流程中53筆7步驟、忠南及HUFS兩筆8步驟，申請後補件不等錄取。其他32校沒有製造外校逐項清單。
+
+待確認學院／學制的API及前端均不加符合分、不硬性排除；field_evidence不是verified_current亦保持unknown。ZHAW工學院字串有值但證據待確認，故可確定學院是1筆而不是2筆。
 
 ## 欄位核實狀態
 
@@ -38,23 +46,23 @@
 | 矛 | 61 |
 | 未公告 | 1 |
 
-39校至少一項當期外校事實已核實，0校17項全核實，0校完整外校申請文件清單；`functional_parity_complete=false`。一般無年份頁、舊指南、技術失敗、登入／提名後個人資料及實際矛盾分開。只有HUFS到校前TB檢查窗口一項是官方明示尚未公告。
+39校至少一項當期外校事實已核實；0校17項全核實、0校完整外校文件集合，`functional_parity_complete=false`。僅HUFS到校前TB窗口是官方明示尚未公告。
 
-| 7類基本資料 | 當期／當前身分已核實 | 年度或条件待確認 | 舊參考 | 未載 |
+| 7類基本資料 | 當期／身分已核實 | 年度或條件待確認 | 舊參考 | 未載 |
 | --- | ---: | ---: | ---: | ---: |
 | city | 38 | 13 | 3 | 1 |
 | location | 38 | 13 | 3 | 1 |
 | website | 55 | 0 | 0 | 0 |
-| degree_levels | 7 | 14 | 0 | 34 |
+| degree_levels | 8 | 14 | 0 | 33 |
 | colleges | 1 | 10 | 0 | 44 |
 | transport | 17 | 23 | 5 | 10 |
 | campus_life | 17 | 26 | 5 | 7 |
 
 ## 55筆逐校核對
 
-核＝verified_current；待＝needs_confirmation；舊＝reference_only；缺＝missing；矛＝conflict。城市／交通／生活欄以狀態呈現，不把非空當作核實。所有母校當期收件均已截止；3筆空白名額仍是待確認。PDF頁碼對應中正2026.09.17的121頁學校資訊，並非host附件頁碼。
+核／待／舊／缺／矛分別表示verified_current／needs_confirmation／reference_only／missing／conflict。所有母校當期收件已截止；3筆名額空白仍待確認。下列PDF頁是中正2026.09.17學校資訊的物理頁，host附件頁另存逐項證據。
 
-| 中正PDF頁 | 合作校／計畫 | 外校17項核／待／缺／矛／舊 | 城市／交通／生活 | 外校個別文件數／階段 |
+| 中正PDF頁 | 合作校／計畫 | 外校17项核／待／缺／矛／舊 | 城市／交通／生活 | 外校個別文件數／階段 |
 | ---: | --- | --- | --- | --- |
 | 10 | Beijing Normal University 北京師範大學 | 12/1/4/0/0 | 核/舊/舊 | 6／student_application:6 |
 | 16 | Chongqing University 重慶大學 | 0/9/7/0/1 | 核/舊/缺 | 0／未建個別外校清單 |
@@ -72,12 +80,12 @@
 | 42 | Dong-A University 東亞大學 | 0/5/9/2/1 | 核/舊/待 | 0／未建個別外校清單 |
 | 43 | Pusan National University 釜山國立大學 | 14/1/2/0/0 | 核/核/核 | 7／student_application:7 |
 | 45 | Kyung Hee University 慶熙大學 | 14/2/1/0/0 | 核/核/核 | 11／student_application:9, post_offer:2 |
-| 47 | Hankuk University of Foreign Studies 韓國外國語大學 | 13/2/1/0/0 | 核/待/核 | 11／student_application:9, post_offer:2 |
+| 47 | Hankuk University of Foreign Studies 韓國外國語大學 | 13/2/1/0/0 | 核/待/核 | 11／student_application:9, after_dorm_assignment:1, after_application:1 |
 | 48 | Seoul National University of Science and Technology 國立首爾科技大學 | 12/4/1/0/0 | 待/缺/核 | 10／student_application:6, post_offer:4 |
 | 49 | Sungshin Women's University 誠信女子大學 | 12/0/2/3/0 | 核/核/核 | 9／student_application:9 |
 | 50 | Chung Ang University 中央大學 | 0/17/0/0/0 | 待/待/待 | 0／未建個別外校清單 |
 | 52 | Gachon University 嘉泉大學 | 3/11/1/2/0 | 待/待/待 | 0／未建個別外校清單 |
-| 53 | ChungNam National University 忠南大學 | 13/3/0/1/0 | 待/待/待 | 9／student_application:4, post_offer:5 |
+| 53 | ChungNam National University 忠南大學 | 13/3/0/1/0 | 待/待/待 | 9／student_application:4, after_application:2, post_offer:3 |
 | 54 | Kyungsung University 慶星大學 | 8/2/5/2/0 | 核/核/核 | 0／未建個別外校清單 |
 | 58 | Thammasat University 國立法政大學 | 0/14/2/1/0 | 待/待/待 | 0／未建個別外校清單 |
 | 61 | King Mongkut’s University of Technology Thonburi 蒙庫國王科技大學 | 0/13/2/2/0 | 待/待/待 | 0／未建個別外校清單 |
@@ -114,8 +122,10 @@
 
 ## 尚待補查與實際限制
 
-剩餘公開來源工作：交通10校、生活7校、學制34校、學院44校無可填值；其餘一般無年份／跨校區來源仍待確認適用性。這是公開查核缺口，並非都只能聯絡學校。已列逐校checklist及 `research-gap-audit.json`／`acquired-content-review.json`。
+公開查核缺口：交通10校、生活7校、學制33校、學院44校未載；其餘無年份／跨校區來源待確認適用性。未把所有缺值歸為只能聯絡學校。逐校checklist、research-gap-audit及acquired-content-review均保留。
 
-637個來源紀錄唯一且對應637請求；70筆fetch_failed，另有7個challenge、3個空回應、2個captcha、1個不相關內容異常。異常頁不當成官方政策或城市來源。20筆失敗followup分成14笔已重試及6筆首次失敗而未重試，不捏造重試結果。
+637個唯一來源對應637請求，81個可解析合作校附件；70筆fetch_failed，另7challenge、3空回應、2captcha及1不相關內容異常不採作政策。失敗followup中14筆實際重試，6筆首次失敗未重試。
 
-中正母校流程與名額適配已可使用；外校規定仍有上述缺口，未宣稱與長庚資料完整度相同。未登入學校系統、提交資料、聯絡承辦、merge main或部署。
+最新測試、實際匿名官方DOCX HTTP200及byte比對、手機／桌面點擊下載與套件證據見ccu-validation-2026-10-08/parent-fix-*。瀏覽器下載以保存的真實官方DOCX回放，匿名即時HTTP驗證獨立記錄，未將回放冒充即時外網請求。
+
+中正母校與平台適配可用；外校完整度仍有上述缺口。未登入學校系統、提交資料、聯絡承辦、merge main或部署。

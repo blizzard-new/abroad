@@ -21,10 +21,8 @@ from fastapi.testclient import TestClient
 
 from exchange_info.api import create_app
 from exchange_info.ccu_sources import BUNDLE, HOME
-from exchange_info.qualification_scopes import (
-    college_scope_needs_confirmation,
-    degree_scope_needs_confirmation,
-)
+from exchange_info.models import PartnerUniversity
+from exchange_info.qualification_scopes import partner_scope_needs_confirmation
 
 
 def load_jsonl(path):
@@ -102,10 +100,15 @@ def main():
                 "partner_nonempty": Counter(),
                 "structured_scope_known": Counter(),
                 "documents": Counter(),
+                "document_center": Counter(),
                 "workflow_rows": [],
             }
+            if code == "cgu":
+                aggregate["cgu_explicit_115_documents"] = Counter()
+                aggregate["cgu_explicit_115_workflow_rows"] = []
             for index, (name, guide) in enumerate(guides.items(), 1):
                 partner = partners[name]
+                partner_model = PartnerUniversity.model_validate(partner)
                 response = client.get(
                     "/application-workflow",
                     params={"home_school": home, "school": name},
@@ -124,9 +127,36 @@ def main():
                         },
                     )
                     response.raise_for_status()
+                    published = response.json()
+                    assert published["academic_year"] == "115"
                     aggregate["cgu_explicit_115_workflow_statuses"][
-                        response.json()["review_status"]
+                        published["review_status"]
                     ] += 1
+                    published_requirements = [
+                        r
+                        for step in published["steps"]
+                        for r in step["document_requirements"]
+                    ]
+                    published_counts = aggregate["cgu_explicit_115_documents"]
+                    published_counts["requirements"] += len(published_requirements)
+                    published_counts["requirements_with_form"] += sum(
+                        bool(r["official_form_url"]) for r in published_requirements
+                    )
+                    published_counts["schools_with_requirements"] += bool(
+                        published_requirements
+                    )
+                    published_counts["schools_with_signature_detail"] += any(
+                        r["signatures"] or r["stamps"] for r in published_requirements
+                    )
+                    aggregate["cgu_explicit_115_workflow_rows"].append(
+                        {
+                            "school_name": name,
+                            "academic_year": published["academic_year"],
+                            "review_status": published["review_status"],
+                            "step_count": len(published["steps"]),
+                            "requirement_count": len(published_requirements),
+                        }
+                    )
                 for key in [
                     "city",
                     "housing_summary",
@@ -149,10 +179,10 @@ def main():
                 )
                 aggregate["structured_scope_known"]["colleges"] += bool(
                     partner.get("colleges")
-                ) and not college_scope_needs_confirmation(partner["colleges"])
+                ) and not partner_scope_needs_confirmation(partner_model, "colleges")
                 aggregate["structured_scope_known"]["degree_levels"] += bool(
                     partner.get("degree_levels")
-                ) and not degree_scope_needs_confirmation(partner["degree_levels"])
+                ) and not partner_scope_needs_confirmation(partner_model, "degree_levels")
                 req = [
                     r for step in flow["steps"] for r in step["document_requirements"]
                 ]
@@ -174,6 +204,27 @@ def main():
                 )
                 if code == "ccu":
                     page = partner["source_pages"][0]
+                    response = client.get(
+                        "/application-center/catalog",
+                        params={"school": home, "target_school": name},
+                    )
+                    response.raise_for_status()
+                    catalog = response.json()
+                    assert catalog["workflow_found"]
+                    host_catalog = [r for r in catalog["items"] if r.get("stage")]
+                    doc = documents.get(page)
+                    assert len(host_catalog) == (len(doc["requirements"]) if doc else 0)
+                    aggregate["document_center"]["schools_with_catalog"] += 1
+                    aggregate["document_center"]["host_items_with_stage"] += len(
+                        host_catalog
+                    )
+                    aggregate["document_center"]["verified_official_links"] += sum(
+                        r["official_form_verified"] and r["download_available"]
+                        for r in host_catalog
+                    )
+                    aggregate["document_center"]["conditional_items"] += sum(
+                        r["conditional"] for r in host_catalog
+                    )
                     response = client.get(
                         "/school-data-completeness",
                         params={"home_school": home, "school": name},
@@ -197,7 +248,6 @@ def main():
                         ]
                         if k in partner["field_evidence"]
                     }
-                    doc = documents.get(page)
                     report["ccu_per_school"].append(
                         {
                             "ccu_page": page,
@@ -217,15 +267,11 @@ def main():
                             "profile_fields": profile_reviews[page]["fields"],
                             "academic_filter_scope": {
                                 "colleges_known": bool(partner.get("colleges"))
-                                and not college_scope_needs_confirmation(
-                                    partner["colleges"]
-                                ),
+                                and not partner_scope_needs_confirmation(partner_model, "colleges"),
                                 "degree_levels_known": bool(
                                     partner.get("degree_levels")
                                 )
-                                and not degree_scope_needs_confirmation(
-                                    partner["degree_levels"]
-                                ),
+                                and not partner_scope_needs_confirmation(partner_model, "degree_levels"),
                             },
                             "documents": {
                                 "home_individual_requirements": len(
@@ -248,6 +294,10 @@ def main():
                                 "requirements": doc["requirements"] if doc else [],
                             },
                             "runtime": {
+                                "document_catalog_phases": list(
+                                    dict.fromkeys(r["phase"] for r in host_catalog)
+                                ),
+                                "document_catalog_host_items": host_catalog,
                                 "workflow_http": 200,
                                 "guide_present": True,
                                 "review_status": flow["review_status"],
@@ -302,7 +352,9 @@ def main():
                 "output": str(args.output),
                 "baseline": report["baseline"],
                 "runtime": {
-                    code: {k: v for k, v in row.items() if k != "workflow_rows"}
+                    code: {
+                        k: v for k, v in row.items() if not k.endswith("workflow_rows")
+                    }
                     for code, row in report["runtime"].items()
                 },
                 "status_summary": report["status_summary"],

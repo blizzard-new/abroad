@@ -1075,7 +1075,9 @@
           "copies": null,
           "copy_type": "unspecified",
           "signatures": [],
-          "stamps": [],
+          "stamps": [
+            "institutional stamp（機構核章）"
+          ],
           "official_form_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/02_evaluation_w.docx",
           "source_urls": [
             "https://intl.ryukoku.ac.jp/english/html/s_exchange_02.html",
@@ -2670,7 +2672,7 @@
       },
       {
         "requirement": {
-          "name": "英文經歷／讀書essay（≥1頁）",
+          "name": "一般personal history／plan of study brief essay（未載最少頁數）",
           "copies": null,
           "copy_type": "unspecified",
           "signatures": [],
@@ -2692,10 +2694,10 @@
             "application_round": "2027春季",
             "checked_at": "2026-10-08T09:30:25.482027+00:00",
             "status": "verified_current",
-            "excerpt": "rc08/jsp/fexchange/index.html 2. 1 brief essay of personal history and plan of study 3. 1 copy of academic transcript 4. 1 certificate of current enrollment at home university ( students joining with a passport from a non-OECD country must have an apostille or Korean embassy/consulate authentication on the certificate ) 5. 1 copy of evidence of",
+            "excerpt": "2. 1 brief essay of personal history and plan of study",
             "content_hash": "e9a182a98cdb644afe239c13245ad58fde4238b4d18616dfca5b27fe40dda11a",
             "text_sha256": "50a3edc0aad8944a3ee8b1822ad7495ac68fe5b25886daff79fbc09004e70c1c",
-            "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+            "note": "第2項一般申請brief essay未載1頁限制；第11項限Intensive Korean Program。"
           }
         ],
         "conditional": false,
@@ -2929,8 +2931,9 @@
             "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
           }
         ],
-        "conditional": false,
-        "stage": "post_offer"
+        "conditional": true,
+        "stage": "after_dorm_assignment",
+        "condition": "僅宿舍申請者，宿舍分配後依校方要求提交"
       },
       {
         "requirement": {
@@ -2963,11 +2966,12 @@
           }
         ],
         "conditional": true,
-        "stage": "post_offer"
+        "stage": "after_application",
+        "condition": "依護照OECD／非OECD適用分流，申請期間結束後另發表；非OECD另銀行證明"
       },
       {
         "requirement": {
-          "name": "（密集韓語申請者）studyessay",
+          "name": "（Intensive Korean Program申請者）study essay至少1頁",
           "copies": null,
           "copy_type": "unspecified",
           "signatures": [],
@@ -2989,14 +2993,15 @@
             "application_round": "2027春季",
             "checked_at": "2026-10-08T09:30:25.482027+00:00",
             "status": "verified_current",
-            "excerpt": "r/HUFSfactsheet 11. 1 page min. of study essay for Intensive Korean Program applicants ADMISSION PACKET TO STUDENTS Admission packets will be sent to students via email. It will contain the following documents, 1. Certificate of Admission 2. Certificate of Business Registration (HUFS) 3. Letter of Acceptance VISA PROCESS Students MUST apply and",
+            "excerpt": "11. 1 page min. of study essay for Intensive Korean Program applicants",
             "content_hash": "e9a182a98cdb644afe239c13245ad58fde4238b4d18616dfca5b27fe40dda11a",
             "text_sha256": "50a3edc0aad8944a3ee8b1822ad7495ac68fe5b25886daff79fbc09004e70c1c",
             "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
           }
         ],
         "conditional": true,
-        "stage": "student_application"
+        "stage": "student_application",
+        "condition": "僅Intensive Korean Program申請者；一般brief essay未載最少頁數"
       }
     ],
     "review_note": "清單按實讀要求拆成逐項；conditional與分期文字保留，整個workflow仍需覆核。已取得模板才設official_form_url，不是全部附件或可代送申請。"
@@ -3808,14 +3813,14 @@
             "application_round": "2027春季",
             "checked_at": "2026-10-08T00:00:00Z",
             "status": "verified_current",
-            "excerpt": "ument] *In English or In Korean a. Bank Statement (4,000USD/one semester, 8,600USD/one year) (original copy , this should be valid on a month prior to admission. Please issue this paper in December.) b. The school's Certificate of Enrollment (Original copy with an official stam p, issued after October 2026) - Certification Requirement: All student",
+            "excerpt": "<After application-Additional Document Submission> [Step 2] Should upload documents by 20 December https://forms.gle/oV4XP9rRp7aTF2Cw7 [Step 3] Should be arrived in our office by 15 January via post. [Additional Document] *In English or In Korean a. Bank Statement (4,000USD/one semester, 8,600USD/one year) (original copy , this should be valid on a month prior to admission. Please issue this paper in December.) b. The school's Certificate of Enrollment (Original copy with an official stam p, issued after October 2026) - Certification Requirement: All students must have their Certificate of Enrollment legalized either by the Korean Embassy/Consulate in their home country (Consular Confirmation) or via Apostille.",
             "content_hash": "7a02de3148793e42746ab5606423e69485a6633991b8181e6891468d94b5f20f",
             "text_sha256": "ae3493831b2b2ba78dcd4a3156fc430ac590ac0d57e05cfb8f92a2c9523a41be",
-            "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+            "note": "After application而非錄取後；2026-12-20上傳、2027-01-15正本送達；錄取信12月底另發。"
           }
         ],
         "conditional": false,
-        "stage": "post_offer"
+        "stage": "after_application"
       },
       {
         "requirement": {
@@ -3841,14 +3846,14 @@
             "application_round": "2027春季",
             "checked_at": "2026-10-08T00:00:00Z",
             "status": "verified_current",
-            "excerpt": " Enrollment (Original copy with an official stam p, issued after October 2026) - Certification Requirement: All students must have their Certificate of Enrollment legalized either by the Korean Embassy/Consulate in their home country (Consular Confirmation) or via Apostille.",
+            "excerpt": "<After application-Additional Document Submission> [Step 2] Should upload documents by 20 December https://forms.gle/oV4XP9rRp7aTF2Cw7 [Step 3] Should be arrived in our office by 15 January via post. [Additional Document] *In English or In Korean a. Bank Statement (4,000USD/one semester, 8,600USD/one year) (original copy , this should be valid on a month prior to admission. Please issue this paper in December.) b. The school's Certificate of Enrollment (Original copy with an official stam p, issued after October 2026) - Certification Requirement: All students must have their Certificate of Enrollment legalized either by the Korean Embassy/Consulate in their home country (Consular Confirmation) or via Apostille.",
             "content_hash": "7a02de3148793e42746ab5606423e69485a6633991b8181e6891468d94b5f20f",
             "text_sha256": "ae3493831b2b2ba78dcd4a3156fc430ac590ac0d57e05cfb8f92a2c9523a41be",
-            "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+            "note": "After application而非錄取後；2026-12-20上傳、2027-01-15正本送達；錄取信12月底另發。"
           }
         ],
         "conditional": false,
-        "stage": "post_offer"
+        "stage": "after_application"
       },
       {
         "requirement": {

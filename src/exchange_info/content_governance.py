@@ -2441,6 +2441,12 @@ def workflow_content_hash(workflow: UniversityApplicationWorkflow) -> str:
         payload.pop(field, None)
     for step in payload.get("steps", []):
         step.pop("checked_at", None)
+        for requirement in step.get("document_requirements", []):
+            # Additive document metadata must not invalidate older publication
+            # snapshots when its values retain their original empty meaning.
+            for key, default in {"stage": None, "conditional": False, "condition": None, "official_form_verified": False}.items():
+                if requirement.get(key) == default:
+                    requirement.pop(key, None)
     for source in payload.get("sources", []):
         source.pop("checked_at", None)
     canonical = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))

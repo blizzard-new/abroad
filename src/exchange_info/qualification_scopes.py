@@ -5,6 +5,15 @@ import re
 import unicodedata
 
 
+def partner_scope_needs_confirmation(partner: object, field: str) -> bool:
+    evidence = getattr(partner, "field_evidence", {}).get(field)
+    if evidence is not None and evidence.status != "verified_current":
+        return True
+    scope = getattr(partner, field, None)
+    check = college_scope_needs_confirmation if field == "colleges" else degree_scope_needs_confirmation
+    return check(scope)
+
+
 def _normal(value: object) -> str:
     return " ".join(unicodedata.normalize("NFKC", str(value or "")).strip().casefold().split())
 

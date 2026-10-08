@@ -11,9 +11,9 @@ from .school_identity import same_school
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
 from .task_documents import document_link_for_step
 from .qualification_scopes import (
-    college_scope_needs_confirmation, degree_scope_needs_confirmation,
     college_scope_matches as _partner_scope_matches,
     degree_scope_matches as _partner_degree_matches,
+    partner_scope_needs_confirmation,
 )
 
 from .models import (
@@ -419,7 +419,7 @@ def _eligibility_checks(
                 contact_unit=contact_unit,
             )
         )
-    elif college_scope_needs_confirmation(partner.colleges):
+    elif partner_scope_needs_confirmation(partner, "colleges"):
         checks.append(
             _check(
                 "college",
@@ -465,7 +465,7 @@ def _eligibility_checks(
                 contact_unit=contact_unit,
             )
         )
-    elif degree_scope_needs_confirmation(partner.degree_levels):
+    elif partner_scope_needs_confirmation(partner, "degree_levels"):
         checks.append(
             _check(
                 "degree_level",

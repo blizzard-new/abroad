@@ -925,6 +925,14 @@ def build_application_document_catalog(
     )
     items: list[ApplicationDocumentCatalogItem] = []
     sequence = 0
+    stages = {
+        "nomination": "合作校提名",
+        "student_application": "合作校申請",
+        "after_application": "合作校申請後補件（不等錄取）",
+        "post_offer": "合作校錄取後",
+        "after_dorm_assignment": "合作校宿舍分配後",
+        "conditional_program": "合作校特定計畫文件",
+    }
     for step in sorted(workflow.steps, key=lambda row: row.order):
         for requirement in step.document_requirements:
             sequence += 1
@@ -960,7 +968,7 @@ def build_application_document_catalog(
                 ApplicationDocumentCatalogItem(
                     id=hashlib.sha256(identity.encode("utf-8")).hexdigest()[:20],
                     sequence=sequence,
-                    phase=step.phase,
+                    phase=stages.get(requirement.stage, step.phase),
                     step_title=step.title,
                     name=requirement.name,
                     copies=requirement.copies,
@@ -976,8 +984,17 @@ def build_application_document_catalog(
                         else ApplicationSupportStatus.VERIFIED
                     ),
                     needs_confirmation=needs_confirmation,
+                    stage=requirement.stage,
+                    conditional=requirement.conditional,
+                    condition=requirement.condition,
+                    official_form_verified=requirement.official_form_verified,
                     download_available=bool(
-                        official_form_url and not needs_confirmation
+                        official_form_url and (
+                            not needs_confirmation or (
+                                workflow.home_university == "國立中正大學"
+                                and requirement.official_form_verified
+                            )
+                        )
                     ),
                     contact_unit=(
                         step.confirmation_contact
@@ -989,7 +1006,7 @@ def build_application_document_catalog(
                 )
             )
 
-    return ApplicationDocumentCatalog(
+    result = ApplicationDocumentCatalog(
         context=context,
         workflow_found=True,
         workflow_coverage_status=workflow.coverage_status,
@@ -999,6 +1016,9 @@ def build_application_document_catalog(
         items=items,
         contact_unit=contact_unit,
     )
+    if workflow.home_university == "國立中正大學":
+        result.disclaimer = "官方文件直連只表示來源及保存檔案已核實可讀；部分連結是指引，並非申請表。流程仍未發布、清單不完整，適用年度、計畫、條件及簽章須依逐項來源核對。"
+    return result
 
 
 def _has_value(value: Any) -> bool:

@@ -216,7 +216,8 @@ def test_ccu_workflows_are_complete_structurally_but_not_published():
     assert len(flows) == 55
     for workflow in flows:
         assert workflow.home_university == HOME and workflow.application_round == ROUND
-        assert len(workflow.steps) == 7 and not workflow_structure_issues(workflow)
+        extra = any(r.stage == "after_application" for s in workflow.steps for r in s.document_requirements)
+        assert len(workflow.steps) == (8 if extra else 7) and not workflow_structure_issues(workflow)
         assert workflow.review_status == "legacy" and workflow.published_at is None
         assert all(not step.deadline_reminder_eligible for step in workflow.steps)
         assert (

@@ -3182,9 +3182,9 @@ def create_app(
         academic_year: str | None = Query(default=None, max_length=40),
         application_round: str | None = Query(default=None, max_length=80),
     ) -> ApplicationDocumentCatalog:
-        partner = partner_for_school(target_school, school)
+        university, partner = partner_context_for_school(target_school, school)
         context = ApplicationCenterContext(
-            school_name=school,
+            school_name=university.school_name,
             target_school=partner.school_name,
             college=college,
             department=department,
@@ -3193,7 +3193,7 @@ def create_app(
             academic_year=academic_year,
             application_round=application_round,
         )
-        workflows = load_application_workflows(resolved_data_dir)
+        workflows = workflows_for_university(university) if university.id == "ccu" else load_application_workflows(resolved_data_dir)
         return build_application_document_catalog(context, workflows)
 
     @app.post(

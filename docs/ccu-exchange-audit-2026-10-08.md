@@ -6,7 +6,7 @@
 交付前遠端 main 已前進至 `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`（第一批交付時為 `293546e807294dc0812f390b240a4cfb68e86cd0`）；第一批交付保留開工基準；第二輪依使用者要求安全整合此最新main，保留臺大與既有資料，未寫入其他session工作目錄。
 本 clone 未找到 AGENTS.md 或適用 `.agents/skills`。未寫入其他學校 session 的工作目錄。
 
-最新數量、功能對照與實際驗證見末節「第八至十一輪：逐校文件、生活資料及實際 API 對照」及 [55筆功能對照](ccu-functional-parity-2026-10-08.md)；前節保留歷史檢查點，不能取代最新數字。
+最新數量、功能對照與實際驗證見末節第十三輪及 [55筆功能對照](ccu-functional-parity-2026-10-08.md)；前節保留歷史檢查點，不能取代最新數字。
 
 ## 已核實適用範圍
 
@@ -390,3 +390,37 @@ UBM、EPITA、SDU的新接收資料顯示替代語言證明／program分流或�
 - wheel建置成功，760個CCU資料檔與來源byte一致，ccu_profile.py、ccu_documents.py與CCU生活renderer納入套件；最新SHA見eighth-eleventh-wheel-proof.json。
 
 長庚基準亦經實際API核對：原始154流程＝77 published(115)＋77 legacy(116)。無年度API回傳77 legacy；指定academic_year=115才是77 published，已在最新main解包API重現。中正與長庚照片、72小時、行李、到校採購皆為0，不能列成中正單方缺口。完整55筆逐校對照、來源狀態、文件階段與尚缺欄位見ccu-functional-parity-2026-10-08.md及functional-parity.json。
+
+## 第十二輪：當期學制來源一致性修正
+
+續查逐校學制缺值時，核對中正當期學校資訊p39的黑字「限大學部(大四下畢業者亦不可申請)」及undergraduate GPA原文。常磐大學原API保留資格原文，卻沒有結構化學制及profile證據；現補成當期母校依據，含相同附件hash、物理頁39與原文，不以host無年份頁推定年度。沒有把本科年級字眼或學校開設碩博士課程擴張成交換接收資格。
+
+學制profile非空由21增至22，狀態變為8已核實、14待確認、33缺值；實際API學制非空由22增至23，可確定學制篩選由8增至9；常磐大學本科符合、碩博士排除已以實際程式檢查。其他6類profile及935個獨立海外欄位狀態不變，637來源、81合作校附件、104條目與55流程數不變。這項是來源稽核一致性修正，不能宣稱資料已與長庚相同完整。
+
+第八至十一輪提交4db9cd381d0316c6bf012e6f7b3825dc5933b3f7已推送，origin分支讀回相同SHA，PR #3仍為draft。第十二輪追加驗證及交付證據另存twelfth-*檔；第十二、十三輪一起提交，最新遠端SHA以交付回報及GitHub分支為準。
+
+第十二輪實際驗證：91 passed（CCU來源完整性、資格、文件、生活及API檢查），無skip/fail；重新量測CGU 77份unscoped／77份115 published及CCU55份實際workflow，學制非空23、可確定9；20個輸出再次重建一致、49個既有學校檔案不變、110 API路徑及required schema不變。本輪曾建置wheel，最終逐byte驗證以第十三輪parent-fix-wheel-proof.json為準。此輪未改renderer或共用程式，前輪27個瀏覽器測試及兩項展開可見性驗證仍是當時適用畫面證據，沒有重複宣稱另跑全部四校。
+
+## 第十三輪：待確認資格、文件階段及官方附件修正
+
+本輪回應實際前後端差異及逐份文件誤讀，沒有增加104條目或假裝外校完整度完成。935海外欄位仍為310已核、229缺值、314待確認、20參考、61矛盾及1官方明示未公告；637來源、81可解析合作校附件及23校175項partial_not_exhaustive文件清單不變。
+
+- FHNW p104及北海道p37的待確認學院／學制，前端原會依文字加分或排除，現與API使用相同保守判斷，連field_evidence.status亦核對；unknown保留篩選可見、沒有確定符合或不符。實際兩校×手機390／桌面1440、符合文字與不符文字兩種申請者皆核對前端、advisor及application-plan。ZHAW p103學院有字串但來源待確認，實際可確定學院重新計為1；學制可確定9。
+- 忠南p53的2027 factsheet物理p2明示申請後2026-12-20上傳銀行／認證在學證明，2027-01-15原件抵校，錄取信12月底；兩項由post_offer改after_application，另設不等錄取的補件步驟。健康／TB及participation agreements仍錄取後，沒有將所有文件塞入學生申請一步。
+- HUFS p47的2027 factsheet物理p3一般brief essay未載最低頁數；至少1頁只適用Intensive Korean Program study essay。一般與條件項分開，conditional及condition傳到流程與文件目錄。finance是申請期後，宿舍健康表在宿舍分配後；兩者不混作一般錄取後文件。舊第九輪錯誤歷史記錄標superseded_by及原因，最新依thirteenth-document-corrections.json。
+- 18個官方附件已有實際取得內容及hash，現在legacy／適用性待確認仍可直接開啟，並保留完整清單與適用性提示。附件含指引而不全是空白表格。龍谷學習計畫及語言評估DOCX的即時匿名HTTP均200且byte與保存檔相同；評估表institutional stamp單獨保存。瀏覽器实际點擊流程及文件目錄下載、驗證hash；瀏覽器外網以保存的真實DOCX回放，沒有將回放說成即時網路成功。
+
+55流程現為53筆7步驟、忠南及HUFS2筆8步驟，均維持legacy／official_partial。實際55校文件目錄保留175個host階段、26個條件項及18個已核實官方連結。長庚指定115 published基準1238項文件、0個form URL；未指定年度116 legacy為1469項及77個form URL，年度分開量測。
+
+相對第八至十一輪，需要協調的共用差異：qualification_scopes.py、advisor.py、application_rules.py（同一來源狀態守門）；models.py（兩種文件模型各新增stage、conditional、condition及official_form_verified選填metadata）；application_documents.py（個別階段、條件、CCU已核附件開啟與提示）；api.py（CCU文件目錄由bundled資料取得且canonical母校名）；static/app.js與index.html（未知篩選、文件連結／條件呈現及資源版本）；content_governance.py（忽略新增metadata的空預設值，維持既有內容hash，但有值的條件／階段仍hash約束）；docs/api/openapi.json（新增選填欄，110路徑與required欄不變）。tests/test_school_photo_and_match.py補其既有Node fixture所需helper及stub；其他新增測試及產出留校別獨立檔。這些是可合併程式差異，未修改權限、憑證或安全設定。
+
+實際驗證及可重查證據保存在docs/ccu-validation-2026-10-08/parent-fix-*：
+
+- 擴大四校回歸312 passed、5 skipped、1既有NTPU目的地數量失敗（165.40s），失敗已在最新main獨立重現。沒有把失敗算成功。
+- 完整CCU手機／桌面瀏覽器33 passed（240.35s），涵蓋實際unknown篩選、兩API與流程／目錄點擊下载；另兩個聚焦下載測試2 passed。
+- 後續新增內容hash相容性及最新提示的完整性測試8 passed（15.21s）；四校及33瀏覽器在這兩項最後調整前執行，沒有宣稱之後重跑全套。
+- 20份輸出離線重建hash相同；49份CGU／NTPU／NTU main資料逐檔未變；API110路徑及required欄不變，選填schema有上述增加。CGU115 published上海交大及NTPU115 legacy ESIC的內容hash與main一致，選填非空階段變更會改hash。
+- 相關新增／改動檔Ruff、JS語法及OpenAPI contract成功；不宣稱整個專案lint全過。wheel成功，762個CCU資料及12個相關程式／UI檔byte一致，SHA見parent-fix-wheel-proof.json。
+- 既有content_governance測試wrapper無法collect：缺少tests/__pycache__/test_content_governance.cpython-312-pytest-9.1.1.pyc。真實collection错误保存在existing-governance-wrapper-unavailable.txt；改以獨立main內容hash證據及新增完整性測試驗證，沒有捏造wrapper通過。
+
+本輪是已驗證修正的可整合檢查點。公開學制33校、學院44校、交通10校、生活7校仍有缺值，另有登入／提名後個人表、來源矛盾及當期適用性未核；functional_parity_complete=false，未直接merge或部署。

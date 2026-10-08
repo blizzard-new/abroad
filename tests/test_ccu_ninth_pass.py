@@ -13,6 +13,7 @@ from exchange_info.ccu_sources import BUNDLE, HOME
 from exchange_info.ccu_student_view import fetch_ccu_partner_universities
 from exchange_info.qualification_scopes import (
     college_scope_matches,
+    degree_scope_matches,
     degree_scope_needs_confirmation,
 )
 from exchange_info.university_locations import UniversityLocation
@@ -74,6 +75,14 @@ def test_structured_academic_scopes_stay_conservative():
     assert degree_scope_needs_confirmation(at(37).degree_levels)
     assert degree_scope_needs_confirmation(at(35).degree_levels)
     assert at(74).degree_levels is None
+    tokiwa = at(39)
+    assert degree_scope_matches(tokiwa.degree_levels, "大學部")
+    assert not degree_scope_matches(tokiwa.degree_levels, "碩士班")
+    assert not degree_scope_matches(tokiwa.degree_levels, "博士班")
+    scope = reviewed_profiles()[39]["fields"]["degree_levels"]
+    assert scope["status"] == "verified_current"
+    assert scope["evidence"][0]["source_pages"] == [39]
+    assert "限大學部" in scope["evidence"][0]["excerpt"]
 
 
 def test_hufs_actual_new_2027_body_resolves_old_calendar_without_editing_old_pdf():
@@ -149,13 +158,14 @@ def test_api_host_documents_have_individual_forms_conditions_and_later_stages(tm
         assert flow["review_status"] != "published"
         host = flow["steps"][4]
         registry = reviewed_documents()[page]
-        assert len(host["document_requirements"]) == len(registry["requirements"])
+        requirements = [r for s in flow["steps"] for r in s["document_requirements"] if r["stage"]]
+        assert len(requirements) == len(registry["requirements"])
         assert len(host["document_requirements"]) > 1
         assert all(len(r["name"]) < 240 for r in host["document_requirements"])
         if page == 32:
             assert any(
                 "if available" in r["name"] and "JLPT" in r["name"]
-                for r in host["document_requirements"]
+                for r in requirements
             )
             assert len(host["official_form_urls"]) >= 5
             assert any(
@@ -167,7 +177,7 @@ def test_api_host_documents_have_individual_forms_conditions_and_later_stages(tm
                 "12/20" in r["name"]
                 and "1/15" in r["name"]
                 and r["copy_type"] == "original"
-                for r in host["document_requirements"]
+                for r in requirements
             )
             assert any(
                 "中正逐校第二階文件：當期已核實" in detail

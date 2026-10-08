@@ -10,10 +10,9 @@ from .ai_gateway import structured_response
 from .fit_signals import course_interest_fit, school_budget_fit, teaching_language_fit
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
 from .qualification_scopes import (
-    college_scope_needs_confirmation as _college_scope_needs_confirmation,
-    degree_scope_needs_confirmation as _degree_scope_needs_confirmation,
     college_scope_matches as _scope_matches,
     degree_scope_matches as _degree_matches,
+    partner_scope_needs_confirmation,
 )
 
 
@@ -264,7 +263,7 @@ def _score_partner(
         gaps.append(confirmation_items[-1])
 
     if profile.college:
-        if cycle_unconfirmed or _college_scope_needs_confirmation(partner.colleges):
+        if cycle_unconfirmed or partner_scope_needs_confirmation(partner, "colleges"):
             confirmation_items.append("合作校學院範圍尚待確認")
             gaps.append(confirmation_items[-1])
         elif _scope_matches(partner.colleges, profile.college):
@@ -279,7 +278,7 @@ def _score_partner(
         confirmation_items.append(gaps[-1])
 
     if profile.degree_level:
-        if cycle_unconfirmed or _degree_scope_needs_confirmation(partner.degree_levels):
+        if cycle_unconfirmed or partner_scope_needs_confirmation(partner, "degree_levels"):
             confirmation_items.append("合作校學制範圍尚待確認")
             gaps.append(confirmation_items[-1])
         elif _degree_matches(partner.degree_levels, profile.degree_level):
