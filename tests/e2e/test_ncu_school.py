@@ -7,6 +7,67 @@ from .conftest import enter_public_site, open_navigation
 from .test_open_catalog import wait_until, sign_in_cookie, attach_session
 
 
+def test_ncu_hiroshima_fee_image_coe_and_departure_stages_reach_mobile_ui(page,live_server):
+    page.set_viewport_size({'width':390,'height':956})
+    page.emulate_media(reduced_motion='reduce')
+    errors=[]
+    page.on('pageerror',lambda error:errors.append(str(error)))
+    enter_public_site(page,live_server,'partners')
+    expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+    open_navigation(page)
+    page.locator('#school-switcher').click()
+    page.locator('[data-home-school="國立中央大學"]').click()
+    page.locator('#confirm-school').click()
+    wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60.0)
+    if page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
+        page.locator('#glass-menu-toggle').click()
+    page.locator('[data-partner-view="list"]').click()
+    page.locator('#partner-search').fill('廣島')
+    expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+    page.locator('#partner-table .partner-card > summary').first.click()
+    page.locator('#partner-table .school-detail-trigger:visible').first.click()
+    degree=page.locator('#detail-overview .partner-student-summary li').filter(has_text='中央115表另限大學部').first
+    expect(degree).to_be_visible()
+    page.locator('#ncu-source-audit > summary').click()
+    fee=page.locator('#ncu-source-audit-body > details').filter(has_text='2026/7現行費表原圖').first
+    expect(fee.locator(':scope > summary')).to_contain_text('1張原文圖片已視覺查核')
+    fee.locator(':scope > summary').click()
+    part=fee.locator('details').first
+    expect(part.locator(':scope > summary')).to_contain_text('原文圖片 1（無PDF頁碼）')
+    part.locator(':scope > summary').click()
+    expect(part.locator('pre')).to_be_visible()
+    expect(part.locator('pre')).to_contain_text('3,120')
+    expect(part.locator('pre')).to_contain_text('印度')
+    out=Path('/tmp/ncu-audit/browser');out.mkdir(parents=True,exist_ok=True)
+    part.locator('pre').scroll_into_view_if_needed()
+    page.screenshot(path=str(out/'ncu-hiroshima-fee-image-390.png'))
+    page.locator('#detail-tab-life').click()
+    page.locator('#detail-life .life-official-guide > summary').click()
+    expect(page.locator('#destination-official-content li').filter(has_text='單次3120TWD').first).to_be_visible()
+    page.locator('#detail-tab-application').click()
+    initial=page.locator('#detail-application .workflow-step').filter(has_text='HUSA現連參考：特別聽講學生申請表').first
+    initial.locator(':scope > summary').click()
+    expect(initial.locator('.workflow-documents > li')).to_have_count(8)
+    expect(initial).to_contain_text('學生及母校承辦皆檢核及簽名')
+    coe=page.locator('#detail-application .workflow-step').filter(has_text='錄取後依外校邀請辦理COE與財力證明').first
+    coe.locator(':scope > summary').click()
+    bank=coe.get_by_text('錄取後COE參考：銀行存款證明',exact=False).first
+    expect(bank).to_be_visible();expect(coe).to_contain_text('480000')
+    expect(coe).to_contain_text('待確認')
+    bank.scroll_into_view_if_needed()
+    page.screenshot(path=str(out/'ncu-hiroshima-coe-stage-390.png'))
+    departure=page.locator('#detail-application .workflow-step').filter(has_text='如入住池之上，提前一個月提交退居屆並安排點檢').first
+    departure.locator(':scope > summary').click()
+    form=departure.get_by_text('如入住池之上：退居屆',exact=False).first
+    expect(form).to_be_visible();expect(departure).to_contain_text('先確認點檢日')
+    expect(departure.locator('.workflow-documents > li.needs-confirmation')).to_contain_text('待官方確認')
+    expect(departure).to_contain_text('個人住處仍需核')
+    form.scroll_into_view_if_needed()
+    page.screenshot(path=str(out/'ncu-hiroshima-departure-stage-390.png'))
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
+    assert not errors
+
+
 @pytest.mark.parametrize("school,life_text,source_text,filename", [
     ("南京信息工程", "中文「僅限」", "Twin Room | 2,000—2,500 CNY per year", "ncu-nuist-versions-390.png"),
     ("濟南大學", "不能住國際生宿舍", "31/10/2024", "ncu-ujn-hk-scope-390.png"),

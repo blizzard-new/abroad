@@ -1410,3 +1410,69 @@ def test_gxu_visual_photos_scut_outgoing_and_browser_excerpts_are_not_new_host_f
     broken=byid['host-scut-ccu-broken-short-link']
     assert broken['status']==200 and '轉址失敗' in broken['error']
     assert broken['content_status']['response_bytes_received'] and not broken['content_status']['downloaded']
+
+
+def test_hiroshima_current_forms_do_not_expand_home_degree_scope_or_expired_round(tmp_path):
+    partner=next(p for p in fetch_ncu_partner_universities() if 'Hiroshima University' in p.school_name)
+    assert partner.quota is None and partner.degree_levels is None
+    client=TestClient(create_app(tmp_path))
+    workflow=client.get('/application-workflow',params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'}).json()
+    steps={s['rule_id']:s for s in workflow['steps']}
+    initial=steps['ncu-115-host-apply']
+    assert len(initial['document_requirements'])==8
+    assert len(steps['ncu-116-1-home-3']['document_requirements'])==7
+    assert not any('銀行' in d['name'] or '簽證申請' in d['name'] or '退居' in d['name']for d in initial['document_requirements'])
+    assert len(steps['ncu-115-host-coe-financial']['document_requirements'])==1
+    assert len(steps['ncu-115-host-japan-student-visa']['document_requirements'])==5
+    assert not steps['ncu-115-host-local-health-insurance']['document_requirements']
+    assert not steps['ncu-115-host-medicine-import']['document_requirements']
+    arrival=steps['ncu-116-1-home-8']['order'];returned=steps['ncu-116-1-home-9']['order']
+    for suffix in ['local-health-insurance','temporary-travel','ikenoue-departure']:
+        assert arrival < steps['ncu-115-host-'+suffix]['order'] < returned
+    assert steps['ncu-115-host-ikenoue-departure']['phase']=='離校準備'
+    assert steps['ncu-115-host-research-hours-petition']['order']<steps['ncu-116-1-home-6']['order']
+    assert workflow['review_status']=='pending_review' and workflow['published_at'] is None
+    assert not any(s['deadline_reminder_eligible']for s in workflow['steps'])
+    audit=ncu_field_audit(partner.school_name)
+    assert '中央115表另限大學部' in audit['fields']['eligibility']['note']
+    assert '61+' in audit['fields']['language']['note'] and 'above' in audit['fields']['language']['note']
+    assert '中央home正式語檢必繳' in audit['fields']['language']['note']
+    assert '2028/2/9' in audit['fields']['study_period']['note']
+    assert '2027春提名8/15' in audit['fields']['host_deadline']['note']
+    assert '2027秋或2028春提醒' in audit['fields']['host_deadline']['note']
+    assert '3120TWD' in audit['fields']['cost']['note']
+    assert '未標年' in audit['fields']['housing']['unresolved'] or '116' in audit['fields']['housing']['unresolved']
+    catalog=client.get('/application-center/catalog',params={'school':'NCU','target_school':partner.school_name,'academic_year':'116'}).json()
+    initial_names={d['name']for d in initial['document_requirements']}
+    documents=[d for d in catalog['items']if d['name']in initial_names]
+    assert len(documents)==8 and all(not d['download_available']for d in documents)
+    forms=[d for d in documents if d.get('official_form_url')]
+    assert len(forms)==2 and all(d['source_urls']for d in forms)
+
+
+def test_hiroshima_source_years_visual_fee_and_selected_old_guide_are_auditable():
+    raw=json.loads(gzip.decompress((BUNDLE/'source-evidence.json.gz').read_bytes()));sources={s['id']:s for s in raw}
+    from exchange_info.ncu_source_coverage import indexable_source_text
+    calendar=sources['host-hiro-calendar2027']
+    assert len(calendar['pages'])==1 and calendar['visual_review']['pdf_pages_reviewed']==[1]
+    assert '2027' in calendar['pages'][0]['text'] and '10/4' in calendar['pages'][0]['text']
+    fee=sources['government-japan-koryu-fee-image-1']
+    assert fee['pages'][0]['page'] is None and fee['pages'][0]['image']==1
+    assert fee['content_status']['visual_reviewed_image_count']==1
+    assert fee['visual_review']['source_sha256']==fee['sha256']
+    assert '3,120' in fee['pages'][0]['text'] and '印度' in fee['pages'][0]['text']
+    old=sources['host-hiro-ikenoue-guide2023']
+    assert len(old['pages'])==33 and len(old['reading_review']['pages_reviewed'])==9
+    assert not old['content_status']['all_pages_read']
+    assert '7,500 yen' in old['pages'][28]['text']
+    assert '7,500 yen' not in indexable_source_text(old)
+    pre=sources['host-hiro-prearrival']
+    assert "a year's supply" in pre['pages'][0]['text']
+    assert "a year's supply" not in indexable_source_text(pre)
+    qa=sources['government-japan-mhlw-medicine-qa']
+    assert 'Adults：1 tablet' in qa['pages'][8]['text']
+    assert 'Adults：1 tablet' not in indexable_source_text(qa)
+    for ident in ['government-japan-koryu-visa-mandarin-blank','government-japan-koryu-visa-english-blank']:
+        assert len(sources[ident]['pages'])==2 and sources[ident]['content_status']['all_pages_read']
+    assert sources['host-hiro-dorm-guide2025']['error']
+    assert not sources['host-hiro-dorm-guide2025']['content_status']['downloaded']

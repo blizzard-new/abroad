@@ -796,7 +796,14 @@ def build(output):
         for stage in review.get("host_document_stages", []) if review else []:
             requirements = stage["document_requirements"]
             target = host_followup_steps if stage.get("position") == "after_host_application" else tail
-            position = len(target) if target is host_followup_steps else next(i for i, step in enumerate(tail) if step["phase"] == "抵達後")
+            if target is host_followup_steps:
+                position = len(target)
+            elif stage.get("position") == "before_home_return":
+                # Departure notices and procedures during the exchange belong
+                # after arrival and before the home university's return steps.
+                position = next(i for i, step in enumerate(tail) if step["phase"] == "返國後")
+            else:
+                position = next(i for i, step in enumerate(tail) if step["phase"] == "抵達後")
             order = host_step["order"] + len(target) + 1 if target is host_followup_steps else tail[position]["order"]
             target.insert(position, dict(
                 order=order,

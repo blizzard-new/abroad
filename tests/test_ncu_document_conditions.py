@@ -189,3 +189,17 @@ def test_swu_portfolio_needs_major_confirmation_in_every_saved_state(admission,h
     assert '音樂、美術、服裝設計、景觀' in result.note
     assert '接收單位通知確認是否適用' in result.note
     assert document_applicability('長庚大學',school,doc,PartnerDocumentPreparationState()) is None
+
+
+@pytest.mark.parametrize('admission',['unknown','not_accepted','accepted'])
+@pytest.mark.parametrize('housing',['unknown','on_campus','off_campus'])
+def test_hiroshima_grad_exception_trip_and_specific_dorm_need_institutional_scope(admission,housing):
+    school='廣島大學 Hiroshima University'
+    workflow=next(w for w in storage.load_bundled_application_workflows()if w.home_university==NCU and w.school_name==school)
+    for suffix in ['research-hours-petition','temporary-travel','ikenoue-departure']:
+        step=next(s for s in workflow.steps if s.rule_id=='ncu-115-host-'+suffix)
+        assert len(step.document_requirements)==1
+        doc=step.document_requirements[0]
+        result=document_applicability(NCU,school,doc,PartnerDocumentPreparationState(host_admission_status=admission,housing_choice=housing))
+        assert result.status=='needs_confirmation' and not result.current_applicability_verified
+        assert document_applicability('長庚大學',school,doc,PartnerDocumentPreparationState()) is None
