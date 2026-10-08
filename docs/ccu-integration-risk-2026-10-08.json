@@ -1,0 +1,485 @@
+{
+  "checked_at": "2026-10-08T20:51:11.419610+00:00",
+  "main_sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "ccu_prior_pushed_sha": "2528ede75412e1f353ce6466467cd02579fe6191",
+  "no_other_branches_merged": true,
+  "isolated_combined_integration_test": "not_run_pending_parent_arrangement",
+  "ccu_shared_paths": [
+    "docs/api/openapi.json",
+    "pyproject.toml",
+    "src/exchange_info/advisor.py",
+    "src/exchange_info/api.py",
+    "src/exchange_info/application_documents.py",
+    "src/exchange_info/application_rules.py",
+    "src/exchange_info/application_workflow_collector.py",
+    "src/exchange_info/cli.py",
+    "src/exchange_info/content_governance.py",
+    "src/exchange_info/models.py",
+    "src/exchange_info/qualification_scopes.py",
+    "src/exchange_info/static/app.js",
+    "src/exchange_info/static/index.html",
+    "src/exchange_info/storage.py",
+    "src/exchange_info/university_registry.py",
+    "src/exchange_info/workflow_structuring.py",
+    "uv.lock"
+  ],
+  "branches": [
+    {
+      "ref": "origin/codex/add-ntu-third-university",
+      "sha": "daad399fd3cadf2ba9414fd85d0d3b76154bbbf6",
+      "changed_path_count": 0,
+      "shared_paths": [],
+      "ccu_overlap": []
+    },
+    {
+      "ref": "origin/codex/ntu-photos-globe-life",
+      "sha": "b8833a6a6ffc8236276fa7870e4c1ff541c34117",
+      "changed_path_count": 301,
+      "shared_paths": [
+        "src/exchange_info/api.py",
+        "src/exchange_info/life_context.py",
+        "src/exchange_info/school_image_collector.py",
+        "src/exchange_info/static/app.js"
+      ],
+      "ccu_overlap": [
+        {
+          "path": "src/exchange_info/api.py",
+          "main_sha256": "323dbf8ddffc4fbbb1693d7501930d47aa0fa276b5e5dace149dda0de083dd32",
+          "ccu_working_sha256": "f62dc7e993b0bf07ccad8bad6d305b554f7f8d695e109f8a00ae28e75908c57f",
+          "other_sha256": "15c326450a135f7c98094300540dde3d67c1fa12f44f9dd664c0c5a19eee3dc2",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -429 +429 @@ HOME_UNIVERSITY_BOARDS = {item.school_name for item in SUPPORTED_UNIVERSITIES}",
+            "@@ -437 +437 @@ def _load_school_image_manifest() -> dict[str, dict[str, object]]:",
+            "@@ -452 +452 @@ def _attach_school_images("
+          ]
+        },
+        {
+          "path": "src/exchange_info/static/app.js",
+          "main_sha256": "e7c4ed2b9ed0b33c24261e84776610eb1a32b1e6328da34ad7af631872a0193c",
+          "ccu_working_sha256": "97354be3641c8f079d39415a790fcf2ea74a99aa207f37eafd55212a200ce21f",
+          "other_sha256": "775b2b5232b4a1291f4e4b643a40bf5c51d18c3f968207fc072a86091cd6d99e",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -1092 +1092 @@ async function loadSchoolImages() {",
+            "@@ -1101 +1101 @@ async function loadSchoolImages() {",
+            "@@ -1103,0 +1104 @@ function schoolImageFor(schoolName) {",
+            "@@ -1108 +1109 @@ function renderSchoolPhoto(item, variant = \"card\") {",
+            "@@ -1117 +1118 @@ function renderSchoolPhoto(item, variant = \"card\") {",
+            "@@ -1139 +1140 @@ function renderCoverageBadges(item) {",
+            "@@ -1141 +1142 @@ function renderCoverageBadges(item) {",
+            "@@ -7556 +7557 @@ function renderPartnerLinks(item) {",
+            "@@ -7568 +7569,7 @@ function renderSchoolImageCredit(item) {",
+            "@@ -8314 +8321 @@ function renderLifeResearchStatus(context, { loading = false, error = \"\" } = {})",
+            "@@ -8335,2 +8342 @@ async function loadSchoolLifeContext(item, { refresh = false } = {}) {",
+            "@@ -8357 +8363 @@ function renderLifeEvidenceSupplement(category, { limit = 2 } = {}) {"
+          ]
+        }
+      ]
+    },
+    {
+      "ref": "origin/data/ncu-exchange-20261008",
+      "sha": "1bddf5a154e2283e17cbb5c1ab554089385e033c",
+      "changed_path_count": 371,
+      "shared_paths": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/advisor.py",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/application_rules.py",
+        "src/exchange_info/cost_estimates.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/openapi_contract.py",
+        "src/exchange_info/school_completeness.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/application-workspace.css",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/static/multi-plan.js",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "uv.lock"
+      ],
+      "ccu_overlap": [
+        {
+          "path": "docs/api/openapi.json",
+          "main_sha256": "318799f44c5fd61cf819773e16e09350b6a11b824dbb897cfe540d51c04d8179",
+          "ccu_working_sha256": "3ea0a7f6631f2ad2da8daa5c1efc5497c1d438de7045f3e9c0559d4199bc46ef",
+          "other_sha256": "60bb5d538112de29e247051776f8a6e6b041a93fe24b531ddb849b327f52e5c0",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -2334,0 +2335,8 @@",
+            "@@ -2484,0 +2493,10 @@",
+            "@@ -3921,0 +3940,7 @@",
+            "@@ -4117,0 +4143,10 @@",
+            "@@ -8176,0 +8212,41 @@",
+            "@@ -9133,0 +9210,7 @@",
+            "@@ -9138,0 +9222,7 @@",
+            "@@ -9143,0 +9234,5 @@",
+            "@@ -9543,0 +9639,27 @@",
+            "@@ -10125,0 +10248,12 @@",
+            "@@ -12380,0 +12515,7 @@",
+            "@@ -14730,0 +14872,47 @@",
+            "@@ -18045,0 +18234,58 @@",
+            "@@ -18606 +18852 @@"
+          ]
+        },
+        {
+          "path": "pyproject.toml",
+          "main_sha256": "b383b71e8eea2208ec2d1dbc0578a7778fe262fa9b8a88cbb3df9f540763d975",
+          "ccu_working_sha256": "0554660916373507be1643807ded2bc74290cffd13adccb0cbf17bba437af460",
+          "other_sha256": "19efde58ee2a76fbc688c6cb0c3eadc2c1dc0980b5d6142ad1c7141ab74e216f",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -4 +4 @@ version = \"0.1.0\"",
+            "@@ -50,0 +51 @@ exchange_info = [",
+            "@@ -51,0 +53 @@ exchange_info = ["
+          ]
+        },
+        {
+          "path": "src/exchange_info/advisor.py",
+          "main_sha256": "e0e5970a4f2da91499903a083c953e090ce592260e391f4e74b790ffd73e19ef",
+          "ccu_working_sha256": "e141940921e0ae2b46947d519164d71ba3110a35344a0fa7cb7e3c79c3443553",
+          "other_sha256": "53ff5cd5694a45d99007ec9f2b02b3f20ab5cedd31b5f23703e41e4a6c3d721e",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -10,0 +11 @@ from .fit_signals import course_interest_fit, school_budget_fit, teaching_langua",
+            "@@ -297 +298,13 @@ def _score_partner(",
+            "@@ -343 +356,5 @@ def _score_partner(",
+            "@@ -447 +464,3 @@ def _qualification_summary(",
+            "@@ -459 +478,3 @@ def _qualification_summary("
+          ]
+        },
+        {
+          "path": "src/exchange_info/api.py",
+          "main_sha256": "323dbf8ddffc4fbbb1693d7501930d47aa0fa276b5e5dace149dda0de083dd32",
+          "ccu_working_sha256": "f62dc7e993b0bf07ccad8bad6d305b554f7f8d695e109f8a00ae28e75908c57f",
+          "other_sha256": "579fac451214fb643f61ad438a7c4f6174b88f9eb61ed2ae86016d2800de56c7",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -7,0 +8 @@ from .school_content import complete_destination_profile",
+            "@@ -21 +22 @@ from pypdf import PdfReader",
+            "@@ -170,0 +172 @@ from .models import (",
+            "@@ -257,0 +260 @@ from .ntpu_student_view import (",
+            "@@ -392,0 +396 @@ from .university_registry import (",
+            "@@ -1080 +1084,3 @@ def create_app(",
+            "@@ -1123,0 +1130,2 @@ def create_app(",
+            "@@ -1137,0 +1146,2 @@ def create_app(",
+            "@@ -1186,0 +1197,2 @@ def create_app(",
+            "@@ -2803 +2815 @@ def create_app(",
+            "@@ -2843 +2855 @@ def create_app(",
+            "@@ -3167,0 +3180,3 @@ def create_app(",
+            "@@ -3168,0 +3184 @@ def create_app(",
+            "@@ -3171 +3187 @@ def create_app(",
+            "@@ -3178,0 +3195,9 @@ def create_app(",
+            "@@ -3180 +3204,0 @@ def create_app(",
+            "@@ -3599,0 +3624,14 @@ def create_app("
+          ]
+        },
+        {
+          "path": "src/exchange_info/application_documents.py",
+          "main_sha256": "12168fbd99c9aed6cbfcc7496d42d781979cbbdbf7d8d6e3826d32af39450194",
+          "ccu_working_sha256": "582e133cd4df9f3d35b9618fe761e2dc793c825b4e58ae219270a55ca195316a",
+          "other_sha256": "2d34c3fd16572942f4e9c0ea517be2dfc97cc2836e09e005a132b9ad83bc836a",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -60 +60,2 @@ from .application_rules import select_application_workflow",
+            "@@ -61,0 +63 @@ from .ntu_student_view import NTU_GUIDELINES_URL",
+            "@@ -832,0 +835,38 @@ def _ntu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT",
+            "@@ -839,0 +880,27 @@ def application_field_required(field: ApplicationFormField, values: dict[str, An",
+            "@@ -866,0 +934,2 @@ def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]",
+            "@@ -920,0 +990 @@ def build_application_document_catalog(",
+            "@@ -941 +1011 @@ def build_application_document_catalog(",
+            "@@ -983,0 +1054,6 @@ def build_application_document_catalog(",
+            "@@ -1239 +1315 @@ def build_packet_manifest(",
+            "@@ -1329 +1405,3 @@ def build_packet_manifest("
+          ]
+        },
+        {
+          "path": "src/exchange_info/application_rules.py",
+          "main_sha256": "2d4af48af49233a9631aae470ff848c9aaba8697dff25abf64d2676de568e24b",
+          "ccu_working_sha256": "a690ff80da6b5510089deab36d50c4e8e4d82c0ba1a97de3fb86bdc4c171fa7a",
+          "other_sha256": "3279d3b8fab90d902e04ecb07bc9ab1ac92d4e2154be02cdd27f7a0aed76476f",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -10,0 +11,2 @@ from .school_identity import same_school",
+            "@@ -195 +197 @@ def build_personal_application_plan(",
+            "@@ -366 +368 @@ def _eligibility_checks(",
+            "@@ -385 +387 @@ def _eligibility_checks(",
+            "@@ -431 +433,5 @@ def _eligibility_checks(",
+            "@@ -476 +482,4 @@ def _eligibility_checks(",
+            "@@ -522,0 +532,4 @@ def _eligibility_checks(",
+            "@@ -672,0 +686 @@ def _workflow_checklist(",
+            "@@ -692,0 +707,9 @@ def _workflow_checklist(",
+            "@@ -726,0 +750 @@ def _workflow_checklist(",
+            "@@ -768,0 +793,2 @@ def select_reference_workflow("
+          ]
+        },
+        {
+          "path": "src/exchange_info/models.py",
+          "main_sha256": "f45e39b447520191f8f36cf67e29467be79a8b9b8e4fa6df88978963ae662bd5",
+          "ccu_working_sha256": "f0e0ca92ddbc3702a5ea8fc1707f3fb0d6c442bde5456de6e4f55126ed19715f",
+          "other_sha256": "dbd6c3add91e0af090384eba548b68a2da35b1141913716aabbf4ef9c319a1ff",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -220,0 +221,16 @@ class ApplicationDocumentTemplate(BaseModel):",
+            "@@ -232,0 +249 @@ class ApplicationCenterContext(BaseModel):",
+            "@@ -1331,0 +1349 @@ class ApplicationPlanPreference(BaseModel):",
+            "@@ -1383,0 +1402 @@ class ApplicationPlanChecklistItem(BaseModel):",
+            "@@ -1396,0 +1416 @@ class PersonalApplicationPlanRequest(BaseModel):",
+            "@@ -1460,0 +1481 @@ class ApplicationDocumentCatalogItem(BaseModel):",
+            "@@ -2489,0 +2511,3 @@ class HomeSelectionRules(BaseModel):"
+          ]
+        },
+        {
+          "path": "src/exchange_info/static/app.js",
+          "main_sha256": "e7c4ed2b9ed0b33c24261e84776610eb1a32b1e6328da34ad7af631872a0193c",
+          "ccu_working_sha256": "97354be3641c8f079d39415a790fcf2ea74a99aa207f37eafd55212a200ce21f",
+          "other_sha256": "a2f692e0e615d5495fc6c88a190f987397de453f9f10745e35f6edb94db5f6bb",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -707,0 +708,8 @@ function homeAcademicPass(profile) {",
+            "@@ -713,0 +722,11 @@ function renderAcademicFields() {",
+            "@@ -720,2 +739,2 @@ function renderAcademicFields() {",
+            "@@ -1035,0 +1055 @@ async function loadSupportedUniversities() {",
+            "@@ -2449,0 +2470 @@ function sanitizeAccountWorkspacePayload(payload, homeSchool = activeHomeSchool(",
+            "@@ -2578,0 +2600,5 @@ function mergeAccountWorkspaceConflict(baseWorkspace, remoteWorkspace, localWork",
+            "@@ -4310 +4336 @@ function eligibilitySummary() {",
+            "@@ -5777,0 +5804,4 @@ function refreshApplicationFieldConditions(template) {",
+            "@@ -5832,0 +5863,43 @@ function applicationFlagsFromForm(form) {",
+            "@@ -5861,0 +5935 @@ function restoreApplicationContextForm() {",
+            "@@ -5913,0 +5988 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5932 +6007 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5934,0 +6010,5 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5941 +6021 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -6120,0 +6201,3 @@ function renderApplicationDocumentCatalog() {",
+            "@@ -6125,2 +6208,2 @@ function renderApplicationDocumentCatalog() {",
+            "@@ -7525,2 +7608,3 @@ function partnerSummaryPoints(item, key) {",
+            "@@ -7528 +7612 @@ function renderStudentPointList(points, { limit = 4, compact = false, fallback =",
+            "@@ -7530,0 +7615,3 @@ function renderStudentPointList(points, { limit = 4, compact = false, fallback =",
+            "@@ -7722,0 +7810,15 @@ function openUniversityDetail(item, { updateHistory = true } = {}) {",
+            "@@ -7963 +8065 @@ function renderPartnerStudentSummary(item) {",
+            "@@ -7993,0 +8096 @@ function renderUniversityOverview(item) {",
+            "@@ -8102 +8205 @@ function renderSchoolCompleteness(report) {",
+            "@@ -8104 +8207,2 @@ function renderSchoolCompleteness(report) {",
+            "@@ -10978 +11082 @@ function renderPersonalApplicationPlan(plan) {",
+            "@@ -11015 +11119 @@ async function checkEligibility(event) {",
+            "@@ -11065,0 +11170 @@ async function checkEligibility(event) {",
+            "@@ -12620 +12725,6 @@ function bindEvents() {"
+          ]
+        },
+        {
+          "path": "src/exchange_info/static/index.html",
+          "main_sha256": "0659638e38f07234ca532ee3dc5449ba6ed363c922ae163db4e558ceb2ded26f",
+          "ccu_working_sha256": "4510190e1665d2020dd5b56d02518ea58b2a48502afa4fc36ee1ce8e3765c065",
+          "other_sha256": "4880e9ccf7838d054cd9177401be7fcadb8aa2ae0f4aa4519f7be1192675044e",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -34 +34 @@",
+            "@@ -146 +146 @@",
+            "@@ -165,0 +166 @@",
+            "@@ -167 +168 @@",
+            "@@ -895,0 +897,6 @@",
+            "@@ -1198 +1205 @@",
+            "@@ -1200,2 +1207,2 @@",
+            "@@ -1205 +1212 @@"
+          ]
+        },
+        {
+          "path": "src/exchange_info/storage.py",
+          "main_sha256": "6bcd5bbb3c93ab35f304283b22e4ba18583283b6a49d6fd031e86ff0110ddc13",
+          "ccu_working_sha256": "1cc9c0cbd87d9b1125dfb2c7527ecf12652e9d74a7c316e1172c31bc1a46b758",
+          "other_sha256": "a8564a337b0d660b0c519ca94c92f5614972cba57ca4e45acccf5c4e3e0f68ec",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -51 +51 @@ from .school_identity import school_identity_key",
+            "@@ -60,0 +61 @@ BUNDLED_NTU_DIR = PACKAGE_DIR / \"official_data\" / \"ntu\"",
+            "@@ -554 +555 @@ def _bundled_workflow_paths() -> tuple[Path, ...]:",
+            "@@ -714,0 +716 @@ def load_destination_profiles(",
+            "@@ -748 +750 @@ def load_partner_research("
+          ]
+        },
+        {
+          "path": "src/exchange_info/university_registry.py",
+          "main_sha256": "00411be3ec6de16bb17c9d2ac26000fe6be8859638ae06e98dd558ecf03cdb31",
+          "ccu_working_sha256": "4399d96cea842bd209652a44244e63d7b9d9d3113bd51c41a6494a0bfffe2155",
+          "other_sha256": "b022592451226b701214b5fb786a16c403cc0956f492b76103a91844f5fb3459",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -98 +98,19 @@ NTU = UniversityProfile("
+          ]
+        },
+        {
+          "path": "uv.lock",
+          "main_sha256": "8a943920ecc4af095485e6a08fa4200d7a11f3e72ceb152de30ca1b9f5e73575",
+          "ccu_working_sha256": "edf3026e7302335cb90a578f9e41eba30a741ff287a2d71204012461c89bd79e",
+          "other_sha256": "edf3026e7302335cb90a578f9e41eba30a741ff287a2d71204012461c89bd79e",
+          "same_as_ccu": true,
+          "hunk_contexts": [
+            "@@ -1577,13 +1576,0 @@ wheels = [",
+            "@@ -1924 +1910,0 @@ dependencies = [",
+            "@@ -1957 +1942,0 @@ requires-dist = ["
+          ]
+        }
+      ]
+    },
+    {
+      "ref": "origin/data/tku-exchange-20261008",
+      "sha": "61659fe12cf5bb5f3fed2502f112039c7f8abd92",
+      "changed_path_count": 80,
+      "shared_paths": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py"
+      ],
+      "ccu_overlap": [
+        {
+          "path": "docs/api/openapi.json",
+          "main_sha256": "318799f44c5fd61cf819773e16e09350b6a11b824dbb897cfe540d51c04d8179",
+          "ccu_working_sha256": "3ea0a7f6631f2ad2da8daa5c1efc5497c1d438de7045f3e9c0559d4199bc46ef",
+          "other_sha256": "30d1542fe9594d24b6a91dc121d4c5fe4043907b7c9b23cf5c22c218801a432f",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -9769 +9769,4 @@",
+            "@@ -14871,0 +14875,34 @@"
+          ]
+        },
+        {
+          "path": "pyproject.toml",
+          "main_sha256": "b383b71e8eea2208ec2d1dbc0578a7778fe262fa9b8a88cbb3df9f540763d975",
+          "ccu_working_sha256": "0554660916373507be1643807ded2bc74290cffd13adccb0cbf17bba437af460",
+          "other_sha256": "87f197c879a6181a5a72527692a013365f6cc988a5af19894993db1a81b56d4e",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -49,0 +50,2 @@ exchange_info = ["
+          ]
+        },
+        {
+          "path": "src/exchange_info/api.py",
+          "main_sha256": "323dbf8ddffc4fbbb1693d7501930d47aa0fa276b5e5dace149dda0de083dd32",
+          "ccu_working_sha256": "f62dc7e993b0bf07ccad8bad6d305b554f7f8d695e109f8a00ae28e75908c57f",
+          "other_sha256": "9f99266ab7c62323b53eb4a93bff28df9ffd818f6bc056eedc24281f454762f2",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -385,0 +386,4 @@ from .student_view import build_student_dashboard, fetch_partner_universities",
+            "@@ -1075,0 +1080,7 @@ def create_app(",
+            "@@ -1128,0 +1140,2 @@ def create_app(",
+            "@@ -1137,0 +1151,2 @@ def create_app(",
+            "@@ -1186,0 +1202,3 @@ def create_app(",
+            "@@ -3139,0 +3158,2 @@ def create_app(",
+            "@@ -3149,0 +3170,2 @@ def create_app(",
+            "@@ -3169,0 +3192 @@ def create_app(",
+            "@@ -3171 +3194 @@ def create_app(",
+            "@@ -3180 +3203 @@ def create_app(",
+            "@@ -3588,0 +3612,3 @@ def create_app("
+          ]
+        },
+        {
+          "path": "src/exchange_info/application_documents.py",
+          "main_sha256": "12168fbd99c9aed6cbfcc7496d42d781979cbbdbf7d8d6e3826d32af39450194",
+          "ccu_working_sha256": "582e133cd4df9f3d35b9618fe761e2dc793c825b4e58ae219270a55ca195316a",
+          "other_sha256": "4cde4964570490d52f3721f27eb24bfd181819f7ad9269a38e907b0d1c825329",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -866,0 +867,3 @@ def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]",
+            "@@ -884,0 +888,5 @@ def templates_for_context(context: ApplicationCenterContext) -> list[Application",
+            "@@ -1329 +1337,3 @@ def build_packet_manifest("
+          ]
+        },
+        {
+          "path": "src/exchange_info/models.py",
+          "main_sha256": "f45e39b447520191f8f36cf67e29467be79a8b9b8e4fa6df88978963ae662bd5",
+          "ccu_working_sha256": "f0e0ca92ddbc3702a5ea8fc1707f3fb0d6c442bde5456de6e4f55126ed19715f",
+          "other_sha256": "b0e615a58bd6c55f23146a9d90aa10c6f114dcd83230848377b70a3710a8fcd3",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -559 +559 @@ class PartnerUniversity(BaseModel):"
+          ]
+        },
+        {
+          "path": "src/exchange_info/static/app.js",
+          "main_sha256": "e7c4ed2b9ed0b33c24261e84776610eb1a32b1e6328da34ad7af631872a0193c",
+          "ccu_working_sha256": "97354be3641c8f079d39415a790fcf2ea74a99aa207f37eafd55212a200ce21f",
+          "other_sha256": "0866d31471cf0f5c6cfafbb5f5d74d8519332c58ef761b759977b1a13ecdc936",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -114,0 +115,2 @@ const state = {",
+            "@@ -146,0 +149 @@ const state = {",
+            "@@ -1321,0 +1325,7 @@ function setHomeSchool(schoolName, { reload = true } = {}) {",
+            "@@ -1397,9 +1407,18 @@ async function refreshHomeUniversityData() {",
+            "@@ -1407,3 +1425,0 @@ async function refreshHomeUniversityData() {",
+            "@@ -3850,0 +3867,10 @@ function partnerAvailabilityMeta(item) {",
+            "@@ -3894,0 +3921,6 @@ function renderPartnerAvailabilityNotice(item) {",
+            "@@ -4310 +4342 @@ function eligibilitySummary() {",
+            "@@ -5833 +5865 @@ function applicationFlagsFromForm(form) {",
+            "@@ -5836 +5867,0 @@ function readApplicationContextForm() {",
+            "@@ -5910,0 +5942,4 @@ function initializeApplicationSelections() {",
+            "@@ -5913,0 +5949,7 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5915 +5957,4 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5916,0 +5962,3 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5918 +5965,0 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5923,0 +5971,3 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5924,0 +5975 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5941,4 +5992 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5947,0 +5996,5 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5960 +6013,2 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5964 +6018,5 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -6078,0 +6137,6 @@ function renderApplicationDocumentCatalog() {",
+            "@@ -6085 +6149,2 @@ function renderApplicationDocumentCatalog() {",
+            "@@ -6236,0 +6302,2 @@ async function handleApplicationContextChange(event) {",
+            "@@ -6238 +6304,0 @@ async function handleApplicationContextChange(event) {",
+            "@@ -6241 +6307,8 @@ async function handleApplicationContextChange(event) {",
+            "@@ -6247 +6320 @@ async function handleApplicationContextChange(event) {",
+            "@@ -7497,0 +7571,5 @@ function partnerDeadlineReference(item) {",
+            "@@ -7653 +7731 @@ function renderComparison(items) {",
+            "@@ -8102 +8180 @@ function renderSchoolCompleteness(report) {",
+            "@@ -8291 +8369 @@ function renderStudentSurvivalGuide(item, profile) {"
+          ]
+        },
+        {
+          "path": "src/exchange_info/static/index.html",
+          "main_sha256": "0659638e38f07234ca532ee3dc5449ba6ed363c922ae163db4e558ceb2ded26f",
+          "ccu_working_sha256": "4510190e1665d2020dd5b56d02518ea58b2a48502afa4fc36ee1ce8e3765c065",
+          "other_sha256": "ffdcaf00de10f13238c6a62c528e7b6764784ac0aadea1cc8e6ec4badf93c385",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -167 +167 @@",
+            "@@ -733 +733 @@",
+            "@@ -1205 +1205 @@"
+          ]
+        },
+        {
+          "path": "src/exchange_info/storage.py",
+          "main_sha256": "6bcd5bbb3c93ab35f304283b22e4ba18583283b6a49d6fd031e86ff0110ddc13",
+          "ccu_working_sha256": "1cc9c0cbd87d9b1125dfb2c7527ecf12652e9d74a7c316e1172c31bc1a46b758",
+          "other_sha256": "abc03f6694062b723485d425a2125244d2ae4bff4c247550d99110305956f525",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -51 +51 @@ from .school_identity import school_identity_key",
+            "@@ -58,0 +59 @@ BUNDLED_NTPU_DIR = PACKAGE_DIR / \"official_data\" / \"ntpu\"",
+            "@@ -554 +555 @@ def _bundled_workflow_paths() -> tuple[Path, ...]:",
+            "@@ -712,0 +714 @@ def load_destination_profiles("
+          ]
+        },
+        {
+          "path": "src/exchange_info/university_registry.py",
+          "main_sha256": "00411be3ec6de16bb17c9d2ac26000fe6be8859638ae06e98dd558ecf03cdb31",
+          "ccu_working_sha256": "4399d96cea842bd209652a44244e63d7b9d9d3113bd51c41a6494a0bfffe2155",
+          "other_sha256": "37d86b0a6f0bfe82c803eb60f5e5f3990b1b06741edc65746145b18a1f02d526",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -7,0 +8,2 @@ from typing import Literal",
+            "@@ -79,0 +82,2 @@ NTPU = UniversityProfile(",
+            "@@ -98 +102 @@ NTU = UniversityProfile("
+          ]
+        }
+      ]
+    }
+  ]
+}

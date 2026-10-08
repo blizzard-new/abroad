@@ -1,6 +1,6 @@
 # 中正大學 2027 春季校級薦外交換資料交接
 
-第二十二輪更新：943份來源、55份official_partial流程、32校230項外校要求（50附條件、28實開官方文件連結），17欄305當期／327待／211缺／20舊／71矛盾／1明示未公告。新增慶熙分階段GoogleForm、EPITA泛用政策差異、Jena三份後續表、DIT原費章與兩次修正；生活通知email誤推送件方法已修。424完整回歸416pass／7skip／1同main既知NTPUfail，桌機／手機12項pass。合併影響及逐byte／hash／wheel證據見[twentysecond-validation-summary](ccu-validation-2026-10-08/twentysecond-validation-summary.json)與[twentysecond-merge-scope](ccu-validation-2026-10-08/twentysecond-merge-scope.json)。工作繼續，公開來源未稱耗盡；十三個第二十三輪必要來源已取得並持續讀正文。
+第二十三輪候選：956來源、104母校條目（52列名額／49不開放／3空白非零）、55 legacy／official_partial流程、32校237項host要求（57附條件、28已核實直連）、131份host附件。935欄304當期／331待／208缺／20參考／71矛盾／1明示未公告，functional_parity_complete=false。手機桌面4項真實四校API/UI驗收通過101.15s，修復母校切換空值與分享URL舊參數回切兩個問題；外部瀏覽器模板TLS阻礙另列。此為commit前證據，最終候選必須執行`scripts/validate_ccu_candidate.py --output <clone外路徑>`，同一SHA完整回歸／瀏覽器／API／wheel結果以其輸出和draft PR驗收記錄為準。
 
 查核日：2026-10-08。Repository：`blizzard-new/abroad`。
 獨立 clone：`/workspace/abroad-ccu-20261008`；分支：`data/ccu-exchange-20261008`。
@@ -8,7 +8,7 @@
 交付前遠端 main 已前進至 `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`（第一批交付時為 `293546e807294dc0812f390b240a4cfb68e86cd0`）；第一批交付保留開工基準；第二輪依使用者要求安全整合此最新main，保留臺大與既有資料，未寫入其他session工作目錄。
 本 clone 未找到 AGENTS.md 或適用 `.agents/skills`。未寫入其他學校 session 的工作目錄。
 
-最新數量、功能對照與實際驗證見末節第十八輪及 [55筆功能對照](ccu-functional-parity-2026-10-08.md)；前節保留歷史檢查點，不能取代最新數字。
+最新數量、功能對照與實際驗證見末節第二十三輪及 [55筆功能對照](ccu-functional-parity-2026-10-08.md)；前節保留歷史檢查點，不能取代最新數字。
 
 ## 已核實適用範圍
 
@@ -539,3 +539,18 @@ HCMUTE2027 factsheet的5 mandatory／2 optional資料由母校整包彙整email�
 本輪五個共用程式修改及校別ccu_documents.py列於eighteenth-merge-scope.json；整分支相對main仍14共用code paths。四校最終375 passed、7 skipped、1 NTPU既有失敗，獨立解包最新main f6ad1b8再次重現目的地0對預期1；中正相關全通過。瀏覽器同次31 passed，含28次真實表單、HCMUTE畫面及NTU／共用條件回歸。首輪四校374 passed、7 skipped、2 failed（中正舊26校斷言與同一NTPU失敗）；舊斷言更新27校後同套完整重跑。首輪瀏覽器4 failed（測試未展開年級及email空白定位），第二輪3 passed/1 failed（攔到multi-plan背景請求），真實條件表單請求辨識後4 passed，再完整31 passed。原始失敗與最終logs/XML均保留，不宣稱全repo測試通過。
 
 六個builder、22生成檔重建一致；49個原CGU/NTPU/NTU檔案及77原published hash與latest main一致；110 API routes、required欄位及完整OpenAPI snapshot不變。Ruff校別／新測試通過；六共用Python檔與37a36ec基準56既有診斷相同、无新增。wheel含855中正檔案與13相關code檔byte一致，hash與來源／頁數／API／截圖證據在eighteenth-*。未合併或部署，不登入外校、提交學生資料、聯絡學校或改存取／安全設定。公開候選仍可續查，不把partial或缺值當作全部工作無法繼續的理由。
+
+
+## 第二十三輪：政府表、圖書館範圍與同SHA驗收候選
+
+21筆原候選取得中13筆新增來源、6筆正文排除及2筆本文hash相同alias；另1次HiKorea匿名索引GET亦與已讀本文相同，共22次取得檢查，並非22份新source。13份raw與7附件保存，新列7個慶熙ARC到校後條件文件，簽名或蓋章而非一律兩者；租約非本人名下才需提供者身分及確認書，照片條件依案件區別。HiKorea政府表PDF來自官網匿名下載按鈕原參數POST；無登入、個人資料、TLS繞過或申請送件。GET下載endpoint為空，未採作正文；保存PDF魔術碼、85427bytes與hash，錯誤MIME亦留證。source_url表示實際POST取得來源，UI official_form_url為官網索引且verified=false，不偽装成可直接GET下載。
+
+慶熙2021-2宿舍手冊僅歷史參考；30,000現金ARC與政府2025-01-01起35,000規定衝突。東北JYPE往屆10／20課只是sample。SDU自動學生卡借書、CPR與私人借書人保證条件，Ostfalia校內卡／外部客借與催還費，FHNW swisscovery/FH卡與SWITCHeduID、2022借閱條款、2023費表逐項分開；個別圖書館規定不製造成交換初次必交文件或每月固定生活費。ZHAW SEMP與CCU雙邊、AMU freemover繳費與協議交換分开；Cukurova當期p3免學費為既有current重新核對，非新增current。
+
+本輪校別修改：ccu_overseas.py、ccu_profile.py保存aggregate conflict／pending中的原current、reference evidence，verified_current需至少一份current證據；fetch_ccu_overseas_sources.py僅允許精確政府公開表參數POST且拒絕個人欄位／其他URL／PUT。共用app.js修復partner空值及顯式母校切換同步既有home query參數，校別degreeFilterOptions只作大學部／碩／博／研究所分類而不創造資格，index.html更新cache版本。uv.lock刪15行已不在pyproject的pytesseract殘留，其他依賴版本未變；原lock在本地與CI指定uv0.11.26均不一致，修正後lock --check與frozen sync通過。
+
+最新來源、字節／API相容性及重建proof見twentythird-*。943既有source JSON保持字節；956來源中939有text hash核對、17未設；152個source的bundled_file hash核對數包含host以外保存檔，不等於131份host附件。46個最新main官方data檔字節保持，77原CGU published內容hash等於獨立main證據。API110 paths及既有required不變，但6既有optional schema有差異、4新增component，完整OpenAPI並非與main相同。前文49檔為歷史錯誤計數，現在實際46，不能沿用49作最終證據。
+
+真實four-school acceptance使用獨立server和原production bundles，未假造CGU partner list或API/state。手機390／桌面1440都完成中正搜尋Nagoya／KHU、收藏比較、兩API實際配對與計畫評估、實際task保存重載、4校切換與grade/template隔離；另一組完成文件中心7ARC條件／階段／government索引狀態，實點Jena官方DOC，個人準備工具必填與草稿重載、https來源控制。4 passed／101.15s。外部DOC瀏覽器實點ERR_CERT_AUTHORITY_INVALID，live_external_browser_passed=false，未回放或停TLS驗證。CGU首次production dashboard冷啟動約26–28秒，測試先量測並warm真实API，沒有將性能限制藏成無延遲。
+
+前期定位、目標確認、CGU冷啟動等待、兩個真實UI bug及必填草稿問題造成的失敗試次保存在twentythird-acceptance-trials/，不能混作最終通過。13個新增單元全通過、含profile／account workspace共23項targeted通過7.69s；最終候選同SHA完整gate尚須執行，結果不預先填入。既有NTPU目的地數測試main與分支皆0對預期1，仍是未解驗收阻礙；CI上一候選failure且0 jobs未測，不以基底問題或本機通過宣稱可上線。其他校共享差異見[整合風險表](ccu-integration-risk-2026-10-08.md)，未合併其他分支，延遲回應／快速切換的跨分支隔離整合未跑。

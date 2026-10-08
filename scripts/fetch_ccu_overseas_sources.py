@@ -175,7 +175,33 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
         target = f"https://drive.usercontent.google.com/download?id={match[1]}&export=download"
     client = session or requests.Session()
     try:
-        response = client.get(target, timeout=(10, 35))
+        method = item.get("public_download_method", "GET")
+        if method == "GET":
+            response = client.get(target, timeout=(10, 35))
+        else:
+            # HiKorea's public form button submits only four file identifiers.
+            # This is an anonymous file download, with no application data.
+            parameters = item.get("public_download_parameters")
+            index_url = "https://www.hikorea.go.kr/board/BoardApplicationListR.pt?page=1"
+            if (
+                method != "POST"
+                or target != "https://www.hikorea.go.kr/fileNewExistsChkAjax.pt"
+                or item["authority"] != "government_official_public_document"
+                or parameters != {
+                    "spec": "pt",
+                    "dir": "info",
+                    "apndFileNm": "down-1-1-2.pdf",
+                    "oriFileNm": "통합신청서(신고서).pdf",
+                }
+            ):
+                raise ValueError("Unsupported public file download request")
+            client.get(index_url, timeout=(10, 35)).raise_for_status()
+            response = client.post(
+                target, data=parameters, headers={"Referer": index_url},
+                timeout=(10, 35),
+            )
+            result["public_file_view_url"] = index_url
+            result["extraction_method"] = "anonymous_public_form_button_file_parameters"
         result.update(
             requested_url=target,
             final_url=response.url,

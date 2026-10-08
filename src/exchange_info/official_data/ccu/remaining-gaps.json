@@ -4,11 +4,11 @@
   "round": "2027春季",
   "definition": "逐校實際取得與欄位映射清冊；未映射不自稱未讀，既有逐欄review也不推整份／全部政策已核。候選href不是政策事實或已驗證可開啟。",
   "input_sha256": {
-    "profile-reviewed-fields.json": "1a584a0eaf49ce02337ec12dffc7e7ee834258eb3ee8e7301e14513ba274ad1c",
-    "overseas-reviewed-fields.json": "e1c872d57d5506300c3c7a4d931989932d12244fac30aee6d7fc0c28ec75f00a",
-    "partner-document-requirements.json": "60e1267fb1e73df05df9bc71c8f58a9e8d4e5b73bb636b53dbdd19045ce4932e",
-    "overseas-source-registry.json": "de26d5bcccedd38101aaac40f3c5b4ed9143fcdb37c1830867816208769f5147",
-    "overseas-source-requests.json": "7771f3ab007c927e6bbc81d15acc411768e9f66a6f0c9c6516f9101b9b402579",
+    "profile-reviewed-fields.json": "a2669bbf8aed603ce4bf1e55c7093d49516b8bccb824ef4dac993728de31bbd3",
+    "overseas-reviewed-fields.json": "dc56acfc0677435586b02997780061ce2e72faa0d6cc0955b71a2c7972e3f5ef",
+    "partner-document-requirements.json": "f7418d59b16e4c09e7f2cb7c80ce7270395674efc894102c5b75791ac2170052",
+    "overseas-source-registry.json": "5febc226a6b787b909a97196f42931820d7dc879cfe5eb04ad05cf62a1bc4389",
+    "overseas-source-requests.json": "8be61be3ea9982af1ab4655ec1418a8aebaa960d6cfca4fbd88f717047f69121",
     "semantic-review-ledger.json": "9bb4b811c577b8b9200b6570d6ab29540e233c6ea75c77c35d1224f0530f44a5"
   },
   "input_source_json_sha256": {
@@ -954,10 +954,23 @@
     "p39-r22-e1425d9b28": "fd1a0f3de6c54677ec7cede053e1649ac982b78e39d44b9157dff4fe4d792065",
     "p102-r22-de4a40d1ca": "d6cdf237753232ec05ec47c829df6ed251373ba1e90185389c3a9ae378c33127",
     "p102-r22-93b657ba1c": "a4bb58d746229bc0913c5ead2eedfaad21f93f53c198235cf3a7afb062c7d2d4",
-    "p104-r22-1843b95935": "6491b3a8f7ea00c570ba6e869b5b303164db0cc1e366f50125a32af3b869a16d"
+    "p104-r22-1843b95935": "6491b3a8f7ea00c570ba6e869b5b303164db0cc1e366f50125a32af3b869a16d",
+    "p45-r23-84928111ff": "56d8bbe97a5c4574aac8e0f3d8d6569b1b510e10b8b96e4bdd786018996ae73d",
+    "p45-r23-46f871a492": "89a50b3d31d42218783bf253aafb5610fca0ba94878470f4971c3db90ff9d8ea",
+    "p89-r23-4cf5f04e25": "ac32f82eba3a8c352d8b4dd20e3825cc180b56bba10ad479b1979a268193acc4",
+    "p100-r23-b876382cc2": "aa732207cfaaa1c9f2c599ca2186b8990a73909f2a5d339b1d19447424b9e5a9",
+    "p35-r23-ae2833c5b0": "3bb6efd59e5811263202df79a964e7e31f6cfb808ed5a7d4daf0929b30600892",
+    "p104-r23-367d887527": "25d6ca05182ec67026d4baf1a338c3193a531e2efa6a8d5cb78bf9fcd164d52c",
+    "p100-r23-follow-90a8f3f877": "29f65a469399502958642b6eebc5ddb74d0764fa2b5db9948d4992ea1e1af5e2",
+    "p104-r23-follow-ea29b0ff52": "5203fc789d55221b97dd20b1b9038e058cb0085c9f178d5f02da41f885042182",
+    "p104-r23-follow-f070da0276": "10d681f8141513db9e728b23692f15edce58d658a6360ba2fd38196f11f21e30",
+    "p45-r23-follow-3879e18719": "1c24352028f2b85f401df67e20db995c2f3184978af7d7780318d3fbfbfd9b01",
+    "p45-r23-follow-11e35a3763": "d5b12a00d824026698575303d7ab1219c42de6f449d24b6e3f2a3440c07c46a7",
+    "p45-r23-government-integrated-form": "c5b7cec1ee652a2861cfb174f1ffa4cb19c862aaefb11862d4be5f743be493f7",
+    "p104-r23-follow-legacy-fee-link": "941d10d048074c807dd10a4837374559fa149eb57eda051038d3f00a4d10f80a"
   },
   "school_count": 55,
-  "source_count": 943,
+  "source_count": 956,
   "gap_status_counts": {
     "missing": 71,
     "reference_only": 17,
@@ -6027,6 +6040,20 @@
           "sha256": "95e32636d9cc55e7d24b317ae2633def0b4af90a5404a78a1193d5b6801b7f2c",
           "bundled_file": "partner_forms/p35-r22-fe0b4d109b.pdf",
           "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p35-r23-ae2833c5b0",
+          "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/jype/3-class-schedule-sample/",
+          "checked_at": "2026-10-08T19:30:54.268822+00:00",
+          "status": "html",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "正文自述過去JYPE學生課表示例，沒有2027年，不升2027IRT或課時硬要求",
+          "content_applicability": "reference_only",
+          "content_review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+          "sha256": "58746153ee151a4711ac35f47f5e8bce4150f34ea2e9069554f06fad646493f8",
+          "bundled_file": null,
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         }
       ],
       "host_document_count": 0,
@@ -6037,7 +6064,7 @@
         {
           "url": "https://www.insc.tohoku.ac.jp/english/exchange/colabs-short-term-3/",
           "label": "TU Research-Oriented Incoming Student (ROIS) Scholarship",
-          "discovered_in_source": "p35-r21-ac85d60147"
+          "discovered_in_source": "p35-r23-ae2833c5b0"
         },
         {
           "url": "https://www.insc.tohoku.ac.jp/english/exchange/deep-bridge/",
@@ -6342,11 +6369,6 @@
         {
           "url": "https://www.insc.tohoku.ac.jp/english/exchange/currentstudents/#ank07",
           "label": "Contact",
-          "discovered_in_source": "p35-r21-ac85d60147"
-        },
-        {
-          "url": "https://www.insc.tohoku.ac.jp/english/exchange/jype/3-class-schedule-sample/",
-          "label": "Class Schedule（Sample）",
           "discovered_in_source": "p35-r21-ac85d60147"
         },
         {
@@ -8028,8 +8050,8 @@
         },
         "application_forms": {
           "status": "needs_confirmation",
-          "known_value": "提名後寄学生onlineapplicationlink；未查得可公開下載完整表，須依當期學生通知。 2026–2027PDF第2页另GoogleForm提交银行／英文保险，确切期限TBA、开证日另通知；未明示必须等录取。公开完整个人form仍提名后发。",
-          "reason": "精確正文／附件核實；以年度、身分、學制、校區分流，矛盾與私人後發表單保留待核。",
+          "known_value": "提名後寄学生onlineapplicationlink；未查得可公開下載完整表，須依當期學生通知。 2026–2027PDF第2页另GoogleForm提交银行／英文保险，确切期限TBA、开证日另通知；未明示必须等录取。公开完整个人form仍提名后发。 公開ApplicationForm正文是統合居留申報，不是KHU平台交換初次申請；簽名或印章為擇一，家人同意欄依案件，不加全體家長簽章。 HiKorea官方清單實際公開下載的別紙34號表正文修訂2022-04-12；與KHU未年鏡像文字不同。官方現在提供該版，不等官方2027新版；PDF依匿名按鈕POST取得，原檔可開。",
+          "reason": "逐項正文核實適用年／對象；其他未知、不同版本與私人通知保留，不由單一服務證據宣稱整欄完整。",
           "evidence": [
             {
               "source_id": "p45-mirror",
@@ -8060,6 +8082,36 @@
               "content_hash": "56860dba23722ac7d4bd748ca0fac40c84de7a4bd687fe975b9af9b3c2551455",
               "text_sha256": "8d6f6fef333411d67f0f538ed6c6080d29b77bb48e65970595db9c8f8e8aad5a",
               "note": "evidence.status為欄位匯總；來源角色／實際年度由academic_year與原來源分開保存，未年／舊期未升2027。"
+            },
+            {
+              "source_id": "p45-r23-84928111ff",
+              "source_url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Application%20form.pdf",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "KHU未年統合居留申報表1頁，沒有法規修訂日期；不是交換初次申請表",
+              "application_round": null,
+              "checked_at": "2026-10-08T19:30:50.125961+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "APPLICATION FORM (REPORT FORM) □ 업무선택 SELECT APPLICATION [ ] 외국인 등록 FOREIGN RESIDENT REGISTRATION [ ] 체류자격외 활동허가 (희망 자격 : ) PHOTO 여권용 사진(35㎜×45㎜) 촬영일부터 6개월이 경과하지 않아야 함 taken within last 6 months 외국인 등록 및 등록증 재발급 시에만 사진 부착 Photo only for Foreign Resident Registration (Reissued) ENGAGE IN ACTIVITIES NOT COVERED BY THE STATUS OF SOJOURN / Status to apply for ( ) [ ] 등록증 재발급 REISSUANCE OF REGISTRATION CARD [ ] 근무처변경ㆍ추가허가 / 신고 CHANGE OR ADDITION OF WORKPLACE [ ] 체류기간 연장허가 EXTENSION OF SOJOURN PERIOD [ ] 재입국허가 (단수, 복수) REENTRY PERMIT (SINGLE, MULTIPLE) [ ] 체류자격 변경허가 (희 망 자 격 : ) [ ] 체류지 변경신고 ALTERATION OF RESIDENCE CHANGE OF STATUS OF SOJOURN / Status to apply for ( ) [ ] 체류자격 부여 (희 망 자 격 : ) [ ] 등록사항 변경신고 CHANGE OF INFORMATION ON FOREIGN RESIDENT REGISTRATION GRANTING STATUS OF SOJOURN / Status to apply for ( ) 성 명 Name In Full 성 Surname 명 Given names 漢字姓名 생년월일 Date of Birth 년 yy 월 mm 일 dd 성 별 Sex [ ]남 M [ ]여 F 국 적 Nationality/ Others 외국인등록번호 Foreign Resident Registration No. (If any) 여권 번호 Passport No. 여권 발급일자 Passport Issue Date 여권 유효기간 Passport Expiry Date 대한민국 내 주소 Address In Korea 전화 번호 Telephone No. 휴대 전화 Cell phone No. 본국 주소 Address In Home Country 전화 번호 Telephone No. 재 학 여 부 School S tatus 초[ ], 중[ ], 고[ ] Elementary[ ], Middle[ ], High[ ] 학교 이름 Name of School 전화 번호 Telephone No. 근무처 Workplace 원 근무처 Current Workplace 사업자등록번호 Business Registration No. 전화 번호 Telephone No. 예정 근",
+              "content_hash": "a00948b93a57ca5ffff10a24e21e6f1ac0a25719d03822b1d805664ed0245d35",
+              "text_sha256": "56e12a45949243493a1c5596e1212eb1865c2f89adbed7ef61454489bdcf5564",
+              "note": "來源實際年份及recipient分開；無年／2022版本／下載成功不升2027當期模板。"
+            },
+            {
+              "source_id": "p45-r23-government-integrated-form",
+              "source_url": "https://www.hikorea.go.kr/fileNewExistsChkAjax.pt",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "HiKorea現行公開清單提供法規別紙34號、正文2022-04-12修訂；非2027新版，個人法定適用待核",
+              "application_round": null,
+              "checked_at": "2026-10-08T19:47:32.302115+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "2022. 4. 12.> 통합신청서 (신고서 ) APPLICATION FORM (REPORT FORM) ※ 신청서는 한글 또는 영문으로 작성하시기 바랍니다. (Please complete this form in Korean or English.) □ 신청/신고 선택 SELECT APPLICATION/REPORT [ ] 외국인 등록 FOREIGN RESIDENT REGISTRATION [ ] 체류자격 외 활동허가 (희망 자격 : ) PHOTO 여권용 사진(35㎜×45㎜) * 촬영일부터 6개월이 지나 지 않아야 함 taken within last 6 months * 외국인 등록 및 등록증 재발급 시에만 사진 부착 Photo only for Foreign Resident Registration (Reissued) ENGAGE IN ACTIVITIES NOT COVERED BY THE STATUS OF SOJOURN / Status to apply for ( ) [ ] 등록증 재발급 REISSUANCE OF REGISTRATION CARD [ ] 근무처 변경ㆍ추가허가 / 신고 CHANGE OR ADDITION OF WORKPLACE [ ] 체류기간 연장허가 EXTENSION OF SOJOURN PERIOD [ ] 재입국허가 (단수, 복수) REENTRY PERMIT (SINGLE, MULTIPLE) [ ] 체류자격 변경허가 (희 망 자 격 : ) [ ] 체류지 변경신고 ALTERATION OF RESIDENCE CHANGE OF STATUS OF SOJOURN / Status to apply for ( ) [ ] 체류자격 부여 (희 망 자 격 : ) [ ] 등록사항 변경신고 CHANGE OF INFORMATION ON REGISTRATION GRANTING STATUS OF SOJOURN / Status to apply for ( ) 성명 Name In Full 성 Surname 명 Given names 생년월일 Date of Birth 년 yyyy 월 mm 일 dd 성 별 Sex [ ]남 M [ ]여 F 국적 Nationality 외국인등록번호 Foreign Resident Registration No. 여권번호 Passport No. 여권 발급일자 Passport Issue Date 여권 유효기간 Passport Expiry Date 대한민국 내 주소 Address In Korea 전화번호 Telephone No. 휴대전화 Cell phone No. 본국 주소 Address In Home Country 전화번호 Phone No. 재 학 여 부 School S tatus 미취학[ ], 초[ ], 중[ ], 고[ ] Non-school[ ], Elem entary[ ], M iddle[ ], High[ ] 학교 이름 Name of School 전화번호 Phone No.",
+              "content_hash": "07a9c116b84e60807e161226e10c665de33eb75051bfd30e61653875655b11d7",
+              "text_sha256": "8bfa795854448a706e4a099269d05f8ad3c016d5709ece3f0e761045ed50b87f",
+              "note": "來源實際年份及recipient分開；無年／2022版本／下載成功不升2027當期模板。"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
@@ -8149,9 +8201,79 @@
           "sha256": "8e7fef1fd55e39eada310406b288fd33bf075a3e9807665e213b00483089c933",
           "bundled_file": null,
           "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p45-r23-84928111ff",
+          "source_url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Application%20form.pdf",
+          "checked_at": "2026-10-08T19:30:50.125961+00:00",
+          "status": "pdf",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "KHU未年統合居留申報表1頁，沒有法規修訂日期；不是交換初次申請表",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+          "sha256": "a00948b93a57ca5ffff10a24e21e6f1ac0a25719d03822b1d805664ed0245d35",
+          "bundled_file": "partner_forms/p45-r23-84928111ff.pdf",
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p45-r23-46f871a492",
+          "source_url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Guide%20of%20foreigners'%20dormitory%20application.pdf",
+          "checked_at": "2026-10-08T19:30:50.126645+00:00",
+          "status": "pdf",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "封面明示2021-2nd semester，10頁舊宿舍申請指南；不是2027申請表或保證房型",
+          "content_applicability": "reference_only",
+          "content_review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+          "sha256": "12f2dfa50b44fa5cba553a1b8de095343da4c0f6c9f2c32b0e141e15b49e0d3e",
+          "bundled_file": "partner_forms/p45-r23-46f871a492.pdf",
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p45-r23-follow-3879e18719",
+          "source_url": "https://www.hikorea.go.kr/board/BoardApplicationListR.pt?page=1",
+          "checked_at": "2026-10-08T19:44:22.079988+00:00",
+          "status": "html",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "HiKorea現行官方民願表清單；只核統合申報表按鈕與公開下載參數，非2027申請梯次",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+          "sha256": "4463c91ad17126a2984805db2e3b679c17c6a11609b2fee4d694e433c7bed5ce",
+          "bundled_file": null,
+          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+        },
+        {
+          "source_id": "p45-r23-follow-11e35a3763",
+          "source_url": "https://www.immigration.go.kr/immigration_eng/1832/subview.do?enc=Zm5jdDF8QEB8JTJGYmJzJTJGaW1taWdyYXRpb25fZW5nJTJGMjI5JTJGNTkwMzE0JTJGYXJ0Y2xWaWV3LmRvJTNGcGFzc3dvcmQlM0QlMjZyZ3NCZ25kZVN0ciUzRCUyNmJic0NsU2VxJTNEJTI2cmdzRW5kZGVTdHIlM0QlMjZpc1ZpZXdNaW5lJTNEZmFsc2UlMjZwYWdlJTNEMSUyNmJic09wZW5XcmRTZXElM0QlMjZzcmNoQ29sdW1uJTNEJTI2c3JjaFdyZCUzRCUyNg%3D%3D",
+          "checked_at": "2026-10-08T19:44:23.353774+00:00",
+          "status": "html",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "韓國移民署2024-12-14公告，2025-01-01起居留卡發證35,000KRW；不保2027個人最終費用",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+          "sha256": "fd621ae6ca7e6ed3bad4537cb671586aa3eb9146764bdc62ecfe64268ddf8659",
+          "bundled_file": null,
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p45-r23-government-integrated-form",
+          "source_url": "https://www.hikorea.go.kr/fileNewExistsChkAjax.pt",
+          "checked_at": "2026-10-08T19:47:32.302115+00:00",
+          "status": "pdf",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "HiKorea現行公開清單提供法規別紙34號、正文2022-04-12修訂；非2027新版，個人法定適用待核",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+          "sha256": "07a9c116b84e60807e161226e10c665de33eb75051bfd30e61653875655b11d7",
+          "bundled_file": "partner_forms/p45-r23-government-integrated-form.pdf",
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         }
       ],
-      "host_document_count": 14,
+      "host_document_count": 21,
       "host_list_completeness": "partial_not_exhaustive",
       "academic_scope_options": [],
       "document_access_constraints": [],
@@ -8180,6 +8302,11 @@
           "url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Application form.pdf",
           "label": "1) Application form",
           "discovered_in_source": "p45-r22-fc6f5e2f59"
+        },
+        {
+          "url": "https://www.hikorea.go.kr/board/BoardApplicationListR.pt",
+          "label": "민원서식",
+          "discovered_in_source": "p45-r23-follow-3879e18719"
         }
       ],
       "public_sources_exhausted": false,
@@ -16215,8 +16342,8 @@
         },
         "campus_life": {
           "status": "needs_confirmation",
-          "known_value": "未年SDU資料列閱讀室、實驗室、圖書館、健身等設施；各校區與交換生可用資格／費用未核。 一般incoming支持不保SPS degree同範圍；若申specialexam須送每個relevantstudyboard及disability證據，非所有交換必繳健康資料／不保資助。 一般SDU card學生library24/7 access，staffed operating hours依city不同，不等全天有librarian；2027開通／假日通知另核。 一般圖書館user需在Denmark住址／註冊，yellowhealthcard為librarycard；正文LastUpdated2026-02-03，不由此列交換入學healthform。",
-          "reason": "精確正文／附件核實；以年度、身分、學制、校區分流，矛盾與私人後發表單保留待核。",
+          "known_value": "未年SDU資料列閱讀室、實驗室、圖書館、健身等設施；各校區與交換生可用資格／費用未核。 一般incoming支持不保SPS degree同範圍；若申specialexam須送每個relevantstudyboard及disability證據，非所有交換必繳健康資料／不保資助。 一般SDU card學生library24/7 access，staffed operating hours依city不同，不等全天有librarian；2027開通／假日通知另核。 一般圖書館user需在Denmark住址／註冊，yellowhealthcard為librarycard；正文LastUpdated2026-02-03，不由此列交換入學healthform。 圖書館學生自動註冊並用studentcard，通常30日；無CPR的SDU/Flensburg學生持有效學生證可免保證人。PrivateBorrower／staff與學生分開；現行網頁自述取代前版、2026-02-03更新，不保2027費率不再變。",
+          "reason": "逐項正文核實適用年／對象；其他未知、不同版本與私人通知保留，不由單一服務證據宣稱整欄完整。",
           "evidence": [
             {
               "source_id": "p89-mirror",
@@ -16271,6 +16398,19 @@
               "content_hash": "528e76aff98cd69b63bb7a14dde849d5ee8cf0bdbe0dec5f8a0362cfcc0b7b7c",
               "text_sha256": "5ea993f0a3ac03439e5407c0f3bce957e2aaa0abe251a1e9f107ea5c9d68b1bb",
               "note": "evidence.status為欄位匯總；來源角色／實際年度由academic_year與原來源分開保存，未年／舊期未升2027。"
+            },
+            {
+              "source_id": "p89-r23-4cf5f04e25",
+              "source_url": "https://www.sdu.dk/en/bibliotek/om-biblioteket/laaneregler",
+              "source_pages": [],
+              "academic_year": "圖書館網頁LastUpdated2026-02-03，自述現行規則取代舊版；非2027固定申請年度",
+              "application_round": null,
+              "checked_at": "2026-10-08T19:30:52.892635+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "SDU Students To borrow materials, you must have a valid student card and accept the library’s loan rules. The student card must be presented at each loan. Your student card is strictly personal, and as a borrower, you are personally liable for borrowed materials and responsible for returning them on time. The loan period is the time from when the material is borrowed until it can be recalled: Standard loans: 30 days Library use only: Selected materials may only be used in the library. These are marked “Library Use Only” in the catalog and on the books. Loans from other libraries: Follow the loan period set by the lending library. Renewal of standard loans is possible if the material is not reserved by another borrower. Renewals can be made directly in the library catalog. Materials are recalled when the loan period expires. Recalls are sent by email. If the material is not returned or renewed within 7 days after the first recall, a second recall will be sent with a fee of DKK 25 per recalled item. If the material is still not returned or renewed within 9 days after the second recall, an invoice will be issued for the cost of the material plus an additional invoicing fee of DKK 150 per case. The invoicing fee applies even if the book is later returned after the replacement process has started. If the borrower does not respond to the invoice, the case will be sent to debt collect",
+              "content_hash": "46f492ac834e72c580141b941f06f9f4f028003b2d87e85af79f6905e8779021",
+              "text_sha256": "4aca86b700dd862fafb8452ac3d32fb9b46cc80bec71cb2714d7264399553c1f",
+              "note": "來源實際年份及recipient分開；無年／2022版本／下載成功不升2027當期模板。"
             }
           ],
           "next_public_action": "續查官方一般服務及校區指引，保留未標年度和交換身分限制。"
@@ -16726,6 +16866,20 @@
           "sha256": "1e546f8970fbfa641d16395f3e2c1a2e3dcac8332c9be02cd5692fae3cda146f",
           "bundled_file": null,
           "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p89-r23-4cf5f04e25",
+          "source_url": "https://www.sdu.dk/en/bibliotek/om-biblioteket/laaneregler",
+          "checked_at": "2026-10-08T19:30:52.892635+00:00",
+          "status": "html",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "圖書館網頁LastUpdated2026-02-03，自述現行規則取代舊版；非2027固定申請年度",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+          "sha256": "46f492ac834e72c580141b941f06f9f4f028003b2d87e85af79f6905e8779021",
+          "bundled_file": null,
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         }
       ],
       "host_document_count": 1,
@@ -16741,37 +16895,37 @@
         {
           "url": "https://www.sdu.dk/en/uddannelse/exchange",
           "label": "Exchange and guest studies",
-          "discovered_in_source": "p89-r21-611f4957e4"
+          "discovered_in_source": "p89-r23-4cf5f04e25"
         },
         {
           "url": "https://www.sdu.dk/en/bibliotek",
           "label": "Library",
-          "discovered_in_source": "p89-r21-611f4957e4"
+          "discovered_in_source": "p89-r23-4cf5f04e25"
         },
         {
           "url": "https://www.sdu.dk/en/bibliotek/brug-biblioteket",
           "label": "Use the library",
-          "discovered_in_source": "p89-r21-611f4957e4"
+          "discovered_in_source": "p89-r23-4cf5f04e25"
         },
         {
           "url": "https://www.sdu.dk/en/bibliotek/om-biblioteket",
           "label": "About the Library",
-          "discovered_in_source": "p89-r21-611f4957e4"
+          "discovered_in_source": "p89-r23-4cf5f04e25"
         },
         {
           "url": "https://www.sdu.dk/en/bibliotek/om-biblioteket/strategi",
           "label": "Library strategy",
-          "discovered_in_source": "p89-r21-611f4957e4"
+          "discovered_in_source": "p89-r23-4cf5f04e25"
         },
         {
           "url": "https://www.sdu.dk/en/bibliotek/om-biblioteket/baeredygtighed",
           "label": "Sustainable Library at SDU",
-          "discovered_in_source": "p89-r21-611f4957e4"
+          "discovered_in_source": "p89-r23-4cf5f04e25"
         },
         {
           "url": "https://www.sdu.dk/en/bibliotek/materialer",
           "label": "When Google Is Not Enough At the library you will find evidence-based knowledge Read more",
-          "discovered_in_source": "p89-r21-611f4957e4"
+          "discovered_in_source": "p89-r23-4cf5f04e25"
         },
         {
           "url": "https://www.sdu.dk/en/uddannelse/studenthousing/vejle",
@@ -17237,11 +17391,6 @@
           "url": "https://www.sdu.dk/-/media/files/om_sdu/fakulteterne/sundhedsvidenskab/exchange/skema_udveksling-paa-medicinuddannelsen-paa-sdu.docx",
           "label": "View courses and clinical training (in Danish)",
           "discovered_in_source": "p89-r21-ae3769f803"
-        },
-        {
-          "url": "https://www.sdu.dk/en/bibliotek/om-biblioteket/laaneregler",
-          "label": "University Library's rules",
-          "discovered_in_source": "p89-r21-7654862399"
         },
         {
           "url": "https://www.sdu.dk/en/test/fa-web/maria/studenthousing/studenthousing-esbjerg?sc_lang=da",
@@ -18596,8 +18745,8 @@
         },
         "campus_life": {
           "status": "needs_confirmation",
-          "known_value": "國際學生辦公室一般流程列開學前welcome介紹校內設施、協助抵達登記與教授討論課表；2027活動日期／服務承諾仍待接收通知。 一般借閱正常4週、短借1週，跨館到件／還書可選；2027時段與交換開通另核。 一般四campus staffed opening hours與延長limitedservice不同，後者有效啟用card及無未清費；2026/27holiday顯示不保Spring2027逐日開館表。 一般學生OstfaliaCard有librarynumber可續借／reserveditems；外部讀者另一卡，不列入學必繳。",
-          "reason": "精確正文／附件核實；以年度、身分、學制、校區分流，矛盾與私人後發表單保留待核。",
+          "known_value": "國際學生辦公室一般流程列開學前welcome介紹校內設施、協助抵達登記與教授討論課表；2027活動日期／服務承諾仍待接收通知。 一般借閱正常4週、短借1週，跨館到件／還書可選；2027時段與交換開通另核。 一般四campus staffed opening hours與延長limitedservice不同，後者有效啟用card及無未清費；2026/27holiday顯示不保Spring2027逐日開館表。 一般學生OstfaliaCard有librarynumber可續借／reserveditems；外部讀者另一卡，不列入學必繳。 OstfaliaCard就是大學成員借書證，不套externaluser付費辦卡；正常四週、最多七次續借，須無預約／欠費。通知僅Ostfaliaemail，還書可任一館，條件及2027個別服務變更另核。 2024-10-28公布翌日生效規則§2.2(4)：RZ發卡簽收即承認規則，首次借閱啟用；只有選用library服務之規範，不加為CCU初次交換文件，未核2027是否有更新。",
+          "reason": "逐項正文核實適用年／對象；其他未知、不同版本與私人通知保留，不由單一服務證據宣稱整欄完整。",
           "evidence": [
             {
               "source_id": "p100-r10-life",
@@ -18649,6 +18798,34 @@
               "content_hash": "d72a653cdfde24fa81fa4da67dc5f686682d227371a46f9ec36ecfa49e08ce99",
               "text_sha256": "6510d3f4caf40e5778a91aa54a157d4a4209a8845fe64825c43989ec191fb429",
               "note": "evidence.status為欄位匯總；來源角色／實際年度由academic_year與原來源分開保存，未年／舊期未升2027。"
+            },
+            {
+              "source_id": "p100-r23-b876382cc2",
+              "source_url": "https://www.ostfalia.de/en/university/campus-facilities/library/library-a-to-z",
+              "source_pages": [],
+              "academic_year": "官方一般學生／生活政策未明示2027適用年",
+              "application_round": null,
+              "checked_at": "2026-10-08T19:30:53.282750+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Library card Borrowing is only possible with a library card. University members are admitted to the library when they are issued with their Ostfalia Card. External users can obtain their user card in the library by paying a fee in cash or by EC-card and presenting valid identification documents. Library catalogue You can find our electronic library catalogue here (external link, opens in a new window) . Loss of media If you lose an item, please contact the library staff for a replacement. MN M Master's thesis The Ostfalia Library grants you longer loan periods for your Master's thesis. Further information can be found in the information sheet . Submit a copy or scan of your completed application for admission to the Master's thesis to the library. The start of the processing period and the submission date of the thesis should be stated. Mission Statement Mission statement and services of the Ostfalia library. N New acquisitions You can find new acquisitions of the library sorted by subject in the library catalogue. Search requests can also be subscribed to via RSS feed. You are welcome to send suggestions for acquisitions by email to the library or via the acquisition suggestion form . OPQ O Online catalogue You can access our online catalogue here (external link, opens in a new window) . OPUS On the Ostfalia publication server - OPUS (external link, opens in a new window) - yo",
+              "content_hash": "abf61350c7e7158b1dd169705f178da0ba11b92bb09f26d07bafefc2019a7a0d",
+              "text_sha256": "3e2f6298b06147c12d6ca105343ad623dc8f313e3b8c2090f221fd39b8884094",
+              "note": "來源實際年份及recipient分開；無年／2022版本／下載成功不升2027當期模板。"
+            },
+            {
+              "source_id": "p100-r23-follow-90a8f3f877",
+              "source_url": "https://www.ostfalia.de/fileadmin/user_upload/Einrichtungen/Bibliothek/Nutzerinformationen/Benutzungsordnung.pdf",
+              "source_pages": [
+                3
+              ],
+              "academic_year": "官方Verkündungsblatt38/2024，2024-10-28發布、次日生效；非2027新學期文件",
+              "application_round": null,
+              "checked_at": "2026-10-08T19:44:22.074571+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Mit der Aushändigung der Karte gegen Unter- schrift im Rechenzentrum erfolgt automatisch die Zulas- sung zur Benutzung der Bibliothek. Die Bestimmungen die- ser Benutzungsordnung werden damit anerkannt. Bei Hochschulangehörigen erfolgt eine Freischaltung der nicht übertragbaren Ostfalia-Card bei der ersten Bibliotheksnut- zung. (5) Die Zulassung zur Benutzung kann zeitlich befristet und un- ter Bedingungen erteilt werden. (6) Die Zulassung kann von der schriftlichen Zustimmung der gesetzlichen Vertreter und/oder von einer selbstschuldneri- schen Bürgschaft abhängig gemacht werden. Bei minder- jährigen Benutzerinnen und Benutzern steht der gesetzli- che Vertreter mit seiner Einverständniserklärung zur Benut- zung für die Beachtung der gesetzlichen Bestimmungen für den Jugendschutz ein. (7) Mit der Anmeldung wird diese Benutzungsordnung aner- kannt. (8) Änderungen der persönlichen Daten, insbesondere Name und Anschrift und der ggf. hinterlegten E-Mail-Adresse sind der Bibliothek bzw. im Fall von Hochschulangehörigen der Hochschule über das Portal des Rechenzentrums unver- züglich mitzuteilen. Kosten, die der Bibliothek aus der Nichtbeachtung dieser Vorschrift entstehen, trägt die Be- nutzerin oder der Benutzer. (9) Zum Ende des Benutzungsverhältnisses sind alle aus der Bibliothek entliehenen Werke sowie der Benutzerausweis zurückzugeben bzw. die Ostfalia-Card zur Abmeldung in der",
+              "content_hash": "0e4d31a629c8d1c5fa167ef09d92990673f3c06d6bed2fa91119861b84a0e762",
+              "text_sha256": "bba33b71a134ef8f9f8c485ca7f7c24c2a5f213e305cfbe71f0bda259c9242e0",
+              "note": "來源實際年份及recipient分開；無年／2022版本／下載成功不升2027當期模板。"
             }
           ],
           "next_public_action": "續查官方一般服務及校區指引，保留未標年度和交換身分限制。"
@@ -18948,6 +19125,34 @@
           "sha256": "d72a653cdfde24fa81fa4da67dc5f686682d227371a46f9ec36ecfa49e08ce99",
           "bundled_file": null,
           "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p100-r23-b876382cc2",
+          "source_url": "https://www.ostfalia.de/en/university/campus-facilities/library/library-a-to-z",
+          "checked_at": "2026-10-08T19:30:53.282750+00:00",
+          "status": "html",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "官方一般學生／生活政策未明示2027適用年",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+          "sha256": "abf61350c7e7158b1dd169705f178da0ba11b92bb09f26d07bafefc2019a7a0d",
+          "bundled_file": null,
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p100-r23-follow-90a8f3f877",
+          "source_url": "https://www.ostfalia.de/fileadmin/user_upload/Einrichtungen/Bibliothek/Nutzerinformationen/Benutzungsordnung.pdf",
+          "checked_at": "2026-10-08T19:44:22.074571+00:00",
+          "status": "pdf",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "官方Verkündungsblatt38/2024，2024-10-28發布、次日生效；非2027新學期文件",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+          "sha256": "0e4d31a629c8d1c5fa167ef09d92990673f3c06d6bed2fa91119861b84a0e762",
+          "bundled_file": "partner_forms/p100-r23-follow-90a8f3f877.pdf",
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         }
       ],
       "host_document_count": 0,
@@ -18958,72 +19163,67 @@
         {
           "url": "https://www.ostfalia.de/en/university/faculties/faculty-of-transport-sport-tourism-media",
           "label": "Faculty of Transport-Sport-Tourism-Media",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
+          "discovered_in_source": "p100-r23-b876382cc2"
         },
         {
           "url": "https://www.ostfalia.de/en/hochschule/campus-einrichtungen/bibliothek/archive-library-news",
           "label": "Archive Library News",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
-        },
-        {
-          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/library-a-to-z",
-          "label": "Library A to Z",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
+          "discovered_in_source": "p100-r23-b876382cc2"
         },
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/documents-for-library-use",
           "label": "Documents for library use",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
+          "discovered_in_source": "p100-r23-b876382cc2"
         },
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/specialist-informations-by-locations",
           "label": "Specialist informations by locations",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
+          "discovered_in_source": "p100-r23-b876382cc2"
         },
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/interlibrary-lending-and-acquisition-proposal",
-          "label": "Interlibrary Lending and Acquisition Proposal",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
+          "label": "Interlibrary lending",
+          "discovered_in_source": "p100-r23-b876382cc2"
         },
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/contact-persons-and-feedback",
-          "label": "Contact persons and feedback",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
+          "label": "us",
+          "discovered_in_source": "p100-r23-b876382cc2"
         },
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/recommended-literature",
           "label": "Recommended literature",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
+          "discovered_in_source": "p100-r23-b876382cc2"
         },
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/ostfalia-library-wolfenbuettel",
-          "label": "Ostfalia Library Wolfenbüttel",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
+          "label": "Wolfenbüttel",
+          "discovered_in_source": "p100-r23-b876382cc2"
         },
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/ostfalia-library-wolfsburg",
-          "label": "Ostfalia Library Wolfsburg",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
+          "label": "Wolfsburg",
+          "discovered_in_source": "p100-r23-b876382cc2"
         },
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/ostfalia-library-salzgitter",
-          "label": "Ostfalia Library Salzgitter",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
+          "label": "Salzgitter",
+          "discovered_in_source": "p100-r23-b876382cc2"
         },
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/ostfalia-library-suderburg",
-          "label": "Ostfalia Library Suderburg",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
+          "label": "Suderburg",
+          "discovered_in_source": "p100-r23-b876382cc2"
         },
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/publishing-and-open-access",
           "label": "Publishing and Open Access",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
+          "discovered_in_source": "p100-r23-b876382cc2"
         },
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/research-opportunities-at-ostfalia",
-          "label": "Research opportunities at Ostfalia",
-          "discovered_in_source": "p100-r21-0978ae3e7c"
+          "label": "Research Opportunities at Ostfalia",
+          "discovered_in_source": "p100-r23-b876382cc2"
         },
         {
           "url": "https://www.ostfalia.de/en/studieren/studieninteressierte/application-enrolment/application-with-a-foreign-school-leaving-qualification",
@@ -19054,6 +19254,51 @@
           "url": "https://www.ostfalia.de/export/sites/default/de/bib/.content/documents/Clip3_bibliothekskonto_bearbeitet.mp4",
           "label": "Library account (external link, opens in a new window)",
           "discovered_in_source": "p100-r21-0978ae3e7c"
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/contact-persons-and-feedback#c17526",
+          "label": "library staff",
+          "discovered_in_source": "p100-r23-b876382cc2"
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/research-opportunities-at-ostfalia#c23726",
+          "label": "Database Information System DBIS",
+          "discovered_in_source": "p100-r23-b876382cc2"
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/research-opportunities-at-ostfalia#c23731",
+          "label": "Ostfalia online catalogue",
+          "discovered_in_source": "p100-r23-b876382cc2"
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/research-opportunities-at-ostfalia#c23952",
+          "label": "EDZ",
+          "discovered_in_source": "p100-r23-b876382cc2"
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/contact-persons-and-feedback#c38337",
+          "label": "feedback",
+          "discovered_in_source": "p100-r23-b876382cc2"
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/interlibrary-lending-and-acquisition-proposal#c10117",
+          "label": "interlibrary lending",
+          "discovered_in_source": "p100-r23-b876382cc2"
+        },
+        {
+          "url": "https://www.ostfalia.de/en/hochschule/campus-einrichtungen/bibliothek/dokumente-zur-bibliotheksbenutzung/mission-statement-of-the-ostfalia-library",
+          "label": "Mission statement and services",
+          "discovered_in_source": "p100-r23-b876382cc2"
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/interlibrary-lending-and-acquisition-proposal#c38319",
+          "label": "acquisition suggestion form",
+          "discovered_in_source": "p100-r23-b876382cc2"
+        },
+        {
+          "url": "https://www.ostfalia.de/fileadmin/user_upload/Einrichtungen/Bibliothek/Nutzerinformationen/katalogrecherche.pdf",
+          "label": "introduction to searching in the library catalogue (PDF, 35.19 KB) (opens in a new window), (not accessible)",
+          "discovered_in_source": "p100-r23-b876382cc2"
         }
       ],
       "public_sources_exhausted": false,
@@ -20704,8 +20949,8 @@
         },
         "campus_life": {
           "status": "needs_confirmation",
-          "known_value": "一般FHNW商學院學生組織／ESN志工辦社交活動、旅行與buddy；各校區與2027費用另核。 一般FHNW library5locations有學習/工作資源；非10schools全作CCU開放，也未核Business交換借閱帳戶。 一般incoming可享sports，十所school一般profile不是CCU可提名院系清單。 一般五館locations／不同hours，非2027學期開館承諾。 圖書館一般accessibility：Oltenmedia可及不全，部分走道不適輪椅、support請circulationdesk；不推全館同設施／十院開放。",
-          "reason": "精確正文／附件核實；以年度、身分、學制、校區分流，矛盾與私人後發表單保留待核。",
+          "known_value": "一般FHNW商學院學生組織／ESN志工辦社交活動、旅行與buddy；各校區與2027費用另核。 一般FHNW library5locations有學習/工作資源；非10schools全作CCU開放，也未核Business交換借閱帳戶。 一般incoming可享sports，十所school一般profile不是CCU可提名院系清單。 一般五館locations／不同hours，非2027學期開館承諾。 圖書館一般accessibility：Oltenmedia可及不全，部分走道不適輪椅、support請circulationdesk；不推全館同設施／十院開放。 借書SWITCHeduID與swisscovery註冊、FHCARD可作librarycard，不能當交換初次登入／申請表；一般書刊loan免費，服務費另規則。 現行頁連結library規則2022-11-14生效，實體第3/4/5頁核註冊及借閱；與交換院系／入學資格無關，沒有2027申請梯次。",
+          "reason": "逐項正文核實適用年／對象；其他未知、不同版本與私人通知保留，不由單一服務證據宣稱整欄完整。",
           "evidence": [
             {
               "source_id": "p104-mirror",
@@ -20773,6 +21018,34 @@
               "content_hash": "540a7d625f135ebf61e32507e7aa53fdc263af7a71850b73ab6e67b1ca223e68",
               "text_sha256": "1ec0a475b43e0bb9f37beade17d5887b32fc2e9e9f266f484c43c6afa559368b",
               "note": "evidence.status為欄位匯總；來源角色／實際年度由academic_year與原來源分開保存，未年／舊期未升2027。"
+            },
+            {
+              "source_id": "p104-r23-367d887527",
+              "source_url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using",
+              "source_pages": [],
+              "academic_year": "官方一般學生／生活政策未明示2027適用年",
+              "application_round": null,
+              "checked_at": "2026-10-08T19:30:59.490165+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "The FHNW Library is open to all interested persons from the age of 16. Not yet registered for swisscovery? No Switch Edu-ID? Registration for SWITCH edu-ID: https://eduid.ch/web/registration Registration for swisscovery: https://registration.slsp.ch/?iz=fhnw ﻿Please note: When registering for SWITCH edu-ID, please also enter the following three non-mandatory fields: Date of birth, address, phone number. We recommend that you enter the barcode of your library card in the last step of the registration process. Employees and students of FHNW can use their FH Card as a library card. External users can obtain their library card at the library information desk. If there are changes to your address or e-mail you have to adjust them yourself in your SWITCH edu-ID account. Resetting your password can be done via SWITCH . Written instructions on how to register can be found here: https://registration.slsp.ch/help/ Information for institutional accounts can be found here: https://registration.slsp.ch/institutional-account-help/ The personal data from your SWITCH edu-ID account is transferred to swisscovery/SLSP. The personal data is used by SLSP libraries from which you obtain media or services. Further information on data protection can be found on the SLSP website . Loans and fees Reserving media for pickup or ordering them from a different library can be done through the discovery plat",
+              "content_hash": "6c13c323d0a7a84eea94962f06f02200739f9ef148895c2e978ed8786731f13b",
+              "text_sha256": "c5049ee7e2911e6543e575bb9c896dbe0a2950acbfe273b63c30eaab03dad761",
+              "note": "來源實際年份及recipient分開；無年／2022版本／下載成功不升2027當期模板。"
+            },
+            {
+              "source_id": "p104-r23-follow-ea29b0ff52",
+              "source_url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/media/fhnw_conditions_of_use-1.pdf/@@display-file/file",
+              "source_pages": [
+                5
+              ],
+              "academic_year": "圖書館規則正文2022-11-14修訂生效；現行頁仍連結，非2027交換申請表",
+              "application_round": null,
+              "checked_at": "2026-10-08T19:44:22.075162+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "These conditions of use shall enter into force on 14 November 2022 and replace all previous regulations governing use of the FHNW Library. 6 See Federal Copyright and Related Proprietary Rights Act (https://www.fedlex.admin.ch/eli/ cc/1993/1798_1798_1798/de)",
+              "content_hash": "492bb4517a06196ff1ae7cf5b22d383d6a17efc4acf8c41fad5ef18a071a1aea",
+              "text_sha256": "6d7ef0f59aa46985bfc774057616e3596733391044769568aa0d71d119f62f80",
+              "note": "來源實際年份及recipient分開；無年／2022版本／下載成功不升2027當期模板。"
             }
           ],
           "next_public_action": "續查官方一般服務及校區指引，保留未標年度和交換身分限制。"
@@ -21237,6 +21510,62 @@
           "sha256": "8102d51fda816e7a32500b7de4fb66ab9eadf56fb4593506a4fef9c51d8e1e3c",
           "bundled_file": null,
           "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p104-r23-367d887527",
+          "source_url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using",
+          "checked_at": "2026-10-08T19:30:59.490165+00:00",
+          "status": "html",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "官方一般學生／生活政策未明示2027適用年",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+          "sha256": "6c13c323d0a7a84eea94962f06f02200739f9ef148895c2e978ed8786731f13b",
+          "bundled_file": null,
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p104-r23-follow-ea29b0ff52",
+          "source_url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/media/fhnw_conditions_of_use-1.pdf/@@display-file/file",
+          "checked_at": "2026-10-08T19:44:22.075162+00:00",
+          "status": "pdf",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "圖書館規則正文2022-11-14修訂生效；現行頁仍連結，非2027交換申請表",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+          "sha256": "492bb4517a06196ff1ae7cf5b22d383d6a17efc4acf8c41fad5ef18a071a1aea",
+          "bundled_file": "partner_forms/p104-r23-follow-ea29b0ff52.pdf",
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p104-r23-follow-f070da0276",
+          "source_url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/media/fhnw_scale_of_charges.pdf/@@display-file/file",
+          "checked_at": "2026-10-08T19:44:22.077723+00:00",
+          "status": "pdf",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "正文2022-12-15宣布、2023-01-01生效之圖書館費表，現行頁仍連結；不保2027個人收費",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+          "sha256": "16300f12903884800da72ec43dc219155ac6346187fb67a38dae02e59fe3abb2",
+          "bundled_file": "partner_forms/p104-r23-follow-f070da0276.pdf",
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p104-r23-follow-legacy-fee-link",
+          "source_url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/media/fhnw_scale_of_charges_new.pdf",
+          "checked_at": "2026-10-08T20:02:12.107111+00:00",
+          "status": "pdf",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "規則PDF腳註連結的另一費表，正文2022-12-15宣布／2023-01-01生效；金額同現行頁附件但原檔與文字hash不同，非2027新表",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+          "sha256": "783a0b10263a211d6376cddf8954f4e066d3a5e48ffc843113a65165f2f06513",
+          "bundled_file": "partner_forms/p104-r23-follow-legacy-fee-link.pdf",
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         }
       ],
       "host_document_count": 3,
@@ -21275,19 +21604,14 @@
           "discovered_in_source": "p104-r21-fb667f69e0"
         },
         {
-          "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using",
-          "label": "Searching and using",
-          "discovered_in_source": "p104-r22-2457ef7bb1"
-        },
-        {
           "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/researching-and-publishing",
           "label": "Researching and publishing",
-          "discovered_in_source": "p104-r22-2457ef7bb1"
+          "discovered_in_source": "p104-r23-367d887527"
         },
         {
           "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/subject-areas",
           "label": "Subject areas",
-          "discovered_in_source": "p104-r22-2457ef7bb1"
+          "discovered_in_source": "p104-r23-367d887527"
         },
         {
           "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/about-us",
@@ -21353,6 +21677,26 @@
           "url": "https://www.fhnw.ch/de/wirtschaft/studium/internationales/incoming-studierende",
           "label": "Exchange Semester an der Hochschule für Wirtschaft",
           "discovered_in_source": "p104-r22-1843b95935"
+        },
+        {
+          "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/research",
+          "label": "Searching",
+          "discovered_in_source": "p104-r23-367d887527"
+        },
+        {
+          "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/e-resources",
+          "label": "Electronic resources",
+          "discovered_in_source": "p104-r23-367d887527"
+        },
+        {
+          "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/aquisition-proposal",
+          "label": "Aquisition proposal",
+          "discovered_in_source": "p104-r23-367d887527"
+        },
+        {
+          "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/digisem",
+          "label": "Digital semester apparatus (DigiSem) for lecturers",
+          "discovered_in_source": "p104-r23-367d887527"
         }
       ],
       "public_sources_exhausted": false,

@@ -68,6 +68,7 @@ def reviewed_rows() -> dict[int, dict]:
         for field in row["fields"].values():
             if field["status"] == "verified_current" and (
                 not field["value"] or not field["evidence"]
+                or not any(ev["status"] == "verified_current" for ev in field["evidence"])
             ):
                 raise ValueError(
                     "Current overseas fact requires a value and checked evidence"
@@ -128,8 +129,11 @@ def reviewed_rows() -> dict[int, dict]:
                     or not ev["source_url"]
                 ):
                     raise ValueError("Missing overseas provenance")
-                if ev["status"] != field["status"]:
-                    raise ValueError("CCU overseas field/evidence status disagree")
+                # A field can retain both a current rule and an older or
+                # unyear policy for comparison. Each excerpt keeps its own
+                # applicability rather than inheriting the aggregate state.
+                if ev["status"] not in STATUS_LABELS or ev["status"] == "missing":
+                    raise ValueError("Invalid CCU overseas evidence status")
     return {row["ccu_page"]: row for row in rows}
 
 

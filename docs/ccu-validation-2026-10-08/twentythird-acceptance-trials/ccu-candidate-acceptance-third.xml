@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="20.067" timestamp="2026-10-08T20:27:55.475734+00:00" hostname="e5e438874453"><testcase classname="tests.e2e.test_ccu_candidate_acceptance" name="test_real_school_search_matching_comparison_plan_reload_and_home_isolation[390]" time="19.985"><failure message="AssertionError: Locator expected to be visible&#10;Actual value: None&#10;Error: element(s) not found &#10;Call log:&#10;  - Expect &quot;to_be_visible&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;.multi-plan-shared [data-multi-task]&quot;).first&#10;&#10;Aria snapshot:&#10;- link &quot;跳到主要內容&quot;:&#10;  - /url: &quot;#main-content&quot;&#10;- main:&#10;  - button &quot;開啟功能選單&quot;&#10;  - link &quot;UniWay 首頁&quot;:&#10;    - /url: &quot;#home&quot;&#10;    - strong: UniWay&#10;  - status&#10;  - region &quot;我的申請工作區&quot;:&#10;    - text: 我的申請&#10;    - strong: 從選校到送件，接著完成下一步&#10;    - paragraph: 國立中正大學 · 文件與時程目標：Nagoya University 名古屋大學&#10;    - navigation &quot;申請工作區階段&quot;:&#10;      - link &quot;選校與確認&quot;:&#10;        - /url: &quot;#advisor&quot;&#10;      - link &quot;準備與時程&quot;:&#10;        - /url: &quot;#overview&quot;&#10;      - link &quot;文件與送件&quot;:&#10;        - /url: &quot;#application-center&quot;&#10;    - navigation &quot;本階段操作&quot;:&#10;      - link &quot;我的準備&quot;:&#10;        - /url: &quot;#overview&quot;&#10;      - link &quot;日曆&quot;:&#10;        - /url: &quot;#calendar&quot;&#10;      - link &quot;官方期限&quot;:&#10;        - /url: &quot;#deadlines&quot;&#10;      - link &quot;預算&quot;:&#10;        - /url: &quot;#budget&quot;&#10;      - link &quot;補助&quot;:&#10;        - /url: &quot;#scholarships&quot;&#10;    - region &quot;我的交換計畫&quot;:&#10;      - region &quot;我的交換計畫&quot;:&#10;        - heading &quot;我的交換計畫&quot; [level=2]&#10;        - link &quot;調整我的條件&quot;:&#10;          - /url: &quot;#advisor&quot;&#10;        - text: 現在，先做這一件事&#10;        - strong: 先確認目標學校的資格&#10;        - paragraph: 中正2027春季校內收件已截止，需確認已有申請及提名資格&#10;        - link &quot;核對詳細資格&quot;:&#10;          - /url: &quot;#eligibility&quot;&#10;        - article:&#10;          - text: 我的條件&#10;          - strong: 法學院 · 碩士班 · 語言能力待確認 · 尚未設定&#10;          - link &quot;更新條件與推薦&quot;:&#10;            - /url: &quot;#advisor&quot;&#10;        - article:&#10;          - text: 我的目標&#10;          - strong: Nagoya University 名古屋大學&#10;          - text: 文件工作區會帶入這所學校，接著依上方提示確認資格與安排時程。&#10;      - region &quot;選出你的下一站&quot;:&#10;        - text: 條件配對&#10;        - heading &quot;選出你的下一站&quot; [level=2]&#10;        - link &quot;查看推薦與調整條件&quot;:&#10;          - /url: &quot;#advisor&quot;&#10;        - strong: 先確認，再決定 20 所&#10;        - paragraph: 有資格尚待確認，先查看缺口與官方來源。&#10;        - article:&#10;          - text: 1 資格待確認&#10;          - strong: Nagoya University 名古屋大學&#10;          - text: 日本&#10;          - list:&#10;            - listitem: 符合學院範圍&#10;            - listitem: 符合目前學制&#10;          - group: 查看待確認事項 · 4 項&#10;          - button &quot;已設為目標&quot;&#10;          - button &quot;查看學校&quot;&#10;        - article:&#10;          - text: 2 資格待確認&#10;          - strong: Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學&#10;          - text: 越南&#10;          - list:&#10;            - listitem: 符合目前學制&#10;            - listitem: 達國立中正大學公開基本成績門檻&#10;          - group: 查看待確認事項 · 4 項&#10;          - button &quot;設為待確認目標&quot;&#10;          - button &quot;查看學校&quot;&#10;        - article:&#10;          - text: 3 資格待確認&#10;          - strong: Bordeaux Montaigne University 蒙田波爾多大學&#10;          - text: 法國&#10;          - list:&#10;            - listitem: 符合目前學制&#10;            - listitem: 達國立中正大學公開基本成績門檻&#10;          - group: 查看待確認事項 · 5 項&#10;          - button &quot;設為待確認目標&quot;&#10;          - button &quot;查看學校&quot;&#10;        - group: 再看其他 17 所&#10;        - group: 目前條件不符 · 3 所&#10;      - region &quot;我的志願與共用準備&quot;:&#10;        - text: 一份清單，照顧所有志願&#10;        - heading &quot;我的志願與共用準備&quot; [level=2]&#10;        - link &quot;選校比較&quot;:&#10;          - /url: &quot;#favorites&quot;&#10;        - group:&#10;          - text: 設定與調整志願順序 第一志願&#10;          - combobox &quot;第一志願&quot;:&#10;            - option &quot;請選擇學校&quot;&#10;            - option &quot;Beijing Normal University 北京師範大學&quot;&#10;            - option &quot;Chongqing University 重慶大學&quot;&#10;            - option &quot;Xiamen University 廈門大學&quot;&#10;            - option &quot;Tianjin University 天津大學&quot;&#10;            - option &quot;Northeast Normal University 東北師範大學&quot;&#10;            - option &quot;University of Electronic Science and Technology of China 電子科技大學&quot;&#10;            - option &quot;Central China Normal University 華中師範大學&quot;&#10;            - option &quot;Ryukoku University 龍谷大學&quot;&#10;            - option &quot;Chiba University of Commerce 千葉商科大學&quot;&#10;            - option &quot;Nagoya University 名古屋大學&quot; [selected]&#10;            - option &quot;Tohoku University 東北大學&quot;&#10;            - option &quot;Hokkaido University 北海道大學&quot;&#10;            - option &quot;Tokiwa University 常磐大學&quot;&#10;            - option &quot;Dong-A University 東亞大學&quot;&#10;            - option &quot;Pusan National University 釜山國立大學&quot;&#10;            - option &quot;Kyung Hee University 慶熙大學&quot;&#10;            - option &quot;Hankuk University of Foreign Studies 韓國外國語大學&quot;&#10;            - option &quot;Seoul National University of Science and Technology 國立首爾科技大學&quot;&#10;            - option &quot;Sungshin Women's University 誠信女子大學&quot;&#10;            - option &quot;Chung Ang University 中央大學&quot;&#10;            - option &quot;Gachon University 嘉泉大學&quot;&#10;            - option &quot;ChungNam National University 忠南大學&quot;&#10;            - option &quot;Kyungsung University 慶星大學&quot;&#10;            - option &quot;Thammasat University 國立法政大學&quot;&#10;            - option &quot;King Mongkut’s University of Technology Thonburi 蒙庫國王科技大學&quot;&#10;            - option &quot;Universitas Bunda MuliaUK 慈育大學&quot;&#10;            - option &quot;Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學&quot;&#10;            - option &quot;Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學&quot;&#10;            - option &quot;Chitkara University 吉特卡拉大學&quot;&#10;            - option &quot;Saintigits Group of Institutions 聖基茲工學院&quot;&#10;            - option &quot;Vel Tech Rangarajan Dr.Sagunthala R&amp;D Institute of Science andTechnology 維爾特克科技大學&quot;&#10;            - option &quot;Mapua University 瑪普爾大學&quot;&#10;            - option &quot;Bordeaux Montaigne University 蒙田波爾多大學&quot;&#10;            - option &quot;EPITA (School of engineering &amp; computer science) 法國高等工程技術學院&quot;&#10;            - option &quot;University of Strasbourg 史特拉斯堡大學&quot;&#10;            - option &quot;Faculty of Management, Economics &amp; Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)&quot;&#10;            - option &quot;University of Southern Denmark 南丹麥大學&quot;&#10;            - option &quot;Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學&quot;&#10;            - option &quot;Ludwigshafen University of Business and Society 路德維希港社會應用科技大學&quot;&#10;            - option &quot;Friedrich Schiller Universität Jena 耶拿大學&quot;&#10;            - option &quot;Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學&quot;&#10;            - option &quot;Deggendorf Institute of Technology 德根多夫應用科技大學&quot;&#10;            - option &quot;Augsburg University of Applied Sciences 奧格斯堡應用科技大學&quot;&#10;            - option &quot;ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院&quot;&#10;            - option &quot;University of Applied Sciences and Arts Northwestern Switzerland – School of Business Fachhoschule Nordwestschweiz (FHNW) - Hochschule für Wirtschaft 西北應用科技與藝術大學&quot;&#10;            - option &quot;Ankara Social Science University 土耳其安卡拉社會科技大學&quot;&#10;            - option &quot;Ç ukurova University 土耳其丘庫羅瓦大學&quot;&#10;            - option &quot;Tomas Bata University in Zlí n 托馬斯拔佳大學&quot;&#10;            - option &quot;University of West Bohemia 西波希米亞大學&quot;&#10;            - option &quot;SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)&quot;&#10;            - option &quot;Ø stfold University of Applied Sciences 厄斯特福德應用科學大學&quot;&#10;            - option &quot;Universidad Internacional 墨西哥國際大學&quot;&#10;          - text: 第二志願&#10;          - combobox &quot;第二志願&quot;:&#10;            - option &quot;暫不設定&quot;&#10;            - option &quot;Beijing Normal University 北京師範大學&quot;&#10;            - option &quot;Chongqing University 重慶大學&quot;&#10;            - option &quot;Xiamen University 廈門大學&quot;&#10;            - option &quot;Tianjin University 天津大學&quot;&#10;            - option &quot;Northeast Normal University 東北師範大學&quot;&#10;            - option &quot;University of Electronic Science and Technology of China 電子科技大學&quot;&#10;            - option &quot;Central China Normal University 華中師範大學&quot;&#10;            - option &quot;Ryukoku University 龍谷大學&quot;&#10;            - option &quot;Chiba University of Commerce 千葉商科大學&quot;&#10;            - option &quot;Nagoya University 名古屋大學&quot;&#10;            - option &quot;Tohoku University 東北大學&quot;&#10;            - option &quot;Hokkaido University 北海道大學&quot;&#10;            - option &quot;Tokiwa University 常磐大學&quot;&#10;            - option &quot;Dong-A University 東亞大學&quot;&#10;            - option &quot;Pusan National University 釜山國立大學&quot;&#10;            - option &quot;Kyung Hee University 慶熙大學&quot; [selected]&#10;            - option &quot;Hankuk University of Foreign Studies 韓國外國語大學&quot;&#10;            - option &quot;Seoul National University of Science and Technology 國立首爾科技大學&quot;&#10;            - option &quot;Sungshin Women's University 誠信女子大學&quot;&#10;            - option &quot;Chung Ang University 中央大學&quot;&#10;            - option &quot;Gachon University 嘉泉大學&quot;&#10;            - option &quot;ChungNam National University 忠南大學&quot;&#10;            - option &quot;Kyungsung University 慶星大學&quot;&#10;            - option &quot;Thammasat University 國立法政大學&quot;&#10;            - option &quot;King Mongkut’s University of Technology Thonburi 蒙庫國王科技大學&quot;&#10;            - option &quot;Universitas Bunda MuliaUK 慈育大學&quot;&#10;            - option &quot;Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學&quot;&#10;            - option &quot;Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學&quot;&#10;            - option &quot;Chitkara University 吉特卡拉大學&quot;&#10;            - option &quot;Saintigits Group of Institutions 聖基茲工學院&quot;&#10;            - option &quot;Vel Tech Rangarajan Dr.Sagunthala R&amp;D Institute of Science andTechnology 維爾特克科技大學&quot;&#10;            - option &quot;Mapua University 瑪普爾大學&quot;&#10;            - option &quot;Bordeaux Montaigne University 蒙田波爾多大學&quot;&#10;            - option &quot;EPITA (School of engineering &amp; computer science) 法國高等工程技術學院&quot;&#10;            - option &quot;University of Strasbourg 史特拉斯堡大學&quot;&#10;            - option &quot;Faculty of Management, Economics &amp; Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)&quot;&#10;            - option &quot;University of Southern Denmark 南丹麥大學&quot;&#10;            - option &quot;Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學&quot;&#10;            - option &quot;Ludwigshafen University of Business and Society 路德維希港社會應用科技大學&quot;&#10;            - option &quot;Friedrich Schiller Universität Jena 耶拿大學&quot;&#10;            - option &quot;Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學&quot;&#10;            - option &quot;Deggendorf Institute of Technology 德根多夫應用科技大學&quot;&#10;            - option &quot;Augsburg University of Applied Sciences 奧格斯堡應用科技大學&quot;&#10;            - option &quot;ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院&quot;&#10;            - option &quot;University of Applied Sciences and Arts Northwestern Switzerland – School of Business Fachhoschule Nordwestschweiz (FHNW) - Hochschule für Wirtschaft 西北應用科技與藝術大學&quot;&#10;            - option &quot;Ankara Social Science University 土耳其安卡拉社會科技大學&quot;&#10;            - option &quot;Ç ukurova University 土耳其丘庫羅瓦大學&quot;&#10;            - option &quot;Tomas Bata University in Zlí n 托馬斯拔佳大學&quot;&#10;            - option &quot;University of West Bohemia 西波希米亞大學&quot;&#10;            - option &quot;SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)&quot;&#10;            - option &quot;Ø stfold University of Applied Sciences 厄斯特福德應用科學大學&quot;&#10;            - option &quot;Universidad Internacional 墨西哥國際大學&quot;&#10;          - text: 第三志願&#10;          - combobox &quot;第三志願&quot;:&#10;            - option &quot;暫不設定&quot; [selected]&#10;            - option &quot;Beijing Normal University 北京師範大學&quot;&#10;            - option &quot;Chongqing University 重慶大學&quot;&#10;            - option &quot;Xiamen University 廈門大學&quot;&#10;            - option &quot;Tianjin University 天津大學&quot;&#10;            - option &quot;Northeast Normal University 東北師範大學&quot;&#10;            - option &quot;University of Electronic Science and Technology of China 電子科技大學&quot;&#10;            - option &quot;Central China Normal University 華中師範大學&quot;&#10;            - option &quot;Ryukoku University 龍谷大學&quot;&#10;            - option &quot;Chiba University of Commerce 千葉商科大學&quot;&#10;            - option &quot;Nagoya University 名古屋大學&quot;&#10;            - option &quot;Tohoku University 東北大學&quot;&#10;            - option &quot;Hokkaido University 北海道大學&quot;&#10;            - option &quot;Tokiwa University 常磐大學&quot;&#10;            - option &quot;Dong-A University 東亞大學&quot;&#10;            - option &quot;Pusan National University 釜山國立大學&quot;&#10;            - option &quot;Kyung Hee University 慶熙大學&quot;&#10;            - option &quot;Hankuk University of Foreign Studies 韓國外國語大學&quot;&#10;            - option &quot;Seoul National University of Science and Technology 國立首爾科技大學&quot;&#10;            - option &quot;Sungshin Women's University 誠信女子大學&quot;&#10;            - option &quot;Chung Ang University 中央大學&quot;&#10;            - option &quot;Gachon University 嘉泉大學&quot;&#10;            - option &quot;ChungNam National University 忠南大學&quot;&#10;            - option &quot;Kyungsung University 慶星大學&quot;&#10;            - option &quot;Thammasat University 國立法政大學&quot;&#10;            - option &quot;King Mongkut’s University of Technology Thonburi 蒙庫國王科技大學&quot;&#10;            - option &quot;Universitas Bunda MuliaUK 慈育大學&quot;&#10;            - option &quot;Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學&quot;&#10;            - option &quot;Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學&quot;&#10;            - option &quot;Chitkara University 吉特卡拉大學&quot;&#10;            - option &quot;Saintigits Group of Institutions 聖基茲工學院&quot;&#10;            - option &quot;Vel Tech Rangarajan Dr.Sagunthala R&amp;D Institute of Science andTechnology 維爾特克科技大學&quot;&#10;            - option &quot;Mapua University 瑪普爾大學&quot;&#10;            - option &quot;Bordeaux Montaigne University 蒙田波爾多大學&quot;&#10;            - option &quot;EPITA (School of engineering &amp; computer science) 法國高等工程技術學院&quot;&#10;            - option &quot;University of Strasbourg 史特拉斯堡大學&quot;&#10;            - option &quot;Faculty of Management, Economics &amp; Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)&quot;&#10;            - option &quot;University of Southern Denmark 南丹麥大學&quot;&#10;            - option &quot;Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學&quot;&#10;            - option &quot;Ludwigshafen University of Business and Society 路德維希港社會應用科技大學&quot;&#10;            - option &quot;Friedrich Schiller Universität Jena 耶拿大學&quot;&#10;            - option &quot;Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學&quot;&#10;            - option &quot;Deggendorf Institute of Technology 德根多夫應用科技大學&quot;&#10;            - option &quot;Augsburg University of Applied Sciences 奧格斯堡應用科技大學&quot;&#10;            - option &quot;ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院&quot;&#10;            - option &quot;University of Applied Sciences and Arts Northwestern Switzerland – School of Business Fachhoschule Nordwestschweiz (FHNW) - Hochschule für Wirtschaft 西北應用科技與藝術大學&quot;&#10;            - option &quot;Ankara Social Science University 土耳其安卡拉社會科技大學&quot;&#10;            - option &quot;Ç ukurova University 土耳其丘庫羅瓦大學&quot;&#10;            - option &quot;Tomas Bata University in Zlí n 托馬斯拔佳大學&quot;&#10;            - option &quot;University of West Bohemia 西波希米亞大學&quot;&#10;            - option &quot;SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)&quot;&#10;            - option &quot;Ø stfold University of Applied Sciences 厄斯特福德應用科學大學&quot;&#10;            - option &quot;Universidad Internacional 墨西哥國際大學&quot;&#10;          - text: 第四志願&#10;          - combobox &quot;第四志願&quot;:&#10;            - option &quot;暫不設定&quot; [selected]&#10;            - option &quot;Beijing Normal University 北京師範大學&quot;&#10;            - option &quot;Chongqing University 重慶大學&quot;&#10;            - option &quot;Xiamen University 廈門大學&quot;&#10;            - option &quot;Tianjin University 天津大學&quot;&#10;            - option &quot;Northeast Normal University 東北師範大學&quot;&#10;            - option &quot;University of Electronic Science and Technology of China 電子科技大學&quot;&#10;            - option &quot;Central China Normal University 華中師範大學&quot;&#10;            - option &quot;Ryukoku University 龍谷大學&quot;&#10;            - option &quot;Chiba University of Commerce 千葉商科大學&quot;&#10;            - option &quot;Nagoya University 名古屋大學&quot;&#10;            - option &quot;Tohoku University 東北大學&quot;&#10;            - option &quot;Hokkaido University 北海道大學&quot;&#10;            - option &quot;Tokiwa University 常磐大學&quot;&#10;            - option &quot;Dong-A University 東亞大學&quot;&#10;            - option &quot;Pusan National University 釜山國立大學&quot;&#10;            - option &quot;Kyung Hee University 慶熙大學&quot;&#10;            - option &quot;Hankuk University of Foreign Studies 韓國外國語大學&quot;&#10;            - option &quot;Seoul National University of Science and Technology 國立首爾科技大學&quot;&#10;            - option &quot;Sungshin Women's University 誠信女子大學&quot;&#10;            - option &quot;Chung Ang University 中央大學&quot;&#10;            - option &quot;Gachon University 嘉泉大學&quot;&#10;            - option &quot;ChungNam National University 忠南大學&quot;&#10;            - option &quot;Kyungsung University 慶星大學&quot;&#10;            - option &quot;Thammasat University 國立法政大學&quot;&#10;            - option &quot;King Mongkut’s University of Technology Thonburi 蒙庫國王科技大學&quot;&#10;            - option &quot;Universitas Bunda MuliaUK 慈育大學&quot;&#10;            - option &quot;Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學&quot;&#10;            - option &quot;Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學&quot;&#10;            - option &quot;Chitkara University 吉特卡拉大學&quot;&#10;            - option &quot;Saintigits Group of Institutions 聖基茲工學院&quot;&#10;            - option &quot;Vel Tech Rangarajan Dr.Sagunthala R&amp;D Institute of Science andTechnology 維爾特克科技大學&quot;&#10;            - option &quot;Mapua University 瑪普爾大學&quot;&#10;            - option &quot;Bordeaux Montaigne University 蒙田波爾多大學&quot;&#10;            - option &quot;EPITA (School of engineering &amp; computer science) 法國高等工程技術學院&quot;&#10;            - option &quot;University of Strasbourg 史特拉斯堡大學&quot;&#10;            - option &quot;Faculty of Management, Economics &amp; Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)&quot;&#10;            - option &quot;University of Southern Denmark 南丹麥大學&quot;&#10;            - option &quot;Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學&quot;&#10;            - option &quot;Ludwigshafen University of Business and Society 路德維希港社會應用科技大學&quot;&#10;            - option &quot;Friedrich Schiller Universität Jena 耶拿大學&quot;&#10;            - option &quot;Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學&quot;&#10;            - option &quot;Deggendorf Institute of Technology 德根多夫應用科技大學&quot;&#10;            - option &quot;Augsburg University of Applied Sciences 奧格斯堡應用科技大學&quot;&#10;            - option &quot;ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院&quot;&#10;            - option &quot;University of Applied Sciences and Arts Northwestern Switzerland – School of Business Fachhoschule Nordwestschweiz (FHNW) - Hochschule für Wirtschaft 西北應用科技與藝術大學&quot;&#10;            - option &quot;Ankara Social Science University 土耳其安卡拉社會科技大學&quot;&#10;            - option &quot;Ç ukurova University 土耳其丘庫羅瓦大學&quot;&#10;            - option &quot;Tomas Bata University in Zlí n 托馬斯拔佳大學&quot;&#10;            - option &quot;University of West Bohemia 西波希米亞大學&quot;&#10;            - option &quot;SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)&quot;&#10;            - option &quot;Ø stfold University of Applied Sciences 厄斯特福德應用科學大學&quot;&#10;            - option &quot;Universidad Internacional 墨西哥國際大學&quot;&#10;          - text: 第五志願&#10;          - combobox &quot;第五志願&quot;:&#10;            - option &quot;暫不設定&quot; [selected]&#10;            - option &quot;Beijing Normal University 北京師範大學&quot;&#10;            - option &quot;Chongqing University 重慶大學&quot;&#10;            - option &quot;Xiamen University 廈門大學&quot;&#10;            - option &quot;Tianjin University 天津大學&quot;&#10;            - option &quot;Northeast Normal University 東北師範大學&quot;&#10;            - option &quot;University of Electronic Science and Technology of China 電子科技大學&quot;&#10;            - option &quot;Central China Normal University 華中師範大學&quot;&#10;            - option &quot;Ryukoku University 龍谷大學&quot;&#10;            - option &quot;Chiba University of Commerce 千葉商科大學&quot;&#10;            - option &quot;Nagoya University 名古屋大學&quot;&#10;            - option &quot;Tohoku University 東北大學&quot;&#10;            - option &quot;Hokkaido University 北海道大學&quot;&#10;            - option &quot;Tokiwa University 常磐大學&quot;&#10;            - option &quot;Dong-A University 東亞大學&quot;&#10;            - option &quot;Pusan National University 釜山國立大學&quot;&#10;            - option &quot;Kyung Hee University 慶熙大學&quot;&#10;            - option &quot;Hankuk University of Foreign Studies 韓國外國語大學&quot;&#10;            - option &quot;Seoul National University of Science and Technology 國立首爾科技大學&quot;&#10;            - option &quot;Sungshin Women's University 誠信女子大學&quot;&#10;            - option &quot;Chung Ang University 中央大學&quot;&#10;            - option &quot;Gachon University 嘉泉大學&quot;&#10;            - option &quot;ChungNam National University 忠南大學&quot;&#10;            - option &quot;Kyungsung University 慶星大學&quot;&#10;            - option &quot;Thammasat University 國立法政大學&quot;&#10;            - option &quot;King Mongkut’s University of Technology Thonburi 蒙庫國王科技大學&quot;&#10;            - option &quot;Universitas Bunda MuliaUK 慈育大學&quot;&#10;            - option &quot;Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學&quot;&#10;            - option &quot;Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學&quot;&#10;            - option &quot;Chitkara University 吉特卡拉大學&quot;&#10;            - option &quot;Saintigits Group of Institutions 聖基茲工學院&quot;&#10;            - option &quot;Vel Tech Rangarajan Dr.Sagunthala R&amp;D Institute of Science andTechnology 維爾特克科技大學&quot;&#10;            - option &quot;Mapua University 瑪普爾大學&quot;&#10;            - option &quot;Bordeaux Montaigne University 蒙田波爾多大學&quot;&#10;            - option &quot;EPITA (School of engineering &amp; computer science) 法國高等工程技術學院&quot;&#10;            - option &quot;University of Strasbourg 史特拉斯堡大學&quot;&#10;            - option &quot;Faculty of Management, Economics &amp; Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)&quot;&#10;            - option &quot;University of Southern Denmark 南丹麥大學&quot;&#10;            - option &quot;Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學&quot;&#10;            - option &quot;Ludwigshafen University of Business and Society 路德維希港社會應用科技大學&quot;&#10;            - option &quot;Friedrich Schiller Universität Jena 耶拿大學&quot;&#10;            - option &quot;Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學&quot;&#10;            - option &quot;Deggendorf Institute of Technology 德根多夫應用科技大學&quot;&#10;            - option &quot;Augsburg University of Applied Sciences 奧格斯堡應用科技大學&quot;&#10;            - option &quot;ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院&quot;&#10;            - option &quot;University of Applied Sciences and Arts Northwestern Switzerland – School of Business Fachhoschule Nordwestschweiz (FHNW) - Hochschule für Wirtschaft 西北應用科技與藝術大學&quot;&#10;            - option &quot;Ankara Social Science University 土耳其安卡拉社會科技大學&quot;&#10;            - option &quot;Ç ukurova University 土耳其丘庫羅瓦大學&quot;&#10;            - option &quot;Tomas Bata University in Zlí n 托馬斯拔佳大學&quot;&#10;            - option &quot;University of West Bohemia 西波希米亞大學&quot;&#10;            - option &quot;SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)&quot;&#10;            - option &quot;Ø stfold University of Applied Sciences 厄斯特福德應用科學大學&quot;&#10;            - option &quot;Universidad Internacional 墨西哥國際大學&quot;&#10;          - button &quot;保存志願順序&quot;&#10;          - paragraph: 這是個人準備順序；正式志願數、語組與分發規定仍以本校當期公告為準。調整順序會保留既有進度；文件與時程目標可在各校清單中選擇。&#10;        - status: 2 個志願 · 15 項準備工作&#10;        - paragraph: 勾選只記錄個人的準備進度；不代表正式送件、校方受理或錄取。來源或規定不同的工作會分開顯示。&#10;        - paragraph: 目前沒有能確認為共用的步驟，保留各校清單以便核對。&#10;        - group: 第 1 志願 · Nagoya University 名古屋大學 需要校方確認&#10;        - group: 第 2 志願 · Kyung Hee University 慶熙大學 需要校方確認&#10;      - region &quot;我的準備工作台&quot;:&#10;        - text: 讓準備符合你的生活&#10;        - heading &quot;我的準備工作台&quot; [level=2]&#10;        - link &quot;完整日曆&quot;:&#10;          - /url: &quot;#calendar&quot;&#10;        - article:&#10;          - strong: 今天可以做什麼&#10;          - paragraph: 先設定每週可投入時間與各項工作時數，系統會安排今天與後續的工作。&#10;        - article:&#10;          - strong: 正在等待 0 項&#10;          - paragraph: 目前沒有記錄等待事項。等校方或他人回覆時，可在任務內填寫原因。&#10;        - group: 設定可投入時間與重新安排&#10;        - group: 任務工時、前置關係與文件&#10;        - paragraph: 目前沿用準備天數倒推。設定可投入時間後，才會產生逐日工作安排。&#10;        - group: 依官方期限預留準備天數&#10;      - heading &quot;接著，準備申請文件&quot; [level=2]&#10;      - paragraph: 送件資料：0 / 2 項已標記完成。填寫、列印與標記完成不代表已送件。&#10;      - link &quot;開啟申請文件&quot;:&#10;        - /url: &quot;#application-center&quot;&#10;- paragraph:&#10;  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），&#10;  - button &quot;停用匿名使用統計&quot;&#10;  - text: 。&#10;  - link &quot;隱私權政策&quot;:&#10;    - /url: /privacy&#10;  - link &quot;使用條款&quot;:&#10;    - /url: /terms">page = &lt;Page url='http://127.0.0.1:54167/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&amp;view=list&amp;q=Kyung+Hee+University+%E6%85%B6%E7%86%99%E5%A4%A7%E5%AD%B8#overview'&gt;
+acceptance_server = LiveServer(base_url='http://127.0.0.1:54167', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-126/ccu-acceptance-real-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_real_school_search_matching_comparison_plan_reload_and_home_isolation(page, acceptance_server, width):
+        server = acceptance_server
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        session = login(page, server, width)
+        assert set(page.locator("#degree-filter option").evaluate_all("rows =&gt; rows.map(row =&gt; row.value)")) == {"", "大學部", "碩士班", "博士班", "研究所"}
+        names = [school(34), school(45)]
+        for name in names:
+            page.locator("#partner-search").fill(name)
+            if width == 390:
+                card = page.locator("#partner-table .partner-card").filter(has_text=name)
+                expect(card).to_be_visible()
+                card.locator("&gt; summary").click()
+            button = page.locator(f'#partner-table .favorite-toggle[data-school-name="{name}"]:visible').first
+            expect(button).to_be_visible(timeout=30_000)
+            button.click()
+            expect(button).to_have_attribute("aria-pressed", "true")
+        navigate(page, "favorites")
+        expect(page.locator(".discovery-candidate")).to_have_count(2)
+        for name in names:
+            page.locator(f'[data-compare-school="{name}"]').check()
+        comparison = page.locator("#discovery-comparison")
+        for name in names:
+            expect(comparison).to_contain_text(name)
+        capture(page, "real-favorites-comparison", width)
+        navigate(page, "application-center")
+        select_target(page, names[0])
+        navigate(page, "advisor")
+        wait_until(page, "homeCollegeOptions().includes('法學院')")
+        page.locator("#advisor-college").select_option("法學院")
+        department = page.locator("#advisor-department")
+        if department.evaluate("node =&gt; node.tagName") == "SELECT":
+            wait_until(page, "document.querySelector('#advisor-department').options.length &gt; 1")
+            department.select_option(department.locator("option").evaluate_all("rows =&gt; rows.find(row =&gt; row.value).value"))
+        else:
+            department.fill("法律學系")
+        page.locator("#advisor-degree").select_option("碩士班")
+        page.locator("#advisor-academic-score").fill("85")
+        page.locator("#advisor-academic-gpa").fill("3.5")
+        page.locator("#advisor-language-test").select_option("ielts")
+        page.locator("#advisor-language-score").fill("7")
+        with page.expect_response(lambda r: r.url.endswith("/advisor/plan") and r.request.method == "POST") as result:
+            page.locator("#advisor-submit").click()
+        assert result.value.ok
+        assert result.value.request.post_data_json["school_name"] == HOME
+        assert "符合目前學制" in result.value.json()["target_match"]["reasons"]
+        expect(page.locator("#advisor-profile-status")).to_have_text("已保存條件")
+        capture(page, "real-advisor", width)
+        navigate(page, "overview")
+        expect(page.locator("#multi-plan-workspace")).to_be_visible()
+        page.locator("#multi-plan-settings &gt; summary").click()
+        selects = page.locator("#multi-plan-preferences select")
+        for index, name in enumerate(names):
+            selects.nth(index).select_option(name)
+        with page.expect_response(lambda r: r.url.endswith("/application-plan/evaluate") and r.request.method == "POST" and len(r.request.post_data_json["preferences"]) == 2) as planned:
+            page.locator("#multi-plan-preferences button").click()
+        assert planned.value.ok
+        real_plan = planned.value.json()
+        assert [c["school_name"] for c in real_plan["choices"]] == names
+        assert real_plan["tasks"]  # actual partial workflows, never fabricated dates
+        expect(page.locator("#multi-plan-status")).to_contain_text("2 個志願")
+        shared = page.locator(".multi-plan-shared [data-multi-task]").first
+&gt;       expect(shared).to_be_visible()
+E       AssertionError: Locator expected to be visible
+E       Actual value: None
+E       Error: element(s) not found 
+E       Call log:
+E         - Expect "to_be_visible" with timeout 5000ms
+E         - waiting for locator(".multi-plan-shared [data-multi-task]").first
+E       
+E       Aria snapshot:
+E       - link "跳到主要內容":
+E         - /url: "#main-content"
+E       - main:
+E         - button "開啟功能選單"
+E         - link "UniWay 首頁":
+E           - /url: "#home"
+E           - strong: UniWay
+E         - status
+E         - region "我的申請工作區":
+E           - text: 我的申請
+E           - strong: 從選校到送件，接著完成下一步
+E           - paragraph: 國立中正大學 · 文件與時程目標：Nagoya University 名古屋大學
+E           - navigation "申請工作區階段":
+E             - link "選校與確認":
+E               - /url: "#advisor"
+E             - link "準備與時程":
+E               - /url: "#overview"
+E             - link "文件與送件":
+E               - /url: "#application-center"
+E           - navigation "本階段操作":
+E             - link "我的準備":
+E               - /url: "#overview"
+E             - link "日曆":
+E               - /url: "#calendar"
+E             - link "官方期限":
+E               - /url: "#deadlines"
+E             - link "預算":
+E               - /url: "#budget"
+E             - link "補助":
+E               - /url: "#scholarships"
+E           - region "我的交換計畫":
+E             - region "我的交換計畫":
+E               - heading "我的交換計畫" [level=2]
+E               - link "調整我的條件":
+E                 - /url: "#advisor"
+E               - text: 現在，先做這一件事
+E               - strong: 先確認目標學校的資格
+E               - paragraph: 中正2027春季校內收件已截止，需確認已有申請及提名資格
+E               - link "核對詳細資格":
+E                 - /url: "#eligibility"
+E               - article:
+E                 - text: 我的條件
+E                 - strong: 法學院 · 碩士班 · 語言能力待確認 · 尚未設定
+E                 - link "更新條件與推薦":
+E                   - /url: "#advisor"
+E               - article:
+E                 - text: 我的目標
+E                 - strong: Nagoya University 名古屋大學
+E                 - text: 文件工作區會帶入這所學校，接著依上方提示確認資格與安排時程。
+E             - region "選出你的下一站":
+E               - text: 條件配對
+E               - heading "選出你的下一站" [level=2]
+E               - link "查看推薦與調整條件":
+E                 - /url: "#advisor"
+E               - strong: 先確認，再決定 20 所
+E               - paragraph: 有資格尚待確認，先查看缺口與官方來源。
+E               - article:
+E                 - text: 1 資格待確認
+E                 - strong: Nagoya University 名古屋大學
+E                 - text: 日本
+E                 - list:
+E                   - listitem: 符合學院範圍
+E                   - listitem: 符合目前學制
+E                 - group: 查看待確認事項 · 4 項
+E                 - button "已設為目標"
+E                 - button "查看學校"
+E               - article:
+E                 - text: 2 資格待確認
+E                 - strong: Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學
+E                 - text: 越南
+E                 - list:
+E                   - listitem: 符合目前學制
+E                   - listitem: 達國立中正大學公開基本成績門檻
+E                 - group: 查看待確認事項 · 4 項
+E                 - button "設為待確認目標"
+E                 - button "查看學校"
+E               - article:
+E                 - text: 3 資格待確認
+E                 - strong: Bordeaux Montaigne University 蒙田波爾多大學
+E                 - text: 法國
+E                 - list:
+E                   - listitem: 符合目前學制
+E                   - listitem: 達國立中正大學公開基本成績門檻
+E                 - group: 查看待確認事項 · 5 項
+E                 - button "設為待確認目標"
+E                 - button "查看學校"
+E               - group: 再看其他 17 所
+E               - group: 目前條件不符 · 3 所
+E             - region "我的志願與共用準備":
+E               - text: 一份清單，照顧所有志願
+E               - heading "我的志願與共用準備" [level=2]
+E               - link "選校比較":
+E                 - /url: "#favorites"
+E               - group:
+E                 - text: 設定與調整志願順序 第一志願
+E                 - combobox "第一志願":
+E                   - option "請選擇學校"
+E                   - option "Beijing Normal University 北京師範大學"
+E                   - option "Chongqing University 重慶大學"
+E                   - option "Xiamen University 廈門大學"
+E                   - option "Tianjin University 天津大學"
+E                   - option "Northeast Normal University 東北師範大學"
+E                   - option "University of Electronic Science and Technology of China 電子科技大學"
+E                   - option "Central China Normal University 華中師範大學"
+E                   - option "Ryukoku University 龍谷大學"
+E                   - option "Chiba University of Commerce 千葉商科大學"
+E                   - option "Nagoya University 名古屋大學" [selected]
+E                   - option "Tohoku University 東北大學"
+E                   - option "Hokkaido University 北海道大學"
+E                   - option "Tokiwa University 常磐大學"
+E                   - option "Dong-A University 東亞大學"
+E                   - option "Pusan National University 釜山國立大學"
+E                   - option "Kyung Hee University 慶熙大學"
+E                   - option "Hankuk University of Foreign Studies 韓國外國語大學"
+E                   - option "Seoul National University of Science and Technology 國立首爾科技大學"
+E                   - option "Sungshin Women's University 誠信女子大學"
+E                   - option "Chung Ang University 中央大學"
+E                   - option "Gachon University 嘉泉大學"
+E                   - option "ChungNam National University 忠南大學"
+E                   - option "Kyungsung University 慶星大學"
+E                   - option "Thammasat University 國立法政大學"
+E                   - option "King Mongkut’s University of Technology Thonburi 蒙庫國王科技大學"
+E                   - option "Universitas Bunda MuliaUK 慈育大學"
+E                   - option "Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學"
+E                   - option "Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學"
+E                   - option "Chitkara University 吉特卡拉大學"
+E                   - option "Saintigits Group of Institutions 聖基茲工學院"
+E                   - option "Vel Tech Rangarajan Dr.Sagunthala R&amp;D Institute of Science andTechnology 維爾特克科技大學"
+E                   - option "Mapua University 瑪普爾大學"
+E                   - option "Bordeaux Montaigne University 蒙田波爾多大學"
+E                   - option "EPITA (School of engineering &amp; computer science) 法國高等工程技術學院"
+E                   - option "University of Strasbourg 史特拉斯堡大學"
+E                   - option "Faculty of Management, Economics &amp; Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)"
+E                   - option "University of Southern Denmark 南丹麥大學"
+E                   - option "Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學"
+E                   - option "Ludwigshafen University of Business and Society 路德維希港社會應用科技大學"
+E                   - option "Friedrich Schiller Universität Jena 耶拿大學"
+E                   - option "Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學"
+E                   - option "Deggendorf Institute of Technology 德根多夫應用科技大學"
+E                   - option "Augsburg University of Applied Sciences 奧格斯堡應用科技大學"
+E                   - option "ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院"
+E                   - option "University of Applied Sciences and Arts Northwestern Switzerland – School of Business Fachhoschule Nordwestschweiz (FHNW) - Hochschule für Wirtschaft 西北應用科技與藝術大學"
+E                   - option "Ankara Social Science University 土耳其安卡拉社會科技大學"
+E                   - option "Ç ukurova University 土耳其丘庫羅瓦大學"
+E                   - option "Tomas Bata University in Zlí n 托馬斯拔佳大學"
+E                   - option "University of West Bohemia 西波希米亞大學"
+E                   - option "SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)"
+E                   - option "Ø stfold University of Applied Sciences 厄斯特福德應用科學大學"
+E                   - option "Universidad Internacional 墨西哥國際大學"
+E                 - text: 第二志願
+E                 - combobox "第二志願":
+E                   - option "暫不設定"
+E                   - option "Beijing Normal University 北京師範大學"
+E                   - option "Chongqing University 重慶大學"
+E                   - option "Xiamen University 廈門大學"
+E                   - option "Tianjin University 天津大學"
+E                   - option "Northeast Normal University 東北師範大學"
+E                   - option "University of Electronic Science and Technology of China 電子科技大學"
+E                   - option "Central China Normal University 華中師範大學"
+E                   - option "Ryukoku University 龍谷大學"
+E                   - option "Chiba University of Commerce 千葉商科大學"
+E                   - option "Nagoya University 名古屋大學"
+E                   - option "Tohoku University 東北大學"
+E                   - option "Hokkaido University 北海道大學"
+E                   - option "Tokiwa University 常磐大學"
+E                   - option "Dong-A University 東亞大學"
+E                   - option "Pusan National University 釜山國立大學"
+E                   - option "Kyung Hee University 慶熙大學" [selected]
+E                   - option "Hankuk University of Foreign Studies 韓國外國語大學"
+E                   - option "Seoul National University of Science and Technology 國立首爾科技大學"
+E                   - option "Sungshin Women's University 誠信女子大學"
+E                   - option "Chung Ang University 中央大學"
+E                   - option "Gachon University 嘉泉大學"
+E                   - option "ChungNam National University 忠南大學"
+E                   - option "Kyungsung University 慶星大學"
+E                   - option "Thammasat University 國立法政大學"
+E                   - option "King Mongkut’s University of Technology Thonburi 蒙庫國王科技大學"
+E                   - option "Universitas Bunda MuliaUK 慈育大學"
+E                   - option "Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學"
+E                   - option "Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學"
+E                   - option "Chitkara University 吉特卡拉大學"
+E                   - option "Saintigits Group of Institutions 聖基茲工學院"
+E                   - option "Vel Tech Rangarajan Dr.Sagunthala R&amp;D Institute of Science andTechnology 維爾特克科技大學"
+E                   - option "Mapua University 瑪普爾大學"
+E                   - option "Bordeaux Montaigne University 蒙田波爾多大學"
+E                   - option "EPITA (School of engineering &amp; computer science) 法國高等工程技術學院"
+E                   - option "University of Strasbourg 史特拉斯堡大學"
+E                   - option "Faculty of Management, Economics &amp; Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)"
+E                   - option "University of Southern Denmark 南丹麥大學"
+E                   - option "Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學"
+E                   - option "Ludwigshafen University of Business and Society 路德維希港社會應用科技大學"
+E                   - option "Friedrich Schiller Universität Jena 耶拿大學"
+E                   - option "Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學"
+E                   - option "Deggendorf Institute of Technology 德根多夫應用科技大學"
+E                   - option "Augsburg University of Applied Sciences 奧格斯堡應用科技大學"
+E                   - option "ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院"
+E                   - option "University of Applied Sciences and Arts Northwestern Switzerland – School of Business Fachhoschule Nordwestschweiz (FHNW) - Hochschule für Wirtschaft 西北應用科技與藝術大學"
+E                   - option "Ankara Social Science University 土耳其安卡拉社會科技大學"
+E                   - option "Ç ukurova University 土耳其丘庫羅瓦大學"
+E                   - option "Tomas Bata University in Zlí n 托馬斯拔佳大學"
+E                   - option "University of West Bohemia 西波希米亞大學"
+E                   - option "SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)"
+E                   - option "Ø stfold University of Applied Sciences 厄斯特福德應用科學大學"
+E                   - option "Universidad Internacional 墨西哥國際大學"
+E                 - text: 第三志願
+E                 - combobox "第三志願":
+E                   - option "暫不設定" [selected]
+E                   - option "Beijing Normal University 北京師範大學"
+E                   - option "Chongqing University 重慶大學"
+E                   - option "Xiamen University 廈門大學"
+E                   - option "Tianjin University 天津大學"
+E                   - option "Northeast Normal University 東北師範大學"
+E                   - option "University of Electronic Science and Technology of China 電子科技大學"
+E                   - option "Central China Normal University 華中師範大學"
+E                   - option "Ryukoku University 龍谷大學"
+E                   - option "Chiba University of Commerce 千葉商科大學"
+E                   - option "Nagoya University 名古屋大學"
+E                   - option "Tohoku University 東北大學"
+E                   - option "Hokkaido University 北海道大學"
+E                   - option "Tokiwa University 常磐大學"
+E                   - option "Dong-A University 東亞大學"
+E                   - option "Pusan National University 釜山國立大學"
+E                   - option "Kyung Hee University 慶熙大學"
+E                   - option "Hankuk University of Foreign Studies 韓國外國語大學"
+E                   - option "Seoul National University of Science and Technology 國立首爾科技大學"
+E                   - option "Sungshin Women's University 誠信女子大學"
+E                   - option "Chung Ang University 中央大學"
+E                   - option "Gachon University 嘉泉大學"
+E                   - option "ChungNam National University 忠南大學"
+E                   - option "Kyungsung University 慶星大學"
+E                   - option "Thammasat University 國立法政大學"
+E                   - option "King Mongkut’s University of Technology Thonburi 蒙庫國王科技大學"
+E                   - option "Universitas Bunda MuliaUK 慈育大學"
+E                   - option "Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學"
+E                   - option "Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學"
+E                   - option "Chitkara University 吉特卡拉大學"
+E                   - option "Saintigits Group of Institutions 聖基茲工學院"
+E                   - option "Vel Tech Rangarajan Dr.Sagunthala R&amp;D Institute of Science andTechnology 維爾特克科技大學"
+E                   - option "Mapua University 瑪普爾大學"
+E                   - option "Bordeaux Montaigne University 蒙田波爾多大學"
+E                   - option "EPITA (School of engineering &amp; computer science) 法國高等工程技術學院"
+E                   - option "University of Strasbourg 史特拉斯堡大學"
+E                   - option "Faculty of Management, Economics &amp; Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)"
+E                   - option "University of Southern Denmark 南丹麥大學"
+E                   - option "Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學"
+E                   - option "Ludwigshafen University of Business and Society 路德維希港社會應用科技大學"
+E                   - option "Friedrich Schiller Universität Jena 耶拿大學"
+E                   - option "Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學"
+E                   - option "Deggendorf Institute of Technology 德根多夫應用科技大學"
+E                   - option "Augsburg University of Applied Sciences 奧格斯堡應用科技大學"
+E                   - option "ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院"
+E                   - option "University of Applied Sciences and Arts Northwestern Switzerland – School of Business Fachhoschule Nordwestschweiz (FHNW) - Hochschule für Wirtschaft 西北應用科技與藝術大學"
+E                   - option "Ankara Social Science University 土耳其安卡拉社會科技大學"
+E                   - option "Ç ukurova University 土耳其丘庫羅瓦大學"
+E                   - option "Tomas Bata University in Zlí n 托馬斯拔佳大學"
+E                   - option "University of West Bohemia 西波希米亞大學"
+E                   - option "SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)"
+E                   - option "Ø stfold University of Applied Sciences 厄斯特福德應用科學大學"
+E                   - option "Universidad Internacional 墨西哥國際大學"
+E                 - text: 第四志願
+E                 - combobox "第四志願":
+E                   - option "暫不設定" [selected]
+E                   - option "Beijing Normal University 北京師範大學"
+E                   - option "Chongqing University 重慶大學"
+E                   - option "Xiamen University 廈門大學"
+E                   - option "Tianjin University 天津大學"
+E                   - option "Northeast Normal University 東北師範大學"
+E                   - option "University of Electronic Science and Technology of China 電子科技大學"
+E                   - option "Central China Normal University 華中師範大學"
+E                   - option "Ryukoku University 龍谷大學"
+E                   - option "Chiba University of Commerce 千葉商科大學"
+E                   - option "Nagoya University 名古屋大學"
+E                   - option "Tohoku University 東北大學"
+E                   - option "Hokkaido University 北海道大學"
+E                   - option "Tokiwa University 常磐大學"
+E                   - option "Dong-A University 東亞大學"
+E                   - option "Pusan National University 釜山國立大學"
+E                   - option "Kyung Hee University 慶熙大學"
+E                   - option "Hankuk University of Foreign Studies 韓國外國語大學"
+E                   - option "Seoul National University of Science and Technology 國立首爾科技大學"
+E                   - option "Sungshin Women's University 誠信女子大學"
+E                   - option "Chung Ang University 中央大學"
+E                   - option "Gachon University 嘉泉大學"
+E                   - option "ChungNam National University 忠南大學"
+E                   - option "Kyungsung University 慶星大學"
+E                   - option "Thammasat University 國立法政大學"
+E                   - option "King Mongkut’s University of Technology Thonburi 蒙庫國王科技大學"
+E                   - option "Universitas Bunda MuliaUK 慈育大學"
+E                   - option "Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學"
+E                   - option "Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學"
+E                   - option "Chitkara University 吉特卡拉大學"
+E                   - option "Saintigits Group of Institutions 聖基茲工學院"
+E                   - option "Vel Tech Rangarajan Dr.Sagunthala R&amp;D Institute of Science andTechnology 維爾特克科技大學"
+E                   - option "Mapua University 瑪普爾大學"
+E                   - option "Bordeaux Montaigne University 蒙田波爾多大學"
+E                   - option "EPITA (School of engineering &amp; computer science) 法國高等工程技術學院"
+E                   - option "University of Strasbourg 史特拉斯堡大學"
+E                   - option "Faculty of Management, Economics &amp; Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)"
+E                   - option "University of Southern Denmark 南丹麥大學"
+E                   - option "Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學"
+E                   - option "Ludwigshafen University of Business and Society 路德維希港社會應用科技大學"
+E                   - option "Friedrich Schiller Universität Jena 耶拿大學"
+E                   - option "Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學"
+E                   - option "Deggendorf Institute of Technology 德根多夫應用科技大學"
+E                   - option "Augsburg University of Applied Sciences 奧格斯堡應用科技大學"
+E                   - option "ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院"
+E                   - option "University of Applied Sciences and Arts Northwestern Switzerland – School of Business Fachhoschule Nordwestschweiz (FHNW) - Hochschule für Wirtschaft 西北應用科技與藝術大學"
+E                   - option "Ankara Social Science University 土耳其安卡拉社會科技大學"
+E                   - option "Ç ukurova University 土耳其丘庫羅瓦大學"
+E                   - option "Tomas Bata University in Zlí n 托馬斯拔佳大學"
+E                   - option "University of West Bohemia 西波希米亞大學"
+E                   - option "SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)"
+E                   - option "Ø stfold University of Applied Sciences 厄斯特福德應用科學大學"
+E                   - option "Universidad Internacional 墨西哥國際大學"
+E                 - text: 第五志願
+E                 - combobox "第五志願":
+E                   - option "暫不設定" [selected]
+E                   - option "Beijing Normal University 北京師範大學"
+E                   - option "Chongqing University 重慶大學"
+E                   - option "Xiamen University 廈門大學"
+E                   - option "Tianjin University 天津大學"
+E                   - option "Northeast Normal University 東北師範大學"
+E                   - option "University of Electronic Science and Technology of China 電子科技大學"
+E                   - option "Central China Normal University 華中師範大學"
+E                   - option "Ryukoku University 龍谷大學"
+E                   - option "Chiba University of Commerce 千葉商科大學"
+E                   - option "Nagoya University 名古屋大學"
+E                   - option "Tohoku University 東北大學"
+E                   - option "Hokkaido University 北海道大學"
+E                   - option "Tokiwa University 常磐大學"
+E                   - option "Dong-A University 東亞大學"
+E                   - option "Pusan National University 釜山國立大學"
+E                   - option "Kyung Hee University 慶熙大學"
+E                   - option "Hankuk University of Foreign Studies 韓國外國語大學"
+E                   - option "Seoul National University of Science and Technology 國立首爾科技大學"
+E                   - option "Sungshin Women's University 誠信女子大學"
+E                   - option "Chung Ang University 中央大學"
+E                   - option "Gachon University 嘉泉大學"
+E                   - option "ChungNam National University 忠南大學"
+E                   - option "Kyungsung University 慶星大學"
+E                   - option "Thammasat University 國立法政大學"
+E                   - option "King Mongkut’s University of Technology Thonburi 蒙庫國王科技大學"
+E                   - option "Universitas Bunda MuliaUK 慈育大學"
+E                   - option "Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學"
+E                   - option "Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學"
+E                   - option "Chitkara University 吉特卡拉大學"
+E                   - option "Saintigits Group of Institutions 聖基茲工學院"
+E                   - option "Vel Tech Rangarajan Dr.Sagunthala R&amp;D Institute of Science andTechnology 維爾特克科技大學"
+E                   - option "Mapua University 瑪普爾大學"
+E                   - option "Bordeaux Montaigne University 蒙田波爾多大學"
+E                   - option "EPITA (School of engineering &amp; computer science) 法國高等工程技術學院"
+E                   - option "University of Strasbourg 史特拉斯堡大學"
+E                   - option "Faculty of Management, Economics &amp; Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)"
+E                   - option "University of Southern Denmark 南丹麥大學"
+E                   - option "Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學"
+E                   - option "Ludwigshafen University of Business and Society 路德維希港社會應用科技大學"
+E                   - option "Friedrich Schiller Universität Jena 耶拿大學"
+E                   - option "Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學"
+E                   - option "Deggendorf Institute of Technology 德根多夫應用科技大學"
+E                   - option "Augsburg University of Applied Sciences 奧格斯堡應用科技大學"
+E                   - option "ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院"
+E                   - option "University of Applied Sciences and Arts Northwestern Switzerland – School of Business Fachhoschule Nordwestschweiz (FHNW) - Hochschule für Wirtschaft 西北應用科技與藝術大學"
+E                   - option "Ankara Social Science University 土耳其安卡拉社會科技大學"
+E                   - option "Ç ukurova University 土耳其丘庫羅瓦大學"
+E                   - option "Tomas Bata University in Zlí n 托馬斯拔佳大學"
+E                   - option "University of West Bohemia 西波希米亞大學"
+E                   - option "SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)"
+E                   - option "Ø stfold University of Applied Sciences 厄斯特福德應用科學大學"
+E                   - option "Universidad Internacional 墨西哥國際大學"
+E                 - button "保存志願順序"
+E                 - paragraph: 這是個人準備順序；正式志願數、語組與分發規定仍以本校當期公告為準。調整順序會保留既有進度；文件與時程目標可在各校清單中選擇。
+E               - status: 2 個志願 · 15 項準備工作
+E               - paragraph: 勾選只記錄個人的準備進度；不代表正式送件、校方受理或錄取。來源或規定不同的工作會分開顯示。
+E               - paragraph: 目前沒有能確認為共用的步驟，保留各校清單以便核對。
+E               - group: 第 1 志願 · Nagoya University 名古屋大學 需要校方確認
+E               - group: 第 2 志願 · Kyung Hee University 慶熙大學 需要校方確認
+E             - region "我的準備工作台":
+E               - text: 讓準備符合你的生活
+E               - heading "我的準備工作台" [level=2]
+E               - link "完整日曆":
+E                 - /url: "#calendar"
+E               - article:
+E                 - strong: 今天可以做什麼
+E                 - paragraph: 先設定每週可投入時間與各項工作時數，系統會安排今天與後續的工作。
+E               - article:
+E                 - strong: 正在等待 0 項
+E                 - paragraph: 目前沒有記錄等待事項。等校方或他人回覆時，可在任務內填寫原因。
+E               - group: 設定可投入時間與重新安排
+E               - group: 任務工時、前置關係與文件
+E               - paragraph: 目前沿用準備天數倒推。設定可投入時間後，才會產生逐日工作安排。
+E               - group: 依官方期限預留準備天數
+E             - heading "接著，準備申請文件" [level=2]
+E             - paragraph: 送件資料：0 / 2 項已標記完成。填寫、列印與標記完成不代表已送件。
+E             - link "開啟申請文件":
+E               - /url: "#application-center"
+E       - paragraph:
+E         - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E         - button "停用匿名使用統計"
+E         - text: 。
+E         - link "隱私權政策":
+E           - /url: /privacy
+E         - link "使用條款":
+E           - /url: /terms
+
+tests/e2e/test_ccu_candidate_acceptance.py:163: AssertionError</failure></testcase></testsuite></testsuites>

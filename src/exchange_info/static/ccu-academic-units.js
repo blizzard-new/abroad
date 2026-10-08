@@ -3,6 +3,9 @@ window.UniWayAcademicUnits ||= {};
 window.UniWayAcademicUnits["國立中正大學"] = {
   sourceUrl: "https://s2.exam.ccu.edu.tw/ccuee_intro/stu/intro_index.php",
   checkedAt: "2026-10-08",
+  // Search categories only. Programme-specific admission limits remain in the
+  // reviewed scope and matching checks; evidence prose is not a select option.
+  degreeFilterOptions: ["大學部", "碩士班", "博士班", "研究所"],
   colleges: {
     "文學院": ["中國文學系", "外國語文學系", "歷史學系", "哲學系", "語言學研究所", "台灣文學與創意應用研究所"],
     "理學院": ["數學系", "地球與環境科學系", "物理系", "化學暨生物化學系", "生物醫學科學系", "跨領域科學國際博士學位學程"],

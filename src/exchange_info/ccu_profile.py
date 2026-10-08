@@ -40,6 +40,10 @@ def reviewed_profiles() -> dict[int, dict]:
                 raise ValueError("CCU missing profile facts must remain null")
             if field["value"] and not field["evidence"]:
                 raise ValueError("CCU profile fact requires source evidence")
+            if field["status"] == "verified_current" and not any(
+                ev["status"] == "verified_current" for ev in field["evidence"]
+            ):
+                raise ValueError("Current CCU profile requires current evidence")
             for ev in field["evidence"]:
                 source = json.loads(
                     (
@@ -87,8 +91,11 @@ def reviewed_profiles() -> dict[int, dict]:
                     ev.get(k) for k in ["academic_year", "checked_at", "source_url"]
                 ):
                     raise ValueError("Incomplete CCU profile provenance")
-                if ev["status"] != field["status"]:
-                    raise ValueError("CCU profile field/evidence status disagreement")
+                if ev["status"] not in {
+                    "verified_current", "needs_confirmation", "reference_only",
+                    "conflict", "explicit_not_announced",
+                }:
+                    raise ValueError("Invalid CCU profile evidence status")
     return {row["ccu_page"]: row for row in rows}
 
 

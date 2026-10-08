@@ -1326,6 +1326,14 @@ function setHomeSchool(schoolName, { reload = true } = {}) {
   state.homeSchool = nextSchool;
   state.selectedHomeSchool = nextSchool;
   state.applicationContext.school_name = nextSchool;
+  // A shared catalogue URL must follow an explicit school choice. Otherwise
+  // the next hash navigation re-applies the previous ?home= school.
+  const sharedUrl = new URL(window.location.href);
+  if (sharedUrl.searchParams.has("home") && sharedUrl.searchParams.get("home") !== nextSchool) {
+    sharedUrl.searchParams.set("home", nextSchool);
+    window.UniWayNavigation.replaceState({}, "", sharedUrl.href);
+    partnerUrlSearch = window.location.search;
+  }
   if (needsRefresh) {
     state.applicationContext.target_school = "";
     state.applicationContext.target_country = "";
@@ -3892,8 +3900,8 @@ function partnerAvailabilityMeta(item) {
   }
   return {
     status: "open",
-    shortLabel: item.application_window_status === "closed" ? `${item.application_round}名額已列／校內截止` : "本期開放",
-    cardLabel: item.application_window_status === "closed" ? `${item.application_round}名額已列／校內截止` : "本期開放",
+    shortLabel: item?.application_window_status === "closed" ? `${item.application_round}名額已列／校內截止` : "本期開放",
+    cardLabel: item?.application_window_status === "closed" ? `${item.application_round}名額已列／校內截止` : "本期開放",
     matchLabel: "本期開放",
     reason: "中央當期名單已列",
     blocked: false,
@@ -7350,7 +7358,8 @@ function renderPartnerFilters() {
   const countries = state.region ? allCountries.filter((country) => regions.inRegion(country, state.region)) : allCountries;
   const colleges = homeCollegeOptions();
   state.college = homeCollegeValue(state.college);
-  const degrees = unique(partners.flatMap((item) => splitOptions(item.degree_levels)));
+  const degrees = window.UniWayAcademicUnits?.[activeHomeSchool()]?.degreeFilterOptions
+    || unique(partners.flatMap((item) => splitOptions(item.degree_levels)));
   fillRegionSelect("#region-filter", allCountries, state.region);
   fillCountrySelect("#country-filter", countries, state.country);
   fillSelect("#college-filter", colleges, "全部學院", state.college);

@@ -1,20 +1,19 @@
 {
   "checked_date": "2026-10-08",
   "scope": "CCU2027春季55校學生必要資料；候選href篩查非正文政策查核。",
-  "input_sha256": "ad73e9698cd65145a3130a1ac21093dcdf6edbdba5913ae6b1ed64749fc99b9c",
+  "input_sha256": "e9cea24d013d1958cb80e451cd12ac3dd8d4dc4874086cdff6e9ecf56d32537a",
   "canonicalization": "移除fragment/utm，排序query，空白path編碼；只用已取得requested_url/final_url證明別名，其他HTTP/HTTPS、尾slash、index及語言不同不推定同頁。",
-  "review_input_sha256": "e13bb198ed64a371463add9fbed3d2ebdc119c0baeb75713957614bb498b39f3",
-  "raw_href_count": 618,
-  "unique_url_count": 599,
-  "collapsed_href_count": 19,
+  "review_input_sha256": "0f8e65ad1766d26690e41df3027ea1dfcbd10d1f5e1b90bfb79ea3dc7169af01",
+  "raw_href_count": 628,
+  "unique_url_count": 602,
+  "collapsed_href_count": 26,
   "disposition_counts": {
-    "public_candidate_requires_content_review": 19,
-    "content_reviewed": 7,
-    "same_content_reviewed": 11,
+    "content_reviewed": 9,
+    "same_content_reviewed": 14,
     "deferred_other_program_scope": 16,
-    "excluded_navigation": 84,
+    "excluded_navigation": 87,
     "deferred_library_detail": 44,
-    "deferred_general_library": 7,
+    "deferred_general_library": 8,
     "excluded_degree_program": 29,
     "excluded_other_recipient": 35,
     "reference_candidate": 24,
@@ -22,6 +21,8 @@
     "excluded_other_program": 29,
     "excluded_events_stories": 48,
     "already_requested": 19,
+    "deferred_optional_external_language_program": 1,
+    "deferred_optional_exam_policy": 1,
     "access_limited": 1,
     "deferred_archive_navigation": 8,
     "deferred_media": 14,
@@ -29,10 +30,16 @@
     "deferred_scope_requires_check": 9,
     "excluded_auth_navigation": 72,
     "deferred_alternate_language": 3,
+    "excluded_malformed_navigation": 1,
     "deferred_optional_exchange_project": 30,
     "deferred_room_option_detail": 20,
+    "deferred_optional_other_program": 1,
     "excluded_degree_admission": 1,
-    "same_extracted_text_reviewed": 5
+    "deferred_optional_library_detail": 4,
+    "same_extracted_text_reviewed": 5,
+    "alternate_language_no_new_required_policy": 1,
+    "deferred_other_recipient_library_service": 1,
+    "excluded_calendar_or_display_navigation": 3
   },
   "schools": [
     {
@@ -524,7 +531,8 @@
         "p35-r20-2a6662dd76",
         "p35-r21-ac85d60147",
         "p35-r22-398e19c12c",
-        "p35-r22-fe0b4d109b"
+        "p35-r22-fe0b4d109b",
+        "p35-r23-ae2833c5b0"
       ],
       "source_access_constraints": [],
       "candidate_ids_by_disposition": {
@@ -586,9 +594,6 @@
           "ccu-link-924103f7dedc965f",
           "ccu-link-517c086f058eef8f",
           "ccu-link-ec4ae6d638239b3e"
-        ],
-        "public_candidate_requires_content_review": [
-          "ccu-link-ae2833c5b02c11a6"
         ],
         "reference_candidate": [
           "ccu-link-4bee0f8b2f679bfd",
@@ -793,19 +798,27 @@
         "p45-r21-b99ab07fd2",
         "p45-r22-4664709e21",
         "p45-r22-fc6f5e2f59",
-        "p45-r22-64f331f77e"
+        "p45-r22-64f331f77e",
+        "p45-r23-84928111ff",
+        "p45-r23-46f871a492",
+        "p45-r23-follow-3879e18719",
+        "p45-r23-follow-11e35a3763",
+        "p45-r23-government-integrated-form"
       ],
       "source_access_constraints": [],
       "candidate_ids_by_disposition": {
         "already_requested": [
           "ccu-link-68ef13355525f1c7"
         ],
+        "content_reviewed": [
+          "ccu-link-84928111ffed923e",
+          "ccu-link-46f871a49294dc99"
+        ],
         "excluded_other_recipient": [
           "ccu-link-0980fc44bd1a4db0"
         ],
-        "public_candidate_requires_content_review": [
-          "ccu-link-84928111ffed923e",
-          "ccu-link-46f871a49294dc99"
+        "same_content_reviewed": [
+          "ccu-link-51321e91625b508b"
         ]
       },
       "public_sources_exhausted": false
@@ -869,6 +882,9 @@
       ],
       "source_access_constraints": [],
       "candidate_ids_by_disposition": {
+        "deferred_optional_external_language_program": [
+          "ccu-link-b863a6a0df1ee064"
+        ],
         "deferred_optional_student_service": [
           "ccu-link-9adb149aea2f695c",
           "ccu-link-52552cdffd6848fb",
@@ -887,14 +903,11 @@
         "excluded_navigation": [
           "ccu-link-e4a2d613a3180c87",
           "ccu-link-cbf2e9348cc585ce",
+          "ccu-link-1a16e6150e95c896",
           "ccu-link-202fb1a6bb2e2ba2",
           "ccu-link-d8dcf219af71905c",
-          "ccu-link-3cb538e622241eb1"
-        ],
-        "public_candidate_requires_content_review": [
-          "ccu-link-1a16e6150e95c896",
           "ccu-link-70151eeddc96fa1c",
-          "ccu-link-b863a6a0df1ee064"
+          "ccu-link-3cb538e622241eb1"
         ]
       },
       "public_sources_exhausted": false
@@ -1010,6 +1023,9 @@
           "ccu-link-36e50a374f2f4397",
           "ccu-link-ee6cc0d5a00fde2d"
         ],
+        "deferred_optional_exam_policy": [
+          "ccu-link-66ddc35b81ded931"
+        ],
         "deferred_other_program_scope": [
           "ccu-link-a65566cf2a1e5129"
         ],
@@ -1034,9 +1050,6 @@
         "excluded_other_recipient": [
           "ccu-link-5779a4d6d6ec9e9b",
           "ccu-link-30f2c0f49dbfe3b2"
-        ],
-        "public_candidate_requires_content_review": [
-          "ccu-link-66ddc35b81ded931"
         ],
         "reference_candidate": [
           "ccu-link-43c07d9a70f60ef4",
@@ -1769,7 +1782,8 @@
         "p89-r21-7654862399",
         "p89-r21-46b2e47d8b",
         "p89-r21-fbfb7c89d8",
-        "p89-r21-611f4957e4"
+        "p89-r21-611f4957e4",
+        "p89-r23-4cf5f04e25"
       ],
       "source_access_constraints": [],
       "candidate_ids_by_disposition": {
@@ -1874,6 +1888,9 @@
           "ccu-link-a7c54b81d39ee881",
           "ccu-link-9e6785e6eaa4407e"
         ],
+        "excluded_malformed_navigation": [
+          "ccu-link-c24d94fe91afff01"
+        ],
         "excluded_navigation": [
           "ccu-link-9eccc1554eb10af1",
           "ccu-link-bcb591a21b88eea1",
@@ -1899,10 +1916,6 @@
         "excluded_other_program": [
           "ccu-link-1185c7346e3989ee",
           "ccu-link-ff4c32cc94f084db"
-        ],
-        "public_candidate_requires_content_review": [
-          "ccu-link-4cf5f04e25952a81",
-          "ccu-link-c24d94fe91afff01"
         ],
         "reference_candidate": [
           "ccu-link-8b6eed4d897b881f",
@@ -1939,6 +1952,9 @@
       ],
       "source_access_constraints": [],
       "candidate_ids_by_disposition": {
+        "deferred_optional_other_program": [
+          "ccu-link-a433e2257a02d62e"
+        ],
         "deferred_optional_student_service": [
           "ccu-link-26ccd24a34f19d37"
         ],
@@ -1950,9 +1966,6 @@
         ],
         "excluded_other_recipient": [
           "ccu-link-098e2b5714dc532b"
-        ],
-        "public_candidate_requires_content_review": [
-          "ccu-link-a433e2257a02d62e"
         ]
       },
       "public_sources_exhausted": false
@@ -2085,11 +2098,14 @@
         "p100-r20-0217a4735b",
         "p100-r20-434c248c73",
         "p100-r20-90ffda482c",
-        "p100-r21-0978ae3e7c"
+        "p100-r21-0978ae3e7c",
+        "p100-r23-b876382cc2",
+        "p100-r23-follow-90a8f3f877"
       ],
       "source_access_constraints": [],
       "candidate_ids_by_disposition": {
         "deferred_general_library": [
+          "ccu-link-d47fb3e068f4635f",
           "ccu-link-e3eaa8d71a417419"
         ],
         "deferred_library_detail": [
@@ -2105,6 +2121,9 @@
           "ccu-link-e19d7a724a6f43f8",
           "ccu-link-604b47718283a3c1"
         ],
+        "deferred_optional_library_detail": [
+          "ccu-link-0290653fba21fb63"
+        ],
         "deferred_scope_requires_check": [
           "ccu-link-f1676081be28ac75"
         ],
@@ -2115,9 +2134,6 @@
         "excluded_navigation": [
           "ccu-link-be6d889ecb9e3568",
           "ccu-link-e2b3066441766646"
-        ],
-        "public_candidate_requires_content_review": [
-          "ccu-link-b876382cc2e45340"
         ],
         "reference_candidate": [
           "ccu-link-4b194f4ca70ae761"
@@ -2168,11 +2184,9 @@
           "ccu-link-633fd1ba012db80e",
           "ccu-link-7fed7c946484747f"
         ],
-        "public_candidate_requires_content_review": [
-          "ccu-link-9cce9936319861b8"
-        ],
         "same_content_reviewed": [
-          "ccu-link-77fa786a1565e846"
+          "ccu-link-77fa786a1565e846",
+          "ccu-link-9cce9936319861b8"
         ],
         "same_extracted_text_reviewed": [
           "ccu-link-73bc0fb97202d631",
@@ -2236,9 +2250,7 @@
           "ccu-link-5b95ddc0716f8f52"
         ],
         "excluded_navigation": [
-          "ccu-link-91f1c991c27117e9"
-        ],
-        "public_candidate_requires_content_review": [
+          "ccu-link-91f1c991c27117e9",
           "ccu-link-dcfe65a95b85b1af"
         ]
       },
@@ -2375,12 +2387,19 @@
         "p104-r21-e43ce76d42",
         "p104-r21-fb667f69e0",
         "p104-r22-2457ef7bb1",
-        "p104-r22-1843b95935"
+        "p104-r22-1843b95935",
+        "p104-r23-367d887527",
+        "p104-r23-follow-ea29b0ff52",
+        "p104-r23-follow-f070da0276",
+        "p104-r23-follow-legacy-fee-link"
       ],
       "source_access_constraints": [],
       "candidate_ids_by_disposition": {
         "already_requested": [
           "ccu-link-4c0c7f98e4004489"
+        ],
+        "alternate_language_no_new_required_policy": [
+          "ccu-link-a0e09ba044595577"
         ],
         "deferred_library_detail": [
           "ccu-link-b4073ca0b9828cbb",
@@ -2395,8 +2414,16 @@
           "ccu-link-6f122a95eeac9723",
           "ccu-link-8c2ff41d59429275"
         ],
+        "deferred_optional_library_detail": [
+          "ccu-link-db2c82dafa786ad8",
+          "ccu-link-4009b07a1c1fb824",
+          "ccu-link-18f0fa9b285b54d9"
+        ],
         "deferred_other_program_scope": [
           "ccu-link-889ec3b92e44e578"
+        ],
+        "deferred_other_recipient_library_service": [
+          "ccu-link-fb683d758de05643"
         ],
         "excluded_navigation": [
           "ccu-link-1eff272d651e38a8",
@@ -2405,10 +2432,8 @@
           "ccu-link-168c60810a6fdbc3",
           "ccu-link-933cfcde68f4597e"
         ],
-        "public_candidate_requires_content_review": [
-          "ccu-link-a0e09ba044595577",
-          "ccu-link-d47ba710efce87a0",
-          "ccu-link-367d8875274c99f0"
+        "same_content_reviewed": [
+          "ccu-link-d47ba710efce87a0"
         ],
         "same_extracted_text_reviewed": [
           "ccu-link-6156bc620d19a400"
@@ -2757,6 +2782,11 @@
       ],
       "source_access_constraints": [],
       "candidate_ids_by_disposition": {
+        "excluded_calendar_or_display_navigation": [
+          "ccu-link-e524f42bc0b4a3f5",
+          "ccu-link-06fb5839cea785df",
+          "ccu-link-c79af0be24f89dbd"
+        ],
         "excluded_navigation": [
           "ccu-link-2f693b51c73d962a"
         ],
@@ -2768,11 +2798,6 @@
           "ccu-link-44c9cd3b59481950",
           "ccu-link-28c1f66b88d673ff",
           "ccu-link-8b36725376542e0b"
-        ],
-        "public_candidate_requires_content_review": [
-          "ccu-link-e524f42bc0b4a3f5",
-          "ccu-link-06fb5839cea785df",
-          "ccu-link-c79af0be24f89dbd"
         ]
       },
       "public_sources_exhausted": false
@@ -2929,206 +2954,6 @@
     }
   ],
   "candidates": [
-    {
-      "candidate_id": "ccu-link-84928111ffed923e",
-      "url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Application%20form.pdf",
-      "ccu_pages": [
-        45
-      ],
-      "labels": [
-        "1) Application form"
-      ],
-      "occurrences": [
-        {
-          "url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Application form.pdf",
-          "label": "1) Application form",
-          "discovered_in_source": "p45-r22-fc6f5e2f59",
-          "ccu_page": 45
-        }
-      ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
-      "target_gap_fields": [
-        "application_forms",
-        "documents"
-      ],
-      "priority_score": 10,
-      "source_content_read": false,
-      "source_availability": "unrequested",
-      "already_requested_source_id": null,
-      "content_review": null
-    },
-    {
-      "candidate_id": "ccu-link-46f871a49294dc99",
-      "url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Guide%20of%20foreigners'%20dormitory%20application.pdf",
-      "ccu_pages": [
-        45
-      ],
-      "labels": [
-        "Click to see information"
-      ],
-      "occurrences": [
-        {
-          "url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Guide of foreigners' dormitory application.pdf",
-          "label": "Click to see information",
-          "discovered_in_source": "p45-r22-fc6f5e2f59",
-          "ccu_page": 45
-        }
-      ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
-      "target_gap_fields": [
-        "application_forms",
-        "documents"
-      ],
-      "priority_score": 10,
-      "source_content_read": false,
-      "source_availability": "unrequested",
-      "already_requested_source_id": null,
-      "content_review": null
-    },
-    {
-      "candidate_id": "ccu-link-9cce9936319861b8",
-      "url": "https://www.th-deg.de/en/students/documents/application-and-service-fees",
-      "ccu_pages": [
-        101
-      ],
-      "labels": [
-        "EN"
-      ],
-      "occurrences": [
-        {
-          "url": "https://www.th-deg.de/en/students/documents/application-and-service-fees",
-          "label": "EN",
-          "discovered_in_source": "p101-r22-30543afa9c",
-          "ccu_page": 101
-        }
-      ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
-      "target_gap_fields": [
-        "application_forms",
-        "documents"
-      ],
-      "priority_score": 10,
-      "source_content_read": false,
-      "source_availability": "unrequested",
-      "already_requested_source_id": null,
-      "content_review": null
-    },
-    {
-      "candidate_id": "ccu-link-dcfe65a95b85b1af",
-      "url": "https://www.tha.de/studium/internationale-angebote/dein-weg-nach-augsburg/",
-      "ccu_pages": [
-        102
-      ],
-      "labels": [
-        "Informationen zur Bewerbung für Exchange Students"
-      ],
-      "occurrences": [
-        {
-          "url": "https://www.tha.de/studium/internationale-angebote/dein-weg-nach-augsburg/",
-          "label": "Informationen zur Bewerbung für Exchange Students",
-          "discovered_in_source": "p102-r22-de4a40d1ca",
-          "ccu_page": 102
-        }
-      ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
-      "target_gap_fields": [
-        "college_scope",
-        "degree_scope"
-      ],
-      "priority_score": 6,
-      "source_content_read": false,
-      "source_availability": "unrequested",
-      "already_requested_source_id": null,
-      "content_review": null
-    },
-    {
-      "candidate_id": "ccu-link-4cf5f04e25952a81",
-      "url": "https://www.sdu.dk/en/bibliotek/om-biblioteket/laaneregler",
-      "ccu_pages": [
-        89
-      ],
-      "labels": [
-        "University Library's rules"
-      ],
-      "occurrences": [
-        {
-          "url": "https://www.sdu.dk/en/bibliotek/om-biblioteket/laaneregler",
-          "label": "University Library's rules",
-          "discovered_in_source": "p89-r21-7654862399",
-          "ccu_page": 89
-        }
-      ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
-      "target_gap_fields": [
-        "campus_life"
-      ],
-      "priority_score": 1,
-      "source_content_read": false,
-      "source_availability": "unrequested",
-      "already_requested_source_id": null,
-      "content_review": null
-    },
-    {
-      "candidate_id": "ccu-link-a433e2257a02d62e",
-      "url": "https://amu.edu.pl/en/solidarity-with-ukraine/summer-schools",
-      "ccu_pages": [
-        95
-      ],
-      "labels": [
-        "Summer Schools organised with the support of the Polish National Agency for Academic Exchange"
-      ],
-      "occurrences": [
-        {
-          "url": "https://amu.edu.pl/en/solidarity-with-ukraine/summer-schools",
-          "label": "Summer Schools organised with the support of the Polish National Agency for Academic Exchange",
-          "discovered_in_source": "p95-profile-root",
-          "ccu_page": 95
-        }
-      ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
-      "target_gap_fields": [
-        "campus_life"
-      ],
-      "priority_score": 1,
-      "source_content_read": false,
-      "source_availability": "unrequested",
-      "already_requested_source_id": null,
-      "content_review": null
-    },
-    {
-      "candidate_id": "ccu-link-b876382cc2e45340",
-      "url": "https://www.ostfalia.de/en/university/campus-facilities/library/library-a-to-z",
-      "ccu_pages": [
-        100
-      ],
-      "labels": [
-        "Library A to Z"
-      ],
-      "occurrences": [
-        {
-          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/library-a-to-z",
-          "label": "Library A to Z",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
-          "ccu_page": 100
-        }
-      ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
-      "target_gap_fields": [
-        "campus_life"
-      ],
-      "priority_score": 1,
-      "source_content_read": false,
-      "source_availability": "unrequested",
-      "already_requested_source_id": null,
-      "content_review": null
-    },
     {
       "candidate_id": "ccu-link-0f50c78dc2fb1933",
       "url": "https://iso.bnu.edu.cn/en/accommodation/detail?bid=3&campid=1&cid=13&pid=1",
@@ -5285,7 +5110,7 @@
         {
           "url": "https://www.insc.tohoku.ac.jp/english/exchange/colabs-short-term-3/",
           "label": "TU Research-Oriented Incoming Student (ROIS) Scholarship",
-          "discovered_in_source": "p35-r21-ac85d60147",
+          "discovered_in_source": "p35-r23-ae2833c5b0",
           "ccu_page": 35
         }
       ],
@@ -5574,32 +5399,6 @@
       ],
       "disposition": "excluded_events_stories",
       "screening_reason": "活動、故事、舊假日或招募訊息，不是本期必要申請或服務規定。",
-      "target_gap_fields": [],
-      "priority_score": 0,
-      "source_content_read": false,
-      "source_availability": "unrequested",
-      "already_requested_source_id": null,
-      "content_review": null
-    },
-    {
-      "candidate_id": "ccu-link-ae2833c5b02c11a6",
-      "url": "https://www.insc.tohoku.ac.jp/english/exchange/jype/3-class-schedule-sample/",
-      "ccu_pages": [
-        35
-      ],
-      "labels": [
-        "Class Schedule（Sample）"
-      ],
-      "occurrences": [
-        {
-          "url": "https://www.insc.tohoku.ac.jp/english/exchange/jype/3-class-schedule-sample/",
-          "label": "Class Schedule（Sample）",
-          "discovered_in_source": "p35-r21-ac85d60147",
-          "ccu_page": 35
-        }
-      ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
       "target_gap_fields": [],
       "priority_score": 0,
       "source_content_read": false,
@@ -7084,6 +6883,136 @@
       "content_review": null
     },
     {
+      "candidate_id": "ccu-link-84928111ffed923e",
+      "url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Application%20form.pdf",
+      "ccu_pages": [
+        45
+      ],
+      "labels": [
+        "1) Application form"
+      ],
+      "occurrences": [
+        {
+          "url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Application form.pdf",
+          "label": "1) Application form",
+          "discovered_in_source": "p45-r22-fc6f5e2f59",
+          "ccu_page": 45
+        }
+      ],
+      "disposition": "content_reviewed",
+      "screening_reason": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+      "target_gap_fields": [
+        "application_forms",
+        "documents"
+      ],
+      "priority_score": 0,
+      "source_content_read": true,
+      "source_availability": "pdf",
+      "already_requested_source_id": "p45-r23-84928111ff",
+      "content_review": {
+        "url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Application%20form.pdf",
+        "ccu_page": 45,
+        "disposition": "content_reviewed",
+        "source_content_read": true,
+        "source_id": "p45-r23-84928111ff",
+        "review_extent": "necessary_policy_sections",
+        "checked_at": "2026-10-08T19:30:50.125961+00:00",
+        "sha256": "a00948b93a57ca5ffff10a24e21e6f1ac0a25719d03822b1d805664ed0245d35",
+        "text_sha256": "56e12a45949243493a1c5596e1212eb1865c2f89adbed7ef61454489bdcf5564",
+        "academic_year": "KHU未年統合居留申報表1頁，沒有法規修訂日期；不是交換初次申請表",
+        "applicability_status": "needs_confirmation",
+        "review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。"
+      }
+    },
+    {
+      "candidate_id": "ccu-link-46f871a49294dc99",
+      "url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Guide%20of%20foreigners'%20dormitory%20application.pdf",
+      "ccu_pages": [
+        45
+      ],
+      "labels": [
+        "Click to see information"
+      ],
+      "occurrences": [
+        {
+          "url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Guide of foreigners' dormitory application.pdf",
+          "label": "Click to see information",
+          "discovered_in_source": "p45-r22-fc6f5e2f59",
+          "ccu_page": 45
+        }
+      ],
+      "disposition": "content_reviewed",
+      "screening_reason": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。",
+      "target_gap_fields": [
+        "application_forms",
+        "documents"
+      ],
+      "priority_score": 0,
+      "source_content_read": true,
+      "source_availability": "pdf",
+      "already_requested_source_id": "p45-r23-46f871a492",
+      "content_review": {
+        "url": "https://oia.khu.ac.kr/resources/user/download/oiak_kor/Guide%20of%20foreigners'%20dormitory%20application.pdf",
+        "ccu_page": 45,
+        "disposition": "content_reviewed",
+        "source_content_read": true,
+        "source_id": "p45-r23-46f871a492",
+        "review_extent": "necessary_policy_sections",
+        "checked_at": "2026-10-08T19:30:50.126645+00:00",
+        "sha256": "12f2dfa50b44fa5cba553a1b8de095343da4c0f6c9f2c32b0e141e15b49e0d3e",
+        "text_sha256": "29d63696d0e6702644a890d55d1dd31dc33a10ec7ad7f59017b5b76e48d8f034",
+        "academic_year": "封面明示2021-2nd semester，10頁舊宿舍申請指南；不是2027申請表或保證房型",
+        "applicability_status": "reference_only",
+        "review_note": "只核必要正文、對象、实际年度；私人通知与当期模板适用未核處保持待確認。"
+      }
+    },
+    {
+      "candidate_id": "ccu-link-51321e91625b508b",
+      "url": "https://www.hikorea.go.kr/board/BoardApplicationListR.pt",
+      "ccu_pages": [
+        45
+      ],
+      "labels": [
+        "민원서식"
+      ],
+      "occurrences": [
+        {
+          "url": "https://www.hikorea.go.kr/board/BoardApplicationListR.pt",
+          "label": "민원서식",
+          "discovered_in_source": "p45-r23-follow-3879e18719",
+          "ccu_page": 45
+        }
+      ],
+      "disposition": "same_content_reviewed",
+      "screening_reason": "未帶page查詢之官方清單實際HTTP200重查，原檔及文字SHA與page=1來源完全一致；沿用已有來源，不由URL推定別名。",
+      "target_gap_fields": [
+        "application_forms",
+        "documents"
+      ],
+      "priority_score": 0,
+      "source_content_read": true,
+      "source_availability": "reviewed_acquisition",
+      "already_requested_source_id": null,
+      "content_review": {
+        "url": "https://www.hikorea.go.kr/board/BoardApplicationListR.pt",
+        "ccu_page": 45,
+        "disposition": "same_content_reviewed",
+        "source_content_read": true,
+        "review_extent": "necessary_policy_sections",
+        "source_id": "p45-r23-follow-3879e18719",
+        "checked_at": "2026-10-08T20:23:02.855867+00:00",
+        "sha256": "4463c91ad17126a2984805db2e3b679c17c6a11609b2fee4d694e433c7bed5ce",
+        "text_sha256": "e9a149338dec814a6e9767074a79a58385d70b66fb0de0e169a4c1b56a750e3d",
+        "review_note": "未帶page查詢之官方清單實際HTTP200重查，原檔及文字SHA與page=1來源完全一致；沿用已有來源，不由URL推定別名。",
+        "proof": {
+          "same_original_bytes": true,
+          "same_extracted_text": true,
+          "requested_url": "https://www.hikorea.go.kr/board/BoardApplicationListR.pt",
+          "existing_source_url": "https://www.hikorea.go.kr/board/BoardApplicationListR.pt?page=1"
+        }
+      }
+    },
+    {
       "candidate_id": "ccu-link-9adb149aea2f695c",
       "url": "https://exchange.hufs.ac.kr/Campus-Tour",
       "ccu_pages": [
@@ -7319,14 +7248,25 @@
           "ccu_page": 47
         }
       ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
+      "disposition": "excluded_navigation",
+      "screening_reason": "HTTP200只Housing標題／框架，沒有新的住房政策正文。",
       "target_gap_fields": [],
       "priority_score": 0,
-      "source_content_read": false,
-      "source_availability": "unrequested",
+      "source_content_read": true,
+      "source_availability": "reviewed_acquisition",
       "already_requested_source_id": null,
-      "content_review": null
+      "content_review": {
+        "url": "https://exchange.hufs.ac.kr/Housing",
+        "ccu_page": 47,
+        "disposition": "excluded_navigation",
+        "source_content_read": true,
+        "review_extent": "recipient_and_relevant_body_sections",
+        "review_note": "HTTP200只Housing標題／框架，沒有新的住房政策正文。",
+        "checked_at": "2026-10-08T19:30:55.194592+00:00",
+        "sha256": "44fbcbbeb70a0734e84414076882c822293833a5eef59c308e50f28d42ea4c08",
+        "text_sha256": "5d6f4aad09c6a1fb2ec2a9fb8f7d56b30d37c11ea4fdd50b3b40a351f92e7c2c",
+        "excerpt": "Exchange/Visiting Pre-Arrival Guide - 6. Housing Search this site Embedded Files Skip to main content Skip to navigation Housing Report abuse Page details Page updated Report abuse"
+      }
     },
     {
       "candidate_id": "ccu-link-202fb1a6bb2e2ba2",
@@ -7423,14 +7363,25 @@
           "ccu_page": 47
         }
       ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
+      "disposition": "excluded_navigation",
+      "screening_reason": "HTTP200只NonCreditProgram標題／框架，精確課程頁已查，不稱讀到新規定。",
       "target_gap_fields": [],
       "priority_score": 0,
-      "source_content_read": false,
-      "source_availability": "unrequested",
+      "source_content_read": true,
+      "source_availability": "reviewed_acquisition",
       "already_requested_source_id": null,
-      "content_review": null
+      "content_review": {
+        "url": "https://exchange.hufs.ac.kr/Korean-Courses/Non-Credit-Programs",
+        "ccu_page": 47,
+        "disposition": "excluded_navigation",
+        "source_content_read": true,
+        "review_extent": "recipient_and_relevant_body_sections",
+        "review_note": "HTTP200只NonCreditProgram標題／框架，精確課程頁已查，不稱讀到新規定。",
+        "checked_at": "2026-10-08T19:30:55.334748+00:00",
+        "sha256": "1965c4ac91a3698072cee59a75c61da45a45a9e69d2870d7ae1b7bf45a4062c3",
+        "text_sha256": "1cf6150c4db2034d894fa109d422e3f38023b6c5396f04649d22b75735f73f27",
+        "excerpt": "Exchange/Visiting Pre-Arrival Guide - a. Non-Credit Programs Search this site Embedded Files Skip to main content Skip to navigation Non-Credit Korean Programs Report abuse Page details Page updated Report abuse"
+      }
     },
     {
       "candidate_id": "ccu-link-b863a6a0df1ee064",
@@ -7449,14 +7400,25 @@
           "ccu_page": 47
         }
       ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
+      "disposition": "deferred_optional_external_language_program",
+      "screening_reason": "正文為SeoulGlobalCenter校外optional免費或少量教材費語言／TOPIK課，無2027年或HUFS學分，不當入學語言門檻。",
       "target_gap_fields": [],
       "priority_score": 0,
-      "source_content_read": false,
-      "source_availability": "unrequested",
+      "source_content_read": true,
+      "source_availability": "reviewed_acquisition",
       "already_requested_source_id": null,
-      "content_review": null
+      "content_review": {
+        "url": "https://exchange.hufs.ac.kr/Korean-Courses/Non-HUFS-Programs",
+        "ccu_page": 47,
+        "disposition": "deferred_optional_external_language_program",
+        "source_content_read": true,
+        "review_extent": "recipient_and_relevant_body_sections",
+        "review_note": "正文為SeoulGlobalCenter校外optional免費或少量教材費語言／TOPIK課，無2027年或HUFS學分，不當入學語言門檻。",
+        "checked_at": "2026-10-08T19:30:57.064792+00:00",
+        "sha256": "6c12fae728e44082541fc427eb605adb7c1bc2d9058ad23d156a79c2df6fcd6c",
+        "text_sha256": "432406ccbcb20f7abde32aa357f543f9331a06e50feb91759a9568e01ea61aaf",
+        "excerpt": "Exchange/Visiting Pre-Arrival Guide - b. Non-HUFS Programs Search this site Embedded Files Skip to main content Skip to navigation Non-HUFS Programs Overview Seoul Global Center https://global.seoul.go.kr/web/educ/edos/educListPage.do Cost: Free/Minor (e.g., textbook fee) Korean language education general class Providing customized Korean language education for foreign residents by level 3 semesters per year, 36 classes in total (8 levels) Korean language education general class Prepare for TOPIK and strengthen students’ employment ability 3 semesters a year, 18 classes in total (beginner, intermediate, advanced) Korean language education special class Advanced Korean speaking, writing, communication, etc. 3 semesters a year, 6 classes in total Report abuse Page details Page updated Report abuse"
+      }
     },
     {
       "candidate_id": "ccu-link-04cfd78bcd04f032",
@@ -8020,14 +7982,30 @@
           "ccu_page": 50
         }
       ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
+      "disposition": "deferred_optional_exam_policy",
+      "screening_reason": "父頁label為考試違規處分公告；精確當期入學文件非此公告，目標正文未讀，不假稱已核處分內容／年度。",
       "target_gap_fields": [],
       "priority_score": 0,
       "source_content_read": false,
-      "source_availability": "unrequested",
+      "source_availability": "reviewed_acquisition",
       "already_requested_source_id": null,
-      "content_review": null
+      "content_review": {
+        "url": "https://oia.cau.ac.kr/cauoia/exchange/notice.do?article.offset=0&articleLimit=10&articleNo=47920&mode=view",
+        "ccu_page": 50,
+        "disposition": "deferred_optional_exam_policy",
+        "source_content_read": false,
+        "review_extent": "link_scope_screening_only",
+        "review_note": "父頁label為考試違規處分公告；精確當期入學文件非此公告，目標正文未讀，不假稱已核處分內容／年度。",
+        "discovery_evidence": {
+          "source_id": "p50-r20-1fce12ee1f",
+          "source_url": "https://oia.cau.ac.kr/cauoia/exchange/notice.do?article.offset=0&articleLimit=10&articleNo=47893&mode=view",
+          "checked_at": "2026-10-08T16:37:30.069536+00:00",
+          "sha256": "0c2b26d0453f282d1617fe67f6b23173c2824b9bb53a22f8460432992e4c0a37",
+          "text_sha256": "23c541ad05ab11e4b7d938142694cdbabeda5f7fa7431b867bcff67cf9c115d3",
+          "label": "Announcement of Punishment for Violation of Regulations during Examination",
+          "url": "https://oia.cau.ac.kr/cauoia/exchange/notice.do?article.offset=0&articleLimit=10&articleNo=47920&mode=view"
+        }
+      }
     },
     {
       "candidate_id": "ccu-link-e0cafab0b8f42ab9",
@@ -11817,7 +11795,7 @@
         {
           "url": "https://www.sdu.dk/en/bibliotek",
           "label": "Library",
-          "discovered_in_source": "p89-r21-611f4957e4",
+          "discovered_in_source": "p89-r23-4cf5f04e25",
           "ccu_page": 89
         }
       ],
@@ -11865,7 +11843,7 @@
         {
           "url": "https://www.sdu.dk/en/bibliotek/brug-biblioteket",
           "label": "Use the library",
-          "discovered_in_source": "p89-r21-611f4957e4",
+          "discovered_in_source": "p89-r23-4cf5f04e25",
           "ccu_page": 89
         }
       ],
@@ -11904,7 +11882,7 @@
         {
           "url": "https://www.sdu.dk/en/bibliotek/materialer",
           "label": "When Google Is Not Enough At the library you will find evidence-based knowledge Read more",
-          "discovered_in_source": "p89-r21-611f4957e4",
+          "discovered_in_source": "p89-r23-4cf5f04e25",
           "ccu_page": 89
         }
       ],
@@ -11952,7 +11930,7 @@
         {
           "url": "https://www.sdu.dk/en/bibliotek/om-biblioteket",
           "label": "About the Library",
-          "discovered_in_source": "p89-r21-611f4957e4",
+          "discovered_in_source": "p89-r23-4cf5f04e25",
           "ccu_page": 89
         }
       ],
@@ -12000,7 +11978,7 @@
         {
           "url": "https://www.sdu.dk/en/bibliotek/om-biblioteket/baeredygtighed",
           "label": "Sustainable Library at SDU",
-          "discovered_in_source": "p89-r21-611f4957e4",
+          "discovered_in_source": "p89-r23-4cf5f04e25",
           "ccu_page": 89
         }
       ],
@@ -12028,7 +12006,7 @@
         {
           "url": "https://www.sdu.dk/en/bibliotek/om-biblioteket/strategi",
           "label": "Library strategy",
-          "discovered_in_source": "p89-r21-611f4957e4",
+          "discovered_in_source": "p89-r23-4cf5f04e25",
           "ccu_page": 89
         }
       ],
@@ -12276,7 +12254,7 @@
         {
           "url": "https://www.sdu.dk/en/uddannelse/exchange",
           "label": "Exchange and guest studies",
-          "discovered_in_source": "p89-r21-611f4957e4",
+          "discovered_in_source": "p89-r23-4cf5f04e25",
           "ccu_page": 89
         }
       ],
@@ -12306,14 +12284,30 @@
           "ccu_page": 89
         }
       ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
+      "disposition": "excluded_malformed_navigation",
+      "screening_reason": "父頁routeplanner label有錯誤括號URL；不當有效政策文件、不要外推SDU交通失效；目標未讀。",
       "target_gap_fields": [],
       "priority_score": 0,
       "source_content_read": false,
-      "source_availability": "unrequested",
+      "source_availability": "reviewed_acquisition",
       "already_requested_source_id": null,
-      "content_review": null
+      "content_review": {
+        "url": "https://www.sdu.dk/en/uddannelse/exchange/(https:/www.rejseplanen.dk/webapp/?language=en_EN%7C%7C%7C",
+        "ccu_page": 89,
+        "disposition": "excluded_malformed_navigation",
+        "source_content_read": false,
+        "review_extent": "link_scope_screening_only",
+        "review_note": "父頁routeplanner label有錯誤括號URL；不當有效政策文件、不要外推SDU交通失效；目標未讀。",
+        "discovery_evidence": {
+          "source_id": "p89-r20-4fe2769f55",
+          "source_url": "https://www.sdu.dk/en/uddannelse/exchange/accessibility-and-support-options",
+          "checked_at": "2026-10-08T16:37:19.421067+00:00",
+          "sha256": "88528a83da564e38a11d82f6502673b45aef396dc8e04971f28a599bb53cd6fc",
+          "text_sha256": "8ce6383520c3cf68ace18adc34caada9227a5fe4582e110489be8164cac81fd6",
+          "label": "www.rejseplanen.dk",
+          "url": "https://www.sdu.dk/en/uddannelse/exchange/(https:/www.rejseplanen.dk/webapp/?language=en_EN%7C%7C%7C"
+        }
+      }
     },
     {
       "candidate_id": "ccu-link-15706cabdc13747c",
@@ -16188,6 +16182,50 @@
       }
     },
     {
+      "candidate_id": "ccu-link-a433e2257a02d62e",
+      "url": "https://amu.edu.pl/en/solidarity-with-ukraine/summer-schools",
+      "ccu_pages": [
+        95
+      ],
+      "labels": [
+        "Summer Schools organised with the support of the Polish National Agency for Academic Exchange"
+      ],
+      "occurrences": [
+        {
+          "url": "https://amu.edu.pl/en/solidarity-with-ukraine/summer-schools",
+          "label": "Summer Schools organised with the support of the Polish National Agency for Academic Exchange",
+          "discovered_in_source": "p95-profile-root",
+          "ccu_page": 95
+        }
+      ],
+      "disposition": "deferred_optional_other_program",
+      "screening_reason": "父頁及URL指Ukraine專屬summer school，不是本次CCU semester；目標正文未讀。",
+      "target_gap_fields": [
+        "campus_life"
+      ],
+      "priority_score": 0,
+      "source_content_read": false,
+      "source_availability": "reviewed_acquisition",
+      "already_requested_source_id": null,
+      "content_review": {
+        "url": "https://amu.edu.pl/en/solidarity-with-ukraine/summer-schools",
+        "ccu_page": 95,
+        "disposition": "deferred_optional_other_program",
+        "source_content_read": false,
+        "review_extent": "link_scope_screening_only",
+        "review_note": "父頁及URL指Ukraine專屬summer school，不是本次CCU semester；目標正文未讀。",
+        "discovery_evidence": {
+          "source_id": "p95-profile-root",
+          "source_url": "https://amu.edu.pl/en",
+          "checked_at": "2026-10-08T09:10:30.177212+00:00",
+          "sha256": "6ddf176ef51eed18b1b43ccd2d49fd7639e3dc1f5403da73812fb1c92e7fbca7",
+          "text_sha256": "9571843faa9c5ef875a9c8a5878bbb6d05d09e3d77d693582ae584bcc217e758",
+          "label": "Summer Schools organised with the support of the Polish National Agency for Academic Exchange",
+          "url": "https://amu.edu.pl/en/solidarity-with-ukraine/summer-schools"
+        }
+      }
+    },
+    {
       "candidate_id": "ccu-link-8a84f1ec8a2e2e33",
       "url": "https://www.uni-jena.de/en/1955/guest-studies",
       "ccu_pages": [
@@ -16513,7 +16551,7 @@
         {
           "url": "https://www.ostfalia.de/en/hochschule/campus-einrichtungen/bibliothek/archive-library-news",
           "label": "Archive Library News",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
+          "discovered_in_source": "p100-r23-b876382cc2",
           "ccu_page": 100
         }
       ],
@@ -16546,6 +16584,51 @@
           }
         ],
         "target_policy_year": null
+      }
+    },
+    {
+      "candidate_id": "ccu-link-d47fb3e068f4635f",
+      "url": "https://www.ostfalia.de/en/hochschule/campus-einrichtungen/bibliothek/dokumente-zur-bibliotheksbenutzung/mission-statement-of-the-ostfalia-library",
+      "ccu_pages": [
+        100
+      ],
+      "labels": [
+        "Mission statement and services"
+      ],
+      "occurrences": [
+        {
+          "url": "https://www.ostfalia.de/en/hochschule/campus-einrichtungen/bibliothek/dokumente-zur-bibliotheksbenutzung/mission-statement-of-the-ostfalia-library",
+          "label": "Mission statement and services",
+          "discovered_in_source": "p100-r23-b876382cc2",
+          "ccu_page": 100
+        }
+      ],
+      "disposition": "deferred_general_library",
+      "screening_reason": "父頁標籤為圖書館宗旨／服務概述，基本學生借書證、借期、收費及正式規則已分項核。 精確目標正文未讀，仍保留候選，沒有宣稱全站耗盡或2027服務規定已核。",
+      "target_gap_fields": [
+        "campus_life"
+      ],
+      "priority_score": 0,
+      "source_content_read": false,
+      "source_availability": "reviewed_acquisition",
+      "already_requested_source_id": null,
+      "content_review": {
+        "url": "https://www.ostfalia.de/en/hochschule/campus-einrichtungen/bibliothek/dokumente-zur-bibliotheksbenutzung/mission-statement-of-the-ostfalia-library",
+        "ccu_page": 100,
+        "disposition": "deferred_general_library",
+        "source_content_read": false,
+        "review_extent": "link_scope_screening_only",
+        "review_note": "父頁標籤為圖書館宗旨／服務概述，基本學生借書證、借期、收費及正式規則已分項核。 精確目標正文未讀，仍保留候選，沒有宣稱全站耗盡或2027服務規定已核。",
+        "discovery_evidence": {
+          "source_id": "p100-r23-b876382cc2",
+          "source_url": "https://www.ostfalia.de/en/university/campus-facilities/library/library-a-to-z",
+          "checked_at": "2026-10-08T19:30:53.282750+00:00",
+          "content_hash": "abf61350c7e7158b1dd169705f178da0ba11b92bb09f26d07bafefc2019a7a0d",
+          "text_sha256": "3e2f6298b06147c12d6ca105343ad623dc8f313e3b8c2090f221fd39b8884094",
+          "labels": [
+            "Mission statement and services"
+          ]
+        }
       }
     },
     {
@@ -16662,19 +16745,35 @@
         100
       ],
       "labels": [
-        "Contact persons and feedback"
+        "us",
+        "library staff",
+        "feedback"
       ],
       "occurrences": [
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/contact-persons-and-feedback",
-          "label": "Contact persons and feedback",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
+          "label": "us",
+          "discovered_in_source": "p100-r23-b876382cc2",
+          "ccu_page": 100
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/contact-persons-and-feedback#c17526",
+          "label": "library staff",
+          "discovered_in_source": "p100-r23-b876382cc2",
+          "ccu_page": 100
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/contact-persons-and-feedback#c38337",
+          "label": "feedback",
+          "discovered_in_source": "p100-r23-b876382cc2",
           "ccu_page": 100
         }
       ],
       "disposition": "deferred_library_detail",
       "screening_reason": "一般分馆／研究／媒体／课程或服务扩展。必要studentcard／借阅帐号及校园生活概览有精确已读来源；此目标正文未读，不当2027交换入学要求。",
-      "target_gap_fields": [],
+      "target_gap_fields": [
+        "campus_life"
+      ],
       "priority_score": 0,
       "source_content_read": false,
       "source_availability": "reviewed_acquisition",
@@ -16715,7 +16814,7 @@
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/documents-for-library-use",
           "label": "Documents for library use",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
+          "discovered_in_source": "p100-r23-b876382cc2",
           "ccu_page": 100
         },
         {
@@ -16754,13 +16853,27 @@
         100
       ],
       "labels": [
-        "Interlibrary Lending and Acquisition Proposal"
+        "Interlibrary lending",
+        "interlibrary lending",
+        "acquisition suggestion form"
       ],
       "occurrences": [
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/interlibrary-lending-and-acquisition-proposal",
-          "label": "Interlibrary Lending and Acquisition Proposal",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
+          "label": "Interlibrary lending",
+          "discovered_in_source": "p100-r23-b876382cc2",
+          "ccu_page": 100
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/interlibrary-lending-and-acquisition-proposal#c10117",
+          "label": "interlibrary lending",
+          "discovered_in_source": "p100-r23-b876382cc2",
+          "ccu_page": 100
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/interlibrary-lending-and-acquisition-proposal#c38319",
+          "label": "acquisition suggestion form",
+          "discovered_in_source": "p100-r23-b876382cc2",
           "ccu_page": 100
         }
       ],
@@ -16782,13 +16895,13 @@
         100
       ],
       "labels": [
-        "Ostfalia Library Salzgitter"
+        "Salzgitter"
       ],
       "occurrences": [
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/ostfalia-library-salzgitter",
-          "label": "Ostfalia Library Salzgitter",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
+          "label": "Salzgitter",
+          "discovered_in_source": "p100-r23-b876382cc2",
           "ccu_page": 100
         }
       ],
@@ -16830,13 +16943,13 @@
         100
       ],
       "labels": [
-        "Ostfalia Library Suderburg"
+        "Suderburg"
       ],
       "occurrences": [
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/ostfalia-library-suderburg",
-          "label": "Ostfalia Library Suderburg",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
+          "label": "Suderburg",
+          "discovered_in_source": "p100-r23-b876382cc2",
           "ccu_page": 100
         }
       ],
@@ -16878,13 +16991,13 @@
         100
       ],
       "labels": [
-        "Ostfalia Library Wolfenbüttel"
+        "Wolfenbüttel"
       ],
       "occurrences": [
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/ostfalia-library-wolfenbuettel",
-          "label": "Ostfalia Library Wolfenbüttel",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
+          "label": "Wolfenbüttel",
+          "discovered_in_source": "p100-r23-b876382cc2",
           "ccu_page": 100
         }
       ],
@@ -16926,13 +17039,13 @@
         100
       ],
       "labels": [
-        "Ostfalia Library Wolfsburg"
+        "Wolfsburg"
       ],
       "occurrences": [
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/ostfalia-library-wolfsburg",
-          "label": "Ostfalia Library Wolfsburg",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
+          "label": "Wolfsburg",
+          "discovered_in_source": "p100-r23-b876382cc2",
           "ccu_page": 100
         }
       ],
@@ -16980,7 +17093,7 @@
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/publishing-and-open-access",
           "label": "Publishing and Open Access",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
+          "discovered_in_source": "p100-r23-b876382cc2",
           "ccu_page": 100
         }
       ],
@@ -17026,7 +17139,7 @@
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/recommended-literature",
           "label": "Recommended literature",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
+          "discovered_in_source": "p100-r23-b876382cc2",
           "ccu_page": 100
         }
       ],
@@ -17066,13 +17179,34 @@
         100
       ],
       "labels": [
-        "Research opportunities at Ostfalia"
+        "Research Opportunities at Ostfalia",
+        "Database Information System DBIS",
+        "Ostfalia online catalogue",
+        "EDZ"
       ],
       "occurrences": [
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/research-opportunities-at-ostfalia",
-          "label": "Research opportunities at Ostfalia",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
+          "label": "Research Opportunities at Ostfalia",
+          "discovered_in_source": "p100-r23-b876382cc2",
+          "ccu_page": 100
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/research-opportunities-at-ostfalia#c23726",
+          "label": "Database Information System DBIS",
+          "discovered_in_source": "p100-r23-b876382cc2",
+          "ccu_page": 100
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/research-opportunities-at-ostfalia#c23731",
+          "label": "Ostfalia online catalogue",
+          "discovered_in_source": "p100-r23-b876382cc2",
+          "ccu_page": 100
+        },
+        {
+          "url": "https://www.ostfalia.de/en/university/campus-facilities/library/research-opportunities-at-ostfalia#c23952",
+          "label": "EDZ",
+          "discovered_in_source": "p100-r23-b876382cc2",
           "ccu_page": 100
         }
       ],
@@ -17118,7 +17252,7 @@
         {
           "url": "https://www.ostfalia.de/en/university/campus-facilities/library/specialist-informations-by-locations",
           "label": "Specialist informations by locations",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
+          "discovered_in_source": "p100-r23-b876382cc2",
           "ccu_page": 100
         }
       ],
@@ -17164,7 +17298,7 @@
         {
           "url": "https://www.ostfalia.de/en/university/faculties/faculty-of-transport-sport-tourism-media",
           "label": "Faculty of Transport-Sport-Tourism-Media",
-          "discovered_in_source": "p100-r21-0978ae3e7c",
+          "discovered_in_source": "p100-r23-b876382cc2",
           "ccu_page": 100
         }
       ],
@@ -17275,6 +17409,51 @@
       "source_availability": "unrequested",
       "already_requested_source_id": null,
       "content_review": null
+    },
+    {
+      "candidate_id": "ccu-link-0290653fba21fb63",
+      "url": "https://www.ostfalia.de/fileadmin/user_upload/Einrichtungen/Bibliothek/Nutzerinformationen/katalogrecherche.pdf",
+      "ccu_pages": [
+        100
+      ],
+      "labels": [
+        "introduction to searching in the library catalogue (PDF, 35.19 KB) (opens in a new window), (not accessible)"
+      ],
+      "occurrences": [
+        {
+          "url": "https://www.ostfalia.de/fileadmin/user_upload/Einrichtungen/Bibliothek/Nutzerinformationen/katalogrecherche.pdf",
+          "label": "introduction to searching in the library catalogue (PDF, 35.19 KB) (opens in a new window), (not accessible)",
+          "discovered_in_source": "p100-r23-b876382cc2",
+          "ccu_page": 100
+        }
+      ],
+      "disposition": "deferred_optional_library_detail",
+      "screening_reason": "父頁列查詢教學、購書建議或電子資源等自選library服務；不作交換初次申請／簽章或學期政策必讀清單。 精確目標正文未讀，仍保留候選，沒有宣稱全站耗盡或2027服務規定已核。",
+      "target_gap_fields": [
+        "campus_life"
+      ],
+      "priority_score": 0,
+      "source_content_read": false,
+      "source_availability": "reviewed_acquisition",
+      "already_requested_source_id": null,
+      "content_review": {
+        "url": "https://www.ostfalia.de/fileadmin/user_upload/Einrichtungen/Bibliothek/Nutzerinformationen/katalogrecherche.pdf",
+        "ccu_page": 100,
+        "disposition": "deferred_optional_library_detail",
+        "source_content_read": false,
+        "review_extent": "link_scope_screening_only",
+        "review_note": "父頁列查詢教學、購書建議或電子資源等自選library服務；不作交換初次申請／簽章或學期政策必讀清單。 精確目標正文未讀，仍保留候選，沒有宣稱全站耗盡或2027服務規定已核。",
+        "discovery_evidence": {
+          "source_id": "p100-r23-b876382cc2",
+          "source_url": "https://www.ostfalia.de/en/university/campus-facilities/library/library-a-to-z",
+          "checked_at": "2026-10-08T19:30:53.282750+00:00",
+          "content_hash": "abf61350c7e7158b1dd169705f178da0ba11b92bb09f26d07bafefc2019a7a0d",
+          "text_sha256": "3e2f6298b06147c12d6ca105343ad623dc8f313e3b8c2090f221fd39b8884094",
+          "labels": [
+            "introduction to searching in the library catalogue (PDF, 35.19 KB) (opens in a new window), (not accessible)"
+          ]
+        }
+      }
     },
     {
       "candidate_id": "ccu-link-a2a5dbd612c50bbf",
@@ -17691,6 +17870,57 @@
       "content_review": null
     },
     {
+      "candidate_id": "ccu-link-9cce9936319861b8",
+      "url": "https://www.th-deg.de/en/students/documents/application-and-service-fees",
+      "ccu_pages": [
+        101
+      ],
+      "labels": [
+        "EN"
+      ],
+      "occurrences": [
+        {
+          "url": "https://www.th-deg.de/en/students/documents/application-and-service-fees",
+          "label": "EN",
+          "discovered_in_source": "p101-r22-30543afa9c",
+          "ccu_page": 101
+        }
+      ],
+      "disposition": "same_content_reviewed",
+      "screening_reason": "精確官方英語費用頁重新取得，原檔與抽取文字 SHA 均與已存來源相同；沿用既有來源，不新增或宣稱2027新規。",
+      "target_gap_fields": [
+        "application_forms",
+        "documents"
+      ],
+      "priority_score": 0,
+      "source_content_read": true,
+      "source_availability": "reviewed_acquisition",
+      "already_requested_source_id": null,
+      "content_review": {
+        "url": "https://www.th-deg.de/en/students/documents/application-and-service-fees",
+        "ccu_page": 101,
+        "disposition": "same_content_reviewed",
+        "source_content_read": true,
+        "source_id": "p101-r20-c3cffbbf18",
+        "review_extent": "necessary_policy_sections",
+        "checked_at": "2026-10-08T19:30:50.129355+00:00",
+        "sha256": "daf36740acf3118a50408fab45b08808f1cbac9136cfbf30f0ed7d62decebbc4",
+        "text_sha256": "1da3068420b6dc6e38023887478b121094607220515cbc4000d61bb0238b7d0f",
+        "proof": {
+          "checked_at": "2026-10-08T19:30:50.129355+00:00",
+          "requested_url": "https://www.th-deg.de/en/students/documents/application-and-service-fees",
+          "final_url": "https://www.th-deg.de/en/students/documents/application-and-service-fees",
+          "sha256": "daf36740acf3118a50408fab45b08808f1cbac9136cfbf30f0ed7d62decebbc4",
+          "text_sha256": "1da3068420b6dc6e38023887478b121094607220515cbc4000d61bb0238b7d0f",
+          "candidate_source_id": "p101-r23-9cce993631",
+          "existing_source_id": "p101-r20-c3cffbbf18",
+          "same_extracted_text": true,
+          "same_original_bytes": true
+        },
+        "review_note": "精確官方英語費用頁重新取得，原檔與抽取文字 SHA 均與已存來源相同；沿用既有來源，不新增或宣稱2027新規。"
+      }
+    },
+    {
       "candidate_id": "ccu-link-91f1c991c27117e9",
       "url": "https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/",
       "ccu_pages": [
@@ -17856,6 +18086,46 @@
       "source_availability": "unrequested",
       "already_requested_source_id": null,
       "content_review": null
+    },
+    {
+      "candidate_id": "ccu-link-dcfe65a95b85b1af",
+      "url": "https://www.tha.de/studium/internationale-angebote/dein-weg-nach-augsburg/",
+      "ccu_pages": [
+        102
+      ],
+      "labels": [
+        "Informationen zur Bewerbung für Exchange Students"
+      ],
+      "occurrences": [
+        {
+          "url": "https://www.tha.de/studium/internationale-angebote/dein-weg-nach-augsburg/",
+          "label": "Informationen zur Bewerbung für Exchange Students",
+          "discovered_in_source": "p102-r22-de4a40d1ca",
+          "ccu_page": 102
+        }
+      ],
+      "disposition": "excluded_navigation",
+      "screening_reason": "德文頁只degree／exchange／researchinternship入口與聯絡，精確Business正文已查，不增加入口為新政策。",
+      "target_gap_fields": [
+        "college_scope",
+        "degree_scope"
+      ],
+      "priority_score": 0,
+      "source_content_read": true,
+      "source_availability": "reviewed_acquisition",
+      "already_requested_source_id": null,
+      "content_review": {
+        "url": "https://www.tha.de/studium/internationale-angebote/dein-weg-nach-augsburg/",
+        "ccu_page": 102,
+        "disposition": "excluded_navigation",
+        "source_content_read": true,
+        "review_extent": "recipient_and_relevant_body_sections",
+        "review_note": "德文頁只degree／exchange／researchinternship入口與聯絡，精確Business正文已查，不增加入口為新政策。",
+        "checked_at": "2026-10-08T19:30:51.314080+00:00",
+        "sha256": "dbe47fc45568b2163632c3dccea9e08aeaee736964cbf5a794ad3ceb2d78d418",
+        "text_sha256": "fb26cff5846bdef5bf63e466a5e316f634bbdbbf86dc780a7b3dbdcb37498033",
+        "excerpt": "Dein Weg nach Augsburg Dein Weg nach Augsburg Du wirst dich bei uns bald einleben und wohlfühlen. Dabei spielt es keine Rolle, ob du nur ein oder zwei Semester als Exchange Student zu uns kommst, als Degree Student für ein volles Studium oder als Gast. Internationale Studierende, die einen Bachelor- oder Masterabschluss an der THA anstreben. Degree Students/Seeker Austauschstudierende, die für ein oder zwei Semester an die THA kommen. Exchange Students Auch für ein Forschungspraktikum sind Sie herzlich willkommen an der THA. Research Internships Das Incoming Team Beratung internationaler Studierender und Studieninteressierter Internationaler Alumni-Hub Jessica Gaulocher Beratung Studieninteressierter des Studiengangs International Information Systems und internatioinales Hochschulmarketing Özge Sarikaya Beratung Studieninteressierter des Studiengangs International Information Systems und internationales Hochschulmarketing Nicole Frank Beratung internationaler Studierender Stipendien und PROMOS-Beauftragte Lena Leznova Exchange Student Coordinator DAAD STIBET-Verantwortliche Betreuung des Ministerium-Gastdozenten-Programms Katharina Leuthmetzer Research Internship und Beratung mobiler Wissenschaftler Frederic Wagner"
+      }
     },
     {
       "candidate_id": "ccu-link-58c1f799fe04ab78",
@@ -19400,14 +19670,25 @@
           "ccu_page": 104
         }
       ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
+      "disposition": "alternate_language_no_new_required_policy",
+      "screening_reason": "完整必要德文正文與已讀英文一般SwissInfo均列1800–2000CHF／month、各國visa及insurance等通則；未增2027必要要求，非hash同正文證明或全站已查盡。",
       "target_gap_fields": [],
       "priority_score": 0,
-      "source_content_read": false,
-      "source_availability": "unrequested",
+      "source_content_read": true,
+      "source_availability": "reviewed_acquisition",
       "already_requested_source_id": null,
-      "content_review": null
+      "content_review": {
+        "url": "https://www.fhnw.ch/de/studium/international/incoming/info-schweiz",
+        "ccu_page": 104,
+        "disposition": "alternate_language_no_new_required_policy",
+        "source_content_read": true,
+        "review_extent": "recipient_and_relevant_body_sections",
+        "review_note": "完整必要德文正文與已讀英文一般SwissInfo均列1800–2000CHF／month、各國visa及insurance等通則；未增2027必要要求，非hash同正文證明或全站已查盡。",
+        "checked_at": "2026-10-08T19:30:58.075293+00:00",
+        "sha256": "68581182c7d3ddafe3350f9c710e44487f40473c539a5b4c30330de2f0b5cc27",
+        "text_sha256": "7bcaa6eade50c58b481e1faa4beeed03769981a8812023a66b17755b36888ef6",
+        "excerpt": "Informationen zur Schweiz | FHNW Zu Hauptinhalt springen Zur Suche springen Zu Hauptnavigation springen Zu Footer springen Zehn Hochschulen Ein Ziel Die FHNW umfasst 10 Hochschulen mit unterschiedlichen Schwerpunkten. Wählen Sie eine Hochschule aus, um deren spezifische Kurse, Studiengänge und Informationen zu sehen. Angewandte Psychologie Architektur, Bau und Geomatik Gestaltung und Kunst Informatik Life Sciences Musik Pädagogische Hochschule Soziale Arbeit Technik und Umwelt Wirtschaft Studienangebot Rund ums Studium International studieren Unterstützung und Rechtliches Weiterbildungsangebot Rund um Weiterbildung Themen Zukunftsfelder Themen Forschung Zusammenarbeit Internationales International studieren Neuigkeiten und Einblicke Veranstaltungen Medien Porträt und Organisation Karriere Bibliothek FHNW Standorte Hochschulsport Studium Weiterbildung Themen Forschung und Dienstleistungen Internationales Aktuelles Die FHNW Angebot Studium Weiterbildung Forschung und Dienstleistungen Die FHNW Porträt Hochschulen Standorte Bibliothek FHNW Jobs und Karriere Medienkontakte Support IT-Support Inside FHNW Webmail Social Media Facebook Instagram Bluesky LinkedIn YouTube Datenschutz Impressum Accessibility Studium Studienangebot Rund ums Studium International studieren Unterstützung und Rechtliches Weiterbildung Weiterbildungsangebot Rund um Weiterbildung Themen Themen Zukunftsfelder Themen Forschung und Dienstleistungen Forschung Zusammenarbeit Internationales Internationales International studieren Aktuelles Neuigkeiten und Einblicke Veranstaltungen Medien Die FHNW Porträt und Organisation Karriere Bibliothek FHNW Standorte Hochschulsport Suche Geben Sie einen Suchbegriff ein und suchen Sie nach Weiterbildungen, Studienangeboten, Veranstaltungen, Dokumenten und anderen Inhalte"
+      }
     },
     {
       "candidate_id": "ccu-link-d47ba710efce87a0",
@@ -19426,14 +19707,36 @@
           "ccu_page": 104
         }
       ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
+      "disposition": "same_content_reviewed",
+      "screening_reason": "德語incoming網址實際轉址至已核Business頁，原檔與抽取文字 SHA 均相同；以轉址與hash證明同正文，不推其他語言路徑同頁。",
       "target_gap_fields": [],
       "priority_score": 0,
-      "source_content_read": false,
-      "source_availability": "unrequested",
+      "source_content_read": true,
+      "source_availability": "reviewed_acquisition",
       "already_requested_source_id": null,
-      "content_review": null
+      "content_review": {
+        "url": "https://www.fhnw.ch/de/wirtschaft/studium/internationales/incoming-studierende",
+        "ccu_page": 104,
+        "disposition": "same_content_reviewed",
+        "source_content_read": true,
+        "source_id": "p104-r22-1843b95935",
+        "review_extent": "necessary_policy_sections",
+        "checked_at": "2026-10-08T19:30:58.320969+00:00",
+        "sha256": "8102d51fda816e7a32500b7de4fb66ab9eadf56fb4593506a4fef9c51d8e1e3c",
+        "text_sha256": "796f26c7c3c884548f910e3145fa5c7c35445526d0a9816b775ef11004760101",
+        "proof": {
+          "checked_at": "2026-10-08T19:30:58.320969+00:00",
+          "requested_url": "https://www.fhnw.ch/de/wirtschaft/studium/internationales/incoming-studierende",
+          "final_url": "https://www.fhnw.ch/de/wirtschaft/studium/internationales/exchange-semester",
+          "sha256": "8102d51fda816e7a32500b7de4fb66ab9eadf56fb4593506a4fef9c51d8e1e3c",
+          "text_sha256": "796f26c7c3c884548f910e3145fa5c7c35445526d0a9816b775ef11004760101",
+          "candidate_source_id": "p104-r23-d47ba710ef",
+          "existing_source_id": "p104-r22-1843b95935",
+          "same_extracted_text": true,
+          "same_original_bytes": true
+        },
+        "review_note": "德語incoming網址實際轉址至已核Business頁，原檔與抽取文字 SHA 均相同；以轉址與hash證明同正文，不推其他語言路徑同頁。"
+      }
     },
     {
       "candidate_id": "ccu-link-b4073ca0b9828cbb",
@@ -19875,7 +20178,7 @@
         {
           "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/researching-and-publishing",
           "label": "Researching and publishing",
-          "discovered_in_source": "p104-r22-2457ef7bb1",
+          "discovered_in_source": "p104-r23-367d887527",
           "ccu_page": 104
         }
       ],
@@ -19909,30 +20212,176 @@
       }
     },
     {
-      "candidate_id": "ccu-link-367d8875274c99f0",
-      "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using",
+      "candidate_id": "ccu-link-db2c82dafa786ad8",
+      "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/aquisition-proposal",
       "ccu_pages": [
         104
       ],
       "labels": [
-        "Searching and using"
+        "Aquisition proposal"
       ],
       "occurrences": [
         {
-          "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using",
-          "label": "Searching and using",
-          "discovered_in_source": "p104-r22-2457ef7bb1",
+          "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/aquisition-proposal",
+          "label": "Aquisition proposal",
+          "discovered_in_source": "p104-r23-367d887527",
           "ccu_page": 104
         }
       ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
+      "disposition": "deferred_optional_library_detail",
+      "screening_reason": "父頁列查詢教學、購書建議或電子資源等自選library服務；不作交換初次申請／簽章或學期政策必讀清單。 精確目標正文未讀，仍保留候選，沒有宣稱全站耗盡或2027服務規定已核。",
       "target_gap_fields": [],
       "priority_score": 0,
       "source_content_read": false,
-      "source_availability": "unrequested",
+      "source_availability": "reviewed_acquisition",
       "already_requested_source_id": null,
-      "content_review": null
+      "content_review": {
+        "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/aquisition-proposal",
+        "ccu_page": 104,
+        "disposition": "deferred_optional_library_detail",
+        "source_content_read": false,
+        "review_extent": "link_scope_screening_only",
+        "review_note": "父頁列查詢教學、購書建議或電子資源等自選library服務；不作交換初次申請／簽章或學期政策必讀清單。 精確目標正文未讀，仍保留候選，沒有宣稱全站耗盡或2027服務規定已核。",
+        "discovery_evidence": {
+          "source_id": "p104-r23-367d887527",
+          "source_url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using",
+          "checked_at": "2026-10-08T19:30:59.490165+00:00",
+          "content_hash": "6c13c323d0a7a84eea94962f06f02200739f9ef148895c2e978ed8786731f13b",
+          "text_sha256": "c5049ee7e2911e6543e575bb9c896dbe0a2950acbfe273b63c30eaab03dad761",
+          "labels": [
+            "Aquisition proposal"
+          ]
+        }
+      }
+    },
+    {
+      "candidate_id": "ccu-link-fb683d758de05643",
+      "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/digisem",
+      "ccu_pages": [
+        104
+      ],
+      "labels": [
+        "Digital semester apparatus (DigiSem) for lecturers"
+      ],
+      "occurrences": [
+        {
+          "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/digisem",
+          "label": "Digital semester apparatus (DigiSem) for lecturers",
+          "discovered_in_source": "p104-r23-367d887527",
+          "ccu_page": 104
+        }
+      ],
+      "disposition": "deferred_other_recipient_library_service",
+      "screening_reason": "父頁明示供lecturers之Digital semester apparatus；不是CCU交換學生必繳文件。 精確目標正文未讀，仍保留候選，沒有宣稱全站耗盡或2027服務規定已核。",
+      "target_gap_fields": [],
+      "priority_score": 0,
+      "source_content_read": false,
+      "source_availability": "reviewed_acquisition",
+      "already_requested_source_id": null,
+      "content_review": {
+        "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/digisem",
+        "ccu_page": 104,
+        "disposition": "deferred_other_recipient_library_service",
+        "source_content_read": false,
+        "review_extent": "link_scope_screening_only",
+        "review_note": "父頁明示供lecturers之Digital semester apparatus；不是CCU交換學生必繳文件。 精確目標正文未讀，仍保留候選，沒有宣稱全站耗盡或2027服務規定已核。",
+        "discovery_evidence": {
+          "source_id": "p104-r23-367d887527",
+          "source_url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using",
+          "checked_at": "2026-10-08T19:30:59.490165+00:00",
+          "content_hash": "6c13c323d0a7a84eea94962f06f02200739f9ef148895c2e978ed8786731f13b",
+          "text_sha256": "c5049ee7e2911e6543e575bb9c896dbe0a2950acbfe273b63c30eaab03dad761",
+          "labels": [
+            "Digital semester apparatus (DigiSem) for lecturers"
+          ]
+        }
+      }
+    },
+    {
+      "candidate_id": "ccu-link-4009b07a1c1fb824",
+      "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/e-resources",
+      "ccu_pages": [
+        104
+      ],
+      "labels": [
+        "Electronic resources"
+      ],
+      "occurrences": [
+        {
+          "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/e-resources",
+          "label": "Electronic resources",
+          "discovered_in_source": "p104-r23-367d887527",
+          "ccu_page": 104
+        }
+      ],
+      "disposition": "deferred_optional_library_detail",
+      "screening_reason": "父頁列查詢教學、購書建議或電子資源等自選library服務；不作交換初次申請／簽章或學期政策必讀清單。 精確目標正文未讀，仍保留候選，沒有宣稱全站耗盡或2027服務規定已核。",
+      "target_gap_fields": [],
+      "priority_score": 0,
+      "source_content_read": false,
+      "source_availability": "reviewed_acquisition",
+      "already_requested_source_id": null,
+      "content_review": {
+        "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/e-resources",
+        "ccu_page": 104,
+        "disposition": "deferred_optional_library_detail",
+        "source_content_read": false,
+        "review_extent": "link_scope_screening_only",
+        "review_note": "父頁列查詢教學、購書建議或電子資源等自選library服務；不作交換初次申請／簽章或學期政策必讀清單。 精確目標正文未讀，仍保留候選，沒有宣稱全站耗盡或2027服務規定已核。",
+        "discovery_evidence": {
+          "source_id": "p104-r23-367d887527",
+          "source_url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using",
+          "checked_at": "2026-10-08T19:30:59.490165+00:00",
+          "content_hash": "6c13c323d0a7a84eea94962f06f02200739f9ef148895c2e978ed8786731f13b",
+          "text_sha256": "c5049ee7e2911e6543e575bb9c896dbe0a2950acbfe273b63c30eaab03dad761",
+          "labels": [
+            "Electronic resources"
+          ]
+        }
+      }
+    },
+    {
+      "candidate_id": "ccu-link-18f0fa9b285b54d9",
+      "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/research",
+      "ccu_pages": [
+        104
+      ],
+      "labels": [
+        "Searching"
+      ],
+      "occurrences": [
+        {
+          "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/research",
+          "label": "Searching",
+          "discovered_in_source": "p104-r23-367d887527",
+          "ccu_page": 104
+        }
+      ],
+      "disposition": "deferred_optional_library_detail",
+      "screening_reason": "父頁列查詢教學、購書建議或電子資源等自選library服務；不作交換初次申請／簽章或學期政策必讀清單。 精確目標正文未讀，仍保留候選，沒有宣稱全站耗盡或2027服務規定已核。",
+      "target_gap_fields": [],
+      "priority_score": 0,
+      "source_content_read": false,
+      "source_availability": "reviewed_acquisition",
+      "already_requested_source_id": null,
+      "content_review": {
+        "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using/research",
+        "ccu_page": 104,
+        "disposition": "deferred_optional_library_detail",
+        "source_content_read": false,
+        "review_extent": "link_scope_screening_only",
+        "review_note": "父頁列查詢教學、購書建議或電子資源等自選library服務；不作交換初次申請／簽章或學期政策必讀清單。 精確目標正文未讀，仍保留候選，沒有宣稱全站耗盡或2027服務規定已核。",
+        "discovery_evidence": {
+          "source_id": "p104-r23-367d887527",
+          "source_url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/searching-and-using",
+          "checked_at": "2026-10-08T19:30:59.490165+00:00",
+          "content_hash": "6c13c323d0a7a84eea94962f06f02200739f9ef148895c2e978ed8786731f13b",
+          "text_sha256": "c5049ee7e2911e6543e575bb9c896dbe0a2950acbfe273b63c30eaab03dad761",
+          "labels": [
+            "Searching"
+          ]
+        }
+      }
     },
     {
       "candidate_id": "ccu-link-8c2ff41d59429275",
@@ -19947,7 +20396,7 @@
         {
           "url": "https://www.fhnw.ch/en/about-fhnw/fhnw-library/subject-areas",
           "label": "Subject areas",
-          "discovered_in_source": "p104-r22-2457ef7bb1",
+          "discovered_in_source": "p104-r23-367d887527",
           "ccu_page": 104
         }
       ],
@@ -22443,14 +22892,30 @@
           "ccu_page": 111
         }
       ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
+      "disposition": "excluded_calendar_or_display_navigation",
+      "screening_reason": "同已讀visaDecision頁的前後月份／mobile顯示連結，無獨立申請文件意義；目標正文未讀，不主張hash同正文。",
       "target_gap_fields": [],
       "priority_score": 0,
       "source_content_read": false,
-      "source_availability": "unrequested",
+      "source_availability": "reviewed_acquisition",
       "already_requested_source_id": null,
-      "content_review": null
+      "content_review": {
+        "url": "https://mzv.gov.cz/jnp/en/information_for_aliens/decision_on_visa_application/index$2548.html?action=setMonth&month=11&year=2026",
+        "ccu_page": 111,
+        "disposition": "excluded_calendar_or_display_navigation",
+        "source_content_read": false,
+        "review_extent": "link_scope_screening_only",
+        "review_note": "同已讀visaDecision頁的前後月份／mobile顯示連結，無獨立申請文件意義；目標正文未讀，不主張hash同正文。",
+        "discovery_evidence": {
+          "source_id": "p111-r22-9601f95507",
+          "source_url": "https://mzv.gov.cz/jnp/en/information_for_aliens/decision_on_visa_application/index.html",
+          "checked_at": "2026-10-08T18:57:43.902832+00:00",
+          "sha256": "5a24852c871181469ac87b6450829b16e9ad5553fd62603b10f63941be5e6d69",
+          "text_sha256": "09c87cf8010d67caa6f49238ec415ebbde148932264138e7046e9472ac2d02bc",
+          "label": "►",
+          "url": "https://mzv.gov.cz/jnp/en/information_for_aliens/decision_on_visa_application/index$2548.html?action=setMonth&month=11&year=2026"
+        }
+      }
     },
     {
       "candidate_id": "ccu-link-06fb5839cea785df",
@@ -22469,14 +22934,30 @@
           "ccu_page": 111
         }
       ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
+      "disposition": "excluded_calendar_or_display_navigation",
+      "screening_reason": "同已讀visaDecision頁的前後月份／mobile顯示連結，無獨立申請文件意義；目標正文未讀，不主張hash同正文。",
       "target_gap_fields": [],
       "priority_score": 0,
       "source_content_read": false,
-      "source_availability": "unrequested",
+      "source_availability": "reviewed_acquisition",
       "already_requested_source_id": null,
-      "content_review": null
+      "content_review": {
+        "url": "https://mzv.gov.cz/jnp/en/information_for_aliens/decision_on_visa_application/index$2548.html?action=setMonth&month=9&year=2026",
+        "ccu_page": 111,
+        "disposition": "excluded_calendar_or_display_navigation",
+        "source_content_read": false,
+        "review_extent": "link_scope_screening_only",
+        "review_note": "同已讀visaDecision頁的前後月份／mobile顯示連結，無獨立申請文件意義；目標正文未讀，不主張hash同正文。",
+        "discovery_evidence": {
+          "source_id": "p111-r22-9601f95507",
+          "source_url": "https://mzv.gov.cz/jnp/en/information_for_aliens/decision_on_visa_application/index.html",
+          "checked_at": "2026-10-08T18:57:43.902832+00:00",
+          "sha256": "5a24852c871181469ac87b6450829b16e9ad5553fd62603b10f63941be5e6d69",
+          "text_sha256": "09c87cf8010d67caa6f49238ec415ebbde148932264138e7046e9472ac2d02bc",
+          "label": "◄",
+          "url": "https://mzv.gov.cz/jnp/en/information_for_aliens/decision_on_visa_application/index$2548.html?action=setMonth&month=9&year=2026"
+        }
+      }
     },
     {
       "candidate_id": "ccu-link-c79af0be24f89dbd",
@@ -22495,14 +22976,30 @@
           "ccu_page": 111
         }
       ],
-      "disposition": "public_candidate_requires_content_review",
-      "screening_reason": "僅已查href與來源上下文；須取得全文後分年度／計畫／校區，不等於政策已核。",
+      "disposition": "excluded_calendar_or_display_navigation",
+      "screening_reason": "同已讀visaDecision頁的前後月份／mobile顯示連結，無獨立申請文件意義；目標正文未讀，不主張hash同正文。",
       "target_gap_fields": [],
       "priority_score": 0,
       "source_content_read": false,
-      "source_availability": "unrequested",
+      "source_availability": "reviewed_acquisition",
       "already_requested_source_id": null,
-      "content_review": null
+      "content_review": {
+        "url": "https://mzv.gov.cz/jnp/en/information_for_aliens/decision_on_visa_application/index.html?force_format=mobile",
+        "ccu_page": 111,
+        "disposition": "excluded_calendar_or_display_navigation",
+        "source_content_read": false,
+        "review_extent": "link_scope_screening_only",
+        "review_note": "同已讀visaDecision頁的前後月份／mobile顯示連結，無獨立申請文件意義；目標正文未讀，不主張hash同正文。",
+        "discovery_evidence": {
+          "source_id": "p111-r22-9601f95507",
+          "source_url": "https://mzv.gov.cz/jnp/en/information_for_aliens/decision_on_visa_application/index.html",
+          "checked_at": "2026-10-08T18:57:43.902832+00:00",
+          "sha256": "5a24852c871181469ac87b6450829b16e9ad5553fd62603b10f63941be5e6d69",
+          "text_sha256": "09c87cf8010d67caa6f49238ec415ebbde148932264138e7046e9472ac2d02bc",
+          "label": "Mobile version",
+          "url": "https://mzv.gov.cz/jnp/en/information_for_aliens/decision_on_visa_application/index.html?force_format=mobile"
+        }
+      }
     },
     {
       "candidate_id": "ccu-link-2f693b51c73d962a",

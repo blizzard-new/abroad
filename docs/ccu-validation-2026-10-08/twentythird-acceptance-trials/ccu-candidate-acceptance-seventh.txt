@@ -1,0 +1,226 @@
+CONFTEST LOADED!
+..F
+=================================== FAILURES ===================================
+__ test_real_document_center_stages_conditions_templates_and_saved_draft[390] __
+
+page = <Page url='http://127.0.0.1:51557/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&view=list#application-form=exchange-application-data'>
+acceptance_server = LiveServer(base_url='http://127.0.0.1:51557', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-132/ccu-acceptance-real-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_real_document_center_stages_conditions_templates_and_saved_draft(page, acceptance_server, width):
+        server = acceptance_server
+        errors = record_errors(page)
+        login(page, server, width)
+        navigate(page, "application-center")
+        target = school(45)
+        with page.expect_response(lambda r: "/application-center/catalog?" in r.url and parse_qs(urlsplit(r.url).query).get("target_school") == [target]) as response:
+            select_target(page, target)
+        assert response.value.ok
+        items = response.value.json()["items"]
+        arc = [r for r in items if "ARC" in r["name"]]
+        assert len(arc) == 7 and all(r["conditional"] and r["stage"] == "post_offer" for r in arc)
+        catalog = page.locator("#application-requirement-list")
+        group = catalog.locator("details.application-requirement-group").filter(has_text="入韓後ARC")
+        expect(group).to_have_count(1)
+        group.locator("> summary").click()
+        form = group.locator("article").filter(has_text="統合申請")
+        expect(form).to_contain_text("2022")
+        expect(form).to_contain_text("擇一")
+        expect(form).to_contain_text("條件")
+        link = form.locator('a[href="https://www.hikorea.go.kr/board/BoardApplicationListR.pt?page=1"]')
+        expect(link).to_have_count(1)
+        expect(form).not_to_contain_text("當期已驗證表格")
+        second = catalog.locator("details.application-requirement-group").filter(has=page.locator("summary strong").filter(has_text="第二次文件送件"))
+        expect(second).to_have_count(1)
+        second.locator("> summary").click()
+        expect(second).to_contain_text("非OECD")
+        expect(second).not_to_contain_text("入韓後ARC")
+        capture(page, "real-document-stages-conditions", width)
+        # Jena's public form link belongs to a later conditional extension, not the
+        # first exchange application. API and visible control must agree.
+        select_target(page, school(99))
+        extension = catalog.locator("details.application-requirement-group").filter(has_text="Jena交换延期申请")
+        expect(extension).to_have_count(1)
+        if not extension.evaluate("node => node.open"):
+            extension.locator("> summary").click()
+        official = extension.locator('a[href="https://www.uni-jena.de/unijenamedia/66670/gaststud-verlaengerung.doc"]')
+        expect(official).to_have_count(1)
+        expect(extension).to_contain_text("核章")
+        expect(extension).to_contain_text("待確認")
+        capture(page, "real-public-extension-template", width)
+        # Click the real official control. Network/TLS availability is reported
+        # separately from the local rendering gate; no response replay or TLS bypass.
+        link_events = {"label": "jena-extension", "official_url": official.get_attribute("href"), "width": width, "failures": [], "downloads": [], "popups": []}
+        page.context.on("requestfailed", lambda request: link_events["failures"].append({"url": request.url, "error": request.failure}) if "uni-jena.de" in request.url else None)
+        page.on("download", lambda download: link_events["downloads"].append(download.suggested_filename))
+        popups = []
+        page.on("popup", lambda popup: popups.append(popup))
+        official.click()
+        deadline = time.monotonic() + 12
+        while time.monotonic() < deadline and not link_events["failures"] and not link_events["downloads"]:
+            page.wait_for_timeout(250)
+        link_events["popups"] = [popup.url for popup in popups]
+        link_events["live_external_browser_passed"] = bool(link_events["downloads"])
+        output = Path(os.environ.get("CCU_ACCEPTANCE_OUTPUT", "/tmp/ccu-candidate-acceptance"))
+        (output / f"external-template-{width}.json").write_text(json.dumps(link_events, ensure_ascii=False, indent=2) + "\n")
+        for popup in popups:
+            popup.close()
+        tool = page.locator(".application-template-open").first
+        expect(tool).to_be_visible()
+        template_id = tool.get_attribute("data-open-application-template")
+        tool.click()
+        expect(page.locator("#application-document-form")).to_be_visible()
+        field = page.locator("#application-document-fields input[type=text]").first
+        field_name = field.get_attribute("name")
+        field.fill("中正驗收用的未完成草稿")
+        page.locator("#application-document-form button[type=submit]").click()
+>       expect(page.locator("#application-document-form-status")).to_contain_text("儲存")
+E       AssertionError: Locator expected to contain text '儲存'
+E       Actual value:  
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#application-document-form-status")
+E           13 × locator resolved to <div role="status" aria-live="polite" class="form-status" id="application-document-form-status"></div>
+E              - unexpected value ""
+E       
+E       Aria snapshot:
+E       - link "跳到主要內容":
+E         - /url: "#main-content"
+E       - main:
+E         - button "開啟功能選單"
+E         - link "UniWay 首頁":
+E           - /url: "#home"
+E           - strong: UniWay
+E         - status
+E         - region "我的申請工作區":
+E           - text: 我的申請
+E           - strong: 從選校到送件，接著完成下一步
+E           - paragraph: 國立中正大學 · 文件與時程目標：Friedrich Schiller Universität Jena 耶拿大學
+E           - navigation "申請工作區階段":
+E             - link "選校與確認":
+E               - /url: "#advisor"
+E             - link "準備與時程":
+E               - /url: "#overview"
+E             - link "文件與送件":
+E               - /url: "#application-center"
+E           - navigation "本階段操作":
+E             - link "返回文件清單與列印包":
+E               - /url: "#application-center"
+E           - region "2027春季交換申請資料整理":
+E             - text: 校內申請
+E             - heading "2027春季交換申請資料整理" [level=2]
+E             - text: 申請整理
+E             - paragraph: 國立中正大學 · 2027春季交換申請資料整理
+E             - region "這份文件一路完成":
+E               - heading "這份文件一路完成" [level=3]
+E               - paragraph: 0 / 6 步
+E               - list:
+E                 - listitem:
+E                   - button "1 · 下一步 填寫必填欄位 已填 1 / 7 項必填":
+E                     - text: 1 · 下一步
+E                     - strong: 填寫必填欄位
+E                     - text: 已填 1 / 7 項必填
+E                 - listitem:
+E                   - button "2 · 稍後 逐欄核對 先完成必填欄位":
+E                     - text: 2 · 稍後
+E                     - strong: 逐欄核對
+E                     - text: 先完成必填欄位
+E                 - listitem:
+E                   - button "3 · 稍後 下載列印 PDF 核對後才能下載":
+E                     - text: 3 · 稍後
+E                     - strong: 下載列印 PDF
+E                     - text: 核對後才能下載
+E                 - listitem:
+E                   - button "4 · 可選 檢查成品 選擇性：用規則檢查簽名與完整度":
+E                     - text: 4 · 可選
+E                     - strong: 檢查成品
+E                     - text: 選擇性：用規則檢查簽名與完整度
+E                 - listitem:
+E                   - button "5 · 可選 私人保存 選擇性：逐檔同意後加密保存":
+E                     - text: 5 · 可選
+E                     - strong: 私人保存
+E                     - text: 選擇性：逐檔同意後加密保存
+E                 - listitem:
+E                   - button "6 · 稍後 簽名、核章與送件 先完成必填欄位，再產生列印版。":
+E                     - text: 6 · 稍後
+E                     - strong: 簽名、核章與送件
+E                     - text: 先完成必填欄位，再產生列印版。
+E               - button "下一步：填寫必填欄位"
+E               - paragraph: 完成每一步只代表你自己的準備進度；下載、保存或標示已完成都不代表已送件、校方受理或錄取。
+E             - tablist "這份文件的工作區":
+E               - tab "填寫與核對" [selected]
+E               - tab "檢查成品"
+E               - tab "私人保存"
+E               - tab "來源與送件"
+E             - tabpanel "填寫與核對":
+E               - status: 已帶入 1 欄
+E               - status:
+E                 - strong: 一般欄位已加密同步
+E                 - text: 2026/10/08 下午08:40 · 敏感欄位與檔案仍需逐次同意。
+E               - text: 中文姓名 *
+E               - textbox "中文姓名 *": 中正驗收用的未完成草稿
+E               - text: 護照英文姓名 *
+E               - textbox "護照英文姓名 *"
+E               - text: 學號 *
+E               - textbox "學號 *"
+E               - text: 系所 *
+E               - textbox "系所 *"
+E               - text: 歷年GPA *
+E               - spinbutton "歷年GPA *"
+E               - text: 歷年总平均 *
+E               - spinbutton "歷年总平均 *"
+E               - text: 3個志願及各計畫名稱 *
+E               - textbox "3個志願及各計畫名稱 *"
+E               - region "逐欄預覽":
+E                 - heading "逐欄預覽" [level=3]
+E                 - paragraph: 空白欄位將保持空白。
+E                 - text: 6 欄待補
+E                 - term: 中文姓名 必填
+E                 - definition: 中正驗收用的未完成草稿
+E                 - term: 護照英文姓名 必填
+E                 - definition: 留白（不會猜測）
+E                 - term: 學號 必填
+E                 - definition: 留白（不會猜測）
+E                 - term: 系所 必填
+E                 - definition: 留白（不會猜測）
+E                 - term: 歷年GPA 必填
+E                 - definition: 留白（不會猜測）
+E                 - term: 歷年总平均 必填
+E                 - definition: 留白（不會猜測）
+E                 - term: 3個志願及各計畫名稱 必填
+E                 - definition: 留白（不會猜測）
+E                 - region "列印與簽核位置":
+E                   - heading "列印與簽核位置" [level=4]
+E                   - term: 列印
+E                   - definition: 1 份 · A4 · 待確認官方單雙面規定
+E                   - term: 簽名
+E                   - definition: 不需要
+E                   - term: 核章
+E                   - definition: 不需要
+E                   - term: 送件
+E                   - definition: 學生自存備份、國立中正大學國際事務處
+E                   - term: 附件順序
+E                   - definition: 無
+E                 - paragraph: 先完成必填欄位：護照英文姓名、學號、系所、歷年GPA、歷年总平均、3個志願及各計畫名稱
+E                 - checkbox "我已核對以上目前內容 我已逐欄確認資料、份數、簽名、核章與送件單位；任何資料或份數變更後都必須重新核對。" [disabled]
+E                 - strong: 我已核對以上目前內容
+E                 - text: 我已逐欄確認資料、份數、簽名、核章與送件單位；任何資料或份數變更後都必須重新核對。
+E               - status
+E               - paragraph: 填完並核對後可下載草稿；下載與列印不代表已送件、校方受理或錄取。
+E               - button "儲存"
+E               - button "下載 PDF" [disabled]
+E       - paragraph:
+E         - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E         - button "停用匿名使用統計"
+E         - text: 。
+E         - link "隱私權政策":
+E           - /url: /privacy
+E         - link "使用條款":
+E           - /url: /terms
+
+tests/e2e/test_ccu_candidate_acceptance.py:306: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ccu_candidate_acceptance.py::test_real_document_center_stages_conditions_templates_and_saved_draft[390]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 2 passed in 94.06s (0:01:34)
