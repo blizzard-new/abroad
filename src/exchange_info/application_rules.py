@@ -8,6 +8,7 @@ from collections.abc import Iterable
 from .application_task_identity import preparation_identity
 from .plan_defaults import suggest_effort_hours
 from .school_identity import same_school
+from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
 from .task_documents import document_link_for_step
 from .qualification_scopes import (
@@ -363,7 +364,7 @@ def _eligibility_checks(
         checks.append(
             _check(
                 "availability",
-                "needs_confirmation" if is_ntu(request.home_school) and partner.quota is None else "fail",
+                "needs_confirmation" if (is_ntu(request.home_school) or is_ncu(request.home_school)) and partner.quota is None else "fail",
                 "當期名額",
                 partner.availability_note
                 or "這筆資料目前未列入當期公開開放名單。",
@@ -382,7 +383,7 @@ def _eligibility_checks(
             )
         )
 
-    if is_ntu(request.home_school):
+    if is_ntu(request.home_school) or is_ncu(request.home_school):
         checks.append(_check("college", "needs_confirmation", "學院／學系範圍",
                              "合作校本期學院與系所範圍尚未全面確認；詳情頁的既有條件僅供參考。",
                              source_url=partner_source, contact_unit=contact_unit))
@@ -428,7 +429,11 @@ def _eligibility_checks(
             )
         )
 
-    if is_ntu(request.home_school):
+    if is_ncu(request.home_school):
+        checks.append(_check("degree_level", "needs_confirmation", "學制與學籍",
+                             "中央校內在职專班可申請；大學部需有至少一學年在學成績，碩一可附大學歷年成績。須以甄選身分出國且保有學籍。外校當期學制與track另查。",
+                             source_url=academic_source_url, contact_unit=contact_unit))
+    elif is_ntu(request.home_school):
         checks.append(_check("degree_level", "needs_confirmation", "學制與學籍",
                              "校內須為在學學士二年級以上或研究生；合作校本期可提名學制、在學狀態與年級仍須確認。",
                              source_url=partner_source, contact_unit=contact_unit))
@@ -473,7 +478,10 @@ def _eligibility_checks(
             )
         )
 
-    if is_ntu(request.home_school):
+    if is_ncu(request.home_school):
+        status, detail = ncu_academic_check(request.degree_level, request.academic_score, request.current_year)
+        checks.append(_check("academic_score", status, "校內成績門檻", detail, source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit))
+    elif is_ntu(request.home_school):
         status, detail = ntu_academic_check(request.degree_level, request.academic_gpa, request.class_rank_percent)
         checks.append(_check(
             "academic_score", status, "校內成績門檻", detail,
@@ -520,6 +528,10 @@ def _eligibility_checks(
         language_threshold = None
         home_status, home_detail = ntu_language_check(request.language_test, request.language_score)
         checks.append(_check("home_language_score", home_status, "校內語組門檻", home_detail, source_url=academic_source_url, contact_unit=contact_unit))
+    if is_ncu(request.home_school):
+        language_threshold = None
+        home_status, home_detail = ncu_language_check(request.language_test, request.language_score)
+        checks.append(_check("home_language_score", home_status, "校內正式語檢", home_detail, source_url=academic_source_url, contact_unit=contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",

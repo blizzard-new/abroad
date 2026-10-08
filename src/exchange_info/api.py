@@ -255,6 +255,7 @@ from .ntpu_student_view import (
     ntpu_exchange_info,
     ntpu_processed_pages,
 )
+from .ncu_student_view import build_ncu_student_dashboard, fetch_ncu_partner_universities, ncu_exchange_info, ncu_processed_pages
 from .ntu_student_view import (
     build_ntu_student_dashboard,
     fetch_ntu_partner_universities,
@@ -390,6 +391,7 @@ from .university_registry import (
     CGU,
     NTPU,
     NTU,
+    NCU,
     SUPPORTED_UNIVERSITIES,
     UniversityProfile,
     require_university,
@@ -1077,7 +1079,9 @@ def create_app(
             with partner_cache_lock:
                 if university.id not in partner_cache:
                     partner_cache[university.id] = (
-                        fetch_ntu_partner_universities()
+                        fetch_ncu_partner_universities()
+                        if university.id == NCU.id
+                        else fetch_ntu_partner_universities()
                         if university.id == NTU.id
                         else fetch_ntpu_partner_universities()
                         if university.id == NTPU.id
@@ -1121,6 +1125,8 @@ def create_app(
         university = university_for(
             school.school_name if isinstance(school, UniversityProfile) else school
         )
+        if university.id == NCU.id:
+            return ncu_processed_pages()
         if university.id == NTU.id:
             return ntu_processed_pages()
         return (
@@ -1135,6 +1141,8 @@ def create_app(
         )
         if university.id == NTPU.id:
             return ntpu_exchange_info(partners_for_university(university))
+        if university.id == NCU.id:
+            return ncu_exchange_info(partners_for_university(university))
         if university.id == NTU.id:
             return ntu_exchange_info(partners_for_university(university))
         return load_exchange_info(resolved_data_dir) or ExchangeInfo(school_name=CGU.school_name)
@@ -1184,6 +1192,8 @@ def create_app(
             return build_ntpu_student_dashboard(
                 partner_universities=partners_for_university(university)
             )
+        if university.id == NCU.id:
+            return build_ncu_student_dashboard(partner_universities=partners_for_university(university))
         if university.id == NTU.id:
             return build_ntu_student_dashboard(partner_universities=partners_for_university(university))
         # Building this one downloads the partner sheet and parses a dozen official PDFs: 10 to 40 seconds on the free
@@ -2800,7 +2810,7 @@ def create_app(
                 if destination_audit
                 else (
                     destination.coverage_status
-                    if university.id in {CGU.id, NTU.id} and destination
+                    if university.id in {CGU.id, NTU.id, NCU.id} and destination
                     else "not_collected"
                 )
             )
@@ -2840,7 +2850,7 @@ def create_app(
                         destination_audit.checked_at
                         if destination_audit
                         else destination.last_checked
-                        if university.id in {CGU.id, NTU.id} and destination
+                        if university.id in {CGU.id, NTU.id, NCU.id} and destination
                         else None
                     ),
                 )
@@ -3596,6 +3606,20 @@ def create_app(
             partner, destination_profile(school, home_school), workflow,
             home_university=university.school_name,
         )
+
+    @app.get("/partner-source-audit", response_model=dict)
+    def partner_source_audit(school: str = Query(min_length=2), home_school: str | None = Query(default=None)) -> dict:
+        university, partner = partner_context_for_school(school, home_school)
+        if university.id != NCU.id:
+            raise HTTPException(status_code=404, detail="此校尚無逐欄來源查核記錄。")
+        from .ncu_student_view import ncu_field_audit, NCU_OFFICIAL_DATA_DIR
+        import gzip
+        audit = ncu_field_audit(partner.school_name)
+        if audit is None:
+            raise HTTPException(status_code=404, detail="未找到此合作項目查核記錄。")
+        evidence = json.loads(gzip.decompress((NCU_OFFICIAL_DATA_DIR / "source-evidence.json.gz").read_bytes()))
+        source_ids = {source["id"] for source in audit["read_sources"]}
+        return {**audit, "source_evidence":[row for row in evidence if row["id"] in source_ids]}
 
     @app.get("/school-life-context", response_model=SchoolLifeContext)
     def school_life_context(

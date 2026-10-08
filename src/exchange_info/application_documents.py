@@ -57,8 +57,9 @@ from .models import (
     UniversityApplicationWorkflow,
 )
 from .application_rules import select_application_workflow
-from .university_registry import NTPU, NTU, require_university
+from .university_registry import NTPU, NTU, NCU, require_university
 from .ntu_student_view import NTU_GUIDELINES_URL
+from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -830,6 +831,38 @@ def _ntu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ncu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理中央116-1個人資料與校內附件；正式報名須完成校方線上申請、列印簽核及系所紙本繳件。大學部平均60分、研究生70分，在職專班可申請但無研修獎學金。",
+        "study-plan": "個人研修與選課規劃工具；中央116-1校內必繳清單沒有列研修計畫。外校若要求，須依該校格式另備。",
+        "course-preapproval": "出發前向中央所屬系所確認學分採認；依外校修課規定，無規定時至少兩門且一門專業課。學則另規定兩門或六學分，須分別核對。",
+        "predeparture-notice": "出國前兩週完成中央行前程序單並繳文件；自行辦理護照、簽證、足額醫療／意外／急難救助保險及役男許可。此工具不代替中央正式表格。",
+        "return-report": "返國後一週內填中央返校程序單；心得須WORD電子檔800–1500字並至少四張照片。此工具協助草擬，正式程序單須依國際處通知取得。",
+        "credit-transfer": "整理外校原始成績證明與課程資料；依中央系所規定於畢業前完成採認，延畢生另核對校際選課兩階段程序及學雜費。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str): return value.replace("長庚大學", "國立中央大學").replace("長庚", "中央")
+        if isinstance(value, list): return [adapt(x) for x in value]
+        if isinstance(value, dict): return {k:adapt(v) for k,v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT", "TOEFL ITP（第4頁；與第6頁PBT差異須確認）", "IELTS Academic", "GEPT（複試通過）", "TOEIC（聽讀）", "Linguaskill（實用組）", "BESTEP", "志願校接受之第三外語檢定"]
+            field["help_text"] = "校內必繳正式外語檢定成績，不限分數級數；英文檢定须兩年內有效。簡章第4頁列ITP、第6頁列PBT，先向國際處確認。合作校規定之語檢另查，提名前須具備。"
+        if field["id"] == "language_result_date":
+            field["help_text"] = "填已發生的實際考試日期；正式英檢在校內申請及外校送件時均須有效。預計日期或網路截圖不能代替校內必繳正式成績。"
+    payload.update(description=descriptions[template.id], source_url=NCU_GUIDELINES_URL,
+        source_checked_at=NCU_CHECKED_AT, official_layout=False, official_form_number=None,
+        official_file_name=None, official_download_url=None, default_copies=1, signatures=[], stamps=[],
+        stage={"predeparture-notice":"出國前兩週", "return-report":"返國後一週"}.get(template.id,"申請與文件準備"),
+        version="116-1準備工具-2026-10-08.1", destinations=["學生自存備份"],
+        conditional_note="此為個人準備工具；中央正式申請表由系統列印完成簽核。家長／個資同意書請用中央現行下載檔。校內文件與外校文件分開，份數與其他正式表格依承辦通知。")
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def application_field_required(field: ApplicationFormField, values: dict[str, Any]) -> bool:
     return field.required or any(
         all(str(values.get(key, "")) in allowed for key, allowed in clause.items())
@@ -864,6 +897,8 @@ def _ntu_language_validation(template: ApplicationDocumentTemplate, values: dict
 
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university = require_university(school_name)
+    if university.id == NCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncu_template(template)) is not None]
     if university.id == NTU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntu_template(template)) is not None]
     if university.id != NTPU.id:
@@ -1326,7 +1361,9 @@ def build_packet_manifest(
             for item in items
         ),
         source_checked_at=(
-            NTU_SOURCE_CHECKED_AT
+            NCU_CHECKED_AT
+            if require_university(request.context.school_name).id == NCU.id
+            else NTU_SOURCE_CHECKED_AT
             if require_university(request.context.school_name).id == NTU.id
             else NTPU_SOURCE_CHECKED_AT
             if require_university(request.context.school_name).id == NTPU.id

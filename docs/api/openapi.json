@@ -9131,14 +9131,33 @@
             ],
             "title": "Academic Reference Year"
           },
+          "degree_score_minimums": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "title": "Degree Score Minimums",
+            "type": "object"
+          },
           "exclude_in_service": {
             "default": false,
             "title": "Exclude In Service",
             "type": "boolean"
           },
+          "excluded_undergraduate_years": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Excluded Undergraduate Years",
+            "type": "array"
+          },
           "graduate_academic_exempt": {
             "default": false,
             "title": "Graduate Academic Exempt",
+            "type": "boolean"
+          },
+          "language_certificate_required": {
+            "default": false,
+            "title": "Language Certificate Required",
             "type": "boolean"
           },
           "partner_requirements_need_confirmation": {
@@ -10122,6 +10141,18 @@
               }
             ],
             "title": "College"
+          },
+          "current_year": {
+            "anyOf": [
+              {
+                "maxLength": 40,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Year"
           },
           "degree_level": {
             "anyOf": [
@@ -18043,6 +18074,64 @@
         "summary": "Health"
       }
     },
+    "/partner-source-audit": {
+      "get": {
+        "operationId": "partner_source_audit_partner_source_audit_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "school",
+            "required": true,
+            "schema": {
+              "minLength": 2,
+              "title": "School",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home_school",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Home School"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Partner Source Audit Partner Source Audit Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Partner Source Audit"
+      }
+    },
     "/product/entitlements": {
       "get": {
         "operationId": "product_entitlements_product_entitlements_get",
@@ -18603,7 +18692,7 @@
     "resource_not_found": 404,
     "validation_failed": 422
   },
-  "x-contract-version": "2026-10-08.3",
+  "x-contract-version": "2026-10-08.4",
   "x-product-boundaries": {
     "account_routes_require_bearer_session": true,
     "ai_features": "paused",

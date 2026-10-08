@@ -1394,6 +1394,7 @@ class PersonalApplicationPlanRequest(BaseModel):
     college: str | None = Field(default=None, max_length=120)
     department: str | None = Field(default=None, max_length=120)
     degree_level: str | None = Field(default=None, max_length=80)
+    current_year: str | None = Field(default=None, max_length=40)
     academic_score: float | None = Field(default=None, ge=0, le=100)
     academic_gpa: float | None = Field(default=None, ge=0, le=4.3)
     class_rank_percent: float | None = Field(default=None, gt=0, le=100)
@@ -2487,6 +2488,9 @@ class HomeSelectionRules(BaseModel):
     exclude_in_service: bool = False
     pending_quota_planning: bool = False
     partner_requirements_need_confirmation: bool = False
+    degree_score_minimums: dict[str, float] = Field(default_factory=dict)
+    excluded_undergraduate_years: list[str] = Field(default_factory=list)
+    language_certificate_required: bool = False
 
 
 class StudentDashboard(BaseModel):

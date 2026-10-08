@@ -705,6 +705,14 @@ function homeAcademicPass(profile) {
       (profile.classRankPercent > 0 && profile.classRankPercent <= rules.undergraduate_rank_maximum)
     );
   }
+  if (Object.keys(rules.degree_score_minimums || {}).length) {
+    const degree = profile.degree || "";
+    const undergraduate = ["大學部","學士","學士班","大一","大二","大三","大四","大五","大六"].includes(degree);
+    if (undergraduate && (rules.excluded_undergraduate_years || []).includes(profile.currentYear || degree)) return false;
+    if (undergraduate && !profile.currentYear) return false;
+    const minimum = rules.degree_score_minimums[degree];
+    return minimum != null && profile.academicScore != null && profile.academicScore >= minimum;
+  }
   const minimum = academicMinimum();
   return minimum != null && profile.academicScore != null && profile.academicScore >= minimum;
 }
@@ -717,8 +725,8 @@ function renderAcademicFields() {
     label.hidden = !ntu;
     label.querySelector("input").disabled = !ntu;
   });
-  $("#advisor-academic-rule").hidden = !ntu;
-  if (ntu) $("#advisor-academic-rule").textContent = state.dashboard.academic_score_rule;
+  $("#advisor-academic-rule").hidden = !state.dashboard?.academic_score_rule;
+  if (state.dashboard?.academic_score_rule) $("#advisor-academic-rule").textContent = state.dashboard.academic_score_rule;
 }
 
 function homeCollegeOptions() {
@@ -1033,6 +1041,7 @@ async function loadSupportedUniversities() {
         official_url: "https://studyabroad.ntu.edu.tw/", supported: true,
         partner_count: 288, coverage_note: "116-1校級甄選、文件與補助；282項名額待公布，6項零名額。",
       },
+      {id:"ncu",school_name:"國立中央大學",short_name:"中央",english_name:"National Central University",hero_image:"/static/assets/ncu-campus.svg",official_url:"https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",supported:true,partner_count:0,coverage_note:"116-1簡章已公告，名額預定2026/10/12公告；115名單僅供參考。"},
     ];
   }
   renderSchoolOptions();
@@ -4307,7 +4316,7 @@ function eligibilitySummary() {
   return {
     likely,
     review,
-    qualificationLabel: academicPass && languagePass ? (activeHomeSchool() === "國立臺灣大學" ? "所填成績與英語分數達基本門檻" : `符合${activeUniversityProfile().short_name}基本門檻`) : "仍有基本條件要確認",
+    qualificationLabel: homeSelectionRules().language_certificate_required ? "校內正式語檢及外校條件仍須核對" : academicPass && languagePass ? (activeHomeSchool() === "國立臺灣大學" ? "所填成績與英語分數達基本門檻" : `符合${activeUniversityProfile().short_name}基本門檻`) : "仍有基本條件要確認",
   };
 }
 
@@ -7720,6 +7729,21 @@ function openUniversityDetail(item, { updateHistory = true } = {}) {
   const cachedCompleteness = state.completenessCache.get(item.school_name);
   if (cachedCompleteness) renderSchoolCompleteness(cachedCompleteness);
   else loadSchoolCompleteness(item);
+  document.querySelector("#ncu-source-audit")?.addEventListener("toggle", async (event) => {
+    if (!event.currentTarget.open || event.currentTarget.dataset.loaded) return;
+    const element = event.currentTarget;
+    const body = element.querySelector("#ncu-source-audit-body");
+    try {
+      const report = await fetchJson(`/partner-source-audit?school=${encodeURIComponent(item.school_name)}&home_school=${encodeURIComponent(activeHomeSchool())}`);
+      if (state.activeSchool !== item.school_name) return;
+      body.innerHTML = `<p>查核日：${escapeHtml(report.checked_at)}。附件原文已取得；各來源年度、校區與track的適用性仍須核對。</p>
+        <ul>${Object.values(report.fields).map(row=>`<li><strong>${escapeHtml(row.label)}</strong>：${escapeHtml(row.note)}${row.unresolved ? `<small>${escapeHtml(row.unresolved)}</small>`:""}</li>`).join("")}</ul>
+        ${report.source_evidence.map(src=>`<details><summary>${escapeHtml(src.label)} · ${src.pages.length}頁（來源版本待核對）</summary><p><a href="${escapeHtml(safeSourceUrl(src.url))}" target="_blank" rel="noopener noreferrer">官方公開附件</a> · 查核${escapeHtml(src.checked_at)}</p>${src.pages.map(p=>`<details><summary>原文第${escapeHtml(p.page ?? "未標頁")}頁</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text)}</pre></details>`).join("")}</details>`).join("")}
+        ${report.unretrieved_sources.length ? `<p>未取得來源：${report.unretrieved_sources.map(src=>`${escapeHtml(src.id)}：${escapeHtml(src.reason)}`).join("；")}</p>`:""}`;
+      element.dataset.loaded = "true";
+    } catch (error) { body.textContent = `查核記錄讀取失敗：${error.message}`; }
+  });
+
 
   const cachedCommunity = state.communityCache.get(item.school_name);
   if (cachedCommunity) renderCommunityThreads(cachedCommunity);
@@ -7991,6 +8015,7 @@ function renderUniversityOverview(item) {
         </div>
         ${renderPartnerAvailabilityNotice(item)}
         <details class="overview-more school-data-completeness"><summary>這所學校的資料完整度</summary><div id="school-data-completeness-body" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-card"></div></div></details>
+        ${activeHomeSchool() === "國立中央大學" ? '<details id="ncu-source-audit" class="overview-more"><summary>已查來源、適用年度與未解問題</summary><div id="ncu-source-audit-body">展開讀取逐欄查核與原文頁碼。</div></details>' : ""}
         <details class="overview-more"><summary>選校參考</summary><div id="quick-decision-fit">${renderQuickDecisionFit(item)}</div></details>
         ${renderProgramOptions(item)}
         <details class="overview-more"><summary>方案資料</summary><div class="university-facts">${facts.map(([label, value]) => `<div class="university-fact"><span>${escapeHtml(label)}</span><strong>${highlightHtml(value)}</strong></div>`).join("")}</div></details>
@@ -11063,6 +11088,7 @@ async function checkEligibility(event) {
     college,
     department,
     degree_level: degree,
+    current_year: profile.currentYear || null,
     academic_score: ntu ? null : academicScore,
     academic_gpa: academicGpa,
     class_rank_percent: classRankPercent,
