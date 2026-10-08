@@ -1,6 +1,6 @@
 # 中央116-1來源查核與平台接入（進行中）
 
-基底為合併PR #1後的`f6ad1b8`，已確認包含臺大六項修正`daad399`。獨立worktree `/workspace/abroad-ncu`、分支`data/ncu-exchange-20261008`；已推送checkpoint `dc126d2`、`95c883a`、`2865413`、`6f2f9d1`，draft [PR #4](https://github.com/blizzard-new/abroad/pull/4)。原工作目錄、中正及淡江分支未改動。本文件不宣稱中央全部外校資料完備。
+基底為合併PR #1後的`f6ad1b8`，已確認包含臺大六項修正`daad399`。獨立worktree `/workspace/abroad-ncu`、分支`data/ncu-exchange-20261008`；已推送checkpoint `dc126d2`、`95c883a`、`2865413`、`6f2f9d1`、`dd06632`，draft [PR #4](https://github.com/blizzard-new/abroad/pull/4)。原工作目錄、中正及淡江分支未改動。本文件不宣稱中央全部外校資料完備。
 
 ## 適用年度與實際覆蓋
 
@@ -18,9 +18,9 @@
 | 完全無文字的附件 | 5份，33頁（URCA、Bolton、UOS、重慶、HUST） |
 | 有明確SHA與逐頁紀錄的全文已讀／視覺文件 | Drive附件3／3；UOS舊影像版11頁、SUFE與SHU各8頁逐頁視覺讀完；OCR僅UOS舊版 |
 | 部分或全部無文字頁／字型問題 | 36份含100頁、2份字型缺字 |
-| 另查公開host／home網頁 | 128筆公開頁／文件讀取紀錄（含browser選定摘錄）；13筆讀取錯誤分列 |
-| 有相關host原文的目錄項 | 197（196項有文字） |
-| 人工整理的host紀錄 | 25（全部partial） |
+| 另查公開host／home網頁 | 241筆公開頁／文件讀取紀錄（含browser選定摘錄）；43筆目前讀取錯誤分列 |
+| 有外校來源的目錄項 | 211（210項有文字）；214項有任意參考來源，另3項只有其他母校官方轉載、不可冒充host官網 |
+| 人工整理的host紀錄 | 40（全部partial） |
 | 全部17欄完成116當期核准 | **0** |
 
 附件取得／文字抽取不是逐欄當期查核完成。其他資料仍可繼續查；未查完的欄位不稱「官方未公告」。
@@ -37,7 +37,7 @@
 
 首頁仍下載forms-2022.pdf：個資同意第1頁、家長同意第2頁、109年度範例第3頁。只使用現行表格連結，不將範例舊日期當116截止。行前兩週程序、回國一週程序、WORD心得800–1500字及至少四照片接入流程。課程兩門且一門專業課與學則兩門或六學分分別列出，採認由系所審定。
 
-## 二十五筆人工外校整理與具體缺口
+## 四十筆人工外校整理與具體缺口
 
 - Manitoba：AY2027–28表（2026/9更新），提名／申請梯次分開、UG／grad文件不同、closed faculties與Computer Science限制、住宿開放、免學費及額外費用、保險及行前。精確校曆官方表稱未定；英文門檻專頁、當期房價／housing截止、個人移民文件仍待查。
 - 信州：AY2027–28、Fall2027提名／申請／暫定到校日，Sheet清單、COE另系統、財力、課程、住宿、預算。英日版本暑假年份及coop保險金額互相矛盾；Spring2028期限、最新Sheet／COE包未取得。不可用Spring2027推算2028。
@@ -68,9 +68,28 @@
 - 上海財經：中央Drive八頁逐頁視覺閱讀，持港澳臺證件／中國護照track與non-Chinese international分開；四項host材料及成績管理部門公章、提名後另發申請模板、無host總學分下限、通常27號樓／地鐵18號線、生活1000–1500／月與保險「建議」分列。封面2026–27、封底2025–26衝突保留；官網現連高清PDFSHA不同，不能沿用Drive視覺紀錄，已另外視覺核對高清原第1、8頁，亦見相同封底衝突；其餘六頁不宣稱已沿用查核。2026截止／Spring2027不能當116秋春期限，住宿價目與最新模板仍待查。
 - 上海大學：港澳臺八頁全視覺閱讀，原第5–6頁是一般英文介紹、第8頁2020地鐵圖、第3–4頁2023–24校曆；空文字頁保留、另附選定原文。三學期正文與秋冬春夏校曆差異、部分線下選課／無線上完整大綱、3–4人房10／天、水電實際與餐費1000／月接生活頁；一卡通四欄與20元是到校文件，不能充作完整host清單。2019港澳臺PDF及入口local proxy400、國際圖片指南不等於臺灣track，最新接收包／期限／保險簽證仍待查。
 
+- 日惹UNY：現行國際處首頁、Programs、Study／Current兩個正文不足入口及Visitor404，另逐頁讀PMB2021一般degree頁。中央網路學習科技dual-degree不是semester exchange，degree年齡、USD4000財力、使館推薦、2021學費／期限全部不建立為交換必繳或當期費用；14個host欄保留實際已查來源與具體缺口。住宿／簽證標籤沒有正文，未知不等於無要求或官方未公告。
+
+- 迪波內哥羅UNDIP：官網2026 guideline標籤內的2027三頁表／Spring2027海報與未標年38頁booklet已讀，四個空白／相片頁另視覺確認；第2頁另核對Spring提名2026/11/10早於中央116，Fall2027五月／六月確切日官方此表待公布，Spring2028新版尚未找到。UG敘述與Master／Doctor課單、生活補助多零、Fall2026提名Excel、USD1500外校財力與另一政府E30B類別分開。十項host文件分Online／Visa兩類，因表第3頁稱兩類都上傳portal，不一律移Visa至錄取後。兩Word空白表與提名Excel非空行全讀；直接2025模板URL403另保存。秋139頁／春146頁課冊仍2026，只第1–4頁人工讀，其餘281頁未宣稱逐課已查；政府E30F正文Data Belum Tersedia、Mamikos外部JS房源不是宿舍保證，不能抵扣未核准補助。
+
+- 大連理工：雲科官方Spring2025臺灣兩頁／Word空白表全讀，七件彩掃、母校及本人簽名、四人宿舍400–600／學期、全期自購保險與指定日免費接機；官網2022國際UG／PG、HSK／英語、十件文件、年例期限、X簽證及月租另讀，不套臺灣。2022交通含三校區，FAQ甚至引用北京居留交通，範圍及錯址保留，116新包未取得。
+- 天津：雲科Spring2025臺灣Word及HKU官方Spring2027港澳兩頁另讀，兩track與秋季標題／春季日期矛盾分開。七件初次附件與到校後保險單據分為host申請、抵達後兩步；四至六人600／學期及接機旅費自付不是當期保證。空白表本人簽名／日期、舊Word轉DOCX的原件與轉檔SHA保留；116臺灣新版未取得。
+- 西安交通：雲科2025港澳臺須知、申請／推薦Word及單工作表Excel全讀；GPA>2.8/4.3保持嚴格大於、9學分或4課原文不改判。五學生件合一PDF、母校另Excel、申請人與派出承辦手寫簽名；統一住宿無價格，未知不填0。官方入口proxy403不當登入，116新包未取得。
+- Warmadewa：官方國際教育概述及校曆browser選定摘錄，local403另保存，沒有原HTML SHA；最新索引2025–26、明細附件未取得。商業WIP方案不是中央雙邊交換，host文件仍空，印尼政府E30F／E30B与交換範圍分開。
+- ITERA：官方宿舍／設施／合作正文已讀相关段落；2020／2021–22國內新生200.000／2000.000／150.000每月價格矛盾與10月預付不能套116。DIM／BPJS及照片清單不建立成交換必繳，2019BRT／內部校車不能當2027班次；國際入口proxy403不當登入。OAIL實為天文台，未冒充國際處。
+- HCMUS：清華公開未標年兩頁交換空白表全讀，母校承辦與本人均需手寫簽名日期；只有一份待確認表，不虛構完整附件／緊急聯絡件。現行官方browser組織頁Campus1／2行政區不同於舊表；兩校區地址不是交換教學／住宿保證，outgoing期限與費用未移植。
+- 東北林業：官網未標年交換頁与舊life指南全讀；後續local重讀200的成功與首次proxy403分開保存。外國護照／JW／X簽證、七件國際生申請與500／1000月租、400／800保險不自動套臺灣track。2021表格下載兩筆雖200卻非原件，host臺灣結構清單保持空，116包待查。
+- 武漢：澳科大官方轉載接收港澳一頁PDF全讀，九類含選填、兩推薦信／心理健康、online加紙本、境內門診住院意外保險及延畢成績延後均明列參考。港澳標題与registerHMTStudent路徑不證明臺灣適用，host清單不硬填；當期臺灣新包、住房課程費用及政府程序仍待查。
+- 長安：雲科2023秋四份空白附件全讀，六件初次合一PDF、母校公章／負責人簽名、母校一份13欄Excel、行前接機表與到校紙本分三阶段。Excel兩工作表（其一空白）逐欄讀，原XLS／轉檔SHA保留；接機2023/8/28卻含2020/8/20回傳矛盾，未改造日期，116新包未取得。
+
+- 南京信息工程：中英文費用、宿舍／報到／交通入口browser正文查讀，五筆local403保留；中文雙人2500–3000／英文2000–2500 RMB年價、中文僅限／英文部分保留博士及國家獎學金差異，不自選價格或硬判資格。報到／交通圖尚未讀，兩校區標題不能算機場路線已查；臺灣116交換文件仍空。
+- 鄭州：靜宜官方轉載51頁PDF只讀臺灣簡章1–6及校區11，其餘44頁未全部讀；第6頁2026/7批文與1100／人年另視覺核對。有效協議／臺灣籍UG或PG、50專業及按通知報到分列；6/30／12/31是Offer日，不作申請截止。申請段未列完整附件或表格，host清單仍空。
+- 貴州：舊OIR國際生全所得正文及2011行前／交通索引、2025國際學院概述分讀；國際自費／CSC與臺灣交換不能混。舊X／F與旅遊簽轉學習簽文字整段從問答索引隔離，原文保留稽核，不當現行政府指引。當期臺灣包、費用／宿舍／保險與最新表仍需續查。
+- 濟南：山東UJN五頁嶺南香港交換表全讀，不能套廣州暨南JNU；header2024、2025秋／2026春與2024/10／2025/4截止矛盾保留。香港版4人400–800／學期、不住國際宿舍、到後意外醫療保險；2025國際生X1／X2報到、床品自備、2024交通另查而不套臺灣。臺灣116接收清單仍空。
+
 ## 尚未完成的來源工作
 
-目前189項尚無初步人工欄位整理；已整理25項也全部partial，**214項沒有任何一項完成116當期全欄核准**。不能以中央提名步驟當host文件清單完成。197項有附件／網頁不表示197項全部17欄已核對。17項仍無相關host來源映射；另1項只有影像、尚無可讀文字，具體項目见下列清單及CSV「已讀host來源數=0」；多數仍可繼續做官方host來源搜尋／身份與track核對，**尚非證實登入限定或官方未公告**。已取得的大陸international資料若排除Chinese nationals，另列臺灣track缺口，不能硬配。
+目前174項尚無初步人工欄位整理；已整理40項也全部partial，**214項沒有任何一項完成116當期全欄核准**。不能以中央提名步驟當host文件清單完成。211項有外校附件／網頁不表示211項全部17欄已核對。3項仍無外校來源映射；另1項只有影像、尚無可讀文字，具體項目见下列清單及CSV「其中外校來源數=0」；多數仍可繼續做官方host來源搜尋／身份與track核對，**尚非證實登入限定或官方未公告**。已取得的大陸international資料若排除Chinese nationals，另列臺灣track缺口，不能硬配。
 
 本地HTTP讀取限制：Western Sydney兩頁406（browser其中一頁讀取成功）、SDU表格入口500（申請頁重讀200）、中央student portal503（browser先前502）、ALKU Form401／FAQ timeout、TUAF Form401。不把這些錯誤改寫成登入限定。南洋理工brochure頁200但只回導航文字，保留而不稱完整brochure已讀。
 
@@ -102,26 +121,13 @@ Chromium中央／臺大10項通過，實際檢查390與1440寬的摘要、原文
 
 來源字型缺口：上海財經26–27手冊第1、8頁及上海大學申請指南第2頁含NUL，原始缺字仍保留；三頁已視覺核對，摘錄與原始抽取分開。36份共100個無抽取文字頁包括封面／圖片，尚未全部視覺核對。下載成功不代表全文內容核對完成。
 
-## 尚無相關host來源映射的17項
+## 尚無外校官網來源映射的3項
 
-- ncu-173：大連理工大學 Dalian University of Technology（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-174：天津大學 Tianjin University（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-177：吉林大學 Jilin University（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-178：西安交通大學 Xian Jiaotong University（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-181：東北林業大學 NORTHEAST FORESTRY UNIVERSITY（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-182：武漢大學 Wuhan University（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-183：長安大學 Changan University（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-186：南京信息工程大學 Nanjing University of Information Science and Technology（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-191：華南理工大學 South China University of Technology（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-194：鄭州大學 Zhengzhou University（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-195：貴州大學 Guizhou University（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-196：濟南大學 University of Jinan（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-206：沃瑪德瓦大學 Universitas Warmadewa（印尼）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-208：日惹國立大學 Universitas Negeri Yogyakarta（印尼）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-209：迪波內戈羅大學 Universitas Diponegoro（印尼）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-211：蘇門答臘理工學院 Institut Teknologi Sumatera (ITERA)（印尼）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-216：胡志明市自然科學大學 VNUHCM-University of Science, Ho Chi Minh City (HCMUS)（越南）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
+其中西安交通、武漢及長安已有其他母校官方轉載，來源authority保留home_university，不能用轉載填補host官網計量。其餘仍需公開host／官方轉載搜尋，不稱官方未公告或登入限定。
 
+- ncu-178：西安交通大學 Xian Jiaotong University。具體已查來源、HTTP失敗、年度／track與未解欄位見field-audit。
+- ncu-182：武漢大學 Wuhan University。具體已查來源、HTTP失敗、年度／track與未解欄位見field-audit。
+- ncu-183：長安大學 Changan University。具體已查來源、HTTP失敗、年度／track與未解欄位見field-audit。
 ## 表格視覺及原件摘錄證據
 
 [Turku評量第1頁](ncu-source-evidence/language-assessment.png)、[第2頁](ncu-source-evidence/language-assessment-p2.png)為DOC轉檔頁，原件無固定PDF頁碼。[TUAF factsheet原PDF第2頁](ncu-source-evidence/ncu-tuaf-2026-factsheet-p2.png)顯示費用分類。視覺紀錄保存原件與截圖SHA；原件變更即不套舊視覺確認。已填範例摘錄同樣依SHA確認，原件變更／摘錄遺失即保留空頁與具體錯誤，不輸出學生填答。
@@ -147,3 +153,41 @@ Chromium中央／臺大10項通過，實際檢查390與1440寬的摘要、原文
 本轮公開視覺證據：[UOS舊第3頁](ncu-source-evidence/uos-old-2023-p3.png)、[UOS新版第3頁](ncu-source-evidence/uos-current-p3.png)、[新版第4頁](ncu-source-evidence/uos-current-p4.png)、[新版第7頁](ncu-source-evidence/uos-current-p7.png)、[SUFE Drive封面](ncu-source-evidence/sufe-p1.png)、[Drive封底](ncu-source-evidence/sufe-p8.png)、[SUFE官網高清封面](ncu-source-evidence/sufe-primary-p1.png)、[高清封底](ncu-source-evidence/sufe-primary-p8.png)、[SHU第2頁](ncu-source-evidence/shu-p2.png)、[SHU第8頁](ncu-source-evidence/shu-p8.png)。學生頁截图已追蹤於docs/ncu-browser-evidence/ncu-uos-*、ncu-sufe-*與ncu-shu-*；只展示來源、流程及生活資訊，沒有學生個資。
 
 最新跨校與共用接口回歸：school_content、NTPU support、NTU audit／integration、application_rules、document_catalog及documents_api七個module共97 passed（32.51s）。前述NTPU bundled destination基底已知失敗仍單獨列出；不宣稱全部CI通過。
+
+首爾市立政府表格補查：臺北韓國代表部2025/8/8現連Visa Application Form原PDF5頁均讀，韓／英大寫、35×45mm近6月照、五年旅行史、USD費用／付款者及第5頁姓名／日期／親筆簽名分列；未滿17歲另有父母／監護簽名。政府來源不標為host authority，不放入UOS初次交換申請必繳清單；本表不是入境後居留登錄表，個人條件及2027行前更新仍須查。新增UNY／政府表及離線重建兩項回歸2 passed（11.72s）。
+
+## UOS問答索引隔離與本輪續查
+
+已確認UOS新版第3／6／7頁含不可見舊字層。以前ProcessedPage把raw與正確摘錄並列，造成索引污染風險；尚未證實發生使用者錯答。本輪以來源SHA與明確頁碼隔離：同SHA、同頁已核對摘錄替代問答索引中的該頁，原始破損文字仍完整留於source-evidence／audit。SHA變更或該頁未列視覺閱讀時先隔離，不能套舊修正版；不是用價格regex清洗。住宿764,000／382,000保留2025參考與2027–2028價格未核實，實際build_document_chunks／local index／search回歸通過。
+
+HUST申請前3–6門課學習計畫已進結構化文件，附2027–28簡章第7頁。UOS住宿健康文件與HUST錄取後健康文件的正式啟用條件仍待實作；目前models沒有住宿選擇／錄取狀態判斷，不能宣稱已完成條件引擎。具體邏輯與相容性要求見[可審閱啟用前設計](ncu-conditional-documents-design.md)，三項缺口亦在實際學生field-audit。所有214流程仍未發布，沒有精確host提醒。
+
+來源計量改分任意參考來源與外校来源；Warmadewa／ITERA只有印尼政府來源仍列host缺口。CSV不再把附件取得稱「已讀host」。文字／視覺頁数及原始空頁繼續分開。新增[UNDIP第2頁原圖](ncu-source-evidence/undip-factsheet-2027-p2.png)與[Spring2027海報](ncu-source-evidence/undip-poster-spring2027.jpg)。本輪UNY／韓國政府表／UNDIP版本及離線重建，含新增UOS索引檢索四項先通過（4 passed，17.97s）；NCU／完整度52項通過，通用RAG6項通過另1項失敗；該503預期／422實際差異已在未修改f6ad1b8復現（1 failed，10.33s）。跨校與文件七module97項通過（37.91s）；UI靜態4項、JS／OpenAPI檢查通過。手機實測UOS簽證原文、UNY適用範圍、UNDIP未定期限與十文件各1項通過，另臺大瀏覽與切回長庚2項通過（67.46s）。UNDIP實測發現摘要十項截斷，已增中央專用其餘說明展開；畫面選擇器亦已修正，未隱藏boot狀態或強制點擊。追蹤[UOS簽證原文](ncu-browser-evidence/ncu-uos-visa-form-390.png)、[UNY生活](ncu-browser-evidence/ncu-uny-life-390.png)、[UNDIP原文](ncu-browser-evidence/ncu-undip-source-390.png)、[UNDIP生活](ncu-browser-evidence/ncu-undip-life-390.png)。這批27校驗證後仍持續下一批天津／HCMUS／ITERA／Warmadewa來源查核，後續變更須再重建與複驗。
+
+## 長庚範圍逐項驗收與36筆續查
+
+新增[長庚對照驗收表](ncu-cgu-acceptance-20261008.md)，逐項對照實際models／loader／API／文件中心／流程與生活頁；含資格、語言、名額、內外截止、所有文件階段、課程採認、住房、費用、保險簽證、城市交通、到校與返國。表格明確分介面接通與內容未完成，0項目全17欄当期核实，178項可續查而非外部阻擋。
+
+新增天津手机流程、轉檔原文1 passed（52.09s）；首次49.31s於中央切換前被既有boot-splash攔截，未到內容，原失敗保留。檢視截圖後發現原測試只檢查折疊內DOM文字，補上實際展開申請與抵達後步驟、可見文字斷言，再1 passed（46.64s）；[抵達後保險](ncu-browser-evidence/ncu-tju-arrival-390.png)及[轉檔原文](ncu-browser-evidence/ncu-tju-source-390.png)已檢視，無學生個資。沒有移除遮罩或強制點擊。
+
+舊Word／Excel轉檔必須SHA相符，原件變更即不使用既有轉檔；原始解析失敗仍保存，不對OLE二進位做文字解碼。Excel逐工作表確認，不能以所有page=None就算全工作表已讀。HTTP200但回HTML而非PDF／Word分為回應已取得、原件未取得，不能計原件下載完成。
+
+## 文件中心真實API缺口修正及40筆續查
+
+新增隔離資料目录的中央文件catalog測試曾得到空清單：流程API可讀repo baseline，但catalog只讀隔離目录且context保留NCU alias。當時63 passed、1 failed（112.84s）；已修正中央catalog使用同校治理／baseline loader並正規化中央校名，沒有改其他母校catalog路徑、登入／安全或資料發布界線。天津初次七件、抵達後保險、home文件在實際API及UI均待確認，沒有正式下載。
+
+修正後NCU／來源collector／完整度、CGU／NTPU／NTU／規則／文件API及前端契約11個module為207 passed、8 failed（155.02s）。八項皆前端契約既有失敗，已在未修改f6ad1b8逐項復現（8 failed，46 deselected，1.80s），涉及社群舊文案／fetch名、通知字串、舊app版本、資格元件及學校計畫文案；未隱藏或篡改結果，不能稱全套CI通過。
+
+長安空工作表與天津文件中心真實手機測試1 passed（73.73s）。[長安空白工作表](ncu-browser-evidence/ncu-chd-workbook-390.png)與[天津抵達後catalog](ncu-browser-evidence/ncu-tju-catalog-390.png)已檢視：實際展開sheet2、原文空白說明與待確認保險，並非只檢查折疊DOM。新增鄭州[第6頁原图](ncu-source-evidence/zzu-taiwan-reference-p6.png)已視覺確認，原件及轉圖SHA附sidecar；整份51頁不計全文已讀。
+
+最新main再fetch仍為f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59。中央40筆仍全部partial、174筆可做公開來源工作未整理；新增四校來源不使任何項目達到當期全欄核實。南京信息工程五筆local403與五筆browser選定摘錄分開保存，原HTML SHA未知／圖片未讀；來源計量211 host映射不是211全包完成。貴州舊國際生簽證正文只在問答索引隔離，來源原文及人工閱讀證據仍保留。
+
+最新40筆資料的NCU／collector／完整度三module共71 passed（125.04s）。新增四校第一輪聚焦測試6 passed、2 failed（17.67s），兩項是測試對報到圖字樣與錯用processed_pages loader路徑的斷言問題，已依實際audit及pages.jsonl修正後完整三module通過。未改來源內容或降低年度／範圍封鎖。
+
+南京信息工程與濟南兩項手機內容2 passed（81.67s），實際展開原文及官方生活段；[南京中英文房價及資格差異](ncu-browser-evidence/ncu-nuist-versions-390.png)、[濟南香港宿舍範圍](ncu-browser-evidence/ncu-ujn-hk-scope-390.png)已檢視。濟南宿舍頁只讀圖標題，已改不計整頁內容已讀；現連REGISTRATION NOTICE PDF亦補試，200非PDF原件的43rd讀取缺口保留，不當登入限制。這兩筆最後來源狀態修正另跑聚焦來源、重建及API複驗。JS、diff與OpenAPI快照檢查通過。
+
+最後補查濟南PDF時，builder曾因失敗來源沒有原文頁而StopIteration，聚焦回歸2 failed、2 passed（13.59s）；已修正只將成功頁附為original_evidence，失敗URL仍在欄位source_urls及unretrieved_sources。新測試確認200非PDF不計下載、不附虛構原文，之後完整NCU／collector／完整度再71 passed（89.76s）。貴州隔離頁的索引提示另明確標過時簽證，不錯稱原件文字破損，原始內容不變。
+
+OpenAPI版本2026-10-08.4再次與snapshot一致，JavaScript syntax及git diff --check通過。uv第一次因預設/home/agent cache唯讀未能開始；改用/tmp/ncu-uv-cache後uv lock --check通過（87 packages，16ms），沒有新增依賴或修改lock。沒有環境斷線。
+
+最後索引提示／來源狀態／離線重建聚焦4 passed（16.04s），git diff --check通過。2026-10-08 10:06:05 UTC收到環境斷線通知後，在原/workspace/abroad-ncu執行date、pwd、git rev-parse及讀catalog的唯讀命令均exit0；git ls-remote亦exit0，main仍f6ad1b8、當時遠端中央checkpoint仍dd06632f871d6c38313aa32520837161446cf43d。40筆／241來源及CGU驗收表、UOS索引sidecar已保存；通知未形成實際環境阻塞，未換環境或建立重複工作。

@@ -604,6 +604,301 @@ def test_shanghai_visual_versions_and_taiwan_track_do_not_become_current():
     assert not next(w for w in workflows if w.home_university == NCU.school_name and w.school_name == shu.school_name).steps[4].document_requirements
 
 
+def test_uny_degree_and_dual_degree_are_not_exchange_and_government_form_is_scoped():
+    partners = fetch_ncu_partner_universities()
+    uny = next(p for p in partners if "Universitas Negeri Yogyakarta" in p.school_name)
+    audit = ncu_field_audit(uny.school_name)
+    assert "2021" in audit["fields"]["host_deadline"]["note"]
+    assert "雙聯不是" in audit["fields"]["eligibility"]["note"]
+    assert "USD4000" in audit["fields"]["host_documents"]["note"]
+    assert "不能套" in audit["fields"]["eligibility"]["note"]
+    workflow = next(w for w in storage.load_bundled_application_workflows() if w.home_university == NCU.school_name and w.school_name == uny.school_name)
+    assert not workflow.steps[4].document_requirements
+    assert all(not s.deadline_reminder_eligible for s in workflow.steps)
+    sources = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    form = next(d for d in sources if d["id"] == "gov-kr-taipei-visa-form")
+    assert form["authority_kind"] == "government"
+    assert form["content_status"]["page_count"] == 5
+    assert form["content_status"]["all_pages_read"]
+    assert not form["content_status"]["visual_reviewed"]
+    assert "SIGNATURE OF APPLICANT" in form["pages"][4]["text"]
+    uos = next(p for p in partners if "University of Seoul" in p.school_name)
+    assert "親筆簽名" in ncu_field_audit(uos.school_name)["fields"]["visa"]["note"]
+    host = next(w for w in storage.load_bundled_application_workflows() if w.home_university == NCU.school_name and w.school_name == uos.school_name)
+    assert not any("VISA APPLICATION" in d.name for d in host.steps[4].document_requirements)
+
+
+def test_uos_known_broken_layers_stay_in_audit_and_out_of_rag(tmp_path, monkeypatch):
+    from copy import deepcopy
+    from exchange_info.models import ProcessedPage
+    from exchange_info.ncu_source_coverage import indexable_source_text
+    from exchange_info.rag import build_document_chunks, build_rag_index, search_document_chunks
+
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    source = next(d for d in raw if d["id"] == "host-uos-partner-current")
+    broken = "".join(source["pages"][6]["text"].split())
+    assert "6,000KRW/semester+100,000KRWdeposit=7000KRW" in broken
+    assert "33000KRW" in broken
+    indexed = next(ProcessedPage.model_validate_json(line) for line in (BUNDLE / "pages.jsonl").read_text().splitlines() if json.loads(line)["source_url"] == source["url"])
+    assert indexed.text == indexable_source_text(source)
+    compact = "".join(indexed.text.split())
+    assert "6,000KRW/semester+100,000KRWdeposit=7000KRW" not in compact
+    assert "33000KRW" not in compact
+    assert "764,000KRW/semester" in compact and "382,000KRW" in compact
+    chunks = build_document_chunks([indexed])
+    housing = next(c for c in chunks if "764,000" in c.text and "382,000" in c.text)
+    assert "2025房價參考" in housing.text and "2027–2028價格未核實" in housing.text
+    monkeypatch.setattr("exchange_info.rag.ai_enabled", lambda: False)
+    build_rag_index([indexed], tmp_path, use_embeddings=False, sync_supabase=False)
+    hits = search_document_chunks("Residence Hall 764,000 382,000 KRW 住宿", tmp_path, limit=8)
+    assert hits and any("764,000" in hit.chunk.text for hit in hits)
+    assert all("33000KRW" not in "".join(hit.chunk.text.split()) for hit in hits)
+    stale = deepcopy(source)
+    stale["sha256"] = "changed-original"
+    changed = indexable_source_text(stale)
+    page7 = changed.split("【第7頁】", 1)[1].split("【第8頁】", 1)[0]
+    assert "已隔離" in page7 and "764,000" not in page7 and "33000" not in page7
+    wrong_page = deepcopy(source)
+    wrong_page["visual_review"]["pdf_pages_reviewed"] = [1]
+    page7 = indexable_source_text(wrong_page).split("【第7頁】", 1)[1].split("【第8頁】", 1)[0]
+    assert "已隔離" in page7 and "764,000" not in page7
+
+
+def test_undip_2027_partial_dates_degree_conflict_and_government_sources_stay_scoped():
+    partners = fetch_ncu_partner_universities()
+    undip = next(p for p in partners if "Universitas Diponegoro" in p.school_name)
+    audit = ncu_field_audit(undip.school_name)
+    assert "to be announce" in audit["fields"]["host_deadline"]["note"]
+    assert "不能套用" in audit["fields"]["host_deadline"]["note"]
+    assert "硬封研究生" in audit["fields"]["eligibility"]["note"]
+    assert "IDR2.5000.000" in audit["fields"]["cost"]["note"]
+    assert "不能抵扣預算" in audit["fields"]["cost"]["note"]
+    workflows = storage.load_bundled_application_workflows()
+    workflow = next(w for w in workflows if w.home_university == NCU.school_name and w.school_name == undip.school_name)
+    assert len(workflow.steps[4].document_requirements) == 10
+    visa = [d for d in workflow.steps[4].document_requirements if d.name.startswith("Visa類附件")]
+    assert len(visa) == 5 and any("財力" in d.name for d in visa)
+    assert all(d.needs_confirmation for d in visa)
+    assert not any(s.rule_id.endswith("host-predeparture-documents") for s in workflow.steps)
+    assert all(not s.deadline_reminder_eligible for s in workflow.steps)
+    hust = next(w for w in workflows if w.home_university == NCU.school_name and "Huazhong University" in w.school_name)
+    study = next(d for d in hust.steps[4].document_requirements if "學習計畫" in d.name)
+    assert "3–6" in study.name and study.source_urls[0].endswith("#page=7")
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    booklet = next(d for d in raw if d["id"] == "host-undip-booklet")
+    assert booklet["content_status"]["all_pages_read"]
+    assert not booklet["content_status"]["all_pages_have_text"]
+    assert booklet["content_status"]["visual_reviewed_page_count"] == 4
+    courses = next(d for d in raw if d["id"] == "host-undip-courses-spring")
+    assert len(courses["pages"]) == 146 and not courses["content_status"]["all_pages_read"]
+    metrics = json.loads((BUNDLE / "catalog-completeness.json").read_text())
+    rows = json.loads((BUNDLE / "field-audit.json").read_text())
+    host_rows = [row for row in rows if any(s["authority_kind"] == "partner_university" for s in row["read_sources"])]
+    assert metrics["host_source_mapped_entries"] == len(host_rows)
+    assert metrics["source_mapped_entries"] > metrics["host_source_mapped_entries"]
+    for row in rows:
+        if set(row["source_rows"]) & {"ncu-206", "ncu-211"}:
+            assert any(s["authority_kind"] == "government" for s in row["read_sources"])
+            assert any(s["authority_kind"] == "partner_university" for s in row["read_sources"])
+    assert all(d["authority_kind"] == "government" for d in raw if d["id"].startswith("gov-indonesia-"))
+
+
+def test_tju_insurance_is_an_arrival_file_and_hong_kong_dates_do_not_activate_taiwan():
+    workflows = storage.load_bundled_application_workflows()
+    workflow = next(w for w in workflows if w.home_university == NCU.school_name and "Tianjin University" in w.school_name)
+    host = next(s for s in workflow.steps if s.rule_id.endswith("host-apply"))
+    arrival = next(s for s in workflow.steps if s.rule_id.endswith("host-arrival-documents"))
+    assert len(host.document_requirements) == 7
+    assert not any("保險" in d.name for d in host.document_requirements)
+    assert arrival.phase == "抵達後" and arrival.order > host.order
+    assert len(arrival.document_requirements) == 1
+    assert "報到後" in arrival.document_requirements[0].name
+    assert arrival.document_requirements[0].needs_confirmation
+    assert [s.order for s in workflow.steps] == sorted({s.order for s in workflow.steps})
+    assert all(not s.deadline_reminder_eligible for s in workflow.steps)
+    audit = ncu_field_audit(workflow.school_name)
+    assert "港澳" in audit["fields"]["host_deadline"]["note"]
+    assert "2025" in audit["fields"]["host_documents"]["note"]
+    assert all(audit["fields"][k]["status"] == "needs_confirmation" for k in ("eligibility", "host_documents", "host_deadline", "insurance"))
+
+
+def test_dut_xjtu_forms_keep_track_signature_and_strict_gpa_scope():
+    workflows = storage.load_bundled_application_workflows()
+    dut = next(w for w in workflows if w.home_university == NCU.school_name and "Dalian University of Technology" in w.school_name)
+    dut_host = next(s for s in dut.steps if s.rule_id.endswith("host-apply"))
+    assert len(dut_host.document_requirements) == 7
+    recommendations = [d for d in dut_host.document_requirements if "推薦信" in d.name]
+    assert len(recommendations) == 1 and "不套國際版兩封" in recommendations[0].name
+    assert "母校聯絡老師簽名" in dut_host.document_requirements[0].signatures
+    audit = ncu_field_audit(dut.school_name)
+    assert "2022" in audit["fields"]["language"]["note"]
+    assert "400–600" in audit["fields"]["housing"]["note"]
+    xjtu = next(w for w in workflows if w.home_university == NCU.school_name and "Xian Jiaotong University" in w.school_name)
+    xjtu_host = next(s for s in xjtu.steps if s.rule_id.endswith("host-apply"))
+    assert len(xjtu_host.document_requirements) == 5
+    assert "母校派出交換承辦老師手寫簽名" in xjtu_host.document_requirements[0].signatures
+    audit = ncu_field_audit(xjtu.school_name)
+    assert "GPA>2.8" in audit["fields"]["eligibility"]["note"]
+    assert "不能改≥2.8" in audit["fields"]["eligibility"]["note"]
+    assert "不得少于9学分或少于4门课程" in audit["fields"]["courses"]["note"]
+    assert xjtu.review_status == "pending_review" and xjtu.published_at is None
+
+
+def test_itera_domestic_housing_and_hcmus_blank_form_do_not_become_exchange_requirements():
+    workflows = storage.load_bundled_application_workflows()
+    itera = next(w for w in workflows if w.home_university == NCU.school_name and "Institut Teknologi Sumatera" in w.school_name)
+    assert not next(s for s in itera.steps if s.rule_id.endswith("host-apply")).document_requirements
+    audit = ncu_field_audit(itera.school_name)
+    assert "200.000" in audit["fields"]["housing"]["note"]
+    assert "2000.000" in audit["fields"]["housing"]["note"]
+    assert "2021" in audit["fields"]["housing"]["note"]
+    assert "DIM" in audit["fields"]["host_documents"]["note"]
+    hcmus = next(w for w in workflows if w.home_university == NCU.school_name and "(HCMUS)" in w.school_name)
+    host = next(s for s in hcmus.steps if s.rule_id.endswith("host-apply"))
+    assert len(host.document_requirements) == 1
+    assert "手寫簽名" in host.document_requirements[0].name
+    assert "未列緊急聯絡" in ncu_field_audit(hcmus.school_name)["fields"]["host_documents"]["note"]
+    evidence = ncu_field_audit(hcmus.school_name)["fields"]["host_documents"]["original_evidence"]
+    assert {e["page"] for e in evidence} == {1, 2}
+
+
+def test_reviewed_old_word_conversion_retains_original_sha_and_has_no_fixed_pdf_pages():
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    for source_id in ("host-tju-application-2025", "host-xjtu-application-2025"):
+        source = next(d for d in raw if d["id"] == source_id)
+        assert source["conversion_review"]["source_sha256"] == source["sha256"]
+        assert source["conversion_review"]["converted_sha256"]
+        assert source["extraction_attempts"][0]["status"] == "failed"
+        assert source["document_format"] == "doc_converted_docx_no_fixed_pdf_pages"
+        assert all(p["page"] is None and "\x00" not in p["text"] for p in source["pages"])
+        assert source["content_status"]["all_pages_read"]
+        assert not source["content_status"]["visual_reviewed"]
+
+
+def test_chd_old_pickup_conflict_and_three_document_stages_remain_visible():
+    workflow = next(w for w in storage.load_bundled_application_workflows() if w.home_university == NCU.school_name and "Changan University" in w.school_name)
+    initial = next(s for s in workflow.steps if s.rule_id.endswith("host-apply"))
+    predeparture = next(s for s in workflow.steps if s.rule_id.endswith("host-predeparture-documents"))
+    arrival = next(s for s in workflow.steps if s.rule_id.endswith("host-arrival-documents"))
+    assert len(initial.document_requirements) == 6
+    assert any("保險" in d.name for d in initial.document_requirements)
+    assert initial.document_requirements[0].signatures == ["母校兩岸事務處負責人簽名、日期"]
+    assert "母校單位公章" in initial.document_requirements[0].stamps
+    assert not any("接機" in d.name for d in initial.document_requirements)
+    assert "2020／2023" in predeparture.document_requirements[0].name
+    assert arrival.phase == "抵達後" and "紙本" in arrival.document_requirements[0].name
+    assert initial.order < predeparture.order < arrival.order
+    audit = ncu_field_audit(workflow.school_name)
+    assert "2020/8/20" in audit["fields"]["transport"]["note"]
+    assert "2023/8/28" in audit["fields"]["transport"]["note"]
+    assert all(not s.deadline_reminder_eligible for s in workflow.steps)
+
+
+def test_nefu_foreigner_and_whu_hong_kong_macau_do_not_become_taiwan_host_files():
+    workflows = storage.load_bundled_application_workflows()
+    for name in ("NORTHEAST FORESTRY UNIVERSITY", "Wuhan University"):
+        workflow = next(w for w in workflows if w.home_university == NCU.school_name and name in w.school_name)
+        assert not next(s for s in workflow.steps if s.rule_id.endswith("host-apply")).document_requirements
+        audit = ncu_field_audit(workflow.school_name)
+        assert audit["fields"]["host_documents"]["status"] == "needs_confirmation"
+        assert "116" in audit["fields"]["host_documents"]["note"]
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    for i in ("host-nefu-health-form", "host-nefu-application-form"):
+        source = next(s for s in raw if s["id"] == i)
+        assert source["status"] == 200 and source["error"]
+        assert not source["pages"] and not source["content_status"]["all_pages_read"]
+        assert source["content_status"]["response_bytes_received"]
+        assert not source["content_status"]["downloaded"]
+    nomination = next(s for s in raw if s["id"] == "host-chd-nomination-2023")
+    assert len(nomination["pages"]) == 2 and nomination["pages"][1]["text"] == ""
+    assert nomination["content_status"]["all_pages_read"]
+    assert not nomination["content_status"]["all_pages_have_text"]
+
+
+@pytest.mark.parametrize("name", ["Nanjing University of Information", "Zhengzhou University", "Guizhou University", "University of Jinan"])
+def test_new_mainland_sources_do_not_fill_current_taiwan_exchange_documents(name):
+    partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+    audit = ncu_field_audit(partner.school_name)
+    assert all(audit["fields"][k]["status"] == "needs_confirmation" for k in ("eligibility", "host_documents", "host_deadline", "housing", "visa"))
+    workflow = next(w for w in storage.load_bundled_application_workflows() if w.home_university == NCU.school_name and w.school_name == partner.school_name)
+    assert not next(s for s in workflow.steps if s.rule_id.endswith("host-apply")).document_requirements
+    assert workflow.review_status == "pending_review" and workflow.published_at is None
+    assert not any(s.deadline_reminder_eligible for s in workflow.steps)
+
+
+def test_nuist_language_versions_and_ujn_hong_kong_scope_stay_distinct():
+    partners = fetch_ncu_partner_universities()
+    nuist = next(p for p in partners if "Nanjing University of Information" in p.school_name)
+    audit = ncu_field_audit(nuist.school_name)
+    assert "2500–3000" in audit["fields"]["housing"]["note"]
+    assert "2000–2500" in audit["fields"]["housing"]["note"]
+    assert "僅限" in audit["fields"]["housing"]["note"] and "部分保留" in audit["fields"]["housing"]["note"]
+    assert "報到圖" in audit["fields"]["arrival"]["unresolved"]
+    ujn = next(p for p in partners if "University of Jinan" in p.school_name)
+    audit = ncu_field_audit(ujn.school_name)
+    assert "2024" in audit["fields"]["host_deadline"]["note"] and "2026" in audit["fields"]["host_deadline"]["note"]
+    assert "香港版" in audit["fields"]["housing"]["note"]
+    assert "不能住國際生宿舍" in audit["fields"]["housing"]["note"]
+    assert "廣州暨南" in audit["fields"]["city"]["note"]
+    assert "抵達後" in audit["fields"]["insurance"]["note"]
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    dormitory = next(s for s in raw if s["id"] == "host-ujn-dormitory")
+    assert not dormitory["content_status"]["all_pages_read"]
+    attachment = next(s for s in raw if s["id"] == "host-ujn-registration-pdf")
+    assert attachment["status"] == 200 and attachment["error"] and not attachment["pages"]
+    assert attachment["content_status"]["response_bytes_received"]
+    assert not attachment["content_status"]["downloaded"]
+    assert attachment["url"] in audit["fields"]["host_documents"]["source_urls"]
+    assert any(s["id"] == attachment["id"] and s["reason"] for s in audit["unretrieved_sources"])
+    assert all(e["source_url"] != attachment["url"] for e in audit["fields"]["host_documents"]["original_evidence"])
+
+
+def test_zzu_offer_dates_are_not_deadlines_and_selected_pdf_is_not_fully_read():
+    partner = next(p for p in fetch_ncu_partner_universities() if "Zhengzhou University" in p.school_name)
+    audit = ncu_field_audit(partner.school_name)
+    assert "不是學生申請截止" in audit["fields"]["host_deadline"]["note"]
+    assert "2026/7" in audit["fields"]["cost"]["note"]
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    source = next(s for s in raw if s["id"] == "host-zzu-taiwan-reference")
+    assert len(source["pages"]) == 51 and source["authority_kind"] == "home_university"
+    assert source["content_status"]["any_text"] and not source["content_status"]["all_pages_read"]
+    assert source["content_status"]["visual_reviewed_page_count"] == 1
+    assert source["visual_review"]["pdf_pages_reviewed"] == [6]
+
+
+def test_gzu_old_visa_text_remains_in_audit_but_is_quarantined_from_rag():
+    from exchange_info.models import ProcessedPage
+    from exchange_info.ncu_source_coverage import indexable_source_text
+    from exchange_info.rag import build_document_chunks
+
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    source = next(s for s in raw if s["id"] == "host-gzu-international-application")
+    assert "tourist visa" in source["pages"][0]["text"]
+    assert source["content_status"]["all_pages_read"]
+    indexed = next(ProcessedPage.model_validate_json(line) for line in (BUNDLE / "pages.jsonl").read_text().splitlines() if json.loads(line)["source_url"] == source["url"])
+    assert indexed.text == indexable_source_text(source)
+    assert "tourist visa" not in indexed.text and "已隔離" in indexed.text
+    assert "過時" in indexed.text and "破損文字層" not in indexed.text
+    assert all("tourist visa" not in c.text for c in build_document_chunks([indexed]))
+    stale = json.loads(json.dumps(source))
+    stale["sha256"] = "0" * 64
+    assert "tourist visa" not in indexable_source_text(stale)
+
+
+def test_actual_ncu_document_catalog_keeps_initial_and_arrival_phases_pending(tmp_path):
+    client = TestClient(create_app(tmp_path))
+    partner = next(p for p in client.get("/student-dashboard", params={"school": "NCU"}).json()["partner_universities"] if "Tianjin University" in p["school_name"])
+    response = client.get("/application-center/catalog", params={"school": "NCU", "target_school": partner["school_name"], "academic_year": "116"})
+    assert response.status_code == 200
+    catalog = response.json()
+    assert catalog["workflow_found"] and catalog["workflow_review_status"] == "pending_review"
+    assert len([d for d in catalog["items"] if d["phase"] == "合作校申請"]) == 7
+    insurance = next(d for d in catalog["items"] if "2025臺灣參考：保險" in d["name"])
+    assert insurance["phase"] == "抵達後" and insurance["needs_confirmation"]
+    assert all(d["needs_confirmation"] and not d["download_available"] for d in catalog["items"])
+    assert "cgu.edu.tw" not in response.text
+
+
 @pytest.mark.parametrize(
     "test,date,error",
     [

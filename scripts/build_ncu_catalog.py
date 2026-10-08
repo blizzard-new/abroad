@@ -22,7 +22,7 @@ from exchange_info.models import (
     PartnerResearchRecord,
 )
 from exchange_info.ncu_eligibility import SCORE_MINIMUMS, EXCLUDED_YEARS
-from exchange_info.ncu_source_coverage import attach_visual_review, source_content_status
+from exchange_info.ncu_source_coverage import attach_visual_review, indexable_source_text, source_content_status
 from exchange_info.ncu_student_view import (
     NCU_GUIDELINES_URL as NOTICE,
     NCU_INDEX_URL as INDEX,
@@ -194,6 +194,9 @@ def build(output):
         visual_path = SOURCES / f"{d['id']}-visual-review.json"
         if visual_path.exists():
             attach_visual_review(d, load_json(visual_path))
+        index_review_path = SOURCES / f"{d['id']}-index-review.json"
+        if index_review_path.exists():
+            d["index_review"] = load_json(index_review_path)
         d["content_status"] = source_content_status(d)
     reviewed = load_json(SOURCES / "reviewed-host-records.json")
     from pypdf import PdfReader
@@ -621,6 +624,29 @@ def build(output):
                     scope={"home_universities": [HOME], "partner_universities": [name], "academic_years": ["116"]},
                 ),
             )
+        if review and review.get("host_arrival_documents"):
+            requirements = review["host_arrival_documents"]
+            arrival_position = next(i for i, step in enumerate(tail) if step["phase"] == "抵達後") + 1
+            tail.insert(
+                arrival_position,
+                dict(
+                    order=tail[arrival_position - 1]["order"] + 1,
+                    rule_id=f"{rowids[0]}-host-arrival-documents",
+                    phase="抵達後",
+                    title="依外校報到通知繳交到校文件",
+                    responsible_party="學生與接收單位",
+                    summary="來源明列到校後才提交的文件；不是初次host申請或母校甄選附件，當期仍待確認。",
+                    details=reviewed_points("arrival"),
+                    document_requirements=requirements,
+                    source_urls=list(dict.fromkeys(u for d in requirements for u in d["source_urls"])),
+                    checked_at=CHECKED,
+                    support_status="needs_confirmation",
+                    needs_confirmation=True,
+                    scope={"home_universities": [HOME], "partner_universities": [name], "academic_years": ["116"]},
+                ),
+            )
+            for step in tail[arrival_position + 1:]:
+                step["order"] += 1
         workflows.append(
             dict(
                 home_university=HOME,
@@ -851,6 +877,11 @@ def build(output):
                 ev = []
                 for ref in value["sources"]:
                     d = docs[ref["id"]]
+                    if d.get("error"):
+                        # A failed attachment can document a specific gap, but
+                        # has no original text/page to attach as read evidence.
+                        # Its URL and failure remain in the field and audit.
+                        continue
                     p = next(p for p in d["pages"] if p["page"] == ref["page"])
                     visual_passage = next(
                         (v for v in d.get("page_transcriptions", []) if v["page"] == p["page"]),
@@ -860,7 +891,10 @@ def build(output):
                         {
                             "text": visual_passage["text"] if visual_passage else p["text"],
                             "text_method": "human_visual_selected_passages"
-                            if visual_passage else "original_extraction",
+                            if visual_passage
+                            else "converted_native_text"
+                            if d.get("conversion_review")
+                            else "original_extraction",
                             "source_url": d["url"],
                             "page": p["page"],
                             "source_title": d["label"],
@@ -876,7 +910,7 @@ def build(output):
                     reference_status="reviewed_partial_reference",
                     current_applicability_status="unconfirmed",
                     note=" ".join(value["points"]),
-                    source_urls=list(dict.fromkeys(x["source_url"] for x in ev)),
+                    source_urls=list(dict.fromkeys(docs[ref["id"]]["url"] for ref in value["sources"])),
                     original_evidence=ev,
                     unresolved=value.get("unresolved")
                     or "參考內容已讀；整筆來源的116年度／校區／track適用性仍未核實。",
@@ -909,6 +943,7 @@ def build(output):
                         url=d["url"],
                         title=d["label"],
                         sha256=d.get("sha256"),
+                        authority_kind=d.get("authority_kind", "partner_university"),
                         pages=len(d["pages"]),
                         text_quality_issues=d.get("text_quality_issues", []),
                         non_text_pages=d.get("non_text_pages", []),
@@ -956,19 +991,7 @@ def build(output):
                 *([docs[fid] for fid in review["source_ids"]] if review else []),
             ]
         }.values():
-            text = "\n\n".join(
-                (
-                    f"【第{p['page']}頁】"
-                    if p["page"] is not None
-                    else "【網頁／無PDF頁碼】"
-                )
-                + f"\n{p['text']}"
-                for p in d["pages"]
-            )
-            text += "".join(
-                f"\n\n【原PDF第{p['page']}頁；人工視覺核對摘錄，非原始文字抽取】\n{p['text']}"
-                for p in d.get("page_transcriptions", [])
-            )
+            text = indexable_source_text(d)
             pages.append(
                 dict(
                     title=f"{zh}：{d['label']}（116適用性待查）",
@@ -1195,7 +1218,8 @@ def build(output):
                 "學校／track",
                 "國家",
                 "115來源列",
-                "已讀host來源數",
+                "已取得參考來源數",
+                "其中外校來源數",
                 *FIELDS.values(),
                 "未解問題",
             ]
@@ -1207,6 +1231,7 @@ def build(output):
                     row["country"],
                     ";".join(row["source_rows"]),
                     len(row["read_sources"]),
+                    sum(d["authority_kind"] == "partner_university" for d in row["read_sources"]),
                     *(row["fields"][k]["status"] for k in FIELDS),
                     "；".join(
                         f"{f['label']}：{f['unresolved']}"
@@ -1286,8 +1311,12 @@ def build(output):
                 bool(d.get("error")) for d in web_evidence
             ),
             "source_mapped_entries": sum(bool(x["read_sources"]) for x in audit),
+            "host_source_mapped_entries": sum(
+                any(d["authority_kind"] == "partner_university" for d in x["read_sources"])
+                for x in audit
+            ),
             "entries_with_any_host_text": sum(
-                any(d["content_status"]["any_text"] for d in x["read_sources"])
+                any(d["content_status"]["any_text"] and d["authority_kind"] == "partner_university" for d in x["read_sources"])
                 for x in audit
             ),
             "reviewed_host_records": len(reviewed),

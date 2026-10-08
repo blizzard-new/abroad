@@ -129,18 +129,44 @@ def fetch(spec):
                     if x.attrib.get("TargetMode") == "External"
                 ]
         elif response.content.startswith(bytes.fromhex("d0cf11e0a1b11ae1")):
-            antiword = os.environ.get("NCU_ANTIWORD_PATH", "antiword")
-            with tempfile.NamedTemporaryFile(suffix=".doc") as handle:
-                handle.write(response.content)
-                handle.flush()
-                converted = subprocess.run(
-                    [antiword, "-m", "UTF-8.txt", handle.name],
-                    capture_output=True,
-                    check=True,
-                    timeout=30,
+            old_excel = expected_format == "xls"
+            converted = None
+            if not old_excel:
+                antiword = os.environ.get("NCU_ANTIWORD_PATH", "antiword")
+                with tempfile.NamedTemporaryFile(suffix=".doc") as handle:
+                    handle.write(response.content)
+                    handle.flush()
+                    converted = subprocess.run(
+                        [antiword, "-m", "UTF-8.txt", handle.name],
+                        capture_output=True,
+                        timeout=30,
+                    )
+            if converted and converted.returncode == 0:
+                result["pages"] = [{"page": None, "text": converted.stdout.decode("utf-8")}]
+                result["document_format"] = "doc_no_fixed_pdf_pages"
+            else:
+                # Some WPS/Word OLE files are rejected by antiword. A separately
+                # reviewed conversion snapshot is bound to the original bytes;
+                # never decode the OLE binary as text or reuse a changed source.
+                snapshot = OUT / f"{spec['id']}-conversion.json"
+                if not snapshot.exists():
+                    if old_excel:
+                        raise ValueError("舊Excel須先人工檢視SHA相符的XLSX轉檔；不以antiword解析。")
+                    converted.check_returncode()
+                conversion = json.loads(snapshot.read_text())
+                if conversion["source_sha256"] != result["sha256"]:
+                    raise ValueError("舊Office原件已變更，既有轉檔抽取不套用。")
+                result["pages"] = conversion["pages"]
+                result["conversion_review"] = {
+                    k: v for k, v in conversion.items() if k != "pages"
+                }
+                result["document_format"] = (
+                    "xls_converted_xlsx_no_pdf_pages" if old_excel
+                    else "doc_converted_docx_no_fixed_pdf_pages"
                 )
-            result["pages"] = [{"page": None, "text": converted.stdout.decode("utf-8")}]
-            result["document_format"] = "doc_no_fixed_pdf_pages"
+                result["extraction_attempts"] = [] if old_excel else [
+                    {"method": "antiword", "status": "failed", "returncode": converted.returncode}
+                ]
         elif response.headers.get("content-type", "").startswith("image/"):
             transcription = OUT / f"{spec['id']}-transcription.json"
             if transcription.exists():

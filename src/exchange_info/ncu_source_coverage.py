@@ -17,6 +17,47 @@ def attach_visual_review(source: dict, review: dict) -> None:
         source["ocr_status"] = review["ocr_status"]
 
 
+def indexable_source_text(source: dict) -> str:
+    """Keep known broken layers out of retrieval; the audit retains originals.
+
+    Page quarantine is explicit research metadata, never a text/price heuristic.
+    A replacement needs matching source and review SHAs and the same reviewed
+    PDF page. A changed source remains isolated until it is reviewed again.
+    """
+    sha = source.get("sha256")
+    visual = source.get("visual_review", {})
+    visual_valid = bool(sha and visual.get("source_sha256") == sha)
+    reviewed_pages = set(visual.get("pdf_pages_reviewed", [])) if visual_valid else set()
+    if visual_valid and visual.get("pdf_page") is not None:
+        reviewed_pages.add(visual["pdf_page"])
+    passages = {
+        p["page"]: p["text"]
+        for p in source.get("page_transcriptions", [])
+        if p["page"] in reviewed_pages and p.get("text", "").strip()
+    }
+    policy = source.get("index_review", {})
+    quarantined = set(policy.get("quarantined_pdf_pages", []))
+    replacement_valid = bool(sha and policy.get("source_sha256") == sha)
+    parts = []
+    for page in source.get("pages", []):
+        number = page["page"]
+        marker = f"【第{number}頁】" if number is not None else "【網頁／無PDF頁碼】"
+        passage = passages.get(number)
+        if number in quarantined:
+            note = policy.get("page_applicability_notes_zh", {}).get(str(number), "116當期適用性未核實。")
+            text = (
+                f"【同SHA、同頁人工視覺核對的選定原文；原始破損圖層僅供來源稽核】\n{note}\n{passage}"
+                if replacement_valid and passage
+                else policy.get("isolation_note_zh", "此頁已知破損文字層已隔離；尚無同SHA、同頁核對內容可供問答索引。")
+            )
+        else:
+            text = page.get("text") or ""
+            if passage:
+                text += f"\n【同SHA、同頁人工視覺核對摘錄，非全文轉錄；116適用性未核實】\n{passage}"
+        parts.append(f"{marker}\n{text}")
+    return "\n\n".join(parts)
+
+
 def source_content_status(source: dict) -> dict:
     pages = source.get("pages", [])
     text_pages = sum(
@@ -32,15 +73,25 @@ def source_content_status(source: dict) -> dict:
     if visual_valid and visual.get("pdf_page") is not None:
         visual_pages.add(visual["pdf_page"])
     reading = source.get("reading_review", {})
+    reading_valid = bool(sha and reading.get("source_sha256") == sha)
     read_pages = (
         set(reading.get("pages_reviewed", []))
-        if sha and reading.get("source_sha256") == sha
+        if reading_valid
         else set()
     ) | visual_pages
     page_ids = {p["page"] for p in pages}
+    sheet_ids = {p["sheet"] for p in pages if p.get("sheet")}
+    all_parts_read = (
+        reading_valid and sheet_ids <= set(reading.get("sheets_reviewed", []))
+        if sheet_ids
+        else page_ids <= read_pages
+    )
     status = source.get("status")
+    response_received = bool(isinstance(status, int) and 200 <= status < 300 and sha)
     return {
-        "downloaded": bool(isinstance(status, int) and 200 <= status < 300 and sha),
+        # A 200 HTML error/download page is not the requested PDF or form.
+        "response_bytes_received": response_received,
+        "downloaded": bool(response_received and not source.get("error")),
         "page_count": len(pages),
         "text_page_count": text_pages,
         "any_text": bool(text_pages and not source.get("error")),
@@ -50,7 +101,7 @@ def source_content_status(source: dict) -> dict:
         ),
         # Text extraction itself is never evidence that a person read a page.
         "all_pages_read": bool(
-            pages and page_ids <= read_pages and not source.get("error")
+            pages and all_parts_read and not source.get("error")
         ),
         "visual_reviewed_page_count": len(page_ids & visual_pages)
         + len(converted_pages),

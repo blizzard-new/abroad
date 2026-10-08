@@ -3879,7 +3879,9 @@
       "host-uos-faq-5",
       "host-uos-faq-6",
       "gov-kr-taipei-studyvisa",
-      "gov-kr-taipei-visa-index"
+      "gov-kr-taipei-visa-index",
+      "gov-kr-taipei-visa-form-index",
+      "gov-kr-taipei-visa-form"
     ],
     "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
     "fields": {
@@ -3990,7 +3992,7 @@
             "page": null
           }
         ],
-        "unresolved": "WISE application／nomination本地HTTP400 Access Blocked，未取得manual及完整欄位；不推論純登入限定。non-OECD財力金額／格式與當期空白申請包仍待接收通知。"
+        "unresolved": "WISE application／nomination本地HTTP400 Access Blocked，未取得manual及完整欄位；不推論純登入限定。non-OECD財力金額／格式與當期空白申請包仍待接收通知。 正式啟用前尚須實作依錄取階段與校內住宿選擇篩選MMR／健康表；目前只放未發布行前步驟，不得一律要求初次申請者先交。"
       },
       "host_deadline": {
         "points": [
@@ -4138,7 +4140,7 @@
             "page": 9
           }
         ],
-        "unresolved": "中央互惠住宿保證、116配房／入住／付款／續住截止、當期房費押金未核實。"
+        "unresolved": "中央互惠住宿保證、116配房／入住／付款／續住截止、當期房費押金未核實。 正式啟用前需有已錄取＋校內住宿的機器可判斷條件；未知住宿不視為全部住宿或免交。"
       },
       "insurance": {
         "points": [
@@ -4164,7 +4166,8 @@
       "visa": {
         "points": [
           "駐臺代表部現行索引仍置頂D-2／D-4頁（發布日期2018），按臺灣籍／其他國籍、當年認證大學／簽證受限大學分1–4或1–8文件，不先假定UOS之2027認證分類。基本為簽證表／照片、護照正影本、身分／居留證、標準入學許可；其餘財力、學習計畫、在學及居留事由是條件文件。",
-          "UOS到校頁稱停留逾90日须90日內辦登錄；舊頁照片3×4兩張與新版PDF3.5×4.5一張、處理7日／KRW30000不同，不能拿舊頁作當期規格。延一學期需母校再提名，FAQ稱至少到期前1個月準備居留延長。"
+          "UOS到校頁稱停留逾90日须90日內辦登錄；舊頁照片3×4兩張與新版PDF3.5×4.5一張、處理7日／KRW30000不同，不能拿舊頁作當期規格。延一學期需母校再提名，FAQ稱至少到期前1個月準備居留延長。",
+          "臺北代表部2025/8/8現連Visa Application Form五頁已逐頁讀：韓文或英文大寫完整填寫，35×45mm近6個月白底正面照；按護照姓名、護照效期／其他護照、住址／緊急聯絡、家庭、學歷、學生／工作、入境目的與期間及五年旅行史、邀請單位、USD費用與付款者分項填。第5頁須申請日期、本人姓名與親筆簽名，未滿17歲另需父母／法定監護簽名。這是签證表，不是UOS初次交換申請文件，也不取代個人送件条件與入境後居留登錄表。"
         ],
         "sources": [
           {
@@ -4186,9 +4189,33 @@
           {
             "id": "host-uos-faq-6",
             "page": null
+          },
+          {
+            "id": "gov-kr-taipei-visa-form-index",
+            "page": null
+          },
+          {
+            "id": "gov-kr-taipei-visa-form",
+            "page": 1
+          },
+          {
+            "id": "gov-kr-taipei-visa-form",
+            "page": 2
+          },
+          {
+            "id": "gov-kr-taipei-visa-form",
+            "page": 3
+          },
+          {
+            "id": "gov-kr-taipei-visa-form",
+            "page": 4
+          },
+          {
+            "id": "gov-kr-taipei-visa-form",
+            "page": 5
           }
         ],
-        "unresolved": "2027認證大學名單、最新簽證表／登錄表與收費照片規格及個人國籍程序仍待政府原件核實。"
+        "unresolved": "2027認證大學名單、簽證發給認證號碼專用表適用及登錄表／收費／照片規格、個人國籍／居留送件程序仍待政府原件核實；行前需再核對表格更新。"
       },
       "arrival": {
         "points": [
@@ -4348,7 +4375,7 @@
             "page": 9
           }
         ],
-        "unresolved": "最新中央適用提名匯總／空白申報表及各院追加件未取得；不宣稱8頁影像brochure或通用提名已補齊。"
+        "unresolved": "最新中央適用提名匯總／空白申報表及各院追加件未取得；不宣稱8頁影像brochure或通用提名已補齊。 正式啟用前需實作host錄取階段判斷健康報告，未錄取者不能一律先交；當前流程仍未發布。"
       },
       "host_deadline": {
         "points": [
@@ -4515,6 +4542,13 @@
       }
     },
     "host_documents": [
+      {
+        "name": "申請前學習計畫（意向院系3–6門課，須母校認可並先討論修課）",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://intl.hkbu.edu.hk/f/partner/3387/华中科技大学接收港澳台交换生简章_2027_2028学年.pdf#page=7"
+        ]
+      },
       {
         "name": "交換生提名匯總表及港澳臺申報表（除簽名外簡體中文打印）",
         "needs_confirmation": true,
@@ -5106,6 +5140,3478 @@
           }
         ],
         "unresolved": "最新報到日時、完整健康／保險／臺灣身份文件與住宿安排仍待查。"
+      }
+    },
+    "host_documents": []
+  },
+  "ncu-208": {
+    "city": "日惹",
+    "source_ids": [
+      "host-uny-index",
+      "host-uny-study",
+      "host-uny-current",
+      "host-uny-programs",
+      "host-uny-old-degree",
+      "gov-id-e30f",
+      "gov-id-e30b",
+      "gov-id-education-evisa"
+    ],
+    "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+    "fields": {
+      "city": {
+        "points": [
+          "官方首頁明列Yogyakarta（日惹）；PMB2021舊degree頁地址Colombo Street No.1，實際交換授課／住宿校區仍須接收通知。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-index",
+            "page": null
+          },
+          {
+            "id": "host-uny-old-degree",
+            "page": null
+          }
+        ],
+        "unresolved": "116實際校區與更新門牌待接收資料。"
+      },
+      "transport": {
+        "points": [
+          "PMB2021稱距Adisutjipto機場／Tugu火車站15分鐘，是舊版位置估計，不能當2027機場選擇、YIA路線或交通時間保證。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-old-degree",
+            "page": null
+          }
+        ],
+        "unresolved": "2027抵達機場、接送／預約截止、鐵路與宿舍通勤、最新車資尚未核實。"
+      },
+      "eligibility": {
+        "points": [
+          "PMB一般degree頁有與中央網路學習科技研究所dual-degree說明，但雙聯不是本目錄semester exchange；degree年齡23／40歲與高中畢業條件不能套中央交換生。",
+          "現行Programs分degree、BIPA、短期及DISS／KNB／Darmasiswa；尚未讀到交換名額／學制／GPA／院系限制，不因一般外國生頁自動允許全學制。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-old-degree",
+            "page": null
+          },
+          {
+            "id": "host-uny-programs",
+            "page": null
+          }
+        ],
+        "unresolved": "中央116semester exchange有效協議、申請學制、院系、GPA與名額需接收包。"
+      },
+      "language": {
+        "points": [
+          "PMB2021 degree稱多數印尼語、少數雙語及可免費印尼語課，並列TOEFL／IELTS／TOEIC證明；不是交換生語言門檻或2027英語課可選保證。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-old-degree",
+            "page": null
+          }
+        ],
+        "unresolved": "交換track接受的證明、數字門檻、英文課與印尼語要求未核實。"
+      },
+      "host_documents": {
+        "points": [
+          "PMB2021八項學位申請文件包含畢業證、使館推薦及USD4000財力，是degree track。未建立為中央交換生必繳清單；中央通用提名也不代表UNY的host文件已查完。",
+          "現行Study與Current International Students入口只有標題與导航，未提供交換申請包；Programs內容多為degree／短期，無最新semester exchange模板。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-old-degree",
+            "page": null
+          },
+          {
+            "id": "host-uny-study",
+            "page": null
+          },
+          {
+            "id": "host-uny-current",
+            "page": null
+          },
+          {
+            "id": "host-uny-programs",
+            "page": null
+          }
+        ],
+        "unresolved": "116提名後host完整附件／空白表、語言／签名／章戳／份數／財力条件未取得；不聲稱官方未公告或登入限定。"
+      },
+      "host_deadline": {
+        "points": [
+          "PMB degree截止2021/7/30、2021/8/12抵達及8/30開學均已過時；現行首頁2025/9/1迎新也不是中央116交换期限。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-old-degree",
+            "page": null
+          },
+          {
+            "id": "host-uny-index",
+            "page": null
+          }
+        ],
+        "unresolved": "交換2027／2028提名、host申請及母校轉送窗口未取得。"
+      },
+      "study_period": {
+        "points": [
+          "現行首頁只見2025活動；PMB頁2021年學位入學校曆，不用來推出2027交換學期或考試／到校日。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-index",
+            "page": null
+          },
+          {
+            "id": "host-uny-old-degree",
+            "page": null
+          }
+        ],
+        "unresolved": "116交換學期、正式校曆、迎新與最晚考試日待交換接收通知。"
+      },
+      "courses": {
+        "points": [
+          "PMB2021學位課程清單的雙語註記與dual-degree課程不是2027交換課表／容量。現行國際處Study頁沒有正文可核對交換選課。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-old-degree",
+            "page": null
+          },
+          {
+            "id": "host-uny-study",
+            "page": null
+          }
+        ],
+        "unresolved": "當期交換課單、先修、院系限制、最低／最高學分及中央採認尚未核實。"
+      },
+      "tuition": {
+        "points": [
+          "PMB2021一般學位頁列UG／Master／Doctoral USD680／950／1200每學期及註冊30／50／50，並稱不退、簽證等另付；都不是本交換方案當期費用或減免條款。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-old-degree",
+            "page": null
+          }
+        ],
+        "unresolved": "中央116協議是否免學費、雜費與其適用范围未核實，未知费用不給預算通過。"
+      },
+      "visa": {
+        "points": [
+          "UNY Current資源頁僅標題導航，沒有實際KITAS文件。另已查印尼政府E30F交換生類別頁，回200但正文Data Belum Tersedia；政府E30B與教育eVisa是不同類別，不能把degree財力／保費／有效期套給中央交換。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-current",
+            "page": null
+          },
+          {
+            "id": "gov-id-e30f",
+            "page": null
+          },
+          {
+            "id": "gov-id-e30b",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣身份最新E30F具體文件／sponsor、申請／入境／到校與KITAS期限、費率仍待核對，政府單頁無內容與UNY未取得接收包分開。"
+      },
+      "arrival": {
+        "points": [
+          "首頁Arrival & Orientation明列2025/9/1，不能用為116到校日期；Visit指引現連404，不能稱接機／住宿或完整到校清單已查完。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-index",
+            "page": null
+          }
+        ],
+        "unresolved": "116報到、住宿保留、健康保險／簽證文件、接送與原件清單待接收資料。"
+      },
+      "housing": {
+        "points": [
+          "首頁Current學生入口宣稱有住宿資源，實際正文只有標題導航，未提供房型／金額／申請表或期限；不把有住宿標籤當已讀宿舍規則。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-current",
+            "page": null
+          }
+        ],
+        "unresolved": "116宿舍申請方式、房型／校區、保證、費用／押金、申請／入住／付款截止均未取得。"
+      },
+      "insurance": {
+        "points": [
+          "目前已查Current學生資源頁沒有保險正文或當期投保清單；中央行前保險要求另成立，不能據空頁推定外校無要求。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-current",
+            "page": null
+          }
+        ],
+        "unresolved": "host接受保單、最低保額／自負額、全期起迄、當期保費與繳證明期限尚未核實。"
+      },
+      "cost": {
+        "points": [
+          "現行Programs只以low living costs文宣描述日惹，沒有交換生活費金額；PMB2021學位學費也不能充作當期交換總預算。"
+        ],
+        "sources": [
+          {
+            "id": "host-uny-programs",
+            "page": null
+          }
+        ],
+        "unresolved": "生活／住宿／交通／保險／簽證及雜費完整預算未取得，未知不當作0。"
+      }
+    },
+    "host_documents": []
+  },
+  "ncu-209": {
+    "city": "三寶瓏",
+    "source_ids": [
+      "host-undip-factsheet-2027",
+      "host-undip-booklet",
+      "host-undip-courses-fall",
+      "host-undip-courses-spring",
+      "host-undip-declaration",
+      "host-undip-financial",
+      "host-undip-nomination",
+      "host-undip-poster-2027",
+      "host-undip-admission-index",
+      "host-undip-admission-news",
+      "host-undip-admission-deep",
+      "host-undip-admission-register",
+      "host-undip-life-links",
+      "gov-id-e30f",
+      "gov-id-e30b",
+      "gov-id-education-evisa",
+      "host-undip-boarding-referral",
+      "gov-semarang-food-referral"
+    ],
+    "applicability": "UNDIP官網標2026 guideline的公開資料夾實際含2027 factsheet三頁與Spring2027海報；未標年38頁booklet原文全讀（四個空白／相片頁另視覺核對）。秋春詳細課冊明列2026，僅第1–4頁人工核對，其餘下載抽取不稱已逐課讀完；提名Excel仍Fall2026。中央116協議／2027秋及Spring2028適用性未核准。",
+    "fields": {
+      "city": {
+        "points": [
+          "三頁factsheet第1頁明列Semarang, Indonesia與Tembalang的Widya Puraya國際處地址；行政地址不是全部34個學程教學／宿舍校區保證。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 1
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 38
+          }
+        ],
+        "unresolved": "各院系／交換學程的教學、住宿校區及通勤距離仍待逐課確認。"
+      },
+      "transport": {
+        "points": [
+          "Booklet第7頁列三寶瓏BRT／線上汽車或機車計程車、跨城火車與巴士；國際航班只是手冊描述，未核對2027航線／時刻。",
+          "2027表第2頁列機場到校接送但附terms and conditions；未寫費用、可用機場、預約表／截止，不能當無條件接機。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-booklet",
+            "page": 7
+          },
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 2
+          }
+        ],
+        "unresolved": "最新航線、票價／末班、機場接送預約條件與截止未核實。"
+      },
+      "eligibility": {
+        "points": [
+          "DEEP分partner CTS與non-partner CES；CTS需兩校同意課程才可轉學分，中央115名單不能自動證明當期協議與採認。",
+          "Booklet第9頁稱undergraduate，第36頁要求在學、至少第二年、母校提名與CGPA3.00/4.00或equivalent；第12–35頁卻列Master／Doctor學程。不能據本科敘述硬封研究生，也不能據研究所課名推定研究生均能申請；equivalent換算未提供。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 1
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 9
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 12
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 36
+          }
+        ],
+        "unresolved": "中央116可提名學制／院系／CTS協議，UG／grad範圍矛盾與GPA等值方法仍待核對，不建立數字自動資格通過。"
+      },
+      "language": {
+        "points": [
+          "2027表第3頁列TOEIC600、Paper TOEFL500、CBT180、IBT65、IELTS5.5，或印尼語B2–C1；第2頁文件卻只寫TOEFL PBT500／IELTS5.5 or equivalent，其他測驗／印尼語證明格式未說明。",
+          "未標年booklet稱EMI英語教學；中央home正式語檢另須提交，不因host等值選項而免除。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 2
+          },
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 3
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 9
+          }
+        ],
+        "unresolved": "2027台灣交換身份接受測驗類型、正式證明、效期／等值與印尼語選項須外校當期確認。"
+      },
+      "host_documents": {
+        "points": [
+          "2027表第2頁將Online五項與Visa五項分欄，第3頁却要求兩類文件全部上傳admission，除相片外各別PDF不超過200KB。書冊第36頁把九項混列Online，流程先後仍需接收包核對，不能以中央提名前提代替完整host包。",
+          "Online：英文教師／母校國際處推薦、在學證明、TOEFL PBT500／IELTS5.5或等值、最新英文成績、主管機關英文健康證明。Visa：財力／CV、彩色護照至少兩年或Student ID、聲明與4×6彩色半身證件照；Student ID字樣不代表簽證可免護照。",
+          "官網現連Drive的聲明與財力Word全文已讀：聲明含印尼住址、護照、program／faculty、日期與本人簽名；財力可勾自費／家庭及贊助、混合需都勾與附件，簽名日期必填。泛用聲明承擔tuition文字不能取消DEEP減免，也不能推定補助已核准。",
+          "提名Excel單工作表全部非空行已讀：母校／coordinator、學生護照／國籍／學年／兩校院系／課程／抵離／生日及聯絡，母校單位送xlsx；表頭仍Fall2026，不是2027新模板。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 2
+          },
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 3
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 36
+          },
+          {
+            "id": "host-undip-declaration",
+            "page": null
+          },
+          {
+            "id": "host-undip-financial",
+            "page": null
+          },
+          {
+            "id": "host-undip-nomination",
+            "page": null
+          }
+        ],
+        "unresolved": "提名Google Form401未讀完整欄位；初次portal與簽證文件的交件時點、2027新提名表／最新財力與聲明原件一致性仍待核對。"
+      },
+      "host_deadline": {
+        "points": [
+          "2027表第2頁及Spring2027海報：Spring2027提名2026/11/10、申請11/30，學期Feb–Jun2027；早於中央116線上甄選及交換出發範圍，不能套用。",
+          "Fall2027提名May2027、申請June2027，兩欄明寫to be announce，沒有確切日。2025舊news題Fall Open而正文Spring2026、admission首頁同項Closed，無法據此判定2027關閉。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 2
+          },
+          {
+            "id": "host-undip-poster-2027",
+            "page": null
+          },
+          {
+            "id": "host-undip-admission-news",
+            "page": null
+          },
+          {
+            "id": "host-undip-admission-index",
+            "page": null
+          }
+        ],
+        "unresolved": "Fall2027確切日官方此表明寫待公布；Spring2028尚未找到新版，兩者情形分開，無當期精確host提醒。"
+      },
+      "study_period": {
+        "points": [
+          "DEEP一學期；2027表明列Spring Feb–Jun2027、Fall Aug–Dec2027。中央116秋方案從Sep2027列起，與外校Aug開始不同，须提前協調，不改写中央年度。",
+          "未標年booklet第10頁只列年例Spring／Fall；現行admission仍Feb–Jun2026與Aug–Dec2026，不當Spring2028校曆。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 2
+          },
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 3
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 10
+          },
+          {
+            "id": "host-undip-admission-deep",
+            "page": null
+          }
+        ],
+        "unresolved": "Fall2027確切報到／課始／考試／離校、Spring2028及一學年能否延長未核實。"
+      },
+      "courses": {
+        "points": [
+          "2027表第3頁申請選至少2最多12 credits並以本人學科背景／相關科目選課；中央至少兩門且一門專業／學則六學分規則另成立，不把SKS直接等同中央學分。",
+          "Booklet第11頁1 SKS=1.6 ECTS／3.33 UK-CATS是host工作量說明，不作GPA資格或中央採認自動換算。第12–35頁34個本科／碩博學程清單已讀，非每課均開放保證。",
+          "現連秋139頁／春146頁詳細課冊封面都是2026；第1–4頁已讀學期、目錄與Public Administration 3SKS／4.8ECTS範例。其餘281頁僅取得文字，尚未逐課核對先修／語言／座位，不能稱2027課單已全讀。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 3
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 11
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 12
+          },
+          {
+            "id": "host-undip-courses-fall",
+            "page": 1
+          },
+          {
+            "id": "host-undip-courses-fall",
+            "page": 3
+          },
+          {
+            "id": "host-undip-courses-spring",
+            "page": 1
+          },
+          {
+            "id": "host-undip-courses-spring",
+            "page": 3
+          }
+        ],
+        "unresolved": "2027課單、各課先修／跨院限制／語言／開課與名額，以及2–12 credits的單位／home採認未核實。"
+      },
+      "tuition": {
+        "points": [
+          "2027表及現連booklet列註冊／學費減免；中央交換仍繳home學雜費，協議身分與補助核准仍須確認。旅票、簽證、宿舍、餐費、書及個人費用自付；未列雜費不能當0。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 2
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 9
+          }
+        ],
+        "unresolved": "中央116 CTS協議是否套用減免、其他校方／課程收費及繳費期限未核实。"
+      },
+      "cost": {
+        "points": [
+          "Settlement IDR1,500,000一次且可能課稅；生活補助factsheet／admission原字是IDR2.5000.000（月），booklet第9頁是IDR2.500.000（月），保留多零矛盾，不自動修值。",
+          "住宿／餐飲／簽證及旅費自付未列總額；補助資格、名額、發款與稅額未核准，不能抵扣預算或當生活費估算。",
+          "官方生活入口餐飲連結轉往Semarang市政府餐館名錄，原頁是店名／地址／地图表，不是交換每月餐費或完整生活預算。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 2
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 9
+          },
+          {
+            "id": "host-undip-admission-deep",
+            "page": null
+          },
+          {
+            "id": "gov-semarang-food-referral",
+            "page": null
+          }
+        ],
+        "unresolved": "当期完整自付預算、補助金額矛盾與eligibility／發款／稅款需確認；未知不填0。"
+      },
+      "housing": {
+        "points": [
+          "2027表明列dormitory由學生自付、未給保證或房價；Booklet第6頁僅列宿舍設施。",
+          "現連UndipLife公開JSON實際是五個生活入口；住宿轉往Mamikos外部搜尋，local頁要求啟用JavaScript，未讀到房价／房型／押金。不能把外部搜尋當校方宿舍保證、完整housing規則或確定可訂房。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 2
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 6
+          },
+          {
+            "id": "host-undip-life-links",
+            "page": null
+          },
+          {
+            "id": "host-undip-boarding-referral",
+            "page": null
+          }
+        ],
+        "unresolved": "116住房房型／校區、名額保障、價格／押金／水電、申請／入住／付款／退租截止仍待核對，設施介紹不當住宿規則已讀。"
+      },
+      "insurance": {
+        "points": [
+          "已讀2027表及booklet未提供當期保單最低保額／保費／證明截止；健康證明不是保險。中央行前全期意外醫療急難保險另須準備，host未列不能當無要求。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 2
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 36
+          }
+        ],
+        "unresolved": "host接受保單／全期保障／保額／自負額／投保與繳證明期限仍可續查。"
+      },
+      "visa": {
+        "points": [
+          "2027表與booklet費用已改列E30F；印尼政府E30F頁實讀200，標題Visa Pertukaran Pelajar但正文Data Belum Tersedia，只有類別、未取得完整交換清單。外校C316／B211A舊頁local403與政府E30F200分列。",
+          "政府E30B高等教育與eVisa教育FAQ另列護照至少6月、3月銀行USD2000、sponsor、CV／itinerary／LoA、1／2／4年及費率，這是另一類別，不硬套E30F；外校表的USD1500財力／護照兩年保留，不用E30B覆寫成交換必繳。",
+          "現連聲明及財力表需本人簽名日期，簽證類文件與初次host申請五項分開呈現；最新政府E30F文件／費率未取得。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 2
+          },
+          {
+            "id": "host-undip-booklet",
+            "page": 9
+          },
+          {
+            "id": "gov-id-e30f",
+            "page": null
+          },
+          {
+            "id": "gov-id-e30b",
+            "page": null
+          },
+          {
+            "id": "gov-id-education-evisa",
+            "page": null
+          },
+          {
+            "id": "host-undip-declaration",
+            "page": null
+          },
+          {
+            "id": "host-undip-financial",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣國籍當期E30F sponsor／文件／健康保險／財力、申請與入境時限、e-ITAS／居留及費率待政府與接收包確認，不拿degree FAQ補空白。"
+      },
+      "arrival": {
+        "points": [
+          "2027表提名後才開admission，選NON-DEGREE／DEEP，全部文件除相片PDF200KB、保存並等verification／Announcement；註冊公開頁只有護照號、email與password／confirm，未註冊帳號，不能稱後段上傳欄已全部讀。",
+          "Fall2027六月起發LoA與簽證程序、機場接送有條件；當期迎新／住宿保留／到校原件清單沒有取得。"
+        ],
+        "sources": [
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 2
+          },
+          {
+            "id": "host-undip-factsheet-2027",
+            "page": 3
+          },
+          {
+            "id": "host-undip-admission-register",
+            "page": null
+          }
+        ],
+        "unresolved": "接收包、報到／迎新確切日與地點、住宿鑰匙／健康／居留證明、接送預約表及出發原件仍待查。"
+      }
+    },
+    "host_documents": [
+      {
+        "name": "英文推薦函（教師或母校國際處）",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/uc?export=download&id=1jtCUMzyVoqYHlyR0MmPgjAy3ZOmU5Kbo#page=2"
+        ]
+      },
+      {
+        "name": "母校在學證明",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/uc?export=download&id=1jtCUMzyVoqYHlyR0MmPgjAy3ZOmU5Kbo#page=2"
+        ]
+      },
+      {
+        "name": "TOEFL PBT500／IELTS5.5或等值正式證明（類型待確認）",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/uc?export=download&id=1jtCUMzyVoqYHlyR0MmPgjAy3ZOmU5Kbo#page=2"
+        ]
+      },
+      {
+        "name": "最新英文成績單",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/uc?export=download&id=1jtCUMzyVoqYHlyR0MmPgjAy3ZOmU5Kbo#page=2"
+        ]
+      },
+      {
+        "name": "主管機關出具英文健康證明",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/uc?export=download&id=1jtCUMzyVoqYHlyR0MmPgjAy3ZOmU5Kbo#page=2"
+        ]
+      },
+      {
+        "name": "Visa類附件（PDF稱亦上傳申請portal；交件時點待確認）：財力保證表／銀行USD1500參考（政府E30F清單未取得）",
+        "official_form_url": "https://drive.google.com/uc?export=download&id=1YJdSm3CcGbycKWV_yspgS3AWVIcnRBnY",
+        "signatures": [
+          "本人簽名、日期"
+        ],
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/uc?export=download&id=1jtCUMzyVoqYHlyR0MmPgjAy3ZOmU5Kbo#page=2"
+        ]
+      },
+      {
+        "name": "Visa類附件（PDF稱亦上傳申請portal；交件時點待確認）：CV／Resume",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/uc?export=download&id=1jtCUMzyVoqYHlyR0MmPgjAy3ZOmU5Kbo#page=2"
+        ]
+      },
+      {
+        "name": "Visa類附件（PDF稱亦上傳申請portal；交件時點待確認）：彩色護照至少兩年（原文或Student ID不可推定免護照）",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/uc?export=download&id=1jtCUMzyVoqYHlyR0MmPgjAy3ZOmU5Kbo#page=2"
+        ]
+      },
+      {
+        "name": "Visa類附件（PDF稱亦上傳申請portal；交件時點待確認）：遵守印尼法律聲明表",
+        "official_form_url": "https://drive.google.com/uc?export=download&id=1eqtmVQJtr7NbWm6b7bqj5dlRJsPcs60e",
+        "signatures": [
+          "本人簽名、姓名與日期"
+        ],
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/uc?export=download&id=1jtCUMzyVoqYHlyR0MmPgjAy3ZOmU5Kbo#page=2"
+        ]
+      },
+      {
+        "name": "Visa類附件（PDF稱亦上傳申請portal；交件時點待確認）：4×6彩色正式半身照片",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/uc?export=download&id=1jtCUMzyVoqYHlyR0MmPgjAy3ZOmU5Kbo#page=2"
+        ]
+      }
+    ]
+  },
+  "ncu-216": {
+    "city": "胡志明市",
+    "source_ids": [
+      "host-hcmus-nthu-application",
+      "host-hcmus-organization-browser"
+    ],
+    "applicability": "清華官方公開轉載未標年HCMUS兩頁交換空白表全讀；現行HCMUS校區頁browser可讀、local403。無116當期完整接收包或原件更新證據。",
+    "fields": {
+      "city": {
+        "points": [
+          "現行組織頁列Campus1 Nguyễn Văn Cừ／Cho Quan與Campus2 VNUHCM Urban Area／Dong Hoa；表第1頁舊Ward4／District5稱法另保留，行政地址不是交換上課／住宿安排。"
+        ],
+        "sources": [
+          {
+            "id": "host-hcmus-organization-browser",
+            "page": null
+          },
+          {
+            "id": "host-hcmus-nthu-application",
+            "page": 1
+          }
+        ],
+        "unresolved": "所選院系教學校區及住宿／通勤仍待當期確認。"
+      },
+      "transport": {
+        "points": [
+          "已查來源的適用範圍如上；機場／通勤與交通尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "機場／通勤與交通仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "eligibility": {
+        "points": [
+          "表第1頁教育經歷有Degree／University／Year，現行官網有本科與研究所學院入口；均不是116交換可申請學制／院系保證。"
+        ],
+        "sources": [
+          {
+            "id": "host-hcmus-nthu-application",
+            "page": 1
+          },
+          {
+            "id": "host-hcmus-organization-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "最新中央協議、接收學制與學業門檻未取得，不硬判研究生或全院系開放。"
+      },
+      "language": {
+        "points": [
+          "未標年表第1頁只有English proficiency level空欄，沒有測驗分數／豁免或英授課保證；中央home正式語檢要求另成立。"
+        ],
+        "sources": [
+          {
+            "id": "host-hcmus-nthu-application",
+            "page": 1
+          }
+        ],
+        "unresolved": "host最低門檻、可收母校函／測驗、效期和課程語言仍待查。"
+      },
+      "host_documents": {
+        "points": [
+          "兩頁空白表已讀：個人／護照／住址、學校主修、教育經驗／英文程度／skills／motivation／交換起迄；第2頁母校聯絡姓名email職務日期及手寫簽名、本人姓名日期及手寫簽名。表內未列緊急聯絡欄。",
+          "這份表沒有完整附件清單或申請期限；官網搜尋多為HCMUS赴POSTECH／清華／Bayreuth的outgoing，不能移植其文件、名額或200000VND費用。"
+        ],
+        "sources": [
+          {
+            "id": "host-hcmus-nthu-application",
+            "page": 1
+          },
+          {
+            "id": "host-hcmus-nthu-application",
+            "page": 2
+          }
+        ],
+        "unresolved": "116新表、提名方式、成績／在學／財力／保險等完整清單未取得；只建立待確認申請表。"
+      },
+      "host_deadline": {
+        "points": [
+          "已查來源的適用範圍如上；當期提名與申請分開截止／時區尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期提名與申請分開截止／時區仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "study_period": {
+        "points": [
+          "表第2頁Period of Exchange program只有from／to空白欄，不是已公告學期起迄。"
+        ],
+        "sources": [
+          {
+            "id": "host-hcmus-nthu-application",
+            "page": 2
+          }
+        ],
+        "unresolved": "2027秋／2028春學期、迎新與考試／離校日期未取得。"
+      },
+      "courses": {
+        "points": [
+          "已查來源的適用範圍如上；當期英授／語言／先修／跨院／採認限制尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期英授／語言／先修／跨院／採認限制仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "tuition": {
+        "points": [
+          "已查來源的適用範圍如上；協議免學費與另收註冊／雜費尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "協議免學費與另收註冊／雜費仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "cost": {
+        "points": [
+          "已查來源的適用範圍如上；当期完整生活費與一次性支出尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "当期完整生活費與一次性支出仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "housing": {
+        "points": [
+          "已查來源的適用範圍如上；當期住宿資格、房型、費用、期限／保證尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期住宿資格、房型、費用、期限／保證仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "insurance": {
+        "points": [
+          "已查來源的適用範圍如上；host保險保額、費用、證明期限尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "host保險保額、費用、證明期限仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "visa": {
+        "points": [
+          "已查來源的適用範圍如上；臺灣身分簽證／居留、政府文件与時效尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "臺灣身分簽證／居留、政府文件与時效仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "arrival": {
+        "points": [
+          "表第2頁明載兩個手寫簽名及日期，現行校區兩址需依接收通知確認；沒有取得完整行前／報到清單。"
+        ],
+        "sources": [
+          {
+            "id": "host-hcmus-nthu-application",
+            "page": 2
+          },
+          {
+            "id": "host-hcmus-organization-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "簽證sponsor、到校原件、迎新／宿舍與機場預約時點仍待查。"
+      }
+    },
+    "host_documents": [
+      {
+        "name": "未標年HCMUS交換申請表（本人與母校承辦人手寫簽名、日期；完整清單待查）",
+        "source_urls": [
+          "https://oga.site.nthu.edu.tw/var/file/524/1524/img/Applicationform.pdf"
+        ],
+        "needs_confirmation": true,
+        "official_form_url": "https://oga.site.nthu.edu.tw/var/file/524/1524/img/Applicationform.pdf",
+        "signatures": [
+          "本人手寫簽名、姓名與日期",
+          "母校承辦人姓名、職務、email、日期與手寫簽名"
+        ]
+      }
+    ]
+  },
+  "ncu-206": {
+    "city": "登巴薩",
+    "source_ids": [
+      "host-warmadewa-international-browser",
+      "host-warmadewa-calendar-browser",
+      "gov-id-e30f",
+      "gov-id-e30b",
+      "gov-id-education-evisa"
+    ],
+    "applicability": "Warmadewa官方國際教育概述與校曆索引browser選定段落；local403原回執另留。現行索引最新2025–26，未取得中央116交換接收包，不套第三方自費WIP方案。",
+    "fields": {
+      "city": {
+        "points": [
+          "官方國際教育頁地址為Denpasar Tim.／Bali的Jl.Terompong24，未核對交换教學／住宿校區。"
+        ],
+        "sources": [
+          {
+            "id": "host-warmadewa-international-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "当期接收院系、具體上課校區／住宿位置仍未取得。"
+      },
+      "transport": {
+        "points": [
+          "已查來源的適用範圍如上；機場／通勤與交通尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "機場／通勤與交通仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "eligibility": {
+        "points": [
+          "已查來源的適用範圍如上；當期接收學制、院系及track資格尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期接收學制、院系及track資格仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "language": {
+        "points": [
+          "已查來源的適用範圍如上；當期語言門檻、建議及正式證明尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期語言門檻、建議及正式證明仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "host_documents": {
+        "points": [
+          "官方概述只說合作、交流、seminars／conferences，沒有incoming交換文件／提名portal。第三方Asia Exchange的自費WIP不等同中央雙邊交換，不建立其文件與收費為中央必繳。"
+        ],
+        "sources": [
+          {
+            "id": "host-warmadewa-international-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "中央116雙邊交換接收包、提名／申請入口與最新blank forms仍可續查。"
+      },
+      "host_deadline": {
+        "points": [
+          "已查來源的適用範圍如上；當期提名與申請分開截止／時區尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期提名與申請分開截止／時區仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "study_period": {
+        "points": [
+          "現行校曆索引最新列2025–26，更舊至2016–17；2025–26條目正文不足、附件尚未取得，不能拿索引標題當完整校曆或推算2027。"
+        ],
+        "sources": [
+          {
+            "id": "host-warmadewa-calendar-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "2027–28最新版尚未找到，不稱整個官方尚未公告。"
+      },
+      "courses": {
+        "points": [
+          "已查來源的適用範圍如上；當期英授／語言／先修／跨院／採認限制尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期英授／語言／先修／跨院／採認限制仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "tuition": {
+        "points": [
+          "官方國際教育概述不列免學費與雜費；第三方WIP自費價格／優惠不當中央交換協議免學費。中央仍繳home學雜費。"
+        ],
+        "sources": [
+          {
+            "id": "host-warmadewa-international-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "116合作track減免、註冊／雜費與繳費時點未核實。"
+      },
+      "cost": {
+        "points": [
+          "已查來源的適用範圍如上；当期完整生活費與一次性支出尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "当期完整生活費與一次性支出仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "housing": {
+        "points": [
+          "已查來源的適用範圍如上；當期住宿資格、房型、費用、期限／保證尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期住宿資格、房型、費用、期限／保證仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "insurance": {
+        "points": [
+          "已查來源的適用範圍如上；host保險保額、費用、證明期限尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "host保險保額、費用、證明期限仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "visa": {
+        "points": [
+          "印尼政府E30F頁為Visa Pertukaran Pelajar，但正文Data Belum Tersedia；E30B高等教育與eVisa FAQ的1／2／4年、USD2000與費率不是已核實交換E30F清單。"
+        ],
+        "sources": [
+          {
+            "id": "gov-id-e30f",
+            "page": null
+          },
+          {
+            "id": "gov-id-e30b",
+            "page": null
+          },
+          {
+            "id": "gov-id-education-evisa",
+            "page": null
+          }
+        ],
+        "unresolved": "Warmadewa當期交換sponsor、E30F文件／費率／期限及ITAS未核實。"
+      },
+      "arrival": {
+        "points": [
+          "已查來源的適用範圍如上；到校原件、迎新、住宿／報到準備尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "到校原件、迎新、住宿／報到準備仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      }
+    },
+    "host_documents": []
+  },
+  "ncu-211": {
+    "city": "南楠榜",
+    "source_ids": [
+      "host-itera-asrama",
+      "host-itera-facilities",
+      "gov-id-e30f",
+      "gov-id-e30b",
+      "gov-id-education-evisa"
+    ],
+    "applicability": "ITERA現行設施與宿舍頁仍含2020 SOP／2021–22疫情國內TPB新生規則；已讀住宿與交通／合作部分，非全文／116交換接收包。International Office入口proxy403，OAIL是天文台而非國際處。",
+    "fields": {
+      "city": {
+        "points": [
+          "設施頁以Lampung Selatan／Bandar Lampung通勤與Sumatera校園為背景；未用ITERA天文台OAIL地址代替國際處或交換住宿校區。"
+        ],
+        "sources": [
+          {
+            "id": "host-itera-facilities",
+            "page": null
+          }
+        ],
+        "unresolved": "當期上課／宿舍樓與地點、機場路線未核實。"
+      },
+      "transport": {
+        "points": [
+          "Smart BRT段落列2019捐贈十台、兩路12.13／15.30km、05:45–19:45及校內每日4–6班，是未標當期的設施參考；2027班次／票價與機場接送未核實。"
+        ],
+        "sources": [
+          {
+            "id": "host-itera-facilities",
+            "page": null
+          }
+        ],
+        "unresolved": "最新BRT班次／票價／末班及機場接送申請仍待查。"
+      },
+      "eligibility": {
+        "points": [
+          "已查來源的適用範圍如上；當期接收學制、院系及track資格尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期接收學制、院系及track資格仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "language": {
+        "points": [
+          "已查來源的適用範圍如上；當期語言門檻、建議及正式證明尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期語言門檻、建議及正式證明仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "host_documents": {
+        "points": [
+          "宿舍頁DIM與BPJS／健康無毒證明、3×4照片、住約印花及付款單是國內TPB／KIP-KULIAH新生住宿流程，不放進中央host交換申請必繳清單。"
+        ],
+        "sources": [
+          {
+            "id": "host-itera-asrama",
+            "page": null
+          }
+        ],
+        "unresolved": "International Office入口讀取proxy403不是登入證據；116incoming資格與最新全部表格仍未取得。"
+      },
+      "host_deadline": {
+        "points": [
+          "已查來源的適用範圍如上；當期提名與申請分開截止／時區尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期提名與申請分開截止／時區仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "study_period": {
+        "points": [
+          "已查來源的適用範圍如上；當期迎新、課始、考試與交換期間尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期迎新、課始、考試與交換期間仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "courses": {
+        "points": [
+          "已查來源的適用範圍如上；當期英授／語言／先修／跨院／採認限制尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期英授／語言／先修／跨院／採認限制仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "tuition": {
+        "points": [
+          "已查來源的適用範圍如上；協議免學費與另收註冊／雜費尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "協議免學費與另收註冊／雜費仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "cost": {
+        "points": [
+          "設施及宿舍只有國內新生／疫情費用，沒有116交換完整生活費；不套10個月預繳或以未知填0。"
+        ],
+        "sources": [
+          {
+            "id": "host-itera-asrama",
+            "page": null
+          }
+        ],
+        "unresolved": "當期全期住房、餐飲、交通、入境及一次性費用需另外核實。"
+      },
+      "housing": {
+        "points": [
+          "同一宿舍頁價格包含Rp.200.000／月、重複段Rp.2000.000／月與2021–22輔導員段Rp.150.000／月，均稱預付10月；保留範圍／多零差異，不能修值、折算當期交換一學期價。",
+          "四塔疫情最多712人、二人房、國內新生優先與至少14天隔離均是歷史適用描述，不當中央交換保證住宿／現行隔離。"
+        ],
+        "sources": [
+          {
+            "id": "host-itera-asrama",
+            "page": null
+          }
+        ],
+        "unresolved": "116外國交換是否可住、實際房型／押金水電、申請付款退租期限及價格矛盾未核實。"
+      },
+      "insurance": {
+        "points": [
+          "住宿頁國內新生要求BPJS或其他有效健康保險、卡／證明；不是已核實中央交換host保險方案或免保險。"
+        ],
+        "sources": [
+          {
+            "id": "host-itera-asrama",
+            "page": null
+          }
+        ],
+        "unresolved": "外國交換接受的保單／保額、費率、全期與截止待查，中央行前保障另成立。"
+      },
+      "visa": {
+        "points": [
+          "政府E30F交換簽證正文Data Belum Tersedia；E30B／未標代碼教育FAQ是另一適用類別，不補造中央交換文件。"
+        ],
+        "sources": [
+          {
+            "id": "gov-id-e30f",
+            "page": null
+          },
+          {
+            "id": "gov-id-e30b",
+            "page": null
+          }
+        ],
+        "unresolved": "ITERA當期交換sponsor、E30F文件／費率／时效及ITAS未核實。"
+      },
+      "arrival": {
+        "points": [
+          "宿舍頁先選DIM、繳保險證明、錄取後表格照片／住約／付款／健康等原件再分房，全部保留國內TPB／疫情適用限制，不成中央必繳。"
+        ],
+        "sources": [
+          {
+            "id": "host-itera-asrama",
+            "page": null
+          }
+        ],
+        "unresolved": "外國交換到校原件、住房鑰匙／迎新、報到／居留程序及機場預約仍待查。"
+      }
+    },
+    "host_documents": []
+  },
+  "ncu-174": {
+    "city": "天津",
+    "source_ids": [
+      "host-tju-taiwan-2025",
+      "host-tju-hkmu-spring2027",
+      "host-tju-application-2025",
+      "host-tju-hmt-index"
+    ],
+    "applicability": "天津Spring2025臺灣版Word與Spring2027港澳版PDF（官方友校轉載）分讀；現行港澳臺入口正文不足。新PDF僅港澳，春季早於中央116；臺灣2027秋／2028春版本未取得。",
+    "fields": {
+      "city": {
+        "points": [
+          "兩版國際處地址均為北洋園雅觀路135號1895行政樓A324；不是全部院系／宿舍安排，也不推定衛津路校區不可選。"
+        ],
+        "sources": [
+          {
+            "id": "host-tju-taiwan-2025",
+            "page": null
+          },
+          {
+            "id": "host-tju-hkmu-spring2027",
+            "page": 1
+          }
+        ],
+        "unresolved": "116教學院系與住宿校區分配未取得。"
+      },
+      "transport": {
+        "points": [
+          "依航班協調學生志願者接送，學生支付機場到校計程車／公共交通；不是免費接機或保證，預約期限未提供。"
+        ],
+        "sources": [
+          {
+            "id": "host-tju-taiwan-2025",
+            "page": null
+          },
+          {
+            "id": "host-tju-hkmu-spring2027",
+            "page": 2
+          }
+        ],
+        "unresolved": "當期機場／校區、預約表截止、路線與末班未核實。"
+      },
+      "eligibility": {
+        "points": [
+          "兩版皆須協議母校推薦及兩校錄取标准，人数／期限以協議為準而非數字名額；空白表列本科各年級、研究所與博士欄，不是當期每學制均開放保證。"
+        ],
+        "sources": [
+          {
+            "id": "host-tju-taiwan-2025",
+            "page": null
+          },
+          {
+            "id": "host-tju-hkmu-spring2027",
+            "page": 1
+          },
+          {
+            "id": "host-tju-application-2025",
+            "page": null
+          }
+        ],
+        "unresolved": "中央116提名協議、接收學制／院系及最低標準未核實。"
+      },
+      "language": {
+        "points": [
+          "已查來源的適用範圍如上；當期語言門檻、建議及正式證明尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期語言門檻、建議及正式證明仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "host_documents": {
+        "points": [
+          "2025臺灣版七項初次附件：申請表、推薦信、成績、CV、在學或學生證、台胞證、電子照；母校coordinator統一提名與送全套，照片命名XX大学_姓名，除照片與到校後保險單其餘合併一PDF。",
+          "2027港澳PDF換成港澳通行證，不能把此版臺灣排除或把新截止套臺灣；2025包空白申請表全文轉檔讀完，日期／本人簽名、交換期限、年級、院系／研究計畫及緊急聯絡欄保留。"
+        ],
+        "sources": [
+          {
+            "id": "host-tju-taiwan-2025",
+            "page": null
+          },
+          {
+            "id": "host-tju-hkmu-spring2027",
+            "page": 2
+          },
+          {
+            "id": "host-tju-application-2025",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116最新提名表／申請包及校方簽章、版本適用未核實。"
+      },
+      "host_deadline": {
+        "points": [
+          "2025臺灣版申請2024/11/15且標題誤稱秋季；2027港澳版同樣秋季小標、正文2026/11/15且email主旨2027春。原文矛盾保留，不把11/15作中央116當期截止。"
+        ],
+        "sources": [
+          {
+            "id": "host-tju-taiwan-2025",
+            "page": null
+          },
+          {
+            "id": "host-tju-hkmu-spring2027",
+            "page": 2
+          }
+        ],
+        "unresolved": "臺灣Fall2027／Spring2028提名與申請分開精確截止、時區未取得。"
+      },
+      "study_period": {
+        "points": [
+          "兩版在校期限以協議為準；申請表起迄空欄，2027港澳Spring不屬中央116出發範圍。"
+        ],
+        "sources": [
+          {
+            "id": "host-tju-taiwan-2025",
+            "page": null
+          },
+          {
+            "id": "host-tju-hkmu-spring2027",
+            "page": 1
+          },
+          {
+            "id": "host-tju-application-2025",
+            "page": null
+          }
+        ],
+        "unresolved": "116報到、迎新、課始、考試、離校與可交換長度未核實。"
+      },
+      "courses": {
+        "points": [
+          "已查來源的適用範圍如上；當期英授／語言／先修／跨院／採認限制尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期英授／語言／先修／跨院／採認限制仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "tuition": {
+        "points": [
+          "已查來源的適用範圍如上；協議免學費與另收註冊／雜費尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "協議免學費與另收註冊／雜費仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "cost": {
+        "points": [
+          "兩版只有住宿600／學期參考及機場交通自付，没有完整餐飲／通勤／雜支或生活費。"
+        ],
+        "sources": [
+          {
+            "id": "host-tju-taiwan-2025",
+            "page": null
+          },
+          {
+            "id": "host-tju-hkmu-spring2027",
+            "page": 2
+          }
+        ],
+        "unresolved": "116完整生活費、一次性保險／證件／交通及宿舍額外費用未核實。"
+      },
+      "housing": {
+        "points": [
+          "2025臺灣／2027港澳版皆4–6人房600RMB／學期且價格以實際為準，年度與track分開；没有公布申請／入住／繳費期限或住房保障。"
+        ],
+        "sources": [
+          {
+            "id": "host-tju-taiwan-2025",
+            "page": null
+          },
+          {
+            "id": "host-tju-hkmu-spring2027",
+            "page": 2
+          }
+        ],
+        "unresolved": "116臺灣房型／住宿校區、押金水電、價格與申请／退租期限未核實。"
+      },
+      "insurance": {
+        "points": [
+          "保險單據影本明列來校報到後提交，不列初次host申請附件；中央行前仍須全期足額醫療意外急難保障。"
+        ],
+        "sources": [
+          {
+            "id": "host-tju-taiwan-2025",
+            "page": null
+          },
+          {
+            "id": "host-tju-hkmu-spring2027",
+            "page": 2
+          }
+        ],
+        "unresolved": "host当期可收保單、保額保費與報到期限未取得。"
+      },
+      "visa": {
+        "points": [
+          "2025臺灣版要臺灣居民來往大陸通行證影本；2027港澳版要求港澳證件。未用國際生X簽證或港澳證件取代臺灣身分規則。"
+        ],
+        "sources": [
+          {
+            "id": "host-tju-taiwan-2025",
+            "page": null
+          },
+          {
+            "id": "host-tju-hkmu-spring2027",
+            "page": 2
+          }
+        ],
+        "unresolved": "臺灣当期證件效期、申辦及居住登記規則／政府清單仍待查。"
+      },
+      "arrival": {
+        "points": [
+          "天津保險單據來校報到後交，接機自付；現包沒有精確當期報到／宿舍入住、原件及迎新清單。"
+        ],
+        "sources": [
+          {
+            "id": "host-tju-taiwan-2025",
+            "page": null
+          },
+          {
+            "id": "host-tju-hkmu-spring2027",
+            "page": 2
+          }
+        ],
+        "unresolved": "116接收通知与到校原件、住宿／保險交件期限仍待核實。"
+      }
+    },
+    "host_documents": [
+      {
+        "name": "2025臺灣參考：天津港澳臺交換申請表（當期新版待確認）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2050_2624d0fc5cc33c7dde88b738d8d8816d"
+        ],
+        "needs_confirmation": true,
+        "official_form_url": "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2051_8577fd1c045919572c1b6a1a58d154a7",
+        "signatures": [
+          "本人簽名與日期"
+        ]
+      },
+      {
+        "name": "2025臺灣參考：推薦信",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2050_2624d0fc5cc33c7dde88b738d8d8816d"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "2025臺灣參考：成績單",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2050_2624d0fc5cc33c7dde88b738d8d8816d"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "2025臺灣參考：個人簡歷",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2050_2624d0fc5cc33c7dde88b738d8d8816d"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "2025臺灣參考：在學證明或學生證影本",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2050_2624d0fc5cc33c7dde88b738d8d8816d"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "2025臺灣參考：臺灣居民來往大陸通行證影本",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2050_2624d0fc5cc33c7dde88b738d8d8816d"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "2025臺灣參考：電子照片一份（XX大学_姓名）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2050_2624d0fc5cc33c7dde88b738d8d8816d"
+        ],
+        "needs_confirmation": true
+      }
+    ],
+    "host_arrival_documents": [
+      {
+        "name": "2025臺灣參考：保險單據影本（來校報到後才提交，非初次host附件）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2050_2624d0fc5cc33c7dde88b738d8d8816d"
+        ],
+        "needs_confirmation": true
+      }
+    ]
+  },
+  "ncu-173": {
+    "city": "大連",
+    "source_ids": [
+      "host-dut-taiwan-2025",
+      "host-dut-application-2025",
+      "host-dut-exchange",
+      "host-dut-eligibility",
+      "host-dut-documents",
+      "host-dut-process",
+      "host-dut-deadline",
+      "host-dut-faq",
+      "host-dut-transport"
+    ],
+    "applicability": "大連理工Spring2025臺灣友校PDF兩頁／空白Word全讀；現連一般國際交換資格／文件／期限頁明2022，FAQ未標當期，臺灣track範圍與矛盾另列。116新接收包未取得。",
+    "fields": {
+      "city": {
+        "points": [
+          "臺灣版國際處淩工路2號主樓120；2022交通頁另分大連凌水、盤錦與開發區軟件學院，不保證全部交換都在大連本部。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 1
+          },
+          {
+            "id": "host-dut-transport",
+            "page": null
+          }
+        ],
+        "unresolved": "当期院系／校區／住宿安排及通勤未核實。"
+      },
+      "transport": {
+        "points": [
+          "臺灣版與FAQ報到期間免費接機，FAQ明其他日不提供；2022交通頁公車23／901／10與盤錦轉乘、周五／周日16:00跨校區車只保留舊參考。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 1
+          },
+          {
+            "id": "host-dut-faq",
+            "page": null
+          },
+          {
+            "id": "host-dut-transport",
+            "page": null
+          }
+        ],
+        "unresolved": "當期報到日、接機機場／預約表／截止与最新公交／班車仍待查。"
+      },
+      "eligibility": {
+        "points": [
+          "臺灣2025版申請專業須與母校相符或相關、至少修一門本專業；一般國際2022頁UG兩學期／PG一學期與70/100，不自動套臺灣116資格。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 1
+          },
+          {
+            "id": "host-dut-eligibility",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116各學制／院系與成績門檻未核實，不做GPA百分制換算。"
+      },
+      "language": {
+        "points": [
+          "臺灣版未列HSK／英文分數；一般國際2022頁列理工經管HSK4／180、人文外語HSK5／180、英文TOEFL80／IELTS5.5與豁免／研究生面試，範圍未確認不能當臺灣硬門檻。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 1
+          },
+          {
+            "id": "host-dut-eligibility",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116語言證明與課程語言仍待當期核實。"
+      },
+      "host_documents": {
+        "points": [
+          "臺灣2025版七項彩色掃描：申請表、在學、成績、推薦、個人撰述／學習計畫、台胞證、一吋電子照；只收母校國際兩岸單位送件、不收個人直送，無需紙本寄。",
+          "Word全讀：本人日期簽名與母校聯絡老師簽名先簽再掃描，台胞證效期、母校及緊急聯絡、寢具購買、申請學習／研究專業及計畫欄。",
+          "一般國際2022十項另有500字plan、兩推薦、體檢超六個月條件、六個月無犯罪與護照，不補進臺灣版七項。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 1
+          },
+          {
+            "id": "host-dut-application-2025",
+            "page": null
+          },
+          {
+            "id": "host-dut-documents",
+            "page": null
+          }
+        ],
+        "unresolved": "116新臺灣接收包／空白表、母校提名格式與身分範圍未取得。"
+      },
+      "host_deadline": {
+        "points": [
+          "臺灣Spring2025截止2024/11/30；一般國際2022年例提名春11/1秋5/1、申請春11/15秋5/15，不與臺灣版合併，不套116。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 1
+          },
+          {
+            "id": "host-dut-deadline",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣Fall2027／Spring2028母校提名與host申請精確期限未核實。"
+      },
+      "study_period": {
+        "points": [
+          "臺灣版Spring2025為2025/2–6，不能推算2028；一般入口一／二學期是協議範圍，不是當期精確校曆。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 1
+          },
+          {
+            "id": "host-dut-exchange",
+            "page": null
+          }
+        ],
+        "unresolved": "116迎新、報到、課始、考試／離校与長度未取得。"
+      },
+      "courses": {
+        "points": [
+          "臺灣2025版可跨專業但至少一門與本專業相關，申請专业须相關；2024專業目錄已找到雲科索引但這輪尚未下載核對，不聲稱新課程全讀。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 1
+          }
+        ],
+        "unresolved": "116英授／先修、院系與校區開放、完整課單／母校採認未核實。"
+      },
+      "tuition": {
+        "points": [
+          "臺灣2025版依兩校協議免學費、繳住宿；不是中央116減免核准，中央home學雜費另繳。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 1
+          }
+        ],
+        "unresolved": "當期協議、註冊／課程／雜費及繳款期限仍待查。"
+      },
+      "cost": {
+        "points": [
+          "臺灣2025預估生活1500–2000RMB／月、宿舍／寢具另外列，未寫是否包含房租；不把舊價當2027預算或把自願寢具變必付。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 2
+          }
+        ],
+        "unresolved": "当期總生活費、各項是否含住宿、一次性費用需確認。"
+      },
+      "housing": {
+        "points": [
+          "臺灣2025版四人房400–600RMB／學期、衛浴安排依公寓中心、公共浴室；寢具可自願購買450–500／套。",
+          "一般國際FAQ三月以上單／雙900／600RMB每月、較短1800／1200，不能取代臺灣宿舍400–600／學期。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 2
+          },
+          {
+            "id": "host-dut-faq",
+            "page": null
+          }
+        ],
+        "unresolved": "116臺灣宿舍房型／保證／實際价、押金水電／網費、申請入住付款退租時點未核實。"
+      },
+      "insurance": {
+        "points": [
+          "臺灣2025版要求在臺灣購買意外等保險、到校不提供；一般國際FAQ可到校買300／學期500／年，track差異保留，不讓後者取消home行前／臺灣版要求。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 1
+          },
+          {
+            "id": "host-dut-faq",
+            "page": null
+          }
+        ],
+        "unresolved": "116臺灣可收保單、最低保額與全期／提交期限待核實。"
+      },
+      "visa": {
+        "points": [
+          "臺灣版要求台胞證；FAQ特列港澳臺旅行證件持有者非degree交換可自行辦入境，外國人X1／X2與30天居留另段，不套臺灣。FAQ有DUT卻稱Beijing出行的原文矛盾，不能作地方申辦指引。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 1
+          },
+          {
+            "id": "host-dut-faq",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣当期通行證效期／辦理、居住登記與到校原件、官方政府規則仍待查。"
+      },
+      "arrival": {
+        "points": [
+          "只在報到期間免費接機；臺灣版行前保險自購、寢具選擇與到校住宿依當期安排；全文空白表提醒兩方先簽後掃描，但當期報到原件／日期未取得。"
+        ],
+        "sources": [
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 1
+          },
+          {
+            "id": "host-dut-taiwan-2025",
+            "page": 2
+          },
+          {
+            "id": "host-dut-application-2025",
+            "page": null
+          },
+          {
+            "id": "host-dut-faq",
+            "page": null
+          }
+        ],
+        "unresolved": "116接收通知／迎新、到校原件與住宿鑰匙、接機預約截止未核實。"
+      }
+    },
+    "host_documents": [
+      {
+        "name": "Spring2025臺灣參考：大連理工交換申請表（彩色掃描）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2102_39aad1cad74f0b3ab7a1f41acbf7b847"
+        ],
+        "needs_confirmation": true,
+        "official_form_url": "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2103_3f494493307342bcfb6a81608965d9e9",
+        "signatures": [
+          "本人簽名、日期",
+          "母校聯絡老師簽名"
+        ]
+      },
+      {
+        "name": "Spring2025臺灣參考：在學證明（彩色掃描）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2102_39aad1cad74f0b3ab7a1f41acbf7b847"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "Spring2025臺灣參考：成績單（彩色掃描）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2102_39aad1cad74f0b3ab7a1f41acbf7b847"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "Spring2025臺灣參考：推薦信（彩色掃描；不套國際版兩封）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2102_39aad1cad74f0b3ab7a1f41acbf7b847"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "Spring2025臺灣參考：個人撰述與學習計畫（彩色掃描）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2102_39aad1cad74f0b3ab7a1f41acbf7b847"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "Spring2025臺灣參考：臺灣居民來往大陸通行證（彩色掃描）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2102_39aad1cad74f0b3ab7a1f41acbf7b847"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "Spring2025臺灣參考：一吋照片電子檔",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2102_39aad1cad74f0b3ab7a1f41acbf7b847"
+        ],
+        "needs_confirmation": true
+      }
+    ]
+  },
+  "ncu-178": {
+    "city": "西安",
+    "source_ids": [
+      "host-xjtu-hmt-2025",
+      "host-xjtu-application-2025",
+      "host-xjtu-recommendation-2025",
+      "host-xjtu-nomination-2025"
+    ],
+    "applicability": "雲科官方轉載Spring2025港澳臺兩頁須知、三份空白表全讀；舊Word經SHA核對转檔。西安交通官方入口proxy403，不推論登入；116新接收包／政府規則未取得。",
+    "fields": {
+      "city": {
+        "points": [
+          "舊表國際處地址為咸寧西路28號、西安；未提供全部2025專業或116交換的教學／住宿校區。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 1
+          },
+          {
+            "id": "host-xjtu-application-2025",
+            "page": null
+          }
+        ],
+        "unresolved": "116教學／宿舍校區及機場通勤仍待查。"
+      },
+      "transport": {
+        "points": [
+          "已查來源的適用範圍如上；機場／通勤與交通尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "機場／通勤與交通仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "eligibility": {
+        "points": [
+          "Spring2025只收港澳臺籍協議學生、全日制且母校一年以上、交換非畢業／延期畢業、無不及格／違規；原文GPA>2.8總分4.3，不能改≥2.8或換算百分制。",
+          "申請表列本科／研究所／博士，不證明2027每學制與院系皆開放；須知第2頁專業目錄只屬2025。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 1
+          },
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 2
+          },
+          {
+            "id": "host-xjtu-application-2025",
+            "page": null
+          }
+        ],
+        "unresolved": "中央116臺灣接收名額／學制院系及資格未核實，不建立舊GPA硬判。"
+      },
+      "language": {
+        "points": [
+          "已查來源的適用範圍如上；當期語言門檻、建議及正式證明尚未取得116當期核實資料。"
+        ],
+        "sources": [],
+        "unresolved": "當期語言門檻、建議及正式證明仍需接收包或進一步公開來源查核；不以尚未找到稱官方未公告。"
+      },
+      "host_documents": {
+        "points": [
+          "五項合併一PDF：申請表、個人推薦表、在學、成績、台胞證或港澳通行證；Spring2025截止未有證件視為放棄，是舊期規則不能移當期。母校另送推薦匯總Excel。",
+          "申請表只收派出業務承辦老師推薦：本人與推薦人均手寫簽名，三種學制與兩校院系／20xx年級／Spring2025日期欄；個人推薦表含教育、得獎、語言興趣、學習計畫、自述與本人日期簽名。",
+          "Excel空白及例行全讀，DOB例子37742是Excel日期序號，非資格條件或真實学生資料。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 1
+          },
+          {
+            "id": "host-xjtu-application-2025",
+            "page": null
+          },
+          {
+            "id": "host-xjtu-recommendation-2025",
+            "page": null
+          },
+          {
+            "id": "host-xjtu-nomination-2025",
+            "page": null
+          }
+        ],
+        "unresolved": "116新版全部表格、提名與逐件格式／簽章及證件截止未取得。"
+      },
+      "host_deadline": {
+        "points": [
+          "舊須知年例春前一年10月底、秋4月底；2025春電子件母校截止2024/10/31，不套2027／2028，也未提供提名／學生申請分開日與時區。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 1
+          }
+        ],
+        "unresolved": "116提名與host截止／時區仍待當期確認。"
+      },
+      "study_period": {
+        "points": [
+          "Spring2025二月中上旬至六月中下旬，確切報到錄取後通知；不能推算2028春。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 1
+          },
+          {
+            "id": "host-xjtu-application-2025",
+            "page": null
+          }
+        ],
+        "unresolved": "116迎新、上課考試／離校日及長度未取得。"
+      },
+      "courses": {
+        "points": [
+          "2025非外語專業不可選外語專業課、不可實驗／講座學分／小学期；原文「不得少于9学分或少于4门课程（其中两门需为专业必修）」保留或字範圍，未擅改and／or規則。",
+          "第2頁列物理至外國語院系／單位專業，全文已讀，不能当2027英授課表或證明每門課／campus開放。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 1
+          },
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 2
+          }
+        ],
+        "unresolved": "116最新專業／課單、9學分或4門解讀、兩專業必修／先修與中央採認仍待確認。"
+      },
+      "tuition": {
+        "points": [
+          "須知未列免學費或註冊／課程雜費；母校中央繳費義務另成立，不用協議名單推定host所有費用0。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 1
+          }
+        ],
+        "unresolved": "116協議減免及另收費項／期限未核實。"
+      },
+      "cost": {
+        "points": [
+          "舊須知只說到校繳宿舍費而無金額，沒有每月生活費或一次性費用，未知不填0。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 1
+          }
+        ],
+        "unresolved": "116住房／餐飲／通勤／保險證件完整預算未取得。"
+      },
+      "housing": {
+        "points": [
+          "2025統一安排學生宿舍、無須另申請，到校報到後繳住宿、分房依實際；没有房型或價格，不能據舊版承諾116保障。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 1
+          }
+        ],
+        "unresolved": "当期台灣住宿房型／校區、價格押金水電、保證與入住／付款退租期限未取得。"
+      },
+      "insurance": {
+        "points": [
+          "2025須知及申請／推薦空白表未提供host保單規則，不等於免投保；中央行前全期醫療意外急難保險另成立。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 1
+          },
+          {
+            "id": "host-xjtu-application-2025",
+            "page": null
+          }
+        ],
+        "unresolved": "当期host可收保單／保額、保費與繳證明期限未核實。"
+      },
+      "visa": {
+        "points": [
+          "2025申請五項包含台胞證／港澳通行證，申請表身分分臺灣香港澳門；未套外國人X簽證，亦未提供完整政府居留登記程序。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 1
+          },
+          {
+            "id": "host-xjtu-application-2025",
+            "page": null
+          }
+        ],
+        "unresolved": "116臺灣證件效期、申辦／居住登記及出發原件仍待政府與接收包核實。"
+      },
+      "arrival": {
+        "points": [
+          "報到日期錄取後通知、開學前夕才選課、到校繳宿舍與統一分配；各為2025參考，不推算2027報到日期或文件。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtu-hmt-2025",
+            "page": 1
+          }
+        ],
+        "unresolved": "116接收通知、報到原件／迎新、住宿鑰匙与機場路線仍待查。"
+      }
+    },
+    "host_documents": [
+      {
+        "name": "Spring2025港澳臺參考：交換申請表（五項合併一PDF）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2124_e2a09b748872b6702380db3f818d50b4"
+        ],
+        "needs_confirmation": true,
+        "official_form_url": "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2126_a49a3b9d05d4bbb2a25fd7ebd149acbb",
+        "signatures": [
+          "本人手寫簽名",
+          "母校派出交換承辦老師手寫簽名"
+        ]
+      },
+      {
+        "name": "Spring2025港澳臺參考：個人推薦表（五項合併一PDF）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2124_e2a09b748872b6702380db3f818d50b4"
+        ],
+        "needs_confirmation": true,
+        "official_form_url": "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2127_171c05935012aef8ca4831742ae1d69a",
+        "signatures": [
+          "本人簽名與日期"
+        ]
+      },
+      {
+        "name": "Spring2025港澳臺參考：在學證明（五項合併一PDF）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2124_e2a09b748872b6702380db3f818d50b4"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "Spring2025港澳臺參考：成績單（五項合併一PDF）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2124_e2a09b748872b6702380db3f818d50b4"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "Spring2025港澳臺參考：台胞證／港澳通行證（五項合併一PDF）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2124_e2a09b748872b6702380db3f818d50b4"
+        ],
+        "needs_confirmation": true
+      }
+    ]
+  },
+  "ncu-181": {
+    "city": "哈爾濱",
+    "source_ids": [
+      "host-nefu-exchange",
+      "host-nefu-life-2017",
+      "host-nefu-forms-current",
+      "host-nefu-health-index",
+      "host-nefu-application-index"
+    ],
+    "applicability": "東北林業官網交換正文未標年度，生活指南搜尋索引標2017、正文未標適用學年；護照／外國人體檢及JW國際生程序不自动套臺灣track。公開表格入口已讀，但兩下載200不是原件；臺灣116包仍未取得。",
+    "fields": {
+      "city": {
+        "points": [
+          "官方交換／生活頁地址為哈爾濱香坊區和興路26號；三棟國際生宿舍與第七學生公寓為舊指南，不能保證116臺灣學生上課／入住樓。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-exchange",
+            "page": null
+          },
+          {
+            "id": "host-nefu-life-2017",
+            "page": null
+          }
+        ],
+        "unresolved": "116教學與住宿楼、具體报到单位及校區仍待確認。"
+      },
+      "transport": {
+        "points": [
+          "舊生活指南列公車102至經緯街、10至省博覽中心與68至天鵝飯店後步行300米體檢；沒有機場接機／預約／價格。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-life-2017",
+            "page": null
+          }
+        ],
+        "unresolved": "2027路線、交通費、機場至校區与pickup預約未核實，舊路線不是當期班次。"
+      },
+      "eligibility": {
+        "points": [
+          "交換頁要求健康守法、協議交換期間有效、合作校全日制在籍；中文UG／PG與國際經濟貿易英授本科、林學／林業工程／生態／生物英授硕士等依派出學習計畫選課／研究。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-exchange",
+            "page": null
+          }
+        ],
+        "unresolved": "未標年國際生頁能否適用臺灣中央116、接收院系與協議內容需確認；不推定所有學制開放。"
+      },
+      "language": {
+        "points": [
+          "未標年頁：漢語言項目不用語言證明；中文授課HSK4/180或其他漢語證明，英授非英語母語須證明，未列數字英文分數。中央home語檢另必繳，不能用host語言班豁免取消。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-exchange",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116免／收HSK方式、英語證明格式／效期及課程語言仍待核實，不轉硬門檻。"
+      },
+      "host_documents": {
+        "points": [
+          "未標年國際生列七項：online申請、一年以上效期護照、英文／中文在學與成績、語言證明、母校國合推薦、外國人體格檢查表；漢語言項目語言件例外。不能把外國人七件當臺灣116必繳。",
+          "現行下載索引列2021外國留學生申請／健康表及2022學習計畫、經濟擔保、導師函；不等於七項清單新增三件。兩原件下載雖200卻非PDF／DOCX，保留取得失敗而非已讀表格。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-exchange",
+            "page": null
+          },
+          {
+            "id": "host-nefu-forms-current",
+            "page": null
+          },
+          {
+            "id": "host-nefu-health-index",
+            "page": null
+          },
+          {
+            "id": "host-nefu-application-index",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116完整host包、台胞證代替護照是否適用、最新表格與各件簽章／時效仍未取得；結構化必繳清單保持空。"
+      },
+      "host_deadline": {
+        "points": [
+          "未標年頁年例春季9/15–12/30、秋季3/15–6/30；未分提名與申請，不能填116確切提醒。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-exchange",
+            "page": null
+          }
+        ],
+        "unresolved": "當期臺灣track提名／申請deadline與時區未核實。"
+      },
+      "study_period": {
+        "points": [
+          "頁只列一學期或一學年，未標2027／2028課始考試迎新；舊指南報到以錄取通知日為準。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-exchange",
+            "page": null
+          },
+          {
+            "id": "host-nefu-life-2017",
+            "page": null
+          }
+        ],
+        "unresolved": "116臺灣接收長度、校曆、最晚報到与入住日期未取得。"
+      },
+      "courses": {
+        "points": [
+          "未標年頁按母校學習計畫選修／研究；中文UG／硕士、部分指定英授UG／硕士，沒有當期課表／先修／最少學分。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-exchange",
+            "page": null
+          }
+        ],
+        "unresolved": "116可收院系、英授課單、研究同意、跨院與學分限制仍待查。"
+      },
+      "tuition": {
+        "points": [
+          "未標年交換頁學費依協議約定，食宿保險簽證自付；舊life generic學費／書費不能據此否定協議免學費，也不直接寫0。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-exchange",
+            "page": null
+          },
+          {
+            "id": "host-nefu-life-2017",
+            "page": null
+          }
+        ],
+        "unresolved": "116中央協議減免及另收註冊／書費／課程費未核實。"
+      },
+      "cost": {
+        "points": [
+          "未標年交換頁雙人500／單人1000 RMB每人月、保險400學期／800年；只是國際生參考，未列餐食／交通／押金／一次性支出完整預算。舊life體檢363以實際為準。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-exchange",
+            "page": null
+          },
+          {
+            "id": "host-nefu-life-2017",
+            "page": null
+          }
+        ],
+        "unresolved": "116臺灣房費、餐飲交通及一次性費用未核實，不給當期總預算通過。"
+      },
+      "housing": {
+        "points": [
+          "國際生頁雙人500／單人1000 RMB每人月；舊life三棟宿舍、22:30–6:00門禁、校外先申請，未滿一年通常不准校外（配偶條件例外）。這是舊國際生管理，不能承諾臺灣116住宿或限制。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-exchange",
+            "page": null
+          },
+          {
+            "id": "host-nefu-life-2017",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116房型／费用保障、申請繳費押金水電與入住期限仍待確認。"
+      },
+      "insurance": {
+        "points": [
+          "未標年交換頁400/學期、800/年；舊國際生life說境內購買指定綜合保險，缺保險不註冊，保期2/24或8/25起。不能單靠舊指南取代中央全期醫療意外急難或強制臺灣學生購同款。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-exchange",
+            "page": null
+          },
+          {
+            "id": "host-nefu-life-2017",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116保單可接受範圍、額度、費率／生效日與交件期限仍待核實。"
+      },
+      "visa": {
+        "points": [
+          "舊life談外國護照JW201/JW202、X1/X2、24小時住宿登記及30日居留，交換申請亦列護照；沒有臺灣台胞證程序，不硬套外國人簽證。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-exchange",
+            "page": null
+          },
+          {
+            "id": "host-nefu-life-2017",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116入境證件／效期、居住登記與政府原件未核實，亦未列當期政府來源。"
+      },
+      "arrival": {
+        "points": [
+          "舊life按通知日註冊，列護照、錄取、JW201/202、四張二吋照、住宿登記與兩安全文件、電話／銀行自行辦；>6月外國留學生體檢確認。國際生旧範圍尚未確認臺灣適用。"
+        ],
+        "sources": [
+          {
+            "id": "host-nefu-life-2017",
+            "page": null
+          }
+        ],
+        "unresolved": "116臺灣報到清單、迎新／宿舍、體檢時效與境內證件仍待接收包；不建立為強制到校文件。"
+      }
+    },
+    "host_documents": []
+  },
+  "ncu-182": {
+    "city": "武漢",
+    "source_ids": [
+      "host-whu-hm-reference"
+    ],
+    "applicability": "澳科大官方公開轉載武漢「接收港澳地區」一頁PDF全讀、未標AY；portal路徑2023/12不是當期年份證明。未取得臺灣中央116完整接收包，不套港澳或外國人track。",
+    "fields": {
+      "city": {
+        "points": [
+          "港澳參考表列湖北武漢武昌珞珈山港澳臺辦聯絡地址，非指定臺灣交換教學／住宿楼。"
+        ],
+        "sources": [
+          {
+            "id": "host-whu-hm-reference",
+            "page": 1
+          }
+        ],
+        "unresolved": "116接收院系與教學／宿舍校區待查。"
+      },
+      "transport": {
+        "points": [
+          "當期機場與通勤尚未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期機場與通勤仍須續查公開來源或接收通知；不是已證實官方未公告。"
+      },
+      "eligibility": {
+        "points": [
+          "港澳版可收延畢學生，但本科成績通常第二學期9月中下旬／3月中下旬才發，研究生一般學期中發；不能當中央延畢資格或即時成績保證。"
+        ],
+        "sources": [
+          {
+            "id": "host-whu-hm-reference",
+            "page": 1
+          }
+        ],
+        "unresolved": "臺灣116接收學制、延畢／畢業限制与中央年度资格仍待核實。"
+      },
+      "language": {
+        "points": [
+          "港澳版要求中文研修計畫，未列強制語檢／英授；學習計畫語言不等於語檢豁免。"
+        ],
+        "sources": [
+          {
+            "id": "host-whu-hm-reference",
+            "page": 1
+          }
+        ],
+        "unresolved": "臺灣116語言門檻、課程語言及證明未核實。"
+      },
+      "host_documents": {
+        "points": [
+          "港澳版九類：推薦資訊電子及蓋章掃描；240×320 JPG共50KB、姓名學校命名；全歷年成績；在學／延畢證明；兩推薦人兩信；中文研修；常規含心電圖及乙肝／艾滋等健康報告；心理健康；自願補充CV／獎證。",
+          "先online上傳，再母校推薦資訊、全部上傳紙本與系統匯出港澳申請表郵寄。資料均公元紀年；不是已取得臺灣116必繳清單，選填件亦非必繳。"
+        ],
+        "sources": [
+          {
+            "id": "host-whu-hm-reference",
+            "page": 1
+          }
+        ],
+        "unresolved": "臺灣116最新表格、心理健康／紙本是否適用、全包與簽章未核實；結構化host必繳仍空。"
+      },
+      "host_deadline": {
+        "points": [
+          "未標年港澳版收件上半年5/20、下半年11/30；未列提名日與時區，不能作臺灣116提醒。"
+        ],
+        "sources": [
+          {
+            "id": "host-whu-hm-reference",
+            "page": 1
+          }
+        ],
+        "unresolved": "116臺灣提名／online及紙本到達分開截止未核實。"
+      },
+      "study_period": {
+        "points": [
+          "當期學期／迎新／考試期間尚未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期學期／迎新／考試期間仍須續查公開來源或接收通知；不是已證實官方未公告。"
+      },
+      "courses": {
+        "points": [
+          "當期可修課與先修／採認限制尚未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期可修課與先修／採認限制仍須續查公開來源或接收通知；不是已證實官方未公告。"
+      },
+      "tuition": {
+        "points": [
+          "當期協議減免與另收費用尚未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期協議減免與另收費用仍須續查公開來源或接收通知；不是已證實官方未公告。"
+      },
+      "cost": {
+        "points": [
+          "當期完整生活與一次性費用尚未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期完整生活與一次性費用仍須續查公開來源或接收通知；不是已證實官方未公告。"
+      },
+      "housing": {
+        "points": [
+          "當期房型、房價、申請／付款期限及保障尚未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期房型、房價、申請／付款期限及保障仍須續查公開來源或接收通知；不是已證實官方未公告。"
+      },
+      "insurance": {
+        "points": [
+          "港澳版來校前購全交換期、境內有效，涵蓋門診住院意外；未列保費／最低額、免責或哪一步上傳證明。"
+        ],
+        "sources": [
+          {
+            "id": "host-whu-hm-reference",
+            "page": 1
+          }
+        ],
+        "unresolved": "116臺灣保單、保額／費率及繳交時點未核實。"
+      },
+      "visa": {
+        "points": [
+          "港澳版申請並未提供臺灣入境證件／居留及外國人X簽證文件，不從registerHMTStudent網址硬推台灣適用。"
+        ],
+        "sources": [
+          {
+            "id": "host-whu-hm-reference",
+            "page": 1
+          }
+        ],
+        "unresolved": "當期臺灣政府程序及期限仍須續查。"
+      },
+      "arrival": {
+        "points": [
+          "表要求來校前已購保險、延畢生及母校注意成績發放延後；沒有當期報到／宿舍／機場清單。"
+        ],
+        "sources": [
+          {
+            "id": "host-whu-hm-reference",
+            "page": 1
+          }
+        ],
+        "unresolved": "116原件、迎新／住房、交通與成績寄送時點未完整取得。"
+      }
+    },
+    "host_documents": []
+  },
+  "ncu-183": {
+    "city": "西安",
+    "source_ids": [
+      "host-chd-materials-2023",
+      "host-chd-application-2023",
+      "host-chd-nomination-2023",
+      "host-chd-pickup-2023"
+    ],
+    "applicability": "雲科官方2023秋臺灣包四附件全讀；三Word無固定PDF頁、XLS轉為XLSX後全非空欄及空工作表2已讀。交換2023/8/28–2024/1/13，接機表仍含2020截止矛盾；不是116新包。",
+    "fields": {
+      "city": {
+        "points": [
+          "材料頁南二環中段，接機表港澳臺辦渭水校區為未央區朱宏路北段；兩個行政地址不同，不能據此指定116教學／住宿校區。"
+        ],
+        "sources": [
+          {
+            "id": "host-chd-materials-2023",
+            "page": null
+          },
+          {
+            "id": "host-chd-pickup-2023",
+            "page": null
+          }
+        ],
+        "unresolved": "當期院系、教學與宿舍樓及报到地点未核實。"
+      },
+      "transport": {
+        "points": [
+          "接機表2023/8/28 08:00–18:00免費西安咸陽機場，T1/T2/T3與班機時間；同校須同航班。表回傳2020/8/20與材料頁2023八月底矛盾，不能改造截止或保證2027接機。"
+        ],
+        "sources": [
+          {
+            "id": "host-chd-materials-2023",
+            "page": null
+          },
+          {
+            "id": "host-chd-pickup-2023",
+            "page": null
+          }
+        ],
+        "unresolved": "116班次／付款／是否接機与正確回傳日期需新通知；舊免費日不當當期保障。"
+      },
+      "eligibility": {
+        "points": [
+          "2023臺灣申請推薦表列在臺學校／院系／年級／學習GPA／外語／得獎，但沒有最低數字或當期全部學制開放規則。"
+        ],
+        "sources": [
+          {
+            "id": "host-chd-application-2023",
+            "page": null
+          }
+        ],
+        "unresolved": "116中央協議接收學制／名额／院系與資格待核實。"
+      },
+      "language": {
+        "points": [
+          "推薦表只記學習情況含外語成績，文件清單沒有獨立語檢門檻；不能解讀無語言要求或取消中央正式證明。"
+        ],
+        "sources": [
+          {
+            "id": "host-chd-materials-2023",
+            "page": null
+          },
+          {
+            "id": "host-chd-application-2023",
+            "page": null
+          }
+        ],
+        "unresolved": "当期host語言門檻／正式證明、課程語言与豁免未核實。"
+      },
+      "host_documents": {
+        "points": [
+          "2023六學生件按順序合併姓名命名PDF：申請推薦、蓋部門章在學、自傳及學習計畫、台胞證彩掃、蓋校或醫院章健康、個人保險證明；紙本到校交港澳臺辦。母校另一份匯總Excel與之分開。",
+          "申請推薦表需母校两岸负责人签字、单位盖章與日期，未列學生簽名不補造；Excel13欄包含系所年級、台胞證、生日、手機／email、申請系所與緊急聯絡，不是母校額外每人一份Excel。接機表為確認航班後另件，未放初次六項。"
+        ],
+        "sources": [
+          {
+            "id": "host-chd-materials-2023",
+            "page": null
+          },
+          {
+            "id": "host-chd-application-2023",
+            "page": null
+          },
+          {
+            "id": "host-chd-nomination-2023",
+            "page": null
+          },
+          {
+            "id": "host-chd-pickup-2023",
+            "page": null
+          }
+        ],
+        "unresolved": "116新表、完整文件／格式、健康時效与保險標準仍未取得。"
+      },
+      "host_deadline": {
+        "points": [
+          "舊資料電子2023/6/10前母校回傳，錄取／邀請掃描6/20前送母校；接機材料八月底、表卻2020/8/20，兩者保留不自選有效日。"
+        ],
+        "sources": [
+          {
+            "id": "host-chd-materials-2023",
+            "page": null
+          },
+          {
+            "id": "host-chd-pickup-2023",
+            "page": null
+          }
+        ],
+        "unresolved": "116提名、學生申請／正確接機回傳與時區未核實。"
+      },
+      "study_period": {
+        "points": [
+          "推薦表交流2023/8/28–2024/1/13，2023秋短期交換勾選；不是2027校曆或116期間。"
+        ],
+        "sources": [
+          {
+            "id": "host-chd-application-2023",
+            "page": null
+          }
+        ],
+        "unresolved": "116迎新／課始／考試／離校與住宿日期未核實。"
+      },
+      "courses": {
+        "points": [
+          "推薦表填擬申請系所、學習情況与計畫；沒有英文課單、最少學分或跨院先修規定。"
+        ],
+        "sources": [
+          {
+            "id": "host-chd-materials-2023",
+            "page": null
+          },
+          {
+            "id": "host-chd-application-2023",
+            "page": null
+          },
+          {
+            "id": "host-chd-nomination-2023",
+            "page": null
+          }
+        ],
+        "unresolved": "当期課表與限制、兩校採認仍待核實。"
+      },
+      "tuition": {
+        "points": [
+          "當期協議減免與另收費用尚未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期協議減免與另收費用仍須續查公開來源或接收通知；不是已證實官方未公告。"
+      },
+      "cost": {
+        "points": [
+          "當期完整生活與一次性費用尚未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期完整生活與一次性費用仍須續查公開來源或接收通知；不是已證實官方未公告。"
+      },
+      "housing": {
+        "points": [
+          "當期房型、房價、申請／付款期限及保障尚未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期房型、房價、申請／付款期限及保障仍須續查公開來源或接收通知；不是已證實官方未公告。"
+      },
+      "insurance": {
+        "points": [
+          "2023六初次學生件即含個人購買保險證明，不是天津那種抵達後才交；未列最低額、保險種類／價格或境內有效條件。"
+        ],
+        "sources": [
+          {
+            "id": "host-chd-materials-2023",
+            "page": null
+          }
+        ],
+        "unresolved": "116保單範圍、額度、費率、證明截止及接受版本未核實。"
+      },
+      "visa": {
+        "points": [
+          "2023台胞證彩掃列初次附件，錄取後通知／邀請掃描轉學生；紙本原版可另告知需求，沒有正式政府入境／居留規則。"
+        ],
+        "sources": [
+          {
+            "id": "host-chd-materials-2023",
+            "page": null
+          }
+        ],
+        "unresolved": "116證件效期、政府申辦／居住登记、邀請紙本需要與寄送期限未核實。"
+      },
+      "arrival": {
+        "points": [
+          "2023六件紙本到校交港澳臺辦；錄取通知／邀請掃描經母校轉發，需要紙本版本另提出；確認航班後填接機表与同校同航班。健康和保險原在初次六件，不全部後移。"
+        ],
+        "sources": [
+          {
+            "id": "host-chd-materials-2023",
+            "page": null
+          },
+          {
+            "id": "host-chd-pickup-2023",
+            "page": null
+          }
+        ],
+        "unresolved": "当期報到原件／份數、住房／迎新与接機時程未核實。"
+      }
+    },
+    "host_documents": [
+      {
+        "name": "2023臺灣參考：申請推薦表（六項順序合併姓名命名PDF）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-33/item/download/1401_7af380a8057a19addff841f678336f3a"
+        ],
+        "needs_confirmation": true,
+        "official_form_url": "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-33/item/download/1402_d5ad80e1960f79956d4c92c8b0ae5194",
+        "signatures": [
+          "母校兩岸事務處負責人簽名、日期"
+        ],
+        "stamps": [
+          "母校單位公章"
+        ]
+      },
+      {
+        "name": "2023臺灣參考：在學證明（母校相關部門公章）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-33/item/download/1401_7af380a8057a19addff841f678336f3a"
+        ],
+        "needs_confirmation": true,
+        "stamps": [
+          "母校相關部門公章"
+        ]
+      },
+      {
+        "name": "2023臺灣參考：自傳與交換期間學習計畫",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-33/item/download/1401_7af380a8057a19addff841f678336f3a"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "2023臺灣參考：台胞證彩色掃描",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-33/item/download/1401_7af380a8057a19addff841f678336f3a"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "2023臺灣參考：健康檢查證明（校或醫院公章）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-33/item/download/1401_7af380a8057a19addff841f678336f3a"
+        ],
+        "needs_confirmation": true,
+        "stamps": [
+          "學校或醫院公章"
+        ]
+      },
+      {
+        "name": "2023臺灣參考：個人購買保險證明",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-33/item/download/1401_7af380a8057a19addff841f678336f3a"
+        ],
+        "needs_confirmation": true
+      }
+    ],
+    "host_predeparture_documents": [
+      {
+        "name": "2023臺灣參考：確認航班後另填接機調查表（2020／2023回傳日期矛盾，當期待確認）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-33/item/download/1404_f84c76e465959faa7f7feec98b394343"
+        ],
+        "needs_confirmation": true,
+        "official_form_url": "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-33/item/download/1404_f84c76e465959faa7f7feec98b394343"
+      }
+    ],
+    "host_arrival_documents": [
+      {
+        "name": "2023臺灣參考：初次六項申請文件的紙本（到校報到另交港澳臺辦）",
+        "source_urls": [
+          "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-33/item/download/1401_7af380a8057a19addff841f678336f3a"
+        ],
+        "needs_confirmation": true
+      }
+    ]
+  },
+  "ncu-186": {
+    "city": "南京",
+    "source_ids": [
+      "host-nuist-fees-cn-browser",
+      "host-nuist-fees-en-browser",
+      "host-nuist-registration-browser",
+      "host-nuist-transport-browser",
+      "host-nuist-dormitory-browser",
+      "host-nuist-fees-cn",
+      "host-nuist-fees-en",
+      "host-nuist-registration",
+      "host-nuist-transport",
+      "host-nuist-dormitory"
+    ],
+    "applicability": "國際生費用／宿舍與報到入口browser查讀選定正文，local五筆403分列；費用未標AY、中英文雙人房價／資格不同，報到與交通是圖片未讀。未取得臺灣116交換全包。",
+    "fields": {
+      "city": {
+        "points": [
+          "官網地址南京寧六路219號；交通頁另列南京校區與金牛湖校區標題，不代表臺灣中央交換生任選或已確定教學／宿舍校區。"
+        ],
+        "sources": [
+          {
+            "id": "host-nuist-transport-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "當期院系及兩校區上課／住宿分配待核實。"
+      },
+      "transport": {
+        "points": [
+          "交通頁僅「如何抵達南京校區／金牛湖校區」標題，其下路線圖未取得可讀原件；沒有把頁標題當機場交通全查。"
+        ],
+        "sources": [
+          {
+            "id": "host-nuist-transport-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "圖片路線尚須取得／視覺讀取，116班次、費率、接機預約与所屬校區仍待查。"
+      },
+      "eligibility": {
+        "points": [
+          "116中央臺灣接收學制／院系與協議資格未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "116中央臺灣接收學制／院系與協議資格需續查公開接收資料；尚非證實官方未公告或登入限定。"
+      },
+      "language": {
+        "points": [
+          "當期必備及建議語言／正式證明未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期必備及建議語言／正式證明需續查公開接收資料；尚非證實官方未公告或登入限定。"
+      },
+      "host_documents": {
+        "points": [
+          "報到頁只有流程圖未讀，費用頁是國際生申請平台資訊；不是初次交換包、也不能拿學位生高中／護照等件代替臺灣交換清單。"
+        ],
+        "sources": [
+          {
+            "id": "host-nuist-registration-browser",
+            "page": null
+          },
+          {
+            "id": "host-nuist-fees-cn-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116全套申請與提名文件、最新空白表、簽章及到校原件未取得，host結構清單保持空。"
+      },
+      "host_deadline": {
+        "points": [
+          "當期提名／學生申請內外截止與時區未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期提名／學生申請內外截止與時區需續查公開接收資料；尚非證實官方未公告或登入限定。"
+      },
+      "study_period": {
+        "points": [
+          "116交換期間／迎新／考試與住宿日期未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "116交換期間／迎新／考試與住宿日期需續查公開接收資料；尚非證實官方未公告或登入限定。"
+      },
+      "courses": {
+        "points": [
+          "當期可修課、先修／跨院／學分與採認限制未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期可修課、先修／跨院／學分與採認限制需續查公開接收資料；尚非證實官方未公告或登入限定。"
+      },
+      "tuition": {
+        "points": [
+          "未標年國際生費用：本科／普通進修15000、碩士／高級進修20000、博士25000 RMB/年，申請費500；不能用一般進修費判定中央雙邊交換學費或申請費一定要繳。"
+        ],
+        "sources": [
+          {
+            "id": "host-nuist-fees-cn-browser",
+            "page": null
+          },
+          {
+            "id": "host-nuist-fees-en-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "116中央協議的交換學費減免、500申請費適用與另收項目仍待核實。"
+      },
+      "cost": {
+        "points": [
+          "未標年單人4000/年；中文雙人2500–3000與英文2000–2500/年不同。押金200、水免費、電0.55/度、暖氣另付；600/年保險、400居留與526/次體檢是國際生費用，不能自動套臺灣當期。"
+        ],
+        "sources": [
+          {
+            "id": "host-nuist-fees-cn-browser",
+            "page": null
+          },
+          {
+            "id": "host-nuist-fees-en-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "中英文房價差異、臺灣適用費用、餐飲／交通與一次性支出未核實，不計為當期可用總預算。"
+      },
+      "housing": {
+        "points": [
+          "單人4000 RMB/年，雙人兩版2500–3000與2000–2500差異保留；中文「僅限」博士／國家級獎學金，英文「部分保留」語意不同。照片標籤不足以保證一般交換生可住單雙人間。"
+        ],
+        "sources": [
+          {
+            "id": "host-nuist-fees-cn-browser",
+            "page": null
+          },
+          {
+            "id": "host-nuist-fees-en-browser",
+            "page": null
+          },
+          {
+            "id": "host-nuist-dormitory-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "116交換生可選房型、保障、期限、押金及中英文限制差異待查，不選較便宜版或硬判禁止。"
+      },
+      "insurance": {
+        "points": [
+          "國際生費用列綜合醫療600 RMB/年、第一學期第一週費用繳齊；沒有交換生保额、可替代保單及semester價格。"
+        ],
+        "sources": [
+          {
+            "id": "host-nuist-fees-cn-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116保險範圍、金額／費率、可接受保單及期限未核實。"
+      },
+      "visa": {
+        "points": [
+          "國際生頁列外國人一年內居留400、報到後體檢526，不證明台胞證身分需同款外國居留或體檢；政府規則需另查。"
+        ],
+        "sources": [
+          {
+            "id": "host-nuist-fees-cn-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116證件／居住登記與政府期限仍待核實。"
+      },
+      "arrival": {
+        "points": [
+          "一般國際生費用第一學期第一週繳齊、報到後體檢；註冊流程圖片尚未讀，不捏造原件清單／時點。"
+        ],
+        "sources": [
+          {
+            "id": "host-nuist-fees-cn-browser",
+            "page": null
+          },
+          {
+            "id": "host-nuist-registration-browser",
+            "page": null
+          }
+        ],
+        "unresolved": "報到圖原件與116交換接收通知、入住／迎新及到校文件待查。"
+      }
+    },
+    "host_documents": []
+  },
+  "ncu-194": {
+    "city": "鄭州",
+    "source_ids": [
+      "host-zzu-taiwan-reference",
+      "host-zzu-hmt-index",
+      "host-zzu-contact"
+    ],
+    "applicability": "靜宜官方轉載51頁PDF，只人工讀臺灣交換簡章1–6與校區11，第6頁視覺核對；無AY標題，2026/7批文是費率調整依據而非116適用證明。其餘44頁未全部讀，完整申請附件清單／空白表仍未取得。",
+    "fields": {
+      "city": {
+        "points": [
+          "簡章行政地址科學大道100號；第11頁另有大學北路75／40、文化路97與科學大道157多校區，不保證交換學生上課或住宿地址。"
+        ],
+        "sources": [
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 6
+          },
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 11
+          },
+          {
+            "id": "host-zzu-contact",
+            "page": null
+          }
+        ],
+        "unresolved": "116所收院系的上課／宿舍校區待核實。"
+      },
+      "transport": {
+        "points": [
+          "當期機場接機／通勤未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期機場接機／通勤需續查公開接收資料；尚非證實官方未公告或登入限定。"
+      },
+      "eligibility": {
+        "points": [
+          "未標AY臺灣簡章：合作協議有效、臺灣高校正式在籍本科或研究生、經母校審核，不接受非臺灣籍；按協議及所申請專業擇優錄取。不能硬判中央所有境外生合格。"
+        ],
+        "sources": [
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 2
+          }
+        ],
+        "unresolved": "中央116有效協議、接收學制／年級／院系、學生國籍與兩校約定需確認。"
+      },
+      "language": {
+        "points": [
+          "簡章六頁未列語檢數字或豁免；外語類專業在列表中不代表交換英授、亦不取消中央必繳正式語檢。"
+        ],
+        "sources": [
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 2
+          },
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 3
+          }
+        ],
+        "unresolved": "116host正式門檻、授課語言、豁免及證明仍待查。"
+      },
+      "host_documents": {
+        "points": [
+          "「申請材料」段只說依已獲成績和申請專業評估擇優，沒有完整清單、申請推薦空白表或每件簽章；不把成績評估敘述冒充全包。"
+        ],
+        "sources": [
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 2
+          },
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 3
+          }
+        ],
+        "unresolved": "116提名、完整host附件、最新表格、簽章／翻譯／格式與提交管道仍需續查，結構清單保持空。"
+      },
+      "host_deadline": {
+        "points": [
+          "當年6/30、12/31前發正式錄取是發Offer時點，不是學生申請截止或提名日；未標當期年份。"
+        ],
+        "sources": [
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 2
+          },
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 3
+          }
+        ],
+        "unresolved": "116母校提名及学生交件精確截止、時區、錄取時程待確認，不以Offer日建立deadline。"
+      },
+      "study_period": {
+        "points": [
+          "一般秋季9/1前後、春季3/1前後報到，具體依錄取通知；未列116迎新、課始／考試或准住日期。"
+        ],
+        "sources": [
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 6
+          }
+        ],
+        "unresolved": "當期各學期校曆、報到最晚日、交換長度與住房日期未取得。"
+      },
+      "courses": {
+        "points": [
+          "第3–5頁列50類專業；名稱以實際錄取通知為準，含醫學／藝術等不表示中央所有院系可自由選課，未列跨院、先修或最低學分。"
+        ],
+        "sources": [
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 3
+          },
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 4
+          },
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 5
+          }
+        ],
+        "unresolved": "當期可修課單／先修與學分採認限制待核實，清單不是每課都開放。"
+      },
+      "tuition": {
+        "points": [
+          "交換生依兩校協議減免，交流生依大陸一般學費標準。本科4400／5000或5700／醫學6300／藝術8000等是一般年額，不直接加到交換預算也不硬判所有費用為0。"
+        ],
+        "sources": [
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 5
+          },
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 6
+          }
+        ],
+        "unresolved": "116中央協議的實際減免範圍與其他費用需确认。"
+      },
+      "cost": {
+        "points": [
+          "住宿不超過1100 RMB/人年，若標準調整按河南省2026/7最新批文；此句已視覺核對。沒有餐飲交通、押金、保險／體檢／證件總額。"
+        ],
+        "sources": [
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 6
+          }
+        ],
+        "unresolved": "116實際年／學期房费、調整批文及完整生活一次性預算未核實，未標AY不當本期已核准。"
+      },
+      "housing": {
+        "points": [
+          "簡章住宿上限1100 RMB/人年，不等於房型保障、semester必定550、免暑假費或免押金；沒有申請／繳費期限。"
+        ],
+        "sources": [
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 6
+          }
+        ],
+        "unresolved": "當期床位保障、校區房型、房費／押金／水電、入住／退宿與期限未核實。"
+      },
+      "insurance": {
+        "points": [
+          "當期保額／保單／繳交時點與費率未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期保額／保單／繳交時點與費率需續查公開接收資料；尚非證實官方未公告或登入限定。"
+      },
+      "visa": {
+        "points": [
+          "臺灣當期政府證件／入境及居住登記未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "臺灣當期政府證件／入境及居住登記需續查公開接收資料；尚非證實官方未公告或登入限定。"
+      },
+      "arrival": {
+        "points": [
+          "按錄取通知報到，一般秋9/1春3/1前後；簡章沒有原件、迎新、接機或床品清單。"
+        ],
+        "sources": [
+          {
+            "id": "host-zzu-taiwan-reference",
+            "page": 6
+          }
+        ],
+        "unresolved": "116接收通知及到校生活文件／住宿／交通待查。"
+      }
+    },
+    "host_documents": []
+  },
+  "ncu-195": {
+    "city": "貴陽",
+    "source_ids": [
+      "host-gzu-international-application",
+      "host-gzu-cie-current",
+      "host-gzu-prearrival-old",
+      "host-gzu-transport-old"
+    ],
+    "applicability": "舊OIR國際生申請頁（2009版權及舊X/F簽證內容）、2011行前索引與交通全所得文字已讀；2025/11國際學院概述另查。不是臺灣116交換接收包，舊政府程序不供當期問答指引，原文保留稽核。",
+    "fields": {
+      "city": {
+        "points": [
+          "舊OIR地址Huaxi／花溪貴陽，2025學院概述列語言及文化課程；沒有臺灣116交換上課與宿舍樓。"
+        ],
+        "sources": [
+          {
+            "id": "host-gzu-international-application",
+            "page": null
+          },
+          {
+            "id": "host-gzu-cie-current",
+            "page": null
+          }
+        ],
+        "unresolved": "116中央所收學制／院系的教學及宿舍校區未核實。"
+      },
+      "transport": {
+        "points": [
+          "舊交通指南市區201／202／207與校門對面站，龍洞堡機場概述；行前索引7條皆2011地理旅遊介紹，不是incoming報到包。"
+        ],
+        "sources": [
+          {
+            "id": "host-gzu-prearrival-old",
+            "page": null
+          },
+          {
+            "id": "host-gzu-transport-old",
+            "page": null
+          }
+        ],
+        "unresolved": "116機場交通、班次價格、接機預約與教學校區未核實；舊路線不當現行。"
+      },
+      "eligibility": {
+        "points": [
+          "舊自費國際生明列非中國籍、一般訪問完成兩年UG／高級訪問碩士或副教授等；不是臺灣交換協議學制，不套其門檻或排除結論。"
+        ],
+        "sources": [
+          {
+            "id": "host-gzu-international-application",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116有效協議、接收學制／年級／院系与身分仍待確認。"
+      },
+      "language": {
+        "points": [
+          "2025學院概述語言班初／中／高級及文化課，不含116交換語檢／學分課名單；舊語言班程序不推定交換HSK豁免。"
+        ],
+        "sources": [
+          {
+            "id": "host-gzu-cie-current",
+            "page": null
+          },
+          {
+            "id": "host-gzu-international-application",
+            "page": null
+          }
+        ],
+        "unresolved": "當期課程語言／正式證明與必備／建議門檻待查。"
+      },
+      "host_documents": {
+        "points": [
+          "舊國際生列申請、護照、CV原文作Curriculum visa、最高學歷、六張照與蓋章體檢；另一自費CSC段又有兩份表、公證學歷成績、六個月健康、PG兩推薦與藝術作品等條件，兩段不能硬合併。索引表格有中文班、自費、degree及外國居留，未取得臺灣交換專用。"
+        ],
+        "sources": [
+          {
+            "id": "host-gzu-international-application",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116全套文件／空白表、提名格式及簽章未取得；不以國際生表格冒充交換清單。"
+      },
+      "host_deadline": {
+        "points": [
+          "舊頁同列提前兩月、3/9–31、自費通常五月前、CSC5/31、語言班5或12月，不同項目混列而且未標AY；不是臺灣116學生確切截止。"
+        ],
+        "sources": [
+          {
+            "id": "host-gzu-international-application",
+            "page": null
+          }
+        ],
+        "unresolved": "116提名／學生申請分開截止及時區未核實。"
+      },
+      "study_period": {
+        "points": [
+          "116交換期間／迎新／考試與住宿日期未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "116交換期間／迎新／考試與住宿日期需續查公開接收資料；尚非證實官方未公告或登入限定。"
+      },
+      "courses": {
+        "points": [
+          "當期可修課、先修／跨院／學分與採認限制未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期可修課、先修／跨院／學分與採認限制需續查公開接收資料；尚非證實官方未公告或登入限定。"
+      },
+      "tuition": {
+        "points": [
+          "舊自費申請有申請費／報到全部繳費但沒有明列交換協議減免；不能寫0或把自費degree收費套中央。"
+        ],
+        "sources": [
+          {
+            "id": "host-gzu-international-application",
+            "page": null
+          }
+        ],
+        "unresolved": "116協議學費、申請費与另收課程／註冊費仍待查。"
+      },
+      "cost": {
+        "points": [
+          "當期完整生活及一次性支出未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期完整生活及一次性支出需續查公開接收資料；尚非證實官方未公告或登入限定。"
+      },
+      "housing": {
+        "points": [
+          "當期房型／費率／申請與付款期限及保障未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "當期房型／費率／申請與付款期限及保障需續查公開接收資料；尚非證實官方未公告或登入限定。"
+      },
+      "insurance": {
+        "points": [
+          "舊申請正文沒有當期交換保單費率、保額／免責與繳交時間；外國人體檢六個月不是保險。"
+        ],
+        "sources": [
+          {
+            "id": "host-gzu-international-application",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116保險要求與健康／保单階段分開查核，不能依home一般保險當host已查。"
+      },
+      "visa": {
+        "points": [
+          "舊頁含X/F學習期限分類及晚申請先旅遊簽轉學習簽說法，屬未核實過時國際生程序；原件保留稽核、整段從問答索引隔離，不能指示臺灣116照辦。"
+        ],
+        "sources": [
+          {
+            "id": "host-gzu-international-application",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣當期台胞證、居住登記与現行政府來源未核實；不將舊旅遊簽段落當操作指引。"
+      },
+      "arrival": {
+        "points": [
+          "舊國際生說提前課始兩天到、預告班機／火車可免費接送、報到繳齊；未標當期且不確認臺灣交換適用，不能承諾116免費接機。"
+        ],
+        "sources": [
+          {
+            "id": "host-gzu-international-application",
+            "page": null
+          }
+        ],
+        "unresolved": "當期臺灣報到原件／迎新、住宿／接機與新接收通知未取得。"
+      }
+    },
+    "host_documents": []
+  },
+  "ncu-196": {
+    "city": "濟南",
+    "source_ids": [
+      "host-ujn-partner-reference-2024",
+      "host-ujn-registration",
+      "host-ujn-transport",
+      "host-ujn-dormitory",
+      "host-ujn-hmt-index",
+      "host-ujn-international-index",
+      "host-ujn-registration-pdf"
+    ],
+    "applicability": "嶺南官方轉載5頁香港交換資訊表全讀，header2/8/2024、學期2025秋／2026春與2024/10/31／2025/4/30截止矛盾保留。2025/8/15外國留學生報到与2024交通另讀；不是廣州JNU、亦不自動套臺灣116。",
+    "fields": {
+      "city": {
+        "points": [
+          "香港版與2025國際報到都列山東濟南西校區南辛莊西路336，台港澳入口相同地址；國際生宿舍不代表香港或臺灣交換住宿楼，不能套廣州暨南JNU資料。"
+        ],
+        "sources": [
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 1
+          },
+          {
+            "id": "host-ujn-registration",
+            "page": null
+          },
+          {
+            "id": "host-ujn-hmt-index",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116上課／宿舍校區及報到承辦待確認。"
+      },
+      "transport": {
+        "points": [
+          "香港版濟南遙牆、機場巴士或出租車，指定報到日學校接送；國際2024指南出租車160–200、火車站30–50、西站40–60、東站70–100 RMB及路線，2025報到頁另列機場Line1+102／Line2+K92。不同版且未確認臺灣116，不能當2027班次／pickup保證。"
+        ],
+        "sources": [
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 1
+          },
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 3
+          },
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 4
+          },
+          {
+            "id": "host-ujn-registration",
+            "page": null
+          },
+          {
+            "id": "host-ujn-transport",
+            "page": null
+          }
+        ],
+        "unresolved": "當期臺灣接機預約、校區／宿舍交通與費率未核實。"
+      },
+      "eligibility": {
+        "points": [
+          "116中央臺灣接收學制／院系與協議資格未取得116當期適用證據。"
+        ],
+        "sources": [],
+        "unresolved": "116中央臺灣接收學制／院系與協議資格需續查公開接收資料；尚非證實官方未公告或登入限定。"
+      },
+      "language": {
+        "points": [
+          "香港版主要中文／其他無，TOEFL與IELTS數字留白（分项勾沒有）；學術GPA也留白。未填不等於免語檢，不套國際英授degree課到雙邊交換。"
+        ],
+        "sources": [
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 1
+          },
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 2
+          },
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 3
+          }
+        ],
+        "unresolved": "116臺灣交換語言證明、host門檻／建議、效期与英授可修課未核實。"
+      },
+      "host_documents": {
+        "points": [
+          "香港版只寫寄mail，未列初次交換附件／空白申請表；2025國際生報到有護照、X1JW202／體檢、4張30×40照與初次申請原件，是到校國際生程序不能拿來填臺灣初次host文件。",
+          "2025報到頁現連REGISTRATION NOTICE.pdf另試，HTTP200卻不是PDF原件；沒有宣稱該附件已讀或登入限定。"
+        ],
+        "sources": [
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 2
+          },
+          {
+            "id": "host-ujn-registration",
+            "page": null
+          },
+          {
+            "id": "host-ujn-registration-pdf",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116初次與提名全包、新表／簽章、錄取後及到校清單未取得，host結構清單保持空。現連PDF原件尚未取得（200非PDF回應），公開替代原件需續查。"
+      },
+      "host_deadline": {
+        "points": [
+          "香港版header2/8/2024，2025秋卻列31/10/2024、2026春列30/4/2025；原文日期差異保留，不自行順移半年／一年，也不硬選有效日。"
+        ],
+        "sources": [
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 1
+          },
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 2
+          }
+        ],
+        "unresolved": "臺灣116正確提名／申請截止与时區需新版確認，不建立host精確提醒。"
+      },
+      "study_period": {
+        "points": [
+          "香港版2025秋9/1課始、12/26課末、2026/1/5–16考試；2026春3/2課始、6/19課末、6/29–7/10考試。入住退宿留白，不能用考試末日替代退房日。"
+        ],
+        "sources": [
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 3
+          }
+        ],
+        "unresolved": "116臺灣校曆／迎新／考試、入住退宿及交換長度待查。"
+      },
+      "courses": {
+        "points": [
+          "香港版列11學科領域、一般每學期上限30學分而下限空白、報到後選課；jwgl為課程入口，不代表中央可跨全部院系或沒有最少學分。"
+        ],
+        "sources": [
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 1
+          },
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 2
+          },
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 3
+          }
+        ],
+        "unresolved": "116所收院系／課單、先修／跨院／學分與母校採認需確認。"
+      },
+      "tuition": {
+        "points": [
+          "香港版寫繳嶺南母校學費、迎新費無；不能把嶺南協議直接當中央免學費，也不能把一般國際生全費註冊當中央必繳。"
+        ],
+        "sources": [
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 4
+          },
+          {
+            "id": "host-ujn-registration",
+            "page": null
+          }
+        ],
+        "unresolved": "116中央協議減免及另收學費／註冊費仍待核實。"
+      },
+      "cost": {
+        "points": [
+          "香港版多人最多4人、房租400–800 RMB/學期、生活6000/學期、無押金、學校接送；空調／體檢／證件／教材另計且總支出留白，不能當完整臺灣116預算。"
+        ],
+        "sources": [
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 3
+          },
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 4
+          }
+        ],
+        "unresolved": "當期臺灣費率及完整分項预算、香港版保險據實與未填費用仍需查。"
+      },
+      "housing": {
+        "points": [
+          "香港版到前可確認、學期休息期間提供、多人最多4人400–800/學期、按實際分配無需提前申請、不能住國際生宿舍；這是香港版。2025國際生一律安排且不准私租、只給1.5×2米床墊自行備床品，不套臺灣住宿限制。"
+        ],
+        "sources": [
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 3
+          },
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 4
+          },
+          {
+            "id": "host-ujn-registration",
+            "page": null
+          },
+          {
+            "id": "host-ujn-dormitory",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣116保障／房型樓區、申請付款期限与床品、跨假期等仍待确认；不混香港与國際宿舍。"
+      },
+      "insurance": {
+        "points": [
+          "香港版勾抵達後購指定意外與醫療、據實費用；2025國際生未購保險限期補買否則不註冊。兩版不取消中央行前全期醫療／意外／急難。"
+        ],
+        "sources": [
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 4
+          },
+          {
+            "id": "host-ujn-registration",
+            "page": null
+          }
+        ],
+        "unresolved": "116臺灣host保單額度、接受／另購條件、費率與繳交時點待核實。"
+      },
+      "visa": {
+        "points": [
+          "2025國際生X1>6月／X2短期、24h住宿登記、X1入境30日居留與6月體檢；護照JW202適用外國人，不能硬套臺灣台胞證。香港版未提供臺灣政府程序。"
+        ],
+        "sources": [
+          {
+            "id": "host-ujn-registration",
+            "page": null
+          },
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 3
+          }
+        ],
+        "unresolved": "116臺灣政府文件、入境／居住登記与期限仍待核實。"
+      },
+      "arrival": {
+        "points": [
+          "香港版9/1或3/2接送／報到後選課；2025國際報到需提前一週說明早晚、到校24h辦手續、WeChatRMB繳費、證明原件与床品自行備。年份、國際／香港不同，臺灣116還無完整到校包。"
+        ],
+        "sources": [
+          {
+            "id": "host-ujn-partner-reference-2024",
+            "page": 3
+          },
+          {
+            "id": "host-ujn-registration",
+            "page": null
+          }
+        ],
+        "unresolved": "116臺灣原件、迎新／住房、接機預約与成績單發放待查。"
       }
     },
     "host_documents": []

@@ -7,6 +7,150 @@ from .conftest import enter_public_site, open_navigation
 from .test_open_catalog import wait_until, sign_in_cookie, attach_session
 
 
+@pytest.mark.parametrize("school,life_text,source_text,filename", [
+    ("南京信息工程", "中文「僅限」", "Twin Room | 2,000—2,500 CNY per year", "ncu-nuist-versions-390.png"),
+    ("濟南大學", "不能住國際生宿舍", "31/10/2024", "ncu-ujn-hk-scope-390.png"),
+])
+def test_ncu_nuist_versions_and_ujn_hong_kong_scope_reach_visible_mobile_content(page, live_server, school, life_text, source_text, filename):
+    page.set_viewport_size({"width": 390, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    enter_public_site(page, live_server, "partners")
+    open_navigation(page)
+    page.locator("#school-switcher").click()
+    page.locator('[data-home-school="國立中央大學"]').click()
+    page.locator("#confirm-school").click()
+    if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+        page.locator("#glass-menu-toggle").click()
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
+    page.locator('[data-partner-view="list"]').click()
+    page.locator("#partner-search").fill(school)
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+    page.locator("#partner-table .partner-card > summary").first.click()
+    page.locator("#partner-table .school-detail-trigger:visible").first.click()
+    page.locator("#ncu-source-audit > summary").click()
+    source = page.locator("#ncu-source-audit-body > details").filter(has_text=source_text).first
+    source.locator(":scope > summary").click()
+    part = source.locator("details").filter(has_text=source_text).first
+    part.locator(":scope > summary").click()
+    expect(part.locator("pre")).to_be_visible()
+    expect(part.locator("pre")).to_contain_text(source_text)
+    page.locator("#detail-tab-application").click()
+    expect(page.locator("#detail-application")).to_contain_text("家長同意書")
+    expect(page.locator("#detail-application")).to_contain_text("待確認")
+    page.locator("#detail-tab-life").click()
+    page.locator("#detail-life .life-official-guide > summary").click()
+    point = page.locator("#destination-official-content li").filter(has_text=life_text).first
+    expect(point).to_be_visible()
+    point.scroll_into_view_if_needed()
+    expect(page.locator("#detail-life")).to_contain_text("116")
+    out = Path("/tmp/ncu-audit/browser")
+    out.mkdir(parents=True, exist_ok=True)
+    page.screenshot(path=str(out / filename))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors
+
+
+def test_ncu_tju_application_and_arrival_files_and_conversion_note_reach_mobile_ui(page, live_server):
+    page.set_viewport_size({"width": 390, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    enter_public_site(page, live_server, "partners")
+    open_navigation(page)
+    page.locator("#school-switcher").click()
+    page.locator('[data-home-school="國立中央大學"]').click()
+    page.locator("#confirm-school").click()
+    if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+        page.locator("#glass-menu-toggle").click()
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
+    page.locator('[data-partner-view="list"]').click()
+    page.locator("#partner-search").fill("天津")
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+    page.locator("#partner-table .partner-card > summary").first.click()
+    page.locator("#partner-table .school-detail-trigger:visible").first.click()
+    page.locator("#detail-tab-application").click()
+    workflow = page.locator("#detail-application")
+    application = workflow.locator(".workflow-step").filter(has_text="2025臺灣參考：個人簡歷").first
+    application.locator(":scope > summary").click()
+    expect(application.get_by_text("2025臺灣參考：個人簡歷", exact=False).first).to_be_visible()
+    arrival = workflow.locator(".workflow-step").filter(has_text="依外校報到通知繳交到校文件").first
+    arrival.locator(":scope > summary").click()
+    expect(arrival).to_contain_text("來校報到後才提交，非初次host附件")
+    out = Path("/tmp/ncu-audit/browser")
+    out.mkdir(parents=True, exist_ok=True)
+    insurance = arrival.get_by_text("2025臺灣參考：保險單據影本（來校報到後才提交，非初次host附件）", exact=False).first
+    expect(insurance).to_be_visible()
+    insurance.scroll_into_view_if_needed()
+    page.screenshot(path=str(out / "ncu-tju-arrival-390.png"))
+    page.locator("#detail-tab-overview").click()
+    page.locator("#ncu-source-audit > summary").click()
+    source = page.locator("#ncu-source-audit-body > details").filter(has=page.locator(":scope > summary").filter(has_text="天津港澳臺申請空白表")).first
+    source.locator(":scope > summary").click()
+    expect(source).to_contain_text("轉為DOCX")
+    expect(source).to_contain_text("固定PDF頁")
+    source.locator("details > summary").first.click()
+    expect(source.locator("pre").first).to_contain_text("申请人签字")
+    source.locator("pre").first.scroll_into_view_if_needed()
+    page.screenshot(path=str(out / "ncu-tju-source-390.png"))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors
+
+
+def test_ncu_chd_workbook_and_tju_document_catalog_are_visible(page, live_server):
+    page.set_viewport_size({"width": 390, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    enter_public_site(page, live_server, "partners")
+    open_navigation(page)
+    page.locator("#school-switcher").click()
+    page.locator('[data-home-school="國立中央大學"]').click()
+    page.locator("#confirm-school").click()
+    if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+        page.locator("#glass-menu-toggle").click()
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
+    page.locator('[data-partner-view="list"]').click()
+    page.locator("#partner-search").fill("長安")
+    page.locator("#partner-table .partner-card > summary").first.click()
+    page.locator("#partner-table .school-detail-trigger:visible").first.click()
+    page.locator("#ncu-source-audit > summary").click()
+    source = page.locator("#ncu-source-audit-body > details").filter(has=page.locator(":scope > summary").filter(has_text="2023交換提名Excel")).first
+    source.locator(":scope > summary").click()
+    expect(source).to_contain_text("空白工作表另保留")
+    expect(source.locator("details > summary").nth(1)).to_contain_text("sheet2.xml（無PDF頁碼）")
+    source.locator("details > summary").nth(1).click()
+    blank = source.locator("pre").nth(1)
+    expect(blank).to_be_visible()
+    expect(blank).to_contain_text("沒有非空儲存格")
+    blank.scroll_into_view_if_needed()
+    out = Path("/tmp/ncu-audit/browser")
+    out.mkdir(parents=True, exist_ok=True)
+    page.screenshot(path=str(out / "ncu-chd-workbook-390.png"))
+    page.evaluate("location.hash='#application-center'")
+    target = page.locator("#application-target-school")
+    expect(target).to_be_visible()
+    value = target.locator("option").filter(has_text="Tianjin University").first.get_attribute("value")
+    target.select_option(value)
+    expect(page.locator("#application-requirement-summary")).to_contain_text("0 項已確認")
+    groups = page.locator("#application-requirement-list .application-requirement-group")
+    host = groups.filter(has=page.locator(":scope > summary").filter(has_text="合作校申請"))
+    host.locator(":scope > summary").click()
+    expect(host.locator(".application-requirement-item")).to_have_count(7)
+    expect(host).to_contain_text("2025臺灣參考：個人簡歷")
+    arrival = groups.filter(has=page.locator(":scope > summary").filter(has_text="抵達後"))
+    arrival.locator(":scope > summary").click()
+    item = arrival.locator(".application-requirement-item").filter(has_text="非初次host附件")
+    expect(item).to_be_visible()
+    expect(item).to_contain_text("待確認")
+    item.scroll_into_view_if_needed()
+    page.screenshot(path=str(out / "ncu-tju-catalog-390.png"))
+    assert page.locator("#application-requirement-list").get_by_text("下載校方正式表格", exact=True).count() == 0
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors
+
+
 @pytest.mark.parametrize("width", [390, 1440])
 def test_ncu_content_source_pages_home_host_and_life(page, live_server, width):
     page.set_viewport_size({"width": width, "height": 956})
@@ -82,6 +226,54 @@ def test_ncu_content_source_pages_home_host_and_life(page, live_server, width):
     expect(page.locator("#detail-life")).to_contain_text("2025–26")
     expect(page.locator("#detail-life")).to_contain_text("201–550")
     page.screenshot(path=str(out / f"ncu-life-{width}.png"), full_page=True)
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors
+
+
+def test_ncu_undip_2027_pending_dates_and_ten_scoped_files_reach_mobile_ui(page, live_server):
+    page.set_viewport_size({"width": 390, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    enter_public_site(page, live_server, "partners")
+    open_navigation(page)
+    page.locator("#school-switcher").click()
+    page.locator('[data-home-school="國立中央大學"]').click()
+    page.locator("#confirm-school").click()
+    if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+        page.locator("#glass-menu-toggle").click()
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
+    page.locator('[data-partner-view="list"]').click()
+    page.locator("#partner-search").fill("Universitas Diponegoro")
+    page.locator("#partner-table .partner-card > summary").first.click()
+    page.locator("#partner-table .school-detail-trigger:visible").first.click()
+    application_summary = page.locator("#school-detail-view .partner-summary-group").filter(has_text="合作校申請步驟")
+    application_summary.locator(".partner-summary-more > summary").click()
+    expect(application_summary.locator("li").filter(has_text="to be announce")).to_be_visible()
+    expect(application_summary.locator("li").filter(has_text="不能套用")).to_be_visible()
+    page.locator("#ncu-source-audit > summary").click()
+    source = page.locator("#ncu-source-audit-body > details").filter(has=page.locator(":scope > summary").filter(has_text="UNDIP FACTSHEET for DEEP 2027")).first
+    expect(source.locator(":scope > summary")).to_contain_text("3頁有文字")
+    expect(source.locator(":scope > summary")).to_contain_text("1頁已視覺查核")
+    source.locator(":scope > summary").click()
+    source.locator("details > summary").nth(1).click()
+    expect(source.locator("pre").nth(1)).to_contain_text("10 November 2026")
+    source.locator("pre").nth(1).scroll_into_view_if_needed()
+    out = Path("/tmp/ncu-audit/browser")
+    out.mkdir(parents=True, exist_ok=True)
+    page.screenshot(path=str(out / "ncu-undip-source-390.png"))
+    page.locator("#detail-tab-application").click()
+    expect(page.locator("#detail-application")).to_contain_text("英文推薦函")
+    expect(page.locator("#detail-application")).to_contain_text("Visa類附件")
+    expect(page.locator("#detail-application")).to_contain_text("本人簽名、姓名與日期")
+    page.locator("#detail-tab-life").click()
+    page.locator("#detail-life .life-official-guide > summary").click()
+    cost = page.locator("#destination-official-content li").filter(has_text="IDR2.5000.000").first
+    expect(cost).to_be_visible()
+    expect(page.locator("#detail-life")).to_contain_text("Data Belum Tersedia")
+    expect(page.locator("#detail-life")).to_contain_text("不能抵扣預算")
+    cost.scroll_into_view_if_needed()
+    page.screenshot(path=str(out / "ncu-undip-life-390.png"))
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors
 
@@ -243,6 +435,8 @@ def test_ncu_shanghai_visual_versions_and_life_are_visible(page, live_server, sc
 def test_ncu_uos_visual_evidence_and_conditional_housing_form_are_visible(page, live_server):
     page.set_viewport_size({"width": 390, "height": 956})
     page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
     enter_public_site(page, live_server, "partners")
     open_navigation(page)
     page.locator("#school-switcher").click()
@@ -269,6 +463,13 @@ def test_ncu_uos_visual_evidence_and_conditional_housing_form_are_visible(page, 
     out.mkdir(parents=True, exist_ok=True)
     passage.scroll_into_view_if_needed()
     page.screenshot(path=str(out / "ncu-uos-visual-390.png"))
+    form = page.locator("#ncu-source-audit-body > details").filter(has_text="臺北韓國代表部現連Visa Application Form PDF").first
+    expect(form.locator(":scope > summary")).to_contain_text("5頁有文字")
+    form.locator(":scope > summary").click()
+    form.locator("details > summary").last.click()
+    expect(form.locator("pre").last).to_contain_text("SIGNATURE OF APPLICANT")
+    form.locator("pre").last.scroll_into_view_if_needed()
+    page.screenshot(path=str(out / "ncu-uos-visa-form-390.png"))
     page.locator("#detail-tab-application").click()
     expect(page.locator("#detail-application")).to_contain_text("家長同意書")
     expect(page.locator("#detail-application")).to_contain_text("核對外校錄取後與住宿行前文件")
@@ -281,3 +482,42 @@ def test_ncu_uos_visual_evidence_and_conditional_housing_form_are_visible(page, 
     bus.scroll_into_view_if_needed()
     page.screenshot(path=str(out / "ncu-uos-transport-390.png"))
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors
+
+
+def test_ncu_uny_degree_history_and_empty_exchange_resources_are_visible(page, live_server):
+    page.set_viewport_size({"width": 390, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    enter_public_site(page, live_server, "partners")
+    open_navigation(page)
+    page.locator("#school-switcher").click()
+    page.locator('[data-home-school="國立中央大學"]').click()
+    page.locator("#confirm-school").click()
+    if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+        page.locator("#glass-menu-toggle").click()
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
+    page.locator('[data-partner-view="list"]').click()
+    page.locator("#partner-search").fill("Universitas Negeri Yogyakarta")
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+    page.locator("#partner-table .partner-card > summary").first.click()
+    page.locator("#partner-table .school-detail-trigger:visible").first.click()
+    expect(page.locator("#school-detail-view .partner-student-summary")).to_contain_text("雙聯不是")
+    page.locator("#ncu-source-audit > summary").click()
+    expect(page.locator("#ncu-source-audit-body")).to_contain_text("2021")
+    expect(page.locator("#ncu-source-audit-body")).to_contain_text("USD4000")
+    expect(page.locator("#ncu-source-audit-body")).to_contain_text("404")
+    page.locator("#detail-tab-application").click()
+    expect(page.locator("#detail-application")).to_contain_text("家長同意書")
+    expect(page.locator("#detail-application")).to_contain_text("未建立為中央交換生必繳清單")
+    page.locator("#detail-tab-life").click()
+    page.locator("#detail-life .life-official-guide > summary").click()
+    housing = page.locator("#destination-official-content li").filter(has_text="沒有保險正文").first
+    expect(housing).to_be_visible()
+    housing.scroll_into_view_if_needed()
+    out = Path("/tmp/ncu-audit/browser")
+    out.mkdir(parents=True, exist_ok=True)
+    page.screenshot(path=str(out / "ncu-uny-life-390.png"))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors
