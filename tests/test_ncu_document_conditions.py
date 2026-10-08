@@ -318,3 +318,19 @@ def test_omu_degree_optional_english_coe_and_iwing_are_not_inferred_from_saved_s
     assert any('一般校內住宿／錄取不能證明' in item.note for item in scoped)
     initial = next(s for s in workflow.steps if s.rule_id == 'ncu-132-host-apply')
     assert all(document_applicability(NCU, school, d, state) is None for d in initial.document_requirements)
+
+
+@pytest.mark.parametrize('level,total', [('院級',17),('校級',35)])
+@pytest.mark.parametrize('admission',['unknown','not_accepted','accepted'])
+@pytest.mark.parametrize('housing',['unknown','on_campus','off_campus'])
+def test_hokkaido_track_documents_need_institution_even_after_admission(level,total,admission,housing):
+    school = next(w.school_name for w in storage.load_bundled_application_workflows()
+                  if w.home_university==NCU and f'北海道大學({level})' in w.school_name)
+    workflow = next(w for w in storage.load_bundled_application_workflows() if w.home_university==NCU and w.school_name==school)
+    docs=[d for step in workflow.steps if '北海道' in workflow.school_name and step.rule_id.startswith(('ncu-116-host-','ncu-117-host-')) for d in step.document_requirements]
+    assert len(docs)==total
+    state=PartnerDocumentPreparationState(host_admission_status=admission,housing_choice=housing)
+    for doc in docs:
+        result=document_applicability(NCU,school,doc,state)
+        assert result.status=='needs_confirmation' and not result.current_applicability_verified
+        assert '兩校確認' in result.note and result.source_urls

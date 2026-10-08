@@ -956,7 +956,11 @@ def build(output):
                         title=FIELDS.get(key, key),
                         summary=review["applicability"],
                         points=pts,
-                        source_urls=[docs[fid]["url"] for fid in review["source_ids"]],
+                        source_urls=list(dict.fromkeys(
+                            docs[ref["id"]]["url"]
+                            for field_key in keys
+                            for ref in review["fields"].get(field_key, {}).get("sources", [])
+                        )),
                         caution="中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
                     )
                     if section:
@@ -1031,7 +1035,10 @@ def build(output):
                 {
                     "title": "外校到校程序",
                     "detail": p,
-                    "source_urls": [docs[fid]["url"] for fid in review["source_ids"]],
+                    "source_urls": list(dict.fromkeys(
+                        docs[ref["id"]]["url"]
+                        for ref in review["fields"].get("arrival", {}).get("sources", [])
+                    )),
                 }
                 for p in reviewed_points("arrival", include_applicability=False)
             )

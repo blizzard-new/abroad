@@ -1,6 +1,6 @@
 # 中央116-1來源查核與平台接入（進行中）
 
-基底為合併PR #1後的`f6ad1b8`，已確認包含臺大六項修正`daad399`。獨立worktree `/workspace/abroad-ncu`、分支`data/ncu-exchange-20261008`；已推送checkpoint `dc126d2`、`95c883a`、`2865413`、`6f2f9d1`、`dd06632`、`0d91d46`、`5b0df5a`、`7b381ae`、`9d44a4e`、`7f0e1cc`、`a9c6fd0`、`a199426`、`719d523`、`fc876ca`、`0b10d31`、`1bddf5a`、`ded2ed1`、`eb0b610`（只補原始驗收證據），draft [PR #4](https://github.com/blizzard-new/abroad/pull/4)。原工作目錄、中正及淡江分支未改動。本文件不宣稱中央全部外校資料完備。
+基底為合併PR #1後的`f6ad1b8`，已確認包含臺大六項修正`daad399`。獨立worktree `/workspace/abroad-ncu`、分支`data/ncu-exchange-20261008`；已推送checkpoint `dc126d2`、`95c883a`、`2865413`、`6f2f9d1`、`dd06632`、`0d91d46`、`5b0df5a`、`7b381ae`、`9d44a4e`、`7f0e1cc`、`a9c6fd0`、`a199426`、`719d523`、`fc876ca`、`0b10d31`、`1bddf5a`、`ded2ed1`、`eb0b610`（只補ded2ed1原始證據）、`9671a106`、`eeade3d`（只補9671a106證據），draft [PR #4](https://github.com/blizzard-new/abroad/pull/4)。原工作目錄、中正及淡江分支未改動。本文件不宣稱中央全部外校資料完備。
 
 ## 適用年度與實際覆蓋
 
@@ -16,11 +16,11 @@
 | 公開附件下載成功 | 459，下載錯誤0 |
 | 至少一頁有可讀文字／全頁有文字 | 454／423；文字抽取不等於人工已讀 |
 | 完全無文字的附件 | 5份，33頁（URCA、Bolton、UOS、重慶、HUST） |
-| 有明確SHA與逐頁紀錄的全文已讀／視覺文件 | Drive附件18／4；UOS舊影像版11頁、SUFE與SHU各8頁、廣西16頁逐頁視覺讀完；OCR僅UOS舊版 |
+| 有明確SHA與逐頁紀錄的全文已讀／視覺文件 | Drive附件19／4；UOS舊影像版11頁、SUFE與SHU各8頁、廣西16頁逐頁視覺讀完；OCR僅UOS舊版 |
 | 部分或全部無文字頁／字型問題 | 36份含100頁、2份字型缺字 |
-| 另查公開host／home網頁 | 647筆公開頁／文件讀取紀錄（含browser選定摘錄）；92筆目前讀取錯誤分列 |
+| 另查公開host／home網頁 | 740筆公開頁／文件讀取紀錄（含browser失敗／選定摘錄）；97筆目前讀取錯誤分列 |
 | 有外校來源的目錄項 | 211（210項有文字）；214項有任意參考來源，另3項只有其他母校官方轉載、不可冒充host官網 |
-| 人工整理的host紀錄 | 60（全部partial）；154項尚未逐欄整理 |
+| 人工整理的host紀錄 | 62（全部partial）；152項尚未逐欄整理 |
 | 全部17欄完成116當期核准 | **0** |
 
 附件取得／文字抽取不是逐欄當期查核完成。其他資料仍可繼續查；未查完的欄位不稱「官方未公告」。
@@ -463,3 +463,24 @@ COE接收後另寄母校清單，日本籍含雙重不申COE；新版財力／�
 這批目前是工作樹資料與適配；必要新候選檢查、CI狀態與提交SHA另以原始證據報告。其他154項仍可查，並非外部阻塞；不得用這次推送代稱完整中央交付，也不授權merge／deploy／正式DB。
 
 工作樹預驗：九工大12項API／來源／九組條件12 passed（15.99s）、共用目錄快取6 passed（8.80s）、手機390／桌面1440九工大2 passed（108.04s）；六張內容截圖已逐圖檢視。這些不是後述新候選SHA完整結果。舊ded2ed1對同併發測試確實讀12次／預期4次，log與JUnit保留；為避免與browser搶資源停止該額外程序，process exit130另列，不能當完整測試執行。最後候選全部必要回歸依序執行，原新潟預設5秒不變。
+
+
+## 北海道兩協議候選映射（仍partial，待同SHA必要驗證）
+
+新增93筆公開來源紀錄；最新總數740／97目前讀取錯誤，Drive19份有SHA相符全文閱讀紀錄。院級與校級兩筆已人工映射，但都不是116當期核准，總數62 partial／214，152項尚可續查，0 full116。
+
+- 院級：2026/9/1北海道協議PDF7列中央工／理學院與北大相應單位、A／S／I、2018/2/5。Polar Institute對Arctic Research Center的2024協議僅A，不能當同一交換名額。校級列表另列NCU2025/8/8及學生交換標記；兩種協議／中央舊quota不合併。
+- HUSTEP只全日制UG、到校前兩年及GPA3/4同等，TOEFL79／IELTS6.5、CEFR C1可能接受，January2028採4.5為host原文政策，未硬換算。JLCSP只校級日語／文化主修UG非大一，申請N3同等；MEXT N2／年齡是獎學金條件。SA UG／Grad專業課與SRS Grad研究無學分分開。
+- 院級9 stages／17條件文件；校級13 stages／35條件文件。HUSTEP學生6／母校4、JLCSP學生5／母校3、SA／SRS一般7、PSS獨立6項（含一般可選推薦及條件獎學金）、母校提名、另email COE、個人JPETS、宿舍／保險／到校／離校各自獨立。未核當期仍全部needs_confirmation、正式下載封鎖；錄取／住校不自動判全必繳。
+- SA／SRS最新2026/8版2027春提名9/25已過、申請11/13；HUSTEP／JLCSP春10/23，JLCSP明示JST，未造23:59。全部是舊／相鄰年度，不建立116提醒；2027秋／2028春包未取得與官方尚未公告分開。
+- 已讀2026宿舍日英兩工作表與2026/7寢具5頁：押金50000、季節能源／清掃另付、房型及性別範圍；北23短日額JA806／EN807、寢具處理費日中含稅4000／EN4000＋稅矛盾保留。私人保證／火災與賠償保險另核；一般mid-Jan／mid-Jul不是programdeadline。
+- 國保資格確認書／MyNumber、HUSTEP三保險mandatory與一般生活頁recommended分开；FY2026年金17920仅當年參考，20–59及減免需核准。2025到校銀行指南北洋>6月、郵局app剩餘>3月／16歲／無存摺与紙本窗口不同；不排除全部五個月交換。2021郵局保費、2019舊卡制、一般degree學費不当交換116報價。
+- 原件視覺25頁已保存[SHA／頁碼對照](ncu-source-evidence/hokkaido-review-manifest.json)。JLCSP在學PDF只有影像，原生空頁保留且選定欄位人工轉錄，不稱OCR全文。JLCSP guide11頁、銀行／區役所文件及兩個Study Plan原生實讀；PSS資訊科学院Word已讀，但部局與交換適用須核。
+- PSS公開指引有交換選項，限實際支援部局；HTTP入口只unsupported browser錯誤且錯置京都信箱、ChromiumTLS失敗，沒有繞過或登入。ISA正常HTTP403與HU舊年金404保留，年金另循政府現行頁取得。不能把故障或403稱登入限定／官方未公告。
+- 仍可獨立查：HUSTEP83頁syllabus只讀PDF1–4，其餘79頁未詳讀；協議16頁只讀PDF7、其餘15頁未讀。原文與閱讀範圍在實際來源稽核顯示，未讀頁隔離問答索引。最新接收包、宿舍時限、互免條款與個人居留／JPETS為具體待取得項，不代稱全部外部阻塞。
+
+前一實作SHA `9671a106`已完成248 NCU pass、164 shared pass／2skip、52 browser pass與三輪原5秒冷測；證據專用`eeade3d1`保存[原始manifest／JUnit／cold reports](ncu-test-evidence/9671a106/README.md)。必要舊10 fail、quality failure／0jobs與資料門檻保留；CI runner.temp語法由淡江任務最小修正，NCU沒有重複改共用workflow。這些測試不能改標本次北海道新候選SHA；提交後另做固定SHA必要驗證。
+
+北海道預驗紀錄：新23項API／來源／18組身分與住房條件第一版19 passed／4 failed（測試誤把既有agreement_only寫needs_confirmation及生活摘要當完整guide），修正檢查實際API後23 passed；browser初版2 passed／2 failed發現流程只有名稱／簽章而漏表格連結。已限NCU補官方參考表格連結，當期適用警語及正式下載封鎖不變，第二版4 passed（144.78s）。兩次原始失敗未抹除。畫面另顯示生活每欄重複全校93來源，改NCU builder依逐欄refs供連結，到校段亦只列arrival已查來源；全部原件仍保留在來源稽核。最後版本提交後以新SHA再跑，不將preview改標提交結果。
+
+2026-10-08 23:18 UTC唯讀fetch：main `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`、CCU `0e70dbf29d0830ed3733c46090d5b7126689b958`、TKU `61659fe12cf5bb5f3fed2502f112039c7f8abd92`。新增NCU builder是獨立檔；共用app.js的表格參考連結只對NCU workflow啟用，其餘母校渲染不加連結。仍須按兩分支最新14共檔逐段整合；沒有合併、覆蓋或重複改TKU正在處理的CI workflow。

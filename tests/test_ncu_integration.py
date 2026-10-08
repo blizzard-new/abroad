@@ -1962,3 +1962,106 @@ def test_ncu_runtime_preserves_all_explicit_document_unknowns_and_alternatives()
             for source, document in zip(step.document_requirements, actual.document_requirements):
                 for key in ['name', 'copies', 'copy_type', 'signatures', 'stamps', 'official_form_url']:
                     assert getattr(document, key) == getattr(source, key), (workflow.school_name, source.name, key)
+
+
+@pytest.mark.parametrize('level,rowid,total', [('院級','ncu-116',17), ('校級','ncu-117',35)])
+def test_hokkaido_agreement_programme_and_sender_split_reaches_api(tmp_path, level, rowid, total):
+    partner = next(p for p in fetch_ncu_partner_universities() if f'北海道大學({level})' in p.school_name)
+    assert partner.quota is None and partner.availability_status == 'agreement_only'
+    client = TestClient(create_app(tmp_path))
+    response = client.get('/application-workflow', params={
+        'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116',
+    })
+    assert response.status_code == 200
+    workflow = response.json(); steps = {s['rule_id']:s for s in workflow['steps']}
+    assert workflow['review_status'] == 'pending_review' and workflow['published_at'] is None
+    assert len(steps['ncu-116-1-home-3']['document_requirements']) == 7
+    assert not steps[rowid+'-host-apply']['document_requirements']
+    initial = steps[rowid+'-host-sasrs-initial']['document_requirements']
+    assert len(initial) == 7 and 'if any' in initial[4]['name']
+    assert '大學＋研究所' in initial[3]['name'] and not initial[3]['signatures']
+    assert steps[rowid+'-host-sasrs-coe']['submission']['method'] == 'email'
+    assert steps[rowid+'-host-sasrs-initial']['submission']['method'] == 'online'
+    assert len(steps[rowid+'-host-srs-pss-provisional']['document_requirements']) == 6
+    assert '一般非必繳' in steps[rowid+'-host-srs-pss-provisional']['document_requirements'][-1]['name']
+    if level == '院級':
+        assert not any('jlcsp-' in key or 'hustep-' in key for key in steps)
+        assert 'department-wide' in ncu_field_audit(partner.school_name)['fields']['eligibility']['note']
+    else:
+        assert [len(steps[rowid+'-host-'+x]['document_requirements']) for x in [
+            'hustep-student-initial','hustep-home-initial','jlcsp-student-initial','jlcsp-home-initial',
+        ]] == [6,4,5,3]
+        mother = steps[rowid+'-host-jlcsp-home-initial']['document_requirements'][0]
+        assert mother['signatures'] == ['母校系所／國際事務承辦簽名'] and mother['stamps'] == ['Official Stamp']
+        assert mother['copies'] is None
+        assert not any(d['name']=='語言自我評估表' for step in steps.values() for d in step['document_requirements'])
+    catalog = client.get('/application-center/catalog', params={
+        'school':'NCU','target_school':partner.school_name,'academic_year':'116',
+        'host_admission_status':'accepted','housing_choice':'on_campus',
+    }).json()
+    conditional = [x for x in catalog['items'] if x['applicability']]
+    assert len(conditional) == total
+    assert all(x['applicability']['status']=='needs_confirmation' and not x['download_available'] for x in conditional)
+    assert all(not s['deadline_reminder_eligible'] for s in steps.values())
+
+
+@pytest.mark.parametrize('level', ['院級','校級'])
+def test_hokkaido_reference_year_conflicts_and_student_content(tmp_path, level):
+    partner = next(p for p in fetch_ncu_partner_universities() if f'北海道大學({level})' in p.school_name)
+    audit = ncu_field_audit(partner.school_name)
+    assert '2027春' in audit['fields']['host_deadline']['note'] and '已過' in audit['fields']['host_deadline']['note']
+    assert 'January2028' in audit['fields']['language']['note'] and '可能接受' in audit['fields']['language']['note']
+    assert '無修課學分' in audit['fields']['eligibility']['note'] or '無修課／學分' in audit['fields']['eligibility']['note']
+    assert '806' in audit['fields']['housing']['note'] and '807' in audit['fields']['housing']['note']
+    assert '日中寫含稅' in audit['fields']['housing']['note'] and '英文寫＋稅' in audit['fields']['housing']['note']
+    assert 'CSSD' in audit['fields']['host_documents']['note'] and '中央在學者依母校所在地' in audit['fields']['host_documents']['note']
+    assert '官方全部未公告' in audit['fields']['host_deadline']['note']
+    client = TestClient(create_app(tmp_path))
+    life = client.get('/school-life-context',params={'home_school':'NCU','school':partner.school_name})
+    assert life.status_code == 200
+    text = json.dumps(life.json(),ensure_ascii=False)
+    for needle in ['50000','806','807','2300','17920','在留卡剩餘>3月']:
+        assert needle in text
+    destination=client.get('/destination-profile',params={'home_school':'NCU','school':partner.school_name})
+    assert destination.status_code==200 and '資格確認書' in json.dumps(destination.json(),ensure_ascii=False)
+    sections={s['key']:s for s in destination.json()['student_guide_sections']}
+    assert sections['housing']['source_urls']==audit['fields']['housing']['source_urls']
+    assert 'https://pre-admission.oia.hokudai.ac.jp/' not in sections['housing']['source_urls']
+    shown = next(p for p in client.get('/student-dashboard',params={'school':'NCU'}).json()['partner_universities'] if p['school_name']==partner.school_name)
+    summary = json.dumps(shown['student_summary_zh'],ensure_ascii=False)
+    for needle in ['PSS','2027春','semester','N3','N2','SRS']:
+        assert needle in summary
+
+
+def test_hokkaido_original_scope_failed_interface_and_image_form_are_preserved():
+    from exchange_info.ncu_source_coverage import indexable_source_text
+    sources = {s['id']:s for s in json.loads(gzip.decompress((BUNDLE/'source-evidence.json.gz').read_bytes()))}
+    guide = sources['host-hokkaido-jlcsp-guide2027spring']
+    assert len(guide['pages'])==11 and guide['content_status']['all_pages_read']
+    syllabus = sources['host-hokkaido-hustep-syllabus2026spring']
+    assert len(syllabus['pages'])==83 and syllabus['reading_review']['pages_reviewed']==[1,2,3,4]
+    assert not syllabus['content_status']['all_pages_read']
+    assert 'Course Number' not in indexable_source_text(syllabus)
+    agreements = sources['host-hokkaido-department-partners2026sep']
+    assert len(agreements['pages'])==16 and agreements['reading_review']['pages_reviewed']==[7]
+    assert not agreements['content_status']['all_pages_read']
+    university = sources['host-hokkaido-university-partners']
+    assert 'August 8, 2025' in university['pages'][0]['text'] and not university['content_status']['all_pages_read']
+    form = sources['host-hokkaido-jlcsp-blank-2']
+    assert form['pages'][0]['text']=='' and form['content_status']['all_pages_read']
+    assert form['content_status']['visual_reviewed_page_count']==1 and not form['content_status']['any_text']
+    assert 'coordinator' in form['page_transcriptions'][0]['text']
+    plan = sources['host-hokkaido-hustep-blank-2']
+    assert plan['document_format']=='xls_native_sheets_no_pdf_pages' and plan['content_status']['all_pages_read']
+    assert plan['previous_attempts'][0]['error'] and not plan.get('error')
+    for ident,status in [('government-pension',404),('government-student-residence',403),('government-affiliation',403),('pss-registration-public',200),('pss-registration-browser',None)]:
+        source=sources['host-hokkaido-'+ident]
+        assert source['status']==status and source['error'] and not source['content_status']['all_pages_read']
+    for ident in ['government-nhi-hokkaido-zh','government-pension','government-student-residence','government-affiliation']:
+        assert sources['host-hokkaido-'+ident]['kind']=='government_official'
+        assert sources['host-hokkaido-'+ident]['authority_kind']=='government'
+    fees = sources['host-hokkaido-housing-fees2026jun']
+    assert len(fees['pages'])==2 and len(fees['reading_review']['sheets_reviewed'])==2 and fees['content_status']['all_pages_read']
+    bank = sources['host-hokkaido-bank-online2025']
+    assert bank['reading_review']['pages_reviewed']==list(range(2,21))
+    assert bank['content_status']['all_pages_read'] and bank['content_status']['visual_reviewed_page_count']==4

@@ -9284,7 +9284,7 @@ function renderWorkflowStep(step, index, workflow) {
         ${renderWorkflowSubmission(step)}
         ${renderWorkflowSubmissionProgress(workflow, step)}
         ${step.details?.length ? `<div><h4>具體要做</h4><ul>${step.details.map((detail) => `<li>${highlightHtml(detail)}</li>`).join("")}</ul></div>` : ""}
-        ${requirements.length ? `<div><h4>這一步要準備</h4><ul class="workflow-documents">${requirements.map(renderWorkflowDocumentRequirement).join("")}</ul></div>` : ""}
+        ${requirements.length ? `<div><h4>這一步要準備</h4><ul class="workflow-documents">${requirements.map((requirement) => renderWorkflowDocumentRequirement(requirement, { showReferenceForm: workflow.home_university === "國立中央大學" })).join("")}</ul></div>` : ""}
         ${step.action_url ? `<a class="official-link workflow-action" href="${escapeHtml(step.action_url)}" target="_blank" rel="noreferrer"><span>開啟這一步的官方頁面</span><i data-lucide="external-link" aria-hidden="true"></i></a>` : ""}
         ${workflow.workflow_id && workflow.issue_report_snapshot && step.rule_id ? `<div class="workflow-step-report"><span>發現資格、期限、文件或送件資訊不一致？</span><button type="button" class="text-button" data-workflow-issue-report data-step-rule-id="${escapeHtml(step.rule_id)}"><i data-lucide="message-square-warning" aria-hidden="true"></i>回報此步驟</button></div>` : ""}
       </div>
@@ -9374,16 +9374,19 @@ function renderWorkflowSubmission(step) {
     </div>`;
 }
 
-function renderWorkflowDocumentRequirement(requirement) {
+function renderWorkflowDocumentRequirement(requirement, { showReferenceForm = false } = {}) {
   const metadata = [];
   if (requirement.copies) metadata.push(`${requirement.copies} 份`);
   metadata.push(WORKFLOW_COPY_LABELS[requirement.copy_type] || "文件形式待確認");
   if (requirement.signatures?.length) metadata.push(`簽署：${requirement.signatures.join("、")}`);
   if (requirement.stamps?.length) metadata.push(`核章：${requirement.stamps.join("、")}`);
+  const referenceUrl = showReferenceForm && requirement.official_form_url
+    ? safeSourceUrl(requirement.official_form_url)
+    : null;
   return `
     <li class="${requirement.needs_confirmation ? "needs-confirmation" : ""}">
       <i data-lucide="${requirement.needs_confirmation ? "circle-help" : "file-check-2"}" aria-hidden="true"></i>
-      <span><b>${highlightHtml(requirement.name)}</b><small>${metadata.map(escapeHtml).join(" · ")}${requirement.needs_confirmation ? " · 待官方確認" : ""}</small></span>
+      <span><b>${highlightHtml(requirement.name)}</b><small>${metadata.map(escapeHtml).join(" · ")}${requirement.needs_confirmation ? " · 待官方確認" : ""}</small>${referenceUrl && referenceUrl !== "#" ? `<small><a href="${escapeHtml(referenceUrl)}" target="_blank" rel="noopener noreferrer">官方參考表格（當期適用待確認）</a></small>` : ""}</span>
     </li>`;
 }
 
