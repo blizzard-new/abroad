@@ -734,7 +734,37 @@
     "diff_check": "passed",
     "offline_rebuild": "passed in TKU regression test",
     "lockfile_check": "exit 1 on this branch and untouched f6ad: The lockfile at uv.lock needs to be updated; uv.lock unchanged",
-    "remote_ci": "Delivery evidence will be checked after push and recorded in PR/final reply; local passes do not establish remote CI success."
+    "remote_ci": "quality run37728615498 failure, zero jobs, log not found; one separate Supabase Preview check skipped; cause unverified"
   },
-  "remaining_scope": "124 archived programme rows are reference-only; current host details are reviewed only for the four latest Japanese choices. Nagasaki NICS/graduate mapping, UEC 2027-specific forms, and 13 source conflicts remain explicit."
+  "remaining_scope": "124 archived programme rows are reference-only; current host details are reviewed only for the four latest Japanese choices. Nagasaki NICS/graduate mapping, UEC 2027-specific forms, and 13 source conflicts remain explicit.",
+  "delivery_evidence": {
+    "application_commit": "78849153528068a61aabec9de0437d4ee9d132ba",
+    "remote_branch_head_verified": "78849153528068a61aabec9de0437d4ee9d132ba",
+    "main_head_verified": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "push": "normal fast-forward, no force",
+    "pr": {
+      "url": "https://github.com/blizzard-new/abroad/pull/2",
+      "state": "OPEN",
+      "is_draft": true,
+      "mergeable": "MERGEABLE"
+    },
+    "quality_run": {
+      "id": 37728615498,
+      "url": "https://github.com/blizzard-new/abroad/actions/runs/37728615498",
+      "status": "completed",
+      "conclusion": "failure",
+      "jobs": 0,
+      "failed_log_exit_code": 1,
+      "failed_log_error": "failed to get run log: log not found",
+      "cause": "not verified"
+    },
+    "check_runs": [
+      {
+        "name": "Supabase Preview",
+        "status": "completed",
+        "conclusion": "skipped"
+      }
+    ],
+    "following_evidence_commit": "documentation only; final HEAD verification is reported in PR/final reply"
+  }
 }

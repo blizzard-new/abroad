@@ -70,7 +70,9 @@ TKU **20 passed**。擴大回歸 **301 passed、9 failed、6 skipped**；9 個 f
 
 OpenAPI --check、Python／JavaScript 語法、git diff --check 及資料離線重建逐位元一致通過。`uv lock --check` 在本分支及未改 f6ad 基準均實際 exit 1：`The lockfile at uv.lock needs to be updated`；未修改 lockfile，使用既有 frozen venv。
 
-遠端 CI 不宣稱通過：此前 cd48 quality run 37724530515 和 main f6ad run 37723868722 均 failure；沒有 job／check-run 的原因尚未核實，取失敗 log 曾實際報 `log not found`。本輪推送後的 branch HEAD、draft PR 與 run 查核另在 PR／最後回覆回報；本地通過不表示遠端 CI 綠燈。
+程式／資料 commit `78849153528068a61aabec9de0437d4ee9d132ba` 已正常推送，`git ls-remote` 與本地一致；[draft PR #2](https://github.com/blizzard-new/abroad/pull/2) 為 OPEN／draft／MERGEABLE，main 仍為 f6ad。後續證據提交只更新交接文件。
+
+本輪 [quality run 37728615498](https://github.com/blizzard-new/abroad/actions/runs/37728615498) 為 completed／failure、jobs **0**；取失敗 log 實際 exit 1：`failed to get run log: log not found`。該 commit 的 check-runs **1**，為 `Supabase Preview`／completed／skipped；沒有品質 job 執行結果或部署成功證據。失敗原因尚未核實，不推測為配額或宣稱 CI 通過。此前 main f6ad 的 quality run 37723868722 亦 failure；本地通過不表示遠端 CI 綠燈。最終文件提交的遠端 HEAD 與 CI 查核另在 PR／最後回覆回報。
 
 未解資料為英歐／中文新版、各系所提前截止、長崎 NICS／研究生對應、UEC 2027 專屬版及 13 組來源矛盾；124 舊期學校外校欄位未逐校查新期，不冒稱完整。需官方新版／提名材料／承辦澄清才能提升狀態，未聯繫校方。
 
