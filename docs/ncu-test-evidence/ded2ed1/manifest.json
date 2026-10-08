@@ -1,0 +1,623 @@
+{
+  "candidate_sha": "ded2ed1a79a5f3cb009655790eb560816a7af61a",
+  "started_at": "2026-10-08T21:00:12.259097+00:00",
+  "results": [
+    {
+      "name": "ncu_unit",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ncu_integration.py",
+        "tests/test_ncu_document_conditions.py",
+        "tests/test_ncu_source_collector.py",
+        "tests/test_school_completeness.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/ncu_unit.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu",
+      "exit_code": 0,
+      "started_at": "2026-10-08T21:00:12.283625+00:00",
+      "finished_at": "2026-10-08T21:05:07.215880+00:00",
+      "log": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/ncu_unit.log",
+      "junit": {
+        "tests": 236,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": []
+    },
+    {
+      "name": "shared_regression",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_school_content.py",
+        "tests/test_ntpu_support.py",
+        "tests/test_ntu_audit.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_application_rules.py",
+        "tests/test_application_document_catalog.py",
+        "tests/test_application_documents_api.py",
+        "tests/test_fit_signals.py",
+        "tests/test_task_documents_and_reference_plan.py",
+        "tests/test_workflow_structuring.py",
+        "tests/test_account_workspace_api.py",
+        "tests/test_application_workflow.py",
+        "tests/test_workflow_context_api.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/shared_regression.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu",
+      "exit_code": 0,
+      "started_at": "2026-10-08T21:05:07.269930+00:00",
+      "finished_at": "2026-10-08T21:06:18.536000+00:00",
+      "log": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/shared_regression.log",
+      "junit": {
+        "tests": 160,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2
+      },
+      "failed_test_cases": []
+    },
+    {
+      "name": "existing_gate_failures",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ntpu_bundled_data.py",
+        "tests/test_frontend_contract.py",
+        "tests/test_rag.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/existing_gate_failures.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu",
+      "exit_code": 1,
+      "started_at": "2026-10-08T21:06:18.572381+00:00",
+      "finished_at": "2026-10-08T21:06:32.258120+00:00",
+      "log": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/existing_gate_failures.log",
+      "junit": {
+        "tests": 65,
+        "failures": 10,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": [
+        {
+          "name": "test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+          "class": "tests.test_ntpu_bundled_data",
+          "message": "assert 0 == 1"
+        },
+        {
+          "name": "test_web_routes_states_and_touch_targets_are_consistent",
+          "class": "tests.test_frontend_contract",
+          "message": "assert 'renderCommunityEmpty(\"社群暫時無法載入\", error.message, \"error\")' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+        },
+        {
+          "name": "test_community_identity_preview_matches_public_name_and_resets_per_submission",
+          "class": "tests.test_frontend_contract",
+          "message": "assert 'fetchCommunityAuth(url)' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+        },
+        {
+          "name": "test_web_notification_center_and_explicit_email_opt_in_are_present",
+          "class": "tests.test_frontend_contract",
+          "message": "assert '重新核對申請清單' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+        },
+        {
+          "name": "test_application_center_separates_official_requirements_from_preparation_tools",
+          "class": "tests.test_frontend_contract",
+          "message": "assert '不會用其他年度或其他學校的文件代替' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+        },
+        {
+          "name": "test_successful_login_closes_before_noncritical_account_hydration",
+          "class": "tests.test_frontend_contract",
+          "message": "assert 'app.js?v=20260929-chinese-1' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...08-2\" defer></script>\\n    <script src=\"/static/app.js?v=20261008-ncu-sources-3\" defer></script>\\n  </body>\\n</html>\\n'"
+        },
+        {
+          "name": "test_personal_application_plan_uses_structured_api_and_progressive_login",
+          "class": "tests.test_frontend_contract",
+          "message": "assert 'id=\"eligibility-department\"' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...08-2\" defer></script>\\n    <script src=\"/static/app.js?v=20261008-ncu-sources-3\" defer></script>\\n  </body>\\n</html>\\n'"
+        },
+        {
+          "name": "test_global_home_board_routing_and_following_are_present",
+          "class": "tests.test_frontend_contract",
+          "message": "assert '查看學生身分驗證' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+        },
+        {
+          "name": "test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+          "class": "tests.test_frontend_contract",
+          "message": "assert '暫不可建立正式申請計畫' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...08-2\" defer></script>\\n    <script src=\"/static/app.js?v=20261008-ncu-sources-3\" defer></script>\\n  </body>\\n</html>\\n'"
+        },
+        {
+          "name": "test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused",
+          "class": "tests.test_rag",
+          "message": "assert 422 == 503\n +  where 422 = <Response [422 Unprocessable Content]>.status_code"
+        }
+      ]
+    },
+    {
+      "name": "openapi",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "cwd": "/workspace/abroad-ncu",
+      "exit_code": 0,
+      "started_at": "2026-10-08T21:06:32.308913+00:00",
+      "finished_at": "2026-10-08T21:06:39.106469+00:00",
+      "log": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/openapi.log"
+    },
+    {
+      "name": "main_workflow_export",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "/tmp/ncu-omu-parity-export.py"
+      ],
+      "cwd": "/tmp/abroad-ncu-baseline",
+      "exit_code": 0,
+      "started_at": "2026-10-08T21:06:39.131140+00:00",
+      "finished_at": "2026-10-08T21:06:45.147206+00:00",
+      "log": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/main_workflow_export.log"
+    },
+    {
+      "name": "workflow_parity",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "/tmp/ncu-omu-parity-compare.py"
+      ],
+      "cwd": "/workspace/abroad-ncu",
+      "exit_code": 0,
+      "started_at": "2026-10-08T21:06:45.167658+00:00",
+      "finished_at": "2026-10-08T21:06:56.420659+00:00",
+      "log": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/workflow_parity.log"
+    },
+    {
+      "name": "js_app",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/app.js"
+      ],
+      "cwd": "/workspace/abroad-ncu",
+      "exit_code": 0,
+      "started_at": "2026-10-08T21:06:56.445004+00:00",
+      "finished_at": "2026-10-08T21:06:56.545716+00:00",
+      "log": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/js_app.log"
+    },
+    {
+      "name": "js_discovery-ui",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/discovery-ui.js"
+      ],
+      "cwd": "/workspace/abroad-ncu",
+      "exit_code": 0,
+      "started_at": "2026-10-08T21:06:56.568326+00:00",
+      "finished_at": "2026-10-08T21:06:56.622742+00:00",
+      "log": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/js_discovery-ui.log"
+    },
+    {
+      "name": "js_multi-plan",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/multi-plan.js"
+      ],
+      "cwd": "/workspace/abroad-ncu",
+      "exit_code": 0,
+      "started_at": "2026-10-08T21:06:56.661762+00:00",
+      "finished_at": "2026-10-08T21:06:56.730479+00:00",
+      "log": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/js_multi-plan.log"
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "cwd": "/workspace/abroad-ncu",
+      "exit_code": 0,
+      "started_at": "2026-10-08T21:06:56.754195+00:00",
+      "finished_at": "2026-10-08T21:06:56.762658+00:00",
+      "log": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/diff.log"
+    },
+    {
+      "name": "lock",
+      "command": [
+        "uv",
+        "lock",
+        "--check"
+      ],
+      "cwd": "/workspace/abroad-ncu",
+      "exit_code": 0,
+      "started_at": "2026-10-08T21:06:56.782266+00:00",
+      "finished_at": "2026-10-08T21:06:56.904192+00:00",
+      "log": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/lock.log"
+    },
+    {
+      "name": "browser_ncu_ntu",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/e2e/test_ncu_acceptance.py",
+        "tests/e2e/test_ncu_niigata.py",
+        "tests/e2e/test_ncu_school.py",
+        "tests/e2e/test_ntu_school.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser_ncu_ntu.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu",
+      "exit_code": 1,
+      "started_at": "2026-10-08T21:06:56.948582+00:00",
+      "finished_at": "2026-10-08T21:30:29.254669+00:00",
+      "log": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser_ncu_ntu.log",
+      "junit": {
+        "tests": 50,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": [
+        {
+          "name": "test_ncu_niigata_iec_graduate_finance_and_source_scope[390]",
+          "class": "tests.e2e.test_ncu_niigata",
+          "message": "AssertionError: Locator expected to contain text 'IEC No.1／2'\nActual value: \n        詳細申請流程\n        \n    \n      正在查核中央與合作校官方申請流程…\n      \n      \n    \n       \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for locator(\"#detail-application\")\n    7 × locator resolved to <section hidden=\"\" tabindex=\"0\" role=\"tabpanel\" id=\"detail-application\" class=\"detail-section workflow-section\" aria-labelledby=\"detail-tab-application\">…</section>\n      - unexpected value \"\n        詳細申請流程\n        \n    \n      正在查核中央與合作校官方申請流程…\n      \n      \n    \n      \"\n\nAria snapshot:\n- link \"跳到主要內容\":\n  - /url: \"#main-content\"\n- main:\n  - button \"開啟功能選單\"\n  - link \"UniWay 首頁\":\n    - /url: \"#home\"\n    - strong: UniWay\n  - status\n  - region \"新潟大學 Niigata University\":\n    - button \"加入比較新潟大學 Niigata University\"\n    - button \"登入建立計畫\"\n    - link \"官方來源\":\n      - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf#page=5\n    - text: 日本 · 交換學生 下一站\n    - strong: 日本\n    - heading \"新潟大學 Niigata University\" [level=1]\n    - text: 我的資格\n    - strong: 尚未進行資格初判\n    - text: 合作校參考時程\n    - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】2027春母校提名／申請同一2026/11/1–11/10期間，日本時間，沒有明示一律23:59截止；11/1前網站不可使用。研究科基本資訊亦母校於11/10 JST前email。 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】2027秋host現頁明示to be announced、normally early May2027；只能顯示尚未公告，不能推固定5/10。Spring2028新版尚未取得，與已明示尚未公告不同。中央116甄選11/16才開始，春2027外校11/10不是本梯可準備提醒。 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】2024附件Spring2025 Nov10/2024 tentative、標Fall2026卻寫Oct2025/May10/2025，矛盾與過期分列，不用標題推2026截止。（適用年度待確認）\n    - text: 語言門檻\n    - strong: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced…\n    - text: 生活費參考\n    - strong: 官方費用待查核\n    - text: 交換名額\n    - strong: 依公告\n    - text: 研修期間\n    - strong:\n      - text: 116母校方案：2027/9–2028/2\n      - strong: 一學期\n      - text: 、2027/9–2028/6\n      - strong: 一學年\n      - text: 、2028/2–6\n      - strong: 一學期\n      - text: ；實際依外校校曆與可提名學期確認。 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】2027春一semester Apr1–Aug31/2027、兩semester Apr1/2027–Feb29/2028，建議三月底抵達、參加完整課／考試，不接受數週或三月不到\n      - strong: 一學期\n      - text: 的交換；年期真實包含2028閏日。 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】2027正式校曆整頁原圖核：Term1 Apr8–Jun8、Term2 Jun10–Aug5、Term3 Oct4–Dec1、Term4 Dec3–Feb14；普通入學／迎新Apr5／Apr6–7與Oct1不能當已收到個人交換報到通知。春／秋各兩term不是各四semester；課程考試結束與身分／住房期別分開。\n    - tablist \"交換學校詳細資訊\":\n      - tab \"快速了解\" [selected]\n      - tab \"申請方式\"\n      - tab \"生活情報\"\n      - tab \"出發前提醒\"\n      - tab \"學生心得\"\n      - tab \"學生社群\"\n    - tabpanel \"快速了解\":\n      - heading \"申請重點\" [level=2]\n      - article:\n        - text: 01 國立中央大學規定\n        - heading \"校內甄選\" [level=3]\n        - paragraph: 通過中央甄選後，由校方提名。\n      - article:\n        - text: 02 合作校規定\n        - heading \"提名後申請\" [level=3]\n        - paragraph: 依合作校要求送件，等待審查結果。\n      - note:\n        - strong: 本期名額待公告\n        - paragraph: 可先加入志願規劃；能否申請須等本期名額與條件公告\n        - group: 完整說明\n      - group: 這所學校的資料完整度\n      - group: 已查來源、適用年度與未解問題\n      - group: 選校參考\n      - group: 方案資料\n      - region \"合作校條件\":\n        - heading \"合作校條件\" [level=3]\n        - heading \"資格與語言重點\" [level=4]\n        - list:\n          - listitem: 116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】IEC No.1／2均在五十嵐校區學習、住校外附近生協委託公寓；一般新潟有五十嵐與旭町兩校區。研究科No.3–11按實際接收，不按校名或醫療關鍵字自動配校區。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】未標年中央介紹地址8050 2-no-cho Ikarashi只介紹地址，不保證所有研究生配置；2027總合學術新研究科與舊現代社會文化／自然科學研究科送件窗口分開。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】host現頁與2027春須能以日語或英語順利溝通，未設統一英日語考試最低分；持有考試成績／證書可交影本，不把有則交變成全部必交。中央home正式語檢仍必繳且不同有效期／影本規則。\n          - listitem:\n            - text: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】一般日語專業課需要理解內容並通過課業的N2／N1程度；不是所有exchange或英語課一律JLPT N2考試證照門檻。日語課從初中級至高級，不保證零日語能湊足七堂與專業採認。備用\n            - strong: 申請表\n            - text: 自評JLPT／CEFR、沒有用下拉N1–N5／C2–A1選項推入學門檻。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】2027春須全程母校正規UG／研究生學籍並繳母校學費，不能在交換結束時已從母校畢業；交換僅完整一或兩semester。中央舊未標年second year or above未在新簡章明列，不以舊表自動封一年級或擴研究科。\n          - listitem:\n            - text: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】host不是一般\n            - strong: GPA\n            - text: 2.3：前一年度成績用NU指定公式至少2.30／最高3.00；前年度沒成績可最近一semester、依成績點數乘學分總和／全部註冊學分，含不及格，四捨五入到二位。新公式沒有舊中央零學分按1說明，須承辦確認，不能以平台平均85或\n            - strong: GPA\n            - text: 4制當已通過。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】研究生依目的只選No.2–11一個：IEC No.2原則不能修研究所課／不配置專業指導教授；No.3–11研究科初次只送基本資訊、之後另指示。被研究科拒收不能同一期間再改申IEC；醫齒保健No.11建議提前一年洽詢，是建議而非一律提前一年截止。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】IEC至少每週7堂×90分鐘，對應10小時以上；不是7學分或任何七個課名。需Student Web System申請與教師許可，容量、抽籤、先修與聽課對象可能拒絕，UG不得研究所課；IEC研究生No.2原則也不修研究所專業，研究科接收另外處理。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】2027日語課明示2027/3另公布、2027春／秋外語課還準備中；目前2026春3頁與秋3頁原生全讀，包含英／中／法文、UG與研究所各段，不拿外語列表保證全英或研究所可選。扁平數字如22不直接當22學分，須原表／SYLLABUS。\n        - group: 查看其餘 7 項說明\n        - heading \"合作校申請步驟\" [level=4]\n        - list:\n          - listitem:\n            - text: 校內線上申請2026/11/16 09:00至12/4 12:00（臺灣時間）。紙本資料另須12/11 17:00前交系所；系所12/18 17:00前送國際處，不能把系所送件日當學生\n            - strong: 截止日\n            - text: 。\n          - listitem: 校內初審只取得推薦資格；須由外校另行審查並核發入學許可，且取得簽證。\n          - listitem: 校內必繳正式外語檢定，不限級數；英檢須兩年內有效，線上關閉前須備妥並上傳，不接受網路截圖或補繳。外校要求之語檢分開查核。\n          - listitem:\n            - text: 校內必繳：簽核\n            - strong: 申請表\n            - text: 、家長\n            - strong: 同意書\n            - text: 、個資\n            - strong: 同意書\n            - text: 、正式語檢影本、中文歷年成績、中文名次證明、加蓋國際處章戳之國際移動力證明。\n          - listitem: 簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。\n          - listitem: 外校文件／表格尚未取得並完成116適用性核對；中央通用提名流程不是外校文件清單。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】IEC No.1／2初次學生六類各一份：正式成績、入學前半年內在學、護照影本、入學前半年內健康、COE申請Excel不貼照片、4×3清晰數位照。健康blank包含半年內胸部X光、醫師簽名日期及留學健康判斷；疫苗歷史與病史只是醫師填表欄，不regex判健康不合格。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】財力另條件：本人支應僅本人存款證明；他人支應則經費支弁、支應者銀行、年收入、在職四份各1，月平均至少89000JPY不是存款總額89000或別校480000。無法供某證明早告host；新經費表填關係／支應月額方式／地址職場電話／署名印，不杜撰雙方簽名加章全部必需。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】母校承辦合一Recommendation XLSX列所有學生、交換排名與獎學金排名可以不同，母校簽名或公印擇一，不要求兩者都有；含預計母校畢業、學期期數、host成績寄送地址。非英日文件附打字英日翻譯、可以本人譯，不杜撰必須公證翻譯。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】母校先email推薦，11/1開網站後由承辦登錄上傳影本；只有網站無法成功才用備用志願XLSX並email全件，原件保留至抵達，不要求全體寄紙本。備用表含兩段日文約800字／英文約400字理由與study plan，一年兩semester分寫；公開只第一張空白，原四張已讀三、第四2026秋承辦表未讀不發布。\n        - group: 查看其餘 9 項說明\n        - heading \"費用提醒\" [level=4]\n        - list:\n          - listitem: 中央交換期間仍須註冊及繳本校學雜費；外校是否免學費與其他校方收費須逐方案核對，不保證一律免繳。\n          - listitem:\n            - text: 【中央公開介紹參考；年份／116適用性未確認】生活費：Around 22,000 日圓 每月（新潟大學.pdf PDF，第1頁；\n            - link \"官方連結\":\n              - /url: https://drive.google.com/file/d/1LaJLRg4tEKF3D20sLN4IQrANq-gXhfho/view\n            - text: ）\n          - listitem:\n            - text: 【中央公開介紹參考；年份／116適用性未確認】簽證：Student are required to submit the application of Certificate of Eligibility (COE). School will apply for COE to Immigration Bureau. Niigata send COE to the student’s home university and the student can apply for student visa with the COE.（新潟大學.pdf PDF，第1頁；\n            - link \"官方連結\":\n              - /url: https://drive.google.com/file/d/1LaJLRg4tEKF3D20sLN4IQrANq-gXhfho/view\n            - text: ）\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】2027春IEC検定／入學費0，學費14800JPY每credit；只有適用fee-waiver協議且母校按免學費身分提名才免，不將所有中央nomination當已核互免。母校中央學費維持另繳。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】一般研究科聽課14800／credit、特別研究29700／月屬不同身分；不免時聽課4/10月出invoice月底前繳，研究每3月一期。研究科後續實際接受身分／協議費用須通知，不套IEC免費或現行degree減免。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】2027春簡章約80000JPY／月含租、伙食水電，旅費／初期費另加；host交換頁細項伙食25000、水電15000、NHI2000估、Ikarashi租25000–45000／Asahimachi35000–55000，教材電話個人另計，不在80000之上再全加同一租。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】新生建議到校帶200000–250000JPY可支應初期到銀行設立前生活；舊中央22000／月非新總生活費，也不能當IEC22k宿舍價。COE銀行月平均至少89000是證明能力而非校方估生活費80000或總餘額門檻。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】一般交換頁說6月以上才可開銀行，2027春5月與JASSO舊秋新生指定銀行說明存在範圍差異，需要NU／銀行按個人資格確認，不宣稱日本法律一律禁半年內開帳。國保／學研災費是估或舊文，未获獎學金不從預算減80000。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】2027春IEC只用五十嵐附近Co-op Leased Apartments服務、單人不可共住或中途移房；接收後另通知online入口／日期，不用International House或Rikka當全體可申。核准準備後取消負擔已花費，到日本後取消住處3月租違約、90天內移出補到3月租差額，不能省略。\n          - listitem: 【中央115歷史名單非116名額。已讀2026/10公布2027春IEC兩語六頁、研究所分流／空白表、2027校曆與生活來源；春2027不屬中央116出發期。host現頁明示秋2027期限to be announced，Spring2028新版未取得；全部當期提醒仍封鎖。】一般生協委託一次初期67500JPY＝liability8500／年＋rentguarantee10000／年＋clean44000＋生協出資5000（結束按規則返還）；NU付押金仲介，但月租水電自付。房間家具／網路含，床有但床具另13000現金估。\n        - group: 查看其餘 9 項說明\n      - link \"學校網站\":\n        - /url: https://www.niigata-u.ac.jp/en/study/exchange/\n      - link \"官方來源\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf#page=5\n    - complementary \"申請準備進度與官方來源\":\n      - heading \"我的申請進度\" [level=2]\n      - progressbar \"申請準備進度\":\n        - strong: 0 / 5 已完成\n        - text: 準備中\n      - paragraph:\n        - text: 登入以保存進度\n        - button \"登入\"\n      - checkbox \"確認資格與語言門檻\" [disabled]\n      - text: 確認資格與語言門檻\n      - checkbox \"比較課程、費用與生活\" [disabled]\n      - text: 比較課程、費用與生活\n      - checkbox \"備妥校內申請文件\" [disabled]\n      - text: 備妥校內申請文件\n      - checkbox \"完成校內甄選送件\" [disabled]\n      - text: 完成校內甄選送件\n      - checkbox \"完成合作校線上申請\" [disabled]\n      - text: 完成合作校線上申請\n      - strong: 送件前確認\n      - paragraph: 截止日與資格以當期官方公告為準。\n- paragraph:\n  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），\n  - button \"停用匿名使用統計\"\n  - text: 。\n  - link \"隱私權政策\":\n    - /url: /privacy\n  - link \"使用條款\":\n    - /url: /terms"
+        }
+      ]
+    }
+  ],
+  "production_actions": false,
+  "full_ci_equivalence": false,
+  "data_coverage": {
+    "checked_at": "2026-10-08T00:00:00+00:00",
+    "academic_year": "116",
+    "home_notice_confirmed": true,
+    "current_list_status": "scheduled_not_yet_announced",
+    "current_list_expected_date": "2026-10-12",
+    "historical_rows": 216,
+    "catalog_entries": 214,
+    "source_documents_attempted": 459,
+    "source_documents_downloaded": 459,
+    "source_documents_any_text": 454,
+    "source_documents_all_pages_have_text": 423,
+    "source_documents_all_pages_read": 17,
+    "source_documents_visual_reviewed": 4,
+    "source_documents_ocr_reviewed": 1,
+    "source_documents_with_errors": 0,
+    "source_documents_with_text_quality_gaps": 2,
+    "source_documents_with_non_text_pages": 36,
+    "source_non_text_page_count": 100,
+    "host_web_checks": 562,
+    "host_web_checks_with_errors": 79,
+    "source_mapped_entries": 214,
+    "host_source_mapped_entries": 211,
+    "entries_with_any_host_text": 210,
+    "reviewed_host_records": 59,
+    "host_full_116_verification_count": 0,
+    "pending_workflows": 214,
+    "provenance_note": "提取不是當期資格核准；逐欄缺口與原文分列於field-audit.json。"
+  },
+  "data_acceptance_passed": false,
+  "ci_status": "not_checked_yet",
+  "workflow_parity": {
+    "main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "compared_count": 851,
+    "semantic_differences": 0,
+    "method": "untouched main runtime export revalidated with identical current schema; serialized values compared as a multiset including duplicate workflows",
+    "counts": {
+      "國立臺北大學": 409,
+      "長庚大學": 154,
+      "國立臺灣大學": 288
+    }
+  },
+  "browser_evidence": [
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-acceptance-comparison-1440.png",
+      "sha256": "4b5dc582991add677171c37bbd3720f0743058d6cdf7a159a85a3e31b1e07c1b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-acceptance-comparison-390.png",
+      "sha256": "361a5df4819c91a176b40aa574c82efc8c8b6ac1f84752a757ff4f06638c1e46"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-acceptance-document-tool-1440.png",
+      "sha256": "d62c22cae3bddd16e2b24b68668c217cbd38f04e8f823c4db69870b46957e880"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-acceptance-document-tool-390.png",
+      "sha256": "5fbb6d083bd41efe01d32c01192e69d4c4a1231c27df8985c36139ec93e444f3"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-acceptance-matching-plan-1440.png",
+      "sha256": "013b798ed4607c57d9f8351e3b632e09eaf6a8a658b270bab57600d6d5139846"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-acceptance-matching-plan-390.png",
+      "sha256": "aade664a0f6241576acc36a4da0f93b1dc136a53b66de7b79aa33ce9b1604624"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-bnu-slides-workflow-390.png",
+      "sha256": "c3fa17001ecce0ebac4c3292a6a0f4b526d9beb4810fbfb97d66bf71330d681f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-bupt-photo-conflict-390.png",
+      "sha256": "8adf7764de98e46a2d95cea7e3862735460fe28e843f7618fe3c54e99a7b7d35"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-ccnu-arrival-insurance-390.png",
+      "sha256": "ca627600e80e2e02cb5850d06e40f45dd1e4e6ab24af2cf6d09ed4826cbbee36"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-chd-workbook-390.png",
+      "sha256": "29e9f17016140b240acc2a823b9929fc313ec47691cb5a0316a9d7e34c5010da"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-chiba-initial-health-390.png",
+      "sha256": "fa4ec04d1bc76224b0b7dcf02b9e216f709253eea75f471d990796fda47e8067"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-chiba-insurance-plan-390.png",
+      "sha256": "63830a8d154ad2a97213f295b7f18ae3125b54f9f01019e2e45d8892b20efd1f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-chiba-insurance-visual-390.png",
+      "sha256": "586ed3e89aab64e85cccc50c5f834d66f3d15a60dc3abb7dd5051e140eaefd5f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-cqu-latest-registration-390.png",
+      "sha256": "43856dcfb273740f5605777e2ac96a668316d6a14ce2be9e1273de30a9233a03"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-fudan-initial-insurance-390.png",
+      "sha256": "ae5cdf5ba2a9b3f03a55ab4da1ba47834edc3a86468f56912ab17fbd81429d7b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-gxu-local-accident-insurance-390.png",
+      "sha256": "b35d0c707ef009f913f63c2f19d3de0a4525f4f044024a0b64a435b6cb403902"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-hiroshima-coe-stage-390.png",
+      "sha256": "45f58fbe2c0c030a8325064ff2ebde25575b8bbc1889d97ba3ad76b3be9e8df9"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-hiroshima-departure-stage-390.png",
+      "sha256": "7c2e3c784c6518d6f15b186fc5ccdc697bdad78a0dd07f257646a73643e47d81"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-hiroshima-fee-image-390.png",
+      "sha256": "7fcb481d205218501a16a48ad518e10dc89e8f2fa83d8a6a31da67ec944a1182"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-hust-deferred-health-1440.png",
+      "sha256": "67f64961b687b0d0b82490c5b4ab39e9e3558413c34d515f1db27c21aab54d7f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-hust-deferred-health-390.png",
+      "sha256": "2790c49311c4c95a3f456074a9b092967280fc17656a8ff905d126a477b226f9"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-hust-deferred-task-1440.png",
+      "sha256": "811d03c79279d6332d1a5818fad6252e9cec8e7f21f26b4798ba56b25ccb77ce"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-hust-deferred-task-390.png",
+      "sha256": "9dca863b339104c948fa6f56cb17c725583ad30238edc5b2a341a90e9ae4b38b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-hust-insurance-alternatives-390.png",
+      "sha256": "1c44147b975080de9ff828e4842c9427a794d98fd4f4db860eed4515f2b35005"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-life-1440.png",
+      "sha256": "22d5dd2e1a3da5d17ae4c0e549b1b4bc697a51e24832bd335fa96fd26676442e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-life-390.png",
+      "sha256": "7095b970c83ebc5ebe4c058e333dda29802a2545cdcb7b7265d3214796004ade"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-niigata-blank-sheet-scope-1440.png",
+      "sha256": "4a32a4e01f5294ceb1f66914743abaf2a3571f1038895f90c45e08e81bdae0cc"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-niigata-graduate-basic-only-1440.png",
+      "sha256": "c2e2b963512d1322641c2085dd9f4850de23236e76428887f48ea4678eb84874"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-niigata-housing-cost-scope-1440.png",
+      "sha256": "c49e4036a24c7b4e8bfeb64dd85920cb0222a63d5f5df0d814086a7d013099c4"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-nju-second-batch-390.png",
+      "sha256": "f30829f212a40f4cc097b781e221064bb53bbdaa3d0a8cfee14bdb28178f452d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-nuist-2027-documents-390.png",
+      "sha256": "71bb149f635b82826a6e9756e529a43acbfb16178f47da029886e23e71c838b2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-nuist-2027-life-390.png",
+      "sha256": "1192338a19f1ee3b8d21fe67715fccb2362e152e928b11574379aff178132ea6"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-nuist-2027-source-390.png",
+      "sha256": "d6f554c86114059672ec75196a28a3d90ec7933716e8dc47da1aeed9cbd1deb1"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-nuist-versions-390.png",
+      "sha256": "92fb2c46fd70f67a598e7017a9e527f1ff200433af29d75f14262f6700c13852"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-omu-iwing-cost-scope-390.png",
+      "sha256": "a1ff0cf28ed92e9ce3288515b1f169e5430353b463460d883b622b1c221082bc"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-omu-iwing-health-later-390.png",
+      "sha256": "e4bd8733561d7a968429ea76f463b6d86646eeb6a99d8f3674bcfe781a96fbaa"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-omu-optional-english-source-390.png",
+      "sha256": "d0b2bfd4fc41938507709b37721cf4f713149589b4e5ca9fda86f7b5ee7f70e1"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-science-health-scope-390.png",
+      "sha256": "ebacb38bf6abc9d8d54e401083f443f1d4cfea5542272a80e43f697a89b03c39"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-science-initial-coe-390.png",
+      "sha256": "b0533d5e319286e5dbb980e858b7d32d15a6922f07b4b3900e7cf426ea9b7a29"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-science-tiec2027-fee-390.png",
+      "sha256": "69e273a6c116001aba3bcc89902a3d13502d54ee0905875acf0590ccc57b8da3"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-scut-missing-blank-form-390.png",
+      "sha256": "788d1ab9c00e3612beb6488a9eb9dbcc961e3e059034d235cbc1c4245d928865"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-seu-health-condition-catalog-390.png",
+      "sha256": "a77792a0e79ad4855931012cd776cdaa7b001c3bbd48ef203bd97453412c4131"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-seu-reciprocal-health-390.png",
+      "sha256": "aee34ddfb911d42e02f97d7a344df1af460ad729927308e31d59e746bce4b18f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-shu-life-390.png",
+      "sha256": "fd5017e2c97dfbecb67ddcf77c9eac31e49ae8ecb42a84fd583ea067d4969c88"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-shu-visual-390.png",
+      "sha256": "4b9c6255af15d5a54ba15e30a52df3f0c735db8d82254707df017659b521dda7"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-source-1440.png",
+      "sha256": "04dc7ee04d86f6d97ecbcb40d0fd0e3ff4fc8271b76149a91c978b8a28cff7a6"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-source-390.png",
+      "sha256": "aec2e5fb093f212ef09c933ee5a77d48fdf2ba37c27e5ad0ab8de68dd6511305"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-sufe-life-390.png",
+      "sha256": "3991beb7784dd1c69280b945f21180cd7060097655c298dcd9a7c3e81062feb0"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-sufe-visual-390.png",
+      "sha256": "2c9bda784486093cf761d0f607bd37e9819282c47a2d7637e7c83d8f4a8d9b57"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-swu-major-portfolio-390.png",
+      "sha256": "ac65fc57dd2b10f22167158c1c43631fb24c9b8b29bcc4c638dc2011733cc45b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-swu-portfolio-condition-catalog-390.png",
+      "sha256": "f4d2046784110d4503c9c3c77c974136c82a172edf791acfabf03768f22e70a2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-tju-arrival-390.png",
+      "sha256": "d5e5c7bbb5cb0ee2190cdafd942a83f9273f993fd9c740b5278805abbab5164e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-tju-catalog-390.png",
+      "sha256": "e715b4f76861aa7b44f1b9a3e99076cae6bb0cbcd8040e16ae4f67cd30f91017"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-tju-source-390.png",
+      "sha256": "18218a43a09a3e4322f822da7fa2092a78bfc697c474da3fa3e8a772b33d5c44"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-tongji-new-list-390.png",
+      "sha256": "d44882443a168a0d83eb23618da404832a2d3131752cc233000d195178347b8b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-tuaf-390.png",
+      "sha256": "76c413213d8fd1bccddd6b11f2ae865a1841100fe88cf8e33dcb554f1d7ddd90"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-turku-390.png",
+      "sha256": "04b47630d2a37e02ceef6e62cc269de4a42fc179db2ba413bf5ef13948b3df35"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-ujn-hk-scope-390.png",
+      "sha256": "fa2199ec58865e5705532162cbe5bac51f22af1bfccc3fc655ce85726e07db29"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-undip-life-390.png",
+      "sha256": "8ff845c56a4f750f837a4d7235ba602fda071af575110b9ea73a2c77a5f2954c"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-undip-source-390.png",
+      "sha256": "32f98b99f8933e04aaf69464123967493a5e7b6a58fccb2cef8f791f5c5b3aec"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-uny-life-390.png",
+      "sha256": "725dedbcf4ec571f9cc17e9e6fe404cea4c2599147fe7aa7fc637bf6084b10e2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-uos-off-campus-1440.png",
+      "sha256": "c8a8b47a6ff46cfa2e9cf4e34aece6711dc8e40f6be8376b29eeb942914981e2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-uos-off-campus-390.png",
+      "sha256": "6eabd35757a291885f074ccdc0076eceda1c51e0e9913064b8400379c28a0682"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-uos-transport-390.png",
+      "sha256": "eeffb3b518ef69b9d6f51e533461f889657077541404446b859040625fb5ca6b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-uos-visa-form-390.png",
+      "sha256": "e7823f06e7708df864c0c886272fa1d762fcd583415987db06d930f7475819d5"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-uos-visual-390.png",
+      "sha256": "068e443c9ea0859bfb1f5e182ffe9f9a83fb3e03a2168555fd66cd19f558d9cb"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-workflow-1440.png",
+      "sha256": "d4e0fcd89733bfb0c54186b445b2f8fb93680adcedbb8ae7bb78f99f32a636f8"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-workflow-390.png",
+      "sha256": "05fdd220b3e628eb68832cd67717ce095bc2b2ac38312824a70f2c2b31afdf7b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-xjtu-mother-nomination-390.png",
+      "sha256": "288c6ec3a09c732c896e7d3e5a0f91aab4bea00df18656b44088f68233d04254"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-xmu-2027-image-390.png",
+      "sha256": "a8bb85d17c00506b885c34a6314a00248919b6cbd51945c7ebb594d104f59f8d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-xmu-health-docx-390.png",
+      "sha256": "1964c8695ba7bfa80ca23b26324f9af671c4a081531ea75266af24b23e5bfb9b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-zju-form-alternatives-catalog-390.png",
+      "sha256": "7691d07c5ca2dda3198d563cdf909c301696610811227c8abe61fc2029ea5408"
+    },
+    {
+      "path": "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/browser/ncu-zju-insurance-later-390.png",
+      "sha256": "71f3f375c806c552b4844127be0c1c267e63c535c60d0870c55a1e70d957729e"
+    }
+  ],
+  "same_sha_at_end": true,
+  "necessary_local_tests_passed": false,
+  "acceptance_status": "blocked",
+  "finished_at": "2026-10-08T21:30:29.499747+00:00"
+}

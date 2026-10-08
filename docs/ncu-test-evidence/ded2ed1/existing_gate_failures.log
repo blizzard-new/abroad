@@ -1,0 +1,279 @@
+CONFTEST LOADED!
+.F....F............................F.F......F.......F.FFF.......F        [100%]
+=================================== FAILURES ===================================
+_ test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbc5003f050>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-154/test_runtime_includes_tracked_0')
+
+    def test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data(
+        monkeypatch,
+        tmp_path,
+    ) -> None:
+        research = storage.read_jsonl(
+            storage.BUNDLED_NTPU_DIR / "partner_research.jsonl",
+            PartnerResearchRecord,
+        )[0]
+        partner = PartnerUniversity(
+            program_type="交換學生（英語組）",
+            country=research.country,
+            school_name=research.school_name,
+            source_url="https://new.ntpu.edu.tw/oia/sister-schools",
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.fetch_ntpu_partner_universities",
+            lambda: [partner],
+        )
+    
+        client = TestClient(create_app(tmp_path))
+        coverage = client.get(
+            "/coverage",
+            params={"school": "國立臺北大學"},
+        ).json()
+        destination = client.get(
+            "/destination-profile",
+            params={
+                "school": partner.school_name,
+                "home_school": "國立臺北大學",
+            },
+        ).json()
+    
+        assert coverage["total_partner_schools"] == 1
+        assert coverage["official_website_count"] == 1
+        assert coverage["partners"][0]["official_website_url"] == research.official_website
+>       assert coverage["destination_profile_count"] == 1
+E       assert 0 == 1
+
+tests/test_ntpu_bundled_data.py:110: AssertionError
+___________ test_web_routes_states_and_touch_targets_are_consistent ____________
+
+    def test_web_routes_states_and_touch_targets_are_consistent() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert '<span>資格與志願</span>' in html
+        assert 'eligibility: "資格與志願"' in script
+        assert "function focusRouteHeading(selector)" in script
+        assert 'focusRouteHeading("#community-hub-title")' in script
+        assert '? PUBLIC_COMMUNITY_BOARD' in script
+        assert '? "我的追蹤"' in script
+        assert "跨校討論交換申請、簽證、住宿與海外生活。" in script
+        assert 'role="${isError ? "alert" : "status"}"' in script
+>       assert "renderCommunityEmpty(\"社群暫時無法載入\", error.message, \"error\")" in script
+E       assert 'renderCommunityEmpty("社群暫時無法載入", error.message, "error")' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:502: AssertionError
+_ test_community_identity_preview_matches_public_name_and_resets_per_submission _
+
+    def test_community_identity_preview_matches_public_name_and_resets_per_submission() -> None:
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+        assert "這次公開顯示：" in script
+        assert "（每次送出可重新選擇）" in script
+        assert 'aria-live="polite"' in script
+        assert "function resetCommunityIdentityPreviews(container)" in script
+        assert "resetCommunityIdentityPreviews(form);" in script
+        assert "post.viewer_can_delete" in script
+        assert "comment.viewer_can_delete" in script
+>       assert "fetchCommunityAuth(url)" in script
+E       assert 'fetchCommunityAuth(url)' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1002: AssertionError
+______ test_web_notification_center_and_explicit_email_opt_in_are_present ______
+
+    def test_web_notification_center_and_explicit_email_opt_in_are_present() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert 'id="notification-button"' in html
+        assert 'id="notification-dialog"' in html
+        assert 'id="notification-center-list"' in html
+        assert 'name="email_notifications"' in html
+        assert "只有勾選並儲存後才排入寄送" in html
+        assert 'fetchJson("/account/notifications?limit=50")' in script
+        assert 'fetchJson("/account/notifications/read-all"' in script
+        assert 'values.get("email_notifications") === "on"' in script
+        assert "紙本送件以送達日計算" in html
+        assert "官方規定更新" in script
+>       assert "重新核對申請清單" in script
+E       assert '重新核對申請清單' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1054: AssertionError
+_ test_application_center_separates_official_requirements_from_preparation_tools _
+
+    def test_application_center_separates_official_requirements_from_preparation_tools() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert 'id="application-requirement-list"' in html
+        assert "當期文件與官方表格" in html
+        assert "可填寫的準備工具" in html
+        assert "不代表當期校方必備文件" in html
+        assert "沒有確認的份數或表格不會被當成正式版本" in html
+        assert "/application-center/catalog" in script
+        assert "renderApplicationDocumentCatalog" in script
+        assert "下載校方正式表格" in script
+        assert "查看官方規定" in script
+        assert "份數待確認" in script
+>       assert "不會用其他年度或其他學校的文件代替" in script
+E       assert '不會用其他年度或其他學校的文件代替' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1296: AssertionError
+______ test_successful_login_closes_before_noncritical_account_hydration _______
+
+    def test_successful_login_closes_before_noncritical_account_hydration() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        accept_block = script.split("async function acceptAccountSession(session)", 1)[1].split(
+            "async function restoreAccount", 1
+        )[0]
+        submit_block = script.split("async function submitAccountForm(form, endpoint)", 1)[1].split(
+            "async function saveAccountProfile", 1
+        )[0]
+    
+>       assert "app.js?v=20260929-chinese-1" in html
+E       assert 'app.js?v=20260929-chinese-1' in '<!doctype html>\n<html lang="zh-Hant" data-theme="light">\n  <head>\n    <meta charset="utf-8" />\n    <meta name="vi...08-2" defer></script>\n    <script src="/static/app.js?v=20261008-ncu-sources-3" defer></script>\n  </body>\n</html>\n'
+
+tests/test_frontend_contract.py:1659: AssertionError
+___ test_personal_application_plan_uses_structured_api_and_progressive_login ___
+
+    def test_personal_application_plan_uses_structured_api_and_progressive_login() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        for element_id in (
+            "eligibility-department",
+            "eligibility-academic-year",
+            "eligibility-application-round",
+            "eligibility-preference-1",
+            "eligibility-preference-2",
+            "eligibility-preference-3",
+        ):
+>           assert f'id="{element_id}"' in html
+E           assert 'id="eligibility-department"' in '<!doctype html>\n<html lang="zh-Hant" data-theme="light">\n  <head>\n    <meta charset="utf-8" />\n    <meta name="vi...08-2" defer></script>\n    <script src="/static/app.js?v=20261008-ncu-sources-3" defer></script>\n  </body>\n</html>\n'
+
+tests/test_frontend_contract.py:1701: AssertionError
+___________ test_global_home_board_routing_and_following_are_present ___________
+
+    def test_global_home_board_routing_and_following_are_present() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+        assert 'href="#home"' in html
+        assert 'href="#following"' in html
+        assert 'href="#language-school-board"' in html
+        assert 'href="#board=長庚大學"' in html
+        assert 'data-follow-board="長庚大學"' in html
+        assert '<span>發布看板</span>' in html
+        assert '<select id="global-community-school" name="board_id"' in html
+        assert 'id="global-community-compose" type="button" class="primary-button" aria-label="發一篇文章"' in html
+        assert '<option value="public-study-abroad">公共留學板</option>' in html
+        assert '<option value="language-school">語言學校板</option>' in html
+        assert 'fetchJson("/community/boards")' in script
+        assert '"#language-school-board": "language"' in script
+        assert 'const LANGUAGE_SCHOOL_COMMUNITY_BOARD = "語言學校板"' in script
+        assert "function activeCommunityBoardAccess()" in script
+        assert "activeBoard && !activeBoard.can_post" in script
+        assert "activeBoard.unavailable_reason" in script
+>       assert "查看學生身分驗證" in script
+E       assert '查看學生身分驗證' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1734: AssertionError
+_ test_departmental_partner_references_are_visible_but_blocked_from_formal_plans _
+
+    def test_departmental_partner_references_are_visible_but_blocked_from_formal_plans() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert '<option value="departmental_reference">院級參考／當期需確認</option>' in html
+>       assert "暫不可建立正式申請計畫" in html
+E       assert '暫不可建立正式申請計畫' in '<!doctype html>\n<html lang="zh-Hant" data-theme="light">\n  <head>\n    <meta charset="utf-8" />\n    <meta name="vi...08-2" defer></script>\n    <script src="/static/app.js?v=20261008-ncu-sources-3" defer></script>\n  </body>\n</html>\n'
+
+tests/test_frontend_contract.py:1750: AssertionError
+____ test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused _____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-154/test_rules_advisor_works_while0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbc513ce000>
+
+    def test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused(
+        tmp_path,
+        monkeypatch,
+    ) -> None:
+        monkeypatch.setenv("AI_PROVIDER", "openai")
+        monkeypatch.setenv("OPENAI_API_KEY", "must-not-enable-ai")
+        ai_requests: list[str] = []
+    
+        def unexpected_ai_post(url: str, **kwargs):
+            ai_requests.append(url)
+            raise AssertionError("paused runtime must not make an external AI request")
+    
+        monkeypatch.setattr("exchange_info.ai_gateway.requests.post", unexpected_ai_post)
+        page = _page()
+        data_dir = tmp_path / "data"
+        save_processed_pages([page], data_dir)
+        build_rag_index([page], data_dir, use_embeddings=False)
+        build_structured_source_index([page], data_dir, use_ai=False)
+        dashboard = StudentDashboard(
+            school_name="長庚大學",
+            required_documents=[
+                StudentInfoItem(
+                    title="交換申請文件",
+                    details=["申請表、成績單、讀書計畫與語言證明。"],
+                    source=SourceReference(title="交換公告", source_url=SOURCE_URL),
+                )
+            ],
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.build_student_dashboard",
+            lambda pages, info, **kwargs: dashboard,
+        )
+        client = _authenticated_client(data_dir)
+    
+        answer = client.post("/advisor/ask", json={"question": "交換需要哪些申請文件？"})
+        paused_chat = client.post("/ai/chat", json={"question": "交換需要哪些申請文件？"})
+        status = client.get("/ai/status")
+        review = client.post(
+            "/ai/review-document",
+            files={"file": ("讀書計畫.txt", "申請動機與學習計畫。" * 30, "text/plain")},
+            data={"document_type": "study_plan", "consent": "true"},
+        )
+        rewrite = client.post(
+            "/ai/rewrite-document",
+            json={"text": "這是我自行撰寫且需要調整語氣的交換申請內容。" * 2, "action": "formalize"},
+        )
+    
+        assert answer.status_code == 200
+        assert answer.json()["sources"][0]["published_at"] == "2026-07-01"
+        assert answer.json()["sources"][0]["last_checked"].startswith("2026-07-19")
+        assert status.json()["rag_index"]["source_count"] == 1
+        assert status.json()["structured_source_count"] == 1
+        assert status.json()["ai_enabled"] is False
+        assert status.json()["runtime_state"] == "paused"
+        assert status.json()["provider"] is None
+        assert status.json()["model"] is None
+        assert "AI API 與本地 AI 目前暫緩" in status.json()["paused_reason"]
+        assert paused_chat.status_code == 503
+        assert review.status_code == 503
+        assert "AI 深度檢查目前暫緩" in review.json()["detail"]
+>       assert rewrite.status_code == 503
+E       assert 422 == 503
+E        +  where 422 = <Response [422 Unprocessable Content]>.status_code
+
+tests/test_rag.py:241: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data
+FAILED tests/test_frontend_contract.py::test_web_routes_states_and_touch_targets_are_consistent
+FAILED tests/test_frontend_contract.py::test_community_identity_preview_matches_public_name_and_resets_per_submission
+FAILED tests/test_frontend_contract.py::test_web_notification_center_and_explicit_email_opt_in_are_present
+FAILED tests/test_frontend_contract.py::test_application_center_separates_official_requirements_from_preparation_tools
+FAILED tests/test_frontend_contract.py::test_successful_login_closes_before_noncritical_account_hydration
+FAILED tests/test_frontend_contract.py::test_personal_application_plan_uses_structured_api_and_progressive_login
+FAILED tests/test_frontend_contract.py::test_global_home_board_routing_and_following_are_present
+FAILED tests/test_frontend_contract.py::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans
+FAILED tests/test_rag.py::test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused
+10 failed, 55 passed in 10.19s
