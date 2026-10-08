@@ -1145,6 +1145,19 @@
         "additionalProperties": false,
         "description": "Student supplied conditions, separate from admission or source verification.",
         "properties": {
+          "academic_gpa": {
+            "anyOf": [
+              {
+                "maximum": 4.3,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Gpa"
+          },
           "academic_score": {
             "anyOf": [
               {
@@ -1169,6 +1182,19 @@
             "maxLength": 80,
             "title": "Application Round",
             "type": "string"
+          },
+          "class_rank_percent": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 100.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Class Rank Percent"
           },
           "college": {
             "default": "",
@@ -1220,6 +1246,7 @@
                   "toeic",
                   "ielts",
                   "toefl",
+                  "toefl_new",
                   "duolingo",
                   "other"
                 ],
@@ -1638,6 +1665,19 @@
       },
       "AdvisorProfile": {
         "properties": {
+          "academic_gpa": {
+            "anyOf": [
+              {
+                "maximum": 4.3,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Gpa"
+          },
           "academic_score": {
             "anyOf": [
               {
@@ -1650,6 +1690,19 @@
               }
             ],
             "title": "Academic Score"
+          },
+          "class_rank_percent": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 100.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Class Rank Percent"
           },
           "college": {
             "anyOf": [
@@ -1731,6 +1784,7 @@
                   "toeic",
                   "ielts",
                   "toefl",
+                  "toefl_new",
                   "duolingo",
                   "other"
                 ],
@@ -3246,6 +3300,19 @@
             "title": "Options",
             "type": "array"
           },
+          "options_by_field": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "type": "object"
+            },
+            "title": "Options By Field",
+            "type": "object"
+          },
           "placeholder": {
             "anyOf": [
               {
@@ -3261,6 +3328,19 @@
             "default": false,
             "title": "Required",
             "type": "boolean"
+          },
+          "required_when": {
+            "items": {
+              "additionalProperties": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "type": "object"
+            },
+            "title": "Required When",
+            "type": "array"
           },
           "reusable_profile_key": {
             "anyOf": [
@@ -3966,6 +4046,7 @@
               "degree_level",
               "academic_score",
               "language_score",
+              "home_language_score",
               "academic_year",
               "application_round",
               "workflow"
@@ -9028,6 +9109,74 @@
         "title": "HTTPValidationError",
         "type": "object"
       },
+      "HomeSelectionRules": {
+        "properties": {
+          "academic_policy": {
+            "default": "percentage",
+            "enum": [
+              "percentage",
+              "gpa_or_rank"
+            ],
+            "title": "Academic Policy",
+            "type": "string"
+          },
+          "academic_reference_year": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Reference Year"
+          },
+          "exclude_in_service": {
+            "default": false,
+            "title": "Exclude In Service",
+            "type": "boolean"
+          },
+          "graduate_academic_exempt": {
+            "default": false,
+            "title": "Graduate Academic Exempt",
+            "type": "boolean"
+          },
+          "partner_requirements_need_confirmation": {
+            "default": false,
+            "title": "Partner Requirements Need Confirmation",
+            "type": "boolean"
+          },
+          "pending_quota_planning": {
+            "default": false,
+            "title": "Pending Quota Planning",
+            "type": "boolean"
+          },
+          "undergraduate_gpa_minimum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Undergraduate Gpa Minimum"
+          },
+          "undergraduate_rank_maximum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Undergraduate Rank Maximum"
+          }
+        },
+        "title": "HomeSelectionRules",
+        "type": "object"
+      },
       "LifeCategory": {
         "properties": {
           "evidence": {
@@ -9899,6 +10048,19 @@
       "PersonalApplicationPlanRequest": {
         "additionalProperties": false,
         "properties": {
+          "academic_gpa": {
+            "anyOf": [
+              {
+                "maximum": 4.3,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Gpa"
+          },
           "academic_score": {
             "anyOf": [
               {
@@ -9935,6 +10097,19 @@
               }
             ],
             "title": "Application Round"
+          },
+          "class_rank_percent": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 100.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Class Rank Percent"
           },
           "college": {
             "anyOf": [
@@ -9998,6 +10173,7 @@
                   "toeic",
                   "ielts",
                   "toefl",
+                  "toefl_new",
                   "duolingo",
                   "other"
                 ],
@@ -11314,6 +11490,9 @@
             "title": "School Name",
             "type": "string"
           },
+          "selection_rules": {
+            "$ref": "#/components/schemas/HomeSelectionRules"
+          },
           "sources": {
             "items": {
               "$ref": "#/components/schemas/SourceReference"
@@ -11961,6 +12140,13 @@
       },
       "SupportedUniversity": {
         "properties": {
+          "aliases": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Aliases",
+            "type": "array"
+          },
           "colleges": {
             "items": {
               "type": "string"
@@ -18417,7 +18603,7 @@
     "resource_not_found": 404,
     "validation_failed": 422
   },
-  "x-contract-version": "2026-10-02.1",
+  "x-contract-version": "2026-10-08.3",
   "x-product-boundaries": {
     "account_routes_require_bearer_session": true,
     "ai_features": "paused",

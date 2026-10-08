@@ -24,7 +24,7 @@ def test_bundled_ntpu_catalog_is_complete(monkeypatch, tmp_path) -> None:
 
     monkeypatch.setattr(storage, "DEFAULT_DATA_DIR", tmp_path)
 
-    research = storage.load_partner_research(tmp_path)
+    research = [row for row in storage.load_partner_research(tmp_path) if row.home_university == "國立臺北大學"]
     workflows = [
         row
         for row in storage.load_application_workflows(tmp_path)

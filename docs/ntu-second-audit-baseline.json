@@ -1,0 +1,29 @@
+{
+  "baseline_head": "230629ce526ed1ccfaf0223509d13b3496567915",
+  "baseline_failures": [
+    "FAILED tests/test_frontend_contract.py::test_web_routes_states_and_touch_targets_are_consistent",
+    "FAILED tests/test_frontend_contract.py::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+    "FAILED tests/test_frontend_contract.py::test_web_notification_center_and_explicit_email_opt_in_are_present",
+    "FAILED tests/test_frontend_contract.py::test_application_center_separates_official_requirements_from_preparation_tools",
+    "FAILED tests/test_frontend_contract.py::test_successful_login_closes_before_noncritical_account_hydration",
+    "FAILED tests/test_frontend_contract.py::test_personal_application_plan_uses_structured_api_and_progressive_login",
+    "FAILED tests/test_frontend_contract.py::test_global_home_board_routing_and_following_are_present",
+    "FAILED tests/test_frontend_contract.py::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+    "FAILED tests/test_next_phase_contract.py::test_private_community_writes_expose_retry_mutation_header",
+    "FAILED tests/test_next_phase_contract.py::test_workflow_issue_report_contract_exposes_retry_and_admin_review_paths",
+    "FAILED tests/test_next_phase_contract.py::test_account_deletion_exposes_dedicated_retry_mutation_header",
+    "FAILED tests/test_next_phase_contract.py::test_api_contract_page_does_not_depend_on_csp_blocked_assets",
+    "FAILED tests/test_next_phase_contract.py::test_external_calendar_contract_documents_subscription_boundary",
+    "FAILED tests/test_next_phase_contract.py::test_application_document_contract_keeps_official_forms_public_and_gates_generation",
+    "FAILED tests/test_next_phase_contract.py::test_document_completeness_contract_is_subscription_gated_and_ai_stays_paused",
+    "FAILED tests/test_next_phase_contract.py::test_ai_compatibility_contract_is_explicitly_paused",
+    "FAILED tests/test_next_phase_contract.py::test_content_review_contract_exposes_nonpublishing_source_candidates",
+    "FAILED tests/test_next_phase_contract.py::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing",
+    "FAILED tests/test_next_phase_contract.py::test_destination_profile_review_contract_requires_explicit_audited_promotion",
+    "FAILED tests/test_next_phase_contract.py::test_application_workflow_publication_contract_exposes_safe_rollback"
+  ],
+  "current_failure_set_matches_baseline": true,
+  "baseline_results": "20 failed, 60 passed",
+  "current_results": "20 failed, 60 passed",
+  "command": ".venv/bin/python -m pytest tests/test_frontend_contract.py tests/test_school_completeness.py tests/test_next_phase_contract.py -q"
+}

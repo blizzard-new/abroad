@@ -7,7 +7,7 @@
   const COUNTRIES = {
     "east-asia": [
       ["大陸地區", "China", "中國", "中國大陸", "中華人民共和國", "mainland"], ["中國", "China"], ["中國大陸", "China", "mainland"],
-      ["香港", "Hong Kong"], ["澳門", "Macau"], ["臺灣", "Taiwan", "台灣"], ["日本", "Japan"], ["韓國", "South Korea", "Korea", "南韓"], ["蒙古", "Mongolia"],
+      ["香港", "Hong Kong"], ["澳門", "Macau"], ["臺灣", "Taiwan", "台灣"], ["日本", "Japan"], ["韓國", "South Korea", "Korea", "南韓"], ["南韓", "South Korea", "Korea", "韓國"], ["蒙古", "Mongolia"],
     ],
     "southeast-asia": [
       ["越南", "Vietnam"], ["泰國", "Thailand"], ["印尼", "Indonesia"], ["菲律賓", "Philippines"], ["馬來西亞", "Malaysia"],
@@ -24,7 +24,7 @@
       ["保加利亞", "Bulgaria"], ["立陶宛", "Lithuania", "波羅的海"], ["拉脫維亞", "Latvia", "波羅的海"], ["愛沙尼亞", "Estonia", "波羅的海"],
       ["俄羅斯", "Russia"], ["烏克蘭", "Ukraine"], ["白俄羅斯", "Belarus"], ["阿爾巴尼亞", "Albania", "巴爾幹"], ["塞爾維亞", "Serbia", "巴爾幹"],
       ["克羅埃西亞", "Croatia", "巴爾幹"], ["斯洛維尼亞", "Slovenia", "巴爾幹"], ["波士尼亞", "Bosnia", "巴爾幹"], ["北馬其頓", "North Macedonia", "巴爾幹"],
-      ["蒙特內哥羅", "Montenegro", "巴爾幹"], ["摩爾多瓦", "Moldova"],
+      ["蒙特內哥羅", "Montenegro", "巴爾幹"], ["摩爾多瓦", "Moldova"], ["科索沃", "Kosovo", "巴爾幹"],
     ],
     "western-europe": [
       ["法國", "France"], ["德國", "Germany", "中歐"], ["荷蘭", "Netherlands", "Holland"], ["比利時", "Belgium"], ["盧森堡", "Luxembourg"],
@@ -37,7 +37,7 @@
       ["巴西", "Brazil"], ["阿根廷", "Argentina"], ["智利", "Chile"], ["哥倫比亞", "Colombia"], ["秘魯", "Peru"], ["烏拉圭", "Uruguay"],
       ["厄瓜多", "Ecuador"], ["古巴", "Cuba"], ["巴拿馬", "Panama"], ["哥斯大黎加", "Costa Rica"], ["瓜地馬拉", "Guatemala"],
     ],
-    "oceania": [["澳洲", "Australia"], ["紐西蘭", "New Zealand"], ["斐濟", "Fiji"]],
+    "oceania": [["澳洲", "Australia", "澳大利亞"], ["澳大利亞", "Australia", "澳洲"], ["紐西蘭", "New Zealand"], ["斐濟", "Fiji"]],
     "africa": [
       ["摩洛哥", "Morocco"], ["南非", "South Africa"], ["埃及", "Egypt"], ["肯亞", "Kenya"], ["迦納", "Ghana"], ["突尼西亞", "Tunisia"],
       ["奈及利亞", "Nigeria"], ["衣索比亞", "Ethiopia"], ["坦尚尼亞", "Tanzania"], ["塞內加爾", "Senegal"],

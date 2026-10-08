@@ -50,8 +50,8 @@ def test_stage_only_match_is_last_resort_and_labelled():
 
 def test_every_bundled_step_is_either_linked_listed_or_documentless():
     workflows = storage.load_bundled_application_workflows()
-    # CGU 77 (115) + 77 (116); NTPU 203 (115) + 206 (116)
-    assert len(workflows) == 563
+    # CGU 77 (115) + 77 (116); NTPU 203 (115) + 206 (116); NTU 288 (116-1).
+    assert len(workflows) == 851
     audit = audit_task_document_links(workflows)
     assert audit["steps"] == sum(len(row.steps) for row in workflows)
     assert audit["tool_linked"] + audit["requirements_only"] + audit["no_documents"] == audit["steps"]
@@ -185,7 +185,7 @@ def test_every_bundled_workflow_yields_a_schedulable_estimated_plan_for_an_unpub
     from exchange_info.models import PartnerUniversity
 
     workflows = storage.load_bundled_application_workflows()
-    assert len(workflows) == 563
+    assert len(workflows) == 851
     empty, unplannable = [], []
     for workflow in workflows:
         if len(workflow.school_name) > 200:
