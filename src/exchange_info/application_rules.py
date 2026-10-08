@@ -13,8 +13,9 @@ from .task_documents import document_link_for_step
 from .qualification_scopes import (
     coupled_academic_scope_matches,
     college_scope_matches as _partner_scope_matches,
-    degree_scope_matches as _partner_degree_matches,
+    partner_degree_scope_matches,
     partner_scope_needs_confirmation,
+    resolved_degree_level,
 )
 
 from .models import (
@@ -478,24 +479,23 @@ def _eligibility_checks(
             )
         )
     else:
-        degree_matches = _partner_degree_matches(
-            partner.degree_levels, request.degree_level
-        )
+        degree = resolved_degree_level(request.degree_level, request.current_year)
+        degree_matches = partner_degree_scope_matches(partner, request.college or request.department, degree)
         coupled_match = coupled_academic_scope_matches(
-            partner, request.college or request.department, request.degree_level
+            partner, request.college or request.department, degree
         )
-        if coupled_match is not None:
-            degree_matches = coupled_match
         degree_detail = (
             f"你的學制符合公開範圍：{partner.degree_levels}。"
             if degree_matches else f"你的學制不在公開範圍：{partner.degree_levels}。"
         )
         if coupled_match is not None:
-            degree_detail = f"你的學院／學制配對{'符合' if coupled_match else '不符'}公開範圍：{request.college or request.department}／{request.degree_level}；{partner.degree_levels}。"
+            degree_detail = f"你的學院／學制配對{'符合' if coupled_match else '不符'}公開範圍：{request.college or request.department}／{degree}；{partner.degree_levels}。"
+        if degree_matches is None:
+            degree_detail = f"研究所尚未區分碩博士，不能判定符合學院／學制範圍：{partner.degree_levels}；請設定碩士班或博士班。"
         checks.append(
             _check(
                 "degree_level",
-                "pass" if degree_matches else "fail",
+                "needs_confirmation" if degree_matches is None else "pass" if degree_matches else "fail",
                 "學制",
                 degree_detail,
                 source_url=partner_source,

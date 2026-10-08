@@ -3951,16 +3951,18 @@ function partnerMatch(item, profile = state.eligibilityProfile) {
   const college = homeCollegeValue(profile.college);
   const cycleConfirmed = !homeSelectionRules().partner_requirements_need_confirmation;
   const collegeKnown = Boolean(cycleConfirmed && college && !academicScopeNeedsConfirmation(item, "colleges"));
-  const degreeKnown = Boolean(cycleConfirmed && profile.degree && !academicScopeNeedsConfirmation(item, "degree_levels"));
+  const degree = resolvedDegreeLevel(profile.degree, profile.currentYear);
+  const degreeMatch = partnerDegreeScopeMatches(item, college, degree);
+  const degreeKnown = Boolean(cycleConfirmed && degree && degreeMatch !== null && !academicScopeNeedsConfirmation(item, "degree_levels"));
   const collegePass = collegeKnown && collegeMatches(item.colleges, college);
-  const coupledMatch = coupledAcademicScopeMatches(item, college, profile.degree);
-  const degreePass = degreeKnown && (coupledMatch === null ? degreeMatches(item.degree_levels, profile.degree) : coupledMatch);
+  const coupledMatch = coupledAcademicScopeMatches(item, college, degree);
+  const degreePass = degreeKnown && degreeMatch;
   if (!collegeKnown) risks.push(college ? "合作校學院範圍待確認" : "尚未填寫學院");
   else if (collegePass) { score += 30; reasons.push("符合學院範圍"); }
   else { mismatches.push("學院範圍待確認"); risks.push(`你的學院：${college}；學校範圍：${item.colleges}`); }
-  if (!degreeKnown) risks.push(profile.degree ? "合作校學制範圍待確認" : "尚未填寫學制");
+  if (!degreeKnown) risks.push(profile.degree ? degreeMatch === null && degree === "研究所" ? "研究所尚未區分碩博士；合作校學制範圍待確認" : "合作校學制範圍待確認" : "尚未填寫學制");
   else if (degreePass) { score += 20; reasons.push("符合目前學制"); }
-  else { mismatches.push("學制範圍待確認"); risks.push(coupledMatch === false ? `學院／學制配對不符：${college}／${profile.degree}；學校配對：${item.degree_levels}` : `你的學制：${profile.degree}；學校範圍：${item.degree_levels}`); }
+  else { mismatches.push("學制範圍待確認"); risks.push(coupledMatch === false ? `學院／學制配對不符：${college}／${degree}；學校配對：${item.degree_levels}` : `你的學制：${degree}；學校範圍：${item.degree_levels}`); }
   if (profile.preferredCountry && item.country === profile.preferredCountry) { score += 15; reasons.push(`位於優先國家 ${item.country}`); }
   const threshold = languageThresholdFromPartner(item, profile.languageTest, profile.degree);
   const hasLanguageScore = Boolean(profile.languageTest) && Number.isFinite(Number(profile.languageScore)) && Number(profile.languageScore) > 0;
@@ -7373,7 +7375,7 @@ function filteredPartners() {
       window.UniWayRegions.inRegion(item.country, state.region) &&
       (!state.country || item.country === state.country) &&
       (!state.college || academicScopeNeedsConfirmation(item, "colleges") || collegeMatches(item.colleges, state.college)) &&
-      (!state.degree || academicScopeNeedsConfirmation(item, "degree_levels") || degreeMatches(item.degree_levels, state.degree)) &&
+      (!state.degree || academicScopeNeedsConfirmation(item, "degree_levels") || degreeMatches(item.degree_levels, state.degree) !== false) &&
       coupledAcademicScopeMatches(item, state.college, state.degree) !== false && discoveryCriteriaMatch(item)
     );
   });
@@ -7395,13 +7397,33 @@ function academicScopeNeedsConfirmation(item, key) {
   return !terms.some(term => text.includes(term)) && !(key === "colleges" && /\ball\b/i.test(text));
 }
 
-function coupledAcademicScopeMatches(item, college, degree) {
+function coupledAcademicScopeOptions(item) {
   const options = item.program_options || [];
-  if (!college || !degree || !options.length) return null;
+  if (!options.length) return null;
   if (["colleges", "degree_levels"].some(key => item.field_evidence?.[key]?.status !== "verified_current")) return null;
   const urls = new Set([item.field_evidence.colleges.source_url, item.field_evidence.degree_levels.source_url]);
   if (options.some(option => !urls.has(option.source_url) || academicScopeNeedsConfirmation(option, "colleges") || academicScopeNeedsConfirmation(option, "degree_levels"))) return null;
-  return options.some(option => collegeMatches(option.colleges, college) && degreeMatches(option.degree_levels, degree));
+  return options;
+}
+
+function coupledAcademicScopeMatches(item, college, degree) {
+  const options = coupledAcademicScopeOptions(item);
+  if (!college || !degree || options === null) return null;
+  const matches = options.filter(option => collegeMatches(option.colleges, college)).map(option => degreeMatches(option.degree_levels, degree));
+  return matches.includes(true) ? true : matches.includes(null) ? null : false;
+}
+
+function resolvedDegreeLevel(degree, currentYear) {
+  if (degree !== "研究所") return degree;
+  const year = normalize(currentYear).normalize("NFKC");
+  const master = year.includes("碩士") || /\bmaster(?:'s)?\b/i.test(year);
+  const doctoral = year.includes("博士") || /\b(?:ph\.?d\.?|doctoral)\b/i.test(year);
+  return master !== doctoral ? master ? "碩士班" : "博士班" : degree;
+}
+
+function partnerDegreeScopeMatches(item, college, degree) {
+  if (college && coupledAcademicScopeOptions(item) !== null) return coupledAcademicScopeMatches(item, college, degree);
+  return degreeMatches(item.degree_levels, degree);
 }
 
 function collegeMatches(value, selected) {
@@ -7413,6 +7435,10 @@ function collegeMatches(value, selected) {
 
 function degreeMatches(value, selected) {
   const text = normalize(value);
+  if (selected === "研究所") {
+    const master = degreeMatches(value, "碩士班"), doctoral = degreeMatches(value, "博士班");
+    return master && doctoral ? true : master || doctoral ? null : false;
+  }
   const aliases = {"大學部":["大學部","學士","undergraduate","bachelor"],"碩士班":["碩士","研究所","master","graduate"],"博士班":["博士","研究所","doctoral","phd","graduate"],"研究所":["研究所","碩士","博士","graduate","master","doctoral","phd"]};
   return (aliases[selected] || [selected]).some(term => /^[a-z]+$/i.test(term)
     ? new RegExp(`(?<![a-z])${term}(?![a-z])`, "i").test(text)

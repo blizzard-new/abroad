@@ -1,0 +1,673 @@
+CONFTEST LOADED!
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+________ test_actual_degree_select_and_current_year_in_both_modes[390] _________
+
+page = <Page url='http://127.0.0.1:36927/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#advisor'>
+live_server = LiveServer(base_url='http://127.0.0.1:36927', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-96/web-e2e-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_actual_degree_select_and_current_year_in_both_modes(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        session = sign_in_cookie(live_server, school=HOME)
+        live_server.verify_student(session["profile"]["id"], university=HOME)
+        attach_session(page, live_server, session)
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        enter_public_site(page, live_server, "application-center")
+        partner = at(34)
+        wait_until(page, "homeCollegeOptions().includes('教育學院') && homeCollegeOptions().includes('法學院')")
+        page.locator("#application-target-school").select_option(partner.school_name)
+        wait_until(page, "state.applicationContext.target_school === " + repr(partner.school_name))
+        for college, degree, year, status in [
+            ("法學院", "研究所", "博士班", "fail"),
+            ("法學院", "研究所", "", "needs_confirmation"),
+            ("法學院", "研究所", "碩士班", "pass"),
+            ("法學院", "碩士班", "碩士班", "pass"),
+            ("法學院", "博士班", "博士班", "fail"),
+            ("教育學院", "大學部", "大三", "pass"),
+            ("教育學院", "研究所", "", "pass"),
+        ]:
+            page.evaluate("location.hash='#advisor'")
+            expect(page.locator("#advisor-form")).to_be_visible()
+            page.locator("#advisor-college").select_option(college)
+            department = page.locator("#advisor-department")
+            if department.evaluate("node=>node.tagName") == "SELECT":
+                wait_until(page, "document.querySelector('#advisor-department').options.length > 1")
+                value = department.locator("option").evaluate_all("rows=>rows.find(row=>row.value).value")
+                department.select_option(value)
+            else:
+                department.fill("法律學系" if college == "法學院" else "教育學系")
+            page.locator("#advisor-degree").select_option(degree)
+>           page.locator("#advisor-current-year").select_option(year)
+
+tests/e2e/test_ccu_eighteenth_pass.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:20069: in select_option
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:633: in select_option
+    return await self._frame.select_option(
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:814: in select_option
+    return await self._channel.send("selectOption", self._timeout, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7fd9cb8b8530>
+cb = <function Channel.send.<locals>.<lambda> at 0x7fd9ca94fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+E           Call log:
+E             - waiting for locator("#advisor-current-year")
+E               - locator resolved to <select name="current_year" id="advisor-current-year">…</select>
+E             - attempting select option action
+E               2 × waiting for element to be visible and enabled
+E                 - element is not visible
+E               - retrying select option action
+E               - waiting 20ms
+E               2 × waiting for element to be visible and enabled
+E                 - element is not visible
+E               - retrying select option action
+E                 - waiting 100ms
+E               60 × waiting for element to be visible and enabled
+E                  - element is not visible
+E                - retrying select option action
+E                  - waiting 500ms
+
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: TimeoutError
+________ test_actual_degree_select_and_current_year_in_both_modes[1440] ________
+
+page = <Page url='http://127.0.0.1:36927/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#advisor'>
+live_server = LiveServer(base_url='http://127.0.0.1:36927', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-96/web-e2e-data0'))
+width = 1440
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_actual_degree_select_and_current_year_in_both_modes(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        session = sign_in_cookie(live_server, school=HOME)
+        live_server.verify_student(session["profile"]["id"], university=HOME)
+        attach_session(page, live_server, session)
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        enter_public_site(page, live_server, "application-center")
+        partner = at(34)
+        wait_until(page, "homeCollegeOptions().includes('教育學院') && homeCollegeOptions().includes('法學院')")
+        page.locator("#application-target-school").select_option(partner.school_name)
+        wait_until(page, "state.applicationContext.target_school === " + repr(partner.school_name))
+        for college, degree, year, status in [
+            ("法學院", "研究所", "博士班", "fail"),
+            ("法學院", "研究所", "", "needs_confirmation"),
+            ("法學院", "研究所", "碩士班", "pass"),
+            ("法學院", "碩士班", "碩士班", "pass"),
+            ("法學院", "博士班", "博士班", "fail"),
+            ("教育學院", "大學部", "大三", "pass"),
+            ("教育學院", "研究所", "", "pass"),
+        ]:
+            page.evaluate("location.hash='#advisor'")
+            expect(page.locator("#advisor-form")).to_be_visible()
+            page.locator("#advisor-college").select_option(college)
+            department = page.locator("#advisor-department")
+            if department.evaluate("node=>node.tagName") == "SELECT":
+                wait_until(page, "document.querySelector('#advisor-department').options.length > 1")
+                value = department.locator("option").evaluate_all("rows=>rows.find(row=>row.value).value")
+                department.select_option(value)
+            else:
+                department.fill("法律學系" if college == "法學院" else "教育學系")
+            page.locator("#advisor-degree").select_option(degree)
+>           page.locator("#advisor-current-year").select_option(year)
+
+tests/e2e/test_ccu_eighteenth_pass.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:20069: in select_option
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:633: in select_option
+    return await self._frame.select_option(
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:814: in select_option
+    return await self._channel.send("selectOption", self._timeout, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7fd9cb8b8530>
+cb = <function Channel.send.<locals>.<lambda> at 0x7fd997035620>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+E           Call log:
+E             - waiting for locator("#advisor-current-year")
+E               - locator resolved to <select name="current_year" id="advisor-current-year">…</select>
+E             - attempting select option action
+E               2 × waiting for element to be visible and enabled
+E                 - element is not visible
+E               - retrying select option action
+E               - waiting 20ms
+E               2 × waiting for element to be visible and enabled
+E                 - element is not visible
+E               - retrying select option action
+E                 - waiting 100ms
+E               60 × waiting for element to be visible and enabled
+E                  - element is not visible
+E                - retrying select option action
+E                  - waiting 500ms
+
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: TimeoutError
+__________ test_hcmute_email_sender_and_pilsen_transfers_render[390] ___________
+
+page = <Page url='http://127.0.0.1:36927/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Ho%20Chi%20Min...hnology%20and%20Engineering%20HCMUTE%E8%83%A1%E5%BF%97%E6%98%8E%E7%A7%91%E6%8A%80%E5%B7%A5%E7%A8%8B%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:36927', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-96/web-e2e-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_hcmute_email_sender_and_pilsen_transfers_render(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(at(68).school_name))
+        expect(page.locator("#detail-tab-application")).to_be_visible(timeout=30_000)
+        page.locator("#detail-tab-application").click()
+        steps = page.locator("details.workflow-step")
+        for index in [3, 4]:
+            step = steps.nth(index)
+            step.locator("> summary").click()
+>           expect(step).to_contain_text("電子郵件送件")
+E           AssertionError: Locator expected to contain text '電子郵件送件'
+E           Actual value: 
+E                 
+E                   4
+E                   
+E                     錄取及提名 · 國立中正大學國際事務處
+E                     母校彙整七項提名資料，以email寄合作校
+E                     
+E                   
+E                   
+E                 
+E                 
+E                   母校彙整五項必備與兩項選附資料，寄送提名信至factsheet列明聯絡人之一。
+E                   適用範圍115 學年度2027春季
+E                   此步驟仍有送件或文件細節待確認。請聯絡：國立中正大學國際事務處及合作校提名通知所列承辦人
+E                   
+E                   
+E               
+E                 送件方式
+E                 電子郵件 送件
+E                 承辦地點：母校國際事務處彙整與寄送；合作校國際事務處收件電子郵件：oia@hcmute.edu.vn
+E               
+E                   
+E               
+E                 
+E                   我的送件紀錄尚未開始
+E                   電子郵件 送件 · 學生手動
+E                 
+E                 
+E                   下一步先備齊文件並再次核對官方送件方式。
+E                   承辦國立中正大學國際事務處
+E                   期限期限待官方確認，不會自動提醒
+E                   收件證明尚未記錄
+E                 
+E                 
+E                 
+E                   登入後記錄進度
+E                   
+E                 
+E                 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E               
+E                   具體要做中正逐校第二階文件：當期已核實；官方PDF第68頁；2027春季；查核2026-10-08：1. An official list of nominated students 2. A Letter of Nomination 3. A curriculum vitae 4. Full academic transcript in English 5. A photocopy of passport (identification page with applicant’s photo and name) 6. A portrait photo in JPG format 7. Certificate of English language proficiency (B2 or above)（mandatory母校）官方提名名單 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory母校）Letter of Nomination · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory）CV · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory）英文完整成績 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory）護照身分頁 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（optional）JPG肖像 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（optional）英文B2以上證書（中正校內另規） · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E                   這一步要準備
+E               
+E                 
+E                 家長同意書電子檔 · 簽署：家長查看官方表格來源（待核實）原檔下載未核實，適用年度仍待確認。
+E               
+E               
+E                 
+E                 （mandatory母校）官方提名名單階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory母校）Letter of Nomination階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory）CV階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory）英文完整成績階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory）護照身分頁階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （optional）JPG肖像階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 適用條件：（optional）JPG肖像 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （optional）英文B2以上證書（中正校內另規）階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 適用條件：（optional）英文B2以上證書（中正校內另規） · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E                   
+E                   發現資格、期限、文件或送件資訊不一致？回報此步驟
+E                 
+E                
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("details.workflow-step").nth(3)
+E               14 × locator resolved to <details open="" class="workflow-step needs-confirmation">…</details>
+E                  - unexpected value "
+E                 
+E                   4
+E                   
+E                     錄取及提名 · 國立中正大學國際事務處
+E                     母校彙整七項提名資料，以email寄合作校
+E                     
+E                   
+E                   
+E                 
+E                 
+E                   母校彙整五項必備與兩項選附資料，寄送提名信至factsheet列明聯絡人之一。
+E                   適用範圍115 學年度2027春季
+E                   此步驟仍有送件或文件細節待確認。請聯絡：國立中正大學國際事務處及合作校提名通知所列承辦人
+E                   
+E                   
+E               
+E                 送件方式
+E                 電子郵件 送件
+E                 承辦地點：母校國際事務處彙整與寄送；合作校國際事務處收件電子郵件：oia@hcmute.edu.vn
+E               
+E                   
+E               
+E                 
+E                   我的送件紀錄尚未開始
+E                   電子郵件 送件 · 學生手動
+E                 
+E                 
+E                   下一步先備齊文件並再次核對官方送件方式。
+E                   承辦國立中正大學國際事務處
+E                   期限期限待官方確認，不會自動提醒
+E                   收件證明尚未記錄
+E                 
+E                 
+E                 
+E                   登入後記錄進度
+E                   
+E                 
+E                 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E               
+E                   具體要做中正逐校第二階文件：當期已核實；官方PDF第68頁；2027春季；查核2026-10-08：1. An official list of nominated students 2. A Letter of Nomination 3. A curriculum vitae 4. Full academic transcript in English 5. A photocopy of passport (identification page with applicant’s photo and name) 6. A portrait photo in JPG format 7. Certificate of English language proficiency (B2 or above)（mandatory母校）官方提名名單 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory母校）Letter of Nomination · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory）CV · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory）英文完整成績 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory）護照身分頁 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（optional）JPG肖像 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（optional）英文B2以上證書（中正校內另規） · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E                   這一步要準備
+E               
+E                 
+E                 家長同意書電子檔 · 簽署：家長查看官方表格來源（待核實）原檔下載未核實，適用年度仍待確認。
+E               
+E               
+E                 
+E                 （mandatory母校）官方提名名單階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory母校）Letter of Nomination階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory）CV階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory）英文完整成績階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory）護照身分頁階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （optional）JPG肖像階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 適用條件：（optional）JPG肖像 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （optional）英文B2以上證書（中正校內另規）階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 適用條件：（optional）英文B2以上證書（中正校內另規） · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E                   
+E                   發現資格、期限、文件或送件資訊不一致？回報此步驟
+E                 
+E               "
+E           
+E           Aria snapshot:
+E           - group:
+E             - text: 錄取及提名 · 國立中正大學國際事務處
+E             - strong: 母校彙整七項提名資料，以email寄合作校
+E             - paragraph: 母校彙整五項必備與兩項選附資料，寄送提名信至factsheet列明聯絡人之一。
+E             - strong: 適用範圍
+E             - text: 115 學年度 2027春季
+E             - strong: 此步驟仍有送件或文件細節待確認。
+E             - text: 請聯絡：國立中正大學國際事務處及合作校提名通知所列承辦人
+E             - heading "送件方式" [level=4]
+E             - strong: 電子郵件 送件
+E             - list:
+E               - listitem: 承辦地點：母校國際事務處彙整與寄送；合作校國際事務處收件
+E               - listitem: 電子郵件：oia@hcmute.edu.vn
+E             - heading "我的送件紀錄" [level=4]
+E             - strong: 尚未開始
+E             - text: 電子郵件 送件 · 學生手動
+E             - term: 下一步
+E             - definition: 先備齊文件並再次核對官方送件方式。
+E             - term: 承辦
+E             - definition: 國立中正大學國際事務處
+E             - term: 期限
+E             - definition: 期限待官方確認，不會自動提醒
+E             - term: 收件證明
+E             - definition: 尚未記錄
+E             - button "登入後記錄進度"
+E             - paragraph: 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E             - heading "具體要做" [level=4]
+E             - list:
+E               - listitem: 中正逐校第二階文件：當期已核實；官方PDF第68頁；2027春季；查核2026-10-08：1. An official list of nominated students 2. A Letter of Nomination 3. A curriculum vitae 4. Full academic transcript in English 5. A photocopy of passport (identification page with applicant’s photo and name) 6. A portrait photo in JPG format 7. Certificate of English language proficiency (B2 or above)
+E               - listitem: （mandatory母校）官方提名名單 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E               - listitem: （mandatory母校）Letter of Nomination · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E               - listitem: （mandatory）CV · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E               - listitem: （mandatory）英文完整成績 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E               - listitem: （mandatory）護照身分頁 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E               - listitem: （optional）JPG肖像 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E               - listitem: （optional）英文B2以上證書（中正校內另規） · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E             - heading "這一步要準備" [level=4]
+E             - list:
+E               - listitem:
+E                 - text: 家長
+E                 - strong: 同意書
+E                 - text: 電子檔 · 簽署：家長
+E                 - link "查看官方表格來源（待核實）":
+E                   - /url: https://oia.ccu.edu.tw/var/file/8/1008/img/1130/733224149.pdf
+E                 - text: 原檔下載未核實，適用年度仍待確認。
+E               - listitem: （mandatory母校）官方提名名單 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               - listitem: （mandatory母校）Letter of Nomination 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               - listitem: （mandatory）CV 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               - listitem: （mandatory）英文完整成績 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               - listitem: （mandatory）護照身分頁 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               - listitem: （optional）JPG肖像 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 適用條件：（optional）JPG肖像 · 文件形式待確認 · 適用性及送件細節待確認
+E               - listitem: （optional）英文B2以上證書（中正校內另規） 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 適用條件：（optional）英文B2以上證書（中正校內另規） · 文件形式待確認 · 適用性及送件細節待確認
+E             - text: 發現資格、期限、文件或送件資訊不一致？
+E             - button "回報此步驟"
+
+tests/e2e/test_ccu_eighteenth_pass.py:108: AssertionError
+__________ test_hcmute_email_sender_and_pilsen_transfers_render[1440] __________
+
+page = <Page url='http://127.0.0.1:36927/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Ho%20Chi%20Min...hnology%20and%20Engineering%20HCMUTE%E8%83%A1%E5%BF%97%E6%98%8E%E7%A7%91%E6%8A%80%E5%B7%A5%E7%A8%8B%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:36927', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-96/web-e2e-data0'))
+width = 1440
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_hcmute_email_sender_and_pilsen_transfers_render(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(at(68).school_name))
+        expect(page.locator("#detail-tab-application")).to_be_visible(timeout=30_000)
+        page.locator("#detail-tab-application").click()
+        steps = page.locator("details.workflow-step")
+        for index in [3, 4]:
+            step = steps.nth(index)
+            step.locator("> summary").click()
+>           expect(step).to_contain_text("電子郵件送件")
+E           AssertionError: Locator expected to contain text '電子郵件送件'
+E           Actual value: 
+E                 
+E                   4
+E                   
+E                     錄取及提名 · 國立中正大學國際事務處
+E                     母校彙整七項提名資料，以email寄合作校
+E                     
+E                   
+E                   
+E                 
+E                 
+E                   母校彙整五項必備與兩項選附資料，寄送提名信至factsheet列明聯絡人之一。
+E                   適用範圍115 學年度2027春季
+E                   此步驟仍有送件或文件細節待確認。請聯絡：國立中正大學國際事務處及合作校提名通知所列承辦人
+E                   
+E                   
+E               
+E                 送件方式
+E                 電子郵件 送件
+E                 承辦地點：母校國際事務處彙整與寄送；合作校國際事務處收件電子郵件：oia@hcmute.edu.vn
+E               
+E                   
+E               
+E                 
+E                   我的送件紀錄尚未開始
+E                   電子郵件 送件 · 學生手動
+E                 
+E                 
+E                   下一步先備齊文件並再次核對官方送件方式。
+E                   承辦國立中正大學國際事務處
+E                   期限期限待官方確認，不會自動提醒
+E                   收件證明尚未記錄
+E                 
+E                 
+E                 
+E                   登入後記錄進度
+E                   
+E                 
+E                 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E               
+E                   具體要做中正逐校第二階文件：當期已核實；官方PDF第68頁；2027春季；查核2026-10-08：1. An official list of nominated students 2. A Letter of Nomination 3. A curriculum vitae 4. Full academic transcript in English 5. A photocopy of passport (identification page with applicant’s photo and name) 6. A portrait photo in JPG format 7. Certificate of English language proficiency (B2 or above)（mandatory母校）官方提名名單 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory母校）Letter of Nomination · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory）CV · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory）英文完整成績 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory）護照身分頁 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（optional）JPG肖像 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（optional）英文B2以上證書（中正校內另規） · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E                   這一步要準備
+E               
+E                 
+E                 家長同意書電子檔 · 簽署：家長查看官方表格來源（待核實）原檔下載未核實，適用年度仍待確認。
+E               
+E               
+E                 
+E                 （mandatory母校）官方提名名單階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory母校）Letter of Nomination階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory）CV階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory）英文完整成績階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory）護照身分頁階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （optional）JPG肖像階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 適用條件：（optional）JPG肖像 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （optional）英文B2以上證書（中正校內另規）階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 適用條件：（optional）英文B2以上證書（中正校內另規） · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E                   
+E                   發現資格、期限、文件或送件資訊不一致？回報此步驟
+E                 
+E                
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("details.workflow-step").nth(3)
+E               14 × locator resolved to <details open="" class="workflow-step needs-confirmation">…</details>
+E                  - unexpected value "
+E                 
+E                   4
+E                   
+E                     錄取及提名 · 國立中正大學國際事務處
+E                     母校彙整七項提名資料，以email寄合作校
+E                     
+E                   
+E                   
+E                 
+E                 
+E                   母校彙整五項必備與兩項選附資料，寄送提名信至factsheet列明聯絡人之一。
+E                   適用範圍115 學年度2027春季
+E                   此步驟仍有送件或文件細節待確認。請聯絡：國立中正大學國際事務處及合作校提名通知所列承辦人
+E                   
+E                   
+E               
+E                 送件方式
+E                 電子郵件 送件
+E                 承辦地點：母校國際事務處彙整與寄送；合作校國際事務處收件電子郵件：oia@hcmute.edu.vn
+E               
+E                   
+E               
+E                 
+E                   我的送件紀錄尚未開始
+E                   電子郵件 送件 · 學生手動
+E                 
+E                 
+E                   下一步先備齊文件並再次核對官方送件方式。
+E                   承辦國立中正大學國際事務處
+E                   期限期限待官方確認，不會自動提醒
+E                   收件證明尚未記錄
+E                 
+E                 
+E                 
+E                   登入後記錄進度
+E                   
+E                 
+E                 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E               
+E                   具體要做中正逐校第二階文件：當期已核實；官方PDF第68頁；2027春季；查核2026-10-08：1. An official list of nominated students 2. A Letter of Nomination 3. A curriculum vitae 4. Full academic transcript in English 5. A photocopy of passport (identification page with applicant’s photo and name) 6. A portrait photo in JPG format 7. Certificate of English language proficiency (B2 or above)（mandatory母校）官方提名名單 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory母校）Letter of Nomination · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory）CV · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory）英文完整成績 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（mandatory）護照身分頁 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（optional）JPG肖像 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08（optional）英文B2以上證書（中正校內另規） · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E                   這一步要準備
+E               
+E                 
+E                 家長同意書電子檔 · 簽署：家長查看官方表格來源（待核實）原檔下載未核實，適用年度仍待確認。
+E               
+E               
+E                 
+E                 （mandatory母校）官方提名名單階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory母校）Letter of Nomination階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory）CV階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory）英文完整成績階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （mandatory）護照身分頁階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （optional）JPG肖像階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 適用條件：（optional）JPG肖像 · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E               
+E                 
+E                 （optional）英文B2以上證書（中正校內另規）階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 適用條件：（optional）英文B2以上證書（中正校內另規） · 文件形式待確認 · 適用性及送件細節待確認
+E               
+E                   
+E                   發現資格、期限、文件或送件資訊不一致？回報此步驟
+E                 
+E               "
+E           
+E           Aria snapshot:
+E           - group:
+E             - text: 錄取及提名 · 國立中正大學國際事務處
+E             - strong: 母校彙整七項提名資料，以email寄合作校
+E             - paragraph: 母校彙整五項必備與兩項選附資料，寄送提名信至factsheet列明聯絡人之一。
+E             - strong: 適用範圍
+E             - text: 115 學年度 2027春季
+E             - strong: 此步驟仍有送件或文件細節待確認。
+E             - text: 請聯絡：國立中正大學國際事務處及合作校提名通知所列承辦人
+E             - heading "送件方式" [level=4]
+E             - strong: 電子郵件 送件
+E             - list:
+E               - listitem: 承辦地點：母校國際事務處彙整與寄送；合作校國際事務處收件
+E               - listitem: 電子郵件：oia@hcmute.edu.vn
+E             - heading "我的送件紀錄" [level=4]
+E             - strong: 尚未開始
+E             - text: 電子郵件 送件 · 學生手動
+E             - term: 下一步
+E             - definition: 先備齊文件並再次核對官方送件方式。
+E             - term: 承辦
+E             - definition: 國立中正大學國際事務處
+E             - term: 期限
+E             - definition: 期限待官方確認，不會自動提醒
+E             - term: 收件證明
+E             - definition: 尚未記錄
+E             - button "登入後記錄進度"
+E             - paragraph: 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E             - heading "具體要做" [level=4]
+E             - list:
+E               - listitem: 中正逐校第二階文件：當期已核實；官方PDF第68頁；2027春季；查核2026-10-08：1. An official list of nominated students 2. A Letter of Nomination 3. A curriculum vitae 4. Full academic transcript in English 5. A photocopy of passport (identification page with applicant’s photo and name) 6. A portrait photo in JPG format 7. Certificate of English language proficiency (B2 or above)
+E               - listitem: （mandatory母校）官方提名名單 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E               - listitem: （mandatory母校）Letter of Nomination · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E               - listitem: （mandatory）CV · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E               - listitem: （mandatory）英文完整成績 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E               - listitem: （mandatory）護照身分頁 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E               - listitem: （optional）JPG肖像 · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E               - listitem: （optional）英文B2以上證書（中正校內另規） · 階段nomination；正文Fall2026/Spring2027兩terms；接收交換/訪問生；PDF第1頁；查核2026-10-08
+E             - heading "這一步要準備" [level=4]
+E             - list:
+E               - listitem:
+E                 - text: 家長
+E                 - strong: 同意書
+E                 - text: 電子檔 · 簽署：家長
+E                 - link "查看官方表格來源（待核實）":
+E                   - /url: https://oia.ccu.edu.tw/var/file/8/1008/img/1130/733224149.pdf
+E                 - text: 原檔下載未核實，適用年度仍待確認。
+E               - listitem: （mandatory母校）官方提名名單 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               - listitem: （mandatory母校）Letter of Nomination 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               - listitem: （mandatory）CV 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               - listitem: （mandatory）英文完整成績 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               - listitem: （mandatory）護照身分頁 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 文件形式待確認 · 適用性及送件細節待確認
+E               - listitem: （optional）JPG肖像 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 適用條件：（optional）JPG肖像 · 文件形式待確認 · 適用性及送件細節待確認
+E               - listitem: （optional）英文B2以上證書（中正校內另規） 階段：提名 · 適用性：當期依據已核 · 正文Fall2026/Spring2027兩terms；接收交換/訪問生 · 適用條件：（optional）英文B2以上證書（中正校內另規） · 文件形式待確認 · 適用性及送件細節待確認
+E             - text: 發現資格、期限、文件或送件資訊不一致？
+E             - button "回報此步驟"
+
+tests/e2e/test_ccu_eighteenth_pass.py:108: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ccu_eighteenth_pass.py::test_actual_degree_select_and_current_year_in_both_modes[390]
+FAILED tests/e2e/test_ccu_eighteenth_pass.py::test_actual_degree_select_and_current_year_in_both_modes[1440]
+FAILED tests/e2e/test_ccu_eighteenth_pass.py::test_hcmute_email_sender_and_pilsen_transfers_render[390]
+FAILED tests/e2e/test_ccu_eighteenth_pass.py::test_hcmute_email_sender_and_pilsen_transfers_render[1440]
+4 failed in 97.85s (0:01:37)

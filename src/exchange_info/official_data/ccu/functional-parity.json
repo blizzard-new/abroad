@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-08T14:41:20.159292+00:00",
+  "checked_at": "2026-10-08T15:41:19.589624+00:00",
   "definition": "逐校讀取本機公開API。nonempty是呈現／功能覆蓋，不等於當期規定完整；每個中正欄位另存來源、年度與查核狀態。",
   "baseline": {
     "cgu_raw_workflows": 154,
@@ -1098,14 +1098,14 @@
         "degree_levels": 10
       },
       "documents": {
-        "requirements": 1132,
+        "requirements": 1138,
         "requirements_with_form": 132,
         "schools_with_requirements": 55,
         "schools_with_signature_detail": 55
       },
       "document_center": {
         "schools_with_catalog": 55,
-        "host_items_with_stage": 197,
+        "host_items_with_stage": 203,
         "verified_official_links": 21,
         "conditional_items": 33
       },
@@ -1372,7 +1372,7 @@
           "school_name": "Deggendorf Institute of Technology 德根多夫應用科技大學",
           "review_status": "legacy",
           "step_count": 7,
-          "requirement_count": 17
+          "requirement_count": 23
         },
         {
           "school_name": "Augsburg University of Applied Sciences 奧格斯堡應用科技大學",
@@ -14333,8 +14333,8 @@
         },
         "housing": {
           "status": "needs_confirmation",
-          "value": "一般exchange頁須申請校方宿舍、偏好不保證，不是所有國際生普通流程。COLABS當期程序表moveoutEarlyAugust vsmandatorypresentationAug4–6與舊FAQmidAug；正式個人租期/2027床位仍待通知，不能預定8/1返程。",
-          "reason": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+          "value": "一般exchange頁須申請校方宿舍、偏好不保證，不是所有國際生普通流程。COLABS當期程序表moveoutEarlyAugust vsmandatorypresentationAug4–6與舊FAQmidAug；正式個人租期/2027床位仍待通知，不能預定8/1返程。 新讀4頁住宿ApplicationGuide正文為October2026，期間段仍October2024–2026；房數僅該期宿舍availability，非交換名額，不當2027春季申請規定。",
+          "reason": "核對所附逐項原文；各來源年度／計畫／校區分開，未知2027適用不升級；完整個人通知及追加清單仍未核。",
           "evidence": [
             {
               "source_id": "p35-r7-colabs-application",
@@ -14361,6 +14361,38 @@
               "note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
               "content_hash": "f1923371cf77c807e435e3e789c0a04207f996032cf603b6f4c411c440457014",
               "text_sha256": "51a3e7a67afe63a8e3fc9c856e0a2b1e0a33e59b15bd5c3c4a3c639435b0e380"
+            },
+            {
+              "source_id": "p35-r18-application-guide",
+              "source_url": "https://www.insc.tohoku.ac.jp/english/wp-content/uploads/2026/06/60a79b6e0fdac0d867ba6ca68ad2a8f8-2.pdf",
+              "source_pages": [
+                1,
+                2,
+                3
+              ],
+              "academic_year": "正文October2026住宿申請；期間段仍October2024–2026，不適用2027春季",
+              "application_round": null,
+              "checked_at": "2026-10-08T15:27:37.777623+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Application Guide October, 2026 We are now accepting new residence applications from international students for Tohoku University's University House and International House dormitories. ●Accommodations and Locations ・University House Aobayama 468-1 Aramaki-Aza Aoba Aobaku Sendai 980-0845 ・University House Sanjo 19-1 Sanjomachi Aobaku Sendai 981-0935 ・University House Sanjo Ⅱ 19-1 Sanjomachi Aobaku Sendai 981-0935 ・University House Sanjo Ⅲ 19-1 Sanjomachi Aobaku Sendai 981-0935 ・International House Sanjo 1 19-1 Sanjomachi Aobaku Sendai 981-0935 ・International House Sanjo 2 10-15 Sanjomachi Aobaku Sendai 981-0935 【Website】 https://sup.bureau.tohoku.ac.jp/en/pre-arrival-e/find-a-place-e/ 1 Room Availability Room availability is subject to change. ●University House Aobayama Single Room (Male, 11～12㎡) 108 rooms Single Room (Female, 11～12㎡) 71 rooms ●University House Sanjo A Type (Male, 10㎡) 22 rooms ※Communal showers and toilets A Type (Female, 10㎡) 25 rooms 〃 B Type (Male, 13㎡) 25 rooms ※Private showers and toilets B Type (Female, 13㎡) 19 rooms 〃 ※A Type rooms are mainly for undergraduate students, B Type rooms are mainly for graduate students. ●University House Sanjo II Single Room (Male, 12㎡) 36 rooms Single Room (Female, 12㎡) 55 rooms ●University House Sanjo III Single Room (Male,",
+              "content_hash": "fd15f910061ea9a56750342ac561c1ccda13000873ed8354b25b90aa2820309a",
+              "text_sha256": "2a521b9023c66c686509581ef2242f9e2369745235dcb2c3bf8b3db59b80dc56",
+              "note": "已讀4頁；不是交換學術申請指南。住宿room availability非CCU交換名額；第3頁舊期間與2026標題不一致，不套2027。 此evidence.status標示該欄匯總適用判讀；原文件年度身分另見academic_year與source content_applicability，不升級原文。"
+            },
+            {
+              "source_id": "p35-r18-application-guide",
+              "source_url": "https://www.insc.tohoku.ac.jp/english/wp-content/uploads/2026/06/60a79b6e0fdac0d867ba6ca68ad2a8f8-2.pdf",
+              "source_pages": [
+                3
+              ],
+              "academic_year": "正文October2026住宿申請；期間段仍October2024–2026，不適用2027春季",
+              "application_round": null,
+              "checked_at": "2026-10-08T15:27:37.777623+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "October 1, 2024 - February 28, 2026 (2) October 1, 2024 - August 31, 2026 ※1 Due to room cleaning for the next semester, students cannot stay in the dorms until September 30(for the Spring Semester) or March 31 (for the Fall Semester). ※2 If students leave the dorm by the 15th day of the final month of the approved period of stay, rent and management charges for the relevant month will be half of the regular fee. However, students whose duration of stay is scheduled to end on September 15 are not eligible to receive this discount for August even if they leave before August 15. This discount applies only to the final month written on the Residence Permit. 4 Rent and facilities Please see ‘dorm list 2026.10’ 5 How to apply Please submit your application through the online Google form, the Do",
+              "content_hash": "fd15f910061ea9a56750342ac561c1ccda13000873ed8354b25b90aa2820309a",
+              "text_sha256": "2a521b9023c66c686509581ef2242f9e2369745235dcb2c3bf8b3db59b80dc56",
+              "note": "已讀4頁；不是交換學術申請指南。住宿room availability非CCU交換名額；第3頁舊期間與2026標題不一致，不套2027。 此evidence.status標示該欄匯總適用判讀；原文件年度身分另見academic_year與source content_applicability，不升級原文。"
             }
           ]
         },
@@ -14808,10 +14840,11 @@
             "key": "housing",
             "label": "住宿",
             "status": "needs_confirmation",
-            "note": "僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+            "note": "核對所附逐項原文；各來源年度／計畫／校區分開，未知2027適用不升級；完整個人通知及追加清單仍未核。",
             "source_urls": [
               "https://www.insc.tohoku.ac.jp/english/exchange/colabs/colabs-application-procedures/",
-              "https://www.insc.tohoku.ac.jp/english/exchange/colabs/colabs_curriculum_1/"
+              "https://www.insc.tohoku.ac.jp/english/exchange/colabs/colabs_curriculum_1/",
+              "https://www.insc.tohoku.ac.jp/english/wp-content/uploads/2026/06/60a79b6e0fdac0d867ba6ca68ad2a8f8-2.pdf"
             ]
           },
           {
@@ -14860,7 +14893,7 @@
               {
                 "theme": "housing",
                 "kind": "official",
-                "text": "住宿與床位 · 適用年度或條件待確認：一般exchange頁須申請校方宿舍、偏好不保證，不是所有國際生普通流程。COLABS當期程序表moveoutEarlyAugust vsmandatorypresentationAug4–6與舊FAQmidAug；正式個人租期/2027床位仍待通知，不能預定8/1返程。（正文Spring2027；updatedJune2026；官方文件／網頁原文；查核2026-10-08）",
+                "text": "住宿與床位 · 適用年度或條件待確認：一般exchange頁須申請校方宿舍、偏好不保證，不是所有國際生普通流程。COLABS當期程序表moveoutEarlyAugust vsmandatorypresentationAug4–6與舊FAQmidAug；正式個人租期/2027床位仍待通知，不能預定8/1返程。 新讀4頁住宿ApplicationGuide正文為October2026，期間段仍October2024–2026；房數僅該期宿舍availability，非交換名額，不當2027春季申請規定。（正文Spring2027；updatedJune2026；官方文件／網頁原文；查核2026-10-08）",
                 "sources": [
                   {
                     "title": "中正逐欄查核來源",
@@ -14869,10 +14902,18 @@
                   {
                     "title": "中正逐欄查核來源",
                     "url": "https://www.insc.tohoku.ac.jp/english/exchange/colabs/colabs_curriculum_1/"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://www.insc.tohoku.ac.jp/english/wp-content/uploads/2026/06/60a79b6e0fdac0d867ba6ca68ad2a8f8-2.pdf#page=1"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://www.insc.tohoku.ac.jp/english/wp-content/uploads/2026/06/60a79b6e0fdac0d867ba6ca68ad2a8f8-2.pdf#page=3"
                   }
                 ],
                 "checked_at": "2026-10-08T07:45:36.775732Z",
-                "scope": "適用年度或條件待確認；正文Spring2027；updatedJune2026；僅核實所述計畫/學制及年度事實；未年/舊梯次、母校與接收端差異另標，完整個人申請及院系席位未取得，不猜缺值。",
+                "scope": "適用年度或條件待確認；正文Spring2027；updatedJune2026；核對所附逐項原文；各來源年度／計畫／校區分開，未知2027適用不升級；完整個人通知及追加清單仍未核。",
                 "original_excerpt": false,
                 "original_text": "",
                 "translation_status": "original"
@@ -35132,7 +35173,7 @@
             "id": "388192c89e2e9e8b029f",
             "sequence": 18,
             "phase": "合作校提名",
-            "step_title": "回覆交換意願並等待提名",
+            "step_title": "母校彙整七項提名資料，以email寄合作校",
             "name": "（mandatory母校）官方提名名單",
             "copies": null,
             "copy_type": "unspecified",
@@ -35162,7 +35203,7 @@
             "id": "b53ac61329ae372836e6",
             "sequence": 19,
             "phase": "合作校提名",
-            "step_title": "回覆交換意願並等待提名",
+            "step_title": "母校彙整七項提名資料，以email寄合作校",
             "name": "（mandatory母校）Letter of Nomination",
             "copies": null,
             "copy_type": "unspecified",
@@ -35192,7 +35233,7 @@
             "id": "4c2a532d173f86caf144",
             "sequence": 20,
             "phase": "合作校提名",
-            "step_title": "回覆交換意願並等待提名",
+            "step_title": "母校彙整七項提名資料，以email寄合作校",
             "name": "（mandatory）CV",
             "copies": null,
             "copy_type": "unspecified",
@@ -35222,7 +35263,7 @@
             "id": "26c3b2f2d9d2f6fe7415",
             "sequence": 21,
             "phase": "合作校提名",
-            "step_title": "回覆交換意願並等待提名",
+            "step_title": "母校彙整七項提名資料，以email寄合作校",
             "name": "（mandatory）英文完整成績",
             "copies": null,
             "copy_type": "unspecified",
@@ -35252,7 +35293,7 @@
             "id": "b3f4a78e3c4cf0a14c0b",
             "sequence": 22,
             "phase": "合作校提名",
-            "step_title": "回覆交換意願並等待提名",
+            "step_title": "母校彙整七項提名資料，以email寄合作校",
             "name": "（mandatory）護照身分頁",
             "copies": null,
             "copy_type": "unspecified",
@@ -35282,7 +35323,7 @@
             "id": "435e0c35e85990f1ca0b",
             "sequence": 23,
             "phase": "合作校提名",
-            "step_title": "回覆交換意願並等待提名",
+            "step_title": "母校彙整七項提名資料，以email寄合作校",
             "name": "（optional）JPG肖像",
             "copies": null,
             "copy_type": "unspecified",
@@ -35312,7 +35353,7 @@
             "id": "a50023d8804fd5db95c7",
             "sequence": 24,
             "phase": "合作校提名",
-            "step_title": "回覆交換意願並等待提名",
+            "step_title": "母校彙整七項提名資料，以email寄合作校",
             "name": "（optional）英文B2以上證書（中正校內另規）",
             "copies": null,
             "copy_type": "unspecified",
@@ -49255,16 +49296,48 @@
           ]
         },
         "documents": {
-          "status": "missing",
-          "value": null,
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-          "evidence": []
+          "status": "needs_confirmation",
+          "value": "未標年度incoming清單：Mobility Online上傳CV、在學證明、成績單、護照copy、英文能力證據；行前與母校制定Learning Agreement。母校以email提名，學生線上申請分開；2027及追加文件待核。",
+          "reason": "核對所附逐項原文；各來源年度／計畫／校區分開，未知2027適用不升級；完整個人通知及追加清單仍未核。",
+          "evidence": [
+            {
+              "source_id": "p101-r18-exchange-checklist",
+              "source_url": "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "未標年度的一般incoming exchange申請程序",
+              "application_round": null,
+              "checked_at": "2026-10-08T15:27:37.778250+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "3.Application process through mobility online Apply through our online application portal Mobility Online. Documents needed: • CV • Enrolment certificate • Transcript of records • Copy of passport • Proof of English language skills Mobility online",
+              "content_hash": "312b13ad896bdfb9de35c4fdbd91f8f03337f692556fdddec44dbc4077c3a076",
+              "text_sha256": "8456b236307ac9c7f4ea2ee2d73f1bdd6a8c1fd881a3a79c63ab014fa8a41d77",
+              "note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
+            }
+          ]
         },
         "application_forms": {
-          "status": "missing",
-          "value": null,
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-          "evidence": []
+          "status": "needs_confirmation",
+          "value": "一般指南指向Mobility Online申請，但未提供通用空白表；學術Learning Agreement須與母校制定，未取得對應模板。2027個人系統欄位與實際表仍待核。",
+          "reason": "核對所附逐項原文；各來源年度／計畫／校區分開，未知2027適用不升級；完整個人通知及追加清單仍未核。",
+          "evidence": [
+            {
+              "source_id": "p101-r18-exchange-checklist",
+              "source_url": "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "未標年度的一般incoming exchange申請程序",
+              "application_round": null,
+              "checked_at": "2026-10-08T15:27:37.778250+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "3.Application process through mobility online Apply through our online application portal Mobility Online. Documents needed: • CV • Enrolment certificate • Transcript of records • Copy of passport • Proof of English language skills Mobility online",
+              "content_hash": "312b13ad896bdfb9de35c4fdbd91f8f03337f692556fdddec44dbc4077c3a076",
+              "text_sha256": "8456b236307ac9c7f4ea2ee2d73f1bdd6a8c1fd881a3a79c63ab014fa8a41d77",
+              "note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
+            }
+          ]
         },
         "academic_calendar": {
           "status": "conflict",
@@ -49383,7 +49456,7 @@
         },
         "insurance": {
           "status": "needs_confirmation",
-          "value": "入学前须健康保險，由德国保险provider電子傳學校；未核本期国籍个别适用。",
+          "value": "入学前须健康保險，由德国保险provider電子傳學校；未核本期国籍个别适用。 新讀行前指南把travel insurance與German public insurance列在同一括號，亦稱可抵校後取得；與既有入學前電子傳送要求須分程序核對，不猜兩者等同或確定期限。",
           "reason": "未載適用2027春季年，尚未核實新版。",
           "evidence": [
             {
@@ -49400,20 +49473,67 @@
               "note": "未載適用2027春季年，尚未核實新版。",
               "content_hash": "ecb00ff5c4f29f0e0e9ffc4039f4f369791e0003a5befde30a58cf3b0a2de23a",
               "text_sha256": "51153c435d9bf6885d546b98dbd47ab4b1a4da746a4c2c1bc76940b485a0fcfa"
+            },
+            {
+              "source_id": "p101-r18-exchange-checklist",
+              "source_url": "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "未標年度的一般incoming exchange申請程序",
+              "application_round": null,
+              "checked_at": "2026-10-08T15:27:37.778250+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Get travel insurance (German public insurance which is required for your studies at DIT. Can also be obtained after your arrival at DIT) • Make a learning agreement with your home university • Book your flight to Germany 6.On arrival Join our Orientation Weeks and make new friends from all over the world. 4.Letter of acceptance After having checked your application, we will send your official letter of acceptance by e-mail. Welcome to the orientation weeks! TICKET www.th-deg.de/en/study-with-us/exchange-students 3.Application process through mobility online Apply through our online application portal Mobility Online. Documents needed: • CV • Enrolment certificate • Transcript of records • Copy of passport • Proof of English language skills Mobility online",
+              "content_hash": "312b13ad896bdfb9de35c4fdbd91f8f03337f692556fdddec44dbc4077c3a076",
+              "text_sha256": "8456b236307ac9c7f4ea2ee2d73f1bdd6a8c1fd881a3a79c63ab014fa8a41d77",
+              "note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
             }
           ]
         },
         "visa": {
-          "status": "missing",
-          "value": null,
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-          "evidence": []
+          "status": "needs_confirmation",
+          "value": "一般行前節點非EU學生須申請student visa；指南未列國籍個案所需完整簽證文件或期限，2027待核。",
+          "reason": "核對所附逐項原文；各來源年度／計畫／校區分開，未知2027適用不升級；完整個人通知及追加清單仍未核。",
+          "evidence": [
+            {
+              "source_id": "p101-r18-exchange-checklist",
+              "source_url": "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "未標年度的一般incoming exchange申請程序",
+              "application_round": null,
+              "checked_at": "2026-10-08T15:27:37.778250+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Non-EU students only: - Apply for a student visa - Get travel insurance (German public insurance which is required for your studies at DIT. Can also be obtained after your arrival at DIT) • Make a learning agreement with your home university • Book your flight to Germany 6.On arrival Join our Orientation Weeks and make new friends from all over the world. 4.Letter of acceptance After having checked your application, we will send your official letter of acceptance by e-mail. Welcome to the orientation weeks! TICKET www.th-deg.de/en/study-with-us/exchange-students 3.Application process through mobility online Apply through our online application portal Mobility Online. Documents needed: • CV • Enrolment certificate • Transcript of records • Copy of passport • Proof of English language skills Mobility online",
+              "content_hash": "312b13ad896bdfb9de35c4fdbd91f8f03337f692556fdddec44dbc4077c3a076",
+              "text_sha256": "8456b236307ac9c7f4ea2ee2d73f1bdd6a8c1fd881a3a79c63ab014fa8a41d77",
+              "note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
+            }
+          ]
         },
         "arrival": {
-          "status": "missing",
-          "value": null,
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-          "evidence": []
+          "status": "needs_confirmation",
+          "value": "一般incoming指南要求參加Orientation Weeks；未載2027日期、抵達最晚日或接機保證。",
+          "reason": "核對所附逐項原文；各來源年度／計畫／校區分開，未知2027適用不升級；完整個人通知及追加清單仍未核。",
+          "evidence": [
+            {
+              "source_id": "p101-r18-exchange-checklist",
+              "source_url": "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "未標年度的一般incoming exchange申請程序",
+              "application_round": null,
+              "checked_at": "2026-10-08T15:27:37.778250+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "6.On arrival Join our Orientation Weeks and make new friends from all over the world. 4.Letter of acceptance After having checked your application, we will send your official letter of acceptance by e-mail. Welcome to the orientation weeks! TICKET www.th-deg.de/en/study-with-us/exchange-students 3.Application process through mobility online Apply through our online application portal Mobility Online. Documents needed: • CV • Enrolment certificate • Transcript of records • Copy of passport • Proof of English language skills Mobility online",
+              "content_hash": "312b13ad896bdfb9de35c4fdbd91f8f03337f692556fdddec44dbc4077c3a076",
+              "text_sha256": "8456b236307ac9c7f4ea2ee2d73f1bdd6a8c1fd881a3a79c63ab014fa8a41d77",
+              "note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
+            }
+          ]
         },
         "host_tuition": {
           "status": "missing",
@@ -49552,14 +49672,407 @@
       "documents": {
         "home_individual_requirements": 9,
         "mother_per_school_notes_retained": true,
-        "host_individual_requirements": 0,
-        "host_stages": {},
-        "host_list_completeness": "unverified",
-        "requirements": []
+        "host_individual_requirements": 6,
+        "host_stages": {
+          "student_application": 5,
+          "post_offer": 1
+        },
+        "host_list_completeness": "partial_not_exhaustive",
+        "requirements": [
+          {
+            "requirement": {
+              "name": "CV",
+              "copies": null,
+              "copy_type": "unspecified",
+              "signatures": [],
+              "stamps": [],
+              "official_form_url": null,
+              "source_urls": [
+                "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf"
+              ],
+              "needs_confirmation": true
+            },
+            "evidence": [
+              {
+                "source_id": "p101-r18-exchange-checklist",
+                "source_url": "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+                "source_pages": [
+                  1
+                ],
+                "academic_year": "未標年度的一般incoming exchange申請程序",
+                "application_round": null,
+                "checked_at": "2026-10-08T15:27:37.778250+00:00",
+                "status": "needs_confirmation",
+                "excerpt": "CV • Enrolment certificate • Transcript of records • Copy of passport • Proof of English language skills Mobility online",
+                "content_hash": "312b13ad896bdfb9de35c4fdbd91f8f03337f692556fdddec44dbc4077c3a076",
+                "text_sha256": "8456b236307ac9c7f4ea2ee2d73f1bdd6a8c1fd881a3a79c63ab014fa8a41d77",
+                "note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
+              }
+            ],
+            "conditional": false,
+            "stage": "student_application",
+            "applicability_status": "needs_confirmation",
+            "applicability_year": "未標年度的一般incoming exchange申請程序",
+            "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+          },
+          {
+            "requirement": {
+              "name": "在學證明",
+              "copies": null,
+              "copy_type": "unspecified",
+              "signatures": [],
+              "stamps": [],
+              "official_form_url": null,
+              "source_urls": [
+                "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf"
+              ],
+              "needs_confirmation": true
+            },
+            "evidence": [
+              {
+                "source_id": "p101-r18-exchange-checklist",
+                "source_url": "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+                "source_pages": [
+                  1
+                ],
+                "academic_year": "未標年度的一般incoming exchange申請程序",
+                "application_round": null,
+                "checked_at": "2026-10-08T15:27:37.778250+00:00",
+                "status": "needs_confirmation",
+                "excerpt": "Enrolment certificate • Transcript of records • Copy of passport • Proof of English language skills Mobility online",
+                "content_hash": "312b13ad896bdfb9de35c4fdbd91f8f03337f692556fdddec44dbc4077c3a076",
+                "text_sha256": "8456b236307ac9c7f4ea2ee2d73f1bdd6a8c1fd881a3a79c63ab014fa8a41d77",
+                "note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
+              }
+            ],
+            "conditional": false,
+            "stage": "student_application",
+            "applicability_status": "needs_confirmation",
+            "applicability_year": "未標年度的一般incoming exchange申請程序",
+            "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+          },
+          {
+            "requirement": {
+              "name": "成績單",
+              "copies": null,
+              "copy_type": "unspecified",
+              "signatures": [],
+              "stamps": [],
+              "official_form_url": null,
+              "source_urls": [
+                "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf"
+              ],
+              "needs_confirmation": true
+            },
+            "evidence": [
+              {
+                "source_id": "p101-r18-exchange-checklist",
+                "source_url": "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+                "source_pages": [
+                  1
+                ],
+                "academic_year": "未標年度的一般incoming exchange申請程序",
+                "application_round": null,
+                "checked_at": "2026-10-08T15:27:37.778250+00:00",
+                "status": "needs_confirmation",
+                "excerpt": "Transcript of records • Copy of passport • Proof of English language skills Mobility online",
+                "content_hash": "312b13ad896bdfb9de35c4fdbd91f8f03337f692556fdddec44dbc4077c3a076",
+                "text_sha256": "8456b236307ac9c7f4ea2ee2d73f1bdd6a8c1fd881a3a79c63ab014fa8a41d77",
+                "note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
+              }
+            ],
+            "conditional": false,
+            "stage": "student_application",
+            "applicability_status": "needs_confirmation",
+            "applicability_year": "未標年度的一般incoming exchange申請程序",
+            "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+          },
+          {
+            "requirement": {
+              "name": "護照copy",
+              "copies": null,
+              "copy_type": "unspecified",
+              "signatures": [],
+              "stamps": [],
+              "official_form_url": null,
+              "source_urls": [
+                "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf"
+              ],
+              "needs_confirmation": true
+            },
+            "evidence": [
+              {
+                "source_id": "p101-r18-exchange-checklist",
+                "source_url": "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+                "source_pages": [
+                  1
+                ],
+                "academic_year": "未標年度的一般incoming exchange申請程序",
+                "application_round": null,
+                "checked_at": "2026-10-08T15:27:37.778250+00:00",
+                "status": "needs_confirmation",
+                "excerpt": "Copy of passport • Proof of English language skills Mobility online",
+                "content_hash": "312b13ad896bdfb9de35c4fdbd91f8f03337f692556fdddec44dbc4077c3a076",
+                "text_sha256": "8456b236307ac9c7f4ea2ee2d73f1bdd6a8c1fd881a3a79c63ab014fa8a41d77",
+                "note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
+              }
+            ],
+            "conditional": false,
+            "stage": "student_application",
+            "applicability_status": "needs_confirmation",
+            "applicability_year": "未標年度的一般incoming exchange申請程序",
+            "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+          },
+          {
+            "requirement": {
+              "name": "英文能力證據",
+              "copies": null,
+              "copy_type": "unspecified",
+              "signatures": [],
+              "stamps": [],
+              "official_form_url": null,
+              "source_urls": [
+                "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf"
+              ],
+              "needs_confirmation": true
+            },
+            "evidence": [
+              {
+                "source_id": "p101-r18-exchange-checklist",
+                "source_url": "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+                "source_pages": [
+                  1
+                ],
+                "academic_year": "未標年度的一般incoming exchange申請程序",
+                "application_round": null,
+                "checked_at": "2026-10-08T15:27:37.778250+00:00",
+                "status": "needs_confirmation",
+                "excerpt": "Proof of English language skills Mobility online",
+                "content_hash": "312b13ad896bdfb9de35c4fdbd91f8f03337f692556fdddec44dbc4077c3a076",
+                "text_sha256": "8456b236307ac9c7f4ea2ee2d73f1bdd6a8c1fd881a3a79c63ab014fa8a41d77",
+                "note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
+              }
+            ],
+            "conditional": false,
+            "stage": "student_application",
+            "applicability_status": "needs_confirmation",
+            "applicability_year": "未標年度的一般incoming exchange申請程序",
+            "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+          },
+          {
+            "requirement": {
+              "name": "與母校制定Learning Agreement（行前；模板未核）",
+              "copies": null,
+              "copy_type": "unspecified",
+              "signatures": [],
+              "stamps": [],
+              "official_form_url": null,
+              "source_urls": [
+                "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf"
+              ],
+              "needs_confirmation": true
+            },
+            "evidence": [
+              {
+                "source_id": "p101-r18-exchange-checklist",
+                "source_url": "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+                "source_pages": [
+                  1
+                ],
+                "academic_year": "未標年度的一般incoming exchange申請程序",
+                "application_round": null,
+                "checked_at": "2026-10-08T15:27:37.778250+00:00",
+                "status": "needs_confirmation",
+                "excerpt": "Make a learning agreement with your home university • Book your flight to Germany 6.On arrival Join our Orientation Weeks and make new friends from all over the world. 4.Letter of acceptance After having checked your application, we will send your official letter of acceptance by e-mail. Welcome to the orientation weeks! TICKET www.th-deg.de/en/study-with-us/exchange-students 3.Application process through mobility online Apply through our online application portal Mobility Online. Documents needed: • CV • Enrolment certificate • Transcript of records • Copy of passport • Proof of English language skills Mobility online",
+                "content_hash": "312b13ad896bdfb9de35c4fdbd91f8f03337f692556fdddec44dbc4077c3a076",
+                "text_sha256": "8456b236307ac9c7f4ea2ee2d73f1bdd6a8c1fd881a3a79c63ab014fa8a41d77",
+                "note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
+              }
+            ],
+            "conditional": false,
+            "stage": "post_offer",
+            "applicability_status": "needs_confirmation",
+            "applicability_year": "未標年度的一般incoming exchange申請程序",
+            "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+          }
+        ]
       },
       "runtime": {
-        "document_catalog_phases": [],
-        "document_catalog_host_items": [],
+        "document_catalog_phases": [
+          "合作校申請",
+          "合作校錄取後"
+        ],
+        "document_catalog_host_items": [
+          {
+            "id": "6234d9702a1e6dccd0b8",
+            "sequence": 18,
+            "phase": "合作校申請",
+            "step_title": "依提名信辦理合作校申請",
+            "name": "CV",
+            "copies": null,
+            "copy_type": "unspecified",
+            "signatures": [],
+            "stamps": [],
+            "official_form_url": null,
+            "source_urls": [
+              "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+              "https://drive.google.com/file/d/15gOOUjTRRBG_PB9KuPXgQEDaCVJODuOE/view?usp=drive_link"
+            ],
+            "source_checked_at": "2026-10-08T00:00:00Z",
+            "support_status": "needs_confirmation",
+            "needs_confirmation": true,
+            "download_available": false,
+            "contact_unit": "outbound@ccu.edu.tw",
+            "stage": "student_application",
+            "conditional": false,
+            "condition": null,
+            "official_form_verified": false,
+            "applicability_status": "needs_confirmation",
+            "applicability_year": "未標年度的一般incoming exchange申請程序",
+            "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+          },
+          {
+            "id": "fb48eba675039c26b1ad",
+            "sequence": 19,
+            "phase": "合作校申請",
+            "step_title": "依提名信辦理合作校申請",
+            "name": "在學證明",
+            "copies": null,
+            "copy_type": "unspecified",
+            "signatures": [],
+            "stamps": [],
+            "official_form_url": null,
+            "source_urls": [
+              "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+              "https://drive.google.com/file/d/15gOOUjTRRBG_PB9KuPXgQEDaCVJODuOE/view?usp=drive_link"
+            ],
+            "source_checked_at": "2026-10-08T00:00:00Z",
+            "support_status": "needs_confirmation",
+            "needs_confirmation": true,
+            "download_available": false,
+            "contact_unit": "outbound@ccu.edu.tw",
+            "stage": "student_application",
+            "conditional": false,
+            "condition": null,
+            "official_form_verified": false,
+            "applicability_status": "needs_confirmation",
+            "applicability_year": "未標年度的一般incoming exchange申請程序",
+            "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+          },
+          {
+            "id": "e872d3d4fed6686aacba",
+            "sequence": 20,
+            "phase": "合作校申請",
+            "step_title": "依提名信辦理合作校申請",
+            "name": "成績單",
+            "copies": null,
+            "copy_type": "unspecified",
+            "signatures": [],
+            "stamps": [],
+            "official_form_url": null,
+            "source_urls": [
+              "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+              "https://drive.google.com/file/d/15gOOUjTRRBG_PB9KuPXgQEDaCVJODuOE/view?usp=drive_link"
+            ],
+            "source_checked_at": "2026-10-08T00:00:00Z",
+            "support_status": "needs_confirmation",
+            "needs_confirmation": true,
+            "download_available": false,
+            "contact_unit": "outbound@ccu.edu.tw",
+            "stage": "student_application",
+            "conditional": false,
+            "condition": null,
+            "official_form_verified": false,
+            "applicability_status": "needs_confirmation",
+            "applicability_year": "未標年度的一般incoming exchange申請程序",
+            "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+          },
+          {
+            "id": "38f56d63217f33506360",
+            "sequence": 21,
+            "phase": "合作校申請",
+            "step_title": "依提名信辦理合作校申請",
+            "name": "護照copy",
+            "copies": null,
+            "copy_type": "unspecified",
+            "signatures": [],
+            "stamps": [],
+            "official_form_url": null,
+            "source_urls": [
+              "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+              "https://drive.google.com/file/d/15gOOUjTRRBG_PB9KuPXgQEDaCVJODuOE/view?usp=drive_link"
+            ],
+            "source_checked_at": "2026-10-08T00:00:00Z",
+            "support_status": "needs_confirmation",
+            "needs_confirmation": true,
+            "download_available": false,
+            "contact_unit": "outbound@ccu.edu.tw",
+            "stage": "student_application",
+            "conditional": false,
+            "condition": null,
+            "official_form_verified": false,
+            "applicability_status": "needs_confirmation",
+            "applicability_year": "未標年度的一般incoming exchange申請程序",
+            "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+          },
+          {
+            "id": "263bd6e02688b08d4f4b",
+            "sequence": 22,
+            "phase": "合作校申請",
+            "step_title": "依提名信辦理合作校申請",
+            "name": "英文能力證據",
+            "copies": null,
+            "copy_type": "unspecified",
+            "signatures": [],
+            "stamps": [],
+            "official_form_url": null,
+            "source_urls": [
+              "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+              "https://drive.google.com/file/d/15gOOUjTRRBG_PB9KuPXgQEDaCVJODuOE/view?usp=drive_link"
+            ],
+            "source_checked_at": "2026-10-08T00:00:00Z",
+            "support_status": "needs_confirmation",
+            "needs_confirmation": true,
+            "download_available": false,
+            "contact_unit": "outbound@ccu.edu.tw",
+            "stage": "student_application",
+            "conditional": false,
+            "condition": null,
+            "official_form_verified": false,
+            "applicability_status": "needs_confirmation",
+            "applicability_year": "未標年度的一般incoming exchange申請程序",
+            "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+          },
+          {
+            "id": "4ca54d350807dc35b3e5",
+            "sequence": 23,
+            "phase": "合作校錄取後",
+            "step_title": "核對接收計畫的住宿、保險與抵達安排",
+            "name": "與母校制定Learning Agreement（行前；模板未核）",
+            "copies": null,
+            "copy_type": "unspecified",
+            "signatures": [],
+            "stamps": [],
+            "official_form_url": null,
+            "source_urls": [
+              "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+              "https://ec.th-deg.de/en/students/documents",
+              "https://drive.google.com/file/d/15gOOUjTRRBG_PB9KuPXgQEDaCVJODuOE/view?usp=drive_link"
+            ],
+            "source_checked_at": "2026-10-08T00:00:00Z",
+            "support_status": "needs_confirmation",
+            "needs_confirmation": true,
+            "download_available": false,
+            "contact_unit": "國立中正大學國際事務處及合作校提名窗口",
+            "stage": "post_offer",
+            "conditional": false,
+            "condition": null,
+            "official_form_verified": false,
+            "applicability_status": "needs_confirmation",
+            "applicability_year": "未標年度的一般incoming exchange申請程序",
+            "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+          }
+        ],
         "workflow_http": 200,
         "guide_present": true,
         "review_status": "legacy",
@@ -51674,7 +52187,7 @@
         "nomination_deadline": {
           "status": "needs_confirmation",
           "value": "一般spring10/15，本科/硕士同；未标本期年。",
-          "reason": "直連合作校SoE新版內容2026-04-22，學士及碩士、TOEFL新舊量尺不同；未明載2027春季年度，保留待確認。碩士春季intro week37疑似錯置。",
+          "reason": "核對所附逐項原文；各來源年度／計畫／校區分開，未知2027適用不升級；完整個人通知及追加清單仍未核。",
           "evidence": [
             {
               "source_id": "p103-host0",
@@ -51690,13 +52203,28 @@
               "note": "直連合作校SoE新版內容2026-04-22，學士及碩士、TOEFL新舊量尺不同；未明載2027春季年度，保留待確認。碩士春季intro week37疑似錯置。",
               "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
               "text_sha256": "5748881ec85c92d1bc0c76f0ae48d70c0829652e2e8d439f37051d7c5232df2d"
+            },
+            {
+              "source_id": "p103-r18-timeline",
+              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf",
+              "source_pages": [
+                2
+              ],
+              "academic_year": "未標年度；Fall/Spring一般SoE時間線",
+              "application_round": null,
+              "checked_at": "2026-10-08T15:27:37.780997+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "01.08. – 15.10. Home University nominates through provided link 01.08. – 01.11. IO sends application information to nominated student 01.11. – mid-Nov Heads of Study Programs review applications Till 01.11. Exchange students upload application in tool Till mid-Nov mid-Nov – before semester start 2 weeks before semester start Your buddy will be assigned and contact you Till 2 weeks after semester start Adjustment of courses possible Orientation week in calendar week 7 Welcome and introduction at ZHAW SoE with administrational topics Timeline of Spring Semester EU students Non-EU students Search for accommodation Visa if required SoE scholarship: sign “Declaration of foundation obligation” (excl. intra-Swiss Students and Students who are granted by ERASMUS+ and EELISA at their European University) SEMP: sign Grant Agreement IO shares feedback and sends Letter of Acceptance",
+              "content_hash": "4246bedde52d97c56308caf1ba33b7245d0a99d1d99bf4d52d041927232bc3f4",
+              "text_sha256": "951d564dd9af90c76f3cb5c4e38597ba68ce4af8387ec51e219aad771ff494d4",
+              "note": "已讀2頁；spring提名10/15、申請11/1、orientation week7及buddy前2週。SoE/SEMP資助表分EU/非EU及豁免，不推每位學生必繳；2027適用未核。"
             }
           ]
         },
         "application_deadline": {
           "status": "needs_confirmation",
           "value": "一般spring11/1；未标年，仅不需visa者late nomination可先询，不给延长保证。",
-          "reason": "直連合作校SoE新版內容2026-04-22，學士及碩士、TOEFL新舊量尺不同；未明載2027春季年度，保留待確認。碩士春季intro week37疑似錯置。",
+          "reason": "核對所附逐項原文；各來源年度／計畫／校區分開，未知2027適用不升級；完整個人通知及追加清單仍未核。",
           "evidence": [
             {
               "source_id": "p103-host0",
@@ -51712,6 +52240,21 @@
               "note": "直連合作校SoE新版內容2026-04-22，學士及碩士、TOEFL新舊量尺不同；未明載2027春季年度，保留待確認。碩士春季intro week37疑似錯置。",
               "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
               "text_sha256": "5748881ec85c92d1bc0c76f0ae48d70c0829652e2e8d439f37051d7c5232df2d"
+            },
+            {
+              "source_id": "p103-r18-timeline",
+              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf",
+              "source_pages": [
+                2
+              ],
+              "academic_year": "未標年度；Fall/Spring一般SoE時間線",
+              "application_round": null,
+              "checked_at": "2026-10-08T15:27:37.780997+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Till 01.11. Exchange students upload application in tool Till mid-Nov mid-Nov – before semester start 2 weeks before semester start Your buddy will be assigned and contact you Till 2 weeks after semester start Adjustment of courses possible Orientation week in calendar week 7 Welcome and introduction at ZHAW SoE with administrational topics Timeline of Spring Semester EU students Non-EU students Search for accommodation Visa if required SoE scholarship: sign “Declaration of foundation obligation” (excl. intra-Swiss Students and Students who are granted by ERASMUS+ and EELISA at their European University) SEMP: sign Grant Agreement IO shares feedback and sends Letter of Acceptance",
+              "content_hash": "4246bedde52d97c56308caf1ba33b7245d0a99d1d99bf4d52d041927232bc3f4",
+              "text_sha256": "951d564dd9af90c76f3cb5c4e38597ba68ce4af8387ec51e219aad771ff494d4",
+              "note": "已讀2頁；spring提名10/15、申請11/1、orientation week7及buddy前2週。SoE/SEMP資助表分EU/非EU及豁免，不推每位學生必繳；2027適用未核。"
             }
           ]
         },
@@ -51864,10 +52407,26 @@
           "evidence": []
         },
         "arrival": {
-          "status": "missing",
-          "value": null,
-          "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；直連合作校SoE新版內容2026-04-22，學士及碩士、TOEFL新舊量尺不同；未明載2027春季年度，保留待確認。碩士春季intro week37疑似錯置。",
-          "evidence": []
+          "status": "needs_confirmation",
+          "value": "未標年度SoE spring timeline列orientation calendar week7；buddy在semester start前2週安排聯絡。僅一般流程，2027具體日期、個案buddy與抵達日仍待核；不把另一factsheet碩士week37疑點悄悄修正。",
+          "reason": "核對所附逐項原文；各來源年度／計畫／校區分開，未知2027適用不升級；完整個人通知及追加清單仍未核。",
+          "evidence": [
+            {
+              "source_id": "p103-r18-timeline",
+              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf",
+              "source_pages": [
+                2
+              ],
+              "academic_year": "未標年度；Fall/Spring一般SoE時間線",
+              "application_round": null,
+              "checked_at": "2026-10-08T15:27:37.780997+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "2 weeks before semester start Your buddy will be assigned and contact you Till 2 weeks after semester start Adjustment of courses possible Orientation week in calendar week 7 Welcome and introduction at ZHAW SoE with administrational topics Timeline of Spring Semester EU students Non-EU students Search for accommodation Visa if required SoE scholarship: sign “Declaration of foundation obligation” (excl. intra-Swiss Students and Students who are granted by ERASMUS+ and EELISA at their European University) SEMP: sign Grant Agreement IO shares feedback and sends Letter of Acceptance",
+              "content_hash": "4246bedde52d97c56308caf1ba33b7245d0a99d1d99bf4d52d041927232bc3f4",
+              "text_sha256": "951d564dd9af90c76f3cb5c4e38597ba68ce4af8387ec51e219aad771ff494d4",
+              "note": "已讀2頁；spring提名10/15、申請11/1、orientation week7及buddy前2週。SoE/SEMP資助表分EU/非EU及豁免，不推每位學生必繳；2027適用未核。"
+            }
+          ]
         },
         "host_tuition": {
           "status": "missing",
@@ -52021,7 +52580,7 @@
           ]
         },
         "campus_life": {
-          "value": "一般SoE生活頁列ESN Winterthur、ALIAS學生會、Campus Card、圖書館與ASVZ運動（頁面稱exchange學生會員free）；2027適用／活動及個別服務另核。",
+          "value": "一般SoE生活頁列ESN Winterthur、ALIAS學生會、Campus Card、圖書館與ASVZ運動（頁面稱exchange學生會員free）；2027適用／活動及個別服務另核。 另有未標年度timeline稱buddy於學期前2週指派聯絡，2027個別安排未核。",
           "status": "needs_confirmation",
           "reason": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
           "evidence": [
@@ -52048,6 +52607,21 @@
               "excerpt": "ll students are issued with a Campus Card the size of a credit card. This serves as identification for cash-free payment in the canteen and copy center as well as providing access to the buildings. Each student also receives: a personal email account a personal web folder access to the ZHAW network via individual network connections in all teaching and work rooms access to Intranet and Internet Photo: Sylvia Wanke The ZHAW university library is located close to Winterthur Main Railway Station. It offers students a state-of-the-art media, information, and learning center covering roughly 6,000 square meters. It comprises more than 120,000 types of media and approximately 700 individual and group workstations, as well as around 30 research stations and PC workstations across several floors. In addition, ZHAW students always have access to the building (24/7). The Erasmus Student Network is a Europe-wide student organization that actively promotes international exchange. The local ESN Winterthur group enhances the study abroad experience for international students by organizing a full range of leisure activities throughout the semester with excursions, regular meetings, and parties. All students automatically become members of ZHAW students' union “ ALIAS ” which also offers various activities. The Academic Sports Association of Zurich (ASVZ) offers over 120 different sports in Winterthur and Zurich as an active way to achieve a healthy work-life balance. Students can benefit from an extensive infrastructure with modern sports equipment as well as knowledgeable, professional supervision. The ASVZ membership is free for our exchange students. The ZHAW School of Engineering offers free and confidential counseling in a wide range of situations. The International Office is happy to put you in contact with ",
               "content_hash": "acae4b870d23d230ffa2fd226b686defe1f20ba51c34df7fd11fbc79aabcf273",
               "text_sha256": "78b05f329e89709ad6eb8bc53758281b36b4fcdb990434df342ade34758b21e9"
+            },
+            {
+              "source_id": "p103-r18-timeline",
+              "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf",
+              "source_pages": [
+                2
+              ],
+              "academic_year": "未標年度；Fall/Spring一般SoE時間線",
+              "application_round": null,
+              "checked_at": "2026-10-08T15:27:37.780997+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "2 weeks before semester start Your buddy will be assigned and contact you Till 2 weeks after semester start Adjustment of courses possible Orientation week in calendar week 7 Welcome and introduction at ZHAW SoE with administrational topics Timeline of Spring Semester EU students Non-EU students Search for accommodation Visa if required SoE scholarship: sign “Declaration of foundation obligation” (excl. intra-Swiss Students and Students who are granted by ERASMUS+ and EELISA at their European University) SEMP: sign Grant Agreement IO shares feedback and sends Letter of Acceptance",
+              "content_hash": "4246bedde52d97c56308caf1ba33b7245d0a99d1d99bf4d52d041927232bc3f4",
+              "text_sha256": "951d564dd9af90c76f3cb5c4e38597ba68ce4af8387ec51e219aad771ff494d4",
+              "note": "已讀2頁；spring提名10/15、申請11/1、orientation week7及buddy前2週。SoE/SEMP資助表分EU/非EU及豁免，不推每位學生必繳；2027適用未核。"
             }
           ]
         }
@@ -52157,7 +52731,8 @@
             "status": "needs_confirmation",
             "note": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
             "source_urls": [
-              "https://www.zhaw.ch/en/engineering/study/international-office/studying-in-switzerland/campus-and-infrastructure"
+              "https://www.zhaw.ch/en/engineering/study/international-office/studying-in-switzerland/campus-and-infrastructure",
+              "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf"
             ]
           },
           {
@@ -52285,7 +52860,7 @@
               {
                 "theme": "social",
                 "kind": "official",
-                "text": "一般SoE生活頁列ESN Winterthur、ALIAS學生會、Campus Card、圖書館與ASVZ運動（頁面稱exchange學生會員free）；2027適用／活動及個別服務另核。（適用年度或條件待確認；公開一般交通／校園生活；2027春季個人適用尚未核實；查核2026-10-08）",
+                "text": "一般SoE生活頁列ESN Winterthur、ALIAS學生會、Campus Card、圖書館與ASVZ運動（頁面稱exchange學生會員free）；2027適用／活動及個別服務另核。 另有未標年度timeline稱buddy於學期前2週指派聯絡，2027個別安排未核。（適用年度或條件待確認；公開一般交通／校園生活；2027春季個人適用尚未核實；查核2026-10-08）",
                 "sources": [
                   {
                     "title": "中正逐欄查核來源",
@@ -52294,6 +52869,10 @@
                   {
                     "title": "中正逐欄查核來源",
                     "url": "https://www.zhaw.ch/en/engineering/study/international-office/studying-in-switzerland/campus-and-infrastructure"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf#page=2"
                   }
                 ],
                 "checked_at": "2026-10-08T10:02:18.041897Z",
@@ -52618,8 +53197,8 @@
         },
         "course_restrictions": {
           "status": "conflict",
-          "value": "來源年矛盾：Spring2027英語入口的BaselIBM/BIT兩PDF正文均Spring2026，不作當期開课。Brugg-WindischIM/BIT正文Spring2027、OltenIM provisional2027已讀：先修/成班/滿班與PT夜間周六、最多一focus/專門化、不得混專門化。Olten2/8–12密集及internationalprojects仅全學年學生，與新生迎新重疊；不能给新入春季當可修清單。",
-          "reason": "核對實際正文、適用年/計畫與附件；verified_current只代表列出的已核事實，未列細節不宣稱完整。一般指引、舊年度、計畫差異或矛盾另標。",
+          "value": "來源年矛盾維持：新讀課程入口正文Spring2027；其英／德子頁與三份course offer同URL已有review，複查抽取文字未變。Basel IBM仍正文Spring2026，不當當期；BruggIM2027、OltenIM provisional2027先修／成班／PT夜間周六／母語及全學年限制沿用既有逐項證據，學院學制保持待確認。",
+          "reason": "核對所附逐項原文；各來源年度／計畫／校區分開，未知2027適用不升級；完整個人通知及追加清單仍未核。",
           "evidence": [
             {
               "source_id": "p104-r5-spring27-english",
@@ -52678,6 +53257,19 @@
               "note": "實際3頁全文讀，先修與語言、chooseONLYONE、全年專屬前期2/8–12模組和迎新重疊；provisional不保证開課。",
               "content_hash": "632ecb6f4ad3bf1438cb137a88fe6fcc375be6ec1110a2db87d926b77973b6a7",
               "text_sha256": "6fd437944b15c1920f1bbb067c0cfbb6c0c64f376d2dec5192aeade2d3a69d9f"
+            },
+            {
+              "source_id": "p104-r18-spring27",
+              "source_url": "https://www.fhnw.ch/plattformen/iobusiness/exchange-at-fhnw-school-of-business/study-information/spring-27/",
+              "source_pages": [],
+              "academic_year": "正文Course Offers Spring2027；僅課程入口",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T15:27:39.394327+00:00",
+              "status": "conflict",
+              "excerpt": "Course Offers Spring 2027 In the following links, you can see more about our course offers during the Spring semester 2027. For courses taught in English For courses taught in German Footer Suche schliessen Suche Please enter your search term This website uses cookies (see Data Privacy ). You can adjust the use of cookies in the Settings . By closing this notice or continuing to browse the site you consent to the use of cookies. OK Cookie-Einstellungen For this website, we distinguish between essential cookies (which are used to ensure error-free use of the site, so that all functionalities are available), as well as statistics and marketing cookies (which allow us to understand and optimise the use of our offerings and promotional opportunities). You can find more information at Data Privacy . Allow only essential cookies Allow all cookies scroll back to the top",
+              "content_hash": "f9b16f147177cb2c7f44760519b0b90a50254a87d3987cdd171dbd8e93dfd8a4",
+              "text_sha256": "3bc7d900ba5212ffa9c49a438b34d232a7b7bf29e1157e51f88c6314691db08a",
+              "note": "正文2027春季課程入口已讀；子頁及三份課程PDF是已查registry同URL，沒有重複新增。Basel舊2026課程、Brugg2027及Olten provisional2027差異維持，不升級學院學制。 此evidence.status標示該欄匯總適用判讀；原文件年度身分另見academic_year與source content_applicability，不升級原文。"
             }
           ]
         },
@@ -56689,9 +57281,9 @@
           ]
         },
         "documents": {
-          "status": "verified_current",
-          "value": "所有人：成績、CV、學生證/在學，指定FMC課需portfolio；Erasmus加OLA，freemover加SAF/LA，中正bilateral對應須另确认。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "status": "conflict",
+          "value": "2026/27factsheet已讀：全體成績、CV、學生證/在學；指定FMC課需portfolio，Erasmus加OLA、freemover加SAF/LA。新一般未標年度申請頁則寫Visual/Audiovisual Arts specialization需Portfolio，兩種條件範圍差異待核，不擅自選其一或擴大至所有院系。",
+          "reason": "核對所附逐項原文；各來源年度／計畫／校區分開，未知2027適用不升級；完整個人通知及追加清單仍未核。",
           "evidence": [
             {
               "source_id": "p108-mirror",
@@ -56702,11 +57294,24 @@
               "academic_year": "2026/2027",
               "application_round": "2027春季",
               "checked_at": "2026-10-08T00:00:00Z",
-              "status": "verified_current",
+              "status": "conflict",
               "excerpt": "utb.cz/en/university/international/students/ex- change-students/incoming-students/courses/ REQUIRED DOCUMENTS FOR THE APPLICATION DOCUMENTS REQUIRED FOR ALL APPLICANTS Academic Transcript of Records from Home University CV (resumé) Copy of the Student Card, or Student Certificate Portfolio – obligatory only for courses that are marked in the course offer ",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。 此evidence.status標示該欄匯總適用判讀；原文件年度身分另見academic_year與source content_applicability，不升級原文。",
               "content_hash": "8f45edd8287afce3fc57daaa2fc140a1144926b5e05d7b7e29c5f53f2b58145e",
               "text_sha256": "6b9572d6515b490655db634efda5c558fc524b4994379e170a8928e771d6627d"
+            },
+            {
+              "source_id": "p108-r18-application",
+              "source_url": "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/application/",
+              "source_pages": [],
+              "academic_year": "一般incoming application未標適用年度",
+              "application_round": null,
+              "checked_at": "2026-10-08T15:27:39.769033+00:00",
+              "status": "conflict",
+              "excerpt": "Documents Required from All Applicants The documents listed below are required from all applicants to support their application, regardless of whether they are applying through the Erasmus+ program or as a Freemover. Copy of the student card (or student confirmation) Transcript of Records CV Portfolio – obligatory only for students with specialisation in Arts (Visual and Audiovisual Arts) TBU in Zlín does not require a language certificate from exchange students from our partner universities. However, a minimum B2 level of English is expected. Additional Documents Required for Erasmus+ Students Students coming under the Erasmus+ program are obliged to submit the following documents: Online Learning Agreement (OLA) The OLA is prepared in the Erasmus Without Paper (EWP) system of the applicant’s home university. After the OLA is prepared and fully signed on the applicant’s side, it is automatically transferred to TBU via the EWP network. Once the OLA is transferred, TBU will revise it. Additional Documents Required for Freemover Students Freemover students must submit the two documents mentioned below: Student Application Form (SAF) Learning Agreement (LA) So both documents can be filled in and afterwards printed from the TBU informational system “ Portál “. Additionally, to help y",
+              "content_hash": "b538ba3a9665d424c159aace03cca9e96b6c315495d6fe78d4001e884966c7f9",
+              "text_sha256": "8fbc22e091d56b9026f1c4b35d8398fae2b26bc80f070086f50ffa474d1c180d",
+              "note": "正文已讀；all applicants與Erasmus/freemover分開。Portfolio寫Visual/Audiovisual Arts specialization，與2026/27factsheet指定FMC課範圍差異待核。Faculty導航不推開放名單。 此evidence.status標示該欄匯總適用判讀；原文件年度身分另見academic_year與source content_applicability，不升級原文。"
             }
           ]
         },
@@ -57268,7 +57873,8 @@
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link"
+              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link",
+              "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/application/"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -57295,7 +57901,8 @@
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link"
+              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link",
+              "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/application/"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -57322,7 +57929,8 @@
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link"
+              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link",
+              "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/application/"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -57349,7 +57957,8 @@
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link"
+              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link",
+              "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/application/"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -57376,7 +57985,8 @@
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link"
+              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link",
+              "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/application/"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -57403,7 +58013,8 @@
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link"
+              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link",
+              "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/application/"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -58224,7 +58835,7 @@
           "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
         },
         "transport": {
-          "value": "教育學院一般FAQ列Plzeň市內公共交通；新增未標年度PDF列Prague機場搭100號公車至Zličín，再轉直達巴士、metro或火車至Pilsen，另列宿舍電車4號站點。僅學院一般指引，2027路線／班次／票價及其他院系／Cheb校區未核，不當接機保證。",
+          "value": "教育學院一般FAQ列Plzeň市內公共交通；新增未標年度PDF列Prague機場搭100號公車至Zličín，可直接搭巴士至Pilsen；或搭metro B線至Florenc再轉巴士；或搭B線至Florenc轉C線到Hlavní Nádraží（中央車站），再搭火車至Pilsen，另列宿舍電車4號站點。僅學院一般指引，2027路線／班次／票價及其他院系／Cheb校區未核，不當接機保證。",
           "status": "needs_confirmation",
           "evidence": [
             {
@@ -58495,7 +59106,7 @@
               {
                 "theme": "transport",
                 "kind": "official",
-                "text": "教育學院一般FAQ列Plzeň市內公共交通；新增未標年度PDF列Prague機場搭100號公車至Zličín，再轉直達巴士、metro或火車至Pilsen，另列宿舍電車4號站點。僅學院一般指引，2027路線／班次／票價及其他院系／Cheb校區未核，不當接機保證。（適用年度或條件待確認；未標交換年度；公開一般incoming服務／程序；查核2026-10-08）",
+                "text": "教育學院一般FAQ列Plzeň市內公共交通；新增未標年度PDF列Prague機場搭100號公車至Zličín，可直接搭巴士至Pilsen；或搭metro B線至Florenc再轉巴士；或搭B線至Florenc轉C線到Hlavní Nádraží（中央車站），再搭火車至Pilsen，另列宿舍電車4號站點。僅學院一般指引，2027路線／班次／票價及其他院系／Cheb校區未核，不當接機保證。（適用年度或條件待確認；未標交換年度；公開一般incoming服務／程序；查核2026-10-08）",
                 "sources": [
                   {
                     "title": "中正逐欄查核來源",
@@ -61629,11 +62240,11 @@
   ],
   "status_summary": {
     "host_17_fields": {
-      "verified_current": 312,
-      "missing": 229,
-      "needs_confirmation": 313,
+      "verified_current": 311,
+      "missing": 224,
+      "needs_confirmation": 318,
       "reference_only": 20,
-      "conflict": 60,
+      "conflict": 61,
       "explicit_not_announced": 1
     },
     "profile_7_fields": {

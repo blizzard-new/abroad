@@ -9,7 +9,11 @@ from functools import lru_cache
 from urllib.parse import unquote
 
 from .ccu_sources import BUNDLE
-from .models import ApplicationDocumentRequirement, ApplicationStep
+from .models import (
+    ApplicationDocumentRequirement,
+    ApplicationStep,
+    ApplicationSubmissionMethod,
+)
 
 
 @lru_cache(maxsize=1)
@@ -193,9 +197,20 @@ def enrich_documents(workflow, partner):
         )
     application.details.append(row["review_note"])
     if row.get("submission_method") == "home_compiled_email":
+        nomination = targets["nomination"]
+        nomination.title = "母校彙整七項提名資料，以email寄合作校"
+        nomination.responsible_party = "學生準備／母校國際事務處彙整與email送件"
+        nomination.summary = "母校彙整五項必備與兩項選附資料，寄送提名信至factsheet列明聯絡人之一。"
         application.title = "準備資料交母校彙整，由母校以email送件"
         application.summary = "合作校公開factsheet由母校彙整學生整包資料並寄送提名信；未載學生自行線上申請步驟。"
         application.responsible_party = "學生準備／母校彙整與email送件"
+        for step in (nomination, application):
+            step.submission = step.submission.model_copy(update={
+                "method": ApplicationSubmissionMethod.EMAIL,
+                "office": "母校國際事務處彙整與寄送；合作校國際事務處收件",
+                "email": "oia@hcmute.edu.vn",
+                "portal_url": None,
+            })
     elif row.get("submission_method") == "online_generated_pdf_then_home_signature_email":
         application.title = "線上申請後列印PDF，由母校簽名再掃描email"
         application.summary = "公開程序依序要求online申請、列印自動產生的PDF交母校coordinator簽名，再掃描email；流程年度及個人欄位待確認。"

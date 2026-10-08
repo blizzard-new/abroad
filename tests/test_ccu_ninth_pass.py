@@ -28,7 +28,7 @@ def at(page):
 def test_profile_review_covers_source_backed_geography_and_distinct_life():
     rows = reviewed_profiles()
     assert len(rows) == 55
-    assert len(reviewed_documents()) == 26
+    assert len(reviewed_documents()) == 27
     for page, row in rows.items():
         partner = at(page)
         if row["fields"]["city"]["value"]:

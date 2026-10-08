@@ -12,8 +12,9 @@ from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
 from .qualification_scopes import (
     coupled_academic_scope_matches,
     college_scope_matches as _scope_matches,
-    degree_scope_matches as _degree_matches,
+    partner_degree_scope_matches,
     partner_scope_needs_confirmation,
+    resolved_degree_level,
 )
 
 
@@ -259,7 +260,9 @@ def _score_partner(
     confirmation_items: list[str] = []
 
     cycle_unconfirmed = dashboard.selection_rules.partner_requirements_need_confirmation
-    coupled_scope = coupled_academic_scope_matches(partner, profile.college, profile.degree_level)
+    degree = resolved_degree_level(profile.degree_level, profile.current_year)
+    coupled_scope = coupled_academic_scope_matches(partner, profile.college, degree)
+    degree_match = partner_degree_scope_matches(partner, profile.college, degree) if degree else None
     if partner.availability_status != "open":
         confirmation_items.append("本期甄選名額尚未公告；可先規劃，能否申請須等官方更新")
         gaps.append(confirmation_items[-1])
@@ -283,13 +286,16 @@ def _score_partner(
         if cycle_unconfirmed or partner_scope_needs_confirmation(partner, "degree_levels"):
             confirmation_items.append("合作校學制範圍尚待確認")
             gaps.append(confirmation_items[-1])
-        elif (coupled_scope if coupled_scope is not None else _degree_matches(partner.degree_levels, profile.degree_level)):
+        elif degree_match is None:
+            confirmation_items.append("研究所尚未區分碩博士；合作校學制範圍待確認")
+            gaps.append(confirmation_items[-1])
+        elif degree_match:
             score += 15
             reasons.append("符合目前學制")
         else:
             gaps.append("公開學制範圍可能不符")
             if coupled_scope is False:
-                blocking_reasons.append(f"學院／學制配對不符：{profile.college}／{profile.degree_level}；公開配對：{partner.degree_levels}")
+                blocking_reasons.append(f"學院／學制配對不符：{profile.college}／{degree}；公開配對：{partner.degree_levels}")
             else:
                 blocking_reasons.append(f"公開學制範圍：{partner.degree_levels}；你的學制：{profile.degree_level}")
             blocked = True

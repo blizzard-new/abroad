@@ -1803,6 +1803,16 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:09.153572+00:00"
+      },
+      {
+        "source_id": "p35-r18-application-guide",
+        "source_url": "https://www.insc.tohoku.ac.jp/english/wp-content/uploads/2026/06/60a79b6e0fdac0d867ba6ca68ad2a8f8-2.pdf",
+        "checked_at": "2026-10-08T15:27:37.777623+00:00",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "正文October2026住宿申請；期間段仍October2024–2026，不適用2027春季",
+        "content_applicability": "reference_only",
+        "content_review_note": "已讀4頁；不是交換學術申請指南。住宿room availability非CCU交換名額；第3頁舊期間與2026標題不一致，不套2027。"
       }
     ]
   },
@@ -6953,6 +6963,16 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:17.831186+00:00"
+      },
+      {
+        "source_id": "p101-r18-exchange-checklist",
+        "source_url": "https://th-deg.de/Studieninteressierte/Bewerbung/application-process-exchange.pdf",
+        "checked_at": "2026-10-08T15:27:37.778250+00:00",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "未標年度的一般incoming exchange申請程序",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
       }
     ]
   },
@@ -7088,6 +7108,16 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T09:10:31.310320+00:00"
+      },
+      {
+        "source_id": "p102-r18-learning-agreement-retry",
+        "source_url": "https://backend.tha.de/fileadmin/tha_gruppen/abt_6_io/Exchange_Students/Learning-Agreement-Incoming.pdf",
+        "checked_at": "2026-10-08T15:32:12.397912+00:00",
+        "status": "fetch_failed",
+        "http_status": 429,
+        "content_academic_year": "原檔HTTP429，年度仍未核",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "遵循一次合理間隔重試，仍HTTP429；不重試循環或繞過。已有網頁抽取的1頁一般LA文字，未取得原始binary仍不宣稱下載已核。"
       }
     ]
   },
@@ -7234,7 +7264,7 @@
         ]
       },
       "campus_life": {
-        "value": "一般SoE生活頁列ESN Winterthur、ALIAS學生會、Campus Card、圖書館與ASVZ運動（頁面稱exchange學生會員free）；2027適用／活動及個別服務另核。",
+        "value": "一般SoE生活頁列ESN Winterthur、ALIAS學生會、Campus Card、圖書館與ASVZ運動（頁面稱exchange學生會員free）；2027適用／活動及個別服務另核。 另有未標年度timeline稱buddy於學期前2週指派聯絡，2027個別安排未核。",
         "status": "needs_confirmation",
         "reason": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
         "evidence": [
@@ -7261,6 +7291,21 @@
             "excerpt": "ll students are issued with a Campus Card the size of a credit card. This serves as identification for cash-free payment in the canteen and copy center as well as providing access to the buildings. Each student also receives: a personal email account a personal web folder access to the ZHAW network via individual network connections in all teaching and work rooms access to Intranet and Internet Photo: Sylvia Wanke The ZHAW university library is located close to Winterthur Main Railway Station. It offers students a state-of-the-art media, information, and learning center covering roughly 6,000 square meters. It comprises more than 120,000 types of media and approximately 700 individual and group workstations, as well as around 30 research stations and PC workstations across several floors. In addition, ZHAW students always have access to the building (24/7). The Erasmus Student Network is a Europe-wide student organization that actively promotes international exchange. The local ESN Winterthur group enhances the study abroad experience for international students by organizing a full range of leisure activities throughout the semester with excursions, regular meetings, and parties. All students automatically become members of ZHAW students' union “ ALIAS ” which also offers various activities. The Academic Sports Association of Zurich (ASVZ) offers over 120 different sports in Winterthur and Zurich as an active way to achieve a healthy work-life balance. Students can benefit from an extensive infrastructure with modern sports equipment as well as knowledgeable, professional supervision. The ASVZ membership is free for our exchange students. The ZHAW School of Engineering offers free and confidential counseling in a wide range of situations. The International Office is happy to put you in contact with ",
             "content_hash": "acae4b870d23d230ffa2fd226b686defe1f20ba51c34df7fd11fbc79aabcf273",
             "text_sha256": "78b05f329e89709ad6eb8bc53758281b36b4fcdb990434df342ade34758b21e9"
+          },
+          {
+            "source_id": "p103-r18-timeline",
+            "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf",
+            "source_pages": [
+              2
+            ],
+            "academic_year": "未標年度；Fall/Spring一般SoE時間線",
+            "application_round": null,
+            "checked_at": "2026-10-08T15:27:37.780997+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "2 weeks before semester start Your buddy will be assigned and contact you Till 2 weeks after semester start Adjustment of courses possible Orientation week in calendar week 7 Welcome and introduction at ZHAW SoE with administrational topics Timeline of Spring Semester EU students Non-EU students Search for accommodation Visa if required SoE scholarship: sign “Declaration of foundation obligation” (excl. intra-Swiss Students and Students who are granted by ERASMUS+ and EELISA at their European University) SEMP: sign Grant Agreement IO shares feedback and sends Letter of Acceptance",
+            "content_hash": "4246bedde52d97c56308caf1ba33b7245d0a99d1d99bf4d52d041927232bc3f4",
+            "text_sha256": "951d564dd9af90c76f3cb5c4e38597ba68ce4af8387ec51e219aad771ff494d4",
+            "note": "已讀2頁；spring提名10/15、申請11/1、orientation week7及buddy前2週。SoE/SEMP資助表分EU/非EU及豁免，不推每位學生必繳；2027適用未核。"
           }
         ]
       }
@@ -7305,6 +7350,16 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:18.041897+00:00"
+      },
+      {
+        "source_id": "p103-r18-timeline",
+        "source_url": "https://www.zhaw.ch/storage/engineering/studium/internationales-studium/vom-ausland-in-die-schweiz/Timeline_from_Nomination_to_Exchange_Semester_Start.pdf",
+        "checked_at": "2026-10-08T15:27:37.780997+00:00",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "未標年度；Fall/Spring一般SoE時間線",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀2頁；spring提名10/15、申請11/1、orientation week7及buddy前2週。SoE/SEMP資助表分EU/非EU及豁免，不推每位學生必繳；2027適用未核。"
       }
     ]
   },
@@ -7476,6 +7531,16 @@
         "http_status": 404,
         "access_result": null,
         "checked_at": "2026-10-08T09:10:33.385156+00:00"
+      },
+      {
+        "source_id": "p104-r18-spring27",
+        "source_url": "https://www.fhnw.ch/plattformen/iobusiness/exchange-at-fhnw-school-of-business/study-information/spring-27/",
+        "checked_at": "2026-10-08T15:27:39.394327+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文Course Offers Spring2027；僅課程入口",
+        "content_applicability": "verified_current",
+        "content_review_note": "正文2027春季課程入口已讀；子頁及三份課程PDF是已查registry同URL，沒有重複新增。Basel舊2026課程、Brugg2027及Olten provisional2027差異維持，不升級學院學制。"
       }
     ]
   },
@@ -8088,6 +8153,16 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T09:10:34.782226+00:00"
+      },
+      {
+        "source_id": "p108-r18-application",
+        "source_url": "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/application/",
+        "checked_at": "2026-10-08T15:27:39.769033+00:00",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "一般incoming application未標適用年度",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "正文已讀；all applicants與Erasmus/freemover分開。Portfolio寫Visual/Audiovisual Arts specialization，與2026/27factsheet指定FMC課範圍差異待核。Faculty導航不推開放名單。"
       }
     ]
   },
@@ -8175,7 +8250,7 @@
         "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
       },
       "transport": {
-        "value": "教育學院一般FAQ列Plzeň市內公共交通；新增未標年度PDF列Prague機場搭100號公車至Zličín，再轉直達巴士、metro或火車至Pilsen，另列宿舍電車4號站點。僅學院一般指引，2027路線／班次／票價及其他院系／Cheb校區未核，不當接機保證。",
+        "value": "教育學院一般FAQ列Plzeň市內公共交通；新增未標年度PDF列Prague機場搭100號公車至Zličín，可直接搭巴士至Pilsen；或搭metro B線至Florenc再轉巴士；或搭B線至Florenc轉C線到Hlavní Nádraží（中央車站），再搭火車至Pilsen，另列宿舍電車4號站點。僅學院一般指引，2027路線／班次／票價及其他院系／Cheb校區未核，不當接機保證。",
         "status": "needs_confirmation",
         "evidence": [
           {
@@ -8560,6 +8635,16 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T10:02:19.431837+00:00"
+      },
+      {
+        "source_id": "p114-r18-study-la",
+        "source_url": "https://www.hiof.no/english/studies/exchange-students/how-to-apply/required-documentation/he-learning-agreement---studies-ka131---editable.docx",
+        "checked_at": "2026-10-08T15:27:40.447629+00:00",
+        "status": "docx",
+        "http_status": 200,
+        "content_academic_year": "Erasmus+2021–2027框架；EU/associated countries mobility；個人academic year空白",
+        "content_applicability": "needs_confirmation",
+        "content_review_note": "已讀DOCX正文全部段落與表格（merged cells重複另去重供閱讀）；study LA分long-term/short-term/doctoral及三方approval。模板對Erasmus國家間mobility，中正bilateral適用未核，不當現行bilateral申請表。"
       }
     ]
   },

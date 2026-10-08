@@ -6,7 +6,7 @@
 交付前遠端 main 已前進至 `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`（第一批交付時為 `293546e807294dc0812f390b240a4cfb68e86cd0`）；第一批交付保留開工基準；第二輪依使用者要求安全整合此最新main，保留臺大與既有資料，未寫入其他session工作目錄。
 本 clone 未找到 AGENTS.md 或適用 `.agents/skills`。未寫入其他學校 session 的工作目錄。
 
-最新數量、功能對照與實際驗證見末節第十七輪及 [55筆功能對照](ccu-functional-parity-2026-10-08.md)；前節保留歷史檢查點，不能取代最新數字。
+最新數量、功能對照與實際驗證見末節第十八輪及 [55筆功能對照](ccu-functional-parity-2026-10-08.md)；前節保留歷史檢查點，不能取代最新數字。
 
 ## 已核實適用範圍
 
@@ -522,3 +522,18 @@ HCMUTE2027 factsheet的5 mandatory／2 optional資料由母校整包彙整email�
 第十七輪 wheel SHA-256：`f5979b7f307ca4f225bdfdb11e93fe15db31a665da6f6b6f8a9f73eab9704076`；841份CCU檔案及13個關鍵程式／靜態檔与工作樹逐byte一致。
 
 封存清冊時再核對分類：source_checks僅代表取得／查核紀錄，不計作已映射政策；只以各欄evidence及逐項文件證據判定mapped。此報告分類修正後的獨立測試1 passed，未改runtime資料／API／UI。
+
+
+## 第十八輪：真實表單及送件投影修正，公開href篩查
+
+名古屋真實#advisor-degree新增碩士班／博士班，保留舊研究所值但標未細分。兩API與前端先用current_year細分舊研究所；法學博士／本科不符、法學碩士符合，僅研究所未知則待確認、不加符合分；教育學院本科與研究生仍符合。耦合unknown不退回全校學制聯集。手機390／桌面1440實際操作select、展開年級、提交兩個API：七種身分×兩寬度×兩模式＝28次真實條件表單請求，沒有注入虛構degree option。HCMUTE第4／5步明確submission.method=email、母校彙整責任及factsheet p1列明oia@hcmute.edu.vn；七項提名文件／兩項選附保留。否定句不再推斷online/mixed。西波希米亞只補正機場巴士100至Zličín後三條轉乘：直接巴士、B線Florenc轉巴士、B線Florenc轉C線至中央車站轉火車；2027年度與班次費用仍待核。
+
+初始593 href已去fragment／tracking去重582 URL，逐校保留來源occurrences與處置，不把首頁／研究技術application／incoming staff／outgoing／一般学位招生／CMS登录当必要學生規定。目前588 href／577 URL，其中355待正文、180明確不同對象／計畫或無關導覽研究事件招生、41參考或低優先、1已取得來源；各校public_sources_exhausted=false，這不是全部公開資料已讀或有證據的阻塞清單。
+
+新增七份來源（六份成功，一份429），其中三PDF共七物理頁、一DOCX及兩HTML；另五份FHNW相同URL複查已識別原registry，PDF hash和抽取內容未變、兩HTML抽取文字未變，不覆蓋原檔或算新增。DIT一般incoming checklist拆五項Mobility Online上傳文件與行前LA，共六項待年度核實；簽證／保險行動不猜成申請附件。ZHAW一般spring timeline補orientation week7及buddy前2週；不把未標年自升2027或擅修碩士另一PDF week37疑點。東北ApplicationGuide正文為October2026住宿，期間段仍October2024–2026，僅參考；不是學術申請指南。TBU一般頁Portfolio Arts specialization與當期factsheet指定FMC課有範圍差異，documents標conflict，不選其中一個條件。Østfold新增study LA模板實為Erasmus+國家間mobility，留獨立來源、不替代bilateral表。Augsburg原檔合理間隔單次再查仍429，未取得原檔不設verified download；401提名個人表不繞過。
+
+704唯一來源對704請求／source JSON；93合作校附件＝69PDF、19DOCX、3XLSX、1XLS、1DOC，檔案hash全吻合。原697來源JSON逐字不變。104母校條目仍52當期已列名額、49灰字歷史不開放、3空白非零、0明示零；55當期／名額待核身分與55 legacy／official_partial流程維持。27校203項host文件均partial_not_exhaustive、33有條件、21已驗證文件直連；1138項workflow要求含母校，不與203混算。935 host欄位311核、224缺、318待、20參、61矛、1官方明示未公告；0校17项全核、0完整host集合，functional_parity_complete=false。
+
+本輪五個共用程式修改及校別ccu_documents.py列於eighteenth-merge-scope.json；整分支相對main仍14共用code paths。四校最終375 passed、7 skipped、1 NTPU既有失敗，獨立解包最新main f6ad1b8再次重現目的地0對預期1；中正相關全通過。瀏覽器同次31 passed，含28次真實表單、HCMUTE畫面及NTU／共用條件回歸。首輪四校374 passed、7 skipped、2 failed（中正舊26校斷言與同一NTPU失敗）；舊斷言更新27校後同套完整重跑。首輪瀏覽器4 failed（測試未展開年級及email空白定位），第二輪3 passed/1 failed（攔到multi-plan背景請求），真實條件表單請求辨識後4 passed，再完整31 passed。原始失敗與最終logs/XML均保留，不宣稱全repo測試通過。
+
+六個builder、22生成檔重建一致；49個原CGU/NTPU/NTU檔案及77原published hash與latest main一致；110 API routes、required欄位及完整OpenAPI snapshot不變。Ruff校別／新測試通過；六共用Python檔與37a36ec基準56既有診斷相同、无新增。wheel含855中正檔案與13相關code檔byte一致，hash與來源／頁數／API／截圖證據在eighteenth-*。未合併或部署，不登入外校、提交學生資料、聯絡學校或改存取／安全設定。公開候選仍可續查，不把partial或缺值當作全部工作無法繼續的理由。

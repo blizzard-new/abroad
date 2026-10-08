@@ -22,16 +22,16 @@
 | location_with_source | 47 | 55 |
 | 可確定的學術篩選：colleges | 77 | 3 |
 | 可確定的學術篩選：degree_levels | 77 | 10 |
-| 流程文件：requirements | 1469 | 1132 |
+| 流程文件：requirements | 1469 | 1138 |
 | 流程文件：requirements_with_form | 77 | 132 |
 | 流程文件：schools_with_requirements | 77 | 55 |
 | 流程文件：schools_with_signature_detail | 3 | 55 |
 
-長庚指定115已發布基準有1238項文件、0項form URL及3校簽章細節；未指定年度116 legacy則1469項文件、77項form URL及3校簽章細節。兩個年度不得混用。中正1132項含母校通用及逐校準備要求，不可與197項已逐份實讀的host清單等同。
+長庚指定115已發布基準有1238項文件、0項form URL及3校簽章細節；未指定年度116 legacy則1469項文件、77項form URL及3校簽章細節。兩個年度不得混用。中正1138項含母校通用及逐校準備要求，不可與203項已逐份實讀的host清單等同。
 
 城市／校址55筆有來源；未標年或交換校區仍待確認；地圖經緯度全部pending。55個網站核實身分入口，不保證全站2027規定已核實。照片、抵達72小時、行李及到校採購兩校均為0。
 
-母校第一階9類準備文件、37筆當期逐校第二階要求、26校197項外校文件分開。197項均partial_not_exhaustive；33項附條件，21個已取得且hash核實的官方文件連結可開啟，含申請指引，不全部是空白表。55流程中52筆7步驟，忠南／HUFS／首爾科技三筆8步驟。忠南／HUFS的after_application表示補件不等錄取；首爾科技三項改為中性second_submission，逐項顯示時點待確認。其他29校沒有製造完整外校清單。
+母校第一階9類準備文件、37筆當期逐校第二階要求、27校203項外校文件分開。203項均partial_not_exhaustive；33項附條件，21個已取得且hash核實的官方文件連結可開啟，含申請指引，不全部是空白表。55流程中52筆7步驟，忠南／HUFS／首爾科技三筆8步驟。忠南／HUFS的after_application表示補件不等錄取；首爾科技三項改為中性second_submission，逐項顯示時點待確認。其他28校沒有製造完整外校清單。
 
 待確認學院／學制的API及前端均不加符合分、不硬性排除。名古屋教育／法學以學院學制配對篩選；法學限碩士。ZHAW工學院改由母校當期p103核實。可確定學院是3筆。
 
@@ -43,11 +43,11 @@ HCMUT當期公開公告及Updated August 2026 factsheet一致：2026-09-30提名
 
 | 17類海外接收欄位（55×17＝935） | 數量 |
 | --- | ---: |
-| 核 | 312 |
-| 缺 | 229 |
-| 待 | 313 |
+| 核 | 311 |
+| 缺 | 224 |
+| 待 | 318 |
 | 舊 | 20 |
-| 矛 | 60 |
+| 矛 | 61 |
 | 未公告 | 1 |
 
 39校至少一項當期外校事實已核實；0校17項全核實、0校完整外校文件集合，`functional_parity_complete=false`。僅HUFS到校前TB窗口是官方明示尚未公告。
@@ -68,34 +68,34 @@ HCMUT當期公開公告及Updated August 2026 factsheet一致：2026-09-30提名
 
 | 中正PDF頁 | 合作校／計畫 | 外校17項核／待／缺／矛／舊 | 城市／交通／生活 | 外校個別文件數／階段 |
 | ---: | --- | --- | --- | --- |
-| 10 | Beijing Normal University 北京師範大學 | 12/1/4/0/0 | 核/舊/舊 | 6／student_application:6 |
-| 16 | Chongqing University 重慶大學 | 0/9/7/0/1 | 核/舊/舊 | 0／未建個別外校清單 |
+| 10 | Beijing Normal University 北京師範大學 | 12/1/4/0/0 | 核/參/參 | 6／student_application:6 |
+| 16 | Chongqing University 重慶大學 | 0/9/7/0/1 | 核/參/參 | 0／未建個別外校清單 |
 | 23 | Xiamen University 廈門大學 | 0/13/4/0/0 | 核/待/待 | 4／conditional_program:4 |
-| 24 | Tianjin University 天津大學 | 8/1/6/2/0 | 核/核/舊 | 8／student_application:7, post_offer:1 |
+| 24 | Tianjin University 天津大學 | 8/1/6/2/0 | 核/核/參 | 8／student_application:7、post_offer:1 |
 | 26 | Northeast Normal University 東北師範大學 | 0/15/2/0/0 | 待/待/待 | 0／未建個別外校清單 |
-| 27 | University of Electronic Science and Technology of China 電子科技大學 | 9/2/5/1/0 | 核/舊/待 | 8／student_application:7, post_offer:1 |
+| 27 | University of Electronic Science and Technology of China 電子科技大學 | 9/2/5/1/0 | 核/參/待 | 8／student_application:7、post_offer:1 |
 | 29 | Central China Normal University 華中師範大學 | 11/2/4/0/0 | 核/核/核 | 8／student_application:8 |
 | 32 | Ryukoku University 龍谷大學 | 11/1/1/4/0 | 核/核/核 | 10／student_application:10 |
 | 33 | Chiba University of Commerce 千葉商科大學 | 0/11/4/2/0 | 核/待/待 | 0／未建個別外校清單 |
 | 34 | Nagoya University 名古屋大學 | 14/1/0/2/0 | 待/核/待 | 10／student_application:10 |
 | 35 | Tohoku University 東北大學 | 4/9/2/1/1 | 待/待/待 | 0／未建個別外校清單 |
 | 37 | Hokkaido University 北海道大學 | 12/3/0/2/0 | 核/核/待 | 9／conditional_program:9 |
-| 39 | Tokiwa University 常磐大學 | 0/3/4/0/10 | 舊/待/舊 | 0／未建個別外校清單 |
-| 42 | Dong-A University 東亞大學 | 0/5/9/2/1 | 核/舊/待 | 0／未建個別外校清單 |
+| 39 | Tokiwa University 常磐大學 | 0/3/4/0/10 | 參/待/參 | 0／未建個別外校清單 |
+| 42 | Dong-A University 東亞大學 | 0/5/9/2/1 | 核/參/待 | 0／未建個別外校清單 |
 | 43 | Pusan National University 釜山國立大學 | 14/1/2/0/0 | 核/核/核 | 7／student_application:7 |
-| 45 | Kyung Hee University 慶熙大學 | 14/2/1/0/0 | 核/核/核 | 11／student_application:9, post_offer:2 |
-| 47 | Hankuk University of Foreign Studies 韓國外國語大學 | 13/2/1/0/0 | 核/待/核 | 11／student_application:9, after_dorm_assignment:1, after_application:1 |
-| 48 | Seoul National University of Science and Technology 國立首爾科技大學 | 13/2/1/1/0 | 待/待/核 | 12／student_application:7, second_submission:3, conditional_program:2 |
+| 45 | Kyung Hee University 慶熙大學 | 14/2/1/0/0 | 核/核/核 | 11／student_application:9、post_offer:2 |
+| 47 | Hankuk University of Foreign Studies 韓國外國語大學 | 13/2/1/0/0 | 核/待/核 | 11／student_application:9、after_dorm_assignment:1、after_application:1 |
+| 48 | Seoul National University of Science and Technology 國立首爾科技大學 | 13/2/1/1/0 | 待/待/核 | 12／student_application:7、second_submission:3、conditional_program:2 |
 | 49 | Sungshin Women's University 誠信女子大學 | 12/0/2/3/0 | 核/核/核 | 9／student_application:9 |
 | 50 | Chung Ang University 中央大學 | 0/17/0/0/0 | 待/待/待 | 0／未建個別外校清單 |
 | 52 | Gachon University 嘉泉大學 | 3/11/1/2/0 | 待/待/待 | 0／未建個別外校清單 |
-| 53 | ChungNam National University 忠南大學 | 13/3/0/1/0 | 待/待/待 | 9／student_application:4, after_application:2, post_offer:3 |
+| 53 | ChungNam National University 忠南大學 | 13/3/0/1/0 | 待/待/待 | 9／student_application:4、after_application:2、post_offer:3 |
 | 54 | Kyungsung University 慶星大學 | 8/2/5/2/0 | 核/核/核 | 0／未建個別外校清單 |
 | 58 | Thammasat University 國立法政大學 | 0/14/2/1/0 | 待/待/待 | 0／未建個別外校清單 |
 | 61 | King Mongkut’s University of Technology Thonburi 蒙庫國王科技大學 | 0/13/2/2/0 | 待/待/待 | 0／未建個別外校清單 |
 | 65 | Universitas Bunda MuliaUK 慈育大學 | 0/11/6/0/0 | 核/待/待 | 0／未建個別外校清單 |
-| 67 | Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學 | 14/1/2/0/0 | 核/核/核 | 9／student_application:7, nomination:1, post_offer:1 |
-| 68 | Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學 | 11/1/4/1/0 | 核/待/舊 | 7／nomination:7 |
+| 67 | Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學 | 14/1/2/0/0 | 核/核/核 | 9／student_application:7、nomination:1、post_offer:1 |
+| 68 | Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學 | 11/1/4/1/0 | 核/待/參 | 7／nomination:7 |
 | 71 | Dong Nai Technology University (DNTU) 同奈科技大學 | 0/0/17/0/0 | 待/缺/待 | 0／未建個別外校清單 |
 | 73 | Chitkara University 吉特卡拉大學 | 4/5/7/1/0 | 核/核/待 | 0／未建個別外校清單 |
 | 74 | Saintigits Group of Institutions 聖基茲工學院 | 0/1/16/0/0 | 核/待/待 | 0／未建個別外校清單 |
@@ -107,22 +107,22 @@ HCMUT當期公開公告及Updated August 2026 factsheet一致：2026-09-30提名
 | 87 | University of Strasbourg 史特拉斯堡大學 | 2/10/4/1/0 | 待/待/待 | 0／未建個別外校清單 |
 | 88 | Faculty of Management, Economics & Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院) | 10/1/6/0/0 | 核/核/核 | 1／student_application:1 |
 | 89 | University of Southern Denmark 南丹麥大學 | 0/11/5/1/0 | 核/待/待 | 0／未建個別外校清單 |
-| 95 | Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學 | 2/6/6/0/3 | 核/舊/舊 | 0／未建個別外校清單 |
+| 95 | Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學 | 2/6/6/0/3 | 核/參/參 | 0／未建個別外校清單 |
 | 98 | Ludwigshafen University of Business and Society 路德維希港社會應用科技大學 | 6/2/9/0/0 | 核/核/核 | 5／student_application:5 |
-| 99 | Friedrich Schiller Universität Jena 耶拿大學 | 9/5/0/3/0 | 舊/待/舊 | 0／未建個別外校清單 |
+| 99 | Friedrich Schiller Universität Jena 耶拿大學 | 9/5/0/3/0 | 參/待/參 | 0／未建個別外校清單 |
 | 100 | Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學 | 1/12/4/0/0 | 核/待/待 | 0／未建個別外校清單 |
-| 101 | Deggendorf Institute of Technology 德根多夫應用科技大學 | 0/6/10/1/0 | 核/待/待 | 0／未建個別外校清單 |
+| 101 | Deggendorf Institute of Technology 德根多夫應用科技大學 | 0/10/6/1/0 | 核/待/待 | 6／student_application:5、post_offer:1 |
 | 102 | Augsburg University of Applied Sciences 奧格斯堡應用科技大學 | 7/8/2/0/0 | 核/核/核 | 10／student_application:10 |
-| 103 | ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院 | 0/9/6/2/0 | 核/待/待 | 0／未建個別外校清單 |
+| 103 | ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院 | 0/10/5/2/0 | 核/待/待 | 0／未建個別外校清單 |
 | 104 | University of Applied Sciences and Arts Northwestern Switzerland – School of Business Fachhoschule Nordwestschweiz (FHNW) - Hochschule für Wirtschaft 西北應用科技與藝術大學 | 3/10/2/2/0 | 待/待/待 | 0／未建個別外校清單 |
-| 105 | Ankara Social Science University 土耳其安卡拉社會科技大學 | 1/11/3/2/0 | 舊/舊/舊 | 0／未建個別外校清單 |
+| 105 | Ankara Social Science University 土耳其安卡拉社會科技大學 | 1/11/3/2/0 | 參/參/參 | 0／未建個別外校清單 |
 | 106 | Ç ukurova University 土耳其丘庫羅瓦大學 | 10/0/6/1/0 | 核/待/核 | 7／student_application:7 |
 | 107 | University of Pardubice 捷克巴爾杜比彩大學 | 13/0/3/1/0 | 待/待/待 | 3／student_application:3 |
-| 108 | Tomas Bata University in Zlí n 托馬斯拔佳大學 | 8/2/6/1/0 | 核/待/核 | 6／student_application:4, conditional_program:2 |
+| 108 | Tomas Bata University in Zlí n 托馬斯拔佳大學 | 7/2/6/2/0 | 核/待/核 | 6／student_application:4、conditional_program:2 |
 | 109 | University of West Bohemia 西波希米亞大學 | 2/12/3/0/0 | 待/待/待 | 0／未建個別外校清單 |
 | 111 | SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院) | 6/3/5/3/0 | 核/核/核 | 0／未建個別外校清單 |
 | 114 | Ø stfold University of Applied Sciences 厄斯特福德應用科學大學 | 5/5/6/1/0 | 核/待/待 | 5／student_application:5 |
-| 119 | Universidad Internacional 墨西哥國際大學 | 6/2/6/3/0 | 核/缺/核 | 8／student_application:6, post_offer:2 |
+| 119 | Universidad Internacional 墨西哥國際大學 | 6/2/6/3/0 | 核/缺/核 | 8／student_application:6、post_offer:2 |
 
 ## 第十七輪適配與逐校缺口
 
@@ -141,3 +141,5 @@ HCMUTE2027 factsheet五mandatory／兩optional均由母校整包彙整email提�
 最新測試及套件證據見ccu-validation-2026-10-08/seventeenth-*。保留第十六輪來源與測試歷史；本輪新增名古屋配對篩選及未標年表格警示，下載回放使用保存的真實官方檔案，另保存匿名來源HTTP／hash，不宣稱回放是即時外網下載。
 
 中正母校與平台適配可用；外校完整度仍有上述缺口。未登入學校系統、提交資料、聯絡承辦、merge main或部署。
+
+第十八輪修正真實條件表單：新增碩士／博士選項；舊研究所值可由年級細分，法學研究所未細分時保持待確認。HCMUTE第4／5步明確為母校email，不以否定句推斷online。西波希米亞路線補Florenc轉巴士／B轉C到中央車站轉火車，年度仍待確認。

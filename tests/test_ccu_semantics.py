@@ -265,7 +265,7 @@ def test_frontend_matches_structured_language_and_document_statuses():
     const homeCollegeValue=value=>value,normalize=value=>String(value||''),academicMinimum=()=>70;
     const collegeMatches=()=>true,degreeMatches=()=>true,coverageForSchool=()=>null,destinationProfileForSchool=()=>null;
     const escapeHtml=value=>String(value),highlightHtml=value=>String(value);
-    for(const name of ['academicScopeNeedsConfirmation','coupledAcademicScopeMatches','languageThresholdFromPartner','partnerAvailabilityMeta','partnerMatch','renderPartnerFieldEvidence']) {
+    for(const name of ['academicScopeNeedsConfirmation','coupledAcademicScopeOptions','coupledAcademicScopeMatches','resolvedDegreeLevel','partnerDegreeScopeMatches','languageThresholdFromPartner','partnerAvailabilityMeta','partnerMatch','renderPartnerFieldEvidence']) {
       eval(source.match(new RegExp('^function '+name+'\\([^]*?^}','m'))[0]);
     }
     for(const test of cases) {

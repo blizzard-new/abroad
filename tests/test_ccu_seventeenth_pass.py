@@ -58,7 +58,7 @@ def test_nagoya_pairs_in_both_real_apis(tmp_path, college, degree, allowed):
 
 def test_pending_documents_render_without_promoting_completeness(tmp_path):
     docs = reviewed_documents()
-    assert len(docs) == 26 and sum(len(r["requirements"]) for r in docs.values()) == 197
+    assert len(docs) == 27 and sum(len(r["requirements"]) for r in docs.values()) == 203
     client = TestClient(create_app(tmp_path))
     for page, count in [(98, 5), (102, 10), (23, 4)]:
         response = client.get("/application-center/catalog", params={
@@ -134,7 +134,7 @@ def test_metadata_is_hash_bound_and_existing_school_data_remains_default():
 
 def test_per_school_gap_inventory_distinguishes_mapping_from_exhaustion():
     report = json.loads((BUNDLE / "remaining-gaps.json").read_text())
-    assert report["school_count"] == 55 and report["source_count"] == 697
+    assert report["school_count"] == 55 and report["source_count"] == 704
     for name, expected in report["input_sha256"].items():
         assert hashlib.sha256((BUNDLE / name).read_bytes()).hexdigest() == expected
     for sid, expected in report["input_source_json_sha256"].items():

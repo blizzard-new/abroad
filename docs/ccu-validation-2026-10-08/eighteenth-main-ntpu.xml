@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="3.131" timestamp="2026-10-08T15:46:24.761327+00:00" hostname="e5e438874453"><testcase classname="tests.test_ntpu_bundled_data" name="test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data" time="1.766"><failure message="assert 0 == 1">monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7fb412200470&gt;
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-101/test_runtime_includes_tracked_0')
+
+    def test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data(
+        monkeypatch,
+        tmp_path,
+    ) -&gt; None:
+        research = storage.read_jsonl(
+            storage.BUNDLED_NTPU_DIR / "partner_research.jsonl",
+            PartnerResearchRecord,
+        )[0]
+        partner = PartnerUniversity(
+            program_type="交換學生（英語組）",
+            country=research.country,
+            school_name=research.school_name,
+            source_url="https://new.ntpu.edu.tw/oia/sister-schools",
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.fetch_ntpu_partner_universities",
+            lambda: [partner],
+        )
+    
+        client = TestClient(create_app(tmp_path))
+        coverage = client.get(
+            "/coverage",
+            params={"school": "國立臺北大學"},
+        ).json()
+        destination = client.get(
+            "/destination-profile",
+            params={
+                "school": partner.school_name,
+                "home_school": "國立臺北大學",
+            },
+        ).json()
+    
+        assert coverage["total_partner_schools"] == 1
+        assert coverage["official_website_count"] == 1
+        assert coverage["partners"][0]["official_website_url"] == research.official_website
+&gt;       assert coverage["destination_profile_count"] == 1
+E       assert 0 == 1
+
+tests/test_ntpu_bundled_data.py:110: AssertionError</failure></testcase></testsuite></testsuites>
