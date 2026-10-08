@@ -2467,6 +2467,7 @@ function sanitizeAccountWorkspacePayload(payload, homeSchool = activeHomeSchool(
       application_round: context.application_round || "",
       semester: context.semester || "",
       flags: Array.isArray(context.flags) ? context.flags.map(String) : [],
+      partner_document_states: Object.fromEntries(Object.entries(context.partner_document_states || {}).slice(0,214).filter(([,value])=>value && typeof value === "object" && !Array.isArray(value)).map(([key,value])=>[key,{host_admission_status:["unknown","not_accepted","accepted"].includes(value.host_admission_status) ? value.host_admission_status : "unknown",housing_choice:["unknown","on_campus","off_campus"].includes(value.housing_choice) ? value.housing_choice : "unknown"}])),
     },
     application_selections: selections,
     submission_progress: source.submission_progress && typeof source.submission_progress === "object"
@@ -2596,6 +2597,11 @@ function mergeAccountWorkspaceConflict(baseWorkspace, remoteWorkspace, localWork
         local.application_context,
       ),
       school_name: remote.home_school,
+      partner_document_states: mergeWorkspaceRecord(
+        base.application_context?.partner_document_states,
+        remote.application_context?.partner_document_states,
+        local.application_context?.partner_document_states,
+      ),
     },
     application_selections: mergeWorkspaceRecord(
       base.application_selections,
@@ -5854,6 +5860,49 @@ function applicationFlagsFromForm(form) {
   return ["subsidy", "military_service", "full_year"].filter((name) => form.elements[name]?.checked);
 }
 
+function ncuDocumentStateKey(schoolName = state.applicationContext.target_school, year = state.applicationContext.academic_year, round = state.applicationContext.application_round, semester = state.applicationContext.semester) {
+  return JSON.stringify([schoolName || "", year || "", round || "", semester || ""]);
+}
+
+function ncuDocumentState(schoolName, year, round, semester = state.applicationContext.semester) {
+  return state.applicationContext.partner_document_states?.[ncuDocumentStateKey(schoolName, year, round, semester)] || {host_admission_status:"unknown",housing_choice:"unknown"};
+}
+
+function ncuCatalogContextKey(context) {
+  const key = ncuDocumentStateKey(context.target_school,context.academic_year,context.application_round,context.semester);
+  const selection = context.partner_document_states?.[key] || {};
+  return JSON.stringify([context.target_school || "",context.college || "",context.department || "",context.degree_level || "",context.academic_year || "",context.application_round || "",context.semester || "",selection.host_admission_status || "unknown",selection.housing_choice || "unknown"]);
+}
+
+function restoreNcuDocumentState() {
+  const panel = $("#ncu-document-state");
+  if (!panel) return;
+  panel.hidden = activeHomeSchool() !== "國立中央大學" || !state.applicationContext.target_school || state.applicationContext.program_type !== "exchange";
+  const selection = ncuDocumentState(state.applicationContext.target_school, state.applicationContext.academic_year, state.applicationContext.application_round);
+  $("#ncu-host-admission").value = selection.host_admission_status;
+  $("#ncu-housing-choice").value = selection.housing_choice;
+  $("#ncu-document-state-note").textContent = `此學校、年度／梯次與學期的條件文件會依選擇顯示準備時點；當期要求仍須查核。${state.account ? "選擇會保存於本次申請設定。" : "登入後可保存選擇。"}`;
+}
+
+function documentApplicabilityMarkup(results) {
+  const labels = {applicable:"符合參考條件",not_applicable:"不適用",deferred:"錄取後再準備",needs_confirmation:"條件需確認"};
+  return (results || []).map(result=>`<p class="document-applicability" data-document-applicability="${escapeHtml(result.status)}"><strong>${escapeHtml(labels[result.status] || "需確認")} · ${escapeHtml(result.requirement_name)}</strong><span>${escapeHtml(result.note)}</span></p>`).join("");
+}
+
+async function handleNcuDocumentStateChange() {
+  if (activeHomeSchool() !== "國立中央大學" || !state.applicationContext.target_school) return;
+  const key = ncuDocumentStateKey();
+  state.applicationContext.partner_document_states = {...(state.applicationContext.partner_document_states || {}), [key]:{host_admission_status:$("#ncu-host-admission").value,housing_choice:$("#ncu-housing-choice").value}};
+  persistApplicationContext();
+  if (state.personalApplicationPlan?.choices?.some(choice=>choice.school_name === state.applicationContext.target_school)) {
+    state.personalApplicationPlan = null;
+    $("#eligibility-result").innerHTML = '<p>錄取或住宿條件已修改，請重新核對志願以更新個人準備任務。</p>';
+    renderPersonalPlanSnapshot();
+  }
+  await loadApplicationTemplates();
+  window.UniWayMultiPlan?.render();
+}
+
 function readApplicationContextForm() {
   const form = $("#application-context-form");
   if (!form) return state.applicationContext;
@@ -5883,6 +5932,7 @@ function restoreApplicationContextForm() {
     form.elements[name].checked = (state.applicationContext.flags || []).includes(name);
   });
   renderApplicationTargetSchools();
+  restoreNcuDocumentState();
 }
 
 function renderApplicationTargetSchools() {
@@ -5935,6 +5985,7 @@ function initializeApplicationSelections() {
 async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}) {
   if (!canAccessPartnerCatalog()) return false;
   const requestedSchool = homeSchool;
+  const requestedContextKey = ncuCatalogContextKey(state.applicationContext);
   const container = $("#application-template-list");
   if (container) container.innerHTML = '<div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>';
   state.applicationLoading = true;
@@ -5953,16 +6004,21 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}
         school: requestedSchool,
         target_school: context.target_school,
       });
-      ["college", "department", "degree_level", "academic_year", "application_round"].forEach((key) => {
+      ["college", "department", "degree_level", "academic_year", "application_round", "semester"].forEach((key) => {
         if (context[key]) catalogParams.set(key, context[key]);
       });
+      if (requestedSchool === "國立中央大學") {
+        const selection = ncuDocumentState(context.target_school, context.academic_year, context.application_round);
+        catalogParams.set("host_admission_status", selection.host_admission_status);
+        catalogParams.set("housing_choice", selection.housing_choice);
+      }
       try {
         catalog = await fetchJson(`/application-center/catalog?${catalogParams}`);
       } catch (error) {
         catalogError = error.message;
       }
     }
-    if (!isCurrentHomeSchool(requestedSchool)) return false;
+    if (!isCurrentHomeSchool(requestedSchool) || (requestedSchool === "國立中央大學" && requestedContextKey !== ncuCatalogContextKey(state.applicationContext))) return false;
     state.applicationTemplates = templates;
     state.applicationDocumentCatalog = catalog;
     state.applicationDocumentCatalogError = catalogError;
@@ -6146,7 +6202,7 @@ function renderApplicationDocumentCatalog() {
         return `
           <article class="application-requirement-item ${item.needs_confirmation ? "needs-confirmation" : "is-confirmed"}">
             <span class="application-requirement-order">${item.sequence}</span>
-            <div><span class="application-requirement-badges"><em>${item.needs_confirmation ? "待確認" : "已確認"}</em>${item.download_available ? "<b>官方表格</b>" : ""}</span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.step_title)}</small><p>${escapeHtml(applicationRequirementMeta(item))}</p>${item.needs_confirmation ? `<p class="application-requirement-contact">請聯絡 ${escapeHtml(item.contact_unit || catalog.contact_unit)}</p>` : ""}</div>
+            <div><span class="application-requirement-badges"><em>${item.needs_confirmation ? "待確認" : "已確認"}</em>${item.download_available ? "<b>官方表格</b>" : ""}</span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.step_title)}</small><p>${escapeHtml(applicationRequirementMeta(item))}</p>${documentApplicabilityMarkup(item.applicability ? [item.applicability] : [])}${item.needs_confirmation ? `<p class="application-requirement-contact">請聯絡 ${escapeHtml(item.contact_unit || catalog.contact_unit)}</p>` : ""}</div>
             <div class="application-requirement-source">${sourceHref ? `<a href="${escapeHtml(sourceHref)}" target="_blank" rel="noreferrer"><i data-lucide="external-link" aria-hidden="true"></i><span>${sourceLabel}</span></a>` : "<span>來源待校方提供</span>"}<small>${escapeHtml(checkedAt)}</small></div>
           </article>`;
       }).join("")}</div>
@@ -11020,7 +11076,7 @@ function renderPersonalApplicationPlan(plan) {
           <header><span class="application-plan-rank">第 ${choice.rank} 志願</span><div><strong>${escapeHtml(choice.school_name)}</strong><small>${escapeHtml(choice.country || "未標示國家")}</small></div><em class="application-plan-status ${meta.tone}">${escapeHtml(meta.label)}</em></header>
           <p>${escapeHtml(choice.summary)}</p>
           <div class="eligibility-checks">${choice.checks.map((check) => renderCheckRow(check.status === "needs_confirmation" ? "review" : check.status, `${check.title}：${check.detail}${check.contact_unit ? `（聯絡 ${check.contact_unit}）` : ""}`)).join("")}</div>
-          ${choice.checklist.length ? `<details class="application-plan-checklist" open><summary><span>個人下一步</span><strong>${choice.checklist.length} 項</strong></summary><ol>${choice.checklist.map((item) => `<li class="${item.needs_confirmation ? "needs-confirmation" : "verified"}"><span><i data-lucide="${item.needs_confirmation ? "circle-help" : "circle-check"}" aria-hidden="true"></i></span><div><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.detail)}</p><small>${escapeHtml(item.phase)} · ${escapeHtml(item.responsible_unit)}${item.confirmation_contact ? ` · 請聯絡 ${escapeHtml(item.confirmation_contact)}` : ""}</small>${item.source_urls?.[0] ? `<a href="${escapeHtml(item.source_urls[0])}" target="_blank" rel="noopener noreferrer">查看官方來源</a>` : ""}</div></li>`).join("")}</ol></details>` : `<div class="application-plan-empty"><strong>暫不建立執行清單</strong><span>這個志願尚未開放或缺少結構化流程，請先聯絡 ${escapeHtml(plan.contact_unit)}。</span></div>`}
+          ${choice.checklist.length ? `<details class="application-plan-checklist" open><summary><span>個人下一步</span><strong>${choice.checklist.length} 項</strong></summary><ol>${choice.checklist.map((item) => `<li class="${item.needs_confirmation ? "needs-confirmation" : "verified"}"><span><i data-lucide="${item.needs_confirmation ? "circle-help" : "circle-check"}" aria-hidden="true"></i></span><div><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.detail)}</p>${documentApplicabilityMarkup(item.document_applicability)}<small>${escapeHtml(item.phase)} · ${escapeHtml(item.responsible_unit)}${item.confirmation_contact ? ` · 請聯絡 ${escapeHtml(item.confirmation_contact)}` : ""}</small>${item.source_urls?.[0] ? `<a href="${escapeHtml(item.source_urls[0])}" target="_blank" rel="noopener noreferrer">查看官方來源</a>` : ""}</div></li>`).join("")}</ol></details>` : `<div class="application-plan-empty"><strong>暫不建立執行清單</strong><span>這個志願尚未開放或缺少結構化流程，請先聯絡 ${escapeHtml(plan.contact_unit)}。</span></div>`}
         </article>`;
     }).join("")}</div>
     <div class="eligibility-actions"><button id="view-matched-schools" type="button" class="secondary-button">回到合作校比較</button></div>`;
@@ -11057,7 +11113,7 @@ async function checkEligibility(event) {
   const preferences = [1, 2, 3, 4, 5]
     .map((rank) => ({ rank, school_name: $(`#eligibility-preference-${rank}`).value }))
     .filter((item) => item.school_name)
-    .map((item, index) => ({ ...item, rank: index + 1 }));
+    .map((item, index) => ({ ...item, rank: index + 1, ...(activeHomeSchool() === "國立中央大學" ? {document_preparation_state:ncuDocumentState(item.school_name, academicYear, applicationRound)} : {}) }));
 
   if (!college || !department || !degree || !academicYear || !applicationRound || (!ntu && (academicScore === null || !Number.isFinite(academicScore))) || !languageTest || !preferences.length) {
     announce("請完成所有必填欄位", "error");
@@ -12663,7 +12719,12 @@ function bindEvents() {
   });
 
   $("#application-context-form").addEventListener("submit", (event) => event.preventDefault());
-  $("#application-context-form").addEventListener("change", handleApplicationContextChange);
+  $("#application-context-form").addEventListener("change", (event) => {
+    if (["ncu-host-admission", "ncu-housing-choice"].includes(event.target.id)) return;
+    handleApplicationContextChange(event);
+  });
+  $("#ncu-host-admission").addEventListener("change", handleNcuDocumentStateChange);
+  $("#ncu-housing-choice").addEventListener("change", handleNcuDocumentStateChange);
   $("#application-profile-form").addEventListener("submit", saveApplicationProfile);
   $("#application-remember-profile").addEventListener("change", (event) => setApplicationProfileMemory(event.target.checked));
   $("#clear-application-profile-memory").addEventListener("click", clearApplicationProfileMemory);

@@ -1,6 +1,6 @@
 # 中央116-1來源查核與平台接入（進行中）
 
-基底為合併PR #1後的`f6ad1b8`，已確認包含臺大六項修正`daad399`。獨立worktree `/workspace/abroad-ncu`、分支`data/ncu-exchange-20261008`；已推送checkpoint `dc126d2`、`95c883a`、`2865413`、`6f2f9d1`、`dd06632`，draft [PR #4](https://github.com/blizzard-new/abroad/pull/4)。原工作目錄、中正及淡江分支未改動。本文件不宣稱中央全部外校資料完備。
+基底為合併PR #1後的`f6ad1b8`，已確認包含臺大六項修正`daad399`。獨立worktree `/workspace/abroad-ncu`、分支`data/ncu-exchange-20261008`；已推送checkpoint `dc126d2`、`95c883a`、`2865413`、`6f2f9d1`、`dd06632`、`0d91d46`、`5b0df5a`、`7b381ae`，draft [PR #4](https://github.com/blizzard-new/abroad/pull/4)。原工作目錄、中正及淡江分支未改動。本文件不宣稱中央全部外校資料完備。
 
 ## 適用年度與實際覆蓋
 
@@ -114,7 +114,7 @@ PYTHONPATH=src python scripts/export_openapi.py --check
 
 重建只讀追蹤snapshot，不需網路或私有資料。`import-provenance.json`保存输入SHA-256，builder不以regex產生外校數字資格、名額或精確截止。`collect_ncu_sources.py --inventory`、`collect_ncu_drive.py --retry-errors`與`collect_ncu_host_web.py`只用公開URL；它們是2026/10/8快照工具，未假裝持續更新。
 
-Chromium中央／臺大10項通過，實際檢查390與1440寬的摘要、原文、home／host文件、生活頁、成績尺度／年級／正式語檢表單。六份截圖在`/tmp/ncu-audit/browser/`，本機已檢視中央手機生活頁。另追蹤三份公開頁面截圖：[來源](ncu-browser-evidence/source-390.png)、[流程](ncu-browser-evidence/workflow-390.png)、[生活](ncu-browser-evidence/life-390.png)。最新中央3項（含母校PDF原文展開）亦通過。API OpenAPI版本`2026-10-08.4`與快照一致。
+Chromium中央／臺大10項通過，實際檢查390與1440寬的摘要、原文、home／host文件、生活頁、成績尺度／年級／正式語檢表單。六份截圖在`/tmp/ncu-audit/browser/`，本機已檢視中央手機生活頁。另追蹤三份公開頁面截圖：[來源](ncu-browser-evidence/source-390.png)、[流程](ncu-browser-evidence/workflow-390.png)、[生活](ncu-browser-evidence/life-390.png)。最新中央3項（含母校PDF原文展開）亦通過。API OpenAPI版本`2026-10-08.5`與快照一致（最新條件引擎修正）。
 
 北大`test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data`的destination_profile_count=0失敗已在未修改基底f6ad1b8復現（1 failed, 3 passed），與此輪相同；没有隱藏或修改該失敗。第一輪12個NCU／CGU／NTPU／NTU／文件／流程／完整度／預算測試module：171 passed、4 skipped（51.97s）；本輪含新增三項來源／範例摘錄防漏測試為174 passed、4 skipped（110.55s）。新增來源測試曾因禁止原始PDF含NUL而失敗，已改為只禁止Word二進位誤解析並保留原始缺字、加上品質缺口。NCU／預算／完整度四module另62 passed；最後排除把法國政府標成外校authority後，NCU30項再通過且OpenAPI／JS檢查通過。不宣稱全套CI通過。
 
@@ -226,3 +226,23 @@ NUIST成功browser摘錄先列、同URL失敗local後列曾使pages.jsonl五頁�
 Chromium天津階段／文件中心2 passed、新NUIST首次因來源標題選擇器錯誤1 failed（合計78.53s）；修正為原文件實際標題後NUIST1 passed（44.86s）。[八項NUIST文件](ncu-browser-evidence/ncu-nuist-2027-documents-390.png)、[第7頁視覺摘錄](ncu-browser-evidence/ncu-nuist-2027-source-390.png)、[學校購買保險](ncu-browser-evidence/ncu-nuist-2027-life-390.png)及[天津到校後保單](ncu-browser-evidence/ncu-tju-arrival-390.png)已逐圖檢視。不是只查校數或折疊DOM。
 
 住宿／錄取條件引擎仍是內部待實作工作，不是學校未公告或登入限制；後續實作要保持未發布流程與版本查核狀態。此checkpoint不表示完成214校全包，也不授權部署。
+
+## 條件引擎實作與年度封鎖（OpenAPI .5）
+
+UOS兩份住宿健康文件與HUST一份錄取後健康報告已實作四態条件，按學校／年度／梯次／學期保存明確錄取、住宿選擇；文件catalog、個人計畫與統一任務使用同一policy。未知不一律必繳或免交，延後／不適用／未知文件不列當前「要準備」；依然顯示條件與來源，符合條件也只標參考範圍，116來源未核實、不可正式下載、沒有host精確提醒。現有工作區JSON可存新狀態，不需migration，未套用正式DB。完整規則見[已實作條件文件](ncu-conditional-documents-design.md)。
+
+25項條件組合最先通過（21.36s）。完整NCU／collector／completeness／新條件四module106 passed（137.74s）。共享九module首次118 passed、2 failed（49.97s），都是固定851流程數；更新成851既有＋214中央後22 passed、1 failed（30.99s）揭露中央未發布流程仍被跨年度reference fallback借用。已加中央專用未發布阻擋，48項條件／工作區／任務全過（51.49s），最新九module120 passed（53.93s）；保持其他學校原有估計行為，沒有把中央pending稱已發布。851份CGU／NTPU／NTU workflow content hash逐份與未修改f6ad1b8比較完全相同。
+
+真實手機測試曾1 failed（68.53s）發現同步整理函式遺漏新狀態；已補必要值、每期間快照及跨裝置不同鍵合併。另兩次1 failed（48.07s／53.71s）是在boot仍載入時以select_option直接操作後被初始化覆寫；測試改等待既有boot自然消失，沒有移除遮罩或force。新catalog請求另按相關條件快照防止舊回應覆蓋新選擇。文件目錄、四態、遠端JSON確實保存、重載及切學期後未知、HUST延後健康已1 passed（61.06s）。
+
+補讀HUST所附2024八頁全影像宣傳冊：逐頁視覺核對，原空文字頁保持，兩頁少量內容及圖片SHA可審阅；第3頁三校區、第7頁Junshan仍「upcoming」、第8頁含outgoing／international，不能補成116臺灣接收包。聚焦新條件／NUIST檢索／來源順序／原件年度／離線重建30 passed（25.60s）。sourcecoverage仍276／44錯誤、44partial／170未整理／0全116核實；閱讀一份宣傳冊不增加完成校數。
+
+追加統一任務的真實操作時1 failed（88.66s）：其既有選單只列availability=open，使中央pending資料不可選，先前只驗證catalog不足以發現此點。已僅為中央加入本期名額待公告候選標籤；零名額／封鎖校不進候選，其他母校篩選規則保持。完整任務畫面複驗及最新SHA在後續紀錄。
+
+已唯讀fetch遠端CCU4db9cd3／TKU61659fe並列[共享檔交集](ncu-shared-merge-points-20261008.json)：中正13項、淡江14項。API校別loader／models新欄位／文件中心／registry／前端條件選單與來源／OpenAPI及851＋214校數契約須逐段保留各校變更後重建，不以整檔覆蓋。沒有切換、提交、推送或合併它們的分支。
+
+最新手機完整四態／保存與重載／學期隔離／統一任務內容 **1 passed（63.78s）**；臺大手機瀏覽 **1 passed（73.52s）**，長庚工作區單獨複驗 **1 passed（45.70s）**。先前同時啟動三個browser process曾使中央boot等待69.15s、長庚遮罩攔截53.06s各失敗，現按既有fixture順序執行，不移除遮罩或force。三張[UOS校外住宿](ncu-browser-evidence/ncu-uos-off-campus-390.png)、[HUST錄取後目錄](ncu-browser-evidence/ncu-hust-deferred-health-390.png)、[HUST統一任務](ncu-browser-evidence/ncu-hust-deferred-task-390.png)已逐圖檢視。
+
+條件來源新增逐原件SHA版本綁定；原件改變／錯誤／URL或版本缺失不能沿用已讀政策，四種失效情況連同條件、來源與離線重建 **34 passed（46.48s）**。JavaScript syntax、diff及uv lock check通過。第一次OpenAPI check省略PYTHONPATH，載入另一未修改/workspace/abroad的安裝路徑而報drift；已用兩個實際import __file__命令確認，改用本worktree的PYTHONPATH=src核對，沒有以重產快照掩蓋差異。
+
+本worktree OpenAPI .5快照檢查已成功（exit0），2026-10-08 11:49:55 UTC唯讀healthcheck與ls-remote也成功；main仍f6ad1b8、當時中央遠端7b381ae，沒有卡住或換環境。

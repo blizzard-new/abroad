@@ -103,3 +103,10 @@ body.unified-shell #application-workspace > [data-university-page] { width:100%;
 .school-completeness-list li[data-completeness-status="needs_confirmation"] em { color:#8a5200; }
 .school-completeness-list small, .school-completeness-disclaimer { font-size:12px; line-height:1.6; color:var(--muted,#62788c); }
 .school-completeness-disclaimer { display:block; margin-top:10px; }
+
+.document-applicability { display:grid; gap:4px; padding:10px; border-left:3px solid #907234; background:#fff8e8; font-size:13px; line-height:1.6; overflow-wrap:anywhere; }
+.document-applicability[data-document-applicability="not_applicable"] { border-color:#67818a; background:#f0f4f5; }
+.document-applicability[data-document-applicability="applicable"] { border-color:#207c67; background:#edf8f4; }
+#ncu-document-state { margin-top:12px; min-width:0; border:1px solid #d9e3e8; border-radius:10px; padding:12px; }
+#ncu-document-state[hidden] { display:none; }
+#ncu-document-state > small { grid-column:1/-1; line-height:1.6; }

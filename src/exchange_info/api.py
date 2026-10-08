@@ -5,6 +5,7 @@ from .discovery import localize_experience_digest
 from .experience_digests import attach_digests, load_digests, with_bundled_sources
 from .public_translation import PublicTranslationBatch, translate_public_batch
 from .school_content import complete_destination_profile
+from .ncu_document_conditions import preparation_state_key
 
 import csv
 from contextvars import ContextVar
@@ -18,7 +19,7 @@ from .access_control import (
 )
 from io import BytesIO, StringIO
 from pypdf import PdfReader
-from typing import Any, Mapping, Sequence
+from typing import Any, Literal, Mapping, Sequence
 from uuid import uuid4
 
 import hashlib
@@ -168,6 +169,7 @@ from .models import (
     AccountSessionRecord,
     AccountCalendarEvent,
     ApplicationCenterContext,
+    PartnerDocumentPreparationState,
     ApplicationDocumentCatalog,
     ApplicationDocumentTemplate,
     ApplicationFormDraft,
@@ -3175,6 +3177,9 @@ def create_app(
         program_type: str | None = Query(default=None, max_length=80),
         academic_year: str | None = Query(default=None, max_length=40),
         application_round: str | None = Query(default=None, max_length=80),
+        host_admission_status: Literal["unknown", "not_accepted", "accepted"] = Query(default="unknown"),
+        housing_choice: Literal["unknown", "on_campus", "off_campus"] = Query(default="unknown"),
+        semester: str | None = Query(default=None, max_length=30),
     ) -> ApplicationDocumentCatalog:
         university = university_for(school)
         partner = partner_for_school(target_school, school)
@@ -3187,6 +3192,10 @@ def create_app(
             program_type=program_type or "exchange",
             academic_year=academic_year,
             application_round=application_round,
+            semester=semester,
+            partner_document_states={preparation_state_key(partner.school_name, academic_year, application_round, semester): PartnerDocumentPreparationState(
+                host_admission_status=host_admission_status, housing_choice=housing_choice,
+            )} if university.id == NCU.id else {},
         )
         workflows = (
             workflows_for_university(university)

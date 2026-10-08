@@ -1,15 +1,19 @@
-# 中央外校條件文件正式啟用前的缺口
+# 中央外校條件文件：已實作的參考條件與當期查核邊界
 
-目前214份流程均未發布；`ApplicationDocumentRequirement`只提供`needs_confirmation`，沒有住宿選擇或外校錄取階段的條件欄位。現有階段與文件名稱能說明範圍，但不能宣稱系統已可逐人決定是否必繳。
+UOS兩項住宿健康文件與HUST一項錄取後健康報告已具備明確條件判斷，接入API文件目錄、個人準備清單、統一任務清單與實際手機UI。條件未知不當作全部必繳或全部免交。這項開發已完成，不能再列成外部資料取得阻礙。
 
-| 文件與來源 | 正式啟用前需判斷的條件 | 未滿足／未知時 |
+| 文件 | 參考條件 | 結果與限制 |
 | --- | --- | --- |
-| UOS MMR兩劑／宿舍核准醫師替代證明：[住宿官方頁](https://eng.uos.ac.kr/oia/web/contents/OIA_Studyat_01_04) | 外校已錄取且選校內住宿；醫師替代尚須宿舍核准 | 未錄取先待辦；已確定校外住宿不適用；住宿或錄取未知需確認，不強制先交 |
-| UOS Health & Medical Clearance Form（6個月內TB、醫師及本人簽名）：[現連Word](https://eng.uos.ac.kr/oia/web/file/download/uu/d373b8995c2949b595c6d1b2ef6e0777) | 外校已錄取且選校內住宿；TB時效依當期入住規則 | 未錄取先待辦；校外住宿不適用；未知需確認，不以Health Form替代MMR另件 |
-| HUST近3月健康報告／醫院公章：[2027–28簡章第9頁](https://intl.hkbu.edu.hk/f/partner/3387/华中科技大学接收港澳台交换生简章_2027_2028学年.pdf#page=9) | 外校已錄取，再依接收通知／檢查時效準備 | 未錄取先待辦；錄取未知需確認，不放入初次host必繳 |
+| UOS MMR兩劑／宿舍核准醫師替代證明 | 已取得外校錄取且選校內宿舍 | 校外住宿不適用；尚未錄取延後；錄取或住宿未知需確認；醫師替代仍須宿舍核准 |
+| UOS Health & Medical Clearance Form | 已取得外校錄取且選校內宿舍 | 四態同上；醫師及本人簽名、六個月內TB；不能取代MMR另件 |
+| HUST近三月健康報告／醫院公章 | 已取得外校錄取 | 未錄取延後、錄取未知需確認；沒有住房前提，也不移到初次申請 |
 
-實作需把錄取階段及住宿選擇存成明確值，以適用、不適用、延後、需確認四種結果回傳，並由API、學生文件／任務清單及UI共同使用。條件未知不得回傳全部必繳或全部免交；每項仍須保留年度、來源與待確認狀態。新增欄位須保持既有CGU／NTPU／NTU流程序列化與發布hash相容，並更新OpenAPI快照及條件組合回歸。
+政策逐件明列於[source policy](../sources/ncu/2026-10-08/document-conditions.json)，按學校及完整文件名稱匹配；不以MMR、health或費用正則猜門檻。builder驗證policy的rule_id、文件名稱、來源URL與逐原件SHA，並寫入可離線重建的bundle；原件變更、取得失敗或缺少版本綁定時阻止重建，須重新明確查核。原始文件、年度、SHA與查核日仍在field-audit／source-evidence；條件政策並不取代來源查核。
 
-這是待實作、可審閱的啟用前設計，不是已存在的條件判斷，也沒有啟用或部署流程。三項缺口同時列在中央field-audit的host文件／住宿欄，學生詳情可見。
+`PartnerDocumentPreparationState`只接受明確的錄取與住宿狀態；`DocumentApplicability`回傳applicable／not_applicable／deferred／needs_confirmation。申請設定以學校＋學年度＋梯次＋學期為鍵保存每個狀態快照。切換學校、年度、梯次或學期，不借用另一期間的已錄取狀態；不同鍵跨裝置合併，同一鍵保持一組狀態，不把兩裝置欄位拼成未選過的組合。
 
-UNDIP 2027 factsheet第2頁分Online五項與Visa五項，第3頁又說兩類皆上傳admission。因此十項按類別放在未發布的host申請步驟，交件時點待核對；沒有把Visa五項一律移至錄取後行前步驟。
+`/application-center/catalog`帶錄取、住宿與學期參數；`/application-plan/evaluate`由各志願提供自己的狀態，清單與統一任務共用[ncu_document_conditions.py](../src/exchange_info/ncu_document_conditions.py)。延後、不適用與未知文件不列在當前「要準備的文件」清單，仍以條件說明可見；符合條件也只表示符合參考範圍。未發布文件繼續needs_confirmation／不可正式下載，沒有host精確期限或提醒。中央未發布流程不能被借用為另一未來年度的估計清單。
+
+既有工作區JSON欄可保存狀態，沒有套用正式DB或準備migration，也没有新增流程文件規則模型欄位，因此CGU／NTPU／NTU的851份workflow content hash均與f6ad1b8相同。共享API模型與OpenAPI快照已更新為2026-10-08.5；功能與當期資料核准分開驗證。
+
+仍待外部核實：UOS當期接收包、住宿保障／價格／入住期限、TB與替代證明的當期宿舍通知；HUST中央116適用通知、當期健康檢查時效與各院追加件。這些缺口仍顯示在逐欄稽核。UNDIP十項文件保留Online／Visa類及portal要求；這次沒有任意把Visa類移到錄取後。

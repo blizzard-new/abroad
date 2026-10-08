@@ -2332,6 +2332,14 @@
             "title": "Flags",
             "type": "array"
           },
+          "partner_document_states": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/PartnerDocumentPreparationState"
+            },
+            "maxProperties": 214,
+            "title": "Partner Document States",
+            "type": "object"
+          },
           "program_type": {
             "default": "exchange",
             "enum": [
@@ -2482,6 +2490,16 @@
       },
       "ApplicationDocumentCatalogItem": {
         "properties": {
+          "applicability": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocumentApplicability"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "contact_unit": {
             "anyOf": [
               {
@@ -3919,6 +3937,13 @@
             "title": "Detail",
             "type": "string"
           },
+          "document_applicability": {
+            "items": {
+              "$ref": "#/components/schemas/DocumentApplicability"
+            },
+            "title": "Document Applicability",
+            "type": "array"
+          },
           "document_link": {
             "anyOf": [
               {
@@ -4115,6 +4140,16 @@
       },
       "ApplicationPlanPreference": {
         "properties": {
+          "document_preparation_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PartnerDocumentPreparationState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "rank": {
             "maximum": 5.0,
             "minimum": 1.0,
@@ -8174,6 +8209,47 @@
         "title": "DiscoveryWorkspace",
         "type": "object"
       },
+      "DocumentApplicability": {
+        "properties": {
+          "current_applicability_verified": {
+            "default": false,
+            "title": "Current Applicability Verified",
+            "type": "boolean"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "requirement_name": {
+            "title": "Requirement Name",
+            "type": "string"
+          },
+          "source_urls": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Urls",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "applicable",
+              "not_applicable",
+              "deferred",
+              "needs_confirmation"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "requirement_name",
+          "status",
+          "note"
+        ],
+        "title": "DocumentApplicability",
+        "type": "object"
+      },
       "DocumentCheckIssue": {
         "properties": {
           "code": {
@@ -9558,6 +9634,33 @@
           "school_name"
         ],
         "title": "PartnerCoverage",
+        "type": "object"
+      },
+      "PartnerDocumentPreparationState": {
+        "additionalProperties": false,
+        "properties": {
+          "host_admission_status": {
+            "default": "unknown",
+            "enum": [
+              "unknown",
+              "not_accepted",
+              "accepted"
+            ],
+            "title": "Host Admission Status",
+            "type": "string"
+          },
+          "housing_choice": {
+            "default": "unknown",
+            "enum": [
+              "unknown",
+              "on_campus",
+              "off_campus"
+            ],
+            "title": "Housing Choice",
+            "type": "string"
+          }
+        },
+        "title": "PartnerDocumentPreparationState",
         "type": "object"
       },
       "PartnerProgramOption": {
@@ -12409,6 +12512,13 @@
             "title": "Detail",
             "type": "string"
           },
+          "document_applicability": {
+            "items": {
+              "$ref": "#/components/schemas/DocumentApplicability"
+            },
+            "title": "Document Applicability",
+            "type": "array"
+          },
           "document_link": {
             "anyOf": [
               {
@@ -14758,6 +14868,53 @@
                 }
               ],
               "title": "Application Round"
+            }
+          },
+          {
+            "in": "query",
+            "name": "host_admission_status",
+            "required": false,
+            "schema": {
+              "default": "unknown",
+              "enum": [
+                "unknown",
+                "not_accepted",
+                "accepted"
+              ],
+              "title": "Host Admission Status",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "housing_choice",
+            "required": false,
+            "schema": {
+              "default": "unknown",
+              "enum": [
+                "unknown",
+                "on_campus",
+                "off_campus"
+              ],
+              "title": "Housing Choice",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "semester",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 30,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Semester"
             }
           }
         ],
@@ -18692,7 +18849,7 @@
     "resource_not_found": 404,
     "validation_failed": 422
   },
-  "x-contract-version": "2026-10-08.4",
+  "x-contract-version": "2026-10-08.5",
   "x-product-boundaries": {
     "account_routes_require_bearer_session": true,
     "ai_features": "paused",

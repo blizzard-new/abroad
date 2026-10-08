@@ -126,6 +126,27 @@ def write_json(path, value):
     )
 
 
+def validate_document_conditions(conditions, workflows, sources_by_id):
+    """An updated original requires a new explicit condition review."""
+    for policy in conditions:
+        workflow = next(w for w in workflows if w["school_name"] == policy["school_name"])
+        step = next(s for s in workflow["steps"] if s.get("rule_id") == policy["rule_id"])
+        document = next(d for d in step["document_requirements"] if d["name"] == policy["requirement_name"])
+        if not set(policy["source_urls"]) <= set(document["source_urls"]):
+            raise ValueError("NCU條件文件來源已變更，須重新查核政策。")
+        versions = policy.get("source_versions", [])
+        referenced = {url.split("#", 1)[0] for url in policy["source_urls"]}
+        if referenced != {v["url"].split("#", 1)[0] for v in versions}:
+            raise ValueError("NCU條件文件來源缺少完整版本綁定。")
+        for version in versions:
+            original = sources_by_id.get(version["source_id"])
+            if (not original or original.get("error")
+                or not version.get("sha256")
+                or original.get("sha256") != version["sha256"]
+                or original["url"].split("#", 1)[0] != version["url"].split("#", 1)[0]):
+                raise ValueError("NCU條件文件原件版本已變更或未取得，須重新查核政策。")
+
+
 def write_rows(path, values, model):
     path.write_text(
         "".join(
@@ -1254,6 +1275,9 @@ def build(output):
     write_rows(
         output / "application_workflows.jsonl", workflows, UniversityApplicationWorkflow
     )
+    conditions = load_json(SOURCES / "document-conditions.json")
+    validate_document_conditions(conditions, workflows, docs)
+    write_json(output / "document-conditions.json", conditions)
     write_rows(output / "destination_profiles.jsonl", destinations, DestinationProfile)
     write_rows(output / "partner_research.jsonl", research, PartnerResearchRecord)
     write_rows(

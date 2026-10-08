@@ -57,6 +57,7 @@ from .models import (
     UniversityApplicationWorkflow,
 )
 from .application_rules import select_application_workflow
+from .ncu_document_conditions import document_applicability, preparation_state_key
 from .university_registry import NTPU, NTU, NCU, require_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
@@ -1048,6 +1049,12 @@ def build_application_document_catalog(
                         or contact_unit
                         if needs_confirmation
                         else None
+                    ),
+                    applicability=document_applicability(
+                        context.school_name, workflow.school_name, requirement,
+                        context.partner_document_states.get(preparation_state_key(
+                            workflow.school_name, context.academic_year, context.application_round, context.semester,
+                        )),
                     ),
                 )
             )

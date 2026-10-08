@@ -9,6 +9,7 @@ from .application_task_identity import preparation_identity
 from .plan_defaults import suggest_effort_hours
 from .school_identity import same_school
 from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
+from .ncu_document_conditions import document_applicability
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
 from .task_documents import document_link_for_step
 from .qualification_scopes import (
@@ -193,7 +194,7 @@ def build_personal_application_plan(
         if status == ApplicationPlanEligibilityStatus.UNAVAILABLE:
             checklist = []
         elif workflow is not None:
-            checklist = _workflow_checklist(preference.rank, workflow, contact_unit)
+            checklist = _workflow_checklist(preference.rank, workflow, contact_unit, preference.document_preparation_state)
         elif reference is not None:
             checklist = _reference_checklist(reference, context, contact_unit)
         else:
@@ -682,6 +683,7 @@ def _workflow_checklist(
     preference_rank: int,
     workflow: UniversityApplicationWorkflow | None,
     contact_unit: str,
+    document_preparation_state=None,
 ) -> list[ApplicationPlanChecklistItem]:
     if workflow is None:
         return []
@@ -702,6 +704,15 @@ def _workflow_checklist(
     for index, step in enumerate(workflow.steps, start=1):
         task_id, task_scope, signature = preparation_identity(workflow, step, index)
         link = document_link_for_step(step)
+        applicability = [result for requirement in step.document_requirements
+                         if (result := document_applicability(workflow.home_university, workflow.school_name, requirement, document_preparation_state))]
+        inactive = {result.requirement_name for result in applicability
+                    if result.status != "applicable"}
+        if link and inactive:
+            link = link.model_copy(update={
+                "requirement_names": [name for name in link.requirement_names if name not in inactive],
+                "unmapped_requirement_names": [name for name in link.unmapped_requirement_names if name not in inactive],
+            })
         confirmed = (
             step.support_status
             in {ApplicationSupportStatus.VERIFIED, ApplicationSupportStatus.NOT_APPLICABLE}
@@ -736,6 +747,7 @@ def _workflow_checklist(
                 ),
                 support_status=step.support_status,
                 needs_confirmation=not confirmed,
+                document_applicability=applicability,
                 confirmation_contact=(None if confirmed else confirmation_contact),
                 source_urls=source_urls,
                 task_scope=task_scope,
@@ -778,6 +790,8 @@ def select_reference_workflow(
         )
         and (not home_key or _normalize(workflow.home_university) == home_key)
         and workflow.steps
+        and (not is_ncu(context.home_university)
+             or workflow.review_status == ApplicationWorkflowReviewStatus.PUBLISHED)
     ]
     if not candidates:
         return None

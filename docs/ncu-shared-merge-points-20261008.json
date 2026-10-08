@@ -1,0 +1,46 @@
+{
+  "main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "ncu_checkpoint": "7b381ae16f4d436d330172fc677621f5f59cf68a",
+  "compared_branches": [
+    {
+      "branch": "origin/data/ccu-exchange-20261008",
+      "checked_head": "4db9cd381d0316c6bf012e6f7b3825dc5933b3f7",
+      "shared_changed_paths": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/advisor.py",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/application_rules.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_ntu_integration.py"
+      ]
+    },
+    {
+      "branch": "origin/data/tku-exchange-20261008",
+      "checked_head": "61659fe12cf5bb5f3fed2502f112039c7f8abd92",
+      "shared_changed_paths": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_fit_signals.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_school_completeness.py",
+        "tests/test_task_documents_and_reference_plan.py"
+      ]
+    }
+  ],
+  "note_zh": "僅讀遠端分支及列交集，未合併或覆寫。NCU最新未推條件引擎改動亦納入本地與main差異。合併需聯集校別分支、模型欄位与registry，重建OpenAPI，重算包含各校的契約校數。"
+}

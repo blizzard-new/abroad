@@ -1109,7 +1109,9 @@ def test_new_mainland_2027_packets_keep_date_examples_track_and_document_stages(
     assert any("錄取後" in d.name for s in workflow.steps if s.phase == "行前準備" for d in s.document_requirements)
     raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
     flyer = next(s for s in raw if s["id"].startswith("host-hust-mcu2027-1TS"))
-    assert not flyer["content_status"]["all_pages_read"] and not flyer["content_status"]["visual_reviewed"]
+    assert flyer["content_status"]["all_pages_read"] and flyer["content_status"]["visual_reviewed"]
+    assert not flyer["content_status"]["any_text"]
+    assert "upcoming campus" in next(p["text"] for p in flyer["page_transcriptions"] if p["page"] == 7)
     tju = next(p for p in partners if "Tianjin University" in p.school_name)
     audit = ncu_field_audit(tju.school_name)
     assert "秋季" in audit["fields"]["host_deadline"]["note"] and "2026/11/15" in audit["fields"]["host_deadline"]["note"]
