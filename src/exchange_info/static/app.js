@@ -6126,6 +6126,11 @@ function applicationRequirementMeta(item) {
   ];
   if (item.signatures?.length) parts.push(`簽名：${item.signatures.join("、")}`);
   if (item.stamps?.length) parts.push(`核章：${item.stamps.join("、")}`);
+  if (item.conditional) parts.push(`適用條件：${item.condition || item.name}`);
+  if (item.applicability_status) parts.push(`適用性：${({verified_current:"當期依據已核",needs_confirmation:"當期適用待確認",reference_only:"一般／歷史參考"})[item.applicability_status]}`);
+  if (item.applicability_year) parts.push(item.applicability_year);
+  if (item.applicability_note) parts.push(item.applicability_note);
+  if (item.official_form_verified && item.needs_confirmation) parts.push("官方原檔／表單入口已核實可開啟；適用性與完整送件清單仍須確認");
   return parts.join(" · ");
 }
 
@@ -6181,13 +6186,17 @@ function renderApplicationDocumentCatalog() {
       <summary><span><strong>${escapeHtml(group.phase)}</strong><small>${group.items.length} 項</small></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
       <div>${group.items.map((item) => {
         const sourceUrl = item.source_urls?.[0] || "";
-        const sourceLabel = item.download_available ? "下載校方正式表格" : "查看官方規定";
+        const sourceLabel = item.download_available
+          ? activeHomeSchool() === "淡江大學"
+            ? (item.applicability_status === "reference_only" ? "開啟官方一般參考表格" : "開啟校方原表／表單入口")
+            : "下載校方正式表格"
+          : "查看官方規定";
         const sourceHref = item.download_available ? item.official_form_url : sourceUrl;
         const checkedAt = item.source_checked_at ? formatDate(item.source_checked_at) : "查核日待補";
         return `
           <article class="application-requirement-item ${item.needs_confirmation ? "needs-confirmation" : "is-confirmed"}">
             <span class="application-requirement-order">${item.sequence}</span>
-            <div><span class="application-requirement-badges"><em>${item.needs_confirmation ? "待確認" : "已確認"}</em>${item.download_available ? "<b>官方表格</b>" : ""}</span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.step_title)}</small><p>${escapeHtml(applicationRequirementMeta(item))}</p>${item.needs_confirmation ? `<p class="application-requirement-contact">請聯絡 ${escapeHtml(item.contact_unit || catalog.contact_unit)}</p>` : ""}</div>
+            <div><span class="application-requirement-badges"><em>${item.needs_confirmation ? "待確認" : "已確認"}</em>${item.conditional ? "<b>符合條件才需要</b>" : ""}${item.download_available ? "<b>官方表格</b>" : ""}</span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.step_title)}</small><p>${escapeHtml(applicationRequirementMeta(item))}</p>${item.needs_confirmation ? `<p class="application-requirement-contact">請聯絡 ${escapeHtml(item.contact_unit || catalog.contact_unit)}</p>` : ""}</div>
             <div class="application-requirement-source">${sourceHref ? `<a href="${escapeHtml(sourceHref)}" target="_blank" rel="noreferrer"><i data-lucide="external-link" aria-hidden="true"></i><span>${sourceLabel}</span></a>` : "<span>來源待校方提供</span>"}<small>${escapeHtml(checkedAt)}</small></div>
           </article>`;
       }).join("")}</div>
@@ -10954,13 +10963,19 @@ function renderApplicationPeriodOptions() {
   const periods = data?.periods || [];
   // Retain future years and legacy drafts, but never present them as published periods.
   const currentYear = new Date().getFullYear() - 1911;
-  const years = [...new Set([String(currentYear),String(currentYear+1),String(currentYear+2),...periods.map(row=>row.academic_year),selectedYear].filter(Boolean))];
+  const defaultYears = activeHomeSchool() === "淡江大學"
+    ? window.UniWayTKU.applicationYears(periods)
+    : [String(currentYear), String(currentYear+1), String(currentYear+2)];
+  const years = [...new Set([...defaultYears,...periods.map(row=>row.academic_year),selectedYear].filter(Boolean))];
   yearField.innerHTML = '<option value="">請選擇</option>' + years.sort().reverse().map(year=>
     `<option value="${escapeHtml(year)}">${escapeHtml(year)} 學年度${periods.some(row=>row.academic_year === year) ? "" : "（流程資料待確認）"}</option>`).join("");
   yearField.value = selectedYear;
   const relevant = periods.filter(row=>row.academic_year === selectedYear);
+  const defaultRounds = activeHomeSchool() === "淡江大學"
+    ? ["其他／尚未核實"]
+    : ["第一梯次","第二梯次","其他／尚未公告"];
   const rounds = [...new Set([...relevant.map(row=>row.application_round),...periods.map(row=>row.application_round),
-    "第一梯次","第二梯次","其他／尚未公告",selectedRound].filter(Boolean))];
+    ...defaultRounds,selectedRound].filter(Boolean))];
   roundField.innerHTML = '<option value="">請選擇</option>' + rounds.map(round=>{
     const row = relevant.find(item=>item.application_round === round);
     const note = row ? row.needs_confirmation ? "（適用性待確認）" : "" : "（此年度流程待確認）";

@@ -1,0 +1,85 @@
+{
+  "checked_at": "2026-10-08",
+  "main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "read_only_other_branches": true,
+  "other_branches_merged": false,
+  "branches": [
+    {
+      "branch": "origin/data/ncu-exchange-20261008",
+      "commit": "1bddf5a154e2283e17cbb5c1ab554089385e033c",
+      "changed_files": 371,
+      "shared_overlap": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_fit_signals.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_school_completeness.py",
+        "tests/test_task_documents_and_reference_plan.py"
+      ]
+    },
+    {
+      "branch": "origin/data/ccu-exchange-20261008",
+      "commit": "2528ede75412e1f353ce6466467cd02579fe6191",
+      "changed_files": 1619,
+      "shared_overlap": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_ntu_integration.py"
+      ]
+    }
+  ],
+  "own_shared_files": [
+    "docs/api/openapi.json",
+    "pyproject.toml",
+    "src/exchange_info/api.py",
+    "src/exchange_info/application_documents.py",
+    "src/exchange_info/models.py",
+    "src/exchange_info/static/app.js",
+    "src/exchange_info/static/index.html",
+    "src/exchange_info/storage.py",
+    "src/exchange_info/university_registry.py",
+    "tests/e2e/test_ntu_school.py",
+    "tests/test_fit_signals.py",
+    "tests/test_ntu_integration.py",
+    "tests/test_school_completeness.py",
+    "tests/test_task_documents_and_reference_plan.py"
+  ],
+  "protected_files_changed": [],
+  "rules": [
+    "registry/API/storage/templates的各校dispatch必須合併保留，不能取單一分支覆蓋。",
+    "TKU stage/conditional/condition/official_form_verified/applicability_*欄位逐名對齊CCU；NCU新增applicability可加並存。",
+    "官方原檔可開啟與流程發布／資格核實分離；合併CCU＋TKU的公開原表例外，預設其他母校仍受既有審查條件。",
+    "保留TKU目標確認／請求ID／未知年度清空修正；與NCU/CCU語言、科系、工作區handler需人工對照。",
+    "TKU原生2027-2028年度／日語第二次甄選不能被ROC115/116或generic梯次覆蓋。",
+    "NTU新增journey/workbench不修改；選校卡片總數、workflows與destination總数要按合併後實際catalog更新。",
+    "OpenAPI待所有欄位合併完成後重產；pyproject學校附件包裝項合併保留；不改uv.lock掩蓋既有失敗。"
+  ],
+  "protected_bundle_workflows": {
+    "國立臺北大學": 409,
+    "長庚大學": 154,
+    "國立臺灣大學": 288,
+    "淡江大學": 4
+  },
+  "protected_bundle_destinations": {
+    "國立臺北大學": 206,
+    "淡江大學": 4,
+    "長庚大學": 77,
+    "國立臺灣大學": 288
+  }
+}

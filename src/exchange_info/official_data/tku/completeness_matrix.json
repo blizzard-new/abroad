@@ -2912,14 +2912,24 @@
           "key": "latest_forms",
           "label": "外校本期表單內容／取得方式",
           "status": "needs_confirmation",
-          "value": "2027 sheet p.2清單已讀；申請表、日語學習背景、健康／醫療等表單透過母校交換承辦／提名學生提供，公開incoming頁未附可下載空白表；不使用自行仿製表。",
-          "reason": "當期清單及提供對象已核實，未取得非公開空白表內容；需母校承辦提供，不能冒稱已读全部表單。",
+          "value": "2027 sheet p.2清單已讀；官網Program段指定向母校交換承辦索取申請材料。已查incoming頁未列這些空白表下載，內容尚未取得核實；不能推定所有表單只限提名後或非公開。COE細節p.2明示另提供提名學生。",
+          "reason": "當期清單、承辦索取途徑及COE提名後通知已核實；一般申請原表仍未取得，沒有逐表非公開證據。",
           "evidence": [
             {
               "source_id": "seikei-2027-sheet",
               "source_url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
-              "locator": "PDF p.2 Application Procedures",
+              "locator": "PDF p.1–2 Application Procedures；incoming頁Program段",
               "applicable_year": "2027 Spring",
+              "application_round": "2027春季外校申請／淡江日語二甄後續",
+              "role": "host_incoming",
+              "checked_at": "2026-10-08T00:00:00Z",
+              "quote": ""
+            },
+            {
+              "source_id": "seikei-host",
+              "source_url": "https://www.seikei.ac.jp/gakuen/siis/intl/incoming.html",
+              "locator": "Program: contact home university coordinator for application details and materials",
+              "applicable_year": "general / no cycle stated",
               "application_round": "2027春季外校申請／淡江日語二甄後續",
               "role": "host_incoming",
               "checked_at": "2026-10-08T00:00:00Z",
@@ -2930,6 +2940,13 @@
             {
               "source_id": "seikei-2027-sheet",
               "url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
+              "checked_at": "2026-10-08T00:00:00Z",
+              "result": "verified_open",
+              "scope": "field evidence"
+            },
+            {
+              "source_id": "seikei-host",
+              "url": "https://www.seikei.ac.jp/gakuen/siis/intl/incoming.html",
               "checked_at": "2026-10-08T00:00:00Z",
               "result": "verified_open",
               "scope": "field evidence"
@@ -2997,7 +3014,7 @@
           "label": "外校住宿申請期限",
           "status": "missing_in_source",
           "value": null,
-          "reason": "住宿資料已核實，公開sheet未列住宿表截止，須提名後提供資訊。",
+          "reason": "住宿資料已核實，公開sheet未列住宿表截止；取得方式與期限須承辦確認。",
           "evidence": [
             {
               "source_id": "seikei-2027-sheet",

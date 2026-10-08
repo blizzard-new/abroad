@@ -2482,6 +2482,60 @@
       },
       "ApplicationDocumentCatalogItem": {
         "properties": {
+          "applicability_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Note"
+          },
+          "applicability_status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "verified_current",
+                  "needs_confirmation",
+                  "reference_only"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Status"
+          },
+          "applicability_year": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Year"
+          },
+          "condition": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Condition"
+          },
+          "conditional": {
+            "default": false,
+            "title": "Conditional",
+            "type": "boolean"
+          },
           "contact_unit": {
             "anyOf": [
               {
@@ -2539,6 +2593,11 @@
             ],
             "title": "Official Form Url"
           },
+          "official_form_verified": {
+            "default": false,
+            "title": "Official Form Verified",
+            "type": "boolean"
+          },
           "phase": {
             "title": "Phase",
             "type": "string"
@@ -2574,6 +2633,26 @@
             "title": "Source Urls",
             "type": "array"
           },
+          "stage": {
+            "anyOf": [
+              {
+                "enum": [
+                  "nomination",
+                  "student_application",
+                  "after_application",
+                  "second_submission",
+                  "post_offer",
+                  "after_dorm_assignment",
+                  "conditional_program"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stage"
+          },
           "stamps": {
             "items": {
               "type": "string"
@@ -2602,6 +2681,60 @@
       },
       "ApplicationDocumentRequirement": {
         "properties": {
+          "applicability_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Note"
+          },
+          "applicability_status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "verified_current",
+                  "needs_confirmation",
+                  "reference_only"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Status"
+          },
+          "applicability_year": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Applicability Year"
+          },
+          "condition": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Condition"
+          },
+          "conditional": {
+            "default": false,
+            "title": "Conditional",
+            "type": "boolean"
+          },
           "copies": {
             "anyOf": [
               {
@@ -2641,6 +2774,11 @@
             ],
             "title": "Official Form Url"
           },
+          "official_form_verified": {
+            "default": false,
+            "title": "Official Form Verified",
+            "type": "boolean"
+          },
           "signatures": {
             "items": {
               "type": "string"
@@ -2654,6 +2792,26 @@
             },
             "title": "Source Urls",
             "type": "array"
+          },
+          "stage": {
+            "anyOf": [
+              {
+                "enum": [
+                  "nomination",
+                  "student_application",
+                  "after_application",
+                  "second_submission",
+                  "post_offer",
+                  "after_dorm_assignment",
+                  "conditional_program"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stage"
           },
           "stamps": {
             "items": {

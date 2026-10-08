@@ -89,14 +89,15 @@ def enrich_current(record):
         put('host_study_period','一學期或一學年；2027春住宿約3月中旬至8月初、秋季9月初至次年2月初；確切期間依外校通知。',sheet,'PDF p.1 Semester Schedule',status='needs_confirmation',reason='2027 sheet只列近似時段，精確calendar链接仍是AY2026；與淡江全年期間須確認。')
         put('host_calendar','Spring2027 sheet：3月中旬入住、3月下旬orientation、4月初至7月下旬上課及7月底考試、8月初退宿；秋季9月初入住、9月中orientation、9月下旬至1月下旬上課／考試、2月初退宿。精確2027日期未核實。',sheet,'PDF p.1 Academic Calendar / Semester Schedule',status='needs_confirmation',reason='該sheet的calendar連結標AY2026；僅近似schedule可用，不能套2026確切日。')
         put('campus','東京武藏野市吉祥寺北町；專業課依指導教師同意，無法保證選上。',sheet,'PDF p.1 Contact / p.2 Course Information')
-        put('housing_application_deadline',None,sheet,'PDF p.3–4 Accommodation',status='missing_in_source',reason='住宿資料已核實，公開sheet未列住宿表截止，須提名後提供資訊。')
+        put('housing_application_deadline',None,sheet,'PDF p.3–4 Accommodation',status='missing_in_source',reason='住宿資料已核實，公開sheet未列住宿表截止；取得方式與期限須承辦確認。')
         put('housing_costs',str(f['costs'].value),sheet,'PDF p.3–4 Fees')
         put('living_costs','2027 sheet另估手機3,000–5,000/月、其他個人支出20,000–50,000/月；國際會館另估水電8,000–10,000/月、食物25,000–30,000/月。Dormy及MICHI有不同餐費包含範圍，不能把全部項目重複加總。',sheet,'PDF p.4–5 Fees / Living Costs')
         put('insurance','國民健康保險官方sheet估約10,000日圓/年；實際保費需依自治體及個人情況，與宿舍費不同。',sheet,'PDF p.5 Living Costs')
         put('arrival_preparation','春季約3月中旬入住、3月下旬orientation；先由母校提名，COE線上表及財力證明等細節提供給提名學生。2027/9起原校安排住宿者搬入MICHI，需預留搬遷安排。',sheet,'PDF p.1–4')
         put('arrival_date',None,sheet,'PDF p.1 arrival / orientation schedule',status='missing_in_source',reason='只載mid/late-March，未載2027指定抵達日期或接機服務。')
         put('course_schedule_2027',None,'seikei-host','Incoming Students / Syllabus links',status='not_verified_new',reason='2027當期課表未核實；incoming頁現有歷年syllabus僅供參考。')
-        put('latest_forms','2027 sheet p.2清單已讀；申請表、日語學習背景、健康／醫療等表單透過母校交換承辦／提名學生提供，公開incoming頁未附可下載空白表；不使用自行仿製表。',sheet,'PDF p.2 Application Procedures',status='needs_confirmation',reason='當期清單及提供對象已核實，未取得非公開空白表內容；需母校承辦提供，不能冒稱已读全部表單。')
+        put('latest_forms','2027 sheet p.2清單已讀；官網Program段指定向母校交換承辦索取申請材料。已查incoming頁未列這些空白表下載，內容尚未取得核實；不能推定所有表單只限提名後或非公開。COE細節p.2明示另提供提名學生。',sheet,'PDF p.1–2 Application Procedures；incoming頁Program段',status='needs_confirmation',reason='當期清單、承辦索取途徑及COE提名後通知已核實；一般申請原表仍未取得，沒有逐表非公開證據。')
+        f['latest_forms'].evidence.append(host_fact('','seikei-host','Program: contact home university coordinator for application details and materials').evidence[0])
         put('transport',None,sheet,'PDF p.1–6; no arrival transfer policy',status='missing_in_source',reason='sheet未載接機或2027交通票價；不能借用其他學校方案。')
         put('scholarships','成蹊40,000日圓/月（每年60人）或深谷60,000/月（每學期1人），至多10月，均非保證。成蹊獎要求其他非貸款獎助低於60,000/月；深谷不得有其他獎助，活動參與等條件見sheet；與交換申請同時申請。',sheet,'PDF p.5 Scholarships')
     else:
@@ -158,10 +159,10 @@ def host_documents(slug):
         doc('passport','護照姓名／國籍／照片等相關頁；曾入境日本者併入出境章頁PDF',s,'PDF p.18–19',copy_type='copy')
         doc('residence-card','有效在留卡正面影本，My Number背面不得提交',s,'PDF p.19–20',condition='持有效日本在留卡者',copy_type='copy')
         doc('coe','指定行政書士COE網路表，另依通知補件',s,'PDF p.20',phase=5,condition='非日本籍且無有效在留卡者；有在留卡者由外校判斷',access='separately_sent_to_applicant')
-        doc('health','Health Information Registration Form',s,'PDF p.21',phase=5,access='after_admission_by_email')
-        doc('medical','指定診斷證明及處方',s,'PDF p.21–22',phase=5,condition='治療／服藥／定期觀察或需醫療支持者',access='after_admission_by_email')
-        doc('accommodation-support','診斷證明及母校學習調整證明；預期困難聲明可選',s,'PDF p.21–22',phase=5,condition='申請合理學習調整者；困難聲明選附',access='after_admission_by_email')
-        doc('housing','錄取後正式住宿申請',s,'PDF p.18',phase=5,condition='申請I-House者，公開本期截止未載',access='after_admission_by_email')
+        doc('health','Health Information Registration Form',s,'PDF p.21',phase=5,access='after_admission_separately_provided')
+        doc('medical','指定診斷證明及處方',s,'PDF p.21–22',phase=5,condition='治療／服藥／定期觀察或需醫療支持者',access='after_admission_separately_provided')
+        doc('accommodation-support','診斷證明及母校學習調整證明；預期困難聲明可選',s,'PDF p.21–22',phase=5,condition='申請合理學習調整者；困難聲明選附',access='after_admission_separately_provided')
+        doc('housing','錄取後正式住宿申請',s,'PDF p.18',phase=5,condition='申請I-House者，公開本期截止未載',access='after_admission_separately_provided')
         doc('japanese-id','戶籍謄本抄本及學生證照片',s,'PDF p.20',phase=5,condition='日本國籍者（含雙重國籍）；不與COE必繳並列')
     elif slug=='nagasaki':
         s='nagasaki-nics-2027'
@@ -179,7 +180,7 @@ def host_documents(slug):
     elif slug=='seikei':
         s='seikei-2027-sheet'
         specs=[('application','Exchange Student Application','所有申請人'),('japanese-background','Japanese Language Study Background','所有申請人'),('health','Health Certificate','所有申請人'),('scholarship-intention','Declaration of intention for applying scholarships','申請清單列載全體；實際填寫意向依表'),('financial-statement','Statement of financial situation','僅獎學金申請人'),('medical','Medical declaration form','所有申請人'),('transcript','英文官方Academic Transcript','所有申請人'),('passport','有效護照照片頁影本','所有申請人'),('photo','ID照片資料4×3cm','所有申請人'),('coe','線上COE申請及財力證明','提名後依外校COE指示；適用者須辦')]
-        for key,name,condition in specs:doc(key,name,s,'PDF p.2 Application Procedures',condition=condition,access='provided_to_home_coordinator_or_nominated_students' if key not in ['transcript','passport','photo'] else 'own_document',copy_type='copy' if key=='passport' else 'unspecified')
+        for key,name,condition in specs:doc(key,name,s,'PDF p.2 Application Procedures',condition=condition,access='provided_to_nominated_students' if key=='coe' else 'contact_home_coordinator' if key not in ['transcript','passport','photo'] else 'own_document',copy_type='copy' if key=='passport' else 'unspecified')
     else:
         s='uec-application-recheck';kw={'status':'reference_only'}
         doc('form-a','JUSST Form A（PDF可編輯）：列印親簽與母校推薦欄',s,'Application Forms item1; Form A PDF p.1/8/9',form='uec-jusst_form_A-rev9-pdf',signatures=['申請人','母校授權推薦人'],**kw)
@@ -208,6 +209,25 @@ def document_requirement(item):
     if item['status']=='reference_only':name='一般參考／2027版未核實：'+name
     urls=[item['evidence']['source_url']]
     if item['official_form_url']:urls.append(item['official_form_url'])
+    form_source=source_map().get(item['form_source_id'])
+    # Public availability is distinct from the student's programme/year eligibility.
+    form_verified=bool(form_source and form_source.get('open_status')=='verified_open'
+        and form_source.get('http_status')==200 and form_source.get('sha256'))
+    access_labels={
+        'verified_public':'已核實公開原檔／官方表單入口',
+        'own_document':'自行取得的證明文件',
+        'nomination_then_account_by_email':'提名核准後由外校寄送申請帳號',
+        'separately_sent_to_applicant':'外校另寄申請人',
+        'after_admission_separately_provided':'錄取後由外校另提供；不得推定已取得表單內容',
+        'provided_to_nominated_students':'外校明示提供已提名學生',
+        'contact_home_coordinator':'官網指定向母校承辦索取；原表尚未取得，非公開限制未核實',
+    }
+    mapping_note='長崎NICS與淡江本輪／研究生對應仍待確認；此項不代表所有淡江提名者適用。' if item['evidence']['source_id'].startswith('nagasaki-') else ''
     return dict(name=name,copy_type=item['copy_type'],signatures=item['signatures'],
         official_form_url=item['official_form_url'],source_urls=list(dict.fromkeys(urls)),
-        needs_confirmation=item['status']!='verified')
+        needs_confirmation=item['status']!='verified',
+        stage='student_application' if item['step_order']==4 else 'post_offer',
+        conditional=conditional,condition=item['condition'],official_form_verified=form_verified,
+        applicability_status='reference_only' if item['status']=='reference_only' else 'needs_confirmation' if item['status']!='verified' or mapping_note else 'verified_current',
+        applicability_year=item['applicable_year'],
+        applicability_note=f"外校incoming，僅已獲母校推薦者；{item['evidence']['locator']}；{access_labels[item['form_access']]}。{mapping_note}")

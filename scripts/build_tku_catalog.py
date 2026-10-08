@@ -258,7 +258,12 @@ def build_platform_data(current):
                                      "copy_type":"original" if index in [0,1,3] else "copy" if index==2 else "unspecified",
                                      "signatures":["申請人","系主任"] if index==0 else ["申請人","家長（監護人）"] if index==6 else [],
                                      "official_form_url":SOURCES[JP_GUIDE]["source_url"]+"#page=14" if index==6 else None,
-                                     "source_urls":[SOURCES[JP_GUIDE]["source_url"]]})
+                                     "source_urls":[SOURCES[JP_GUIDE]["source_url"]],
+                                     "stage":"student_application", "conditional":index==7,
+                                     "condition":"有則附" if index==7 else "所有申請人；碩一另附大學四年成績單" if index==1 else "所有申請人",
+                                     "official_form_verified":index==6,
+                                     "applicability_status":"verified_current", "applicability_year":JP_YEAR,
+                                     "applicability_note":"母校outbound；簡章PDF p.3–4（切結書p.14）；校內已截止，僅供流程與既有提名者準備查核。"})
             if order in [4,5]:
                 selected=[item for item in host_items if item['step_order']==order]
                 requirements=[document_requirement(item) for item in selected]

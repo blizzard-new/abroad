@@ -886,8 +886,8 @@ def all_application_templates(
 
 def templates_for_context(context: ApplicationCenterContext) -> list[ApplicationDocumentTemplate]:
     if require_university(context.school_name).id == "tku" and (
-        context.academic_year not in (None, "2027-2028")
-        or context.application_round not in (None, "日語組第二次甄選")
+        str(context.academic_year or "").strip() not in ("", "2027-2028")
+        or str(context.application_round or "").strip() not in ("", "日語組第二次甄選")
     ):
         return []
     flags = set(context.flags)
@@ -979,8 +979,20 @@ def build_application_document_catalog(
                         else ApplicationSupportStatus.VERIFIED
                     ),
                     needs_confirmation=needs_confirmation,
+                    stage=requirement.stage,
+                    conditional=requirement.conditional,
+                    condition=requirement.condition,
+                    official_form_verified=requirement.official_form_verified,
+                    applicability_status=requirement.applicability_status,
+                    applicability_year=requirement.applicability_year,
+                    applicability_note=requirement.applicability_note,
                     download_available=bool(
-                        official_form_url and not needs_confirmation
+                        official_form_url and (
+                            not needs_confirmation or (
+                                workflow.home_university == "淡江大學"
+                                and requirement.official_form_verified
+                            )
+                        )
                     ),
                     contact_unit=(
                         step.confirmation_contact

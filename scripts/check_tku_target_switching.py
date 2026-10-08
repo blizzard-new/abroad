@@ -7,7 +7,9 @@ from __future__ import annotations
 
 import itertools
 import json
+import os
 import socket
+import subprocess
 import tempfile
 import threading
 import time
@@ -220,8 +222,8 @@ def main():
                 browser = p.chromium.launch(headless=True)
                 checks = [check(base, browser, view) for view in [{"width":1280,"height":900}, {"width":390,"height":844}]]
                 browser.close()
-            report = {"status":"passed", "checks":checks}
-            Path("/tmp/tku-switch-result.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+            report = {"status":"passed", "tested_commit":subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip(), "checks":checks}
+            Path(os.environ.get("TKU_SWITCH_OUTPUT", "/tmp/tku-switch-result.json")).write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
             print(json.dumps(report, ensure_ascii=False))
         finally:
             server.should_exit = True; thread.join(timeout=5)

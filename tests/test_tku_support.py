@@ -96,6 +96,59 @@ def test_document_template_api_honours_tku_year_and_round(tmp_path):
     assert client.get('/application-center/templates',params={**query,'application_round':'英歐語組'}).json()==[]
 
 
+def test_native_context_empty_strings_keep_preparation_manifest_and_wrong_round_does_not():
+    from exchange_info.application_documents import build_packet_manifest
+    from exchange_info.models import ApplicationPacketRequest
+    request=ApplicationPacketRequest(context={"school_name":"淡江大學", "academic_year":"2027-2028",
+        "application_round":"", "target_school":""},
+        answers={"tku-autobiography-preparation":{"autobiography_zh":"自傳內容", "autobiography_ja":"自伝の内容"}},
+        selections=[{"template_id":"tku-autobiography-preparation", "copies":1}])
+    manifest=build_packet_manifest(request)
+    assert len(manifest.items)==1 and manifest.items[0].template_id=="tku-autobiography-preparation"
+    assert manifest.source_checked_at.date().isoformat()=="2026-10-08"
+    for field,value in [("academic_year","2028-2029"),("application_round","英歐語組")]:
+        other=request.model_copy(update={"context":request.context.model_copy(update={field:value})})
+        assert build_packet_manifest(other).items==[]
+
+
+def test_registration_directory_and_native_year_options_are_official_and_reproducible():
+    directory=json.loads((BUNDLE/'academic_units.json').read_text())
+    sources=json.loads((BUNDLE/'academic_sources.json').read_text())
+    assert len(directory['colleges'])==9 and sum(map(len,directory['colleges'].values()))==44
+    assert len(directory['evidence'])==44 and len(directory['source_discrepancies'])==3
+    assert len(TKU.colleges)==9 and '資訊工程學系' in directory['colleges']['工學院']
+    assert len(sources)==3 and all(s['http_status']==200 and s['sha256'] and s['checked_at'] for s in sources)
+    assert all(row['locator'] and row['source_ids']==['academic-directory','organization-115'] for row in directory['evidence'])
+    assert '不得推定' in directory['evidence'][0]['scope']
+    script=BUNDLE.parents[3]/'scripts/build_tku_academic_units.py'
+    js=BUNDLE.parents[1]/'static/tku-academic-units.js'
+    before={path:path.read_bytes() for path in [BUNDLE/'academic_units.json',js]}
+    subprocess.run([sys.executable,str(script)],cwd=script.parents[1],check=True,capture_output=True)
+    assert {path:path.read_bytes() for path in before}==before
+    code="global.window={};\n"+js.read_text()+"""
+    const periods=[{academic_year:'115'},{academic_year:'2027-2028'}];
+    const years=window.UniWayTKU.applicationYears(periods);
+    if (JSON.stringify(years)!==JSON.stringify(['2027-2028','2028-2029','2029-2030'])) throw Error('years');
+    if (Object.keys(window.UniWayAcademicUnits['淡江大學'].colleges).length!==9) throw Error('colleges');
+    """
+    subprocess.run(['node','-e',code],check=True,capture_output=True,timeout=10)
+
+
+def test_acceptance_gap_audit_does_not_promote_missing_forms_or_department_metadata():
+    audit=json.loads((BUNDLE/'acceptance_gap_audit.json').read_text())
+    assert len(audit['field_gaps'])==67 and len(audit['documents'])==53
+    assert audit['official_not_announced_claims']==[]
+    assert all(row['evidence'] and row['status']!='verified' for row in audit['field_gaps'])
+    assert len(audit['access_rules'])==6 and all(r['source_url'].startswith('https://') and r['locator'] and r['quote'] and r['applicable_year'] and r['checked_at'] for r in audit['access_rules'])
+    candidate=audit['department_candidate']
+    assert candidate['detail_http_status']==502 and candidate['promoted_to_field'] is False
+    seikei=[d for d in audit['documents'] if 'Seikei' in d['school_name']]
+    assert all(d['form_access'] in ['contact_home_coordinator','own_document','provided_to_nominated_students'] for d in seikei)
+    assert not any(d['original_form_contents_verified'] for d in seikei)
+    uec=[d for d in audit['documents'] if 'Electro' in d['school_name']]
+    assert all(d['status']=='reference_only' and not d['current_host_notice_form_link_verified'] for d in uec)
+
+
 def test_document_catalog_scopes_four_mothers_even_for_same_japanese_partner(tmp_path, monkeypatch):
     from exchange_info.models import PartnerUniversity
     from exchange_info.ntu_student_view import fetch_ntu_partner_universities
@@ -216,7 +269,11 @@ def test_offline_api_registry_documents_search_and_life_profile(tmp_path,monkeyp
         "academic_year":"2027-2028","application_round":"日語組第二次甄選"})
     assert catalog.status_code==200 and catalog.json()["workflow_found"] is True
     assert Counter(i['phase'] for i in catalog.json()['items'])=={'校內申請':8,'外校申請':9,'行前':6}
-    assert all(i["needs_confirmation"] and not i["download_available"] for i in catalog.json()["items"])
+    assert all(i["needs_confirmation"] for i in catalog.json()["items"])
+    assert all(not i["download_available"] or i["official_form_verified"] for i in catalog.json()["items"])
+    # An unpublished workflow cannot manufacture a usable official form; the
+    # separately read public pledge remains accessible with its applicability warning.
+    assert sum(i["download_available"] for i in catalog.json()["items"]) == 1
 
 
 def test_documents_and_workflows_do_not_invent_official_layout_or_new_year():
@@ -254,6 +311,9 @@ def test_host_documents_preserve_conditions_versions_and_submission_phase(tmp_pa
     seikei=next(r for r in catalog if r['partner_id'].endswith('seikei'))
     conditional=next(d for d in seikei['documents'] if d['key']=='financial-statement')
     assert conditional['condition']=='僅獎學金申請人'
+    assert conditional['form_access']=='contact_home_coordinator'
+    assert next(d for d in seikei['documents'] if d['key']=='coe')['form_access']=='provided_to_nominated_students'
+    assert '非公開' in next(r for r in load_tku_records() if r.id.endswith('seikei')).fields['latest_forms'].reason
     assert any(d['key']=='coe' and '財力' in d['name'] for d in seikei['documents'])
     rit=next(r for r in catalog if r['partner_id'].endswith('ritsumeikan'))
     assert next(d for d in rit['documents'] if d['key']=='health')['phase']=='行前'

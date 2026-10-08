@@ -1,4 +1,8 @@
 """TKU profile values consumed by the shared registry."""
+import json
+from pathlib import Path
+
+_directory = json.loads((Path(__file__).parent / "official_data/tku/academic_units.json").read_text())
 PROFILE = {
     "id": "tku", "school_name": "淡江大學", "short_name": "淡江",
     "english_name": "Tamkang University",
@@ -9,6 +13,6 @@ PROFILE = {
     "support_level": "basic", "partner_count_hint": 4,
     "academic_score_minimum": 75,
     "student_card_signals": ("淡江大學", "TAMKANGUNIVERSITY", "TKU"),
-    # A verified college directory has not been captured; never reuse CGU/NTPU units.
-    "colleges": (),
+    # This is a registration directory, not a list of eligible exchange units.
+    "colleges": tuple(_directory["colleges"]),
 }
