@@ -22,6 +22,7 @@ from exchange_info.models import (
     PartnerResearchRecord,
 )
 from exchange_info.ncu_eligibility import SCORE_MINIMUMS, EXCLUDED_YEARS
+from exchange_info.ncu_source_coverage import source_content_status
 from exchange_info.ncu_student_view import (
     NCU_GUIDELINES_URL as NOTICE,
     NCU_INDEX_URL as INDEX,
@@ -35,6 +36,8 @@ CHECKED = "2026-10-08T00:00:00+00:00"
 HOME = "國立中央大學"
 ROUND = "第一梯次"
 FIELDS = {
+    "city": "城市與校區位置",
+    "transport": "抵達與日常交通",
     "quota": "116年度名額",
     "eligibility": "學制／校區／track範圍",
     "language": "強制與建議語言",
@@ -187,6 +190,8 @@ def build(output):
         gzip.decompress((SOURCES / "host-web-evidence.json.gz").read_bytes())
     )
     docs = {x["id"]: x for x in evidence + web_evidence}
+    for d in docs.values():
+        d["content_status"] = source_content_status(d)
     reviewed = load_json(SOURCES / "reviewed-host-records.json")
     from pypdf import PdfReader
 
@@ -721,6 +726,7 @@ def build(output):
         if review:
             dest = destinations[-1]
             for name_key, keys in [
+                ("transport_summary", ["transport"]),
                 ("cost_summary", ["tuition", "cost"]),
                 ("housing_summary", ["housing"]),
                 ("campus_life_summary", ["arrival", "courses", "study_period"]),
@@ -735,6 +741,10 @@ def build(output):
             dest["coverage_note"] = (
                 review["applicability"] + " 各欄缺口見逐欄查核，不表示完整核准。"
             )
+            # Only an explicitly reviewed scalar city may fill this display field.
+            # Multi-campus location prose is not converted to a guessed campus.
+            if review.get("city"):
+                dest["city"] = review["city"]
             dest["first_72_hours"].extend(
                 {
                     "title": "外校到校程序",
@@ -798,6 +808,14 @@ def build(output):
                 unresolved="核對2027–2028的官方方案、年度、文件及期限。"
                 if key not in ["home_documents", "home_deadline", "quota"]
                 else None,
+                reference_status="home_source_verified"
+                if key in ["home_documents", "home_deadline"]
+                else "extracted_reference"
+                if found
+                else "not_collected",
+                current_applicability_status="verified"
+                if key in ["home_documents", "home_deadline"]
+                else "unconfirmed",
             )
         if review:
             for key, value in review["fields"].items():
@@ -816,13 +834,17 @@ def build(output):
                         }
                     )
                 byfield[key].update(
-                    status="needs_confirmation"
-                    if value.get("unresolved")
-                    else "available",
+                    # All reviewed host records are reference material with the
+                    # 116 year/track still unapproved. An empty field-level gap
+                    # never overrides that record-level applicability limit.
+                    status="needs_confirmation",
+                    reference_status="reviewed_partial_reference",
+                    current_applicability_status="unconfirmed",
                     note=" ".join(value["points"]),
                     source_urls=list(dict.fromkeys(x["source_url"] for x in ev)),
                     original_evidence=ev,
-                    unresolved=value.get("unresolved"),
+                    unresolved=value.get("unresolved")
+                    or "參考內容已讀；整筆來源的116年度／校區／track適用性仍未核實。",
                     applicability=review["applicability"],
                 )
         byfield["home_documents"]["original_evidence"] = [
@@ -855,6 +877,7 @@ def build(output):
                         pages=len(d["pages"]),
                         text_quality_issues=d.get("text_quality_issues", []),
                         non_text_pages=d.get("non_text_pages", []),
+                        content_status=d["content_status"],
                         status="reviewed_partial_scope"
                         if review and d["id"] in review["source_ids"]
                         else "extracted_not_cycle_approved",
@@ -1188,8 +1211,24 @@ def build(output):
             "historical_rows": len(rows),
             "catalog_entries": len(partners),
             "source_documents_attempted": len(evidence),
-            "source_documents_extracted": sum(
-                bool(d.get("pages")) and not d.get("error") for d in evidence
+            "source_documents_downloaded": sum(
+                d["content_status"]["downloaded"] for d in evidence
+            ),
+            "source_documents_any_text": sum(
+                d["content_status"]["any_text"] for d in evidence
+            ),
+            "source_documents_all_pages_have_text": sum(
+                d["content_status"]["all_pages_have_text"] for d in evidence
+            ),
+            "source_documents_all_pages_read": sum(
+                d["content_status"]["all_pages_read"] for d in evidence
+            ),
+            "source_documents_visual_reviewed": sum(
+                d["content_status"]["visual_reviewed"] for d in evidence
+            ),
+            "source_documents_ocr_reviewed": sum(
+                d["content_status"]["ocr_status"] == "visually_verified"
+                for d in evidence
             ),
             "source_documents_with_errors": sum(bool(d.get("error")) for d in evidence),
             "source_documents_with_text_quality_gaps": sum(
@@ -1206,6 +1245,10 @@ def build(output):
                 bool(d.get("error")) for d in web_evidence
             ),
             "source_mapped_entries": sum(bool(x["read_sources"]) for x in audit),
+            "entries_with_any_host_text": sum(
+                any(d["content_status"]["any_text"] for d in x["read_sources"])
+                for x in audit
+            ),
             "reviewed_host_records": len(reviewed),
             "host_full_116_verification_count": 0,
             "pending_workflows": len(workflows),

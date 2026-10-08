@@ -33,6 +33,16 @@ def test_ncu_content_source_pages_home_host_and_life(page, live_server, width):
     if width < 700:
         page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
+    page.locator("#school-detail-view .school-data-completeness > summary").click()
+    expect(page.locator("#school-data-completeness-body")).to_contain_text(
+        "2 / 17 項本期已核實"
+    )
+    expect(page.locator("#school-data-completeness-body")).to_contain_text(
+        "城市與校區位置"
+    )
+    expect(page.locator("#school-data-completeness-body")).to_contain_text(
+        "抵達與日常交通"
+    )
     expect(
         page.locator("#school-detail-view .partner-student-summary")
     ).to_contain_text("2025–26")
@@ -161,9 +171,13 @@ def test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui(
     page.locator("#detail-tab-life").click()
     expect(page.locator("#detail-life")).to_contain_text(life_text)
     page.locator("#detail-life .life-official-guide > summary").click()
-    expect(
-        page.locator("#destination-official-content li").filter(has_text=life_text).first
-    ).to_be_visible()
+    insurance = (
+        page.locator("#destination-official-content li")
+        .filter(has_text=life_text)
+        .first
+    )
+    expect(insurance).to_be_visible()
+    insurance.scroll_into_view_if_needed()
     expect(page.locator("#detail-life")).to_contain_text(
         "4天" if school == "圖爾庫" else "24working hours"
     )
@@ -171,7 +185,7 @@ def test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui(
     out.mkdir(parents=True, exist_ok=True)
     page.screenshot(
         path=str(out / f"ncu-{'turku' if school == '圖爾庫' else 'tuaf'}-390.png"),
-        full_page=True,
+        full_page=False,
     )
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors

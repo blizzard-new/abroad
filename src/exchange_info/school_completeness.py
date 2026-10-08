@@ -64,9 +64,9 @@ def build_school_completeness(
             rows = [SchoolCompletenessItem.model_validate({k:v for k,v in item.items() if k in {"key","label","status","note","source_urls"}}) for item in audit["fields"].values()]
             return SchoolDataCompleteness(school_name=partner.school_name, country=partner.country, home_university=home_university,
                 items=rows, available_count=sum(r.status == "available" for r in rows), total_count=len(rows),
-                score=round(sum({"available":1,"partial":.5,"needs_confirmation":.25,"missing":0}[r.status] for r in rows)/len(rows),3),
+                score=round(sum(r.status == "available" for r in rows)/len(rows),3),
                 priority_gaps=[r.label for r in rows if r.status != "available"],
-                disclaimer="home與host逐欄分開；取得原文不代表116適用性已確認。尚未取得不表示官方未公告。")
+                disclaimer="計數只含116本期已核實欄位；已讀參考不計入。home與host分開，取得原文不代表年度／校區／track適用性已確認，未取得不表示官方未公告。")
     destination = destination or DestinationProfile(school_name=partner.school_name)
     urls = [source.source_url for source in destination.sources]
     items: list[SchoolCompletenessItem] = []

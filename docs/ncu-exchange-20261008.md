@@ -13,15 +13,19 @@
 | 115 PDF原始列 | 216 |
 | 平台目錄／pending流程／生活資料項 | 各214 |
 | 公開Drive遞迴資料夾 | 173 |
-| 公開附件下載／抽取紀錄 | 459，下載錯誤0；36份含100個無文字頁、2份字型缺字 |
-| 另查公開host／home網頁 | 78筆公開頁／文件讀取紀錄（含一筆browser摘錄） |
-| 有相關host原文的目錄項 | 194 |
-| 人工整理的host紀錄 | 18（全部partial） |
-| 全部15欄完成116當期核准 | **0** |
+| 公開附件下載成功 | 459，下載錯誤0 |
+| 至少一頁有可讀文字／全頁有文字 | 454／423；文字抽取不等於人工已讀 |
+| 完全無文字的附件 | 5份，33頁（URCA、Bolton、UOS、重慶、HUST） |
+| 有明確SHA與逐頁紀錄的全文已讀／視覺文件 | Drive附件目前0／0；UOS11頁正在核對 |
+| 部分或全部無文字頁／字型問題 | 36份含100頁、2份字型缺字 |
+| 另查公開host／home網頁 | 95筆公開頁／文件讀取紀錄（含一筆browser摘錄） |
+| 有相關host原文的目錄項 | 196（195項有文字） |
+| 人工整理的host紀錄 | 20（全部partial） |
+| 全部17欄完成116當期核准 | **0** |
 
 附件取得／文字抽取不是逐欄當期查核完成。其他資料仍可繼續查；未查完的欄位不稱「官方未公告」。
 
-[逐校逐欄CSV](../src/exchange_info/official_data/ncu/field-coverage.csv)與[完整證據／缺口JSON](../src/exchange_info/official_data/ncu/field-audit.json)包含15欄：名額、學制／校區／track、語言、home文件、host文件、home截止、host截止、交換期間、課程、學費、生活費、住宿、保險、簽證、到校。JSON保留來源URL、PDF頁碼、原文、適用年份及查核日期。CSV與JSON不是全綠即完成的數字展示。
+[逐校逐欄CSV](../src/exchange_info/official_data/ncu/field-coverage.csv)與[完整證據／缺口JSON](../src/exchange_info/official_data/ncu/field-audit.json)包含17欄：城市／校區、抵達／日常交通、名額、學制／校區／track、語言、home文件、host文件、home截止、host截止、交換期間、課程、學費、生活費、住宿、保險、簽證、到校。JSON保留來源URL、PDF頁碼、原文、適用年份及查核日期。CSV與JSON不是全綠即完成的數字展示。
 
 ## 已確認母校規則
 
@@ -33,7 +37,7 @@
 
 首頁仍下載forms-2022.pdf：個資同意第1頁、家長同意第2頁、109年度範例第3頁。只使用現行表格連結，不將範例舊日期當116截止。行前兩週程序、回國一週程序、WORD心得800–1500字及至少四照片接入流程。課程兩門且一門專業課與學則兩門或六學分分別列出，採認由系所審定。
 
-## 十八筆人工外校整理與具體缺口
+## 二十筆人工外校整理與具體缺口
 
 - Manitoba：AY2027–28表（2026/9更新），提名／申請梯次分開、UG／grad文件不同、closed faculties與Computer Science限制、住宿開放、免學費及額外費用、保險及行前。精確校曆官方表稱未定；英文門檻專頁、當期房價／housing截止、個人移民文件仍待查。
 - 信州：AY2027–28、Fall2027提名／申請／暫定到校日，Sheet清單、COE另系統、財力、課程、住宿、預算。英日版本暑假年份及coop保險金額互相矛盾；Spring2028期限、最新Sheet／COE包未取得。不可用Spring2027推算2028。
@@ -55,9 +59,12 @@
 - 西交利物浦：現行incoming與明列臺灣學生住宿頁已讀。SIP／太倉校區、10–25學分與40學分備選、課程限制及住宿最低租期分開；推薦邀請後表格未公開取得，home歷史列臺灣且不採認學分仍需116系所核對。不拿年租價當一學期，宿舍押金、水電與退約逐項保留。
 - TUAF：現連2026–27新版40頁手冊（公開Google Drive確認下載）、2026 factsheet、2024–25表與2022範例均保留；申請／提名／acceptance及迎新晚於課始矛盾不修造。IELTS5.5是program learning outcome，非交換門檻；八項host文件全部待當期確認。現連DOCX是已填學生範例，只保存原件SHA與必要欄位摘錄，未複製個資，沒有宣稱空白當期表已取得。已視覺核对factsheet第2頁：Administration $70到校付、Visa $95／6月及$135／12月，文字抽取錯序仍保留。新版保險60／年不是每月、越南health insurance／home旅保差異、到校24 working hours和延簽提前30天接入生活及流程；116臺灣簽證政府文件與接收包仍需查。
 
+- 太歷國立大學：現行OIAL下載入口明載2024/9/24生效，三份SF06／08／11 DOCX全讀；PHS六正本、指印、成績與出生認證、相片及保險均保留一般外國生適用限制。exchange入口正文不足，不把一般入學表套成中央host必繳。菲律賓政府SSP／9F、CGAF、條件附件、2024線上公告與ECC已讀；費表明載2014、Children表URL2025但Effective2024，年例／舊版與當期分開。
+- 胡志明市科師大：官方現稱Technology and Engineering，保留115原列Education名稱並核對身份。inbound／outbound雙欄程序已讀，CV／英文面試、faculty審查、入境住宿支援及到校生活安排均列參考；國際處索引多為outgoing，不能移植其截止。沒有完整incoming包，host文件清單仍空。
+
 ## 尚未完成的來源工作
 
-目前196項尚無初步人工欄位整理；已整理18項也全部partial，**214項沒有任何一項完成116當期全欄核准**。不能以中央提名步驟當host文件清單完成。194項有附件／網頁不表示194項全部15欄已核對。20項仍無可用相關host原文，具體項目见下列清單及CSV「已讀host來源數=0」；多數仍可繼續做官方host來源搜尋／身份與track核對，**尚非證實登入限定或官方未公告**。已取得的大陸international資料若排除Chinese nationals，另列臺灣track缺口，不能硬配。
+目前194項尚無初步人工欄位整理；已整理20項也全部partial，**214項沒有任何一項完成116當期全欄核准**。不能以中央提名步驟當host文件清單完成。196項有附件／網頁不表示196項全部17欄已核對。18項仍無相關host來源映射；另1項只有影像、尚無可讀文字，具體項目见下列清單及CSV「已讀host來源數=0」；多數仍可繼續做官方host來源搜尋／身份與track核對，**尚非證實登入限定或官方未公告**。已取得的大陸international資料若排除Chinese nationals，另列臺灣track缺口，不能硬配。
 
 本地HTTP讀取限制：Western Sydney兩頁406（browser其中一頁讀取成功）、SDU表格入口500（申請頁重讀200）、中央student portal503（browser先前502）、ALKU Form401／FAQ timeout、TUAF Form401。不把這些錯誤改寫成登入限定。南洋理工brochure頁200但只回導航文字，保留而不稱完整brochure已讀。
 
@@ -89,7 +96,7 @@ Chromium中央／臺大10項通過，實際檢查390與1440寬的摘要、原文
 
 來源字型缺口：上海財經26–27手冊第1、8頁及上海大學申請指南第2頁含NUL，未補造缺字；36份共100個無抽取文字頁包括封面／圖片，尚未全部視覺核對。下載成功不代表全文內容核對完成。
 
-## 尚無可用相關host原文的20項
+## 尚無相關host來源映射的18項
 
 - ncu-173：大連理工大學 Dalian University of Technology（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
 - ncu-174：天津大學 Tianjin University（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
@@ -103,12 +110,10 @@ Chromium中央／臺大10項通過，實際檢查390與1440寬的摘要、原文
 - ncu-194：鄭州大學 Zhengzhou University（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
 - ncu-195：貴州大學 Guizhou University（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
 - ncu-196：濟南大學 University of Jinan（中國）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-199：太歷國立大學 Tarlac State University（菲律賓）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
 - ncu-206：沃瑪德瓦大學 Universitas Warmadewa（印尼）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
 - ncu-208：日惹國立大學 Universitas Negeri Yogyakarta（印尼）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
 - ncu-209：迪波內戈羅大學 Universitas Diponegoro（印尼）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
 - ncu-211：蘇門答臘理工學院 Institut Teknologi Sumatera (ITERA)（印尼）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
-- ncu-214：胡志明市科技師範大學 Ho Chi Min City University of Technology and Education（越南）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
 - ncu-215：胡志明市國際大學 International University, Viet Nam National University（越南）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
 - ncu-216：胡志明市自然科學大學 VNUHCM-University of Science, Ho Chi Minh City (HCMUS)（越南）。已查來源與下一步見field-audit；未完成官方host搜尋／身份核對，不聲稱官方未公告。
 
@@ -117,3 +122,13 @@ Chromium中央／臺大10項通過，實際檢查390與1440寬的摘要、原文
 [Turku評量第1頁](ncu-source-evidence/language-assessment.png)、[第2頁](ncu-source-evidence/language-assessment-p2.png)為DOC轉檔頁，原件無固定PDF頁碼。[TUAF factsheet原PDF第2頁](ncu-source-evidence/ncu-tuaf-2026-factsheet-p2.png)顯示費用分類。視覺紀錄保存原件與截圖SHA；原件變更即不套舊視覺確認。已填範例摘錄同樣依SHA確認，原件變更／摘錄遺失即保留空頁與具體錯誤，不輸出學生填答。
 
 本輪Chromium新增Turku／TUAF兩項手機檢查通過，驗證實際host文件、保險、住宿期限、24 working hours及範例摘錄提示。既有390寬測試首次因啟動遮罩攔截選單點擊逾時失敗，未到中央內容；獨立重跑同項通過（40.78s），原先失敗仍記錄。首次共4 passed、1 failed，重跑1 passed；沒有修改啟動遮罩或測試等待條件掩蓋問題。
+
+## 2865413複核後修正
+
+曾以單欄unresolved為空將釜慶courses、Strasbourg arrival標available，忽略整筆年份／track限制。現在所有host參考欄均needs_confirmation，另記reference_status與current_applicability_status；兩個home欄才計本期已核實，NCU分數只算2/17，不給待確認加權。前端改顯示「項本期已核實」，其他學校用「項已提供資料」，不再寫「資料完整」。城市與交通納入17欄，沒有官方核實內容仍保留未知與具體缺口。
+
+下載、any_text、all_pages_have_text、all_pages_read、visual_reviewed和OCR狀態分開。all_pages_read／visual只計原件SHA相符的明確逐頁紀錄，不能以pages陣列存在或可抽取文字推定人工已讀。五份全影像與部分影像均有回歸測試。來源UI顯示文字／視覺頁數與缺口，不將11個空段落稱已讀原文。
+
+補做Turku／TUAF生活指南展開及可見文字檢查，2 passed（66.50s）。曾因Turku全文長頁截圖30秒逾時失敗，內容断言已過；改在已可見的保險文字位置截取實際viewport，重跑通過，未修改內容或隱藏原失敗。
+
+完整度、來源計量及城市／交通修正後，NCU與school_completeness兩個module為44 passed（43.99s）；390px Chromium實際內容檢查1 passed（102.55s），另驗證2/17本期已核實與城市／交通缺口。OpenAPI快照、JS syntax及git diff --check通過。這些新檢查不替代前述基底失敗紀錄或全部CI。

@@ -73,7 +73,7 @@ def test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_
     for profile in profiles:
         result = build_school_completeness(
             PartnerUniversity(program_type="交換", school_name=profile.school_name, source_url=SOURCE), profile, None)
-        expected_fields = 15 if profile.home_university == "國立中央大學" else 10
+        expected_fields = 17 if profile.home_university == "國立中央大學" else 10
         assert 0 <= result.score <= 1 and result.total_count == len(result.items) == expected_fields
         if profile.home_university == "國立中央大學":
             assert by_key(result)["quota"].status == "needs_confirmation"

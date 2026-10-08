@@ -226,7 +226,7 @@ def test_api_reads_ncu_offline_and_exposes_page_evidence_and_life(
     params = {"home_school": "NCU", "school": p["school_name"]}
     audit = client.get("/partner-source-audit", params=params)
     assert audit.status_code == 200
-    assert len(audit.json()["fields"]) == 15
+    assert len(audit.json()["fields"]) == 17
     housing = audit.json()["fields"]["housing"]
     assert (
         housing["original_evidence"][0]["page"] == 2
@@ -401,6 +401,78 @@ def test_unverified_ncu_costs_cannot_pass_a_current_budget():
     assert budget_fit(estimates, 100000)["status"] == "unknown"
 
 
+def test_record_year_and_track_limits_override_empty_field_gaps_and_scores():
+    from exchange_info.school_completeness import build_school_completeness
+
+    records = json.loads((BUNDLE / "field-audit.json").read_text())
+    for record in records:
+        verified = {
+            key
+            for key, field in record["fields"].items()
+            if field["status"] == "available"
+        }
+        assert verified == {"home_documents", "home_deadline"}
+        assert {"city", "transport"} <= record["fields"].keys()
+    for name, field_key in (("Pukyong", "courses"), ("Strasbourg", "arrival")):
+        partner = next(
+            p for p in fetch_ncu_partner_universities() if name in p.school_name
+        )
+        audit = ncu_field_audit(partner.school_name)
+        field = audit["fields"][field_key]
+        assert field["status"] == "needs_confirmation"
+        assert field["current_applicability_status"] == "unconfirmed"
+        assert field["reference_status"] == "reviewed_partial_reference"
+        result = build_school_completeness(
+            partner, None, None, home_university=NCU.school_name
+        )
+        assert result.available_count == 2 and result.total_count == 17
+        assert result.score == round(2 / 17, 3)
+
+
+@pytest.mark.parametrize(
+    "texts,any_text,all_text",
+    [
+        (["", ""], False, False),
+        (["body", ""], True, False),
+        (["body", "body"], True, True),
+    ],
+)
+def test_downloaded_pdf_pages_are_not_text_or_human_reading(texts, any_text, all_text):
+    from exchange_info.ncu_source_coverage import source_content_status
+
+    document = {
+        "status": 200,
+        "sha256": "original",
+        "pages": [{"page": i + 1, "text": text} for i, text in enumerate(texts)],
+    }
+    result = source_content_status(document)
+    assert result["downloaded"] and result["any_text"] == any_text
+    assert result["all_pages_have_text"] == all_text
+    assert not result["all_pages_read"] and not result["visual_reviewed"]
+    document["visual_review"] = {
+        "source_sha256": "changed",
+        "pdf_pages_reviewed": [1, 2],
+    }
+    assert not source_content_status(document)["visual_reviewed"]
+    document["visual_review"]["source_sha256"] = "original"
+    verified = source_content_status(document)
+    assert verified["all_pages_read"] and verified["visual_reviewed_page_count"] == 2
+    assert verified["any_text"] == any_text
+
+
+def test_catalog_content_metrics_exclude_all_image_documents_and_never_claim_full_reading():
+    metrics = json.loads((BUNDLE / "catalog-completeness.json").read_text())
+    assert metrics["source_documents_downloaded"] == 459
+    assert metrics["source_documents_any_text"] == 454
+    assert metrics["source_documents_all_pages_have_text"] == 423
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    drive = [d for d in raw if not d["id"].startswith(("host-", "home-"))]
+    images = [d for d in drive if not d["content_status"]["any_text"]]
+    assert len(images) == 5 and sum(len(d["pages"]) for d in images) == 33
+    uos = next(d for d in drive if d["id"] == "1YTU2HTNgu80it9DHNHy-2OVZSFu7tEqd")
+    assert len(uos["pages"]) == 11 and not uos["content_status"]["any_text"]
+
+
 def test_bundle_rebuilds_exactly_from_tracked_source_data(tmp_path):
     subprocess.run(
         [sys.executable, "scripts/build_ncu_catalog.py", "--output-dir", str(tmp_path)],
@@ -413,7 +485,7 @@ def test_bundle_rebuilds_exactly_from_tracked_source_data(tmp_path):
         if item.is_file():
             assert (tmp_path / item.name).read_bytes() == item.read_bytes(), item.name
     audit = json.loads((tmp_path / "field-audit.json").read_text())
-    assert len(audit) == 214 and all(len(x["fields"]) == 15 for x in audit)
+    assert len(audit) == 214 and all(len(x["fields"]) == 17 for x in audit)
     sources = json.loads(
         gzip.decompress((tmp_path / "source-evidence.json.gz").read_bytes())
     )
