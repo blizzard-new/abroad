@@ -24,18 +24,18 @@
     <link rel="stylesheet" href="/static/travel.css?v=20260927-home-1" />
     <link rel="stylesheet" href="/static/motion.css?v=20260926-motion-1" />
     <link rel="stylesheet" href="/static/journey.css?v=20260929-photos-1" />
-    <link rel="stylesheet" href="/static/journey-canvas.css?v=20260929-home-color-1" />
+    <link rel="stylesheet" href="/static/journey-canvas.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/typography.css?v=20260929-fonts-2" />
     <link rel="stylesheet" href="/static/community-reader.css?v=20260930-discussion-2b" />
     <link rel="stylesheet" href="/static/community-feed.css?v=20260930-forum-1" />
     <link rel="stylesheet" href="/static/glass-theme.css?v=20261001-ui-refinements-1" />
-    <link rel="stylesheet" href="/static/planning-ux.css?v=20261007-solid-1" />
+    <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/application-workspace.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/document-workbench.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/destination-tips.css?v=20261004-tips-2" />
     <link rel="stylesheet" href="/static/brand.css?v=20261004-logo-2" />
-    <link rel="stylesheet" href="/static/feedback.css?v=20261008-3" />
+    <link rel="stylesheet" href="/static/feedback.css?v=20261008-4" />
     <link rel="stylesheet" href="/static/responsive.css?v=20261007-responsive-1" />
     <noscript><style>.boot-splash { display: none !important; }</style></noscript>
   </head>
@@ -399,6 +399,7 @@
                 <span class="section-kicker">用戶評價</span>
                 <h1 id="feedback-title">說說你的想法</h1>
                 <p>UniWay 還在長大。哪裡好用、哪裡卡住、想要什麼新功能，都可以寫在這裡，我們會一則一則看。</p>
+                <p class="feedback-invite" id="feedback-invite"><strong>成功申請過交換嗎？</strong>尤其是進修部、碩士在職專班，或東歐這類比較少人分享的地區，歡迎寫下哪一年、哪所學校、怎麼申請。若你留下聯絡方式，我們會先問過你同意，才會整理成不具名的經驗放進網站。</p>
               </div>
               <span class="uw-mascot feedback-mascot" data-play data-tilt aria-hidden="true">
                 <span class="uw-mascot-shadow"></span>
@@ -721,7 +722,8 @@
             <details class="journey-filter-drawer" open>
               <summary><i data-lucide="sliders-horizontal" aria-hidden="true"></i>篩選<i data-lucide="chevron-down" aria-hidden="true"></i></summary>
             <div class="filter-panel" aria-label="合作學校篩選條件">
-              <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">115 學年度開放</option><option value="agreement_only">合作備查／本期未公告</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
+              <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">本期開放</option><option value="agreement_only">合作備查／本期未公告</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
+              <label for="region-filter"><span>地區</span><select id="region-filter"></select></label>
               <label for="country-filter"><span>國家</span><select id="country-filter"></select></label>
               <label for="college-filter"><span>學院</span><select id="college-filter"></select></label>
               <label for="degree-filter"><span>學制</span><select id="degree-filter"></select></label>
@@ -1174,6 +1176,7 @@
     <dialog id="discussion-reader" aria-labelledby="discussion-reader-title"><header class="discussion-reader-header"><h2 id="discussion-reader-title">留學討論</h2><button id="discussion-reader-close" type="button" class="secondary-button" aria-label="返回文章列表">返回列表</button></header><input id="discussion-share-link" aria-label="文章分享連結" readonly hidden /><div id="discussion-reader-body"></div></dialog>
     <dialog id="discussion-moderation" aria-labelledby="discussion-moderation-title"><header class="discussion-reader-header"><h2 id="discussion-moderation-title">討論管理</h2><button id="discussion-moderation-close" type="button" class="secondary-button">返回討論</button></header><div class="discussion-article"><label>內容狀態<select id="discussion-moderation-filter"><option value="pending">待審核</option><option value="approved">已公開</option><option value="hidden">已隱藏</option></select></label><div id="discussion-moderation-body"></div></div></dialog>
     <script src="/static/public-content-zh.js?v=20261007-requests-1" defer></script>
+    <script src="/static/regions.js?v=20261008-regions-1" defer></script>
     <script src="/static/discovery-core.js?v=20260924-selection-1" defer></script>
     <script src="/static/discovery-ui.js?v=20261004-digest-2" defer></script>
     <script src="/static/navigation.js?v=20261001-planning-workspace-1" defer></script>
@@ -1191,6 +1194,6 @@
     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
     <script src="/static/analytics.js?v=20261003-analytics-1" defer></script>
     <script src="/static/feedback.js?v=20261008-2" defer></script>
-    <script src="/static/app.js?v=20261008-feedback-1" defer></script>
+    <script src="/static/app.js?v=20261008-regions-1" defer></script>
   </body>
 </html>

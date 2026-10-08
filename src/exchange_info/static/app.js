@@ -6,6 +6,7 @@ const state = {
   partnerDataLoading: false,
   partnerDataError: false,
   availability: "",
+  region: "",
   country: "",
   college: "",
   degree: "",
@@ -3798,7 +3799,8 @@ function partnerAvailabilityMeta(item) {
     return {
       status,
       shortLabel: "合作備查／本期未公告",
-      cardLabel: "合作備查／本期未公告",
+      cardLabel: "已簽約・本期沒開放名額",
+      hint: "已簽有交換合約，只是這一期沒有開放名額",
       matchLabel: "本期名額待確認",
       reason: "交換合作關係備查",
       blocked: true,
@@ -3806,8 +3808,8 @@ function partnerAvailabilityMeta(item) {
   }
   return {
     status: "open",
-    shortLabel: "115 學年度開放",
-    cardLabel: "115 學年度開放",
+    shortLabel: "本期開放",
+    cardLabel: "本期開放",
     matchLabel: "本期開放",
     reason: "中央當期名單已列",
     blocked: false,
@@ -3819,7 +3821,7 @@ function renderPartnerAvailabilityNotice(item) {
   if (!availability.blocked) return "";
   const fallback = availability.status === "departmental_reference"
     ? "中央當期名單未列，請先向所屬學院或國際處確認是否開放。"
-    : "目前未列入當期交換名額表。";
+    : "你的學校和這所學校簽有交換合約，只是這一期的交換名額表沒有列它，所以現在不能申請。之後若開放，會出現在學校國際處的名額表；開放前請先看國際處公告。";
   return `
     <div class="partner-availability-notice ${escapeHtml(availability.status)}" role="note">
       <i data-lucide="badge-alert" aria-hidden="true"></i>
@@ -7045,7 +7047,7 @@ let partnerMapLoadPromise = null;
 let partnerMapLoadFailed = false;
 let partnerMapGeneration = 0;
 let partnerUrlSearch = "";
-const PARTNER_QUERY_KEYS = { partnerQuery: "q", country: "country", availability: "availability", college: "college", degree: "degree" };
+const PARTNER_QUERY_KEYS = { partnerQuery: "q", region: "region", country: "country", availability: "availability", college: "college", degree: "degree" };
 
 function readPartnerUrl() {
   const previousFilters = JSON.stringify(Object.keys(PARTNER_QUERY_KEYS).map((key) => state[key]));
@@ -7168,15 +7170,20 @@ function syncPartnerView() {
 
 function renderPartnerFilters() {
   const partners = state.dashboard.partner_universities;
-  const countries = unique(partners.map((item) => item.country));
+  const regions = window.UniWayRegions;
+  const allCountries = unique(partners.map((item) => item.country));
+  // A region that does not exist (a made-up address) is dropped, so it cannot hide every school.
+  if (state.region && !regions.isRegion(state.region)) state.region = "";
+  const countries = state.region ? allCountries.filter((country) => regions.inRegion(country, state.region)) : allCountries;
   const colleges = homeCollegeOptions();
   state.college = homeCollegeValue(state.college);
   const degrees = unique(partners.flatMap((item) => splitOptions(item.degree_levels)));
-  fillSelect("#country-filter", countries, "全部國家", state.country);
+  fillRegionSelect("#region-filter", allCountries, state.region);
+  fillCountrySelect("#country-filter", countries, state.country);
   fillSelect("#college-filter", colleges, "全部學院", state.college);
   fillSelect("#degree-filter", degrees, "全部學制", state.degree);
   // Empty URL filters are explicit resets, not a request to keep the old select value.
-  ["country", "college", "degree", "availability"].forEach((key) => {
+  ["region", "country", "college", "degree", "availability"].forEach((key) => {
     $(`#${key}-filter`).value = state[key];
   });
 }
@@ -7187,11 +7194,12 @@ function filteredPartners() {
   const partners = state.dashboard.partner_universities.filter((item) => {
     const destination = destinationProfileForSchool(item.school_name);
     const text = normalize(
-      `${Object.values(item).join(" ")} ${item.location?.city || ""} ${JSON.stringify(item.student_summary_zh || {})} ${Object.values(destination || {}).join(" ")}`
+      `${Object.values(item).join(" ")} ${item.location?.city || ""} ${JSON.stringify(item.student_summary_zh || {})} ${Object.values(destination || {}).join(" ")} ${window.UniWayRegions.searchText(item.country)}`
     );
     return (
       (!query || text.includes(query)) &&
       (!state.availability || (item.availability_status || "open") === state.availability) &&
+      window.UniWayRegions.inRegion(item.country, state.region) &&
       (!state.country || item.country === state.country) &&
       (!state.college || collegeMatches(item.colleges, state.college)) &&
       (!state.degree || degreeMatches(item.degree_levels, state.degree)) && discoveryCriteriaMatch(item)
@@ -7285,7 +7293,7 @@ function renderPartnerTableRow(item) {
           </div>
         </div>
       </td>
-      <td>${escapeHtml(item.program_type || "--")}${availability.blocked ? `<br><span class="coverage-chip empty">${escapeHtml(availability.shortLabel)}</span>` : ""}</td>
+      <td>${escapeHtml(item.program_type || "--")}${availability.blocked ? `<br><span class="coverage-chip empty">${escapeHtml(availability.shortLabel)}</span>${availability.hint ? `<small class="availability-hint">${escapeHtml(availability.hint)}</small>` : ""}` : ""}</td>
       <td>${escapeHtml([item.colleges, item.degree_levels].filter(Boolean).join("／") || "--")}</td>
       <td>${escapeHtml([item.quota, period, deadline.compact].filter(Boolean).join("／") || "--")}</td>
       <td class="condition-cell"><details class="partner-condition-disclosure"><summary>資格與語言</summary>${renderStudentPointList(partnerSummaryPoints(item, "eligibility_points"), { limit: 3, compact: true })}</details></td>
@@ -11754,6 +11762,34 @@ function fillSelect(selector, values, placeholder, selected = "") {
   if ([...element.options].some((option) => option.value === current)) element.value = current;
 }
 
+// The region drop-down: "歐洲（全部）" and its parts, "亞洲（全部）" and its parts, and so on, only for regions that have a school.
+function fillRegionSelect(selector, countries, selected = "") {
+  const element = $(selector);
+  const groups = window.UniWayRegions.regionGroups(countries);
+  const option = (entry) => `<option value="${escapeHtml(entry.id)}">${escapeHtml(entry.label)}</option>`;
+  element.innerHTML = [
+    '<option value="">全部地區</option>',
+    ...groups.map((group) => group.options.length === 1 && group.options[0].label === group.label
+      ? option(group.options[0])
+      : `<optgroup label="${escapeHtml(group.label)}">${group.options.map(option).join("")}</optgroup>`),
+  ].join("");
+  if ([...element.options].some((entry) => entry.value === selected)) element.value = selected;
+}
+
+// The country drop-down, split by region so "波蘭" is found under 東歐／中歐 instead of among 40 names in no obvious order.
+function fillCountrySelect(selector, countries, selected = "") {
+  const element = $(selector);
+  const groups = window.UniWayRegions.countryGroups(countries);
+  const option = (country) => `<option value="${escapeHtml(country)}">${escapeHtml(country)}</option>`;
+  element.innerHTML = [
+    '<option value="">全部國家</option>',
+    ...(groups.length === 1
+      ? groups[0].countries.map(option)
+      : groups.map((group) => `<optgroup label="${escapeHtml(group.label)}">${group.countries.map(option).join("")}</optgroup>`)),
+  ].join("");
+  if ([...element.options].some((entry) => entry.value === selected)) element.value = selected;
+}
+
 function splitOptions(value) {
   return String(value || "")
     .split(/[、,，/／;；]+/)
@@ -12220,10 +12256,15 @@ function bindEvents() {
     renderPartnerTable();
   });
 
-  ["availability", "country", "college", "degree"].forEach((name) => {
+  ["availability", "region", "country", "college", "degree"].forEach((name) => {
     $(`#${name}-filter`).addEventListener("change", (event) => {
       state[name] = event.target.value;
       state.partnerLimit = partnerPageSize();
+      // A new region changes which countries can be picked; a country outside it is let go.
+      if (name === "region") {
+        if (state.country && !window.UniWayRegions.inRegion(state.country, state.region)) state.country = "";
+        renderPartnerFilters();
+      }
       renderPartnerTable();
     });
   });
@@ -12234,6 +12275,7 @@ function bindEvents() {
     $("#discovery-criteria-form").reset();
     renderDiscoveryCriteria();
     state.availability = "";
+    state.region = "";
     state.country = "";
     state.college = "";
     state.degree = "";
