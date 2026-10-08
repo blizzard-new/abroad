@@ -466,7 +466,10 @@ def test_catalog_content_metrics_exclude_all_image_documents_and_never_claim_ful
     assert metrics["source_documents_any_text"] == 454
     assert metrics["source_documents_all_pages_have_text"] == 423
     raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
-    drive = [d for d in raw if not d["id"].startswith(("host-", "home-"))]
+    drive_ids = {d["id"] for d in json.loads(gzip.decompress(
+        (ROOT / "sources/ncu/2026-10-08/drive-evidence.json.gz").read_bytes()
+    ))}
+    drive = [d for d in raw if d["id"] in drive_ids]
     images = [d for d in drive if not d["content_status"]["any_text"]]
     assert len(images) == 5 and sum(len(d["pages"]) for d in images) == 33
     uos = next(d for d in drive if d["id"] == "1YTU2HTNgu80it9DHNHy-2OVZSFu7tEqd")
@@ -489,8 +492,116 @@ def test_bundle_rebuilds_exactly_from_tracked_source_data(tmp_path):
     sources = json.loads(
         gzip.decompress((tmp_path / "source-evidence.json.gz").read_bytes())
     )
-    drive = [x for x in sources if not x["id"].startswith(("host-", "home-"))]
+    drive_ids = {d["id"] for d in json.loads(gzip.decompress(
+        (ROOT / "sources/ncu/2026-10-08/drive-evidence.json.gz").read_bytes()
+    ))}
+    drive = [x for x in sources if x["id"] in drive_ids]
     assert len(drive) == 459 and not any(x.get("error") for x in drive)
+
+
+def test_visual_review_preserves_native_empty_pages_and_expires_with_sha():
+    from exchange_info.ncu_source_coverage import attach_visual_review, source_content_status
+
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    old = next(d for d in raw if d["id"] == "1YTU2HTNgu80it9DHNHy-2OVZSFu7tEqd")
+    assert all(not p["text"] for p in old["pages"])
+    assert old["content_status"]["all_pages_read"]
+    assert old["content_status"]["visual_reviewed_page_count"] == 11
+    assert old["content_status"]["ocr_status"] == "performed_selected_passages_verified"
+    assert "2023" in old["page_transcriptions"][2]["text"]
+    old["sha256"] = "changed-original"
+    attach_visual_review(old, old["visual_review"])
+    assert not old.get("page_transcriptions") and not old.get("visual_review")
+    assert source_content_status(old)["ocr_status"] == "not_performed"
+    assert not source_content_status(old)["all_pages_read"]
+
+
+def test_tuaf_visual_sidecar_reaches_offline_audit_and_rejects_changed_sha():
+    from exchange_info.ncu_source_coverage import attach_visual_review, source_content_status
+
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    source = next(d for d in raw if d["id"] == "host-tuaf-2026")
+    sidecar = json.loads((ROOT / "sources/ncu/2026-10-08/host-tuaf-2026-visual-review.json").read_text())
+    assert source["visual_review"] == sidecar
+    assert sidecar["pdf_page"] == 2 and source["content_status"]["page_count"] == 2
+    assert source["content_status"]["visual_reviewed_page_count"] == 1
+    assert source["content_status"]["visual_reviewed"]
+    partner = next(p for p in fetch_ncu_partner_universities() if "太原農林" in p.school_name)
+    audit = ncu_field_audit(partner.school_name)
+    row = next(s for s in audit["read_sources"] if s["id"] == "host-tuaf-2026")
+    assert row["content_status"]["visual_reviewed_page_count"] == 1
+    source["sha256"] = "different-original"
+    attach_visual_review(source, sidecar)
+    assert not source_content_status(source)["visual_reviewed"]
+    assert not source.get("visual_review")
+    source["sha256"] = sidecar["source_sha256"]
+    attach_visual_review(source, {**sidecar, "pdf_page": 99})
+    assert not source_content_status(source)["visual_reviewed"]
+
+
+def test_uos_current_calendar_conflicts_and_post_admission_files_stay_scoped(tmp_path):
+    partner = next(p for p in fetch_ncu_partner_universities() if "University of Seoul" in p.school_name)
+    audit = ncu_field_audit(partner.school_name)
+    assert "2027/3/1–4/15" in partner.application_deadline
+    assert "Spring2028" in audit["fields"]["host_deadline"]["unresolved"]
+    assert "preferred" in audit["fields"]["eligibility"]["note"]
+    assert "TOPIK4" in audit["fields"]["language"]["note"]
+    assert "不是全校" in audit["fields"]["language"]["note"]
+    workflow = next(w for w in storage.load_bundled_application_workflows() if w.home_university == NCU.school_name and w.school_name == partner.school_name)
+    assert len(workflow.steps[2].document_requirements) == 7
+    assert not any("MMR" in d.name for d in workflow.steps[4].document_requirements)
+    post = next(s for s in workflow.steps if s.rule_id.endswith("host-predeparture-documents"))
+    assert post.phase == "行前準備" and post.needs_confirmation
+    assert len(post.document_requirements) == 2
+    assert any("MMR" in d.name for d in post.document_requirements)
+    assert any(d.official_form_url and "d373b899" in d.official_form_url for d in post.document_requirements)
+    assert len({s.order for s in workflow.steps}) == len(workflow.steps)
+    assert not any(s.deadline_reminder_eligible for s in workflow.steps)
+    destination = next(d for d in storage.load_destination_profiles(tmp_path, include_bundled_baseline=True) if d.home_university == NCU.school_name and d.school_name == partner.school_name)
+    assert destination.city == "首爾" and "6002" in destination.transport_summary
+    assert any(s.key == "transport" for s in destination.student_guide_sections)
+
+
+def test_hust_taiwan_track_historical_dates_and_conditional_health_do_not_mix():
+    partner = next(p for p in fetch_ncu_partner_universities() if "Huazhong University" in p.school_name)
+    audit = ncu_field_audit(partner.school_name)
+    assert "2027/5/5" in partner.application_deadline
+    assert "不能推定2027" in audit["fields"]["eligibility"]["note"]
+    assert "舊年度" in audit["fields"]["study_period"]["applicability"]
+    assert "不套" in audit["fields"]["insurance"]["note"]
+    workflow = next(w for w in storage.load_bundled_application_workflows() if w.home_university == NCU.school_name and w.school_name == partner.school_name)
+    assert not any("健康" in d.name for d in workflow.steps[4].document_requirements)
+    post = next(s for s in workflow.steps if s.rule_id.endswith("host-predeparture-documents"))
+    assert post.document_requirements[0].name.startswith("錄取後才繳")
+    assert not any("hkbu.edu.hk" in s.source_url for s in workflow.sources)
+    legacy = next(p for p in fetch_ncu_partner_universities() if "International University, Viet Nam" in p.school_name)
+    report = ncu_field_audit(legacy.school_name)
+    assert "2018" in report["fields"]["host_documents"]["applicability"]
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    assert "完整當期" in next(d for d in raw if d["id"] == "host-hcm-iex-2018-browser")["excerpt_note_zh"]
+
+
+def test_shanghai_visual_versions_and_taiwan_track_do_not_become_current():
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    sufe_source = next(d for d in raw if d["id"] == "1JSkQxNHeCgPkLeFtT5BtTbLXU_dfv1fN")
+    shu_source = next(d for d in raw if d["id"] == "1p6fLyiZOpX7RjEyF_QW6UBPp2-PFV99e")
+    for source in (sufe_source, shu_source):
+        assert source["content_status"]["all_pages_read"]
+        assert source["content_status"]["visual_reviewed_page_count"] == 8
+    assert "2026--2027" in sufe_source["page_transcriptions"][0]["text"]
+    assert "2025--2026" in sufe_source["page_transcriptions"][-1]["text"]
+    assert not shu_source["pages"][7]["text"].strip()
+    assert "2020" in shu_source["page_transcriptions"][-1]["text"]
+    partners = fetch_ncu_partner_universities()
+    sufe = next(p for p in partners if p.school_name.startswith("上海財經大學 "))
+    shu = next(p for p in partners if p.school_name.endswith("Shanghai University"))
+    assert "不是中央116" in ncu_field_audit(sufe.school_name)["fields"]["study_period"]["note"]
+    assert "下限" in ncu_field_audit(sufe.school_name)["fields"]["courses"]["note"]
+    workflows = storage.load_bundled_application_workflows()
+    sw = next(w for w in workflows if w.home_university == NCU.school_name and w.school_name == sufe.school_name)
+    assert len(sw.steps[4].document_requirements) == 4
+    assert not any(s.deadline_at and s.rule_id.endswith("host-application") for s in sw.steps)
+    assert not next(w for w in workflows if w.home_university == NCU.school_name and w.school_name == shu.school_name).steps[4].document_requirements
 
 
 @pytest.mark.parametrize(

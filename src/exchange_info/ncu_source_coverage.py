@@ -1,6 +1,22 @@
 """Measure download, text and explicit reading evidence independently."""
 
 
+def attach_visual_review(source: dict, review: dict) -> None:
+    """Attach SHA-bound review while keeping original extraction untouched."""
+    if not source.get("sha256") or review.get("source_sha256") != source["sha256"]:
+        for key in ("visual_review", "page_transcriptions", "ocr_status"):
+            source.pop(key, None)
+        source["visual_review_note"] = "原件已變更，既有視覺摘錄與逐頁閱讀紀錄不套用。"
+        return
+    source["visual_review"] = review
+    page_ids = {p["page"] for p in source.get("pages", [])}
+    source["page_transcriptions"] = [
+        p for p in review.get("page_transcriptions", []) if p["page"] in page_ids
+    ]
+    if review.get("ocr_status"):
+        source["ocr_status"] = review["ocr_status"]
+
+
 def source_content_status(source: dict) -> dict:
     pages = source.get("pages", [])
     text_pages = sum(
@@ -30,6 +46,7 @@ def source_content_status(source: dict) -> dict:
         "any_text": bool(text_pages and not source.get("error")),
         "all_pages_have_text": bool(
             pages and text_pages == len(pages) and not source.get("error")
+            and not source.get("source_excerpt_only")
         ),
         # Text extraction itself is never evidence that a person read a page.
         "all_pages_read": bool(
@@ -38,5 +55,7 @@ def source_content_status(source: dict) -> dict:
         "visual_reviewed_page_count": len(page_ids & visual_pages)
         + len(converted_pages),
         "visual_reviewed": bool(page_ids & visual_pages or converted_pages),
-        "ocr_status": source.get("ocr_status", "not_performed"),
+        "ocr_status": source.get("ocr_status", "not_performed")
+        if visual_valid
+        else "not_performed",
     }

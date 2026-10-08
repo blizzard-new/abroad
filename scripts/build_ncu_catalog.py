@@ -22,7 +22,7 @@ from exchange_info.models import (
     PartnerResearchRecord,
 )
 from exchange_info.ncu_eligibility import SCORE_MINIMUMS, EXCLUDED_YEARS
-from exchange_info.ncu_source_coverage import source_content_status
+from exchange_info.ncu_source_coverage import attach_visual_review, source_content_status
 from exchange_info.ncu_student_view import (
     NCU_GUIDELINES_URL as NOTICE,
     NCU_INDEX_URL as INDEX,
@@ -191,6 +191,9 @@ def build(output):
     )
     docs = {x["id"]: x for x in evidence + web_evidence}
     for d in docs.values():
+        visual_path = SOURCES / f"{d['id']}-visual-review.json"
+        if visual_path.exists():
+            attach_visual_review(d, load_json(visual_path))
         d["content_status"] = source_content_status(d)
     reviewed = load_json(SOURCES / "reviewed-host-records.json")
     from pypdf import PdfReader
@@ -417,6 +420,7 @@ def build(output):
         if review:
             summary["eligibility_points"] = [
                 summary["eligibility_points"][0],
+                *reviewed_points("city"),
                 *reviewed_points("language"),
                 *reviewed_points("eligibility"),
                 *reviewed_points("courses"),
@@ -592,6 +596,31 @@ def build(output):
                 ],
             ),
         ]
+        if review and review.get("host_predeparture_documents"):
+            # Housing and post-admission health documents are not application
+            # uploads, and must not be added to the seven home selection files.
+            for step in tail[2:]:
+                step["order"] += 1
+            requirements = review["host_predeparture_documents"]
+            tail.insert(
+                2,
+                dict(
+                    order=8,
+                    rule_id=f"{rowids[0]}-host-predeparture-documents",
+                    phase="行前準備",
+                    title="核對外校錄取後與住宿行前文件",
+                    responsible_party="學生與接收單位",
+                    summary="依外校錄取及住宿適用条件另備文件；不是中央校內甄選必繳附件或一般申請上傳清單。",
+                    details=reviewed_points("arrival"),
+                    document_requirements=requirements,
+                    official_form_urls=[d["official_form_url"] for d in requirements if d.get("official_form_url")],
+                    source_urls=list(dict.fromkeys(u for d in requirements for u in d["source_urls"])),
+                    checked_at=CHECKED,
+                    support_status="needs_confirmation",
+                    needs_confirmation=True,
+                    scope={"home_universities": [HOME], "partner_universities": [name], "academic_years": ["116"]},
+                ),
+            )
         workflows.append(
             dict(
                 home_university=HOME,
@@ -656,7 +685,7 @@ def build(output):
                 )
             )
         if review:
-            for key in ["cost", "housing", "insurance", "visa", "courses", "arrival"]:
+            for key in ["city", "transport", "cost", "housing", "insurance", "visa", "courses", "arrival"]:
                 keys = (
                     ["tuition", "cost"]
                     if key == "cost"
@@ -729,7 +758,7 @@ def build(output):
                 ("transport_summary", ["transport"]),
                 ("cost_summary", ["tuition", "cost"]),
                 ("housing_summary", ["housing"]),
-                ("campus_life_summary", ["arrival", "courses", "study_period"]),
+                ("campus_life_summary", ["city", "transport", "arrival", "courses", "study_period"]),
             ]:
                 pts = sum((reviewed_points(k) for k in keys), [])
                 if pts:
@@ -823,9 +852,15 @@ def build(output):
                 for ref in value["sources"]:
                     d = docs[ref["id"]]
                     p = next(p for p in d["pages"] if p["page"] == ref["page"])
+                    visual_passage = next(
+                        (v for v in d.get("page_transcriptions", []) if v["page"] == p["page"]),
+                        None,
+                    )
                     ev.append(
                         {
-                            "text": p["text"],
+                            "text": visual_passage["text"] if visual_passage else p["text"],
+                            "text_method": "human_visual_selected_passages"
+                            if visual_passage else "original_extraction",
                             "source_url": d["url"],
                             "page": p["page"],
                             "source_title": d["label"],
@@ -929,6 +964,10 @@ def build(output):
                 )
                 + f"\n{p['text']}"
                 for p in d["pages"]
+            )
+            text += "".join(
+                f"\n\n【原PDF第{p['page']}頁；人工視覺核對摘錄，非原始文字抽取】\n{p['text']}"
+                for p in d.get("page_transcriptions", [])
             )
             pages.append(
                 dict(
@@ -1227,7 +1266,9 @@ def build(output):
                 d["content_status"]["visual_reviewed"] for d in evidence
             ),
             "source_documents_ocr_reviewed": sum(
-                d["content_status"]["ocr_status"] == "visually_verified"
+                d["content_status"]["ocr_status"] in {
+                    "visually_verified", "performed_selected_passages_verified"
+                }
                 for d in evidence
             ),
             "source_documents_with_errors": sum(bool(d.get("error")) for d in evidence),

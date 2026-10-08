@@ -155,13 +155,20 @@ def fetch(spec):
                 result["error"] = (
                     "Public image checklist requires visual transcription; not a text/PDF document."
                 )
-        elif "html" not in response.headers.get("content-type", ""):
+        elif "html" not in response.headers.get("content-type", "").lower() and not (
+            expected_format == "html"
+            and response.content.lstrip().lower().startswith((b"<!doctype html", b"<html"))
+        ):
             raise ValueError("Unsupported content type; no HTML text inferred")
         else:
             soup = BeautifulSoup(response.content, "html.parser")
             for node in soup.select("script, style, nav, header, footer"):
                 node.decompose()
-            main = soup.select_one("main") or soup.select_one('[role="main"]') or soup
+            main = (
+                soup.select_one(spec["html_content_selector"])
+                if spec.get("html_content_selector")
+                else None
+            ) or soup.select_one("main") or soup.select_one('[role="main"]') or soup
             result["pages"] = [{"page": None, "text": main.get_text("\n", strip=True)}]
             result["links"] = [
                 {"label": a.get_text(" ", strip=True), "href": a.get("href")}

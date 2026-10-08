@@ -156,6 +156,8 @@ def test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui(
     page.locator("#ncu-source-audit > summary").click()
     expect(page.locator("#ncu-source-audit-body")).to_contain_text(audit_text)
     if school == "太原農林":
+        visual = page.locator("#ncu-source-audit-body > details").filter(has_text="TUAF2026交換program PDF").first
+        expect(visual.locator(":scope > summary")).to_contain_text("1頁已視覺查核")
         source = (
             page.locator("#ncu-source-audit-body > details")
             .filter(has_text="僅必要欄位摘錄")
@@ -189,3 +191,93 @@ def test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui(
     )
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors
+
+
+@pytest.mark.parametrize("school,source_label,old_year,life_text", [
+    ("上海財經", "26-27学年_上海财经大学来校交换生信息手册.pdf PDF", "2025--2026", "1000–1500"),
+    ("上海大學", "上海大学港澳台交换生申请指南.pdf PDF", "2020", "10元人民幣"),
+])
+def test_ncu_shanghai_visual_versions_and_life_are_visible(page, live_server, school, source_label, old_year, life_text):
+    page.set_viewport_size({"width": 390, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    enter_public_site(page, live_server, "partners")
+    open_navigation(page)
+    page.locator("#school-switcher").click()
+    page.locator('[data-home-school="國立中央大學"]').click()
+    page.locator("#confirm-school").click()
+    if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+        page.locator("#glass-menu-toggle").click()
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
+    page.locator('[data-partner-view="list"]').click()
+    page.locator("#partner-search").fill(school)
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+    page.locator("#partner-table .partner-card > summary").first.click()
+    page.locator("#partner-table .school-detail-trigger:visible").first.click()
+    page.locator("#ncu-source-audit > summary").click()
+    source = page.locator("#ncu-source-audit-body > details").filter(has_text=source_label).first
+    expect(source.locator(":scope > summary")).to_contain_text("8頁已視覺查核")
+    source.locator(":scope > summary").click()
+    passage = source.locator(".ncu-visual-passage").filter(has_text=old_year).first
+    passage.locator(":scope > summary").click()
+    expect(passage.locator("pre")).to_be_visible()
+    passage.scroll_into_view_if_needed()
+    out = Path("/tmp/ncu-audit/browser")
+    out.mkdir(parents=True, exist_ok=True)
+    page.screenshot(path=str(out / f"ncu-{'sufe' if school == '上海財經' else 'shu'}-visual-390.png"))
+    page.locator("#detail-tab-application").click()
+    if school == "上海財經":
+        expect(page.locator("#detail-application")).to_contain_text("成績管理部門公章")
+        expect(page.locator("#detail-application")).to_contain_text("提名後提供模板")
+    page.locator("#detail-tab-life").click()
+    page.locator("#detail-life .life-official-guide > summary").click()
+    life = page.locator("#destination-official-content li").filter(has_text=life_text).first
+    expect(life).to_be_visible()
+    life.scroll_into_view_if_needed()
+    page.screenshot(path=str(out / f"ncu-{'sufe' if school == '上海財經' else 'shu'}-life-390.png"))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors
+
+
+def test_ncu_uos_visual_evidence_and_conditional_housing_form_are_visible(page, live_server):
+    page.set_viewport_size({"width": 390, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    enter_public_site(page, live_server, "partners")
+    open_navigation(page)
+    page.locator("#school-switcher").click()
+    page.locator('[data-home-school="國立中央大學"]').click()
+    page.locator("#confirm-school").click()
+    if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+        page.locator("#glass-menu-toggle").click()
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
+    page.locator('[data-partner-view="list"]').click()
+    page.locator("#partner-search").fill("University of Seoul")
+    page.locator("#partner-table .partner-card > summary").first.click()
+    page.locator("#partner-table .school-detail-trigger:visible").first.click()
+    expect(page.locator("#school-detail-view .partner-student-summary")).to_contain_text("2027/3/1–4/15")
+    page.locator("#ncu-source-audit > summary").click()
+    old = page.locator("#ncu-source-audit-body > details").filter(has_text="UOS Partner Information_Web.pdf").first
+    old.locator(":scope > summary").click()
+    expect(old.locator(":scope > summary")).to_contain_text("0頁有文字")
+    expect(old.locator(":scope > summary")).to_contain_text("11頁已視覺查核")
+    passage = old.locator(".ncu-visual-passage").filter(has_text="原PDF第3頁")
+    passage.locator(":scope > summary").click()
+    expect(passage.locator("pre")).to_be_visible()
+    expect(passage.locator("pre")).to_contain_text("Academic Year 2023")
+    out = Path("/tmp/ncu-audit/browser")
+    out.mkdir(parents=True, exist_ok=True)
+    passage.scroll_into_view_if_needed()
+    page.screenshot(path=str(out / "ncu-uos-visual-390.png"))
+    page.locator("#detail-tab-application").click()
+    expect(page.locator("#detail-application")).to_contain_text("家長同意書")
+    expect(page.locator("#detail-application")).to_contain_text("核對外校錄取後與住宿行前文件")
+    expect(page.locator("#detail-application")).to_contain_text("校內住宿者：英文MMR兩劑")
+    expect(page.locator("#detail-application")).to_contain_text("Health & Medical Clearance Form")
+    page.locator("#detail-tab-life").click()
+    page.locator("#detail-life .life-official-guide > summary").click()
+    bus = page.locator("#destination-official-content li").filter(has_text="6002").first
+    expect(bus).to_be_visible()
+    bus.scroll_into_view_if_needed()
+    page.screenshot(path=str(out / "ncu-uos-transport-390.png"))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
