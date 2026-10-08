@@ -39,7 +39,7 @@ def report(args):
     drift=sorted(key for key in set(old)|set(hashes) if old.get(key)!=hashes.get(key))
     browser=[json.loads(path.read_text()) for path in sorted((out/'browser').glob('*.json'))]
     switch=json.loads((out/'switch.json').read_text())
-    if len(browser)!=10 or any(r['tested_commit']!=head or r['status']!='passed' for r in browser) or switch['tested_commit']!=head:
+    if len(browser)!=12 or any(r['tested_commit']!=head or r['status']!='passed' for r in browser) or switch['tested_commit']!=head:
         raise RuntimeError('Browser evidence does not belong to this complete candidate')
     result=dict(tested_commit=head,baseline_commit=args.baseline_commit,runner_exit_code=run['runner_exit_code'],
         all_checks_passed=run['all_checks_passed'],candidate_invariant_passed=True,

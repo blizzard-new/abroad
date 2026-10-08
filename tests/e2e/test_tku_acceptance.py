@@ -43,6 +43,43 @@ def record(page, name, width, errors, **facts):
 
 
 @pytest.mark.parametrize("width", [390,1280])
+def test_tku_shared_home_query_follows_explicit_school_choice_and_navigation(page, live_server, width):
+    _, errors = start(page, live_server, width, "application-center")
+    assert page.evaluate("new URL(location.href).searchParams.get('home')") == HOME
+
+    def choose(home):
+        open_navigation(page)
+        page.locator('#school-switcher').click()
+        page.locator(f'#school-options [data-home-school={json.dumps(home,ensure_ascii=False)}]').click()
+        page.locator('#confirm-school').click()
+        wait_until(page, f"state.dashboard?.school_name === {json.dumps(home,ensure_ascii=False)} && !state.homeSchoolLoading && !state.applicationLoading")
+        assert page.evaluate("new URL(location.href).searchParams.get('home')") == home
+
+    choose('國立臺北大學')
+    page.evaluate("location.hash='#overview'")
+    wait_until(page, "state.dashboard?.school_name === '國立臺北大學' && !state.homeSchoolLoading")
+    expect(page.locator('#application-workspace-context')).to_contain_text('國立臺北大學')
+    assert page.evaluate("activeHomeSchool()") == '國立臺北大學'
+    page.reload()
+    wait_until(page, "state.dashboard?.school_name === '國立臺北大學' && !state.homeSchoolLoading")
+    assert page.evaluate("activeHomeSchool()") == '國立臺北大學'
+    choose(HOME)
+    page.evaluate("location.hash='#application-center'")
+    expect(page.locator('#application-context-form')).to_be_visible()
+    year=page.locator('#application-context-form input[name="academic_year"]')
+    year.fill('2027-2028');year.press('Tab')
+    wait_until(page, '!state.applicationLoading')
+    target=page.evaluate('state.dashboard.partner_universities[0].school_name')
+    page.locator('#application-target-school').select_option(target)
+    wait_until(page, "state.applicationDocumentCatalog?.context.school_name === '淡江大學' && !state.applicationLoading")
+    assert page.evaluate("state.applicationDocumentCatalog.academic_year") == '2027-2028'
+    assert page.evaluate("activeHomeSchool()") == HOME
+    record(page, 'shared-home-query-navigation', width, errors,
+        query_follows_explicit_choice=True, navigation_preserves_choice=True,
+        reload_preserved=True, returned_to_tku=True, tku_document_context_preserved=True)
+
+
+@pytest.mark.parametrize("width", [390,1280])
 def test_tku_list_filters_favorites_comparison_and_reload(page, live_server, width):
     session, errors = start(page, live_server, width, "partners")
     page.locator('[data-partner-view="list"]').click()

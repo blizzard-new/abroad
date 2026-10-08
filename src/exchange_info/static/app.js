@@ -607,14 +607,22 @@ function accountNeedsSchool() {
 }
 
 function alignAccountSchool() {
-  const school = !state.account?.is_platform_admin && state.account?.catalog_home_university;
-  if (school) {
+  const accountSchool = !state.account?.is_platform_admin && state.account?.catalog_home_university;
+  if (accountSchool) {
+    const url = new URL(window.location.href);
+    const sharedHome = url.searchParams.get("home");
+    const school = state.supportedUniversities.some((item) => item.school_name === sharedHome)
+      ? sharedHome : accountSchool;
     state.homeSchool = school;
     state.selectedHomeSchool = school;
     state.applicationContext.school_name = school;
-    const url = new URL(window.location.href);
-    url.searchParams.set("home", school);
-    window.UniWayNavigation.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+    // A valid shared choice selects a public catalogue, not an account identity.
+    // During boot the registry may still be loading; leave the incoming query
+    // intact so boot can validate it after both account and registry resolve.
+    if (!sharedHome) {
+      url.searchParams.set("home", school);
+      window.UniWayNavigation.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+    }
   }
   updateSchoolContext();
   renderSchoolOptions();
@@ -1321,6 +1329,14 @@ function setHomeSchool(schoolName, { reload = true } = {}) {
   state.homeSchool = nextSchool;
   state.selectedHomeSchool = nextSchool;
   state.applicationContext.school_name = nextSchool;
+  // An explicit selection must replace the home encoded by an incoming link,
+  // otherwise the next hash route silently restores the previous university.
+  const selectedUrl = new URL(window.location.href);
+  if (selectedUrl.searchParams.has("home") && selectedUrl.searchParams.get("home") !== nextSchool) {
+    selectedUrl.searchParams.set("home", nextSchool);
+    window.UniWayNavigation.replaceState({}, "", selectedUrl.href);
+    partnerUrlSearch = window.location.search;
+  }
   if (needsRefresh) {
     // Invalidate even an A → B → A response before the next school load starts.
     state.applicationTemplateRequestId += 1;
