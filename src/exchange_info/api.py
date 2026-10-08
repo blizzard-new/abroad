@@ -255,6 +255,12 @@ from .ntpu_student_view import (
     ntpu_exchange_info,
     ntpu_processed_pages,
 )
+from .ntu_student_view import (
+    build_ntu_student_dashboard,
+    fetch_ntu_partner_universities,
+    ntu_exchange_info,
+    ntu_processed_pages,
+)
 
 mimetypes.add_type("application/vnd.android.package-archive", ".apk")
 
@@ -387,6 +393,7 @@ from .request_origin import client_fingerprint, public_base_url
 from .university_registry import (
     CGU,
     NTPU,
+    NTU,
     SUPPORTED_UNIVERSITIES,
     UniversityProfile,
     require_university,
@@ -1081,7 +1088,9 @@ def create_app(
             with partner_cache_lock:
                 if university.id not in partner_cache:
                     partner_cache[university.id] = (
-                        fetch_ntpu_partner_universities()
+                        fetch_ntu_partner_universities()
+                        if university.id == NTU.id
+                        else fetch_ntpu_partner_universities()
                         if university.id == NTPU.id
                         else fetch_partner_universities()
                     )
@@ -1123,6 +1132,8 @@ def create_app(
         university = university_for(
             school.school_name if isinstance(school, UniversityProfile) else school
         )
+        if university.id == NTU.id:
+            return ntu_processed_pages()
         return (
             ntpu_processed_pages()
             if university.id == NTPU.id
@@ -1139,6 +1150,8 @@ def create_app(
             return ntpu_exchange_info(partners_for_university(university))
         if university.id == "tku":
             return tku_exchange_info(partners_for_university(university))
+        if university.id == NTU.id:
+            return ntu_exchange_info(partners_for_university(university))
         return load_exchange_info(resolved_data_dir) or ExchangeInfo(school_name=CGU.school_name)
 
     dashboard_cache: dict[str, tuple[float, tuple, StudentDashboard]] = {}
@@ -1189,6 +1202,8 @@ def create_app(
         if university.id == "tku":
             # Refresh window state on each request; a cached open round must close on time.
             return build_tku_student_dashboard()
+        if university.id == NTU.id:
+            return build_ntu_student_dashboard(partner_universities=partners_for_university(university))
         # Building this one downloads the partner sheet and parses a dozen official PDFs: 10 to 40 seconds on the free
         # host. The result is kept; once it is a few minutes old the next visitor still gets it at once while a fresh one
         # is built in the background. Only when the data files behind it were rewritten (or nothing was built yet) does
@@ -2719,6 +2734,7 @@ def create_app(
                 school_name=university.school_name,
                 short_name=university.short_name,
                 english_name=university.english_name,
+                aliases=list(university.aliases),
                 hero_image=university.hero_image,
                 official_url=university.official_url,
                 support_level=university.support_level,
@@ -2802,7 +2818,7 @@ def create_app(
                 if destination_audit
                 else (
                     destination.coverage_status
-                    if university.id == CGU.id and destination
+                    if university.id in {CGU.id, NTU.id} and destination
                     else "not_collected"
                 )
             )
@@ -2842,7 +2858,7 @@ def create_app(
                         destination_audit.checked_at
                         if destination_audit
                         else destination.last_checked
-                        if university.id == CGU.id and destination
+                        if university.id in {CGU.id, NTU.id} and destination
                         else None
                     ),
                 )
