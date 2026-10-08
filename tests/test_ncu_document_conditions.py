@@ -105,6 +105,23 @@ def test_explicit_policy_does_not_guess_from_similar_names_or_other_home_school(
         assert document_applicability(home,UOS,docs[0]) is None
 
 
+@pytest.mark.parametrize('admission', ['unknown', 'not_accepted', 'accepted'])
+@pytest.mark.parametrize('housing', ['unknown', 'on_campus', 'off_campus'])
+def test_kyutech_program_and_old_housing_reference_need_institutional_confirmation(admission, housing):
+    school = '九州工業大學 Kyushu Institute of Technology'
+    workflow = next(w for w in storage.load_bundled_application_workflows()
+                    if w.home_university == NCU and w.school_name == school)
+    docs = [d for step in workflow.steps if step.rule_id.startswith('ncu-140-host-')
+            for d in step.document_requirements]
+    assert len(docs) == 13
+    state = PartnerDocumentPreparationState(host_admission_status=admission, housing_choice=housing)
+    for doc in docs:
+        result = document_applicability(NCU, school, doc, state)
+        assert result is not None and result.status == 'needs_confirmation'
+        assert not result.current_applicability_verified
+        assert '兩校確認' in result.note and result.source_urls
+
+
 @pytest.mark.parametrize("change", ["changed_original", "failed_original", "missing_version", "wrong_url", "wrong_school", "wrong_step", "wrong_document"])
 def test_changed_condition_source_cannot_reuse_a_reviewed_policy(change):
     root = Path(__file__).resolve().parents[1]

@@ -2,7 +2,11 @@
 from __future__ import annotations
 
 import random
+import threading
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+
+import pytest
 
 from exchange_info import storage
 from exchange_info.storage import (
@@ -113,3 +117,52 @@ def test_local_workflows_are_reread_when_the_file_changes(tmp_path: Path) -> Non
 
     texts = {row.disclaimer for row in after if _application_workflow_key(row) == _application_workflow_key(chosen)}
     assert texts == {"第二版說明，文字長度不同"}, "an edited file is read again, not served from the remembered copy"
+
+
+def test_simultaneous_cold_catalogue_requests_read_each_bundle_once(monkeypatch) -> None:
+    storage._workflow_cache.clear()
+    calls = []
+    first_read = threading.Event()
+    release_read = threading.Event()
+    barrier = threading.Barrier(3)
+    real = storage.read_jsonl
+
+    def read(path, model):
+        calls.append(path)
+        first_read.set()
+        assert release_read.wait(10), "the test must release the cold file read"
+        return real(path, model)
+
+    monkeypatch.setattr(storage, "read_jsonl", read)
+
+    def load():
+        barrier.wait(timeout=10)
+        return load_bundled_application_workflows()
+
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        pending = [pool.submit(load) for _ in range(3)]
+        try:
+            assert first_read.wait(10)
+            # Keep the real file read in flight while the other HTTP workers
+            # enter the public loader. This reproduces a cold page's requests.
+            threading.Event().wait(0.05)
+        finally:
+            release_read.set()
+        rows = [future.result(timeout=30) for future in pending]
+    assert len(calls) == len(storage._bundled_workflow_paths())
+    assert rows[0] == rows[1] == rows[2]
+    assert rows[0] is not rows[1] and rows[1] is not rows[2]
+    assert {row.home_university for row in rows[0]} >= {
+        "長庚大學", "國立臺北大學", "國立臺灣大學", "國立中央大學"
+    }
+
+
+def test_invalid_local_catalogue_can_be_repaired_after_failed_load(tmp_path) -> None:
+    ensure_data_dirs(tmp_path)
+    path = storage.data_paths(tmp_path)["application_workflows"]
+    path.write_text('{"broken":', encoding="utf-8")
+    with pytest.raises(ValueError):
+        load_application_workflows(tmp_path)
+    chosen = load_bundled_application_workflows()[0]
+    save_application_workflows([chosen], tmp_path)
+    assert len(load_application_workflows(tmp_path)) == 1

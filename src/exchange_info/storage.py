@@ -4,6 +4,7 @@ import json
 import os
 import tempfile
 import threading
+from concurrent.futures import Future
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Generator, Iterable, TextIO, TypeVar
@@ -510,6 +511,7 @@ def replace_school_experiences(
 _WORKFLOW_CACHE_LIMIT = 8
 _workflow_cache_lock = threading.Lock()
 _workflow_cache: dict[tuple, list[UniversityApplicationWorkflow]] = {}
+_workflow_cache_builds: dict[tuple, Future] = {}
 
 
 def _file_signature(path: Path) -> tuple[int, int] | None:
@@ -529,13 +531,32 @@ def file_signature(path: Path) -> tuple[int, int] | None:
 def _cached_workflows(key: tuple, build) -> list[UniversityApplicationWorkflow]:
     with _workflow_cache_lock:
         cached = _workflow_cache.get(key)
-    if cached is None:
+        if cached is not None:
+            return list(cached)
+        pending = _workflow_cache_builds.get(key)
+        owns_build = pending is None
+        if owns_build:
+            pending = Future()
+            _workflow_cache_builds[key] = pending
+    if not owns_build:
+        return list(pending.result())
+    # A cold page requests the same catalogue concurrently. Parse it once;
+    # other signatures can still build independently, and nested local/bundled
+    # catalogue reads do not hold the cache lock while they build or wait.
+    try:
         cached = build()
         with _workflow_cache_lock:
             while len(_workflow_cache) >= _WORKFLOW_CACHE_LIMIT:
                 _workflow_cache.pop(next(iter(_workflow_cache)))
             _workflow_cache[key] = cached
-    return list(cached)
+        pending.set_result(cached)
+        return list(cached)
+    except BaseException as error:
+        pending.set_exception(error)
+        raise
+    finally:
+        with _workflow_cache_lock:
+            _workflow_cache_builds.pop(key, None)
 
 
 def workflow_catalog_token(data_dir: Path = DEFAULT_DATA_DIR) -> tuple:

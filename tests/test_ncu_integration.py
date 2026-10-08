@@ -1841,6 +1841,111 @@ def test_niigata_original_sheet_scope_blank_forms_and_year_isolation():
     assert 'November 10, 2024' not in indexable_source_text(old)
 
 
+def test_kyutech_initial_accepted_housing_and_arrival_documents_reach_api(tmp_path):
+    partner = next(p for p in fetch_ncu_partner_universities() if 'Kyushu Institute' in p.school_name)
+    assert partner.quota is None and partner.degree_levels is None
+    client = TestClient(create_app(tmp_path))
+    response = client.get('/application-workflow', params={
+        'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116',
+    })
+    assert response.status_code == 200
+    workflow = response.json(); steps = {s['rule_id']: s for s in workflow['steps']}
+    assert len(steps['ncu-116-1-home-3']['document_requirements']) == 7
+    assert not steps['ncu-140-host-apply']['document_requirements']
+    counts = {'auditing-research-initial': 3, 'visitor-initial': 2, 'accepted-pledge': 1,
+              'arrival-common': 5, 'arrival-auditing-course': 1, 'gcc-housing-reference': 1,
+              'insurance-confirmation': 0, 'departure-and-transcript': 0}
+    for suffix, count in counts.items():
+        step = steps['ncu-140-host-' + suffix]
+        assert len(step['document_requirements']) == count
+        assert step['submission']['method'] == 'unknown'
+        assert not step['deadline_reminder_eligible']
+        assert all(d['copies'] is None and not d['signatures'] and not d['stamps']
+                   and d['needs_confirmation'] for d in step['document_requirements'])
+    assert not any('成績' in d['name'] for d in steps['ncu-140-host-visitor-initial']['document_requirements'])
+    assert '影本' in steps['ncu-140-host-auditing-research-initial']['document_requirements'][1]['name']
+    assert all('履修' not in d['name'] for d in steps['ncu-140-host-arrival-common']['document_requirements'])
+    assert '履修' in steps['ncu-140-host-arrival-auditing-course']['document_requirements'][0]['name']
+    assert workflow['review_status'] == 'pending_review' and workflow['published_at'] is None
+    catalog = client.get('/application-center/catalog', params={
+        'school': 'NCU', 'target_school': partner.school_name, 'academic_year': '116',
+        'host_admission_status': 'accepted', 'housing_choice': 'on_campus',
+    }).json()
+    conditional = [d for d in catalog['items'] if d['applicability']]
+    assert len(conditional) == 13
+    assert all(d['applicability']['status'] == 'needs_confirmation' for d in conditional)
+    assert all(d['needs_confirmation'] and not d['download_available'] for d in conditional)
+    gcc = next(d for d in conditional if 'GCC入館願' in d['name'])
+    assert any('.docx' in url for url in gcc['source_urls'])
+
+
+def test_kyutech_support_levels_fee_scope_and_housing_conflict_reach_student_views(tmp_path):
+    partner = next(p for p in fetch_ncu_partner_universities() if 'Kyushu Institute' in p.school_name)
+    audit = ncu_field_audit(partner.school_name)
+    assert '不是CEFR' in audit['fields']['language']['note']
+    assert '非SEIC' in audit['fields']['language']['note'] and 'Advanced Ceramics' in audit['fields']['courses']['note']
+    assert '新版未取得' in audit['fields']['host_deadline']['note']
+    assert '自動判日本國立豁免' in audit['fields']['tuition']['note']
+    assert '7000' in audit['fields']['cost']['note'] and '減免' in audit['fields']['cost']['note']
+    assert '14429' in audit['fields']['cost']['note'] and '生效範圍未明' in audit['fields']['cost']['note']
+    assert '一般免除' in audit['fields']['cost']['note']
+    summary = json.dumps(partner.student_summary_zh.model_dump(mode='json'), ensure_ascii=False)
+    assert 'Level 5' in summary and '17920' in summary and '2026/7/31' in summary
+    client = TestClient(create_app(tmp_path))
+    life = client.get('/school-life-context', params={'home_school': 'NCU', 'school': partner.school_name})
+    assert life.status_code == 200
+    body = json.dumps(life.json(), ensure_ascii=False)
+    assert '14429' in body and '17920' in body and '7000' in body
+    destination = client.get('/destination-profile', params={'home_school': 'NCU', 'school': partner.school_name})
+    assert destination.status_code == 200
+    assert '資格確認書' in json.dumps(destination.json(), ensure_ascii=False)
+    dashboard = client.get('/student-dashboard', params={'school': 'NCU'}).json()
+    shown = next(p for p in dashboard['partner_universities'] if p['school_name'] == partner.school_name)
+    assert '非SEIC' in json.dumps(shown['student_summary_zh'], ensure_ascii=False)
+
+
+def test_kyutech_original_reading_ranges_visuals_failed_attempts_and_old_scope():
+    from exchange_info.ncu_source_coverage import indexable_source_text
+    sources = {s['id']: s for s in json.loads(gzip.decompress((BUNDLE / 'source-evidence.json.gz').read_bytes()))}
+    handbook = sources['host-kyutech-handbook2026']
+    assert handbook['content_status']['page_count'] == 66 and handbook['content_status']['all_pages_read']
+    assert len(handbook['reading_review']['pages_reviewed']) == 66
+    assert handbook['content_status']['visual_reviewed_page_count'] == 9
+    for sid, total, read in [
+        ('host-kyutech-tobata-grad-book2026', 170, [145, 146, 147, 148]),
+        ('host-kyutech-iizuka-grad-book2026', 150, [117, 118, 119, 120]),
+        ('host-kyutech-iizuka-ug-book2026jun', 274, [242, 243, 244, 245]),
+        ('host-kyutech-tobata-ug-outline2027', 85, [1, 2]),
+    ]:
+        source = sources[sid]
+        assert source['content_status']['page_count'] == total
+        assert not source['content_status']['all_pages_read']
+        assert source['reading_review']['pages_reviewed'] == read
+        assert '未全文讀' in source['reading_review']['scope']
+        assert '此原件為2026' in indexable_source_text(source)
+        assert '学生交流' not in indexable_source_text(source)
+    insurance = sources['host-kyutech-insurance2026']
+    assert insurance.get('reading_review') is None and insurance['content_status']['visual_reviewed_page_count'] == 7
+    assert insurance['content_status']['all_pages_read']
+    assert not sources['host-kyutech-handbook2023']['content_status']['all_pages_read']
+    assert sources['host-kyutech-syllabus-guide2026']['status'] == 503
+    assert sources['host-kyutech-syllabus-guide2026-retry']['content_status']['all_pages_read']
+    assert sources['host-kyutech-syllabus-guest-browser']['error']
+    search = sources['host-kyutech-syllabus-ceramics-search2026']
+    assert search['status'] == 200 and search['source_excerpt_only']
+    assert search['content_status']['all_pages_read']
+    assert '尚未閱讀單門完整syllabus' in search['reading_review']['scope']
+    assert '26470831' in search['pages'][0]['text'] and '先進' in search['pages'][0]['text']
+    excerpt = sources['host-kyutech-lsse-timetable2026-en-web-excerpt']
+    assert excerpt['source_excerpt_only'] and not excerpt.get('sha256')
+    assert not excerpt['content_status']['all_pages_read']
+    blank = sources['host-kyutech-gcc2026oct-blank']
+    assert blank['content_status']['all_pages_read'] and blank['pages'][0]['page'] is None
+    assert '兩表' in blank['reading_review']['scope'] and '入館願' not in indexable_source_text(blank)
+    old = sources['1w7gtlmyYk0VnXXWhFusMRzL4EunmfGqe']
+    assert old['content_status']['all_pages_read'] and 'only English' not in indexable_source_text(old)
+
+
 def test_ncu_runtime_preserves_all_explicit_document_unknowns_and_alternatives():
     from exchange_info.models import UniversityApplicationWorkflow
     raw = [UniversityApplicationWorkflow.model_validate(json.loads(line))
