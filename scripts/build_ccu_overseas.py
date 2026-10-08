@@ -142,7 +142,12 @@ def main():
                 s["access_result"]
                 for s in snapshots.values()
                 if s.get("access_result")
-                in {"challenge_page", "captcha_required", "empty_response"}
+                in {
+                    "challenge_page",
+                    "captcha_required",
+                    "empty_response",
+                    "unrelated_content_anomaly",
+                }
             )
         ),
         "semantic_review_ledger": "semantic-review-ledger.json",

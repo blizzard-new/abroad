@@ -51,6 +51,7 @@ def source_check(source, field, used, semantically_reviewed=(), partially_review
         "challenge_page",
         "captcha_required",
         "empty_response",
+        "unrelated_content_anomaly",
     }:
         result = (
             f"未取得政策正文；{source['access_result']}；"
@@ -279,9 +280,13 @@ def main():
                 "safe_alternatives": [
                     source_check(s, None, set()) for s in alternatives
                 ],
-                "conclusion": "原入口重試可讀；內容適用性仍另核對。"
-                if retry and retry["status"] != "fetch_failed"
-                else "原入口重試仍失敗；可讀替代資料已另逐欄核對，未查完的替代入口繼續補查。",
+                "conclusion": (
+                    "原入口本輪首次讀取失敗；尚無同入口重試紀錄，已查替代入口另列。"
+                    if retry is None
+                    else "原入口重試可讀；內容適用性仍另核對。"
+                    if retry["status"] != "fetch_failed"
+                    else "原入口重試仍失敗；替代入口及各欄實際結果另列，尚未讀完的公開資料續查。"
+                ),
             }
         )
     write("overseas-reviewed-fields.json", rows)

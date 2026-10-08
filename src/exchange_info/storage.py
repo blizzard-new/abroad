@@ -200,6 +200,10 @@ def merge_application_workflows(
 def _with_explicit_destination_gaps(profile: DestinationProfile) -> DestinationProfile:
     """Keep an honest, visible answer for official details that are not public."""
 
+    if profile.home_university == CCU.school_name:
+        # CCU keeps reviewed field statuses and true nulls. Unverified public
+        # research cannot be rewritten as an official non-publication claim.
+        return profile
     defaults = {
         "housing_summary": (
             "官方網站未公開可可靠核對的交換生住宿資訊；請以合作校最新 fact sheet、"

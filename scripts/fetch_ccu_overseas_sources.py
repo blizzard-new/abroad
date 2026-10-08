@@ -58,7 +58,9 @@ def public_spreadsheet_pages(body: bytes) -> list[str] | None:
                 content = (
                     (value.text or "")
                     if value is not None
-                    else "".join(inline.itertext()) if inline is not None else ""
+                    else "".join(inline.itertext())
+                    if inline is not None
+                    else ""
                 )
                 if cell.get("t") == "s" and content:
                     content = strings[int(content)]
@@ -132,7 +134,10 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
     }
     target = url
     match = re.search(r"drive\.google\.com/file/d/([^/?]+)", url)
-    if match and item["authority"] == "partner_issued_document_linked_by_ccu":
+    if match and item["authority"] in {
+        "partner_issued_document_linked_by_ccu",
+        "partner_official_public_document",
+    }:
         target = f"https://drive.usercontent.google.com/download?id={match[1]}&export=download"
     client = session or requests.Session()
     try:
@@ -145,6 +150,39 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
             bytes=len(response.content),
         )
         response.raise_for_status()
+        if (
+            urlsplit(url).hostname == "seafile.unistra.fr"
+            and re.fullmatch(r"/d/[a-zA-Z0-9]+/files/", urlsplit(url).path)
+            and item["authority"] == "partner_official_public_document"
+            and not response.content.startswith(b"%PDF-")
+        ):
+            # This anonymous public file-view page supplies its download URL.
+            # Read it literally; never evaluate scripts or request an account.
+            match = re.search(r"rawPath:\s*'([^']+)'", response.text)
+            if match:
+                download_url = json.loads('"' + match[1] + '"')
+                parsed = urlsplit(download_url)
+                if (
+                    parsed.scheme != "https"
+                    or parsed.hostname != "seafile.unistra.fr"
+                    or not parsed.path.startswith("/seafhttp/files/")
+                    or parsed.username
+                    or parsed.password
+                ):
+                    raise ValueError("Unexpected public Strasbourg download URL")
+                result["public_file_view_url"] = url
+                result["extraction_method"] = (
+                    "public_file_view_rawPath_no_script_execution"
+                )
+                response = client.get(download_url, timeout=(10, 35))
+                result.update(
+                    requested_url=download_url,
+                    final_url=response.url,
+                    http_status=response.status_code,
+                    content_type=response.headers.get("Content-Type"),
+                    bytes=len(response.content),
+                )
+                response.raise_for_status()
         body = response.content
         if len(body) > 32 * 1024 * 1024:
             raise ValueError(
@@ -232,7 +270,10 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
                 if urlsplit(urljoin(response.url, a["href"])).scheme
                 in {"http", "https"}
             ]
-            for node in soup(["script", "style", "nav", "footer", "header"]):
+            for node in soup(
+                ["script", "style", "nav", "header"]
+                + ([] if item.get("preserve_footer") else ["footer"])
+            ):
                 node.decompose()
             # Google Sites can keep a public timetable in an escaped data-code
             # attribute. Read the supplied HTML, without executing its scripts.

@@ -157,7 +157,7 @@ def apply_overseas_review(partner: PartnerUniversity) -> PartnerUniversity:
             home_evidence.status = "conflict"
             home_evidence.note = deadline.reason + "；" + (deadline.value or "")
     calendar = partner.partner_exchange_details["academic_calendar"]
-    if partner.source_pages[0] == 34 and calendar.status == "conflict":
+    if partner.source_pages[0] in {34, 61} and calendar.status == "conflict":
         if partner.semester_dates:
             partner.reference_data["semester_dates"] = partner.semester_dates
         partner.semester_dates = calendar.value
@@ -168,7 +168,7 @@ def apply_overseas_review(partner: PartnerUniversity) -> PartnerUniversity:
         if home_evidence:
             home_evidence.status = "conflict"
             home_evidence.note = calendar.value
-    if partner.source_pages[0] in {32, 35, 37}:
+    if partner.source_pages[0] in {32, 35, 37, 61, 87, 105}:
         detail = partner.partner_exchange_details["language"]
         partner.language_review_note = detail.value or detail.reason
         for condition in partner.language_conditions:
@@ -178,13 +178,6 @@ def apply_overseas_review(partner: PartnerUniversity) -> PartnerUniversity:
         partner.student_summary_zh.eligibility_points.append(
             partner.language_review_note
         )
-    if partner.source_pages[0] == 32:
-        # The Spring 2027 host list is now readable, but its optional JLPT
-        # certificate differs from the mother's required-document list.
-        document = partner.partner_exchange_details["documents"]
-        home_evidence = partner.field_evidence["partner_documents"]
-        home_evidence.status = "needs_confirmation"
-        home_evidence.note = document.value or document.reason
     if partner.source_pages[0] == 95:
         detail = partner.partner_exchange_details["language"]
         partner.language_review_note = detail.value or detail.reason
@@ -255,10 +248,34 @@ def describe_field(key: str, field: PartnerExchangeDetailField) -> str:
 
 
 def enrich_workflow(workflow, partner: PartnerUniversity):
+    from .ccu_documents import enrich_documents
+
     fields = partner.partner_exchange_details
     if not fields:
         return workflow
     scope = workflow.steps[4].scope
+    # The mother's per-school second-stage list is independent of the host's
+    # freshly reviewed list. Keep both, without promoting gray historical text.
+    home_documents = partner.field_evidence.get("partner_documents")
+    if home_documents:
+        pages = "、".join(map(str, home_documents.source_pages))
+        if home_documents.status == "reference_only":
+            text = home_documents.reference_excerpt
+            label = "中正逐校第二階文件：歷史灰字參考，尚未核實當期，不作必備文件"
+        else:
+            text = home_documents.excerpt or partner.application_info
+            label = f"中正逐校第二階文件：{STATUS_LABELS[home_documents.status]}"
+        if text:
+            workflow.steps[3].details.append(
+                f"{label}；官方PDF第{pages}頁；"
+                f"{home_documents.application_round or '適用年度未核實'}；"
+                f"查核2026-10-08：{text}"
+            )
+            workflow.steps[3].source_urls = list(
+                dict.fromkeys(
+                    [*workflow.steps[3].source_urls, home_documents.source_url]
+                )
+            )
 
     def sources(keys):
         return list(
@@ -300,6 +317,7 @@ def enrich_workflow(workflow, partner: PartnerUniversity):
                 needs_confirmation=True,
             )
         ]
+        enrich_documents(step, partner)
     # Always show the source gaps: an actual listed requirement is not a promise
     # that every attachment, signature or faculty-specific item is complete.
     step.needs_confirmation = True
@@ -346,11 +364,13 @@ def enrich_workflow(workflow, partner: PartnerUniversity):
         )
         for url, ev in refs.items()
     )
-    workflow.coverage_note = "中正2027春季規定及55校海外附件／頁面已逐欄查核；缺值、舊年度、計畫差異與來源矛盾另列，非完整資料或双人審核。"
+    workflow.coverage_note = "中正2027春季母校規定已核；55校海外資料按17欄保存查核狀態，已讀原文範圍另见審閱紀錄。仍有公開資料續查、缺值、舊年度、計畫差異與來源矛盾；流程未完成雙人審核發布。"
     return workflow
 
 
 def destination_profile(partner: PartnerUniversity) -> DestinationProfile:
+    from .ccu_profile import profile_life
+
     fields = partner.partner_exchange_details
     life_keys = [
         "housing",
@@ -375,6 +395,14 @@ def destination_profile(partner: PartnerUniversity) -> DestinationProfile:
         )
         for key in life_keys
     ]
+    life, profile_sections, profile_evidence = profile_life(partner)
+    sections.extend(profile_sections)
+    refs.update(
+        {
+            ev["source_url"]: ExchangeFieldEvidence.model_validate(ev)
+            for ev in profile_evidence
+        }
+    )
 
     def summary(key):
         return describe_field(key, fields[key])
@@ -383,10 +411,11 @@ def destination_profile(partner: PartnerUniversity) -> DestinationProfile:
         home_university=HOME,
         school_name=partner.school_name,
         country=partner.country,
+        city=partner.location.city if partner.location else None,
         cost_summary=summary("costs"),
         housing_summary=summary("housing"),
-        transport_summary=summary("arrival"),
-        campus_life_summary=summary("arrival"),
+        transport_summary=life.get("transport"),
+        campus_life_summary=life.get("campus_life"),
         student_guide_sections=sections,
         sources=[
             SourceReference(

@@ -97,7 +97,6 @@ def test_overseas_counts_do_not_claim_full_coverage_or_turn_fetches_into_current
     "page,field",
     [
         (24, "nomination_deadline"),
-        (47, "academic_calendar"),
         (49, "academic_calendar"),
         (54, "housing"),
         (58, "costs"),
@@ -138,10 +137,17 @@ def test_hokkaido_program_evidence_and_old_documents_stay_separate():
     flows = read_jsonl(
         BUNDLE / "application_workflows.jsonl", UniversityApplicationWorkflow
     )
-    for page in (16, 23, 32, 42, 80, 95, 99, 105):
+    for page in (16, 23, 42, 80, 95, 99, 105):
         partner = at(page)
         flow = next(f for f in flows if f.school_name == partner.school_name)
         assert not flow.steps[4].required_documents
+    assert any(
+        "if available" in item
+        for item in next(f for f in flows if f.school_name == at(32).school_name)
+        .steps[4]
+        .required_documents
+    )
+    assert at(32).field_evidence["partner_documents"].status == "reference_only"
     assert at(47).partner_exchange_details["arrival"].status == "explicit_not_announced"
     assert (
         at(47).partner_exchange_details["housing_deadline"].status
@@ -196,7 +202,10 @@ def test_api_and_storage_deliver_life_guides_without_changing_cgu(tmp_path):
     )
     data = response.json()
     assert response.status_code == 200 and data["home_university"] == HOME
-    assert len(data["student_guide_sections"]) == 8
+    assert len(data["student_guide_sections"]) == 10
+    assert {"transport", "campus_life"} <= {
+        s["key"] for s in data["student_guide_sections"]
+    }
     assert "2026/2027" in json.dumps(data, ensure_ascii=False)
     partner = at(71)
     data = client.get(

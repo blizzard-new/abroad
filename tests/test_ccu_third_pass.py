@@ -116,10 +116,11 @@ def test_receiving_reciprocity_cap_preserves_ccu_home_quota():
     assert p.quota == "一學期(one semester) 2名 或 一學年(one year) 1名"
     assert p.quota_status == "published" and p.availability_status == "open"
     field = p.partner_exchange_details["eligibility"]
-    assert field.status == "verified_current"
-    assert "最多2名" in field.value and "僅1席" in field.value
-    assert {page for e in field.evidence for page in e.source_pages} == {4, 5}
-    assert "個人GPA" in field.value
+    assert field.status == "needs_confirmation"
+    assert "≤2席" in field.value and "互惠1席" in field.value
+    assert "個人年級只在未年Overview" in field.value
+    assert any(e.source_pages == [5] for e in field.evidence)
+    assert any(not e.source_pages for e in field.evidence)
 
 
 def test_fges_partial_certificate_requirement_and_approximate_welcome():
@@ -137,7 +138,8 @@ def test_fges_partial_certificate_requirement_and_approximate_welcome():
         )
         if f.school_name == p.school_name
     )
-    assert flow.steps[4].required_documents == [docs.value]
+    assert flow.steps[4].required_documents == ["語言能力證明（完整其他附件待提名表）"]
+    assert all(r.needs_confirmation for r in flow.steps[4].document_requirements)
     assert flow.steps[4].deadline_at is None
 
 

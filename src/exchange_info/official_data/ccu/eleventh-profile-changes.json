@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-10-08T10:12:36.633488+00:00",
+  "new_network_records": 7,
+  "new_source_ids": [
+    "p10-r11-clubs",
+    "p10-r11-life",
+    "p108-r11-location",
+    "p109-r11-student",
+    "p26-r11-activity",
+    "p33-r11-clubs",
+    "p33-r11-support"
+  ],
+  "profile_field_changes": [
+    {
+      "ccu_page": 10,
+      "field": "campus_life",
+      "previous_status": "missing",
+      "new_status": "reference_only",
+      "source_ids": [
+        "p10-r11-clubs"
+      ]
+    },
+    {
+      "ccu_page": 33,
+      "field": "campus_life",
+      "previous_status": "missing",
+      "new_status": "needs_confirmation",
+      "source_ids": [
+        "p33-r11-clubs"
+      ]
+    }
+  ],
+  "missing_profile_fields_filled": 2,
+  "notes": [
+    "NENU入口、UTB校址等只有導航無通勤內容，不填transport",
+    "BNU辯論隊舊例子留reference_only",
+    "CUC社團有正文才填，不把studentlife導航當內容"
+  ]
+}

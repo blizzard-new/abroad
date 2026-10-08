@@ -123,11 +123,19 @@ def test_each_gap_has_real_acquisition_checks_without_inventing_nonpublication()
                     and field["status"] == "explicit_not_announced"
                 )
     followup = json.loads((BUNDLE / "source-failure-followup.json").read_text())
-    assert followup["original_failed_source_count"] == 14
-    assert all(x["retry"] for x in followup["sources"])
-    assert (
-        len([x for x in followup["sources"] if "失敗" not in x["retry"]["result"]]) == 1
-    )
+    assert followup["original_failed_source_count"] == len(followup["sources"])
+    retried = [x for x in followup["sources"] if x["retry"]]
+    assert len(retried) == 14
+    for item in followup["sources"]:
+        source = json.loads(
+            (
+                BUNDLE / "overseas_sources" / (item["original"]["source_id"] + ".json")
+            ).read_text()
+        )
+        assert source["status"] == "fetch_failed"
+        if not item["retry"]:
+            assert "尚無同入口重試" in item["conclusion"]
+    assert len([x for x in retried if "失敗" not in x["retry"]["result"]]) == 1
 
 
 def test_fetcher_keeps_legacy_word_binary_and_relative_official_links(tmp_path):

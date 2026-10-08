@@ -2911,8 +2911,10 @@ def create_app(
             base_url=public_base_url(request),
         )
         locations = load_university_locations(resolved_data_dir)
+        from .ccu_profile import school_location
+        is_ccu = university_for(school).id == "ccu"
         return dashboard.model_copy(update={"partner_universities": [
-            partner.model_copy(update={"location": public_location(locations, partner.school_name, partner.country)})
+            partner.model_copy(update={"location": school_location(partner, public_location(locations, partner.school_name, partner.country)) if is_ccu else public_location(locations, partner.school_name, partner.country)})
             for partner in dashboard.partner_universities
         ]})
 
@@ -3606,27 +3608,42 @@ def create_app(
                 home_university=university.school_name, partner_university=partner.school_name,
             ),
         )
-        return build_school_completeness(
+        result = build_school_completeness(
             partner, destination_profile(school, home_school), workflow,
             home_university=university.school_name,
         )
+        if university.id == "ccu":
+            from .ccu_profile import align_completeness
+            return align_completeness(result, partner)
+        return result
 
     @app.get("/school-life-context", response_model=SchoolLifeContext)
     def school_life_context(
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
     ) -> SchoolLifeContext:
-        partner = partner_for_school(school, home_school)
+        university, partner = partner_context_for_school(school, home_school)
         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
-        return build_life_context(partner, destination_profile(school, home_school), location, resolved_data_dir)
+        if university.id == "ccu":
+            from .ccu_profile import school_location
+            location = school_location(partner, location)
+        profile = destination_profile(school, home_school)
+        context = build_life_context(partner, profile, location, resolved_data_dir)
+        if university.id == "ccu":
+            from .ccu_profile import align_life_context
+            return align_life_context(context, partner, profile, location)
+        return context
 
     @app.post("/school-life-context/refresh", response_model=SchoolLifeContext)
     def refresh_school_life_context(
         school: str = Query(min_length=2),
         home_school: str | None = Query(default=None),
     ) -> SchoolLifeContext:
-        partner = partner_for_school(school, home_school)
+        university, partner = partner_context_for_school(school, home_school)
         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
+        if university.id == "ccu":
+            from .ccu_profile import school_location
+            location = school_location(partner, location)
         result = refresh_life_research(partner, location, resolved_data_dir)
         context = school_life_context(school, home_school)
         return context.model_copy(update={"research_notes": result.notes})

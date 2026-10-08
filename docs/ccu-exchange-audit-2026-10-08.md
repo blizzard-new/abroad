@@ -6,7 +6,7 @@
 交付前遠端 main 已前進至 `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`（第一批交付時為 `293546e807294dc0812f390b240a4cfb68e86cd0`）；第一批交付保留開工基準；第二輪依使用者要求安全整合此最新main，保留臺大與既有資料，未寫入其他session工作目錄。
 本 clone 未找到 AGENTS.md 或適用 `.agents/skills`。未寫入其他學校 session 的工作目錄。
 
-最新數量與分類見末節「第五輪：校級協議、公開嵌入表與年度範圍核對」；前節保留歷史檢查點及最新main整合的資料與驗證。
+最新數量、功能對照與實際驗證見末節「第八至十一輪：逐校文件、生活資料及實際 API 對照」及 [55筆功能對照](ccu-functional-parity-2026-10-08.md)；前節保留歷史檢查點，不能取代最新數字。
 
 ## 已核實適用範圍
 
@@ -355,3 +355,38 @@ UBM、EPITA、SDU的新接收資料顯示替代語言證明／program分流或�
 實際驗證：141項CCU測試全過；四校選定回歸262 passed、5 skipped、1既有NTPU目的地計數失敗（已於main重現）。瀏覽器同次22項既有通過；四個新案例因重複有效URL數量假設失敗後修正，單獨重跑4 passed/25.08s。16輸出離線重建雜湊一致；49個CGU/NTPU/NTU main資料雜湊不變；110 API路徑及必填schema不變。最終wheel562份CCU檔案逐byte一致、實際XLS已包含，SHA見seventh-pass-final-wheel-proof.json。初始指令/測試問題、真實日誌與截圖保留於validation和本目錄。
 
 本輪共用處變更僅pyproject.toml的CCU legacy-XLS package-data glob；校別程式新增optional xlrd研究依賴及唯讀XLS擷取，CCU adapter補語言計畫/替代說明、龍谷文件待確認。累計核心registry/storage/API/UI/資格與文件協調改動見此前檔案清單。下一輪公開源續查p16/23/61/77/87/105；此仍是可整合檢查點，未標整體研究已耗盡。
+
+## 第八至十一輪：逐校文件、生活資料及實際 API 對照
+
+此節更新前述歷史檢查點。截至2026-10-08，104條目分類仍為52筆當期列名額（校內收件已截止）、49筆本季不開放、3筆名額空白待確認，無明示零名額。55筆流程各7步驟及55筆指南可由實際API讀取；流程保持legacy／official_partial。
+
+新增個別外校文件清單：23校175項，保留申請、錄取後、條件計畫三種階段。每項具有官方URL、原文、物理PDF頁碼或網頁、年度／梯次、查核日期、hash；份數、簽章、正本、form URL僅按實讀內容設定。全23份清單標為partial_not_exhaustive，不代表全部文件。母校9類第一階個別準備文件及37筆當期逐校第二階要求另放在母校與提名步驟，不能被外校清單覆盖或當成host申請規定。
+
+新增55×7逐欄基本資料：城市／校址各54筆有來源、網站55筆、学制21筆、學院11筆、交通45筆、生活48筆有查得內容；非空不等於2027適用，逐欄狀態見功能對照。地圖經緯度全部保持pending，54筆城市可核對且1筆缺值，不從名稱猜座標。p71官方入口回傳不相關內容，保存異常而不採作政策、校址或城市依據。多校區、SoE／Erasmus／HUSTEP／研究所等條件分別保留。學術filter中待確認標記保持unknown，不能自動判符合。
+
+接收校17類欄位共935項：310當期已核實、229缺值、314適用年度或條件待確認、20其他年度參考、61來源矛盾、1官方明示尚未公告（HUFS到校前TB窗口）。39校至少一项當期海外事實，0校17项全核實，0校完整外校申請文件集合，functional_parity_complete=false。剩餘公開交通、生活、學制／學院及政策適用年仍是公開查核工作；登入／提名後個人表、技術失敗与承辦确认另列，沒有把所有缺值都稱為只能聯絡學校。
+
+本輪實讀校務內容的重大修正：
+
+- 東北COLABS的request提交為2026-10-15 15:00JST，Oct1–15提交對應EarlyNovember結果通知；舊Q5時程內部矛盾保留，request、結果與TAO Oct1–Nov15分開。
+- 龍谷母校灰字十項文件保持舊參考，current Spring2027接收清單的JLPT是if available；中正兩年內語言證明不因此豁免。
+- KMUTT AY2026正式校曆的Sem2/2026課程為2027-01-13至05-28；01-11/12是registration而非開課，與中正母校表01-11至05-15矛盾保留；SIT研究所另計。
+- ASBU主校2026/27本科、研究所與Cyprus校區分開；主校春季授課2027-02-08至06-04，Cyprus內部exchange日期不能當CCU接收申請截止。舊2025/26flyer的春秋nomination標籤疑義不自行修正。
+- HUFS新Spring2027–Fall2027 factsheet與語言替代簽章表實際可開啟；GPA≥2.5，英文與韓文有各自替代條件。非OECD passport財力認證、提名後個人finance表及NHIS與私人保險分開。
+- 忠南2027 current factsheet修正一般申請12/1、bank／認證在學12/20上傳、2027-01-15正本抵校，健康／TB與participation agreements錄取後；regular與GSP住房／餐費條件不同。
+- Strasbourg2026/27 nomination與student application均到Oct1；Learning Agreement實得PDF實際有本人與兩校coord簽章、至少50%同系課程。2026住房指南、CROUS流程與法國政府住房補貼条件分開。
+- VelTech所謂application DOCX實際是factsheet，web與文件截止／住宿價格矛盾保留。Xiamen health.pdf實際DOCX可讀；另一physical exam captcha不冒充PDF表格。CQU/HMT与一般foreign，NENU/BNU外國生規定與Taiwan路徑分開。
+
+637個來源ID唯一且對應637請求，81個合作校附件均可解析（60PDF、16DOCX、3XLSX、1XLS、1DOC）；附件可開啟只證明可讀，不能推定當期或完整清單。70筆fetch_failed另記；7challenge、3空回應、2captcha、1不相關內容異常不採作規定正文。20筆failed followup中14筆實際重試、6筆僅首次失敗無重試，未捏造結果。
+
+本輪校別新程式為ccu_profile.py、ccu_documents.py、build_ccu_functional_parity.py；新增資料獨立放在official_data/ccu。相對第七輪的核心差異是api.py（CCU城市、生活与completeness對應真實來源）、storage.py（CCU缺值不改成官方未公告）、static/app.js（載入CCU交通／生活段落）、static/index.html（保留NTU前綴並更新CCU資源版本）。本輪沒有新增API路徑或改required schema。初始分支至main的其他共用差異仍見前表，供統一合併。
+
+實際檢查及證據均存於docs/ccu-validation-2026-10-08：
+
+- 四校回歸：282 passed、5 skipped、1 failed（臺北大學destination profile count預期1實際0，在最新main独立環境已重現）；沒有CCU新增失敗。5skip為4個既有CGU Phase C與1個NTU Docker opt-in。
+- 全CCU手機／桌面瀏覽器27 passed；補強實際展開生活指南及母校／host文件後的兩個聚焦測試亦通過。截圖可見Winterthur交通、ALIAS及忠南12/20上傳／1/15正本抵校要求，無水平溢出。
+- 最新main的49個CGU／NTPU／NTU資料檔逐檔hash不變；20份輸出重建前後一致；110條API路徑及required schema不變。
+- 新增與實質修改的10個Python檔Ruff通過，JS node --check通過。擴大到較早學校測試與build程式的Ruff有47筆既存樣式問題，保留實際結果，不能宣稱全專案lint通過。
+- wheel建置成功，760個CCU資料檔與來源byte一致，ccu_profile.py、ccu_documents.py與CCU生活renderer納入套件；最新SHA見eighth-eleventh-wheel-proof.json。
+
+長庚基準亦經實際API核對：原始154流程＝77 published(115)＋77 legacy(116)。無年度API回傳77 legacy；指定academic_year=115才是77 published，已在最新main解包API重現。中正與長庚照片、72小時、行李、到校採購皆為0，不能列成中正單方缺口。完整55筆逐校對照、來源狀態、文件階段與尚缺欄位見ccu-functional-parity-2026-10-08.md及functional-parity.json。

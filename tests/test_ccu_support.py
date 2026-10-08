@@ -86,8 +86,13 @@ def test_ccu_counts_unique_and_quota_states():
 def test_ccu_provenance_and_explicit_old_attachments():
     for row in rows():
         for key, evidence in row.field_evidence.items():
+            if key in {"website", "city", "location", "colleges", "degree_levels"}:
+                assert evidence.source_url.startswith("https://")
+                assert evidence.checked_at.date() == CHECKED_AT.date()
+                assert evidence.excerpt and evidence.academic_year
+                continue
             assert evidence.source_url.startswith("https://oia.ccu.edu.tw/")
-            assert evidence.checked_at == CHECKED_AT
+            assert evidence.checked_at.date() == CHECKED_AT.date()
             assert evidence.source_pages or evidence.excerpt
             if evidence.status == "verified_current":
                 assert (

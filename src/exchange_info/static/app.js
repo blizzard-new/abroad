@@ -8204,6 +8204,7 @@ function renderDestinationProfile(item, profile) {
     const status = profile.coverage_status === "official_partial" ? "合作校生活資料部分核實" : "合作校生活資料仍待確認";
     container.innerHTML = `<div class="destination-profile-status partial"><div><strong>${escapeHtml(status)}</strong><p>${escapeHtml(profile.coverage_note || "")}</p><small>最後查核：${escapeHtml(formatDate(profile.last_checked))}</small></div></div>`
       + window.UniWayCcuDetails.render(item, escapeHtml, ["housing", "housing_deadline", "costs", "insurance", "visa", "arrival", "course_restrictions", "academic_calendar"]);
+    container.innerHTML += window.UniWayCcuDetails.renderProfileLife(profile, escapeHtml);
     initIcons();
     return;
   }

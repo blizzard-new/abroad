@@ -811,8 +811,10 @@ def main():
     if len({r.school_name for r in rows}) != len(rows):
         raise ValueError("Duplicate partner identity")
     from exchange_info.ccu_overseas import apply_overseas_review, destination_profile
+    from exchange_info.ccu_profile import apply_profile
 
     rows = [apply_overseas_review(row) for row in rows]
+    rows = [apply_profile(row) for row in rows]
     for row, detail in zip(rows, details, strict=True):
         detail["fields"] = {
             key: value.model_dump(mode="json")

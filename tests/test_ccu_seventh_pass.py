@@ -58,12 +58,13 @@ def test_ryukoku_current_round_and_deadline_conflict_reach_all_projections():
 def test_ryukoku_language_optional_certificate_and_internal_housing_conflicts():
     p = at(32)
     f = p.partner_exchange_details
-    assert f["language"].status == f["documents"].status == "needs_confirmation"
+    assert f["language"].status == "needs_confirmation"
+    assert f["documents"].status == "verified_current"
     assert (
         "recommended" in p.language_review_note and "PBL500" in p.language_review_note
     )
     assert "ifavailable" in f["documents"].value
-    assert p.field_evidence["partner_documents"].status == "needs_confirmation"
+    assert p.field_evidence["partner_documents"].status == "reference_only"
     assert (
         f["housing"].status
         == f["costs"].status
@@ -99,12 +100,12 @@ def test_colabs_prior_consent_is_not_a_nomination_deadline_or_tao_acceptance():
     f = at(35).partner_exchange_details
     assert f["nomination_deadline"].status == "missing"
     assert f["nomination_deadline"].value is None
-    assert f["application_deadline"].status == "verified_current"
+    assert f["application_deadline"].status == "conflict"
     for text in [
-        "2026-10-15 15:00 JST",
+        "10-15 15:00 JST",
         "Oct1–Nov15",
-        "由division",
-        "不可申请前直接聯繫教授",
+        "EarlyNovember",
+        "不得先直接聯繫教授",
         "不等入學",
     ]:
         assert text in f["application_deadline"].value
