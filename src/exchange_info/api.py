@@ -377,6 +377,10 @@ from .storage import (
     upsert_partner_research,
 )
 from .student_view import build_student_dashboard, fetch_partner_universities
+from .tku_student_view import (
+    build_tku_student_dashboard, fetch_tku_partner_universities,
+    tku_exchange_info, tku_processed_pages,
+)
 from .rag import rag_index_status, search_document_chunks, supabase_configured
 from .legal_pages import TERMS_VERSION, register_legal_pages
 from .request_origin import client_fingerprint, public_base_url
@@ -1066,6 +1070,13 @@ def create_app(
         university = university_for(
             school.school_name if isinstance(school, UniversityProfile) else school
         )
+        if university.id == "tku":
+            # Window state is time-sensitive across dashboards, advisors and plans.
+            return apply_partner_research(
+                fetch_tku_partner_universities(),
+                load_partner_research(resolved_data_dir),
+                home_university=university.school_name,
+            )
         if university.id not in partner_cache:
             with partner_cache_lock:
                 if university.id not in partner_cache:
@@ -1115,6 +1126,8 @@ def create_app(
         return (
             ntpu_processed_pages()
             if university.id == NTPU.id
+            else tku_processed_pages()
+            if university.id == "tku"
             else load_processed_pages(resolved_data_dir)
         )
 
@@ -1124,6 +1137,8 @@ def create_app(
         )
         if university.id == NTPU.id:
             return ntpu_exchange_info(partners_for_university(university))
+        if university.id == "tku":
+            return tku_exchange_info(partners_for_university(university))
         return load_exchange_info(resolved_data_dir) or ExchangeInfo(school_name=CGU.school_name)
 
     dashboard_cache: dict[str, tuple[float, tuple, StudentDashboard]] = {}
@@ -1171,6 +1186,9 @@ def create_app(
             return build_ntpu_student_dashboard(
                 partner_universities=partners_for_university(university)
             )
+        if university.id == "tku":
+            # Refresh window state on each request; a cached open round must close on time.
+            return build_tku_student_dashboard()
         # Building this one downloads the partner sheet and parses a dozen official PDFs: 10 to 40 seconds on the free
         # host. The result is kept; once it is a few minutes old the next visitor still gets it at once while a fresh one
         # is built in the background. Only when the data files behind it were rewritten (or nothing was built yet) does

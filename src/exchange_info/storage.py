@@ -48,7 +48,7 @@ from .models import (
 )
 from .settings import DEFAULT_DATA_DIR
 from .school_identity import school_identity_key
-from .university_registry import CGU, NTPU
+from .university_registry import CGU, NTPU, TKU
 from .workflow_structuring import structure_application_workflow
 from .workflow_identity import workflow_storage_key
 
@@ -56,6 +56,7 @@ T = TypeVar("T", bound=BaseModel)
 
 PACKAGE_DIR = Path(__file__).resolve().parent
 BUNDLED_NTPU_DIR = PACKAGE_DIR / "official_data" / "ntpu"
+BUNDLED_TKU_DIR = PACKAGE_DIR / "official_data" / "tku"
 BUNDLED_CGU_DIR = PACKAGE_DIR / "official_data" / "cgu"
 
 _STORAGE_LOCKS_GUARD = threading.Lock()
@@ -550,7 +551,7 @@ def cached_workflow_catalog(key: tuple, build) -> list[UniversityApplicationWork
 
 
 def _bundled_workflow_paths() -> tuple[Path, ...]:
-    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR))
+    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_TKU_DIR))
 
 
 def _bundled_workflow_signature() -> tuple:
@@ -709,6 +710,7 @@ def load_destination_profiles(
         row.model_copy(update={"home_university": home_university})
         for directory, home_university in (
             (BUNDLED_NTPU_DIR, NTPU.school_name),
+            (BUNDLED_TKU_DIR, TKU.school_name),
             (BUNDLED_CGU_DIR, CGU.school_name),
         )
         for row in read_jsonl(

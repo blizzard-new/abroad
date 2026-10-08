@@ -5,6 +5,8 @@ import unicodedata
 from dataclasses import dataclass
 from typing import Literal
 
+from .tku_university import PROFILE as TKU_PROFILE
+
 
 @dataclass(frozen=True)
 class UniversityProfile:
@@ -77,7 +79,9 @@ NTPU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU)
+TKU = UniversityProfile(**TKU_PROFILE)
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, TKU)
 DEFAULT_UNIVERSITY = CGU
 
 

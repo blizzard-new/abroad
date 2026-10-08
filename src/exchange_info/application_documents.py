@@ -755,6 +755,9 @@ def _ntpu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
 
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university = require_university(school_name)
+    if university.id == "tku":
+        from .tku_documents import tku_application_templates
+        return tku_application_templates()
     if university.id != NTPU.id:
         return [template.model_copy(deep=True) for template in APPLICATION_TEMPLATES]
     return [
@@ -771,6 +774,11 @@ def all_application_templates(
 
 
 def templates_for_context(context: ApplicationCenterContext) -> list[ApplicationDocumentTemplate]:
+    if require_university(context.school_name).id == "tku" and (
+        context.academic_year not in (None, "2027-2028")
+        or context.application_round not in (None, "日語組第二次甄選")
+    ):
+        return []
     flags = set(context.flags)
     return [
         template.model_copy(deep=True)
@@ -1213,6 +1221,9 @@ def build_packet_manifest(
             for item in items
         ),
         source_checked_at=(
+            datetime(2026, 10, 8, tzinfo=timezone.utc)
+            if require_university(request.context.school_name).id == "tku"
+            else
             NTPU_SOURCE_CHECKED_AT
             if require_university(request.context.school_name).id == NTPU.id
             else SOURCE_CHECKED_AT

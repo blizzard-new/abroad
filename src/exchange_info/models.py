@@ -552,7 +552,7 @@ class PartnerProgramOption(BaseModel):
 class PartnerUniversity(BaseModel):
     program_type: str
     availability_status: Literal[
-        "open", "agreement_only", "departmental_reference"
+        "open", "agreement_only", "departmental_reference", "closed", "reference_only", "quota_unconfirmed"
     ] = "open"
     availability_note: str | None = None
     agreement_type: str | None = None

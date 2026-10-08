@@ -3785,6 +3785,16 @@ function languageThresholdFromPartner(item, languageTest) {
 
 function partnerAvailabilityMeta(item) {
   const status = item?.availability_status || "open";
+  const additional = {
+    closed: { label: "表列交換校／校內申請已截止", reason: "本梯次校內甄選已截止" },
+    reference_only: { label: "舊期參考／不能作當期申請", reason: "尚未核實新版名額及規定" },
+    quota_unconfirmed: { label: "當期名額或期間待確認", reason: "名額或申請期間尚未確認可申請" },
+  };
+  if (additional[status]) {
+    const meta = additional[status];
+    return { status, shortLabel: meta.label, cardLabel: meta.label, matchLabel: meta.label,
+      reason: meta.reason, blocked: true };
+  }
   if (status === "departmental_reference") {
     return {
       status,
@@ -3821,6 +3831,12 @@ function renderPartnerAvailabilityNotice(item) {
   if (!availability.blocked) return "";
   const fallback = availability.status === "departmental_reference"
     ? "中央當期名單未列，請先向所屬學院或國際處確認是否開放。"
+    : availability.status === "closed"
+    ? "此校列於官方名額表，但校內申請已截止；已獲推薦者請依外校通知續辦。"
+    : availability.status === "reference_only"
+    ? "這是已標示年度的舊期資料；新版尚未核實。"
+    : availability.status === "quota_unconfirmed"
+    ? "須確認當期正名額及申請期間後才能申請。"
     : "你的學校和這所學校簽有交換合約，只是這一期的交換名額表沒有列它，所以現在不能申請。之後若開放，會出現在學校國際處的名額表；開放前請先看國際處公告。";
   return `
     <div class="partner-availability-notice ${escapeHtml(availability.status)}" role="note">
@@ -4218,7 +4234,7 @@ function eligibilitySummary() {
   return {
     likely,
     review,
-    qualificationLabel: academicPass && languagePass ? `符合${activeUniversityProfile().short_name}基本門檻` : "仍有基本條件要確認",
+    qualificationLabel: activeUniversityProfile().id === "tku" ? "淡江須依語組、學制、梯次及官方矛盾項確認資格" : academicPass && languagePass ? `符合${activeUniversityProfile().short_name}基本門檻` : "仍有基本條件要確認",
   };
 }
 
