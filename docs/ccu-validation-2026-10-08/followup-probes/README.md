@@ -7,3 +7,5 @@ NTPU問題是`/coverage`僅採用CGU/NTU guide狀態，其他已載入母校資�
 `race-before`重現舊A回應在新A仍pending時解除loading；`queued-before`重現切母校前排隊的650ms自動儲存遺失。修正後`race-stable`8項通過（390／1440各4）：只延遲實際API bytes送達，保留HTTP/body hash；草稿case控制browser clock，不替換application state或政策response。新detail測試最初誤期待program_scope為「法學」，實際官方欄位為NUPACE／National Chung Cheng University；修正測試與實際來源一致，未改官方資料迎合測試。
 
 `followup-data`10項通過＝既有NTPU4項＋新增coverage/isolation3項＋新增來源/分類3項。Focus結果不能替代後續full gate，遠端CI仍未執行。
+
+新增四校8个Latin/中文home alias案例后，focused NTPU＋NTU＋本轮测试共51passed；这是修改后未提交工作目录probe，不是53e88e7结果，也不替代后续新SHA完整gate。

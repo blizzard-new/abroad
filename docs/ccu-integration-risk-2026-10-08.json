@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-08T21:53:29.418865+00:00",
+  "checked_at": "2026-10-08T22:07:55.670485+00:00",
   "main_sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
-  "ccu_prior_pushed_sha": "5d55498245e86009b682ab4fb6e1e6ac816679bf",
+  "ccu_prior_pushed_sha": "53e88e7c77480cec810e412e989054b0aec9bcbc",
   "no_other_branches_merged": true,
   "isolated_combined_integration_test": "not_run_pending_parent_arrangement",
   "ccu_shared_paths": [
@@ -45,7 +45,7 @@
         {
           "path": "src/exchange_info/api.py",
           "main_sha256": "323dbf8ddffc4fbbb1693d7501930d47aa0fa276b5e5dace149dda0de083dd32",
-          "ccu_working_sha256": "d7ef51933f4531a8fa68a6a9696b9c486143bd96f05b2854828dde4dfe32c1fc",
+          "ccu_working_sha256": "f36c9d20e203a14a936661a4b8251259c2e981eb08a0764a6d20051bc97034ef",
           "other_sha256": "15c326450a135f7c98094300540dde3d67c1fa12f44f9dd664c0c5a19eee3dc2",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -57,7 +57,7 @@
         {
           "path": "src/exchange_info/static/app.js",
           "main_sha256": "e7c4ed2b9ed0b33c24261e84776610eb1a32b1e6328da34ad7af631872a0193c",
-          "ccu_working_sha256": "edb3a076876eb6f67c8be1711c2ece85201af435b18c25506efa4098985b80cf",
+          "ccu_working_sha256": "2cc44a50449ffe4ad166ef223532f1b4498ff19b9124c83927c5033bd88f1a55",
           "other_sha256": "775b2b5232b4a1291f4e4b643a40bf5c51d18c3f968207fc072a86091cd6d99e",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -79,8 +79,8 @@
     },
     {
       "ref": "origin/data/ncu-exchange-20261008",
-      "sha": "1bddf5a154e2283e17cbb5c1ab554089385e033c",
-      "changed_path_count": 371,
+      "sha": "eb0b610604499da9ca29884830fa0c85522aab33",
+      "changed_path_count": 463,
       "shared_paths": [
         "docs/api/openapi.json",
         "pyproject.toml",
@@ -153,7 +153,7 @@
         {
           "path": "src/exchange_info/api.py",
           "main_sha256": "323dbf8ddffc4fbbb1693d7501930d47aa0fa276b5e5dace149dda0de083dd32",
-          "ccu_working_sha256": "d7ef51933f4531a8fa68a6a9696b9c486143bd96f05b2854828dde4dfe32c1fc",
+          "ccu_working_sha256": "f36c9d20e203a14a936661a4b8251259c2e981eb08a0764a6d20051bc97034ef",
           "other_sha256": "579fac451214fb643f61ad438a7c4f6174b88f9eb61ed2ae86016d2800de56c7",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -234,38 +234,43 @@
         {
           "path": "src/exchange_info/static/app.js",
           "main_sha256": "e7c4ed2b9ed0b33c24261e84776610eb1a32b1e6328da34ad7af631872a0193c",
-          "ccu_working_sha256": "edb3a076876eb6f67c8be1711c2ece85201af435b18c25506efa4098985b80cf",
-          "other_sha256": "a2f692e0e615d5495fc6c88a190f987397de453f9f10745e35f6edb94db5f6bb",
+          "ccu_working_sha256": "2cc44a50449ffe4ad166ef223532f1b4498ff19b9124c83927c5033bd88f1a55",
+          "other_sha256": "675917457182ed8210361e5d42ad33c76c4a6389baaa29df3f5a86064c573f45",
           "same_as_ccu": false,
           "hunk_contexts": [
             "@@ -707,0 +708,8 @@ function homeAcademicPass(profile) {",
             "@@ -713,0 +722,11 @@ function renderAcademicFields() {",
             "@@ -720,2 +739,2 @@ function renderAcademicFields() {",
-            "@@ -1035,0 +1055 @@ async function loadSupportedUniversities() {",
-            "@@ -2449,0 +2470 @@ function sanitizeAccountWorkspacePayload(payload, homeSchool = activeHomeSchool(",
-            "@@ -2578,0 +2600,5 @@ function mergeAccountWorkspaceConflict(baseWorkspace, remoteWorkspace, localWork",
-            "@@ -4310 +4336 @@ function eligibilitySummary() {",
-            "@@ -5777,0 +5804,4 @@ function refreshApplicationFieldConditions(template) {",
-            "@@ -5832,0 +5863,43 @@ function applicationFlagsFromForm(form) {",
-            "@@ -5861,0 +5935 @@ function restoreApplicationContextForm() {",
-            "@@ -5913,0 +5988 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -5932 +6007 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -5934,0 +6010,5 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -5941 +6021 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -6120,0 +6201,3 @@ function renderApplicationDocumentCatalog() {",
-            "@@ -6125,2 +6208,2 @@ function renderApplicationDocumentCatalog() {",
-            "@@ -7525,2 +7608,3 @@ function partnerSummaryPoints(item, key) {",
-            "@@ -7528 +7612 @@ function renderStudentPointList(points, { limit = 4, compact = false, fallback =",
-            "@@ -7530,0 +7615,3 @@ function renderStudentPointList(points, { limit = 4, compact = false, fallback =",
-            "@@ -7722,0 +7810,15 @@ function openUniversityDetail(item, { updateHistory = true } = {}) {",
-            "@@ -7963 +8065 @@ function renderPartnerStudentSummary(item) {",
-            "@@ -7993,0 +8096 @@ function renderUniversityOverview(item) {",
-            "@@ -8102 +8205 @@ function renderSchoolCompleteness(report) {",
-            "@@ -8104 +8207,2 @@ function renderSchoolCompleteness(report) {",
-            "@@ -10978 +11082 @@ function renderPersonalApplicationPlan(plan) {",
-            "@@ -11015 +11119 @@ async function checkEligibility(event) {",
-            "@@ -11065,0 +11170 @@ async function checkEligibility(event) {",
-            "@@ -12620 +12725,6 @@ function bindEvents() {"
+            "@@ -780,0 +800,10 @@ function languageThreshold(test) {",
+            "@@ -1035,0 +1065 @@ async function loadSupportedUniversities() {",
+            "@@ -2388 +2417,0 @@ function selectionProfileFromWorkspace(conditions) {",
+            "@@ -2394 +2423 @@ function selectionProfileFromWorkspace(conditions) {",
+            "@@ -2449,0 +2479 @@ function sanitizeAccountWorkspacePayload(payload, homeSchool = activeHomeSchool(",
+            "@@ -2578,0 +2609,5 @@ function mergeAccountWorkspaceConflict(baseWorkspace, remoteWorkspace, localWork",
+            "@@ -4310 +4345 @@ function eligibilitySummary() {",
+            "@@ -5777,0 +5813,4 @@ function refreshApplicationFieldConditions(template) {",
+            "@@ -5832,0 +5872,43 @@ function applicationFlagsFromForm(form) {",
+            "@@ -5861,0 +5944 @@ function restoreApplicationContextForm() {",
+            "@@ -5913,0 +5997 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5932 +6016 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5934,0 +6019,5 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5941 +6030 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -6120,0 +6210,3 @@ function renderApplicationDocumentCatalog() {",
+            "@@ -6125,2 +6217,2 @@ function renderApplicationDocumentCatalog() {",
+            "@@ -7525,2 +7617,3 @@ function partnerSummaryPoints(item, key) {",
+            "@@ -7528 +7621 @@ function renderStudentPointList(points, { limit = 4, compact = false, fallback =",
+            "@@ -7530,0 +7624,3 @@ function renderStudentPointList(points, { limit = 4, compact = false, fallback =",
+            "@@ -7722,0 +7819,15 @@ function openUniversityDetail(item, { updateHistory = true } = {}) {",
+            "@@ -7963 +8074 @@ function renderPartnerStudentSummary(item) {",
+            "@@ -7993,0 +8105 @@ function renderUniversityOverview(item) {",
+            "@@ -8102 +8214 @@ function renderSchoolCompleteness(report) {",
+            "@@ -8104 +8216,2 @@ function renderSchoolCompleteness(report) {",
+            "@@ -10978 +11091 @@ function renderPersonalApplicationPlan(plan) {",
+            "@@ -11015 +11128 @@ async function checkEligibility(event) {",
+            "@@ -11065,0 +11179 @@ async function checkEligibility(event) {",
+            "@@ -11498 +11611,0 @@ async function submitAdvisorPlan(event) {",
+            "@@ -11511 +11624 @@ async function submitAdvisorPlan(event) {",
+            "@@ -12620 +12733,6 @@ function bindEvents() {"
           ]
         },
         {
@@ -310,6 +315,23 @@
           ]
         },
         {
+          "path": "src/exchange_info/workflow_structuring.py",
+          "main_sha256": "302b7f8e90520282f31ad5cffcd6d5b0346e5cbc0997a0f0170b367467e35f80",
+          "ccu_working_sha256": "f9c340bfdb26308812608ba33deae16a8630ae3f2b200c1c85b598b620194860",
+          "other_sha256": "67bf8ec3f43f672c9d4c83f4ddf3de58d07f28e78cd9a702e883633872f2c5d8",
+          "same_as_ccu": false,
+          "hunk_contexts": [
+            "@@ -277,0 +278,4 @@ def _structure_step(",
+            "@@ -279 +283 @@ def _structure_step(",
+            "@@ -312 +316,2 @@ def _structure_step(",
+            "@@ -320,0 +326 @@ def _structure_step(",
+            "@@ -500,0 +507 @@ def _structure_document_requirement(",
+            "@@ -503 +510 @@ def _structure_document_requirement(",
+            "@@ -506 +513 @@ def _structure_document_requirement(",
+            "@@ -508 +515,3 @@ def _structure_document_requirement("
+          ]
+        },
+        {
           "path": "uv.lock",
           "main_sha256": "8a943920ecc4af095485e6a08fa4200d7a11f3e72ceb152de30ca1b9f5e73575",
           "ccu_working_sha256": "edf3026e7302335cb90a578f9e41eba30a741ff287a2d71204012461c89bd79e",
@@ -325,8 +347,8 @@
     },
     {
       "ref": "origin/data/tku-exchange-20261008",
-      "sha": "61659fe12cf5bb5f3fed2502f112039c7f8abd92",
-      "changed_path_count": 80,
+      "sha": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+      "changed_path_count": 97,
       "shared_paths": [
         "docs/api/openapi.json",
         "pyproject.toml",
@@ -343,27 +365,34 @@
           "path": "docs/api/openapi.json",
           "main_sha256": "318799f44c5fd61cf819773e16e09350b6a11b824dbb897cfe540d51c04d8179",
           "ccu_working_sha256": "3ea0a7f6631f2ad2da8daa5c1efc5497c1d438de7045f3e9c0559d4199bc46ef",
-          "other_sha256": "30d1542fe9594d24b6a91dc121d4c5fe4043907b7c9b23cf5c22c218801a432f",
+          "other_sha256": "ee8a049e3b492fc74b13c7142022fd04086cfe072da12b352fa223ca2108a440",
           "same_as_ccu": false,
           "hunk_contexts": [
-            "@@ -9769 +9769,4 @@",
-            "@@ -14871,0 +14875,34 @@"
+            "@@ -2484,0 +2485,54 @@",
+            "@@ -2541,0 +2596,5 @@",
+            "@@ -2576,0 +2636,20 @@",
+            "@@ -2604,0 +2684,54 @@",
+            "@@ -2643,0 +2777,5 @@",
+            "@@ -2657,0 +2796,20 @@",
+            "@@ -9769 +9927,4 @@",
+            "@@ -14871,0 +15033,34 @@"
           ]
         },
         {
           "path": "pyproject.toml",
           "main_sha256": "b383b71e8eea2208ec2d1dbc0578a7778fe262fa9b8a88cbb3df9f540763d975",
           "ccu_working_sha256": "0554660916373507be1643807ded2bc74290cffd13adccb0cbf17bba437af460",
-          "other_sha256": "87f197c879a6181a5a72527692a013365f6cc988a5af19894993db1a81b56d4e",
+          "other_sha256": "39fd738921d47285c57e9b10856e9228623e0fa8fd93866c594ea956d262e721",
           "same_as_ccu": false,
           "hunk_contexts": [
-            "@@ -49,0 +50,2 @@ exchange_info = ["
+            "@@ -49,0 +50,2 @@ exchange_info = [",
+            "@@ -51,0 +54,2 @@ exchange_info = ["
           ]
         },
         {
           "path": "src/exchange_info/api.py",
           "main_sha256": "323dbf8ddffc4fbbb1693d7501930d47aa0fa276b5e5dace149dda0de083dd32",
-          "ccu_working_sha256": "d7ef51933f4531a8fa68a6a9696b9c486143bd96f05b2854828dde4dfe32c1fc",
+          "ccu_working_sha256": "f36c9d20e203a14a936661a4b8251259c2e981eb08a0764a6d20051bc97034ef",
           "other_sha256": "9f99266ab7c62323b53eb4a93bff28df9ffd818f6bc056eedc24281f454762f2",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -384,74 +413,92 @@
           "path": "src/exchange_info/application_documents.py",
           "main_sha256": "12168fbd99c9aed6cbfcc7496d42d781979cbbdbf7d8d6e3826d32af39450194",
           "ccu_working_sha256": "582e133cd4df9f3d35b9618fe761e2dc793c825b4e58ae219270a55ca195316a",
-          "other_sha256": "4cde4964570490d52f3721f27eb24bfd181819f7ad9269a38e907b0d1c825329",
+          "other_sha256": "ebf35919adce1f711301fdb0658d6ef8716697184c73c60e23df86cac6d17082",
           "same_as_ccu": false,
           "hunk_contexts": [
             "@@ -866,0 +867,3 @@ def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]",
             "@@ -884,0 +888,5 @@ def templates_for_context(context: ApplicationCenterContext) -> list[Application",
-            "@@ -1329 +1337,3 @@ def build_packet_manifest("
+            "@@ -973,0 +982,7 @@ def build_application_document_catalog(",
+            "@@ -975 +990,6 @@ def build_application_document_catalog(",
+            "@@ -1329 +1349,3 @@ def build_packet_manifest(",
+            "@@ -1338 +1360,10 @@ def build_packet_manifest(",
+            "@@ -1363,2 +1394,2 @@ def _register_pdf_font() -> tuple[str, str]:",
+            "@@ -1472 +1503 @@ def _manifest_cover(request: ApplicationPacketRequest, manifest: ApplicationPack",
+            "@@ -1604 +1635 @@ def _generic_template_pdf("
           ]
         },
         {
           "path": "src/exchange_info/models.py",
           "main_sha256": "f45e39b447520191f8f36cf67e29467be79a8b9b8e4fa6df88978963ae662bd5",
           "ccu_working_sha256": "f0e0ca92ddbc3702a5ea8fc1707f3fb0d6c442bde5456de6e4f55126ed19715f",
-          "other_sha256": "b0e615a58bd6c55f23146a9d90aa10c6f114dcd83230848377b70a3710a8fcd3",
+          "other_sha256": "acb1d3929bf640534bfdb57a41471220991415915c765ba7c0ced0e214f18dd8",
           "same_as_ccu": false,
           "hunk_contexts": [
-            "@@ -559 +559 @@ class PartnerUniversity(BaseModel):"
+            "@@ -559 +559 @@ class PartnerUniversity(BaseModel):",
+            "@@ -1209,0 +1210,19 @@ class ApplicationDocumentRequirement(BaseModel):",
+            "@@ -1460,0 +1480,7 @@ class ApplicationDocumentCatalogItem(BaseModel):"
           ]
         },
         {
           "path": "src/exchange_info/static/app.js",
           "main_sha256": "e7c4ed2b9ed0b33c24261e84776610eb1a32b1e6328da34ad7af631872a0193c",
-          "ccu_working_sha256": "edb3a076876eb6f67c8be1711c2ece85201af435b18c25506efa4098985b80cf",
-          "other_sha256": "0866d31471cf0f5c6cfafbb5f5d74d8519332c58ef761b759977b1a13ecdc936",
+          "ccu_working_sha256": "2cc44a50449ffe4ad166ef223532f1b4498ff19b9124c83927c5033bd88f1a55",
+          "other_sha256": "9a093794889bd7064131524f43395c0f3156e15dec9c2d009c2751d8c58ece20",
           "same_as_ccu": false,
           "hunk_contexts": [
             "@@ -114,0 +115,2 @@ const state = {",
             "@@ -146,0 +149 @@ const state = {",
-            "@@ -1321,0 +1325,7 @@ function setHomeSchool(schoolName, { reload = true } = {}) {",
-            "@@ -1397,9 +1407,18 @@ async function refreshHomeUniversityData() {",
-            "@@ -1407,3 +1425,0 @@ async function refreshHomeUniversityData() {",
-            "@@ -3850,0 +3867,10 @@ function partnerAvailabilityMeta(item) {",
-            "@@ -3894,0 +3921,6 @@ function renderPartnerAvailabilityNotice(item) {",
-            "@@ -4310 +4342 @@ function eligibilitySummary() {",
-            "@@ -5833 +5865 @@ function applicationFlagsFromForm(form) {",
-            "@@ -5836 +5867,0 @@ function readApplicationContextForm() {",
-            "@@ -5910,0 +5942,4 @@ function initializeApplicationSelections() {",
-            "@@ -5913,0 +5949,7 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -5915 +5957,4 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -5916,0 +5962,3 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -5918 +5965,0 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -5923,0 +5971,3 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -5924,0 +5975 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -5941,4 +5992 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -5947,0 +5996,5 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -5960 +6013,2 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -5964 +6018,5 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
-            "@@ -6078,0 +6137,6 @@ function renderApplicationDocumentCatalog() {",
-            "@@ -6085 +6149,2 @@ function renderApplicationDocumentCatalog() {",
-            "@@ -6236,0 +6302,2 @@ async function handleApplicationContextChange(event) {",
-            "@@ -6238 +6304,0 @@ async function handleApplicationContextChange(event) {",
-            "@@ -6241 +6307,8 @@ async function handleApplicationContextChange(event) {",
-            "@@ -6247 +6320 @@ async function handleApplicationContextChange(event) {",
-            "@@ -7497,0 +7571,5 @@ function partnerDeadlineReference(item) {",
-            "@@ -7653 +7731 @@ function renderComparison(items) {",
-            "@@ -8102 +8180 @@ function renderSchoolCompleteness(report) {",
-            "@@ -8291 +8369 @@ function renderStudentSurvivalGuide(item, profile) {"
+            "@@ -607,2 +610,6 @@ function alignAccountSchool() {",
+            "@@ -612,3 +619,7 @@ function alignAccountSchool() {",
+            "@@ -1320,0 +1332,8 @@ function setHomeSchool(schoolName, { reload = true } = {}) {",
+            "@@ -1321,0 +1341,7 @@ function setHomeSchool(schoolName, { reload = true } = {}) {",
+            "@@ -1397,9 +1423,18 @@ async function refreshHomeUniversityData() {",
+            "@@ -1407,3 +1441,0 @@ async function refreshHomeUniversityData() {",
+            "@@ -3850,0 +3883,10 @@ function partnerAvailabilityMeta(item) {",
+            "@@ -3894,0 +3937,6 @@ function renderPartnerAvailabilityNotice(item) {",
+            "@@ -4310 +4358 @@ function eligibilitySummary() {",
+            "@@ -5833 +5881 @@ function applicationFlagsFromForm(form) {",
+            "@@ -5836 +5883,0 @@ function readApplicationContextForm() {",
+            "@@ -5910,0 +5958,4 @@ function initializeApplicationSelections() {",
+            "@@ -5913,0 +5965,7 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5915 +5973,4 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5916,0 +5978,3 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5918 +5981,0 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5923,0 +5987,3 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5924,0 +5991 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5941,4 +6008 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5947,0 +6012,5 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5960 +6029,2 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -5964 +6034,5 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}",
+            "@@ -6070,0 +6145,6 @@ function applicationRequirementMeta(item) {",
+            "@@ -6078,0 +6159,6 @@ function renderApplicationDocumentCatalog() {",
+            "@@ -6085 +6171,2 @@ function renderApplicationDocumentCatalog() {",
+            "@@ -6119 +6206,5 @@ function renderApplicationDocumentCatalog() {",
+            "@@ -6125 +6216 @@ function renderApplicationDocumentCatalog() {",
+            "@@ -6236,0 +6328,2 @@ async function handleApplicationContextChange(event) {",
+            "@@ -6238 +6330,0 @@ async function handleApplicationContextChange(event) {",
+            "@@ -6241 +6333,8 @@ async function handleApplicationContextChange(event) {",
+            "@@ -6247 +6346 @@ async function handleApplicationContextChange(event) {",
+            "@@ -7497,0 +7597,5 @@ function partnerDeadlineReference(item) {",
+            "@@ -7653 +7757 @@ function renderComparison(items) {",
+            "@@ -8102 +8206 @@ function renderSchoolCompleteness(report) {",
+            "@@ -8291 +8395 @@ function renderStudentSurvivalGuide(item, profile) {",
+            "@@ -10879 +10983,4 @@ function renderApplicationPeriodOptions() {",
+            "@@ -10883,0 +10991,3 @@ function renderApplicationPeriodOptions() {",
+            "@@ -10885 +10995 @@ function renderApplicationPeriodOptions() {"
           ]
         },
         {
           "path": "src/exchange_info/static/index.html",
           "main_sha256": "0659638e38f07234ca532ee3dc5449ba6ed363c922ae163db4e558ceb2ded26f",
           "ccu_working_sha256": "5f48c719ab35be02f122292b54b399dbb59626f04bf677bb51fc0e57a109d0b3",
-          "other_sha256": "ffdcaf00de10f13238c6a62c528e7b6764784ac0aadea1cc8e6ec4badf93c385",
+          "other_sha256": "38d95151b6d5d7be58bde1a4f40967d9417db07fc9d01582f7ae217f2a843ffa",
           "same_as_ccu": false,
           "hunk_contexts": [
             "@@ -167 +167 @@",
             "@@ -733 +733 @@",
-            "@@ -1205 +1205 @@"
+            "@@ -1194,0 +1195 @@",
+            "@@ -1205 +1206 @@"
           ]
         },
         {
@@ -484,7 +531,7 @@
   ],
   "ccu_working_snapshot_pending_new_candidate_commit": true,
   "followup_shared_changes": {
-    "src/exchange_info/api.py": "各母校自己目的地guide计覆盖率；显式home不fallback别校guide",
+    "src/exchange_info/api.py": "各母校自己目的地guide计覆盖率；显式home不fallback别校guide；explicit-home經registry解析正式校名，保留各校Latin/中文別名",
     "src/exchange_info/static/app.js": "school epoch+各loader request ID；target/detail/life上下文固定；排队草稿保存原home与account；旧回应不污染新上下文",
     "src/exchange_info/static/index.html": "app脚本cache query更新"
   }

@@ -3572,7 +3572,8 @@ def create_app(
     ) -> DestinationProfile:
         partner = partner_for_school(school, home_school)
         normalized = normalize_school(partner.school_name)
-        target_home = normalize_school(home_school) if home_school else None
+        canonical_home = university_for(home_school).school_name if home_school else None
+        target_home = normalize_school(canonical_home) if canonical_home else None
         profiles = load_destination_profiles(resolved_data_dir, include_bundled_baseline=True)
         if target_home:
             for profile in profiles:
@@ -3586,10 +3587,10 @@ def create_app(
                 if target_home:
                     if profile.home_university:
                         continue
-                    return complete_destination_profile(profile.model_copy(update={"home_university": home_school}), resolved_data_dir)
+                    return complete_destination_profile(profile.model_copy(update={"home_university": canonical_home}), resolved_data_dir)
                 return complete_destination_profile(profile, resolved_data_dir)
         return DestinationProfile(
-            home_university=home_school,
+            home_university=canonical_home,
             school_name=partner.school_name,
             country=partner.country,
         )

@@ -90,3 +90,28 @@ def test_body_triage_has_review_proof_and_no_false_exhaustion_or_announcement():
     subclaim = triage["explicit_unannounced_subclaims"][0]
     assert subclaim["source_id"] == "p49-mirror" and subclaim["source_pages"] == [6]
     assert "National Health Insurance" in subclaim["scope"]
+
+
+@pytest.mark.parametrize("home,alias,collector", [
+    ("長庚大學", "CGU", "fetch_partner_universities"),
+    ("長庚大學", "長庚", "fetch_partner_universities"),
+    ("國立臺北大學", "NTPU", "fetch_ntpu_partner_universities"),
+    ("國立臺北大學", "北大", "fetch_ntpu_partner_universities"),
+    ("國立臺灣大學", "NTU", "fetch_ntu_partner_universities"),
+    ("國立臺灣大學", "台大", "fetch_ntu_partner_universities"),
+    ("國立中正大學", "CCU", "fetch_ccu_partner_universities"),
+    ("國立中正大學", "中正", "fetch_ccu_partner_universities"),
+])
+def test_destination_home_alias_keeps_real_profile_and_canonical_home(monkeypatch, tmp_path, home, alias, collector):
+    profiles = storage.load_destination_profiles(tmp_path, include_bundled_baseline=True)
+    profile = next(row for row in profiles if row.home_university == home and row.coverage_status != "not_collected")
+    partner = PartnerUniversity(school_name=profile.school_name, country=profile.country, program_type="交換學生", source_url="https://oia.ccu.edu.tw/")
+    monkeypatch.setattr(api, collector, lambda: [partner])
+    client = TestClient(api.create_app(tmp_path))
+    response = client.get("/destination-profile", params={"school": profile.school_name, "home_school": alias})
+    assert response.status_code == 200
+    guide = response.json()
+    assert guide["home_university"] == home
+    assert guide["coverage_status"] == profile.coverage_status
+    assert guide["last_checked"] == profile.model_dump(mode="json")["last_checked"]
+    assert guide["housing_summary"] == profile.housing_summary
