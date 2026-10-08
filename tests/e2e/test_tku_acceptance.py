@@ -35,6 +35,7 @@ def start(page, live_server, width, route, verified=False):
 
 def record(page, name, width, errors, **facts):
     assert not errors, errors
+    expect(page.locator('#boot-splash')).to_be_hidden(timeout=30000)
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     OUTPUT.mkdir(parents=True, exist_ok=True)
     page.screenshot(path=str(OUTPUT / f"{name}-{width}.png"))
