@@ -51,4 +51,6 @@ python scripts/build_ntu_catalog.py \
 | Chromium：既有公開目錄切校、首次登入選校與登出 | 3 passed |
 | JavaScript語法、Git空白檢查、OpenAPI快照檢查 | passed；API版本2026-10-08.1 |
 
+GitHub PR分支以`293546e`的最新`main`為基底，保留主分支的流程快取、背景更新、地區篩選與用戶評價功能。補入臺大名單使用的南韓、澳大利亞與科索沃地區分類，並更新靜態檔版本以避免瀏覽器沿用舊分類。重整後的非E2E檢查涵蓋16個模組；臺大與既有切校共6項Chromium檢查通過。
+
 原始HEAD的三個既有測試模組另有22項失敗，已用隔離快照重現：8項`test_frontend_contract.py`字串斷言、1項臺北大學`destination_profile_count`覆蓋斷言，以及13項`test_next_phase_contract.py`斷言。此次刷新OpenAPI快照後，快照漂移的1項已通過；其餘21項仍失敗，涉及既有頁面字串、重試Header、訂閱錯誤碼與管理API路徑。這些檢查不列為臺大驗證通過，沒有宣稱整個專案測試全數通過。
