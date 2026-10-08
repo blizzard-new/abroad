@@ -1,0 +1,25 @@
+PLW1510 `subprocess.run` without explicit `check` argument
+   --> tests/test_ccu_overseas.py:227:14
+    |
+225 |     assert.equal(window.UniWayCcuDetails.render({school_name:'legacy'},escapeHtml),'');
+226 |     """
+227 |     result = subprocess.run(
+    |              ^^^^^^^^^^^^^^
+228 |         [
+229 |             "node",
+    |
+help: Add explicit `check=False`
+
+PLW1510 `subprocess.run` without explicit `check` argument
+   --> tests/test_ccu_overseas.py:290:14
+    |
+288 |     assert.equal((container.innerHTML.match(/data-ccu-field=/g)||[]).length,8);
+289 |     """
+290 |     result = subprocess.run(
+    |              ^^^^^^^^^^^^^^
+291 |         [
+292 |             "node",
+    |
+help: Add explicit `check=False`
+
+Found 18 errors (16 fixed, 2 remaining).

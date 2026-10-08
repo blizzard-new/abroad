@@ -732,5 +732,80 @@
     "api_paths": 110,
     "api_routes_changed": false,
     "api_required_fields_changed": false
+  },
+  "fourth_pass": {
+    "checked_at": "2026-10-08T06:21:24.946769+00:00",
+    "ccu_tests": {
+      "passed": 103,
+      "failed": 0,
+      "seconds": 29.02,
+      "log": "docs/ccu-validation-2026-10-08/fourth-pass-tests.txt"
+    },
+    "four_school_tests": {
+      "passed": 194,
+      "skipped": 5,
+      "failed": 1,
+      "seconds": 40.7,
+      "known_failure": "tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+      "log": "docs/ccu-validation-2026-10-08/fourth-pass-four-school.txt"
+    },
+    "browser_tests": {
+      "passed": 9,
+      "failed": 0,
+      "seconds": 60.76,
+      "log": "docs/ccu-validation-2026-10-08/fourth-pass-browser.txt"
+    },
+    "integrity": {
+      "rebuild": {
+        "identical": true,
+        "files_compared": 16,
+        "sha256": {
+          "partners.jsonl": "55a954a4c90723dcd99704f2d2c774e899b3afece1e2ed5ea5519d665302b49b",
+          "application_workflows.jsonl": "90c2f4a6597731065448662eca625e7b465374e4116560abba3450ee5262da4e",
+          "destination_profiles.jsonl": "33836bb4e42a16376421863433be6a61cac02120e7546c7601ec7f269c44de83",
+          "field-audit.json": "4c732605dfa70e21dc6793ba0607dbd4ffef93e0ec1491cae4108e8526c7e32d",
+          "completeness.json": "c28422ecd0faf761260907da59176000f7afa9b1b013072e059499c2b01cdba9",
+          "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
+          "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
+          "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
+          "field-completeness-matrix.json": "c527803158cac268b30da91d15f93844c3641bca29a502857f6fcc69d07630c6",
+          "confirmation-questions.json": "872279d5c058c4b949a5facc4515ed8a8c50221bc1aa51742e1cacc290ab3b89",
+          "overseas-completeness.json": "f9609138f4175ef250c3d3b40356e46e6c749d050ec2837fbd4ed8138739e584",
+          "overseas-conflicts.json": "fe4a3c851e99e789877c75beaabccc660b14e81a0895874d7727ffc0e497e793",
+          "research-gap-audit.json": "9229e7645217e839047a30b8a7a10c0e08f8b0809bc88c3fcbed8fe72cbb84e9",
+          "acquired-content-review.json": "9b5116ce783b01215e15381480cc8c0d5395eeeb9e9b78a9930b55b39d915901",
+          "source-failure-followup.json": "ef42a306ded21adb03e5699f875d4ae95948b89b506f34ee54600034abc01938",
+          "overseas-reviewed-fields.json": "fb6d8fdb98b1d8e1014253c1d8cc674e24912c36cc478307a84ee50a5965b607"
+        }
+      },
+      "existing_main_files_compared": 49,
+      "existing_main_files_changed": 0,
+      "api_paths": 110,
+      "api_routes_changed": false,
+      "api_required_fields_changed": false
+    },
+    "source_count": 241,
+    "new_source_count": 39,
+    "field_changes": 22,
+    "previously_missing_filled": 14,
+    "overseas_field_status_counts": {
+      "verified_current": 245,
+      "needs_confirmation": 197,
+      "reference_only": 41,
+      "conflict": 32,
+      "missing": 419,
+      "explicit_not_announced": 1
+    },
+    "complete_research_claimed": false,
+    "final_ccu_tests": {
+      "passed": 103,
+      "failed": 0,
+      "seconds": 28.14,
+      "log": "docs/ccu-validation-2026-10-08/fourth-pass-final-tests.txt"
+    },
+    "static_checks": {
+      "ruff": "pass after 18 initial style/import findings corrected",
+      "log": "docs/ccu-validation-2026-10-08/fourth-pass-final-static.txt"
+    }
   }
 }

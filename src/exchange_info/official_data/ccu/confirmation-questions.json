@@ -698,14 +698,14 @@
     "school_name": "Tianjin University 天津大學",
     "ccu_page": 24,
     "quota_status": "published",
-    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。",
+    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。；第四輪已逐頁讀完當期附件和可讀深層官方頁，見semantic-review-ledger；未載、舊版、存取限制與尚有其他來源分開。",
     "questions": [
       {
         "field": "language",
         "label": "合作校語言條件與替代證明",
         "status": "missing",
         "question": "請確認Tianjin University 天津大學中正2027春季的合作校語言條件與替代證明，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -762,18 +762,34 @@
       {
         "field": "application_forms",
         "label": "合作校申請表取得方式",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Tianjin University 天津大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "逐頁核對實際正文及17欄適用性；只列已讀要求，未知、舊年與矛盾不合併成當期事實。",
+        "reference_value": "2027春季附件列申請表及母校提名表，要求母校协调人寄全套材料；PDF沒有空白表或具體模板下載連結。本輪官方HMT/OIA入口實際DNS失敗，仍未核實當期表內容或签章欄位。",
+        "evidence": [
+          {
+            "source_id": "p24-mirror",
+            "source_url": "https://drive.google.com/file/d/1mX2s3ruNWdHTqFbT2DAxoeIWg4LgqIG5/view?usp=drive_link",
+            "source_pages": [
+              2
+            ],
+            "academic_year": "2027春季臺灣交換生",
+            "application_round": "2027春季臺灣交換生",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "needs_confirmation",
+            "excerpt": "送提名表和全 套申请材料至交换生负责人。 交换生材料包括： 申请表；推荐信；成绩单；个人简历 ；在学证明或学生证 复印件；台湾居民往来大陆通行证复印件；保险单据复印件 （来校报道后提交）；电子版照片1份 （文件名为XX大学_ 姓名） 除电子版照片和保险单据外，其余材料需合并为一个pdf文 档 5. 秋季申请截止日期 请于2026年11月15日前由学校项目协调人以邮件形式将提 名表和学生申请材料发送至 ies@tju.edu.cn 。邮件主题为“XX大学2027春季项目申请” 6. 住宿信息 学生宿舍4-6人间, 600元/学期，价格以实际为准 7.接送机信息 根据航班情况，协调学生志愿者接送机，交换生需要支付机 场到天津大学的打车费或公共交通费。",
+            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+            "content_hash": "4ab57901002171168809bb79f88e7586d51ff9587eadf131244642a4042739d9",
+            "text_sha256": "03508b774b7bd209ac05d3ed69f05d38efb0cae616cdbe35ec927cb9d3b243d1"
+          }
+        ]
       },
       {
         "field": "academic_calendar",
         "label": "合作校校曆及考試",
         "status": "missing",
         "question": "請確認Tianjin University 天津大學中正2027春季的合作校校曆及考試，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -782,7 +798,7 @@
         "label": "課程與學分限制",
         "status": "missing",
         "question": "請確認Tianjin University 天津大學中正2027春季的課程與學分限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -791,7 +807,7 @@
         "label": "住宿申請／付款截止",
         "status": "missing",
         "question": "請確認Tianjin University 天津大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -800,7 +816,7 @@
         "label": "簽證與居留",
         "status": "missing",
         "question": "請確認Tianjin University 天津大學中正2027春季的簽證與居留，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -809,7 +825,7 @@
         "label": "合作校學費",
         "status": "missing",
         "question": "請確認Tianjin University 天津大學中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       }
@@ -822,6 +838,24 @@
         "content_academic_year": "2027春季臺灣交換生",
         "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p24-r4-hmt",
+        "source_url": "https://hmt.tju.edu.cn/",
+        "status": "fetch_failed",
+        "error": "ProxyError: HTTPSConnectionPool(host='hmt.tju.edu.cn', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))",
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T05:59:06.050927+00:00"
+      },
+      {
+        "source_id": "p24-r4-oia",
+        "source_url": "https://oia.tju.edu.cn/",
+        "status": "fetch_failed",
+        "error": "ProxyError: HTTPSConnectionPool(host='oia.tju.edu.cn', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))",
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T06:01:12.626203+00:00"
       }
     ]
   },
@@ -1283,14 +1317,14 @@
     "school_name": "University of Electronic Science and Technology of China 電子科技大學",
     "ccu_page": 27,
     "quota_status": "published",
-    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。",
+    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。；第四輪已逐頁讀完當期附件和可讀深層官方頁，見semantic-review-ledger；未載、舊版、存取限制與尚有其他來源分開。",
     "questions": [
       {
         "field": "language",
         "label": "合作校語言條件與替代證明",
         "status": "missing",
         "question": "請確認University of Electronic Science and Technology of China 電子科技大學中正2027春季的合作校語言條件與替代證明，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -1299,7 +1333,7 @@
         "label": "合作校提名截止",
         "status": "missing",
         "question": "請確認University of Electronic Science and Technology of China 電子科技大學中正2027春季的合作校提名截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -1346,18 +1380,49 @@
       {
         "field": "application_forms",
         "label": "合作校申請表取得方式",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認University of Electronic Science and Technology of China 電子科技大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "逐頁核對實際正文及17欄適用性；只列已讀要求，未知、舊年與矛盾不合併成當期事實。",
+        "reference_value": "當期PDF列交換生申請表（貼2吋白底彩照）、交流學生彙總表；未附空白表或下載連結。所有材料由母校傳送，保險另補；不論是否錄取，申請材料不退件，應自行留備份。完整模板及簽章要求仍未核實。",
+        "evidence": [
+          {
+            "source_id": "p27-r4-full-pdf",
+            "source_url": "https://drive.google.com/file/d/1nSgO6-CsLVbLD35TmniN39qOG7RXnzat/view?usp=drive_link",
+            "source_pages": [
+              2
+            ],
+            "academic_year": "2026/2027臺灣高校交換生；右欄表另限2026秋季",
+            "application_round": "2026/2027臺灣高校交換生；右欄表另限2026秋季",
+            "checked_at": "2026-10-08T06:14:34.602171+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "綜合表現。請以公平、公開及公正方式選拔。 三、申請截止時間：不論是否錄取，申請資料恕不退件；有需要者請先自存一份備參。 五、雙方學校均有權拒絕錄取對方學校推薦之學生。 六、學生管理：交換結束，電子科技大學會將交換生成績單寄送貴校推薦單位。交換學生在電子科技大學交換期滿必須立即返回臺灣。交換期間不得打工，並請注意個人安全。應于開學一周內購買醫療（住院）及意外保險。在本校交換以一學期為限，且應保留原推薦學校學籍。交換項目結束返臺前，必須完成離校手續。 七、申請系所及選課：請參考本校院系專業簡表，學業（專業）之選擇影響個人選課，請申請人務必認真謹慎選擇。 八、費用：繳交學雜費，與本校簽署協議書另外規定者依其規定辦理，費用由本校負擔。住宿申請將由本校依該學期住宿狀況進行安排，恕無法指定宿舍。",
+            "note": "已讀兩頁圖像全文；重要中文條文人工視覺核對，不用錯字OCR作事實。費用條文歧義另待確認。",
+            "content_hash": "33eaf841b21f11d757dfbf0974dd3e6940950c664bdf868fd159e671cd8c1f85",
+            "text_sha256": "34a7c7f57ca85c88067ace0abc59e33130189ad034050af65703f59fe34745db"
+          },
+          {
+            "source_id": "p27-r4-full-pdf",
+            "source_url": "https://drive.google.com/file/d/1nSgO6-CsLVbLD35TmniN39qOG7RXnzat/view?usp=drive_link",
+            "source_pages": [
+              2
+            ],
+            "academic_year": "2026/2027臺灣高校交換生；右欄表另限2026秋季",
+            "application_round": "2026/2027臺灣高校交換生；右欄表另限2026秋季",
+            "checked_at": "2026-10-08T06:14:34.602171+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "季班——每年的3月1日至5月31日止。 四、提交的申請材料：交換生申請表（張貼兩寸白底彩照1張）；交流學生匯總表；學生證復印件；在學證明書；臺胞證影印本；個人簡歷；在校期間成績單；交換學習計劃書；醫療/意外保險證明。所有材料由學校方遞傳（不含醫療/意外保險證明）提交至gatsw@uestc.edu.cn。 七、申請系所及選課：交換生至少修讀5門課12個學分，其中至少一門課需與本專業相關。本校2026年秋季學期課程將在2026年5月公布。 八、費用：學生宿舍約人民幣6000/學期，校外租屋約人民幣1000–1500元/月。學生到校時請先預備人民幣約5000元以支付首月生活及相關費用。 九、大陸地區消費（以人民幣計算，供參考）：膳食1000–2000元/月；雜費500–1500元/月。 二、選拔條件：請依據學生學業成績、操行及綜合表現。請以公平、公開及公正方式選拔。 三、申",
+            "note": "已讀兩頁圖像全文；重要中文條文人工視覺核對，不用錯字OCR作事實。費用條文歧義另待確認。",
+            "content_hash": "33eaf841b21f11d757dfbf0974dd3e6940950c664bdf868fd159e671cd8c1f85",
+            "text_sha256": "34a7c7f57ca85c88067ace0abc59e33130189ad034050af65703f59fe34745db"
+          }
+        ]
       },
       {
         "field": "academic_calendar",
         "label": "合作校校曆及考試",
         "status": "missing",
         "question": "請確認University of Electronic Science and Technology of China 電子科技大學中正2027春季的合作校校曆及考試，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -1366,7 +1431,7 @@
         "label": "住宿申請／付款截止",
         "status": "missing",
         "question": "請確認University of Electronic Science and Technology of China 電子科技大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -1375,36 +1440,34 @@
         "label": "簽證與居留",
         "status": "missing",
         "question": "請確認University of Electronic Science and Technology of China 電子科技大學中正2027春季的簽證與居留，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "arrival",
-        "label": "抵達與迎新",
-        "status": "missing",
-        "question": "請確認University of Electronic Science and Technology of China 電子科技大學中正2027春季的抵達與迎新，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
       {
         "field": "host_tuition",
         "label": "合作校學費",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認University of Electronic Science and Technology of China 電子科技大學中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "exchange_duration",
-        "label": "交換期間及延長限制",
-        "status": "missing",
-        "question": "請確認University of Electronic Science and Technology of China 電子科技大學中正2027春季的交換期間及延長限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "逐頁核對實際正文及17欄適用性；只列已讀要求，未知、舊年與矛盾不合併成當期事實。",
+        "reference_value": "當期原文：「繳交學雜費，與本校簽署協議書另外規定者依其規定辦理，費用由本校負擔。」同句付款與負擔措辭有歧義，且協議可另規定。未核實中正雙邊實際豁免或應繳額，不能改寫為普遍免學費。",
+        "evidence": [
+          {
+            "source_id": "p27-r4-full-pdf",
+            "source_url": "https://drive.google.com/file/d/1nSgO6-CsLVbLD35TmniN39qOG7RXnzat/view?usp=drive_link",
+            "source_pages": [
+              2
+            ],
+            "academic_year": "2026/2027臺灣高校交換生；右欄表另限2026秋季",
+            "application_round": "2026/2027臺灣高校交換生；右欄表另限2026秋季",
+            "checked_at": "2026-10-08T06:14:34.602171+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "）之選擇影響個人選課，請申請人務必認真謹慎選擇。 八、費用：繳交學雜費，與本校簽署協議書另外規定者依其規定辦理，費用由本校負擔。住宿申請將由本校依該學期住宿狀況進行安排，恕無法指定宿舍。",
+            "note": "已讀兩頁圖像全文；重要中文條文人工視覺核對，不用錯字OCR作事實。費用條文歧義另待確認。",
+            "content_hash": "33eaf841b21f11d757dfbf0974dd3e6940950c664bdf868fd159e671cd8c1f85",
+            "text_sha256": "34a7c7f57ca85c88067ace0abc59e33130189ad034050af65703f59fe34745db"
+          }
+        ]
       }
     ],
     "source_acquisition": [
@@ -1423,6 +1486,34 @@
         "content_academic_year": "中正2027春季名額表，2026.09.17版",
         "content_review_note": "本快照只抽取此校頁，原PDF共121頁；轉載接收申請截止與同年度合作校文件比較，沒有個別延期通知。",
         "checked_at": "2026-10-08T04:48:35.526956+00:00"
+      },
+      {
+        "source_id": "p27-r4-full-pdf",
+        "source_url": "https://drive.google.com/file/d/1nSgO6-CsLVbLD35TmniN39qOG7RXnzat/view?usp=drive_link",
+        "status": "downloaded_extracted_pdf",
+        "content_academic_year": "2026/2027臺灣高校交換生；右欄表另限2026秋季",
+        "content_review_note": "已讀兩頁圖像全文；重要中文條文人工視覺核對，不用錯字OCR作事實。費用條文歧義另待確認。",
+        "checked_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "source_id": "p27-r4-hmt",
+        "source_url": "https://www.oice.uestc.edu.cn/",
+        "status": "html",
+        "access_result": "empty_response",
+        "http_status": 202,
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "HTTP202實際正文空白；未取得所求校方政策，不算已讀。",
+        "checked_at": "2026-10-08T05:59:06.116656+00:00"
+      },
+      {
+        "source_id": "p27-r4-oice-http",
+        "source_url": "http://www.oice.uestc.edu.cn/",
+        "status": "html",
+        "access_result": "empty_response",
+        "http_status": 202,
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "HTTP202實際正文空白；未取得所求校方政策，不算已讀。",
+        "checked_at": "2026-10-08T06:01:14.224211+00:00"
       }
     ]
   },
@@ -1430,50 +1521,99 @@
     "school_name": "Central China Normal University 華中師範大學",
     "ccu_page": 29,
     "quota_status": "published",
-    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。",
+    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。；第四輪已逐頁讀完當期附件和可讀深層官方頁，見semantic-review-ledger；未載、舊版、存取限制與尚有其他來源分開。",
     "questions": [
-      {
-        "field": "eligibility",
-        "label": "合作校接收資格",
-        "status": "missing",
-        "question": "請確認Central China Normal University 華中師範大學中正2027春季的合作校接收資格，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
       {
         "field": "language",
         "label": "合作校語言條件與替代證明",
         "status": "missing",
         "question": "請確認Central China Normal University 華中師範大學中正2027春季的合作校語言條件與替代證明，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
       {
         "field": "nomination_deadline",
         "label": "合作校提名截止",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Central China Normal University 華中師範大學中正2027春季的合作校提名截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "逐頁核對實際正文及17欄適用性；只列已讀要求，未知、舊年與矛盾不合併成當期事實。",
+        "reference_value": "當期由各母校聯絡人統一送電子材料，報名申請截止2026-11-02；PDF沒有另列獨立提名期限，不能將報名日當提名日或套舊一般流程11/1–12/15。",
+        "evidence": [
+          {
+            "source_id": "p29-mirror",
+            "source_url": "https://drive.google.com/file/d/18kn23p8lZ694ujDNA5XpByqGbSSsCdpD/view?usp=drive_link",
+            "source_pages": [
+              3
+            ],
+            "academic_year": "2027春季港澳臺交換生",
+            "application_round": "2027春季港澳臺交換生",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "needs_confirmation",
+            "excerpt": " 学期起止时间 2027年2月21日-2027年7月10日 报名申请截止时间 2026年11月2日 材料提交要求 由各学校联络负责人统一发送，需提供申请材料电子版，不接受 学生个人申报。 保险要求 交换生需自行购买境外保险（含人身意外险，紧急救援险，住院 医疗险），到校后交至本校。 选课要求 方法 本科生为线上选课，研究生为线下选课。 课程 每位交换生在我校选修至少两门以上课程，课程类型、 学分数不限。本科生课程可登陆我校本科生院网站 （http://jwc.ccnu.edu.cn/index.htm ）参考往年情 况；研究生课程可登陆所在学院网站了解。 住宿信息 校内住宿，宿舍内有空调及独立卫生间，根据房型住宿费为人民 币 600-1200 元/月，床上用品需自行购买，水电费另行据实结算。 接送机服务 提供接送机服务，费用由本校承担。 每月生活费 约人民币 1000-",
+            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+            "content_hash": "c630104eebc36cac5f6dd606899c2b4a22522f7f627e0f0bf519de469f604765",
+            "text_sha256": "71e7e9fbbcdbe64d6ca94e1834c2dceff7a1c2e431c7470552923ff7fa42c769"
+          }
+        ]
       },
       {
         "field": "application_forms",
         "label": "合作校申請表取得方式",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Central China Normal University 華中師範大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "逐頁核對實際正文及17欄適用性；只列已讀要求，未知、舊年與矛盾不合併成當期事實。",
+        "reference_value": "當期PDF指定「華中師範大學招收港澳台地區交換學生申報表」，除簽名外簡體打印，但未附空白表。已讀incoming下載清單，只找到2016-09-13舊附件，下載實際要求驗證碼。新版申報表未核實，不宣稱校方尚未公告，也不把舊研修/住宿表當當期必繳。",
+        "evidence": [
+          {
+            "source_id": "p29-mirror",
+            "source_url": "https://drive.google.com/file/d/18kn23p8lZ694ujDNA5XpByqGbSSsCdpD/view?usp=drive_link",
+            "source_pages": [
+              4
+            ],
+            "academic_year": "2027春季港澳臺交換生",
+            "application_round": "2027春季港澳臺交換生",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "needs_confirmation",
+            "excerpt": " 2. 应交材料 （ 1）华中师范大学招收港澳台地区交换学生申报表（除签名外，其他部分请用 简体中文打印）； （2）在读证明； （3）历年学业成绩单； （4）个人简历（请用简体中文呈现）； （5）最近 6个月内体检报告（常规项目，需加盖医院公章）； （6）台胞证/回乡证正反扫描件； （7）电子照片（规格为白底小2 寸正面免冠登记照）； （8）就读学校推荐函（盖有学校公章）。",
+            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+            "content_hash": "c630104eebc36cac5f6dd606899c2b4a22522f7f627e0f0bf519de469f604765",
+            "text_sha256": "71e7e9fbbcdbe64d6ca94e1834c2dceff7a1c2e431c7470552923ff7fa42c769"
+          },
+          {
+            "source_id": "p29-r4-forms-index-web",
+            "source_url": "https://hmt.ccnu.edu.cn/jhjls1/lxjhs/xgxz.htm",
+            "source_pages": [],
+            "academic_year": "清單日期2016-09-13；當期模板未核",
+            "application_round": "清單日期2016-09-13；當期模板未核",
+            "checked_at": "2026-10-08T06:04:43.394Z",
+            "status": "needs_confirmation",
+            "excerpt": "关下载 L69: * 港澳台地区学生来我校交换所需附件下载 2016年09月13日 * * * 首页上页1下页尾页 Image L77: Copyright ©2015 华中师范大学港澳台事务办公室 All rights reserved. 地址：湖北省武汉市珞喻路152号国际文化交流园区一号楼三楼 电话：+86-27-67865079",
+            "note": "已讀incoming相關下載，不是華師學生赴港澳台的outbound頁；當期PDF要求的申報表是否與舊附件同版未知。",
+            "content_hash": "d80ab66ffedba1252dd3c3c942c76e52f962541272db9efc4292322dc72ce92f",
+            "text_sha256": "42ba5db19210afbde94893107f81ba9d18ab13b32fbb9fd27ef8e29378364546"
+          },
+          {
+            "source_id": "p29-r4-legacy-attachment-blocked-web",
+            "source_url": "https://hmt.ccnu.edu.cn/system/_content/download.jsp?owner=1280106966&urltype=news.DownloadAttachUrl&wbfileid=58CBEEC99D420317BF70B70EBBD61ADF",
+            "source_pages": [],
+            "academic_year": "舊版附件頁2016-09-13；當期模板未核",
+            "application_round": "舊版附件頁2016-09-13；當期模板未核",
+            "checked_at": "2026-10-08T06:10:36.299Z",
+            "status": "needs_confirmation",
+            "excerpt": "# 请输入验证码下载附件 L2: [Input] L4: [Input]",
+            "note": "實際web回應要求輸入驗證碼；未下載DOC，也未解驗證碼或宣稱檔案已開啟。",
+            "content_hash": "31d17b9b28318bce589a269f19dcdf91c1454f545bb3e786b2b0a7fe7d151a5a",
+            "text_sha256": "f49f842efdfe5af24682b64cb25329c4e76c2f1c4be9dd3960508bd131f8a8b5"
+          }
+        ]
       },
       {
         "field": "housing_deadline",
         "label": "住宿申請／付款截止",
         "status": "missing",
         "question": "請確認Central China Normal University 華中師範大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -1482,7 +1622,7 @@
         "label": "簽證與居留",
         "status": "missing",
         "question": "請確認Central China Normal University 華中師範大學中正2027春季的簽證與居留，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -1491,16 +1631,7 @@
         "label": "合作校學費",
         "status": "missing",
         "question": "請確認Central China Normal University 華中師範大學中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "exchange_duration",
-        "label": "交換期間及延長限制",
-        "status": "missing",
-        "question": "請確認Central China Normal University 華中師範大學中正2027春季的交換期間及延長限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       }
@@ -1513,6 +1644,96 @@
         "content_academic_year": "2027春季港澳臺交換生",
         "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p29-r4-courses",
+        "source_url": "https://jwc.ccnu.edu.cn/",
+        "status": "fetch_failed",
+        "http_status": 403,
+        "error": "HTTPError: 403 Client Error: Forbidden for url: https://jwc.ccnu.edu.cn/",
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T05:59:07.101755+00:00"
+      },
+      {
+        "source_id": "p29-r4-faq-web",
+        "source_url": "https://hmt.ccnu.edu.cn/jhjls1/lxjhs/cjwt.htm",
+        "status": "web_extracted_html",
+        "content_academic_year": "未標年度；FAQ正文空白",
+        "content_review_note": "可讀頁沒有問答正文；這不等於校方明示2027尚未公告。",
+        "checked_at": "2026-10-08T06:04:45.203Z"
+      },
+      {
+        "source_id": "p29-r4-forms-index-web",
+        "source_url": "https://hmt.ccnu.edu.cn/jhjls1/lxjhs/xgxz.htm",
+        "status": "web_extracted_html",
+        "content_academic_year": "清單日期2016-09-13；當期模板未核",
+        "content_review_note": "已讀incoming相關下載，不是華師學生赴港澳台的outbound頁；當期PDF要求的申報表是否與舊附件同版未知。",
+        "checked_at": "2026-10-08T06:04:43.394Z"
+      },
+      {
+        "source_id": "p29-r4-hmt-http",
+        "source_url": "http://hmt.ccnu.edu.cn/",
+        "status": "fetch_failed",
+        "http_status": 403,
+        "error": "HTTPError: 403 Client Error: Forbidden for url: http://hmt.ccnu.edu.cn/",
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T06:01:12.637386+00:00"
+      },
+      {
+        "source_id": "p29-r4-hmt-index",
+        "source_url": "https://hmt.ccnu.edu.cn/index.htm",
+        "status": "fetch_failed",
+        "http_status": 403,
+        "error": "HTTPError: 403 Client Error: Forbidden for url: https://hmt.ccnu.edu.cn/index.htm",
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T06:01:14.047175+00:00"
+      },
+      {
+        "source_id": "p29-r4-hmt",
+        "source_url": "https://hmt.ccnu.edu.cn/",
+        "status": "fetch_failed",
+        "http_status": 403,
+        "error": "HTTPError: 403 Client Error: Forbidden for url: https://hmt.ccnu.edu.cn/",
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T05:59:06.567789+00:00"
+      },
+      {
+        "source_id": "p29-r4-legacy-attachment-blocked-web",
+        "source_url": "https://hmt.ccnu.edu.cn/system/_content/download.jsp?owner=1280106966&urltype=news.DownloadAttachUrl&wbfileid=58CBEEC99D420317BF70B70EBBD61ADF",
+        "status": "web_extracted_html",
+        "access_result": "captcha_required",
+        "content_academic_year": "舊版附件頁2016-09-13；當期模板未核",
+        "content_review_note": "實際web回應要求輸入驗證碼；未下載DOC，也未解驗證碼或宣稱檔案已開啟。",
+        "checked_at": "2026-10-08T06:10:36.299Z"
+      },
+      {
+        "source_id": "p29-r4-legacy-factsheet-web",
+        "source_url": "https://hmt.ccnu.edu.cn/info/1082/1076.htm",
+        "status": "web_extracted_html",
+        "access_result": "public_legacy_content",
+        "content_academic_year": "正文2016–2017、發布2016-09-13",
+        "content_review_note": "已讀旧年度來校交換規則；不把舊春季截止、普通話要求或住宿申請表套2027。",
+        "checked_at": "2026-10-08T06:10:35.602Z"
+      },
+      {
+        "source_id": "p29-r4-procedure-web",
+        "source_url": "https://hmt.ccnu.edu.cn/jhjls1/lxjhs/bllc.htm",
+        "status": "web_extracted_html",
+        "content_academic_year": "未標年度；一般來校流程含舊資訊",
+        "content_review_note": "已讀報到、選課、離校流程；一般春季11/1–12/15不能取代2027簡章11/2。未使用頁面所示登入資訊。",
+        "checked_at": "2026-10-08T06:04:44.494Z"
+      },
+      {
+        "source_id": "p29-r4-rules-index-web",
+        "source_url": "https://hmt.ccnu.edu.cn/jhjls1/lxjhs/gzzd.htm",
+        "status": "web_extracted_html",
+        "content_academic_year": "清單日期2016-09-13；當期版本未核",
+        "content_review_note": "已讀incoming規章清單及2016/17信息表，不能作2027當期政策。",
+        "checked_at": "2026-10-08T06:04:43.937Z"
       }
     ]
   },
@@ -6605,14 +6826,14 @@
     "school_name": "Saintigits Group of Institutions 聖基茲工學院",
     "ccu_page": 74,
     "quota_status": "published",
-    "review_note": "鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+    "review_note": "鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。；第四輪已逐頁讀完當期附件和可讀深層官方頁，見semantic-review-ledger；未載、舊版、存取限制與尚有其他來源分開。",
     "questions": [
       {
         "field": "program_scope",
         "label": "接收計畫、學制及校區",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的接收計畫、學制及校區，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6621,7 +6842,7 @@
         "label": "合作校接收資格",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的合作校接收資格，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6630,7 +6851,7 @@
         "label": "合作校語言條件與替代證明",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的合作校語言條件與替代證明，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6639,7 +6860,7 @@
         "label": "合作校提名截止",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的合作校提名截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6648,7 +6869,7 @@
         "label": "合作校申請截止",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的合作校申請截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6657,7 +6878,7 @@
         "label": "合作校文件要求（僅列已核實項目）",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的合作校文件要求（僅列已核實項目），提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6666,7 +6887,7 @@
         "label": "合作校申請表取得方式",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6675,7 +6896,7 @@
         "label": "合作校校曆及考試",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的合作校校曆及考試，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6684,25 +6905,39 @@
         "label": "課程與學分限制",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的課程與學分限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
       {
         "field": "housing",
         "label": "住宿與床位",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的住宿與床位，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "逐頁核對實際正文及17欄適用性；只列已讀要求，未知、舊年與矛盾不合併成當期事實。",
+        "reference_value": "Saintgits集團一般官方住宿頁列六棟宿舍、男女分棟及基本設施；未標2027交換適用年，也沒有中正交換床位保證、房型費率、住房/付款期限。僅作一般住宿線索，接收學院與住宿資格待確認。",
+        "evidence": [
+          {
+            "source_id": "p74-r4-housing",
+            "source_url": "https://saintgits.org/resources/hostels/",
+            "source_pages": [],
+            "academic_year": "未標2027交換適用年度；集團一般住宿",
+            "application_round": "未標2027交換適用年度；集團一般住宿",
+            "checked_at": "2026-10-08T06:01:12.106437+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "tion at Saintgits consists of 6 separate hostel blocks. It has good infrastructure which makes students feel comfortable and find a homely atmosphere. Proximity to the city means that the students are housed in a hostel which has a serene and calm atmosphere and yet have access to the city. Detailed thought and consideration has gone in to provide utmost comfort to the students with more",
+            "note": "完整讀到六棟宿舍及一般設施；未載中正交換床位保證、費率、申請截止。",
+            "content_hash": "a33dda9082064a3b9b0298c2db6f24547fd668f1972651648aa7d1ef1a2bef14",
+            "text_sha256": "0b3a34f4c4281e1abb8efe87b5866bf0427b71becd86fa6a50dbd1e8db4cad33"
+          }
+        ]
       },
       {
         "field": "housing_deadline",
         "label": "住宿申請／付款截止",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6711,7 +6946,7 @@
         "label": "住宿與生活費用",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的住宿與生活費用，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6720,7 +6955,7 @@
         "label": "保險",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的保險，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6729,7 +6964,7 @@
         "label": "簽證與居留",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的簽證與居留，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6738,7 +6973,7 @@
         "label": "抵達與迎新",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的抵達與迎新，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6747,7 +6982,7 @@
         "label": "合作校學費",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -6756,7 +6991,7 @@
         "label": "交換期間及延長限制",
         "status": "missing",
         "question": "請確認Saintigits Group of Institutions 聖基茲工學院中正2027春季的交換期間及延長限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       }
@@ -6778,6 +7013,52 @@
         "content_academic_year": "未標示",
         "content_review_note": "鏡像為未標年度的機構介紹，未載完整交換申請；中正TOEFL92/80矛盾未解。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p74-r4-engineering",
+        "source_url": "https://saintgits.org/saintgits-college-of-engineering/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標交換年度；工程學院一般介紹",
+        "content_review_note": "已讀全頁與相關連結；學位招生、海外競賽及食品系consultancy不能當中正incoming資格/文件。",
+        "checked_at": "2026-10-08T06:10:34.545392+00:00"
+      },
+      {
+        "source_id": "p74-r4-exchange-programs",
+        "source_url": "https://saintgits.org/saintgits-institute-of-management/exchange-programs/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標年度；赴UMass Lowell的學位twinning",
+        "content_review_note": "完整讀完：Civil/Mechanical 2+2或3+1 outbound雙聯，不是中正incoming交換；不映射GPA/語言/費用。",
+        "checked_at": "2026-10-08T06:02:31.330712+00:00"
+      },
+      {
+        "source_id": "p74-r4-homepage",
+        "source_url": "https://saintgits.org/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T06:01:12.107123+00:00"
+      },
+      {
+        "source_id": "p74-r4-housing",
+        "source_url": "https://saintgits.org/resources/hostels/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標2027交換適用年度；集團一般住宿",
+        "content_review_note": "完整讀到六棟宿舍及一般設施；未載中正交換床位保證、費率、申請截止。",
+        "checked_at": "2026-10-08T06:01:12.106437+00:00"
+      },
+      {
+        "source_id": "p74-r4-international",
+        "source_url": "https://saintgits.org/saintgits-college-of-engineering/international-collaborations/",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://saintgits.org/saintgits-college-of-engineering/international-collaborations/",
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T05:59:07.819177+00:00"
       }
     ]
   },
@@ -12226,23 +12507,14 @@
     "school_name": "SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)",
     "ccu_page": 111,
     "quota_status": "published",
-    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。",
+    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。；第四輪已逐頁讀完當期附件和可讀深層官方頁，見semantic-review-ledger；未載、舊版、存取限制與尚有其他來源分開。",
     "questions": [
-      {
-        "field": "eligibility",
-        "label": "合作校接收資格",
-        "status": "missing",
-        "question": "請確認SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)中正2027春季的合作校接收資格，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
       {
         "field": "language",
         "label": "合作校語言條件與替代證明",
         "status": "missing",
         "question": "請確認SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)中正2027春季的合作校語言條件與替代證明，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -12326,23 +12598,34 @@
         "label": "合作校申請表取得方式",
         "status": "needs_confirmation",
         "question": "請確認SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-        "reference_value": "伙伴bilateral母校email提名後用mobility申請；不套Erasmus個人unique-link或staff表，實際當期字段/表本身未核。",
+        "reason": "逐頁核對實際正文及17欄適用性；只列已讀要求，未知、舊年與矛盾不合併成當期事實。",
+        "reference_value": "2026/27 Partner universities(Students)公開入口已匿名GET讀到，與Freemovers virtual及staff分開；國家選單含Taiwan。完整欄位仍依JS/後續流程未讀，入口沒有統一截止而說各faculty自訂。當期PDF要求先母校提名；未建立申請、註冊、提交或驗證email。",
         "evidence": [
           {
-            "source_id": "p111-mirror",
-            "source_url": "https://drive.google.com/file/d/1a2yjX6NYYTlr59TfJdHtCBJJcApgmps_/view?usp=drive_link",
-            "source_pages": [
-              3
-            ],
-            "academic_year": "2026/2027",
-            "application_round": "2026/2027",
-            "checked_at": "2026-10-08T00:00:00Z",
+            "source_id": "p111-r4-partner-form",
+            "source_url": "https://mobility.slu.cz/en/incoming-partner-universities/application/preApply/?cycleId=171",
+            "source_pages": [],
+            "academic_year": "正文Partner universities(Students)2026/2027",
+            "application_round": "正文Partner universities(Students)2026/2027",
+            "checked_at": "2026-10-08T06:11:06.618996+00:00",
             "status": "needs_confirmation",
-            "excerpt": "ir nomination from their home university coordinator. Such nomination list shall be sent by e-mail as agreed in a joint approval. APPLICATION PROCEDURE FOR PARTNER UNIVERSITY STUDENTS Exchange and visiting students interested in mobilities within bilateral agreements with our partner universities (excluding Erasmus+) shall submit their application directly via applicatio",
-            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-            "content_hash": "60926e8d3c8b22cb18549a90bacb5deb0f799dd254915284f989494b40dedd3f",
-            "text_sha256": "ff60866c84c3654df1afa0482cdca7592b7d3374b5b8911f0d946e42b444e454"
+            "excerpt": "udents and staff coming to SU Partner universities (Students) 2026/2027 2026/2027 Create new application Country: not selected China Japan Netherlands Spain Taiwan Javascript is not enabled. The system requires Javascript. Please enable Javascript in your browser.",
+            "note": "匿名GET可讀入口國家選單，包括Taiwan；其餘字段依JS/後續流程未讀，不宣稱完整表已取得。未建立申請。",
+            "content_hash": "28b154ac6d232b0d51a3cfd2ed01626e22c18c72407390fcc75fbcbcf11bd092",
+            "text_sha256": "8c400507e25bd850e1bc6e68641ae5d10785e65c5973e72f0e0d40551b231695"
+          },
+          {
+            "source_id": "p111-r4-incoming-application",
+            "source_url": "https://mobility.slu.cz/en/incoming-application/application/",
+            "source_pages": [],
+            "academic_year": "正文Partner universities(Students)2026/2027",
+            "application_round": "正文Partner universities(Students)2026/2027",
+            "checked_at": "2026-10-08T06:10:34.543762+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ual mobility SU SBA 2026/2027 Deadline is set by each faculty individually. WWW with more information about the application Incoming staff Application opened for All programs except development projects The application is opened permanently. WWW with more information about the application Application opened for Development projects 2026-2030 Deadline is on 31st Dec 2030. Partner universi",
+            "note": "已匿名GET讀取開放計畫選單：Freemovers virtual、staff及partner students分開；各faculty截止，未填寫提交。",
+            "content_hash": "f2ef5bf11632402fb2b5145ccc77ce8f5b08c9c2f24a76df8b6ddee4f3608cdf",
+            "text_sha256": "b58ccea4459b949ac23f18d81782778f987ce5d0f338702b27945cc039d6b674"
           }
         ]
       },
@@ -12351,7 +12634,7 @@
         "label": "課程與學分限制",
         "status": "missing",
         "question": "請確認SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)中正2027春季的課程與學分限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -12360,7 +12643,7 @@
         "label": "住宿申請／付款截止",
         "status": "missing",
         "question": "請確認SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -12369,17 +12652,17 @@
         "label": "住宿與生活費用",
         "status": "missing",
         "question": "請確認SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)中正2027春季的住宿與生活費用，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
       {
         "field": "insurance",
         "label": "保險",
-        "status": "needs_confirmation",
+        "status": "conflict",
         "question": "請確認SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)中正2027春季的保險，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-        "reference_value": "附件列非EU超90日综合保險、保额60000EUR；需再核官方現行法規，不直接当2027確定法規保額。",
+        "reason": "逐頁核對實際正文及17欄適用性；只列已讀要求，未知、舊年與矛盾不合併成當期事實。",
+        "reference_value": "來源矛盾：校方2026/27附件列非EU超90日保額至少EUR60000、全期綜合保險；捷克內政部/外交部2026-10-08現行長期指引列每事故至少EUR400000、無自負額。公保/特定國際協定等豁免、海外申請與境內續期須分開；中正bilateral不推定Erasmus豁免。不能用校方60000當2027確定規格，亦不保證未來法規不變。",
         "evidence": [
           {
             "source_id": "p111-mirror",
@@ -12390,11 +12673,37 @@
             "academic_year": "2026/2027",
             "application_round": "2026/2027",
             "checked_at": "2026-10-08T00:00:00Z",
-            "status": "needs_confirmation",
-            "excerpt": "ective students will be asked to submit a proof of Czech health insurance when they apply for visa. The coverage limit is minimum 60,000 EUR and the insurance must be purchased for the entire period of stay. You should conclude your travel medical insurance in the scope of comprehensive healthcare as required by the Act on the R",
+            "status": "conflict",
+            "excerpt": "The coverage limit is minimum 60,000 EUR and the insurance must be purchased for the entire period of stay. You should conclude your travel medical insurance in the scope of comprehensive healthcare as required by the Act on the Residence of Foreign Nationals with any insurance company authorised to provide it in the Czech Republic. Please read more on the medical insurance here or on ou",
             "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
             "content_hash": "60926e8d3c8b22cb18549a90bacb5deb0f799dd254915284f989494b40dedd3f",
             "text_sha256": "ff60866c84c3654df1afa0482cdca7592b7d3374b5b8911f0d946e42b444e454"
+          },
+          {
+            "source_id": "p111-r4-government-medical",
+            "source_url": "https://ipc.gov.cz/en/forms-and-documents/documents/medical-insurance/",
+            "source_pages": [],
+            "academic_year": "2026-10-08查核的現行移民指引；不是2027保證",
+            "application_round": "2026-10-08查核的現行移民指引；不是2027保證",
+            "checked_at": "2026-10-08T06:02:31.327968+00:00",
+            "status": "conflict",
+            "excerpt": "d event) must be at least EUR 400,000, with no cost sharing by the insured person. This limit applies both to insurance covering necessary and urgent care and to comprehensive health insurance. If you applied for long-term visa or for long-term residence permit at an office of the Diplomatic Mission of the Czech Republic, you have to submit a certificate proving your travel medical insur",
+            "note": "全文已讀：長期保險每事故EUR400000且無自負額、海外申請/境內續期及公保/協定豁免分開；不推定中正雙邊適用Erasmus豁免。",
+            "content_hash": "ac658da8f988feb0d109f0a2f86ca66df105aa42882e8245b2ba05e886c2601e",
+            "text_sha256": "e0c9bb0f3932b9be90f437a98a9507431fff6fe20221d95050cd14dc80c85dea"
+          },
+          {
+            "source_id": "p111-r4-mfa-medical",
+            "source_url": "https://mzv.gov.cz/jnp/en/information_for_aliens/supporting_documents_overview/travel_medical_insurance.mobi",
+            "source_pages": [],
+            "academic_year": "2026-10-08查核的現行外交部指引；不是2027保證",
+            "application_round": "2026-10-08查核的現行外交部指引；不是2027保證",
+            "checked_at": "2026-10-08T06:02:31.328413+00:00",
+            "status": "conflict",
+            "excerpt": " minimum coverage must be EUR 400,000 (without co-payment). ****************** Urgent medical care – may not exclude insurance payments in case of injury brought about by intention, negligence or contributory negligence of the insured nor as a result of alcohol, toxic or psychotropic substances. This insurance may be bought from an insurance company providing insurance on the CZE territo",
+            "note": "全文已讀；短期Schengen EUR30000與長期EUR400000分開，不能互換。未判定個人簽證或豁免。",
+            "content_hash": "350494d7d36c75a7417adc5352eb650d99017971802484097cc12e998f8b46ae",
+            "text_sha256": "ae4fa44febe27a219c1733e816972b137795525a0c3a61c194df09be69a7abe8"
           }
         ]
       },
@@ -12404,7 +12713,7 @@
         "status": "needs_confirmation",
         "question": "請確認SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)中正2027春季的簽證與居留，提供明載年度／計畫的官方文件或提名通知。",
         "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-        "reference_value": "校方說非EU超90日需D長期學生簽、正本及部分捷克官方翻譯；要求申請人核最新內政部/使館。",
+        "reference_value": "校方說非EU超90日需D長期學生簽、正本及部分捷克官方翻譯；要求申請人核最新內政部/使館。；內政部與外交部现行保險全文另已讀，長期与Schengen、協定豁免依國籍/停留/資助身分分開；校方一般最長60天說法不是個人保證。校方簽證子頁實際HTTP200為Anubis限制，未取得該頁政策正文。",
         "evidence": [
           {
             "source_id": "p111-mirror",
@@ -12420,6 +12729,19 @@
             "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
             "content_hash": "60926e8d3c8b22cb18549a90bacb5deb0f799dd254915284f989494b40dedd3f",
             "text_sha256": "ff60866c84c3654df1afa0482cdca7592b7d3374b5b8911f0d946e42b444e454"
+          },
+          {
+            "source_id": "p111-r4-mfa-medical",
+            "source_url": "https://mzv.gov.cz/jnp/en/information_for_aliens/supporting_documents_overview/travel_medical_insurance.mobi",
+            "source_pages": [],
+            "academic_year": "2026-10-08查核的現行外交部指引；不是2027保證",
+            "application_round": "2026-10-08查核的現行外交部指引；不是2027保證",
+            "checked_at": "2026-10-08T06:02:31.328413+00:00",
+            "status": "needs_confirmation",
+            "excerpt": " coverage must be EUR 30,000. LONG-TERM VISAS AND RESIDENCE PERMITS Travel medical insurance must cover all expenses related to complex medical care for the entire stay in CZE. Complex medical care –must include preventive and dispensary (= regular medical supervision for certain disease) care, as well as care related to pregnancy and labor. The minimum coverage must be EUR 400,000 (with",
+            "note": "全文已讀；短期Schengen EUR30000與長期EUR400000分開，不能互換。未判定個人簽證或豁免。",
+            "content_hash": "350494d7d36c75a7417adc5352eb650d99017971802484097cc12e998f8b46ae",
+            "text_sha256": "ae4fa44febe27a219c1733e816972b137795525a0c3a61c194df09be69a7abe8"
           }
         ]
       },
@@ -12428,16 +12750,7 @@
         "label": "合作校學費",
         "status": "missing",
         "question": "請確認SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "exchange_duration",
-        "label": "交換期間及延長限制",
-        "status": "missing",
-        "question": "請確認SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)中正2027春季的交換期間及延長限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       }
@@ -12450,6 +12763,150 @@
         "content_academic_year": "2026/2027",
         "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p111-r4-accommodation",
+        "source_url": "https://www.slu.cz/opf/en/accommodation",
+        "status": "html",
+        "access_result": "challenge_page",
+        "http_status": 200,
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "HTTP200實際為Anubis存取限制頁，未取得所求課程/住宿/保險/簽證正文；未解挑戰。不能算政策讀取成功。",
+        "checked_at": "2026-10-08T05:59:04.688524+00:00"
+      },
+      {
+        "source_id": "p111-r4-courses",
+        "source_url": "https://www.slu.cz/opf/en/listofcourses",
+        "status": "html",
+        "access_result": "challenge_page",
+        "http_status": 200,
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "HTTP200實際為Anubis存取限制頁，未取得所求課程/住宿/保險/簽證正文；未解挑戰。不能算政策讀取成功。",
+        "checked_at": "2026-10-08T05:59:04.688102+00:00"
+      },
+      {
+        "source_id": "p111-r4-factsheet",
+        "source_url": "https://www.slu.cz/opf/en/file/cul/6ad775eb-afab-46a3-a91f-709039e5da74",
+        "status": "html",
+        "access_result": "challenge_page",
+        "http_status": 200,
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "HTTP200實際為Anubis存取限制頁，未取得所求課程/住宿/保險/簽證正文；未解挑戰。不能算政策讀取成功。",
+        "checked_at": "2026-10-08T05:59:05.726128+00:00"
+      },
+      {
+        "source_id": "p111-r4-government-health",
+        "source_url": "https://ipc.gov.cz/en/obligations-for-foreigners/health-insurance/",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://ipc.gov.cz/en/obligations-for-foreigners/health-insurance/",
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T06:01:15.107575+00:00"
+      },
+      {
+        "source_id": "p111-r4-government-insurance",
+        "source_url": "https://ipc.gov.cz/en/administrative-proceedings/travel-medical-insurance/",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://ipc.gov.cz/en/administrative-proceedings/travel-medical-insurance/",
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T05:59:05.911441+00:00"
+      },
+      {
+        "source_id": "p111-r4-government-medical",
+        "source_url": "https://ipc.gov.cz/en/forms-and-documents/documents/medical-insurance/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "2026-10-08查核的現行移民指引；不是2027保證",
+        "content_review_note": "全文已讀：長期保險每事故EUR400000且無自負額、海外申請/境內續期及公保/協定豁免分開；不推定中正雙邊適用Erasmus豁免。",
+        "checked_at": "2026-10-08T06:02:31.327968+00:00"
+      },
+      {
+        "source_id": "p111-r4-government-oldpdf",
+        "source_url": "https://www.mvcr.cz/docDetail.aspx?docid=21672761&doctype=ART",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T06:01:15.171819+00:00"
+      },
+      {
+        "source_id": "p111-r4-incoming-application",
+        "source_url": "https://mobility.slu.cz/en/incoming-application/application/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文Partner universities(Students)2026/2027",
+        "content_review_note": "已匿名GET讀取開放計畫選單：Freemovers virtual、staff及partner students分開；各faculty截止，未填寫提交。",
+        "checked_at": "2026-10-08T06:10:34.543762+00:00"
+      },
+      {
+        "source_id": "p111-r4-insurance",
+        "source_url": "https://www.slu.cz/opf/en/insurance",
+        "status": "html",
+        "access_result": "challenge_page",
+        "http_status": 200,
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "HTTP200實際為Anubis存取限制頁，未取得所求課程/住宿/保險/簽證正文；未解挑戰。不能算政策讀取成功。",
+        "checked_at": "2026-10-08T05:59:04.688873+00:00"
+      },
+      {
+        "source_id": "p111-r4-mfa-medical",
+        "source_url": "https://mzv.gov.cz/jnp/en/information_for_aliens/supporting_documents_overview/travel_medical_insurance.mobi",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "2026-10-08查核的現行外交部指引；不是2027保證",
+        "content_review_note": "全文已讀；短期Schengen EUR30000與長期EUR400000分開，不能互換。未判定個人簽證或豁免。",
+        "checked_at": "2026-10-08T06:02:31.328413+00:00"
+      },
+      {
+        "source_id": "p111-r4-mobility",
+        "source_url": "https://mobility.slu.cz/en/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T05:59:05.695584+00:00"
+      },
+      {
+        "source_id": "p111-r4-partner-form",
+        "source_url": "https://mobility.slu.cz/en/incoming-partner-universities/application/preApply/?cycleId=171",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "正文Partner universities(Students)2026/2027",
+        "content_review_note": "匿名GET可讀入口國家選單，包括Taiwan；其餘字段依JS/後續流程未讀，不宣稱完整表已取得。未建立申請。",
+        "checked_at": "2026-10-08T06:11:06.618996+00:00"
+      },
+      {
+        "source_id": "p111-r4-student-guide",
+        "source_url": "https://www.slu.cz/opf/en/intstudguide",
+        "status": "html",
+        "access_result": "challenge_page",
+        "http_status": 200,
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "HTTP200實際為Anubis存取限制頁，未取得所求課程/住宿/保險/簽證正文；未解挑戰。不能算政策讀取成功。",
+        "checked_at": "2026-10-08T05:59:05.454809+00:00"
+      },
+      {
+        "source_id": "p111-r4-studies",
+        "source_url": "https://www.slu.cz/opf/en/aboutstudies",
+        "status": "html",
+        "access_result": "challenge_page",
+        "http_status": 200,
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "HTTP200實際為Anubis存取限制頁，未取得所求課程/住宿/保險/簽證正文；未解挑戰。不能算政策讀取成功。",
+        "checked_at": "2026-10-08T05:59:05.453696+00:00"
+      },
+      {
+        "source_id": "p111-r4-visa",
+        "source_url": "https://www.slu.cz/opf/en/visaandrespermitin",
+        "status": "html",
+        "access_result": "challenge_page",
+        "http_status": 200,
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "HTTP200實際為Anubis存取限制頁，未取得所求課程/住宿/保險/簽證正文；未解挑戰。不能算政策讀取成功。",
+        "checked_at": "2026-10-08T05:59:04.690383+00:00"
       }
     ]
   },
@@ -12791,23 +13248,14 @@
     "school_name": "Universidad Internacional 墨西哥國際大學",
     "ccu_page": 119,
     "quota_status": "published",
-    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。",
+    "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。；第四輪已逐頁讀完當期附件和可讀深層官方頁，見semantic-review-ledger；未載、舊版、存取限制與尚有其他來源分開。",
     "questions": [
-      {
-        "field": "program_scope",
-        "label": "接收計畫、學制及校區",
-        "status": "missing",
-        "question": "請確認Universidad Internacional 墨西哥國際大學中正2027春季的接收計畫、學制及校區，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
       {
         "field": "eligibility",
         "label": "合作校接收資格",
         "status": "missing",
         "question": "請確認Universidad Internacional 墨西哥國際大學中正2027春季的合作校接收資格，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -12866,7 +13314,7 @@
         "label": "合作校申請截止",
         "status": "missing",
         "question": "請確認Universidad Internacional 墨西哥國際大學中正2027春季的合作校申請截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -12925,7 +13373,7 @@
         "label": "住宿與床位",
         "status": "missing",
         "question": "請確認Universidad Internacional 墨西哥國際大學中正2027春季的住宿與床位，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -12934,7 +13382,7 @@
         "label": "住宿申請／付款截止",
         "status": "missing",
         "question": "請確認Universidad Internacional 墨西哥國際大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -12943,7 +13391,7 @@
         "label": "簽證與居留",
         "status": "missing",
         "question": "請確認Universidad Internacional 墨西哥國際大學中正2027春季的簽證與居留，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       },
@@ -12953,7 +13401,7 @@
         "status": "conflict",
         "question": "請確認Universidad Internacional 墨西哥國際大學中正2027春季的抵達與迎新，提供明載年度／計畫的官方文件或提名通知。",
         "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-        "reference_value": "Spring2027資料orientation寫January11–15,2026，與開學2027-01-18不一致；不自行改成2027年。",
+        "reference_value": "Spring2027資料orientation寫January11–15,2026，與開學2027-01-18不一致；不自行改成2027年。；PDF另有BuddyProgramme，校方可依特別要求配對當地學生協助适應，未列唯一預約截止或保证机场接送。這項一般當期服務不能修復orientation錯年。",
         "evidence": [
           {
             "source_id": "p119-mirror",
@@ -12969,6 +13417,21 @@
             "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
             "content_hash": "ee4decff25d716b57eab527f08c056964723c81b7e2b5cb95010b631ae81e9bb",
             "text_sha256": "1d4d5a60792abcb232107b8b7cf9289f00a75714b6b1e2b315474198d5abd935"
+          },
+          {
+            "source_id": "p119-mirror",
+            "source_url": "https://drive.google.com/file/d/14Mz7loHIdWZ97ECIzo2CtjxKTbf3lCJv/view?usp=drive_link",
+            "source_pages": [
+              8
+            ],
+            "academic_year": "2026–2027校曆（部分欄位年度矛盾）",
+            "application_round": "2026–2027校曆（部分欄位年度矛盾）",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "conflict",
+            "excerpt": "INTERNATIONALIZATION PROGRAMS BUDDY PROGRAM International students can request a Buddy who is familiar with bot the university and the locar city and culture CLUB AMIGO Round tables, excursions, participation in cultural events, social coffee gatherings, and activities both inside and outside UNINTER that promote interculturality",
+            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+            "content_hash": "ee4decff25d716b57eab527f08c056964723c81b7e2b5cb95010b631ae81e9bb",
+            "text_sha256": "1d4d5a60792abcb232107b8b7cf9289f00a75714b6b1e2b315474198d5abd935"
           }
         ]
       },
@@ -12977,16 +13440,7 @@
         "label": "合作校學費",
         "status": "missing",
         "question": "請確認Universidad Internacional 墨西哥國際大學中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "exchange_duration",
-        "label": "交換期間及延長限制",
-        "status": "missing",
-        "question": "請確認Universidad Internacional 墨西哥國際大學中正2027春季的交換期間及延長限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
+        "reason": "本輪已全文核對此校當期PDF及可讀官方子頁，未找到支持此欄當期適用的原文；已嘗試入口失敗另記，不等於官方明示尚未公告。",
         "reference_value": null,
         "evidence": []
       }
@@ -13009,6 +13463,46 @@
         "content_academic_year": "完整表內容未核實；由2026/27 factsheet所連",
         "content_review_note": "HTTP200僅MicrosoftForms Loading頁，完整表內容未讀取；公開瀏覽器開啟遇環境憑證信任錯誤，未更動信任設定。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p119-r4-homepage",
+        "source_url": "https://uninter.edu.mx/",
+        "status": "fetch_failed",
+        "http_status": 503,
+        "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/",
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T06:01:12.108690+00:00"
+      },
+      {
+        "source_id": "p119-r4-inbound",
+        "source_url": "https://uninter.edu.mx/Internacionalizacion",
+        "status": "fetch_failed",
+        "http_status": 503,
+        "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://uninter.edu.mx/Internacionalizacion",
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T05:59:08.774225+00:00"
+      },
+      {
+        "source_id": "p119-r4-lodging",
+        "source_url": "https://spanishschool.uninter.edu.mx/Lodging",
+        "status": "fetch_failed",
+        "http_status": 503,
+        "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://spanishschool.uninter.edu.mx/Lodging",
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T06:02:31.331588+00:00"
+      },
+      {
+        "source_id": "p119-r4-spanish-semester",
+        "source_url": "https://spanishschool.uninter.edu.mx/Semester-Program",
+        "status": "fetch_failed",
+        "http_status": 503,
+        "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://spanishschool.uninter.edu.mx/Semester-Program",
+        "content_academic_year": "未標適用年度或本次未讀到政策正文",
+        "content_review_note": "本輪實際取得與語意查核；未取得的正文/年份不猜，取得HTTP成功不等於讀到政策。",
+        "checked_at": "2026-10-08T06:01:12.110095+00:00"
       }
     ]
   }

@@ -7,13 +7,12 @@ import json
 import re
 from functools import lru_cache
 
-from .ccu_sources import BUNDLE, CHECKED_AT, HOME, ROUND
+from .ccu_sources import BUNDLE, CHECKED_AT, HOME
 from .models import (
     ApplicationDocumentRequirement,
     ApplicationStep,
     ApplicationWorkflowSource,
     DestinationProfile,
-    ExchangeFieldEvidence,
     PageCategory,
     PartnerExchangeDetailField,
     PartnerUniversity,
@@ -79,6 +78,12 @@ def reviewed_rows() -> dict[int, dict]:
                         BUNDLE / "overseas_sources" / (ev["source_id"] + ".json")
                     ).read_text()
                 )
+                if ev["status"] == "verified_current" and source.get(
+                    "access_result"
+                ) in {"challenge_page", "captcha_required", "empty_response"}:
+                    raise ValueError(
+                        "Unread CCU access response cannot support current policy"
+                    )
                 text_hash = hashlib.sha256(
                     json.dumps(
                         source.get("text_pages", []), ensure_ascii=False

@@ -6,10 +6,10 @@ blank quotas, historical attachments, or download successes to current facts.
 
 from __future__ import annotations
 
-from collections import Counter
 import json
-from pathlib import Path
 import sys
+from collections import Counter
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -64,6 +64,7 @@ def main():
                         "source_id",
                         "source_url",
                         "status",
+                        "access_result",
                         "http_status",
                         "error",
                         "browser_check_error",
@@ -136,6 +137,15 @@ def main():
         "source_acquisition_statuses": dict(
             Counter(s["status"] for s in snapshots.values())
         ),
+        "source_access_limitations": dict(
+            Counter(
+                s["access_result"]
+                for s in snapshots.values()
+                if s.get("access_result")
+                in {"challenge_page", "captcha_required", "empty_response"}
+            )
+        ),
+        "semantic_review_ledger": "semantic-review-ledger.json",
         "research_gap_audit": "research-gap-audit.json",
         "acquired_content_review_queue": "acquired-content-review.json",
         "source_failure_followup": "source-failure-followup.json",

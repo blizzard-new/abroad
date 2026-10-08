@@ -6,26 +6,26 @@
   "reviewed_current_or_unknown_quota_schools": 55,
   "overseas_field_count_per_school": 17,
   "overseas_field_status_counts": {
-    "verified_current": 237,
-    "missing": 433,
-    "needs_confirmation": 192,
+    "verified_current": 245,
+    "missing": 419,
+    "needs_confirmation": 197,
     "reference_only": 41,
-    "conflict": 31,
+    "conflict": 32,
     "explicit_not_announced": 1
   },
   "schools_with_at_least_one_current_overseas_fact": 29,
   "schools_with_all_overseas_fields_current": 0,
   "field_counts": {
     "program_scope": {
-      "verified_current": 20,
-      "missing": 20,
+      "verified_current": 21,
+      "missing": 19,
       "reference_only": 3,
       "needs_confirmation": 12
     },
     "eligibility": {
-      "verified_current": 12,
+      "verified_current": 14,
       "reference_only": 3,
-      "missing": 29,
+      "missing": 27,
       "needs_confirmation": 11
     },
     "language": {
@@ -36,10 +36,10 @@
       "conflict": 3
     },
     "nomination_deadline": {
-      "missing": 22,
+      "missing": 21,
       "reference_only": 2,
       "conflict": 3,
-      "needs_confirmation": 13,
+      "needs_confirmation": 14,
       "verified_current": 15
     },
     "application_deadline": {
@@ -56,9 +56,9 @@
       "missing": 9
     },
     "application_forms": {
-      "needs_confirmation": 16,
+      "needs_confirmation": 19,
       "reference_only": 1,
-      "missing": 33,
+      "missing": 30,
       "verified_current": 5
     },
     "academic_calendar": {
@@ -77,8 +77,8 @@
     "housing": {
       "verified_current": 21,
       "reference_only": 8,
-      "needs_confirmation": 15,
-      "missing": 9,
+      "needs_confirmation": 16,
+      "missing": 8,
       "conflict": 2
     },
     "housing_deadline": {
@@ -98,7 +98,8 @@
       "verified_current": 16,
       "missing": 20,
       "reference_only": 4,
-      "needs_confirmation": 15
+      "needs_confirmation": 14,
+      "conflict": 1
     },
     "visa": {
       "missing": 34,
@@ -108,36 +109,42 @@
       "conflict": 2
     },
     "arrival": {
-      "verified_current": 20,
-      "missing": 27,
+      "verified_current": 21,
+      "missing": 26,
       "needs_confirmation": 5,
       "explicit_not_announced": 1,
       "conflict": 2
     },
     "host_tuition": {
-      "missing": 45,
-      "needs_confirmation": 5,
+      "missing": 44,
+      "needs_confirmation": 6,
       "reference_only": 1,
       "verified_current": 4
     },
     "exchange_duration": {
-      "missing": 38,
-      "verified_current": 9,
+      "missing": 34,
+      "verified_current": 13,
       "needs_confirmation": 7,
       "reference_only": 1
     }
   },
-  "source_count": 202,
+  "source_count": 241,
   "source_acquisition_statuses": {
-    "html": 98,
-    "fetch_failed": 39,
-    "downloaded_extracted_pdf": 41,
+    "html": 117,
+    "fetch_failed": 52,
+    "downloaded_extracted_pdf": 42,
     "docx": 4,
     "pdf": 17,
+    "web_extracted_html": 7,
     "web_extracted_pdf": 1,
-    "doc": 1,
-    "web_extracted_html": 1
+    "doc": 1
   },
+  "source_access_limitations": {
+    "empty_response": 2,
+    "challenge_page": 7,
+    "captcha_required": 1
+  },
+  "semantic_review_ledger": "semantic-review-ledger.json",
   "research_gap_audit": "research-gap-audit.json",
   "acquired_content_review_queue": "acquired-content-review.json",
   "source_failure_followup": "source-failure-followup.json",

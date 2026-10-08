@@ -306,15 +306,6 @@
     "candidates": [
       {
         "source_id": "p24-mirror",
-        "field": "application_forms",
-        "source_page": 2,
-        "source_status": "verified_current",
-        "excerpts": [
-          "4.入学所需申请材料: 学校推荐; 由学校项目协调人以邮件形式发送提名表和全 套申请材料至交换生负责人。 交换生材料包括： 申请表；推荐信；成绩单；个人简历 ；在学证明或学生证 复印件；台湾居民往来大陆通行证复印件；保险单据复印件 （来校报道后提交）；电子版照片1份 （文件名为XX大学_ 姓名） 除电子版照片和保险单据外，其余材料需合并为一个pdf文 档 5. 秋季申请截止日期 请于2026年11月15日前由学校项目协调人以邮件形式将提 名表和学生申请材料发送至 ies@tju.edu.cn 。邮件主题为“XX大学2027春季项目申请” 6. 住宿信息 学生宿舍4-6人间, 600元/学期，价格以实际为准 7.接送机信息 根据航班情况，协调学生志愿者接送机，交换生需要支付机 场到天津大学的打车费或公共交通费。"
-        ]
-      },
-      {
-        "source_id": "p24-mirror",
         "field": "housing_deadline",
         "source_page": 2,
         "source_status": "verified_current",
@@ -324,8 +315,21 @@
         ]
       }
     ],
-    "fields_reread_this_pass": [],
-    "remaining_review_status": "pending_semantic_reread",
+    "fields_reread_this_pass": [
+      {
+        "ccu_page": 24,
+        "field": "application_forms",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "needs_confirmation",
+        "value": "2027春季附件列申請表及母校提名表，要求母校协调人寄全套材料；PDF沒有空白表或具體模板下載連結。本輪官方HMT/OIA入口實際DNS失敗，仍未核實當期表內容或签章欄位。",
+        "source_ids": [
+          "p24-mirror"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      }
+    ],
+    "remaining_review_status": "listed_sources_semantically_reviewed_more_sources_pending",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
   {
@@ -410,24 +414,6 @@
       },
       {
         "source_id": "p27-mirror",
-        "field": "application_forms",
-        "source_page": 2,
-        "source_status": "verified_current",
-        "excerpts": [
-          "之學生。大學部（本科生）一年級、大四請勿申請。 三、申請截止時間：春季班——每年的10月30日至12月31日止；秋季班——每年的3月1日至5月31日止。 四、提交的申請材料：交換生申請表（張貼兩寸白底彩照1張）；交流學生匯總表；學生證復印件；在學證明書；臺胞證影印本；個人簡歷；在校期間成績單；交換學習計劃書；醫療/意外保險證明。所有材料由學校方遞傳（不含醫療/意外保險證明）提交至gatsw@uestc.edu.cn。 七、申請系所及選課：交換生至少修讀5門課12個學分，其中至少一門課需與本專業相關。本校2026年秋季學期課程將在2026年5月公布。 八、費用：學生宿舍約人民幣6000/學期，校外租屋約人民幣1000–1500元/月。學生到校時請先預備人民幣約5000元以支付首月生活及相關費用。 九、大陸地區消費（以人民幣計算，供參考）：膳食1000–2000元/月；雜費500–1500元/月。"
-        ]
-      },
-      {
-        "source_id": "p27-ccu-deadline-crosscheck",
-        "field": "application_forms",
-        "source_page": 27,
-        "source_status": "verified_current",
-        "excerpts": [
-          "有資格進行第 二階段(姊妹校)申請。 以下資料檔僅須電子檔，按照以下順序，合併成一個 PDF， 繳交電子檔至 : outbound@ccu.edu.tw 1. 交換生申請表(張貼 2 寸白底彩照) 2. 學生證（影本） 3. 在學證明書 4. 臺胞證（影本） 5. 個人簡歷(CV) 6. 在校期間成績單 7. 交換學習計劃 8. 醫療/意外保險證明 Note：9 不必放在 pdf 内 相關資料 (Other documents) 官網: www.uestc.edu.cn/ 備註(Notes) Application deadline申請截止日: 2026/11/30 學期期間: 2027/03/02 – 2027/07/17 "
-        ]
-      },
-      {
-        "source_id": "p27-mirror",
         "field": "housing_deadline",
         "source_page": 2,
         "source_status": "verified_current",
@@ -436,28 +422,108 @@
         ]
       },
       {
-        "source_id": "p27-mirror",
-        "field": "exchange_duration",
+        "source_id": "p27-r4-full-pdf",
+        "field": "housing_deadline",
         "source_page": 2,
         "source_status": "verified_current",
         "excerpts": [
-          "校方遞傳（不含醫療/意外保險證明）提交至gatsw@uestc.edu.cn。 七、申請系所及選課：交換生至少修讀5門課12個學分，其中至少一門課需與本專業相關。本校2026年秋季學期課程將在2026年5月公布。 八、費用：學生宿舍約人民幣6000/學期，校外租屋約人民幣1000–1500元/月。學生到校時請先預備人民幣約5000元以支付首月生活及相關費用。 九、大陸地區消費（以人民幣計算，供參考）：膳食1000–2000元/月；雜費500–1500元/月。",
-          ".cn。 七、申請系所及選課：交換生至少修讀5門課12個學分，其中至少一門課需與本專業相關。本校2026年秋季學期課程將在2026年5月公布。 八、費用：學生宿舍約人民幣6000/學期，校外租屋約人民幣1000–1500元/月。學生到校時請先預備人民幣約5000元以支付首月生活及相關費用。 九、大陸地區消費（以人民幣計算，供參考）：膳食1000–2000元/月；雜費500–1500元/月。"
-        ]
-      },
-      {
-        "source_id": "p27-ccu-deadline-crosscheck",
-        "field": "exchange_duration",
-        "source_page": 27,
-        "source_status": "verified_current",
-        "excerpts": [
-          "sity of Electronic Science and Technology of China 電子科技大學 交換期程 (Application Period) 一學期(one semester) 甄選名額 (Quotas) 2名 申請資格 (Qualification) 僅限台籍學生申請。 大一，四學生不得申請 申請科系需與專業相關 語言能力 (Language Proficiency) 無 姊妹校簡章 (Fact Sheet) https://drive.google.com/file/d/1nSgO6- CsLVbLD35TmniN39qOG7RXnzat/view?usp=drive_link 第二階繳交資 料 (Submit relevant documents _Second Section) 必須先經過第一階段校內申請通過，且經過國際處向",
-          " Electronic Science and Technology of China 電子科技大學 交換期程 (Application Period) 一學期(one semester) 甄選名額 (Quotas) 2名 申請資格 (Qualification) 僅限台籍學生申請。 大一，四學生不得申請 申請科系需與專業相關 語言能力 (Language Proficiency) 無 姊妹校簡章 (Fact Sheet) https://drive.google.com/file/d/1nSgO6- CsLVbLD35TmniN39qOG7RXnzat/view?usp=drive_link 第二階繳交資 料 (Submit relevant documents _Second Section) 必須先經過第一階段校內申請通過，且經過國際處向姐妹校提名後，才有資格進行"
+          "w@uestc.edu.cn。 七、申請系所及選課：交換生至少修讀5門課12個學分，其中至少一門課需與本專業相關。本校2026年秋季學期課程將在2026年5月公布。 八、費用：學生宿舍約人民幣6000/學期，校外租屋約人民幣1000–1500元/月。學生到校時請先預備人民幣約5000元以支付首月生活及相關費用。 九、大陸地區消費（以人民幣計算，供參考）：膳食1000–2000元/月；雜費500–1500元/月。 二、選拔條件：請依據學生學業成績、操行及綜合表現。請以公平、公開及公正方式選拔。 三、申請截止時間：不論是否錄取，申請資料恕不退件；有需要者請先自存一份備參。 五、雙方學校均有權拒絕錄取對方學校推薦之學生。 六、學生管理：交換結束，電子科技大學會將交換生成績單寄送貴校推薦單位。交換學生在電子科技大學交換期滿必須立即返回臺灣。交換期間不得打工，並請注意個人安全。應于開學一周內購買醫療（住院）及意外保險。在本",
+          "、申請系所及選課：請參考本校院系專業簡表，學業（專業）之選擇影響個人選課，請申請人務必認真謹慎選擇。 八、費用：繳交學雜費，與本校簽署協議書另外規定者依其規定辦理，費用由本校負擔。住宿申請將由本校依該學期住宿狀況進行安排，恕無法指定宿舍。"
         ]
       }
     ],
-    "fields_reread_this_pass": [],
-    "remaining_review_status": "pending_semantic_reread",
+    "fields_reread_this_pass": [
+      {
+        "ccu_page": 27,
+        "field": "eligibility",
+        "previous_status": "verified_current",
+        "previous_value": "臺灣校交流生：大一/大四勿申請，交流生安排需均分不同學院；5名為對方資料年名額，不能覆蓋中正母校配額。",
+        "status": "verified_current",
+        "value": "2026/27臺灣高校交流生：大一、大四勿申請；依學業成績、操行及綜合表現，以公平公開公正方式選拔。未載統一GPA。5名為校方對方年度總額且應分布各學院，不覆蓋中正公布名額；雙方均可拒絕推薦生。",
+        "source_ids": [
+          "p27-r4-full-pdf",
+          "p27-r4-full-pdf"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 27,
+        "field": "application_forms",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "needs_confirmation",
+        "value": "當期PDF列交換生申請表（貼2吋白底彩照）、交流學生彙總表；未附空白表或下載連結。所有材料由母校傳送，保險另補；不論是否錄取，申請材料不退件，應自行留備份。完整模板及簽章要求仍未核實。",
+        "source_ids": [
+          "p27-r4-full-pdf",
+          "p27-r4-full-pdf"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 27,
+        "field": "housing",
+        "previous_status": "verified_current",
+        "previous_value": "資料列校內住宿約6000 CNY/學期、校外約1000–1500 CNY/月；實際宿舍由校方安排。",
+        "status": "verified_current",
+        "value": "2026/27資料列學生宿舍約6000 CNY/學期、校外1000–1500 CNY/月；校方依當期宿舍狀況安排，學生不能指定宿舍。沒有床位保證或獨立住房申請/付款截止。",
+        "source_ids": [
+          "p27-r4-full-pdf",
+          "p27-r4-full-pdf"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 27,
+        "field": "insurance",
+        "previous_status": "verified_current",
+        "previous_value": "申請材料包含醫療/意外保險證明；未載保額。",
+        "status": "verified_current",
+        "value": "當期要求醫療（住院）及意外保險，開學一週內購買；申請材料列保險證明但母校統一提交時排除保險另補。未載保額、費率或指定公司，不能推定所有自購保單皆合格。",
+        "source_ids": [
+          "p27-r4-full-pdf"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 27,
+        "field": "arrival",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "verified_current",
+        "value": "當期提醒到校預備約5000 CNY支付首月生活及相關費用，學生自行負擔機場交通等；未列2027春季抵達/迎新日期或接機服務。交換結束返臺前須完成離校手續。",
+        "source_ids": [
+          "p27-r4-full-pdf",
+          "p27-r4-full-pdf"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 27,
+        "field": "host_tuition",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "needs_confirmation",
+        "value": "當期原文：「繳交學雜費，與本校簽署協議書另外規定者依其規定辦理，費用由本校負擔。」同句付款與負擔措辭有歧義，且協議可另規定。未核實中正雙邊實際豁免或應繳額，不能改寫為普遍免學費。",
+        "source_ids": [
+          "p27-r4-full-pdf"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 27,
+        "field": "exchange_duration",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "verified_current",
+        "value": "當期在電子科技交換以一學期為限，須保留原推薦母校學籍，期滿立即返回臺灣；交換期間不得打工，返臺前完成離校手續。未核實2027春季起迄或延長例外，不以住宿半年推定可延長。",
+        "source_ids": [
+          "p27-r4-full-pdf",
+          "p27-r4-full-pdf"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      }
+    ],
+    "remaining_review_status": "listed_sources_semantically_reviewed_more_sources_pending",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
   {
@@ -494,27 +560,92 @@
         ]
       },
       {
-        "source_id": "p29-mirror",
-        "field": "exchange_duration",
+        "source_id": "p29-r4-legacy-factsheet-web",
+        "field": "housing_deadline",
         "source_page": 1,
-        "source_status": "verified_current",
+        "source_status": "reference_only",
         "excerpts": [
-          "华中师范大学 Central China Normal University 2027年春季学期 招收港澳台姊妹校交换生简章 忠诚博雅 ·朴实刚毅"
+          "3、历年成绩单4、个人简历5、交流学生研修计划书（见附件二）6、健康检查证明（常规检查）7、身份证件影印件8、照片2张（白底小2寸正面免冠登记彩照）9、就读学校推荐函或同意书10、住宿申请表（见附件三）11、保险证明材料（必须购买，开学报到后交至本校） 课程注册 | 日期 | 2016年9月18日 方法 | 网下 选择科目限制 | 根据就读学院具体情况而定 有关选择科目网址 | http://www.jwc.ccnu.edu.cn/ （本）http://gs.ccnu.edu.cn/default.aspx（研） 住宿申请 | 填写住宿申请表（见附件三），与入学申请材料一同提交 每月花费估计 | 人民币800-1500/月（生活费） * 附件1〖港澳台来我校交换生所需附件（中文）.doc 〗已下载次 L95: Image L96: Copyright ©2015 华中师范大学港澳台事务办公室 Al",
+          "学院具体情况而定 有关选择科目网址 | http://www.jwc.ccnu.edu.cn/ （本）http://gs.ccnu.edu.cn/default.aspx（研） 住宿申请 | 填写住宿申请表（见附件三），与入学申请材料一同提交 每月花费估计 | 人民币800-1500/月（生活费） * 附件1〖港澳台来我校交换生所需附件（中文）.doc 〗已下载次 L95: Image L96: Copyright ©2015 华中师范大学港澳台事务办公室 All rights reserved. L99: 地址：湖北省武汉市珞喻路152号国际文化交流园区一号楼三楼 电话：+86-27-67865079"
         ]
       },
       {
-        "source_id": "p29-mirror",
-        "field": "exchange_duration",
-        "source_page": 3,
-        "source_status": "verified_current",
+        "source_id": "p29-r4-procedure-web",
+        "field": "housing_deadline",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
         "excerpts": [
-          "师 电话：+86-27-67861824 邮箱：hmtexchange@ccnu.edu.cn hmt@ccnu.edu.cn 交换学生身份及人数 依据两校协议及协商确定 申请交换学期 2027年春季学期 学期起止时间 2027年2月21日-2027年7月10日 报名申请截止时间 2026年11月2日 材料提交要求 由各学校联络负责人统一发送，需提供申请材料电子版，不接受 学生个人申报。 保险要求 交换生需自行购买境外保险（含人身意外险，紧急救援险，住院 医疗险），到校后交至本校。 选课要求 方法 本科生为线上选课，研究生为线下选课。 课程 每位交换生在我校选修至少两门以上课程，课程类型、 学分数不限。本科生课程可登陆我校本科生院网站 （http://jwc.ccnu.edu.cn/index.htm ）参考往年情 况；研究生课程可登陆所在学院网站了解。 住宿信息 校内住宿，宿舍内有空调及独立卫生间，根据房型住宿",
-          "7-67861824 邮箱：hmtexchange@ccnu.edu.cn hmt@ccnu.edu.cn 交换学生身份及人数 依据两校协议及协商确定 申请交换学期 2027年春季学期 学期起止时间 2027年2月21日-2027年7月10日 报名申请截止时间 2026年11月2日 材料提交要求 由各学校联络负责人统一发送，需提供申请材料电子版，不接受 学生个人申报。 保险要求 交换生需自行购买境外保险（含人身意外险，紧急救援险，住院 医疗险），到校后交至本校。 选课要求 方法 本科生为线上选课，研究生为线下选课。 课程 每位交换生在我校选修至少两门以上课程，课程类型、 学分数不限。本科生课程可登陆我校本科生院网站 （http://jwc.ccnu.edu.cn/index.htm ）参考往年情 况；研究生课程可登陆所在学院网站了解。 住宿信息 校内住宿，宿舍内有空调及独立卫生间，根据房型住宿费为人民 币 600"
+          "（春季入学申请时间：每年11月1日至12月15日；秋季入学申请时间：每年4月1日至5月15日），并在我校最终确定后，及时向我校相关院系、教务处、研究生院提供境外交换生的报名登记表、住宿需求表等相关材料，以保证交换学生能按规定入校学习。 ↓ 第二步入学 春季入学办理时间 秋季入学办理时间 确定学伴：为每一位来我校交换的港澳台交换生选择一名学伴，辅导其在华师期间的学习生活。 接机/车：港澳台办派车，根据姊妹学校及本人提交的交换生接机信息表，由学伴按交换生到达时间赴机场或火车站接驳。 入住：到国际园区物业管理中心获取住宿安排，然后到相应留学生公寓楼的管理员处办理入住手续。办理入住需提交 邀请信、本人有效证件等材料（以物业要求为准） 报到注册：先凭我校发放的邀请信到到我校港澳台办公室报到，然后我办工作人员安排学伴引导交换生到各自交换学习院系报到。院系报到需提交以下材料： 1.邀请函 2.职能部门会签信",
+          "伴，辅导其在华师期间的学习生活。 接机/车：港澳台办派车，根据姊妹学校及本人提交的交换生接机信息表，由学伴按交换生到达时间赴机场或火车站接驳。 入住：到国际园区物业管理中心获取住宿安排，然后到相应留学生公寓楼的管理员处办理入住手续。办理入住需提交 邀请信、本人有效证件等材料（以物业要求为准） 报到注册：先凭我校发放的邀请信到到我校港澳台办公室报到，然后我办工作人员安排学伴引导交换生到各自交换学习院系报到。院系报到需提交以下材料： 1.邀请函 2.职能部门会签信息表 3.港澳台办介绍函 根据教学秘书提供教学课程安排，线下选课。 办理校园卡：我办工作人员引导交换生到校园卡管理中心办理校园。办理校园卡需提交以下材料： 1.邀请函 2.本人学号（国际学院安排） 3.港澳台办介绍函 ↓ 第三步学习及交流 选课：登录网站http://portal.ccnu.edu.cn L123: /index_"
         ]
       }
     ],
-    "fields_reread_this_pass": [],
-    "remaining_review_status": "pending_semantic_reread",
+    "fields_reread_this_pass": [
+      {
+        "ccu_page": 29,
+        "field": "eligibility",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "verified_current",
+        "value": "2027春季招收港澳臺姊妹校交換生；接收身份及人數依兩校協議/協商，由母校聯絡人統一送件，不接受個人申報。這只核實機構提名資格，未載個人GPA/最低年級，不把全校學位介紹當接收學制範圍。",
+        "source_ids": [
+          "p29-mirror"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 29,
+        "field": "nomination_deadline",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "needs_confirmation",
+        "value": "當期由各母校聯絡人統一送電子材料，報名申請截止2026-11-02；PDF沒有另列獨立提名期限，不能將報名日當提名日或套舊一般流程11/1–12/15。",
+        "source_ids": [
+          "p29-mirror"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 29,
+        "field": "documents",
+        "previous_status": "verified_current",
+        "previous_value": "簡體中文申報表、在讀證明、歷年成績、簡體CV、近6個月體檢（醫院章）、台胞證正反面、白底小2寸照、母校蓋章推薦函。",
+        "status": "verified_current",
+        "value": "2027春季：申報表除簽名外均用簡體中文打印；在讀證明、歷年成績、簡體CV、近6個月常規體檢（醫院公章）、台胞證/回鄉證正反扫描、白底小2吋免冠電子照、母校推薦函（學校公章）。由母校統一寄電子版；沒有要求舊版住宿申請表，不能擅加2016表格。",
+        "source_ids": [
+          "p29-mirror",
+          "p29-mirror"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 29,
+        "field": "application_forms",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "needs_confirmation",
+        "value": "當期PDF指定「華中師範大學招收港澳台地區交換學生申報表」，除簽名外簡體打印，但未附空白表。已讀incoming下載清單，只找到2016-09-13舊附件，下載實際要求驗證碼。新版申報表未核實，不宣稱校方尚未公告，也不把舊研修/住宿表當當期必繳。",
+        "source_ids": [
+          "p29-mirror",
+          "p29-r4-forms-index-web",
+          "p29-r4-legacy-attachment-blocked-web"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 29,
+        "field": "exchange_duration",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "verified_current",
+        "value": "當期一個春季交換學期2027-02-21至2027-07-10；身份及人數由兩校協議/協商確定。PDF沒有全年、延長、提前離校規則，不自行推定可加期。",
+        "source_ids": [
+          "p29-mirror"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      }
+    ],
+    "remaining_review_status": "listed_sources_semantically_reviewed_more_sources_pending",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
   {
@@ -2551,46 +2682,7 @@
         ]
       }
     ],
-    "fields_reread_this_pass": [
-      {
-        "ccu_page": 48,
-        "field": "program_scope",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "2026/27接收交換；每所伙伴每學期最多2人。若過去兩學期沒有SeoulTech學生赴該伙伴交換，只分配1個open seat。這是合作校接收/互惠條件，中正當期公布名額保留，實際雙邊餘額須確認。",
-        "source_ids": [
-          "p48-mirror",
-          "p48-mirror"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 48,
-        "field": "eligibility",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "已核實機構接收限制：每伙伴每學期最多2名，過去兩學期未有SeoulTech赴該伙伴則僅1席。不是學生個人GPA或年級條件；個人其他資格仍未載，也不改寫中正名額。",
-        "source_ids": [
-          "p48-mirror",
-          "p48-mirror"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 48,
-        "field": "exchange_duration",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "當期春季一學期暫定2027-03-02至06-22。是否可延長、全年核准及必須返國日未完整載明；簽證財力的one-year金額不能當作獲准一年交換。",
-        "source_ids": [
-          "p48-mirror"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      }
-    ],
+    "fields_reread_this_pass": [],
     "remaining_review_status": "pending_semantic_reread",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
@@ -3181,45 +3273,7 @@
         ]
       }
     ],
-    "fields_reread_this_pass": [
-      {
-        "ccu_page": 54,
-        "field": "program_scope",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "2027春季接收；English track限Global College列示的Business Administration、Hospitality、Korean Studies、Mechanical Design及IT Engineering。全校54個碩士/39個博士課程介紹不是中正研究生皆可申請的證據。",
-        "source_ids": [
-          "p54-mirror",
-          "p54-mirror"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 54,
-        "field": "documents",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "2027春季文件送件方式：提名與申請附件用email，無須國際郵寄。這份已讀factsheet未列具體附件名稱、格式、簽章清單；方式已核實，完整文件要求尚待取得。",
-        "source_ids": [
-          "p54-mirror"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 54,
-        "field": "exchange_duration",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "當期春季2027-03-02至06-21，末日可能調整2至3天。全學年、延長及返國規則未載，宿舍頁仍寫秋季9/1至12/21的矛盾另保留。",
-        "source_ids": [
-          "p54-mirror"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      }
-    ],
+    "fields_reread_this_pass": [],
     "remaining_review_status": "pending_semantic_reread",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
@@ -3930,71 +3984,7 @@
         ]
       }
     ],
-    "fields_reread_this_pass": [
-      {
-        "ccu_page": 73,
-        "field": "application_deadline",
-        "previous_status": "conflict",
-        "previous_value": "跨來源矛盾：中正2027春季轉載「Application deadline申請截止日: 2026/10/20」；合作校當期來源「Spring2027：10/30（2026/27年度內前一年2026-10-30，未載時刻）。」。須確認中正個別通知及實際收件日，不承諾較晚日期。",
-        "status": "conflict",
-        "value": "跨來源矛盾：中正2027春季轉載「Application deadline申請截止日: 2026/10/20」；合作校當期來源「Spring2027：10/30（2026/27年度內前一年2026-10-30，未載時刻）。」。須確認中正個別通知及實際收件日，不承諾較晚日期。；新讀的一般Inbound頁另列Spring「2nd Week of October」，但未標2027且混有short mobility/internship，不能代替當期10/20或10/30，三種依據及範圍均保留。",
-        "source_ids": [
-          "p73-mirror",
-          "p73-ccu-deadline-crosscheck",
-          "p73-r3-inbound"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 73,
-        "field": "documents",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "一般Inbound Mobility公開頁列五項：最新成績單、SOP/Motivation Letter、護照影本、digital photo、最新Resume/CV。頁同時含semester exchange、short mobility與internship且未標適用學年度；不是已核實2027中正完整checklist，格式/簽章/各院加件仍待確認。",
-        "source_ids": [
-          "p73-r3-inbound"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 73,
-        "field": "academic_calendar",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "一般Inbound頁列Spring一月至六月、Fall七月至十二月，未標2027逐日校曆/考試；不能補出固定開學、抵達或離校日。當期2026/27 factsheet未提供日程，留待補查。",
-        "source_ids": [
-          "p73-r3-inbound"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 73,
-        "field": "housing",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "已完整下載29頁一般Inbound brochure，第25頁描述on-campus及off-campus住宿、家具、internet、dining及recreation；沒有2027租金、床位保證、申請/付款截止。第23頁OIA可協助accommodation；不把行銷內容提升为2027住房承諾。",
-        "source_ids": [
-          "p73-r3-brochure"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 73,
-        "field": "exchange_duration",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "一般Inbound有Semester Exchange與Short Mobility，學制表含undergraduate/masters/internship；Spring一月至六月是未標年度的一般範圍。29頁brochure另介紹一學期semester exchange，未載2027延長或全年核准；與中正雙邊及Rajpura校區分開。",
-        "source_ids": [
-          "p73-r3-inbound",
-          "p73-r3-brochure"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      }
-    ],
+    "fields_reread_this_pass": [],
     "remaining_review_status": "pending_semantic_reread",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
@@ -4010,6 +4000,26 @@
         "excerpts": [
           "on, and start-up mentoring. Holistic Growth & Personalised Support: Thrive in a vibrant campus life — organize and perform in cultural fests, competitions, and receive one-on-one mentoring to discover and refine your unique strengths. Saintgits Hosts the First Taiwan Education Center in Kerala Offering Internship and Recruitment opportunities in Taiwan for Saintgits students Facility to learn Mandarin (Chinese",
           "s students Facility to learn Mandarin (Chinese) from a dedicated Taiwanese Trainer at our Campus Industrial collaborations with Taiwan Companies One of the only 2 Institutions in India with AICTE approved Foreign Collaboration / Twinning Programmes with University of Massachusetts Lowell, USA. Indo - Taiwan Joint Research Centre on AI and ML: World’s First Cross-Nation Federated AI Platform Launched in India by N"
+        ]
+      },
+      {
+        "source_id": "p74-r4-engineering",
+        "field": "program_scope",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "eering – Saintgits Group of Institutions 3s 3s 3s 3s 3s 3s 3s 3s 3s 3s 3s 3s Discover The Campus 3s 3s Latest News AICTE ATAL (Offline mode) sponsored Six-Day Faculty Development Program (FDP) on “AI in power converters for sustainable energy systems,” from 5th January to 10th January, 2026 by Department of Electrical and Electronics Engineering, Saintgits. Saintgits faculty members dominated the All Kerala – Art",
+          "nd current happenings at Saintgits College of Engineering. Know more Saintgits Edge Ansys Campus Know More IoT LAB Know More Fab Lab Know More SCIE Know More VIRTUAL LAB Know More Testimonials Ms Aleena Joseph US FOODS, USA Just a few words about Saintgits… it really is one of the best colleges out there. The teachers were so helpful to me, whenever there was anything I needed or didn’t understand they were alway"
+        ]
+      },
+      {
+        "source_id": "p74-r4-exchange-programs",
+        "field": "program_scope",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "Exchange programs – Saintgits Group of Institutions SIM Placements 2024 Exchange programs TWINNING PROGRAM WITH UNIVERSITY OF MASSACHUSETTS, LOWELL, USA The University of Massachusetts is a public research university of USA committed to excellence in teaching, research and community engagement. It has got four different campus",
+          "Exchange programs – Saintgits Group of Institutions SIM Placements 2024 Exchange programs TWINNING PROGRAM WITH UNIVERSITY OF MASSACHUSETTS, LOWELL, USA The University of Massachusetts is a public research university of USA committed to excellence in teaching, research and community engagement. It has got four different campuses in the state of Massachusetts. The University of Massachusetts campus"
         ]
       },
       {
@@ -4041,6 +4051,24 @@
         ]
       },
       {
+        "source_id": "p74-r4-exchange-programs",
+        "field": "application_forms",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          " University of Massachusetts campus located in Lowell (UMass Lowell) is dedicated to transformational education that fosters student success, lifelong learning and global awareness. The University offers affordable, experience-based undergraduate, graduate and doctoral programs that are taught by internationally recognized faculty who conduct research to expand the horizons of knowledge. UMass Lowell continues "
+        ]
+      },
+      {
+        "source_id": "p74-r4-homepage",
+        "field": "application_forms",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          " Top Engineering College JECI Saintgits hosts Kerala's First Japan Education Center and Information Taiwan Education Center India Saintgits hosts the first Taiwan Education Center in Kerala Admissions – Enquire Now! ♿ High Contrast Dyslexia-Friendly Font A+ A- Highlight Links Large Cursor Line Height Text Spacing Reset"
+        ]
+      },
+      {
         "source_id": "p74-host0",
         "field": "academic_calendar",
         "source_page": 1,
@@ -4048,6 +4076,34 @@
         "excerpts": [
           "Saintgits Group of Institutions – Learn. Grow. Excel × Event Calendar Saintgits Design School Saintgits Institute of Computer Applications Saintgits Institute of Management Saintgits College of Applied Sciences Saintgits College of Engineering (Autonomous) Staff / Students / Parents Portal Online Learning Hub Admissions Event Calendar NAAC Re-accredited with A Grade A Grade for Saintgit",
           "ering (Autonomous) Staff / Students / Parents Portal Online Learning Hub Admissions Event Calendar NAAC Re-accredited with A Grade A Grade for Saintgits College of Applied Sciences NBA Accredited Programs The only unaided engineering institution in Kerala with 10 NBA-accredited programmes, including 6 UG programmes with the elite Tier-1 NBA Accreditation AICTE Approved Institutions Top Engineering College JECI Sain"
+        ]
+      },
+      {
+        "source_id": "p74-r4-engineering",
+        "field": "academic_calendar",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "e hub of technical education in Kerala. Admission Open B. Tech., M. Tech. & PhD Apply Now Exam Results News & Events Learn about the latest news and current happenings at Saintgits College of Engineering. Know more Saintgits Edge Ansys Campus Know More IoT LAB Know More Fab Lab Know More SCIE Know More VIRTUAL LAB Know More Testimonials Ms Aleena Joseph US FOODS, USA Just a few words about Saintgits… it really "
+        ]
+      },
+      {
+        "source_id": "p74-r4-homepage",
+        "field": "academic_calendar",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "Saintgits Group of Institutions – Learn. Grow. Excel × Event Calendar Saintgits Design School Saintgits Institute of Computer Applications Saintgits Institute of Management Saintgits College of Applied Sciences Saintgits College of Engineering (Autonomous) Staff / Students / Parents Portal Online Learning Hub Admissions Event Calendar NAAC Re-accredited with A Grade A Grade for Saintgit",
+          "ering (Autonomous) Staff / Students / Parents Portal Online Learning Hub Admissions Event Calendar NAAC Re-accredited with A Grade A Grade for Saintgits College of Applied Sciences NBA Accredited Programs The only unaided engineering institution in Kerala with 10 NBA-accredited programmes, including 6 UG programmes with the elite Tier-1 NBA Accreditation AICTE Approved Institutions Top Engineering College JECI Sain"
+        ]
+      },
+      {
+        "source_id": "p74-r4-housing",
+        "field": "academic_calendar",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "Hostel – Saintgits Group of Institutions × Event Calendar Hostel SAINTGITS has an excellent hostel facility. The college has separate and secure residential facilities for both boys and girls. Accommodation at Saintgits consists of 6 separate hostel blocks. It has good infrastructure which makes students feel comfortable and find a homely atmosphere. Proximity to the city me"
         ]
       },
       {
@@ -4081,6 +4137,45 @@
         ]
       },
       {
+        "source_id": "p74-r4-engineering",
+        "field": "course_restrictions",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "Punjab Engineering College, Chandigarh. Rs. 76,720 CERD fund Sanctioned for Students’ Projects. ASCE Saintgits Team represented India at the ASCE Society-wide finals of Sustainable Solutions, hosted by Lousiana Tech University, Ruston, USA. Saintgits wins the prestigious IDA – STEM Award for Community Development. Saintgits College of Engineering ABOUT THE INSTITUTION Founded by a group of pioneering educators,",
+          " the institution. Saintgits is now the only Autonomous Institution in Kerala with 9 NBA accredited programmes. Saintgits College of Engineering, right from inception, has been maintaining high levels of standards in academic and extra-curricular realms of activities. We offer 10 B. Tech. Degree programmes, Integrated MCA, Integrated MBA, MBA with Specialization(Logistics and Supply Chain Management), 7 M. Tech. p"
+        ]
+      },
+      {
+        "source_id": "p74-r4-exchange-programs",
+        "field": "course_restrictions",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "neering and Mechanical Engineering programs. It will be extended to other programs in due course. The Twinning program has two paths. (i) A student who completes two years in Saintgits College of Engineering will study the third and fourth year in UMass Lowell and (ii) a student who completes three years in Saintgits College of Engineering will study the fourth year in UMass Lowell. At the end of the fourth year,",
+          "ng from University of Massachusetts. The student would have also acquired some additional credits for continuing for the MS program. The scheme can be availed only by students having high academic merits. The Twinning program has the approval of AICTE and APJKTU. Admissions – Enquire Now! ♿ High Contrast Dyslexia-Friendly Font A+ A- Highlight Links Large Cursor Line Height Text Spacing Reset"
+        ]
+      },
+      {
+        "source_id": "p74-r4-homepage",
+        "field": "course_restrictions",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "Staff / Students / Parents Portal Online Learning Hub Admissions Event Calendar NAAC Re-accredited with A Grade A Grade for Saintgits College of Applied Sciences NBA Accredited Programs The only unaided engineering institution in Kerala with 10 NBA-accredited programmes, including 6 UG programmes with the elite Tier-1 NBA Accreditation AICTE Approved Institutions Top Engineering College JECI Saintgits hosts Keral",
+          "r NAAC Re-accredited with A Grade A Grade for Saintgits College of Applied Sciences NBA Accredited Programs The only unaided engineering institution in Kerala with 10 NBA-accredited programmes, including 6 UG programmes with the elite Tier-1 NBA Accreditation AICTE Approved Institutions Top Engineering College JECI Saintgits hosts Kerala's First Japan Education Center and Information Taiwan Education Center India"
+        ]
+      },
+      {
+        "source_id": "p74-r4-housing",
+        "field": "housing_deadline",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "lity. The college has separate and secure residential facilities for both boys and girls. Accommodation at Saintgits consists of 6 separate hostel blocks. It has good infrastructure which makes students feel comfortable and find a homely atmosphere. Proximity to the city means that the students are housed in a hostel which has a serene and calm atmosphere and yet have access to the city. Detailed thought and consid"
+        ]
+      },
+      {
         "source_id": "p74-mirror",
         "field": "costs",
         "source_page": 3,
@@ -4099,6 +4194,35 @@
         ]
       },
       {
+        "source_id": "p74-r4-engineering",
+        "field": "costs",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "., M. Tech. & PhD Apply Now Exam Results News & Events Learn about the latest news and current happenings at Saintgits College of Engineering. Know more Saintgits Edge Ansys Campus Know More IoT LAB Know More Fab Lab Know More SCIE Know More VIRTUAL LAB Know More Testimonials Ms Aleena Joseph US FOODS, USA Just a few words about Saintgits… it really is one of the best colleges out there. The teachers were so he",
+          " Officer, RABITEC It has been 3 wonderful years at Saintgits. Things could have been different if Saintgits had not nurtured us in all respects – developing a sense of leadership, building our courage to be in Corporate world and learning work ethics to name a few. Saintgits has always guided and encouraged students to take a right path in their own way. Thank you Saintgits! Placements Admissions – Enquire Now!"
+        ]
+      },
+      {
+        "source_id": "p74-r4-exchange-programs",
+        "field": "costs",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "mitted to excellence in teaching, research and community engagement. It has got four different campuses in the state of Massachusetts. The University of Massachusetts campus located in Lowell (UMass Lowell) is dedicated to transformational education that fosters student success, lifelong learning and global awareness. The University offers affordable, experience-based undergraduate, graduate and doctoral progra",
+          "wledge. UMass Lowell continues to build on its founding tradition of innovation, entrepreneurship and partnerships with industry and the community to address challenges facing the world. It distinguishes itself in providing high-quality education with special focus on hands-on learning through experience with personal attention from accomplished faculty and dedicated staff. Saintgits College of Engineering has"
+        ]
+      },
+      {
+        "source_id": "p74-r4-homepage",
+        "field": "costs",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "ge of Applied Sciences Saintgits College of Engineering (Autonomous) Staff / Students / Parents Portal Online Learning Hub Admissions Event Calendar NAAC Re-accredited with A Grade A Grade for Saintgits College of Applied Sciences NBA Accredited Programs The only unaided engineering institution in Kerala with 10 NBA-accredited programmes, including 6 UG programmes with the elite Tier-1 NBA Accreditation AICTE A"
+        ]
+      },
+      {
         "source_id": "p74-mirror",
         "field": "exchange_duration",
         "source_page": 3,
@@ -4108,8 +4232,21 @@
         ]
       }
     ],
-    "fields_reread_this_pass": [],
-    "remaining_review_status": "pending_semantic_reread",
+    "fields_reread_this_pass": [
+      {
+        "ccu_page": 74,
+        "field": "housing",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "needs_confirmation",
+        "value": "Saintgits集團一般官方住宿頁列六棟宿舍、男女分棟及基本設施；未標2027交換適用年，也沒有中正交換床位保證、房型費率、住房/付款期限。僅作一般住宿線索，接收學院與住宿資格待確認。",
+        "source_ids": [
+          "p74-r4-housing"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      }
+    ],
+    "remaining_review_status": "listed_sources_semantically_reviewed_more_sources_pending",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
   {
@@ -5493,44 +5630,7 @@
         ]
       }
     ],
-    "fields_reread_this_pass": [
-      {
-        "ccu_page": 88,
-        "field": "documents",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "當期已知必繳項目：語言能力證明，未限定證照種類；法語/英語B2僅advised，不是统一強制考試分數。本欄不是完整附件清單，其他檔案/簽名及學生表依提名後實際表另核。",
-        "source_ids": [
-          "p88-mirror"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 88,
-        "field": "arrival",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "Spring2027迎新在1月第一週（First week of January），未列確切日或指定抵達日；不能生成精確日期提醒。授課另為1月第一或第二週。",
-        "source_ids": [
-          "p88-mirror"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 88,
-        "field": "exchange_duration",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "當期Spring2027授課從1月第一/二週起；Bachelor及M1至4月中，M2至5月至6月。重考本科6月、碩士7月須另留時間；本資料不核准延長或全學年。",
-        "source_ids": [
-          "p88-mirror"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      }
-    ],
+    "fields_reread_this_pass": [],
     "remaining_review_status": "pending_semantic_reread",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
@@ -6597,63 +6697,7 @@
         ]
       }
     ],
-    "fields_reread_this_pass": [
-      {
-        "ccu_page": 98,
-        "field": "documents",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "公开Your application指引：先備JPEG證件照及護照PDF；online提交後產生申請PDF，列印取得母校coordinator簽名，再將簽名申請表、Learning Agreement及Accommodation Request掃描件依指引email送件。LA模板列學生/兩校負責人簽名日期；此網頁/LA未標適用年，2027住宿表已核，完整當期其他附件/簽章仍待確認。",
-        "source_ids": [
-          "p98-r3-application-web",
-          "p98-r3-application-web",
-          "p98-r3-learning-agreement"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 98,
-        "field": "application_forms",
-        "previous_status": "needs_confirmation",
-        "previous_value": "當期fact sheet指定onlineapplication；由母校先提名，實際portal字段/附件未核實。",
-        "status": "needs_confirmation",
-        "value": "公開三步申請指引及兩份附件已實際讀取：Learning Agreement DOCX、Accommodation Request PDF。住宿PDF正文是summer2027，檔名2026不能用來排除；LA為未標年度Erasmus格式模板，適用條款待核。個人申請PDF須先建立帳號並提交後產生，未取得該PDF；未註冊、登入、提交或寄信。不能把公開附件整體標無法取得。",
-        "source_ids": [
-          "p98-r3-application-web",
-          "p98-r3-learning-agreement",
-          "p98-r3-accommodation-form"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 98,
-        "field": "housing",
-        "previous_status": "verified_current",
-        "previous_value": "合租约300–325EUR/月、320押金、300行政費，合約固定4.5個月，預訂後不能換。",
-        "status": "verified_current",
-        "value": "合租约300–325EUR/月、320押金、300行政費，合約固定4.5個月，預訂後不能換。；當期住宿申請表另明示2027-02-22起可入住、02-22至02-25 move-in；可填同住偏好但公寓選擇不保證，可自行找房。未列獨立住宿/付款截止。",
-        "source_ids": [
-          "p98-mirror",
-          "p98-r3-accommodation-form",
-          "p98-r3-accommodation-form"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 98,
-        "field": "arrival",
-        "previous_status": "verified_current",
-        "previous_value": "Frankfurt機場約35分火車至Mannheim，buddy接站；orientation2027-03-01至03-05。",
-        "status": "verified_current",
-        "value": "Frankfurt機場約35分火車至Mannheim，buddy接站；orientation2027-03-01至03-05。；住宿PDF另指定move-in2027-02-22至02-25，與迎新03-01至03-05分開；不是要求所有人02-22抵德。",
-        "source_ids": [
-          "p98-mirror",
-          "p98-r3-accommodation-form"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      }
-    ],
+    "fields_reread_this_pass": [],
     "remaining_review_status": "pending_semantic_reread",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
@@ -7463,35 +7507,7 @@
         ]
       }
     ],
-    "fields_reread_this_pass": [
-      {
-        "ccu_page": 101,
-        "field": "academic_calendar",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "conflict",
-        "value": "官方Summersemester2027區塊列semester03-15至09-30、授課03-15至07-09，卻把recommended exams寫07-13至07-31「2026」、break寫08-01至09-30「2026」。原文年度矛盾未解，不能自行改成2027考試或據此訂返國；此頁另列各校區/學程，實際faculty安排仍須核。",
-        "source_ids": [
-          "p101-r3-calendar",
-          "p101-r3-calendar"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 101,
-        "field": "costs",
-        "previous_status": "needs_confirmation",
-        "previous_value": "未标年度估760–810EUR/月（住350–400、食至少180、医保110、广播20、其他100）；不是确认2027費率。",
-        "status": "needs_confirmation",
-        "value": "未标年度估760–810EUR/月（住350–400、食至少180、医保110、广播20、其他100）；不是确认2027費率。；另已讀官方Documents：所有學生StudentUnion fee為summer2027 EUR87。此項日期已載明，但原生活總額仍未核當期，不能將EUR87加成保證完整預算。第三國service fee EUR500的一般degree條款是否豁免雙邊交換仍待核。",
-        "source_ids": [
-          "p101-mirror",
-          "p101-r3-calendar",
-          "p101-r3-calendar"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      }
-    ],
+    "fields_reread_this_pass": [],
     "remaining_review_status": "pending_semantic_reread",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
@@ -7520,123 +7536,7 @@
         ]
       }
     ],
-    "fields_reread_this_pass": [
-      {
-        "ccu_page": 102,
-        "field": "program_scope",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "現行英德頁的一至兩學期一般交換，partner與freemover分開；EPS另有申請表。網頁沒有適用年，不由現行URL推定所有2027課程/學制開放；中正雙邊仍需母校提名及接收確認。",
-        "source_ids": [
-          "p102-r3-exchange-en",
-          "p102-r3-exchange-de"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 102,
-        "field": "eligibility",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "一般伙伴交換须母校先提名，再由THA審查完整申請。英德新版頁未明載2027個人GPA、最低年級或各degree限制；不能推定無條件合格，也不把freemover/EPS資格套中正雙邊。",
-        "source_ids": [
-          "p102-r3-exchange-en"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 102,
-        "field": "language",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "一般英德指引要求CV載明德/英程度，並可修德語或英語課；本頁沒有統一2027考試分數。具體課程語言、母校原有要求及各院先修须分開確認，不能解讀為免語言資格。",
-        "source_ids": [
-          "p102-r3-exchange-en"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 102,
-        "field": "documents",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "未標年度英德指引列六類上傳：證件照（無章/標記、最多500×500）、Learning Agreement、德/英CV含雙語程度、母校成績、護照/ID雙面（居留證若適用）、健保證明；Design與Architecture/Civil Engineering另附portfolio或CV作品連結。Non-EU使用NON ERASMUS LA：學生簽名/日期、母校與接收校signature AND STAMP。已讀完整LA一頁web提取；2027完整必繳與院系加件仍待確認，不稱六類為完整清單。",
-        "source_ids": [
-          "p102-r3-exchange-en",
-          "p102-r3-exchange-en",
-          "p102-r3-exchange-de",
-          "p102-r3-learning-agreement-web"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 102,
-        "field": "application_forms",
-        "previous_status": "needs_confirmation",
-        "previous_value": "當期datasheet指向Application-and-arrival網站；未將此入口誤算為已驗證完整表及文件清單。",
-        "status": "verified_current",
-        "value": "已匿名讀取Mobility-Online的General student exchange公開空白申請表，實際有2026/27、SS2027選項，以及個資、緊急聯絡、母校、THA領域/院系、期間、語言課、抵達、特殊需求及同意欄位。表可讀不等於完成提名或已讀後續上傳流程；未填寫或提交。Non-EU LA另於文件欄列未標年度模板，不將它提升為2027專用表。",
-        "source_ids": [
-          "p102-r3-application-portal",
-          "p102-r3-application-portal"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 102,
-        "field": "course_restrictions",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "一般英德頁建議每期15–30 ECTS（recommendation，非硬性最低）；可跨系但須相關母校學位並獲faculty/IFC准入，依先修。網站課未保證當期開課，課表晚定；英文課overview含尚待更新項目，不假裝2027完整course catalogue。",
-        "source_ids": [
-          "p102-r3-exchange-en",
-          "p102-r3-exchange-en"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 102,
-        "field": "insurance",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "未標年度英德交換頁：歐洲學生EHIC；非歐洲學生抵達後辦德國健保；EU但無EHIC者上傳簽署聲明會辦德國健保。仍需核對2027個人國籍、保單及provider，不推定臺籍皆有EHIC或已核實保費。",
-        "source_ids": [
-          "p102-r3-exchange-en"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 102,
-        "field": "visa",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "校方一般指引以國籍及歐洲/非歐洲路徑區分，提醒需簽證者預留使領館處理時間；此未標年度頁不是2027臺籍個人簽證認定。須核對官方移民規定、停留與錄取，不提供入境保證。",
-        "source_ids": [
-          "p102-r3-exchange-en"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 102,
-        "field": "exchange_duration",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "公開SS2027表可選1或2學期；英德一般頁也列一至兩學期。但中正獲准期數、延長與各院接收仍待確認；六個月住宿合約不能連帶保證第二學期住房。",
-        "source_ids": [
-          "p102-r3-application-portal",
-          "p102-r3-exchange-en"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      }
-    ],
+    "fields_reread_this_pass": [],
     "remaining_review_status": "pending_semantic_reread",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
@@ -8944,185 +8844,7 @@
         ]
       }
     ],
-    "fields_reread_this_pass": [
-      {
-        "ccu_page": 107,
-        "field": "program_scope",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "2026/27 Other exchange students一般短期study stay：portal Funding選Other mobility(69)，未接EWP之Erasmus可選51。這是接收端路徑，不把表中Erasmus/virtual選項當作中正協議全部獲准；中正此校名額空白仍待確認，非開放席次。",
-        "source_ids": [
-          "p107-r3-bilateral"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 107,
-        "field": "eligibility",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "當期接收前置條件：母校coordinator完成正式提名；沒有提名不能繼續申請。個人GPA/年級未載，院系可能補要求，仍須符合中正資格及確認空白名額。",
-        "source_ids": [
-          "p107-r3-bilateral"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 107,
-        "field": "language",
-        "previous_status": "needs_confirmation",
-        "previous_value": "交換factsheet列英語B2，任一证照/确认可；不是一般degree入学考试，具体本期适用年度仍需核。",
-        "status": "verified_current",
-        "value": "2026/27接收至少英文B2；可用母校language department證明或國際證書，無單一強制TOEFL/IELTS分數。院系可能另安排語言exam/Skype，不推定全體都須額外面試。",
-        "source_ids": [
-          "p107-r3-bilateral",
-          "p107-r3-bilateral"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 107,
-        "field": "nomination_deadline",
-        "previous_status": "needs_confirmation",
-        "previous_value": "summer需visa9/30、EU11/15；名额仍空白，不視已开放。",
-        "status": "conflict",
-        "value": "官方coordinators頁標題2026/27，但正文仍說2025/26；summer列需visa學生2026-09-30、EU2026-11-15。年度敘述矛盾未解，不任選較晚日或將此校空白名額算可申請；當期application附件日期另由明示2026/27頁支持。",
-        "source_ids": [
-          "p107-r3-coordinators",
-          "p107-r3-coordinators"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 107,
-        "field": "application_deadline",
-        "previous_status": "needs_confirmation",
-        "previous_value": "summer需visa10/10、EU11/30，年度未标；2026/27校曆连结不能單独證明整份申請要求本期。",
-        "status": "verified_current",
-        "value": "2026/27 summer：需visa學生申請/上傳附件2026-10-10，EU學生2026-11-30。年度在Other exchange指引正文核實；臺籍適用哪一路、提名及空白名額仍须确认，不顯示較晚日期為通用截止。",
-        "source_ids": [
-          "p107-r3-bilateral",
-          "p107-r3-bilateral"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 107,
-        "field": "documents",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "2026/27 Other exchange：Learning Agreement由學生及母校簽署送faculty審核；另上傳母校語言部門/國際英文B2證明（file title English certificate）、護照格式彩色人像照片（Photo，非護照影本）。院系可能加Skype或語言exam；本欄僅已核實要求，不保證完整各院清單。",
-        "source_ids": [
-          "p107-r3-bilateral",
-          "p107-r3-bilateral"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 107,
-        "field": "application_forms",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "當期Other exchange頁指定portal先email驗證再填Incoming study visit，Funding69等按路徑；指定的LA for freemovers已實際下載讀取DOCX，列三方簽名日期、課程ECTS與母校認列。雖檔案叫freemover，當期Other exchange正文確實指定此表；不把Erasmus grant或模板短期博士定義套中正獲准交換。未驗證email、註冊、登入或提交。",
-        "source_ids": [
-          "p107-r3-bilateral",
-          "p107-r3-learning-agreement"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 107,
-        "field": "academic_calendar",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "2027夏季授課02-15至05-16；考試05-17至07-04。正式Rector PDF另列08-16至08-31第二段考試，faculty可調整授課/其他日期；官網簡表未列該第二段，不能保證07-04即可離校。正式summer semester為02-15至08-31；院系及個人考試須再核。",
-        "source_ids": [
-          "p107-r3-calendarpdf",
-          "p107-r3-calendarpdf",
-          "p107-r3-calendar"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 107,
-        "field": "course_restrictions",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "當期課程先與faculty coordinator核對並填LA；可另選1–2門其他faculty或Language center，但須與coordinator討論。不是全校無限制混修或任一課必開；課程ECTS/先修依faculty課目另確認。",
-        "source_ids": [
-          "p107-r3-bilateral"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 107,
-        "field": "housing",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "2026/27指引：想住大學宿舍於portal住宿選yes；LA獲faculty核准後收住宿booking自動email。簽證住宿文件須先付deposit，金额與帳戶另通知；未載床位保證、當期房型/租金，不能捏造。",
-        "source_ids": [
-          "p107-r3-bilateral",
-          "p107-r3-bilateral"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 107,
-        "field": "housing_deadline",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "當期簽證住宿文件须儘快付deposit，校方宿舍承辦會email付款資訊。公開指引沒有統一精確deposit截止或金额；只核實相對流程，不造日期，也不稱官方尚未公告。",
-        "source_ids": [
-          "p107-r3-bilateral"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 107,
-        "field": "visa",
-        "previous_status": "needs_confirmation",
-        "previous_value": "校方説明先核使馆，UPCE给批准LA后中英文acceptance、付住宿deposit后housingagreement；原文约60日仅校方参考。",
-        "status": "verified_current",
-        "value": "當期接收指引：需簽證者先詢本國捷克使領館，送齊application/docs後由OIA提供Acceptance，宿舍deposit後才能出housing agreement，正本寄母校；校方約60天說法是一般參考，不保證個人處理時間或判定臺籍簽證種類。",
-        "source_ids": [
-          "p107-r3-bilateral",
-          "p107-r3-bilateral"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 107,
-        "field": "arrival",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "2026/27夏季建議2027-02-13至02-14抵達，迎新02-15至02-21；授課同樣02-15起，須確認faculty迎新與課程時間。個別welcome資訊另由提名前後email通知，非本欄已取得完整行程。",
-        "source_ids": [
-          "p107-r3-calendar"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 107,
-        "field": "exchange_duration",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "verified_current",
-        "value": "当期正式summer semester为2027-02-15至08-31，授課02-15至05-16，5月至7月及8月分段考試。全年/延長或母校批准期間未核；LA模板semester(s)的2至12月定義不是中正獲准一年證據。",
-        "source_ids": [
-          "p107-r3-calendarpdf"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      }
-    ],
+    "fields_reread_this_pass": [],
     "remaining_review_status": "pending_semantic_reread",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
@@ -9313,33 +9035,7 @@
         ]
       }
     ],
-    "fields_reread_this_pass": [
-      {
-        "ccu_page": 109,
-        "field": "course_restrictions",
-        "previous_status": "missing",
-        "previous_value": null,
-        "status": "needs_confirmation",
-        "value": "官方課程入口標Exchange Students2026/27，能讀faculty/semester/language filters；未取得篩選後每門課清單、先修或席次。入口可讀不等於已核實2027中正可選全校課，原mechanical B2及art甄選規則仍須分開。",
-        "source_ids": [
-          "p109-r3-courses"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      },
-      {
-        "ccu_page": 109,
-        "field": "housing_deadline",
-        "previous_status": "needs_confirmation",
-        "previous_value": "一般summer住宿reservationfee12/10前，未标本期年；不是交换申请11/1。",
-        "status": "needs_confirmation",
-        "value": "一般summer住宿reservationfee12/10前，未标本期年；不是交换申请11/1。；第三輪直接重讀Exchange住宿子頁仍未標年度：6000CZK預約費須summer12/10前付才確認住宿；未核實2027日期，志願與single均無保證。",
-        "source_ids": [
-          "p109-host1",
-          "p109-r3-accommodation"
-        ],
-        "reviewed_at": "2026-10-08T05:36:36.122483+00:00"
-      }
-    ],
+    "fields_reread_this_pass": [],
     "remaining_review_status": "pending_semantic_reread",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
@@ -9347,16 +9043,6 @@
     "ccu_page": 111,
     "school_name": "SILESIAN UNIVERSITY IN OPAVA (School of Business Administration in Karvina) 奧帕瓦西里西亞大學(管理學院)",
     "candidates": [
-      {
-        "source_id": "p111-mirror",
-        "field": "eligibility",
-        "source_page": 2,
-        "source_status": "verified_current",
-        "excerpts": [
-          "tion Submission by June 20, 2026 Student’s Arrival by September 20, 2026 Welcome Days and Enrollment September 21 – September 27, 2026 Lectures September 21 – December 20, 2026 Christmas Holiday December 21, 2026 – January 3, 2027 Examination Period January 3 – February 14, 2027 Public Holidays September 28/ October 28/ November 17, 2026 Erasmus+ Student Nomination by October 20, 2027 Student Application Submis",
-          "n Submission by November 20, 2027 Student’s Arrival by February 16, 2027 Welcome Days and Enrollment February 15 – February 21, 2027 Lectures February 15 – May 16, 2027 Examination Period May 17 – June 30, 2027 Public Holidays April 29 / April 1 / May 1 / May 8, 2027"
-        ]
-      },
       {
         "source_id": "p111-mirror",
         "field": "language",
@@ -9367,6 +9053,15 @@
         ]
       },
       {
+        "source_id": "p111-r4-government-medical",
+        "field": "language",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "lation of your insurance agreement and of the general terms and conditions into the Czech language. On request, you have to submit the proof of payment of the insurance premium stated on the comprehensive travel and medical insurance certificate. You will not need to submit your travel and medical insurance certificate provided that: you are participating in the public health insurance, the costs of your health car"
+        ]
+      },
+      {
         "source_id": "p111-mirror",
         "field": "course_restrictions",
         "source_page": 3,
@@ -9374,6 +9069,16 @@
         "excerpts": [
           "turers/researchers shall submit their application directly via application link below. COURSE LIST globe www.slu.cz/opf/en/listofcourses APPLICATION SUBMISSION globe https://mobility.slu.cz/en/ FURTHER INFORMATION FOR STUDENTS globe www.slu.cz/opf/en/aboutstudies",
           "on directly via application link below. COURSE LIST globe www.slu.cz/opf/en/listofcourses APPLICATION SUBMISSION globe https://mobility.slu.cz/en/ FURTHER INFORMATION FOR STUDENTS globe www.slu.cz/opf/en/aboutstudies"
+        ]
+      },
+      {
+        "source_id": "p111-r4-incoming-application",
+        "field": "course_restrictions",
+        "source_page": 1,
+        "source_status": "verified_current",
+        "excerpts": [
+          "the application Incoming staff Application opened for All programs except development projects The application is opened permanently. WWW with more information about the application Application opened for Development projects 2026-2030 Deadline is on 31st Dec 2030. Partner universities (Students) Application opened for 2026/2027 Deadline is set by each faculty individually. Javascript is not enabled. The system",
+          "y. WWW with more information about the application Application opened for Development projects 2026-2030 Deadline is on 31st Dec 2030. Partner universities (Students) Application opened for 2026/2027 Deadline is set by each faculty individually. Javascript is not enabled. The system requires Javascript. Please enable Javascript in your browser."
         ]
       },
       {
@@ -9432,28 +9137,102 @@
         ]
       },
       {
-        "source_id": "p111-mirror",
-        "field": "exchange_duration",
-        "source_page": 2,
-        "source_status": "verified_current",
+        "source_id": "p111-r4-government-medical",
+        "field": "costs",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
         "excerpts": [
-          "2 1 ACADEMIC CALENDAR WINTER SEMESTER SCHEDULE SUMMER SEMESTER SCHEDULE Erasmus+ Student Nomination by May 26, 2026 Student Application Submission by June 20, 2026 Student’s Arrival by September 20, 2026 Welcome Days and Enrollment September 21 – September 27, 2026 Lectures September 21 – December 20, 2026 Christmas Holiday December 21, 2026 – January 3, ",
-          "2 1 ACADEMIC CALENDAR WINTER SEMESTER SCHEDULE SUMMER SEMESTER SCHEDULE Erasmus+ Student Nomination by May 26, 2026 Student Application Submission by June 20, 2026 Student’s Arrival by September 20, 2026 Welcome Days and Enrollment September 21 – September 27, 2026 Lectures September 21 – December 20, 2026 Christmas Holiday December 21, 2026 – January 3, 2027 Examination Period J"
+          "or it in the Czech Republic. It also makes a difference, whether you are a citizen of the European Union, or not. APPLYING FROM OUTSIDE CZECHIA APPLYING IN CZECHIA EU CITIZENS AND THEIR FAMILY MEMBERS PERSONS UNDER 18 YEARS OF AGE APPLYING FROM OUTSIDE CZECHIA APPLYING IN CZECHIA EU CITIZENS AND THEIR FAMILY MEMBERS PERSONS UNDER 18 YEARS OF AGE Application for a long-term visa or for a long-term residence per",
+          "blic. The insurance coverage amount (the agreed limit per insured event) must be at least EUR 400,000, with no cost sharing by the insured person. This limit applies both to insurance covering necessary and urgent care and to comprehensive health insurance. If you applied for long-term visa or for long-term residence permit at an office of the Diplomatic Mission of the Czech Republic, you have to submit a cert"
         ]
       },
       {
-        "source_id": "p111-mirror",
-        "field": "exchange_duration",
-        "source_page": 7,
+        "source_id": "p111-r4-incoming-application",
+        "field": "costs",
+        "source_page": 1,
         "source_status": "verified_current",
         "excerpts": [
-          "ch, organize trips and social activities for the international students during the whole semester. Each semester a new incoming foreign student is assigned a buddy from SU SBA. OTHER USEFUL INFORMATION For more useful information on living and studying in the Czechia, please visit the site: www.studyin.cz. ",
-          "ips and social activities for the international students during the whole semester. Each semester a new incoming foreign student is assigned a buddy from SU SBA. OTHER USEFUL INFORMATION For more useful information on living and studying in the Czechia, please visit the site: www.studyin.cz. "
+          "ng to SU Application for students and staff coming to SU Overview of opened programmes Currently you can apply for the following programmes: Freemovers Application opened for virtual mobility SU SBA 2026/2027 Deadline is set by each faculty individually. WWW with more information about the application Incoming staff Application opened for All programs except development projects The application is opened perman"
+        ]
+      },
+      {
+        "source_id": "p111-r4-mfa-medical",
+        "field": "costs",
+        "source_page": 1,
+        "source_status": "needs_confirmation",
+        "excerpts": [
+          "ngen Area and cover the entire period of stay (or transit) . The minimum coverage must be EUR 30,000. LONG-TERM VISAS AND RESIDENCE PERMITS Travel medical insurance must cover all expenses related to complex medical care for the entire stay in CZE. Complex medical care –must include preventive and dispensary (= regular medical supervision for certain disease) care, as well as care related to pregnancy and labo",
+          "sease) care, as well as care related to pregnancy and labor. The minimum coverage must be EUR 400,000 (without co-payment). ****************** Urgent medical care – may not exclude insurance payments in case of injury brought about by intention, negligence or contributory negligence of the insured nor as a result of alcohol, toxic or psychotropic substances. This insurance may be bought from an insurance compa"
         ]
       }
     ],
-    "fields_reread_this_pass": [],
-    "remaining_review_status": "pending_semantic_reread",
+    "fields_reread_this_pass": [
+      {
+        "ccu_page": 111,
+        "field": "eligibility",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "verified_current",
+        "value": "2026/27 bilateral Partner university students須由母校coordinator先提名（以email依joint approval送提名清單）再自行透過mobility申請。未載個人GPA/年級或Taiwan每學制名額；不套Erasmus學生unique link或staff條款。",
+        "source_ids": [
+          "p111-mirror"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 111,
+        "field": "application_forms",
+        "previous_status": "needs_confirmation",
+        "previous_value": "伙伴bilateral母校email提名後用mobility申請；不套Erasmus個人unique-link或staff表，實際當期字段/表本身未核。",
+        "status": "needs_confirmation",
+        "value": "2026/27 Partner universities(Students)公開入口已匿名GET讀到，與Freemovers virtual及staff分開；國家選單含Taiwan。完整欄位仍依JS/後續流程未讀，入口沒有統一截止而說各faculty自訂。當期PDF要求先母校提名；未建立申請、註冊、提交或驗證email。",
+        "source_ids": [
+          "p111-r4-partner-form",
+          "p111-r4-incoming-application"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 111,
+        "field": "insurance",
+        "previous_status": "needs_confirmation",
+        "previous_value": "附件列非EU超90日综合保險、保额60000EUR；需再核官方現行法規，不直接当2027確定法規保額。",
+        "status": "conflict",
+        "value": "來源矛盾：校方2026/27附件列非EU超90日保額至少EUR60000、全期綜合保險；捷克內政部/外交部2026-10-08現行長期指引列每事故至少EUR400000、無自負額。公保/特定國際協定等豁免、海外申請與境內續期須分開；中正bilateral不推定Erasmus豁免。不能用校方60000當2027確定規格，亦不保證未來法規不變。",
+        "source_ids": [
+          "p111-mirror",
+          "p111-r4-government-medical",
+          "p111-r4-mfa-medical"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 111,
+        "field": "visa",
+        "previous_status": "needs_confirmation",
+        "previous_value": "校方說非EU超90日需D長期學生簽、正本及部分捷克官方翻譯；要求申請人核最新內政部/使館。",
+        "status": "needs_confirmation",
+        "value": "校方說非EU超90日需D長期學生簽、正本及部分捷克官方翻譯；要求申請人核最新內政部/使館。；內政部與外交部现行保險全文另已讀，長期与Schengen、協定豁免依國籍/停留/資助身分分開；校方一般最長60天說法不是個人保證。校方簽證子頁實際HTTP200為Anubis限制，未取得該頁政策正文。",
+        "source_ids": [
+          "p111-mirror",
+          "p111-r4-mfa-medical"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 111,
+        "field": "exchange_duration",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "verified_current",
+        "value": "2026/27 summer當期授課2027-02-15至05-16，考試05-17至06-30，迎新02-15至02-21、arrival by02-16。這是已核實一學期日程，母校批准交換起迄/全年/延長未載；不把Erasmus接收年或住宿當延長核准。",
+        "source_ids": [
+          "p111-mirror"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      }
+    ],
+    "remaining_review_status": "listed_sources_semantically_reviewed_more_sources_pending",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   },
   {
@@ -9646,34 +9425,54 @@
     "candidates": [
       {
         "source_id": "p119-mirror",
-        "field": "program_scope",
-        "source_page": 9,
-        "source_status": "verified_current",
-        "excerpts": [
-          "me Spanish level). Six hours a day, five days a week. Spanish Classes. *Special price for exchange students: 550 USD per semester."
-        ]
-      },
-      {
-        "source_id": "p119-mirror",
         "field": "application_deadline",
         "source_page": 5,
         "source_status": "verified_current",
         "excerpts": [
           " of language knowledge B1 (minimum) in Spanish APPLICATION FOR STUDENTS ABROAD Nomination deadlines May 29th, 2026 July 24th, 2026 ONCE STUDENTS GET THEIR ADMISSION LETTER: 7. Flight schedule 8.International insurance policy covering repatriation costs"
         ]
-      },
-      {
-        "source_id": "p119-mirror",
-        "field": "exchange_duration",
-        "source_page": 9,
-        "source_status": "verified_current",
-        "excerpts": [
-          "day, five days a week. Spanish Classes. *Special price for exchange students: 550 USD per semester."
-        ]
       }
     ],
-    "fields_reread_this_pass": [],
-    "remaining_review_status": "pending_semantic_reread",
+    "fields_reread_this_pass": [
+      {
+        "ccu_page": 119,
+        "field": "program_scope",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "verified_current",
+        "value": "當期factsheet為Cuernavaca的UNINTER，列2026/27交換申請、Spanish為主要授課語言及部分英/法課；另有西語密集特價program，不能混作一般學位/交換免學費。全校學士/碩士課程介紹不代表中正交換生可全學制/全課程入讀。",
+        "source_ids": [
+          "p119-mirror"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 119,
+        "field": "arrival",
+        "previous_status": "conflict",
+        "previous_value": "Spring2027資料orientation寫January11–15,2026，與開學2027-01-18不一致；不自行改成2027年。",
+        "status": "conflict",
+        "value": "Spring2027資料orientation寫January11–15,2026，與開學2027-01-18不一致；不自行改成2027年。；PDF另有BuddyProgramme，校方可依特別要求配對當地學生協助适應，未列唯一預約截止或保证机场接送。這項一般當期服務不能修復orientation錯年。",
+        "source_ids": [
+          "p119-mirror",
+          "p119-mirror"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      },
+      {
+        "ccu_page": 119,
+        "field": "exchange_duration",
+        "previous_status": "missing",
+        "previous_value": null,
+        "status": "verified_current",
+        "value": "當期列Spring2027開學2027-01-18、期末考2027-05-24至05-28；orientation年寫2026與春季2027有矛盾，另於抵達/校曆欄保留，不能据此訂抵達日。factsheet未載全年/延長核准，不用語言密集課程semester價格推定交換期間。",
+        "source_ids": [
+          "p119-mirror"
+        ],
+        "reviewed_at": "2026-10-08T06:14:34.602171+00:00"
+      }
+    ],
+    "remaining_review_status": "listed_sources_semantically_reviewed_more_sources_pending",
     "warning": "關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。"
   }
 ]
