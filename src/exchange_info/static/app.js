@@ -687,16 +687,22 @@ function activeUniversityProfile() {
 }
 
 function academicMinimum() {
-  if (activeHomeSchool() === "國立臺灣大學") return null;
+  if (homeSelectionRules().academic_policy === "gpa_or_rank") return null;
   return state.dashboard?.academic_score_minimum == null ? null : Number(state.dashboard.academic_score_minimum);
 }
 
+function homeSelectionRules() {
+  return state.dashboard?.selection_rules || {};
+}
+
 function homeAcademicPass(profile) {
-  if (activeHomeSchool() === "國立臺灣大學") {
-    if (/研究所|碩士|博士/.test(profile.degree || "")) return true;
-    return /大學部|學士/.test(profile.degree || "") && (
-      (profile.academicGpa != null && profile.academicGpa >= 2.44) ||
-      (profile.classRankPercent != null && profile.classRankPercent <= 50)
+  const rules = homeSelectionRules();
+  if (rules.academic_policy === "gpa_or_rank") {
+    if (rules.exclude_in_service && /在職/.test(profile.degree || "")) return false;
+    if (rules.graduate_academic_exempt && /研究所|研究生|碩士|博士|碩一|博一/.test(profile.degree || "")) return true;
+    return /大學部|學士|大二|大三|大四/.test(profile.degree || "") && (
+      (profile.academicGpa != null && profile.academicGpa >= rules.undergraduate_gpa_minimum) ||
+      (profile.classRankPercent > 0 && profile.classRankPercent <= rules.undergraduate_rank_maximum)
     );
   }
   const minimum = academicMinimum();
@@ -704,7 +710,7 @@ function homeAcademicPass(profile) {
 }
 
 function renderAcademicFields() {
-  const ntu = activeHomeSchool() === "國立臺灣大學";
+  const ntu = homeSelectionRules().academic_policy === "gpa_or_rank";
   $("#advisor-percent-field").hidden = ntu;
   $("#advisor-academic-score").disabled = ntu;
   document.querySelectorAll("[data-ntu-academic-field]").forEach((label) => {
@@ -712,6 +718,7 @@ function renderAcademicFields() {
     label.querySelector("input").disabled = !ntu;
   });
   $("#advisor-academic-rule").hidden = !ntu;
+  if (ntu) $("#advisor-academic-rule").textContent = state.dashboard.academic_score_rule;
 }
 
 function homeCollegeOptions() {
@@ -724,25 +731,22 @@ function homeCollegeValue(value) {
   return homeCollegeOptions().includes(value) ? value : "";
 }
 
+function departmentField(prefix) {
+  return $(`#${prefix}-department-text`)?.hidden === false ? $(`#${prefix}-department-text`) : $(`#${prefix}-department`);
+}
+
 function renderDepartmentOptions(prefix, selected = "") {
   const college = $(`#${prefix}-college`)?.value || "";
-  let select = $(`#${prefix}-department`);
+  const select = $(`#${prefix}-department`);
+  const input = $(`#${prefix}-department-text`);
   if (!select) return;
   const directory = window.UniWayAcademicUnits?.[activeHomeSchool()];
   // A student may enter the exact registered unit when a directory is unavailable.
-  const tag = directory ? "SELECT" : "INPUT";
-  if (select.tagName !== tag) {
-    const replacement = document.createElement(tag.toLowerCase());
-    for (const attribute of select.attributes) replacement.setAttribute(attribute.name, attribute.value);
-    select.replaceWith(replacement);
-    select = replacement;
-  }
+  select.hidden = !directory;
+  if (input) { input.hidden = Boolean(directory); input.disabled = Boolean(directory) || !college; }
   if (!directory) {
-    select.type = "text";
-    select.maxLength = 120;
-    select.placeholder = "請填學籍上的系所或學位學程";
-    select.value = selected;
-    select.disabled = !college;
+    select.disabled = true;
+    if (input) input.value = selected;
     const note = $(`#${prefix}-department-note`);
     if (note) note.textContent = "請依學籍填寫系所或學位學程；可申請範圍仍須核對合作校規定。";
     const link = $(`#${prefix}-department-source`);
@@ -3827,6 +3831,7 @@ function renderPersonalPlanSnapshot() {
 }
 
 function languageThresholdFromPartner(item, languageTest) {
+  if (homeSelectionRules().partner_requirements_need_confirmation) return null;
   const text = partnerSummaryPoints(item, "eligibility_points").join(" ");
   const patterns = {
     toeic: /(?:TOEIC|多益)\s*(?:達|至少|總分|成績)?\s*(\d{3})/i,
@@ -3834,8 +3839,11 @@ function languageThresholdFromPartner(item, languageTest) {
     toefl: /TOEFL(?:\s*iBT)?\s*(?:總分|達|至少)?\s*(\d{2,3})/i,
     duolingo: /Duolingo\s*(?:達|至少)?\s*(\d{2,3})/i,
   };
-  const match = text.match(patterns[languageTest]);
-  return match ? Number(match[1]) : null;
+  const pattern = patterns[languageTest];
+  if (!pattern) return null;
+  const match = text.match(pattern);
+  const threshold = match ? Number(match[1]) : null;
+  return Number.isFinite(threshold) ? threshold : null;
 }
 
 function partnerAvailabilityMeta(item) {
@@ -3851,8 +3859,11 @@ function partnerAvailabilityMeta(item) {
     };
   }
   if (status === "agreement_only") {
-    if (activeHomeSchool() === "國立臺灣大學" && /^0\s*名?$/.test(item.quota || "")) {
+    if (homeSelectionRules().pending_quota_planning && /^0\s*名?$/.test(item.quota || "")) {
       return {status, shortLabel:"116-1零名額", cardLabel:"116-1零名額／本期未開放", matchLabel:"本期未開放", reason:"官方名單已更新為零名額", blocked:true};
+    }
+    if (homeSelectionRules().pending_quota_planning && item.quota == null) {
+      return {status, shortLabel:"本期名額待公告", cardLabel:"合作備查／本期名額待公告", hint:"可先加入志願規劃；能否申請須等本期名額與條件公告", matchLabel:"本期名額待確認", reason:"本期甄選名額尚未公告", blocked:false, pending:true};
     }
     return {
       status,
@@ -3876,8 +3887,10 @@ function partnerAvailabilityMeta(item) {
 
 function renderPartnerAvailabilityNotice(item) {
   const availability = partnerAvailabilityMeta(item);
-  if (!availability.blocked) return "";
-  const fallback = availability.status === "departmental_reference"
+  if (!availability.blocked && !availability.pending) return "";
+  const fallback = availability.pending ? availability.hint
+    : homeSelectionRules().pending_quota_planning && /^0\s*名?$/.test(item.quota || "") ? "官方本期名單已更新為零名額，本期未開放申請。"
+    : availability.status === "departmental_reference"
     ? "中央當期名單未列，請先向所屬學院或國際處確認是否開放。"
     : "你的學校和這所學校簽有交換合約，只是這一期的交換名額表沒有列它，所以現在不能申請。之後若開放，會出現在學校國際處的名額表；開放前請先看國際處公告。";
   return `
@@ -3895,6 +3908,7 @@ function partnerMatch(item, profile = state.eligibilityProfile) {
   const risks = [];
   let score = 0;
   const availability = partnerAvailabilityMeta(item);
+  if (availability.pending) risks.push(availability.hint);
   if (availability.blocked) {
     return {
       score: -100,
@@ -3907,13 +3921,14 @@ function partnerMatch(item, profile = state.eligibilityProfile) {
   if (!profile) {
     const coverage = coverageForSchool(item.school_name);
     score = (coverage?.workflow_status === "completed" ? 20 : 0) + (coverage?.experience_status === "completed" ? 10 : 0) + (destinationProfileForSchool(item.school_name) ? 10 : 0);
-    return { score, tone: "setup", label: "設定條件後配對", reasons: ["申請與生活資料已整理"], risks: [] };
+    return { score, tone: availability.pending ? "review" : "setup", label: availability.pending ? availability.matchLabel : "設定條件後配對", reasons: ["申請與生活資料已整理"], risks };
   }
 
   const mismatches = [];
   const college = homeCollegeValue(profile.college);
-  const collegeKnown = Boolean(college && normalize(item.colleges));
-  const degreeKnown = Boolean(profile.degree && normalize(item.degree_levels));
+  const cycleConfirmed = !homeSelectionRules().partner_requirements_need_confirmation;
+  const collegeKnown = Boolean(cycleConfirmed && college && normalize(item.colleges));
+  const degreeKnown = Boolean(cycleConfirmed && profile.degree && normalize(item.degree_levels));
   const collegePass = collegeKnown && collegeMatches(item.colleges, college);
   const degreePass = degreeKnown && degreeMatches(item.degree_levels, profile.degree);
   if (!collegeKnown) risks.push(college ? "合作校學院範圍待確認" : "尚未填寫學院");
@@ -3945,7 +3960,7 @@ function partnerMatch(item, profile = state.eligibilityProfile) {
   return {
     score,
     tone: blocked ? "blocked" : risks.length ? "review" : "strong",
-    label: blocked ? mismatches[0] : !collegeKnown || !degreeKnown || !hasLanguageScore ? "條件待補齊" : score >= 78 ? "高度符合" : "值得查看",
+    label: blocked ? mismatches[0] : availability.pending ? availability.matchLabel : !collegeKnown || !degreeKnown || !hasLanguageScore ? "條件待補齊" : score >= 78 ? "高度符合" : "值得查看",
     reasons: reasons.slice(0, 3),
     risks,
   };
@@ -4021,6 +4036,12 @@ function planningContextKey() {
   return JSON.stringify([state.account?.id, workflowContextKey(state.applicationContext.target_school), state.applicationContext.program_type, state.applicationContext.semester, state.eligibilityProfile?.targetTerm]);
 }
 
+function planningPreviewAllowed() {
+  const partner = partnerByName(state.applicationContext.target_school);
+  return Boolean(state.account && partner && !partnerAvailabilityMeta(partner).blocked
+    && (partnerAvailabilityMeta(partner).pending || calendarTaskFeatureEnabled()));
+}
+
 function renderPlanningWorkspace() {
   const summary = $("#planning-target-summary");
   if (!summary) return;
@@ -4028,7 +4049,7 @@ function renderPlanningWorkspace() {
   summary.innerHTML = target
     ? `<i data-lucide="school" aria-hidden="true"></i><div><small>本次規劃目標</small><strong>${escapeHtml(target)}</strong></div><a href="#application-center">修改申請設定</a>`
     : '<i data-lucide="route" aria-hidden="true"></i><div><strong>先確認你的目標學校</strong><small>從選校推薦按「選為目標」，或到申請文件設定已有的目標學校。</small></div><a href="#advisor">查看推薦</a>';
-  const allowed = Boolean(target && calendarTaskFeatureEnabled());
+  const allowed = planningPreviewAllowed();
   $("#planning-preview-button").disabled = !allowed || state.planningLoading;
   if (state.planningLoading) $("#planning-preview-button").setAttribute("aria-busy", "true");
   else $("#planning-preview-button").removeAttribute("aria-busy");
@@ -4044,6 +4065,7 @@ function renderPlanningWorkspace() {
     $("#planning-update-durations").hidden = true;
     $("#planning-schedule-recovery").hidden = true;
     $("#planning-schedule-status").textContent = !target ? "選定目標後，就能預覽時程。"
+      : partnerAvailabilityMeta(partnerByName(target)).pending ? "本期名額待公告，可預覽參考流程；確認前不會加入截止提醒。"
       : !calendarTaskFeatureEnabled() ? "目前帳號尚未開放自動準備安排；仍可在日曆手動建立任務並查看官方期限。"
       : "填寫申請學年度與準備天數，先預覽，再加入你的日曆。";
   }
@@ -4084,7 +4106,7 @@ async function selectPlanningTarget(schoolName) {
 async function previewPlanningSchedule(event) {
   event.preventDefault();
   const form = event.currentTarget;
-  if (!form.reportValidity() || state.planningLoading || !calendarTaskFeatureEnabled()) return;
+  if (!form.reportValidity() || state.planningLoading || !planningPreviewAllowed()) return;
   const partner = partnerByName(state.applicationContext.target_school);
   if (!partner || partnerAvailabilityMeta(partner).blocked) return;
   const days = Number(form.elements.preparation_days.value);
@@ -4112,6 +4134,15 @@ async function previewPlanningSchedule(event) {
   try {
     const workflow = await fetchJson(`/application-workflow?${workflowRequestParams(partner).toString()}`, { cache: "no-store" });
     if (requestId !== state.planningRequestId || key !== planningContextKey()) return;
+    if (partnerAvailabilityMeta(partner).pending && workflow.school_name === partner.school_name
+      && workflow.home_university === activeHomeSchool() && String(workflow.academic_year || "").trim() === academicYear
+      && (!round || workflow.application_round === round || (workflow.effective_application_rounds || []).includes(round))) {
+      state.planningPreview = {key, days, events:[], report:{items:[]}, referenceOnly:true};
+      $("#planning-schedule-preview").innerHTML = workflow.steps.map(step=>`<article class="planning-timeline-item"><span class="planning-timeline-icon"><i data-lucide="clipboard-list" aria-hidden="true"></i></span><div><strong>${escapeHtml(step.title)}</strong><p>${escapeHtml(step.details?.[0] || "此階段條件須依當期官方通知確認。")}</p>${safeSourceUrl(step.source_urls?.[0]) ? `<a href="${escapeHtml(safeSourceUrl(step.source_urls[0]))}" target="_blank" rel="noreferrer">核對官方來源</a>` : ""}</div></article>`).join("");
+      $("#planning-schedule-status").textContent = "已顯示參考流程。本期名額與合作校條件尚待確認；這次預覽不會加入日曆或啟用截止提醒。";
+      initIcons();
+      return;
+    }
     if (workflow.school_name !== partner.school_name || workflow.home_university !== activeHomeSchool()
       || workflow.review_status !== "published" || workflow.applicability_status !== "verified"
       || String(workflow.academic_year || "").trim() !== academicYear
@@ -4149,7 +4180,7 @@ async function previewPlanningSchedule(event) {
   } finally {
     if (requestId === state.planningRequestId) {
       state.planningLoading = false;
-      $("#planning-preview-button").disabled = !calendarTaskFeatureEnabled() || !state.applicationContext.target_school;
+      $("#planning-preview-button").disabled = !planningPreviewAllowed();
       $("#planning-preview-button").removeAttribute("aria-busy");
     }
   }
@@ -7351,7 +7382,7 @@ function renderPartnerTableRow(item) {
           </div>
         </div>
       </td>
-      <td>${escapeHtml(item.program_type || "--")}${availability.blocked ? `<br><span class="coverage-chip empty">${escapeHtml(availability.shortLabel)}</span>${availability.hint ? `<small class="availability-hint">${escapeHtml(availability.hint)}</small>` : ""}` : ""}</td>
+      <td>${escapeHtml(item.program_type || "--")}${availability.blocked || availability.pending ? `<br><span class="coverage-chip empty">${escapeHtml(availability.shortLabel)}</span>${availability.hint ? `<small class="availability-hint">${escapeHtml(availability.hint)}</small>` : ""}` : ""}</td>
       <td>${escapeHtml([item.colleges, item.degree_levels].filter(Boolean).join("／") || "--")}</td>
       <td>${escapeHtml([item.quota, period, deadline.compact].filter(Boolean).join("／") || "--")}</td>
       <td class="condition-cell"><details class="partner-condition-disclosure"><summary>資格與語言</summary>${renderStudentPointList(partnerSummaryPoints(item, "eligibility_points"), { limit: 3, compact: true })}</details></td>
@@ -10832,7 +10863,7 @@ function renderEligibilityOptions({ preserveDraft = false } = {}) {
   const selects = [1,2,3,4,5].map(rank=>$(`#eligibility-preference-${rank}`));
   const draft = form.dataset.draftOwner === owner ? selects.map(field=>field.value) : null;
   const openSchools = state.dashboard.partner_universities
-    .filter(item=>(item.availability_status || "open") === "open").map(item=>item.school_name);
+    .filter(item=>!partnerAvailabilityMeta(item).blocked).map(item=>item.school_name);
   const preferences = draft || [...state.applications];
   selects.forEach((field,index)=>fillSelect(`#${field.id}`,openSchools,index ? `不設定第 ${index+1} 志願` : "請選擇第一志願",preferences[index] || ""));
 }
@@ -10906,7 +10937,7 @@ async function checkEligibility(event) {
   event.preventDefault();
   if (state.advisorLoading) return;
   const college = $("#advisor-college").value;
-  const department = $("#advisor-department").value.trim();
+  const department = departmentField("advisor").value.trim();
   const degree = $("#advisor-degree").value;
   const academicYear = $("#eligibility-academic-year").value;
   const applicationRound = $("#eligibility-application-round").value;
@@ -12129,7 +12160,7 @@ function bindEvents() {
     });
   });
   ["advisor"].forEach((prefix) => {
-    $(`#${prefix}-college`).addEventListener("change", () => renderDepartmentOptions(prefix, $(`#${prefix}-department`).value));
+    $(`#${prefix}-college`).addEventListener("change", () => renderDepartmentOptions(prefix, departmentField(prefix).value));
   });
   document.querySelectorAll("[data-calendar-panel]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -12474,7 +12505,7 @@ function bindEvents() {
     $("#planning-schedule-preview").replaceChildren();
     $("#planning-confirm").hidden = true;
     $("#planning-update-durations").hidden = true;
-    $("#planning-preview-button").disabled = !calendarTaskFeatureEnabled() || !state.applicationContext.target_school;
+    $("#planning-preview-button").disabled = !planningPreviewAllowed();
     $("#planning-preview-button").removeAttribute("aria-busy");
     $("#planning-schedule-status").textContent = "條件或準備天數已改變，請重新預覽時程。";
   });

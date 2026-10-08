@@ -8,7 +8,7 @@ from collections.abc import Iterable
 from .application_task_identity import preparation_identity
 from .plan_defaults import suggest_effort_hours
 from .school_identity import same_school
-from .ntu_eligibility import is_ntu, ntu_academic_check
+from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
 from .task_documents import document_link_for_step
 from .qualification_scopes import (
     college_scope_needs_confirmation, degree_scope_needs_confirmation,
@@ -518,12 +518,7 @@ def _eligibility_checks(
     if is_ntu(request.home_school):
         # NTU's partner requirements in this bundle are not cycle-confirmed.
         language_threshold = None
-        home_minimum = {"ielts": 6, "toefl": 79, "toefl_new": 4}.get(request.language_test or "")
-        home_status = "needs_confirmation"
-        home_detail = "一般組可用TOEFL iBT舊制79／新制4.0、IELTS Academic6.0、GEPT中高級或BESTEP B2；其他語組及替代證明另依簡章確認，TOEIC與Duolingo不可自動認定符合。"
-        if home_minimum is not None and request.language_score is not None:
-            home_status = "pass" if request.language_score >= home_minimum else "needs_confirmation"
-            home_detail = f"所填英語分數{'達到' if home_status == 'pass' else '未達'}一般組該測驗基本門檻{home_minimum:g}；須為簡章接受的測驗類型及有效日期，合作校另訂要求。"
+        home_status, home_detail = ntu_language_check(request.language_test, request.language_score)
         checks.append(_check("home_language_score", home_status, "校內語組門檻", home_detail, source_url=academic_source_url, contact_unit=contact_unit))
     language_label = {
         "toeic": "TOEIC",

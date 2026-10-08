@@ -6,6 +6,7 @@ from pathlib import Path
 
 from .models import ApplicationPeriodStatus, ExchangeInfo, PartnerUniversity, ProcessedPage, StudentDashboard
 from .student_view import _application_period_status
+from .ntu_eligibility import ntu_home_rules, ntu_selection_rules
 
 
 NTU_OFFICIAL_DATA_DIR = Path(__file__).resolve().parent / "official_data" / "ntu"
@@ -46,6 +47,8 @@ def build_ntu_student_dashboard(
             "reminder_eligible": False,
         }))
     return dashboard.model_copy(update={
+        "selection_rules": ntu_selection_rules(),
+        "language_score_minimums": ntu_home_rules()["language_score_minimums"],
         "application_periods": periods,
         "partner_universities": partner_universities if partner_universities is not None else fetch_ntu_partner_universities(),
     })

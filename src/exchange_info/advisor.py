@@ -8,7 +8,7 @@ from typing import Iterable
 
 from .ai_gateway import structured_response
 from .fit_signals import course_interest_fit, school_budget_fit, teaching_language_fit
-from .ntu_eligibility import is_ntu, ntu_academic_check
+from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
 from .qualification_scopes import (
     college_scope_needs_confirmation as _college_scope_needs_confirmation,
     degree_scope_needs_confirmation as _degree_scope_needs_confirmation,
@@ -71,10 +71,12 @@ def build_advisor_plan(
 ) -> AdvisorPlan:
     workflow_map = {_school_key(item.school_name): item for item in workflows}
     destination_map = {_school_key(item.school_name): item for item in destinations}
-    open_partners = [
+    planning_partners = [
         partner
         for partner in dashboard.partner_universities
         if partner.availability_status == "open"
+        or (dashboard.selection_rules.pending_quota_planning
+            and partner.availability_status == "agreement_only" and partner.quota is None)
     ]
     matches = [
         _score_partner(
@@ -84,7 +86,7 @@ def build_advisor_plan(
             workflow_map.get(_school_key(partner.school_name)),
             destination_map.get(_school_key(partner.school_name)),
         )
-        for partner in open_partners
+        for partner in planning_partners
     ]
     eligibility_order = {"matches_known": 0, "needs_confirmation": 1, "does_not_match": 2}
     matches.sort(key=lambda item: (
@@ -96,12 +98,13 @@ def build_advisor_plan(
     country = (profile.preferred_country or "").strip()
     in_country = [item for item in matches if country and _normal(item.country) == _normal(country)]
     country_note = ""
+    catalog_label = "候選合作校" if dashboard.selection_rules.pending_quota_planning else "開放合作校"
     candidates = matches
     if country and in_country:
         candidates = in_country
-        country_note = f"已依你選的「{country}」，只列出該地區的 {len(in_country)} 所開放合作校；改選「不限國家」可看全部。"
+        country_note = f"已依你選的「{country}」，只列出該地區的 {len(in_country)} 所{catalog_label}；改選「不限國家」可看全部。"
     elif country:
-        country_note = f"目前沒有「{country}」的開放合作校，先列出其他地區。"
+        country_note = f"目前沒有「{country}」的{catalog_label}，先列出其他地區。"
     # Keep a small set of mismatches visible without letting them displace candidates.
     recommendations = [item for item in candidates if item.eligibility_status != "does_not_match"][:20]
     recommendations += [item for item in candidates if item.eligibility_status == "does_not_match"][:5]
@@ -129,6 +132,8 @@ def build_advisor_plan(
         summary = f"目前有 {ready_count} 所優先候選；先處理高優先任務，再逐校核對最新公告。"
     else:
         summary = "目前條件仍有缺口，先完成下方任務，再重新產生選校方案。"
+    if dashboard.selection_rules.pending_quota_planning:
+        summary += "名額待公告的合作校可先規劃；正式申請須等本期名額與資格確認。"
     if country_note:
         summary = f"{country_note}{summary}"
     mode = "ai_enhanced" if answer and answer.ai_enhanced else "source_grounded"
@@ -253,8 +258,13 @@ def _score_partner(
     blocking_reasons: list[str] = []
     confirmation_items: list[str] = []
 
+    cycle_unconfirmed = dashboard.selection_rules.partner_requirements_need_confirmation
+    if partner.availability_status != "open":
+        confirmation_items.append("本期甄選名額尚未公告；可先規劃，能否申請須等官方更新")
+        gaps.append(confirmation_items[-1])
+
     if profile.college:
-        if _college_scope_needs_confirmation(partner.colleges):
+        if cycle_unconfirmed or _college_scope_needs_confirmation(partner.colleges):
             confirmation_items.append("合作校學院範圍尚待確認")
             gaps.append(confirmation_items[-1])
         elif _scope_matches(partner.colleges, profile.college):
@@ -269,7 +279,7 @@ def _score_partner(
         confirmation_items.append(gaps[-1])
 
     if profile.degree_level:
-        if _degree_scope_needs_confirmation(partner.degree_levels):
+        if cycle_unconfirmed or _degree_scope_needs_confirmation(partner.degree_levels):
             confirmation_items.append("合作校學制範圍尚待確認")
             gaps.append(confirmation_items[-1])
         elif _degree_matches(partner.degree_levels, profile.degree_level):
@@ -310,7 +320,7 @@ def _score_partner(
         blocking_reasons.append(gaps[-1])
         blocked = True
 
-    threshold = _partner_language_threshold(partner, profile.language_test)
+    threshold = None if cycle_unconfirmed else _partner_language_threshold(partner, profile.language_test)
     if not profile.language_test or profile.language_test == "other":
         gaps.append("語言證明需逐校確認")
         confirmation_items.append(gaps[-1])
@@ -330,7 +340,14 @@ def _score_partner(
         blocked = True
 
     home_language_minimum = dashboard.language_score_minimums.get(profile.language_test or "")
-    if home_language_minimum is None:
+    if is_ntu(dashboard.school_name):
+        home_status, home_detail = ntu_language_check(profile.language_test, profile.language_score)
+        if home_status == "pass":
+            reasons.append(home_detail)
+        else:
+            confirmation_items.append(home_detail)
+            gaps.append(home_detail)
+    elif home_language_minimum is None:
         confirmation_items.append("本校語言資格需核對官方來源")
     elif profile.language_score is not None and profile.language_score < home_language_minimum:
         blocking_reasons.append(f"{LANGUAGE_LABELS[profile.language_test]} 未達本校公開門檻 {home_language_minimum:g}")
@@ -439,7 +456,9 @@ def _qualification_summary(
         rows.append(f"學業平均未達{dashboard.school_name}公開基本門檻 {academic_minimum:g} 分")
 
     test = profile.language_test
-    if not test or test == "other" or profile.language_score is None:
+    if is_ntu(dashboard.school_name):
+        rows.append(ntu_language_check(test, profile.language_score)[1])
+    elif not test or test == "other" or profile.language_score is None:
         rows.append("語言成績尚未完成比對")
     else:
         minimum = dashboard.language_score_minimums.get(test)

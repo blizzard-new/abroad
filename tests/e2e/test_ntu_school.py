@@ -28,7 +28,7 @@ def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server
     page.locator('[data-partner-view="list"]').click()
     page.locator("#partner-search").fill("蒙大拿州立大學")
     expect(page.locator("#partner-table")).to_contain_text("蒙大拿州立大學")
-    expect(page.locator("#partner-table")).to_contain_text("本期未公告")
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
     if width < 700:
         page.locator("#partner-table .partner-card > summary").first.click()
     page.locator("#partner-table .school-detail-trigger:visible").first.click()
@@ -43,9 +43,9 @@ def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server
     expect(page.locator("#advisor-academic-gpa")).to_be_visible()
     expect(page.locator("#advisor-class-rank")).to_be_visible()
     page.locator("#advisor-college").select_option("工學院")
-    page.locator("#advisor-department").fill("機械工程學系")
-    expect(page.locator("#advisor-department")).to_have_value("機械工程學系")
-    expect(page.locator("#advisor-academic-rule")).to_contain_text("研究生無校內成績門檻")
+    page.locator("#advisor-department-text").fill("機械工程學系")
+    expect(page.locator("#advisor-department-text")).to_have_value("機械工程學系")
+    expect(page.locator("#advisor-academic-rule")).to_contain_text("研究生校內無成績門檻")
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="長庚大學"]').click()
@@ -67,7 +67,7 @@ def test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion(page,
     enter_public_site(page, live_server, "advisor")
     expect(page.locator("#advisor-academic-gpa")).to_be_visible()
     page.locator("#advisor-college").select_option("工學院")
-    page.locator("#advisor-department").fill("機械工程學系")
+    page.locator("#advisor-department-text").fill("機械工程學系")
     page.locator("#advisor-degree").select_option("大學部")
     page.locator("#advisor-academic-gpa").fill("2.3")
     page.locator("#advisor-class-rank").fill("30")
@@ -80,11 +80,45 @@ def test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion(page,
     assert payload["academic_score"] is None
     assert payload["academic_gpa"] == 2.3 and payload["class_rank_percent"] == 30
     assert "符合校內成績擇一門檻" in str(response.value.json())
+    recommendations = response.value.json()["recommendations"]
+    assert recommendations and all(item["eligibility_status"] == "needs_confirmation" for item in recommendations)
+    assert page.locator("#eligibility-preference-1 option").count() == 283
     saved = _wait_for_workspace(live_server, session, lambda item:
         ((item.get("workspace", {}).get("selection_conditions") or {}).get("profile") or {}).get("class_rank_percent") == 30,
         home_school="國立臺灣大學"
     )["workspace"]["selection_conditions"]["profile"]
     assert saved["academic_gpa"] == 2.3 and saved["academic_score"] is None
+    page.locator("#advisor-result-content [data-planning-target]").first.click()
+    expect(page.locator("#planning-target-summary")).to_contain_text(recommendations[0]["school_name"])
+    page.locator("#planning-deadline-settings > summary").click()
+    page.locator("#planning-academic-year").fill("116")
+    page.locator("#planning-application-round").fill("")
+    with page.expect_response(lambda result: "/application-workflow?" in result.url and result.request.method == "GET") as preview:
+        page.locator("#planning-preview-button").click()
+    assert preview.value.ok
+    expect(page.locator("#planning-schedule-status")).to_contain_text("已顯示參考流程")
+    expect(page.locator("#planning-schedule-status")).to_contain_text("不會加入日曆或啟用截止提醒")
+    expect(page.locator("#planning-schedule-preview .planning-timeline-item")).to_have_count(11)
+    expect(page.locator("#planning-confirm")).to_be_hidden()
+    assert page.evaluate("partnerAvailabilityMeta(state.dashboard.partner_universities.find(p=>p.quota === '0 名')).blocked")
+    assert not page.evaluate("homeAcademicPass({degree:'在職碩士班',academicGpa:4,classRankPercent:1})")
+    page.evaluate("location.hash='#advisor'")
     page.reload()
     expect(page.locator("#advisor-academic-gpa")).to_have_value("2.3")
     expect(page.locator("#advisor-class-rank")).to_have_value("30")
+
+
+@pytest.mark.parametrize("school", ["長庚大學", "國立臺北大學"])
+def test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools(page, live_server, school):
+    session = sign_in_cookie(live_server, school=school)
+    attach_session(page, live_server, session)
+    enter_public_site(page, live_server, "partners")
+    wait_until(page, f"state.dashboard?.school_name === '{school}'")
+    result = page.evaluate("""() => {
+      const partner = state.dashboard.partner_universities.find(item=>item.availability_status === 'open');
+      const profile = {college:homeCollegeOptions()[0],degree:'大學部',academicScore:90,languageTest:'toefl_new',languageScore:4.5};
+      return {threshold:languageThresholdFromPartner(partner,'toefl_new'),match:partnerMatch(partner,profile)};
+    }""")
+    assert result["threshold"] is None
+    assert "NaN" not in str(result["match"])
+    assert "合作校語言門檻需另查" in result["match"]["risks"]

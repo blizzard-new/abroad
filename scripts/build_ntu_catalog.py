@@ -1,12 +1,13 @@
 """Import the NTU research snapshot without promoting unconfirmed rules.
 
-Run with --candidates-dir and --verification-dir pointing at the collected
-source artifacts. The resulting bundle is self-contained at runtime.
+Rebuild offline from the tracked source snapshot, or supply replacement source
+directories together. Candidate provenance is retained separately from runtime models.
 """
 from __future__ import annotations
 
 import argparse
 import hashlib
+import gzip
 import json
 import re
 from pathlib import Path
@@ -21,17 +22,20 @@ SCHOOL = "國立臺灣大學"
 GUIDELINES = "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/07/116-1-Selection-Guidelines_CH.pdf"
 LIST_URL = "https://oia.ntu.edu.tw/outgoing/school.list/semester/1"
 OUTPUT = Path(__file__).resolve().parents[1] / "src/exchange_info/official_data/ntu"
+SNAPSHOT = Path(__file__).resolve().parents[1] / "sources/ntu/2026-10-08-import.json.gz"
+BUILD_INPUTS: dict[str, str] = {}
 FIELD_LABELS = {"eligibility": "申請資格／成績", "language": "語言條件", "deadlines": "合作校收件期限",
                 "calendar": "學期行事曆", "documents": "提名／申請文件", "housing": "住宿",
                 "courses": "課程與修課限制", "cost": "費用", "insurance_visa": "保險及簽證"}
 
 
 def read(path: Path):
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(BUILD_INPUTS[str(path)] if str(path) in BUILD_INPUTS else path.read_text(encoding="utf-8"))
 
 
 def rows(path: Path):
-    return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    text = BUILD_INPUTS[str(path)] if str(path) in BUILD_INPUTS else path.read_text(encoding="utf-8")
+    return [json.loads(line) for line in text.splitlines() if line.strip()]
 
 
 def write(name: str, value):
@@ -40,7 +44,19 @@ def write(name: str, value):
 
 def write_rows(name: str, values, model):
     validated = [model.model_validate(value) for value in values]
-    (OUTPUT / name).write_text("".join(row.model_dump_json() + "\n" for row in validated), encoding="utf-8")
+    compact = name == "application_workflows.jsonl"
+    (OUTPUT / name).write_text("".join(row.model_dump_json(exclude_defaults=compact) + "\n" for row in validated), encoding="utf-8")
+
+
+def compact_workflow_references(workflow, partner):
+    """Keep the original partner text in the catalogue, rather than a second copy."""
+    texts = [value for value in partner.values() if isinstance(value, str)]
+    for step in workflow["steps"]:
+        details = step.get("details", [])
+        kept = [detail for detail in details if not (len(detail) >= 100 and any(detail in text for text in texts))]
+        if len(kept) != len(details):
+            kept.append("合作校參考條件與補充查核請查看本校詳情；本期仍待確認。")
+        step["details"] = kept
 
 
 def clean(value):
@@ -60,13 +76,40 @@ def clean(value):
 
 
 def main():
+    global OUTPUT
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--candidates-dir", type=Path, required=True)
-    parser.add_argument("--verification-dir", type=Path, required=True)
+    parser.add_argument("--candidates-dir", type=Path)
+    parser.add_argument("--verification-dir", type=Path)
+    parser.add_argument("--snapshot", type=Path, default=SNAPSHOT)
+    parser.add_argument("--output-dir", type=Path, default=OUTPUT)
     parser.add_argument("--list-verification", type=Path)
     args = parser.parse_args()
+    if bool(args.candidates_dir) != bool(args.verification_dir):
+        parser.error("--candidates-dir and --verification-dir must be supplied together")
+    BUILD_INPUTS.clear()
+    snapshot = json.loads(gzip.decompress(args.snapshot.read_bytes()))
+    if snapshot["format_version"] != 1:
+        parser.error("unsupported source snapshot format")
+    if not args.candidates_dir:
+        BUILD_INPUTS.update(snapshot["files"])
+        args.candidates_dir, args.verification_dir = Path("candidates"), Path("verification")
+        args.list_verification = args.list_verification or Path("ntu-list-refresh.json")
+    OUTPUT = args.output_dir
     base, latest = args.candidates_dir, args.verification_dir
     OUTPUT.mkdir(parents=True, exist_ok=True)
+    original_home = read(base / "home-university-rules.json")
+    home_rules = clean(original_home)
+    snapshot_home = json.loads(snapshot["files"]["candidates/home-university-rules.json"])
+    for key in ("selection_rules", "language_score_minimums"):
+        home_rules.setdefault(key, snapshot_home[key])
+    write("import_provenance.json", {
+        "source_snapshot": args.snapshot.name,
+        "source_snapshot_sha256": hashlib.sha256(args.snapshot.read_bytes()).hexdigest(),
+        "original_home_flags": {key: original_home.get(key) for key in ("candidate_only", "user_integration_approval", "publication_status")},
+        "platform_integration_authorized_at": "2026-10-08",
+        "content_verification_status": "partial_current_cycle",
+        "note": "使用者授權接入平台不代表合作校資訊已完成當期全面核實；原始旗標保留於來源快照。",
+    })
     wrappers = rows(latest / "partners-116-1-updated-candidates.jsonl")
     manual = read(latest / "manually-reviewed-current-evidence.json")
     partner_rows, ledger = [], []
@@ -116,9 +159,12 @@ def main():
     dashboard = clean(read(base / "student-dashboard-candidate.json")["dashboard"])
     dashboard["partner_universities"] = []  # Loaded from the single partner bundle.
     dashboard["academic_score_minimum"] = None  # GPA/rank is not a percentage score.
-    dashboard["language_score_minimums"] = {"toefl": 79.0, "toefl_new": 4.0, "ielts": 6.0}
-    dashboard["program_overview"][0]["details"][0] = "116學年度第1學期出國（2027年秋季），交換一學期或一學年；實際出國與開學日期依合作校。"
-    dashboard["program_overview"][0]["details"].append(
+    dashboard["language_score_minimums"] = home_rules["language_score_minimums"]
+    dashboard["selection_rules"] = home_rules["selection_rules"]
+    overview = next(item for item in dashboard["program_overview"] if item["title"] == "116-1校級出國交換")
+    overview["details"] = [detail for detail in overview["details"] if not detail.startswith("2027年9月起")]
+    overview["details"].insert(0, "116學年度第1學期出國（2027年秋季），交換一學期或一學年；實際出國與開學日期依合作校。")
+    overview["details"].append(
         "目前282項本期名額待公布，6項為0名額；合作校條件未全部完成116-1確認。"
     )
     colleges = clean(read(base / "college-programmes-candidates.json"))
@@ -139,6 +185,7 @@ def main():
     ExchangeInfo.model_validate(info)
     write("exchange_info.json", info)
     workflows = clean(rows(base / "application-workflows-116-1-candidates.jsonl"))
+    partner_map = {partner["school_name"]: partner for partner in partner_rows}
     for workflow in workflows:
         workflow["applicability_note"] = "校內116-1時程已公告；合作校名額與條件尚未全面確認，流程作為準備參考。"
         if workflow["school_name"] in manual_notes:
@@ -148,6 +195,7 @@ def main():
         # Integration authorization does not constitute source/content approval.
         workflow["review_status"] = "pending_review"
         workflow["published_at"] = None
+        compact_workflow_references(workflow, partner_map[workflow["school_name"]])
     write_rows("application_workflows.jsonl", workflows, UniversityApplicationWorkflow)
     destinations = clean(rows(base / "destination-profiles-candidates.jsonl"))
     for destination in destinations:
@@ -191,10 +239,11 @@ def main():
                       "content_hash": hashlib.sha256(body.encode()).hexdigest()})
     write_rows("pages.jsonl", pages, ProcessedPage)
     for source, target in [
-        ("home-university-rules.json", "home_rules.json"), ("scholarships.json", "scholarships.json"),
+        ("scholarships.json", "scholarships.json"),
         ("documents.json", "documents.json"), ("student-experience-directory.json", "student_experience_directory.json"),
     ]:
         write(target, clean(read(base / source)))
+    write("home_rules.json", home_rules)
     write("college_programmes.json", colleges)
     if args.list_verification:
         receipt = read(args.list_verification)

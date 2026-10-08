@@ -1186,8 +1186,8 @@
           "class_rank_percent": {
             "anyOf": [
               {
+                "exclusiveMinimum": 0.0,
                 "maximum": 100.0,
-                "minimum": 0.0,
                 "type": "number"
               },
               {
@@ -1694,8 +1694,8 @@
           "class_rank_percent": {
             "anyOf": [
               {
+                "exclusiveMinimum": 0.0,
                 "maximum": 100.0,
-                "minimum": 0.0,
                 "type": "number"
               },
               {
@@ -9083,6 +9083,74 @@
         "title": "HTTPValidationError",
         "type": "object"
       },
+      "HomeSelectionRules": {
+        "properties": {
+          "academic_policy": {
+            "default": "percentage",
+            "enum": [
+              "percentage",
+              "gpa_or_rank"
+            ],
+            "title": "Academic Policy",
+            "type": "string"
+          },
+          "academic_reference_year": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Reference Year"
+          },
+          "exclude_in_service": {
+            "default": false,
+            "title": "Exclude In Service",
+            "type": "boolean"
+          },
+          "graduate_academic_exempt": {
+            "default": false,
+            "title": "Graduate Academic Exempt",
+            "type": "boolean"
+          },
+          "partner_requirements_need_confirmation": {
+            "default": false,
+            "title": "Partner Requirements Need Confirmation",
+            "type": "boolean"
+          },
+          "pending_quota_planning": {
+            "default": false,
+            "title": "Pending Quota Planning",
+            "type": "boolean"
+          },
+          "undergraduate_gpa_minimum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Undergraduate Gpa Minimum"
+          },
+          "undergraduate_rank_maximum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Undergraduate Rank Maximum"
+          }
+        },
+        "title": "HomeSelectionRules",
+        "type": "object"
+      },
       "LifeCategory": {
         "properties": {
           "evidence": {
@@ -10007,8 +10075,8 @@
           "class_rank_percent": {
             "anyOf": [
               {
+                "exclusiveMinimum": 0.0,
                 "maximum": 100.0,
-                "minimum": 0.0,
                 "type": "number"
               },
               {
@@ -11395,6 +11463,9 @@
             "default": "長庚大學",
             "title": "School Name",
             "type": "string"
+          },
+          "selection_rules": {
+            "$ref": "#/components/schemas/HomeSelectionRules"
           },
           "sources": {
             "items": {
@@ -18506,7 +18577,7 @@
     "resource_not_found": 404,
     "validation_failed": 422
   },
-  "x-contract-version": "2026-10-08.1",
+  "x-contract-version": "2026-10-08.2",
   "x-product-boundaries": {
     "account_routes_require_bearer_session": true,
     "ai_features": "paused",
