@@ -29,7 +29,7 @@ def test_public_dorm_templates_have_real_signers_without_a_current_template_clai
         assert all(any(s in value for value in item["requirement"]["signatures"]) for s in signers)
         assert item["requirement"]["official_form_url"] in verified_form_urls()
         assert "未" in item["applicability_note"]
-        template = item["evidence"][-1]
+        template = next(e for e in item["evidence"] if e["source_url"] == item["requirement"]["official_form_url"])
         source = read("overseas_sources/" + template["source_id"] + ".json")
         assert source["content_applicability"] == "needs_confirmation"
         assert template["source_pages"] == [1]

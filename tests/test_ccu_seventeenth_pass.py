@@ -58,7 +58,7 @@ def test_nagoya_pairs_in_both_real_apis(tmp_path, college, degree, allowed):
 
 def test_pending_documents_render_without_promoting_completeness(tmp_path):
     docs = reviewed_documents()
-    assert len(docs) == 29 and sum(len(r["requirements"]) for r in docs.values()) >= 216
+    assert len(docs) >= 31 and sum(len(r["requirements"]) for r in docs.values()) >= 222
     client = TestClient(create_app(tmp_path))
     for page, count in [(98, 5), (102, 10), (23, 4)]:
         response = client.get("/application-center/catalog", params={
