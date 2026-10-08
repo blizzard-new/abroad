@@ -810,6 +810,9 @@ def main():
         details.append(detail)
     if len({r.school_name for r in rows}) != len(rows):
         raise ValueError("Duplicate partner identity")
+    from exchange_info.ccu_overseas import apply_overseas_review, destination_profile
+
+    rows = [apply_overseas_review(row) for row in rows]
     (BUNDLE / "partners.jsonl").write_text(
         "".join(r.model_dump_json() + "\n" for r in rows), encoding="utf-8"
     )
@@ -829,6 +832,10 @@ def main():
         raise ValueError(f"CCU workflow structure failed: {issues}")
     (BUNDLE / "application_workflows.jsonl").write_text(
         "".join(r.model_dump_json() + "\n" for r in workflows), encoding="utf-8"
+    )
+    (BUNDLE / "destination_profiles.jsonl").write_text(
+        "".join(destination_profile(row).model_dump_json() + "\n" for row in rows if row.partner_exchange_details),
+        encoding="utf-8",
     )
     (BUNDLE / "field-audit.json").write_text(
         json.dumps(details, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"

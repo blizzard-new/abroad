@@ -73,6 +73,9 @@ def client_for(tmp_path):
         (101, "toefl"),
         (103, "ielts"),
         (80, "ielts"),
+        (65, "toefl"),
+        (86, "ielts"),
+        (89, "ielts"),
     ],
 )
 def test_reviewed_uncertainty_never_becomes_a_scalar_threshold(page, test):
@@ -87,9 +90,9 @@ def test_reviewed_uncertainty_never_becomes_a_scalar_threshold(page, test):
 
 
 def test_reviewed_mandatory_scores_remain_comparable():
-    assert advisor_threshold(at(89), "ielts", "大學部") == 6.5
+    assert advisor_threshold(at(68), "ielts", "大學部") == 6.0
     assert plan_threshold(at(67), "ielts", "大學部") == 6.0
-    assert plan_threshold(at(65), "toefl", "大學部") == 64
+    assert plan_threshold(at(102), "toefl", "大學部") == 72
     assert (
         plan_threshold(at(67), "toeic", "大學部") is None
     )  # L&R AND S&W cannot be flattened.
@@ -226,6 +229,9 @@ def test_frontend_matches_structured_language_and_document_statuses():
             (74, "toefl", 85),
             (50, "ielts", 5),
             (103, "ielts", 6),
+            (65, "toefl", 70),
+            (86, "ielts", 6.5),
+            (89, "ielts", 7),
         ]
     ]
     script = r"""
@@ -233,7 +239,8 @@ def test_frontend_matches_structured_language_and_document_statuses():
     const window={};
     eval(fs.readFileSync(process.argv[2],'utf8'));
     const source=fs.readFileSync(process.argv[1],'utf8');
-    const cases=JSON.parse(process.argv[3]);
+    const payload=JSON.parse(fs.readFileSync(0,'utf8'));
+    const cases=payload.cases;
     const state={dashboard:{academic_gpa_minimum:3,academic_score_minimum:70}};
     const partnerSummaryPoints=(item)=>item.student_summary_zh.eligibility_points;
     const homeCollegeValue=value=>value,normalize=value=>String(value||''),academicMinimum=()=>70;
@@ -250,11 +257,11 @@ def test_frontend_matches_structured_language_and_document_statuses():
       assert.ok(!match.risks.some(text=>text.includes('語言分數未達')));
       assert.ok(match.risks.includes(test.partner.language_review_note));
     }
-    const direct=JSON.parse(process.argv[4]);
-    assert.equal(languageThresholdFromPartner(direct,'ielts','大學部'),6.5);
+    const direct=payload.direct;
+    assert.equal(languageThresholdFromPartner(direct,'ielts','大學部'),6.0);
     const legacy={source_url:'https://example.edu',student_summary_zh:{eligibility_points:['IELTS 6.0']},program_options:[{},{}]};
     assert.equal(languageThresholdFromPartner(legacy,'ielts'),6);
-    for(const item of JSON.parse(process.argv[5])) {
+    for(const item of payload.document_cases) {
       const html=renderPartnerFieldEvidence(item);
       assert.ok(html.includes('母校甄選／提名前提（非文件清單）'));
       assert.ok(!html.includes('合作校申請文件要求（未聲稱完整） · 當期已核實'));
@@ -267,16 +274,18 @@ def test_frontend_matches_structured_language_and_document_statuses():
             script,
             str(Path("src/exchange_info/static/app.js").resolve()),
             str(Path("src/exchange_info/static/ccu-language-conditions.js").resolve()),
-            json.dumps(cases, ensure_ascii=False),
-            at(89).model_dump_json(),
-            json.dumps(
-                [
+        ],
+        input=json.dumps(
+            dict(
+                cases=cases,
+                direct=at(67).model_dump(mode="json"),
+                document_cases=[
                     at(p).model_dump(mode="json")
                     for p in (26, 32, 33, 39, 71, 103, 104, 74)
                 ],
-                ensure_ascii=False,
             ),
-        ],
+            ensure_ascii=False,
+        ),
         capture_output=True,
         text=True,
     )

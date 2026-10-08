@@ -211,7 +211,7 @@ def test_ccu_workflows_are_complete_structurally_but_not_published():
     assert len(flows) == 55
     for workflow in flows:
         assert workflow.home_university == HOME and workflow.application_round == ROUND
-        assert len(workflow.steps) == 6 and not workflow_structure_issues(workflow)
+        assert len(workflow.steps) == 7 and not workflow_structure_issues(workflow)
         assert workflow.review_status == "legacy" and workflow.published_at is None
         assert all(not step.deadline_reminder_eligible for step in workflow.steps)
         assert (
@@ -273,7 +273,7 @@ def test_ccu_api_dispatch_and_workflow(tmp_path, monkeypatch):
         "/application-workflow",
         params={"home_school": "CCU", "school": partner.school_name},
     )
-    assert flow.status_code == 200 and len(flow.json()["steps"]) == 6
+    assert flow.status_code == 200 and len(flow.json()["steps"]) == 7
     assert client.get("/static/ccu-academic-units.js").status_code == 200
 
 

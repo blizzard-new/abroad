@@ -3,13 +3,18 @@
   "base_commit": "f741d540f546d6ddbbf3174c9a34b5ef103c8816",
   "rebuild_identical": true,
   "rebuild_sha256": {
-    "partners.jsonl": "97c7c73cea99734c393464bdcf0671e1b4afe8f4803a7c23f110cd1978404620",
-    "application_workflows.jsonl": "cae54cb2be2d9401241d1745014b1378e1cafde13f17627b7eefde2e08ae7605",
+    "partners.jsonl": "091e0540f1c5681a900447afb3102427323bfa2ad1ebadf69d5b5f309855e797",
+    "application_workflows.jsonl": "9980f70fec8f268c7319698d40e2761dc63eae01d2fd02fea601109364f7477f",
+    "destination_profiles.jsonl": "59bd6707f99545aae9ca0c7140a945d8aec277bdd80cc696d410b74575121a44",
     "field-audit.json": "d8d76ff57d1b65291da5e7047f3ad77fe3460b6b72b18d3562139457c6ea76e4",
     "completeness.json": "bcc39b617847581745b917d273303ac836dccce8fd11cc0f4b9672efdc7d4210",
     "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
     "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
-    "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040"
+    "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
+    "field-completeness-matrix.json": "b920e7616b3cbea04b01487c3b722c6b09588445f497bda30171540a0739cc34",
+    "confirmation-questions.json": "f6873fe36585d07c10c9ba41659cc16b5d88a8c51abab2b3218e85a387baaa3f",
+    "overseas-completeness.json": "f5ad656d3464236f4ad1ef8c4f97096ecb6b8478b0e2d4ec8b7bb11ffb429f30",
+    "overseas-conflicts.json": "d65ad30d188ba8c5420c4e8dac226bf45c0b13800900e1cba49a6395127f748d"
   },
   "ccu_tests": {
     "passed": 16,
@@ -40,7 +45,7 @@
     "success": true,
     "ccu_required_resources_verified": 8
   },
-  "remote_main_at_delivery": "293546e807294dc0812f390b240a4cfb68e86cd0",
+  "remote_main_at_delivery": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
   "final_focused_tests": {
     "passed": 24,
     "failed": 0,
@@ -80,5 +85,46 @@
     "reference_only": 4,
     "denominator": 55,
     "complete_overseas_lists_claimed": false
+  },
+  "delivery_stage": "overseas_checkpoint_2026-10-08",
+  "overseas_checkpoint": {
+    "reviewed_schools": 55,
+    "source_records": 127,
+    "distinct_source_urls": 124,
+    "field_status_counts": {
+      "verified_current": 213,
+      "missing": 515,
+      "needs_confirmation": 151,
+      "reference_only": 31,
+      "conflict": 24,
+      "explicit_not_announced": 1
+    },
+    "current_overseas_schools": 27,
+    "all_fields_current_schools": 0,
+    "receiving_document_requirements_current": 18,
+    "life_guides": 55,
+    "workflow_steps": 7,
+    "tests": {
+      "passed": 115,
+      "failed": 0,
+      "duration_seconds": 16.23
+    },
+    "existing_data_tests": {
+      "passed": 62,
+      "skipped": 4,
+      "failed": 1,
+      "existing_failure": "test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+    },
+    "contract_tests": {
+      "passed": 8,
+      "failed": 12,
+      "same_failure_set_as_previous_stage": true
+    },
+    "ui_detail_checks": {
+      "desktop_and_mobile_receiving_fields": 17,
+      "page_errors": 0,
+      "horizontal_overflow": false
+    },
+    "remaining": "Lifestyle-tab browser verification and final handoff document update in progress; per-school unverified fields and conflicts remain in confirmation-questions.json."
   }
 }

@@ -577,6 +577,15 @@ class PartnerLanguageCondition(BaseModel):
     evidence: ExchangeFieldEvidence
 
 
+class PartnerExchangeDetailField(BaseModel):
+    """Receiving-school facts retain their own year, scope and source evidence."""
+
+    value: str | None = None
+    status: Literal["verified_current", "reference_only", "missing", "needs_confirmation", "conflict", "explicit_not_announced"]
+    reason: str
+    evidence: list[ExchangeFieldEvidence] = Field(default_factory=list)
+
+
 class PartnerUniversity(BaseModel):
     program_type: str
     availability_status: Literal[
@@ -599,6 +608,7 @@ class PartnerUniversity(BaseModel):
     language_conditions: list[PartnerLanguageCondition] = Field(default_factory=list)
     language_review_note: str | None = None
     partner_application_prerequisite: str | None = None
+    partner_exchange_details: dict[str, PartnerExchangeDetailField] = Field(default_factory=dict)
     partner_application_deadline: str | None = None
     nomination_deadline: str | None = None
     semester_dates: str | None = None

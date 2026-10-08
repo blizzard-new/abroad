@@ -1,0 +1,308 @@
+"""Reviewed receiving-school evidence for CCU; never promote an unversioned PDF."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import re
+from functools import lru_cache
+
+from .ccu_sources import BUNDLE, CHECKED_AT, HOME, ROUND
+from .models import (
+    ApplicationDocumentRequirement,
+    ApplicationStep,
+    ApplicationWorkflowSource,
+    DestinationProfile,
+    ExchangeFieldEvidence,
+    PageCategory,
+    PartnerExchangeDetailField,
+    PartnerUniversity,
+    SourceReference,
+    StudentGuideSection,
+)
+
+LABELS = {
+    "program_scope": "接收計畫、學制及校區",
+    "eligibility": "合作校接收資格",
+    "language": "合作校語言條件與替代證明",
+    "nomination_deadline": "合作校提名截止",
+    "application_deadline": "合作校申請截止",
+    "documents": "合作校文件要求（僅列已核實項目）",
+    "application_forms": "合作校申請表取得方式",
+    "academic_calendar": "合作校校曆及考試",
+    "course_restrictions": "課程與學分限制",
+    "housing": "住宿與床位",
+    "housing_deadline": "住宿申請／付款截止",
+    "costs": "住宿與生活費用",
+    "insurance": "保險",
+    "visa": "簽證與居留",
+    "arrival": "抵達與迎新",
+    "host_tuition": "合作校學費",
+    "exchange_duration": "交換期間及延長限制",
+}
+STATUS_LABELS = {
+    "verified_current": "當期已核實",
+    "reference_only": "歷史參考，不能作本期申請依據",
+    "missing": "本期未核實／來源未載",
+    "needs_confirmation": "適用年度或條件待確認",
+    "conflict": "來源矛盾，待確認",
+    "explicit_not_announced": "官方明示尚未公告",
+}
+
+
+def _flat(value: str) -> str:
+    return re.sub(r"\s+", " ", value).strip()
+
+
+@lru_cache(maxsize=1)
+def reviewed_rows() -> dict[int, dict]:
+    rows = json.loads((BUNDLE / "overseas-reviewed-fields.json").read_text())
+    if len(rows) != 55 or len({r["ccu_page"] for r in rows}) != 55:
+        raise ValueError(
+            "CCU overseas review must cover all 55 current/quota-unknown identities"
+        )
+    for row in rows:
+        if set(row["fields"]) != set(LABELS):
+            raise ValueError(f"CCU incomplete field matrix: {row['ccu_page']}")
+        for field in row["fields"].values():
+            if field["status"] == "verified_current" and (
+                not field["value"] or not field["evidence"]
+            ):
+                raise ValueError(
+                    "Current overseas fact requires a value and checked evidence"
+                )
+            if field["value"] is None and field["status"] != "missing":
+                raise ValueError("Do not imply a known value for an unknown field")
+            for ev in field["evidence"]:
+                source = json.loads(
+                    (
+                        BUNDLE / "overseas_sources" / (ev["source_id"] + ".json")
+                    ).read_text()
+                )
+                text_hash = hashlib.sha256(
+                    json.dumps(
+                        source.get("text_pages", []), ensure_ascii=False
+                    ).encode()
+                ).hexdigest()
+                if (
+                    source.get("sha256") != ev["content_hash"]
+                    or text_hash != ev["text_sha256"]
+                ):
+                    raise ValueError(
+                        "Changed CCU overseas source: review contents before promoting"
+                    )
+                if source.get("bundled_file"):
+                    contents = (BUNDLE / source["bundled_file"]).read_bytes()
+                    if hashlib.sha256(contents).hexdigest() != source["sha256"]:
+                        raise ValueError("Changed CCU bundled partner form")
+                pages = ev["source_pages"] or list(
+                    range(1, len(source.get("text_pages", [])) + 1)
+                )
+                text = " ".join(_flat(source["text_pages"][p - 1]) for p in pages)
+                if not _flat(ev["excerpt"]) or _flat(ev["excerpt"]) not in text:
+                    raise ValueError(
+                        f"CCU overseas evidence not in source: {ev['source_id']}"
+                    )
+                if (
+                    not ev["academic_year"]
+                    or not ev["checked_at"]
+                    or not ev["source_url"]
+                ):
+                    raise ValueError("Missing overseas provenance")
+                if ev["status"] != field["status"]:
+                    raise ValueError("CCU overseas field/evidence status disagree")
+    return {row["ccu_page"]: row for row in rows}
+
+
+def apply_overseas_review(partner: PartnerUniversity) -> PartnerUniversity:
+    row = reviewed_rows().get(partner.source_pages[0])
+    if not row:
+        return partner
+    if (
+        row["school_name"] != partner.school_name
+        or partner.availability_status == "not_open"
+    ):
+        raise ValueError("CCU overseas school identity or availability mismatch")
+    partner.partner_exchange_details = {
+        key: PartnerExchangeDetailField.model_validate(value)
+        for key, value in row["fields"].items()
+    }
+    # The new receiving-school source introduces an alternative certificate or
+    # program scope. Do not classify a student's lone test score as mandatory.
+    if partner.source_pages[0] in {65, 86, 89}:
+        detail = partner.partner_exchange_details["language"]
+        partner.language_review_note = (
+            (partner.language_review_note or "")
+            + "；海外補查："
+            + (detail.value or detail.reason)
+        )
+        for condition in partner.language_conditions:
+            condition.scope_choice_required = True
+            condition.additional_conditions.append(
+                "合作校另有語言證明或計畫分流；須確認中正要求與所選路徑"
+            )
+    return partner
+
+
+def describe_field(key: str, field: PartnerExchangeDetailField) -> str:
+    evidence = field.evidence[0] if field.evidence else None
+    scope = ""
+    if evidence:
+        pages = (
+            "；PDF第" + "、".join(map(str, evidence.source_pages)) + "頁"
+            if evidence.source_pages
+            else "；官方文件／網頁原文"
+        )
+        scope = f"（{evidence.academic_year}{pages}；查核2026-10-08）"
+    return f"{LABELS[key]} · {STATUS_LABELS[field.status]}：{field.value or field.reason}{scope}"
+
+
+def enrich_workflow(workflow, partner: PartnerUniversity):
+    fields = partner.partner_exchange_details
+    if not fields:
+        return workflow
+    scope = workflow.steps[4].scope
+
+    def sources(keys):
+        return list(
+            dict.fromkeys(ev.source_url for key in keys for ev in fields[key].evidence)
+        )
+
+    application_keys = [
+        "program_scope",
+        "eligibility",
+        "language",
+        "nomination_deadline",
+        "application_deadline",
+        "documents",
+        "application_forms",
+        "course_restrictions",
+    ]
+    step = workflow.steps[4]
+    step.details = [describe_field(key, fields[key]) for key in application_keys]
+    step.source_urls = sources(application_keys) or step.source_urls
+    deadline = fields["application_deadline"]
+    step.timing = describe_field("application_deadline", deadline)
+    step.deadline_source_url = (
+        deadline.evidence[0].source_url if deadline.evidence else None
+    )
+    step.deadline_status = "needs_confirmation"
+    step.deadline_at = (
+        None  # Day-only or multi-program values never fabricate midnight reminders.
+    )
+    step.required_documents = []
+    step.document_requirements = []
+    document = fields["documents"]
+    if document.status == "verified_current" and document.value:
+        step.required_documents = [document.value]
+        step.document_requirements = [
+            ApplicationDocumentRequirement(
+                name=document.value,
+                copy_type="unspecified",
+                source_urls=sources(["documents"]),
+                needs_confirmation=True,
+            )
+        ]
+    # Always show the source gaps: an actual listed requirement is not a promise
+    # that every attachment, signature or faculty-specific item is complete.
+    step.needs_confirmation = True
+    step.support_status = "needs_confirmation"
+    life_keys = [
+        "academic_calendar",
+        "housing",
+        "housing_deadline",
+        "costs",
+        "insurance",
+        "visa",
+        "arrival",
+        "host_tuition",
+        "exchange_duration",
+    ]
+    home_return = workflow.steps[5]
+    home_return.order = 7
+    life_step = ApplicationStep(
+        order=6,
+        phase="合作校行前與生活",
+        title="核對接收計畫的住宿、保險與抵達安排",
+        responsible_party="學生／合作校",
+        scope=scope,
+        summary="依每欄年度及計畫辦理；歷史參考和矛盾資料不能當作本期確定規定。",
+        details=[describe_field(key, fields[key]) for key in life_keys],
+        source_urls=sources(life_keys),
+        checked_at=CHECKED_AT,
+        support_status="needs_confirmation",
+        needs_confirmation=True,
+        confirmation_contact="國立中正大學國際事務處及合作校提名窗口",
+    )
+    workflow.steps.insert(5, life_step)
+    refs = {ev.source_url: ev for field in fields.values() for ev in field.evidence}
+    workflow.sources.extend(
+        ApplicationWorkflowSource(
+            title="合作校接收資料（逐欄年度另見詳情）",
+            source_url=url,
+            role="partner_university",
+            authority="partner_official",
+            priority=2,
+            effective_academic_year=ev.academic_year,
+            application_round=ev.application_round,
+            checked_at=ev.checked_at,
+        )
+        for url, ev in refs.items()
+    )
+    workflow.coverage_note = "中正2027春季規定及55校海外附件／頁面已逐欄查核；缺值、舊年度、計畫差異與來源矛盾另列，非完整資料或双人審核。"
+    return workflow
+
+
+def destination_profile(partner: PartnerUniversity) -> DestinationProfile:
+    fields = partner.partner_exchange_details
+    life_keys = [
+        "housing",
+        "housing_deadline",
+        "costs",
+        "insurance",
+        "visa",
+        "arrival",
+        "course_restrictions",
+        "academic_calendar",
+    ]
+    refs = {ev.source_url: ev for key in life_keys for ev in fields[key].evidence}
+    sections = [
+        StudentGuideSection(
+            key=key,
+            title=LABELS[key],
+            summary=fields[key].value or fields[key].reason,
+            points=[describe_field(key, fields[key])],
+            source_urls=list(dict.fromkeys(e.source_url for e in fields[key].evidence)),
+            evidence_type="official",
+            caution=STATUS_LABELS[fields[key].status] + "；" + fields[key].reason,
+        )
+        for key in life_keys
+    ]
+
+    def summary(key):
+        return describe_field(key, fields[key])
+
+    return DestinationProfile(
+        home_university=HOME,
+        school_name=partner.school_name,
+        country=partner.country,
+        cost_summary=summary("costs"),
+        housing_summary=summary("housing"),
+        transport_summary=summary("arrival"),
+        campus_life_summary=summary("arrival"),
+        student_guide_sections=sections,
+        sources=[
+            SourceReference(
+                title="合作校生活資料（適用年度逐欄標示）",
+                source_url=url,
+                category=PageCategory.PARTNER_SCHOOL,
+                summary=f"{ev.academic_year}；查核2026-10-08；" + (ev.excerpt or ""),
+            )
+            for url, ev in refs.items()
+        ],
+        last_checked=CHECKED_AT,
+        coverage_status="official_partial"
+        if any(fields[k].status == "verified_current" for k in life_keys)
+        else "needs_confirmation",
+        coverage_note="已查核所列官方附件／頁面內容，仍有未載、未核實新版或矛盾；不能將歷史費率及一般入學資訊當作本期交換規定。",
+    )

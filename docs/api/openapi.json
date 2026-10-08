@@ -9516,6 +9516,51 @@
         "title": "PartnerCoverage",
         "type": "object"
       },
+      "PartnerExchangeDetailField": {
+        "description": "Receiving-school facts retain their own year, scope and source evidence.",
+        "properties": {
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/ExchangeFieldEvidence"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "verified_current",
+              "reference_only",
+              "missing",
+              "needs_confirmation",
+              "conflict",
+              "explicit_not_announced"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "required": [
+          "status",
+          "reason"
+        ],
+        "title": "PartnerExchangeDetailField",
+        "type": "object"
+      },
       "PartnerLanguageCondition": {
         "description": "A reviewed condition, separate from unparsed source text or CEFR ranges.",
         "properties": {
@@ -10082,6 +10127,13 @@
               }
             ],
             "title": "Partner Application Prerequisite"
+          },
+          "partner_exchange_details": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/PartnerExchangeDetailField"
+            },
+            "title": "Partner Exchange Details",
+            "type": "object"
           },
           "program_options": {
             "items": {

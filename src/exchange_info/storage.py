@@ -48,7 +48,7 @@ from .models import (
 )
 from .settings import DEFAULT_DATA_DIR
 from .school_identity import school_identity_key
-from .university_registry import CGU, NTPU
+from .university_registry import CCU, CGU, NTPU
 from .workflow_structuring import structure_application_workflow
 from .workflow_identity import workflow_storage_key
 
@@ -711,6 +711,7 @@ def load_destination_profiles(
         for directory, home_university in (
             (BUNDLED_NTPU_DIR, NTPU.school_name),
             (BUNDLED_CGU_DIR, CGU.school_name),
+            (BUNDLED_CCU_DIR, CCU.school_name),
         )
         for row in read_jsonl(
             directory / "destination_profiles.jsonl",

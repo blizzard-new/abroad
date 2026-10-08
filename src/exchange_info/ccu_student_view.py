@@ -448,7 +448,7 @@ def build_ccu_workflow(partner: PartnerUniversity):
             ("家長同意書", GUARDIAN_URL),
         ]
     ]
-    return UniversityApplicationWorkflow(
+    workflow = UniversityApplicationWorkflow(
         home_university=HOME,
         school_name=partner.school_name,
         partner_website=partner.website,
@@ -465,3 +465,5 @@ def build_ccu_workflow(partner: PartnerUniversity):
         coverage_status="official_partial",
         coverage_note="母校官方當期來源已讀；合作校附件尚未全部獨立查核，無雙人審核。精確期限僅顯示於dashboard，未開啟流程提醒。",
     )
+    from .ccu_overseas import enrich_workflow
+    return enrich_workflow(workflow, partner)

@@ -7875,6 +7875,7 @@ function renderUniversityOverview(item) {
         </div>
         ${renderPartnerAvailabilityNotice(item)}
         ${renderPartnerFieldEvidence(item)}
+        ${window.UniWayCcuDetails?.render(item, escapeHtml) || ""}
         <details class="overview-more school-data-completeness"><summary>這所學校的資料完整度</summary><div id="school-data-completeness-body" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-card"></div></div></details>
         <details class="overview-more"><summary>選校參考</summary><div id="quick-decision-fit">${renderQuickDecisionFit(item)}</div></details>
         ${renderProgramOptions(item)}
