@@ -1140,7 +1140,7 @@ function renderSchoolOptions(query = "") {
     .map(
       (item) => `
         <button type="button" class="school-option${item.school_name === state.selectedHomeSchool ? " selected" : ""}" data-home-school="${escapeHtml(item.school_name)}" role="option" aria-selected="${item.school_name === state.selectedHomeSchool}">
-          <img src="${escapeHtml(item.hero_image || "/static/assets/cgu-campus.jpg")}" alt="${escapeHtml(item.school_name)}校園" />
+          ${item.hero_image ? `<img src="${escapeHtml(item.hero_image)}" alt="${escapeHtml(item.school_name)}校園" />` : `<span class="planning-match-icon" aria-hidden="true"><i data-lucide="school"></i></span>`}
           <span><strong>${escapeHtml(item.school_name)}</strong><small>${escapeHtml(item.coverage_note)}</small></span>
           <span class="school-option-status">${item.partner_count ? `${item.partner_count} 間合作校` : "資料建置中"}</span>
           <i data-lucide="${item.school_name === state.selectedHomeSchool ? "circle-check" : "circle"}" aria-hidden="true"></i>
@@ -2300,7 +2300,7 @@ function sanitizeSelectionConditions(value) {
   return {profile:{
     college:text(profile.college,120), department:text(profile.department,120),
     current_year:text(profile.current_year,40), degree_level:text(profile.degree_level,80),
-    academic_score:number(profile.academic_score,100),
+    academic_score:number(profile.academic_score,100), academic_gpa:number(profile.academic_gpa,4.5),
     language_test:["toeic","ielts","toefl","duolingo","other"].includes(profile.language_test) ? profile.language_test : null,
     language_score:number(profile.language_score,1000),
     target_term:text(profile.target_term,40), preferred_country:text(profile.preferred_country,80),
@@ -2314,7 +2314,7 @@ function sanitizeSelectionConditions(value) {
 function selectionConditionsPayload(profile = state.eligibilityProfile) {
   return sanitizeSelectionConditions({profile:profile ? {
     college:profile.college, department:profile.department, current_year:profile.currentYear,
-    degree_level:profile.degree, academic_score:profile.academicScore,
+    degree_level:profile.degree, academic_score:profile.academicScore, academic_gpa:profile.academicGpa ?? null,
     language_test:profile.languageTest, language_score:profile.languageScore,
     target_term:profile.targetTerm, preferred_country:profile.preferredCountry,
     monthly_budget:profile.monthlyBudget, needs_scholarship:profile.scholarshipNeeded,
@@ -2329,7 +2329,7 @@ function selectionProfileFromWorkspace(conditions) {
   const threshold = languageThreshold(profile.language_test);
   return {
     college:profile.college, department:profile.department, currentYear:profile.current_year,
-    degree:profile.degree_level, academicScore:profile.academic_score,
+    degree:profile.degree_level, academicScore:profile.academic_score, academicGpa:profile.academic_gpa,
     languageTest:profile.language_test || "", languageScore:profile.language_score,
     languageLabel:threshold ? `${threshold.label} ${profile.language_score ?? "待補"}` : "語言能力待確認",
     targetTerm:profile.target_term, preferredCountry:profile.preferred_country,
@@ -3771,6 +3771,7 @@ function renderPersonalPlanSnapshot() {
 }
 
 function languageThresholdFromPartner(item, languageTest) {
+  if ((item.program_options || []).length > 1) return null;
   const text = partnerSummaryPoints(item, "eligibility_points").join(" ");
   const patterns = {
     toeic: /(?:TOEIC|多益)\s*(?:達|至少|總分|成績)?\s*(\d{3})/i,
@@ -3784,6 +3785,10 @@ function languageThresholdFromPartner(item, languageTest) {
 
 function partnerAvailabilityMeta(item) {
   const status = item?.availability_status || "open";
+  if (["not_open", "needs_confirmation", "zero_quota", "fee_paying"].includes(status)) {
+    const label = {not_open:"本季未開放（官方灰字）",needs_confirmation:"名額尚未核實",zero_quota:"零名額",fee_paying:"自費計畫"}[status];
+    return {status,shortLabel:label,cardLabel:label,matchLabel:label,reason:item.availability_note || label,blocked:true};
+  }
   if (status === "departmental_reference") {
     return {
       status,
@@ -3806,8 +3811,8 @@ function partnerAvailabilityMeta(item) {
   }
   return {
     status: "open",
-    shortLabel: "115 學年度開放",
-    cardLabel: "115 學年度開放",
+    shortLabel: item.application_window_status === "closed" ? `${item.application_round}名額已列／校內截止` : "當期名額已列",
+    cardLabel: item.application_window_status === "closed" ? `${item.application_round}名額已列／校內截止` : "當期名額已列",
     matchLabel: "本期開放",
     reason: "中央當期名單已列",
     blocked: false,
@@ -3819,6 +3824,8 @@ function renderPartnerAvailabilityNotice(item) {
   if (!availability.blocked) return "";
   const fallback = availability.status === "departmental_reference"
     ? "中央當期名單未列，請先向所屬學院或國際處確認是否開放。"
+    : ["not_open", "needs_confirmation", "zero_quota", "fee_paying"].includes(availability.status)
+    ? availability.reason
     : "目前未列入當期交換名額表。";
   return `
     <div class="partner-availability-notice ${escapeHtml(availability.status)}" role="note">
@@ -3851,6 +3858,12 @@ function partnerMatch(item, profile = state.eligibilityProfile) {
   }
 
   const mismatches = [];
+  if (state.dashboard?.academic_gpa_minimum != null) {
+    if (profile.academicGpa == null) risks.push("尚未填GPA；須GPA至少3.0且歷年平均至少70分");
+    else if (Number(profile.academicGpa) < Number(state.dashboard.academic_gpa_minimum)) mismatches.push("GPA未達3.0");
+    if (Number(profile.academicScore) < academicMinimum()) mismatches.push("歷年平均未達70分");
+    if (item.application_window_status === "closed") risks.push("校內收件已截止，須確認已有申請或提名資格");
+  }
   const college = homeCollegeValue(profile.college);
   const collegeKnown = Boolean(college && normalize(item.colleges));
   const degreeKnown = Boolean(profile.degree && normalize(item.degree_levels));
@@ -3940,7 +3953,7 @@ async function refreshPlanningRecommendations() {
   try {
     const plan = await fetchJson("/advisor/plan", {
       method:"POST", headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({school_name:activeHomeSchool(),target_school:targetSchool || null,college:profile.college,department:profile.department || null,current_year:profile.currentYear || null,degree_level:profile.degree,academic_score:profile.academicScore ?? null,language_test:profile.languageTest,language_score:profile.languageScore ?? null,target_term:profile.targetTerm || null,preferred_country:profile.preferredCountry || null,monthly_budget:profile.monthlyBudget || null,needs_scholarship:Boolean(profile.scholarshipNeeded),preferred_teaching_language:profile.teachingLanguage || null,course_interests:profile.courseInterests || null}),
+      body:JSON.stringify({school_name:activeHomeSchool(),target_school:targetSchool || null,college:profile.college,department:profile.department || null,current_year:profile.currentYear || null,degree_level:profile.degree,academic_score:profile.academicScore ?? null,academic_gpa:profile.academicGpa ?? null,language_test:profile.languageTest,language_score:profile.languageScore ?? null,target_term:profile.targetTerm || null,preferred_country:profile.preferredCountry || null,monthly_budget:profile.monthlyBudget || null,needs_scholarship:Boolean(profile.scholarshipNeeded),preferred_teaching_language:profile.teachingLanguage || null,course_interests:profile.courseInterests || null}),
     });
     if (planningProfileKey() !== profileKey || state.applicationContext.target_school !== targetSchool || state.advisorLoading) return;
     state.advisorPlan = plan;
@@ -4211,7 +4224,7 @@ function eligibilitySummary() {
   const review = statuses.length - likely;
   const profile = state.eligibilityProfile;
   const threshold = languageThreshold(profile.languageTest);
-  const academicPass = profile.academicScore >= academicMinimum();
+  const academicPass = profile.academicScore >= academicMinimum() && (state.dashboard?.academic_gpa_minimum == null || (profile.academicGpa != null && profile.academicGpa >= state.dashboard.academic_gpa_minimum));
   const languagePass = threshold ? profile.languageScore >= threshold.minimum : false;
   return {
     likely,
@@ -7720,7 +7733,7 @@ function renderPrimaryFacts(item, destinationProfile = state.destinationCache.ge
     [deadline.label, deadline.value, "calendar-clock", "deadline"],
     ["語言門檻", partnerLanguageRequirement(item), "languages", "language"],
     ["生活費參考", truncate(destinationProfile?.cost_summary || "官方費用待查核", 130), "wallet-cards", "cost"],
-    ["交換名額", item.quota || "依公告", "users", "quota"],
+    ["交換名額", item.quota || (item.quota_status === "reference_only" ? "本季未開放" : item.quota_status === "not_published" ? "名額空白，待確認" : "依公告"), "users", "quota"],
     ["研修期間", localizedPartnerValue(item, "study_period", "study_period"), "calendar-range", "period"],
   ]
     .map(([label, value, icon, tone]) => `<div class="${tone || ""}"><i data-lucide="${icon}" aria-hidden="true"></i><span>${escapeHtml(label)}</span><strong>${highlightHtml(value)}</strong></div>`)
@@ -7737,6 +7750,7 @@ function partnerEligibilityStatus(item) {
 }
 
 function partnerLanguageRequirement(item) {
+  if (item.language_requirement) return truncate(item.language_requirement, 110);
   const parts = partnerSummaryPoints(item, "eligibility_points");
   const language = parts.filter((part) => /TOEIC|IELTS|TOEFL|Duolingo|英文|英語|語文|語言|CEFR|JLPT|TOPIK/i.test(part));
   const compact = language.slice(0, 2).map((point) =>
@@ -7758,7 +7772,7 @@ function renderProgramOptions(item) {
   if (options.length <= 1) return "";
   return `
     <div class="program-options" aria-label="可申請方案">
-      <div class="program-options-heading"><strong>這間學校有 ${options.length} 種申請方案</strong><span>請依學院、學制與名額選擇正確方案</span></div>
+      <div class="program-options-heading"><strong>這間學校列有 ${options.length} 種計畫資料</strong><span>請依學院、學制、適用學期與名額核對</span></div>
       <div class="program-option-list">
         ${options.map((option) => {
           const deadline = partnerDeadlineReference(option);
@@ -7766,7 +7780,7 @@ function renderProgramOptions(item) {
           <article class="program-option">
             <div><span class="program-option-type">${escapeHtml(option.program_type)}</span><h3>${escapeHtml([option.colleges, option.degree_levels].filter(Boolean).join(" · ") || "適用身分依公告")}</h3></div>
             <dl>
-              <div><dt>名額</dt><dd>${escapeHtml(option.quota || "依公告")}</dd></div>
+              <div><dt>名額</dt><dd>${escapeHtml(option.quota || (item.field_evidence ? "全校共用名額；本方案未另列" : "依公告"))}</dd></div>
               <div><dt>研修期間</dt><dd>${escapeHtml(localizedPartnerValue(option, "study_period", "study_period"))}</dd></div>
               <div><dt>${escapeHtml(deadline.label)}</dt><dd>${highlightHtml(deadline.value)}</dd></div>
             </dl>
@@ -7815,13 +7829,33 @@ function renderPartnerStudentSummary(item) {
     </section>`;
 }
 
+function renderPartnerFieldEvidence(item) {
+  if (!item.field_evidence || !Object.keys(item.field_evidence).length) return "";
+  const labels = {study_period:"交換期間", quota:"名額", eligibility:"合作校接收資格", language_requirement:"合作校語言", partner_documents:"合作校申請文件", partner_application_deadline:"合作校申請截止", application_deadline:"中正校內截止", semester_dates:"學期日期", housing_info:"住宿資訊", tuition_info:"費用原文", course_restrictions:"課程限制", fact_sheet:"合作校簡章連結"};
+  const statuses = {verified_current:"當期已核實",reference_only:"歷史參考",missing:"未載／未核實",needs_confirmation:"待確認",conflict:"來源矛盾，待確認",explicit_not_announced:"官方明示尚未公告"};
+  return `<details class="overview-more"><summary>當期資料與官方依據（${escapeHtml(item.application_round || "")}）</summary>
+    <p>合作校接收條件須與中正校內資格分別核對；灰字歷史資料不作當期申請依據。</p>
+    ${Object.entries(labels).map(([key,label]) => {
+      const evidence = item.field_evidence[key];
+      if (!evidence) return "";
+      const pages = evidence.source_pages?.length ? `，第${evidence.source_pages.join("、")}頁` : "";
+      return `<article class="university-fact"><strong>${escapeHtml(label)} · ${escapeHtml(statuses[evidence.status] || evidence.status)}</strong>
+        <p>${escapeHtml(evidence.excerpt || "當期值未核實")}</p>
+        ${evidence.reference_excerpt ? `<details><summary>歷史參考（不能作當期申請依據）</summary><p>${escapeHtml(evidence.reference_excerpt)}</p></details>` : ""}
+        ${evidence.note ? `<p>${escapeHtml(evidence.note)}</p>` : ""}
+        <a href="${escapeHtml(evidence.source_url)}" target="_blank" rel="noreferrer">官方來源${escapeHtml(pages)}</a>
+        <small> · 查核 ${escapeHtml((evidence.checked_at || "").slice(0,10))} · ${escapeHtml(evidence.application_round || "參考年度未明")}</small>
+      </article>`;
+    }).join("")}</details>`;
+}
+
 function renderUniversityOverview(item) {
   const tuitionPoints = partnerSummaryPoints(item, "tuition_points");
   const deadline = partnerDeadlineReference(item);
   const facts = [
     ["計畫類型", item.program_type || "依校方公告"],
     ["適用學院／學制", [item.colleges, item.degree_levels].filter(Boolean).join("／") || "依校方公告"],
-    ["名額", item.quota || "依校方公告"],
+    ["名額", item.quota || (item.quota_status === "reference_only" ? "本季未開放" : item.quota_status === "not_published" ? "名額空白，待確認" : "依校方公告")],
     ["研修期間", localizedPartnerValue(item, "study_period", "study_period", "依校方公告")],
     [deadline.label, deadline.value],
     ["學費", tuitionPoints.slice(0, 2).join("；") || "依校方公告"],
@@ -7838,6 +7872,7 @@ function renderUniversityOverview(item) {
           </div>
         </div>
         ${renderPartnerAvailabilityNotice(item)}
+        ${renderPartnerFieldEvidence(item)}
         <details class="overview-more school-data-completeness"><summary>這所學校的資料完整度</summary><div id="school-data-completeness-body" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-card"></div></div></details>
         <details class="overview-more"><summary>選校參考</summary><div id="quick-decision-fit">${renderQuickDecisionFit(item)}</div></details>
         ${renderProgramOptions(item)}
@@ -10763,12 +10798,16 @@ function renderEligibilityOptions({ preserveDraft = false } = {}) {
   if (!state.dashboard) return;
   const form = $("#advisor-form");
   const owner = JSON.stringify([state.account?.id || "", activeHomeSchool()]);
+  const maximum = state.dashboard.maximum_preferences || 5;
+  const gpaField = $("#advisor-academic-gpa");
+  if (gpaField) gpaField.closest?.("label") && (gpaField.closest("label").hidden = state.dashboard.academic_gpa_minimum == null);
   const selects = [1,2,3,4,5].map(rank=>$(`#eligibility-preference-${rank}`));
+  selects.forEach((field,index)=>{field.closest?.("label") && (field.closest("label").hidden=index>=maximum);if(index>=maximum)field.value="";});
   const draft = form.dataset.draftOwner === owner ? selects.map(field=>field.value) : null;
   const openSchools = state.dashboard.partner_universities
     .filter(item=>(item.availability_status || "open") === "open").map(item=>item.school_name);
   const preferences = draft || [...state.applications];
-  selects.forEach((field,index)=>fillSelect(`#${field.id}`,openSchools,index ? `不設定第 ${index+1} 志願` : "請選擇第一志願",preferences[index] || ""));
+  selects.slice(0,maximum).forEach((field,index)=>fillSelect(`#${field.id}`,openSchools,index ? `不設定第 ${index+1} 志願` : "請選擇第一志願",preferences[index] || ""));
 }
 
 function restoreEligibilityForm({ preserveDraft = false } = {}) {
@@ -10845,6 +10884,7 @@ async function checkEligibility(event) {
   const academicYear = $("#eligibility-academic-year").value;
   const applicationRound = $("#eligibility-application-round").value;
   const academicScore = optionalNumber($("#advisor-academic-score").value);
+  const academicGpa = optionalNumber($("#advisor-academic-gpa")?.value);
   const languageTest = $("#advisor-language-test").value;
   const languageScore = Number($("#advisor-language-score").value);
   const targetTerm = $("#advisor-target-term").value;
@@ -10854,7 +10894,7 @@ async function checkEligibility(event) {
   const teachingLanguage = $("#advisor-teaching-language").value;
   const courseInterests = $("#advisor-course-interests").value.trim();
   const result = $("#eligibility-result");
-  const preferences = [1, 2, 3, 4, 5]
+  const preferences = [1, 2, 3, 4, 5].slice(0,state.dashboard?.maximum_preferences || 5)
     .map((rank) => ({ rank, school_name: $(`#eligibility-preference-${rank}`).value }))
     .filter((item) => item.school_name)
     .map((item, index) => ({ ...item, rank: index + 1 }));
@@ -10888,6 +10928,7 @@ async function checkEligibility(event) {
     department,
     degree,
     academicScore,
+    academicGpa,
     languageTest,
     languageScore,
     languageLabel: languageScore > 0 ? `${languageTest.toUpperCase()} ${languageScore}` : "語言能力待確認",
@@ -10907,6 +10948,8 @@ async function checkEligibility(event) {
     department,
     degree_level: degree,
     academic_score: academicScore,
+    academic_gpa: academicGpa,
+    current_year: $("#advisor-current-year").value,
     language_test: languageTest,
     language_score: Number.isFinite(languageScore) && languageScore > 0 ? languageScore : null,
     academic_year: academicYear,
@@ -11066,6 +11109,7 @@ function renderAdvisorForm() {
   $("#advisor-degree").value = profile.degree || "";
   $("#advisor-current-year").value = profile.currentYear || "";
   $("#advisor-academic-score").value = profile.academicScore ?? "";
+  if ($("#advisor-academic-gpa")) $("#advisor-academic-gpa").value = profile.academicGpa ?? "";
   $("#advisor-language-test").value = profile.languageTest || "";
   $("#advisor-language-score").value = profile.languageScore ?? "";
   $("#advisor-target-term").value = profile.targetTerm || "";

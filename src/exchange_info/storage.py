@@ -57,6 +57,7 @@ T = TypeVar("T", bound=BaseModel)
 PACKAGE_DIR = Path(__file__).resolve().parent
 BUNDLED_NTPU_DIR = PACKAGE_DIR / "official_data" / "ntpu"
 BUNDLED_CGU_DIR = PACKAGE_DIR / "official_data" / "cgu"
+BUNDLED_CCU_DIR = PACKAGE_DIR / "official_data" / "ccu"
 
 _STORAGE_LOCKS_GUARD = threading.Lock()
 _STORAGE_LOCKS: dict[str, threading.RLock] = {}
@@ -550,7 +551,7 @@ def cached_workflow_catalog(key: tuple, build) -> list[UniversityApplicationWork
 
 
 def _bundled_workflow_paths() -> tuple[Path, ...]:
-    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR))
+    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_CCU_DIR))
 
 
 def _bundled_workflow_signature() -> tuple:

@@ -118,6 +118,9 @@ def collect_application_workflow(
     rate_limit_seconds: float = 1.0,
 ) -> UniversityApplicationWorkflow:
     home = require_university(home_university)
+    if home.id == "ccu":
+        from .ccu_student_view import build_ccu_workflow
+        return structure_application_workflow(build_ccu_workflow(partner))
     checked_at = datetime.now(timezone.utc)
     partner_pages = discover_official_partner_pages(partner, max_pages=max_partner_pages)
     source_text: dict[str, str] = {}

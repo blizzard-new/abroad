@@ -549,16 +549,42 @@ class PartnerProgramOption(BaseModel):
     student_summary_zh: PartnerStudentSummary = Field(default_factory=PartnerStudentSummary)
 
 
+class ExchangeFieldEvidence(BaseModel):
+    source_url: str
+    source_pages: list[int] = Field(default_factory=list)
+    academic_year: str | None = None
+    application_round: str | None = None
+    checked_at: datetime
+    status: Literal["verified_current", "reference_only", "missing", "needs_confirmation", "conflict", "explicit_not_announced"]
+    excerpt: str | None = None
+    reference_excerpt: str | None = None
+    note: str | None = None
+
+
 class PartnerUniversity(BaseModel):
     program_type: str
     availability_status: Literal[
-        "open", "agreement_only", "departmental_reference"
+        "open", "agreement_only", "departmental_reference", "not_open", "needs_confirmation", "zero_quota", "fee_paying"
     ] = "open"
     availability_note: str | None = None
     agreement_type: str | None = None
     agreement_level: str | None = None
     country: str | None = None
     school_name: str
+    academic_year: str | None = None
+    application_round: str | None = None
+    checked_at: datetime | None = None
+    source_pages: list[int] = Field(default_factory=list)
+    quota_status: Literal["published", "zero", "not_published", "reference_only", "fee_paying"] | None = None
+    application_window_status: Literal["open", "closed", "needs_confirmation"] | None = None
+    field_evidence: dict[str, ExchangeFieldEvidence] = Field(default_factory=dict)
+    reference_data: dict[str, str] = Field(default_factory=dict)
+    language_requirement: str | None = None
+    partner_application_deadline: str | None = None
+    nomination_deadline: str | None = None
+    semester_dates: str | None = None
+    housing_info: str | None = None
+    course_restrictions: str | None = None
     location: UniversityLocation | None = None
     website: str | None = None
     colleges: str | None = None
@@ -1333,6 +1359,10 @@ class ApplicationPlanEligibilityCheck(BaseModel):
         "college",
         "degree_level",
         "academic_score",
+        "academic_gpa",
+        "home_year",
+        "home_deadline",
+        "source_cycle",
         "language_score",
         "academic_year",
         "application_round",
@@ -1390,6 +1420,8 @@ class PersonalApplicationPlanRequest(BaseModel):
     department: str | None = Field(default=None, max_length=120)
     degree_level: str | None = Field(default=None, max_length=80)
     academic_score: float | None = Field(default=None, ge=0, le=100)
+    academic_gpa: float | None = Field(default=None, ge=0, le=4.5)
+    current_year: str | None = Field(default=None, max_length=40)
     language_test: Literal["toeic", "ielts", "toefl", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
     academic_year: str | None = Field(default=None, max_length=20)
@@ -2476,6 +2508,8 @@ class StudentDashboard(BaseModel):
     last_checked: datetime | None = None
     academic_score_minimum: float | None = None
     academic_score_rule: str | None = None
+    academic_gpa_minimum: float | None = None
+    maximum_preferences: int = 5
     language_score_minimums: dict[str, float] = Field(default_factory=dict)
     application_periods: list[ApplicationPeriodItem] = Field(default_factory=list)
     program_overview: list[StudentInfoItem] = Field(default_factory=list)
@@ -2537,6 +2571,7 @@ class AdvisorProfile(BaseModel):
     current_year: str | None = Field(default=None, max_length=40)
     degree_level: str | None = Field(default=None, max_length=80)
     academic_score: float | None = Field(default=None, ge=0, le=100)
+    academic_gpa: float | None = Field(default=None, ge=0, le=4.5)
     language_test: Literal["toeic", "ielts", "toefl", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
     target_term: str | None = Field(default=None, max_length=40)
@@ -3664,6 +3699,7 @@ class AccountSelectionProfile(BaseModel):
     current_year: str = Field(default="", max_length=40)
     degree_level: str = Field(default="", max_length=80)
     academic_score: float | None = Field(default=None, ge=0, le=100)
+    academic_gpa: float | None = Field(default=None, ge=0, le=4.5)
     language_test: Literal["toeic", "ielts", "toefl", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
     target_term: str = Field(default="", max_length=40)
@@ -3674,6 +3710,14 @@ class AccountSelectionProfile(BaseModel):
     application_round: str = Field(default="", max_length=80)
     preferred_teaching_language: TeachingLanguage | None = None
     course_interests: str = Field(default="", max_length=120)
+
+    @model_serializer(mode="wrap")
+    def serialize_optional_gpa(self, handler):
+        payload = handler(self)
+        # Preserve the serialized shape of existing CGU/NTPU saved conditions.
+        if self.academic_gpa is None:
+            payload.pop("academic_gpa", None)
+        return payload
 
 
 class AccountSelectionConditions(BaseModel):

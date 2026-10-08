@@ -58,6 +58,7 @@ from .models import (
 )
 from .application_rules import select_application_workflow
 from .university_registry import NTPU, require_university
+from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -755,6 +756,10 @@ def _ntpu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
 
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university = require_university(school_name)
+    if university.id == "ccu":
+        from .ccu_application_documents import ccu_application_templates
+
+        return ccu_application_templates()
     if university.id != NTPU.id:
         return [template.model_copy(deep=True) for template in APPLICATION_TEMPLATES]
     return [
@@ -1213,7 +1218,9 @@ def build_packet_manifest(
             for item in items
         ),
         source_checked_at=(
-            NTPU_SOURCE_CHECKED_AT
+            CCU_SOURCE_CHECKED_AT
+            if require_university(request.context.school_name).id == "ccu"
+            else NTPU_SOURCE_CHECKED_AT
             if require_university(request.context.school_name).id == NTPU.id
             else SOURCE_CHECKED_AT
         ),

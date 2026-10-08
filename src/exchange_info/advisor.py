@@ -282,6 +282,16 @@ def _score_partner(
         confirmation_items.append(gaps[-1])
 
     academic_minimum = dashboard.academic_score_minimum
+    if dashboard.academic_gpa_minimum is not None:
+        if profile.academic_gpa is None:
+            gaps.append("尚未填歷年GPA；中正須GPA至少3.0且平均至少70分")
+            confirmation_items.append(gaps[-1])
+        elif profile.academic_gpa < dashboard.academic_gpa_minimum:
+            gaps.append("歷年GPA未達中正公開門檻3.0")
+            blocking_reasons.append(gaps[-1])
+            blocked = True
+        if partner.application_window_status == "closed":
+            confirmation_items.append("中正2027春季校內收件已截止，需確認已有申請及提名資格")
     if profile.academic_score is None:
         gaps.append("尚未填學業平均")
         confirmation_items.append(gaps[-1])
@@ -412,6 +422,9 @@ def _qualification_summary(
     dashboard: StudentDashboard,
 ) -> list[str]:
     rows: list[str] = []
+    if dashboard.academic_gpa_minimum is not None:
+        rows.append("歷年GPA尚未填寫；須至少3.0且歷年平均至少70分" if profile.academic_gpa is None else
+                    f"歷年GPA {profile.academic_gpa:g}，{'達' if profile.academic_gpa >= dashboard.academic_gpa_minimum else '未達'}門檻3.0")
     academic_minimum = dashboard.academic_score_minimum
     if profile.academic_score is None:
         rows.append("學業平均尚未填寫")
@@ -850,7 +863,7 @@ def _partner_language_threshold(
     partner: PartnerUniversity,
     language_test: str | None,
 ) -> float | None:
-    if not language_test or language_test == "other":
+    if not language_test or language_test == "other" or len(partner.program_options) > 1:
         return None
     text = " ".join(
         value

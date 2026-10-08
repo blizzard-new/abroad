@@ -377,6 +377,12 @@ from .storage import (
     upsert_partner_research,
 )
 from .student_view import build_student_dashboard, fetch_partner_universities
+from .ccu_student_view import (
+    build_ccu_student_dashboard,
+    fetch_ccu_partner_universities,
+    ccu_exchange_info,
+    ccu_processed_pages,
+)
 from .rag import rag_index_status, search_document_chunks, supabase_configured
 from .legal_pages import TERMS_VERSION, register_legal_pages
 from .request_origin import client_fingerprint, public_base_url
@@ -1070,7 +1076,9 @@ def create_app(
             with partner_cache_lock:
                 if university.id not in partner_cache:
                     partner_cache[university.id] = (
-                        fetch_ntpu_partner_universities()
+                        fetch_ccu_partner_universities()
+                        if university.id == "ccu"
+                        else fetch_ntpu_partner_universities()
                         if university.id == NTPU.id
                         else fetch_partner_universities()
                     )
@@ -1112,6 +1120,8 @@ def create_app(
         university = university_for(
             school.school_name if isinstance(school, UniversityProfile) else school
         )
+        if university.id == "ccu":
+            return ccu_processed_pages()
         return (
             ntpu_processed_pages()
             if university.id == NTPU.id
@@ -1122,6 +1132,8 @@ def create_app(
         university = university_for(
             school.school_name if isinstance(school, UniversityProfile) else school
         )
+        if university.id == "ccu":
+            return ccu_exchange_info(partners_for_university(university))
         if university.id == NTPU.id:
             return ntpu_exchange_info(partners_for_university(university))
         return load_exchange_info(resolved_data_dir) or ExchangeInfo(school_name=CGU.school_name)
@@ -1167,6 +1179,8 @@ def create_app(
         university = university_for(
             school.school_name if isinstance(school, UniversityProfile) else school
         )
+        if university.id == "ccu":
+            return build_ccu_student_dashboard(partner_universities=partners_for_university(university))
         if university.id == NTPU.id:
             return build_ntpu_student_dashboard(
                 partner_universities=partners_for_university(university)

@@ -155,6 +155,10 @@ def build_personal_application_plan(
     """Create a deterministic plan from structured rules without AI inference."""
 
     partner_by_name = {_normalize(partner.school_name): partner for partner in partners}
+    from .university_registry import resolve_university
+    home = resolve_university(request.home_school)
+    if home and home.id == "ccu" and len(request.preferences) > 3:
+        raise ValueError("中正大學2027春季校級交換最多3個志願（簡章第1頁及申請表第1頁）。")
     workflow_rows = list(workflows)
     contact_unit = f"{request.home_school}國際事務處／所屬系所"
     choices: list[PersonalApplicationPlanChoice] = []
@@ -358,11 +362,29 @@ def _eligibility_checks(
 ) -> list[ApplicationPlanEligibilityCheck]:
     checks: list[ApplicationPlanEligibilityCheck] = []
     partner_source = partner.source_url
+    from .university_registry import resolve_university
+    home = resolve_university(request.home_school)
+    if home and home.id == "ccu":
+        from .ccu_sources import GUIDELINES_URL
+        gpa = request.academic_gpa
+        checks.append(_check("academic_gpa", "needs_confirmation" if gpa is None else "pass" if gpa >= 3 else "fail",
+            "中正歷年GPA門檻", "尚未提供GPA；歷年GPA至少3.0且平均至少70分，兩項均須符合。" if gpa is None else f"歷年GPA {gpa:g}，門檻3.0（簡章第1頁）。",
+            source_url=GUIDELINES_URL, contact_unit=contact_unit if gpa is None or gpa < 3 else None))
+        checks.append(_check("home_year", "needs_confirmation", "中正在校年級與修業期間",
+            "須在中正就讀滿兩學期，大二至大四上／碩博士二年級以上；大四專案須承辦確認（簡章第1頁、申請表第1頁）。",
+            source_url=GUIDELINES_URL, contact_unit=contact_unit))
+        if partner.application_window_status == "closed":
+            checks.append(_check("home_deadline", "needs_confirmation", "校內申請期限",
+                "2027春季校內收件已截止；僅已有申請／提名者可依通知繼續，不代表仍接受新申請。",
+                source_url=partner.field_evidence["application_deadline"].source_url, contact_unit=contact_unit))
+        if request.academic_year and request.academic_year != partner.academic_year or request.application_round and not request.application_round.startswith(partner.application_round or "2027春季"):
+            checks.append(_check("source_cycle", "needs_confirmation", "資料適用年度與梯次",
+                "已核實資料僅適用115學年度第二學期／2027春季，所選新版尚未核實。",source_url=partner_source,contact_unit=contact_unit))
     if partner.availability_status != "open":
         checks.append(
             _check(
                 "availability",
-                "fail",
+                "needs_confirmation" if partner.availability_status == "needs_confirmation" else "fail",
                 "當期名額",
                 partner.availability_note
                 or "這筆資料目前未列入當期公開開放名單。",
@@ -376,7 +398,7 @@ def _eligibility_checks(
                 "availability",
                 "pass",
                 "當期名額",
-                "目前列在公開可申請名單中。",
+                "當期名額已列；校內收件已截止。" if partner.application_window_status == "closed" else "目前列在公開可申請名單中。",
                 source_url=partner_source,
             )
         )
@@ -822,6 +844,8 @@ def _choice_status(
     partner: PartnerUniversity,
     checks: list[ApplicationPlanEligibilityCheck],
 ) -> ApplicationPlanEligibilityStatus:
+    if partner.availability_status == "needs_confirmation":
+        return ApplicationPlanEligibilityStatus.NEEDS_CONFIRMATION
     if partner.availability_status != "open":
         return ApplicationPlanEligibilityStatus.UNAVAILABLE
     if any(check.status == "fail" for check in checks):
@@ -854,7 +878,7 @@ def _partner_language_threshold(
     partner: PartnerUniversity,
     language_test: str | None,
 ) -> float | None:
-    if not language_test or language_test == "other":
+    if not language_test or language_test == "other" or len(partner.program_options) > 1:
         return None
     text = " ".join(
         value
