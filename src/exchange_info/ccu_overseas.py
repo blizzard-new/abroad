@@ -95,6 +95,15 @@ def reviewed_rows() -> dict[int, dict]:
                     contents = (BUNDLE / source["bundled_file"]).read_bytes()
                     if hashlib.sha256(contents).hexdigest() != source["sha256"]:
                         raise ValueError("Changed CCU bundled partner form")
+                if source.get("status", "").startswith("web_extracted_"):
+                    # A browser-tool extraction is not a raw HTTP/PDF download.
+                    response = source.get("web_extraction_response", "")
+                    if (
+                        not response
+                        or hashlib.sha256(response.encode()).hexdigest()
+                        != source["sha256"]
+                    ):
+                        raise ValueError("Changed CCU web extraction response")
                 pages = ev["source_pages"] or list(
                     range(1, len(source.get("text_pages", [])) + 1)
                 )

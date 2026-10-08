@@ -107,3 +107,63 @@ def test_all_four_school_grade_fields_remain_isolated(page, live_server):
             assert not page.locator("#eligibility-preference-4").evaluate(
                 'node => node.closest("label").hidden'
             )
+
+
+@pytest.mark.parametrize("width", [390, 1440])
+@pytest.mark.parametrize("source_page", [98, 102, 101])
+def test_ccu_new_public_forms_and_source_conflict_categories(
+    page, live_server, width, source_page
+):
+    page.set_viewport_size(dict(width=width, height=956))
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    page.add_init_script(
+        "localStorage.setItem('exchange-guide-home-school','國立中正大學')"
+    )
+    partner = next(
+        p for p in fetch_ccu_partner_universities() if p.source_pages[0] == source_page
+    )
+    page.goto(
+        live_server.base_url
+        + "/?school="
+        + quote(CCU)
+        + "#school="
+        + quote(partner.school_name)
+    )
+    section = page.locator("#detail-overview .ccu-receiving-school-details")
+    expect(section).to_be_visible(timeout=30_000)
+    expect(section.locator("[data-ccu-field]")).to_have_count(17)
+    key = "academic_calendar" if source_page == 101 else "application_forms"
+    detail = section.locator(f'[data-ccu-field="{key}"]')
+    detail.locator("> summary").click()
+    if source_page == 98:
+        expect(detail).to_contain_text("正文是summer2027")
+        expect(detail).to_contain_text("個人申請PDF")
+        expect(detail).to_contain_text("須建立帳號並提交後才產生個人PDF")
+        assert detail.locator('a[href*="Accommodation_Request_2026.pdf"]').count() >= 1
+        arrival = section.locator('[data-ccu-field="arrival"]')
+        arrival.locator("> summary").click()
+        expect(arrival).to_contain_text("2027-02-22至02-25")
+    elif source_page == 102:
+        expect(detail).to_contain_text("當期已核實")
+        expect(detail).to_contain_text("SS2027")
+        docs = section.locator('[data-ccu-field="documents"]')
+        docs.locator("> summary").click()
+        expect(docs).to_contain_text("六類")
+        expect(docs).to_contain_text("signature AND STAMP")
+        expect(docs).to_contain_text("適用年度或條件待確認")
+        assert (
+            docs.locator('a[href$="Learning-Agreement-Incoming.pdf#page=1"]').count()
+            == 1
+        )
+    else:
+        expect(detail).to_contain_text("來源矛盾尚未釐清，公開依據續查")
+        expect(detail).to_contain_text("2026")
+        expect(detail).not_to_contain_text("須個別通知或校方釐清")
+    detail.scroll_into_view_if_needed()
+    output = Path("/tmp/ccu-third-pass-browser")
+    output.mkdir(exist_ok=True)
+    page.screenshot(path=str(output / f"ccu-public-{source_page}-{width}.png"))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors

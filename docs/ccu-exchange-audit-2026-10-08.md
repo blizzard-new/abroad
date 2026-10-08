@@ -6,7 +6,7 @@
 交付前遠端 main 已前進至 `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`（第一批交付時為 `293546e807294dc0812f390b240a4cfb68e86cd0`）；第一批交付保留開工基準；第二輪依使用者要求安全整合此最新main，保留臺大與既有資料，未寫入其他session工作目錄。
 本 clone 未找到 AGENTS.md 或適用 `.agents/skills`。未寫入其他學校 session 的工作目錄。
 
-最新數量、分類及最新main整合結果見末節「第二輪可審查檢查點」；前節保留歷史檢查點的資料與驗證。
+最新數量與分類見末節「第三輪可審查檢查點」；前節保留歷史檢查點及最新main整合的資料與驗證。
 
 ## 已核實適用範圍
 
@@ -238,3 +238,45 @@ UBM、EPITA、SDU的新接收資料顯示替代語言證明／program分流或�
 本輪仍剩467缺值欄及其他年度／條件、個別通知與矛盾核對工作；3空白名額、2027秋季新版／補助尚未核實，不等同官方未公告。Draft PR是可審查資料與適配檢查點，後續依工作佇列續查；無聯絡學校、無建立校方帳號、无繞過憑證警告。
 
 重建順序先跑`build_ccu_research_audit.py`，再依前節順序重建catalog、source audit、overseas。第二輪實際結果與hash見`validation.json`的`second_pass`，第一階段資料保留為歷史驗證。
+
+## 第三輪可審查檢查點：公開新入口、表格正文與矛盾分類
+
+從已推送`51a254cc96a76b5785b8e54b2f4e8fd6f30c6b70`繼續，獨立分支仍為`data/ccu-exchange-20261008`。2026-10-08再次讀取遠端main，仍為`f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`。本輪沒有改其他session目錄，也沒有merge回main或部署。前兩輪數字與測試是歷史檢查點，最新進度以本節及`validation.json.third_pass`為準。
+
+新增**30份實際取得紀錄**，共202份；其中新紀錄25份可讀、5份取得失敗。修改45個欄位，補上34個原缺值欄位；新增來源不等於新增當期事實，同一Augsburg英德內容沒有重複計算。104筆學校條目、52笔名額已列、49筆未開放參考、3筆名額空白、55份7步流程與55份生活指南不變。52筆名額表示2027春季表曾列席次；中正校內2026年8月至9月申請已截止。
+
+| 接收端欄位狀態 | 最新數量／935欄 |
+| --- | ---: |
+| 當期來源支持已列事實，仍可能只有部分要求 | 237（25.3%） |
+| 適用年度或條件待確認 | 192 |
+| 其他年度／梯次參考 | 41 |
+| 來源矛盾 | 31 |
+| 缺值／當期未核實 | 433 |
+| 官方明示TBC | 1 |
+
+29/55校至少一項當期事實，0/55校17欄全部核實。沒有將讀取成功、一般未標年网页、模板、排名年或照片年提升為本期完整。
+
+本輪已核對：
+
+- **Augsburg**：官方新路徑英德頁均已讀，六類附件、Design/Architecture/Civil Engineering的portfolio、Non-EU LA三方簽名與兩校STAMP、15–30 ECTS建議及先修/准入均保存。這些指引未標適用年度，保持待確認。Mobility-Online公開空白表實際有2026/27、SS2027選項，取得方式可核；沒有提交或登入。當期factsheet較精確的3/1–3/3抵達、3/4–3/14迎新保留。LA原始下載429仍記錄，另由web工具讀到完整一頁PDF；SHA明示是提取回應，沒有冒稱原始PDF已下載或HTTP200。
+- **Ludwigshafen**：直接查Your application子頁，shell418另保留，web工具取得三步公開正文：JPEG照片、護照PDF、online提交後產生PDF、母校coordinator簽名，再依指引email送LA與住宿表。實際下載並讀取LA DOCX及住宿PDF；住宿檔名2026但正文summer2027，2/22起可住、2/22–2/25 move-in，偏好公寓不保證。沒有獨立住宿付款截止；LA含Erasmus grant模板文字，不能當中正雙邊獎助資格。個人PDF須建立帳號並提交後產生，該部分未取得，公開附件不再整體標技術阻塞。
+- **SeoulTech**：重讀2026/27 factsheet第4–5頁，每伙伴每期最多2人、前兩期無SeoulTech赴伙伴則僅1席。這是接收端互惠規則；中正名額原文「一學期2名或一學年1名」未改，不冒充個人GPA條件。
+- **Kyungsung／FGES**：重讀已有當期PDF，不重掃首頁。Kyungsung英語Global College範圍與一學期期間補上，研究所介紹不推定皆開放；email送件方式已讀但附件名稱仍缺。FGES第2頁Spring2027迎新為1月第一週，沒有精確日期；第3頁語言證明必繳、B2僅advised，文件欄只列這個已知要求並明說不是完整清單。
+- **Pardubice**：Other exchange頁正文Academic year2026/27及2026年summer附件期限支持當期申請、B2替代證明、照片與LA、院系補要求、住宿/visa文件程序。指定LA DOCX實際讀取並保存；雖稱freemover模板，由當期Other exchange頁直接指定，不套grant/doctoral模板期間。正式Rector PDF適用2026/27，summer考試5/17–7/4另有8/16–8/31，faculty可調整；網頁簡表漏列後段，不能保證7/4即可離校。coordinators頁標題2026/27但段落2025/26，提名截止獨立列矛盾；中正名額仍空白，不提升為可申請席次。
+- **Deggendorf／West Bohemia／Chiba**：Deggendorf Summersemester2027授課3/15–7/9，但同區exam/break寫2026，保留矛盾；summer2027學生服務費EUR87單獨保存，整體生活預算仍未核。West Bohemia2026/27課程篩選入口可讀但課目明細未取得，住宿子頁summer12/10預約費未標年。Chiba新查頁只有2026年10月校曆與一般外國留學生支援，不拿來填2027春季交換缺值。
+- **Chitkara**：Inbound公開頁五類附件、一般semester/short mobility/internship範圍已讀，未標2027而保留待確認。52,662,368 bytes brochure確實下載，29頁全OCR，第23及25頁再視覺核對；只補一般住宿支援，不填沒有的費率、簽證、保險或床位保證。一般Spring第二週10月与当期factsheet10/30、中正10/20三種來源及範圍分開，不推延當期截止。
+
+查核進度重新分類：**237已支持、1官方TBC、31未解來源矛盾、10個別通知/登入後個人表、0整欄技術失敗、656公開替代來源未查完**。0技術失敗欄不表示每一URL都成功（202份紀錄仍有39份失敗）；只表示不再因一個入口失敗就整欄判阻塞。31個矛盾使用新增`unresolved_source_conflict`，不一律假稱登入或需聯絡校方。沒有對外聯絡、註冊、送件或改憑證。
+
+本輪共用處只有`models.py`接收欄位研究狀態enum及其生成的`docs/api/openapi.json`；其他修改均CCU資料、研究分類/完整度腳本、CCU校方資料讀取驗證與renderer、測試及交接文件。全分支最終合併清單仍見前節共用檔表。web提取回應增加SHA驗證，文字提取與原始文件hash分開；新PDF/DOCX三份保存於CCU `partner_forms/`，已有package通配實際包含。
+
+本輪實際驗證：
+
+- CCU全套**96 passed in 26.97s**，新來源9項於最後分類說明修改後再驗證**9 passed in 1.17s**。初次新測試兩項誤用API模型沒有的source_id，改以模型已有source_url斷言後通過，初次log也保留；未修改資料去迎合錯誤測試。
+- 四校資格/資料回歸**130 passed、4 skipped、1 failed in 17.83s**；唯一NTPU destination count仍是第二輪已在main獨立副本重現的同名失敗，未改skip/CI。
+- 實機**9 passed in 61.81s**：Augsburg/Ludwigshafen/Deggendorf手機390與桌面1440、新來源/年度/矛盾標籤、原有HCMUT/釜山與四校成績控制；無pageerror或水平溢出。Ludwigshafen個人表查核說明最後再跑兩個viewport：2 passed、7 deselected in 13.56s，結果另存證據。
+- 49份main既有CGU/NTPU/NTU及公開資料逐byte仍零變更；16個CCU離線輸出重建hash一致；110個API route及既有required欄不變，OpenAPI快照檢查與Python/JS語法、format、diff檢查通過；wheel實際讀取新表格與来源/JS。
+
+最新快照、原文與每欄時間在`official_data/ccu/overseas_sources/`及`overseas-reviewed-fields.json`；45項差異在`third-pass-changes.json`。測試與package/rebuild證據在`docs/ccu-validation-2026-10-08/`；手機/桌面截圖為`ccu-public-*-*.png`。
+
+剩餘656欄仍需深查公開官方來源，433個缺值、31個矛盾及各校未標年度/院系/費率/完整文件/住宿期限不能稱已完成；10個私有表或個別通知只表示已讀原文中的取得限制，不排除其他公開替代來源。2027秋季中正新版及學海新版尚未核實，未改稱官方尚未公告。這仍是可審查檢查點，PR維持draft。

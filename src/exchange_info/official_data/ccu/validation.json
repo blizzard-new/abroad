@@ -511,5 +511,226 @@
       "static/ccu-partner-details.js"
     ],
     "test_output_format": "Text captures retain actual results and failure names; trailing whitespace normalized."
+  },
+  "third_pass": {
+    "checked_at": "2026-10-08T05:49:33.563689+00:00",
+    "previous_pushed_checkpoint": "51a254cc96a76b5785b8e54b2f4e8fd6f30c6b70",
+    "integrated_main_commit": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "complete_research_claimed": false,
+    "field_changes": 45,
+    "filled_missing_fields": 34,
+    "new_sources": 30,
+    "overseas_completeness": {
+      "home_university": "國立中正大學",
+      "application_round": "2027春季",
+      "checked_at": "2026-10-08",
+      "catalogue_count": 104,
+      "reviewed_current_or_unknown_quota_schools": 55,
+      "overseas_field_count_per_school": 17,
+      "overseas_field_status_counts": {
+        "verified_current": 237,
+        "missing": 433,
+        "needs_confirmation": 192,
+        "reference_only": 41,
+        "conflict": 31,
+        "explicit_not_announced": 1
+      },
+      "schools_with_at_least_one_current_overseas_fact": 29,
+      "schools_with_all_overseas_fields_current": 0,
+      "field_counts": {
+        "program_scope": {
+          "verified_current": 20,
+          "missing": 20,
+          "reference_only": 3,
+          "needs_confirmation": 12
+        },
+        "eligibility": {
+          "verified_current": 12,
+          "reference_only": 3,
+          "missing": 29,
+          "needs_confirmation": 11
+        },
+        "language": {
+          "verified_current": 14,
+          "missing": 19,
+          "needs_confirmation": 17,
+          "reference_only": 2,
+          "conflict": 3
+        },
+        "nomination_deadline": {
+          "missing": 22,
+          "reference_only": 2,
+          "conflict": 3,
+          "needs_confirmation": 13,
+          "verified_current": 15
+        },
+        "application_deadline": {
+          "verified_current": 16,
+          "missing": 11,
+          "reference_only": 4,
+          "conflict": 8,
+          "needs_confirmation": 16
+        },
+        "documents": {
+          "verified_current": 20,
+          "reference_only": 6,
+          "needs_confirmation": 20,
+          "missing": 9
+        },
+        "application_forms": {
+          "needs_confirmation": 16,
+          "reference_only": 1,
+          "missing": 33,
+          "verified_current": 5
+        },
+        "academic_calendar": {
+          "verified_current": 21,
+          "missing": 23,
+          "needs_confirmation": 5,
+          "conflict": 5,
+          "reference_only": 1
+        },
+        "course_restrictions": {
+          "verified_current": 18,
+          "missing": 24,
+          "needs_confirmation": 11,
+          "reference_only": 2
+        },
+        "housing": {
+          "verified_current": 21,
+          "reference_only": 8,
+          "needs_confirmation": 15,
+          "missing": 9,
+          "conflict": 2
+        },
+        "housing_deadline": {
+          "verified_current": 3,
+          "missing": 43,
+          "needs_confirmation": 8,
+          "conflict": 1
+        },
+        "costs": {
+          "verified_current": 16,
+          "missing": 27,
+          "reference_only": 1,
+          "needs_confirmation": 6,
+          "conflict": 5
+        },
+        "insurance": {
+          "verified_current": 16,
+          "missing": 20,
+          "reference_only": 4,
+          "needs_confirmation": 15
+        },
+        "visa": {
+          "missing": 34,
+          "needs_confirmation": 10,
+          "reference_only": 2,
+          "verified_current": 7,
+          "conflict": 2
+        },
+        "arrival": {
+          "verified_current": 20,
+          "missing": 27,
+          "needs_confirmation": 5,
+          "explicit_not_announced": 1,
+          "conflict": 2
+        },
+        "host_tuition": {
+          "missing": 45,
+          "needs_confirmation": 5,
+          "reference_only": 1,
+          "verified_current": 4
+        },
+        "exchange_duration": {
+          "missing": 38,
+          "verified_current": 9,
+          "needs_confirmation": 7,
+          "reference_only": 1
+        }
+      },
+      "source_count": 202,
+      "source_acquisition_statuses": {
+        "html": 98,
+        "fetch_failed": 39,
+        "downloaded_extracted_pdf": 41,
+        "docx": 4,
+        "pdf": 17,
+        "web_extracted_pdf": 1,
+        "doc": 1,
+        "web_extracted_html": 1
+      },
+      "research_gap_audit": "research-gap-audit.json",
+      "acquired_content_review_queue": "acquired-content-review.json",
+      "source_failure_followup": "source-failure-followup.json",
+      "definition": "只計內容、年度及計畫已核實之欄位；下載成功、一般現行未標年網頁、灰字、舊年度及只載提名前提不算當期完整。",
+      "remaining_work": "缺值及已取得未映射段落繼續查官方替代來源；逐欄進度見research-gap-audit.json。矛盾／個別通知另見confirmation-questions.json，不把整體缺值當作承辦阻塞。未聯絡學校或登入校方帳號。新版未核實不等同官方尚未公告。"
+    },
+    "research_category_counts": {
+      "verified_supported": 237,
+      "official_not_announced": 1,
+      "unresolved_source_conflict": 31,
+      "login_or_school_confirmation": 10,
+      "source_technical_failure": 0,
+      "alternative_official_sources_not_fully_checked": 656
+    },
+    "tests": {
+      "ccu-third-pass-tests": "2 failed, 93 passed in 24.37s",
+      "ccu-third-pass-corrections": "8 passed in 1.17s",
+      "ccu-third-pass-final-tests": "96 passed in 26.97s",
+      "ccu-third-pass-final-new-tests": "9 passed in 1.17s",
+      "ccu-third-pass-four-school": "1 failed, 130 passed, 4 skipped in 17.83s",
+      "ccu-third-pass-browser": "9 passed in 61.81s (0:01:01)",
+      "ccu-third-pass-final-ludwigshafen-browser": "2 passed, 7 deselected in 13.56s"
+    },
+    "browser_distinct_cases_passed": 9,
+    "final_ludwigshafen_browser_cases_passed": 2,
+    "known_baseline_failure": "tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+    "checks": {
+      "openapi_current": true,
+      "python_compile": true,
+      "javascript_syntax": true,
+      "ruff_format": true,
+      "diff_check": true
+    },
+    "wheel": {
+      "wheel": "/tmp/ccu-third-pass-final-dist/taiwan_exchange_info-0.1.0-py3-none-any.whl",
+      "sha256": "6e8c4ed0127d1b0ff2e94ee7a1dd39cbabc925358d4f8b2d79f256f54fdc5e3e",
+      "resources": [
+        "exchange_info/official_data/ccu/partner_forms/p98-r3-accommodation-form.pdf",
+        "exchange_info/official_data/ccu/partner_forms/p98-r3-learning-agreement.docx",
+        "exchange_info/official_data/ccu/partner_forms/p107-r3-learning-agreement.docx",
+        "exchange_info/official_data/ccu/overseas_sources/p102-r3-learning-agreement-web.json",
+        "exchange_info/official_data/ccu/third-pass-changes.json",
+        "exchange_info/static/ccu-partner-details.js"
+      ]
+    },
+    "rebuild": {
+      "identical": true,
+      "files_compared": 16,
+      "sha256": {
+        "partners.jsonl": "0414e77135239a6a9dbae96157f67d0387b6bf31a4e2c711cd2a5224af944040",
+        "application_workflows.jsonl": "6046d70b317f6231fe1bb87076f6d11c9d1f7c83492196832d092f62320e1bfe",
+        "destination_profiles.jsonl": "a9c9577ee5b4d2fe8be2bf3c26dc4823bb3b38b495e57898687397ef48ceec9c",
+        "field-audit.json": "4c732605dfa70e21dc6793ba0607dbd4ffef93e0ec1491cae4108e8526c7e32d",
+        "completeness.json": "c28422ecd0faf761260907da59176000f7afa9b1b013072e059499c2b01cdba9",
+        "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
+        "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
+        "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
+        "field-completeness-matrix.json": "9eb85cbca443b3417ccd8c2cc5325cd8e3f8afc4a97231c538c9a7e9a7d5c4e8",
+        "confirmation-questions.json": "9fcef00ff9d976de4d5326950222be4f70453126c1d882b7cd59c05e47e521bf",
+        "overseas-completeness.json": "df33d41438a3eaf5d3e830fec710dad70b15212a352e131d3ab139a5d15ad00b",
+        "overseas-conflicts.json": "62b0840710b2513521a7d41d09da6856435e1e7aeca43a1520d58160bd3224bd",
+        "research-gap-audit.json": "7219c178f881815d8c4c8d526fc86083573acfb2bd7eba9c2c0f511aa122a0d6",
+        "acquired-content-review.json": "71e2b7448e1cee8d7c45348efba6e4e747aaeededa6070eeec2af74f685113bd",
+        "source-failure-followup.json": "ef42a306ded21adb03e5699f875d4ae95948b89b506f34ee54600034abc01938",
+        "overseas-reviewed-fields.json": "c92edbdf110291d65ae078409ae693395b1b9b2be451ee0b9bfcc778676bfd9a"
+      }
+    },
+    "existing_main_files_compared": 49,
+    "existing_main_files_changed": 0,
+    "api_paths": 110,
+    "api_routes_changed": false,
+    "api_required_fields_changed": false
   }
 }

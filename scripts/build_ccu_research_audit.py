@@ -69,23 +69,20 @@ def classify(field, sources, candidates, page, key):
         return "official_not_announced", "僅限本欄原文明示TBC；其他缺值不推定尚未公告。"
     if field["status"] == "conflict":
         return (
-            "login_or_school_confirmation",
-            "已比對實際來源，矛盾須由適用計畫／中正個別通知釐清；未聯絡學校。",
+            "unresolved_source_conflict",
+            "已讀來源仍有年度、日期或計畫矛盾；繼續核對公開適用依據，未認定必須登入或聯絡校方。",
         )
-    if key == "application_forms" and page in {98, 102}:
-        sid = "p98-r2-before" if page == 98 else "p102-r2-application"
-        check = next(s for s in sources if s["source_id"] == sid)
-        if check["status"] == "fetch_failed":
-            return (
-                "source_technical_failure",
-                f"已查官方申請入口HTTP {check.get('http_status')}，表單內容未取得；只記本次技術失敗，仍可續查其他官方入口。",
-            )
     if key == "application_forms" and page == 53:
         return (
             "login_or_school_confirmation",
             "當期PDF所連學生GoogleForms兩份重試均HTTP401；未登入，無法讀實際表單內容。這不表示其他公開資料不存在。",
         )
     value = field["value"] or ""
+    if field["evidence"] and re.search(r"帳號.*產生.*PDF", value):
+        return (
+            "login_or_school_confirmation",
+            "公開指引說明須建立帳號並提交後才產生個人PDF，該個人表未取得；已讀公開LA和住宿PDF另列，其他公開資料仍可續查。",
+        )
     if field["evidence"] and re.search(
         r"提名後.*通知|由.*寄送|Link sent by email|登入後|個別通知", value
     ):
@@ -119,7 +116,10 @@ def main():
         p.stem: json.loads(p.read_text())
         for p in (BUNDLE / "overseas_sources").glob("*.json")
     }
-    changes = json.loads((BUNDLE / "second-pass-changes.json").read_text())
+    passes = [
+        json.loads(p.read_text()) for p in sorted(BUNDLE.glob("*-pass-changes.json"))
+    ]
+    changes = max(passes, key=lambda item: item["reviewed_at"])
     changed = {(x["ccu_page"], x["field"]): x for x in changes["changes"]}
     inventory, matrix = [], []
     counts = Counter(
@@ -128,6 +128,7 @@ def main():
             for k in [
                 "verified_supported",
                 "official_not_announced",
+                "unresolved_source_conflict",
                 "login_or_school_confirmation",
                 "source_technical_failure",
                 "alternative_official_sources_not_fully_checked",
@@ -203,14 +204,14 @@ def main():
         )
     failures = []
     for sid, source in sorted(sources.items()):
-        if source["status"] != "fetch_failed" or "-r2" in sid:
+        if source["status"] != "fetch_failed" or re.search(r"-r\d", sid):
             continue
         page = source.get("ccu_page", source.get("page"))
         retry = sources.get(sid + "-r2retry")
         alternatives = [
             s
             for s in sources.values()
-            if s.get("ccu_page") == page and "-r2-" in s["source_id"]
+            if s.get("ccu_page") == page and re.search(r"-r\d-", s["source_id"])
         ]
         failures.append(
             dict(

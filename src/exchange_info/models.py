@@ -598,6 +598,7 @@ class PartnerExchangeDetailField(BaseModel):
     evidence: list[ExchangeFieldEvidence] = Field(default_factory=list)
     research_category: Literal[
         "verified_supported", "official_not_announced",
+        "unresolved_source_conflict",
         "login_or_school_confirmation", "source_technical_failure",
         "alternative_official_sources_not_fully_checked",
     ] | None = None

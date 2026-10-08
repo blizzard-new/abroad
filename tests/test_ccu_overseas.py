@@ -61,8 +61,8 @@ def test_overseas_counts_do_not_claim_full_coverage_or_turn_fetches_into_current
     assert report["overseas_field_status_counts"] == counts
     assert sum(counts.values()) == 55 * 17
     assert report["schools_with_all_overseas_fields_current"] == 0
-    assert report["schools_with_at_least_one_current_overseas_fact"] == 28
-    assert counts["verified_current"] == 215 and counts["conflict"] == 29
+    assert report["schools_with_at_least_one_current_overseas_fact"] == 29
+    assert counts["verified_current"] == 237 and counts["conflict"] == 31
     questions = json.loads((BUNDLE / "confirmation-questions.json").read_text())
     assert len(questions) == 55 and all(row["questions"] for row in questions)
     matrix = json.loads((BUNDLE / "field-completeness-matrix.json").read_text())

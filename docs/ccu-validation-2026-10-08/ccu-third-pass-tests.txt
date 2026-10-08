@@ -1,0 +1,121 @@
+CONFTEST LOADED!
+FF...................................................................... [ 75%]
+.......................                                                  [100%]
+=================================== FAILURES ===================================
+____ test_augsburg_public_ss2027_form_does_not_promote_unversioned_policies ____
+
+    def test_augsburg_public_ss2027_form_does_not_promote_unversioned_policies():
+        fields = at(102).partner_exchange_details
+        form = fields['application_forms']
+        assert form.status == 'verified_current' and 'SS2027' in form.value
+        portal = source('p102-r3-application-portal')
+        assert 'SS 2027' in portal['text_pages'][0]
+        assert 'Declaration of consent' in portal['text_pages'][0]
+        for name in ['program_scope', 'eligibility', 'language', 'documents',
+                     'course_restrictions', 'insurance', 'visa', 'exchange_duration']:
+            assert fields[name].status == 'needs_confirmation'
+        assert '15–30' in fields['course_restrictions'].value
+        assert '非硬性最低' in fields['course_restrictions'].value
+        docs = fields['documents']
+        assert '六類' in docs.value and 'portfolio' in docs.value
+        assert 'signature AND STAMP' in docs.value
+        assert '500×500' in docs.value and '完整清單' in docs.value
+>       assert {'p102-r3-exchange-en', 'p102-r3-exchange-de', 'p102-r3-learning-agreement-web'} <= {e.source_id for e in docs.evidence}
+                                                                                                    ^^^^^^^^^^^
+
+tests/test_ccu_third_pass.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = ExchangeFieldEvidence(source_url='https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/excha...) a transcript of records from your home', reference_excerpt=None, note='與德語版同一流程，不增加独立當期事實數；partner、freemover及EPS分開。')
+item = 'source_id'
+
+    def __getattr__(self, item: str) -> Any:
+        private_attributes = object.__getattribute__(self, '__private_attributes__')
+        if item in private_attributes:
+            attribute = private_attributes[item]
+            if hasattr(attribute, '__get__'):
+                return attribute.__get__(self, type(self))  # type: ignore
+
+            try:
+                # Note: self.__pydantic_private__ cannot be None if self.__private_attributes__ has items
+                return self.__pydantic_private__[item]  # type: ignore
+            except KeyError as exc:
+                raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}') from exc
+        else:
+            # `__pydantic_extra__` can fail to be set if the model is not yet fully initialized.
+            # See `BaseModel.__repr_args__` for more details
+            try:
+                pydantic_extra = object.__getattribute__(self, '__pydantic_extra__')
+            except AttributeError:
+                pydantic_extra = None
+
+            if pydantic_extra and item in pydantic_extra:
+                return pydantic_extra[item]
+            else:
+                if hasattr(self.__class__, item):
+                    return super().__getattribute__(item)  # Raises AttributeError if appropriate
+                else:
+                    # this is the current error
+>                   raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E                   AttributeError: 'ExchangeFieldEvidence' object has no attribute 'source_id'. Did you mean: 'source_url'?
+
+.venv/lib/python3.12/site-packages/pydantic/main.py:1042: AttributeError
+_____ test_actual_web_pdf_extraction_is_distinct_from_failed_raw_download ______
+
+    def test_actual_web_pdf_extraction_is_distinct_from_failed_raw_download():
+        src = source('p102-r3-learning-agreement-web')
+        assert src['status'] == 'web_extracted_pdf'
+        assert 'not raw HTTP or PDF bytes' in src['sha256_basis']
+        assert 'http_status' not in src and 'bundled_file' not in src
+        assert hashlib.sha256(src['web_extraction_response'].encode()).hexdigest() == src['sha256']
+        assert 'LEARNING AGREEMENT – NON ERASMUS' in src['text_pages'][0]
+        assert 'STAMP' in src['text_pages'][0]
+        assert source('p102-r3-learning-agreement')['http_status'] == 429
+>       ev = next(e for e in at(102).partner_exchange_details['documents'].evidence if e.source_id == src['source_id'])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_ccu_third_pass.py:53:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_ccu_third_pass.py:53: in <genexpr>
+    ev = next(e for e in at(102).partner_exchange_details['documents'].evidence if e.source_id == src['source_id'])
+                                                                                   ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = ExchangeFieldEvidence(source_url='https://www.tha.de/en/studies/international-opportunities/your-way-to-augsburg/excha...) a transcript of records from your home', reference_excerpt=None, note='與德語版同一流程，不增加独立當期事實數；partner、freemover及EPS分開。')
+item = 'source_id'
+
+    def __getattr__(self, item: str) -> Any:
+        private_attributes = object.__getattribute__(self, '__private_attributes__')
+        if item in private_attributes:
+            attribute = private_attributes[item]
+            if hasattr(attribute, '__get__'):
+                return attribute.__get__(self, type(self))  # type: ignore
+
+            try:
+                # Note: self.__pydantic_private__ cannot be None if self.__private_attributes__ has items
+                return self.__pydantic_private__[item]  # type: ignore
+            except KeyError as exc:
+                raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}') from exc
+        else:
+            # `__pydantic_extra__` can fail to be set if the model is not yet fully initialized.
+            # See `BaseModel.__repr_args__` for more details
+            try:
+                pydantic_extra = object.__getattribute__(self, '__pydantic_extra__')
+            except AttributeError:
+                pydantic_extra = None
+
+            if pydantic_extra and item in pydantic_extra:
+                return pydantic_extra[item]
+            else:
+                if hasattr(self.__class__, item):
+                    return super().__getattribute__(item)  # Raises AttributeError if appropriate
+                else:
+                    # this is the current error
+>                   raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E                   AttributeError: 'ExchangeFieldEvidence' object has no attribute 'source_id'. Did you mean: 'source_url'?
+
+.venv/lib/python3.12/site-packages/pydantic/main.py:1042: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_third_pass.py::test_augsburg_public_ss2027_form_does_not_promote_unversioned_policies
+FAILED tests/test_ccu_third_pass.py::test_actual_web_pdf_extraction_is_distinct_from_failed_raw_download
+2 failed, 93 passed in 24.37s

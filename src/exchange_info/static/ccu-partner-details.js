@@ -17,6 +17,7 @@
   };
   const researchLabels = {
     verified_supported: "已有當期依據", official_not_announced: "官方明示尚未公告",
+    unresolved_source_conflict: "來源矛盾尚未釐清，公開依據續查",
     login_or_school_confirmation: "須個別通知或校方釐清", source_technical_failure: "已查入口技術失敗，替代來源續查",
     alternative_official_sources_not_fully_checked: "官方替代來源尚待補查",
   };
