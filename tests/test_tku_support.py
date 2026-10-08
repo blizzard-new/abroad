@@ -122,6 +122,12 @@ def test_offline_api_registry_documents_search_and_life_profile(tmp_path,monkeyp
     assert all(p["availability_status"]=="closed" for p in dashboard["partner_universities"])
     assert "JST" in dashboard["partner_universities"][0]["application_deadline"]
     assert "9/30" in dashboard["partner_universities"][0]["availability_note"]
+    for partner in dashboard['partner_universities']:
+        summary=partner['student_summary_zh']
+        assert summary['eligibility_points'] and summary['application_steps'] and summary['tuition_points']
+        assert 'JLPT N2' in ' '.join(summary['eligibility_points']) and '研究所N1' in ' '.join(summary['eligibility_points'])
+        assert '全額學雜費' in ' '.join(summary['tuition_points'])
+        assert '已截止' in ' '.join(summary['application_steps'])
     assert "系前40%" in dashboard["academic_score_rule"]
     assert "長庚" not in json.dumps(dashboard,ensure_ascii=False)
     results=client.get("/search",params={"school":"TKU","q":"日語"}).json()

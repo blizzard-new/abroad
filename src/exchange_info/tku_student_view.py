@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-from .models import (ApplicationPeriodItem, ExchangeInfo, PartnerUniversity,
+from .models import (ApplicationPeriodItem, ExchangeInfo, PartnerStudentSummary, PartnerUniversity,
                      ProcessedPage, SourceReference, StudentDashboard, StudentInfoItem)
 from .tku_data import BUNDLE, CHECKED_AT, HOME, load_tku_records, load_tku_rounds, load_tku_sources
 
@@ -12,6 +12,29 @@ def _source(source_id: str, summary: str | None = None) -> SourceReference:
     row = next(s for s in load_tku_sources() if s["id"] == source_id)
     return SourceReference(title=row.get("title",source_id), source_url=row["source_url"],
                            summary=summary or f"適用：{row['applicable_year']}；查核2026-10-08；{row['role']}")
+
+
+def tku_partner_summary(record) -> PartnerStudentSummary:
+    """Render reviewed evidence in the fields actually read by school detail UI."""
+    fields=record.fields
+    home_language=("母校語言：大學部日語課程JLPT N2以上，研究所N1；立命館另須N1。"
+                   "電氣通信英語課的大學部例外與研究所N1豁免須分開確認。"
+                   "（2027–2028日語二甄簡章PDF p.2；名額表p.1）")
+    eligibility=[f"母校資格：{fields['home_eligibility'].value}（簡章p.2、p.18）",home_language]
+    for key,label in [('host_eligibility','外校／名額表特別条件'),('department_scope','科系範圍')]:
+        if fields[key].value:
+            basis=fields[key].evidence[0]
+            eligibility.append(f"{label}：{fields[key].value}（{basis.applicable_year}；{basis.locator}）")
+    costs=list(dict.fromkeys(str(fields[key].value) for key in ['home_costs','costs'] if fields[key].value))
+    return PartnerStudentSummary(study_period=str(fields['study_period'].value),
+        application_deadline=fields['host_deadline'].value,
+        eligibility_points=eligibility,
+        application_steps=[
+            '校內申請：2026/9/30 12:00臺北時間已截止；經系所、學院推薦，再由國際處甄選（更正公告、簡章p.3–6）。',
+            '校內文件：申請表、中文歷年成績單、語言證明、推薦函、中日文自傳與研習計畫、切結書及有則附其他證明；A4單面總計不超過16頁（簡章p.3–4）。',
+            '校內甄選：書審與面試；甄試70分不能當作學業平均75分門檻（簡章p.5）。',
+            f"外校申請：僅已獲母校推薦者續辦；{fields['host_deadline'].value or '外校當期期限未核實'}；母校推薦不等於外校錄取。",
+        ],tuition_points=costs,translated_from_english=False)
 
 
 def fetch_tku_partner_universities(*, reference_time: datetime | None = None) -> list[PartnerUniversity]:
@@ -44,6 +67,7 @@ def fetch_tku_partner_universities(*, reference_time: datetime | None = None) ->
             application_deadline=str(value("host_deadline") or "外校當期期限尚未核實；不能沿用其他學校日期"),
             application_info=f"{value('documents')} 外校期限：{value('host_deadline') or '未核實'}。矛盾項：{', '.join(record.conflicts)}；詳細來源見TKU evidence catalogue。",
             tuition_info=str(value("costs")), source_url=evidence.source_url,
+            student_summary_zh=tku_partner_summary(record),
         ))
     return rows
 

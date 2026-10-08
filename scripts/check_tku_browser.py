@@ -44,13 +44,22 @@ with tempfile.TemporaryDirectory(prefix="tku-browser-data-", dir="/tmp") as data
             page.locator("#region-filter").select_option("east-asia")
             assert page.locator("#partner-table").get_attribute("data-result-count")=="4"
             page.screenshot(path="/tmp/tku-browser-desktop.png",full_page=True)
+            detail_checks=[]
+            for name in page.evaluate("state.dashboard.partner_universities.map(p => p.school_name)"):
+                page.locator('#partner-table tbody .school-detail-trigger').filter(has_text=name).click()
+                page.locator('#school-detail-view').wait_for(state='visible')
+                detail=page.locator('#school-detail-content').inner_text()
+                assert 'JLPT N2' in detail and '研究所N1' in detail, name
+                assert '全額學雜費' in detail and '校內申請' in detail, name
+                detail_checks.append({'school':name,'home_language':True,'home_tuition':True,'application_steps':True})
+                page.evaluate('closeUniversityDetail()')
             page.set_viewport_size({"width":390,"height":844})
             page.wait_for_timeout(300)
             assert page.locator("#partner-table").get_attribute("data-result-count")=="4"
             page.screenshot(path="/tmp/tku-browser-mobile.png",full_page=True)
             result={"status":"passed","home_school":page.evaluate("state.dashboard.school_name"),"listed_records":4,
                     "open_filter_records":0,"closed_filter_records":4,"east_asia_filter_records":4,
-                    "viewports":[[1280,900],[390,844]],"page_errors":errors}
+                    "viewports":[[1280,900],[390,844]],"detail_checks":detail_checks,"page_errors":errors}
             Path("/tmp/tku-browser-result.json").write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n")
             print(json.dumps(result,ensure_ascii=False))
             assert not errors,errors
