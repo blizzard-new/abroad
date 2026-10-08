@@ -1,5 +1,7 @@
 # 中正與他校分支衝突／驗收矩陣（2026-10-08）
 
+本文件是 `77dfd84` 候選時的歷史矩陣；其分支 SHA、重疊數與完整度不能当本輪最新狀態。現在資料與本輪候選交接見 [第二十六輪](ccu-twentysixth-review-2026-10-08.md)及另附最終驗證證據。
+
 77dfd84本地选定gate已完成：452回归passed／7skip，102浏览器passed。完整原始证据与精确tested_program_sha见 [验收矩阵](ccu-validation-2026-10-08/77dfd84-final/README.md)；本文件后续证据修订不继承测试SHA。远端最新heads与本矩阵一致，NTU2/NCU13/TKU9共享重叠；仍未合并。
 
 
