@@ -1,10 +1,10 @@
 {
   "main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
-  "ncu_checkpoint": "7b381ae16f4d436d330172fc677621f5f59cf68a",
+  "ncu_checkpoint": "7f0e1cc0128633c9af3fad132d4bf51c264766e8",
   "compared_branches": [
     {
       "branch": "origin/data/ccu-exchange-20261008",
-      "checked_head": "4db9cd381d0316c6bf012e6f7b3825dc5933b3f7",
+      "checked_head": "15270145ea93fab2c4d72a7112fe72cdcff5c6a3",
       "shared_changed_paths": [
         "docs/api/openapi.json",
         "pyproject.toml",
@@ -42,5 +42,5 @@
       ]
     }
   ],
-  "note_zh": "僅讀遠端分支及列交集，未合併或覆寫。NCU最新未推條件引擎改動亦納入本地與main差異。合併需聯集校別分支、模型欄位与registry，重建OpenAPI，重算包含各校的契約校數。"
+  "note_zh": "唯讀fetch與列共享交集，未合併、未切換或覆寫CCU/TKU。NCU工作樹未推變更亦計入交集。合併需保留各校loader／registry、模型、文件中心source_urls策略／條件欄位、前端來源顯示，聯集後重建OpenAPI与各校契約測試。NCU builder Unicode JSONL跳脫只在本校輸出。"
 }

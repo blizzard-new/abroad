@@ -24,7 +24,9 @@ def document_applicability(home_university, partner_university, requirement, sta
     if policy is None:
         return None
     state = state or PartnerDocumentPreparationState()
-    if policy["requires_on_campus_housing"] and state.housing_choice == "off_campus":
+    if policy.get("requires_institutional_confirmation"):
+        status, reason = "needs_confirmation", policy["confirmation_note"]
+    elif policy["requires_on_campus_housing"] and state.housing_choice == "off_campus":
         status, reason = "not_applicable", "已選校外住宿；這項校內宿舍文件不適用。"
     elif state.host_admission_status == "not_accepted":
         status, reason = "deferred", "尚未取得外校錄取；錄取後再依接收通知準備，暫不列初次申請必繳。"

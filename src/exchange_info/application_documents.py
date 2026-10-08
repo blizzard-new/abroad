@@ -58,7 +58,7 @@ from .models import (
 )
 from .application_rules import select_application_workflow
 from .ncu_document_conditions import document_applicability, preparation_state_key
-from .university_registry import NTPU, NTU, NCU, require_university
+from .university_registry import NTPU, NTU, NCU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
 from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 
@@ -987,6 +987,7 @@ def build_application_document_catalog(
     workflow_is_published = (
         workflow.review_status == ApplicationWorkflowReviewStatus.PUBLISHED
     )
+    requirement_sources_only = resolve_university(context.school_name) == NCU
     items: list[ApplicationDocumentCatalogItem] = []
     sequence = 0
     for step in sorted(workflow.steps, key=lambda row: row.order):
@@ -1007,7 +1008,7 @@ def build_application_document_catalog(
                     [
                         *requirement.source_urls,
                         *([official_form_url] if official_form_url else []),
-                        *step.source_urls,
+                        *(step.source_urls if not requirement_sources_only or not requirement.source_urls else []),
                     ]
                 )
             )

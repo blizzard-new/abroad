@@ -41,7 +41,8 @@ def indexable_source_text(source: dict) -> str:
     parts = []
     for page in source.get("pages", []):
         number = page["page"]
-        marker = f"【第{number}頁】" if number is not None else "【網頁／無PDF頁碼】"
+        marker = (f"【投影片{page['slide']}／無PDF頁碼】" if page.get("slide")
+                  else f"【第{number}頁】" if number is not None else "【網頁／無PDF頁碼】")
         passage = passages.get(number)
         if number in quarantined:
             note = policy.get("page_applicability_notes_zh", {}).get(str(number), "116當期適用性未核實。")
@@ -97,8 +98,11 @@ def source_content_status(source: dict) -> dict:
     ) | visual_pages
     page_ids = {p["page"] for p in pages}
     sheet_ids = {p["sheet"] for p in pages if p.get("sheet")}
+    slide_ids = {p["slide"] for p in pages if p.get("slide")}
     all_parts_read = (
-        reading_valid and sheet_ids <= set(reading.get("sheets_reviewed", []))
+        reading_valid and slide_ids <= set(reading.get("slides_reviewed", []))
+        if slide_ids
+        else reading_valid and sheet_ids <= set(reading.get("sheets_reviewed", []))
         if sheet_ids
         else page_ids <= read_pages
     )

@@ -5,6 +5,7 @@ unannounced programme. Web-page text has no PDF page number.
 """
 
 from pathlib import Path
+import posixpath
 import concurrent.futures, gzip, hashlib, io, json, zipfile, os, subprocess, tempfile
 from xml.etree import ElementTree
 from urllib.parse import urlparse
@@ -116,6 +117,21 @@ def fetch(spec):
                         {"page": None, "sheet": name, "text": "\n".join(rows)}
                     )
                 result["document_format"] = "xlsx_sheets_no_pdf_pages"
+            elif "ppt/presentation.xml" in archive.namelist():
+                ns = {"p": "http://schemas.openxmlformats.org/presentationml/2006/main",
+                      "a": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                      "r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships"}
+                relationships = ElementTree.fromstring(archive.read("ppt/_rels/presentation.xml.rels"))
+                targets = {node.attrib["Id"]: posixpath.normpath(posixpath.join("ppt", node.attrib["Target"]))
+                           for node in relationships if node.attrib.get("TargetMode") != "External"}
+                presentation = ElementTree.fromstring(archive.read("ppt/presentation.xml"))
+                result["pages"] = []
+                for number, node in enumerate(presentation.findall("p:sldIdLst/p:sldId", ns), start=1):
+                    part = targets[node.attrib[f"{{{ns['r']}}}id"]]
+                    slide = ElementTree.fromstring(archive.read(part))
+                    text = "\n".join(p.text or "" for p in slide.findall(".//a:t", ns))
+                    result["pages"].append({"page": None, "slide": number, "source_part": part, "text": text})
+                result["document_format"] = "pptx_slides_no_pdf_pages"
             else:
                 raise ValueError("Unsupported ZIP document; no extracted text")
             result["links"] = []
@@ -128,6 +144,13 @@ def fetch(spec):
                     for x in relationships
                     if x.attrib.get("TargetMode") == "External"
                 ]
+        elif response.content.startswith(b"{\\rtf"):
+            conversion = json.loads((OUT / f"{spec['id']}-conversion.json").read_text())
+            if conversion["source_sha256"] != result["sha256"]:
+                raise ValueError("RTF原件已變更，既有轉檔抽取不套用。")
+            result["pages"] = conversion["pages"]
+            result["conversion_review"] = {k: v for k, v in conversion.items() if k != "pages"}
+            result["document_format"] = "rtf_converted_docx_no_fixed_pdf_pages"
         elif response.content.startswith(bytes.fromhex("d0cf11e0a1b11ae1")):
             old_excel = expected_format == "xls"
             converted = None

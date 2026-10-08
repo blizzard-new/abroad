@@ -1163,3 +1163,92 @@ def test_xjtu_mother_nomination_and_hust_insurance_are_real_catalog_and_task_req
         assert item["needs_confirmation"] and not item["download_available"] and task.needs_confirmation
         assert task.official_deadline_at is None
         assert "Spring2027" in item["name"]
+
+
+@pytest.mark.parametrize("needle,count", [("Beijing Normal University",6),("Southeast University",3),("Zhejiang University",7),("Chongqing University",9)])
+def test_four_new_packets_reach_summary_workflow_catalog_and_keep_current_year_unconfirmed(tmp_path,needle,count):
+    partner = next(p for p in fetch_ncu_partner_universities() if needle in p.school_name)
+    assert partner.quota is None and partner.degree_levels is None
+    client = TestClient(create_app(tmp_path))
+    params = dict(school="NCU",target_school=partner.school_name,academic_year="116")
+    workflow = client.get("/application-workflow",params={"home_school":"NCU","school":partner.school_name,"academic_year":"116"})
+    assert workflow.status_code == 200
+    workflow = workflow.json()
+    assert workflow["review_status"] == "pending_review" and workflow["published_at"] is None
+    host = next(s for s in workflow["steps"] if s["rule_id"].endswith("host-apply"))
+    assert len(host["document_requirements"]) == count
+    assert all(s.get("deadline_at") is None for s in workflow["steps"] if "-host-" in (s.get("rule_id")or""))
+    assert len({s["order"] for s in workflow["steps"]}) == len(workflow["steps"])
+    assert [s["order"] for s in workflow["steps"]] == sorted(s["order"] for s in workflow["steps"])
+    catalog = client.get("/application-center/catalog",params=params).json()
+    assert all(d["needs_confirmation"] and not d["download_available"] for d in catalog["items"] if not d["name"].startswith(("系統申請表","家長同意書","學生個人","校內必繳","中文版","國際移動力")))
+    home = next(s for s in workflow["steps"] if s["rule_id"] == "ncu-116-1-home-3")
+    assert len(home["document_requirements"]) == 7
+    audit = ncu_field_audit(partner.school_name)
+    assert len(audit["fields"]) == 17
+    assert all(f["unresolved"] for k,f in audit["fields"].items() if not k.startswith("home_") and k != "quota")
+    assert all(f["current_applicability_status"] == "unconfirmed" for k,f in audit["fields"].items() if not k.startswith("home_"))
+    if "Beijing" in needle:
+        language = audit["fields"]["language"]["note"]
+        assert "港澳臺籍語言要求列「無」" in language and "HSK5另軌" in language
+        evidence = audit["fields"]["housing"]["original_evidence"][0]
+        assert evidence["page"] is None and "原投影片3" in evidence["source_title"] and "60-80" in evidence["text"]
+        stage = next(s for s in workflow["steps"] if s["rule_id"].endswith("purchase-insurance"))
+        assert not stage["document_requirements"] and stage["source_urls"]
+    elif "Southeast" in needle:
+        assert "所有原件未標適用學年" in host["summary"]
+        assert "10個工作日" in audit["fields"]["transport"]["note"] and "不需接機也勾否" in audit["fields"]["transport"]["note"]
+        assert all(d["copies"] == 2 for d in catalog["items"] if "宿舍入住申請表" in d["name"])
+        assert "年度學費均免" in audit["fields"]["tuition"]["note"] and "上網「要交費（校園網免費）」" in audit["fields"]["cost"]["note"]
+    elif "Zhejiang" in needle:
+        assert "2027/2–6" in audit["fields"]["study_period"]["note"] and "2–7月相異" in audit["fields"]["study_period"]["note"]
+        assert "1280／1600 RMB／年" in audit["fields"]["housing"]["note"] and "跨校區" in audit["fields"]["housing"]["note"]
+        assert "2026/11/20" in audit["fields"]["host_deadline"]["note"] and "10/23" in audit["fields"]["host_deadline"]["note"]
+        assert len([d for d in catalog["items"] if "保單（可錄取後補" in d["name"]]) == 1
+        assert len([d for d in catalog["items"] if "母校匯總表" in d["name"]]) == 1
+        application_form = next(d for d in catalog["items"] if "交換申請表（依本科／研究生" in d["name"])
+        original_requirement = next(d for d in host["document_requirements"] if d["name"] == application_form["name"])
+        assert application_form["source_urls"] == original_requirement["source_urls"]
+        assert len(application_form["source_urls"]) == 3
+    else:
+        assert "不一定能提供校內宿舍" in audit["fields"]["housing"]["note"] and "800–1200 RMB／學年" in audit["fields"]["housing"]["note"]
+        assert "2026/10/30" in audit["fields"]["host_deadline"]["note"]
+        later = next(s for s in workflow["steps"] if s["rule_id"].endswith("latest-registration-files"))
+        assert later["phase"] == "行前準備" and "亦可提早" in later["timing"] and len(later["document_requirements"]) == 2
+        recommendation = next(d for d in host["document_requirements"] if "推薦函" in d["name"])
+        assert recommendation["copies"] is None and "1–2" in recommendation["name"]
+
+
+def test_new_originals_keep_slide_sheet_identity_public_excerpts_and_government_scope():
+    raw = json.loads(gzip.decompress((BUNDLE/"source-evidence.json.gz").read_bytes()))
+    bnu = next(x for x in raw if x["id"].startswith("host-bnu-mcu2027-1PX"))
+    assert [p["slide"]for p in bnu["pages"]] == [1,2,3] and all(p["page"] is None for p in bnu["pages"])
+    assert bnu["content_status"]["all_pages_read"]
+    cqu = next(x for x in raw if x["id"].startswith("host-cqu-mcu2027-1a-X"))
+    assert cqu["pages"][0]["text"].strip() == "" and cqu["visual_review"]["pdf_pages_reviewed"] == list(range(1,11))
+    assert "2026年10月30日" in str(cqu["page_transcriptions"])
+    workbook = next(x for x in raw if x["id"].startswith("host-cqu-mcu2027-1ZQ"))
+    assert len(workbook["pages"]) == 3 and sum(not p["text"].strip() for p in workbook["pages"]) == 2
+    assert workbook["content_status"]["all_pages_read"] and not workbook["content_status"]["all_pages_have_text"]
+    for prefix in ("host-seu-mcu2027-11h","host-zju-mcu2027-1YR"):
+        source = next(x for x in raw if x["id"].startswith(prefix))
+        assert source["source_excerpt_only"] and "移除" in source["privacy_note"]
+        excerpt_path = ROOT/"sources/ncu/2026-10-08"/f"{source['id']}-public-excerpt.json"
+        excerpt = json.loads(excerpt_path.read_text())
+        assert excerpt["source_sha256"] == source["sha256"]
+        from exchange_info.ncu_source_coverage import attach_public_field_excerpt
+        changed = {"sha256":"changed-original","pages":[{"page":None,"text":"private example"}]}
+        attach_public_field_excerpt(changed,excerpt)
+        assert changed["pages"] == [] and "原件已變更" in changed["error"]
+    share = next(x for x in raw if x["id"] == "host-zju-partner-course-share")
+    assert "Invalid share" in share["pages"][0]["text"]
+    from exchange_info.ncu_source_coverage import indexable_source_text
+    guide = next(x for x in raw if x["id"] == "government-taiwan-permit-guide")
+    assert "200元" in guide["pages"][0]["text"]
+    assert "不可用舊200／40" in indexable_source_text(guide) and "首次申请、换发、补发200元" not in indexable_source_text(guide)
+    for needle in ("Beijing Normal University","Southeast University","Zhejiang University","Chongqing University"):
+        partner = next(p for p in fetch_ncu_partner_universities()if needle in p.school_name)
+        audit = ncu_field_audit(partner.school_name)
+        assert "親友家" in audit["fields"]["visa"]["note"] and "24小時" in audit["fields"]["visa"]["note"]
+        assert "不足6個月是五年證可換發條件" in audit["fields"]["visa"]["note"]
+        assert "2027/12/31" in audit["fields"]["cost"]["note"] and "2028" in audit["fields"]["cost"]["note"]

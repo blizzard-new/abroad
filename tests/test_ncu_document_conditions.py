@@ -128,3 +128,22 @@ def test_changed_condition_source_cannot_reuse_a_reviewed_policy(change):
         version["url"] = "https://eng.uos.ac.kr/a-different-form"
     with pytest.raises(ValueError, match="NCU條件文件"):
         builder.validate_document_conditions(changed, workflows, sources)
+
+
+@pytest.mark.parametrize("admission",["unknown","not_accepted","accepted"])
+@pytest.mark.parametrize("housing",["unknown","on_campus","off_campus"])
+def test_seu_reciprocal_health_and_optional_housing_require_institutional_confirmation(tmp_path,admission,housing):
+    school = "東南大學 Southeast University"
+    params = dict(school="NCU",target_school=school,academic_year="116",host_admission_status=admission,housing_choice=housing)
+    client=TestClient(create_app(tmp_path))
+    catalog=client.get("/application-center/catalog",params=params).json()
+    conditional=[d for d in catalog["items"] if d["applicability"]]
+    assert len(conditional)==2 and all(d["applicability"]["status"]=="needs_confirmation" for d in conditional)
+    assert all(not d["download_available"] and not d["applicability"]["current_applicability_verified"] for d in conditional)
+    request=PersonalApplicationPlanRequest(home_school=NCU,academic_year="116",application_round="第一梯次",preferences=[dict(rank=1,school_name=school,document_preparation_state=dict(host_admission_status=admission,housing_choice=housing))])
+    plan=build_personal_application_plan(request,fetch_ncu_partner_universities(),storage.load_bundled_application_workflows(),academic_score_minimum=None)
+    tasks=[t for t in plan.tasks if t.document_applicability]
+    assert len(tasks)==2
+    assert all(not t.document_link.requirement_names and {a.status for a in t.document_applicability}=={"needs_confirmation"} for t in tasks)
+    assert any("不由學生自行豁免" in d["applicability"]["note"] for d in conditional)
+    assert any("可不填" in d["applicability"]["note"] for d in conditional)

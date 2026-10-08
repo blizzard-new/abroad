@@ -527,6 +527,10 @@ def test_ncu_uny_degree_history_and_empty_exchange_resources_are_visible(page, l
     ("南京大學", "10元封頂", "港澳通行證掃描件", "核對外校第二階段補件", "ncu-nju-second-batch-390.png"),
     ("同濟", "統一安排校內住宿", "通行证扫描件", "台胞證／回鄉證掃描", "ncu-tongji-new-list-390.png"),
     ("復旦", "6／8人套間、2人一房", "个人境外保险单", "上海全期醫療／人身意外保單PDF", "ncu-fudan-initial-insurance-390.png"),
+    ("北京師範", "60–80 RMB／天／人", "最低6学分", "近期藍／白底JPEG照", "ncu-bnu-slides-workflow-390.png"),
+    ("東南大學", "床品先自備", "無須接機服務者", "先由兩校確認體檢對等互免", "ncu-seu-reciprocal-health-390.png"),
+    ("浙江大學", "宿位緊張可能跨校區", "保险单扫描件可待收到入学通知后再提交", "可錄取後補，亦可先備", "ncu-zju-insurance-later-390.png"),
+    ("重慶大學", "不一定能提供校內宿舍", "2026年10月30日", "最晚開學報到提供", "ncu-cqu-latest-registration-390.png"),
 ])
 def test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life(page, live_server, school, life_text, source_text, application_text, filename):
     page.set_viewport_size({"width": 390, "height": 956})
@@ -534,6 +538,7 @@ def test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life(
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
     enter_public_site(page, live_server, "partners")
+    expect(page.locator("#boot-splash")).to_be_hidden(timeout=60_000)
     open_navigation(page)
     page.locator("#school-switcher").click()
     page.locator('[data-home-school="國立中央大學"]').click()
@@ -553,6 +558,8 @@ def test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life(
     part.locator(":scope > summary").click()
     expect(part.locator("pre")).to_be_visible()
     expect(part.locator("pre")).to_contain_text(source_text)
+    if school == "北京師範":
+        expect(part.locator(":scope > summary")).to_contain_text("原文投影片 3（無PDF頁碼）")
     page.locator("#detail-tab-life").click()
     page.locator("#detail-life .life-official-guide > summary").click()
     point = page.locator("#destination-official-content li").filter(has_text=life_text).first
@@ -745,6 +752,46 @@ def test_ncu_mother_nomination_and_insurance_alternatives_are_visible_catalog_it
         expect(item).to_contain_text("電子版寄送或到校繳交擇一")
     item.scroll_into_view_if_needed()
     out=Path("/tmp/ncu-audit/browser");out.mkdir(parents=True,exist_ok=True)
+    page.screenshot(path=str(out/filename))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors
+
+
+@pytest.mark.parametrize("school,phase,text,filename", [
+    ("Southeast University","合作校申請","健康檢查表（須先由兩校確認對等互免）","ncu-seu-health-condition-catalog-390.png"),
+    ("Zhejiang University","合作校申請","交换", "ncu-zju-form-alternatives-catalog-390.png"),
+])
+def test_ncu_seu_condition_and_zju_alternative_forms_are_visible_in_document_center(page,live_server,school,phase,text,filename):
+    session=sign_in_cookie(live_server,school="國立中央大學")
+    live_server.verify_student(session["profile"]["id"],university="國立中央大學")
+    attach_session(page,live_server,session)
+    page.set_viewport_size({"width":390,"height":956})
+    page.emulate_media(reduced_motion="reduce")
+    errors=[];page.on("pageerror",lambda error:errors.append(str(error)))
+    enter_public_site(page,live_server,"application-center")
+    expect(page.locator("#boot-splash")).to_be_hidden(timeout=60_000)
+    wait_until(page,"state.dashboard?.school_name === '國立中央大學' && !state.applicationLoading && state.accountWorkspaceLoadingCount === 0")
+    target=page.locator("#application-target-school")
+    target.select_option(target.locator("option").filter(has_text=school).first.get_attribute("value"))
+    group=page.locator("#application-requirement-list .application-requirement-group").filter(has=page.locator(":scope > summary").filter(has_text=phase))
+    group.locator(":scope > summary").click()
+    if school == "Southeast University":
+        item=group.locator(".application-requirement-item").filter(has_text=text)
+        expect(item).to_have_count(1)
+        expect(item.locator('[data-document-applicability="needs_confirmation"]')).to_be_visible()
+        expect(item).to_contain_text("不由學生自行豁免")
+        expect(item).to_contain_text("未標年度")
+    else:
+        item=group.locator(".application-requirement-item").filter(has_text="交換申請表（依本科／研究生選相應版本）")
+        expect(item).to_have_count(1)
+        item.locator(".application-requirement-source details > summary").click()
+        expect(item.locator('a[href*="1v7Hjjlt_bcNiIqhi8X720pUlTnPSF-FN"]')).to_be_visible()
+        expect(item.locator('a[href*="1UZd3AD5cVmdQ5lBV_gcUT6MUMd2cqRQG"]')).to_be_visible()
+        expect(item.locator(".application-requirement-source details a")).to_have_count(2)
+        expect(item).to_contain_text("其他參考來源（當期待確認）")
+    expect(item).not_to_contain_text("官方表格")
+    item.scroll_into_view_if_needed()
+    out=Path('/tmp/ncu-audit/browser');out.mkdir(parents=True,exist_ok=True)
     page.screenshot(path=str(out/filename))
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors

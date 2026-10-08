@@ -148,9 +148,17 @@ def validate_document_conditions(conditions, workflows, sources_by_id):
 
 
 def write_rows(path, values, model):
+    # Python splitlines also recognizes these Unicode separators. Escape them
+    # in the JSON representation so source text still round-trips unchanged.
+    def row_json(value):
+        text = model.model_validate(value).model_dump_json(exclude_defaults=True)
+        for character in ("\u0085", "\u2028", "\u2029"):
+            text = text.replace(character, f"\\u{ord(character):04x}")
+        return text
+
     path.write_text(
         "".join(
-            model.model_validate(v).model_dump_json(exclude_defaults=True) + "\n"
+            row_json(v) + "\n"
             for v in values
         ),
         encoding="utf-8",
@@ -168,7 +176,7 @@ def indexed_source_pages(sources, school_name):
         if item.get("error"):
             continue
         text = indexable_source_text(item)
-        if not re.sub(r"【(?:第\d+頁|網頁／無PDF頁碼)】", "", text).strip():
+        if not re.sub(r"【(?:第\d+頁|投影片\d+／無PDF頁碼|網頁／無PDF頁碼)】", "", text).strip():
             continue
         candidates.append(dict(
             title=f"{school_name}：{item['label']}（116適用性待查）",
@@ -770,7 +778,7 @@ def build(output):
                 title="由母校填送外校提名匯總表",
                 responsible_party="母校國際事務處",
                 responsible_unit="中央國際事務處",
-                summary="外校提名匯總表由母校彙整及提交；學生提供所需個人資訊，不自行代填整校名單或代母校寄送。Spring2027參考，116適用性仍待核實。",
+                summary=review.get("host_nomination_note", "外校提名匯總表由母校彙整及提交；學生提供所需個人資訊，不自行代填整校名單或代母校寄送。Spring2027參考，116適用性仍待核實。"),
                 details=reviewed_points("host_documents") + reviewed_points("host_deadline"),
                 document_requirements=requirements,
                 official_form_urls=[d["official_form_url"] for d in requirements if d.get("official_form_url")],
@@ -780,6 +788,32 @@ def build(output):
                 needs_confirmation=True,
                 scope={"home_universities": [HOME], "partner_universities": [name], "academic_years": ["116"]},
             ))
+        # These stages are explicitly reviewed per packet. A latest-at-arrival
+        # option must not be rewritten as an arrival-only requirement.
+        for stage in review.get("host_document_stages", []) if review else []:
+            requirements = stage["document_requirements"]
+            target = host_followup_steps if stage.get("position") == "after_host_application" else tail
+            position = len(target) if target is host_followup_steps else next(i for i, step in enumerate(tail) if step["phase"] == "抵達後")
+            order = host_step["order"] + len(target) + 1 if target is host_followup_steps else tail[position]["order"]
+            target.insert(position, dict(
+                order=order,
+                rule_id=f"{rowids[0]}-host-{stage['id']}",
+                phase=stage["phase"],
+                title=stage["title"],
+                responsible_party=stage["responsible_party"],
+                timing=stage["timing"],
+                summary=stage["summary"],
+                details=reviewed_points(stage["field"]),
+                document_requirements=requirements,
+                official_form_urls=[d["official_form_url"] for d in requirements if d.get("official_form_url")],
+                source_urls=stage.get("source_urls") or list(dict.fromkeys(u for d in requirements for u in d["source_urls"])),
+                checked_at=CHECKED,
+                support_status="needs_confirmation",
+                needs_confirmation=True,
+                scope={"home_universities": [HOME], "partner_universities": [name], "academic_years": ["116"]},
+            ))
+            for step in tail if target is host_followup_steps else tail[position + 1:]:
+                step["order"] += 1
         workflows.append(
             dict(
                 home_university=HOME,
@@ -1015,14 +1049,18 @@ def build(output):
                         # has no original text/page to attach as read evidence.
                         # Its URL and failure remain in the field and audit.
                         continue
-                    p = next(p for p in d["pages"] if p["page"] == ref["page"])
+                    p = next(p for p in d["pages"] if p["page"] == ref["page"]
+                             and (not ref.get("slide") or p.get("slide") == ref["slide"])
+                             and (not ref.get("sheet") or p.get("sheet") == ref["sheet"]))
                     visual_passage = next(
                         (v for v in d.get("page_transcriptions", []) if v["page"] == p["page"]),
                         None,
                     )
                     ev.append(
                         {
-                            "text": visual_passage["text"] if visual_passage else p["text"],
+                            "text": (p["text"] + "\n【同頁視覺核對選定原文；非全文轉錄】\n" + visual_passage["text"])
+                            if visual_passage and d.get("visual_review", {}).get("include_native_with_selected_passages")
+                            else visual_passage["text"] if visual_passage else p["text"],
                             "text_method": "human_visual_selected_passages"
                             if visual_passage
                             else "converted_native_text"
@@ -1030,7 +1068,7 @@ def build(output):
                             else "original_extraction",
                             "source_url": d["url"],
                             "page": p["page"],
-                            "source_title": d["label"],
+                            "source_title": d["label"] + (f"（原投影片{p['slide']}；無PDF頁碼）" if p.get("slide") else ""),
                             "applicability": review["applicability"],
                             "checked_at": CHECKED,
                         }

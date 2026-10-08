@@ -17,3 +17,6 @@ UOS兩項住宿健康文件與HUST一項錄取後健康報告已具備明確條�
 既有工作區JSON欄可保存狀態，沒有套用正式DB或準備migration，也没有新增流程文件規則模型欄位，因此CGU／NTPU／NTU的851份workflow content hash均與f6ad1b8相同。共享API模型與OpenAPI快照已更新為2026-10-08.5；功能與當期資料核准分開驗證。
 
 仍待外部核實：UOS當期接收包、住宿保障／價格／入住期限、TB與替代證明的當期宿舍通知；HUST中央116適用通知、當期健康檢查時效與各院追加件。這些缺口仍顯示在逐欄稽核。UNDIP十項文件保留Online／Visa類及portal要求；這次沒有任意把Visa類移到錄取後。
+
+
+東南大學七份未標年原件另有兩種行政條件：健康表是否對等互免須兩校先確認，宿舍入住表原文明許可不填。這兩件以requires_institutional_confirmation=true明示，不能僅因學生錄取／選校內宿舍就判適用或豁免；九種admission×housing狀態均維持needs_confirmation，active document links不作正式必繳。接機即使不用亦要勾否退回，屬另一獨立文件義務。

@@ -1,6 +1,6 @@
 # 中央116-1來源查核與平台接入（進行中）
 
-基底為合併PR #1後的`f6ad1b8`，已確認包含臺大六項修正`daad399`。獨立worktree `/workspace/abroad-ncu`、分支`data/ncu-exchange-20261008`；已推送checkpoint `dc126d2`、`95c883a`、`2865413`、`6f2f9d1`、`dd06632`、`0d91d46`、`5b0df5a`、`7b381ae`，draft [PR #4](https://github.com/blizzard-new/abroad/pull/4)。原工作目錄、中正及淡江分支未改動。本文件不宣稱中央全部外校資料完備。
+基底為合併PR #1後的`f6ad1b8`，已確認包含臺大六項修正`daad399`。獨立worktree `/workspace/abroad-ncu`、分支`data/ncu-exchange-20261008`；已推送checkpoint `dc126d2`、`95c883a`、`2865413`、`6f2f9d1`、`dd06632`、`0d91d46`、`5b0df5a`、`7b381ae`、`9d44a4e`、`7f0e1cc`，draft [PR #4](https://github.com/blizzard-new/abroad/pull/4)。原工作目錄、中正及淡江分支未改動。本文件不宣稱中央全部外校資料完備。
 
 ## 適用年度與實際覆蓋
 
@@ -18,9 +18,9 @@
 | 完全無文字的附件 | 5份，33頁（URCA、Bolton、UOS、重慶、HUST） |
 | 有明確SHA與逐頁紀錄的全文已讀／視覺文件 | Drive附件3／3；UOS舊影像版11頁、SUFE與SHU各8頁逐頁視覺讀完；OCR僅UOS舊版 |
 | 部分或全部無文字頁／字型問題 | 36份含100頁、2份字型缺字 |
-| 另查公開host／home網頁 | 276筆公開頁／文件讀取紀錄（含browser選定摘錄）；44筆目前讀取錯誤分列 |
+| 另查公開host／home網頁 | 301筆公開頁／文件讀取紀錄（含browser選定摘錄）；44筆目前讀取錯誤分列 |
 | 有外校來源的目錄項 | 211（210項有文字）；214項有任意參考來源，另3項只有其他母校官方轉載、不可冒充host官網 |
-| 人工整理的host紀錄 | 44（全部partial） |
+| 人工整理的host紀錄 | 48（全部partial） |
 | 全部17欄完成116當期核准 | **0** |
 
 附件取得／文字抽取不是逐欄當期查核完成。其他資料仍可繼續查；未查完的欄位不稱「官方未公告」。
@@ -37,7 +37,7 @@
 
 首頁仍下載forms-2022.pdf：個資同意第1頁、家長同意第2頁、109年度範例第3頁。只使用現行表格連結，不將範例舊日期當116截止。行前兩週程序、回國一週程序、WORD心得800–1500字及至少四照片接入流程。課程兩門且一門專業課與學則兩門或六學分分別列出，採認由系所審定。
 
-## 四十四筆人工外校整理與具體缺口
+## 四十八筆人工外校整理與具體缺口
 
 - Manitoba：AY2027–28表（2026/9更新），提名／申請梯次分開、UG／grad文件不同、closed faculties與Computer Science限制、住宿開放、免學費及額外費用、保險及行前。精確校曆官方表稱未定；英文門檻專頁、當期房價／housing截止、個人移民文件仍待查。
 - 信州：AY2027–28、Fall2027提名／申請／暫定到校日，Sheet清單、COE另系統、財力、課程、住宿、預算。英日版本暑假年份及coop保險金額互相矛盾；Spring2028期限、最新Sheet／COE包未取得。不可用Spring2027推算2028。
@@ -94,7 +94,7 @@
 
 ## 尚未完成的來源工作
 
-目前170項尚無初步人工欄位整理；已整理44項也全部partial，**214項沒有任何一項完成116當期全欄核准**。不能以中央提名步驟當host文件清單完成。211項有外校附件／網頁不表示211項全部17欄已核對。3項仍無外校來源映射；另1項只有影像、尚無可讀文字，具體項目见下列清單及CSV「其中外校來源數=0」；多數仍可繼續做官方host來源搜尋／身份與track核對，**尚非證實登入限定或官方未公告**。已取得的大陸international資料若排除Chinese nationals，另列臺灣track缺口，不能硬配。
+目前166項尚無初步人工欄位整理；已整理48項也全部partial，**214項沒有任何一項完成116當期全欄核准**。不能以中央提名步驟當host文件清單完成。211項有外校附件／網頁不表示211項全部17欄已核對。3項仍無外校來源映射；另1項只有影像、尚無可讀文字，具體項目见下列清單及CSV「其中外校來源數=0」；多數仍可繼續做官方host來源搜尋／身份與track核對，**尚非證實登入限定或官方未公告**。已取得的大陸international資料若排除Chinese nationals，另列臺灣track缺口，不能硬配。
 
 本地HTTP讀取限制：Western Sydney兩頁406（browser其中一頁讀取成功）、SDU表格入口500（申請頁重讀200）、中央student portal503（browser先前502）、ALKU Form401／FAQ timeout、TUAF Form401。不把這些錯誤改寫成登入限定。南洋理工brochure頁200但只回導航文字，保留而不稱完整brochure已讀。
 
@@ -256,3 +256,28 @@ HUST applicability已同步為同SHA八頁逐頁視覺已讀、2／3／7／8選�
 两项修正後API／任務／年度／條件及離線重建聚焦 **34 passed（29.69s）**；新手機實際目錄 **2 passed（74.13s）**，已展開母校提名及行前保單條目，明列母校負責／擇一提交與待確認，未啟用正式下載。完整module複驗續行。
 
 最終本輪四module **111 passed（154.93s）**；OpenAPI .5與snapshot一致、diff check通過。兩張新增[XJTU母校匯總表](ncu-browser-evidence/ncu-xjtu-mother-nomination-390.png)、[HUST擇一保單](ncu-browser-evidence/ncu-hust-insurance-alternatives-390.png)已逐圖檢視。摘要／workflow／destination／field-audit四份實際產物均查無舊flyer未讀文字且仍含2024；sourcecoverage保持276／44 errors、44 partial／170未整理／0全116核實。
+
+
+## 301來源、四校分階段文件與政府臺灣證件
+
+2026-10-08 13:50:14 UTC在原worktree唯讀date／HEAD／ls-remote均exit0；main仍f6ad1b8，當時本地及遠端中央head7f0e1cc，沒有未返回的長時間工具。來源增加25筆：銘傳官方2027春公開分校附件18份、浙江官網4筆、政府3筆。301筆／44 errors，48校全部partial、166未整理、0校116全欄核准。新增三校廈門、西南、華中師範的七份原件暫存在/tmp，尚未計入301或48。
+
+- 北京師範：AY2026–27三投影片依presentation manifest原序保留slide而非偽造PDF頁碼；GPA2.5/4.0無比較符號、非最後年級、臺港澳語言「無」與外籍HSK5分軌。六初次學生件、母校統一送件與JPEG另件；照片>300px／240×320及表格48×33mm矛盾保留。住宿60–80 RMB／日／人、統一安排及床具；不提供接機、北京前買全期醫療意外是義務，未杜撰host保單提交件。學费、完整預算與116接收版本仍待查。
+- 東南：七原件均未標年度；銘傳2027春資料夾及母校10/15不等於host適用年／截止。三初次件、母校蓋章名單獨立；已填示例整段移除、不把GPA2.9等範例當門檻。體檢兩校對等互免尚未核定，宿舍表明許不填，兩件加入institutional confirmation、所有錄取／住房狀態都維持待確認。接機提前10工作日，不接也勾否及簽名退回；報到帶保單或到校自費買保險擇一。交換免400申請費及年度學費，宿舍四人900–1200／學期／床、雙人2400–4500／學期／床、床具自備；一般學位年限／學費不套交換，校園網敘述矛盾保留。
+- 浙江：臺灣SpringSummer2027三頁、表格DOC及本科／研究生Excel逐頁／表讀；七初次件、母校名單擇一、保單可收到入學通知後補亦可先備，不能把保單當初次必缺。11/20/2026；本科交換時大二／三、限制院系與研究生醫學／管理不開分列。臺灣2–6月與通用表2–7月、1280／1600 RMB／年及可能跨校區保留。一般國際8頁另軌，Hangzhou11/10、Haining/Yiwu10/23、HSK／English及X簽證不套臺灣；當期課程分享回應Invalid share，首頁明示密碼由母校提供，沒有宣稱讀到內容；官網校曆仍春夏2026待更新。
+- 重慶：十頁原字層及全頁視覺、2027參考校曆一頁、空白DOC、名單XLSX三表（兩空）逐一讀。九學生初次件、母校匯總独立，教師推薦1–2封沒有硬判copies=1；健康和醫療意外最晚報到，可提早，行前段兩件分開。10/30/2026、11–12月錄取及12月底通知；宿舍800–1200 RMB／學年、虎溪不保證宿位。40元平安保險選交不能代替醫療意外；2025專業代碼／2024課表UI不當2027課單。校曆2/20報到、6/21–27考試、6/28–7/11短周不是所有交換生統一離校期限。
+
+三政府來源與host authority分開：NIA臺灣通行證公開指南、司法部法規PDF11頁全文、2025首次證件費豁免公告。親友家住宿24小時（農村72）与學校／飯店辦登記不同責任；五年多次／三月單次及續換分列，不套外國人X簽證。「不足六個月」是可換證條件，不判每次入境最低剩餘六個月。首次證件費豁免只2025/7/1–2027/12/31，不延到2028或免全部代理／補換費。指南原文舊200／40及46口岸保留audit、索引另隔離，不作現行費用回答。四校visa／cost／arrival与個人住宿登記流程已顯示實際產物；個別地方渠道／住宿校區和116更新仍具體待核對。
+
+Office及PDF轉檔／視覺摘錄均SHA綁定；RTF偽.doc明確標轉檔、不杜撰頁碼。PPTX三slide順序、XLSX空表、同SHA sidecar及變更SHA拒用都有回歸。共享文件中心僅NCU：有該文件來源時不再混入整個步驟的所有URL，浙江兩種表的參考連結因此只顯示對應兩份；其他母校既有來源聯集保留。沒有新增API模型，OpenAPI .5快照一致。
+
+本輪聚焦四校與原件／政府5 passed（71.34s）；SEU九組條件9 passed。最初API5 failed源自測試用錯workflow query與文字斷言，修正後重跑全過。Chromium四校原文／流程／生活首次3 passed、BNU切校逾時；BNU單獨第二次被boot splash攔截，補明確等待載入後1 passed（126.76s），沒有force或隱藏畫面。SEU／ZJU文件中心2 passed（161.67s含BNU失敗）；NCU文件来源收斂後ZJU1 passed（95.06s）。以下六張真實390px截圖逐圖檢視：
+
+[北師申請](ncu-browser-evidence/ncu-bnu-slides-workflow-390.png)、[東南體檢流程](ncu-browser-evidence/ncu-seu-reciprocal-health-390.png)、[浙江保單階段](ncu-browser-evidence/ncu-zju-insurance-later-390.png)、[重慶最晚報到文件](ncu-browser-evidence/ncu-cqu-latest-registration-390.png)、[東南條件文件](ncu-browser-evidence/ncu-seu-health-condition-catalog-390.png)、[浙江表格擇一連結](ncu-browser-evidence/ncu-zju-form-alternatives-catalog-390.png)。
+
+
+全四module最新125 passed／3 failed（455.41s），三項同因：浙江PDF原文含Unicode line separator，JSONL被Python splitlines拆成半筆，導致/documents及兩項檢索失敗。NCU builder只在JSON序列化跳脫U+0085/U+2028/U+2029；decode後原文不變、raw audit未改。重新build後原三項＋離線重建4 passed（88.89s）；同次新增保真測試因漏填ProcessedPage必填模型欄位失敗，改用實際合法模型後1 passed（5.65s）。所有JSONL產物與離線重建已通過，沒有略過原失敗API。診斷曾嘗試uvx py-spy，但tool directory預設唯讀而失敗，未安裝、未改權限；測試自行完成並非環境中斷。
+
+共享跨校九module113 passed／6 skipped（162.55s），包含CGU bundled、NTPU support、NTU integration、application rules／workflow／context／task documents／document API／school content；skipped為原測試條件，不稱所有CI通過。另從未修改main實際runtime重新匯出851份流程，用相同當前模型驗證並逐份比較含重複的完整序列值：CGU154／NTPU409／NTU288，差異0，[比較證據](ncu-cross-school-parity-20261008.json)。舊hash檔未記序列化方法，直接套不同格式曾全部不符；本輪以同schema原始值比較，沒有拿hash格式差異當資料改動。
+
+2026/10/8最新CCU遠端15270145ea93fab2c4d72a7112fe72cdcff5c6a3、TKU61659fe12cf5bb5f3fed2502f112039c7f8abd92；已唯讀fetch並重算13／14共享交集，[合併點清單](ncu-shared-merge-points-20261008.json)已更新，未合併或覆蓋。CGU手機工作區首次83.92s被boot-splash攔截；共享E2E helper原只等network idle，現在額外等真實boot overlay hidden 60秒後才操作，不force／移除遮罩。CGU同一手機工作區複驗1 passed（179.58s）：保留問題草稿、選校、資格、文件／舊路由流程實際操作過；測試有真實loader等待，不以移除遮罩掩蓋。
