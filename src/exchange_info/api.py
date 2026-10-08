@@ -426,7 +426,7 @@ CGU_COMMUNITY_BOARD = "長庚大學"
 HOME_UNIVERSITY_BOARDS = {item.school_name for item in SUPPORTED_UNIVERSITIES}
 
 
-def _load_school_image_manifest() -> dict[str, dict[str, object]]:
+def _load_school_image_manifest() -> dict[tuple[str, str], dict[str, object]]:
     if not SCHOOL_IMAGE_MANIFEST.exists():
         return {}
     try:
@@ -434,7 +434,7 @@ def _load_school_image_manifest() -> dict[str, dict[str, object]]:
     except (OSError, json.JSONDecodeError):
         return {}
     return {
-        school_identity_key(str(item.get("school_name", ""))): item
+        (school_identity_key(str(item.get("school_name", ""))), str(item.get("country") or "")): item
         for item in payload.get("schools", [])
         if isinstance(item, dict) and item.get("school_name")
     }
@@ -449,7 +449,7 @@ def _attach_school_images(
     base = base_url.rstrip("/")
     partners = []
     for school in dashboard.partner_universities:
-        visual = visuals.get(school_identity_key(school.school_name))
+        visual = visuals.get((school_identity_key(school.school_name), school.country or ""))
         if not visual or visual.get("status") != "verified":
             partners.append(school)
             continue

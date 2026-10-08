@@ -1089,7 +1089,7 @@ async function loadDestinationProfiles({ homeSchool = activeHomeSchool() } = {})
 
 async function loadSchoolImages() {
   try {
-    const payload = await fetchJson("/static/assets/school-images.json?v=20260929-complete-1");
+    const payload = await fetchJson("/static/assets/school-images.json?v=20261008-ntu-1");
     state.schoolImages = Array.isArray(payload?.schools)
       ? payload.schools.filter((item) => item.status === "verified" && item.local_path)
       : [];
@@ -1098,14 +1098,15 @@ async function loadSchoolImages() {
   }
 }
 
-function schoolImageFor(schoolName) {
+function schoolImageFor(schoolName, country = null) {
   return state.schoolImages.find(
     (item) => normalize(item.school_name) === normalize(schoolName)
+      && (!country || item.country === country)
   );
 }
 
 function renderSchoolPhoto(item, variant = "card") {
-  const visual = schoolImageFor(item.school_name)
+  const visual = schoolImageFor(item.school_name, item.country)
     || (item.image_status === "verified" && item.image_url ? { local_path: item.image_url } : null);
   const label = item.country || "交換學校";
   const fallback = `
@@ -1114,7 +1115,7 @@ function renderSchoolPhoto(item, variant = "card") {
     </span>`;
   const loading = variant === "detail" ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
   const image = visual?.local_path
-    ? `<img src="${escapeHtml(visual.local_path)}" alt="${escapeHtml(item.school_name)}官方照片" ${loading} decoding="async" data-remove-on-error="true" />`
+    ? `<img src="${escapeHtml(visual.local_path)}" alt="${escapeHtml(item.school_name)}校園照片" ${loading} decoding="async" data-remove-on-error="true" />`
     : "";
   return `<span class="school-photo school-photo-${escapeHtml(variant)}">${fallback}${image}</span>`;
 }
@@ -1136,9 +1137,9 @@ function renderCoverageBadges(item) {
   if (!coverage) return '<span class="coverage-chip pending">資料待查核</span>';
   let image = '<span class="coverage-chip pending">照片待整理</span>';
   if (coverage.image_status === "verified") {
-    image = '<span class="coverage-chip ready">官方照片已確認</span>';
+    image = '<span class="coverage-chip ready">校園照片已核對</span>';
   } else if (coverage.image_status === "missing") {
-    image = '<span class="coverage-chip empty">官方照片待補</span>';
+    image = '<span class="coverage-chip empty">校園照片待補</span>';
   } else if (coverage.image_status === "error") {
     image = '<span class="coverage-chip error">照片擷取失敗</span>';
   }
@@ -7553,7 +7554,7 @@ function renderPartnerLinks(item) {
   const source = item.source_url
     ? `<a href="${escapeHtml(item.source_url)}" target="_blank" rel="noreferrer">官方來源</a>`
     : "";
-  const visual = schoolImageFor(item.school_name);
+  const visual = schoolImageFor(item.school_name, item.country);
   const imagePage = visual?.official_page_url || item.image_page_url;
   const imageSource = imagePage
     ? `<a href="${escapeHtml(imagePage)}" target="_blank" rel="noreferrer">圖片來源</a>${renderSchoolImageCredit(item)}`
@@ -7565,7 +7566,13 @@ function renderPartnerLinks(item) {
 }
 
 function renderSchoolImageCredit(item) {
-  const note = schoolImageFor(item.school_name)?.note || "";
+  const visual = schoolImageFor(item.school_name, item.country);
+  const note = visual?.note || "";
+  if (visual?.license_name) {
+    const license = String(visual.license_url || "").replace(/^http:\/\//, "https://");
+    const safeLicense = /^https:\/\/(?:creativecommons\.org|commons\.wikimedia\.org)\//.test(license);
+    return `<small class="school-image-credit">${escapeHtml(note)}${safeLicense ? ` · <a href="${escapeHtml(license)}" target="_blank" rel="noreferrer">圖片授權</a>` : ""}</small>`;
+  }
   if (!note.startsWith("攝影：")) return "";
   return `<small class="school-image-credit">${escapeHtml(note)}${note.includes("CC BY-SA 3.0") ? ' · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noreferrer">圖片授權</a>' : ""}</small>`;
 }
@@ -8311,7 +8318,7 @@ function renderLifeResearchStatus(context, { loading = false, error = "" } = {})
   if (!container) return;
   const status = { ready: "已更新", partial: "部分資料已更新", unavailable: "暫無新資料", not_collected: "待更新" };
   container.innerHTML = `<div class="life-research-heading"><span role="status">${escapeHtml(error || (loading ? "正在更新資料…" : status[context?.research_status] || ""))}${context?.checked_at && !loading ? ` · ${escapeHtml(formatDate(context.checked_at))}` : ""}</span><div class="life-research-actions"><button type="button" class="life-student-search" data-life-student-search>找學生分享</button><button type="button" class="secondary-button" data-refresh-life-context ${loading || context?.can_refresh === false ? "disabled" : ""}><i data-lucide="${loading ? "loader-circle" : "refresh-cw"}" aria-hidden="true"></i>${loading ? "更新中" : "更新資料"}</button></div></div>
-    <details class="life-research-notes"><summary>資料說明</summary><p>官方資料以中文呈現，原文保留在來源中。AI 推論為規則產生的參考建議，非學生心得；機器翻譯未經人工審核。</p><p>${escapeHtml(context?.location_note || "正在讀取校區資料。")}</p>${(context?.research_notes || []).map(note => `<p>${escapeHtml(note)}</p>`).join("")}<small>資料更新後暫存 6 小時；翻譯未完成時可重試。</small></details>`;
+    <details class="life-research-notes"><summary>資料說明</summary><p>官方資料保留來源與原文；尚未翻譯的內容會標示「原文」。AI 推論為規則產生的參考建議，非學生心得；機器翻譯未經人工審核。查閱日期不代表官網內容更新日。</p><p>${escapeHtml(context?.location_note || "正在讀取校區資料。")}</p>${(context?.research_notes || []).map(note => `<p>${escapeHtml(note)}</p>`).join("")}<small>補查結果暫存 6 小時；可按「更新資料」重新查詢。</small></details>`;
   initIcons();
 }
 
@@ -8332,8 +8339,7 @@ async function loadSchoolLifeContext(item, { refresh = false } = {}) {
     let context = cached || await fetchJson(`/school-life-context?${query}`);
     state.lifeContextCache.set(key, context);
     if (lifeContextKey() === key) renderStudentLife(state.experienceCache.get(item.school_name) || { highlights: [] });
-    const needsTranslation = context.can_refresh && context.categories.some(category => category.evidence.some(row => row.translation_status === "pending"));
-    if (refresh || context.research_status === "not_collected" || needsTranslation) {
+    if (refresh || context.research_status === "not_collected") {
       context = await fetchJson(`/school-life-context/refresh?${query}`, { method: "POST", signal: AbortSignal.timeout(60000) });
       state.lifeContextCache.set(key, context);
     }
@@ -8354,7 +8360,7 @@ function renderLifeEvidenceSupplement(category, { limit = 2 } = {}) {
   const labels = { official: "官方", geographic: "周邊地點", mixed: "官方與學生" };
   const evidenceRows = (category.evidence || []).map(row => {
     const pending = row.translation_status === "pending";
-    return `<div class="life-evidence-item"><span class="life-kind ${escapeHtml(row.kind)}">${labels[row.kind] || "公開資料"}${row.translation_status === "machine" ? " · 機器翻譯" : pending ? " · 原文" : ""}</span><p class="life-evidence-text">${escapeHtml(row.text)}</p><details class="life-evidence-source"><summary>資料來源</summary>${row.original_text && row.original_text !== row.text ? `<p>${escapeHtml(row.original_text)}</p>` : ""}<small>${escapeHtml(row.scope)}${row.checked_at ? ` · ${escapeHtml(formatDate(row.checked_at))}` : ""}</small><div class="life-source-links">${row.sources.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.title)} ↗</a>`).join("")}</div></details></div>`;
+    return `<div class="life-evidence-item"><span class="life-kind ${escapeHtml(row.kind)}">${labels[row.kind] || "公開資料"}${row.translation_status === "machine" ? " · 機器翻譯" : pending ? " · 原文" : ""}</span><p class="life-evidence-text">${escapeHtml(row.text)}</p>${row.original_excerpt ? `<small class="life-applicability-note">官網參考；適用校區與年度請核對來源。${row.checked_at ? ` 查閱 ${escapeHtml(formatDate(row.checked_at))}` : ""}</small>` : ""}<details class="life-evidence-source"><summary>資料來源</summary>${row.original_text && row.original_text !== row.text ? `<p>${escapeHtml(row.original_text)}</p>` : ""}<small>${escapeHtml(row.scope)}${row.checked_at ? ` · 查閱 ${escapeHtml(formatDate(row.checked_at))}` : ""}</small><div class="life-source-links">${row.sources.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.title)} ↗</a>`).join("")}</div></details></div>`;
   });
   const evidence = evidenceRows.slice(0, limit).join("") + (evidenceRows.length > limit ? `<details class="life-more-evidence"><summary>再看 ${evidenceRows.length - limit} 則資料</summary>${evidenceRows.slice(limit).join("")}</details>` : "");
   const inference = category.inference;
