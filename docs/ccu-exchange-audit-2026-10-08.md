@@ -6,7 +6,7 @@
 交付前遠端 main 已前進至 `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`（第一批交付時為 `293546e807294dc0812f390b240a4cfb68e86cd0`）；第一批交付保留開工基準；第二輪依使用者要求安全整合此最新main，保留臺大與既有資料，未寫入其他session工作目錄。
 本 clone 未找到 AGENTS.md 或適用 `.agents/skills`。未寫入其他學校 session 的工作目錄。
 
-最新數量、功能對照與實際驗證見末節第十三輪及 [55筆功能對照](ccu-functional-parity-2026-10-08.md)；前節保留歷史檢查點，不能取代最新數字。
+最新數量、功能對照與實際驗證見末節第十四至十五輪及 [55筆功能對照](ccu-functional-parity-2026-10-08.md)；前節保留歷史檢查點，不能取代最新數字。
 
 ## 已核實適用範圍
 
@@ -424,3 +424,31 @@ UBM、EPITA、SDU的新接收資料顯示替代語言證明／program分流或�
 - 既有content_governance測試wrapper無法collect：缺少tests/__pycache__/test_content_governance.cpython-312-pytest-9.1.1.pyc。真實collection错误保存在existing-governance-wrapper-unavailable.txt；改以獨立main內容hash證據及新增完整性測試驗證，沒有捏造wrapper通過。
 
 本輪是已驗證修正的可整合檢查點。公開學制33校、學院44校、交通10校、生活7校仍有缺值，另有登入／提名後個人表、來源矛盾及當期適用性未核；functional_parity_complete=false，未直接merge或部署。
+
+## 第十四至十五輪：首爾科技新版及公開交通／生活續查
+
+本批新增14個來源紀錄，總數651且ID唯一；新增兩個可開啟PDF，合作校附件共83（62PDF、16DOCX、3XLSX、1XLS、1DOC）。71筆fetch_failed，另有7challenge、6空正文／JavaScript外殼、2captcha及1不相關內容異常。不將HTTP2xx、搜尋摘要或連結標籤當作已讀政策正文。
+
+首爾科技官方新入口標2027/2028，但連結的8頁PDF正文實際是2027 Spring；逐頁實讀並渲染核對物理p3文件表、p6住宿／價格表。舊2026/27兩份來源保存原bytes，metadata標reference_only及superseded_by；當期host清單不再沿用旧版。主要差異：
+
+- 新版明示exchange宿舍不保證，International Hall僅候補；男單1329120、男雙1045980、女雙1062360 KRW／期，International Hall各房型及餐費另列且可變。不是保個人房型或帳單。
+- 日期2027-03-02至06-21與中正當期p48一致，旧6/22 tentative被新版取代。Host最低2credits、中正最低3且推薦12仍分來源標conflict；不自行覆蓋母校最低學分。
+- Host第一次7項（online、在學、成績、語言、Study Plan、護照、照片），第二次3項（visa copy、航班、本人銀行），另2項僅宿舍申請者（TB、兩劑麻疹）。第二次／宿舍送件日期與啟動條件未載，不套旧資料抵韓前2週或推定錄取前後。清單仍partial_not_exhaustive，提名後個人online及声稱attached的空白Form1未取得；8頁PDF不是Study Plan表。
+- 新host清單未列推薦信，中正當期母校第二階仍列Recommendation Letter，保留在母校提名步驟並標兩層差異，未擅免除。非OECD才須在學／成績／銀行正本及條件認證，不泛化所有人；一般入口original字樣與PDF範圍差異另保待確認。
+- 2027/2028 incoming明載Undergraduate至少2學期、Graduate至少1學期及partner exchange依協議免tuition，Visiting不免。前者是接收端，不能抵銷中正所有outbound滿2學期、GPA／平均資格。NHIS 79310月費只標as of2026，未保2027費率；密集韓語非學分另收費。
+
+新增交通原文：東北師範一般foreign頁的指定日接機隨通知（臺籍HMT適用未核）；電子科技大學27頁指南實際封面／前言均2025，只作舊路線參考，抽取數字異常不猜時間或價格；托馬斯拔佳incoming列PRG／Otrokovice／Zlín轉乘及查班次入口，未標2027；西波希米亞教育學院FAQ列Plzeň交通，不能套所有學院／Cheb或ArtCamp暑校票。廈門圖書館Reader’s Guide的院方簽章借閱啟用及Siming／Xiang’an櫃檯作一般生活資料，不是交換申請文件；天津2026年9月foreign／degree新生welcome pack只參考，未套臺籍2027交換簽證、照片或學費。HCMUT新頁僅取得44字JavaScript外殼，生活欄保持空值，不用搜尋摘要冒充正文。
+
+最新實際資料／API數量：104條目分類不變，55流程與指南均legacy／official_partial；52筆7步驟、忠南／HUFS／首爾科技3筆8步驟。23校177項外校個別文件、26條件項、18已核實官方文件連結；55校實際文件目錄與階段可讀。網站55、城市54、交通49、生活50筆非空；學制profile23筆非空（9核／14待／32缺），實際API24筆非空、可確定學制10；學院11筆非空、可確定1。935海外欄為311核／229缺／312待／20參考／62矛盾／1官方明示未公告，39校至少一項已核、0校17欄或全部host文件完整，functional_parity_complete=false。
+
+本批額外共用變更只有application_documents.py（after_application目錄按實際school step.phase，首爾科技不誤標不等錄取）及workflow_structuring.py（已逐項核對且有stage的文件保留copies／copy_type／signatures缺值，不從條件名稱自動推所有人須正本或簽名）。source-bound metadata無stage的既有CGU／NTPU／NTU仍沿原整理方式；本批未新增API路徑／模型必填欄或改UI程式。其他分支累計共用整合點仍見前節清單。校別適配在ccu_documents.py，來源、程式輸出及測試獨立。
+
+實際驗證與證據見docs/ccu-validation-2026-10-08/fourteenth-fifteenth-*：
+
+- 最終四校選定回歸318 passed、5 skipped、1既有NTPU目的地計數失敗（183.76s）。初次9失敗含漏稽核旗標、旧资格斷言、新測試HTTP碼假設及條件正本被自動推定；原始結果保留，修正後無CCU新增失敗。
+- 最新手機390／桌面1440聚焦瀏覽器8 passed（83.43s），包括待確認資格／兩API、流程與目錄實際官方DOCX點擊下載、首爾科技新版住宿／價格／最低學分來源差異及第二次送件；五張最新畫面與PDF表格渲染存檔。前次完整33瀏覽器另保留，未冒稱本次重跑全33。
+- 20份輸出最終重建一致、49份main既有CGU／NTPU／NTU資料hash不變、110 API路徑及required欄不變。初次4個衍生檔尚待研究稽核後重建的差異紀錄保留，未將初次失敗算通過。
+- 651請求ID唯一；83合作校附件逐檔hash核對，新增PDF物理8／27頁可解析，原81可讀證據沿用且bytes不變。當期適用性另核，沒有把舊2025指南當2027。
+- 改動校別檔Ruff及OpenAPI contract成功；整個專案lint和缺pyc的content-governance wrapper未宣稱通過，後者限制見前節。新版wheel成功，781個CCU資料檔及13個程式／UI檔逐byte一致，SHA為d065454f2edeb4dfa46a6f6a670ee6d9db4d20e0811a248311784a96e998b979。
+
+第十三輪提交0f300be0d0a691875aaa5506f8ba2c1c7d0e9f0e已推送、遠端读回一致且PR#3為draft；本批最新提交以交付回報及GitHub分支为准。交付前遠端main仍f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59。公開交通6校、生活5校、學制32校、學院44校仍未載；另有未年／跨校區來源、個人表、國籍適用性及矛盾未解，沒有把公開查核缺口一律稱為承辦阻塞。未合併main、部署、登入學校系統、聯絡／送件或改憑證／權限／付款／安全設定。

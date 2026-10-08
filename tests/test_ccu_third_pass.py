@@ -115,12 +115,15 @@ def test_receiving_reciprocity_cap_preserves_ccu_home_quota():
     p = at(48)
     assert p.quota == "一學期(one semester) 2名 或 一學年(one year) 1名"
     assert p.quota_status == "published" and p.availability_status == "open"
-    field = p.partner_exchange_details["eligibility"]
-    assert field.status == "needs_confirmation"
-    assert "≤2席" in field.value and "互惠1席" in field.value
-    assert "個人年級只在未年Overview" in field.value
-    assert any(e.source_pages == [5] for e in field.evidence)
-    assert any(not e.source_pages for e in field.evidence)
+    field = p.partner_exchange_details["program_scope"]
+    assert field.status == "verified_current"
+    assert "最多2人" in field.value and "1個open seat" in field.value
+    assert "不是自動保證2席" in field.value
+    assert any(e.source_pages == [4] for e in field.evidence)
+    eligibility = p.partner_exchange_details["eligibility"]
+    assert eligibility.status == "verified_current"
+    assert "大學部至少完成2學期、研究所至少1學期" in eligibility.value
+    assert any(e.source_url == "https://global.seoultech.ac.kr/bound/inbound" for e in eligibility.evidence)
 
 
 def test_fges_partial_certificate_requirement_and_approximate_welcome():

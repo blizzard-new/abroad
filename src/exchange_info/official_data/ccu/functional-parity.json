@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-08T11:52:45.694868+00:00",
+  "checked_at": "2026-10-08T12:28:52.823701+00:00",
   "definition": "逐校讀取本機公開API。nonempty是呈現／功能覆蓋，不等於當期規定完整；每個中正欄位另存來源、年度與查核狀態。",
   "baseline": {
     "cgu_raw_workflows": 154,
@@ -1078,8 +1078,8 @@
         "city": 54,
         "housing_summary": 55,
         "cost_summary": 55,
-        "transport_summary": 45,
-        "campus_life_summary": 48,
+        "transport_summary": 49,
+        "campus_life_summary": 50,
         "guide_photos": 0,
         "first_72_hours": 0,
         "packing_from_taiwan": 0,
@@ -1089,23 +1089,23 @@
         "website": 55,
         "location": 55,
         "colleges": 11,
-        "degree_levels": 23,
+        "degree_levels": 24,
         "location_with_city": 54,
         "location_with_source": 54
       },
       "structured_scope_known": {
         "colleges": 1,
-        "degree_levels": 9
+        "degree_levels": 10
       },
       "documents": {
-        "requirements": 1110,
+        "requirements": 1112,
         "requirements_with_form": 128,
         "schools_with_requirements": 55,
         "schools_with_signature_detail": 55
       },
       "document_center": {
         "schools_with_catalog": 55,
-        "host_items_with_stage": 175,
+        "host_items_with_stage": 177,
         "verified_official_links": 18,
         "conditional_items": 26
       },
@@ -1215,8 +1215,8 @@
         {
           "school_name": "Seoul National University of Science and Technology 國立首爾科技大學",
           "review_status": "legacy",
-          "step_count": 7,
-          "requirement_count": 27
+          "step_count": 8,
+          "requirement_count": 29
         },
         {
           "school_name": "Sungshin Women's University 誠信女子大學",
@@ -4194,10 +4194,24 @@
           ]
         },
         "campus_life": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "圖書館官方Reader’s Guide列college-invited交換生需院方簽名／蓋章借閱申請、ID／護照及校園卡啟用借閱；Siming Main與Xiang’an Dewang櫃檯提供服務。另有座位／研討室預約及XMUNET+／Eduroam。未標2027或個人HMT適用，這是到校圖書館服務，不是交換申請附件。",
+          "status": "needs_confirmation",
+          "evidence": [
+            {
+              "source_id": "p23-r15-library-exchange",
+              "source_url": "https://linc.xmu.edu.cn/info/1037/1022.htm",
+              "source_pages": [],
+              "academic_year": "未載2027適用年度；公開一般服務／指定校區",
+              "application_round": "公開一般服務／其他年度參考，非2027申請梯次",
+              "checked_at": "2026-10-08T12:23:34.159652+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "For college-invited exchange students, a borrowing application form completely filled out, signed and sealed by the college, personnel ID/Passport along with campus card are required to activate campus card’s library privileges. The Service Counter of Main Library or Dewang Library is where users can activate campus card, and ask questions about borrowing privileges and responsibilities. Library privileges are not transferable. Only the individual named on the library card can use the card. For a downloadable borrowing application form, please visit http://library.xmu.edu.cn/portal-en/secondpage.asp?pid=5&sid=4772 . Campus Library Location Hours Siming Campus Main Library",
+              "content_hash": "d1c8f43dee6cb2b5d6f5fcad779cd3dd4f8cc8b7c2df63592c3ed5bf8a46b93a",
+              "text_sha256": "3204830cf11ada5ce7875403f3e19a6d4b8b4a25f85cd189a4c79013a4884124",
+              "note": "仅核指定生活段落及适用范围；没有填过期价格或强迫缺值成为2027事实。"
+            }
+          ],
+          "reason": "官方实質生活服務，跨校區櫃檯與院方邀請交換生條件保留；無年份不升當期，管理學院舊價不當校級2027費用。"
         }
       },
       "academic_filter_scope": {
@@ -4228,7 +4242,8 @@
           "arrival",
           "course_restrictions",
           "academic_calendar",
-          "transport"
+          "transport",
+          "campus_life"
         ],
         "completeness_items": [
           {
@@ -4301,9 +4316,11 @@
           {
             "key": "campus_life",
             "label": "校園生活",
-            "status": "missing",
-            "note": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。",
-            "source_urls": []
+            "status": "needs_confirmation",
+            "note": "官方实質生活服務，跨校區櫃檯與院方邀請交換生條件保留；無年份不升當期，管理學院舊價不當校級2027費用。",
+            "source_urls": [
+              "https://linc.xmu.edu.cn/info/1037/1022.htm"
+            ]
           },
           {
             "key": "city",
@@ -4324,7 +4341,7 @@
         ],
         "city": "廈門",
         "transport_present": true,
-        "campus_life_present": false,
+        "campus_life_present": true,
         "life_location_note": "官方城市／聯絡地址參考：廈門（verified_current）。尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。 接收校區按所選計畫另核。",
         "life_categories": [
           {
@@ -4426,7 +4443,24 @@
           },
           {
             "theme": "social",
-            "evidence": [],
+            "evidence": [
+              {
+                "theme": "social",
+                "kind": "official",
+                "text": "圖書館官方Reader’s Guide列college-invited交換生需院方簽名／蓋章借閱申請、ID／護照及校園卡啟用借閱；Siming Main與Xiang’an Dewang櫃檯提供服務。另有座位／研討室預約及XMUNET+／Eduroam。未標2027或個人HMT適用，這是到校圖書館服務，不是交換申請附件。（適用年度或條件待確認；未載2027適用年度；公開一般服務／指定校區；查核2026-10-08）",
+                "sources": [
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://linc.xmu.edu.cn/info/1037/1022.htm"
+                  }
+                ],
+                "checked_at": "2026-10-08T12:23:34.159652Z",
+                "scope": "適用年度或條件待確認；未載2027適用年度；公開一般服務／指定校區；官方实質生活服務，跨校區櫃檯與院方邀請交換生條件保留；無年份不升當期，管理學院舊價不當校級2027費用。",
+                "original_excerpt": false,
+                "original_text": "",
+                "translation_status": "original"
+              }
+            ],
             "inference": null,
             "next_step": "先看國際處迎新、社團與語言交換活動；活動存在不代表每位學生都有相同體驗。",
             "search_url": "https://www.google.com/search?q=Xiamen+University+%E4%B8%AD%E5%9C%8B%E5%A4%A7%E9%99%B8+%E5%BB%88%E9%96%80+international+student+clubs"
@@ -4906,10 +4940,24 @@
           "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。"
         },
         "campus_life": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "2026年9月外國新生welcome pack含student guide、handbook、campus ID、迎新與校圖；Weijin／Peiyangyuan分校區办理SIM／銀行／住宿支援。只作2026舊生活參考，未核2027春或臺籍HMT交換適用；degree入學文件及學費不套中正交換。",
+          "status": "reference_only",
+          "evidence": [
+            {
+              "source_id": "p24-r15-welcome2026",
+              "source_url": "https://en.tju.edu.cn/info/1010/13576.htm",
+              "source_pages": [],
+              "academic_year": "正文Welcome International Students 2026；9月2–4日新生報到，非2027春",
+              "application_round": "公開一般服務／其他年度參考，非2027申請梯次",
+              "checked_at": "2026-10-08T12:23:34.160696+00:00",
+              "status": "reference_only",
+              "excerpt": "Procedures of Check-in Step 1: Collect your Welcome Pack, which includes the New Student Guide, International Student Handbook, Campus ID Card, orientation schedule, campus map folder, registration procedure form and registration reminders. Step 2: Verify your insurance payment receipt. Step 3: Apply for a mobile SIM card. Step 4: Open a bank account. Step 5: Apply for on-campus accommodation or inquire about off-campus housing resources. Step 6: Complete the 24-hour accommodation registration (record card for inspection). Step 7: Make an appointment for physical examination for the day after check-in (payment is needed, You may go to the physical examination center via the bus the following day). Registration Time for Registration The arrangement for registration for new international students of Weijin Road Campus: D",
+              "content_hash": "55f1367ec7366948f4f7d0951a0cca1b543bc4d46b1fecdfdf96b34732bbf8aa",
+              "text_sha256": "99d954308a8e51376f578000ec27a1e62a5d4acdcbdd53e0aa1df532ab0fbb01",
+              "note": "仅核指定生活段落及适用范围；没有填过期价格或强迫缺值成为2027事实。"
+            }
+          ],
+          "reason": "正文明确2026及foreign／degree新生；未将旧迎新日、护照签证、十张照片或缴学费泛化为台湾校际交换。"
         }
       },
       "academic_filter_scope": {
@@ -5404,7 +5452,8 @@
           "arrival",
           "course_restrictions",
           "academic_calendar",
-          "transport"
+          "transport",
+          "campus_life"
         ],
         "completeness_items": [
           {
@@ -5452,7 +5501,8 @@
             "status": "partial",
             "note": "有費用片段，但沒有可直接比對的每月總額。",
             "source_urls": [
-              "https://drive.google.com/file/d/1mX2s3ruNWdHTqFbT2DAxoeIWg4LgqIG5/view?usp=drive_link"
+              "https://drive.google.com/file/d/1mX2s3ruNWdHTqFbT2DAxoeIWg4LgqIG5/view?usp=drive_link",
+              "https://en.tju.edu.cn/info/1010/13576.htm"
             ]
           },
           {
@@ -5461,7 +5511,8 @@
             "status": "available",
             "note": "已有來源整理的內容。",
             "source_urls": [
-              "https://drive.google.com/file/d/1mX2s3ruNWdHTqFbT2DAxoeIWg4LgqIG5/view?usp=drive_link"
+              "https://drive.google.com/file/d/1mX2s3ruNWdHTqFbT2DAxoeIWg4LgqIG5/view?usp=drive_link",
+              "https://en.tju.edu.cn/info/1010/13576.htm"
             ]
           },
           {
@@ -5476,9 +5527,11 @@
           {
             "key": "campus_life",
             "label": "校園生活",
-            "status": "missing",
-            "note": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。",
-            "source_urls": []
+            "status": "needs_confirmation",
+            "note": "正文明确2026及foreign／degree新生；未将旧迎新日、护照签证、十张照片或缴学费泛化为台湾校际交换。",
+            "source_urls": [
+              "https://en.tju.edu.cn/info/1010/13576.htm"
+            ]
           },
           {
             "key": "city",
@@ -5499,7 +5552,7 @@
         ],
         "city": "天津",
         "transport_present": true,
-        "campus_life_present": false,
+        "campus_life_present": true,
         "life_location_note": "官方城市／聯絡地址參考：天津（verified_current）。尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。 接收校區按所選計畫另核。",
         "life_categories": [
           {
@@ -5597,7 +5650,24 @@
           },
           {
             "theme": "social",
-            "evidence": [],
+            "evidence": [
+              {
+                "theme": "social",
+                "kind": "official",
+                "text": "2026年9月外國新生welcome pack含student guide、handbook、campus ID、迎新與校圖；Weijin／Peiyangyuan分校區办理SIM／銀行／住宿支援。只作2026舊生活參考，未核2027春或臺籍HMT交換適用；degree入學文件及學費不套中正交換。（其他年度／梯次參考，不能作本期申請依據；正文Welcome International Students 2026；9月2–4日新生報到，非2027春；查核2026-10-08）",
+                "sources": [
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://en.tju.edu.cn/info/1010/13576.htm"
+                  }
+                ],
+                "checked_at": "2026-10-08T12:23:34.160696Z",
+                "scope": "其他年度／梯次參考，不能作本期申請依據；正文Welcome International Students 2026；9月2–4日新生報到，非2027春；正文明确2026及foreign／degree新生；未将旧迎新日、护照签证、十张照片或缴学费泛化为台湾校际交换。",
+                "original_excerpt": false,
+                "original_text": "",
+                "translation_status": "original"
+              }
+            ],
             "inference": null,
             "next_step": "先看國際處迎新、社團與語言交換活動；活動存在不代表每位學生都有相同體驗。",
             "search_url": "https://www.google.com/search?q=Tianjin+University+%E4%B8%AD%E5%9C%8B%E5%A4%A7%E9%99%B8+%E5%A4%A9%E6%B4%A5+international+student+clubs"
@@ -6087,10 +6157,24 @@
           "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
         },
         "transport": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "一般foreign exchange頁說指定日期安排機場接送、日期隨入學通知提供；非指定日期自行到校。未標2027且限非中國籍身分，中正臺灣HMT適用未核，不能保證接機。",
+          "status": "needs_confirmation",
+          "evidence": [
+            {
+              "source_id": "p26-r9-exchange-actual",
+              "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+              "source_pages": [],
+              "academic_year": "未標年foreign交換正文，2027春及Taiwan HMT適用尚未核實",
+              "application_round": "一般公開服務／歷史參考，非申請梯次",
+              "checked_at": "2026-10-08T09:28:36.524287+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Airport Pickup Service NENU will arrange airport pickup on specified dates, which will be notified when sending the admission notice. Students arriving on non-designated dates must arrange their own transportation to campus for registration. VII. Visa Information 1. After receiving the electronic version of the admission documents, apply for an entry visa at the nearest Chinese embassy or consulat",
+              "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+              "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            }
+          ],
+          "reason": "讀到實質交通原文而非導覽；外國籍頁与中正臺籍路徑分開，不套暑校指定日期。"
         },
         "campus_life": {
           "value": null,
@@ -6126,7 +6210,8 @@
           "visa",
           "arrival",
           "course_restrictions",
-          "academic_calendar"
+          "academic_calendar",
+          "transport"
         ],
         "completeness_items": [
           {
@@ -6187,9 +6272,11 @@
           {
             "key": "transport",
             "label": "交通",
-            "status": "missing",
-            "note": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。",
-            "source_urls": []
+            "status": "needs_confirmation",
+            "note": "讀到實質交通原文而非導覽；外國籍頁与中正臺籍路徑分開，不套暑校指定日期。",
+            "source_urls": [
+              "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm"
+            ]
           },
           {
             "key": "campus_life",
@@ -6216,7 +6303,7 @@
           }
         ],
         "city": "長春",
-        "transport_present": false,
+        "transport_present": true,
         "campus_life_present": false,
         "life_location_note": "官方城市／聯絡地址參考：長春（needs_confirmation）。尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。 接收校區按所選計畫另核。",
         "life_categories": [
@@ -6260,7 +6347,24 @@
           },
           {
             "theme": "transport",
-            "evidence": [],
+            "evidence": [
+              {
+                "theme": "transport",
+                "kind": "official",
+                "text": "一般foreign exchange頁說指定日期安排機場接送、日期隨入學通知提供；非指定日期自行到校。未標2027且限非中國籍身分，中正臺灣HMT適用未核，不能保證接機。（適用年度或條件待確認；未標年foreign交換正文，2027春及Taiwan HMT適用尚未核實；查核2026-10-08）",
+                "sources": [
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm"
+                  }
+                ],
+                "checked_at": "2026-10-08T09:28:36.524287Z",
+                "scope": "適用年度或條件待確認；未標年foreign交換正文，2027春及Taiwan HMT適用尚未核實；讀到實質交通原文而非導覽；外國籍頁与中正臺籍路徑分開，不套暑校指定日期。",
+                "original_excerpt": false,
+                "original_text": "",
+                "translation_status": "original"
+              }
+            ],
             "inference": null,
             "next_step": "以錄取校區和住宿地址核對路線、轉乘及末班車，不能用直線距離換算通勤時間。",
             "search_url": "https://www.google.com/search?q=Northeast+Normal+University+%E4%B8%AD%E5%9C%8B%E5%A4%A7%E9%99%B8+%E9%95%B7%E6%98%A5+campus+access+public+transport"
@@ -6845,10 +6949,71 @@
           "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
         },
         "transport": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "2025國際生指南附件分清水河／沙河校區、成都雙流／天府機場與成都東站路線；目前只作舊交通參考。部分PDF數字抽取異常，未填班距、票價、個人2027校區或臺籍接送。",
+          "status": "reference_only",
+          "evidence": [
+            {
+              "source_id": "p27-r14-guide2025",
+              "source_url": "https://en.uestc.edu.cn/2025_Guidebook_for_UESTC_International_Students.pdf",
+              "source_pages": [
+                20
+              ],
+              "academic_year": "2025實際封面／前言；非2027春接收規定",
+              "application_round": "一般公開服務／歷史參考，非申請梯次",
+              "checked_at": "2026-10-08T12:03:10.089227+00:00",
+              "status": "reference_only",
+              "excerpt": "Transportation\u0001 Route\u0001 to\u0001 UESTC West Gate, QINGSHUIHE CAMPUS No.\u0000\u0000\u0000, Tianrun Road, West Hi-Tech Zone, Chengdu, Sichuan, \u0000\u0000\u0000\u0000\u0000\u0000 电⼦科技⼤学清⽔河校区西⻔：成都市⾼新西区天润路888号 West Gate, SHAHE CAMPUS",
+              "content_hash": "77f03e817d0a72a2cb21d1ee08190ae3b88ee028574629d6d9b11ec02065fb97",
+              "text_sha256": "e41018e65cc064767a5bc65b76766eb421c536081af1bdee216de42671fb650b",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            },
+            {
+              "source_id": "p27-r14-guide2025",
+              "source_url": "https://en.uestc.edu.cn/2025_Guidebook_for_UESTC_International_Students.pdf",
+              "source_pages": [
+                21
+              ],
+              "academic_year": "2025舊路線附件／清水河",
+              "application_round": "一般公開服務／歷史參考，非申請梯次",
+              "checked_at": "2026-10-08T12:03:10.089227+00:00",
+              "status": "reference_only",
+              "excerpt": "Chengdu\u0001 Shuangliu\u0001 International\u0001 Airport\u0001 to\u0001 Qingshuihe\u0001 Campus Route\u00011 Start End Chengdu\u0001 Shuangliu\u0001 International\u0001 Airport Walk \u0000\u0000\u0000 meters to Chengdu Shuangliu International Airport Ter",
+              "content_hash": "77f03e817d0a72a2cb21d1ee08190ae3b88ee028574629d6d9b11ec02065fb97",
+              "text_sha256": "e41018e65cc064767a5bc65b76766eb421c536081af1bdee216de42671fb650b",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            },
+            {
+              "source_id": "p27-r14-guide2025",
+              "source_url": "https://en.uestc.edu.cn/2025_Guidebook_for_UESTC_International_Students.pdf",
+              "source_pages": [
+                22
+              ],
+              "academic_year": "2025舊路線附件／沙河",
+              "application_round": "一般公開服務／歷史參考，非申請梯次",
+              "checked_at": "2026-10-08T12:03:10.089227+00:00",
+              "status": "reference_only",
+              "excerpt": "Chengdu\u0001 Shuangliu\u0001 International\u0001 Airport\u0001 to\u0001 Shahe\u0001 Campus Route\u00012 Start End Chengdu\u0001 Shuangliu\u0001 International\u0001 Airport Walk \u0000\u0000\u0000 meters to Chengdu Shuangliu International Airport Terminal",
+              "content_hash": "77f03e817d0a72a2cb21d1ee08190ae3b88ee028574629d6d9b11ec02065fb97",
+              "text_sha256": "e41018e65cc064767a5bc65b76766eb421c536081af1bdee216de42671fb650b",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            },
+            {
+              "source_id": "p27-r14-guide2025",
+              "source_url": "https://en.uestc.edu.cn/2025_Guidebook_for_UESTC_International_Students.pdf",
+              "source_pages": [
+                25
+              ],
+              "academic_year": "2025舊路線附件／天府機場",
+              "application_round": "一般公開服務／歷史參考，非申請梯次",
+              "checked_at": "2026-10-08T12:03:10.089227+00:00",
+              "status": "reference_only",
+              "excerpt": "Chengdu\u0001 Tianfu\u0001 International\u0001 Airport\u0001 to\u0001 Qingshuihe\u0001 Campus Route\u00015 Start End Chengdu\u0001 Tianfu\u0001 International\u0001 Airport Walk \u0000\u0000\u0000 meters to Chengdu Tianfu International Airport Terminal \u0000/\u0000 (about \u0000 ",
+              "content_hash": "77f03e817d0a72a2cb21d1ee08190ae3b88ee028574629d6d9b11ec02065fb97",
+              "text_sha256": "e41018e65cc064767a5bc65b76766eb421c536081af1bdee216de42671fb650b",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            }
+          ],
+          "reason": "實際閱讀2025封面及路線；HTML交通入口空正文另記，不能把舊參考當當期。"
         },
         "campus_life": {
           "value": "一般校網站列學生社團、圖書館與電子科技博物館；交換生使用資格、活動日期及費用仍須確認。",
@@ -7370,6 +7535,7 @@
           "arrival",
           "course_restrictions",
           "academic_calendar",
+          "transport",
           "campus_life"
         ],
         "completeness_items": [
@@ -7419,6 +7585,7 @@
             "note": "有費用片段，但沒有可直接比對的每月總額。",
             "source_urls": [
               "https://drive.google.com/file/d/1nSgO6-CsLVbLD35TmniN39qOG7RXnzat/view?usp=drive_link",
+              "https://en.uestc.edu.cn/2025_Guidebook_for_UESTC_International_Students.pdf",
               "https://www.uestc.edu.cn/"
             ]
           },
@@ -7429,15 +7596,18 @@
             "note": "已有來源整理的內容。",
             "source_urls": [
               "https://drive.google.com/file/d/1nSgO6-CsLVbLD35TmniN39qOG7RXnzat/view?usp=drive_link",
+              "https://en.uestc.edu.cn/2025_Guidebook_for_UESTC_International_Students.pdf",
               "https://www.uestc.edu.cn/"
             ]
           },
           {
             "key": "transport",
             "label": "交通",
-            "status": "missing",
-            "note": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。",
-            "source_urls": []
+            "status": "needs_confirmation",
+            "note": "實際閱讀2025封面及路線；HTML交通入口空正文另記，不能把舊參考當當期。",
+            "source_urls": [
+              "https://en.uestc.edu.cn/2025_Guidebook_for_UESTC_International_Students.pdf"
+            ]
           },
           {
             "key": "campus_life",
@@ -7466,7 +7636,7 @@
           }
         ],
         "city": "成都",
-        "transport_present": false,
+        "transport_present": true,
         "campus_life_present": true,
         "life_location_note": "官方城市／聯絡地址參考：成都（verified_current）。尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。 接收校區按所選計畫另核。",
         "life_categories": [
@@ -7531,7 +7701,36 @@
           },
           {
             "theme": "transport",
-            "evidence": [],
+            "evidence": [
+              {
+                "theme": "transport",
+                "kind": "official",
+                "text": "2025國際生指南附件分清水河／沙河校區、成都雙流／天府機場與成都東站路線；目前只作舊交通參考。部分PDF數字抽取異常，未填班距、票價、個人2027校區或臺籍接送。（其他年度／梯次參考，不能作本期申請依據；2025實際封面／前言；非2027春接收規定；查核2026-10-08）",
+                "sources": [
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://en.uestc.edu.cn/2025_Guidebook_for_UESTC_International_Students.pdf#page=20"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://en.uestc.edu.cn/2025_Guidebook_for_UESTC_International_Students.pdf#page=21"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://en.uestc.edu.cn/2025_Guidebook_for_UESTC_International_Students.pdf#page=22"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://en.uestc.edu.cn/2025_Guidebook_for_UESTC_International_Students.pdf#page=25"
+                  }
+                ],
+                "checked_at": "2026-10-08T12:03:10.089227Z",
+                "scope": "其他年度／梯次參考，不能作本期申請依據；2025實際封面／前言；非2027春接收規定；實際閱讀2025封面及路線；HTML交通入口空正文另記，不能把舊參考當當期。",
+                "original_excerpt": false,
+                "original_text": "",
+                "translation_status": "original"
+              }
+            ],
             "inference": null,
             "next_step": "以錄取校區和住宿地址核對路線、轉乘及末班車，不能用直線距離換算通勤時間。",
             "search_url": "https://www.google.com/search?q=University+of+Electronic+Science+and+Technology+of+China+%E4%B8%AD%E5%9C%8B%E5%A4%A7%E9%99%B8+%E6%88%90%E9%83%BD+campus+access+public+transport"
@@ -12681,7 +12880,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "學習／研究計畫（依身分，醫學另表）",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": "https://nupace.iee.nagoya-u.ac.jp/en/apply/doc/StudyPlan.docx",
@@ -12711,7 +12910,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "正式英文歷年成績（適用時含原校／本科）",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -12741,7 +12940,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "英文在學證明",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -12771,7 +12970,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "主修相關教員指定推薦表",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": "https://nupace.iee.nagoya-u.ac.jp/en/apply/doc/reference.pdf",
@@ -12801,7 +13000,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "適用語言證明",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -12831,7 +13030,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "指定健康表（醫師簽／日期）",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": "https://nupace.iee.nagoya-u.ac.jp/en/apply/doc/healthcert.pdf",
@@ -12861,7 +13060,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（where available）護照資料頁",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -12891,7 +13090,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "素色頭肩照",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -12921,7 +13120,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（限定研究生類別）specific categories聲明",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": "https://nupace.iee.nagoya-u.ac.jp/en/apply/doc/English_Declaration Form_upload_rev_final.docx",
@@ -12951,7 +13150,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "銀行／獎學金證明（JASSO申請者亦需）",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -15504,7 +15703,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（HUSTEP）TAO學生申請",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -15574,7 +15773,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（HUSTEP）照片",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -15608,7 +15807,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（HUSTEP；非母語）英語證明",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -15642,7 +15841,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（HUSTEP）HU Study Plan",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": "https://isc.high.hokudai.ac.jp/wp25/wp-content/uploads/2026/07/HU-Study-Plan_Half-Year_2027-Spring.xls",
@@ -15676,7 +15875,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（HUSTEP；如適用）獎助／貸款證明",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -15710,7 +15909,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（HUSTEP母校）在學證明",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [
               "母校承辦"
             ],
@@ -15748,7 +15947,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（HUSTEP母校）主修教員推薦（非語言教師）",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": "https://isc.high.hokudai.ac.jp/wp-content/uploads/2024/08/HUSTEP-Recommendation-Letter.docx",
@@ -15782,7 +15981,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（HUSTEP母校）英文成績及grading",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -18609,7 +18808,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "在學證明（非OECD國籍需認證正本）",
             "copies": null,
-            "copy_type": "original",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -19900,9 +20099,7 @@
             "name": "護照含簽名頁",
             "copies": null,
             "copy_type": "unspecified",
-            "signatures": [
-              "本人"
-            ],
+            "signatures": [],
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
@@ -20117,7 +20314,7 @@
             "step_title": "核對接收計畫的住宿、保險與抵達安排",
             "name": "（後補／非OECD正本）銀行財力",
             "copies": null,
-            "copy_type": "original",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -20141,7 +20338,7 @@
             "step_title": "核對接收計畫的住宿、保險與抵達安排",
             "name": "（後補）英文保險",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -21526,7 +21723,7 @@
             "phase": "合作校申請",
             "step_title": "依提名信辦理合作校申請",
             "name": "英文成績（1份）",
-            "copies": 1,
+            "copies": null,
             "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
@@ -22081,262 +22278,318 @@
       "host_fields": {
         "program_scope": {
           "status": "verified_current",
-          "value": "2026/27接收交換；每所伙伴每學期最多2人。若過去兩學期沒有SeoulTech學生赴該伙伴交換，只分配1個open seat。這是合作校接收/互惠條件，中正當期公布名額保留，實際雙邊餘額須確認。",
-          "reason": "第三輪逐欄核對公開正文；只列已讀要求及範圍，缺值和未核實新版另標。",
+          "value": "2027春季接收交換；每伙伴每期最多2人，過去兩期無SeoulTech赴伙伴交換僅分配1個open seat。中正2名／一期或1名／一年名額與host互惠實際餘額分開；不是自動保證2席。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-mirror",
-              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
                 4
               ],
-              "academic_year": "2026/2027",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "verified_current",
-              "excerpt": ", SeoulTech has implemented a strategic enrollment limitation starting from the 2024 academic year. This decision reflects our commitment to maintaining high standards of education, fostering a conducive learning environment, and ensuring that each student receives personalized attention and support. We will strive to maintain a balanced number of inbound and outbound exchange students. ",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "Due to accommodation capacity and course registration constraints, SeoulTech has implemented a strategic enrollment limitation starting from the 2024 academic year. This decision reflects our commitment to maintaining high standards of education, fostering a conducive learning environment, and ensuring that each student receives personalized attention and support. We will strive to maintain a balanced number of inbound and outbound exchange students. If none of SeoulTech students have participat",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             },
             {
-              "source_id": "p48-mirror",
-              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
-              "source_pages": [
-                5
-              ],
-              "academic_year": "2026/2027",
+              "source_id": "p48-r14-inbound",
+              "source_url": "https://global.seoultech.ac.kr/bound/inbound",
+              "source_pages": [],
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:05:42.774040+00:00",
               "status": "verified_current",
-              "excerpt": "FACTSHEET_SEOULTECH 5 only one open seat will be allocated to your university. Please note that we are unable to accept more than two students from each partner university per semester. If there is any uncertainty regarding the quota, we strongly recommend contacting SeoulTech in advance before beginning your selection process. Application procedure ■ Nomination deadline (Online ",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "Student Exchange Program : Students can enroll in up to six academic credit courses. * The Student Exchange Program at SeoulTech allows students from partner universities to pursue their studies for one or two semesters at SeoulTech. * Students who are officially nominated by their home universities will have the opportunity to apply for the Student Exchange Program at SeoulTech. * Tuition will be waived under the student exchange agreement. ▶ Visiting(Fee-paying) Program : Students can enroll i",
+              "content_hash": "5ed36533a6951fa055f5e4dcf1e6cb341403d27714b010666d2d3f520b86be3f",
+              "text_sha256": "4ce303dcfea93d0e4006fbfcf0ae6be34b128881126996275ec1934e8c2f5fc7",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "eligibility": {
-          "status": "needs_confirmation",
-          "value": "2026/27PDF核對每伙伴每期≤2席、未有互惠1席，但個人年級只在未年Overview：至少母校2sem／全時／母校提名、可英或韓修≥1sem，前一學期不得已在別韓國大學。先保母校當期名額，不將未年附條件當已核2027個人全套。",
-          "reason": "只核實指定正文／年度／計畫；舊原文保留於source及changes，完整個人表單／院系追加項未取得不假設。",
+          "status": "verified_current",
+          "value": "2027/2028 incoming正文：大學部至少完成2學期、研究所至少1學期；母校全時學籍、有有效協議且母校正式提名；至少可英／韓學習1學期（4.5月），前一學期不可已在其他韓國大學就讀。中正outbound滿2學期及GPA／平均另適用。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-r9-factsheet2026",
-              "source_url": "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "source_pages": [
-                5
-              ],
-              "academic_year": "正文FACTSHEET2026/2027；Spring2027校曆tentative",
-              "application_round": "正文FACTSHEET2026/2027；Spring2027校曆tentative",
-              "checked_at": "2026-10-08T09:30:25.477194+00:00",
-              "status": "needs_confirmation",
-              "excerpt": "FACTSHEET_SEOULTECH 5 only one open seat will be allocated to your university. Please note that we are unable to accept more than two students from each partner university per semester. If there is any uncertainty regarding the quota, we strongly recommend contacting SeoulTech in advance before beginning your selection process. Application procedure ■ Nomination deadline (Online Application) *subject to change - Spring semester(Mar to Jun): 15th October / Fall semester(Sep to Dec): 15th April ■ Ap",
-              "note": "7頁全部可讀文字核對；第3頁圖片未逐圖核。Spring2027Mar2–Jun22tentative；NHIS2026費79,310，其他網站2024費75,490為舊值。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
-            },
-            {
-              "source_id": "p48-r9-inbound",
-              "source_url": "https://irt.seoultech.ac.kr/inbound/exchange_tab",
+              "source_id": "p48-r14-inbound",
+              "source_url": "https://global.seoultech.ac.kr/bound/inbound",
               "source_pages": [],
-              "academic_year": "2026-10-08公開校址／網站或一般服務；不是2027春申請年度證據",
-              "application_round": "2026-10-08公開校址／網站或一般服務；不是2027春申請年度證據",
-              "checked_at": "2026-10-08T09:28:36.524824+00:00",
-              "status": "needs_confirmation",
-              "excerpt": "ust be: - Have completed at least two semesters at their home universities. - Be enrolled as full-time students at their universities. - Be nominated as an Inbound Program student by their home institution. - Be able to study either in English or in Korean for at least one semester (4.5 months). - Not have studied at other Korean universities in the immediate preceding semester . (This requirement is due to visa issues.) Study Period_2025/2026 - Spring semester: 4 March - 23 June, 2025 - Fall semeste",
-              "note": "第九輪分欄閱讀；校址與官方網站身分和申請年度分開核對。校址段和各指定交通／生活段已核；全站新聞、其他學位招生、圖像未全讀。成功下載不代表2027全部政策適用。",
-              "content_hash": "fb52ec8ce29f7546865c6f5fed74e679ffa212d01571586937a248a87b63a53e",
-              "text_sha256": "3cb38b80c93d82c8b7a286c2f7ffa6a9a0640b99f9864eceebab099c3731b2d0"
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:05:42.774040+00:00",
+              "status": "verified_current",
+              "excerpt": "■ Eligibility Exchange student who wishes to study at SeoulTech must; - Completed at least (Undergraduate) two semesters / (Graduate) one semester at student’s home university - Be enrolled as a full-time student at home university that has an active student exchange agreement with SeoulTech - Be nominated as an exchange student candidate by student home university - Be able to study in either English or Korean for at least one semester (4.5 months) - Have not studied at any other Korean university in the previous semester ■ Study Period 2027/2028 - 2027 Spring : March 2, 2027 ~ June 21, 2027 ",
+              "content_hash": "5ed36533a6951fa055f5e4dcf1e6cb341403d27714b010666d2d3f520b86be3f",
+              "text_sha256": "4ce303dcfea93d0e4006fbfcf0ae6be34b128881126996275ec1934e8c2f5fc7",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "language": {
           "status": "verified_current",
-          "value": "英語B2（TOEIC750/IELTS5.5/TOEFL72等；TOEFL未註變體）或TOPIK3；以TOPIK申請限韓語課，不將72任意視iBT。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "2027春季英語B2（TOEIC750、IELTS5.5、TOEFL72、Cambridge160、Pearson59、DET100）或TOPIK3；以TOPIK申請只能修韓語授課。TOEFL正文未註變體，DET是host新列途徑、母校接受性另核。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-mirror",
-              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                5
+                4
               ],
-              "academic_year": "2026/2027",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "verified_current",
-              "excerpt": "sh (Pearson) 59 or : Topik(Test of Proficiency in Korean) 3 * Please note that students who apply to the exchange program using a TOPIK score will be permitted to enroll in Korean-language-taught courses only. Insurance National Health Insurance is a mandatory program implemented by the Ministry of Health and Welfare in Korea and",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "Applicants are required to have a good command of either English (B2 level) OR Korean (TOPIK Level 3) in order to communicate and function effectively in an academic environment. Therefore, an internationally recognized language certificate equivalent to these levels is required. ▶ TOEIC 750 / IELTS 5.5 / TOEFL 72 / Cambridge English Scale 160 / Global Scale of English (Pearson) 59 / DET 100 OR ▶ TOPIK(Test of Proficiency in Korean) Level 3 ※ Students who apply to the exchange program using a TOPIK score will be permitted to enroll in Korean-language-taught courses only. ■ Number of exchanges students Due to accommodation capacity and course registration constraints, SeoulTech has implemente",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "nomination_deadline": {
           "status": "verified_current",
-          "value": "春季10/15（2026/27資料對應2026-10-15，subject to change）。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "2027春季：2026-10-15母校提名；2026-10-31學生申請，兩者分開。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-mirror",
-              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                5
+                2
               ],
-              "academic_year": "2026/2027",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "verified_current",
-              "excerpt": "ction process. Application procedure ■ Nomination deadline (Online Application) *subject to change - Spring semester(Mar to Jun): 15th October / Fall semester(Sep to Dec): 15th April ■ Application deadline (Online Application) *subject to change - Spring semester(Mar to Jun): 31st October / Fall semester(Sep to Dec): 30th April ■ ",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "Spring semester Fall semester Nomination Deadline October 15 April 15 Application Deadline October 31 April 30 1. General Information 2. Nomination / Application Information",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "application_deadline": {
           "status": "verified_current",
-          "value": "春季10/31（對應2026-10-31，subject to change）；非OECD文件抵校須至少抵韓前2周。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "2027春季：2026-10-31學生申請；第二次文件的確切截止未載，不能套舊資料抵韓前2週。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-mirror",
-              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                5
+                2
               ],
-              "academic_year": "2026/2027",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "verified_current",
-              "excerpt": "ll semester(Sep to Dec): 15th April ■ Application deadline (Online Application) *subject to change - Spring semester(Mar to Jun): 31st October / Fall semester(Sep to Dec): 30th April ■ Application documents - 1st: A copy of passport, Study Plan, Recommendation Letter, Official transcript - 2nd: Health clearance(TB test result, Mea",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "Spring semester Fall semester Nomination Deadline October 15 April 15 Application Deadline October 31 April 30 1. General Information 2. Nomination / Application Information",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "documents": {
           "status": "verified_current",
-          "value": "第一階護照、studyplan、推薦、成績；第二階TB/麻疹、航班與韓國簽證。非OECD國籍加銀行及認證在學正本，抵韓前2週寄達。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "2027春季host第一次：線上申請、在學、成績、語言證明、Study Plan Form1、效期≥開課後6月護照、3.5×4.5cm照片；第二次：韓國簽證copy、航班、本人銀行證明USD6000一期／12000兩期。非OECD在學／成績及銀行正本另需條件認證。TB陰性與兩劑麻疹只宿舍申請者，未載送件時點。Host新版未列推薦信，中正當期母校第二階仍列，不能自行免除母校要求。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-mirror",
-              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                5
+                3
               ],
-              "academic_year": "2026/2027",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "verified_current",
-              "excerpt": "ine (Online Application) *subject to change - Spring semester(Mar to Jun): 31st October / Fall semester(Sep to Dec): 30th April ■ Application documents - 1st: A copy of passport, Study Plan, Recommendation Letter, Official transcript - 2nd: Health clearance(TB test result, Measles Vaccination Certificate), Flight info, Copy of Korea visa L",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "1 Online Application ● ● Application link will be sent to student who have been officially nominated by student home university 2 Certificate of Enrollment ● ● (For non-OECD Nationality): Original required to SeoulTech - For Apostille member countries: Notarized with an Apostille - For non-Apostille countries: Authenticated by the Korean Embassy/Consulate ※ CHN students: CHSI only 3 Official Transcript ● ● (For non-OECD Nationality): Original required to SeoulTech - For Apostille member countries: Notarized with an Apostille - For non-Apostille countries: Authenticated by the Korean Embassy/Consulate 4 Certificate of Language Proficiency ● ● 5 Study Plan ● ● [Form 1] attached 6 Copy of Valid Passport ● ● Valid for at least 6 months from the semester start date 7 Photo ● ● Passport-sized: 3.5cm×4.5cm No. Document For OECD Nationality For non-OECD Nationality Notes 1 Copy of Korea Visa ● ● 2 Flight Itinerary ● ● 3 Bank Statement ● ● Bank ",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            },
+            {
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "source_pages": [
+                3
+              ],
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
+              "status": "verified_current",
+              "excerpt": "1 Copy of Korea Visa ● ● 2 Flight Itinerary ● ● 3 Bank Statement ● ● Bank statement under the applicant’s own name - One semester: USD 6,000 / Two semesters: USD 12,000 (For non-OECD Nationality): Original required to SeoulTech No. Document Notes 1 TB test result - Negative Tuberculosis(TB) test result - Available tests: Chest X-ray, blood test OR skin test 2 M easles Vaccination Certificate - Proof of 2 doses",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "application_forms": {
           "status": "needs_confirmation",
-          "value": "當期PDF分1st護照/studyplan/推薦/正式成績，2ndTB/麻疹/航班/visa；一般Overview說online申請link僅正式提名學生獲得。未取得完整個人表／健康格式／院系追加表，不稱官方尚未公告。非OECD銀行/認證在學正本另外抵韓前≥2週寄達。",
-          "reason": "只核實指定正文／年度／計畫；舊原文保留於source及changes，完整個人表單／院系追加項未取得不假設。",
+          "value": "提名後個人online link仍未取得。PDF聲稱Study Plan [Form1] attached，但這份8頁PDF未含空白Form1，入口亦未提供独立表；尚未核實附件不等官方未公告。新版host與母校推薦信要求不同；在學／成績一般入口寫original，PDF只non-OECD原件，個人適用需確認。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-r9-factsheet2026",
-              "source_url": "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                5
+                3
               ],
-              "academic_year": "正文FACTSHEET2026/2027；Spring2027校曆tentative",
-              "application_round": "正文FACTSHEET2026/2027；Spring2027校曆tentative",
-              "checked_at": "2026-10-08T09:30:25.477194+00:00",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "needs_confirmation",
-              "excerpt": "ep to Dec): 30th April ■ Application documents - 1st: A copy of passport, Study Plan, Recommendation Letter, Official transcript - 2nd: Health clearance(TB test result, Measles Vaccination Certificate), Flight info, Copy of Korea visa Language requirement SeoulTech requires a good command of English (B2 level) or Korean (TOPIK Level 3) in order to communicate and function effectively in an academic environment. An internationally recognized language certificate equivalent to the B2 level is required:",
-              "note": "7頁全部可讀文字核對；第3頁圖片未逐圖核。Spring2027Mar2–Jun22tentative；NHIS2026費79,310，其他網站2024費75,490為舊值。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "5 Study Plan ● ● [Form 1] attached 6 Copy of Valid Passport ● ● Valid for at least 6 months from the semester start date 7 Photo ● ● Passport-sized: 3.5cm×4.5cm No. Document For OECD Nationality For non-OECD Na",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             },
             {
-              "source_id": "p48-r9-inbound",
-              "source_url": "https://irt.seoultech.ac.kr/inbound/exchange_tab",
+              "source_id": "p48-r14-inbound",
+              "source_url": "https://global.seoultech.ac.kr/bound/inbound",
               "source_pages": [],
-              "academic_year": "2026-10-08公開校址／網站或一般服務；不是2027春申請年度證據",
-              "application_round": "2026-10-08公開校址／網站或一般服務；不是2027春申請年度證據",
-              "checked_at": "2026-10-08T09:28:36.524824+00:00",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:05:42.774040+00:00",
               "status": "needs_confirmation",
-              "excerpt": " Online application (The application link will be sent to the student who are officially nominated by their home university.) - Official Transcript - A certificate of language proficiency(Enlish or Korean) - Recommendation Letter - Study Plan - Copy of Valid Passport FACTSHEET_2026/27 [개인정보처리방침] | [이메일무단수집거부] Tel : +82-2-970-9206~7 Fax : +82-2-970-9229 Copyright (c) SEOUL NATIONAL UNIVERSITY OF SCIENCE AND TECHNOLOGY. All Rights Reserved.",
-              "note": "第九輪分欄閱讀；校址與官方網站身分和申請年度分開核對。校址段和各指定交通／生活段已核；全站新聞、其他學位招生、圖像未全讀。成功下載不代表2027全部政策適用。",
-              "content_hash": "fb52ec8ce29f7546865c6f5fed74e679ffa212d01571586937a248a87b63a53e",
-              "text_sha256": "3cb38b80c93d82c8b7a286c2f7ffa6a9a0640b99f9864eceebab099c3731b2d0"
+              "excerpt": "■ Application Documents - Online application: Application link will be sent to student who have been officially nominated by student home university - Certificate of Enrollment (※ original required to SeoulTech) - Official Transcript (※ original required to SeoulTech) - Certificate of Language Proficiency (English or Korean) - Study Plan - Copy of Valid Passport - Photo (Passport-sized: 3.5cm×4.5cm) FACTSHEET_2027/2028 Quick Link 웹메일 학생포털 생활관 하이코리아 유학생보험청구 Instagram Youtube KakaoTalk 개인정보처리방침(Privacy Policy) SEOUL NATIONAL UNIVERSITY OF SCIENCE AND TECHNOLOGY | Office of In",
+              "content_hash": "5ed36533a6951fa055f5e4dcf1e6cb341403d27714b010666d2d3f520b86be3f",
+              "text_sha256": "4ce303dcfea93d0e4006fbfcf0ae6be34b128881126996275ec1934e8c2f5fc7",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "academic_calendar": {
           "status": "verified_current",
-          "value": "2027-03-02至2027-06-22（tentative）。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "2027春季2027-03-02至2027-06-21，新版8頁factsheet及官方2027/2028入口與中正當期p48一致；旧2026/27的6/22 tentative已被新版替代。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-mirror",
-              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                1
+                4
               ],
-              "academic_year": "2026/2027",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "verified_current",
-              "excerpt": "l (Incoming) +82-2-970-9216 / (Outgoing) +82-2-970-9214 Fall Semester 2026 1. Sep. – 21. Dec, 2026 Spring Semester 2027 2. Mar. – 22. Jun, 2027 (Tentive) Fall Semester 2027 1. Sep. – 21. Dec, 2027 (Tentive) ",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "2027 Spring Semester March 2, 2027 ~ June 21, 2027",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            },
+            {
+              "source_id": "p48-r14-inbound",
+              "source_url": "https://global.seoultech.ac.kr/bound/inbound",
+              "source_pages": [],
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:05:42.774040+00:00",
+              "status": "verified_current",
+              "excerpt": "■ Study Period 2027/2028 - 2027 Spring : March 2, 2027 ~ June 21, 2027 - 2027 Fall : September 1, 2027 ~ December 21, 2027 (Tentative) - 2028 Spring : March 2, 2028 ~ June 21, 2028 ■ Application Documents - Online application: Application link will be sent to ",
+              "content_hash": "5ed36533a6951fa055f5e4dcf1e6cb341403d27714b010666d2d3f520b86be3f",
+              "text_sha256": "4ce303dcfea93d0e4006fbfcf0ae6be34b128881126996275ec1934e8c2f5fc7",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "course_restrictions": {
-          "status": "verified_current",
-          "value": "僅Module清單課；2–18學分/期。英語實際課約前1月公布，課程不保證；密集韓語非學分另收費。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "status": "conflict",
+          "value": "僅Module清單課；2027英文課約開課前1月公布，2026Spring/Fall課綱只參考、課程不保證。Host新版2–18 credits/期，但中正當期p48最少3、最多18並推薦12；最低數字差異保留，不自行選一個。密集韓語非學分且另收費。",
+          "reason": "新版host2與母校當期3是不同來源最低學分，未擅合併；最新實際Module及回母校認抵仍另核。",
           "evidence": [
             {
-              "source_id": "p48-mirror",
-              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                1
+                4
               ],
-              "academic_year": "2026/2027",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "verified_current",
-              "excerpt": "eantime, please refer to the course list from the previous year. Please note that exchange students are allowed to select courses only from the Module list. * Syllabus For students’ convenience, we have gathered all the syllabi for the Module courses on Google Drive. - (2026 Spring Semester) https://drive.google.com/drive/folders/1pUOZuQxGcJMl",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
+              "status": "conflict",
+              "excerpt": "- Course List (https://global.seoultech.ac.kr/bound/inbound/course) The finalized list of courses offered in English for each semester will be announced approximately one month before the start of the semester. In the meantime, please refer to the course list from the previous semester. Please note that exchange students are allowed to select courses only from the Module list. - Syllabus For students’ convenience, we have gathered all the syllabi for the Module courses on Google Drive. ▶ (2026 Spring Semester) https://drive.google.com/drive/folders/1IGgr8Y7103xdRg0X1qAMuHqznIbMtXmJ?usp=sharing ▶ (2026 Fall Semester) https://drive.google.com/drive/folders/1wzP4AnJfZKSYiJqh7XX_MxEePq3Pf0rf?usp=sharing ※ Please note that course offerings are relatively flexible and may be added or removed for the upcom ing semes",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            },
+            {
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "source_pages": [
+                5
+              ],
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
+              "status": "conflict",
+              "excerpt": "All exchange students can take (Min) 2 credits ~ (Max) 18 credits per semester. 1 Credit = 16 teaching hours including lectures, exam, assignments, and attendance 1 Course = 2 or 3 credits All courses are offered on a se",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            },
+            {
+              "source_id": "p0-profile-ccu-list",
+              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "source_pages": [
+                48
+              ],
+              "academic_year": "中正2027春2026.09.17當期p48",
+              "application_round": "一般公開服務／歷史參考，非申請梯次",
+              "checked_at": "2026-10-08T09:27:00.887129+00:00",
+              "status": "conflict",
+              "excerpt": "推薦修習12 credit (最少 3學分~最多 18學分) SeoulTech only offers Sunglim dormitory room(No kitchen in the room) ; Sunglim Male’s Dormitory ：3 male students will share one room, no kitchen in the room. Sunglim Fem",
+              "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+              "text_sha256": "4c5c624798e4f3ab52633a60d2c53582b33fcfb0edf6a553344a6e6ca66c043e",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "housing": {
           "status": "verified_current",
-          "value": "Sunglim一般宿舍保證，但InternationalHall僅候補不保證；男三人、女雙人。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "2027春季明示不保證exchange住宿；Sunglim International Hall房間非常有限、舊住優先，只接受waiting list。Sunglim男3 units（2 rooms）單／雙床、女雙床；International Hall單／雙／四床另有房型，未保個人分配。舊2026/27保證Sunglim敘述不再作當期。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-mirror",
-              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                2
+                6
               ],
-              "academic_year": "2026/2027",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "verified_current",
-              "excerpt": "eeks). Assessment ※ The lowest passing grade is D0(60.) Living in SEOULTECH ■ On campus SeoulTech guarantees accommodation in the Sunglim Dormitory for exchange students. Please note that there are very limited spaces available in the International Hall. In addition, current residents are given priority to remain in the same room for t",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "SeoulTech does not guarantee accommodation for exchange students. ※ Dormitory fees can be subject to change ※ For Sunglim International Hall Dormitory, spaces are extremely limited and current residents are given priority to extend their stay for the following",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            },
+            {
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "source_pages": [
+                6
+              ],
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
+              "status": "verified_current",
+              "excerpt": "※ For Sunglim International Hall Dormitory, spaces are extremely limited and current residents are given priority to extend their stay for the following semester. Consequently, the likelihood of being assigned to this hall is very low. Therefore, applications for the Sunglim International Hall Dormitory are accepted on a waiting list basis only. * Dormitory Meal Fee (Can only use from Dormitory Cafeteria) ※ Dormitory Meal fees can be subject to change Meal Option Meal fee for",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
@@ -22348,159 +22601,174 @@
         },
         "costs": {
           "status": "verified_current",
-          "value": "資料宿舍男雙床882000/單床1120350、女雙床896760 KRW/期；選餐464600/808000/1151400 KRW/4月，費率可變。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "2027春季KRW／一學期：Sunglim男單1329120、男雙1045980、女雙1062360；International Hall單2303730、雙1601730、四床1216800。餐費可不選；1餐529200、2餐928800、3餐1296000／學期。均明示可變、宿舍不保證；不是全體個人實繳帳單。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-mirror",
-              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                4
+                6
               ],
-              "academic_year": "2026/2027",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "verified_current",
-              "excerpt": "y (Two separate rooms: 2 beds(Room2) + 1 bed(Room1)) * 3 male students will share one room, no kitchen in the room. (2 beds room) KRW 882,000 (1 bed room) KRW 1,120,350 Sunglim Female’s Dormitory (One room: 2 beds) * 2 Female students will share one room, no kitchen in the room. (2 beds room) KRW 896,760 Options Meal Total Price ",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "Meal Option Meal fee for 1 semester (KRW) No meals - 1 Meal a day (Choose 1: Breakfast OR Lunch OR Dinner) 529,200 2 Meals a day (Choose 2) 928,800 3 Meals a day (Breakfast & Lunch & Dinner) 1,296,000 Dormitory Building Room Type Dormitory fee for 1 Semester(KRW) Shared kitchen (Male) Sunglim Dormitory 3 units (2 rooms) single room(1) 1,329,120 double room(2) 1,045,980 (Female) Sunglim Dormitory double room(2) 1,062,360 Kitchen in the room International Hall Dormitory single room(1) 2,303,730 double room(2) 1,601,730 quad room(4) 1,216,800 (Male) Sunglim Dormitory – single room(1) (Male) Sunglim Dormitory – double room(2) (Female) Sunglim Dormitory – double room(2) 4. Accommodation",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "insurance": {
           "status": "verified_current",
-          "value": "當期2026/27PDF明示NHISmandatory且regardless私人insurance，ARC後自動加入，2026月費79,310KRW；一般life頁75,490是asof2024，不能套2027費率或推私人保單自動免。母校出發前medical+accident仍另交，個人2027帳單／政府豁免未核。",
-          "reason": "只核實指定正文／年度／計畫；舊原文保留於source及changes，完整個人表單／院系追加項未取得不假設。",
+          "value": "2027春factsheet：NHISmandatory、不因已有私人保險免除，ARC發卡後自動加入。79,310 KRW/月標As of2026，不能保2027帳單；中正出發前medical／accident保險仍另適用。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-r9-factsheet2026",
-              "source_url": "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                6
+                8
               ],
-              "academic_year": "正文FACTSHEET2026/2027；Spring2027校曆tentative",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T09:30:25.477194+00:00",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "verified_current",
-              "excerpt": "FACTSHEET_SEOULTECH 6 As of 2026, the monthly National Health Insurance premium is KRW 79,310. A payment notice is sent each month to the student’s registered residence in Korea. Visa A student visa (D-2-6) is required for individuals who are not of Korean nationality in order to study in Korea. Please note that a visitor visa cannot be changed to a student visa within Korea. Students must apply for a D-2-6 student visa prior to arrival. The Ministry of Justice introduced new regulations in June 2",
-              "note": "7頁全部可讀文字核對；第3頁圖片未逐圖核。Spring2027Mar2–Jun22tentative；NHIS2026費79,310，其他網站2024費75,490為舊值。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
-            },
-            {
-              "source_id": "p48-r9-factsheet2026",
-              "source_url": "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "source_pages": [
-                5
-              ],
-              "academic_year": "正文FACTSHEET2026/2027；Spring2027校曆tentative",
-              "application_round": "2027春季",
-              "checked_at": "2026-10-08T09:30:25.477194+00:00",
-              "status": "verified_current",
-              "excerpt": "not optional. It applies regardless of whether students have private insurance. Once foreign registration is completed after arrival in Korea, students’ information will be updated in the National Health Insurance system, and students will be automatically enrolled. ★ Additional documents (applicable only to students from non-OECD countries) 1. A bank statement showing the account balance 2. A certificate of enrollment from the current home university, notarized by the Korean Embassy or apostilled **",
-              "note": "7頁全部可讀文字核對；第3頁圖片未逐圖核。Spring2027Mar2–Jun22tentative；NHIS2026費79,310，其他網站2024費75,490為舊值。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "National Health Insurance is a mandatory program implemented by the Ministry of Health and Welfare in Korea and is not optional. It applies regardless of whether students have private insurance. Once students apply for their Alien Registration Card (ARC) after arrival in Korea and the physical card is issued, their information will be updated in the National Health Insurance system, and they will be automatically enrolled. As of 2026, the monthly National Health Insurance premium is KRW 79,310. Payment notices are sent each month to the student’s registered residence in Korea. ■ Korean buddy program & International Student Club (ISC) ISC (International Student Club) is a student organization at SeoulTech that o",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "visa": {
           "status": "verified_current",
-          "value": "非韓國國籍須入境前D-2-6；非OECD財力6000USD/期、12000USD/年與認證在學正本另附。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "2027春factsheet要求入境前D-2-6；visitor不可境內轉、K-ETA不能就讀。簽證文件清單明示reference only，個人臺籍辦理需向官方領務資訊核對；非OECD在學／銀行認證與USD6000一期／12000一年按原文，財力不是生活費估價。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-mirror",
-              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                6
+                7
               ],
-              "academic_year": "2026/2027",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "verified_current",
-              "excerpt": "e premium is KRW 79,310. A payment notice is sent each month to the student’s registered residence in Korea. Visa A student visa (D-2-6) is required for individuals who are not of Korean nationality in order to study in Korea. Please note that a visitor visa cannot be changed to a student visa within Korea. Students must ap",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "■ Visa - Exchange students are required to obtain a student visa (D-2-6) to study in Korea. Students must apply for their D-2-6 visa prior to arrival. ※ A visitor visa cannot be converted into a student visa from within Korea. Pursuing studies under a K-ETA (Tourist Visa) is strictly prohibited. - Following the Ministry of Justice’s updated regulations and tightened immigration policies introduced in June 2022, additional documentation is now required for exchange students. ※ The document list below is for reference only. Please be sure to contact the embassy or consulate of your home country to verify the exact required documents for your visa. ▶ Nationals of OECD countries - Certificate of Admission - Letter of Acceptance - Certificate of Business Registration ▶ Nationals of Non-OECD countries - Certificate of Admission - Letter of Acceptance - Certificate of Business Registration - Certificate of Enrollment ⋅ For Apostille member countries: Must be notarized with an Apostille ⋅ For non-Apostille countries: Must be authenticated by the Korean Embassy - Bank statement: The statement must demonstrate sufficient funds to cover living",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "arrival": {
           "status": "needs_confirmation",
-          "value": "一般Overview校曆仍2025/26、Calendar頁仍Spring2026，不能套2027精確迎新/入住；當期factsheetSpring2027開始Mar2tentative。ISC支援及orientation一般已核，但沒有本期精確首日或接機，保持適用性待確認。",
-          "reason": "只核實指定正文／年度／計畫；舊原文保留於source及changes，完整個人表單／院系追加項未取得不假設。",
+          "value": "新版已核2027-03-02開課至06-21，但未載當期確切報到／迎新／接機日。一般buddy有支援，不推免費接機、入住或抵達第一日安排。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-r9-life",
-              "source_url": "https://irt.seoultech.ac.kr/inbound/exchange_tab/exchange_cam",
-              "source_pages": [],
-              "academic_year": "2026-10-08公開校址／網站或一般服務；不是2027春申請年度證據",
-              "application_round": "2026-10-08公開校址／網站或一般服務；不是2027春申請年度證據",
-              "checked_at": "2026-10-08T09:30:25.478528+00:00",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "source_pages": [
+                4
+              ],
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "needs_confirmation",
-              "excerpt": "ffairs (OIA) conducts an orientation to provide you with important information about the university, its academic system, campus facilities, immigration and visa regulations, as well as other vital support services. This is to ensure you attend the orientation and have sufficient time to adjust to your new home, dormitory, and community here at SeoulTech. [ Academic Transcript] An English version of your academic transcript will be sent to your home institution via email. Please inform us if you requ",
-              "note": "全文分段讀，費/保險印2024：不升2027費率；一般ISC/宿舍設施可参考，2026/27新PDF另列。",
-              "content_hash": "9e9047cf591d8328616401d4fdcd599dc6563b058e7166494b3dbc9a2953cebc",
-              "text_sha256": "95d11f5ca40dfe0f166e82c925cfde83fd73ed4407b01fee5fddd8e95b3392c6"
+              "excerpt": "2027 Spring Semester March 2, 2027 ~ June 21, 2027",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             },
             {
-              "source_id": "p48-r9-factsheet2026",
-              "source_url": "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                1
+                8
               ],
-              "academic_year": "正文FACTSHEET2026/2027；Spring2027校曆tentative",
-              "application_round": "正文FACTSHEET2026/2027；Spring2027校曆tentative",
-              "checked_at": "2026-10-08T09:30:25.477194+00:00",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "needs_confirmation",
-              "excerpt": " 1. Sep. – 21. Dec, 2026 Spring Semester 2027 2. Mar. – 22. Jun, 2027 (Tentive) Fall Semester 2027 1. Sep. – 21. Dec, 2027 (Tentive)",
-              "note": "7頁全部可讀文字核對；第3頁圖片未逐圖核。Spring2027Mar2–Jun22tentative；NHIS2026費79,310，其他網站2024費75,490為舊值。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "■ Korean buddy program & International Student Club (ISC) ISC (International Student Club) is a student organization at SeoulTech that operates a buddy program for international students. During their stay in Korea, exchange students are supported by ISC members to help make their campus life more enjoyable and enriching. ▶ Instragram: @isc_seoultech ■ SeoulTech Contact Information Coordinator Name E-mail Outgoing (Coordinator for sending student",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "host_tuition": {
-          "status": "needs_confirmation",
-          "value": "未年incomingOverview區分partnerExchange在協議下免tuition，Visiting及InternshipBased均不免；不能由2026/27factsheet未寫tuition推全生免。2027個人免學費仍按協議/接收通知，中正母校費另適用。",
-          "reason": "只核實指定正文／年度／計畫；舊原文保留於source及changes，完整個人表單／院系追加項未取得不假設。",
+          "status": "verified_current",
+          "value": "官方2027/2028 incoming：partner Student Exchange依exchange agreement免tuition；Visiting(Fee-paying)不免。非學分Intensive Korean另繳學費。中正母校註冊費另適用，個人仍按有效協議及錄取身分。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-r9-inbound",
-              "source_url": "https://irt.seoultech.ac.kr/inbound/exchange_tab",
+              "source_id": "p48-r14-inbound",
+              "source_url": "https://global.seoultech.ac.kr/bound/inbound",
               "source_pages": [],
-              "academic_year": "2026-10-08公開校址／網站或一般服務；不是2027春申請年度證據",
-              "application_round": "2026-10-08公開校址／網站或一般服務；不是2027春申請年度證據",
-              "checked_at": "2026-10-08T09:28:36.524824+00:00",
-              "status": "needs_confirmation",
-              "excerpt": " Program at SeoulTech. * Tuition will be waived under the student exchange agreement. - Visiting Program : Students can enroll in up to six academic credit courses. * Open to students enrolled at both partner and non-partner universities of SeoulTech. * Participants will have the chance to take credit courses to pursue their studies for one or two semesters at SeoulTech. * Students must be officially nominated by their home universities. * Although students in the Visiting Program are granted the sam",
-              "note": "第九輪分欄閱讀；校址與官方網站身分和申請年度分開核對。校址段和各指定交通／生活段已核；全站新聞、其他學位招生、圖像未全讀。成功下載不代表2027全部政策適用。",
-              "content_hash": "fb52ec8ce29f7546865c6f5fed74e679ffa212d01571586937a248a87b63a53e",
-              "text_sha256": "3cb38b80c93d82c8b7a286c2f7ffa6a9a0640b99f9864eceebab099c3731b2d0"
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:05:42.774040+00:00",
+              "status": "verified_current",
+              "excerpt": "▶ Student Exchange Program : Students can enroll in up to six academic credit courses. * The Student Exchange Program at SeoulTech allows students from partner universities to pursue their studies for one or two semesters at SeoulTech. * Students who are officially nominated by their home universities will have the opportunity to apply for the Student Exchange Program at SeoulTech. * Tuition will be waived under the student exchange agreement. ▶ Visiting(Fee-paying) Program : Students can enroll in up to six academic credit courses. * Open to students enrolled at both partner and non-partner universities of SeoulTech. * Participants will have the chance to take credit courses to pursue their studies for one or two semesters at SeoulTech. * Students must be officially nominated by their home universities. * Although students in the Visiting Program are granted the same status as exchange students, they are not eligible for tuition waiver",
+              "content_hash": "5ed36533a6951fa055f5e4dcf1e6cb341403d27714b010666d2d3f520b86be3f",
+              "text_sha256": "4ce303dcfea93d0e4006fbfcf0ae6be34b128881126996275ec1934e8c2f5fc7",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            },
+            {
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "source_pages": [
+                5
+              ],
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
+              "status": "verified_current",
+              "excerpt": "Exchange students may enroll in an intensive Korean Language Course Program. This is a non-credit course, and students are required to pay the tuition fee. ■ Grading System All exchange students can take (Min) 2 credits ",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         },
         "exchange_duration": {
           "status": "verified_current",
-          "value": "當期春季一學期暫定2027-03-02至06-22。是否可延長、全年核准及必須返國日未完整載明；簽證財力的one-year金額不能當作獲准一年交換。",
-          "reason": "第三輪逐欄核對公開正文；只列已讀要求及範圍，缺值和未核實新版另標。",
+          "value": "2027春一期2027-03-02至06-21；官方2027/2028入口允StudentExchange一或兩期，但個人第二期須依中正1年名額及host核准，不以財力金額推批准。",
+          "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
-              "source_id": "p48-mirror",
-              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                1
+                4
               ],
-              "academic_year": "2026/2027",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "verified_current",
-              "excerpt": "OULTECH 1 FACT SHEET for 2026/2027 General Information of the Institution Office of International Affairs Academic Calendar Courses * Course List: https://irt.seoultech.ac.kr/ The finalized list of courses offered in English for each semester will be available one month before the start of the semester. In the meantime, please refer to the course list from the previous year. Please note ",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
+              "excerpt": "2027 Spring Semester March 2, 2027 ~ June 21, 2027",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            },
+            {
+              "source_id": "p48-r14-inbound",
+              "source_url": "https://global.seoultech.ac.kr/bound/inbound",
+              "source_pages": [],
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:05:42.774040+00:00",
+              "status": "verified_current",
+              "excerpt": "Student Exchange Program at SeoulTech allows students from partner universities to pursue their studies for one or two semesters at SeoulTech. * Students who are officially nominated by their home universities will have the opportunity to apply for the Student Exchange Program at SeoulTech. * Tuition will be waived under the student exchange agreement. ▶ Visiting(Fee-paying) Pr",
+              "content_hash": "5ed36533a6951fa055f5e4dcf1e6cb341403d27714b010666d2d3f520b86be3f",
+              "text_sha256": "4ce303dcfea93d0e4006fbfcf0ae6be34b128881126996275ec1934e8c2f5fc7",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ]
         }
@@ -22569,10 +22837,24 @@
           "reason": "官方網站／國際處入口；個別HTTP故障另記來源取得結果，並不宣稱全站政策適用2027。"
         },
         "degree_levels": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "大學部／研究所",
+          "status": "verified_current",
+          "evidence": [
+            {
+              "source_id": "p48-r14-inbound",
+              "source_url": "https://global.seoultech.ac.kr/bound/inbound",
+              "source_pages": [],
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:05:42.774040+00:00",
+              "status": "verified_current",
+              "excerpt": "Completed at least (Undergraduate) two semesters / (Graduate) one semester at student’s home university - Be enrolled as a full-time student at home university that has an active student exchange agreement with SeoulTech - Be nominated as an exchange student candidate by student home university - Be able to study in either English or Korean for at least one semester (4.5 months) - Have not studied at any other Korean university in the previous semester ■ Study Period 2027/202",
+              "content_hash": "5ed36533a6951fa055f5e4dcf1e6cb341403d27714b010666d2d3f520b86be3f",
+              "text_sha256": "4ce303dcfea93d0e4006fbfcf0ae6be34b128881126996275ec1934e8c2f5fc7",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            }
+          ],
+          "reason": "2027/2028接收正文直接列Undergraduate兩學期、Graduate一學期；研究所為原文Graduate，不由全校招生學位猜交換資格。母校所有交換生至少滿兩學期仍另適用。"
         },
         "colleges": {
           "value": null,
@@ -22587,395 +22869,479 @@
           "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
         },
         "campus_life": {
-          "value": "當期ISC由本地學生協助交換生適應校園；提供buddy支援，未承諾個人配對時點或所有活動費用。",
+          "value": "2027春官方ISC／buddy由本地學生支援交換生校園適應；未承諾免費接機、配對日或活動費全免。",
           "status": "verified_current",
           "evidence": [
             {
-              "source_id": "p48-mirror",
-              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
               "source_pages": [
-                6
+                8
               ],
-              "academic_year": "2026/2027",
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "verified_current",
-              "excerpt": "udent. Korean buddy program & International Student Club(ISC) ISC (International Student Club) is a student organization at SeoulTech that serves as a buddy program for international students. During their stay in Korea, exchange students are supported by ISC members to help make their campus life more enjoyable and enriching. * Instragram: @isc_seoultech",
-              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1",
-              "note": "指定段原文；不由其他年份、全校學位或下載成功推定交換資格。"
+              "excerpt": "■ Korean buddy program & International Student Club (ISC) ISC (International Student Club) is a student organization at SeoulTech that operates a buddy program for international students. During their stay in Korea, exchange students are supported by ISC members to help make their campus life more enjoyable and enriching. ▶ Instragram: @isc_seoultech ■ SeoulTech Contact Information Coordinator Name E-mail Outgoing (Coordinator for sending students to study abroad at SeoulTech) Marina M",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
             }
           ],
-          "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。"
+          "reason": "直接核對當期2027春新factsheet物理p8，不沿用舊版本。"
         }
       },
       "academic_filter_scope": {
         "colleges_known": false,
-        "degree_levels_known": false
+        "degree_levels_known": true
       },
       "documents": {
         "home_individual_requirements": 9,
         "mother_per_school_notes_retained": true,
-        "host_individual_requirements": 10,
+        "host_individual_requirements": 12,
         "host_stages": {
-          "student_application": 6,
-          "post_offer": 4
+          "student_application": 7,
+          "after_application": 3,
+          "conditional_program": 2
         },
         "host_list_completeness": "partial_not_exhaustive",
         "requirements": [
           {
             "requirement": {
-              "name": "（第一階）護照copy",
+              "name": "（第一次）提名後個人線上申請",
               "copies": null,
               "copy_type": "unspecified",
               "signatures": [],
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link"
+                "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p48-mirror",
-                "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+                "source_id": "p48-r14-factsheet2027",
+                "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
                 "source_pages": [
-                  5
+                  3
                 ],
-                "academic_year": "2026/2027",
+                "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:03:07.145666+00:00",
                 "status": "verified_current",
-                "excerpt": "ication documents - 1st: A copy of passport, Study Plan, Recommendation Letter, Official transcript - 2nd: Health clearance(TB test result, Measles Vaccination Certificate), Flight info, Copy of Korea visa Language requirement SeoulTech requires a good command of English (B2 level) or Korean (TOPIK Level 3) in order to communicate and functi",
-                "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-                "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "1 Online Application ● ● Application link will be sent to student who have been officially nominated by student home university 2 Certificate of Enrollment ● ● (For non-OECD Nationality): Original required to SeoulTech - For Apostille member countries: Notarized with an Apostille - For non-Apostille countries: Authenticated by t",
+                "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+                "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+                "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
               }
             ],
             "conditional": false,
+            "condition": null,
             "stage": "student_application"
           },
           {
             "requirement": {
-              "name": "（第一階）Study Plan",
+              "name": "（第一次）在學證明；非OECD須認證正本，CHN只CHSI",
               "copies": null,
               "copy_type": "unspecified",
               "signatures": [],
-              "stamps": [],
+              "stamps": [
+                "非OECD且Apostille會員：Apostille公證；非會員：韓國使領館認證"
+              ],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link"
+                "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p48-mirror",
-                "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+                "source_id": "p48-r14-factsheet2027",
+                "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
                 "source_pages": [
-                  5
+                  3
                 ],
-                "academic_year": "2026/2027",
+                "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:03:07.145666+00:00",
                 "status": "verified_current",
-                "excerpt": "cuments - 1st: A copy of passport, Study Plan, Recommendation Letter, Official transcript - 2nd: Health clearance(TB test result, Measles Vaccination Certificate), Flight info, Copy of Korea visa Language requirement SeoulTech requires a good command of English (B2 level) or Korean (TOPIK Level 3) in order to communicate and function effective",
-                "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-                "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "2 Certificate of Enrollment ● ● (For non-OECD Nationality): Original required to SeoulTech - For Apostille member countries: Notarized with an Apostille - For non-Apostille countries: Authenticated by the Korean Embassy/Consulate ※ CHN students: CHSI only 3 Official Transcript ● ● (For non-OECD Nationality): Original required to",
+                "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+                "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+                "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
               }
             ],
             "conditional": false,
+            "condition": null,
             "stage": "student_application"
           },
           {
             "requirement": {
-              "name": "（第一階）推薦信",
+              "name": "（第一次）正式成績；非OECD須認證正本",
               "copies": null,
               "copy_type": "unspecified",
               "signatures": [],
-              "stamps": [],
+              "stamps": [
+                "非OECD且Apostille會員：Apostille公證；非會員：韓國使領館認證"
+              ],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link"
+                "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p48-mirror",
-                "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+                "source_id": "p48-r14-factsheet2027",
+                "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
                 "source_pages": [
-                  5
+                  3
                 ],
-                "academic_year": "2026/2027",
+                "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:03:07.145666+00:00",
                 "status": "verified_current",
-                "excerpt": "t: A copy of passport, Study Plan, Recommendation Letter, Official transcript - 2nd: Health clearance(TB test result, Measles Vaccination Certificate), Flight info, Copy of Korea visa Language requirement SeoulTech requires a good command of English (B2 level) or Korean (TOPIK Level 3) in order to communicate and function effectively in an academic envir",
-                "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-                "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "3 Official Transcript ● ● (For non-OECD Nationality): Original required to SeoulTech - For Apostille member countries: Notarized with an Apostille - For non-Apostille countries: Authenticated by the Korean Embassy/Consulate 4 Certificate of Language Proficiency ● ● 5 Study Plan ● ● [Form 1] attached 6 Copy of Valid Passport ● ● ",
+                "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+                "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+                "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
               }
             ],
             "conditional": false,
+            "condition": null,
             "stage": "student_application"
           },
           {
             "requirement": {
-              "name": "（第一階）正式成績",
+              "name": "（第一次）英文或韓文語言證明",
               "copies": null,
               "copy_type": "unspecified",
               "signatures": [],
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link"
+                "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p48-mirror",
-                "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+                "source_id": "p48-r14-factsheet2027",
+                "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
                 "source_pages": [
-                  5
+                  3
                 ],
-                "academic_year": "2026/2027",
+                "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:03:07.145666+00:00",
                 "status": "verified_current",
-                "excerpt": "Study Plan, Recommendation Letter, Official transcript - 2nd: Health clearance(TB test result, Measles Vaccination Certificate), Flight info, Copy of Korea visa Language requirement SeoulTech requires a good command of English (B2 level) or Korean (TOPIK Level 3) in order to communicate and function effectively in an academic environment. An internatio",
-                "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-                "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "Certificate of Language Proficiency ● ● 5 Study Plan ● ● [Form 1] attached 6 Copy of Valid Passport ● ● Valid for at least 6 months from the semester start date 7 Photo ● ● Passport-sized: 3.5cm×4.5cm No. Document For OECD Nationality For non-OECD Nationality Notes 1 Copy of Korea Visa ● ● 2 Flight Itinerary ● ● 3 Bank Statement",
+                "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+                "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+                "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
               }
             ],
             "conditional": false,
+            "condition": null,
             "stage": "student_application"
           },
           {
             "requirement": {
-              "name": "（第二階）TB檢查",
+              "name": "（第一次）Study Plan Form1；已提及但空白表未取得",
               "copies": null,
               "copy_type": "unspecified",
               "signatures": [],
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link"
+                "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p48-mirror",
-                "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+                "source_id": "p48-r14-factsheet2027",
+                "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
                 "source_pages": [
-                  5
+                  3
                 ],
-                "academic_year": "2026/2027",
+                "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:03:07.145666+00:00",
                 "status": "verified_current",
-                "excerpt": "transcript - 2nd: Health clearance(TB test result, Measles Vaccination Certificate), Flight info, Copy of Korea visa Language requirement SeoulTech requires a good command of English (B2 level) or Korean (TOPIK Level 3) in order to communicate and function effectively in an academic environment. An internationally recognized language certif",
-                "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-                "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "5 Study Plan ● ● [Form 1] attached 6 Copy of Valid Passport ● ● Valid for at least 6 months from the semester start date 7 Photo ● ● Passport-sized: 3.5cm×4.5cm No. Document For OECD Nationality For non-OECD Nationality Notes 1 Copy of Korea Visa ● ● 2 Flight Itinerary ● ● 3 Bank Statement ● ● Bank statement under the applicant’",
+                "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+                "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+                "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
               }
             ],
             "conditional": false,
-            "stage": "post_offer"
+            "condition": null,
+            "stage": "student_application"
           },
           {
             "requirement": {
-              "name": "（第二階）麻疹疫苗證明",
+              "name": "（第一次）護照copy；效期至少學期開始後6月",
               "copies": null,
-              "copy_type": "unspecified",
+              "copy_type": "copy",
               "signatures": [],
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link"
+                "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p48-mirror",
-                "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+                "source_id": "p48-r14-factsheet2027",
+                "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
                 "source_pages": [
-                  5
+                  3
                 ],
-                "academic_year": "2026/2027",
+                "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:03:07.145666+00:00",
                 "status": "verified_current",
-                "excerpt": ": Health clearance(TB test result, Measles Vaccination Certificate), Flight info, Copy of Korea visa Language requirement SeoulTech requires a good command of English (B2 level) or Korean (TOPIK Level 3) in order to communicate and function effectively in an academic environment. An internationally recognized language certificate equivalent",
-                "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-                "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "6 Copy of Valid Passport ● ● Valid for at least 6 months from the semester start date 7 Photo ● ● Passport-sized: 3.5cm×4.5cm No. Document For OECD Nationality For non-OECD Nationality Notes 1 Copy of Korea Visa ● ● 2 Flight Itinerary ● ● 3 Bank Statement ● ● Bank statement under the applicant’s own name - One semester: USD 6,00",
+                "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+                "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+                "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
               }
             ],
             "conditional": false,
-            "stage": "post_offer"
+            "condition": null,
+            "stage": "student_application"
           },
           {
             "requirement": {
-              "name": "（第二階）航班資料",
+              "name": "（第一次）3.5×4.5cm護照規格照片",
               "copies": null,
               "copy_type": "unspecified",
               "signatures": [],
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link"
+                "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p48-mirror",
-                "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+                "source_id": "p48-r14-factsheet2027",
+                "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
                 "source_pages": [
-                  5
+                  3
                 ],
-                "academic_year": "2026/2027",
+                "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:03:07.145666+00:00",
                 "status": "verified_current",
-                "excerpt": " Measles Vaccination Certificate), Flight info, Copy of Korea visa Language requirement SeoulTech requires a good command of English (B2 level) or Korean (TOPIK Level 3) in order to communicate and function effectively in an academic environment. An internationally recognized language certificate equivalent to the B2 level is required: ; TOEIC ",
-                "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-                "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "7 Photo ● ● Passport-sized: 3.5cm×4.5cm No. Document For OECD Nationality For non-OECD Nationality Notes 1 Copy of Korea Visa ● ● 2 Flight Itinerary ● ● 3 Bank Statement ● ● Bank statement under the applicant’s own name - One semester: USD 6,000 / Two semesters: USD 12,000 (For non-OECD Nationality): Original required to SeoulTe",
+                "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+                "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+                "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
               }
             ],
             "conditional": false,
-            "stage": "post_offer"
+            "condition": null,
+            "stage": "student_application"
           },
           {
             "requirement": {
-              "name": "（第二階）韓國簽證copy",
+              "name": "（第二次）韓國簽證copy；確切繳交日另核",
               "copies": null,
-              "copy_type": "unspecified",
+              "copy_type": "copy",
               "signatures": [],
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link"
+                "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p48-mirror",
-                "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+                "source_id": "p48-r14-factsheet2027",
+                "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
                 "source_pages": [
-                  5
+                  3
                 ],
-                "academic_year": "2026/2027",
+                "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:03:07.145666+00:00",
                 "status": "verified_current",
-                "excerpt": "Certificate), Flight info, Copy of Korea visa Language requirement SeoulTech requires a good command of English (B2 level) or Korean (TOPIK Level 3) in order to communicate and function effectively in an academic environment. An internationally recognized language certificate equivalent to the B2 level is required: ; TOEIC 750/ IELTS 5.5/ TOEF",
-                "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-                "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "1 Copy of Korea Visa ● ● 2 Flight Itinerary ● ● 3 Bank Statement ● ● Bank statement under the applicant’s own name - One semester: USD 6,000 / Two semesters: USD 12,000 (For non-OECD Nationality): Original required to SeoulTech No. Document Notes 1 TB test result - Negative Tuberculosis(TB) test result - Available tests: Chest X",
+                "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+                "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+                "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
               }
             ],
             "conditional": false,
-            "stage": "post_offer"
+            "condition": null,
+            "stage": "after_application"
           },
           {
             "requirement": {
-              "name": "（非OECD國籍；抵韓前2週寄達）銀行正本",
+              "name": "（第二次）航班行程；確切繳交日另核",
               "copies": null,
               "copy_type": "unspecified",
               "signatures": [],
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link"
+                "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p48-mirror",
-                "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+                "source_id": "p48-r14-factsheet2027",
+                "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
                 "source_pages": [
-                  5
+                  3
                 ],
-                "academic_year": "2026/2027",
+                "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:03:07.145666+00:00",
                 "status": "verified_current",
-                "excerpt": "ents from non-OECD countries) 1. A bank statement showing the account balance 2. A certificate of enrollment from the current home university, notarized by the Korean Embassy or apostilled ** Please note that the classification of non-OECD countries is determined based on the student’s nationality(passport), not the country where the student is cu",
-                "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-                "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "2 Flight Itinerary ● ● 3 Bank Statement ● ● Bank statement under the applicant’s own name - One semester: USD 6,000 / Two semesters: USD 12,000 (For non-OECD Nationality): Original required to SeoulTech No. Document Notes 1 TB test result - Negative Tuberculosis(TB) test result - Available tests: Chest X-ray, blood test OR skin ",
+                "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+                "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+                "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+              }
+            ],
+            "conditional": false,
+            "condition": null,
+            "stage": "after_application"
+          },
+          {
+            "requirement": {
+              "name": "（第二次）本人銀行證明USD6000一期／12000兩期；非OECD正本",
+              "copies": null,
+              "copy_type": "unspecified",
+              "signatures": [],
+              "stamps": [],
+              "official_form_url": null,
+              "source_urls": [
+                "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
+              ],
+              "needs_confirmation": true
+            },
+            "evidence": [
+              {
+                "source_id": "p48-r14-factsheet2027",
+                "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+                "source_pages": [
+                  3
+                ],
+                "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+                "application_round": "2027春季",
+                "checked_at": "2026-10-08T12:03:07.145666+00:00",
+                "status": "verified_current",
+                "excerpt": "3 Bank Statement ● ● Bank statement under the applicant’s own name - One semester: USD 6,000 / Two semesters: USD 12,000 (For non-OECD Nationality): Original required to SeoulTech No. Document Notes 1 TB test result - Negative Tuberculosis(TB) test result - Available tests: Chest X-ray, blood test OR skin test 2 M easles Vaccina",
+                "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+                "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+                "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+              }
+            ],
+            "conditional": false,
+            "condition": null,
+            "stage": "after_application"
+          },
+          {
+            "requirement": {
+              "name": "（宿舍條件）TB陰性：胸片／血液／皮膚測試",
+              "copies": null,
+              "copy_type": "unspecified",
+              "signatures": [],
+              "stamps": [],
+              "official_form_url": null,
+              "source_urls": [
+                "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
+              ],
+              "needs_confirmation": true
+            },
+            "evidence": [
+              {
+                "source_id": "p48-r14-factsheet2027",
+                "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+                "source_pages": [
+                  3
+                ],
+                "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+                "application_round": "2027春季",
+                "checked_at": "2026-10-08T12:03:07.145666+00:00",
+                "status": "verified_current",
+                "excerpt": "1 TB test result - Negative Tuberculosis(TB) test result - Available tests: Chest X-ray, blood test OR skin test 2 M easles Vaccination Certificate - Proof of 2 doses",
+                "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+                "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+                "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
               }
             ],
             "conditional": true,
-            "stage": "student_application"
+            "condition": "僅宿舍申請者；正文未載與第一／第二次送件的時點對應",
+            "stage": "conditional_program"
           },
           {
             "requirement": {
-              "name": "（非OECD國籍；抵韓前2週寄達）認證在學正本",
+              "name": "（宿舍條件）麻疹疫苗兩劑證明",
               "copies": null,
               "copy_type": "unspecified",
               "signatures": [],
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link"
+                "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p48-mirror",
-                "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+                "source_id": "p48-r14-factsheet2027",
+                "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
                 "source_pages": [
-                  5
+                  3
                 ],
-                "academic_year": "2026/2027",
+                "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:03:07.145666+00:00",
                 "status": "verified_current",
-                "excerpt": "t showing the account balance 2. A certificate of enrollment from the current home university, notarized by the Korean Embassy or apostilled ** Please note that the classification of non-OECD countries is determined based on the student’s nationality(passport), not the country where the student is currently studying. ** These two documents must be sent by po",
-                "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
-                "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "M easles Vaccination Certificate - Proof of 2 doses",
+                "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+                "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+                "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
               }
             ],
             "conditional": true,
-            "stage": "student_application"
+            "condition": "僅宿舍申請者；正文未載與第一／第二次送件的時點對應",
+            "stage": "conditional_program"
           }
         ]
       },
       "runtime": {
         "document_catalog_phases": [
           "合作校申請",
-          "合作校錄取後"
+          "合作校特定計畫文件",
+          "合作校第二次文件送件"
         ],
         "document_catalog_host_items": [
           {
-            "id": "0f326baa4fd0a8949a28",
+            "id": "fda379ad4daa6bea6e60",
             "sequence": 18,
             "phase": "合作校申請",
             "step_title": "依提名信辦理合作校申請",
-            "name": "（第一階）護照copy",
+            "name": "（第一次）提名後個人線上申請",
             "copies": null,
             "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
-              "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab"
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "https://global.seoultech.ac.kr/bound/inbound",
+              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -22988,20 +23354,22 @@
             "official_form_verified": false
           },
           {
-            "id": "f4e261bf8541c341fb9d",
+            "id": "b1ab043d98c676856db0",
             "sequence": 19,
             "phase": "合作校申請",
             "step_title": "依提名信辦理合作校申請",
-            "name": "（第一階）Study Plan",
+            "name": "（第一次）在學證明；非OECD須認證正本，CHN只CHSI",
             "copies": null,
             "copy_type": "unspecified",
             "signatures": [],
-            "stamps": [],
+            "stamps": [
+              "非OECD且Apostille會員：Apostille公證；非會員：韓國使領館認證"
+            ],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
-              "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab"
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "https://global.seoultech.ac.kr/bound/inbound",
+              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -23014,20 +23382,22 @@
             "official_form_verified": false
           },
           {
-            "id": "0c00e55490bcab216ac9",
+            "id": "b79161105c29a16cf29e",
             "sequence": 20,
             "phase": "合作校申請",
             "step_title": "依提名信辦理合作校申請",
-            "name": "（第一階）推薦信",
+            "name": "（第一次）正式成績；非OECD須認證正本",
             "copies": null,
             "copy_type": "unspecified",
             "signatures": [],
-            "stamps": [],
+            "stamps": [
+              "非OECD且Apostille會員：Apostille公證；非會員：韓國使領館認證"
+            ],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
-              "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab"
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "https://global.seoultech.ac.kr/bound/inbound",
+              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -23040,20 +23410,20 @@
             "official_form_verified": false
           },
           {
-            "id": "52e8a9a2e822a73a7a1b",
+            "id": "4d9069e9b64a0ac4bd48",
             "sequence": 21,
             "phase": "合作校申請",
             "step_title": "依提名信辦理合作校申請",
-            "name": "（第一階）正式成績",
+            "name": "（第一次）英文或韓文語言證明",
             "copies": null,
             "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
-              "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab"
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "https://global.seoultech.ac.kr/bound/inbound",
+              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -23066,20 +23436,20 @@
             "official_form_verified": false
           },
           {
-            "id": "86c9a016b3eea097aad4",
+            "id": "2f783f80d573d385ce86",
             "sequence": 22,
             "phase": "合作校申請",
             "step_title": "依提名信辦理合作校申請",
-            "name": "（非OECD國籍；抵韓前2週寄達）銀行正本",
+            "name": "（第一次）Study Plan Form1；已提及但空白表未取得",
             "copies": null,
-            "copy_type": "original",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
-              "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab"
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "https://global.seoultech.ac.kr/bound/inbound",
+              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -23087,25 +23457,25 @@
             "download_available": false,
             "contact_unit": "outbound@ccu.edu.tw",
             "stage": "student_application",
-            "conditional": true,
-            "condition": "（非OECD國籍；抵韓前2週寄達）銀行正本",
+            "conditional": false,
+            "condition": null,
             "official_form_verified": false
           },
           {
-            "id": "65b491d15d167ae68186",
+            "id": "19eb7f101ebab5e15b9f",
             "sequence": 23,
             "phase": "合作校申請",
             "step_title": "依提名信辦理合作校申請",
-            "name": "（非OECD國籍；抵韓前2週寄達）認證在學正本",
+            "name": "（第一次）護照copy；效期至少學期開始後6月",
             "copies": null,
-            "copy_type": "original",
+            "copy_type": "copy",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
-              "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab"
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "https://global.seoultech.ac.kr/bound/inbound",
+              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -23113,114 +23483,156 @@
             "download_available": false,
             "contact_unit": "outbound@ccu.edu.tw",
             "stage": "student_application",
-            "conditional": true,
-            "condition": "（非OECD國籍；抵韓前2週寄達）認證在學正本",
+            "conditional": false,
+            "condition": null,
             "official_form_verified": false
           },
           {
-            "id": "e8fc5faa53c8ac08e0c3",
+            "id": "ac665f9eb937a678615d",
             "sequence": 24,
-            "phase": "合作校錄取後",
-            "step_title": "核對接收計畫的住宿、保險與抵達安排",
-            "name": "（第二階）TB檢查",
+            "phase": "合作校申請",
+            "step_title": "依提名信辦理合作校申請",
+            "name": "（第一次）3.5×4.5cm護照規格照片",
             "copies": null,
             "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
-              "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab/exchange_cam",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab"
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "https://global.seoultech.ac.kr/bound/inbound",
+              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
             "needs_confirmation": true,
             "download_available": false,
-            "contact_unit": "國立中正大學國際事務處及合作校提名窗口",
-            "stage": "post_offer",
+            "contact_unit": "outbound@ccu.edu.tw",
+            "stage": "student_application",
             "conditional": false,
             "condition": null,
             "official_form_verified": false
           },
           {
-            "id": "ad26080184607d7db9ae",
+            "id": "df8ea4b86333526f23a1",
             "sequence": 25,
-            "phase": "合作校錄取後",
-            "step_title": "核對接收計畫的住宿、保險與抵達安排",
-            "name": "（第二階）麻疹疫苗證明",
+            "phase": "合作校特定計畫文件",
+            "step_title": "依提名信辦理合作校申請",
+            "name": "（宿舍條件）TB陰性：胸片／血液／皮膚測試",
             "copies": null,
             "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
-              "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab/exchange_cam",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab"
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "https://global.seoultech.ac.kr/bound/inbound",
+              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
             "needs_confirmation": true,
             "download_available": false,
-            "contact_unit": "國立中正大學國際事務處及合作校提名窗口",
-            "stage": "post_offer",
-            "conditional": false,
-            "condition": null,
+            "contact_unit": "outbound@ccu.edu.tw",
+            "stage": "conditional_program",
+            "conditional": true,
+            "condition": "僅宿舍申請者；正文未載與第一／第二次送件的時點對應",
             "official_form_verified": false
           },
           {
-            "id": "2a816c6ae233c414c856",
+            "id": "fb979cc01d7253e1132c",
             "sequence": 26,
-            "phase": "合作校錄取後",
-            "step_title": "核對接收計畫的住宿、保險與抵達安排",
-            "name": "（第二階）航班資料",
+            "phase": "合作校特定計畫文件",
+            "step_title": "依提名信辦理合作校申請",
+            "name": "（宿舍條件）麻疹疫苗兩劑證明",
             "copies": null,
             "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
-              "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab/exchange_cam",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab"
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "https://global.seoultech.ac.kr/bound/inbound",
+              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
             "needs_confirmation": true,
             "download_available": false,
-            "contact_unit": "國立中正大學國際事務處及合作校提名窗口",
-            "stage": "post_offer",
+            "contact_unit": "outbound@ccu.edu.tw",
+            "stage": "conditional_program",
+            "conditional": true,
+            "condition": "僅宿舍申請者；正文未載與第一／第二次送件的時點對應",
+            "official_form_verified": false
+          },
+          {
+            "id": "186d64b90ea863cb8952",
+            "sequence": 27,
+            "phase": "合作校第二次文件送件",
+            "step_title": "依提名後通知完成第二次文件送件",
+            "name": "（第二次）韓國簽證copy；確切繳交日另核",
+            "copies": null,
+            "copy_type": "copy",
+            "signatures": [],
+            "stamps": [],
+            "official_form_url": null,
+            "source_urls": [
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
+            ],
+            "source_checked_at": "2026-10-08T00:00:00Z",
+            "support_status": "needs_confirmation",
+            "needs_confirmation": true,
+            "download_available": false,
+            "contact_unit": "outbound@ccu.edu.tw",
+            "stage": "after_application",
             "conditional": false,
             "condition": null,
             "official_form_verified": false
           },
           {
-            "id": "630f59ecdccb72fbde2e",
-            "sequence": 27,
-            "phase": "合作校錄取後",
-            "step_title": "核對接收計畫的住宿、保險與抵達安排",
-            "name": "（第二階）韓國簽證copy",
+            "id": "4151b0915c5d288aeeb4",
+            "sequence": 28,
+            "phase": "合作校第二次文件送件",
+            "step_title": "依提名後通知完成第二次文件送件",
+            "name": "（第二次）航班行程；確切繳交日另核",
             "copies": null,
             "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
-              "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab/exchange_cam",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab"
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
             "needs_confirmation": true,
             "download_available": false,
-            "contact_unit": "國立中正大學國際事務處及合作校提名窗口",
-            "stage": "post_offer",
+            "contact_unit": "outbound@ccu.edu.tw",
+            "stage": "after_application",
+            "conditional": false,
+            "condition": null,
+            "official_form_verified": false
+          },
+          {
+            "id": "8d024df7c8612017423f",
+            "sequence": 29,
+            "phase": "合作校第二次文件送件",
+            "step_title": "依提名後通知完成第二次文件送件",
+            "name": "（第二次）本人銀行證明USD6000一期／12000兩期；非OECD正本",
+            "copies": null,
+            "copy_type": "unspecified",
+            "signatures": [],
+            "stamps": [],
+            "official_form_url": null,
+            "source_urls": [
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
+            ],
+            "source_checked_at": "2026-10-08T00:00:00Z",
+            "support_status": "needs_confirmation",
+            "needs_confirmation": true,
+            "download_available": false,
+            "contact_unit": "outbound@ccu.edu.tw",
+            "stage": "after_application",
             "conditional": false,
             "condition": null,
             "official_form_verified": false
@@ -23229,7 +23641,7 @@
         "workflow_http": 200,
         "guide_present": true,
         "review_status": "legacy",
-        "step_count": 7,
+        "step_count": 8,
         "guide_section_keys": [
           "housing",
           "housing_deadline",
@@ -23264,7 +23676,7 @@
             "key": "workflow",
             "label": "申請流程",
             "status": "needs_confirmation",
-            "note": "7 個步驟；尚未完成發布或適用年度／梯次確認。",
+            "note": "8 個步驟；尚未完成發布或適用年度／梯次確認。",
             "source_urls": [
               "https://oia.ccu.edu.tw/p/406-1008-93586,r1714.php?Lang=zh-tw",
               "https://oia.ccu.edu.tw/var/file/8/1008/attach/78/pta_54384_797227_45763.pdf",
@@ -23287,9 +23699,9 @@
             "status": "partial",
             "note": "有費用片段，但沒有可直接比對的每月總額。",
             "source_urls": [
-              "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
-              "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab/exchange_cam"
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "https://global.seoultech.ac.kr/bound/inbound"
             ]
           },
           {
@@ -23298,9 +23710,9 @@
             "status": "available",
             "note": "已有來源整理的內容。",
             "source_urls": [
-              "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
-              "https://irt.seoultech.ac.kr/storage/irt/ckfinder/files/90D90E3B56B1476B967B2D3B5EA3CB23.pdf",
-              "https://irt.seoultech.ac.kr/inbound/exchange_tab/exchange_cam"
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "https://global.seoultech.ac.kr/bound/inbound"
             ]
           },
           {
@@ -23314,9 +23726,9 @@
             "key": "campus_life",
             "label": "校園生活",
             "status": "available",
-            "note": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。",
+            "note": "直接核對當期2027春新factsheet物理p8，不沿用舊版本。",
             "source_urls": [
-              "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link"
+              "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf"
             ]
           },
           {
@@ -23347,15 +23759,19 @@
               {
                 "theme": "housing",
                 "kind": "official",
-                "text": "住宿與床位 · 當期已核實：Sunglim一般宿舍保證，但InternationalHall僅候補不保證；男三人、女雙人。（2026/2027；PDF第2頁；查核2026-10-08）",
+                "text": "住宿與床位 · 當期已核實：2027春季明示不保證exchange住宿；Sunglim International Hall房間非常有限、舊住優先，只接受waiting list。Sunglim男3 units（2 rooms）單／雙床、女雙床；International Hall單／雙／四床另有房型，未保個人分配。舊2026/27保證Sunglim敘述不再作當期。（PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱；PDF第6頁；查核2026-10-08）",
                 "sources": [
                   {
                     "title": "中正逐欄查核來源",
-                    "url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link#page=2"
+                    "url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf#page=6"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf#page=6"
                   }
                 ],
-                "checked_at": "2026-10-08T00:00:00Z",
-                "scope": "當期已核實；2026/2027；當期來源列出此項；仍依提名後個別通知辦理。",
+                "checked_at": "2026-10-08T12:03:07.145666Z",
+                "scope": "當期已核實；PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱；新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
                 "original_excerpt": false,
                 "original_text": "",
                 "translation_status": "original"
@@ -23371,15 +23787,15 @@
               {
                 "theme": "cost",
                 "kind": "official",
-                "text": "住宿與生活費用 · 當期已核實：資料宿舍男雙床882000/單床1120350、女雙床896760 KRW/期；選餐464600/808000/1151400 KRW/4月，費率可變。（2026/2027；PDF第4頁；查核2026-10-08）",
+                "text": "住宿與生活費用 · 當期已核實：2027春季KRW／一學期：Sunglim男單1329120、男雙1045980、女雙1062360；International Hall單2303730、雙1601730、四床1216800。餐費可不選；1餐529200、2餐928800、3餐1296000／學期。均明示可變、宿舍不保證；不是全體個人實繳帳單。（PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱；PDF第6頁；查核2026-10-08）",
                 "sources": [
                   {
                     "title": "中正逐欄查核來源",
-                    "url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link#page=4"
+                    "url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf#page=6"
                   }
                 ],
-                "checked_at": "2026-10-08T00:00:00Z",
-                "scope": "當期已核實；2026/2027；當期來源列出此項；仍依提名後個別通知辦理。",
+                "checked_at": "2026-10-08T12:03:07.145666Z",
+                "scope": "當期已核實；PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱；新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
                 "original_excerpt": false,
                 "original_text": "",
                 "translation_status": "original"
@@ -23423,15 +23839,15 @@
               {
                 "theme": "social",
                 "kind": "official",
-                "text": "當期ISC由本地學生協助交換生適應校園；提供buddy支援，未承諾個人配對時點或所有活動費用。（當期已核實；2026/2027；查核2026-10-08）",
+                "text": "2027春官方ISC／buddy由本地學生支援交換生校園適應；未承諾免費接機、配對日或活動費全免。（當期已核實；PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱；查核2026-10-08）",
                 "sources": [
                   {
                     "title": "中正逐欄查核來源",
-                    "url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link#page=6"
+                    "url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf#page=8"
                   }
                 ],
-                "checked_at": "2026-10-08T00:00:00Z",
-                "scope": "當期已核實；2026/2027；只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。",
+                "checked_at": "2026-10-08T12:03:07.145666Z",
+                "scope": "當期已核實；PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱；直接核對當期2027春新factsheet物理p8，不沿用舊版本。",
                 "original_excerpt": false,
                 "original_text": "",
                 "translation_status": "original"
@@ -24443,9 +24859,7 @@
             "name": "母校國際處長簽名提名函",
             "copies": null,
             "copy_type": "unspecified",
-            "signatures": [
-              "本人"
-            ],
+            "signatures": [],
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
@@ -33537,7 +33951,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（mandatory母校）官方提名名單",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -33562,7 +33976,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（mandatory母校）Letter of Nomination",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -33587,7 +34001,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（mandatory）CV",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -33612,7 +34026,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（mandatory）英文完整成績",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -33637,7 +34051,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（mandatory）護照身分頁",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -33662,7 +34076,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（optional）JPG肖像",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -33687,7 +34101,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（optional）英文B2以上證書（中正校內另規）",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -53020,7 +53434,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "英語B2證明／母校語言部門確認",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -53046,7 +53460,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "護照格式彩色人像（Photo，非護照影本）",
             "copies": null,
-            "copy_type": "copy",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -53753,10 +54167,37 @@
           "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
         },
         "transport": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "官方incoming交通頁列PRG機場進Prague市區後接火車／巴士，常經Otrokovice轉Zlín，市內有無軌電車／巴士。列IDOS及鐵路公司查班次，正文明示班次約每年變動；未核2027票價／時刻，不估接送。",
+          "status": "needs_confirmation",
+          "evidence": [
+            {
+              "source_id": "p108-r14-transport",
+              "source_url": "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/practical-information/getting-to-zlin/",
+              "source_pages": [],
+              "academic_year": "公開未年一般服務／2027春個人適用性待確認",
+              "application_round": "一般公開服務／歷史參考，非申請梯次",
+              "checked_at": "2026-10-08T12:03:07.146802+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "By train The Czech Republic has an extensive railway network, operated by four major railway companies: České dráhy (ČD, Czech Railways), RegioJet , LEO Express , and Arriva . The timetables and connections are changing approximately once per year. Due to that, we recommend checking the connections at the websites of the mentioned railway companies. Zlín itself has several train stations even though they are all quite small. The main train station is called Zlín – Střed and it has only one direct train from Prague ( Zlínský expres ). However, the neighbouring town Otrokovice is placed on the main train corridor. Due to that, it is possible to get directly from Otrokovice to five European capitals (Bratislava, Budapest, Prague, Vienna, and Warsaw). So, it is possible to search for the connections to Otrokovice and then use the public transportation working between Zlín and Otrokovice. Traveling by České dráhy Tickets are sold at most of the train stations, and it is not mandatory to purchase your tickets online. However, we recommend buying them online because the online reservation g",
+              "content_hash": "953785be480acdbe992748e8545f0e2a099342472b46df01568fb107c3e08a73",
+              "text_sha256": "af050785ddd48d1c20a474413edf623a26aaf5389bf83802738feac993919ac7",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            },
+            {
+              "source_id": "p108-r14-transport",
+              "source_url": "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/practical-information/getting-to-zlin/",
+              "source_pages": [],
+              "academic_year": "公開未年一般服務／2027春個人適用性待確認",
+              "application_round": "一般公開服務／歷史參考，非申請梯次",
+              "checked_at": "2026-10-08T12:03:07.146802+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Public transportation in Zlín Once you are in Zlín, the city has a well-organized public transport system, including trolleybuses and buses. Tickets are available at kiosks, ticket machines, directly in the trolley/buses, via mobile apps, or from the driver. The following single tickets are available: One-ride ticket for 30 minutes for CZK 18 (EUR ",
+              "content_hash": "953785be480acdbe992748e8545f0e2a099342472b46df01568fb107c3e08a73",
+              "text_sha256": "af050785ddd48d1c20a474413edf623a26aaf5389bf83802738feac993919ac7",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            }
+          ],
+          "reason": "實質incoming路線來源但未標適用年度；價格及校區按個人到校當期另核。"
         },
         "campus_life": {
           "value": "當期列宿舍、學生餐廳、圖書館與運動設施、ESNZlin入口；Logistics學院在UherskéHradiště，不能全視為Zlín。",
@@ -54159,6 +54600,7 @@
           "arrival",
           "course_restrictions",
           "academic_calendar",
+          "transport",
           "campus_life"
         ],
         "completeness_items": [
@@ -54216,15 +54658,18 @@
             "status": "available",
             "note": "已有來源整理的內容。",
             "source_urls": [
-              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link"
+              "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link",
+              "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/practical-information/getting-to-zlin/"
             ]
           },
           {
             "key": "transport",
             "label": "交通",
-            "status": "missing",
-            "note": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。",
-            "source_urls": []
+            "status": "needs_confirmation",
+            "note": "實質incoming路線來源但未標適用年度；價格及校區按個人到校當期另核。",
+            "source_urls": [
+              "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/practical-information/getting-to-zlin/"
+            ]
           },
           {
             "key": "campus_life",
@@ -54253,7 +54698,7 @@
           }
         ],
         "city": "茲林（代表聯絡地址）",
-        "transport_present": false,
+        "transport_present": true,
         "campus_life_present": true,
         "life_location_note": "官方城市／聯絡地址參考：Zlín（代表聯絡地址）（verified_current）。尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。 接收校區按所選計畫另核。",
         "life_categories": [
@@ -54314,7 +54759,28 @@
           },
           {
             "theme": "transport",
-            "evidence": [],
+            "evidence": [
+              {
+                "theme": "transport",
+                "kind": "official",
+                "text": "官方incoming交通頁列PRG機場進Prague市區後接火車／巴士，常經Otrokovice轉Zlín，市內有無軌電車／巴士。列IDOS及鐵路公司查班次，正文明示班次約每年變動；未核2027票價／時刻，不估接送。（適用年度或條件待確認；公開未年一般服務／2027春個人適用性待確認；查核2026-10-08）",
+                "sources": [
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/practical-information/getting-to-zlin/"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://www.utb.cz/en/university/international/students/exchange-students/incoming-students/practical-information/getting-to-zlin/"
+                  }
+                ],
+                "checked_at": "2026-10-08T12:03:07.146802Z",
+                "scope": "適用年度或條件待確認；公開未年一般服務／2027春個人適用性待確認；實質incoming路線來源但未標適用年度；價格及校區按個人到校當期另核。",
+                "original_excerpt": false,
+                "original_text": "",
+                "translation_status": "original"
+              }
+            ],
             "inference": null,
             "next_step": "以錄取校區和住宿地址核對路線、轉乘及末班車，不能用直線距離換算通勤時間。",
             "search_url": "https://www.google.com/search?q=Tomas+Bata+University+in+Zl%C3%AD+n+%E6%8D%B7%E5%85%8B+Zl%C3%ADn%EF%BC%88%E4%BB%A3%E8%A1%A8%E8%81%AF%E7%B5%A1%E5%9C%B0%E5%9D%80%EF%BC%89+campus+access+public+transport"
@@ -54926,10 +55392,24 @@
           "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
         },
         "transport": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "教育學院incoming FAQ列Plzeň電車、巴士、無軌電車與學生月票、售票／app方式；一般城市路線可參考。頁面未標2027且為教育學院，其他院系／Cheb校區及當期票價未核，不套ArtCamp暑校票。",
+          "status": "needs_confirmation",
+          "evidence": [
+            {
+              "source_id": "p109-r14-faculty-life-transport",
+              "source_url": "https://www.fpe.zcu.cz/en/Admission/incoming_students.html",
+              "source_pages": [],
+              "academic_year": "公開未年一般服務／2027春個人適用性待確認",
+              "application_round": "一般公開服務／歷史參考，非申請梯次",
+              "checked_at": "2026-10-08T12:03:09.184958+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "What public transportation is available in Plzeň? What is your question? Where can I find information about courses and registration? What is the cost of student dormitories and meals? Whom can I contact in case of emergency? Are there any required travel documents? Yes, you will need a valid passport to enter the Czech Republic. Depending on your nationality, you may also need a visa or residence permit. Make sure your passpo",
+              "content_hash": "946680f5246892788a147b4756148ce654523bf0c6f20cdfdbf561a43e1b0fa6",
+              "text_sha256": "4b3c5b493dd9e9bb5cbcc5cf8422c4a720723bd00efbc863c57f54f0db9a1478",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            }
+          ],
+          "reason": "公開學院FAQ實質交通，不把約12–15EUR月票當2027保證價格或交換全校學院資格。"
         },
         "campus_life": {
           "value": "官方buddy頁限定Erasmus路徑，開學前約1個月通知申請，並非自動配對；志工可協助Pilsen車站到住宿與行政，CCU雙邊交換適用及2027日期待核。",
@@ -54979,6 +55459,7 @@
           "arrival",
           "course_restrictions",
           "academic_calendar",
+          "transport",
           "campus_life"
         ],
         "completeness_items": [
@@ -55044,9 +55525,11 @@
           {
             "key": "transport",
             "label": "交通",
-            "status": "missing",
-            "note": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。",
-            "source_urls": []
+            "status": "needs_confirmation",
+            "note": "公開學院FAQ實質交通，不把約12–15EUR月票當2027保證價格或交換全校學院資格。",
+            "source_urls": [
+              "https://www.fpe.zcu.cz/en/Admission/incoming_students.html"
+            ]
           },
           {
             "key": "campus_life",
@@ -55075,7 +55558,7 @@
           }
         ],
         "city": "Plzeň（院系校區待確認）",
-        "transport_present": false,
+        "transport_present": true,
         "campus_life_present": true,
         "life_location_note": "官方城市／聯絡地址參考：Plzeň（院系校區待確認）（needs_confirmation）。尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。 接收校區按所選計畫另核。",
         "life_categories": [
@@ -55144,7 +55627,24 @@
           },
           {
             "theme": "transport",
-            "evidence": [],
+            "evidence": [
+              {
+                "theme": "transport",
+                "kind": "official",
+                "text": "教育學院incoming FAQ列Plzeň電車、巴士、無軌電車與學生月票、售票／app方式；一般城市路線可參考。頁面未標2027且為教育學院，其他院系／Cheb校區及當期票價未核，不套ArtCamp暑校票。（適用年度或條件待確認；公開未年一般服務／2027春個人適用性待確認；查核2026-10-08）",
+                "sources": [
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://www.fpe.zcu.cz/en/Admission/incoming_students.html"
+                  }
+                ],
+                "checked_at": "2026-10-08T12:03:09.184958Z",
+                "scope": "適用年度或條件待確認；公開未年一般服務／2027春個人適用性待確認；公開學院FAQ實質交通，不把約12–15EUR月票當2027保證價格或交換全校學院資格。",
+                "original_excerpt": false,
+                "original_text": "",
+                "translation_status": "original"
+              }
+            ],
             "inference": null,
             "next_step": "以錄取校區和住宿地址核對路線、轉乘及末班車，不能用直線距離換算通勤時間。",
             "search_url": "https://www.google.com/search?q=University+of+West+Bohemia+%E6%8D%B7%E5%85%8B+Plze%C5%88%EF%BC%88%E9%99%A2%E7%B3%BB%E6%A0%A1%E5%8D%80%E5%BE%85%E7%A2%BA%E8%AA%8D%EF%BC%89+campus+access+public+transport"
@@ -57813,7 +58313,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "線上學生申請",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -57837,7 +58337,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "JPG照片",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -57861,7 +58361,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "動機信",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -57885,7 +58385,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "Learning Agreement",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -57909,7 +58409,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "Image usage同意",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -57933,7 +58433,7 @@
             "step_title": "依提名信辦理合作校申請",
             "name": "（全西語修課）B1證明",
             "copies": null,
-            "copy_type": "digital",
+            "copy_type": "unspecified",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
@@ -58218,11 +58718,11 @@
   ],
   "status_summary": {
     "host_17_fields": {
-      "verified_current": 310,
+      "verified_current": 311,
       "missing": 229,
-      "needs_confirmation": 314,
+      "needs_confirmation": 312,
       "reference_only": 20,
-      "conflict": 61,
+      "conflict": 62,
       "explicit_not_announced": 1
     },
     "profile_7_fields": {
@@ -58242,9 +58742,9 @@
         "verified_current": 55
       },
       "degree_levels": {
-        "missing": 33,
+        "missing": 32,
         "needs_confirmation": 14,
-        "verified_current": 8
+        "verified_current": 9
       },
       "colleges": {
         "missing": 44,
@@ -58252,15 +58752,15 @@
         "verified_current": 1
       },
       "transport": {
-        "reference_only": 5,
-        "needs_confirmation": 23,
+        "reference_only": 6,
+        "needs_confirmation": 26,
         "verified_current": 17,
-        "missing": 10
+        "missing": 6
       },
       "campus_life": {
-        "reference_only": 5,
-        "missing": 7,
-        "needs_confirmation": 26,
+        "reference_only": 6,
+        "missing": 5,
+        "needs_confirmation": 27,
         "verified_current": 17
       }
     },

@@ -499,6 +499,17 @@ def _structure_document_requirement(
     step: ApplicationStep,
     submission: ApplicationSubmissionDetails,
 ) -> ApplicationDocumentRequirement:
+    # Individually reviewed receiving documents already supply their metadata.
+    # A name such as "non-OECD: original" must not impose originals on everyone.
+    if requirement.stage is not None:
+        return requirement.model_copy(
+            update={
+                "source_urls": requirement.source_urls or list(step.source_urls),
+                "needs_confirmation": (
+                    requirement.needs_confirmation or step.needs_confirmation
+                ),
+            }
+        )
     copies = requirement.copies
     if copies is None and (match := COPY_COUNT_PATTERN.search(requirement.name)):
         copies = int(match.group(1))

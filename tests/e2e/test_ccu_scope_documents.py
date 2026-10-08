@@ -183,3 +183,51 @@ def test_actual_template_clicks_and_document_center_stages(page, live_server, wi
     output.mkdir(exist_ok=True)
     page.screenshot(path=str(output / f"document-stages-{width}.png"))
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+
+
+@pytest.mark.parametrize("width", [390, 1440])
+def test_seoultech_new_housing_costs_and_second_submission_are_visible(
+    page, live_server, width
+):
+    page.set_viewport_size({"width": width, "height": 956})
+    page.add_init_script(
+        "localStorage.setItem('exchange-guide-home-school','國立中正大學')"
+    )
+    partner = at(48)
+    page.goto(
+        live_server.base_url
+        + "/?school="
+        + quote(HOME)
+        + "#school="
+        + quote(partner.school_name)
+    )
+    section = page.locator("#detail-overview .ccu-receiving-school-details")
+    expect(section).to_be_visible(timeout=30_000)
+    for key, expected in [
+        ("housing", "不保證"),
+        ("costs", "1329120"),
+        ("course_restrictions", "最少3"),
+    ]:
+        field = section.locator(f'[data-ccu-field="{key}"]')
+        field.locator("> summary").click()
+        expect(field).to_contain_text(expected)
+    page.locator("#detail-tab-application").click()
+    second = page.locator("details.workflow-step").filter(
+        has_text="合作校第二次文件送件"
+    )
+    second.locator("> summary").click()
+    expect(second).to_contain_text("不猜錄取前後")
+    expect(second.locator(".workflow-documents")).to_contain_text("本人銀行")
+    expect(second.locator(".workflow-documents")).to_contain_text("韓國簽證")
+    response = page.request.get(
+        live_server.base_url + "/application-center/catalog",
+        params={"school": HOME, "target_school": partner.school_name},
+    )
+    assert response.ok
+    items = [r for r in response.json()["items"] if r["stage"] == "after_application"]
+    assert len(items) == 3 and all(r["phase"] == "合作校第二次文件送件" for r in items)
+    output = Path("/tmp/ccu-fourteenth-browser")
+    output.mkdir(exist_ok=True)
+    second.scroll_into_view_if_needed()
+    page.screenshot(path=str(output / f"seoultech-second-{width}.png"))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")

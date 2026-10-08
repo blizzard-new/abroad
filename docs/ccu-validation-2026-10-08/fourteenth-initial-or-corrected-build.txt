@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/workspace/abroad-ccu-20261008/scripts/build_ccu_catalog.py", line 883, in <module>
+    main()
+  File "/workspace/abroad-ccu-20261008/scripts/build_ccu_catalog.py", line 816, in main
+    rows = [apply_overseas_review(row) for row in rows]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-ccu-20261008/src/exchange_info/ccu_overseas.py", line 134, in apply_overseas_review
+    row = reviewed_rows().get(partner.source_pages[0])
+          ^^^^^^^^^^^^^^^
+  File "/workspace/abroad-ccu-20261008/src/exchange_info/ccu_overseas.py", line 129, in reviewed_rows
+    raise ValueError("CCU overseas field/evidence status disagree")
+ValueError: CCU overseas field/evidence status disagree
+Traceback (most recent call last):
+  File "/workspace/abroad-ccu-20261008/scripts/build_ccu_overseas.py", line 168, in <module>
+    main()
+  File "/workspace/abroad-ccu-20261008/scripts/build_ccu_overseas.py", line 26, in main
+    reviews = reviewed_rows()
+              ^^^^^^^^^^^^^^^
+  File "/workspace/abroad-ccu-20261008/src/exchange_info/ccu_overseas.py", line 129, in reviewed_rows
+    raise ValueError("CCU overseas field/evidence status disagree")
+ValueError: CCU overseas field/evidence status disagree
+{"validated_files": 5, "home_fields": 17, "conflicts": 8}

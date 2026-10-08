@@ -1,0 +1,247 @@
+CONFTEST LOADED!
+............F.......F..FF.....F......................................... [ 22%]
+.............................................................F.......... [ 44%]
+F.....................F.....sss................s........F............... [ 67%]
+....................................................s................... [ 89%]
+..................................                                       [100%]
+=================================== FAILURES ===================================
+___ test_eighth_counts_and_ledger_distinguish_acquisition_and_full_research ____
+
+    def test_eighth_counts_and_ledger_distinguish_acquisition_and_full_research():
+        c = json.loads((BUNDLE / "eighth-pass-changes.json").read_text())
+        assert c["new_source_count"] == 47
+        assert c["new_network_acquisition_records"] == 40
+        assert c["new_binary_attachment_count"] == 10
+        assert len(c["changes"]) == 82
+        assert sum(x["previous_status"] == "missing" for x in c["changes"]) == 46
+        assert len(reviewed_rows()) == 55
+        ledger = json.loads((BUNDLE / "semantic-review-ledger.json").read_text())
+>       assert all(not x["complete_research_claimed"] for x in ledger)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_ccu_eighth_pass.py:298: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x7f08553614b0>
+
+>   assert all(not x["complete_research_claimed"] for x in ledger)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'complete_research_claimed'
+
+tests/test_ccu_eighth_pass.py:298: KeyError
+____ test_ledger_records_actual_read_scope_and_the_latest_change_inventory _____
+
+    def test_ledger_records_actual_read_scope_and_the_latest_change_inventory():
+        ledger = json.loads((BUNDLE / "semantic-review-ledger.json").read_text())
+        assert {r["ccu_page"] for r in ledger}.issuperset({
+            24,
+            27,
+            29,
+            34,
+            50,
+            52,
+            74,
+            85,
+            95,
+            104,
+            111,
+            119,
+        })
+>       assert all(not r["complete_research_claimed"] for r in ledger)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_ccu_fifth_pass.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x7f085a6a0e50>
+
+>   assert all(not r["complete_research_claimed"] for r in ledger)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'complete_research_claimed'
+
+tests/test_ccu_fifth_pass.py:161: KeyError
+_ test_actual_catalogue_keeps_first_second_dorm_and_home_recommendation_separate _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-79/test_actual_catalogue_keeps_fi0')
+
+    def test_actual_catalogue_keeps_first_second_dorm_and_home_recommendation_separate(
+        tmp_path,
+    ):
+        client = TestClient(create_app(tmp_path))
+        name = at(48).school_name
+        flow_response = client.get(
+            "/application-workflow", params={"home_school": HOME, "school": name}
+        )
+        assert flow_response.status_code == 200
+        flow = flow_response.json()
+        assert flow["review_status"] == "legacy" and len(flow["steps"]) == 8
+        after = next(s for s in flow["steps"] if s["phase"] == "合作校第二次文件送件")
+        assert len(after["document_requirements"]) == 3
+        assert "不猜錄取前後" in after["timing"]
+        assert "Recommendation Letter" in " ".join(flow["steps"][3]["details"])
+        registry = reviewed_documents()[48]
+        assert (
+            len(registry["requirements"]) == 12
+            and registry["list_completeness"] == "partial_not_exhaustive"
+        )
+        assert not any("推薦" in r["requirement"]["name"] for r in registry["requirements"])
+        catalog_response = client.get(
+            "/application-center/catalog", params={"school": "CCU", "target_school": name}
+        )
+        assert catalog_response.status_code == 200
+        host = [r for r in catalog_response.json()["items"] if r["stage"]]
+        assert len(host) == 12
+        first = [r for r in host if r["stage"] == "student_application"]
+        second = [r for r in host if r["stage"] == "after_application"]
+        dorm = [r for r in host if r["conditional"]]
+        assert len(first) == 7 and len(second) == 3 and len(dorm) == 2
+        assert all(r["phase"] == "合作校第二次文件送件" for r in second)
+        assert all("僅宿舍申請者" in r["condition"] for r in dorm)
+        assert all(r["needs_confirmation"] for r in host)
+        study = next(r for r in first if "Study Plan" in r["name"])
+        assert not study["official_form_verified"] and not study["download_available"]
+        bank = next(r for r in second if "銀行" in r["name"])
+>       assert not bank["conditional"] and bank["copy_type"] == "unspecified"
+E       AssertionError: assert (not False and 'original' == 'unspecified'
+E         
+E         - unspecified
+E         + original)
+
+tests/test_ccu_fourteenth_pass.py:84: AssertionError
+_ test_public_routes_fill_missing_but_preserve_year_campus_and_nationality_scope _
+
+    def test_public_routes_fill_missing_but_preserve_year_campus_and_nationality_scope():
+        profiles = reviewed_profiles()
+        for page in [26, 108, 109]:
+            field = profiles[page]["fields"]["transport"]
+            assert field["value"] and field["status"] == "needs_confirmation"
+            assert field["evidence"] and field["evidence"][0]["checked_at"].startswith(
+                "2026-10-08"
+            )
+        assert "臺灣HMT適用未核" in profiles[26]["fields"]["transport"]["value"]
+        assert "教育學院" in profiles[109]["fields"]["transport"]["value"]
+        old = profiles[27]["fields"]["transport"]
+        assert old["status"] == "reference_only" and "2025" in old["value"]
+        guide = json.loads((BUNDLE / "overseas_sources/p27-r14-guide2025.json").read_text())
+        assert "2025 Guidebook" in guide["text_pages"][0]
+        empty = json.loads((BUNDLE / "overseas_sources/p27-r14-transport.json").read_text())
+>       assert empty["http_status"] == 200 and empty["access_result"] == "empty_response"
+E       assert (202 == 200)
+
+tests/test_ccu_fourteenth_pass.py:102: AssertionError
+____ test_full_read_ledger_does_not_turn_missing_values_into_nonpublication ____
+
+    def test_full_read_ledger_does_not_turn_missing_values_into_nonpublication():
+        ledger = json.loads((BUNDLE / "semantic-review-ledger.json").read_text())
+        assert {24, 27, 29, 74, 111, 119} <= {x["ccu_page"] for x in ledger}
+        for row in ledger:
+>           assert len(row["fields"]) == 17 and not row["complete_research_claimed"]
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'complete_research_claimed'
+
+tests/test_ccu_fourth_pass.py:112: KeyError
+_ test_seventh_acquisition_and_review_do_not_claim_all_public_research_complete _
+
+    def test_seventh_acquisition_and_review_do_not_claim_all_public_research_complete():
+        ledger = json.loads((BUNDLE / "semantic-review-ledger.json").read_text())
+        assert {32, 35, 37, 39, 42, 54}.issubset(x["ccu_page"] for x in ledger)
+>       assert len(ledger) >= 24 and all(not x["complete_research_claimed"] for x in ledger)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_ccu_seventh_pass.py:265: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x7f0834a0d420>
+
+>   assert len(ledger) >= 24 and all(not x["complete_research_claimed"] for x in ledger)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'complete_research_claimed'
+
+tests/test_ccu_seventh_pass.py:265: KeyError
+_ test_sixth_ledger_and_counts_preserve_partial_review_and_actual_acquisition_mode _
+
+    def test_sixth_ledger_and_counts_preserve_partial_review_and_actual_acquisition_mode():
+        ledger = json.loads((BUNDLE / "semantic-review-ledger.json").read_text())
+        assert {33, 68, 71, 80, 99, 109}.issubset(x["ccu_page"] for x in ledger)
+>       assert len(ledger) >= 18 and all(not x["complete_research_claimed"] for x in ledger)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_ccu_sixth_pass.py:190: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x7f08357431c0>
+
+>   assert len(ledger) >= 18 and all(not x["complete_research_claimed"] for x in ledger)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'complete_research_claimed'
+
+tests/test_ccu_sixth_pass.py:190: KeyError
+___________ test_receiving_reciprocity_cap_preserves_ccu_home_quota ____________
+
+    def test_receiving_reciprocity_cap_preserves_ccu_home_quota():
+        p = at(48)
+        assert p.quota == "一學期(one semester) 2名 或 一學年(one year) 1名"
+        assert p.quota_status == "published" and p.availability_status == "open"
+        field = p.partner_exchange_details["eligibility"]
+>       assert field.status == "needs_confirmation"
+E       AssertionError: assert 'verified_current' == 'needs_confirmation'
+E         
+E         - needs_confirmation
+E         + verified_current
+
+tests/test_ccu_third_pass.py:119: AssertionError
+_ test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f08357a5790>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-79/test_runtime_includes_tracked_0')
+
+    def test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data(
+        monkeypatch,
+        tmp_path,
+    ) -> None:
+        research = storage.read_jsonl(
+            storage.BUNDLED_NTPU_DIR / "partner_research.jsonl",
+            PartnerResearchRecord,
+        )[0]
+        partner = PartnerUniversity(
+            program_type="交換學生（英語組）",
+            country=research.country,
+            school_name=research.school_name,
+            source_url="https://new.ntpu.edu.tw/oia/sister-schools",
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.fetch_ntpu_partner_universities",
+            lambda: [partner],
+        )
+    
+        client = TestClient(create_app(tmp_path))
+        coverage = client.get(
+            "/coverage",
+            params={"school": "國立臺北大學"},
+        ).json()
+        destination = client.get(
+            "/destination-profile",
+            params={
+                "school": partner.school_name,
+                "home_school": "國立臺北大學",
+            },
+        ).json()
+    
+        assert coverage["total_partner_schools"] == 1
+        assert coverage["official_website_count"] == 1
+        assert coverage["partners"][0]["official_website_url"] == research.official_website
+>       assert coverage["destination_profile_count"] == 1
+E       assert 0 == 1
+
+tests/test_ntpu_bundled_data.py:110: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_eighth_pass.py::test_eighth_counts_and_ledger_distinguish_acquisition_and_full_research
+FAILED tests/test_ccu_fifth_pass.py::test_ledger_records_actual_read_scope_and_the_latest_change_inventory
+FAILED tests/test_ccu_fourteenth_pass.py::test_actual_catalogue_keeps_first_second_dorm_and_home_recommendation_separate
+FAILED tests/test_ccu_fourteenth_pass.py::test_public_routes_fill_missing_but_preserve_year_campus_and_nationality_scope
+FAILED tests/test_ccu_fourth_pass.py::test_full_read_ledger_does_not_turn_missing_values_into_nonpublication
+FAILED tests/test_ccu_seventh_pass.py::test_seventh_acquisition_and_review_do_not_claim_all_public_research_complete
+FAILED tests/test_ccu_sixth_pass.py::test_sixth_ledger_and_counts_preserve_partial_review_and_actual_acquisition_mode
+FAILED tests/test_ccu_third_pass.py::test_receiving_reciprocity_cap_preserves_ccu_home_quota
+FAILED tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data
+9 failed, 308 passed, 5 skipped in 183.60s (0:03:03)

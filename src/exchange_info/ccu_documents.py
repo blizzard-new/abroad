@@ -132,6 +132,15 @@ def enrich_documents(workflow, partner):
             after.timing = (
                 "申請期間結束後由校方另發財力表，未載確切補件日；不以錄取通知當作起點"
             )
+        elif partner.source_pages[0] == 48:
+            after.phase = "合作校第二次文件送件"
+            after.title = "依提名後通知完成第二次文件送件"
+            after.summary = (
+                "2027春季factsheet分第一、第二次送件；第二次日期與啟動條件未載。"
+            )
+            after.timing = (
+                "第二次繳韓國簽證copy、航班及銀行證明；未載確切補件日，不猜錄取前後"
+            )
     for item in row["requirements"]:
         requirement = ApplicationDocumentRequirement.model_validate(
             dict(

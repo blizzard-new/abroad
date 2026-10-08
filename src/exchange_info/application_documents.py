@@ -968,7 +968,10 @@ def build_application_document_catalog(
                 ApplicationDocumentCatalogItem(
                     id=hashlib.sha256(identity.encode("utf-8")).hexdigest()[:20],
                     sequence=sequence,
-                    phase=stages.get(requirement.stage, step.phase),
+                    phase=(
+                        step.phase if requirement.stage == "after_application"
+                        else stages.get(requirement.stage, step.phase)
+                    ),
                     step_title=step.title,
                     name=requirement.name,
                     copies=requirement.copies,
