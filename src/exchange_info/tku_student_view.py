@@ -21,7 +21,8 @@ def tku_partner_summary(record) -> PartnerStudentSummary:
                    "電氣通信英語課的大學部例外與研究所N1豁免須分開確認。"
                    "（2027–2028日語二甄簡章PDF p.2；名額表p.1）")
     eligibility=[f"母校資格：{fields['home_eligibility'].value}（簡章p.2、p.18）",home_language]
-    for key,label in [('host_eligibility','外校／名額表特別条件'),('department_scope','科系範圍')]:
+    for key,label in [('host_eligibility','外校入學條件'),('host_language','外校語言條件'),
+                      ('department_scope','淡江科系範圍'),('campus','校區'),('host_programme_mapping','計畫範圍')]:
         if fields[key].value:
             basis=fields[key].evidence[0]
             eligibility.append(f"{label}：{fields[key].value}（{basis.applicable_year}；{basis.locator}）")
@@ -34,6 +35,7 @@ def tku_partner_summary(record) -> PartnerStudentSummary:
             '校內文件：申請表、中文歷年成績單、語言證明、推薦函、中日文自傳與研習計畫、切結書及有則附其他證明；A4單面總計不超過16頁（簡章p.3–4）。',
             '校內甄選：書審與面試；甄試70分不能當作學業平均75分門檻（簡章p.5）。',
             f"外校申請：僅已獲母校推薦者續辦；{fields['host_deadline'].value or '外校當期期限未核實'}；母校推薦不等於外校錄取。",
+            f"外校文件：依申請流程的外校申請／行前階段清單及條件準備；{fields['latest_forms'].value}",
         ],tuition_points=costs,translated_from_english=False)
 
 

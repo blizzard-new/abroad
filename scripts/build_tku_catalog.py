@@ -17,6 +17,8 @@ sys.path.insert(0, str(ROOT / "src"))
 from exchange_info.tku_data import BUNDLE, CHECKED_AT, TKUEvidence, TKUFact, TKUPartnerRecord, load_tku_sources, tku_integrity_report
 from exchange_info.models import UniversityApplicationWorkflow, ApplicationStep, DestinationProfile, SourceReference
 from exchange_info.workflow_structuring import structure_application_workflow, workflow_structure_issues
+from exchange_info.tku_host_data import enrich_current, host_documents, document_requirement
+from exchange_info.tku_life import build_tku_destination
 
 SOURCES = {s["id"]: s for s in load_tku_sources()}
 JP = "jp-2027-2028-round-2"
@@ -101,9 +103,11 @@ def current_rows():
             fields["documents"] = jp_fact("；".join(DOCUMENTS) + "。外校一般頁另列Form A/H/SP/RP、照片、成績單、護照、學生證、兩段3分鐘影片及條件式財務等文件；须透過母校送件，2027版表單未核實。", "uec-application", "Application Forms and Documents", status="reference_only")
             fields["documents"].evidence.append(jp_fact("", JP_GUIDE, "PDF p.3–4").evidence[0])
             conflicts.append("uec-language-conjunction")
-        yield TKUPartnerRecord(id=f"{JP}-{slug}", round_id=JP, academic_year=JP_YEAR,
+        # The home document fact must contain ONLY the current TKU submission.
+        fields['documents'] = jp_fact('；'.join(DOCUMENTS) + '。A4單面、不超過16頁、不裝訂、L型塑膠套；最多5個志願。', JP_GUIDE, 'PDF p.3–4 貳二、三')
+        yield enrich_current(TKUPartnerRecord(id=f"{JP}-{slug}", round_id=JP, academic_year=JP_YEAR,
                                application_round=JP_ROUND, selection_status="listed", quota_status="numeric",
-                               quota_number=quota, fields=fields, conflicts=conflicts)
+                               quota_number=quota, fields=fields, conflicts=conflicts))
 
 
 def quota_state(raw):
@@ -177,6 +181,8 @@ def main():
     for filename, rows in [("partners_current.jsonl",current),("partners_reference.jsonl",references)]:
         (BUNDLE/filename).write_text("".join(row.model_dump_json() + "\n" for row in rows),encoding="utf-8")
     build_platform_data(current)
+    from exchange_info.tku_completeness import write_tku_completeness_matrix
+    write_tku_completeness_matrix(current + references)
     report = tku_integrity_report()
     (BUNDLE / "integrity.json").write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n")
     print(json.dumps(report,ensure_ascii=False))
@@ -210,10 +216,16 @@ def build_platform_data(current):
         ("jp-stale-dates",["jp-original","jp-revision",JP_GUIDE],"更正公告9/23 09:00–9/30 12:00；PDF p.3星期誤植，p.6流程仍9/17，p.3修正作業有2025日期，p.15修正表9/17；系所送件新截止未明示。","學生申請採更正公告；修改與系所送件期限待承辦確認。"),
         ("jp-academic-rank-alternative",[JP_GUIDE],"p.2正文總平均75；p.18 Q&A5為75或系前40%。","正文75保留，系前40%不能自動判通過；待確認本次適用範圍。"),
         ("jp-departure-before-start",[JP_GUIDE,JP_LIST],"p.7出國/取得入學許可限2027/3/31前；名額表2027.4–2028.3。","可能提前抵達，不能自行判為錯字；確認入境及錄取效力期限。"),
-        ("nagasaki-wrong-url",[JP_LIST],"p.1長崎外國語大學列https://www.jiu.ac.jp/lsc/abroad/detail/id=4537，為城西國際大學網域。","不替換學校名稱、不以城西條件填長崎；正確交換頁待確認。"),
+        ("nagasaki-wrong-url",[JP_LIST,'nagasaki-partners','nagasaki-nics-2027'],"p.1長崎外國語大學列https://www.jiu.ac.jp/lsc/abroad/detail/id=4537，為城西國際大學網域。","保留母校表誤連問題；已核實長崎官方合作名單列淡江及2027 NICS頁，NICS本輪提名對應仍待確認。"),
         ("uec-language-conjunction",[JP_LIST,"uec-application",JP_GUIDE],"TKU名額表iBT67及IELTS6.0、80分且GPA3.0；外校一般頁英語equivalent test scores、學業one of。正文研究所N1，英語課豁免只明示大學部。","各角色分開保存；不得自行把TKU及改成或；研究所英語課N1豁免待確認。"),
         ("mainland-school-count",["mainland-115-attachment-1"],"DOCX明細35列、名額相加118；合計說大陸32校含澳門2校及台灣1校，若按文字應33。","保存35明細；與承辦核對總數文字，不能為總數刪列。"),
         ("macau-wrong-semester",["mainland-115-attachment-1","mainland-115-attachment-4"],"表澳門大學114-2；簡章首頁及肆二115-2/2027春季。","標為舊期參考且保留原文，不選定其中一值作當期申請依據。"),
+        ('nagasaki-photo-count',['nagasaki-nics-2027','nagasaki-form-a-guide'],'2027公告提出書類3說照片3張；目前直接連結的出願指南p.1說無法上傳NICS照片者2張。','數量不猜；照片上傳可免紙本，未上傳者確認張數。'),
+        ('nagasaki-essay-translation',['nagasaki-nics-2027','nagasaki-form-b'],'公告要求日文Form B；DOCX日文為500–1,000字，英文為500–1,000 words且允許英日文。','依日語NICS公告保留日文規則，英譯差異待外校確認。'),
+        ('nagasaki-study-period',[JP_LIST,'nagasaki-pledge','nagasaki-form-a-online'],'淡江表2027/4–2028/3；2027 Form A及誓約書全年選項為2027/3–2028/2。','保留兩方期間；確定實際提名、抵達、結束及返校日後辦理。'),
+        ('nagasaki-programme-mapping',[JP_LIST,'nagasaki-partners','nagasaki-nics-2027'],'淡江列長崎及日語；長崎合作目錄列淡江，2027 NICS收合作校，但淡江本輪表未寫NICS。','NICS資訊依計畫範圍展示，最終提名track及研究所課程適用需承辦確認。'),
+        ('ritsumeikan-budget-insurance',['ritsumeikan-2027-guide','ritsumeikan-fees'],'2027簡章p.4支援費含Gakkensai/Gakkenbai；一般生活預算另列academic/liability insurance，未明示預算年度。','保留一般預算供參考，確認保險重複及當期費用後才合計。'),
+        ('uec-form-a-fall-label',['uec-jusst_form_A-rev9-pdf','uec-application-recheck'],'一般Form A p.8 Fall Semester Entry Process標題下寫April entry in Spring，p.1與官方一般頁為October入學4/30、April入學10/31。','記錄原文標籤矛盾；不以舊表錯標作2027精確期限，2027版待確認。'),
     ]
     (BUNDLE/"rounds.json").write_text(json.dumps(rounds,ensure_ascii=False,indent=2)+"\n")
     conflict_rows=[]
@@ -221,9 +233,13 @@ def build_platform_data(current):
         conflict_rows.append({"id":id,"status":"needs_confirmation","basis":basis,"handling":resolution,
                               "source_urls":[SOURCES[s]["source_url"] for s in sources],"source_ids":sources,"checked_at":CHECKED_AT.isoformat()})
     (BUNDLE/"conflicts.json").write_text(json.dumps(conflict_rows,ensure_ascii=False,indent=2)+"\n")
-    workflows=[];destinations=[]
+    workflows=[];destinations=[];host_catalog=[]
     for record in current:
         fields=record.fields;name=str(fields["school_name"].value)
+        slug=record.id.rsplit('-',1)[-1]
+        host_items=host_documents(slug)
+        host_catalog.append(dict(partner_id=record.id,school_name=name,home_academic_year=JP_YEAR,
+            checked_at=CHECKED_AT.isoformat(),programme_mapping=fields['host_programme_mapping'].model_dump(mode='json'),documents=host_items))
         source_ids=list(dict.fromkeys(e.source_id for f in fields.values() for e in f.evidence))
         scope={"home_universities":["淡江大學"],"partner_universities":[name],"academic_years":[JP_YEAR],"application_rounds":[JP_ROUND]}
         specs=[
@@ -243,12 +259,46 @@ def build_platform_data(current):
                                      "signatures":["申請人","系主任"] if index==0 else ["申請人","家長（監護人）"] if index==6 else [],
                                      "official_form_url":SOURCES[JP_GUIDE]["source_url"]+"#page=14" if index==6 else None,
                                      "source_urls":[SOURCES[JP_GUIDE]["source_url"]]})
+            if order in [4,5]:
+                selected=[item for item in host_items if item['step_order']==order]
+                requirements=[document_requirement(item) for item in selected]
+                documents=[r['name'] for r in requirements]
+                details += [f"{item['name']}；適用：{item['condition']}；{item['applicable_year']}／{item['evidence']['locator']}；表單取得：{item['form_access']}" for item in selected]
+                details += [str(fields[k].value or fields[k].reason) for k in
+                    (['host_nomination_deadline','host_programme_mapping','latest_forms'] if order==4 else ['insurance','visa_residence','arrival_preparation','housing_application_deadline'])]
+            extra={}
+            if order==2:
+                extra=dict(deadline_at='2026-09-30T12:00:00+08:00',deadline_status='verified_exact',
+                    deadline_source_url=SOURCES['jp-revision']['source_url'],deadline_checked_at=CHECKED_AT)
+            elif order==4 and slug=='ritsumeikan':
+                extra=dict(deadline_at='2026-11-02T09:00:00+09:00',deadline_status='verified_exact',
+                    deadline_source_url=SOURCES['ritsumeikan-2027-guide']['source_url']+'#page=2',deadline_checked_at=CHECKED_AT)
+            else:extra=dict(deadline_status='reference_only' if slug=='uec' else 'needs_confirmation')
+            if order==4:
+                details.append({'ritsumeikan':'提名核准後取得SKP帳號，線上填寫並上傳文件；COE另依行政書士通知。',
+                    'nagasaki':'NICS Form A必須線上填寫，其他文件依公告寄送；10/31以消印為準，先確認本輪提名track。',
+                    'seikei':'所有文件由母校交換承辦Email送成蹊；COE線上表及財力文件細節另提供提名學生。',
+                    'uec':'一般規定只接受母校IAO直接送件；一般Form A要求列印親簽後註冊快遞，2027程序待確認。'}[slug])
+            form_urls=list(dict.fromkeys(r['official_form_url'] for r in requirements if r.get('official_form_url')))
+            step_urls=list(dict.fromkeys([SOURCES[source_id]['source_url']]+[u for r in requirements for u in r['source_urls']]))
+            submission={'method':'mixed' if order==2 else 'unknown',
+                'portal_url':'https://exchange.web.tku.edu.tw/' if order==2 else None}
+            action_url='https://exchange.web.tku.edu.tw/' if order==2 else None
+            if order==4:
+                submission.update(method={'ritsumeikan':'online','nagasaki':'mixed','seikei':'mixed','uec':'paper'}[slug],
+                    office='母校交換承辦／外校國際處',deadline_note=str(fields['host_deadline'].value))
+                if slug=='ritsumeikan':
+                    action_url=SOURCES['ritsumeikan-howto-2027']['source_url']
+                    submission['deadline_note']+='；正式申請連結與帳號提名核准後寄送。'
+                elif slug=='nagasaki':
+                    action_url=SOURCES['nagasaki-form-a-online']['source_url']
+                    submission['portal_url']=action_url
+                else:action_url=SOURCES[source_id]['source_url']
             steps.append(ApplicationStep(order=order,phase=phase,title=title,responsible_party=responsible,
                 responsible_unit=responsible,summary=details[0],details=details,required_documents=documents,
-                document_requirements=requirements,scope=scope,source_urls=[SOURCES[source_id]["source_url"]],
-                checked_at=CHECKED_AT,deadline_status="reference_only",deadline_reminder_eligible=False,
-                action_url="https://exchange.web.tku.edu.tw/" if order==2 else None,
-                submission={"method":"mixed" if order==2 else "unknown","portal_url":"https://exchange.web.tku.edu.tw/" if order==2 else None},
+                document_requirements=requirements,official_form_urls=form_urls,scope=scope,source_urls=step_urls,
+                checked_at=CHECKED_AT,deadline_reminder_eligible=False,**extra,
+                action_url=action_url,submission=submission,
                 support_status=support,needs_confirmation=support=="needs_confirmation",
                 confirmation_contact="淡江國際處交流組吳舒宇 分機3759" if support=="needs_confirmation" else None))
         wf=structure_application_workflow(UniversityApplicationWorkflow(home_university="淡江大學",school_name=name,
@@ -257,15 +307,14 @@ def build_platform_data(current):
             coverage_note="已核對校內2027–2028二甄；已截止且矛盾項待確認。外校證據適用期逐項保存；尚未經發布審查，不產生提醒。",
             sources=[{"title":SOURCES[s].get("title",s),"source_url":SOURCES[s]["source_url"],
                       "role":"partner_university" if SOURCES[s]["role"]=="host_incoming" else "home_university",
-                      "checked_at":CHECKED_AT,"content_hash":SOURCES[s].get("sha256")} for s in source_ids]))
+                      "checked_at":CHECKED_AT,"content_hash":SOURCES[s].get("sha256"),
+                      'effective_academic_year':SOURCES[s]['applicable_year'],
+                      'application_round':JP_ROUND if SOURCES[s]['role']=='home_outbound' else '2027春季／一般規則依來源適用期'}
+                     for s in source_ids if SOURCES[s]['role']!='directory_reference']))
         assert not workflow_structure_issues(wf),workflow_structure_issues(wf)
         workflows.append(wf)
-        destinations.append(DestinationProfile(home_university="淡江大學",school_name=name,country="日本",
-            housing_summary=str(fields["housing"].value),cost_summary=str(fields["costs"].value),
-            campus_life_summary=str(fields["course_restrictions"].value),coverage_status="partial_official",
-            coverage_note="各項年度與角色見TKU欄位證據；不能把一般規定視為2027確定帳單。交通尚未收集。",
-            last_checked=CHECKED_AT,sources=[SourceReference(title=SOURCES[s].get("title",s),source_url=SOURCES[s]["source_url"],
-                summary=f"{SOURCES[s]['applicable_year']} / {SOURCES[s]['role']} / 2026-10-08") for s in source_ids]))
+        destinations.append(build_tku_destination(record))
+    (BUNDLE/'host_documents.json').write_text(json.dumps(host_catalog,ensure_ascii=False,indent=2)+'\n')
     for filename,rows in [("application_workflows.jsonl",workflows),("destination_profiles.jsonl",destinations)]:
         (BUNDLE/filename).write_text("".join(row.model_dump_json()+"\n" for row in rows))
 

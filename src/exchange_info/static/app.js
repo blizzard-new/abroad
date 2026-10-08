@@ -7976,7 +7976,7 @@ function renderSchoolCompleteness(report) {
   if (!body) return;
   body.setAttribute("aria-busy", "false");
   body.innerHTML = `
-    <p class="school-completeness-summary"><strong>${report.available_count} / ${report.total_count} 項資料完整</strong>${report.priority_gaps.length ? `<span>，優先向學校確認：${report.priority_gaps.map(escapeHtml).join("、")}</span>` : ""}</p>
+    <p class="school-completeness-summary"><strong>${report.available_count} / ${report.total_count} ${report.home_university === "淡江大學" ? "欄已有當期依據；請逐欄看適用範圍" : "項資料完整"}</strong>${report.priority_gaps.length ? `<span>，優先向學校確認：${report.priority_gaps.map(escapeHtml).join("、")}</span>` : ""}</p>
     <ul class="school-completeness-list">${report.items.map((row) => {
       const [label, icon] = COMPLETENESS_STATUS[row.status] || ["待確認", "circle-alert"];
       const link = (row.source_urls || [])[0];
@@ -8165,7 +8165,7 @@ function renderStudentSurvivalGuide(item, profile) {
         </div>` : ""}
       ${firstHours.length ? `
         <section class="student-guide-arrival" aria-labelledby="student-guide-arrival-title">
-          <div class="student-guide-subheading"><div><i data-lucide="route" aria-hidden="true"></i><h4 id="student-guide-arrival-title">抵達後 72 小時</h4></div><small>照順序完成，先讓自己能通訊、付款、進校與選課</small></div>
+          <div class="student-guide-subheading"><div><i data-lucide="route" aria-hidden="true"></i><h4 id="student-guide-arrival-title">${profile.home_university === "淡江大學" ? "抵達後辦理事項" : "抵達後 72 小時"}</h4></div><small>${profile.home_university === "淡江大學" ? "各項依官方時限及外校通知辦理" : "照順序完成，先讓自己能通訊、付款、進校與選課"}</small></div>
           <ol>${renderGuideChecklist(firstHours, profile)}</ol>
         </section>` : ""}
       ${(bring.length || buyThere.length) ? `

@@ -95,9 +95,10 @@ def test_specific_programme_rules_and_conflicting_rank_alternative():
     assert assess_tku_eligibility(**common,partner_id=jp+"-uec")["home_status"]=="needs_confirmation"
 
 
-def test_incoming_rules_do_not_replace_home_language_and_bad_url_stays_unknown():
+def test_incoming_rules_do_not_replace_home_language_and_corrected_url_keeps_conflict():
     rows={r.id.rsplit("-",1)[-1]:r for r in load_tku_records()}
-    assert rows["nagasaki"].fields["website"].value is None
+    assert 'nagasaki-gaigo.ac.jp' in rows["nagasaki"].fields["website"].value
+    assert rows['nagasaki'].fields['host_programme_mapping'].status=='needs_confirmation'
     assert "nagasaki-wrong-url" in rows["nagasaki"].conflicts
     assert rows["uec"].fields["degree_levels"].status=="missing_in_source"
     assert rows["uec"].fields["department_scope"].value.endswith("學生優先")
@@ -141,7 +142,7 @@ def test_offline_api_registry_documents_search_and_life_profile(tmp_path,monkeyp
     catalog=client.get("/application-center/catalog",params={"school":"TKU","target_school":name,
         "academic_year":"2027-2028","application_round":"日語組第二次甄選"})
     assert catalog.status_code==200 and catalog.json()["workflow_found"] is True
-    assert len(catalog.json()["items"])==8
+    assert Counter(i['phase'] for i in catalog.json()['items'])=={'校內申請':8,'外校申請':9,'行前':6}
     assert all(i["needs_confirmation"] and not i["download_available"] for i in catalog.json()["items"])
 
 
@@ -155,6 +156,88 @@ def test_documents_and_workflows_do_not_invent_official_layout_or_new_year():
     assert all(w.review_status=="legacy" and w.published_at is None for w in workflows)
     assert all(not s.deadline_reminder_eligible for w in workflows for s in w.steps)
     assert all(w.academic_year=="2027-2028" for w in workflows)
+
+
+def test_host_documents_preserve_conditions_versions_and_submission_phase(tmp_path):
+    catalog=json.loads((BUNDLE/'host_documents.json').read_text())
+    assert len(catalog)==4
+    expected={'ritsumeikan':(9,6),'nagasaki':(11,0),'seikei':(10,0),'uec':(15,2)}
+    client=TestClient(create_app(tmp_path))
+    workflows={w.school_name:w for w in load_tku_workflows()}
+    for row in catalog:
+        slug=row['partner_id'].rsplit('-',1)[-1];wf=workflows[row['school_name']]
+        assert len(wf.steps[1].document_requirements)==8
+        assert all('Form A' not in d.name and 'COE' not in d.name for d in wf.steps[1].document_requirements)
+        assert (len(wf.steps[3].document_requirements),len(wf.steps[4].document_requirements))==expected[slug]
+        response=client.get('/application-center/catalog',params=dict(school='TKU',target_school=row['school_name'],academic_year='2027-2028',application_round='日語組第二次甄選'))
+        assert response.status_code==200
+        items=response.json()['items']
+        assert sum(d['phase']=='校內申請' for d in items)==8
+        assert sum(d['phase']=='外校申請' for d in items)==expected[slug][0]
+        assert all(d['source_urls'] and d['source_checked_at'] for d in items)
+        for doc in row['documents']:
+            assert doc['condition'] and doc['evidence']['locator'] and doc['applicable_year']
+            if slug=='uec':assert doc['status']=='reference_only' and '2027' in doc['applicable_year']
+    seikei=next(r for r in catalog if r['partner_id'].endswith('seikei'))
+    conditional=next(d for d in seikei['documents'] if d['key']=='financial-statement')
+    assert conditional['condition']=='僅獎學金申請人'
+    assert any(d['key']=='coe' and '財力' in d['name'] for d in seikei['documents'])
+    rit=next(r for r in catalog if r['partner_id'].endswith('ritsumeikan'))
+    assert next(d for d in rit['documents'] if d['key']=='health')['phase']=='行前'
+    uec=next(r for r in catalog if r['partner_id'].endswith('uec'))
+    assert next(d for d in uec['documents'] if d['key']=='funding')['phase']=='行前'
+    assert '不套所有臺灣' in next(d for d in uec['documents'] if d['key']=='tb')['condition']
+    assert '大學部' in next(d for d in uec['documents'] if d['key']=='research-ug')['condition']
+    assert '研究所' in next(d for d in uec['documents'] if d['key']=='research-grad')['condition']
+    health=next(d for d in uec['documents'] if d['key']=='health')
+    assert health['signatures']==['申請人','母校國際處／授權人'] and '醫師' not in health['name']
+
+
+def test_nagasaki_current_body_and_uec_scholarship_opportunity_are_preserved():
+    rows={r.id.rsplit('-',1)[-1]:r for r in load_tku_records()}
+    naga=rows['nagasaki']
+    assert '2026/10/31消印有效' in naga.fields['host_deadline'].value
+    assert '2026-09-30' in naga.fields['home_deadline'].value
+    assert '50,000' in naga.fields['costs'].value and '53,100' in naga.fields['costs'].value
+    assert '270,000' in naga.fields['costs'].value and '不套用' in naga.fields['costs'].value
+    assert {'nagasaki-photo-count','nagasaki-essay-translation','nagasaki-study-period','nagasaki-programme-mapping'}.issubset(naga.conflicts)
+    sources={r['id']:r for r in load_tku_sources()}
+    assert 'Spring 2027' in sources['nagasaki-pledge']['pages'][0]['text']
+    assert '2027' in sources['nagasaki-form-a-online']['text'][:300]
+    assert '淡江大学' in sources['nagasaki-partners']['text']
+    assert '2009' in sources['uec-private-insurance']['applicable_year']
+    scholarship=rows['uec'].fields['scholarships']
+    assert scholarship.status=='verified' and scholarship.evidence[0].role=='home_outbound'
+    assert scholarship.evidence[0].applicable_year=='2027-2028'
+    assert '有機會' in scholarship.value and '不是保證' in scholarship.value
+
+
+def test_completeness_is_per_school_field_and_general_pages_are_partial(tmp_path):
+    matrix=json.loads((BUNDLE/'completeness_matrix.json').read_text())
+    assert len(matrix['schools'])==128
+    assert len({r['id'] for r in matrix['schools']})==128
+    assert all(len(r['fields'])==38 for r in matrix['schools'])
+    assert all(c['reason'] and c['evidence'] and c['checked_entries'] for r in matrix['schools'] for c in r['fields'])
+    assert all(c['value'] is None for r in matrix['schools'] for c in r['fields'] if c['status'] in {'not_verified_new','missing_in_source','not_applicable'})
+    client=TestClient(create_app(tmp_path))
+    for row in load_tku_records():
+        name=row.fields['school_name'].value
+        response=client.get('/school-data-completeness',params=dict(school=name,home_school='TKU'))
+        assert response.status_code==200
+        report=response.json();items={i['key']:i for i in report['items']}
+        assert len(items)==38 and items['home_deadline']['status']=='available'
+        assert items['housing_application_deadline']['status'] in {'missing','needs_confirmation'}
+        assert items['arrival_date']['status'] in {'missing','needs_confirmation'}
+        assert items['course_schedule_2027']['status']=='needs_confirmation'
+        assert '2026-10-08' in items['latest_forms']['note']
+        if row.id.endswith('uec'):
+            assert items['host_documents']['status']=='partial' and items['housing_costs']['status']=='partial'
+            assert items['scholarships']['status']=='available'
+        profile=client.get('/destination-profile',params=dict(school=name,home_school='TKU')).json()
+        assert len(profile['student_guide_sections'])==14
+        assert all(s['source_urls'] and '2026-10-08' in s['points'][0] for s in profile['student_guide_sections'])
+        assert profile['coverage_status']=='official_partial'
+        assert any(s['caution'] for s in profile['student_guide_sections'])
 
 
 def test_existing_cgu_and_ntpu_scope_counts_unchanged():
@@ -184,7 +267,7 @@ def test_expired_tku_choice_cannot_be_added_as_an_available_personal_plan():
 
 
 def test_build_is_reproducible_without_network():
-    names=["partners_current.jsonl","partners_reference.jsonl","rounds.json","conflicts.json","application_workflows.jsonl","destination_profiles.jsonl","integrity.json"]
+    names=["partners_current.jsonl","partners_reference.jsonl","rounds.json","conflicts.json","application_workflows.jsonl","destination_profiles.jsonl","integrity.json","host_documents.json","completeness_matrix.json"]
     before={name:(BUNDLE/name).read_bytes() for name in names}
     script=BUNDLE.parents[3]/"scripts"/"build_tku_catalog.py"
     subprocess.run([sys.executable,str(script)],cwd=script.parents[1],check=True,capture_output=True)

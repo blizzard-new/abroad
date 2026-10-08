@@ -3593,6 +3593,9 @@ def create_app(
         from .school_completeness import build_school_completeness
 
         university, partner = partner_context_for_school(school, home_school)
+        if university.id == 'tku':
+            from .tku_completeness import build_tku_school_completeness
+            return build_tku_school_completeness(partner)
         workflow = select_application_workflow(
             workflows_for_university(university),
             ApplicationRuleContext(

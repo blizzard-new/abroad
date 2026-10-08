@@ -1,0 +1,243 @@
+{
+  "checked_at": "2026-10-08",
+  "branch": "data/tku-exchange-20261008",
+  "integration_main": "293546e807294dc0812f390b240a4cfb68e86cd0",
+  "data": {
+    "records": 128,
+    "current_round_records": 4,
+    "reference_records": 124,
+    "confirmed_current_quota": 7,
+    "fact_states": {
+      "verified": 85,
+      "missing_in_source": 665,
+      "needs_confirmation": 19,
+      "reference_only": 1604,
+      "not_verified_new": 11
+    },
+    "issues": [],
+    "source_count": 72,
+    "unique_source_urls": 67,
+    "downloaded_original_attachments": 28,
+    "failed_reads": [
+      {
+        "id": "jp-original-attachment-2",
+        "url": "https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/09/2027-28日語組二甄簡章.pdf",
+        "error": "404 Client Error: Not Found for url: https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/09/2027-28%E6%97%A5%E8%AA%9E%E7%B5%84%E4%BA%8C%E7%94%84%E7%B0%A1%E7%AB%A0.pdf"
+      },
+      {
+        "id": "uec-life",
+        "url": "https://www.fedu.uec.ac.jp/en/current_students/everyday-life/",
+        "error": "404 Client Error: Not Found for url: https://www.fedu.uec.ac.jp/en/current_students/everyday-life/"
+      },
+      {
+        "id": "japan-residence",
+        "url": "https://www.moj.go.jp/isa/applications/status/student.html",
+        "error": "403 Client Error: Forbidden for url: https://www.moj.go.jp/isa/applications/status/student.html"
+      }
+    ],
+    "current_matrix": [
+      {
+        "id": "jp-2027-2028-round-2-ritsumeikan",
+        "school_name": "立命館大學 Ritsumeikan University",
+        "field_states": {
+          "verified": 26,
+          "missing_in_source": 4,
+          "needs_confirmation": 4,
+          "reference_only": 3,
+          "not_verified_new": 1
+        }
+      },
+      {
+        "id": "jp-2027-2028-round-2-nagasaki",
+        "school_name": "長崎外國語大學 Nagasaki University of Foreign Studies",
+        "field_states": {
+          "verified": 22,
+          "missing_in_source": 6,
+          "needs_confirmation": 6,
+          "not_verified_new": 2,
+          "reference_only": 2
+        }
+      },
+      {
+        "id": "jp-2027-2028-round-2-seikei",
+        "school_name": "成蹊大學 Seikei University",
+        "field_states": {
+          "verified": 26,
+          "missing_in_source": 5,
+          "needs_confirmation": 5,
+          "reference_only": 1,
+          "not_verified_new": 1
+        }
+      },
+      {
+        "id": "jp-2027-2028-round-2-uec",
+        "school_name": "電氣通信大學 University of Electro-Communications",
+        "field_states": {
+          "verified": 11,
+          "missing_in_source": 2,
+          "reference_only": 14,
+          "needs_confirmation": 4,
+          "not_verified_new": 7
+        }
+      }
+    ],
+    "matrix_school_count": 128,
+    "matrix_fields_per_school": 38,
+    "currently_open_choices": 0,
+    "quota_states": {
+      "numeric": 109,
+      "provisional": 19
+    },
+    "host_documents_by_school": [
+      {
+        "school": "立命館大學 Ritsumeikan University",
+        "phases": {
+          "外校申請": 9,
+          "行前": 6
+        }
+      },
+      {
+        "school": "長崎外國語大學 Nagasaki University of Foreign Studies",
+        "phases": {
+          "外校申請": 11
+        }
+      },
+      {
+        "school": "成蹊大學 Seikei University",
+        "phases": {
+          "外校申請": 10
+        }
+      },
+      {
+        "school": "電氣通信大學 University of Electro-Communications",
+        "phases": {
+          "外校申請": 15,
+          "行前": 2
+        }
+      }
+    ]
+  },
+  "current_tests": {
+    "tests": 214,
+    "passed": 199,
+    "failed": 9,
+    "skipped": 6,
+    "failure_ids": [
+      "tests.test_frontend_contract::test_web_routes_states_and_touch_targets_are_consistent",
+      "tests.test_frontend_contract::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+      "tests.test_frontend_contract::test_web_notification_center_and_explicit_email_opt_in_are_present",
+      "tests.test_frontend_contract::test_application_center_separates_official_requirements_from_preparation_tools",
+      "tests.test_frontend_contract::test_successful_login_closes_before_noncritical_account_hydration",
+      "tests.test_frontend_contract::test_personal_application_plan_uses_structured_api_and_progressive_login",
+      "tests.test_frontend_contract::test_global_home_board_routing_and_following_are_present",
+      "tests.test_frontend_contract::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+      "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+    ],
+    "junit_sha256": "2da4723152bb25dae251ef2cc79ceaaf1749c87b9e0d88e41f20a21f8d637860"
+  },
+  "baseline_failure_comparison": {
+    "tests": 66,
+    "passed": 57,
+    "failed": 9,
+    "skipped": 0,
+    "failure_ids": [
+      "tests.test_frontend_contract::test_web_routes_states_and_touch_targets_are_consistent",
+      "tests.test_frontend_contract::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+      "tests.test_frontend_contract::test_web_notification_center_and_explicit_email_opt_in_are_present",
+      "tests.test_frontend_contract::test_application_center_separates_official_requirements_from_preparation_tools",
+      "tests.test_frontend_contract::test_successful_login_closes_before_noncritical_account_hydration",
+      "tests.test_frontend_contract::test_personal_application_plan_uses_structured_api_and_progressive_login",
+      "tests.test_frontend_contract::test_global_home_board_routing_and_following_are_present",
+      "tests.test_frontend_contract::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+      "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+    ],
+    "junit_sha256": "03b5d057d19c157ebfe8a9fa5aa465ff9e56212137747f52551aa9e6a78e6baf"
+  },
+  "new_failure_ids": [],
+  "browser": {
+    "status": "passed",
+    "home_school": "淡江大學",
+    "listed_records": 4,
+    "open_filter_records": 0,
+    "closed_filter_records": 4,
+    "east_asia_filter_records": 4,
+    "viewports": [
+      [
+        1280,
+        900
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "detail_checks": [
+      {
+        "school": "立命館大學 Ritsumeikan University",
+        "home_language": true,
+        "home_tuition": true,
+        "application_steps": true,
+        "host_documents_in_workflow": true,
+        "official_life_sections": 14,
+        "completeness_fields": 38
+      },
+      {
+        "school": "長崎外國語大學 Nagasaki University of Foreign Studies",
+        "home_language": true,
+        "home_tuition": true,
+        "application_steps": true,
+        "host_documents_in_workflow": true,
+        "official_life_sections": 14,
+        "completeness_fields": 38
+      },
+      {
+        "school": "成蹊大學 Seikei University",
+        "home_language": true,
+        "home_tuition": true,
+        "application_steps": true,
+        "host_documents_in_workflow": true,
+        "official_life_sections": 14,
+        "completeness_fields": 38
+      },
+      {
+        "school": "電氣通信大學 University of Electro-Communications",
+        "home_language": true,
+        "home_tuition": true,
+        "application_steps": true,
+        "host_documents_in_workflow": true,
+        "official_life_sections": 14,
+        "completeness_fields": 38
+      }
+    ],
+    "document_catalog_checks": [
+      {
+        "school": "立命館大學 Ritsumeikan University",
+        "visible_host_documents": 9
+      },
+      {
+        "school": "長崎外國語大學 Nagasaki University of Foreign Studies",
+        "visible_host_documents": 11
+      },
+      {
+        "school": "成蹊大學 Seikei University",
+        "visible_host_documents": 10
+      },
+      {
+        "school": "電氣通信大學 University of Electro-Communications",
+        "visible_host_documents": 15
+      }
+    ],
+    "page_errors": []
+  },
+  "observed_ui_issue": "Switching an existing document-centre target retained the original target after confirmation; main reproduction not yet verified. Four schools are tested in fresh independent student contexts.",
+  "checks": {
+    "openapi": "passed",
+    "python_syntax": "passed",
+    "javascript_syntax": "passed",
+    "diff_check": "passed",
+    "offline_rebuild": "passed",
+    "lockfile_check": "failed on both this branch and untouched main: lockfile needs update; no lockfile change",
+    "remote_ci": "Previous quality run 37719707403 failed with no jobs/checks; log unavailable. Latest run status recorded separately after push."
+  },
+  "remaining_scope": "124 archived rows have home sources; their host current fields are explicitly not individually researched. Four latest Japanese choices have reviewed public host material and field-specific gaps. Not all application forms are public, and not all 2027 dates/prices are verified."
+}

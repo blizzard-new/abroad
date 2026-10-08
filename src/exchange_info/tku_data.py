@@ -6,7 +6,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator, model_serializer
 
 BUNDLE = Path(__file__).resolve().parent / "official_data" / "tku"
 CHECKED_AT = datetime.fromisoformat("2026-10-08T00:00:00+00:00")
@@ -30,6 +30,13 @@ class TKUFact(BaseModel):
     value: str | int | None
     status: Literal["verified", "reference_only", "missing_in_source", "not_verified_new", "needs_confirmation", "not_applicable"]
     evidence: list[TKUEvidence] = Field(min_length=1)
+    reason: str | None = None
+
+    @model_serializer(mode='wrap')
+    def omit_absent_reason(self, handler):
+        payload=handler(self)
+        if self.reason is None:payload.pop('reason',None)
+        return payload
 
     @model_validator(mode="after")
     def unknown_is_null(self):
