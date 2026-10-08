@@ -42,7 +42,7 @@ def write(name, value):
     (BUNDLE / name).write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
 
 
-def source_check(source, field, used, semantically_reviewed=()):
+def source_check(source, field, used, semantically_reviewed=(), partially_reviewed=()):
     sid = source["source_id"]
     timestamp = source["checked_at"]
     if source["status"] == "fetch_failed":
@@ -61,6 +61,10 @@ def source_check(source, field, used, semantically_reviewed=()):
         result = "已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。"
     elif sid in semantically_reviewed:
         result = "已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。"
+    elif sid in partially_reviewed:
+        result = (
+            "已核對部分政策段落；其餘全文／課程細目仍待查讀，不宣稱本來源全文已核。"
+        )
     else:
         result = f"已取得{source['status']}；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
     return {
@@ -185,19 +189,34 @@ def main():
             relevant = [c for c in candidates if c["field"] == key]
             category, note = classify(field, acquired, relevant, row["ccu_page"], key)
             review = ledger.get(row["ccu_page"], {}).get("fields", {}).get(key, {})
-            read_sources = review.get("readable_source_ids", [])
+            read_sources = review.get(
+                "fully_reviewed_source_ids", review.get("readable_source_ids", [])
+            )
+            partial_sources = review.get("partially_reviewed_source_ids", [])
+            pending_sources = partial_sources or review.get(
+                "unreviewed_acquired_source_ids", []
+            )
             if review and category == "alternative_official_sources_not_fully_checked":
                 note = (
-                    "本輪所列可讀官方PDF/子頁已全文及逐欄核對，未找到本欄當期適用依據；"
-                    "舊年、其他計畫與實際存取限制已記錄。其他官方入口仍可續查，"
-                    "不是未讀候選段落，也不是官方明示尚未公告。"
+                    (
+                        "本輪已逐欄核對所列全文來源及部分政策段落，未找到本欄當期適用依據；"
+                        "其他段落／課程細目、舊年及計畫範圍仍待續查，"
+                        "不宣稱所有可讀來源全文已核，也不是官方明示尚未公告。"
+                    )
+                    if pending_sources
+                    else (
+                        "本輪所列可讀官方PDF/子頁已全文及逐欄核對，未找到本欄當期適用依據；"
+                        "舊年、其他計畫與實際存取限制已記錄。其他官方入口仍可續查，"
+                        "不是未讀候選段落，也不是官方明示尚未公告。"
+                    )
                 )
             used = {e["source_id"] for e in field["evidence"]}
             field.update(
                 research_category=category,
                 research_note=note,
                 source_checks=[
-                    source_check(s, key, used, read_sources) for s in acquired
+                    source_check(s, key, used, read_sources, partial_sources)
+                    for s in acquired
                 ],
             )
             counts[category] += 1
@@ -219,7 +238,14 @@ def main():
                     if (row["ccu_page"], k) in changed
                 ],
                 "remaining_review_status": (
-                    "listed_sources_semantically_reviewed_more_sources_pending"
+                    "policy_sections_reviewed_full_sources_pending"
+                    if row["ccu_page"] in ledger
+                    and any(
+                        f.get("partially_reviewed_source_ids")
+                        or f.get("unreviewed_acquired_source_ids")
+                        for f in ledger[row["ccu_page"]]["fields"].values()
+                    )
+                    else "listed_sources_semantically_reviewed_more_sources_pending"
                     if row["ccu_page"] in ledger
                     else "pending_semantic_reread"
                     if candidates

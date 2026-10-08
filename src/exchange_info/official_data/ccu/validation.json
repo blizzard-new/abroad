@@ -807,5 +807,81 @@
       "ruff": "pass after 18 initial style/import findings corrected",
       "log": "docs/ccu-validation-2026-10-08/fourth-pass-final-static.txt"
     }
+  },
+  "fifth_pass": {
+    "base_commit": "05a72ffdc2d68dec018d2970db16e026968933a1",
+    "latest_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "ccu_tests": {
+      "passed": 112,
+      "failed": 0,
+      "seconds": 29.84,
+      "log": "docs/ccu-validation-2026-10-08/fifth-pass-ccu-tests.txt"
+    },
+    "four_school_tests": {
+      "passed": 211,
+      "skipped": 5,
+      "failed": 1,
+      "seconds": 44.85,
+      "known_failure": "tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+      "log": "docs/ccu-validation-2026-10-08/fifth-pass-four-school.txt"
+    },
+    "browser_tests": {
+      "passed": 16,
+      "failed": 0,
+      "seconds": 111.15,
+      "log": "docs/ccu-validation-2026-10-08/fifth-pass-browser.txt"
+    },
+    "integrity": {
+      "rebuild": {
+        "identical": true,
+        "files_compared": 16,
+        "sha256": {
+          "partners.jsonl": "3b83a63f0c9794b08b813aa3c41d5b834bc7db545af7ac2a060398cea43fb1ea",
+          "application_workflows.jsonl": "6d39d8cfcb03518ee81ed4eb115c136dfad62d1aa7099ef68350b2dcc4c3dfd7",
+          "destination_profiles.jsonl": "7b9d9159927b77701a73b57c8042ea3da83b762922b90da1ce167f9de4a52976",
+          "field-audit.json": "4c732605dfa70e21dc6793ba0607dbd4ffef93e0ec1491cae4108e8526c7e32d",
+          "completeness.json": "c28422ecd0faf761260907da59176000f7afa9b1b013072e059499c2b01cdba9",
+          "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
+          "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
+          "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
+          "field-completeness-matrix.json": "cba0cba6d61e93c0543ffe2cf48093baf7286056728ddefb9a55650dbcf87a0e",
+          "confirmation-questions.json": "640314a76bbce5e3848bed478c3c75edc61aa315b02caffc9e206451a9b12ea8",
+          "overseas-completeness.json": "704703f5e37fc1347fb1157fc788e53c3d235203e8c9305e4040d3b996e6c7a4",
+          "overseas-conflicts.json": "ce187eec256f1e5cc35883de0b89e58f7d106ec5ffa9201ffaccad481734ac2f",
+          "research-gap-audit.json": "ea55def76059b4e536d37d1af69c438a6bd95b9987398d1336571ab38c8854ca",
+          "acquired-content-review.json": "0c4385023ffacb1edbf58747eecb42e2f290c2acad00693190b56043c6b73fde",
+          "source-failure-followup.json": "ef42a306ded21adb03e5699f875d4ae95948b89b506f34ee54600034abc01938",
+          "overseas-reviewed-fields.json": "e8d89b48ddf8f593dde4c0359811fd29b61bdbf42dc29b798e8ef26ed5d85f78"
+        }
+      },
+      "existing_main_files_compared": 49,
+      "existing_main_files_changed": 0,
+      "api_paths": 110,
+      "api_routes_changed": false,
+      "api_required_fields_changed": false
+    },
+    "source_count": 320,
+    "new_source_count": 79,
+    "field_changes": 65,
+    "previously_missing_filled": 48,
+    "overseas_field_status_counts": {
+      "verified_current": 272,
+      "missing": 371,
+      "needs_confirmation": 214,
+      "reference_only": 40,
+      "conflict": 37,
+      "explicit_not_announced": 1
+    },
+    "complete_research_claimed": false,
+    "static_checks": {
+      "changed_files": "ruff passed; Python compilation and git diff check passed",
+      "broader_existing_ccu_tests": "19 existing style findings outside changed files; full log retained",
+      "log": "docs/ccu-validation-2026-10-08/fifth-pass-changed-static.txt"
+    },
+    "initial_validation_errors": [
+      "Focused tests initially had two text assertions inconsistent with valid field phrasing; corrected, included in final passing four-school run.",
+      "Initial four-school command referenced nonexistent test file; no tests ran, final corrected command evidence retained.",
+      "Initial integrity check overlapped another rebuild and failed three hashes; sequential rerun compared all 16 files identically."
+    ]
   }
 }

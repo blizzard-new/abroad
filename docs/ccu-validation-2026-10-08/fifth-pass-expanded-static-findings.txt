@@ -1,0 +1,337 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests/test_ccu_second_pass.py:3:1
+   |
+ 1 |   """Use real bundled rows to protect cross-source deadlines and research status."""
+ 2 |
+ 3 | / import hashlib
+ 4 | | import importlib.util
+ 5 | | import json
+ 6 | | from pathlib import Path
+ 7 | | import subprocess
+ 8 | |
+ 9 | | import pytest
+10 | | import requests
+11 | | from pypdf import PdfReader
+12 | |
+13 | | from exchange_info.ccu_sources import BUNDLE
+14 | | from exchange_info.ccu_student_view import fetch_ccu_partner_universities
+15 | | from exchange_info.models import UniversityApplicationWorkflow
+16 | | from exchange_info.storage import read_jsonl
+   | |____________________________________________^
+help: Organize imports
+  |
+5 | import json
+6 + import subprocess
+7 | from pathlib import Path
+  - import subprocess
+8 |
+  |
+
+F401 [*] `pathlib.Path` imported but unused
+ --> tests/test_ccu_second_pass.py:6:21
+  |
+4 | import importlib.util
+5 | import json
+6 | from pathlib import Path
+  |                     ^^^^
+7 | import subprocess
+  |
+help: Remove unused import: `pathlib.Path`
+  |
+5 | import json
+  - from pathlib import Path
+6 | import subprocess
+  |
+
+PLW1510 `subprocess.run` without explicit `check` argument
+  --> tests/test_ccu_second_pass.py:54:14
+   |
+52 |     assert.ok(partnerDeadlineReference(item).value.includes(item.partner_exchange_details.application_deadline.value));
+53 |     """
+54 |     result = subprocess.run(
+   |              ^^^^^^^^^^^^^^
+55 |         ["node", "-e", script],
+56 |         input=partner.model_dump_json(),
+   |
+help: Add explicit `check=False`
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_second_pass.py:151:12
+    |
+149 |               return response
+150 |
+151 |       item = dict(
+    |  ____________^
+152 | |         url="https://official.example.edu/Admission/index.htm",
+153 | |         source_id="test",
+154 | |         authority="partner_official_public_page",
+155 | |     )
+    | |_____^
+156 |       raw = b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1" + b"not html"
+157 |       doc = module.fetch_public_source(item, tmp_path, Session(raw))
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_second_pass.py:168:9
+    |
+166 |     )
+167 |     assert page["links"] == [
+168 |         dict(label="Form", url="https://official.example.edu/form.doc")
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+169 |     ]
+    |
+help: Rewrite as a literal
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests/test_ccu_semantics.py:1:1
+   |
+ 1 | / import hashlib
+ 2 | | import json
+ 3 | | import subprocess
+ 4 | | from datetime import timedelta
+ 5 | | from pathlib import Path
+ 6 | |
+ 7 | | import pytest
+ 8 | | from fastapi.testclient import TestClient
+ 9 | |
+10 | | from exchange_info.api import create_app
+11 | | from exchange_info.advisor import _partner_language_threshold as advisor_threshold
+12 | | from exchange_info.application_rules import (
+13 | |     _partner_language_threshold as plan_threshold,
+14 | | )
+15 | | from exchange_info.ccu_sources import BUNDLE, HOME
+16 | | from exchange_info.ccu_student_view import fetch_ccu_partner_universities
+17 | | from exchange_info.models import (
+18 | |     AccountSessionRecord,
+19 | |     PartnerUniversity,
+20 | |     UserAccount,
+21 | |     utc_now,
+22 | | )
+23 | | from exchange_info.storage import save_account_sessions, save_user_accounts
+   | |___________________________________________________________________________^
+help: Organize imports
+   |
+9  |
+10 + from exchange_info.advisor import _partner_language_threshold as advisor_threshold
+11 | from exchange_info.api import create_app
+   - from exchange_info.advisor import _partner_language_threshold as advisor_threshold
+12 | from exchange_info.application_rules import (
+   |
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_semantics.py:174:14
+    |
+172 |       client = client_for(tmp_path)
+173 |       partner = at(page)
+174 |       common = dict(
+    |  ______________^
+175 | |         college="工學院",
+176 | |         department="資訊工程學系",
+177 | |         degree_level="大學部",
+178 | |         academic_score=85,
+179 | |         academic_gpa=3.5,
+180 | |         language_test=test,
+181 | |         language_score=score,
+182 | |     )
+    | |_____^
+183 |       response = client.post(
+184 |           "/application-plan/evaluate",
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_semantics.py:188:26
+    |
+186 |             home_school=HOME,
+187 |             **common,
+188 |             preferences=[dict(rank=1, school_name=partner.school_name)],
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+189 |         ),
+190 |     )
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_semantics.py:215:13
+    |
+213 |         eligibility="IELTS 6.0",
+214 |         program_options=[
+215 |             dict(program_type="A", source_url="https://example.edu/a"),
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+216 |             dict(program_type="B", source_url="https://example.edu/b"),
+217 |         ],
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_semantics.py:216:13
+    |
+214 |         program_options=[
+215 |             dict(program_type="A", source_url="https://example.edu/a"),
+216 |             dict(program_type="B", source_url="https://example.edu/b"),
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+217 |         ],
+218 |     )
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_semantics.py:225:9
+    |
+223 | def test_frontend_matches_structured_language_and_document_statuses():
+224 |     cases = [
+225 |         dict(partner=at(p).model_dump(mode="json"), test=t, score=s)
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+226 |         for p, t, s in [
+227 |             (45, "ielts", 6),
+    |
+help: Rewrite as a literal
+
+PLW1510 `subprocess.run` without explicit `check` argument
+   --> tests/test_ccu_semantics.py:272:14
+    |
+270 |     }
+271 |     """
+272 |     result = subprocess.run(
+    |              ^^^^^^^^^^^^^^
+273 |         [
+274 |             "node",
+    |
+help: Add explicit `check=False`
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_semantics.py:281:13
+    |
+279 |           ],
+280 |           input=json.dumps(
+281 | /             dict(
+282 | |                 cases=cases,
+283 | |                 direct=at(67).model_dump(mode="json"),
+284 | |                 document_cases=[
+285 | |                     at(p).model_dump(mode="json")
+286 | |                     for p in (26, 32, 33, 39, 71, 103, 104, 74)
+287 | |                 ],
+288 | |             ),
+    | |_____________^
+289 |               ensure_ascii=False,
+290 |           ),
+    |
+help: Rewrite as a literal
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests/test_ccu_support.py:1:1
+   |
+ 1 | / import hashlib
+ 2 | | import json
+ 3 | | import subprocess
+ 4 | | from collections import Counter
+ 5 | | from pathlib import Path
+ 6 | |
+ 7 | | import pytest
+ 8 | | from fastapi.testclient import TestClient
+ 9 | | from pypdf import PdfReader
+10 | |
+11 | | from exchange_info.api import create_app
+12 | | from exchange_info.advisor import build_advisor_plan
+13 | | from exchange_info.application_documents import all_application_templates
+14 | | from exchange_info.application_rules import (
+15 | |     build_personal_application_plan,
+16 | |     _partner_language_threshold,
+17 | | )
+18 | | from exchange_info.ccu_sources import BUNDLE, CHECKED_AT, HOME, ROUND, YEAR, home_round
+19 | | from exchange_info.ccu_student_view import (
+20 | |     fetch_ccu_partner_universities,
+21 | |     build_ccu_student_dashboard,
+22 | | )
+23 | | from exchange_info.models import (
+24 | |     AdvisorProfile,
+25 | |     PersonalApplicationPlanRequest,
+26 | |     UniversityApplicationWorkflow,
+27 | | )
+28 | | from exchange_info.storage import read_jsonl
+29 | | from exchange_info.university_registry import CCU, resolve_university
+30 | | from exchange_info.workflow_structuring import workflow_structure_issues
+   | |________________________________________________________________________^
+help: Organize imports
+   |
+10 |
+11 + from exchange_info.advisor import build_advisor_plan
+12 | from exchange_info.api import create_app
+   - from exchange_info.advisor import build_advisor_plan
+13 | from exchange_info.application_documents import all_application_templates
+14 | from exchange_info.application_rules import (
+15 +     _partner_language_threshold,
+16 |     build_personal_application_plan,
+   -     _partner_language_threshold,
+17 | )
+18 | from exchange_info.ccu_sources import BUNDLE, CHECKED_AT, HOME, ROUND, YEAR, home_round
+19 | from exchange_info.ccu_student_view import (
+   -     fetch_ccu_partner_universities,
+20 |     build_ccu_student_dashboard,
+21 +     fetch_ccu_partner_universities,
+22 | )
+   |
+
+PERF102 When using only the values of a dict use the `values()` method
+  --> tests/test_ccu_support.py:88:30
+   |
+86 | def test_ccu_provenance_and_explicit_old_attachments():
+87 |     for row in rows():
+88 |         for key, evidence in row.field_evidence.items():
+   |                              ^^^^^^^^^^^^^^^^^^^^^^^^
+89 |             assert evidence.source_url.startswith("https://oia.ccu.edu.tw/")
+90 |             assert evidence.checked_at == CHECKED_AT
+   |
+help: Replace `.items()` with `.values()`
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_support.py:173:22
+    |
+171 |         college="工學院",
+172 |         degree_level="大學部",
+173 |         preferences=[dict(rank=1, school_name=partner.school_name)],
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+174 |     )
+175 |     result = build_personal_application_plan(
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_support.py:192:13
+    |
+190 |         home_school=HOME,
+191 |         preferences=[
+192 |             dict(rank=i + 1, school_name=p.school_name) for i, p in enumerate(partners)
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+193 |         ],
+194 |     )
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_support.py:201:40
+    |
+199 |     unknown = at(71)
+200 |     request = PersonalApplicationPlanRequest(
+201 |         home_school=HOME, preferences=[dict(rank=1, school_name=unknown.school_name)]
+    |                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+202 |     )
+203 |     result = build_personal_application_plan(
+    |
+help: Rewrite as a literal
+
+PLW1510 `subprocess.run` without explicit `check` argument
+   --> tests/test_ccu_support.py:321:14
+    |
+319 |     assert.equal(calls.size,5);
+320 |     """
+321 |     result = subprocess.run(
+    |              ^^^^^^^^^^^^^^
+322 |         ["node", "-e", script, str(Path("src/exchange_info/static/app.js").resolve())],
+323 |         capture_output=True,
+    |
+help: Add explicit `check=False`
+
+Found 19 errors.
+[*] 4 fixable with the `--fix` option (12 hidden fixes can be enabled with the `--unsafe-fixes` option).

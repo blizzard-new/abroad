@@ -1,0 +1,53 @@
+CONFTEST LOADED!
+........................................................................ [ 33%]
+........................................sss................s........F... [ 66%]
+................................................................s....... [ 99%]
+.                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7ff59afec4a0>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-42/test_runtime_includes_tracked_0')
+
+    def test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data(
+        monkeypatch,
+        tmp_path,
+    ) -> None:
+        research = storage.read_jsonl(
+            storage.BUNDLED_NTPU_DIR / "partner_research.jsonl",
+            PartnerResearchRecord,
+        )[0]
+        partner = PartnerUniversity(
+            program_type="交換學生（英語組）",
+            country=research.country,
+            school_name=research.school_name,
+            source_url="https://new.ntpu.edu.tw/oia/sister-schools",
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.fetch_ntpu_partner_universities",
+            lambda: [partner],
+        )
+    
+        client = TestClient(create_app(tmp_path))
+        coverage = client.get(
+            "/coverage",
+            params={"school": "國立臺北大學"},
+        ).json()
+        destination = client.get(
+            "/destination-profile",
+            params={
+                "school": partner.school_name,
+                "home_school": "國立臺北大學",
+            },
+        ).json()
+    
+        assert coverage["total_partner_schools"] == 1
+        assert coverage["official_website_count"] == 1
+        assert coverage["partners"][0]["official_website_url"] == research.official_website
+>       assert coverage["destination_profile_count"] == 1
+E       assert 0 == 1
+
+tests/test_ntpu_bundled_data.py:110: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data
+1 failed, 211 passed, 5 skipped in 44.85s

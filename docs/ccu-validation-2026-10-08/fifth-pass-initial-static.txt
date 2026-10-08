@@ -1,0 +1,12 @@
+BLE001 Do not catch blind exception: `Exception`
+   --> scripts/fetch_ccu_overseas_sources.py:170:12
+    |
+168 |             "Fetch succeeded; applicable year, round, program and field semantics still require review."
+169 |         )
+170 |     except Exception as exc:
+    |            ^^^^^^^^^
+171 |         result.update(status="fetch_failed", error=f"{type(exc).__name__}: {exc}")
+172 |     (output / (item["source_id"] + ".json")).write_text(
+    |
+
+Found 6 errors (5 fixed, 1 remaining).

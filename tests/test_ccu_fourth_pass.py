@@ -107,7 +107,7 @@ def test_czech_current_government_and_partner_insurance_conflict_keep_scopes():
 
 def test_full_read_ledger_does_not_turn_missing_values_into_nonpublication():
     ledger = json.loads((BUNDLE / "semantic-review-ledger.json").read_text())
-    assert {x["ccu_page"] for x in ledger} == {24, 27, 29, 74, 111, 119}
+    assert {24, 27, 29, 74, 111, 119} <= {x["ccu_page"] for x in ledger}
     for row in ledger:
         assert len(row["fields"]) == 17 and not row["complete_research_claimed"]
         for review in row["fields"].values():

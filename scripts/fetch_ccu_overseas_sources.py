@@ -8,23 +8,72 @@ are reviewed. Download success is deliberately distinct from current applicabili
 from __future__ import annotations
 
 import argparse
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timezone
 import hashlib
 import io
 import json
-from pathlib import Path
 import re
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import UTC, datetime
+from pathlib import Path
 from urllib.parse import urljoin, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from exchange_info.ccu_sources import BUNDLE
+import requests
 from bs4 import BeautifulSoup
 from docx import Document
 from pypdf import PdfReader
-import requests
+
+from exchange_info.ccu_sources import BUNDLE
+
+
+def public_content_blocks(soup):
+    """Read FHNW public display data without evaluating website JavaScript."""
+
+    def text_nodes(value):
+        if isinstance(value, dict):
+            if isinstance(value.get("text"), str):
+                yield value["text"]
+            for key, child in value.items():
+                if key not in {"text", "plaintext"}:
+                    yield from text_nodes(child)
+        elif isinstance(value, list):
+            for child in value:
+                yield from text_nodes(child)
+
+    for script in soup.find_all("script"):
+        raw = script.string or ""
+        if not raw.startswith("window.__data="):
+            continue
+        for match in re.finditer(r'"content"\s*:', raw):
+            try:
+                content, _ = json.JSONDecoder().raw_decode(raw[match.end() :].lstrip())
+            except json.JSONDecodeError:
+                continue
+            if not isinstance(content, dict) or not isinstance(
+                content.get("data"), dict
+            ):
+                continue
+            blocks = content["data"].get("blocks", {})
+            if not isinstance(blocks, dict):
+                continue
+            for block in blocks.values():
+                if not isinstance(block, dict) or block.get("@type") != "accordion":
+                    continue
+                data = block.get("data")
+                if not isinstance(data, dict):
+                    continue
+                panels = data.get("blocks", {})
+                if not isinstance(panels, dict):
+                    continue
+                for panel in panels.values():
+                    if isinstance(panel, dict):
+                        yield (
+                            str(panel.get("title", ""))
+                            + "\n"
+                            + " ".join(text_nodes(panel))
+                        )
 
 
 def fetch_public_source(item: dict, output: Path, session=None) -> dict:
@@ -35,7 +84,7 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
         **item,
         "status": "fetch_failed",
         "content_applicability": "needs_confirmation",
-        "checked_at": datetime.now(timezone.utc).isoformat(),
+        "checked_at": datetime.now(UTC).isoformat(),
     }
     target = url
     match = re.search(r"drive\.google\.com/file/d/([^/?]+)", url)
@@ -89,6 +138,7 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
             (output / (item["source_id"] + ".doc")).write_bytes(body)
         else:
             soup = BeautifulSoup(body, "html.parser")
+            public_blocks = list(public_content_blocks(soup))
             result["links"] = [
                 {
                     "label": a.get_text(" ", strip=True),
@@ -100,14 +150,40 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
             ]
             for node in soup(["script", "style", "nav", "footer", "header"]):
                 node.decompose()
-            result.update(status="html", text_pages=[soup.get_text("\n", strip=True)])
+            # Google Sites can keep a public timetable in an escaped data-code
+            # attribute. Read the supplied HTML, without executing its scripts.
+            embeds = []
+            for node in soup.select("[data-code]"):
+                code = node.get("data-code", "")
+                embedded = BeautifulSoup(code, "html.parser")
+                for hidden in embedded(["script", "style"]):
+                    hidden.decompose()
+                text = embedded.get_text("\n", strip=True)
+                if text and text not in embeds:
+                    embeds.append(text)
+            result.update(
+                status="html",
+                text_pages=[soup.get_text("\n", strip=True)] + embeds + public_blocks,
+            )
+            if embeds:
+                result["embedded_content_count"] = len(embeds)
+                result["extraction_method"] = (
+                    "html_body_and_public_data_code_attributes_no_script_execution"
+                )
+            if public_blocks:
+                result["public_accordion_count"] = len(public_blocks)
+                result["extraction_method"] = (
+                    "html_body_and_public_content_blocks_no_script_execution"
+                )
         result["text_sha256"] = hashlib.sha256(
             json.dumps(result["text_pages"], ensure_ascii=False).encode()
         ).hexdigest()
         result["review_note"] = (
             "Fetch succeeded; applicable year, round, program and field semantics still require review."
         )
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001
+        # Preserve arbitrary parser/network failures as candidate acquisition
+        # records; a single malformed public document must not abort the batch.
         result.update(status="fetch_failed", error=f"{type(exc).__name__}: {exc}")
     (output / (item["source_id"] + ".json")).write_text(
         json.dumps(result, ensure_ascii=False, indent=2) + "\n"

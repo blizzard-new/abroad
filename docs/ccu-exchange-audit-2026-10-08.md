@@ -6,7 +6,7 @@
 交付前遠端 main 已前進至 `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`（第一批交付時為 `293546e807294dc0812f390b240a4cfb68e86cd0`）；第一批交付保留開工基準；第二輪依使用者要求安全整合此最新main，保留臺大與既有資料，未寫入其他session工作目錄。
 本 clone 未找到 AGENTS.md 或適用 `.agents/skills`。未寫入其他學校 session 的工作目錄。
 
-最新數量與分類見末節「第四輪：六校附件全文與存取結果核對」；前節保留歷史檢查點及最新main整合的資料與驗證。
+最新數量與分類見末節「第五輪：校級協議、公開嵌入表與年度範圍核對」；前節保留歷史檢查點及最新main整合的資料與驗證。
 
 ## 已核實適用範圍
 
@@ -301,3 +301,25 @@ UBM、EPITA、SDU的新接收資料顯示替代語言證明／program分流或�
 本批修改學校獨立資料、`ccu_overseas.py`及兩個CCU離線build script；沒有本輪新增核心registry/API/UI共用改動。全分支必要共用改動仍以前述清單為準。Draft PR#3維持draft，沒有merge或部署；接續第五輪公開來源查核。
 
 第四輪靜態檢核初次發現18項CCU檔案的import/格式/明示subprocess check選項問題，已修正後ruff全數通過；修正後CCU重跑103 passed（28.14秒）。沒有隱藏初次結果，原log另保留。
+
+
+## 第五輪：校級協議、公開嵌入表與年度範圍核對
+
+從已推送`05a72ffdc2d68dec018d2970db16e026968933a1`續作，遠端main實讀仍為`f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`。新增79份實際取得紀錄（其中78成功取得、1實際失敗），共320份。更新65欄，補48個原缺值；104筆學校、52筆當期曾列名額、49筆不開放參考、3筆名額空白、55份七步流程/生活指南保留。中正校內2027春季當期收件已截止。
+
+935欄現在為當期原文支持272（29.1%）、待確認214、參考40、來源矛盾37、缺值371、官方明示TBC1；33/55校至少一項當期事實、0校全部17欄當期已核。來源紀錄另有53份fetch_failed及10份限制/空白回應；不以這些數字宣稱全部官方資料不能取得。研究分類272已支持、1官方TBC、37未解矛盾、10個別通知/登入後個人表、0整欄技術失敗、615其他公開來源仍可續查。沒有以檢查點或PR表示研究完成。
+
+- 名古屋：完整2026/27 NUPACE第32頁列中正`*U`，第29頁定義校級/院系及豁免，支持中正校級協議，原2頁Interdepartmental版保留且補正其正文年度。春季提名2026-10-01、學生申請2026-10-15；GPA3.0/4.0、JASSO3.1另計畫、英/日語分流、15學分或15研究小時分開。當期十項文件與一/兩學期财力、lab/GIS限制、日程/住房/校方保險/簽證/條件式免學費已逐段核對；七份指定DOCX/PDF實際開啟保存。邀請式online完整字段未取得，application_forms整欄仍待確認。未把2025示例課程或醫學實習條件套一般本科。
+- 嘉泉：公開GoogleSites實際`data-code`表支援2027正規Spring03-02至06-21；宿舍頁明示2027-06-19退宿，與課程末日分開。費率嵌入表明示2025 prices，只参考；沒有升為2027費率。GPA官網沒寫recommended、母校附件寫recommended，保留矛盾。Timeline有February抵達但Dec21學期末，年/梯次未明，保留矛盾。公开DOCX/PDF模板已實開，但未標2027，保留待確認；不同track、碩士/本科、medicalcampus及國籍認證分開。
+- 中央大學：新OIA公開公告正文明示2026FallFactSheet，已讀六頁，沒有只憑檔名推當期。2026Brochure的CAT短期保證床位/價格不套一般semesterexchange；一般exchange免學費與visiting付費分開。Spring2027新版仍未核實，不寫官方尚未公告。
+- 蒙田波爾多：2026/27官方迎新2027-01-07與授課01-11至04-30已核；同頁Christmas兩段及星期矛盾保留。EnglishFriendly2026/27單頁實開，不當全英授課/免FrenchB2；一般FAQ的LA僅母校要求與February2026清單通用LA不同，保留待確認/矛盾。住宿APL段2026-07-01規則變更已與法國ServicePublic互核，國籍/助學金/工作等例外分開，不保證臺灣交換生補貼或2027規則不變。25頁Humanities課表仍部分待讀，不憑檔名定年。
+- AMU：官方2026/27Spring授課/考試分段、bilateral附件appendix明示2026/27 B2或母校確認函已核；獨立證照仍recommend，不將學位法規套短期雙邊。新五頁Erasmusfactsheet11/30、12/15截止不自動套中正bilateral。公開根頁只有招生分類，未註冊/取得完整當期表；PhD醫療免費條款不補本科/碩士交換保險。
+- FHNW：匿名公開HTML內十二個accordion使用JSON解碼讀display content，不執行網站JavaScript。Spring2027入口Basel兩PDF正文實為2026，保留來源年矛盾；Brugg-Windisch/Olten課表正文2027已讀，先修/只可選一專門化/全年專屬前期項目與新生迎新限制分開。當期Olten校曆強制2/16InfoSession、2/22起授課、6/21–7/10考試只限該校區。
+
+新增source fetcher支援公開escaped HTML表與FHNW accordion，仍只寫candidate目錄且不把取得成功自動升當期。來源的全文、部分政策/細目、取得未完成語意查核分開保存；`build_ccu_research_audit.py`不再把部分來源寫成全文已核。17類欄位、來源頁碼/原文、適用年、查核時間、原檔SHA均保留。未聯絡學校、註冊、送件或解驗證碼。
+
+實測中正112 passed；四校資料/條件/流程211 passed、5 skipped、1 failed（已在main重現的NTPU既有destination計數）；Chromium中正/臺大16 passed。16份離線產物重建SHA一致，49份原main資料逐byte不變；110 API routes及必填schema不變。此次更動檔ruff、Python編譯及diff檢查通過；擴大lint查到未更動舊CCU測試19個style問題，保留log，不宣稱整個repo lint全通過。
+
+原始驗證失敗亦保留：新測試初次兩個文字斷言與實際內容措辭不同已修；第一次四校命令引用不存在檔而無測試執行；第一次hash比較與另一次重建重疊失敗，改順序後16份相同。有效結果見`validation.json.fifth_pass`及`ccu-validation-2026-10-08/fifth-pass-*`。
+
+本輪新增範圍僅CCU資料、兩個CCU script及CCU測試/交接證據；沒有新增核心registry/API/UI共用修改。全分支必要共用改動以前述合併清單為準。PR#3維持draft，未merge或部署，接續公開來源查核。
