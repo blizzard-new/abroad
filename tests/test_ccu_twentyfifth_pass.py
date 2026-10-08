@@ -70,6 +70,11 @@ def test_document_body_evidence_counts_as_mapping_and_latest_review_is_used():
     assert sources["p114-r21-127da9624a"]["body_state"] == "reviewed_scoped_exclusion"
     assert sources["p45-r23-follow-3879e18719"]["body_state"] == "reviewed_index_linked_bodies_separate"
     assert all(r["body_state"] not in {"read_body_not_mapped", "readable_body_not_semantically_reviewed"} for r in sources.values())
+    evaluation = next(r for r in reviewed_documents()[32]["requirements"] if any(e["source_id"] == "p32-r7-jp-evaluation-form" for e in r["evidence"]))
+    # A stamp omitted from extracted DOCX text does not waive the current
+    # application index's explicit institutional-stamp requirement.
+    assert evaluation["requirement"]["stamps"]
+    assert "institutional stamp" in " ".join(e["excerpt"] for e in evaluation["evidence"] if e["source_id"] == "p32-r7-application-index")
 
 
 def test_actual_gachon_form_has_signature_but_no_invented_current_revision():
@@ -115,6 +120,10 @@ def test_old_years_and_public_indexes_do_not_become_unannounced_or_exhausted():
     for sid in ["p48-r9-calendar", "p50-r19-factsheet-notice", "p80-mirror", "p105-mirror", "p108-r19-9220ea9c14"]:
         assert entries[sid]["disposition"] == "reference_only"
     assert entries["p105-r8-calendar-cyprus"]["disposition"] == "out_of_scope"
+    assert entries["p95-r5-healthcare"]["disposition"] == "out_of_scope"
+    amu = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 95)
+    assert amu.partner_exchange_details["insurance"].status == "missing"
+    assert amu.partner_exchange_details["insurance"].value is None
     assert review["processable_followups"] and all(not r["external_unannounced"] for r in review["processable_followups"])
     triage = read("body-review-triage.json")
     assert all(s["public_sources_exhausted"] is False for s in triage["schools"])

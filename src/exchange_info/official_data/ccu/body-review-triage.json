@@ -4,8 +4,8 @@
   "school_count": 55,
   "source_count": 956,
   "state_counts": {
-    "mapped_sections_remaining_body_unclaimed": 620,
-    "reviewed_scoped_exclusion": 123,
+    "mapped_sections_remaining_body_unclaimed": 619,
+    "reviewed_scoped_exclusion": 124,
     "reviewed_index_linked_bodies_separate": 69,
     "body_not_obtained": 88,
     "identical_body_to_mapped_sections": 21,
@@ -541,14 +541,14 @@
   ],
   "input_sha256": {
     "overseas-source-registry.json": "5febc226a6b787b909a97196f42931820d7dc879cfe5eb04ad05cf62a1bc4389",
-    "overseas-reviewed-fields.json": "b3f3ed6eddb3387f92a6b8cd3c5a8332a0b48d87eac203ce56ea1600cddeb39c",
+    "overseas-reviewed-fields.json": "50851a11eeb7e6806e4e4f10eaab75904fd30deba632eb70e50bdd643332e7a5",
     "profile-reviewed-fields.json": "bf7885186facd671e9a828cd0cc068af4782ed96e03f70b747ecc9f908d246d8",
-    "partner-document-requirements.json": "b6da91c1dd70c1db3364023cd540d413b7db06f33facf2fa0aa2c8563bc2502d",
+    "partner-document-requirements.json": "9b6ff535d37db6aab36b96c6ba39a3348b95e9ec5eeefdd7c878af2e462aca21",
     "semantic-review-ledger.json": "9bb4b811c577b8b9200b6570d6ab29540e233c6ea75c77c35d1224f0530f44a5",
     "eighteenth-source-review.json": "c070091e0ada00fa375c63df48d2833b32e74da3812d138369ce1859dd1dc490",
     "nineteenth-source-review.json": "a626b74a4876a4cd1446a639eafc496316f0ab89f33729d9158c5380ca043544",
     "twentieth-source-review.json": "e0c1c3c115a50efd0fc1017bf14cc997b754ba3849074c86be641580d4b81a1a",
-    "twentyfifth-source-review.json": "209ba252325789b16b9e4d5da5b741012110109eb5a3681fd031d3db48536baa",
+    "twentyfifth-source-review.json": "118cfeb7587f40292fb4ea960395d287c84367100c87e996cf9412692d7bc645",
     "twentyfirst-source-review.json": "adb7ac6da12e135d74fd8780b53a2ad081a9655423d9849b9408cf5e5467ff98",
     "twentyfourth-source-review.json": "2e9b3b6d57bade3459e1b6fffc83353e3cf6860daa1c43e2bf60bb8b7d85b30a",
     "twentysecond-source-review.json": "d8e7f4e1b45e530c5e40079e6253975451127366247a953e242aacb66e6d0cd5",
@@ -573,12 +573,12 @@
     "backlog_remaining_without_disposition": 0,
     "additional_review_sources": 1,
     "disposition_counts": {
+      "out_of_scope": 60,
       "reference_only": 64,
-      "out_of_scope": 59,
       "public_index_no_policy": 69,
       "duplicate_mapped_body": 21,
-      "mapped_scoped_evidence": 103,
-      "access_limited_no_policy_body": 7
+      "access_limited_no_policy_body": 7,
+      "mapped_scoped_evidence": 102
     },
     "processable_followups": [
       {
@@ -12196,7 +12196,7 @@
               "ledger": "twentyfifth-source-review.json",
               "extent": "necessary_policy_sections",
               "checked_at": "2026-10-08T22:44:24.728206+00:00",
-              "note": "实际DOCX正文由日语教师或qualified person填写CEFR/时数，末栏Evaluator姓名职位日期无可见签名栏，不擅加signature/stamp；可附至已绑定当期模板要求作body核对。",
+              "note": "實際DOCX由日本語教師或合格評估者填CEFR與時數、評估者姓名／職位／日期。抽取文字未見簽章欄，不代表免章：Spring2027官方索引明寫with institutional stamp included，仍保留機構核章要求；學生／評估者額外簽名未載不擅補。",
               "sha256": "5c07939a0e9f3f67044b1dfe11216dad9b2130a240803fb14484c116d018cf2d"
             }
           ],
@@ -12223,7 +12223,7 @@
             "source_content_read": true,
             "review_extent": "necessary_policy_sections",
             "disposition": "mapped_scoped_evidence",
-            "review_note": "实际DOCX正文由日语教师或qualified person填写CEFR/时数，末栏Evaluator姓名职位日期无可见签名栏，不擅加signature/stamp；可附至已绑定当期模板要求作body核对。",
+            "review_note": "實際DOCX由日本語教師或合格評估者填CEFR與時數、評估者姓名／職位／日期。抽取文字未見簽章欄，不代表免章：Spring2027官方索引明寫with institutional stamp included，仍保留機構核章要求；學生／評估者額外簽名未載不擅補。",
             "body_evidence": [
               {
                 "source_pages": [
@@ -12238,7 +12238,7 @@
                 "kind": "document",
                 "field": "語言評估指定表",
                 "status": "needs_confirmation",
-                "claim": "實際DOCX要求由日本語教師或合格評估者填CEFR與學習時數，末尾評估者姓名／職位／日期；未見簽名或印章欄，不擅補必須簽章。"
+                "claim": "實際DOCX由日本語教師或合格評估者填CEFR與時數、評估者姓名／職位／日期。抽取文字未見簽章欄，不代表免章：Spring2027官方索引明寫with institutional stamp included，仍保留機構核章要求；學生／評估者額外簽名未載不擅補。"
               }
             ],
             "academic_year": "模板正文未印2027；當期Spring2027官方頁指定，舊JEP標籤不自行改寫"
@@ -73844,8 +73844,8 @@
       "ccu_page": 95,
       "school_name": "Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學",
       "source_state_counts": {
-        "mapped_sections_remaining_body_unclaimed": 8,
-        "reviewed_scoped_exclusion": 1,
+        "mapped_sections_remaining_body_unclaimed": 7,
+        "reviewed_scoped_exclusion": 2,
         "identical_body_to_mapped_sections": 1,
         "reviewed_index_linked_bodies_separate": 3
       },
@@ -74827,7 +74827,7 @@
           "checked_at": "2026-10-08T06:18:00.544077+00:00",
           "sha256": "a20289b75a22db20b78cc8b7a95658fa8ba616cc279d44e74a7188686e8c621b",
           "text_sha256": "f7f373bd312920c9a81ad84d3cbe61416a7722d06fc8fa271aa7c6859bbe2ade",
-          "body_state": "mapped_sections_remaining_body_unclaimed",
+          "body_state": "reviewed_scoped_exclusion",
           "read_evidence": [
             {
               "ledger": "semantic-review-ledger.json",
@@ -74952,21 +74952,11 @@
               "ledger": "twentyfifth-source-review.json",
               "extent": "necessary_policy_sections",
               "checked_at": "2026-10-08T23:06:02.398298+00:00",
-              "note": "actualgeneralmedical免費首段專PhD，不套本科exchange；privatepolicy延迟/limits及insured救護須個案，未年費額不猜。",
+              "note": "實際免費保障首段只對PhD candidates，後段為一般私保／急救資訊，未提供CCU bilateral交換專屬保險要求。保留原文查核與排除理由，不把博士候選人政策當交換保險欄位；該欄維持missing，替代公開交換政策仍可續核。",
               "sha256": "a20289b75a22db20b78cc8b7a95658fa8ba616cc279d44e74a7188686e8c621b"
             }
           ],
-          "mapped_fields": [
-            {
-              "kind": "host",
-              "field": "insurance",
-              "status": "needs_confirmation",
-              "evidence_status": "needs_confirmation",
-              "source_pages": [
-                1
-              ]
-            }
-          ],
+          "mapped_fields": [],
           "scoped_disposition": {
             "source_id": "p95-r5-healthcare",
             "ccu_page": 95,
@@ -74976,8 +74966,8 @@
             "text_sha256": "f7f373bd312920c9a81ad84d3cbe61416a7722d06fc8fa271aa7c6859bbe2ade",
             "source_content_read": true,
             "review_extent": "necessary_policy_sections",
-            "disposition": "mapped_scoped_evidence",
-            "review_note": "actualgeneralmedical免費首段專PhD，不套本科exchange；privatepolicy延迟/limits及insured救護須個案，未年費額不猜。",
+            "disposition": "out_of_scope",
+            "review_note": "實際免費保障首段只對PhD candidates，後段為一般私保／急救資訊，未提供CCU bilateral交換專屬保險要求。保留原文查核與排除理由，不把博士候選人政策當交換保險欄位；該欄維持missing，替代公開交換政策仍可續核。",
             "body_evidence": [
               {
                 "source_pages": [
@@ -74987,17 +74977,6 @@
               }
             ],
             "all_policy_review_complete": false,
-            "completed_mappings": [
-              {
-                "kind": "host",
-                "field": "insurance",
-                "status": "needs_confirmation",
-                "claim": "actualgeneralmedical免費首段專PhD，不套本科exchange；privatepolicy延迟/limits及insured救護須個案，未年費額不猜。",
-                "source_pages": [
-                  1
-                ]
-              }
-            ],
             "academic_year": "一般醫療；開頭PhD candidate免費法定部分"
           },
           "full_saved_body_read": false,
@@ -75845,25 +75824,9 @@
         },
         {
           "field": "insurance",
-          "status": "needs_confirmation",
-          "reason": "本輪實讀來源可支持這個限定範圍；未核年度的條款保持待確認。",
-          "evidence": [
-            {
-              "source_id": "p95-r5-healthcare",
-              "source_url": "https://amu.edu.pl/en/education/healthcare",
-              "source_pages": [
-                1
-              ],
-              "academic_year": "一般公開正文未印2027春適用年度",
-              "application_round": "2027春季",
-              "checked_at": "2026-10-08T23:06:02.398298+00:00",
-              "status": "needs_confirmation",
-              "excerpt": " Year Student Guide MOS - an electronic system for a residence permit All PhD candidates in Poland, regardless of nationality , are subject to the health insurance to be covered by the higher education institution unless they are insured on another basis, for instance as employees or family members. This means that the doctoral candidates have access the public healthcare services free of charge. The right to use the services ends only after 4 months following the graduation or termination of the education. Numer",
-              "note": "actualgeneralmedical免費首段專PhD，不套本科exchange；privatepolicy延迟/limits及insured救護須個案，未年費額不猜。",
-              "content_hash": "a20289b75a22db20b78cc8b7a95658fa8ba616cc279d44e74a7188686e8c621b",
-              "text_sha256": "f7f373bd312920c9a81ad84d3cbe61416a7722d06fc8fa271aa7c6859bbe2ade"
-            }
-          ]
+          "status": "missing",
+          "reason": "第五輪已核本校當期或一般官方政策及另計畫範圍，仍未找到支持此欄當期適用原文；完整課程細目/注册后表或年度更新仍可續查，不等於校方明示尚未公告。",
+          "evidence": []
         },
         {
           "field": "visa",

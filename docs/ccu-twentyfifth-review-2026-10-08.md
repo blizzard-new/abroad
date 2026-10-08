@@ -4,7 +4,7 @@
 
 ## 本輪完成範圍
 
-原 `body-review-triage.json` 的 149 筆可讀但未有語意核讀紀錄、174 筆已讀未映射，凍結為 323 筆佇列。保存來源 URL、原始／文字 SHA256、實際查核時間、適用年、頁碼、逐字原文及限定範圍。103 筆映射指定欄位／文件；21 筆與已映射來源的完整保存文字逐字相同；64 筆舊期參考、59 筆範圍不適用、69 筆索引無政策正文、7 筆僅存取限制／需個別申請入口。每筆有實際理由，沒有仍標 mapping_required 的佇列項。
+原 `body-review-triage.json` 的 149 筆可讀但未有語意核讀紀錄、174 筆已讀未映射，凍結為 323 筆佇列。保存來源 URL、原始／文字 SHA256、實際查核時間、適用年、頁碼、逐字原文及限定範圍。102 筆映射指定欄位／文件；21 筆與已映射來源的完整保存文字逐字相同；64 筆舊期參考、60 筆範圍不適用、69 筆索引無政策正文、7 筆僅存取限制／需個別申請入口。每筆有實際理由，沒有仍標 mapping_required 的佇列項。
 
 這是指定政策段落的處置；**不是全來源全文、所有政策、所有公開連結已窮盡**。重複只承接原本指定欄位的映射範圍。索引被分類不表示其連結無法繼續處理；Mapua 動態公開 render、UNINTER Microsoft Forms 等仍需後續。KMUTT、AMU、Ostfalia、Ankara 的新校曆正文此前已獨立取得，索引不重列為「尚未取得」。
 
@@ -14,7 +14,7 @@ Gachon 另核讀一份實際空白 DOCX（不增加凍結佇列數），確認�
 
 - 合作目錄 104；當期／名額空白待確認的查核学校 55；非零名額 52、空白 3、灰字参考 49。
 - 956 份保存來源不覆寫；原附件亦保留。
-- 935 個海外欄位：307 current、333 pending、203 missing、71 conflict、20 reference、1 explicit_not_announced。39 校有至少一個 current；0 校全 17 欄 current。
+- 935 個海外欄位：307 current、332 pending、204 missing、71 conflict、20 reference、1 explicit_not_announced。39 校有至少一個 current；0 校全 17 欄 current。
 - 文件要求 33 校／249 項，其中 185 current、64 pending；59 項有條件。清單完整性仍部分，不能以 249 項當全量申請附件。
 - 55 校概要共 385 欄：178 current、126 pending、61 missing、20 reference。
 

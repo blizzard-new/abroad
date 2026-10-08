@@ -21790,12 +21790,12 @@
   "backlog_remaining_without_disposition": 0,
   "additional_review_sources": 1,
   "disposition_counts": {
+    "out_of_scope": 60,
     "reference_only": 64,
-    "out_of_scope": 59,
     "public_index_no_policy": 69,
     "duplicate_mapped_body": 21,
-    "mapped_scoped_evidence": 103,
-    "access_limited_no_policy_body": 7
+    "access_limited_no_policy_body": 7,
+    "mapped_scoped_evidence": 102
   },
   "source_reviews": [
     {
@@ -23011,7 +23011,7 @@
       "source_content_read": true,
       "review_extent": "necessary_policy_sections",
       "disposition": "mapped_scoped_evidence",
-      "review_note": "实际DOCX正文由日语教师或qualified person填写CEFR/时数，末栏Evaluator姓名职位日期无可见签名栏，不擅加signature/stamp；可附至已绑定当期模板要求作body核对。",
+      "review_note": "實際DOCX由日本語教師或合格評估者填CEFR與時數、評估者姓名／職位／日期。抽取文字未見簽章欄，不代表免章：Spring2027官方索引明寫with institutional stamp included，仍保留機構核章要求；學生／評估者額外簽名未載不擅補。",
       "body_evidence": [
         {
           "source_pages": [
@@ -23026,7 +23026,7 @@
           "kind": "document",
           "field": "語言評估指定表",
           "status": "needs_confirmation",
-          "claim": "實際DOCX要求由日本語教師或合格評估者填CEFR與學習時數，末尾評估者姓名／職位／日期；未見簽名或印章欄，不擅補必須簽章。"
+          "claim": "實際DOCX由日本語教師或合格評估者填CEFR與時數、評估者姓名／職位／日期。抽取文字未見簽章欄，不代表免章：Spring2027官方索引明寫with institutional stamp included，仍保留機構核章要求；學生／評估者額外簽名未載不擅補。"
         }
       ],
       "academic_year": "模板正文未印2027；當期Spring2027官方頁指定，舊JEP標籤不自行改寫"
@@ -27977,8 +27977,8 @@
       "text_sha256": "f7f373bd312920c9a81ad84d3cbe61416a7722d06fc8fa271aa7c6859bbe2ade",
       "source_content_read": true,
       "review_extent": "necessary_policy_sections",
-      "disposition": "mapped_scoped_evidence",
-      "review_note": "actualgeneralmedical免費首段專PhD，不套本科exchange；privatepolicy延迟/limits及insured救護須個案，未年費額不猜。",
+      "disposition": "out_of_scope",
+      "review_note": "實際免費保障首段只對PhD candidates，後段為一般私保／急救資訊，未提供CCU bilateral交換專屬保險要求。保留原文查核與排除理由，不把博士候選人政策當交換保險欄位；該欄維持missing，替代公開交換政策仍可續核。",
       "body_evidence": [
         {
           "source_pages": [
@@ -27988,17 +27988,6 @@
         }
       ],
       "all_policy_review_complete": false,
-      "completed_mappings": [
-        {
-          "kind": "host",
-          "field": "insurance",
-          "status": "needs_confirmation",
-          "claim": "actualgeneralmedical免費首段專PhD，不套本科exchange；privatepolicy延迟/limits及insured救護須個案，未年費額不猜。",
-          "source_pages": [
-            1
-          ]
-        }
-      ],
       "academic_year": "一般醫療；開頭PhD candidate免費法定部分"
     },
     {
@@ -30272,7 +30261,8 @@
     "duplicate只證完整保存文字逐字相同與既有欄位引用關係；不新增當期適用年或全文件完整性。",
     "索引無政策正文只是此保存body的處置，公開連結後續仍可處理。",
     "來源排除不等整校公開資料已窮盡；2027新版未核實不等官方明示未公告。",
-    "本輪結果另跑新candidate驗證，不沿用77dfd84的452/7和102結果。"
+    "本輪結果另跑新candidate驗證，不沿用77dfd84的452/7和102結果。",
+    "龍谷2027索引明寫institutional stamp；DOCX抽取未見章欄不構成免章，保留索引要求。"
   ],
   "processable_followups": [
     {
