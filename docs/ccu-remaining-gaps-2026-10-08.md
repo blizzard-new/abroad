@@ -1,5 +1,10 @@
 # 中正55校剩餘缺口及來源清冊（第二十三輪）
 
+本輪最終程式候選 **`77dfd84008d438d3602da61991733ecfdf8d65a8`** 已完整執行選定gate：459回歸 **452passed／7skipped／0failed／0errors**，102瀏覽器 **102passed／0skip／0failed／0errors**。两端HEAD不變、working tree乾淨；7 builders與wheel均1162檔逐byte一致，46main官方data／77CGU published hash保留。原始[summary、JUnit、logs、案例集合、HEAD/dirty及manifest](ccu-validation-2026-10-08/77dfd84-final/README.md)均版本化。**測試只屬77dfd84，後續純證據commit沒有重新執行測試**。下方較早輪次結果為歷史紀錄，不能混作本候選结果。
+
+NTPU覆蓋率0/206與NTU别名退步已修，四校8個别名及延迟母校／目标／detail／排队草稿案例通過。資料935海外欄306当期／331待核／206缺／20参考／71冲突／1明示未公告，仍0完整17欄校／0完整host文件集合。**可接受本分支程式修正與已核部分資料供隔離整合，不接受「資料全完成／CI已過／可發布」**；遠端run37851564299 failure/0jobs、Jena瀏覽器TLS受限、尚未跨他校分支整合与其餘完整CI檢查。[逐校正文](ccu-body-review-triage-2026-10-08.md)与[共享風險矩陣](ccu-integration-risk-2026-10-08.md)另列。
+
+
 母校2027春季，查核2026-10-08；935欄304當期／331待確認／208缺／20舊參考／71矛盾／1官方明示未公告。逐欄原文、URL、實體頁、年度、日期與hash在remaining-gaps.json和來源清冊；未知新版不等尚未公告。
 
 | PDF頁 | 學校 | 學院／學制 | 交通／生活 | 個別host文件 | 已取得来源數 | 公開來源耗盡 |

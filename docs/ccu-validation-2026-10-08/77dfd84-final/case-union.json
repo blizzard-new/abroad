@@ -1,0 +1,2857 @@
+{
+  "candidate_sha": "77dfd84008d438d3602da61991733ecfdf8d65a8",
+  "regression_cases": 459,
+  "browser_cases": 102,
+  "browser_distinct_cases": 102,
+  "cases": [
+    {
+      "suite": "regression",
+      "case_id": "tests.test_account_workspace_api::test_workspace_requires_login",
+      "seconds": "0.092"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_account_workspace_api::test_workspace_round_trip_syncs_only_non_sensitive_application_state",
+      "seconds": "0.102"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_account_workspace_api::test_workspace_is_isolated_by_home_school",
+      "seconds": "0.211"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_account_workspace_api::test_public_free_account_cannot_save_multiple_active_plans",
+      "seconds": "0.112"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_account_workspace_api::test_two_sessions_detect_revision_conflict_and_can_merge_without_data_loss",
+      "seconds": "0.113"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_account_workspace_api::test_workspace_rejects_sensitive_or_unknown_root_fields",
+      "seconds": "0.103"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_account_workspace_api::test_submission_progress_bumps_workspace_revision",
+      "seconds": "0.118"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_account_workspace_api::test_submission_progress_syncs_between_sessions_and_cannot_be_overwritten_by_workspace_put",
+      "seconds": "0.289"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_advisor_returns_grounded_match_tasks_and_no_fake_admission_probability",
+      "seconds": "0.005"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_advisor_does_not_turn_partner_reference_text_into_a_future_deadline",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_advisor_unknown_scope_and_threshold_are_not_passed_qualification",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_advisor_misplaced_degree_in_college_field_is_unknown_not_mismatch",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_advisor_undergraduate_is_not_a_graduate_match",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_advisor_eligibility_precedes_preference_score_and_keeps_blocking_reasons",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_advisor_lists_only_the_country_the_student_chose_and_says_so",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_advisor_country_choice_ignores_spacing_and_still_ranks_by_eligibility_inside_the_country",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_advisor_home_language_requirement_cannot_be_offset_by_preferences",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_advisor_unknown_language_remains_explorable_and_target_outside_top_twenty_is_compared",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_grounded_answer_refuses_when_no_relevant_public_source",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_initial_application_document_question_does_not_mix_incoming_or_post_acceptance_files",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_document_checker_reads_docx_and_flags_missing_study_plan_sections",
+      "seconds": "0.027"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_advisor::test_advisor_and_document_check_api",
+      "seconds": "1.738"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_document_catalog::test_catalog_exposes_only_confirmed_official_form_as_download",
+      "seconds": "0.099"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_document_catalog::test_unpublished_workflow_never_exposes_download_as_confirmed",
+      "seconds": "0.089"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_document_catalog::test_cgu_official_short_term_forms_have_current_download_sources",
+      "seconds": "0.006"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_documents_api::test_application_center_resolves_conditional_documents",
+      "seconds": "0.097"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_documents_api::test_verified_free_students_can_read_official_forms_while_generation_requires_subscription",
+      "seconds": "0.282"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_documents_api::test_application_manifest_reports_missing_fields_and_print_copies",
+      "seconds": "0.109"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_documents_api::test_application_manifest_and_pdf_require_current_template_review",
+      "seconds": "0.160"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_documents_api::test_application_center_generates_a_printable_pdf_packet",
+      "seconds": "0.143"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_documents_api::test_short_term_templates_are_tied_to_official_form_numbers",
+      "seconds": "0.467"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_documents_api::test_required_uploads_need_real_file_payloads_and_minimum_photo_count",
+      "seconds": "0.119"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_documents_api::test_corrupt_optional_attachment_blocks_packet_instead_of_being_silently_dropped",
+      "seconds": "0.122"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_documents_api::test_uploaded_pdf_is_appended_to_each_printed_document",
+      "seconds": "0.134"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_documents_api::test_uploaded_pdf_attachments_follow_the_manifest_order",
+      "seconds": "0.154"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_rules::test_unpersonalized_request_preserves_published_workflow",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_rules::test_department_override_replaces_school_default_and_adds_exception",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_rules::test_unknown_department_gets_school_default_without_other_department_rules",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_rules::test_mismatched_year_and_round_exclude_scoped_rule",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_rules::test_personal_plan_uses_scoped_verified_rules_for_checklist",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_rules::test_personal_plan_missing_values_become_confirmation_tasks",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_rules::test_personal_plan_keeps_preference_order_and_marks_closed_choice_unavailable",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_rules::test_personal_plan_blocks_departmental_reference_until_current_opening_is_confirmed",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_legacy_workflow_populates_structured_document_requirements",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_structured_workflow_captures_scope_submission_and_review_metadata",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_official_url_filter_rejects_third_party_hosts",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_official_url_filter_distinguishes_thai_academic_domains",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_official_url_filter_distinguishes_polish_academic_domains",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_discovery_rejects_unrelated_program_pages_on_official_domain",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_discovery_requires_exchange_signal_not_generic_application",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_normalize_official_url_removes_tracking_query",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_clean_official_page_title_removes_concatenated_results",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_discovery_rejects_outgoing_and_placeholder_paths",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_discovery_deduplicates_mirrored_page_titles",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_discovery_prefers_english_locale_for_duplicate_title",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_discovery_rejects_exchange_event_news",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_lincoln_discovery_uses_incoming_official_pages",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_lincoln_workflow_has_detailed_official_stages",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_cgu_reference_workflow_stays_unpublished_and_confirmation_gated",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_replace_workflow_preserves_other_schools",
+      "seconds": "0.004"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_replace_workflow_consolidates_chinese_name_aliases",
+      "seconds": "0.045"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_workflow_api_reads_cache_and_rejects_public_refresh",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_workflow_api_applies_department_override",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_workflow_api_selects_the_requested_published_round",
+      "seconds": "1.987"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_nagoya_graduate_subtype_in_both_apis[\\u6cd5\\u5b78\\u9662-\\u7814\\u7a76\\u6240-\\u535a\\u58eb\\u73ed-fail]",
+      "seconds": "1.502"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_nagoya_graduate_subtype_in_both_apis[\\u6cd5\\u5b78\\u9662-\\u7814\\u7a76\\u6240-\\u78a9\\u58eb\\u73ed-pass]",
+      "seconds": "1.529"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_nagoya_graduate_subtype_in_both_apis[\\u6cd5\\u5b78\\u9662-\\u7814\\u7a76\\u6240-None-needs_confirmation]",
+      "seconds": "1.568"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_nagoya_graduate_subtype_in_both_apis[\\u6cd5\\u5b78\\u9662-\\u535a\\u58eb\\u73ed-\\u535a\\u58eb\\u73ed-fail]",
+      "seconds": "2.796"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_nagoya_graduate_subtype_in_both_apis[\\u6cd5\\u5b78\\u9662-\\u78a9\\u58eb\\u73ed-\\u78a9\\u58eb\\u73ed-pass]",
+      "seconds": "1.667"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_nagoya_graduate_subtype_in_both_apis[\\u6cd5\\u5b78\\u9662-\\u5927\\u5b78\\u90e8-\\u5927\\u4e09-fail]",
+      "seconds": "1.851"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_nagoya_graduate_subtype_in_both_apis[\\u6559\\u80b2\\u5b78\\u9662-\\u7814\\u7a76\\u6240-None-pass]",
+      "seconds": "2.389"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_nagoya_graduate_subtype_in_both_apis[\\u6559\\u80b2\\u5b78\\u9662-\\u7814\\u7a76\\u6240-\\u535a\\u58eb\\u73ed-pass]",
+      "seconds": "3.404"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_nagoya_graduate_subtype_in_both_apis[\\u6559\\u80b2\\u5b78\\u9662-\\u5927\\u5b78\\u90e8-\\u5927\\u4e09-pass]",
+      "seconds": "0.977"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_unspecified_graduate_is_not_a_specific_degree_pass",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_hcmute_api_uses_explicit_mother_email_for_both_steps",
+      "seconds": "2.041"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_pilsen_routes_project_transfer_points_without_year_upgrade",
+      "seconds": "1.681"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_dit_public_documents_and_wrong_program_templates_remain_pending",
+      "seconds": "3.522"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighteenth_pass::test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate",
+      "seconds": "0.206"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighth_pass::test_colabs_request_submission_is_distinct_from_result_batch_and_tao",
+      "seconds": "7.688"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighth_pass::test_ryukoku_historical_grey_list_does_not_create_current_jlpt_requirement",
+      "seconds": "0.120"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighth_pass::test_kmutt_calendar_conflict_reaches_generic_and_guide_projections",
+      "seconds": "0.116"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighth_pass::test_kmutt_incoming_forms_and_alternative_english_do_not_use_outgoing_form",
+      "seconds": "1.136"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighth_pass::test_veltech_fact_sheet_is_not_application_form_and_costs_and_dates_conflict",
+      "seconds": "9.501"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighth_pass::test_asbu_main_and_cyprus_and_graduate_calendars_are_kept_separate",
+      "seconds": "10.775"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighth_pass::test_asbu_recommended_language_conditional_medical_and_old_permit_cost",
+      "seconds": "0.115"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighth_pass::test_strasbourg_current_deadlines_and_blank_learning_agreement",
+      "seconds": "0.115"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighth_pass::test_strasbourg_housing_individual_deadline_and_apl_exceptions_are_not_guarantees",
+      "seconds": "0.093"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighth_pass::test_xiamen_real_docx_and_captcha_keep_home_extra_documents",
+      "seconds": "1.482"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighth_pass::test_chongqing_errors_and_reference_brochure_are_not_current_forms",
+      "seconds": "0.092"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighth_pass::test_public_strasbourg_view_download_is_scoped_and_does_not_execute_scripts",
+      "seconds": "0.174"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_eighth_pass::test_eighth_counts_and_ledger_distinguish_acquisition_and_full_research",
+      "seconds": "0.010"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fifteenth_pass::test_library_activation_is_life_information_and_new_student_guide_is_reference",
+      "seconds": "4.708"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fifteenth_pass::test_javascript_shell_is_recorded_without_using_search_snippets_as_policy",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fifth_pass::test_nagoya_university_agreement_resolves_departmental_scope_without_losing_it",
+      "seconds": "0.106"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fifth_pass::test_opened_current_nagoya_templates_do_not_claim_the_full_invitation_form",
+      "seconds": "0.101"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fifth_pass::test_gachon_2027_calendar_and_checkout_are_separate_from_2025_prices",
+      "seconds": "0.110"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fifth_pass::test_cau_fall_2026_and_short_programs_do_not_become_spring_2027_policy",
+      "seconds": "0.109"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fifth_pass::test_bordeaux_current_orientation_and_courses_keep_calendar_and_la_conflicts",
+      "seconds": "0.094"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fifth_pass::test_amu_erasmus_deadlines_do_not_replace_bilateral_and_phd_policy",
+      "seconds": "0.120"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fifth_pass::test_fhnw_2027_entry_keeps_actual_2026_basel_and_olten_scope",
+      "seconds": "0.128"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fifth_pass::test_ledger_records_actual_read_scope_and_the_latest_change_inventory",
+      "seconds": "0.007"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fifth_pass::test_fetcher_reads_public_embedded_tables_and_display_accordions_without_execution",
+      "seconds": "0.008"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_coverage_counts_existing_home_scoped_profile[\\u570b\\u7acb\\u81fa\\u5317\\u5927\\u5b78]",
+      "seconds": "0.526"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_coverage_counts_existing_home_scoped_profile[\\u570b\\u7acb\\u4e2d\\u6b63\\u5927\\u5b78]",
+      "seconds": "0.346"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_other_home_profile_is_not_counted_or_returned",
+      "seconds": "0.346"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_current_sungshin_waiver_keeps_visiting_and_language_fees_separate",
+      "seconds": "0.051"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_ludwigshafen_nomination_does_not_invent_language_or_degree_threshold",
+      "seconds": "0.062"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_body_triage_has_review_proof_and_no_false_exhaustion_or_announcement",
+      "seconds": "0.060"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_destination_home_alias_keeps_real_profile_and_canonical_home[\\u9577\\u5e9a\\u5927\\u5b78-CGU-fetch_partner_universities]",
+      "seconds": "1.284"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_destination_home_alias_keeps_real_profile_and_canonical_home[\\u9577\\u5e9a\\u5927\\u5b78-\\u9577\\u5e9a-fetch_partner_universities]",
+      "seconds": "0.280"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_destination_home_alias_keeps_real_profile_and_canonical_home[\\u570b\\u7acb\\u81fa\\u5317\\u5927\\u5b78-NTPU-fetch_ntpu_partner_universities]",
+      "seconds": "0.330"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_destination_home_alias_keeps_real_profile_and_canonical_home[\\u570b\\u7acb\\u81fa\\u5317\\u5927\\u5b78-\\u5317\\u5927-fetch_ntpu_partner_universities]",
+      "seconds": "0.195"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_destination_home_alias_keeps_real_profile_and_canonical_home[\\u570b\\u7acb\\u81fa\\u7063\\u5927\\u5b78-NTU-fetch_ntu_partner_universities]",
+      "seconds": "0.269"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_destination_home_alias_keeps_real_profile_and_canonical_home[\\u570b\\u7acb\\u81fa\\u7063\\u5927\\u5b78-\\u53f0\\u5927-fetch_ntu_partner_universities]",
+      "seconds": "0.319"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_destination_home_alias_keeps_real_profile_and_canonical_home[\\u570b\\u7acb\\u4e2d\\u6b63\\u5927\\u5b78-CCU-fetch_ccu_partner_universities]",
+      "seconds": "0.383"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_followup_validation::test_destination_home_alias_keeps_real_profile_and_canonical_home[\\u570b\\u7acb\\u4e2d\\u6b63\\u5927\\u5b78-\\u4e2d\\u6b63-fetch_ccu_partner_universities]",
+      "seconds": "1.711"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fourteenth_pass::test_seoultech_new_body_supersedes_old_housing_and_dates_without_guessing",
+      "seconds": "0.216"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fourteenth_pass::test_actual_catalogue_keeps_first_second_dorm_and_home_recommendation_separate",
+      "seconds": "3.041"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fourteenth_pass::test_public_routes_fill_missing_but_preserve_year_campus_and_nationality_scope",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fourth_pass::test_uestc_image_policies_preserve_tuition_ambiguity_and_home_quota",
+      "seconds": "0.103"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fourth_pass::test_ccnu_old_download_and_captcha_are_not_current_required_forms",
+      "seconds": "0.112"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fourth_pass::test_anubis_http_200_and_empty_202_are_not_read_policy_successes",
+      "seconds": "1.591"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fourth_pass::test_current_partner_portal_is_distinct_from_staff_and_freemover_routes",
+      "seconds": "0.471"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fourth_pass::test_czech_current_government_and_partner_insurance_conflict_keep_scopes",
+      "seconds": "0.127"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fourth_pass::test_full_read_ledger_does_not_turn_missing_values_into_nonpublication",
+      "seconds": "0.432"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_fourth_pass::test_current_fact_rejects_captcha_as_policy_evidence",
+      "seconds": "0.173"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_nineteenth_pass::test_corrected_clauses_point_to_actual_requirement_pages",
+      "seconds": "0.009"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_nineteenth_pass::test_nagoya_language_and_jasso_conditions_are_not_universal",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_nineteenth_pass::test_sungshin_and_tianjin_do_not_invent_english_conditions",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_nineteenth_pass::test_presidency_inbound_form_projects_real_signers_and_pending_year",
+      "seconds": "2.406"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_nineteenth_pass::test_dorm_documents_and_jis_card_keep_later_stages",
+      "seconds": "0.226"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_nineteenth_pass::test_tbu_current_course_exclusion_does_not_publish_course_capacity_as_quota",
+      "seconds": "1.517"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_nineteenth_pass::test_hufs_old_graduate_limit_conflicts_without_overwriting_current_source",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_nineteenth_pass::test_password_prompt_is_an_access_limit_without_login",
+      "seconds": "0.017"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_nineteenth_pass::test_bnu_and_bordeaux_housing_body_years_remain_reference",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_nineteenth_pass::test_reviewed_same_content_aliases_have_actual_acquisition_proof",
+      "seconds": "0.018"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_ninth_pass::test_profile_review_covers_source_backed_geography_and_distinct_life",
+      "seconds": "19.065"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_ninth_pass::test_explicit_operator_location_review_is_not_overridden",
+      "seconds": "0.111"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_ninth_pass::test_structured_academic_scopes_stay_conservative",
+      "seconds": "0.614"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_ninth_pass::test_hufs_actual_new_2027_body_resolves_old_calendar_without_editing_old_pdf",
+      "seconds": "0.109"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_ninth_pass::test_runtime_preserves_city_and_separates_reference_life_status",
+      "seconds": "74.709"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_ninth_pass::test_api_host_documents_have_individual_forms_conditions_and_later_stages",
+      "seconds": "8.235"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_ninth_pass::test_tampered_document_source_is_rejected",
+      "seconds": "0.017"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_ninth_pass::test_direct_life_link_uses_resolved_ccu_home_without_query",
+      "seconds": "0.869"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_every_current_or_unknown_identity_has_explicit_receiving_fields",
+      "seconds": "0.151"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_overseas_counts_do_not_claim_full_coverage_or_turn_fetches_into_current_data",
+      "seconds": "2.584"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_source_contradictions_are_visible_and_do_not_make_reminders[24-nomination_deadline]",
+      "seconds": "0.139"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_source_contradictions_are_visible_and_do_not_make_reminders[49-academic_calendar]",
+      "seconds": "0.132"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_source_contradictions_are_visible_and_do_not_make_reminders[54-housing]",
+      "seconds": "0.142"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_source_contradictions_are_visible_and_do_not_make_reminders[58-costs]",
+      "seconds": "0.136"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_source_contradictions_are_visible_and_do_not_make_reminders[83-application_deadline]",
+      "seconds": "0.140"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_source_contradictions_are_visible_and_do_not_make_reminders[103-academic_calendar]",
+      "seconds": "1.493"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_source_contradictions_are_visible_and_do_not_make_reminders[104-costs]",
+      "seconds": "0.118"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_source_contradictions_are_visible_and_do_not_make_reminders[106-visa]",
+      "seconds": "0.120"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_source_contradictions_are_visible_and_do_not_make_reminders[108-costs]",
+      "seconds": "0.112"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_source_contradictions_are_visible_and_do_not_make_reminders[111-application_deadline]",
+      "seconds": "0.116"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_source_contradictions_are_visible_and_do_not_make_reminders[119-arrival]",
+      "seconds": "0.113"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_hokkaido_program_evidence_and_old_documents_stay_separate",
+      "seconds": "4.731"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_hcmut_student_form_is_readable_and_bound_to_current_link",
+      "seconds": "0.189"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_changed_source_requires_semantic_recheck",
+      "seconds": "0.146"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_api_and_storage_deliver_life_guides_without_changing_cgu",
+      "seconds": "3.802"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_production_renderer_shows_years_conflicts_gaps_and_escapes_source_text",
+      "seconds": "0.174"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_fetcher_records_real_failure_and_never_promotes_download_success",
+      "seconds": "0.003"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_overseas::test_life_renderer_keeps_ccu_reference_and_missing_fields_visible",
+      "seconds": "0.230"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_parent_fixes::test_real_pending_scopes_neither_pass_nor_block_in_both_apis[\\u7ba1\\u7406\\u5b78\\u9662-\\u5927\\u5b78\\u90e8-104]",
+      "seconds": "4.979"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_parent_fixes::test_real_pending_scopes_neither_pass_nor_block_in_both_apis[\\u7ba1\\u7406\\u5b78\\u9662-\\u5927\\u5b78\\u90e8-37]",
+      "seconds": "1.070"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_parent_fixes::test_real_pending_scopes_neither_pass_nor_block_in_both_apis[\\u5de5\\u5b78\\u9662-\\u535a\\u58eb\\u73ed-104]",
+      "seconds": "2.991"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_parent_fixes::test_real_pending_scopes_neither_pass_nor_block_in_both_apis[\\u5de5\\u5b78\\u9662-\\u535a\\u58eb\\u73ed-37]",
+      "seconds": "1.460"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_parent_fixes::test_cnu_after_application_deadlines_and_post_offer_project_separately",
+      "seconds": "5.751"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_parent_fixes::test_hufs_general_essay_has_no_page_minimum_and_program_condition_survives",
+      "seconds": "0.749"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_parent_fixes::test_ryukoku_template_links_and_institutional_stamp_do_not_publish_workflow",
+      "seconds": "0.786"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_parent_fixes::test_new_document_metadata_preserves_existing_hashes_and_binds_stage_changes",
+      "seconds": "3.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_second_pass::test_real_deadline_conflict_reaches_all_student_projections[27]",
+      "seconds": "0.175"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_second_pass::test_real_deadline_conflict_reaches_all_student_projections[73]",
+      "seconds": "0.198"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_second_pass::test_real_deadline_conflict_reaches_all_student_projections[86]",
+      "seconds": "0.187"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_second_pass::test_real_deadline_conflict_reaches_all_student_projections[114]",
+      "seconds": "0.199"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_second_pass::test_acquired_forms_and_approximate_arrival_are_mapped",
+      "seconds": "2.207"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_second_pass::test_each_gap_has_real_acquisition_checks_without_inventing_nonpublication",
+      "seconds": "2.817"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_second_pass::test_fetcher_keeps_legacy_word_binary_and_relative_official_links",
+      "seconds": "0.003"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[45-ielts]",
+      "seconds": "0.164"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[45-toefl]",
+      "seconds": "0.151"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[50-ielts]",
+      "seconds": "0.116"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[58-ielts]",
+      "seconds": "0.190"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[58-toefl]",
+      "seconds": "0.179"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[74-toefl]",
+      "seconds": "0.110"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[49-ielts]",
+      "seconds": "0.115"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[100-ielts]",
+      "seconds": "0.129"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[101-toefl]",
+      "seconds": "0.146"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[103-ielts]",
+      "seconds": "2.053"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[80-ielts]",
+      "seconds": "0.132"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[65-toefl]",
+      "seconds": "0.114"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[86-ielts]",
+      "seconds": "0.125"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[89-ielts]",
+      "seconds": "0.170"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[95-ielts]",
+      "seconds": "0.201"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_uncertainty_never_becomes_a_scalar_threshold[95-other]",
+      "seconds": "0.151"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_reviewed_mandatory_scores_remain_comparable",
+      "seconds": "0.513"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[26-missing]",
+      "seconds": "0.126"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[32-reference_only]",
+      "seconds": "0.135"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[33-reference_only]",
+      "seconds": "0.136"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[39-reference_only]",
+      "seconds": "1.969"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[71-missing]",
+      "seconds": "0.129"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[103-missing]",
+      "seconds": "0.140"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[104-missing]",
+      "seconds": "0.213"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[74-missing]",
+      "seconds": "0.138"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[105-reference_only]",
+      "seconds": "0.136"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[34-needs_confirmation]",
+      "seconds": "0.136"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[37-needs_confirmation]",
+      "seconds": "0.130"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[61-needs_confirmation]",
+      "seconds": "0.126"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[88-needs_confirmation]",
+      "seconds": "0.119"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[111-needs_confirmation]",
+      "seconds": "0.113"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[23-needs_confirmation]",
+      "seconds": "0.110"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_nomination_and_historical_or_linked_documents_are_separate[109-needs_confirmation]",
+      "seconds": "0.121"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_document_coverage_means_actual_listed_requirements_not_complete_overseas_verification",
+      "seconds": "1.873"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_api_plan_and_advisor_return_language_confirmation[45-ielts-6.0]",
+      "seconds": "1.317"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_api_plan_and_advisor_return_language_confirmation[45-ielts-7.0]",
+      "seconds": "3.446"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_api_plan_and_advisor_return_language_confirmation[58-ielts-5.0]",
+      "seconds": "2.670"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_api_plan_and_advisor_return_language_confirmation[58-ielts-7.0]",
+      "seconds": "1.168"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_api_plan_and_advisor_return_language_confirmation[74-toefl-85]",
+      "seconds": "2.844"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_api_plan_and_advisor_return_language_confirmation[74-toefl-100]",
+      "seconds": "3.513"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_api_plan_and_advisor_return_language_confirmation[95-ielts-5.0]",
+      "seconds": "1.019"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_api_plan_and_advisor_return_language_confirmation[95-ielts-7.0]",
+      "seconds": "3.184"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_api_plan_and_advisor_return_language_confirmation[95-other-None]",
+      "seconds": "1.562"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_other_homes_keep_the_original_language_parser",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_frontend_matches_structured_language_and_document_statuses",
+      "seconds": "5.418"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_semantics::test_openapi_exposes_reviewed_ccu_conditions",
+      "seconds": "1.410"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_nagoya_pairs_in_both_real_apis[\\u6559\\u80b2\\u5b78\\u9662-\\u5927\\u5b78\\u90e8-True]",
+      "seconds": "5.034"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_nagoya_pairs_in_both_real_apis[\\u6559\\u80b2\\u5b78\\u9662-\\u78a9\\u58eb\\u73ed-True]",
+      "seconds": "0.961"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_nagoya_pairs_in_both_real_apis[\\u6559\\u80b2\\u5b78\\u9662-\\u535a\\u58eb\\u73ed-True]",
+      "seconds": "0.860"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_nagoya_pairs_in_both_real_apis[\\u6cd5\\u5b78\\u9662-\\u78a9\\u58eb\\u73ed-True]",
+      "seconds": "3.638"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_nagoya_pairs_in_both_real_apis[\\u6cd5\\u5b78\\u9662-\\u5927\\u5b78\\u90e8-False]",
+      "seconds": "3.957"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_nagoya_pairs_in_both_real_apis[\\u6cd5\\u5b78\\u9662-\\u535a\\u58eb\\u73ed-False]",
+      "seconds": "1.160"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_nagoya_pairs_in_both_real_apis[\\u7ba1\\u7406\\u5b78\\u9662-\\u78a9\\u58eb\\u73ed-False]",
+      "seconds": "3.394"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_pending_documents_render_without_promoting_completeness",
+      "seconds": "1.677"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_hcmute_mother_compiles_nomination_bundle",
+      "seconds": "3.187"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_dntu_library_training_hours_and_cs1_scope_are_separate",
+      "seconds": "2.938"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_metadata_is_hash_bound_and_existing_school_data_remains_default",
+      "seconds": "10.268"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_per_school_gap_inventory_distinguishes_mapping_from_exhaustion",
+      "seconds": "0.322"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_discovered_general_sources_keep_program_and_year_limits",
+      "seconds": "8.194"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventeenth_pass::test_fetcher_flags_literal_anomalous_footer_before_html_cleanup",
+      "seconds": "0.004"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventh_pass::test_ryukoku_current_round_and_deadline_conflict_reach_all_projections",
+      "seconds": "0.177"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventh_pass::test_ryukoku_language_optional_certificate_and_internal_housing_conflicts",
+      "seconds": "0.099"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventh_pass::test_current_ryukoku_health_and_recommendation_forms_have_actual_requirements",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventh_pass::test_colabs_prior_consent_is_not_a_nomination_deadline_or_tao_acceptance",
+      "seconds": "0.112"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventh_pass::test_tohoku_english_medium_alternative_and_program_specific_current_calendar",
+      "seconds": "0.126"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventh_pass::test_hokkaido_program_deadlines_degrees_and_scores_do_not_cross_scopes",
+      "seconds": "0.099"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventh_pass::test_hokkaido_actual_form_signatures_and_fee_years_are_kept",
+      "seconds": "0.107"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventh_pass::test_legacy_xls_actual_current_study_plan_is_read_without_running_formulas",
+      "seconds": "0.010"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventh_pass::test_tokiwa_other_round_and_donga_outgoing_or_degree_pages_do_not_fill_spring",
+      "seconds": "0.192"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventh_pass::test_kyungsung_spring_brochure_mixed_fall_housing_is_not_a_current_invoice",
+      "seconds": "0.098"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_seventh_pass::test_seventh_acquisition_and_review_do_not_claim_all_public_research_complete",
+      "seconds": "3.809"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixteenth_pass::test_updated_hcmut_dates_replace_march_and_old_year_is_reference",
+      "seconds": "0.530"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixteenth_pass::test_visible_visa_policy_excludes_hidden_pdf_extraction_residue",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixteenth_pass::test_current_hcmut_templates_stages_and_unread_online_form",
+      "seconds": "0.655"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixteenth_pass::test_public_json_parser_reads_real_response_and_rejects_internal_article",
+      "seconds": "0.031"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixteenth_pass::test_transport_and_life_references_do_not_promote_year_or_anomalous_page",
+      "seconds": "0.692"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixteenth_pass::test_seoultech_bank_authentication_does_not_inherit_other_document_rules",
+      "seconds": "5.528"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixth_pass::test_hcmute_optional_certificates_do_not_remove_home_or_host_language_rules",
+      "seconds": "0.124"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixth_pass::test_hcmute_term_deadlines_conflict_on_all_projections_without_reminders",
+      "seconds": "0.146"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixth_pass::test_hcmute_fee_units_and_suggested_insurance_do_not_become_guarantees",
+      "seconds": "0.180"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixth_pass::test_chiba_unyear_rules_keep_orientation_difference_and_invited_packet",
+      "seconds": "0.252"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixth_pass::test_dntu_news_and_chinese_culture_ccu_do_not_fill_incoming_fields_or_quota",
+      "seconds": "2.659"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixth_pass::test_presidency_opened_inbound_template_and_2025_sheet_keep_actual_scope",
+      "seconds": "0.225"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixth_pass::test_presidency_calendar_general_and_mba_specific_dates_are_both_preserved",
+      "seconds": "0.108"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixth_pass::test_jena_current_guest_deadline_evidence_is_not_degree_admission_text",
+      "seconds": "0.142"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixth_pass::test_jena_forms_and_costs_keep_research_and_winter_scopes",
+      "seconds": "0.108"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixth_pass::test_uwb_formal_calendar_and_dorm_documents_keep_faculty_and_fee_components",
+      "seconds": "0.110"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixth_pass::test_sixth_ledger_and_counts_preserve_partial_review_and_actual_acquisition_mode",
+      "seconds": "0.006"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixth_pass::test_parent_corrections_reach_language_calendar_and_destination_guides",
+      "seconds": "11.369"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_sixth_pass::test_xlsx_fetcher_does_not_confuse_word_or_evaluate_cell_formulas",
+      "seconds": "0.003"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_aliases_and_colleges_are_school_specific",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_counts_unique_and_quota_states",
+      "seconds": "0.154"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_provenance_and_explicit_old_attachments",
+      "seconds": "1.135"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_conflicts_do_not_invent_values",
+      "seconds": "3.023"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_home_and_partner_deadlines_and_programs_stay_separate",
+      "seconds": "1.388"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_closed_rounds_and_unverified_new_round",
+      "seconds": "2.322"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_gpa_and_average_are_both_required[2.9-85-fail]",
+      "seconds": "0.190"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_gpa_and_average_are_both_required[3.0-70-pass]",
+      "seconds": "0.194"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_gpa_and_average_are_both_required[None-80-needs_confirmation]",
+      "seconds": "0.167"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_gpa_and_average_are_both_required[3.6-69-pass]",
+      "seconds": "0.216"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_preference_limit_and_unknown_quota",
+      "seconds": "0.325"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_workflows_are_complete_structurally_but_not_published",
+      "seconds": "0.083"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_attachment_signatures_contents_and_hashes",
+      "seconds": "0.066"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_api_dispatch_and_workflow",
+      "seconds": "4.688"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_advisor_gpa_is_not_replaced_by_high_average",
+      "seconds": "0.283"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_support::test_ccu_frontend_preferences_gpa_and_legacy_restoration",
+      "seconds": "0.063"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_third_pass::test_augsburg_public_ss2027_form_does_not_promote_unversioned_policies",
+      "seconds": "0.154"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_third_pass::test_actual_web_pdf_extraction_is_distinct_from_failed_raw_download",
+      "seconds": "2.679"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_third_pass::test_ludwigshafen_filename_2026_contains_actual_summer_2027_move_in",
+      "seconds": "0.274"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_third_pass::test_receiving_reciprocity_cap_preserves_ccu_home_quota",
+      "seconds": "0.155"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_third_pass::test_fges_partial_certificate_requirement_and_approximate_welcome",
+      "seconds": "0.177"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_third_pass::test_pardubice_calendar_and_application_have_independent_year_evidence",
+      "seconds": "0.112"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_third_pass::test_chitkara_generic_docs_and_brochure_do_not_override_current_deadlines",
+      "seconds": "0.259"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_third_pass::test_conflicts_are_research_gaps_instead_of_invented_login_blockers",
+      "seconds": "0.318"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_third_pass::test_altered_web_response_requires_new_content_review",
+      "seconds": "0.167"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentieth_pass::test_public_dorm_templates_have_real_signers_without_a_current_template_claim",
+      "seconds": "1.693"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentieth_pass::test_hufs_programme_confirmation_is_later_and_conditional",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentieth_pass::test_dit_new_publication_does_not_merge_regular_degree_and_exchange_lists",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentieth_pass::test_colabs_actual_spring_2027_calendar_is_not_an_all_programme_calendar",
+      "seconds": "0.003"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentieth_pass::test_pardubice_recommendation_and_faculty_percentage_are_distinct",
+      "seconds": "0.158"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentieth_pass::test_zhaw_degree_specific_requirements_do_not_promote_the_undated_year",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentieth_pass::test_hiof_2027_autumn_course_is_not_spring_opening_or_admission_degree",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentieth_pass::test_seoultech_2022_visa_bank_amount_never_replaces_2027_admission_amount",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentieth_pass::test_twentieth_ledger_is_acquisition_proof_without_source_exhaustion",
+      "seconds": "0.029"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentieth_pass::test_document_center_has_actual_downloads_and_uncertainty_notes",
+      "seconds": "0.590"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentyfirst_pass::test_ryukoku_actual_2027_translations_keep_the_arrival_date_conflict",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentyfirst_pass::test_ryukoku_all_applicants_have_self_assessment_and_spot_without_signature_invention",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentyfirst_pass::test_ryukoku_nasic_forms_remain_conditional_later_and_private",
+      "seconds": "2.894"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentyfirst_pass::test_dit_certificate_and_language_ability_are_separate_conflicting_rules",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentyfirst_pass::test_hufs_archived_general_essay_and_bank_rules_are_not_current_requirements",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentyfirst_pass::test_fhnw_business_required_and_conditional_later_documents_are_distinct",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentyfirst_pass::test_sdu_housing_city_reply_windows_do_not_become_one_universal_deadline",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentyfirst_pass::test_proven_same_body_rechecks_preserve_all_prior_snapshots",
+      "seconds": "0.034"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentyfirst_pass::test_old_housing_guide_and_outgoing_tables_do_not_become_current_incoming_data",
+      "seconds": "0.003"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentysecond_pass::test_notification_email_does_not_establish_later_housing_delivery",
+      "seconds": "1.533"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentysecond_pass::test_explicit_verified_host_life_method_is_preserved",
+      "seconds": "0.247"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentysecond_pass::test_notification_guard_does_not_change_other_home_inference",
+      "seconds": "0.356"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentysecond_pass::test_khu_google_form_is_neutral_followup_with_conditional_physical_copies",
+      "seconds": "3.631"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentysecond_pass::test_khu_current_dorm_tests_do_not_invent_a_three_month_universal_window",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentysecond_pass::test_khu_unyear_prices_keep_actual_source_conflicts",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentysecond_pass::test_epita_degree_certificate_difference_and_signed_la_remain_pending",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentysecond_pass::test_jena_later_public_forms_have_real_signatures_and_conditional_scope",
+      "seconds": "3.081"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentysecond_pass::test_dit_exchange_exemption_is_supported_by_the_complete_statute_chain",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentysecond_pass::test_ryukoku_agreement_quota_is_separate_from_current_open_quota",
+      "seconds": "0.102"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentysecond_pass::test_48_acquisitions_and_prior_919_sources_are_accounted_for",
+      "seconds": "0.033"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentysecond_pass::test_link_scope_screening_never_claims_to_have_read_optional_target_bodies",
+      "seconds": "0.042"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentythird_pass::test_arc_documents_are_later_conditional_and_not_initial_exchange_forms",
+      "seconds": "0.572"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentythird_pass::test_latest_public_form_and_undated_school_mirror_are_different_versions",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentythird_pass::test_old_dorm_guide_and_past_jype_samples_cannot_be_current_checklists",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentythird_pass::test_registration_fee_is_not_tuition_and_current_visa_is_not_arc_template",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentythird_pass::test_current_tuition_and_semp_scope_reach_partner_api",
+      "seconds": "0.918"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentythird_pass::test_student_library_fee_exceptions_do_not_apply_to_all_users",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentythird_pass::test_a_current_field_cannot_be_supported_only_by_noncurrent_evidence[exchange_info.ccu_overseas-overseas-reviewed-fields.json-reviewed_rows]",
+      "seconds": "0.196"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentythird_pass::test_a_current_field_cannot_be_supported_only_by_noncurrent_evidence[exchange_info.ccu_profile-profile-reviewed-fields.json-reviewed_profiles]",
+      "seconds": "0.020"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentythird_pass::test_public_file_button_post_extracts_pdf_even_with_html_content_type",
+      "seconds": "0.140"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentythird_pass::test_public_download_support_does_not_allow_general_post_or_application_data[another_host]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentythird_pass::test_public_download_support_does_not_allow_general_post_or_application_data[personal_data]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentythird_pass::test_public_download_support_does_not_allow_general_post_or_application_data[another_method]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ccu_twentythird_pass::test_source_review_freezes_prior_files_and_does_not_claim_unread_targets",
+      "seconds": "0.033"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_bundled_cgu_workflows_are_available_without_local_cache",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_bundled_cgu_completeness_report_matches_export",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_001_keeps_current_limits_and_review_status",
+      "seconds": "0.061"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_002_keeps_current_limits_and_review_status",
+      "seconds": "0.058"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_003_keeps_current_limits_and_review_status",
+      "seconds": "0.091"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_004_keeps_current_limits_and_review_status",
+      "seconds": "0.083"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_005_keeps_current_limits_and_review_status",
+      "seconds": "0.062"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_006_separates_current_facts_from_stale_prices",
+      "seconds": "0.071"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_007_keeps_fee_and_campus_scope_explicit",
+      "seconds": "2.576"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_008_keeps_conflicts_and_stale_terms_visible",
+      "seconds": "0.050"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_009_keeps_fee_categories_and_options_separate",
+      "seconds": "0.049"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_010_preserves_program_and_housing_boundaries",
+      "seconds": "0.053"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_011_preserves_fee_housing_and_term_boundaries",
+      "seconds": "0.054"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_012_preserves_program_age_and_identity_boundaries",
+      "seconds": "0.052"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_013_preserves_dual_degree_and_department_boundaries",
+      "seconds": "0.058"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_014_preserves_program_year_and_housing_boundaries",
+      "seconds": "0.093"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_015_preserves_current_and_historical_boundaries",
+      "seconds": "0.079"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_016_keeps_icd_campus_cost_and_deadline_boundaries",
+      "seconds": "0.076"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_backfilled_cgu_workflows_keep_current_details_reference_only",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntpu_bundled_data::test_bundled_ntpu_catalog_is_complete",
+      "seconds": "0.158"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+      "seconds": "3.327"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntpu_bundled_data::test_bundled_ntpu_completeness_report_has_all_required_fields",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntpu_bundled_data::test_default_loader_structures_local_overrides_before_merging_bundle",
+      "seconds": "0.207"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntpu_support::test_ntpu_aliases_resolve_to_the_same_home_university",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntpu_support::test_ntpu_partner_identity_ignores_pdf_location_suffix",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntpu_support::test_bundled_official_ntpu_lists_are_available_offline",
+      "seconds": "1.025"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntpu_support::test_ntpu_application_templates_do_not_leak_cgu_copy",
+      "seconds": "0.005"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntpu_support::test_ntpu_web_api_exposes_dashboard_rules_documents_and_search",
+      "seconds": "0.252"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntpu_support::test_ntpu_116_round_status_follows_the_announced_window_without_guessing",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntpu_support::test_116_quota_sheets_replace_the_115_lists_and_keep_every_continuing_school",
+      "seconds": "0.942"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_all_288_summaries_reach_dashboard_and_keep_source_text",
+      "seconds": "0.617"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_deadline_conflict_keeps_two_sources_without_confirmed_reminder",
+      "seconds": "0.187"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_helsinki_closure_is_limited_to_medicine_2027_28",
+      "seconds": "0.050"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u4e2d\\u8a9e\\u7d44-\\u5426-False]",
+      "seconds": "0.003"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u4e2d\\u8a9e\\u7d44-\\u662f-True]",
+      "seconds": "0.004"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u4e00\\u822c\\u7d44-\\u5426-True]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u65e5\\u8a9e\\u7d44-\\u5426-True]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u5fb7\\u8a9e\\u7d44-\\u5426-True]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u6cd5\\u8a9e\\u7d44-\\u5426-True]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u97d3\\u8a9e\\u7d44-\\u5426-True]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u897f\\u8a9e\\u7d44-\\u5426-True]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e00\\u822c\\u7d44-\\u5426-GEPT-False]",
+      "seconds": "0.004"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e00\\u822c\\u7d44-\\u5426-BESTEP-False]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e00\\u822c\\u7d44-\\u5426-TOEIC-True]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e00\\u822c\\u7d44-\\u5426-Duolingo-True]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u65e5\\u8a9e\\u7d44-\\u5426-JLPT-False]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u65e5\\u8a9e\\u7d44-\\u5426-IELTS Academic-True]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e2d\\u8a9e\\u7d44-\\u662f-TOCFL-False]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e2d\\u8a9e\\u7d44-\\u662f-HSK-False]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e2d\\u8a9e\\u7d44-\\u662f-JLPT-True]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_planned_result_does_not_substitute_for_actual_valid_exam_date[2025-04-30-2026-11-01-True]",
+      "seconds": "0.003"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_planned_result_does_not_substitute_for_actual_valid_exam_date[2025-05-01--False]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_planned_result_does_not_substitute_for_actual_valid_exam_date[2099-01-01--True]",
+      "seconds": "0.003"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_planned_result_does_not_substitute_for_actual_valid_exam_date[not-a-date--True]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_planned_result_does_not_substitute_for_actual_valid_exam_date[-2026-11-01-False]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_ntu_manifest_api_accepts_chinese_exemption_and_enforces_international_exception",
+      "seconds": "0.194"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_documents_supplement_has_read_content_and_truthful_cycle_scope",
+      "seconds": "0.010"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_uncg_preserves_both_year_and_visa_scope_without_confirming_future_plan",
+      "seconds": "0.013"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_hope_deadlines_identity_exceptions_and_repayment_are_visible_in_api",
+      "seconds": "0.297"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_existing_document_templates_keep_language_fields_and_no_ntu_conditions[\\u9577\\u5e9a\\u5927\\u5b78]",
+      "seconds": "0.005"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_audit::test_existing_document_templates_keep_language_fields_and_no_ntu_conditions[\\u570b\\u7acb\\u81fa\\u5317\\u5927\\u5b78]",
+      "seconds": "0.007"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_aliases_resolve_to_the_third_school[\\u81fa\\u5927]",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_aliases_resolve_to_the_third_school[\\u53f0\\u5927]",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_aliases_resolve_to_the_third_school[\\u53f0\\u7063\\u5927\\u5b78]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_aliases_resolve_to_the_third_school[\\u570b\\u7acb\\u81fa\\u7063\\u5927\\u5b78]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_aliases_resolve_to_the_third_school[NTU]",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_aliases_resolve_to_the_third_school[National Taiwan University]",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_shared_exchange_visiting_note_does_not_merge_different_schools",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_email_domain_and_subdomains_are_recognized",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u5927\\u5b78\\u90e8-2.44-70-pass]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u5927\\u5b78\\u90e8-2-50-pass]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u5927\\u5b78\\u90e8-2.43-50.01-fail]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u5927\\u5b78\\u90e8-2.43-None-needs_confirmation]",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u5927\\u5b78\\u90e8-None-60-needs_confirmation]",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u5927\\u5b78\\u90e8-None-None-needs_confirmation]",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u7814\\u7a76\\u6240-None-None-pass]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u78a9\\u58eb\\u73ed-1-90-pass]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u535a\\u58eb\\u73ed-None-None-pass]",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u5728\\u8077\\u78a9\\u58eb\\u73ed-4-1-fail]",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[None-4-1-needs_confirmation]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_bundle_does_not_promote_contract_or_historical_quotas",
+      "seconds": "0.105"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_dashboard_uses_announced_taipei_times_without_percent_grade_gate",
+      "seconds": "0.103"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_catalog_api_works_offline_and_keeps_pending_visible",
+      "seconds": "1.132"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_pending_quota_plan_cannot_claim_current_eligibility_or_convert_percentage",
+      "seconds": "0.029"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_preparation_tools_do_not_claim_other_schools_official_forms",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_zero_class_rank_is_rejected[AdvisorProfile]",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_zero_class_rank_is_rejected[AccountSelectionProfile]",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_zero_class_rank_is_rejected[PersonalApplicationPlanRequest]",
+      "seconds": "0.003"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_advisor_includes_pending_quota_and_agrees_with_evaluation[toefl_new-4.5-pass]",
+      "seconds": "0.121"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_advisor_includes_pending_quota_and_agrees_with_evaluation[toefl_new-3.5-needs_confirmation]",
+      "seconds": "0.131"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_advisor_includes_pending_quota_and_agrees_with_evaluation[toefl-78-needs_confirmation]",
+      "seconds": "0.181"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_advisor_includes_pending_quota_and_agrees_with_evaluation[ielts-5.5-needs_confirmation]",
+      "seconds": "0.128"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_advisor_includes_pending_quota_and_agrees_with_evaluation[toeic-990-needs_confirmation]",
+      "seconds": "0.123"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_integration::test_ntu_catalog_rebuilds_from_tracked_source_snapshot",
+      "seconds": "1.249"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_school_board_migration::test_migration_versions_are_unique",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_school_board_migration::test_ntu_forum_rpc_migration_preserves_authorization_and_replays",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_qualification_scope_consistency::test_recommendation_and_preference_check_use_same_scope_evidence[\\u5927\\u5b78\\u90e8-\\u5927\\u5b78\\u90e8-\\u6cd5\\u5f8b\\u5b78\\u9662-\\u5927\\u5b78\\u90e8-college-needs_confirmation]",
+      "seconds": "0.004"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_qualification_scope_consistency::test_recommendation_and_preference_check_use_same_scope_evidence[\\u4f9d\\u7576\\u671f\\u5354\\u8b70\\u78ba\\u8a8d-\\u5927\\u5b78\\u90e8-\\u5de5\\u5b78\\u9662-\\u5927\\u5b78\\u90e8-college-needs_confirmation]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_qualification_scope_consistency::test_recommendation_and_preference_check_use_same_scope_evidence[all except engineering-\\u5927\\u5b78\\u90e8-\\u5de5\\u5b78\\u9662-\\u5927\\u5b78\\u90e8-college-needs_confirmation]",
+      "seconds": "0.002"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_qualification_scope_consistency::test_recommendation_and_preference_check_use_same_scope_evidence[\\u7121-\\u5927\\u5b78\\u90e8-\\u5de5\\u5b78\\u9662-\\u5927\\u5b78\\u90e8-college-needs_confirmation]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_qualification_scope_consistency::test_recommendation_and_preference_check_use_same_scope_evidence[\\u56db\\u9662\\u7686\\u53ef-\\u5927\\u5b78\\u90e8-\\u5de5\\u5b78\\u9662-\\u5927\\u5b78\\u90e8-college-pass]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_qualification_scope_consistency::test_recommendation_and_preference_check_use_same_scope_evidence[Law-\\u5927\\u5b78\\u90e8-\\u6cd5\\u5f8b\\u5b78\\u9662-\\u5927\\u5b78\\u90e8-college-pass]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_qualification_scope_consistency::test_recommendation_and_preference_check_use_same_scope_evidence[\\u5de5\\u5b78\\u9662-undergraduate-\\u5de5\\u5b78\\u9662-\\u7814\\u7a76\\u6240-degree_level-fail]",
+      "seconds": "0.003"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_qualification_scope_consistency::test_recommendation_and_preference_check_use_same_scope_evidence[\\u5de5\\u5b78\\u9662-2-\\u5de5\\u5b78\\u9662-\\u5927\\u5b78\\u90e8-degree_level-needs_confirmation]",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_school_photo_and_match::test_school_photo_manifest_files_and_aliases",
+      "seconds": "0.018"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_school_photo_and_match::test_match_missing_profile_fields_and_real_mismatches",
+      "seconds": "0.068"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_selection_conditions_sync::test_conditions_persist_across_sessions_and_legacy_write_does_not_erase",
+      "seconds": "0.183"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_selection_conditions_sync::test_conditions_reject_invalid_or_unrelated_fields[academic_score-101]",
+      "seconds": "0.137"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_selection_conditions_sync::test_conditions_reject_invalid_or_unrelated_fields[language_test-invented]",
+      "seconds": "0.155"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_selection_conditions_sync::test_conditions_reject_invalid_or_unrelated_fields[monthly_budget--1]",
+      "seconds": "0.107"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_selection_conditions_sync::test_conditions_reject_invalid_or_unrelated_fields[phone-0912345678]",
+      "seconds": "0.137"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_selection_conditions_sync::test_conditions_require_login_and_are_isolated_by_account_and_home",
+      "seconds": "3.805"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_selection_conditions_sync::test_workspace_extension_migration_keeps_atomic_commit_and_progress_ownership",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_selection_conditions_sync::test_older_client_without_teaching_language_or_course_fields_still_round_trips",
+      "seconds": "0.174"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_workflow_structuring::test_legacy_workflow_is_structured_without_guessing_unknown_values",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_workflow_structuring::test_paper_send_by_without_arrival_deadline_is_never_reminder_eligible",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_workflow_structuring::test_exact_deadline_requires_published_workflow_before_reminder",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_workflow_structuring::test_published_workflow_without_published_at_fails_structure_audit",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_workflow_structuring::test_source_authority_follows_official_priority_order",
+      "seconds": "0.000"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_workflow_structuring::test_workflow_structuring_is_idempotent_and_passes_audit",
+      "seconds": "0.001"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_candidate_acceptance::test_real_school_search_matching_comparison_plan_reload_and_home_isolation[390]",
+      "seconds": "66.749"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_candidate_acceptance::test_real_school_search_matching_comparison_plan_reload_and_home_isolation[1440]",
+      "seconds": "37.282"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_candidate_acceptance::test_real_document_center_stages_conditions_templates_and_saved_draft[390]",
+      "seconds": "17.188"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_candidate_acceptance::test_real_document_center_stages_conditions_templates_and_saved_draft[1440]",
+      "seconds": "17.475"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_eighteenth_pass::test_actual_degree_select_and_current_year_in_both_modes[390]",
+      "seconds": "36.889"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_eighteenth_pass::test_actual_degree_select_and_current_year_in_both_modes[1440]",
+      "seconds": "36.601"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_eighteenth_pass::test_hcmute_email_sender_and_pilsen_transfers_render[390]",
+      "seconds": "17.131"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_eighteenth_pass::test_hcmute_email_sender_and_pilsen_transfers_render[1440]",
+      "seconds": "20.114"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_deadlines_forms_and_research_progress[390]",
+      "seconds": "11.517"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_deadlines_forms_and_research_progress[1440]",
+      "seconds": "11.670"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_submission_result_calendar_and_campus_boundaries[35-390]",
+      "seconds": "8.064"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_submission_result_calendar_and_campus_boundaries[35-1440]",
+      "seconds": "8.054"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_submission_result_calendar_and_campus_boundaries[61-390]",
+      "seconds": "7.551"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_submission_result_calendar_and_campus_boundaries[61-1440]",
+      "seconds": "8.446"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_submission_result_calendar_and_campus_boundaries[105-390]",
+      "seconds": "8.532"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_submission_result_calendar_and_campus_boundaries[105-1440]",
+      "seconds": "8.715"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_profile_life_and_individual_document_stages_render[390]",
+      "seconds": "15.267"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_profile_life_and_individual_document_stages_render[1440]",
+      "seconds": "15.445"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[34-390]",
+      "seconds": "9.428"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[34-1440]",
+      "seconds": "8.529"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[68-390]",
+      "seconds": "8.121"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[68-1440]",
+      "seconds": "7.993"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[95-390]",
+      "seconds": "8.389"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_sixth_batch_conflicts_and_amu_alternative_proof[95-1440]",
+      "seconds": "8.667"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_all_four_school_grade_fields_remain_isolated",
+      "seconds": "14.672"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_new_public_forms_and_source_conflict_categories[98-390]",
+      "seconds": "7.201"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_new_public_forms_and_source_conflict_categories[98-1440]",
+      "seconds": "6.976"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_new_public_forms_and_source_conflict_categories[102-390]",
+      "seconds": "6.962"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_new_public_forms_and_source_conflict_categories[102-1440]",
+      "seconds": "8.901"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_new_public_forms_and_source_conflict_categories[101-390]",
+      "seconds": "7.448"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_new_public_forms_and_source_conflict_categories[101-1440]",
+      "seconds": "8.086"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_seventh_current_templates_and_program_deadlines[32-390]",
+      "seconds": "7.195"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_seventh_current_templates_and_program_deadlines[32-1440]",
+      "seconds": "7.333"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_seventh_current_templates_and_program_deadlines[37-390]",
+      "seconds": "7.269"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_school::test_ccu_seventh_current_templates_and_program_deadlines[37-1440]",
+      "seconds": "8.224"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_seventeenth_pass::test_nagoya_pair_filters_use_one_option[390]",
+      "seconds": "16.166"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_seventeenth_pass::test_nagoya_pair_filters_use_one_option[1440]",
+      "seconds": "13.977"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_seventeenth_pass::test_unyear_templates_have_separate_applicability_warning[98-390]",
+      "seconds": "8.605"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_seventeenth_pass::test_unyear_templates_have_separate_applicability_warning[98-1440]",
+      "seconds": "7.287"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_seventeenth_pass::test_unyear_templates_have_separate_applicability_warning[102-390]",
+      "seconds": "6.902"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_seventeenth_pass::test_unyear_templates_have_separate_applicability_warning[102-1440]",
+      "seconds": "7.446"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentyfirst_pass::test_ryukoku_conflict_and_later_signed_pledge_are_visible[390]",
+      "seconds": "10.309"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentyfirst_pass::test_ryukoku_conflict_and_later_signed_pledge_are_visible[1440]",
+      "seconds": "7.089"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentyfirst_pass::test_fhnw_grant_remains_conditional_and_template_unverified[390]",
+      "seconds": "7.129"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentyfirst_pass::test_fhnw_grant_remains_conditional_and_template_unverified[1440]",
+      "seconds": "7.600"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentyfirst_pass::test_sdu_city_specific_reply_days_and_later_contract_are_visible[390]",
+      "seconds": "6.414"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentyfirst_pass::test_sdu_city_specific_reply_days_and_later_contract_are_visible[1440]",
+      "seconds": "7.043"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ntu_school::test_visitor_can_browse_ntu_filter_details_and_switch_back[390]",
+      "seconds": "6.891"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ntu_school::test_visitor_can_browse_ntu_filter_details_and_switch_back[1440]",
+      "seconds": "10.681"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ntu_school::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion",
+      "seconds": "7.980"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ntu_school::test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\\u9577\\u5e9a\\u5927\\u5b78]",
+      "seconds": "2.851"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ntu_school::test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\\u570b\\u7acb\\u81fa\\u5317\\u5927\\u5b78]",
+      "seconds": "4.376"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ntu_school::test_ntu_document_language_conditions_change_in_real_form[390]",
+      "seconds": "3.883"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ntu_school::test_ntu_document_language_conditions_change_in_real_form[1440]",
+      "seconds": "4.555"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_school_lists::test_a_country_the_student_chose_gets_only_that_country_and_says_so",
+      "seconds": "4.614"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_school_lists::test_every_recommended_school_is_reachable_not_just_the_first_five",
+      "seconds": "4.643"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_school_lists::test_a_small_group_has_no_show_more_button",
+      "seconds": "2.922"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_school_lists::test_a_country_with_no_open_school_says_so_and_lists_the_others",
+      "seconds": "2.689"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_school_lists::test_the_school_list_shows_a_full_page_and_the_count[390-20]",
+      "seconds": "3.212"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_school_lists::test_the_school_list_shows_a_full_page_and_the_count[1280-30]",
+      "seconds": "4.369"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_school_lists::test_filtering_to_a_country_shows_all_of_its_schools_and_only_those",
+      "seconds": "3.497"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_delayed_switching::test_old_home_responses_cannot_finish_newer_a_b_a_load[390]",
+      "seconds": "48.999"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_delayed_switching::test_old_home_responses_cannot_finish_newer_a_b_a_load[1440]",
+      "seconds": "26.215"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_delayed_switching::test_late_target_catalog_cannot_replace_current_conditions_and_saved_draft[390]",
+      "seconds": "18.436"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_delayed_switching::test_late_target_catalog_cannot_replace_current_conditions_and_saved_draft[1440]",
+      "seconds": "20.555"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_delayed_switching::test_late_detail_evidence_cannot_replace_new_target_workflow_or_life[390]",
+      "seconds": "16.704"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_delayed_switching::test_late_detail_evidence_cannot_replace_new_target_workflow_or_life[1440]",
+      "seconds": "15.694"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_delayed_switching::test_queued_form_save_keeps_original_home_when_switching_before_debounce[390]",
+      "seconds": "20.987"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_delayed_switching::test_queued_form_save_keeps_original_home_when_switching_before_debounce[1440]",
+      "seconds": "18.680"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_nineteenth_pass::test_pending_host_forms_render_correct_role_and_stage[80-Inbound Exchange-6818985ddb4fe1746442333.pdf-390]",
+      "seconds": "8.978"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_nineteenth_pass::test_pending_host_forms_render_correct_role_and_stage[80-Inbound Exchange-6818985ddb4fe1746442333.pdf-1440]",
+      "seconds": "8.833"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_nineteenth_pass::test_pending_host_forms_render_correct_role_and_stage[107-Accommodation Letter of Intent-proof_of_accommodation_140338.pdf-390]",
+      "seconds": "7.990"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_nineteenth_pass::test_pending_host_forms_render_correct_role_and_stage[107-Accommodation Letter of Intent-proof_of_accommodation_140338.pdf-1440]",
+      "seconds": "9.543"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_nineteenth_pass::test_tbu_current_course_restrictions_are_visible[390]",
+      "seconds": "8.162"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_nineteenth_pass::test_tbu_current_course_restrictions_are_visible[1440]",
+      "seconds": "11.012"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_scope_documents::test_real_browser_and_both_apis_keep_pending_scope_neutral[104-390]",
+      "seconds": "11.958"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_scope_documents::test_real_browser_and_both_apis_keep_pending_scope_neutral[104-1440]",
+      "seconds": "12.075"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_scope_documents::test_real_browser_and_both_apis_keep_pending_scope_neutral[37-390]",
+      "seconds": "12.345"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_scope_documents::test_real_browser_and_both_apis_keep_pending_scope_neutral[37-1440]",
+      "seconds": "12.581"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_scope_documents::test_actual_template_clicks_and_document_center_stages[390]",
+      "seconds": "11.438"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_scope_documents::test_actual_template_clicks_and_document_center_stages[1440]",
+      "seconds": "12.711"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_scope_documents::test_seoultech_new_housing_costs_and_second_submission_are_visible[390]",
+      "seconds": "10.955"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_scope_documents::test_seoultech_new_housing_costs_and_second_submission_are_visible[1440]",
+      "seconds": "11.944"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_scope_documents::test_hcmut_current_deadlines_and_nomination_template_click[390]",
+      "seconds": "9.979"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_scope_documents::test_hcmut_current_deadlines_and_nomination_template_click[1440]",
+      "seconds": "11.511"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentieth_pass::test_hufs_templates_show_pending_version_and_real_signers[\\u5bbf\\u820d\\u7533\\u8acb\\u8868-1xThdiWsgT4IZ5Tco7UZnpUGFDA16Hknf-390]",
+      "seconds": "9.162"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentieth_pass::test_hufs_templates_show_pending_version_and_real_signers[\\u5bbf\\u820d\\u7533\\u8acb\\u8868-1xThdiWsgT4IZ5Tco7UZnpUGFDA16Hknf-1440]",
+      "seconds": "9.113"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentieth_pass::test_hufs_templates_show_pending_version_and_real_signers[\\u5065\\u5eb7\\uff0fTB-1NwoAHiWT7p3yJO1s-YqyhZCSRN0YQiBy-390]",
+      "seconds": "8.368"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentieth_pass::test_hufs_templates_show_pending_version_and_real_signers[\\u5065\\u5eb7\\uff0fTB-1NwoAHiWT7p3yJO1s-YqyhZCSRN0YQiBy-1440]",
+      "seconds": "8.944"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentieth_pass::test_dit_extra_grade_sheet_stays_pending_and_conditional[390]",
+      "seconds": "8.846"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentieth_pass::test_dit_extra_grade_sheet_stays_pending_and_conditional[1440]",
+      "seconds": "9.929"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentieth_pass::test_hiof_course_conditions_keep_campus_and_semester_scope[390]",
+      "seconds": "7.406"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentieth_pass::test_hiof_course_conditions_keep_campus_and_semester_scope[1440]",
+      "seconds": "7.557"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentysecond_pass::test_nasic_delivery_is_unknown_despite_email_notices[390]",
+      "seconds": "9.154"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentysecond_pass::test_nasic_delivery_is_unknown_despite_email_notices[1440]",
+      "seconds": "8.924"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentysecond_pass::test_khu_second_submission_does_not_wait_for_admission[390]",
+      "seconds": "9.089"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentysecond_pass::test_khu_second_submission_does_not_wait_for_admission[1440]",
+      "seconds": "9.347"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentysecond_pass::test_jena_extension_form_has_both_signatures_and_stamps[390]",
+      "seconds": "7.684"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_ccu_twentysecond_pass::test_jena_extension_form_has_both_signatures_and_stamps[1440]",
+      "seconds": "8.767"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_open_catalog::test_visitor_switches_schools_without_an_account",
+      "seconds": "5.551"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_open_catalog::test_account_without_a_school_is_asked_once_after_google_returns",
+      "seconds": "7.854"
+    },
+    {
+      "suite": "browser",
+      "case_id": "tests.e2e.test_open_catalog::test_signing_out_keeps_the_catalogue_open",
+      "seconds": "4.664"
+    }
+  ],
+  "skipped_tests": [
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_workflow_api_reads_cache_and_rejects_public_refresh",
+      "seconds": "0.000",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_workflow_api_applies_department_override",
+      "seconds": "0.000",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_bundled_cgu_workflows_are_available_without_local_cache",
+      "seconds": "0.000",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+      "seconds": "0.000",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_bundled_cgu_completeness_report_matches_export",
+      "seconds": "0.000",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_backfilled_cgu_workflows_keep_current_details_reference_only",
+      "seconds": "0.000",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_school_board_migration::test_ntu_forum_rpc_migration_preserves_authorization_and_replays",
+      "seconds": "0.000",
+      "reason": "opt in to isolated Docker PostgreSQL"
+    }
+  ]
+}

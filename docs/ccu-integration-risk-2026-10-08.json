@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-08T22:07:55.670485+00:00",
+  "checked_at": "2026-10-08T22:21:35.961358+00:00",
   "main_sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
-  "ccu_prior_pushed_sha": "53e88e7c77480cec810e412e989054b0aec9bcbc",
+  "ccu_prior_pushed_sha": "77dfd84008d438d3602da61991733ecfdf8d65a8",
   "no_other_branches_merged": true,
   "isolated_combined_integration_test": "not_run_pending_parent_arrangement",
   "ccu_shared_paths": [
@@ -45,19 +45,18 @@
         {
           "path": "src/exchange_info/api.py",
           "main_sha256": "323dbf8ddffc4fbbb1693d7501930d47aa0fa276b5e5dace149dda0de083dd32",
-          "ccu_working_sha256": "f36c9d20e203a14a936661a4b8251259c2e981eb08a0764a6d20051bc97034ef",
           "other_sha256": "15c326450a135f7c98094300540dde3d67c1fa12f44f9dd664c0c5a19eee3dc2",
           "same_as_ccu": false,
           "hunk_contexts": [
             "@@ -429 +429 @@ HOME_UNIVERSITY_BOARDS = {item.school_name for item in SUPPORTED_UNIVERSITIES}",
             "@@ -437 +437 @@ def _load_school_image_manifest() -> dict[str, dict[str, object]]:",
             "@@ -452 +452 @@ def _attach_school_images("
-          ]
+          ],
+          "ccu_tested_sha256": "f36c9d20e203a14a936661a4b8251259c2e981eb08a0764a6d20051bc97034ef"
         },
         {
           "path": "src/exchange_info/static/app.js",
           "main_sha256": "e7c4ed2b9ed0b33c24261e84776610eb1a32b1e6328da34ad7af631872a0193c",
-          "ccu_working_sha256": "2cc44a50449ffe4ad166ef223532f1b4498ff19b9124c83927c5033bd88f1a55",
           "other_sha256": "775b2b5232b4a1291f4e4b643a40bf5c51d18c3f968207fc072a86091cd6d99e",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -73,7 +72,8 @@
             "@@ -8314 +8321 @@ function renderLifeResearchStatus(context, { loading = false, error = \"\" } = {})",
             "@@ -8335,2 +8342 @@ async function loadSchoolLifeContext(item, { refresh = false } = {}) {",
             "@@ -8357 +8363 @@ function renderLifeEvidenceSupplement(category, { limit = 2 } = {}) {"
-          ]
+          ],
+          "ccu_tested_sha256": "2cc44a50449ffe4ad166ef223532f1b4498ff19b9124c83927c5033bd88f1a55"
         }
       ]
     },
@@ -104,7 +104,6 @@
         {
           "path": "docs/api/openapi.json",
           "main_sha256": "318799f44c5fd61cf819773e16e09350b6a11b824dbb897cfe540d51c04d8179",
-          "ccu_working_sha256": "3ea0a7f6631f2ad2da8daa5c1efc5497c1d438de7045f3e9c0559d4199bc46ef",
           "other_sha256": "60bb5d538112de29e247051776f8a6e6b041a93fe24b531ddb849b327f52e5c0",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -122,24 +121,24 @@
             "@@ -14730,0 +14872,47 @@",
             "@@ -18045,0 +18234,58 @@",
             "@@ -18606 +18852 @@"
-          ]
+          ],
+          "ccu_tested_sha256": "3ea0a7f6631f2ad2da8daa5c1efc5497c1d438de7045f3e9c0559d4199bc46ef"
         },
         {
           "path": "pyproject.toml",
           "main_sha256": "b383b71e8eea2208ec2d1dbc0578a7778fe262fa9b8a88cbb3df9f540763d975",
-          "ccu_working_sha256": "0554660916373507be1643807ded2bc74290cffd13adccb0cbf17bba437af460",
           "other_sha256": "19efde58ee2a76fbc688c6cb0c3eadc2c1dc0980b5d6142ad1c7141ab74e216f",
           "same_as_ccu": false,
           "hunk_contexts": [
             "@@ -4 +4 @@ version = \"0.1.0\"",
             "@@ -50,0 +51 @@ exchange_info = [",
             "@@ -51,0 +53 @@ exchange_info = ["
-          ]
+          ],
+          "ccu_tested_sha256": "0554660916373507be1643807ded2bc74290cffd13adccb0cbf17bba437af460"
         },
         {
           "path": "src/exchange_info/advisor.py",
           "main_sha256": "e0e5970a4f2da91499903a083c953e090ce592260e391f4e74b790ffd73e19ef",
-          "ccu_working_sha256": "e141940921e0ae2b46947d519164d71ba3110a35344a0fa7cb7e3c79c3443553",
           "other_sha256": "53ff5cd5694a45d99007ec9f2b02b3f20ab5cedd31b5f23703e41e4a6c3d721e",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -148,12 +147,12 @@
             "@@ -343 +356,5 @@ def _score_partner(",
             "@@ -447 +464,3 @@ def _qualification_summary(",
             "@@ -459 +478,3 @@ def _qualification_summary("
-          ]
+          ],
+          "ccu_tested_sha256": "e141940921e0ae2b46947d519164d71ba3110a35344a0fa7cb7e3c79c3443553"
         },
         {
           "path": "src/exchange_info/api.py",
           "main_sha256": "323dbf8ddffc4fbbb1693d7501930d47aa0fa276b5e5dace149dda0de083dd32",
-          "ccu_working_sha256": "f36c9d20e203a14a936661a4b8251259c2e981eb08a0764a6d20051bc97034ef",
           "other_sha256": "579fac451214fb643f61ad438a7c4f6174b88f9eb61ed2ae86016d2800de56c7",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -174,12 +173,12 @@
             "@@ -3178,0 +3195,9 @@ def create_app(",
             "@@ -3180 +3204,0 @@ def create_app(",
             "@@ -3599,0 +3624,14 @@ def create_app("
-          ]
+          ],
+          "ccu_tested_sha256": "f36c9d20e203a14a936661a4b8251259c2e981eb08a0764a6d20051bc97034ef"
         },
         {
           "path": "src/exchange_info/application_documents.py",
           "main_sha256": "12168fbd99c9aed6cbfcc7496d42d781979cbbdbf7d8d6e3826d32af39450194",
-          "ccu_working_sha256": "582e133cd4df9f3d35b9618fe761e2dc793c825b4e58ae219270a55ca195316a",
           "other_sha256": "2d34c3fd16572942f4e9c0ea517be2dfc97cc2836e09e005a132b9ad83bc836a",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -193,12 +192,12 @@
             "@@ -983,0 +1054,6 @@ def build_application_document_catalog(",
             "@@ -1239 +1315 @@ def build_packet_manifest(",
             "@@ -1329 +1405,3 @@ def build_packet_manifest("
-          ]
+          ],
+          "ccu_tested_sha256": "582e133cd4df9f3d35b9618fe761e2dc793c825b4e58ae219270a55ca195316a"
         },
         {
           "path": "src/exchange_info/application_rules.py",
           "main_sha256": "2d4af48af49233a9631aae470ff848c9aaba8697dff25abf64d2676de568e24b",
-          "ccu_working_sha256": "a690ff80da6b5510089deab36d50c4e8e4d82c0ba1a97de3fb86bdc4c171fa7a",
           "other_sha256": "3279d3b8fab90d902e04ecb07bc9ab1ac92d4e2154be02cdd27f7a0aed76476f",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -213,12 +212,12 @@
             "@@ -692,0 +707,9 @@ def _workflow_checklist(",
             "@@ -726,0 +750 @@ def _workflow_checklist(",
             "@@ -768,0 +793,2 @@ def select_reference_workflow("
-          ]
+          ],
+          "ccu_tested_sha256": "a690ff80da6b5510089deab36d50c4e8e4d82c0ba1a97de3fb86bdc4c171fa7a"
         },
         {
           "path": "src/exchange_info/models.py",
           "main_sha256": "f45e39b447520191f8f36cf67e29467be79a8b9b8e4fa6df88978963ae662bd5",
-          "ccu_working_sha256": "f0e0ca92ddbc3702a5ea8fc1707f3fb0d6c442bde5456de6e4f55126ed19715f",
           "other_sha256": "dbd6c3add91e0af090384eba548b68a2da35b1141913716aabbf4ef9c319a1ff",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -229,12 +228,12 @@
             "@@ -1396,0 +1416 @@ class PersonalApplicationPlanRequest(BaseModel):",
             "@@ -1460,0 +1481 @@ class ApplicationDocumentCatalogItem(BaseModel):",
             "@@ -2489,0 +2511,3 @@ class HomeSelectionRules(BaseModel):"
-          ]
+          ],
+          "ccu_tested_sha256": "f0e0ca92ddbc3702a5ea8fc1707f3fb0d6c442bde5456de6e4f55126ed19715f"
         },
         {
           "path": "src/exchange_info/static/app.js",
           "main_sha256": "e7c4ed2b9ed0b33c24261e84776610eb1a32b1e6328da34ad7af631872a0193c",
-          "ccu_working_sha256": "2cc44a50449ffe4ad166ef223532f1b4498ff19b9124c83927c5033bd88f1a55",
           "other_sha256": "675917457182ed8210361e5d42ad33c76c4a6389baaa29df3f5a86064c573f45",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -271,12 +270,12 @@
             "@@ -11498 +11611,0 @@ async function submitAdvisorPlan(event) {",
             "@@ -11511 +11624 @@ async function submitAdvisorPlan(event) {",
             "@@ -12620 +12733,6 @@ function bindEvents() {"
-          ]
+          ],
+          "ccu_tested_sha256": "2cc44a50449ffe4ad166ef223532f1b4498ff19b9124c83927c5033bd88f1a55"
         },
         {
           "path": "src/exchange_info/static/index.html",
           "main_sha256": "0659638e38f07234ca532ee3dc5449ba6ed363c922ae163db4e558ceb2ded26f",
-          "ccu_working_sha256": "5f48c719ab35be02f122292b54b399dbb59626f04bf677bb51fc0e57a109d0b3",
           "other_sha256": "4880e9ccf7838d054cd9177401be7fcadb8aa2ae0f4aa4519f7be1192675044e",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -288,12 +287,12 @@
             "@@ -1198 +1205 @@",
             "@@ -1200,2 +1207,2 @@",
             "@@ -1205 +1212 @@"
-          ]
+          ],
+          "ccu_tested_sha256": "5f48c719ab35be02f122292b54b399dbb59626f04bf677bb51fc0e57a109d0b3"
         },
         {
           "path": "src/exchange_info/storage.py",
           "main_sha256": "6bcd5bbb3c93ab35f304283b22e4ba18583283b6a49d6fd031e86ff0110ddc13",
-          "ccu_working_sha256": "1cc9c0cbd87d9b1125dfb2c7527ecf12652e9d74a7c316e1172c31bc1a46b758",
           "other_sha256": "a8564a337b0d660b0c519ca94c92f5614972cba57ca4e45acccf5c4e3e0f68ec",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -302,22 +301,22 @@
             "@@ -554 +555 @@ def _bundled_workflow_paths() -> tuple[Path, ...]:",
             "@@ -714,0 +716 @@ def load_destination_profiles(",
             "@@ -748 +750 @@ def load_partner_research("
-          ]
+          ],
+          "ccu_tested_sha256": "1cc9c0cbd87d9b1125dfb2c7527ecf12652e9d74a7c316e1172c31bc1a46b758"
         },
         {
           "path": "src/exchange_info/university_registry.py",
           "main_sha256": "00411be3ec6de16bb17c9d2ac26000fe6be8859638ae06e98dd558ecf03cdb31",
-          "ccu_working_sha256": "4399d96cea842bd209652a44244e63d7b9d9d3113bd51c41a6494a0bfffe2155",
           "other_sha256": "b022592451226b701214b5fb786a16c403cc0956f492b76103a91844f5fb3459",
           "same_as_ccu": false,
           "hunk_contexts": [
             "@@ -98 +98,19 @@ NTU = UniversityProfile("
-          ]
+          ],
+          "ccu_tested_sha256": "4399d96cea842bd209652a44244e63d7b9d9d3113bd51c41a6494a0bfffe2155"
         },
         {
           "path": "src/exchange_info/workflow_structuring.py",
           "main_sha256": "302b7f8e90520282f31ad5cffcd6d5b0346e5cbc0997a0f0170b367467e35f80",
-          "ccu_working_sha256": "f9c340bfdb26308812608ba33deae16a8630ae3f2b200c1c85b598b620194860",
           "other_sha256": "67bf8ec3f43f672c9d4c83f4ddf3de58d07f28e78cd9a702e883633872f2c5d8",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -329,19 +328,20 @@
             "@@ -503 +510 @@ def _structure_document_requirement(",
             "@@ -506 +513 @@ def _structure_document_requirement(",
             "@@ -508 +515,3 @@ def _structure_document_requirement("
-          ]
+          ],
+          "ccu_tested_sha256": "f9c340bfdb26308812608ba33deae16a8630ae3f2b200c1c85b598b620194860"
         },
         {
           "path": "uv.lock",
           "main_sha256": "8a943920ecc4af095485e6a08fa4200d7a11f3e72ceb152de30ca1b9f5e73575",
-          "ccu_working_sha256": "edf3026e7302335cb90a578f9e41eba30a741ff287a2d71204012461c89bd79e",
           "other_sha256": "edf3026e7302335cb90a578f9e41eba30a741ff287a2d71204012461c89bd79e",
           "same_as_ccu": true,
           "hunk_contexts": [
             "@@ -1577,13 +1576,0 @@ wheels = [",
             "@@ -1924 +1910,0 @@ dependencies = [",
             "@@ -1957 +1942,0 @@ requires-dist = ["
-          ]
+          ],
+          "ccu_tested_sha256": "edf3026e7302335cb90a578f9e41eba30a741ff287a2d71204012461c89bd79e"
         }
       ]
     },
@@ -364,7 +364,6 @@
         {
           "path": "docs/api/openapi.json",
           "main_sha256": "318799f44c5fd61cf819773e16e09350b6a11b824dbb897cfe540d51c04d8179",
-          "ccu_working_sha256": "3ea0a7f6631f2ad2da8daa5c1efc5497c1d438de7045f3e9c0559d4199bc46ef",
           "other_sha256": "ee8a049e3b492fc74b13c7142022fd04086cfe072da12b352fa223ca2108a440",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -376,23 +375,23 @@
             "@@ -2657,0 +2796,20 @@",
             "@@ -9769 +9927,4 @@",
             "@@ -14871,0 +15033,34 @@"
-          ]
+          ],
+          "ccu_tested_sha256": "3ea0a7f6631f2ad2da8daa5c1efc5497c1d438de7045f3e9c0559d4199bc46ef"
         },
         {
           "path": "pyproject.toml",
           "main_sha256": "b383b71e8eea2208ec2d1dbc0578a7778fe262fa9b8a88cbb3df9f540763d975",
-          "ccu_working_sha256": "0554660916373507be1643807ded2bc74290cffd13adccb0cbf17bba437af460",
           "other_sha256": "39fd738921d47285c57e9b10856e9228623e0fa8fd93866c594ea956d262e721",
           "same_as_ccu": false,
           "hunk_contexts": [
             "@@ -49,0 +50,2 @@ exchange_info = [",
             "@@ -51,0 +54,2 @@ exchange_info = ["
-          ]
+          ],
+          "ccu_tested_sha256": "0554660916373507be1643807ded2bc74290cffd13adccb0cbf17bba437af460"
         },
         {
           "path": "src/exchange_info/api.py",
           "main_sha256": "323dbf8ddffc4fbbb1693d7501930d47aa0fa276b5e5dace149dda0de083dd32",
-          "ccu_working_sha256": "f36c9d20e203a14a936661a4b8251259c2e981eb08a0764a6d20051bc97034ef",
           "other_sha256": "9f99266ab7c62323b53eb4a93bff28df9ffd818f6bc056eedc24281f454762f2",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -407,12 +406,12 @@
             "@@ -3171 +3194 @@ def create_app(",
             "@@ -3180 +3203 @@ def create_app(",
             "@@ -3588,0 +3612,3 @@ def create_app("
-          ]
+          ],
+          "ccu_tested_sha256": "f36c9d20e203a14a936661a4b8251259c2e981eb08a0764a6d20051bc97034ef"
         },
         {
           "path": "src/exchange_info/application_documents.py",
           "main_sha256": "12168fbd99c9aed6cbfcc7496d42d781979cbbdbf7d8d6e3826d32af39450194",
-          "ccu_working_sha256": "582e133cd4df9f3d35b9618fe761e2dc793c825b4e58ae219270a55ca195316a",
           "other_sha256": "ebf35919adce1f711301fdb0658d6ef8716697184c73c60e23df86cac6d17082",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -425,24 +424,24 @@
             "@@ -1363,2 +1394,2 @@ def _register_pdf_font() -> tuple[str, str]:",
             "@@ -1472 +1503 @@ def _manifest_cover(request: ApplicationPacketRequest, manifest: ApplicationPack",
             "@@ -1604 +1635 @@ def _generic_template_pdf("
-          ]
+          ],
+          "ccu_tested_sha256": "582e133cd4df9f3d35b9618fe761e2dc793c825b4e58ae219270a55ca195316a"
         },
         {
           "path": "src/exchange_info/models.py",
           "main_sha256": "f45e39b447520191f8f36cf67e29467be79a8b9b8e4fa6df88978963ae662bd5",
-          "ccu_working_sha256": "f0e0ca92ddbc3702a5ea8fc1707f3fb0d6c442bde5456de6e4f55126ed19715f",
           "other_sha256": "acb1d3929bf640534bfdb57a41471220991415915c765ba7c0ced0e214f18dd8",
           "same_as_ccu": false,
           "hunk_contexts": [
             "@@ -559 +559 @@ class PartnerUniversity(BaseModel):",
             "@@ -1209,0 +1210,19 @@ class ApplicationDocumentRequirement(BaseModel):",
             "@@ -1460,0 +1480,7 @@ class ApplicationDocumentCatalogItem(BaseModel):"
-          ]
+          ],
+          "ccu_tested_sha256": "f0e0ca92ddbc3702a5ea8fc1707f3fb0d6c442bde5456de6e4f55126ed19715f"
         },
         {
           "path": "src/exchange_info/static/app.js",
           "main_sha256": "e7c4ed2b9ed0b33c24261e84776610eb1a32b1e6328da34ad7af631872a0193c",
-          "ccu_working_sha256": "2cc44a50449ffe4ad166ef223532f1b4498ff19b9124c83927c5033bd88f1a55",
           "other_sha256": "9a093794889bd7064131524f43395c0f3156e15dec9c2d009c2751d8c58ece20",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -486,12 +485,12 @@
             "@@ -10879 +10983,4 @@ function renderApplicationPeriodOptions() {",
             "@@ -10883,0 +10991,3 @@ function renderApplicationPeriodOptions() {",
             "@@ -10885 +10995 @@ function renderApplicationPeriodOptions() {"
-          ]
+          ],
+          "ccu_tested_sha256": "2cc44a50449ffe4ad166ef223532f1b4498ff19b9124c83927c5033bd88f1a55"
         },
         {
           "path": "src/exchange_info/static/index.html",
           "main_sha256": "0659638e38f07234ca532ee3dc5449ba6ed363c922ae163db4e558ceb2ded26f",
-          "ccu_working_sha256": "5f48c719ab35be02f122292b54b399dbb59626f04bf677bb51fc0e57a109d0b3",
           "other_sha256": "38d95151b6d5d7be58bde1a4f40967d9417db07fc9d01582f7ae217f2a843ffa",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -499,12 +498,12 @@
             "@@ -733 +733 @@",
             "@@ -1194,0 +1195 @@",
             "@@ -1205 +1206 @@"
-          ]
+          ],
+          "ccu_tested_sha256": "5f48c719ab35be02f122292b54b399dbb59626f04bf677bb51fc0e57a109d0b3"
         },
         {
           "path": "src/exchange_info/storage.py",
           "main_sha256": "6bcd5bbb3c93ab35f304283b22e4ba18583283b6a49d6fd031e86ff0110ddc13",
-          "ccu_working_sha256": "1cc9c0cbd87d9b1125dfb2c7527ecf12652e9d74a7c316e1172c31bc1a46b758",
           "other_sha256": "abc03f6694062b723485d425a2125244d2ae4bff4c247550d99110305956f525",
           "same_as_ccu": false,
           "hunk_contexts": [
@@ -512,27 +511,29 @@
             "@@ -58,0 +59 @@ BUNDLED_NTPU_DIR = PACKAGE_DIR / \"official_data\" / \"ntpu\"",
             "@@ -554 +555 @@ def _bundled_workflow_paths() -> tuple[Path, ...]:",
             "@@ -712,0 +714 @@ def load_destination_profiles("
-          ]
+          ],
+          "ccu_tested_sha256": "1cc9c0cbd87d9b1125dfb2c7527ecf12652e9d74a7c316e1172c31bc1a46b758"
         },
         {
           "path": "src/exchange_info/university_registry.py",
           "main_sha256": "00411be3ec6de16bb17c9d2ac26000fe6be8859638ae06e98dd558ecf03cdb31",
-          "ccu_working_sha256": "4399d96cea842bd209652a44244e63d7b9d9d3113bd51c41a6494a0bfffe2155",
           "other_sha256": "37d86b0a6f0bfe82c803eb60f5e5f3990b1b06741edc65746145b18a1f02d526",
           "same_as_ccu": false,
           "hunk_contexts": [
             "@@ -7,0 +8,2 @@ from typing import Literal",
             "@@ -79,0 +82,2 @@ NTPU = UniversityProfile(",
             "@@ -98 +102 @@ NTU = UniversityProfile("
-          ]
+          ],
+          "ccu_tested_sha256": "4399d96cea842bd209652a44244e63d7b9d9d3113bd51c41a6494a0bfffe2155"
         }
       ]
     }
   ],
-  "ccu_working_snapshot_pending_new_candidate_commit": true,
+  "ccu_working_snapshot_pending_new_candidate_commit": false,
   "followup_shared_changes": {
     "src/exchange_info/api.py": "各母校自己目的地guide计覆盖率；显式home不fallback别校guide；explicit-home經registry解析正式校名，保留各校Latin/中文別名",
     "src/exchange_info/static/app.js": "school epoch+各loader request ID；target/detail/life上下文固定；排队草稿保存原home与account；旧回应不污染新上下文",
     "src/exchange_info/static/index.html": "app脚本cache query更新"
-  }
+  },
+  "ccu_tested_program_sha": "77dfd84008d438d3602da61991733ecfdf8d65a8"
 }
