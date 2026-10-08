@@ -3563,7 +3563,7 @@
         ]
       },
       "housing_deadline": {
-        "value": "Spring宿舍申請1月第一周；確切2027日期及流程於pre-arrival寄送（TBA），不補造1/7截止。",
+        "value": "Spring宿舍申請1月第一周；確切2027截止日未載，流程另在Pre-Arrival Guide（TBA），不補造1/7截止。",
         "status": "needs_confirmation",
         "reason": "檔名含2026Fall，內容實為2026/2027並列春季申請；依正文核實，不沿用檔名。",
         "evidence": [
@@ -3917,7 +3917,7 @@
         ]
       },
       "housing_deadline": {
-        "value": "春季宿舍申請約前一年度12月中；確切期限尚未公告（本份資料原文），提名後email通知。",
+        "value": "春季宿舍申請約前一年12月中；確切截止日未載，申請細節以提名後email通知。TB/麻疹檢查指定日期另為TBA，不能把檢查待定當成宿舍截止官方尚未公告。",
         "status": "needs_confirmation",
         "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
         "evidence": [
@@ -5513,7 +5513,9 @@
     "review_status": "reviewed_with_gaps",
     "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。",
     "sources": [
-      "p53-mirror"
+      "p53-mirror",
+      "p53-hostv0",
+      "p53-hostv1"
     ],
     "fields": {
       "program_scope": {
@@ -5617,7 +5619,7 @@
         ]
       },
       "application_forms": {
-        "value": "本期GoogleSurvey主申請+補件兩階、母校Excel提名附件；確切表內容及最新可開啟狀態未核實，不能僅PDF超連結算表格完整。",
+        "value": "本期主申請及補件GoogleForms均已嘗試開啟，公開HTTP回傳401需授權；未讀取登入後表格。母校Excel提名附件亦須當期提名通知，不能稱表已核實。",
         "status": "needs_confirmation",
         "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
         "evidence": [
@@ -9201,7 +9203,8 @@
     "review_status": "reviewed_with_gaps",
     "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。",
     "sources": [
-      "p88-mirror"
+      "p88-mirror",
+      "p88-hostv0"
     ],
     "fields": {
       "program_scope": {
@@ -9305,7 +9308,7 @@
         "evidence": []
       },
       "application_forms": {
-        "value": "當期資料：母校用Spring在線提名表，提名後向學生寄incomingapplication連結；未核實完整表檔本身，與文件要求缺值分開。",
+        "value": "Spring母校提名表已公開開啟並讀取字段（學生/母校承辦/交換領域），表本身未標年；不是學生申請表。學生applicationlink由提名後寄送，該完整表仍未核實。",
         "status": "needs_confirmation",
         "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
         "evidence": [
@@ -13000,7 +13003,8 @@
     "review_status": "reviewed_with_gaps",
     "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。",
     "sources": [
-      "p119-mirror"
+      "p119-mirror",
+      "p119-hostv0"
     ],
     "fields": {
       "program_scope": {
@@ -13088,9 +13092,9 @@
         ]
       },
       "application_forms": {
-        "value": "當期附件列onlineapplication，未提供已核實公開表檔或全部portal字段；不當完整本期表。",
+        "value": "當期附件連線上MicrosoftForms；公開HTTP200僅Loading頁，瀏覽器開啟遇環境憑證信任錯誤，未讀取完整表或更動信任設定。未核實本期完整portal字段/表版本。",
         "status": "needs_confirmation",
-        "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+        "reason": "表格入口存在，但公開取得結果不足以驗證表內容及本期版本；不能以HTTP200聲稱已開啟完整表。",
         "evidence": [
           {
             "source_id": "p119-mirror",

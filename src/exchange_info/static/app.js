@@ -8034,6 +8034,13 @@ function renderDestinationProfile(item, profile) {
   const cityStamp = $("#school-detail-view .travel-stamp-city");
   if (cityStamp && profile.city) cityStamp.textContent = profile.city;
   $("#school-detail-primary-facts").innerHTML = renderPrimaryFacts(item, profile);
+  if (item.partner_exchange_details && Object.keys(item.partner_exchange_details).length && window.UniWayCcuDetails) {
+    const status = profile.coverage_status === "official_partial" ? "合作校生活資料部分核實" : "合作校生活資料仍待確認";
+    container.innerHTML = `<div class="destination-profile-status partial"><div><strong>${escapeHtml(status)}</strong><p>${escapeHtml(profile.coverage_note || "")}</p><small>最後查核：${escapeHtml(formatDate(profile.last_checked))}</small></div></div>`
+      + window.UniWayCcuDetails.render(item, escapeHtml, ["housing", "housing_deadline", "costs", "insurance", "visa", "arrival", "course_restrictions", "academic_calendar"]);
+    initIcons();
+    return;
+  }
   if (!["official_verified", "official_partial"].includes(profile.coverage_status)) {
     container.innerHTML = `
       <div class="destination-profile-status pending">

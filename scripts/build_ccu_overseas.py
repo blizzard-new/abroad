@@ -66,6 +66,7 @@ def main():
                         "status",
                         "http_status",
                         "error",
+                        "browser_check_error",
                         "content_academic_year",
                         "content_review_note",
                         "checked_at",

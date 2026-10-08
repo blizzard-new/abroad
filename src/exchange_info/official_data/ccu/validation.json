@@ -3,17 +3,17 @@
   "base_commit": "f741d540f546d6ddbbf3174c9a34b5ef103c8816",
   "rebuild_identical": true,
   "rebuild_sha256": {
-    "partners.jsonl": "091e0540f1c5681a900447afb3102427323bfa2ad1ebadf69d5b5f309855e797",
-    "application_workflows.jsonl": "9980f70fec8f268c7319698d40e2761dc63eae01d2fd02fea601109364f7477f",
-    "destination_profiles.jsonl": "59bd6707f99545aae9ca0c7140a945d8aec277bdd80cc696d410b74575121a44",
+    "partners.jsonl": "40c66d26f441207ca7f7f024cc42cfa5918b00fa0972b2eef2b76e3528120a37",
+    "application_workflows.jsonl": "27ad218161efbda53b456d0319e6aff7b207fe2534c7f468f0c524df070297b9",
+    "destination_profiles.jsonl": "3eb88d8a217e1eccf877f9c21ba0b4a157376479894b4e2f21d6bf08254b6c3b",
     "field-audit.json": "d8d76ff57d1b65291da5e7047f3ad77fe3460b6b72b18d3562139457c6ea76e4",
     "completeness.json": "bcc39b617847581745b917d273303ac836dccce8fd11cc0f4b9672efdc7d4210",
     "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
     "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
     "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
-    "field-completeness-matrix.json": "b920e7616b3cbea04b01487c3b722c6b09588445f497bda30171540a0739cc34",
-    "confirmation-questions.json": "f6873fe36585d07c10c9ba41659cc16b5d88a8c51abab2b3218e85a387baaa3f",
-    "overseas-completeness.json": "f5ad656d3464236f4ad1ef8c4f97096ecb6b8478b0e2d4ec8b7bb11ffb429f30",
+    "field-completeness-matrix.json": "00b1ebd79ef2a2966079f401281c5f93d1412b54986827356f3f448b67ccde5c",
+    "confirmation-questions.json": "3e3759fdab98260649319800ccada12090458144eac1365e3252cc4b390864f2",
+    "overseas-completeness.json": "5d9e4492209c3170c584fbb3ec9c31d2e3933e85bea7b6bea12594fbca6489ec",
     "overseas-conflicts.json": "d65ad30d188ba8c5420c4e8dac226bf45c0b13800900e1cba49a6395127f748d"
   },
   "ccu_tests": {
@@ -43,7 +43,11 @@
   "git_diff_check": true,
   "wheel_build": {
     "success": true,
-    "ccu_required_resources_verified": 8
+    "ccu_required_resources_verified": 8,
+    "source_snapshots_verified": 131,
+    "partner_docx_forms_verified": 1,
+    "life_guide_bundle_verified": true,
+    "ccu_render_module_verified": true
   },
   "remote_main_at_delivery": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
   "final_focused_tests": {
@@ -86,7 +90,7 @@
     "denominator": 55,
     "complete_overseas_lists_claimed": false
   },
-  "delivery_stage": "overseas_checkpoint_2026-10-08",
+  "delivery_stage": "final_handoff_with_explicit_source_gaps",
   "overseas_checkpoint": {
     "reviewed_schools": 55,
     "source_records": 127,
@@ -126,5 +130,108 @@
       "horizontal_overflow": false
     },
     "remaining": "Lifestyle-tab browser verification and final handoff document update in progress; per-school unverified fields and conflicts remain in confirmation-questions.json."
+  },
+  "overseas_final": {
+    "source_records": 131,
+    "distinct_source_urls": 128,
+    "acquisition_statuses": {
+      "html": 68,
+      "downloaded_extracted_pdf": 41,
+      "fetch_failed": 14,
+      "pdf": 6,
+      "docx": 2
+    },
+    "reviewed_schools": 55,
+    "field_status_counts": {
+      "verified_current": 213,
+      "missing": 515,
+      "needs_confirmation": 151,
+      "reference_only": 31,
+      "conflict": 24,
+      "explicit_not_announced": 1
+    },
+    "current_overseas_schools": 27,
+    "all_fields_current_schools": 0,
+    "receiving_document_requirements_current": 18,
+    "life_guides": 55,
+    "workflow_steps": 7,
+    "full_overseas_document_lists_claimed": false,
+    "tests": {
+      "passed": 116,
+      "failed": 0,
+      "duration_seconds": 16.79,
+      "files": [
+        "tests/test_ccu_overseas.py",
+        "tests/test_ccu_semantics.py",
+        "tests/test_ccu_support.py",
+        "tests/test_advisor.py",
+        "tests/test_application_rules.py",
+        "tests/test_ntpu_support.py",
+        "tests/test_selection_conditions_sync.py"
+      ]
+    },
+    "post_wording_field_tests": {
+      "passed": 22,
+      "failed": 0
+    },
+    "browser_checks": [
+      {
+        "ccu_page": 83,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "receiving_fields": 17,
+        "page_errors": [],
+        "page_horizontal_overflow": false,
+        "screenshot": "ccu-overseas-desktop.png",
+        "workflow_steps": 7,
+        "life_fields": 8
+      },
+      {
+        "ccu_page": 43,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "receiving_fields": 17,
+        "page_errors": [],
+        "page_horizontal_overflow": false,
+        "screenshot": "ccu-overseas-mobile.png",
+        "workflow_steps": 7,
+        "life_fields": 8
+      },
+      {
+        "ccu_page": 16,
+        "viewport": {
+          "width": 1024,
+          "height": 900
+        },
+        "receiving_fields": 17,
+        "page_errors": [],
+        "page_horizontal_overflow": false,
+        "screenshot": "ccu-overseas-reference.png",
+        "workflow_steps": 7,
+        "life_fields": 8
+      }
+    ],
+    "shared_changes_since_semantic_checkpoint": {
+      "schema_added": "PartnerExchangeDetailField",
+      "schemas_updated": [
+        "PartnerUniversity"
+      ],
+      "route_changes": 0,
+      "required_input_changes": 0,
+      "destination_profile_baseline_added": "CCU",
+      "frontend": "CCU receiving facts and life fields remain visible with separate statuses"
+    },
+    "source_blockers": [
+      "14HTTP/connection failures",
+      "2CNU forms require authorized access (HTTP401)",
+      "Uninter HTML loading shell; browser ERR_CERT_AUTHORITY_INVALID; no certificate settings changed",
+      "Unversioned/old documents, blank quotas, unresolved scope and date/cost conflicts"
+    ],
+    "remaining_questions": "confirmation-questions.json",
+    "checkpoint_pushed_commit": "abce2c7ec1d6184031ba36cc45910f3b7f2d6e69"
   }
 }

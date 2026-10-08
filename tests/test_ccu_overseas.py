@@ -268,3 +268,35 @@ def test_fetcher_records_real_failure_and_never_promotes_download_success(tmp_pa
     fetched = module.fetch_public_source(item, tmp_path, Session(200))
     assert fetched["status"] == "html" and fetched["text_pages"]
     assert fetched["content_applicability"] == "needs_confirmation"
+
+
+def test_life_renderer_keeps_ccu_reference_and_missing_fields_visible():
+    script = r"""
+    const assert=require('node:assert/strict'),fs=require('node:fs');
+    const window={}; eval(fs.readFileSync(process.argv[1],'utf8'));
+    const app=fs.readFileSync(process.argv[2],'utf8');
+    const container={innerHTML:'',setAttribute:()=>{}};
+    const $=selector=>selector.includes('travel-stamp-city')?null:container;
+    const escapeHtml=s=>String(s||'').replaceAll('<','&lt;'),formatDate=s=>s,renderPrimaryFacts=()=>'',initIcons=()=>{};
+    eval(app.match(/^function renderDestinationProfile\([^]*?^}/m)[0]);
+    const item=JSON.parse(fs.readFileSync(0,'utf8'));
+    renderDestinationProfile(item,{coverage_status:'needs_confirmation',coverage_note:'未核實2027版',last_checked:'2026-10-08'});
+    assert.ok(container.innerHTML.includes('合作校生活資料仍待確認'));
+    assert.ok(container.innerHTML.includes('歷史參考，不能作本期申請依據'));
+    assert.ok(container.innerHTML.includes('2025'));
+    assert.ok(container.innerHTML.includes('本期未核實／來源未載'));
+    assert.equal((container.innerHTML.match(/data-ccu-field=/g)||[]).length,8);
+    """
+    result = subprocess.run(
+        [
+            "node",
+            "-e",
+            script,
+            str(Path("src/exchange_info/static/ccu-partner-details.js").resolve()),
+            str(Path("src/exchange_info/static/app.js").resolve()),
+        ],
+        input=at(16).model_dump_json(),
+        text=True,
+        capture_output=True,
+    )
+    assert result.returncode == 0, result.stderr

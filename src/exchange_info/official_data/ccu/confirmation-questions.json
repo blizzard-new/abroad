@@ -2838,7 +2838,7 @@
         "status": "needs_confirmation",
         "question": "請確認Pusan National University 釜山國立大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
         "reason": "檔名含2026Fall，內容實為2026/2027並列春季申請；依正文核實，不沿用檔名。",
-        "reference_value": "Spring宿舍申請1月第一周；確切2027日期及流程於pre-arrival寄送（TBA），不補造1/7截止。",
+        "reference_value": "Spring宿舍申請1月第一周；確切2027截止日未載，流程另在Pre-Arrival Guide（TBA），不補造1/7截止。",
         "evidence": [
           {
             "source_id": "p43-hostz0",
@@ -2962,7 +2962,7 @@
         "status": "needs_confirmation",
         "question": "請確認Kyung Hee University 慶熙大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
         "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-        "reference_value": "春季宿舍申請約前一年度12月中；確切期限尚未公告（本份資料原文），提名後email通知。",
+        "reference_value": "春季宿舍申請約前一年12月中；確切截止日未載，申請細節以提名後email通知。TB/麻疹檢查指定日期另為TBA，不能把檢查待定當成宿舍截止官方尚未公告。",
         "evidence": [
           {
             "source_id": "p45-mirror",
@@ -3992,7 +3992,7 @@
         "status": "needs_confirmation",
         "question": "請確認ChungNam National University 忠南大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
         "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-        "reference_value": "本期GoogleSurvey主申請+補件兩階、母校Excel提名附件；確切表內容及最新可開啟狀態未核實，不能僅PDF超連結算表格完整。",
+        "reference_value": "本期主申請及補件GoogleForms均已嘗試開啟，公開HTTP回傳401需授權；未讀取登入後表格。母校Excel提名附件亦須當期提名通知，不能稱表已核實。",
         "evidence": [
           {
             "source_id": "p53-mirror",
@@ -4037,6 +4037,26 @@
         "status": "downloaded_extracted_pdf",
         "content_academic_year": "2027春季/秋季",
         "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+        "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p53-hostv0",
+        "source_url": "https://forms.gle/tnxvZPTKKqJjamTP7",
+        "status": "fetch_failed",
+        "http_status": 401,
+        "error": "HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLScPZGWnnLQKrmsK99IRvcaQyQ-ivKWig34w4ekiiiyyEAYIFQ/viewform?usp=send_form",
+        "content_academic_year": "完整表內容未核實；由2026/27 factsheet所連",
+        "content_review_note": "完整表格僅在可公開讀取時核實；HTTP401及JS載入頁不算已驗證表格。",
+        "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p53-hostv1",
+        "source_url": "https://forms.gle/oV4XP9rRp7aTF2Cw7",
+        "status": "fetch_failed",
+        "http_status": 401,
+        "error": "HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSfTPObyibS_s40UUQySHq6QwMdz810JE7d5SelPx1qbCP1hgg/viewform?usp=send_form",
+        "content_academic_year": "完整表內容未核實；由2026/27 factsheet所連",
+        "content_review_note": "完整表格僅在可公開讀取時核實；HTTP401及JS載入頁不算已驗證表格。",
         "checked_at": "2026-10-08T00:00:00Z"
       }
     ]
@@ -7334,7 +7354,7 @@
         "status": "needs_confirmation",
         "question": "請確認Faculty of Management, Economics & Sciences (FGES) –Catholic University of Lille 法國里爾天主教大學(管理、經濟及科學學院)中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
         "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-        "reference_value": "當期資料：母校用Spring在線提名表，提名後向學生寄incomingapplication連結；未核實完整表檔本身，與文件要求缺值分開。",
+        "reference_value": "Spring母校提名表已公開開啟並讀取字段（學生/母校承辦/交換領域），表本身未標年；不是學生申請表。學生applicationlink由提名後寄送，該完整表仍未核實。",
         "evidence": [
           {
             "source_id": "p88-mirror",
@@ -7424,6 +7444,15 @@
         "status": "downloaded_extracted_pdf",
         "content_academic_year": "2026–2027",
         "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+        "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p88-hostv0",
+        "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "表格未標示；由2026/27 factsheet連結（Spring）",
+        "content_review_note": "完整表格僅在可公開讀取時核實；HTTP401及JS載入頁不算已驗證表格。",
         "checked_at": "2026-10-08T00:00:00Z"
       }
     ]
@@ -11250,8 +11279,8 @@
         "label": "合作校申請表取得方式",
         "status": "needs_confirmation",
         "question": "請確認Universidad Internacional 墨西哥國際大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-        "reference_value": "當期附件列onlineapplication，未提供已核實公開表檔或全部portal字段；不當完整本期表。",
+        "reason": "表格入口存在，但公開取得結果不足以驗證表內容及本期版本；不能以HTTP200聲稱已開啟完整表。",
+        "reference_value": "當期附件連線上MicrosoftForms；公開HTTP200僅Loading頁，瀏覽器開啟遇環境憑證信任錯誤，未讀取完整表或更動信任設定。未核實本期完整portal字段/表版本。",
         "evidence": [
           {
             "source_id": "p119-mirror",
@@ -11373,6 +11402,16 @@
         "status": "downloaded_extracted_pdf",
         "content_academic_year": "2026–2027校曆（部分欄位年度矛盾）",
         "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+        "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p119-hostv0",
+        "source_url": "https://forms.office.com/r/dBVPQn8y5n",
+        "status": "html",
+        "http_status": 200,
+        "browser_check_error": "Playwright Page.goto: net::ERR_CERT_AUTHORITY_INVALID (no trust/certificate settings changed)",
+        "content_academic_year": "完整表內容未核實；由2026/27 factsheet所連",
+        "content_review_note": "HTTP200僅MicrosoftForms Loading頁，完整表內容未讀取；公開瀏覽器開啟遇環境憑證信任錯誤，未更動信任設定。",
         "checked_at": "2026-10-08T00:00:00Z"
       }
     ]
