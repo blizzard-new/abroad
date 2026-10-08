@@ -212,7 +212,7 @@
     "requires_host_admission": true,
     "requires_on_campus_housing": true,
     "requires_institutional_confirmation": true,
-    "confirmation_note": "僅實際住池之上；on-campus housing不證明就是池之上，仍須宿舍或接收通知確認。",
+    "confirmation_note": "僅實際住池之上；選校內住宿不證明就是池之上，仍須宿舍或接收通知確認。",
     "scope_note": "現連未標年HUSA／池之上參考，中央116適用尚未核准。",
     "source_urls": [
       "https://www.hiroshima-u.ac.jp/en/nyugaku/shien/jyuukyo/gakuseisyukusya/taikyo",
@@ -230,6 +230,496 @@
         "source_id": "host-hiro-ikenoue-departure-form",
         "url": "https://www.hiroshima-u.ac.jp/system/files/189661/%E9%80%80%E5%8E%BB%E5%B1%8A%EF%BC%88Reprot%20of%20Moving%20out%EF%BC%89.pdf",
         "sha256": "75b4b0c6e36efa91a552854753160345bdf44b0b17b6b8e82d33e6705bdfdead"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-acap-nomination-course",
+    "requirement_name": "僅ACAP：課程計畫Excel由母校於提名時提交（現連2026/2027表選單仍2026）",
+    "requires_host_admission": false,
+    "requires_on_campus_housing": false,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "須先確認中央116是否開放ACAP及現行2026選單表能否用；只限ACAP提名、不是YSEP或整校名單。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap",
+      "https://www.titech.ac.jp/english/international-student-exchange/file/fy2025-2026-acap-course-oriented-program-sheet-.xlsx"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-acap",
+        "url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap",
+        "sha256": "7961f495626a6ee1b2105323c46302f0b149e54961671e690c9873163cc01ffe"
+      },
+      {
+        "source_id": "host-science-acap-course-sheet",
+        "url": "https://www.titech.ac.jp/english/international-student-exchange/file/fy2025-2026-acap-course-oriented-program-sheet-.xlsx",
+        "sha256": "a4da4e06708abf44875baf65c16426dc7320414ebe61a12f3bf86cf51490c6ee"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-ysep-prior-consent",
+    "requirement_name": "僅YSEP非建築：申請前指定教授同意email之PDF（建築由校方安排）",
+    "requires_host_admission": false,
+    "requires_on_campus_housing": false,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "只限YSEP非建築已核接收範圍；ACAP／建築由校方安排，不由錄取或學制自動要求教授同意。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-ysep",
+        "url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep",
+        "sha256": "0fc63e78c435a76bd0bcb90236d4e425e48313c4c90858668d1be29e550f35cf"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-track-documents",
+    "requirement_name": "僅ACAP非最後一年大學部：JLPT N1或等同證明",
+    "requires_host_admission": false,
+    "requires_on_campus_housing": false,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "僅ACAP且到校非最後一年大學部；YSEP／研究生／最後年與等同證明須先核實，不由年級字串判定。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-acap",
+        "url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap",
+        "sha256": "7961f495626a6ee1b2105323c46302f0b149e54961671e690c9873163cc01ffe"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-track-documents",
+    "requirement_name": "僅建築與建築工學：履歷及作品集（ACAP／YSEP皆有，教授由校方安排）",
+    "requires_host_admission": false,
+    "requires_on_campus_housing": false,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "僅兩track建築與建築工學申請；姓名或課名含建築不代表接收系所，需兩校確認。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap",
+      "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-acap",
+        "url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap",
+        "sha256": "7961f495626a6ee1b2105323c46302f0b149e54961671e690c9873163cc01ffe"
+      },
+      {
+        "source_id": "host-science-ysep",
+        "url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep",
+        "sha256": "0fc63e78c435a76bd0bcb90236d4e425e48313c4c90858668d1be29e550f35cf"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-apply",
+    "requirement_name": "如適用：ACAP／YSEP英文正式語檢或合規替代文件",
+    "requires_host_admission": false,
+    "requires_on_campus_housing": false,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "英文母語與限指定英語國家／地區母校的MOI例外先核；臺灣母校英授不能自行免host件，中央正式語檢另要求。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap",
+      "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-acap",
+        "url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap",
+        "sha256": "7961f495626a6ee1b2105323c46302f0b149e54961671e690c9873163cc01ffe"
+      },
+      {
+        "source_id": "host-science-ysep",
+        "url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep",
+        "sha256": "0fc63e78c435a76bd0bcb90236d4e425e48313c4c90858668d1be29e550f35cf"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-requested-financial",
+    "requirement_name": "僅外校另要求時：英文財力證明（無明示通用金額，勿填範例120000）",
+    "requires_host_admission": true,
+    "requires_on_campus_housing": false,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "只有外校正式另要求才準備，無通用金額；不能套COE範例每月120000或廣島銀行門檻。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap",
+      "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-acap",
+        "url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap",
+        "sha256": "7961f495626a6ee1b2105323c46302f0b149e54961671e690c9873163cc01ffe"
+      },
+      {
+        "source_id": "host-science-ysep",
+        "url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep",
+        "sha256": "0fc63e78c435a76bd0bcb90236d4e425e48313c4c90858668d1be29e550f35cf"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-pre-enrollment-health",
+    "requirement_name": "如≥三月且適用風險／新版範圍：Part I結核表（網頁與英文表全員字樣待確認）",
+    "requires_host_admission": true,
+    "requires_on_campus_housing": false,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "至少三月與風險／接觸史、2026/10英文All students與網頁矛盾先核；不能因臺灣籍／住宿選項自動免或強制。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://www.titech.ac.jp/english/student-support/prospective-students/admitted/international-infection",
+      "https://www.titech.ac.jp/english/student-support/pdf/isct-health-certificate-part1.pdf",
+      "https://www.titech.ac.jp/english/student-support/pdf/113-list-tb.pdf"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-infection",
+        "url": "https://www.titech.ac.jp/english/student-support/prospective-students/admitted/international-infection",
+        "sha256": "6f9bd7f7271b99766e0d8368252c26b4e3788806709b187a67c64c6a70036298"
+      },
+      {
+        "source_id": "host-science-health-part1",
+        "url": "https://www.titech.ac.jp/english/student-support/pdf/isct-health-certificate-part1.pdf",
+        "sha256": "6bc02769d2ca1cfdbad9ffad486ca62005e18b630484f77bcea9650007ea3dca"
+      },
+      {
+        "source_id": "host-science-tb-country-list",
+        "url": "https://www.titech.ac.jp/english/student-support/pdf/113-list-tb.pdf",
+        "sha256": "64e61bac9a81ce557ccec4fcf0f09439206c42df8fed20549e17ed90a2ab6f10"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-pre-enrollment-health",
+    "requirement_name": "如≥三月：Part II抗體／疫苗證明由醫師填表（可部分合併、醫學免除另函）",
+    "requires_host_admission": true,
+    "requires_on_campus_housing": false,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "至少三月新國際生與醫學免除依正式接收／醫師核實；不能以錄取狀態自動要求兩套抗體加接種。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://www.titech.ac.jp/english/student-support/prospective-students/admitted/international-infection",
+      "https://www.titech.ac.jp/english/student-support/pdf/isct-health-certificate-part2.pdf"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-infection",
+        "url": "https://www.titech.ac.jp/english/student-support/prospective-students/admitted/international-infection",
+        "sha256": "6f9bd7f7271b99766e0d8368252c26b4e3788806709b187a67c64c6a70036298"
+      },
+      {
+        "source_id": "host-science-health-part2",
+        "url": "https://www.titech.ac.jp/english/student-support/pdf/isct-health-certificate-part2.pdf",
+        "sha256": "3c49ccfe459f6ba21f8ef26697ad3f1f173cdf267a2507cd3c8f7c5bd10c2364"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-tiec-conditional",
+    "requirement_name": "如兩校確認申請TIEC：Form1入居申請（3×4照片、本人簽名；海外新人例外由指導教師代簽）",
+    "requires_host_admission": true,
+    "requires_on_campus_housing": true,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "須先確認實際研究生級及TIEC特定住房與送件階段；一般校內住宿或錄取不代表TIEC，各表、在留卡／新渡日與C-D家人例外依接收核實。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=48666cd8384bbc44e40c254985639d2d.xlsx&fileName=tiecform1-1"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-tiec-student",
+        "url": "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+        "sha256": "5ad48b2328173c50d5788701f9b29b17aa3af0cae024b9bef4fc86f0a7a27b65"
+      },
+      {
+        "source_id": "host-science-tiec-schedule2025",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+        "sha256": "71635d69f765fe9e31abebdf60b776a049b22075f170bc5f575a11abe6508e8f"
+      },
+      {
+        "source_id": "host-science-tiec-form1",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=48666cd8384bbc44e40c254985639d2d.xlsx&fileName=tiecform1-1",
+        "sha256": "2fb29b19f38f9222aadf0ad68c0143fa5aad35b23610fdf70ab5824c00bf5cae"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-tiec-conditional",
+    "requirement_name": "如兩校確認申請TIEC：Form3交流活動經歷／計畫",
+    "requires_host_admission": true,
+    "requires_on_campus_housing": true,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "須先確認實際研究生級及TIEC特定住房與送件階段；一般校內住宿或錄取不代表TIEC，各表、在留卡／新渡日與C-D家人例外依接收核實。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=4356c57d9019c1ee62f97857e3ba7744.xls&fileName=tiecform3-1"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-tiec-student",
+        "url": "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+        "sha256": "5ad48b2328173c50d5788701f9b29b17aa3af0cae024b9bef4fc86f0a7a27b65"
+      },
+      {
+        "source_id": "host-science-tiec-schedule2025",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+        "sha256": "71635d69f765fe9e31abebdf60b776a049b22075f170bc5f575a11abe6508e8f"
+      },
+      {
+        "source_id": "host-science-tiec-form3",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=4356c57d9019c1ee62f97857e3ba7744.xls&fileName=tiecform3-1",
+        "sha256": "67eb894566bcd3ec7c8d83d35d1c9e891e0b4c1e78cc9009cbe579d607814ac2"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-tiec-conditional",
+    "requirement_name": "如兩校確認申請TIEC：Form14入居申請誓約（本人簽名及校方承辦確認）",
+    "requires_host_admission": true,
+    "requires_on_campus_housing": true,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "須先確認實際研究生級及TIEC特定住房與送件階段；一般校內住宿或錄取不代表TIEC，各表、在留卡／新渡日與C-D家人例外依接收核實。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=5b22ed78a710827cb88851633277e1ad.xlsx&fileName=tiecform14-1_10"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-tiec-student",
+        "url": "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+        "sha256": "5ad48b2328173c50d5788701f9b29b17aa3af0cae024b9bef4fc86f0a7a27b65"
+      },
+      {
+        "source_id": "host-science-tiec-schedule2025",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+        "sha256": "71635d69f765fe9e31abebdf60b776a049b22075f170bc5f575a11abe6508e8f"
+      },
+      {
+        "source_id": "host-science-tiec-form14",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=5b22ed78a710827cb88851633277e1ad.xlsx&fileName=tiecform14-1_10",
+        "sha256": "3dcf308e132c7a9539cea72a88d50ea92328bda9fcff86b785eaab19dacbd6da"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-tiec-conditional",
+    "requirement_name": "如兩校確認申請TIEC：Science Tokyo誓約書（學生及指導教師簽名）",
+    "requires_host_admission": true,
+    "requires_on_campus_housing": true,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "須先確認實際研究生級及TIEC特定住房與送件階段；一般校內住宿或錄取不代表TIEC，各表、在留卡／新渡日與C-D家人例外依接收核實。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=846fb5dfd55e58fb2607b4c1678f99e5.pdf&fileName=175-new-pledge "
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-tiec-student",
+        "url": "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+        "sha256": "5ad48b2328173c50d5788701f9b29b17aa3af0cae024b9bef4fc86f0a7a27b65"
+      },
+      {
+        "source_id": "host-science-tiec-schedule2025",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+        "sha256": "71635d69f765fe9e31abebdf60b776a049b22075f170bc5f575a11abe6508e8f"
+      },
+      {
+        "source_id": "host-science-tiec-pledge-blank",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=846fb5dfd55e58fb2607b4c1678f99e5.pdf&fileName=175-new-pledge ",
+        "sha256": "85f30ce82f20d813ae3d04876ab72a2d887caffd187282edf2a9b73c234f70ea"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-tiec-conditional",
+    "requirement_name": "如兩校確認申請TIEC：學生證或新生接收通知／入學許可影本",
+    "requires_host_admission": true,
+    "requires_on_campus_housing": true,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "須先確認實際研究生級及TIEC特定住房與送件階段；一般校內住宿或錄取不代表TIEC，各表、在留卡／新渡日與C-D家人例外依接收核實。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=48666cd8384bbc44e40c254985639d2d.xlsx&fileName=tiecform1-1"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-tiec-student",
+        "url": "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+        "sha256": "5ad48b2328173c50d5788701f9b29b17aa3af0cae024b9bef4fc86f0a7a27b65"
+      },
+      {
+        "source_id": "host-science-tiec-schedule2025",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+        "sha256": "71635d69f765fe9e31abebdf60b776a049b22075f170bc5f575a11abe6508e8f"
+      },
+      {
+        "source_id": "host-science-tiec-form1",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=48666cd8384bbc44e40c254985639d2d.xlsx&fileName=tiecform1-1",
+        "sha256": "2fb29b19f38f9222aadf0ad68c0143fa5aad35b23610fdf70ab5824c00bf5cae"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-tiec-conditional",
+    "requirement_name": "如兩校確認申請TIEC：護照照片／簽證／登陸日期頁（範圍依個人階段）",
+    "requires_host_admission": true,
+    "requires_on_campus_housing": true,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "須先確認實際研究生級及TIEC特定住房與送件階段；一般校內住宿或錄取不代表TIEC，各表、在留卡／新渡日與C-D家人例外依接收核實。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=48666cd8384bbc44e40c254985639d2d.xlsx&fileName=tiecform1-1"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-tiec-student",
+        "url": "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+        "sha256": "5ad48b2328173c50d5788701f9b29b17aa3af0cae024b9bef4fc86f0a7a27b65"
+      },
+      {
+        "source_id": "host-science-tiec-schedule2025",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+        "sha256": "71635d69f765fe9e31abebdf60b776a049b22075f170bc5f575a11abe6508e8f"
+      },
+      {
+        "source_id": "host-science-tiec-form1",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=48666cd8384bbc44e40c254985639d2d.xlsx&fileName=tiecform1-1",
+        "sha256": "2fb29b19f38f9222aadf0ad68c0143fa5aad35b23610fdf70ab5824c00bf5cae"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-tiec-conditional",
+    "requirement_name": "如兩校確認申請TIEC：在留卡雙面影本（新渡日者空白表另豁免、待核）",
+    "requires_host_admission": true,
+    "requires_on_campus_housing": true,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "須先確認實際研究生級及TIEC特定住房與送件階段；一般校內住宿或錄取不代表TIEC，各表、在留卡／新渡日與C-D家人例外依接收核實。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=48666cd8384bbc44e40c254985639d2d.xlsx&fileName=tiecform1-1"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-tiec-student",
+        "url": "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+        "sha256": "5ad48b2328173c50d5788701f9b29b17aa3af0cae024b9bef4fc86f0a7a27b65"
+      },
+      {
+        "source_id": "host-science-tiec-schedule2025",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+        "sha256": "71635d69f765fe9e31abebdf60b776a049b22075f170bc5f575a11abe6508e8f"
+      },
+      {
+        "source_id": "host-science-tiec-form1",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=48666cd8384bbc44e40c254985639d2d.xlsx&fileName=tiecform1-1",
+        "sha256": "2fb29b19f38f9222aadf0ad68c0143fa5aad35b23610fdf70ab5824c00bf5cae"
+      }
+    ]
+  },
+  {
+    "school_name": "東京科學大學 Institute of Science Tokyo",
+    "rule_id": "ncu-133-host-tiec-conditional",
+    "requirement_name": "僅TIEC C／D棟同住家人：三月內住民票或EN／JA親屬關係證明及家人證件",
+    "requires_host_admission": true,
+    "requires_on_campus_housing": true,
+    "requires_institutional_confirmation": true,
+    "confirmation_note": "須先確認實際研究生級及TIEC特定住房與送件階段；一般校內住宿或錄取不代表TIEC，各表、在留卡／新渡日與C-D家人例外依接收核實。",
+    "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+    "source_urls": [
+      "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+      "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=48666cd8384bbc44e40c254985639d2d.xlsx&fileName=tiecform1-1"
+    ],
+    "checked_at": "2026-10-08",
+    "current_applicability_verified": false,
+    "source_versions": [
+      {
+        "source_id": "host-science-tiec-student",
+        "url": "https://students.isct.ac.jp/en/012/student-life-and-support/dormitories-and-accommodation/dormitories-recommended",
+        "sha256": "5ad48b2328173c50d5788701f9b29b17aa3af0cae024b9bef4fc86f0a7a27b65"
+      },
+      {
+        "source_id": "host-science-tiec-schedule2025",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=05a4d22dfb2157606d3770a2cb091044.pdf&fileName=175-tiec-call-nomination-20250115",
+        "sha256": "71635d69f765fe9e31abebdf60b776a049b22075f170bc5f575a11abe6508e8f"
+      },
+      {
+        "source_id": "host-science-tiec-form1",
+        "url": "https://students.isct.ac.jp/plugins/cms/component_download_file.php?type=1&pageId=5928&contentsId=&contentsDataId=&prevId=&key=48666cd8384bbc44e40c254985639d2d.xlsx&fileName=tiecform1-1",
+        "sha256": "2fb29b19f38f9222aadf0ad68c0143fa5aad35b23610fdf70ab5824c00bf5cae"
       }
     ]
   }

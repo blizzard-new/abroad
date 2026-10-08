@@ -881,3 +881,49 @@ def test_ncu_seu_condition_and_zju_alternative_forms_are_visible_in_document_cen
     page.screenshot(path=str(out/filename))
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors
+
+
+def test_ncu_science_tokyo_track_coe_health_and_2027_tiec_fee_reach_mobile_content(page,live_server):
+    page.set_viewport_size({'width':390,'height':956})
+    page.emulate_media(reduced_motion='reduce')
+    errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
+    enter_public_site(page,live_server,'partners')
+    expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+    open_navigation(page);page.locator('#school-switcher').click()
+    page.locator('[data-home-school="國立中央大學"]').click();page.locator('#confirm-school').click()
+    wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60.0)
+    if page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':page.locator('#glass-menu-toggle').click()
+    page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill('東京科學')
+    expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+    page.locator('#partner-table .partner-card > summary').first.click();page.locator('#partner-table .school-detail-trigger:visible').first.click()
+    expect(page.locator('#detail-overview .partner-student-summary li').filter(has_text='限115-2').first).to_be_visible()
+    page.locator('#ncu-source-audit > summary').click()
+    health=page.locator('#ncu-source-audit-body > details').filter(has_text='東京科學官方：health-part1').first
+    expect(health.locator(':scope > summary')).to_contain_text('2頁已視覺查核')
+    health.locator(':scope > summary').click()
+    part=health.locator('details').filter(has_text='All student').first
+    part.locator(':scope > summary').click();expect(part.locator('pre')).to_be_visible()
+    expect(part.locator('pre')).to_contain_text('2026. 10')
+    out=Path('/tmp/ncu-audit/browser');out.mkdir(parents=True,exist_ok=True)
+    part.locator('pre').scroll_into_view_if_needed();page.screenshot(path=str(out/'ncu-science-health-scope-390.png'))
+    page.locator('#detail-tab-life').click();page.locator('#detail-life .life-official-guide > summary').click()
+    fee=page.locator('#destination-official-content li').filter(has_text='A48000').first
+    expect(fee).to_be_visible();expect(fee).to_contain_text('2027/3/1')
+    expect(fee).to_contain_text('重新入館改新價')
+    fee.scroll_into_view_if_needed();page.screenshot(path=str(out/'ncu-science-tiec2027-fee-390.png'))
+    page.locator('#detail-tab-application').click()
+    def step(title):
+        return page.locator('#detail-application .workflow-step').filter(has=page.locator('summary').filter(has_text=title)).first
+    consent=step('僅YSEP非建築：受邀申請前確認研究指導同意');consent.locator(':scope > summary').click()
+    expect(consent).to_contain_text('建築及ACAP由校方安排')
+    initial=step('核對外校當期文件並依通知申請');initial.locator(':scope > summary').click()
+    expect(initial.locator('.workflow-documents > li')).to_have_count(8)
+    coe=initial.get_by_text('COE申請Excel',exact=False).last
+    expect(coe).to_be_visible();expect(coe).to_contain_text('初次一起交')
+    coe.scroll_into_view_if_needed();page.screenshot(path=str(out/'ncu-science-initial-coe-390.png'))
+    housing=step('如確認申請TIEC研究生住宿');housing.locator(':scope > summary').click()
+    expect(housing.locator('.workflow-documents > li')).to_have_count(8)
+    expect(housing).to_contain_text('新渡日者在留卡例外')
+    expect(housing).to_contain_text('現連2026表不到116')
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
+    assert not errors

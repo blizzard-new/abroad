@@ -1476,3 +1476,80 @@ def test_hiroshima_source_years_visual_fee_and_selected_old_guide_are_auditable(
         assert len(sources[ident]['pages'])==2 and sources[ident]['content_status']['all_pages_read']
     assert sources['host-hiro-dorm-guide2025']['error']
     assert not sources['host-hiro-dorm-guide2025']['content_status']['downloaded']
+
+
+def test_science_tokyo_tracks_precede_common_application_and_do_not_reuse_hiroshima_coe(tmp_path):
+    partner=next(p for p in fetch_ncu_partner_universities() if 'Institute of Science Tokyo' in p.school_name)
+    client=TestClient(create_app(tmp_path))
+    workflow=client.get('/application-workflow',params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'}).json()
+    steps={s['rule_id']:s for s in workflow['steps']}
+    initial=steps['ncu-133-host-apply']
+    assert len(initial['document_requirements'])==8
+    assert any('COE申請Excel' in d['name']for d in initial['document_requirements'])
+    assert not any('銀行' in d['name']or'Part I' in d['name']or'TIEC' in d['name']or'指導同意' in d['name']for d in initial['document_requirements'])
+    preceding=['acap-nomination-course','ysep-prior-consent','track-documents']
+    assert [steps['ncu-133-host-'+x]['order']for x in preceding]==[5,6,7]
+    assert initial['order']==8
+    assert len(steps['ncu-133-host-track-documents']['document_requirements'])==2
+    assert '建築及ACAP由校方安排' in steps['ncu-133-host-ysep-prior-consent']['summary']
+    assert len(steps['ncu-133-host-pre-enrollment-health']['document_requirements'])==2
+    assert len(steps['ncu-133-host-tiec-conditional']['document_requirements'])==8
+    assert len(steps['ncu-133-host-requested-financial']['document_requirements'])==1
+    assert len(steps['ncu-116-1-home-3']['document_requirements'])==7
+    orders=[s['order']for s in workflow['steps']]
+    assert orders==list(range(1,len(orders)+1))
+    arrival=steps['ncu-116-1-home-8']['order'];returned=steps['ncu-116-1-home-9']['order']
+    for suffix in ['local-insurance','temporary-travel']:
+        assert arrival<steps['ncu-133-host-'+suffix]['order']<returned
+        assert not steps['ncu-133-host-'+suffix]['document_requirements']
+    assert workflow['review_status']=='pending_review' and workflow['published_at']is None
+    assert partner.quota is None and not any(s['deadline_reminder_eligible']for s in workflow['steps'])
+    audit=ncu_field_audit(partner.school_name)
+    assert '限115-2' in audit['fields']['eligibility']['note']
+    assert 'JLPT N1' in audit['fields']['language']['note'] and '不能自動' in audit['fields']['language']['note']
+    assert '2027/3/1' in audit['fields']['cost']['note'] and 'A48000' in audit['fields']['cost']['note']
+    assert '2027秋或2028春提醒' in audit['fields']['host_deadline']['note']
+    assert '每週六堂600分鐘' in audit['fields']['courses']['note']
+    assert '醫療／醫學不是被排除的醫學院身分' in audit['fields']['courses']['note']
+    assert 'All students' in audit['fields']['arrival']['note']
+    assert '2023 FAQ強烈建議與現行必須分開' in audit['fields']['insurance']['note']
+    catalog=client.get('/application-center/catalog',params={'school':'NCU','target_school':partner.school_name,'academic_year':'116'}).json()
+    scoped=[d for d in catalog['items']if d['applicability']]
+    assert len(scoped)==16
+    assert all(d['applicability']['status']=='needs_confirmation' and not d['download_available']for d in scoped)
+    assert any('共用參考：COE申請Excel' in d['name'] and d['official_form_url'].endswith('2026-v3.xlsx')for d in catalog['items'])
+
+
+def test_science_tokyo_original_forms_examples_years_and_partial_guide_read_are_distinct():
+    sources={s['id']:s for s in json.loads(gzip.decompress((BUNDLE/'source-evidence.json.gz').read_bytes()))}
+    from exchange_info.ncu_source_coverage import indexable_source_text
+    coe=sources['host-science-coe2026-blank']
+    assert len(coe['pages'])==5 and coe['source_excerpt_only']
+    assert '非全空白' in coe['privacy_note'] and '學生三sheet' in coe['privacy_note']
+    assert 'SMITH' not in json.dumps(coe['pages']) and '120000' not in indexable_source_text(coe)
+    for ident in ['host-science-tiec-form1','host-science-tiec-form3']:
+        assert len(sources[ident]['pages'])==1 and sources[ident]['source_excerpt_only']
+        assert '第二張記入例' in sources[ident]['privacy_note']
+    health=sources['host-science-health-part1']
+    assert health['visual_review']['pdf_pages_reviewed']==[1,2]
+    assert 'All student' in health['pages'][0]['text'] and '2026. 10' in health['pages'][0]['text']
+    vaccine=sources['host-science-health-part2']
+    assert vaccine['visual_review']['pdf_pages_reviewed']==[1,2]
+    assert 'partial combination of BOTH' in vaccine['pages'][0]['text']
+    tb=sources['host-science-tb-country-list']
+    assert tb['content_status']['visual_reviewed_page_count']==1 and len(tb['pages'][0]['text'])<100
+    assert 'n=129' in tb['page_transcriptions'][0]['text']
+    guide=sources['host-science-current-guide']
+    assert not guide['content_status']['all_pages_read'] and guide['reading_review']['selected_passages_reviewed']
+    old=sources['host-science-exchange-faq']
+    assert 'No, but there are recommended courses' in old['pages'][0]['text']
+    assert 'No, but there are recommended courses' not in indexable_source_text(old)
+    comparison=sources['1_jNWLlS-y-ndrAXwzLiScNbhrcN6I7Hh']
+    assert comparison['content_status']['all_pages_read'] and 'contact an ACAP' in comparison['pages'][1]['text']
+    assert 'contact an ACAP' not in indexable_source_text(comparison)
+    schedule=sources['host-science-tiec-schedule2025']
+    assert all('2026/01/15' in p['text']for p in schedule['pages'])
+    assert '2026/01/15' in schedule['title']
+    course=sources['host-science-course-ug2026']
+    assert course['content_status']['all_pages_read'] and len(course['pages'])==5
+    assert 'Medical and Welfare' in course['pages'][0]['text']

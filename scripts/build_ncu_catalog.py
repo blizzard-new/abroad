@@ -795,8 +795,16 @@ def build(output):
         # option must not be rewritten as an arrival-only requirement.
         for stage in review.get("host_document_stages", []) if review else []:
             requirements = stage["document_requirements"]
-            target = host_followup_steps if stage.get("position") == "after_host_application" else tail
-            if target is host_followup_steps:
+            before_application = stage.get("position") == "before_host_application"
+            if before_application:
+                target = host_nomination_steps
+            elif stage.get("position") == "after_host_application":
+                target = host_followup_steps
+            else:
+                target = tail
+            if before_application:
+                position = len(target)
+            elif target is host_followup_steps:
                 position = len(target)
             elif stage.get("position") == "before_home_return":
                 # Departure notices and procedures during the exchange belong
@@ -804,7 +812,12 @@ def build(output):
                 position = next(i for i, step in enumerate(tail) if step["phase"] == "返國後")
             else:
                 position = next(i for i, step in enumerate(tail) if step["phase"] == "抵達後")
-            order = host_step["order"] + len(target) + 1 if target is host_followup_steps else tail[position]["order"]
+            if before_application:
+                order = host_step["order"]
+            elif target is host_followup_steps:
+                order = host_step["order"] + len(target) + 1
+            else:
+                order = tail[position]["order"]
             target.insert(position, dict(
                 order=order,
                 rule_id=f"{rowids[0]}-host-{stage['id']}",
@@ -822,7 +835,15 @@ def build(output):
                 needs_confirmation=True,
                 scope={"home_universities": [HOME], "partner_universities": [name], "academic_years": ["116"]},
             ))
-            for step in tail if target is host_followup_steps else tail[position + 1:]:
+            if before_application:
+                host_step["order"] += 1
+            if before_application:
+                later_steps = host_followup_steps + tail
+            elif target is host_followup_steps:
+                later_steps = tail
+            else:
+                later_steps = tail[position + 1:]
+            for step in later_steps:
                 step["order"] += 1
         workflows.append(
             dict(

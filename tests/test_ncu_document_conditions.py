@@ -203,3 +203,23 @@ def test_hiroshima_grad_exception_trip_and_specific_dorm_need_institutional_scop
         result=document_applicability(NCU,school,doc,PartnerDocumentPreparationState(host_admission_status=admission,housing_choice=housing))
         assert result.status=='needs_confirmation' and not result.current_applicability_verified
         assert document_applicability('長庚大學',school,doc,PartnerDocumentPreparationState()) is None
+
+
+@pytest.mark.parametrize('admission',['unknown','not_accepted','accepted'])
+@pytest.mark.parametrize('housing',['unknown','on_campus','off_campus'])
+def test_science_tokyo_track_risk_and_tiec_conditions_are_not_inferred_from_saved_choices(admission,housing):
+    school='東京科學大學 Institute of Science Tokyo'
+    workflow=next(w for w in storage.load_bundled_application_workflows()if w.home_university==NCU and w.school_name==school)
+    state=PartnerDocumentPreparationState(host_admission_status=admission,housing_choice=housing)
+    scoped=[]
+    for step in workflow.steps:
+        for doc in step.document_requirements:
+            result=document_applicability(NCU,school,doc,state)
+            if result:
+                scoped.append(result)
+                assert result.status=='needs_confirmation' and not result.current_applicability_verified
+                assert document_applicability('長庚大學',school,doc,state)is None
+    assert len(scoped)==16
+    assert any('YSEP非建築' in r.note for r in scoped)
+    assert any('All students' in r.note for r in scoped)
+    assert any('一般校內住宿或錄取不代表TIEC' in r.note for r in scoped)
