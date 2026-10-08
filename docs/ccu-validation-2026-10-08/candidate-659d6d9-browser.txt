@@ -1,0 +1,160 @@
+CONFTEST LOADED!
+..............FF........................................................ [ 76%]
+......................                                                   [100%]
+=================================== FAILURES ===================================
+_____________ test_ccu_deadlines_forms_and_research_progress[390] ______________
+
+page = <Page url='http://127.0.0.1:57709/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Ho%20Chi%20Min...%E5%BF%97%E6%98%8E%E5%B8%82%E5%9C%8B%E5%AE%B6%E5%A4%A7%E5%AD%B8%E6%89%80%E5%B1%AC%E7%99%BE%E7%A7%91%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:57709', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-135/web-e2e-data2'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_ccu_deadlines_forms_and_research_progress(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.add_init_script(
+            "localStorage.setItem('exchange-guide-home-school','國立中正大學')"
+        )
+        partner = next(
+            p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 67
+        )
+        page.goto(
+            live_server.base_url
+            + "/?school="
+            + quote(CCU)
+            + "#school="
+            + quote(partner.school_name)
+        )
+        section = page.locator("#detail-overview .ccu-receiving-school-details")
+        expect(section).to_be_visible(timeout=30_000)
+        expect(section.locator("[data-ccu-field]")).to_have_count(17)
+        deadline = section.locator('[data-ccu-field="application_deadline"]')
+        deadline.locator("> summary").click()
+>       expect(deadline).to_contain_text("跨來源矛盾")
+E       AssertionError: Locator expected to contain text '跨來源矛盾'
+E       Actual value: 合作校申請截止 · 當期已核實
+E                 新版2026/27第二學期申請2026-10-15（未載時刻）；8月PDF、本期公告及中正2027春p67同日。3月版10/01保留參考，版本差異已核實更新；母校收件已截止不代表仍可向中正新申請。
+E                 最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。
+E                 查核進度：已有當期依據。以本欄原文、年度及計畫為準；不代表全校17欄已完整。
+E                 資料來源 · 官方文件／網頁原文
+E                     適用：正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得 · 查核2026-10-08
+E                     查核原文與適用限制Application Deadline: 15 October 2026 Fact Sheet and Further Information Please visit指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。資料來源 · PDF第2頁
+E                     適用：正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得 · 查核2026-10-08
+E                     查核原文與適用限制2nd Semester 15 October 4) Orientation for new internat指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。
+E                 已查來源與實際結果p67-mirror · 2026-10-08 · 已取得downloaded_extracted_pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-hostw0 · 2026-10-08 · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-hostw1 · 2026-10-08 · 已取得docx；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-ccu-deadline-crosscheck · 2026-10-08T04:48:35.526956Z · 已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-profile-root · 2026-10-08T09:10:22.166007Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r15-international-exchange-support · 2026-10-08T12:23:34.161116Z · 未取得政策正文；empty_response；HTTP 200；限制頁或空白回應不能當政策讀取成功，沒有解驗證碼或存取挑戰。p67-r16-old-news-public-api · 2026-10-08T12:51:40.741116Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-current-news-public-api · 2026-10-08T12:51:42.127681Z · 已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。p67-r16-current-application · 2026-10-08T12:49:48.787645Z · 讀取失敗；HTTP 401；HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSe1Y-PZxvX-_nxhHpYK-K_uzn5hD5ISYw6URGjjOqYk9K5x3g/viewformp67-r16-current-templates · 2026-10-08T12:51:44.447161Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-current-factsheet · 2026-10-08T12:51:47.965958Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-support-public-api · 2026-10-08T12:49:50.256212Z · 未取得政策正文；empty_response；HTTP 200；限制頁或空白回應不能當政策讀取成功，沒有解驗證碼或存取挑戰。p67-r16-student-form2026 · 2026-10-08T12:51:57.398395Z · 已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。p67-r16-factsheet-updated2027 · 2026-10-08T12:51:57.399721Z · 已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。p67-r16-nomination-template · 2026-10-08T12:51:57.400580Z · 已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。p67-r16-pdf-student-form-link · 2026-10-08T12:53:29.148050Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-pdf-online-application · 2026-10-08T12:53:29.148633Z · 讀取失敗；HTTP 401；HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSe1Y-PZxvX-_nxhHpYK-K_uzn5hD5ISYw6URGjjOqYk9K5x3g/viewform?usp=send_formp67-r16-march-factsheet-reference · 2026-10-08T12:55:50.769995Z · 已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。
+E                  
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#detail-overview .ccu-receiving-school-details").locator("[data-ccu-field=\"application_deadline\"]")
+E           13 × locator resolved to <details open="" class="overview-more" data-ccu-field="application_deadline">…</details>
+E              - unexpected value "合作校申請截止 · 當期已核實
+E                 新版2026/27第二學期申請2026-10-15（未載時刻）；8月PDF、本期公告及中正2027春p67同日。3月版10/01保留參考，版本差異已核實更新；母校收件已截止不代表仍可向中正新申請。
+E                 最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。
+E                 查核進度：已有當期依據。以本欄原文、年度及計畫為準；不代表全校17欄已完整。
+E                 資料來源 · 官方文件／網頁原文
+E                     適用：正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得 · 查核2026-10-08
+E                     查核原文與適用限制Application Deadline: 15 October 2026 Fact Sheet and Further Information Please visit指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。資料來源 · PDF第2頁
+E                     適用：正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得 · 查核2026-10-08
+E                     查核原文與適用限制2nd Semester 15 October 4) Orientation for new internat指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。
+E                 已查來源與實際結果p67-mirror · 2026-10-08 · 已取得downloaded_extracted_pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-hostw0 · 2026-10-08 · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-hostw1 · 2026-10-08 · 已取得docx；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-ccu-deadline-crosscheck · 2026-10-08T04:48:35.526956Z · 已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-profile-root · 2026-10-08T09:10:22.166007Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r15-international-exchange-support · 2026-10-08T12:23:34.161116Z · 未取得政策正文；empty_response；HTTP 200；限制頁或空白回應不能當政策讀取成功，沒有解驗證碼或存取挑戰。p67-r16-old-news-public-api · 2026-10-08T12:51:40.741116Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-current-news-public-api · 2026-10-08T12:51:42.127681Z · 已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。p67-r16-current-application · 2026-10-08T12:49:48.787645Z · 讀取失敗；HTTP 401；HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSe1Y-PZxvX-_nxhHpYK-K_uzn5hD5ISYw6URGjjOqYk9K5x3g/viewformp67-r16-current-templates · 2026-10-08T12:51:44.447161Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-current-factsheet · 2026-10-08T12:51:47.965958Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-support-public-api · 2026-10-08T12:49:50.256212Z · 未取得政策正文；empty_response；HTTP 200；限制頁或空白回應不能當政策讀取成功，沒有解驗證碼或存取挑戰。p67-r16-student-form2026 · 2026-10-08T12:51:57.398395Z · 已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。p67-r16-factsheet-updated2027 · 2026-10-08T12:51:57.399721Z · 已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。p67-r16-nomination-template · 2026-10-08T12:51:57.400580Z · 已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。p67-r16-pdf-student-form-link · 2026-10-08T12:53:29.148050Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-pdf-online-application · 2026-10-08T12:53:29.148633Z · 讀取失敗；HTTP 401；HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSe1Y-PZxvX-_nxhHpYK-K_uzn5hD5ISYw6URGjjOqYk9K5x3g/viewform?usp=send_formp67-r16-march-factsheet-reference · 2026-10-08T12:55:50.769995Z · 已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。
+E                 "
+E       
+E       Aria snapshot:
+E       - group:
+E         - text: 合作校申請截止 · 當期已核實
+E         - paragraph: 新版2026/27第二學期申請2026-10-15（未載時刻）；8月PDF、本期公告及中正2027春p67同日。3月版10/01保留參考，版本差異已核實更新；母校收件已截止不代表仍可向中正新申請。
+E         - paragraph: 最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。
+E         - paragraph: 查核進度：已有當期依據。以本欄原文、年度及計畫為準；不代表全校17欄已完整。
+E         - link "資料來源 · 官方文件／網頁原文":
+E           - /url: https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en
+E         - paragraph: 適用：正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得 · 查核2026-10-08
+E         - group: 查核原文與適用限制
+E         - link "資料來源 · PDF第2頁":
+E           - /url: https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view#page=2
+E         - paragraph: 適用：正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得 · 查核2026-10-08
+E         - group: 查核原文與適用限制
+E         - group: 已查來源與實際結果
+
+tests/e2e/test_ccu_school.py:42: AssertionError
+_____________ test_ccu_deadlines_forms_and_research_progress[1440] _____________
+
+page = <Page url='http://127.0.0.1:57709/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Ho%20Chi%20Min...%E5%BF%97%E6%98%8E%E5%B8%82%E5%9C%8B%E5%AE%B6%E5%A4%A7%E5%AD%B8%E6%89%80%E5%B1%AC%E7%99%BE%E7%A7%91%E5%A4%A7%E5%AD%B8'>
+live_server = LiveServer(base_url='http://127.0.0.1:57709', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-135/web-e2e-data2'))
+width = 1440
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_ccu_deadlines_forms_and_research_progress(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.add_init_script(
+            "localStorage.setItem('exchange-guide-home-school','國立中正大學')"
+        )
+        partner = next(
+            p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 67
+        )
+        page.goto(
+            live_server.base_url
+            + "/?school="
+            + quote(CCU)
+            + "#school="
+            + quote(partner.school_name)
+        )
+        section = page.locator("#detail-overview .ccu-receiving-school-details")
+        expect(section).to_be_visible(timeout=30_000)
+        expect(section.locator("[data-ccu-field]")).to_have_count(17)
+        deadline = section.locator('[data-ccu-field="application_deadline"]')
+        deadline.locator("> summary").click()
+>       expect(deadline).to_contain_text("跨來源矛盾")
+E       AssertionError: Locator expected to contain text '跨來源矛盾'
+E       Actual value: 合作校申請截止 · 當期已核實
+E                 新版2026/27第二學期申請2026-10-15（未載時刻）；8月PDF、本期公告及中正2027春p67同日。3月版10/01保留參考，版本差異已核實更新；母校收件已截止不代表仍可向中正新申請。
+E                 最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。
+E                 查核進度：已有當期依據。以本欄原文、年度及計畫為準；不代表全校17欄已完整。
+E                 資料來源 · 官方文件／網頁原文
+E                     適用：正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得 · 查核2026-10-08
+E                     查核原文與適用限制Application Deadline: 15 October 2026 Fact Sheet and Further Information Please visit指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。資料來源 · PDF第2頁
+E                     適用：正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得 · 查核2026-10-08
+E                     查核原文與適用限制2nd Semester 15 October 4) Orientation for new internat指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。
+E                 已查來源與實際結果p67-mirror · 2026-10-08 · 已取得downloaded_extracted_pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-hostw0 · 2026-10-08 · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-hostw1 · 2026-10-08 · 已取得docx；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-ccu-deadline-crosscheck · 2026-10-08T04:48:35.526956Z · 已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-profile-root · 2026-10-08T09:10:22.166007Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r15-international-exchange-support · 2026-10-08T12:23:34.161116Z · 未取得政策正文；empty_response；HTTP 200；限制頁或空白回應不能當政策讀取成功，沒有解驗證碼或存取挑戰。p67-r16-old-news-public-api · 2026-10-08T12:51:40.741116Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-current-news-public-api · 2026-10-08T12:51:42.127681Z · 已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。p67-r16-current-application · 2026-10-08T12:49:48.787645Z · 讀取失敗；HTTP 401；HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSe1Y-PZxvX-_nxhHpYK-K_uzn5hD5ISYw6URGjjOqYk9K5x3g/viewformp67-r16-current-templates · 2026-10-08T12:51:44.447161Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-current-factsheet · 2026-10-08T12:51:47.965958Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-support-public-api · 2026-10-08T12:49:50.256212Z · 未取得政策正文；empty_response；HTTP 200；限制頁或空白回應不能當政策讀取成功，沒有解驗證碼或存取挑戰。p67-r16-student-form2026 · 2026-10-08T12:51:57.398395Z · 已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。p67-r16-factsheet-updated2027 · 2026-10-08T12:51:57.399721Z · 已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。p67-r16-nomination-template · 2026-10-08T12:51:57.400580Z · 已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。p67-r16-pdf-student-form-link · 2026-10-08T12:53:29.148050Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-pdf-online-application · 2026-10-08T12:53:29.148633Z · 讀取失敗；HTTP 401；HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSe1Y-PZxvX-_nxhHpYK-K_uzn5hD5ISYw6URGjjOqYk9K5x3g/viewform?usp=send_formp67-r16-march-factsheet-reference · 2026-10-08T12:55:50.769995Z · 已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。
+E                  
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#detail-overview .ccu-receiving-school-details").locator("[data-ccu-field=\"application_deadline\"]")
+E           14 × locator resolved to <details open="" class="overview-more" data-ccu-field="application_deadline">…</details>
+E              - unexpected value "合作校申請截止 · 當期已核實
+E                 新版2026/27第二學期申請2026-10-15（未載時刻）；8月PDF、本期公告及中正2027春p67同日。3月版10/01保留參考，版本差異已核實更新；母校收件已截止不代表仍可向中正新申請。
+E                 最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。
+E                 查核進度：已有當期依據。以本欄原文、年度及計畫為準；不代表全校17欄已完整。
+E                 資料來源 · 官方文件／網頁原文
+E                     適用：正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得 · 查核2026-10-08
+E                     查核原文與適用限制Application Deadline: 15 October 2026 Fact Sheet and Further Information Please visit指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。資料來源 · PDF第2頁
+E                     適用：正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得 · 查核2026-10-08
+E                     查核原文與適用限制2nd Semester 15 October 4) Orientation for new internat指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。
+E                 已查來源與實際結果p67-mirror · 2026-10-08 · 已取得downloaded_extracted_pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-hostw0 · 2026-10-08 · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-hostw1 · 2026-10-08 · 已取得docx；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-ccu-deadline-crosscheck · 2026-10-08T04:48:35.526956Z · 已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-profile-root · 2026-10-08T09:10:22.166007Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r15-international-exchange-support · 2026-10-08T12:23:34.161116Z · 未取得政策正文；empty_response；HTTP 200；限制頁或空白回應不能當政策讀取成功，沒有解驗證碼或存取挑戰。p67-r16-old-news-public-api · 2026-10-08T12:51:40.741116Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-current-news-public-api · 2026-10-08T12:51:42.127681Z · 已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。p67-r16-current-application · 2026-10-08T12:49:48.787645Z · 讀取失敗；HTTP 401；HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSe1Y-PZxvX-_nxhHpYK-K_uzn5hD5ISYw6URGjjOqYk9K5x3g/viewformp67-r16-current-templates · 2026-10-08T12:51:44.447161Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-current-factsheet · 2026-10-08T12:51:47.965958Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-support-public-api · 2026-10-08T12:49:50.256212Z · 未取得政策正文；empty_response；HTTP 200；限制頁或空白回應不能當政策讀取成功，沒有解驗證碼或存取挑戰。p67-r16-student-form2026 · 2026-10-08T12:51:57.398395Z · 已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。p67-r16-factsheet-updated2027 · 2026-10-08T12:51:57.399721Z · 已取得並逐欄核對原文；本欄適用性見evidence，不由下載成功推定當期。p67-r16-nomination-template · 2026-10-08T12:51:57.400580Z · 已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。p67-r16-pdf-student-form-link · 2026-10-08T12:53:29.148050Z · 已取得html；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。p67-r16-pdf-online-application · 2026-10-08T12:53:29.148633Z · 讀取失敗；HTTP 401；HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSe1Y-PZxvX-_nxhHpYK-K_uzn5hD5ISYw6URGjjOqYk9K5x3g/viewform?usp=send_formp67-r16-march-factsheet-reference · 2026-10-08T12:55:50.769995Z · 已取得pdf；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。
+E                 "
+E       
+E       Aria snapshot:
+E       - group:
+E         - text: 合作校申請截止 · 當期已核實
+E         - paragraph: 新版2026/27第二學期申請2026-10-15（未載時刻）；8月PDF、本期公告及中正2027春p67同日。3月版10/01保留參考，版本差異已核實更新；母校收件已截止不代表仍可向中正新申請。
+E         - paragraph: 最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。
+E         - paragraph: 查核進度：已有當期依據。以本欄原文、年度及計畫為準；不代表全校17欄已完整。
+E         - link "資料來源 · 官方文件／網頁原文":
+E           - /url: https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en
+E         - paragraph: 適用：正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得 · 查核2026-10-08
+E         - group: 查核原文與適用限制
+E         - link "資料來源 · PDF第2頁":
+E           - /url: https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view#page=2
+E         - paragraph: 適用：正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得 · 查核2026-10-08
+E         - group: 查核原文與適用限制
+E         - group: 已查來源與實際結果
+
+tests/e2e/test_ccu_school.py:42: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ccu_school.py::test_ccu_deadlines_forms_and_research_progress[390]
+FAILED tests/e2e/test_ccu_school.py::test_ccu_deadlines_forms_and_research_progress[1440]
+2 failed, 92 passed in 804.86s (0:13:24)

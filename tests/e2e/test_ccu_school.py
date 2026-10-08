@@ -39,21 +39,22 @@ def test_ccu_deadlines_forms_and_research_progress(page, live_server, width):
     expect(section.locator("[data-ccu-field]")).to_have_count(17)
     deadline = section.locator('[data-ccu-field="application_deadline"]')
     deadline.locator("> summary").click()
-    expect(deadline).to_contain_text("跨來源矛盾")
-    expect(deadline).to_contain_text("2026/10/15")
-    expect(deadline).to_contain_text("2026-10-01")
+    expect(deadline).to_contain_text("當期已核實")
+    expect(deadline).to_contain_text("2026-10-15")
+    expect(deadline).to_contain_text("3月版10/01保留參考")
     deadline.get_by_text("已查來源與實際結果", exact=True).click()
     expect(deadline).to_contain_text("已取得並逐欄核對")
     arrival = section.locator('[data-ccu-field="arrival"]')
     arrival.locator("> summary").click()
-    expect(arrival).to_contain_text("2026年12月下旬／2027年初")
+    expect(arrival).to_contain_text("2027-01-08")
+    expect(arrival).to_contain_text("未載接機／宿舍入住")
     output = Path("/tmp/ccu-second-pass-browser")
     output.mkdir(exist_ok=True)
     deadline.scroll_into_view_if_needed()
     page.screenshot(path=str(output / f"ccu-deadline-{width}.png"))
     page.locator("#detail-tab-application").click()
     expect(page.locator("#detail-application")).to_contain_text(
-        "跨來源矛盾", timeout=15_000
+        "提名信", timeout=15_000
     )
     partner = next(
         p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 43

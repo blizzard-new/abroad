@@ -554,3 +554,8 @@ HCMUTE2027 factsheet的5 mandatory／2 optional資料由母校整包彙整email�
 真實four-school acceptance使用獨立server和原production bundles，未假造CGU partner list或API/state。手機390／桌面1440都完成中正搜尋Nagoya／KHU、收藏比較、兩API實際配對與計畫評估、實際task保存重載、4校切換與grade/template隔離；另一組完成文件中心7ARC條件／階段／government索引狀態，實點Jena官方DOC，個人準備工具必填與草稿重載、https來源控制。4 passed／101.15s。外部DOC瀏覽器實點ERR_CERT_AUTHORITY_INVALID，live_external_browser_passed=false，未回放或停TLS驗證。CGU首次production dashboard冷啟動約26–28秒，測試先量測並warm真实API，沒有將性能限制藏成無延遲。
 
 前期定位、目標確認、CGU冷啟動等待、兩個真實UI bug及必填草稿問題造成的失敗試次保存在twentythird-acceptance-trials/，不能混作最終通過。13個新增單元全通過、含profile／account workspace共23項targeted通過7.69s；最終候選同SHA完整gate尚須執行，結果不預先填入。既有NTPU目的地數測試main與分支皆0對預期1，仍是未解驗收阻礙；CI上一候選failure且0 jobs未測，不以基底問題或本機通過宣稱可上線。其他校共享差異見[整合風險表](ccu-integration-risk-2026-10-08.md)，未合併其他分支，延遲回應／快速切換的跨分支隔離整合未跑。
+
+
+第二十三輪首個固定候選 `659d6d9938d307e4bac5f4dab31f40e6b224c93b` 全套實際結果：445回歸＝436passed／8skipped／1既有NTPU fail（326.66s）；94瀏覽器＝92passed／2較早HCMUT斷言fail（804.86s），原始logs／XML及summary以candidate-659d6d9-*保存。兩個斷言仍要求新版已取代的March截止矛盾與泛稱抵達日；改為當期2026-10-15、舊10/01僅參考、公告迎新2027-01-08與未載接機／入住限制，修正後手機桌面2passed／26.67s。未改官方數據來遷就舊斷言。補裝研究用xlrd2.0.2後實讀XLS個案1passed；其餘7skip為6項既有PhaseC與1個Docker opt-in，詳見XML。
+
+新的固定候選需再次完整跑同一gate，不沿用659結果。執行環境先按CI的uv0.11.26 frozen sync，再 `uv pip install --python .venv/bin/python -r scripts/requirements-ccu-research.txt`。gate明確要求實讀XLS依賴並記錄版本；不改runtime依賴。94瀏覽器檔案交錯分成兩组，各自隔離server／account／basetemp，union檢查不漏檔、合併JUnit保留每個case；其他回歸同時另跑。暫存資料放clone外workspace，避免/tmp容量限制。最終同SHA結果在clone外帶SHA路徑及draft PR，提交後不再改candidate來塞入測試結果。
