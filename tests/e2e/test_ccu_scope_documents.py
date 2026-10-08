@@ -211,12 +211,24 @@ def test_seoultech_new_housing_costs_and_second_submission_are_visible(
         field = section.locator(f'[data-ccu-field="{key}"]')
         field.locator("> summary").click()
         expect(field).to_contain_text(expected)
+    documents = section.locator('[data-ccu-field="documents"]')
+    documents.locator("> summary").click()
+    expect(documents).to_contain_text("未列銀行認證")
+    expect(documents).not_to_contain_text("在學／成績及銀行正本另需條件認證")
+    visa = section.locator('[data-ccu-field="visa"]')
+    visa.locator("> summary").click()
+    expect(visa).to_contain_text("銀行只列USD6000一期／12000一年資金證明，未列認證")
     page.locator("#detail-tab-application").click()
     second = page.locator("details.workflow-step").filter(
         has_text="合作校第二次文件送件"
     )
     second.locator("> summary").click()
     expect(second).to_contain_text("不猜錄取前後")
+    requirements = second.locator(".workflow-documents li")
+    expect(requirements).to_have_count(3)
+    for item in requirements.all():
+        expect(item).to_contain_text("第二次文件送件（時點待確認）")
+        expect(item).not_to_contain_text("不等錄取")
     expect(second.locator(".workflow-documents")).to_contain_text("本人銀行")
     expect(second.locator(".workflow-documents")).to_contain_text("韓國簽證")
     response = page.request.get(
@@ -224,10 +236,65 @@ def test_seoultech_new_housing_costs_and_second_submission_are_visible(
         params={"school": HOME, "target_school": partner.school_name},
     )
     assert response.ok
-    items = [r for r in response.json()["items"] if r["stage"] == "after_application"]
+    items = [r for r in response.json()["items"] if r["stage"] == "second_submission"]
     assert len(items) == 3 and all(r["phase"] == "合作校第二次文件送件" for r in items)
+    bank = next(r for r in items if "銀行" in r["name"])
+    assert bank["stamps"] == []
+    page.evaluate("location.hash='#application-center'")
+    page.evaluate(
+        """async name => {state.applicationContext.target_school=name;await loadApplicationTemplates();}""",
+        partner.school_name,
+    )
+    group = page.locator("#application-requirement-list details.application-requirement-group").filter(
+        has=page.locator("summary strong").filter(has_text="合作校第二次文件送件")
+    )
+    expect(group).to_have_count(1)
+    if not group.evaluate("node=>node.open"):
+        group.locator("> summary").click()
+    expect(group.locator("article")).to_have_count(3)
+    expect(group).not_to_contain_text("不等錄取")
     output = Path("/tmp/ccu-fourteenth-browser")
     output.mkdir(exist_ok=True)
-    second.scroll_into_view_if_needed()
+    group.scroll_into_view_if_needed()
     page.screenshot(path=str(output / f"seoultech-second-{width}.png"))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+
+
+@pytest.mark.parametrize("width", [390, 1440])
+def test_hcmut_current_deadlines_and_nomination_template_click(page, live_server, width):
+    page.set_viewport_size({"width": width, "height": 956})
+    page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+    partner = at(67)
+    page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+    section = page.locator("#detail-overview .ccu-receiving-school-details")
+    expect(section).to_be_visible(timeout=30_000)
+    for key, value in [("nomination_deadline", "2026-09-30"), ("application_deadline", "2026-10-15")]:
+        field = section.locator(f'[data-ccu-field="{key}"]')
+        field.locator("> summary").click()
+        expect(field).to_contain_text(value)
+    page.locator("#detail-tab-application").click()
+    step = page.locator("details.workflow-step").filter(
+        has=page.locator(".workflow-documents li").filter(has_text="提名信")
+    )
+    expect(step).to_have_count(1)
+    if not step.evaluate("node=>node.open"):
+        step.locator("> summary").click()
+    nomination = step.locator(".workflow-documents li").filter(has_text="提名信")
+    expect(nomination).to_contain_text("Seal")
+    source = json.loads((BUNDLE / "overseas_sources/p67-r16-nomination-template.json").read_text())
+    url = source["source_url"]
+    link = nomination.locator("a")
+    expect(link).to_have_attribute("href", url)
+    binary = (BUNDLE / source["bundled_file"]).read_bytes()
+    page.context.route(url, lambda route: route.fulfill(
+        status=200, body=binary,
+        headers={"Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "Content-Disposition": 'attachment; filename="hcmut-nomination.docx"'},
+    ))
+    with page.expect_download() as download:
+        link.click()
+    assert hashlib.sha256(Path(download.value.path()).read_bytes()).hexdigest() == source["sha256"]
+    output = Path("/tmp/ccu-sixteenth-browser")
+    output.mkdir(exist_ok=True)
+    step.scroll_into_view_if_needed()
+    page.screenshot(path=str(output / f"hcmut-nomination-{width}.png"))
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")

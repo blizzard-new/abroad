@@ -22,7 +22,7 @@ def at(page):
     )
 
 
-@pytest.mark.parametrize("page", [27, 67, 73, 86, 114])
+@pytest.mark.parametrize("page", [27, 73, 86, 114])
 def test_real_deadline_conflict_reaches_all_student_projections(page):
     partner = at(page)
     field = partner.partner_exchange_details["application_deadline"]
@@ -58,11 +58,6 @@ def test_real_deadline_conflict_reaches_all_student_projections(page):
         capture_output=True,
     )
     assert result.returncode == 0, result.stderr
-    if page == 67:
-        assert "2026/10/15" in partner.reference_data["partner_application_deadline"]
-        assert "10" in field.value and "01" in field.value
-        nomination = partner.partner_exchange_details["nomination_deadline"]
-        assert nomination.status == "verified_current" and "09" in nomination.value
 
 
 def test_acquired_forms_and_approximate_arrival_are_mapped():
@@ -77,8 +72,8 @@ def test_acquired_forms_and_approximate_arrival_are_mapped():
     arrival = at(67).partner_exchange_details["arrival"]
     assert (
         arrival.status == "verified_current"
-        and "下旬" in arrival.value
-        and "確切日期" in arrival.value
+        and "2027-01-08" in arrival.value
+        and "未載接機" in arrival.value
     )
     form = json.loads((BUNDLE / "overseas_sources/p114-r2-form.json").read_text())
     assert (

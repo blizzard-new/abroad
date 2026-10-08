@@ -100,7 +100,6 @@ def test_overseas_counts_do_not_claim_full_coverage_or_turn_fetches_into_current
         (49, "academic_calendar"),
         (54, "housing"),
         (58, "costs"),
-        (67, "visa"),
         (83, "application_deadline"),
         (103, "academic_calendar"),
         (104, "costs"),

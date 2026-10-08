@@ -72,7 +72,7 @@ def test_actual_catalogue_keeps_first_second_dorm_and_home_recommendation_separa
     host = [r for r in catalog_response.json()["items"] if r["stage"]]
     assert len(host) == 12
     first = [r for r in host if r["stage"] == "student_application"]
-    second = [r for r in host if r["stage"] == "after_application"]
+    second = [r for r in host if r["stage"] == "second_submission"]
     dorm = [r for r in host if r["conditional"]]
     assert len(first) == 7 and len(second) == 3 and len(dorm) == 2
     assert all(r["phase"] == "合作校第二次文件送件" for r in second)

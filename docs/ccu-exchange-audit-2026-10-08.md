@@ -6,7 +6,7 @@
 交付前遠端 main 已前進至 `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`（第一批交付時為 `293546e807294dc0812f390b240a4cfb68e86cd0`）；第一批交付保留開工基準；第二輪依使用者要求安全整合此最新main，保留臺大與既有資料，未寫入其他session工作目錄。
 本 clone 未找到 AGENTS.md 或適用 `.agents/skills`。未寫入其他學校 session 的工作目錄。
 
-最新數量、功能對照與實際驗證見末節第十四至十五輪及 [55筆功能對照](ccu-functional-parity-2026-10-08.md)；前節保留歷史檢查點，不能取代最新數字。
+最新數量、功能對照與實際驗證見末節第十六輪及 [55筆功能對照](ccu-functional-parity-2026-10-08.md)；前節保留歷史檢查點，不能取代最新數字。
 
 ## 已核實適用範圍
 
@@ -434,14 +434,14 @@ UBM、EPITA、SDU的新接收資料顯示替代語言證明／program分流或�
 - 新版明示exchange宿舍不保證，International Hall僅候補；男單1329120、男雙1045980、女雙1062360 KRW／期，International Hall各房型及餐費另列且可變。不是保個人房型或帳單。
 - 日期2027-03-02至06-21與中正當期p48一致，旧6/22 tentative被新版取代。Host最低2credits、中正最低3且推薦12仍分來源標conflict；不自行覆蓋母校最低學分。
 - Host第一次7項（online、在學、成績、語言、Study Plan、護照、照片），第二次3項（visa copy、航班、本人銀行），另2項僅宿舍申請者（TB、兩劑麻疹）。第二次／宿舍送件日期與啟動條件未載，不套旧資料抵韓前2週或推定錄取前後。清單仍partial_not_exhaustive，提名後個人online及声稱attached的空白Form1未取得；8頁PDF不是Study Plan表。
-- 新host清單未列推薦信，中正當期母校第二階仍列Recommendation Letter，保留在母校提名步驟並標兩層差異，未擅免除。非OECD才須在學／成績／銀行正本及條件認證，不泛化所有人；一般入口original字樣與PDF範圍差異另保待確認。
+- 新host清單未列推薦信，中正當期母校第二階仍列Recommendation Letter，保留在母校提名步驟並標兩層差異，未擅免除。第十六輪按p3／p7修正：非OECD在學／成績須正本及條件認證；銀行列本人名下金額及非OECD正本，未列銀行認證；一般入口original字樣與PDF範圍差異另保待確認。
 - 2027/2028 incoming明載Undergraduate至少2學期、Graduate至少1學期及partner exchange依協議免tuition，Visiting不免。前者是接收端，不能抵銷中正所有outbound滿2學期、GPA／平均資格。NHIS 79310月費只標as of2026，未保2027費率；密集韓語非學分另收費。
 
 新增交通原文：東北師範一般foreign頁的指定日接機隨通知（臺籍HMT適用未核）；電子科技大學27頁指南實際封面／前言均2025，只作舊路線參考，抽取數字異常不猜時間或價格；托馬斯拔佳incoming列PRG／Otrokovice／Zlín轉乘及查班次入口，未標2027；西波希米亞教育學院FAQ列Plzeň交通，不能套所有學院／Cheb或ArtCamp暑校票。廈門圖書館Reader’s Guide的院方簽章借閱啟用及Siming／Xiang’an櫃檯作一般生活資料，不是交換申請文件；天津2026年9月foreign／degree新生welcome pack只參考，未套臺籍2027交換簽證、照片或學費。HCMUT新頁僅取得44字JavaScript外殼，生活欄保持空值，不用搜尋摘要冒充正文。
 
 最新實際資料／API數量：104條目分類不變，55流程與指南均legacy／official_partial；52筆7步驟、忠南／HUFS／首爾科技3筆8步驟。23校177項外校個別文件、26條件項、18已核實官方文件連結；55校實際文件目錄與階段可讀。網站55、城市54、交通49、生活50筆非空；學制profile23筆非空（9核／14待／32缺），實際API24筆非空、可確定學制10；學院11筆非空、可確定1。935海外欄為311核／229缺／312待／20參考／62矛盾／1官方明示未公告，39校至少一項已核、0校17欄或全部host文件完整，functional_parity_complete=false。
 
-本批額外共用變更只有application_documents.py（after_application目錄按實際school step.phase，首爾科技不誤標不等錄取）及workflow_structuring.py（已逐項核對且有stage的文件保留copies／copy_type／signatures缺值，不從條件名稱自動推所有人須正本或簽名）。source-bound metadata無stage的既有CGU／NTPU／NTU仍沿原整理方式；本批未新增API路徑／模型必填欄或改UI程式。其他分支累計共用整合點仍見前節清單。校別適配在ccu_documents.py，來源、程式輸出及測試獨立。
+本批額外共用變更只有application_documents.py（after_application目錄按實際school step.phase；當時只修phase，逐項stage仍誤標不等錄取，第十六輪另修）及workflow_structuring.py（已逐項核對且有stage的文件保留copies／copy_type／signatures缺值，不從條件名稱自動推所有人須正本或簽名）。source-bound metadata無stage的既有CGU／NTPU／NTU仍沿原整理方式；本批未新增API路徑／模型必填欄或改UI程式。其他分支累計共用整合點仍見前節清單。校別適配在ccu_documents.py，來源、程式輸出及測試獨立。
 
 實際驗證與證據見docs/ccu-validation-2026-10-08/fourteenth-fifteenth-*：
 
@@ -452,3 +452,45 @@ UBM、EPITA、SDU的新接收資料顯示替代語言證明／program分流或�
 - 改動校別檔Ruff及OpenAPI contract成功；整個專案lint和缺pyc的content-governance wrapper未宣稱通過，後者限制見前節。新版wheel成功，781個CCU資料檔及13個程式／UI檔逐byte一致，SHA為d065454f2edeb4dfa46a6f6a670ee6d9db4d20e0811a248311784a96e998b979。
 
 第十三輪提交0f300be0d0a691875aaa5506f8ba2c1c7d0e9f0e已推送、遠端读回一致且PR#3為draft；本批最新提交以交付回報及GitHub分支为准。交付前遠端main仍f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59。公開交通6校、生活5校、學制32校、學院44校仍未載；另有未年／跨校區來源、個人表、國籍適用性及矛盾未解，沒有把公開查核缺口一律稱為承辦阻塞。未合併main、部署、登入學校系統、聯絡／送件或改憑證／權限／付款／安全設定。
+
+
+## 第十六輪：HCMUT當期正文、新表格及逐項範圍修正
+
+本輪新增28個官方來源紀錄，679個source/request ID唯一。合作校附件87份（64PDF、18DOCX、3XLSX、1XLS、1DOC），逐檔SHA核对；新兩份PDF各4頁、兩份DOCX實際含表格，內容可解析。舊83份readability證據保留且bytes不變。77筆fetch_failed，另7challenge、7空正文、2captcha、2不相關內容異常；取得失敗不表示官方尚未公告。
+
+### HCMUT新版正文與當期文件
+
+先前HTML只有44字JavaScript外殼。本輪匿名瀏覽器真實回報ERR_CERT_AUTHORITY_INVALID，沒有跳過TLS驗證。讀官方public JavaScript確認read-only API，再取得[2026-08-26公開公告正文](https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en)（對應[人類入口](https://hcmut.edu.vn/news-en/item/24702)）；API標public/active，原始JSON、SHA及解析器保存。只有公開body被提取，internal/inactive紀錄會拒絕。舊19961公告實際是2025/26 Semester2，不作當期。
+
+- [Updated August 2026 factsheet](https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view)正文與公告一致：AY2026/2027 Semester2、提名2026-09-30、學生申請2026-10-15，未猜截止時刻。Orientation2027-01-08；課程及考試2027-01-11至06-07。中正p67的10/15也一致，application_deadline由conflict轉verified_current。March版9/15及10/1保留reference_only及被取代依據。
+- [新版学生申請DOCX](https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view)與[母校提名範本](https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view)逐段、逐表讀取。提名信須母校letterhead、負責人簽名與Seal；學生申請仍須附，不誤改成學生自行提名。保險copy在到校前一週送；護照與照片copy各一份依新表核實。HCMUT共9項跨nomination/student_application/post_offer，仍partial_not_exhaustive。
+- 公告與PDF兩個線上申請shortlink均HTTP401且導至同個GoogleForm；沒有登入或送件，個人online額外欄位未讀，因此application_forms保持needs_confirmation，不能把DOCX集合稱作全部文件。
+- March及August兩份PDF physical p4文字抽取均帶出Kyoto／CoE／Japanese段落，但實際渲染畫面完全沒有這段；兩張原始畫面、抽取原文與hash均保存。先前把隱藏文字当作官方簽證矛盾的判定已撤回，理由及before/after明載。可見PDF流程與新版學生表均為Vietnam Immigration發Visa Approval及Acceptance，再至指定Vietnamese Embassy/Consulate。visa現為verified_current，沒有以改動原文來掩蓋差異。
+
+### 首爾科技：第二次送件與銀行認證範圍
+
+首爾科技physical p3分第一次7項、第二次3項；只確認順序，第二次確切日期與啟動條件未載。原after_application會在每項UI顯示「不等錄取」，已新增中性second_submission模型值／標籤，三份個別文件改用此值；流程与目錄群組、逐項手機／桌面顯示均待確認時點。忠南及HUFS已核實after_application保留「不等錄取」。修正不是猜第二次發生在錄取前或後。
+
+按physical p3及p7原文與實際p7圖片，認證只列在非OECD在學／成績文件。銀行列本人名下USD6000一期／12000一年，以及非OECD正本，未列銀行Apostille／韓國使領館認證。已修documents及visa摘要、所有衍生資料；個別銀行stamps維持空，原在學／成績stamps保留。p7簽證清單本身明示reference only，不能變成個人使領館確定清單。before/after另存sixteenth-seoultech-bank-correction.json及stage-correction.json。
+
+### 公開交通與生活續查
+
+首爾科技Gongreung／Gongneung交通、Ostfalia數位Deutschlandsemester票及丘庫羅瓦會議頁交通只作一般路線或範圍待確認，未標2027的票價及跨校區資訊未冒作當期保證。重慶2023圖書館／場館為reference；東北師範Ehall郵件服務的臺籍適用未核；HCMUTE 2026校園商店／宿舍合作MOU及2025醫療服務為reference，不當個人住房保證。HCMUT當期到校指南支持campus_life當期來源。DNTU新校園頁尾夾帶不相關內容，整頁不作政策。UNINTER指南三次HTTP503、HCMUTE數位圖書館503、HCMUT空support JSON均保存實際限制。
+
+### 最新数量及共用整合點
+
+104条目仍52當期名額已列／49整校灰字未開放／3空名額待確認／0明示零名額；母校收件已截止。55流程与指南均legacy／official_partial，52筆7步驟＋3筆8步驟。23校178項外校個別文件、26條件項、19已核實官方文件連結；实际流程含母校通用共1113項文件，不與178項host文件等同。網站55、城市54、交通52、生活54非空；可確定學制10及學院1。935海外欄312核／229缺／313待／20參考／60矛盾／1官方明示未公告；39校至少一項核實、0校17欄或完整host文件全核，functional_parity_complete=false。
+
+本輪核心共用差異是models.py（兩個stage Literal選填值）、application_documents.py（second_submission階段及school step.phase）、static/app.js（中性逐項標籤）、static/index.html（保留NTU前綴更新CCU資源版本）、docs/api/openapi.json（只加選填stage enum值）。110API路徑及required欄維持原樣。校別資料與fetcher/public JSON解析留CCU独立檔；全分支累計registry/API/資格守門/governance差異仍見前節完整合併表。
+
+### 最新實際驗證
+
+- 四校最終選定回歸 **322 passed、5 skipped、1既有NTPU失敗（186.89s）**。唯一失敗為test_ntpu_bundled_data.py:110，destination_profile_count期望1／實際0，已在最新main獨立重現，證據見ccu-latest-main-baseline-tests.txt。所有本輪CCU、共用文件API與資格守門測試通過；初次CCU旧步驟斷言及新source頁碼測試假設失敗均保留原始紀錄並修正。
+- 手機390／桌面1440真實UI：首輪8 passed／2個HCMUT定位器失敗；因「母校提名」同時命中兩步驟，改為只選含提名文件的步驟後兩項重跑 **2 passed（21.56s）**。其餘8項已通過且程式／資料未變。包含首爾科技三項逐一不含「不等錄取」、目錄中性phase及銀行範圍，HCMUT新截止日及真實DOCX下載hash；四張新畫面保存。新官方來源HTTP200／原檔hash獨立紀錄，下載回放不冒作即時外網。
+- 20份衍生檔確定性重建一致；49份既有CGU／NTPU／NTU資料SHA維持，110API路徑及必填欄不變。OpenAPI完整比對通過，僅選填stage enum增加second_submission。
+- 679個請求ID唯一，87附件SHA全符。新兩PDF／兩DOCX可解析，當期適用性與物理p4渲染分開核實。正文摘要首次超過240字導致建置停止，改成202字保留完整逐項來源後重建成功。
+- 改動校別fetcher／documents與新測試Ruff通過，app.js語法通過。共用models/application_documents及旧second-pass測試51個既有Ruff診斷與前提交b97c逐項類型／訊息一致，未宣稱整個專案lint通過。既有content-governance wrapper仍缺pyc不可collect，保留此前真實錯誤，另有獨立main hash及metadata測試。
+- Python build模組不可用（No module named build），改用uv build成功。818個CCU資料檔、13個程式／UI檔與wheel逐byte一致，wheel SHA256：1b5b1858fd1beeaaad8b977ac9d31bdbb714e087157a1ae702276a0085a05e4a。沒有把初次錯誤當成功。
+
+
+公開交通尚缺HCMUTE／DNTU／UNINTER三校，生活尚缺DNTU；學制32、學院44校仍未載，另有無年／國籍／校區適用性、個人表及60項矛盾。沒有把所有公開查核缺口當作只能問承辦。資料、API、UI適配可供整合，但不能宣稱外校完整功能已齊。遠端main查核仍f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59；未merge main、部署、登入校方、聯絡承辦、送件或修改憑證／存取／付款／安全設定。

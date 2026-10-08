@@ -9340,7 +9340,7 @@ function renderWorkflowSubmission(step) {
 
 function renderWorkflowDocumentRequirement(requirement) {
   const metadata = [];
-  const stages = {nomination:"提名",student_application:"申請",after_application:"申請後補件（不等錄取）",post_offer:"錄取後",after_dorm_assignment:"宿舍分配後",conditional_program:"特定計畫文件"};
+  const stages = {nomination:"提名",student_application:"申請",after_application:"申請後補件（不等錄取）",second_submission:"第二次文件送件（時點待確認）",post_offer:"錄取後",after_dorm_assignment:"宿舍分配後",conditional_program:"特定計畫文件"};
   if (requirement.stage) metadata.push(`階段：${stages[requirement.stage] || requirement.stage}`);
   if (requirement.conditional) metadata.push(`適用條件：${requirement.condition || requirement.name}`);
   if (requirement.copies) metadata.push(`${requirement.copies} 份`);

@@ -55,7 +55,11 @@ def test_javascript_shell_is_recorded_without_using_search_snippets_as_policy():
     assert source["http_status"] == 200 and source["access_result"] == "empty_response"
     assert "JavaScript外殼" in source["content_review_note"]
     field = reviewed_profiles()[67]["fields"]["campus_life"]
-    assert field["status"] == "missing" and field["value"] is None
+    assert field["status"] == "verified_current"
+    assert {e["source_id"] for e in field["evidence"]} == {
+        "p67-r16-current-news-public-api",
+        "p67-r16-factsheet-updated2027",
+    }
     ledger = json.loads((BUNDLE / "fifteenth-life-changes.json").read_text())
     assert not ledger["complete_research_claimed"]
     assert ledger["overseas_17_field_policy_changes"] == 0

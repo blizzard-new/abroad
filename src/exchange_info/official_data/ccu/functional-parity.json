@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-08T12:28:52.823701+00:00",
+  "checked_at": "2026-10-08T13:20:39.403950+00:00",
   "definition": "逐校讀取本機公開API。nonempty是呈現／功能覆蓋，不等於當期規定完整；每個中正欄位另存來源、年度與查核狀態。",
   "baseline": {
     "cgu_raw_workflows": 154,
@@ -1078,8 +1078,8 @@
         "city": 54,
         "housing_summary": 55,
         "cost_summary": 55,
-        "transport_summary": 49,
-        "campus_life_summary": 50,
+        "transport_summary": 52,
+        "campus_life_summary": 54,
         "guide_photos": 0,
         "first_72_hours": 0,
         "packing_from_taiwan": 0,
@@ -1098,15 +1098,15 @@
         "degree_levels": 10
       },
       "documents": {
-        "requirements": 1112,
-        "requirements_with_form": 128,
+        "requirements": 1113,
+        "requirements_with_form": 129,
         "schools_with_requirements": 55,
         "schools_with_signature_detail": 55
       },
       "document_center": {
         "schools_with_catalog": 55,
-        "host_items_with_stage": 177,
-        "verified_official_links": 18,
+        "host_items_with_stage": 178,
+        "verified_official_links": 19,
         "conditional_items": 26
       },
       "workflow_rows": [
@@ -1270,7 +1270,7 @@
           "school_name": "Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學",
           "review_status": "legacy",
           "step_count": 7,
-          "requirement_count": 25
+          "requirement_count": 26
         },
         {
           "school_name": "Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學",
@@ -3392,10 +3392,37 @@
           "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。"
         },
         "campus_life": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "2023設施介紹列A校區理工／B校區建築／虎溪圖書館分館、Wi-Fi與閱覽；A校區風雨操場為歌舞／大型演講場地。只作舊校園設施參考，未核2027借閱資格、活動時間／費用或交換生實際校區。",
+          "status": "reference_only",
+          "evidence": [
+            {
+              "source_id": "p16-r16-library-a",
+              "source_url": "https://www.cqu.edu.cn/info/2961/1321.htm",
+              "source_pages": [],
+              "academic_year": "設施正文2023.10.10；A校區等指定設施介紹、非2027個人接收",
+              "application_round": "一般服務或舊年度參考，非申請梯次",
+              "checked_at": "2026-10-08T12:46:25.910009+00:00",
+              "status": "reference_only",
+              "excerpt": "重庆大学图书馆按校区和学科布局设立 3 个分馆，包括 A 校区理工图书馆（含声音图书馆），B 校区建筑图书馆，虎溪校区虎溪图书馆（含 4 个舍区书屋、理学分馆、方志图书馆、科幻图书馆），还与学院合作建设有博雅分馆、新闻分馆。馆舍总面积达 59362 平方米，阅览座位 5481 个。图书馆专业馆员 99 名，设综合办公室、学科服务办公室、资源建设部、网络服务部、情报服务部、特藏部、文化育人中心、理工图书馆、建筑图 书馆、虎溪图书馆共 10 个部门，为读者提供全方位的文献服务。馆藏资源丰富，实体馆藏达 517.37 万册，数字馆藏 1424.83 万册 / 件。图书馆有线网络万兆骨干，千兆到桌面，全馆实现无线网覆盖。图书馆拥 有 21 台物理服务器和 381TB 的存储空间，为“双一流”建设、教学科研与拔尖创新人才培养提供了强有力的文献资源保障。 重庆大学图书馆致力于推动学校及社会创新发展提供信息研究及 分析服务，设有教育部首批科技查新站，2018 年获批首批高校国家知识产权信息服务中心，2020 年获批世界知识产权组织在华设立的技术与创新支持中心（TISC）。图书馆积极参与国家、省市级文献资源保 障体系建设，是教育部文献保障体系 CALIS 省级服务中心、重庆市大学联盟资源平台共建单位、重庆市高校图工委常设秘书处所在单位。 重庆大学图书馆馆庆日为每年 10 月 12 日。虚拟形象为书妹儿。吉祥物为学霸雁。 A校区理工图书馆",
+              "content_hash": "251e818809f8e2e63827c2def8d55489eceff5736dffcf7234f8c407240a0b84",
+              "text_sha256": "b5cf5fe53f9938112e58c2cb62790994c4b26cf296de07e29c47720ef710a0f9",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p16-r16-gym-a",
+              "source_url": "https://www.cqu.edu.cn/info/2961/1291.htm",
+              "source_pages": [],
+              "academic_year": "設施正文2023.10.10；A校區等指定設施介紹、非2027個人接收",
+              "application_round": "一般服務或舊年度參考，非申請梯次",
+              "checked_at": "2026-10-08T12:46:25.913013+00:00",
+              "status": "reference_only",
+              "excerpt": "风雨操场紧邻学校后门，位于新建的重庆大学主教楼背后，是依地势而建的半环形露天剧场，坡面为观众席，主要作为歌舞之大剧场、及大型演讲、报告场所，风雨操场后围墙壁是重庆大学校史墙，介绍重庆大学1929——1999年七十余年来历史画面。 上一篇： 思群广场 下一篇： 团结广场 重庆市沙坪坝区沙正街174号 邮编：400044 © Copyright Chongqing University All Rig",
+              "content_hash": "6e9eb3f5385d8ffff976245f3c6c41a0bc9b8b9237a30f532972b471c565f38e",
+              "text_sha256": "67b53f89ec66914936a354e73e7cf94a3d5a54b192a27f22bbfd010797ef3a70",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            }
+          ],
+          "reason": "正文明确2023.10.10，不用活動導航或旧數字推2027個人服務。"
         }
       },
       "academic_filter_scope": {
@@ -3426,7 +3453,8 @@
           "arrival",
           "course_restrictions",
           "academic_calendar",
-          "transport"
+          "transport",
+          "campus_life"
         ],
         "completeness_items": [
           {
@@ -3499,9 +3527,12 @@
           {
             "key": "campus_life",
             "label": "校園生活",
-            "status": "missing",
-            "note": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。",
-            "source_urls": []
+            "status": "needs_confirmation",
+            "note": "正文明确2023.10.10，不用活動導航或旧數字推2027個人服務。",
+            "source_urls": [
+              "https://www.cqu.edu.cn/info/2961/1321.htm",
+              "https://www.cqu.edu.cn/info/2961/1291.htm"
+            ]
           },
           {
             "key": "city",
@@ -3522,7 +3553,7 @@
         ],
         "city": "重慶",
         "transport_present": true,
-        "campus_life_present": false,
+        "campus_life_present": true,
         "life_location_note": "官方城市／聯絡地址參考：重慶（verified_current）。尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。 接收校區按所選計畫另核。",
         "life_categories": [
           {
@@ -3624,7 +3655,28 @@
           },
           {
             "theme": "social",
-            "evidence": [],
+            "evidence": [
+              {
+                "theme": "social",
+                "kind": "official",
+                "text": "2023設施介紹列A校區理工／B校區建築／虎溪圖書館分館、Wi-Fi與閱覽；A校區風雨操場為歌舞／大型演講場地。只作舊校園設施參考，未核2027借閱資格、活動時間／費用或交換生實際校區。（其他年度／梯次參考，不能作本期申請依據；設施正文2023.10.10；A校區等指定設施介紹、非2027個人接收；查核2026-10-08）",
+                "sources": [
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://www.cqu.edu.cn/info/2961/1321.htm"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://www.cqu.edu.cn/info/2961/1291.htm"
+                  }
+                ],
+                "checked_at": "2026-10-08T12:46:25.910009Z",
+                "scope": "其他年度／梯次參考，不能作本期申請依據；設施正文2023.10.10；A校區等指定設施介紹、非2027個人接收；正文明确2023.10.10，不用活動導航或旧數字推2027個人服務。",
+                "original_excerpt": false,
+                "original_text": "",
+                "translation_status": "original"
+              }
+            ],
             "inference": null,
             "next_step": "先看國際處迎新、社團與語言交換活動；活動存在不代表每位學生都有相同體驗。",
             "search_url": "https://www.google.com/search?q=Chongqing+University+%E4%B8%AD%E5%9C%8B%E5%A4%A7%E9%99%B8+%E9%87%8D%E6%85%B6+international+student+clubs"
@@ -6177,10 +6229,37 @@
           "reason": "讀到實質交通原文而非導覽；外國籍頁与中正臺籍路徑分開，不套暑校指定日期。"
         },
         "campus_life": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "國際生服務頁提供E-hall校園信箱申請與WebVPN入口說明；帳號／信箱問題可找VisionBuilding315室。未標2027及臺灣HMT交換身分，尚需確認帳號權限；只提供公開服務資訊，本次未登入／提交或變更帳號。",
+          "status": "needs_confirmation",
+          "evidence": [
+            {
+              "source_id": "p26-r16-email",
+              "source_url": "https://iso.nenu.edu.cn/Campus_Life/Email.htm",
+              "source_pages": [],
+              "academic_year": "未載2027適用年度；一般公開服務／指定校區",
+              "application_round": "一般服務或舊年度參考，非申請梯次",
+              "checked_at": "2026-10-08T12:44:42.272499+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "How to apply for NENU email for individuals Step 1: Find the E-hall service from the website https://www.nenu.edu.cn/index.htm. If you are outside of the campus, please log in to WebVPN first with your student ID number and password. For the first time of login, the password is 10 digitals which are “Nenu+last six number of your passport”, e.g.: Nenu123456. If you have trouble, please go to Room 315 of Vision Building for help. Hotline: 8509-9005. Step 2: Log in with your student ID number and password. For th",
+              "content_hash": "23d92c8378a1ebb0dbcc4e6a7fd2399b233935210293c17c9c26a6a60379b904",
+              "text_sha256": "ea709a8dd8954b8e1647f39e1d9a88683ef13619862f3c01c85bdbcb9bf167d7",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p26-r16-email",
+              "source_url": "https://iso.nenu.edu.cn/Campus_Life/Email.htm",
+              "source_pages": [],
+              "academic_year": "未載2027適用年度；一般公開服務／指定校區",
+              "application_round": "一般服務或舊年度參考，非申請梯次",
+              "checked_at": "2026-10-08T12:44:42.272499+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Note： If you forget your password or your account is locked, please visit Room 315 of Vision Building or send an email to xxhb@nenu.edu.cn to reset your password. Follow Us： StudyatNENU Wechat Scan for Inquiries Copyright： In",
+              "content_hash": "23d92c8378a1ebb0dbcc4e6a7fd2399b233935210293c17c9c26a6a60379b904",
+              "text_sha256": "ea709a8dd8954b8e1647f39e1d9a88683ef13619862f3c01c85bdbcb9bf167d7",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            }
+          ],
+          "reason": "讀具體IT服務流程，不把登入步驟當取得學生帳號／國籍適用已核。"
         }
       },
       "academic_filter_scope": {
@@ -6211,7 +6290,8 @@
           "arrival",
           "course_restrictions",
           "academic_calendar",
-          "transport"
+          "transport",
+          "campus_life"
         ],
         "completeness_items": [
           {
@@ -6281,9 +6361,11 @@
           {
             "key": "campus_life",
             "label": "校園生活",
-            "status": "missing",
-            "note": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。",
-            "source_urls": []
+            "status": "needs_confirmation",
+            "note": "讀具體IT服務流程，不把登入步驟當取得學生帳號／國籍適用已核。",
+            "source_urls": [
+              "https://iso.nenu.edu.cn/Campus_Life/Email.htm"
+            ]
           },
           {
             "key": "city",
@@ -6304,7 +6386,7 @@
         ],
         "city": "長春",
         "transport_present": true,
-        "campus_life_present": false,
+        "campus_life_present": true,
         "life_location_note": "官方城市／聯絡地址參考：長春（needs_confirmation）。尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。 接收校區按所選計畫另核。",
         "life_categories": [
           {
@@ -6385,7 +6467,28 @@
           },
           {
             "theme": "social",
-            "evidence": [],
+            "evidence": [
+              {
+                "theme": "social",
+                "kind": "official",
+                "text": "國際生服務頁提供E-hall校園信箱申請與WebVPN入口說明；帳號／信箱問題可找VisionBuilding315室。未標2027及臺灣HMT交換身分，尚需確認帳號權限；只提供公開服務資訊，本次未登入／提交或變更帳號。（適用年度或條件待確認；未載2027適用年度；一般公開服務／指定校區；查核2026-10-08）",
+                "sources": [
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://iso.nenu.edu.cn/Campus_Life/Email.htm"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://iso.nenu.edu.cn/Campus_Life/Email.htm"
+                  }
+                ],
+                "checked_at": "2026-10-08T12:44:42.272499Z",
+                "scope": "適用年度或條件待確認；未載2027適用年度；一般公開服務／指定校區；讀具體IT服務流程，不把登入步驟當取得學生帳號／國籍適用已核。",
+                "original_excerpt": false,
+                "original_text": "",
+                "translation_status": "original"
+              }
+            ],
             "inference": null,
             "next_step": "先看國際處迎新、社團與語言交換活動；活動存在不代表每位學生都有相同體驗。",
             "search_url": "https://www.google.com/search?q=Northeast+Normal+University+%E4%B8%AD%E5%9C%8B%E5%A4%A7%E9%99%B8+%E9%95%B7%E6%98%A5+international+student+clubs"
@@ -22399,7 +22502,7 @@
         },
         "documents": {
           "status": "verified_current",
-          "value": "2027春季host第一次：線上申請、在學、成績、語言證明、Study Plan Form1、效期≥開課後6月護照、3.5×4.5cm照片；第二次：韓國簽證copy、航班、本人銀行證明USD6000一期／12000兩期。非OECD在學／成績及銀行正本另需條件認證。TB陰性與兩劑麻疹只宿舍申請者，未載送件時點。Host新版未列推薦信，中正當期母校第二階仍列，不能自行免除母校要求。",
+          "value": "2027春第一次：線上申請、在學、成績、語言、Study Plan Form1、效期≥開課後6月護照、3.5×4.5cm照片。第二次：簽證copy、航班、本人銀行USD6000一期／12000兩期；非OECD銀行須正本，未列銀行認證。在學／成績非OECD須正本及依國別Apostille／韓國使領館認證。TB陰性與兩劑麻疹僅宿舍申請者，送件時點未載。Host未列推薦信，但中正第二階仍須；不能免母校要求。",
           "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
@@ -22645,7 +22748,7 @@
         },
         "visa": {
           "status": "verified_current",
-          "value": "2027春factsheet要求入境前D-2-6；visitor不可境內轉、K-ETA不能就讀。簽證文件清單明示reference only，個人臺籍辦理需向官方領務資訊核對；非OECD在學／銀行認證與USD6000一期／12000一年按原文，財力不是生活費估價。",
+          "value": "2027春factsheet要求入境前D-2-6；visitor不可境內轉、K-ETA不能就讀。p7簽證文件清單明示reference only，個人需向官方使領館核對；其非OECD在學證明列Apostille／韓國使領館認證，銀行只列USD6000一期／12000一年資金證明，未列認證。p3第二次學生送件另列銀行本人名下、非OECD須正本；不把在學／成績文件的認證套到銀行。",
           "reason": "新版正文標2027 Spring並與官方incoming入口核對；歷史版本保留在來源及本輪前後紀錄，不作當期文件。",
           "evidence": [
             {
@@ -22659,6 +22762,21 @@
               "checked_at": "2026-10-08T12:03:07.145666+00:00",
               "status": "verified_current",
               "excerpt": "■ Visa - Exchange students are required to obtain a student visa (D-2-6) to study in Korea. Students must apply for their D-2-6 visa prior to arrival. ※ A visitor visa cannot be converted into a student visa from within Korea. Pursuing studies under a K-ETA (Tourist Visa) is strictly prohibited. - Following the Ministry of Justice’s updated regulations and tightened immigration policies introduced in June 2022, additional documentation is now required for exchange students. ※ The document list below is for reference only. Please be sure to contact the embassy or consulate of your home country to verify the exact required documents for your visa. ▶ Nationals of OECD countries - Certificate of Admission - Letter of Acceptance - Certificate of Business Registration ▶ Nationals of Non-OECD countries - Certificate of Admission - Letter of Acceptance - Certificate of Business Registration - Certificate of Enrollment ⋅ For Apostille member countries: Must be notarized with an Apostille ⋅ For non-Apostille countries: Must be authenticated by the Korean Embassy - Bank statement: The statement must demonstrate sufficient funds to cover living",
+              "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+              "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
+              "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            },
+            {
+              "source_id": "p48-r14-factsheet2027",
+              "source_url": "https://global.seoultech.ac.kr/storage/irt2/ckfinder/files/84A62D0377ED4AB18B19C2477B67BC82.pdf",
+              "source_pages": [
+                7
+              ],
+              "academic_year": "PDF正文2027 Spring；入口正文2027/2028的Spring2027，非只看連結名稱",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:03:07.145666+00:00",
+              "status": "verified_current",
+              "excerpt": "▶ Nationals of Non-OECD countries - Certificate of Admission - Letter of Acceptance - Certificate of Business Registration - Certificate of Enrollment ⋅ For Apostille member countries: Must be notarized with an Apostille ⋅ For non-Apostille countries: Must be authenticated by the Korean Embassy - Bank statement: The statement must demonstrate sufficient funds to cover living expenses during the exchange period (USD 6,000 for one semester / USD 12,000 for one academic year). 5. Visa",
               "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
               "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
               "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
@@ -22863,10 +22981,24 @@
           "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
         },
         "transport": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "校級Visitor’s Info列Gongreung／Gongneung站7號線1或2號出口步行約600m／10分鐘、Nowon03小巴及仁川機場6100路線。頁未標2027；18,000KRW舊／未年價與機場站位不當當期保證，出發前另查營運方。",
+          "status": "needs_confirmation",
+          "evidence": [
+            {
+              "source_id": "p48-r16-visitor",
+              "source_url": "https://en.seoultech.ac.kr/about/vinfo",
+              "source_pages": [],
+              "academic_year": "未載2027適用年度；一般公開服務／指定校區",
+              "application_round": "一般服務或舊年度參考，非申請梯次",
+              "checked_at": "2026-10-08T12:44:41.761320+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "By Limousine Bus A . Walk to the bus stop, 1st Floor 3B, 10A in the Incheon Airport B . Buy ticket for, and take Limousine Bus Number 6100. Fair : 18,000KRW Time Required : about 80 minutes Contact : 02-551-0790 C . Get off the bus at Gongreung Station on Line 7. D . Walk to SeoulTech main gate for about 10 minutes, take a taxi, or the village bus number Nowon 03 from Exit 2. By Subway Take Exit 1 or 2 at Gongreung Station on Line 7 and walk 600m(10 min.) or take a taxi, or the village bus number Nowon 03 from Exit 2 Top | Korean | Chinese < 232 Gongneung-ro, Nowon-gu, Seoul, 01811, korea Tel : +82-2-970-6114,7114 Fax : +82-2-970-6088 About SEOULTECH Vision and ",
+              "content_hash": "a30ac924cd24115f4b880edc2cfd6541328b1faf594f8a6410481c4dc418b8eb",
+              "text_sha256": "0293b449bbbd348cba666708a6c850eba0bd23fe9028fbb13e4320e739a3dfb8",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            }
+          ],
+          "reason": "真實校級交通頁，不用無正文國際處導航補值；路線時效仍待核。"
         },
         "campus_life": {
           "value": "2027春官方ISC／buddy由本地學生支援交換生校園適應；未承諾免費接機、配對日或活動費全免。",
@@ -22901,7 +23033,7 @@
         "host_individual_requirements": 12,
         "host_stages": {
           "student_application": 7,
-          "after_application": 3,
+          "second_submission": 3,
           "conditional_program": 2
         },
         "host_list_completeness": "partial_not_exhaustive",
@@ -23180,7 +23312,7 @@
             ],
             "conditional": false,
             "condition": null,
-            "stage": "after_application"
+            "stage": "second_submission"
           },
           {
             "requirement": {
@@ -23214,7 +23346,7 @@
             ],
             "conditional": false,
             "condition": null,
-            "stage": "after_application"
+            "stage": "second_submission"
           },
           {
             "requirement": {
@@ -23248,7 +23380,7 @@
             ],
             "conditional": false,
             "condition": null,
-            "stage": "after_application"
+            "stage": "second_submission"
           },
           {
             "requirement": {
@@ -23584,7 +23716,7 @@
             "needs_confirmation": true,
             "download_available": false,
             "contact_unit": "outbound@ccu.edu.tw",
-            "stage": "after_application",
+            "stage": "second_submission",
             "conditional": false,
             "condition": null,
             "official_form_verified": false
@@ -23608,7 +23740,7 @@
             "needs_confirmation": true,
             "download_available": false,
             "contact_unit": "outbound@ccu.edu.tw",
-            "stage": "after_application",
+            "stage": "second_submission",
             "conditional": false,
             "condition": null,
             "official_form_verified": false
@@ -23632,7 +23764,7 @@
             "needs_confirmation": true,
             "download_available": false,
             "contact_unit": "outbound@ccu.edu.tw",
-            "stage": "after_application",
+            "stage": "second_submission",
             "conditional": false,
             "condition": null,
             "official_form_verified": false
@@ -23651,6 +23783,7 @@
           "arrival",
           "course_restrictions",
           "academic_calendar",
+          "transport",
           "campus_life"
         ],
         "completeness_items": [
@@ -23718,9 +23851,11 @@
           {
             "key": "transport",
             "label": "交通",
-            "status": "missing",
-            "note": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。",
-            "source_urls": []
+            "status": "needs_confirmation",
+            "note": "真實校級交通頁，不用無正文國際處導航補值；路線時效仍待核。",
+            "source_urls": [
+              "https://en.seoultech.ac.kr/about/vinfo"
+            ]
           },
           {
             "key": "campus_life",
@@ -23749,7 +23884,7 @@
           }
         ],
         "city": "首爾",
-        "transport_present": false,
+        "transport_present": true,
         "campus_life_present": true,
         "life_location_note": "官方城市／聯絡地址參考：首爾（needs_confirmation）。尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。 接收校區按所選計畫另核。",
         "life_categories": [
@@ -23814,7 +23949,24 @@
           },
           {
             "theme": "transport",
-            "evidence": [],
+            "evidence": [
+              {
+                "theme": "transport",
+                "kind": "official",
+                "text": "校級Visitor’s Info列Gongreung／Gongneung站7號線1或2號出口步行約600m／10分鐘、Nowon03小巴及仁川機場6100路線。頁未標2027；18,000KRW舊／未年價與機場站位不當當期保證，出發前另查營運方。（適用年度或條件待確認；未載2027適用年度；一般公開服務／指定校區；查核2026-10-08）",
+                "sources": [
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://en.seoultech.ac.kr/about/vinfo"
+                  }
+                ],
+                "checked_at": "2026-10-08T12:44:41.761320Z",
+                "scope": "適用年度或條件待確認；未載2027適用年度；一般公開服務／指定校區；真實校級交通頁，不用無正文國際處導航補值；路線時效仍待核。",
+                "original_excerpt": false,
+                "original_text": "",
+                "translation_status": "original"
+              }
+            ],
             "inference": null,
             "next_step": "以錄取校區和住宿地址核對路線、轉乘及末班車，不能用直線距離換算通勤時間。",
             "search_url": "https://www.google.com/search?q=Seoul+National+University+of+Science+and+Technology+%E9%9F%93%E5%9C%8B+%E9%A6%96%E7%88%BE+campus+access+public+transport"
@@ -31947,232 +32099,362 @@
       "host_fields": {
         "program_scope": {
           "status": "verified_current",
-          "value": "學士、碩士、博士course-taking與research分開；不是HCMUTE。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "AY2026/27第二學期學生academic exchange：Bachelor／Master／PhD可申請；course-taking與research、staff／scholar及14天團體文化交流分開，不是HCMUTE。",
+          "reason": "最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
               "source_pages": [
-                3
+                2
               ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
               "status": "verified_current",
-              "excerpt": "Good C 2.0 5.00 – under 6.00 Average D+ 1.5 4.00 – under 5.00 Poor Fail D 1.0 3.00 – under 4.00 Very poor F 0.0 0.00 – under 3.00 All levels (Bachelor, Master’s, and PhD) of inbound exchange students are eligible. Lecturers in Engineering, Business or Architecture related areas are welcome for teaching mobility at HCMUT. Non-academic staff (esp. from Interna",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+              "excerpt": "All levels (Bachelor, Master’s, and PhD) of inbound exchange students are eligible to apply. Lecturers in Engineering, Business or Architecture related areas are welcome for teaching mobility at HCMUT. Non-academic staff (esp. from International Office) from partner universaities are welcome for one week mobility.",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
         "eligibility": {
           "status": "verified_current",
-          "value": "GPA至少2.5/4；接收依讀書/研究計畫與導師/科系匹配。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "新版GPA≥2.5/4.0、母校正式提名；接收依study/research plan相容及科系／導師核定，中正母校outbound资格另適用。",
+          "reason": "最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
-              "source_pages": [
-                2
-              ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "source_id": "p67-r16-current-news-public-api",
+              "source_url": "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:42.127681+00:00",
               "status": "verified_current",
-              "excerpt": "peaking – Writing 280) or an equivalent level of English proficiency - Acculative GPA at sending institution (for students only): At least 2.5/4 ",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+              "excerpt": "Cumulative GPA: At least 2.5/4.0 at the home institution. Nomination: Students must be officially nominated by their home university in the nomination letter. Application Procedures and Deadlines 1. Nomination The home university nominates eligible students to the External Affair",
+              "content_hash": "c91ee845891beceb538c33bc2ed746aafd17531e72ea61c94935daa4d270c257",
+              "text_sha256": "7542fb8344cd793a67b83240554293c9e2b9db3c26bc9832dded1abf73783994",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "source_pages": [
+                3
+              ],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
+              "status": "verified_current",
+              "excerpt": "If students intend to conduct research, the supervising professor in our available field of study will be willing to communicate in English. In all cases, the admission will be based on the compatibility of the study/research plan written in the Application Form. Course registration After consulting with a professor from our faculties, students should select courses from the course catalogue provi",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
         "language": {
           "status": "verified_current",
-          "value": "CEFR B2/IELTS6/iBT79；TOEIC須L&R730與S&W280組合，不以單一TOEIC总分判定。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "新版CEFR B2／IELTS6.0／TOEFL iBT79／TOEIC L&R730且S&W280，或同等英文能力；不能用單一TOEIC總分判定。中正母校證明有效年限另適用。",
+          "reason": "最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
-              "source_pages": [
-                2
-              ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "source_id": "p67-r16-current-news-public-api",
+              "source_url": "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:42.127681+00:00",
               "status": "verified_current",
-              "excerpt": "nglish The requirements are as follows: - Language requirement: CEFR B2, IELTS 6.0, TOEFL iBT 79, TOEIC (Listening – Reading 730, Speaking – Writing 280) or an equivalent level of English proficiency - Acculative GPA at sending institution (for students only): At least 2.5/4 ",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+              "excerpt": "English Language Proficiency: CEFR B2, IELTS 6.0, TOEFL iBT 79, TOEIC (Listening & Reading: 730; Speaking & Writing: 280), or an equivalent level of English proficiency. Cumulative GPA: At least 2.5/4.0 at the home institution. Nomination: Students must be officially nominated by their home university in the ",
+              "content_hash": "c91ee845891beceb538c33bc2ed746aafd17531e72ea61c94935daa4d270c257",
+              "text_sha256": "7542fb8344cd793a67b83240554293c9e2b9db3c26bc9832dded1abf73783994",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
         "nomination_deadline": {
           "status": "verified_current",
-          "value": "2026/27第二學期提名9/15（對應2026-09-15，未載时刻）。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "新版2026/27第二學期提名2026-09-30（已過，未載時刻）；3月版9/15已被8月PDF與本期公告取代，母校校內收件截止另適用。",
+          "reason": "最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
-              "source_pages": [
-                2
-              ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "source_id": "p67-r16-current-news-public-api",
+              "source_url": "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:42.127681+00:00",
               "status": "verified_current",
-              "excerpt": "(summer semester) July - August (not accepting students for course taking) 2) Nomination deadline 1st Semester 8 May 2nd Semester 15 September 3) Application deadline 1st Semester 15 May 2nd Semester 1 October 4) Orientation for new international students 1st Semester Middle August, 2026 2nd Semester Late December 2026/Early 2027 ",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+              "excerpt": "Nomination Deadline: 30 September 2026 Application Deadline: 15 October 2026 Fact Sheet and Further Information Ple",
+              "content_hash": "c91ee845891beceb538c33bc2ed746aafd17531e72ea61c94935daa4d270c257",
+              "text_sha256": "7542fb8344cd793a67b83240554293c9e2b9db3c26bc9832dded1abf73783994",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
+              "status": "verified_current",
+              "excerpt": "2nd Semester 30 September",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
         "application_deadline": {
-          "status": "conflict",
-          "value": "跨來源矛盾：中正2027春季轉載「Application deadline申請截止日: 2026/10/15」；合作校當期來源「第二學期10/1（對應2026-10-01，已過）；表單由提名後提供。」。須確認中正個別通知及實際收件日，不承諾較晚日期。",
-          "reason": "母校當期轉載與合作校同學年度／同交換申請流程載不同截止；未查得對中正的特別延期，不能任選其中一天。",
+          "status": "verified_current",
+          "value": "新版2026/27第二學期申請2026-10-15（未載時刻）；8月PDF、本期公告及中正2027春p67同日。3月版10/01保留參考，版本差異已核實更新；母校收件已截止不代表仍可向中正新申請。",
+          "reason": "最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
+              "source_id": "p67-r16-current-news-public-api",
+              "source_url": "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:42.127681+00:00",
+              "status": "verified_current",
+              "excerpt": "Application Deadline: 15 October 2026 Fact Sheet and Further Information Please visit",
+              "content_hash": "c91ee845891beceb538c33bc2ed746aafd17531e72ea61c94935daa4d270c257",
+              "text_sha256": "7542fb8344cd793a67b83240554293c9e2b9db3c26bc9832dded1abf73783994",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
               "source_pages": [
                 2
               ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "conflict",
-              "excerpt": "ing) 2) Nomination deadline 1st Semester 8 May 2nd Semester 15 September 3) Application deadline 1st Semester 15 May 2nd Semester 1 October 4) Orientation for new international students 1st Semester Middle August, 2026 2nd Semester Late December 2026/Early 2027 III. Nomination / Application process Nomination process Please inf",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
-            },
-            {
-              "source_id": "p67-ccu-deadline-crosscheck",
-              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
-              "source_pages": [
-                67
-              ],
-              "academic_year": "中正2027春季名額表，2026.09.17版",
-              "application_round": "中正2027春季名額表，2026.09.17版",
-              "checked_at": "2026-10-08T04:48:35.526956+00:00",
-              "status": "conflict",
-              "excerpt": "ang=en&tab=1 備註(Notes) Application deadline申請截止日: 2026/10/15 學期時間: 2027/01/11– 2027/06/07 每學期至少修讀11學分 不可跨學制（學士班／碩士班）修課",
-              "note": "本快照只抽取此校頁，原PDF共121頁；轉載接收申請截止與同年度合作校文件比較，沒有個別延期通知。",
-              "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
-              "text_sha256": "815f16e6ed3b0f256215baf6346a19284f905af2893c37ac51f831537a32f40f"
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
+              "status": "verified_current",
+              "excerpt": "2nd Semester 15 October 4) Orientation for new internat",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
         "documents": {
           "status": "verified_current",
-          "value": "學生專用DOCX已讀：本人簽名+全名exchangeform、母校提名信、CV、動機信、英文正式成績、英文能力證據、護照copy、passportphoto；不是scholar/staff表。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "新版學生表8類：本人簽名全名Academic Exchange Form、母校提名信、CV、動機信、英文正式成績、英文能力證明、護照1copy、照片1copy。新提名範本需母校抬頭及負責人Signature and Seal；保險copy於到校前一週另繳，非初次申請deadline。GoogleForms內部附加欄位HTTP401未取得，清單仍partial。",
+          "reason": "最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
           "evidence": [
             {
-              "source_id": "p67-hostw1",
-              "source_url": "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
+              "source_id": "p67-r16-student-form2026",
+              "source_url": "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
               "source_pages": [],
-              "academic_year": "未標年表格；由AY2026/27 factsheet學生專用連結取得",
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:57.398395+00:00",
               "status": "verified_current",
-              "excerpt": "cademic Exchange Form are correct and complete. _____________ __________________ ________________ City Date Signature Attachments Required documents: Academic exchange form with signature, full name Nomination letter Curriculum Vitae Motivation letter Official Academic Transcript in English (issued by the applicant’s home institution) A ",
-              "note": "已下載DOCX並讀取全部段落及表格；以當期factsheet連結確認學生用途，表本身未標年；與scholar/staff表分開。",
-              "content_hash": "094a959fd378cd15b50371f512034bd1ee632f5925751e23914edc66125fc2bf",
-              "text_sha256": "b66bb6da7e21264b05e0a90bcc181dafb8a98ffcf4cce92495e330d760b1795a"
+              "excerpt": "Required documents: □ Academic exchange form with signature, full name □ Nomination letter □ Curriculum Vitae □ Motivation letter □ Official Academic Transcript in English (issued by the applicant’s home institution) □ A proof of English language skills □ One copy of the passport □ One copy of the passport photo I. | General information about the applicant | General information about the applicant | General information about the applicant Last name | | | Middle name (if applicable) | | | First name | | | Gender (male/ female",
+              "content_hash": "b33ed6617b4e92ac7b0fed37ccf47a3432a6ed5088b97be198473717d4338f15",
+              "text_sha256": "2927fe843de29f41f1746585fbee6981000afd6f29b9de5272d3cc583171e4bc",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-nomination-template",
+              "source_url": "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:57.400580+00:00",
+              "status": "verified_current",
+              "excerpt": "LETTER HEAD OF THE HOME UNIVERSITY To: Ho Chi Minh City University of Technology (HCMUT) 268 Ly Thuong Kiet St., Dien Hong Ward, Ho Chi Minh City, Viet Nam Emai",
+              "content_hash": "7dbe14dd7de9cfac977bc729f3e004cac0919b1a0fe86eaaee46d0ddf8657e86",
+              "text_sha256": "913733d4a087aba13e3a2d5e0c57daf3a036d0a60985b5e40f725cf38cd6cb51",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-nomination-template",
+              "source_url": "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:57.400580+00:00",
+              "status": "verified_current",
+              "excerpt": "(Signature and Seal) No. | Full name | D",
+              "content_hash": "7dbe14dd7de9cfac977bc729f3e004cac0919b1a0fe86eaaee46d0ddf8657e86",
+              "text_sha256": "913733d4a087aba13e3a2d5e0c57daf3a036d0a60985b5e40f725cf38cd6cb51",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "source_pages": [
+                4
+              ],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
+              "status": "verified_current",
+              "excerpt": "The students are required to provide a copy of their insurance to HCMUT one week before their arrival. Incoming stu",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
         "application_forms": {
-          "status": "verified_current",
-          "value": "學生ACADEMICEXCHANGEFORM已公開下載DOCX並完整讀取，附簽名宣告/個資/visa/學制/學習计划；表未標年，依當期2026/27factsheet學生連結取得，提名前仍確認有無更新。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "status": "needs_confirmation",
+          "value": "新版學生ACADEMIC EXCHANGE FORM及母校Nomination Letter DOCX均由本期公開資料夾取得並實讀；PDF学生專用Xtu8muy指向同一新表ID。學生本人簽名／全名，母校提名範本抬頭紙、負責人簽名與Seal。公告及PDF兩個online link實際皆GoogleForms HTTP401，未取得表單內欄位／追加附件，不登入或代提交。",
+          "reason": "兩份本期空白DOCX已核實取得，但個人online application兩入口HTTP401，內部欄位／追加附件未讀，整體表單取得仍待確認；不是官方明示尚未公告。",
           "evidence": [
             {
-              "source_id": "p67-hostw1",
-              "source_url": "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
+              "source_id": "p67-r16-current-news-public-api",
+              "source_url": "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
               "source_pages": [],
-              "academic_year": "未標年表格；由AY2026/27 factsheet學生專用連結取得",
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "verified_current",
-              "excerpt": "ACADEMIC EXCHANGE FORM (for student) With my signature, I hereby confirm that I do not suffer from any disease, which might endanger the health of others. I have not been declared as incapacitated and am not in p",
-              "note": "已下載DOCX並讀取全部段落及表格；以當期factsheet連結確認學生用途，表本身未標年；與scholar/staff表分開。",
-              "content_hash": "094a959fd378cd15b50371f512034bd1ee632f5925751e23914edc66125fc2bf",
-              "text_sha256": "b66bb6da7e21264b05e0a90bcc181dafb8a98ffcf4cce92495e330d760b1795a"
+              "checked_at": "2026-10-08T12:51:42.127681+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Application form and nomination letter template can be downloaded at: https://ioffice.hcmut.edu.vn/url/s/vdT5yxx 3. Application Deadlines Nomination Deadline: 30 September 2026 Application Deadline: 15 October 2026 Fact Sheet and Further Information Please visit the following link to acces",
+              "content_hash": "c91ee845891beceb538c33bc2ed746aafd17531e72ea61c94935daa4d270c257",
+              "text_sha256": "7542fb8344cd793a67b83240554293c9e2b9db3c26bc9832dded1abf73783994",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-student-form2026",
+              "source_url": "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:57.398395+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "ACADEMIC EXCHANGE FORM (for student) With my signature, I hereby confirm that I do not suffer from any disease, which might endanger the health of others. I have not been declared as incapacitated and am not in provisional tutelage. False, erroneous, or incomplete statements can ",
+              "content_hash": "b33ed6617b4e92ac7b0fed37ccf47a3432a6ed5088b97be198473717d4338f15",
+              "text_sha256": "2927fe843de29f41f1746585fbee6981000afd6f29b9de5272d3cc583171e4bc",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-nomination-template",
+              "source_url": "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:57.400580+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "(Signature and Seal) No. | Full nam",
+              "content_hash": "7dbe14dd7de9cfac977bc729f3e004cac0919b1a0fe86eaaee46d0ddf8657e86",
+              "text_sha256": "913733d4a087aba13e3a2d5e0c57daf3a036d0a60985b5e40f725cf38cd6cb51",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
         "academic_calendar": {
           "status": "verified_current",
-          "value": "第二學期2027年1–6月；orientation2026年12月底/2027年初；summer不接受course-taking。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "本期公告及8月PDF：第二學期課程與考試2027-01-11至2027-06-07，迎新公告2027-01-08；summer7–8月不接受course-taking。不是以3月版泛稱1–6月猜日期。",
+          "reason": "最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
-              "source_pages": [
-                2
-              ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "source_id": "p67-r16-current-news-public-api",
+              "source_url": "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:42.127681+00:00",
               "status": "verified_current",
-              "excerpt": "du.vn/dao-tao/lich-hoc-vu 1st Semester August – January 2nd Semester January – June 3rd semester (summer semester) July - August (not accepting students for course taking) 2) Nomination deadline 1st Semester 8 May 2nd Semester 15 September 3) Application deadline 1st Semester 15 May 2nd Semester 1 October 4) Orientation for new international students 1st Sem",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+              "excerpt": "Academic Calendar – Second Semester, Academic Year 2026/2027 Orientation: 08 January 2027 Courses and Exams: 11 January – 07 June 2027 General Requirements English Language Proficiency: CEFR B2, IELTS 6.0, TOEFL iBT 79, TOEIC (Listening & R",
+              "content_hash": "c91ee845891beceb538c33bc2ed746aafd17531e72ea61c94935daa4d270c257",
+              "text_sha256": "7542fb8344cd793a67b83240554293c9e2b9db3c26bc9832dded1abf73783994",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
+              "status": "verified_current",
+              "excerpt": "2nd Semester 11 January 2027 – 07 June 2027 3rd semester (summer semester) July - August (not accepting students for course taking) 2) Nomination",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
         "course_restrictions": {
           "status": "verified_current",
-          "value": "修課至少11本地學分（22ECTS）；英語課依學制/專業/學期，錄取後與教授協調選課。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "新版上課型交換至少11credits／semester（22ECTS）；英文課按學制／科系及當期開課，研究由導師及讀書／研究計畫相容決定。BkeL教材平台與面授、個別線上安排分開，summer不收course-taking。",
+          "reason": "最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
               "source_pages": [
                 3
               ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
               "status": "verified_current",
-              "excerpt": "gue provided to them after being admited as our Exchange Student. In case of course-attendance, the student is required to select at least 11 credits/semester at HCMUT (equivalent to 22 ECTS) 3) Credit system 4) Grading scale 5) Weekly class schedule 6) Types of courses Scale from 0-4 Scale from 0-10 Classfication Graded by letter Graded by numbe",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+              "excerpt": "The availability of courses in English varies at different academic levels and majors and depends on each academic carlendar. These courses are under 30 international Bachelor and Master programs at HCMUT. If students intend to conduct research, the supervising professor in our available field of study will be willing to communicate in English. In all cases, the admission will be based on the compatibility of the study/research plan written in the Application Form. Course registration After consulting with a professor from our faculties, students should select courses from the course catalogue provided to them after being admited as our Exchange Student. In case of course-attendance, the student is required to select at least 11 credits/semester at HCMUT (equivalent to 22 ECTS) 3) Credit system 4) Grading sca",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "source_pages": [
+                3
+              ],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
+              "status": "verified_current",
+              "excerpt": "All lecturers are required to use “Bach Khoa e-learning – BkeL” (an internal online platform at HCMUT) to facilitate their teaching activities and share course-related materials/documents to students.",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
         "housing": {
           "status": "verified_current",
-          "value": "BachKhoa宿舍不保證，OISP可協助與提供替代住宿。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "新版Bach Khoa Dormitory床位有限不保證；OISP可支援註冊或轉介housing agents，oisp@hcmut.edu.vn。不把supporting services誤當保證住房或免費接機。",
+          "reason": "最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
               "source_pages": [
-                4
+                3
               ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
               "status": "verified_current",
-              "excerpt": ": https://hcmut.edu.vn/en/study/support-help?lang=en Note: Due to limited availability, accommodation at Bach Khoa Dorminatory is not always guaranteed. In that case, we can refer students to student housing agents. Our Office for International Study Programs can support international students in registering for the dormitory. Contact: ois",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+              "excerpt": "Note: Due to limited availability, accommodation at Bach Khoa Dorminatory is not always guaranteed. In that case, we can refer students to student housing agents. Our Office for International Study Programs can support international students in registering for the dormitory. Contact: oisp@hcmut.edu.vn Scale from 0-4 Scale from 0-10 Classfication Graded by letter Graded by number A+ 4.0 9.00 - 10.00 Excellent Pass A 3.5 8.00 – ",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-current-news-public-api",
+              "source_url": "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:42.127681+00:00",
+              "status": "verified_current",
+              "excerpt": "Supporting Services: HCMUT provides support with visa applications, dormitory registration, orientation, academic advising, cultural activities, and other practical matters throughout the exchange period. Academic Calendar – Second Semester, Academic Year",
+              "content_hash": "c91ee845891beceb538c33bc2ed746aafd17531e72ea61c94935daa4d270c257",
+              "text_sha256": "7542fb8344cd793a67b83240554293c9e2b9db3c26bc9832dded1abf73783994",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
@@ -32184,111 +32466,135 @@
         },
         "costs": {
           "status": "verified_current",
-          "value": "校方表列住宿100–300、餐200–300、交通10–150、其他，总350–850USD；此表未寫計價期間，不自行標月費。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "8月新版估列USD住宿100–300、食物200–300、交通10–150、utilities5–15、personal35–85、總350–850；原文表未注明計價期間且分項區間不等總額，不能斷言每月總實繳。",
+          "reason": "最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
               "source_pages": [
                 4
               ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
               "status": "verified_current",
-              "excerpt": "us): 10 – 150 USD (depending in the students’ choice of transportation) Utilities: 5 -15 USD Personal expense: 35 – 85 USD Total: 350 – 850 USD Students who stay at HCMUT for academic exchange period are required to obtain a study visa before entering Vietnam, following the procedures below. 1. After finalizing and signing a Learni",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+              "excerpt": "Accommodation: 100 – 300 USD Food: 200 -300 USD Transportation (bus): 10 – 150 USD (depending in the students’ choice of transportation) Utilities: 5 -15 USD Personal expense: 35 – 85 USD Total: 350 – 850 USD Students who stay at HCMUT for academic exchange period are r",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
         "insurance": {
           "status": "verified_current",
-          "value": "建議出發前旅遊保險，须抵達前1週交保險影本；未載保額。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "新版建議出發前購旅程保險；必須於到校前一週向HCMUT繳保險copy。未載確切日／保額／指定產品，不把建議投保文字改成指定強制商品。",
+          "reason": "最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
               "source_pages": [
                 4
               ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
               "status": "verified_current",
-              "excerpt": "incidents during travel from and back to their countries. The students are required to provide a copy of their insurance to HCMUT one week before their arrival. Imcoming students from HCMUT’s partners with valid agreements can benefit from tuition waivers. Exchange students can have the opportunity to receive scholarship s to partly cover necessar",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+              "excerpt": "Before students leave their countries, we strongly recommend that they obtain travel insurance, which covers difficulties, medical helps or incidents during travel from and back to their countries. The students are required to provide a copy of their insurance to HCMUT one week before their arrival. Incoming students from HCMUT's partner institutions with valid exchange agreements are el",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
         "visa": {
-          "status": "conflict",
-          "value": "同頁先列越南StudyVisa/ApprovalLetter，後混入Kyoto/JapaneseEmbassyCOE流程，來源矛盾；不可當完整赴越簽證指引。",
-          "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+          "status": "verified_current",
+          "value": "8月新版第4頁可見流程：各方簽妥Learning Agreement後HCMUT向Vietnam Immigration申請Visa Approval Letter，學生收到掃描核准信及Acceptance Letter後至指定越南使領館辦study visa。新學生表要求正確選定領證館址與single／multiple-entry，聲明送出後不可更改；依校方及官方領務確認個人適用。",
+          "reason": "8月新版第4頁實際渲染的越南流程與新學生表一致；原3月及新8月PDF抽取都帶出畫面未顯示的Japan/Kyoto字串，先前矛盾是抽取殘留誤判，完整原文與頁面圖另存本輪紀錄。",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
               "source_pages": [
                 4
               ],
-              "academic_year": "2026/2027（2026年3月更新）",
-              "application_round": "2026/2027（2026年3月更新）",
-              "checked_at": "2026-10-08T00:00:00Z",
-              "status": "conflict",
-              "excerpt": "ligibility (CoE) application to our university with other required documents. We will submit the completed CoE application to the immigration office in Kyoto. As soon as we receive the CoE from the immigration office, we will send it to the student or the international office of your university by post. When the students receive the CoE, please ",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
+              "status": "verified_current",
+              "excerpt": "Students who stay at HCMUT for academic exchange period are required to obtain a study visa before entering Vietnam, following the procedures below. 1. After the Learning Agreement has been finalized and signed by all parties, HCMUT will begin the internal process of preparing the required visa documents for incoming students. 2. HCMUT will submit the student's visa application documents to the Vietnam Immigration Department to obtain a Visa Approval Letter on the student's behalf. 3. Once approved, HCMUT will send the student a scanned copy of the Visa Approval Letter together with the Letter of Acceptance. 4. The student must present their original passport and the Visa Approval Letter to the Vietnamese Embassy or Consulate specified in the application form, either in their home country or in another country, to obtain a study visa. Notes: - The Visa Approval Letter issued by the Immigration Department will enable the students to obtain a visa shortly. - The incoming students had better NOT apply for a tourist visa themselves before receiving the Visa Approval Letter. A tourist visa doesn’t mean for study purposes and will not be accepted for an exchange stay ",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-student-form2026",
+              "source_url": "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:57.398395+00:00",
+              "status": "verified_current",
+              "excerpt": "Place of Visa Collection (Please check and provide the name and full address of the Vietnamese Embassy/Consulate where you will collect your Student Visa) | ☐ Vietnamese Embassy in <Country> (please specify the country) Full Address: ______________________________________________ ☐ Vietnamese Consulate General in <City, Country> (please specify the city and country) Full Address: _______________________________________________ Important notes: This information is mandatory for HCMUT to process your Visa Approval Letter, which is required for your Student Visa. The Visa Approval Letter can only be processed by HCMUT, with no alternative procedure or substitute under applicable regulations. Please provide the correct Vietnamese Embassy/Consulate. Do not leave this field blank. Once submitted",
+              "content_hash": "b33ed6617b4e92ac7b0fed37ccf47a3432a6ed5088b97be198473717d4338f15",
+              "text_sha256": "2927fe843de29f41f1746585fbee6981000afd6f29b9de5272d3cc583171e4bc",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
         "arrival": {
           "status": "verified_current",
-          "value": "2026/27第二學期迎新：2026年12月下旬／2027年初（Late December 2026/Early 2027）。來源未列確切日期、抵達日或接機安排，須依個別通知確認，不產生精確提醒。",
-          "reason": "第二輪重讀已取得內容或官方替代入口；仍只列來源實際載明的範圍。",
+          "value": "本期2026-08-26公告明确迎新2027-01-08、課程考試2027-01-11至06-07；8月PDF仍寫Late December2026/Early2027，公告補具體日。未載接機／宿舍入住／必須抵達時刻，不自行產生精確提醒。",
+          "reason": "最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
-              "source_pages": [
-                2
-              ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "source_id": "p67-r16-current-news-public-api",
+              "source_url": "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:42.127681+00:00",
               "status": "verified_current",
-              "excerpt": "nts 1st Semester Middle August, 2026 2nd Semester Late December 2026/Early 2027 III. Nomination / Application process Nomination process Please inform us by email at: inter@hcmut.edu.vn of each nominated staff/student’s full name, gender, major and intended period of mobility at our university. After receiving this information, we will send the nominee an Application ",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+              "excerpt": "Orientation: 08 January 2027 Courses and Exams: 11 January – 07 June 2027 General Requirements English Language Proficiency: ",
+              "content_hash": "c91ee845891beceb538c33bc2ed746aafd17531e72ea61c94935daa4d270c257",
+              "text_sha256": "7542fb8344cd793a67b83240554293c9e2b9db3c26bc9832dded1abf73783994",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
         "host_tuition": {
           "status": "verified_current",
-          "value": "有效伙伴協議的incoming可免學費，獎學金非保证。",
-          "reason": "當期來源列出此項；仍依提名後個別通知辦理。",
+          "value": "新版有有效exchange agreement的partner學生免host tuition；年度scholarship預算與機會非保証，母校註冊費及個人錄取身分另適用。",
+          "reason": "最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
+              "source_id": "p67-r16-current-news-public-api",
+              "source_url": "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:42.127681+00:00",
+              "status": "verified_current",
+              "excerpt": "Tuition Fee Waiver: Exchange students from HCMUT partner universities are eligible for a full tuition fee waiver during their exchange period at HCMUT. Supporting Services: HCMUT provides support with visa applications, dormi",
+              "content_hash": "c91ee845891beceb538c33bc2ed746aafd17531e72ea61c94935daa4d270c257",
+              "text_sha256": "7542fb8344cd793a67b83240554293c9e2b9db3c26bc9832dded1abf73783994",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
               "source_pages": [
                 4
               ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
               "status": "verified_current",
-              "excerpt": "copy of their insurance to HCMUT one week before their arrival. Imcoming students from HCMUT’s partners with valid agreements can benefit from tuition waivers. Exchange students can have the opportunity to receive scholarship s to partly cover necessary expenses during their mobility period. We may decline to accept students according to our capa",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+              "excerpt": "Incoming students from HCMUT's partner institutions with valid exchange agreements are eligible for a tuition waiver. In addition, exchange students may have the opportunity to receive scholarships to partially cover their living and mobility expenses during their exchange period, subject to the availability of HCMUT's annual scholarship budget. We may decline to accept students according to our capacity, the changes in the circumstances due to infectious disease prevalence or natural ",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ]
         },
@@ -32305,44 +32611,44 @@
           "status": "verified_current",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
               "source_pages": [
                 1
               ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
               "status": "verified_current",
-              "excerpt": "6339 Website www.hcmut.edu.vn Postal Address 268 Ly Thuong Kiet street, Dien Hong Ward, Ho Chi Minh City, Viet Nam 2) Contact information for Exchange Program Partnership Agreement External Affairs Office Email: inter@hcmut.edu.vn Tel: + 84 28 38 652 442",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26",
-              "note": "指定段原文；不由其他年份、全校學位或下載成功推定交換資格。"
+              "excerpt": "Postal Address 268 Ly Thuong Kiet street, Dien Hong Ward, Ho Chi Minh City, Viet Nam 2) Contact information for Exchange Program Partnership Agreement External Affairs Office Email",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ],
-          "reason": "學校官方聯絡／校區資訊；代表聯絡或郵寄地址不等交換課程全在此地。"
+          "reason": "与2026年8月新版相同已核內容重新綁新版來源，舊3月版只保留歷史。"
         },
         "location": {
           "value": "6339 Website www.hcmut.edu.vn Postal Address 268 Ly Thuong Kiet street, Dien Hong Ward, Ho Chi Minh City, Viet Nam 2) Contact information for Exchange Program Partnership Agreement External Affairs Office Email: inter@hcmut.edu.vn Tel: + 84 28 38 652 442",
           "status": "verified_current",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
               "source_pages": [
                 1
               ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
               "status": "verified_current",
-              "excerpt": "6339 Website www.hcmut.edu.vn Postal Address 268 Ly Thuong Kiet street, Dien Hong Ward, Ho Chi Minh City, Viet Nam 2) Contact information for Exchange Program Partnership Agreement External Affairs Office Email: inter@hcmut.edu.vn Tel: + 84 28 38 652 442",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26",
-              "note": "指定段原文；不由其他年份、全校學位或下載成功推定交換資格。"
+              "excerpt": "Postal Address 268 Ly Thuong Kiet street, Dien Hong Ward, Ho Chi Minh City, Viet Nam 2) Contact information for Exchange Program Partnership Agreement External Affairs Office Email",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ],
-          "reason": "保存實際官方校址／城市原文；座標未取得，geocode保持pending。正式分配校區按program_scope／所選學院另核。"
+          "reason": "与2026年8月新版相同已核內容重新綁新版來源，舊3月版只保留歷史。"
         },
         "website": {
           "value": "https://hcmut.edu.vn/",
@@ -32371,22 +32677,22 @@
           "status": "verified_current",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
               "source_pages": [
-                3
+                2
               ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
               "status": "verified_current",
-              "excerpt": "Good C 2.0 5.00 – under 6.00 Average D+ 1.5 4.00 – under 5.00 Poor Fail D 1.0 3.00 – under 4.00 Very poor F 0.0 0.00 – under 3.00 All levels (Bachelor, Master’s, and PhD) of inbound exchange students are eligible. Lecturers in Engineering, Business or Architecture related areas are welcome for teaching mobility at HCMUT. Non-academic staff (esp. from Interna",
-              "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+              "excerpt": "All levels (Bachelor, Master’s, and PhD) of inbound exchange students are eligible to apply. Lecturers in Engineering, Business or Architecture related areas are welcome for teachi",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ],
-          "reason": "接收學制／學院與母校資格分開。待確認、排除或逐計畫條件不自動通過全校資格篩選。"
+          "reason": "与2026年8月新版相同已核內容重新綁新版來源，舊3月版只保留歷史。"
         },
         "colleges": {
           "value": null,
@@ -32399,28 +32705,57 @@
           "status": "verified_current",
           "evidence": [
             {
-              "source_id": "p67-mirror",
-              "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
               "source_pages": [
                 4
               ],
-              "academic_year": "2026/2027（2026年3月更新）",
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
               "application_round": "2027春季",
-              "checked_at": "2026-10-08T00:00:00Z",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
               "status": "verified_current",
-              "excerpt": " – 300 USD Food: 200 -300 USD Transportation (bus): 10 – 150 USD (depending in the students’ choice of transportation) Utilities: 5 -15 USD Personal expense: 35 – 85 USD Total: 350 – 850 USD Students who stay at HCMUT for academic exchange period are required to obtain a study visa before entering Vietnam, following the procedures below. 1. After finalizing and signing a Learning Agreement, HCMUT sends students a visa request form to fill in. 2. HCMUT submits all documents of the students’ study period to the Vietnamese Immigration Department for issuing the Visa Approval Letter. 3. HCMUT sends the scanned Visa Approval Letter + Acceptance Letter to the students. 4. The incoming students bri",
-              "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
-              "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26",
-              "note": "指定段原文；不由其他年份、全校學位或下載成功推定交換資格。"
+              "excerpt": "Transportation (bus): 10 – 150 USD (depending in the students’ choice of transportation) Utilities: 5 -15 USD Personal expense: 35 – 85 USD Total: 350 – 850 USD Students who stay a",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
             }
           ],
-          "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。"
+          "reason": "与2026年8月新版相同已核內容重新綁新版來源，舊3月版只保留歷史。"
         },
         "campus_life": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "2026/27第二學期新公告列簽證、宿舍註冊、迎新、academicadvising、culturalactivities及實務支援；8月factsheet列BkeL教材平台。迎新2027-01-08；不保證床位、接機或活動全免費。",
+          "status": "verified_current",
+          "evidence": [
+            {
+              "source_id": "p67-r16-current-news-public-api",
+              "source_url": "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "source_pages": [],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:42.127681+00:00",
+              "status": "verified_current",
+              "excerpt": "Supporting Services: HCMUT provides support with visa applications, dormitory registration, orientation, academic advising, cultural activities, and other practical matters throughout the exchange period. Academic Calendar – Second Semester, Academic Year 2026/2027 Orie",
+              "content_hash": "c91ee845891beceb538c33bc2ed746aafd17531e72ea61c94935daa4d270c257",
+              "text_sha256": "7542fb8344cd793a67b83240554293c9e2b9db3c26bc9832dded1abf73783994",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p67-r16-factsheet-updated2027",
+              "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "source_pages": [
+                3
+              ],
+              "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T12:51:57.399721+00:00",
+              "status": "verified_current",
+              "excerpt": "All lecturers are required to use “Bach Khoa e-learning – BkeL” (an internal online platform at HCMUT) to facilitate their teaching activities and share course-related materials/documents to students.",
+              "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+              "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            }
+          ],
+          "reason": "實讀當期公告與新版PDF支持服務，不再用r15JavaScript外殼或2025公告當政策。"
         }
       },
       "academic_filter_scope": {
@@ -32430,9 +32765,11 @@
       "documents": {
         "home_individual_requirements": 9,
         "mother_per_school_notes_retained": true,
-        "host_individual_requirements": 8,
+        "host_individual_requirements": 9,
         "host_stages": {
-          "student_application": 8
+          "student_application": 7,
+          "nomination": 1,
+          "post_offer": 1
         },
         "host_list_completeness": "partial_not_exhaustive",
         "requirements": [
@@ -32445,26 +32782,25 @@
                 "學生本人（全名）"
               ],
               "stamps": [],
-              "official_form_url": "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
+              "official_form_url": "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
               "source_urls": [
-                "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
-                "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download"
+                "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p67-hostw1",
-                "source_url": "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
+                "source_id": "p67-r16-student-form2026",
+                "source_url": "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
                 "source_pages": [],
-                "academic_year": "未標年表格；由AY2026/27 factsheet學生專用連結取得",
+                "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:51:57.398395+00:00",
                 "status": "verified_current",
-                "excerpt": "ACADEMIC EXCHANGE FORM (for student) With my signature, I hereby confirm that I do not suffer from any disease, which might endanger the health of others. I have not been declared as incapacitated and am not in provisional tutelage. False, erroneous, or incomplete statements can result in the enrolment being revoked. I u",
-                "content_hash": "094a959fd378cd15b50371f512034bd1ee632f5925751e23914edc66125fc2bf",
-                "text_sha256": "b66bb6da7e21264b05e0a90bcc181dafb8a98ffcf4cce92495e330d760b1795a",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "Academic exchange form with signature, full name □ Nomination letter □ Curriculum Vitae □ Motivation letter □ Official Academic Transcript in English (issued by the applicant’s home institution) □ A proof of English language skills □ One copy of the passport □ One copy of the passport photo I. | General information about the applicant | G",
+                "content_hash": "b33ed6617b4e92ac7b0fed37ccf47a3432a6ed5088b97be198473717d4338f15",
+                "text_sha256": "2927fe843de29f41f1746585fbee6981000afd6f29b9de5272d3cc583171e4bc",
+                "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
               }
             ],
             "conditional": false,
@@ -32472,34 +32808,65 @@
           },
           {
             "requirement": {
-              "name": "母校提名信",
+              "name": "母校提名信（抬頭紙，負責人簽名及Seal；學生申請亦附）",
               "copies": null,
               "copy_type": "unspecified",
-              "signatures": [],
-              "stamps": [],
-              "official_form_url": null,
+              "signatures": [
+                "母校負責人"
+              ],
+              "stamps": [
+                "母校Seal（範本原文Signature and Seal）"
+              ],
+              "official_form_url": "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view",
               "source_urls": [
-                "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download"
+                "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
+                "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p67-hostw1",
-                "source_url": "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
+                "source_id": "p67-r16-student-form2026",
+                "source_url": "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
                 "source_pages": [],
-                "academic_year": "未標年表格；由AY2026/27 factsheet學生專用連結取得",
+                "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:51:57.398395+00:00",
                 "status": "verified_current",
-                "excerpt": "nge form with signature, full name Nomination letter Curriculum Vitae Motivation letter Official Academic Transcript in English (issued by the applicant’s home institution) A proof of English language skills One copy of the passport One copy of the passport photo I. | General information about the applicant | General information about the appl",
-                "content_hash": "094a959fd378cd15b50371f512034bd1ee632f5925751e23914edc66125fc2bf",
-                "text_sha256": "b66bb6da7e21264b05e0a90bcc181dafb8a98ffcf4cce92495e330d760b1795a",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "Nomination letter □ Curriculum Vitae □ Motivation letter □ Official Academic Transcript in English (issued by the applicant’s home institution) □ A proof of English language skills □ One copy of the passport □ One copy of the passport photo I. | General information about the applicant | General information about the applicant | General in",
+                "content_hash": "b33ed6617b4e92ac7b0fed37ccf47a3432a6ed5088b97be198473717d4338f15",
+                "text_sha256": "2927fe843de29f41f1746585fbee6981000afd6f29b9de5272d3cc583171e4bc",
+                "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+              },
+              {
+                "source_id": "p67-r16-nomination-template",
+                "source_url": "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view",
+                "source_pages": [],
+                "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+                "application_round": "2027春季",
+                "checked_at": "2026-10-08T12:51:57.400580+00:00",
+                "status": "verified_current",
+                "excerpt": "LETTER HEAD OF THE HOME UNIVERSITY To: Ho Chi Minh City University of Technology (HCMUT) 268 Ly Thuong Kiet St., Dien Hong Wa",
+                "content_hash": "7dbe14dd7de9cfac977bc729f3e004cac0919b1a0fe86eaaee46d0ddf8657e86",
+                "text_sha256": "913733d4a087aba13e3a2d5e0c57daf3a036d0a60985b5e40f725cf38cd6cb51",
+                "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+              },
+              {
+                "source_id": "p67-r16-nomination-template",
+                "source_url": "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view",
+                "source_pages": [],
+                "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+                "application_round": "2027春季",
+                "checked_at": "2026-10-08T12:51:57.400580+00:00",
+                "status": "verified_current",
+                "excerpt": "(Signature and Seal) No. | Full nam",
+                "content_hash": "7dbe14dd7de9cfac977bc729f3e004cac0919b1a0fe86eaaee46d0ddf8657e86",
+                "text_sha256": "913733d4a087aba13e3a2d5e0c57daf3a036d0a60985b5e40f725cf38cd6cb51",
+                "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
               }
             ],
             "conditional": false,
-            "stage": "student_application"
+            "stage": "nomination"
           },
           {
             "requirement": {
@@ -32510,23 +32877,23 @@
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download"
+                "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p67-hostw1",
-                "source_url": "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
+                "source_id": "p67-r16-student-form2026",
+                "source_url": "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
                 "source_pages": [],
-                "academic_year": "未標年表格；由AY2026/27 factsheet學生專用連結取得",
+                "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:51:57.398395+00:00",
                 "status": "verified_current",
-                "excerpt": "ature, full name Nomination letter Curriculum Vitae Motivation letter Official Academic Transcript in English (issued by the applicant’s home institution) A proof of English language skills One copy of the passport One copy of the passport photo I. | General information about the applicant | General information about the applicant | General in",
-                "content_hash": "094a959fd378cd15b50371f512034bd1ee632f5925751e23914edc66125fc2bf",
-                "text_sha256": "b66bb6da7e21264b05e0a90bcc181dafb8a98ffcf4cce92495e330d760b1795a",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "Curriculum Vitae □ Motivation letter □ Official Academic Transcript in English (issued by the applicant’s home institution) □ A proof of English language skills □ One copy of the passport □ One copy of the passport photo I. | General information about the applicant | General information about the applicant | General information about the ",
+                "content_hash": "b33ed6617b4e92ac7b0fed37ccf47a3432a6ed5088b97be198473717d4338f15",
+                "text_sha256": "2927fe843de29f41f1746585fbee6981000afd6f29b9de5272d3cc583171e4bc",
+                "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
               }
             ],
             "conditional": false,
@@ -32541,23 +32908,23 @@
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download"
+                "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p67-hostw1",
-                "source_url": "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
+                "source_id": "p67-r16-student-form2026",
+                "source_url": "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
                 "source_pages": [],
-                "academic_year": "未標年表格；由AY2026/27 factsheet學生專用連結取得",
+                "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:51:57.398395+00:00",
                 "status": "verified_current",
-                "excerpt": "Nomination letter Curriculum Vitae Motivation letter Official Academic Transcript in English (issued by the applicant’s home institution) A proof of English language skills One copy of the passport One copy of the passport photo I. | General information about the applicant | General information about the applicant | General information about t",
-                "content_hash": "094a959fd378cd15b50371f512034bd1ee632f5925751e23914edc66125fc2bf",
-                "text_sha256": "b66bb6da7e21264b05e0a90bcc181dafb8a98ffcf4cce92495e330d760b1795a",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "Motivation letter □ Official Academic Transcript in English (issued by the applicant’s home institution) □ A proof of English language skills □ One copy of the passport □ One copy of the passport photo I. | General information about the applicant | General information about the applicant | General information about the applicant Last name",
+                "content_hash": "b33ed6617b4e92ac7b0fed37ccf47a3432a6ed5088b97be198473717d4338f15",
+                "text_sha256": "2927fe843de29f41f1746585fbee6981000afd6f29b9de5272d3cc583171e4bc",
+                "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
               }
             ],
             "conditional": false,
@@ -32572,23 +32939,23 @@
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download"
+                "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p67-hostw1",
-                "source_url": "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
+                "source_id": "p67-r16-student-form2026",
+                "source_url": "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
                 "source_pages": [],
-                "academic_year": "未標年表格；由AY2026/27 factsheet學生專用連結取得",
+                "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:51:57.398395+00:00",
                 "status": "verified_current",
-                "excerpt": "otivation letter Official Academic Transcript in English (issued by the applicant’s home institution) A proof of English language skills One copy of the passport One copy of the passport photo I. | General information about the applicant | General information about the applicant | General information about the applicant Last name | | | Middle ",
-                "content_hash": "094a959fd378cd15b50371f512034bd1ee632f5925751e23914edc66125fc2bf",
-                "text_sha256": "b66bb6da7e21264b05e0a90bcc181dafb8a98ffcf4cce92495e330d760b1795a",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "Official Academic Transcript in English (issued by the applicant’s home institution) □ A proof of English language skills □ One copy of the passport □ One copy of the passport photo I. | General information about the applicant | General information about the applicant | General information about the applicant Last name | | | Middle name (",
+                "content_hash": "b33ed6617b4e92ac7b0fed37ccf47a3432a6ed5088b97be198473717d4338f15",
+                "text_sha256": "2927fe843de29f41f1746585fbee6981000afd6f29b9de5272d3cc583171e4bc",
+                "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
               }
             ],
             "conditional": false,
@@ -32603,23 +32970,23 @@
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download"
+                "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p67-hostw1",
-                "source_url": "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
+                "source_id": "p67-r16-student-form2026",
+                "source_url": "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
                 "source_pages": [],
-                "academic_year": "未標年表格；由AY2026/27 factsheet學生專用連結取得",
+                "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:51:57.398395+00:00",
                 "status": "verified_current",
-                "excerpt": "er Official Academic Transcript in English (issued by the applicant’s home institution) A proof of English language skills One copy of the passport One copy of the passport photo I. | General information about the applicant | General information about the applicant | General information about the applicant Last name | | | Middle name (if ap",
-                "content_hash": "094a959fd378cd15b50371f512034bd1ee632f5925751e23914edc66125fc2bf",
-                "text_sha256": "b66bb6da7e21264b05e0a90bcc181dafb8a98ffcf4cce92495e330d760b1795a",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "A proof of English language skills □ One copy of the passport □ One copy of the passport photo I. | General information about the applicant | General information about the applicant | General information about the applicant Last name | | | Middle name (if applicable) | | | First name | | | Gender (male/ female/ undefined) | | | Date of bi",
+                "content_hash": "b33ed6617b4e92ac7b0fed37ccf47a3432a6ed5088b97be198473717d4338f15",
+                "text_sha256": "2927fe843de29f41f1746585fbee6981000afd6f29b9de5272d3cc583171e4bc",
+                "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
               }
             ],
             "conditional": false,
@@ -32628,29 +32995,29 @@
           {
             "requirement": {
               "name": "護照copy",
-              "copies": null,
-              "copy_type": "unspecified",
+              "copies": 1,
+              "copy_type": "copy",
               "signatures": [],
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download"
+                "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p67-hostw1",
-                "source_url": "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
+                "source_id": "p67-r16-student-form2026",
+                "source_url": "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
                 "source_pages": [],
-                "academic_year": "未標年表格；由AY2026/27 factsheet學生專用連結取得",
+                "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:51:57.398395+00:00",
                 "status": "verified_current",
-                "excerpt": "sh language skills One copy of the passport One copy of the passport photo I. | General information about the applicant | General information about the applicant | General information about the applicant Last name | | | Middle name (if applicable) | | | First name | | | Gender (male/ female/ undefined) | | | Date of birth | | | Place of birt",
-                "content_hash": "094a959fd378cd15b50371f512034bd1ee632f5925751e23914edc66125fc2bf",
-                "text_sha256": "b66bb6da7e21264b05e0a90bcc181dafb8a98ffcf4cce92495e330d760b1795a",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "One copy of the passport □ One copy of the passport photo I. | General information about the applicant | General information about the applicant | General information about the applicant Last name | | | Middle name (if applicable) | | | First name | | | Gender (male/ female/ undefined) | | | Date of birth | | | Place of birth | | | Passpo",
+                "content_hash": "b33ed6617b4e92ac7b0fed37ccf47a3432a6ed5088b97be198473717d4338f15",
+                "text_sha256": "2927fe843de29f41f1746585fbee6981000afd6f29b9de5272d3cc583171e4bc",
+                "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
               }
             ],
             "conditional": false,
@@ -32659,44 +33026,111 @@
           {
             "requirement": {
               "name": "護照格式照片",
-              "copies": null,
-              "copy_type": "unspecified",
+              "copies": 1,
+              "copy_type": "copy",
               "signatures": [],
               "stamps": [],
               "official_form_url": null,
               "source_urls": [
-                "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download"
+                "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view"
               ],
               "needs_confirmation": true
             },
             "evidence": [
               {
-                "source_id": "p67-hostw1",
-                "source_url": "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
+                "source_id": "p67-r16-student-form2026",
+                "source_url": "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
                 "source_pages": [],
-                "academic_year": "未標年表格；由AY2026/27 factsheet學生專用連結取得",
+                "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
                 "application_round": "2027春季",
-                "checked_at": "2026-10-08T00:00:00Z",
+                "checked_at": "2026-10-08T12:51:57.398395+00:00",
                 "status": "verified_current",
-                "excerpt": " passport One copy of the passport photo I. | General information about the applicant | General information about the applicant | General information about the applicant Last name | | | Middle name (if applicable) | | | First name | | | Gender (male/ female/ undefined) | | | Date of birth | | | Place of birth | | | Passport Number | | | T",
-                "content_hash": "094a959fd378cd15b50371f512034bd1ee632f5925751e23914edc66125fc2bf",
-                "text_sha256": "b66bb6da7e21264b05e0a90bcc181dafb8a98ffcf4cce92495e330d760b1795a",
-                "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+                "excerpt": "One copy of the passport photo I. | General information about the applicant | General information about the applicant | General information about the applicant Last name | | | Middle name (if applicable) | | | First name | | | Gender (male/ female/ undefined) | | | Date of birth | | | Place of birth | | | Passport Number | | | Type of Pas",
+                "content_hash": "b33ed6617b4e92ac7b0fed37ccf47a3432a6ed5088b97be198473717d4338f15",
+                "text_sha256": "2927fe843de29f41f1746585fbee6981000afd6f29b9de5272d3cc583171e4bc",
+                "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
               }
             ],
             "conditional": false,
             "stage": "student_application"
+          },
+          {
+            "requirement": {
+              "name": "保險copy（到校前一週繳，非初次申請截止）",
+              "copies": null,
+              "copy_type": "copy",
+              "signatures": [],
+              "stamps": [],
+              "official_form_url": null,
+              "source_urls": [
+                "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view"
+              ],
+              "needs_confirmation": true
+            },
+            "evidence": [
+              {
+                "source_id": "p67-r16-factsheet-updated2027",
+                "source_url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+                "source_pages": [
+                  4
+                ],
+                "academic_year": "正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得",
+                "application_round": "2027春季",
+                "checked_at": "2026-10-08T12:51:57.399721+00:00",
+                "status": "verified_current",
+                "excerpt": "The students are required to provide a copy of their insurance to HCMUT one week before their arrival. Incoming stu",
+                "content_hash": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+                "text_sha256": "7565fc309ebc8fa335ac9d2c2ebc4b008ba0733a6d85355e0ff89f34795d1aa3",
+                "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+              }
+            ],
+            "conditional": false,
+            "stage": "post_offer"
           }
         ]
       },
       "runtime": {
         "document_catalog_phases": [
-          "合作校申請"
+          "合作校提名",
+          "合作校申請",
+          "合作校錄取後"
         ],
         "document_catalog_host_items": [
           {
-            "id": "39ff69d66d5ca29a4352",
+            "id": "9a8b0de352a21ac7927c",
             "sequence": 18,
+            "phase": "合作校提名",
+            "step_title": "回覆交換意願並等待提名",
+            "name": "母校提名信（抬頭紙，負責人簽名及Seal；學生申請亦附）",
+            "copies": null,
+            "copy_type": "unspecified",
+            "signatures": [
+              "母校負責人"
+            ],
+            "stamps": [
+              "母校Seal（範本原文Signature and Seal）"
+            ],
+            "official_form_url": "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view",
+            "source_urls": [
+              "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
+              "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view",
+              "https://oia.ccu.edu.tw/p/406-1008-93586,r1714.php?Lang=zh-tw",
+              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/733224149.pdf",
+              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+            ],
+            "source_checked_at": "2026-10-08T00:00:00Z",
+            "support_status": "needs_confirmation",
+            "needs_confirmation": true,
+            "download_available": true,
+            "contact_unit": "國立中正大學國際事務處及合作校提名通知所列承辦人",
+            "stage": "nomination",
+            "conditional": false,
+            "condition": null,
+            "official_form_verified": true
+          },
+          {
+            "id": "3d96eceb33266c173e42",
+            "sequence": 19,
             "phase": "合作校申請",
             "step_title": "依提名信辦理合作校申請",
             "name": "學生ACADEMIC EXCHANGE FORM（本人簽／全名）",
@@ -32706,11 +33140,12 @@
               "學生本人（全名）"
             ],
             "stamps": [],
-            "official_form_url": "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
+            "official_form_url": "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
             "source_urls": [
-              "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
-              "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
-              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+              "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
+              "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -32721,32 +33156,6 @@
             "conditional": false,
             "condition": null,
             "official_form_verified": true
-          },
-          {
-            "id": "07f10aed85f1eb3f2bda",
-            "sequence": 19,
-            "phase": "合作校申請",
-            "step_title": "依提名信辦理合作校申請",
-            "name": "母校提名信",
-            "copies": null,
-            "copy_type": "unspecified",
-            "signatures": [],
-            "stamps": [],
-            "official_form_url": null,
-            "source_urls": [
-              "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
-              "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
-              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
-            ],
-            "source_checked_at": "2026-10-08T00:00:00Z",
-            "support_status": "needs_confirmation",
-            "needs_confirmation": true,
-            "download_available": false,
-            "contact_unit": "outbound@ccu.edu.tw",
-            "stage": "student_application",
-            "conditional": false,
-            "condition": null,
-            "official_form_verified": false
           },
           {
             "id": "500a106309ee285e89df",
@@ -32760,9 +33169,10 @@
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
-              "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
-              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+              "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
+              "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -32786,9 +33196,10 @@
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
-              "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
-              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+              "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
+              "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -32812,9 +33223,10 @@
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
-              "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
-              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+              "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
+              "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -32838,9 +33250,10 @@
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
-              "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
-              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+              "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
+              "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -32858,15 +33271,16 @@
             "phase": "合作校申請",
             "step_title": "依提名信辦理合作校申請",
             "name": "護照copy",
-            "copies": null,
-            "copy_type": "unspecified",
+            "copies": 1,
+            "copy_type": "copy",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
-              "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
-              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+              "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
+              "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -32884,15 +33298,16 @@
             "phase": "合作校申請",
             "step_title": "依提名信辦理合作校申請",
             "name": "護照格式照片",
-            "copies": null,
-            "copy_type": "unspecified",
+            "copies": 1,
+            "copy_type": "copy",
             "signatures": [],
             "stamps": [],
             "official_form_url": null,
             "source_urls": [
-              "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download",
-              "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
-              "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"
+              "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view",
+              "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view"
             ],
             "source_checked_at": "2026-10-08T00:00:00Z",
             "support_status": "needs_confirmation",
@@ -32900,6 +33315,32 @@
             "download_available": false,
             "contact_unit": "outbound@ccu.edu.tw",
             "stage": "student_application",
+            "conditional": false,
+            "condition": null,
+            "official_form_verified": false
+          },
+          {
+            "id": "46f4d090c852f9c4b4f4",
+            "sequence": 26,
+            "phase": "合作校錄取後",
+            "step_title": "核對接收計畫的住宿、保險與抵達安排",
+            "name": "保險copy（到校前一週繳，非初次申請截止）",
+            "copies": null,
+            "copy_type": "copy",
+            "signatures": [],
+            "stamps": [],
+            "official_form_url": null,
+            "source_urls": [
+              "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view"
+            ],
+            "source_checked_at": "2026-10-08T00:00:00Z",
+            "support_status": "needs_confirmation",
+            "needs_confirmation": true,
+            "download_available": false,
+            "contact_unit": "國立中正大學國際事務處及合作校提名窗口",
+            "stage": "post_offer",
             "conditional": false,
             "condition": null,
             "official_form_verified": false
@@ -32918,7 +33359,8 @@
           "arrival",
           "course_restrictions",
           "academic_calendar",
-          "transport"
+          "transport",
+          "campus_life"
         ],
         "completeness_items": [
           {
@@ -32958,7 +33400,7 @@
             "source_urls": [
               "https://oia.ccu.edu.tw/var/file/8/1008/attach/78/pta_54382_5424695_45762.doc",
               "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/733224149.pdf",
-              "https://drive.usercontent.google.com/download?id=1YAxkAQFfszN5rZLhwZYq5ymq_9ZIiPJM&export=download"
+              "https://drive.google.com/file/d/1XQm-iF-4EZNrZt_c35zhvPTJTl3eya4M/view"
             ]
           },
           {
@@ -32967,7 +33409,9 @@
             "status": "partial",
             "note": "有費用片段，但沒有可直接比對的每月總額。",
             "source_urls": [
-              "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link"
+              "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view"
             ]
           },
           {
@@ -32976,32 +33420,37 @@
             "status": "available",
             "note": "已有來源整理的內容。",
             "source_urls": [
-              "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link"
+              "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view",
+              "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "https://drive.google.com/file/d/1VAxq2TwOtQaUN5x2OIYzZHM16bZCYRhJ/view"
             ]
           },
           {
             "key": "transport",
             "label": "交通",
             "status": "available",
-            "note": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。",
+            "note": "与2026年8月新版相同已核內容重新綁新版來源，舊3月版只保留歷史。",
             "source_urls": [
-              "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link"
+              "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view"
             ]
           },
           {
             "key": "campus_life",
             "label": "校園生活",
-            "status": "missing",
-            "note": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。",
-            "source_urls": []
+            "status": "available",
+            "note": "實讀當期公告與新版PDF支持服務，不再用r15JavaScript外殼或2025公告當政策。",
+            "source_urls": [
+              "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en",
+              "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view"
+            ]
           },
           {
             "key": "city",
             "label": "城市",
             "status": "available",
-            "note": "學校官方聯絡／校區資訊；代表聯絡或郵寄地址不等交換課程全在此地。",
+            "note": "与2026年8月新版相同已核內容重新綁新版來源，舊3月版只保留歷史。",
             "source_urls": [
-              "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link"
+              "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view"
             ]
           },
           {
@@ -33014,7 +33463,7 @@
         ],
         "city": "胡志明市（代表聯絡地址）",
         "transport_present": true,
-        "campus_life_present": false,
+        "campus_life_present": true,
         "life_location_note": "官方城市／聯絡地址參考：胡志明市（代表聯絡地址）（verified_current）。尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。 接收校區按所選計畫另核。",
         "life_categories": [
           {
@@ -33023,15 +33472,19 @@
               {
                 "theme": "housing",
                 "kind": "official",
-                "text": "住宿與床位 · 當期已核實：BachKhoa宿舍不保證，OISP可協助與提供替代住宿。（2026/2027（2026年3月更新）；PDF第4頁；查核2026-10-08）",
+                "text": "住宿與床位 · 當期已核實：新版Bach Khoa Dormitory床位有限不保證；OISP可支援註冊或轉介housing agents，oisp@hcmut.edu.vn。不把supporting services誤當保證住房或免費接機。（正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得；PDF第3頁；查核2026-10-08）",
                 "sources": [
                   {
                     "title": "中正逐欄查核來源",
-                    "url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link#page=4"
+                    "url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view#page=3"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en"
                   }
                 ],
-                "checked_at": "2026-10-08T00:00:00Z",
-                "scope": "當期已核實；2026/2027（2026年3月更新）；當期來源列出此項；仍依提名後個別通知辦理。",
+                "checked_at": "2026-10-08T12:51:57.399721Z",
+                "scope": "當期已核實；正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得；最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
                 "original_excerpt": false,
                 "original_text": "",
                 "translation_status": "original"
@@ -33047,15 +33500,15 @@
               {
                 "theme": "cost",
                 "kind": "official",
-                "text": "住宿與生活費用 · 當期已核實：校方表列住宿100–300、餐200–300、交通10–150、其他，总350–850USD；此表未寫計價期間，不自行標月費。（2026/2027（2026年3月更新）；PDF第4頁；查核2026-10-08）",
+                "text": "住宿與生活費用 · 當期已核實：8月新版估列USD住宿100–300、食物200–300、交通10–150、utilities5–15、personal35–85、總350–850；原文表未注明計價期間且分項區間不等總額，不能斷言每月總實繳。（正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得；PDF第4頁；查核2026-10-08）",
                 "sources": [
                   {
                     "title": "中正逐欄查核來源",
-                    "url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link#page=4"
+                    "url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view#page=4"
                   }
                 ],
-                "checked_at": "2026-10-08T00:00:00Z",
-                "scope": "當期已核實；2026/2027（2026年3月更新）；當期來源列出此項；仍依提名後個別通知辦理。",
+                "checked_at": "2026-10-08T12:51:57.399721Z",
+                "scope": "當期已核實；正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得；最新版Updated August2026與2026-08-26本期公告實讀；3月版已明確由新版取代，不混用舊表與舊截止。",
                 "original_excerpt": false,
                 "original_text": "",
                 "translation_status": "original"
@@ -33078,15 +33531,15 @@
               {
                 "theme": "transport",
                 "kind": "official",
-                "text": "2026/27費用表估交通10–150USD／月，依使用方式差異；未提供機場路線或指定校區通勤，不當確定票價。（當期已核實；2026/2027（2026年3月更新）；查核2026-10-08）",
+                "text": "2026/27費用表估交通10–150USD／月，依使用方式差異；未提供機場路線或指定校區通勤，不當確定票價。（當期已核實；正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得；查核2026-10-08）",
                 "sources": [
                   {
                     "title": "中正逐欄查核來源",
-                    "url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link#page=4"
+                    "url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view#page=4"
                   }
                 ],
-                "checked_at": "2026-10-08T00:00:00Z",
-                "scope": "當期已核實；2026/2027（2026年3月更新）；只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。",
+                "checked_at": "2026-10-08T12:51:57.399721Z",
+                "scope": "當期已核實；正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得；与2026年8月新版相同已核內容重新綁新版來源，舊3月版只保留歷史。",
                 "original_excerpt": false,
                 "original_text": "",
                 "translation_status": "original"
@@ -33112,7 +33565,28 @@
           },
           {
             "theme": "social",
-            "evidence": [],
+            "evidence": [
+              {
+                "theme": "social",
+                "kind": "official",
+                "text": "2026/27第二學期新公告列簽證、宿舍註冊、迎新、academicadvising、culturalactivities及實務支援；8月factsheet列BkeL教材平台。迎新2027-01-08；不保證床位、接機或活動全免費。（當期已核實；正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得；查核2026-10-08）",
+                "sources": [
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://hcmut.edu.vn/api/home/tt-tin-tuc/item?ma=24702&lang=en"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://drive.google.com/file/d/1TH6YSfT3MbusPqHtTZeNER4hRgUwiLt1/view#page=3"
+                  }
+                ],
+                "checked_at": "2026-10-08T12:51:42.127681Z",
+                "scope": "當期已核實；正文AY2026/2027第二學期；公告2026-08-26、PDFUpdated August2026；表格未印年但由本期公告與新版PDF專用連結取得；實讀當期公告與新版PDF支持服務，不再用r15JavaScript外殼或2025公告當政策。",
+                "original_excerpt": false,
+                "original_text": "",
+                "translation_status": "original"
+              }
+            ],
             "inference": null,
             "next_step": "先看國際處迎新、社團與語言交換活動；活動存在不代表每位學生都有相同體驗。",
             "search_url": "https://www.google.com/search?q=Ho+Chi+Minh+City+University+of+Technology+HCMUT+%E8%B6%8A%E5%8D%97+%E8%83%A1%E5%BF%97%E6%98%8E%E5%B8%82%EF%BC%88%E4%BB%A3%E8%A1%A8%E8%81%AF%E7%B5%A1%E5%9C%B0%E5%9D%80%EF%BC%89+international+student+clubs"
@@ -33687,10 +34161,37 @@
           "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
         },
         "campus_life": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "2026-08-13官方新聞介紹LastMinute／GS25／Highlands等校園服務及VNU-HCM宿舍支援合作；2025醫療站新聞列primarycare、firstaid、consultation。均作舊年度／一般服務參考，未確認2027交換生資格、實際床位、免費醫療、地址或營業時間。",
+          "status": "reference_only",
+          "evidence": [
+            {
+              "source_id": "p68-r16-student-support2026",
+              "source_url": "https://en.hcmute.edu.vn/ArticleId/ecb03803-0d56-4cb6-ab71-0daeb0153086/hcm-ute-signed-mou-with-the-vnu-hcm-dormitory-and-urban-area-management-center-to-strengthen-student-support",
+              "source_pages": [],
+              "academic_year": "正文2026-08-13校園商店及宿舍支援MOU；非2027個人住宿承諾",
+              "application_round": "一般服務或舊年度參考，非申請梯次",
+              "checked_at": "2026-10-08T12:46:26.491537+00:00",
+              "status": "reference_only",
+              "excerpt": "Notable examples, including Last Minute, GS25, and Highlands Coffee, were introduced as practical models for making effective use of campus spaces while diversifying services and amenities for students. These practical experiences will provide a basis for the Center to study, evaluate, and select models appropriate to the actual conditions of the VNU-HCM Dormitory. This will contribute to gradually diversifying services and amenities, improving service quality, and better meeting the needs of resident students—including HCM-UTE students—as well as the surrounding community. The signing of the MOU contributes to strengthening coordination between HCM-UTE and the VNU-HCM Dormitory and Urban Area Management Center in supporting HCM-UTE students residing at the VNU-HCM Dorm",
+              "content_hash": "e1c4079c574b819667c96de888116720c28d23c41ce794bb51cbc1b19b9cdf7d",
+              "text_sha256": "dc6fafc4e26584ce51ed90f2b3724c3cfaf96216e2d358737ff51222b2320666",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p68-r16-medical2025",
+              "source_url": "https://en.hcmute.edu.vn/?ArticleId=6cb80425-511d-428e-83a2-163613b6deff",
+              "source_pages": [],
+              "academic_year": "正文2025-02-26醫療站服務新聞／非2027交换",
+              "application_round": "一般服務或舊年度參考，非申請梯次",
+              "checked_at": "2026-10-08T12:44:44.296199+00:00",
+              "status": "reference_only",
+              "excerpt": "HCMUTE's Medical Station not only provides primary healthcare services but also plays a vital role in disease prevention, first aid, and medical consultation. With a dedicated staff and well-equipped facilities, the Medical Station is always ready to support faculty, staff, and students in any health-related situations. Others Study Abroad Opportunities in Taiwan for HCMUTE Stu",
+              "content_hash": "b325e82d5cd4aead048105a89fddf1055f867aae41d1b08ebffd141fe50a05e2",
+              "text_sha256": "7a4296bd215b90acfedff394da1663c01c7f9051ba9504f0f5be8e71fa08fa5d",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            }
+          ],
+          "reason": "合作框架不是個人2027住宿保證；醫療站公告未載交換生費用不猜。"
         }
       },
       "academic_filter_scope": {
@@ -34132,7 +34633,8 @@
           "visa",
           "arrival",
           "course_restrictions",
-          "academic_calendar"
+          "academic_calendar",
+          "campus_life"
         ],
         "completeness_items": [
           {
@@ -34180,7 +34682,9 @@
             "status": "partial",
             "note": "有費用片段，但沒有可直接比對的每月總額。",
             "source_urls": [
-              "https://oia.hcmute.edu.vn/Resources/Docs/SubDomain/oia/HCM-UTE 2027 Fact sheet for exchange student program_EN (revised).pdf"
+              "https://oia.hcmute.edu.vn/Resources/Docs/SubDomain/oia/HCM-UTE 2027 Fact sheet for exchange student program_EN (revised).pdf",
+              "https://en.hcmute.edu.vn/ArticleId/ecb03803-0d56-4cb6-ab71-0daeb0153086/hcm-ute-signed-mou-with-the-vnu-hcm-dormitory-and-urban-area-management-center-to-strengthen-student-support",
+              "https://en.hcmute.edu.vn/?ArticleId=6cb80425-511d-428e-83a2-163613b6deff"
             ]
           },
           {
@@ -34189,7 +34693,9 @@
             "status": "available",
             "note": "已有來源整理的內容。",
             "source_urls": [
-              "https://oia.hcmute.edu.vn/Resources/Docs/SubDomain/oia/HCM-UTE 2027 Fact sheet for exchange student program_EN (revised).pdf"
+              "https://oia.hcmute.edu.vn/Resources/Docs/SubDomain/oia/HCM-UTE 2027 Fact sheet for exchange student program_EN (revised).pdf",
+              "https://en.hcmute.edu.vn/ArticleId/ecb03803-0d56-4cb6-ab71-0daeb0153086/hcm-ute-signed-mou-with-the-vnu-hcm-dormitory-and-urban-area-management-center-to-strengthen-student-support",
+              "https://en.hcmute.edu.vn/?ArticleId=6cb80425-511d-428e-83a2-163613b6deff"
             ]
           },
           {
@@ -34202,9 +34708,12 @@
           {
             "key": "campus_life",
             "label": "校園生活",
-            "status": "missing",
-            "note": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。",
-            "source_urls": []
+            "status": "needs_confirmation",
+            "note": "合作框架不是個人2027住宿保證；醫療站公告未載交換生費用不猜。",
+            "source_urls": [
+              "https://en.hcmute.edu.vn/ArticleId/ecb03803-0d56-4cb6-ab71-0daeb0153086/hcm-ute-signed-mou-with-the-vnu-hcm-dormitory-and-urban-area-management-center-to-strengthen-student-support",
+              "https://en.hcmute.edu.vn/?ArticleId=6cb80425-511d-428e-83a2-163613b6deff"
+            ]
           },
           {
             "key": "city",
@@ -34225,7 +34734,7 @@
         ],
         "city": "胡志明市",
         "transport_present": false,
-        "campus_life_present": false,
+        "campus_life_present": true,
         "life_location_note": "官方城市／聯絡地址參考：胡志明市（verified_current）。尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。 接收校區按所選計畫另核。",
         "life_categories": [
           {
@@ -34310,7 +34819,28 @@
           },
           {
             "theme": "social",
-            "evidence": [],
+            "evidence": [
+              {
+                "theme": "social",
+                "kind": "official",
+                "text": "2026-08-13官方新聞介紹LastMinute／GS25／Highlands等校園服務及VNU-HCM宿舍支援合作；2025醫療站新聞列primarycare、firstaid、consultation。均作舊年度／一般服務參考，未確認2027交換生資格、實際床位、免費醫療、地址或營業時間。（其他年度／梯次參考，不能作本期申請依據；正文2026-08-13校園商店及宿舍支援MOU；非2027個人住宿承諾；查核2026-10-08）",
+                "sources": [
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://en.hcmute.edu.vn/ArticleId/ecb03803-0d56-4cb6-ab71-0daeb0153086/hcm-ute-signed-mou-with-the-vnu-hcm-dormitory-and-urban-area-management-center-to-strengthen-student-support"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://en.hcmute.edu.vn/?ArticleId=6cb80425-511d-428e-83a2-163613b6deff"
+                  }
+                ],
+                "checked_at": "2026-10-08T12:46:26.491537Z",
+                "scope": "其他年度／梯次參考，不能作本期申請依據；正文2026-08-13校園商店及宿舍支援MOU；非2027個人住宿承諾；合作框架不是個人2027住宿保證；醫療站公告未載交換生費用不猜。",
+                "original_excerpt": false,
+                "original_text": "",
+                "translation_status": "original"
+              }
+            ],
             "inference": null,
             "next_step": "先看國際處迎新、社團與語言交換活動；活動存在不代表每位學生都有相同體驗。",
             "search_url": "https://www.google.com/search?q=Ho+Chi+Minh+City+University+of+Technology+and+Engineering+HCMUTE+%E8%B6%8A%E5%8D%97+%E8%83%A1%E5%BF%97%E6%98%8E%E5%B8%82+international+student+clubs"
@@ -46919,10 +47449,50 @@
           "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
         },
         "transport": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "交換生一般頁列semester fee含Deutschlandsemester ticket；校方連結的AStA說自2024/25起以學期費取得數位票，須校內帳號讀票，涵蓋全德local／regional交通且有例外。未載2027個人票價，443EUR一般頁數字不升當期；並非機場接送或所有長途火車通用。",
+          "status": "needs_confirmation",
+          "evidence": [
+            {
+              "source_id": "p100-r16-exchange-live",
+              "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+              "source_pages": [],
+              "academic_year": "未載2027適用年度；一般公開服務／指定校區",
+              "application_round": "一般服務或舊年度參考，非申請梯次",
+              "checked_at": "2026-10-08T12:44:48.331717+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "73.84 EUR: Semester fee 443€/6 (this already includes the Germany semester ticket ) 120 EUR: Health insurance 198 EUR: Catering Students spend 198 eur",
+              "content_hash": "704061f5cb46d86e63530999a63e3527b94f4bef20388f2afa2538356b8300f0",
+              "text_sha256": "02a1e6e69271d7c9d1b7e9172c1e4f1e78b41c14e4122db8feec084a3323ff90",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p100-r16-semester-ticket",
+              "source_url": "https://asta.ostfalia.de/index.php/deutschlandsemester-ticket/",
+              "source_pages": [],
+              "academic_year": "未載2027適用年度；一般公開服務／指定校區",
+              "application_round": "一般服務或舊年度參考，非申請梯次",
+              "checked_at": "2026-10-08T12:46:26.419265+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Digital statt Ostfalia Karte Ab dem 01.09.2024 steht dir das Deutschlandsemester-Ticket nur noch digital zur Verfügung und steht nicht mehr mit auf der Ostfalia Karte. Bedeutet, nach Validierung der Ostfalia Karte ist kein Semesterticket für das Semester mehr auf der Karte aufgedruckt. Du musst dich dann auf einer bestimmten Website (https://asta.ostfalia.de/index.php/link-und-datenschutz-zum-dsemti/) mit deinen Hochschul-Login-Daten einloggen, dort wird dir dann sofort das Ticket angezeigt und du kannst es in dem Wallet deines eigenen Handys speichern. Du hast noch Fragen zum Ticket? Dann melde dich bei unserem AStA Semesterticketreferenten: asta-semesterticket@ostfalia.de ! Was kann ich mit dem Deutschlandsem",
+              "content_hash": "73d15a3d5ae849121ef6a2acfa731a284510e78bb31237527543daab561d269b",
+              "text_sha256": "27629a0a93a290052468b8b1bce10cfdef769fa44853256c367e35cf87d3e114",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p100-r16-semester-ticket",
+              "source_url": "https://asta.ostfalia.de/index.php/deutschlandsemester-ticket/",
+              "source_pages": [],
+              "academic_year": "未載2027適用年度；一般公開服務／指定校區",
+              "application_round": "一般服務或舊年度參考，非申請梯次",
+              "checked_at": "2026-10-08T12:46:26.419265+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Was kann ich mit dem Deutschlandsemester-Ticket alles nutzen? Das Deutschlandsemester-Ticket gilt bundesweit im öffentlichen Personennahverkehr (ÖPNV). Dazu zählen unter anderem U- und S-Bahnen, Straßenbahnen, Trambahnen, Stadt- und Regionalbusse aber auch Regionalzüge (Interregio Express (IRE), Regional Express (RE) , Regionalbahn (RB). Diese Regionalzüge sind mit dem Deutschlandsemester-Ticket nicht nutzbar! Einige innerdeutsche Strecken werden von der Fernverkehr AG betrieben, sind aber für Nahverkehrstickets freigegeben. Diese Freigabe gilt momentan nicht unbedingt auch für das Deutschlandsemester-Ticket. Weiterführende Informationen über Verbindungen der Nahverkehrszüge; S-Bahnen; Busse; Straßen- und U-Bah",
+              "content_hash": "73d15a3d5ae849121ef6a2acfa731a284510e78bb31237527543daab561d269b",
+              "text_sha256": "27629a0a93a290052468b8b1bce10cfdef769fa44853256c367e35cf87d3e114",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            }
+          ],
+          "reason": "公開交換頁與官方連結學生自治單位票務原文；制度起始年不代表已確認2027價或個人資格。"
         },
         "campus_life": {
           "value": "國際學生辦公室一般流程列開學前welcome介紹校內設施、協助抵達登記與教授討論課表；2027活動日期／服務承諾仍待接收通知。",
@@ -46972,6 +47542,7 @@
           "arrival",
           "course_restrictions",
           "academic_calendar",
+          "transport",
           "campus_life"
         ],
         "completeness_items": [
@@ -47035,9 +47606,12 @@
           {
             "key": "transport",
             "label": "交通",
-            "status": "missing",
-            "note": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。",
-            "source_urls": []
+            "status": "needs_confirmation",
+            "note": "公開交換頁與官方連結學生自治單位票務原文；制度起始年不代表已確認2027價或個人資格。",
+            "source_urls": [
+              "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+              "https://asta.ostfalia.de/index.php/deutschlandsemester-ticket/"
+            ]
           },
           {
             "key": "campus_life",
@@ -47066,7 +47640,7 @@
           }
         ],
         "city": "Salzgitter；Suderburg；Wolfenbüttel；Wolfsburg（依校區）",
-        "transport_present": false,
+        "transport_present": true,
         "campus_life_present": true,
         "life_location_note": "官方城市／聯絡地址參考：Salzgitter；Suderburg；Wolfenbüttel；Wolfsburg（依校區）（verified_current）。尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。 接收校區按所選計畫另核。",
         "life_categories": [
@@ -47127,7 +47701,32 @@
           },
           {
             "theme": "transport",
-            "evidence": [],
+            "evidence": [
+              {
+                "theme": "transport",
+                "kind": "official",
+                "text": "交換生一般頁列semester fee含Deutschlandsemester ticket；校方連結的AStA說自2024/25起以學期費取得數位票，須校內帳號讀票，涵蓋全德local／regional交通且有例外。未載2027個人票價，443EUR一般頁數字不升當期；並非機場接送或所有長途火車通用。（適用年度或條件待確認；未載2027適用年度；一般公開服務／指定校區；查核2026-10-08）",
+                "sources": [
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://asta.ostfalia.de/index.php/deutschlandsemester-ticket/"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://asta.ostfalia.de/index.php/deutschlandsemester-ticket/"
+                  }
+                ],
+                "checked_at": "2026-10-08T12:44:48.331717Z",
+                "scope": "適用年度或條件待確認；未載2027適用年度；一般公開服務／指定校區；公開交換頁與官方連結學生自治單位票務原文；制度起始年不代表已確認2027價或個人資格。",
+                "original_excerpt": false,
+                "original_text": "",
+                "translation_status": "original"
+              }
+            ],
             "inference": null,
             "next_step": "以錄取校區和住宿地址核對路線、轉乘及末班車，不能用直線距離換算通勤時間。",
             "search_url": "https://www.google.com/search?q=Ostfalia+University+of+Applied+Sciences+%E5%BE%B7%E5%9C%8B+Salzgitter%EF%BC%9BSuderburg%EF%BC%9BWolfenb%C3%BCttel%EF%BC%9BWolfsburg%EF%BC%88%E4%BE%9D%E6%A0%A1%E5%8D%80%EF%BC%89+campus+access+public+transport"
@@ -51985,10 +52584,37 @@
           "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
         },
         "transport": {
-          "value": null,
-          "status": "missing",
-          "evidence": [],
-          "reason": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。"
+          "value": "官方校內會議交通頁列COV丘庫羅瓦國際機場至Adana，轉公車／dolmuş到Balcalı；市區İnönüParkı或AtillaAltıkat有4／4B與橘色Balcalı公車，火車站亦可接公車。頁為會議MithatÖzsan會場、無2027交換年份；鐵路工程可能影響，非個人校區或現行班次保证。",
+          "status": "needs_confirmation",
+          "evidence": [
+            {
+              "source_id": "p106-r16-conference-transport",
+              "source_url": "https://lfac.cu.edu.tr/cu/about/transportation",
+              "source_pages": [],
+              "academic_year": "未載2027適用年度；一般公開服務／指定校區",
+              "application_round": "一般服務或舊年度參考，非申請梯次",
+              "checked_at": "2026-10-08T12:44:41.761787+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Air Transportation: Transportation from Çukurova International Airport (COV) , which serves Adana and the surrounding region, is available through various alternatives. The airport is located approximately 35 km from Adana city centre and about 45 km from Çukurova University campus. From the airport, you can reach the city centre or the university by taxi or airport shuttle services operating to Adana. Public transportation options also connect the airport to central points in the city. Once in the city centre, the university campus can be reached by municipal buses , minibuses (dolmuş) , or other local transportation services. Minibuses numbered 4 and 4/B departing from İnönü Parkı or the Atilla Altıkat area, as well as the orange-coloured Balcalı buses , provide access to the campus. After entering the campus, campus transportation vehicles can be used to reach the Mithat Özsan Amphitheatre . Train Transportation: Adana Train Station , located approximately 1.5 km away from",
+              "content_hash": "bad01c156980147c9526cbdb819c44f4f84f6b0bd2f9927d4bd0a8aa62e682dc",
+              "text_sha256": "11fbf3ad47eaf5a2941cf9c8ab0520f56a038f55c44d930e2a385f345a91e93a",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p106-r16-conference-transport",
+              "source_url": "https://lfac.cu.edu.tr/cu/about/transportation",
+              "source_pages": [],
+              "academic_year": "未載2027適用年度；一般公開服務／指定校區",
+              "application_round": "一般服務或舊年度參考，非申請梯次",
+              "checked_at": "2026-10-08T12:44:41.761787+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Please check the railway transportation availability for your convenience as speed-train construction is in progress . Bus Transportation: By bus, you can ",
+              "content_hash": "bad01c156980147c9526cbdb819c44f4f84f6b0bd2f9927d4bd0a8aa62e682dc",
+              "text_sha256": "11fbf3ad47eaf5a2941cf9c8ab0520f56a038f55c44d930e2a385f345a91e93a",
+              "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            }
+          ],
+          "reason": "取得具體校區路線，但会議與校級交换接機／住宿承諾分開。"
         },
         "campus_life": {
           "value": "當期國際處與ESN融入活動、文教參訪及校園設施，依人數／天氣／校曆調整；未保所有活動免費。",
@@ -52446,6 +53072,7 @@
           "arrival",
           "course_restrictions",
           "academic_calendar",
+          "transport",
           "campus_life"
         ],
         "completeness_items": [
@@ -52494,7 +53121,8 @@
             "status": "partial",
             "note": "有費用片段，但沒有可直接比對的每月總額。",
             "source_urls": [
-              "https://drive.google.com/file/d/1ywPSJpH9Gn4uujg3FCifeiHqGlgetqEc/view?usp=drive_link"
+              "https://drive.google.com/file/d/1ywPSJpH9Gn4uujg3FCifeiHqGlgetqEc/view?usp=drive_link",
+              "https://lfac.cu.edu.tr/cu/about/transportation"
             ]
           },
           {
@@ -52503,15 +53131,18 @@
             "status": "available",
             "note": "已有來源整理的內容。",
             "source_urls": [
-              "https://drive.google.com/file/d/1ywPSJpH9Gn4uujg3FCifeiHqGlgetqEc/view?usp=drive_link"
+              "https://drive.google.com/file/d/1ywPSJpH9Gn4uujg3FCifeiHqGlgetqEc/view?usp=drive_link",
+              "https://lfac.cu.edu.tr/cu/about/transportation"
             ]
           },
           {
             "key": "transport",
             "label": "交通",
-            "status": "missing",
-            "note": "已核公開校址、當期／參考交換來源及生活入口，但未取得支持此欄的實質原文；尚未核實新版不等於官方尚未公告。",
-            "source_urls": []
+            "status": "needs_confirmation",
+            "note": "取得具體校區路線，但会議與校級交换接機／住宿承諾分開。",
+            "source_urls": [
+              "https://lfac.cu.edu.tr/cu/about/transportation"
+            ]
           },
           {
             "key": "campus_life",
@@ -52540,7 +53171,7 @@
           }
         ],
         "city": "Adana",
-        "transport_present": false,
+        "transport_present": true,
         "campus_life_present": true,
         "life_location_note": "官方城市／聯絡地址參考：Adana（verified_current）。尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。 接收校區按所選計畫另核。",
         "life_categories": [
@@ -52601,7 +53232,28 @@
           },
           {
             "theme": "transport",
-            "evidence": [],
+            "evidence": [
+              {
+                "theme": "transport",
+                "kind": "official",
+                "text": "官方校內會議交通頁列COV丘庫羅瓦國際機場至Adana，轉公車／dolmuş到Balcalı；市區İnönüParkı或AtillaAltıkat有4／4B與橘色Balcalı公車，火車站亦可接公車。頁為會議MithatÖzsan會場、無2027交換年份；鐵路工程可能影響，非個人校區或現行班次保证。（適用年度或條件待確認；未載2027適用年度；一般公開服務／指定校區；查核2026-10-08）",
+                "sources": [
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://lfac.cu.edu.tr/cu/about/transportation"
+                  },
+                  {
+                    "title": "中正逐欄查核來源",
+                    "url": "https://lfac.cu.edu.tr/cu/about/transportation"
+                  }
+                ],
+                "checked_at": "2026-10-08T12:44:41.761787Z",
+                "scope": "適用年度或條件待確認；未載2027適用年度；一般公開服務／指定校區；取得具體校區路線，但会議與校級交换接機／住宿承諾分開。",
+                "original_excerpt": false,
+                "original_text": "",
+                "translation_status": "original"
+              }
+            ],
             "inference": null,
             "next_step": "以錄取校區和住宿地址核對路線、轉乘及末班車，不能用直線距離換算通勤時間。",
             "search_url": "https://www.google.com/search?q=ukurova+University+%E5%9C%9F%E8%80%B3%E5%85%B6+Adana+campus+access+public+transport"
@@ -58718,11 +59370,11 @@
   ],
   "status_summary": {
     "host_17_fields": {
-      "verified_current": 311,
+      "verified_current": 312,
       "missing": 229,
-      "needs_confirmation": 312,
+      "needs_confirmation": 313,
       "reference_only": 20,
-      "conflict": 62,
+      "conflict": 60,
       "explicit_not_announced": 1
     },
     "profile_7_fields": {
@@ -58753,15 +59405,15 @@
       },
       "transport": {
         "reference_only": 6,
-        "needs_confirmation": 26,
+        "needs_confirmation": 29,
         "verified_current": 17,
-        "missing": 6
+        "missing": 3
       },
       "campus_life": {
-        "reference_only": 6,
-        "missing": 5,
-        "needs_confirmation": 27,
-        "verified_current": 17
+        "reference_only": 8,
+        "needs_confirmation": 28,
+        "verified_current": 18,
+        "missing": 1
       }
     },
     "complete_host_application_sets": 0,

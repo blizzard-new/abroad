@@ -929,6 +929,7 @@ def build_application_document_catalog(
         "nomination": "合作校提名",
         "student_application": "合作校申請",
         "after_application": "合作校申請後補件（不等錄取）",
+        "second_submission": "合作校第二次文件送件",
         "post_offer": "合作校錄取後",
         "after_dorm_assignment": "合作校宿舍分配後",
         "conditional_program": "合作校特定計畫文件",
@@ -969,7 +970,7 @@ def build_application_document_catalog(
                     id=hashlib.sha256(identity.encode("utf-8")).hexdigest()[:20],
                     sequence=sequence,
                     phase=(
-                        step.phase if requirement.stage == "after_application"
+                        step.phase if requirement.stage in {"after_application", "second_submission"}
                         else stages.get(requirement.stage, step.phase)
                     ),
                     step_title=step.title,

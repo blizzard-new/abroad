@@ -11,8 +11,8 @@
 | Dashboard條目 | 77 | 104 |
 | 目的地指南 | 77 | 55 |
 | city | 77 | 54 |
-| transport_summary | 77 | 49 |
-| campus_life_summary | 77 | 50 |
+| transport_summary | 77 | 52 |
+| campus_life_summary | 77 | 54 |
 | guide_photos | 0 | 0 |
 | first_72_hours | 0 | 0 |
 | packing_from_taiwan | 0 | 0 |
@@ -22,28 +22,32 @@
 | location_with_source | 47 | 54 |
 | 可確定的學術篩選：colleges | 77 | 1 |
 | 可確定的學術篩選：degree_levels | 77 | 10 |
-| 流程文件：requirements | 1469 | 1112 |
-| 流程文件：requirements_with_form | 77 | 128 |
+| 流程文件：requirements | 1469 | 1113 |
+| 流程文件：requirements_with_form | 77 | 129 |
 | 流程文件：schools_with_requirements | 77 | 55 |
 | 流程文件：schools_with_signature_detail | 3 | 55 |
 
-長庚指定115已發布基準有1238項文件、0項form URL及3校簽章細節；未指定年度116 legacy則1469項文件、77項form URL及3校簽章細節。兩個年度不得混用。中正1112項含母校通用及逐校準備要求，不可與177項已逐份實讀的host清單等同。
+長庚指定115已發布基準有1238項文件、0項form URL及3校簽章細節；未指定年度116 legacy則1469項文件、77項form URL及3校簽章細節。兩個年度不得混用。中正1113項含母校通用及逐校準備要求，不可與178項已逐份實讀的host清單等同。
 
-城市／校址54筆有來源，1筆未核實；地圖經緯度全部pending，沒有猜座標。55個網站核實身分入口，不保證全站2027規定已核實。照片、抵達72小時、行李及到校採購兩校均為0。
+城市／校址54筆有來源，1筆未核實；地圖經緯度全部pending。55個網站核實身分入口，不保證全站2027規定已核實。照片、抵達72小時、行李及到校採購兩校均為0。
 
-中正母校第一階9類準備文件、37筆當期逐校第二階要求、23校177項外校文件分開。177項均partial_not_exhaustive，26項附條件，18個已取得且hash核實的官方文件連結可直接開啟，同時保留適用性及清單完整性待確認。18個含申請指引，不全部稱作空白表單。實際55校文件目錄均保留177項host階段；55流程中52筆7步驟、忠南／HUFS／首爾科技三筆8步驟。忠南／HUFS補件不等錄取；首爾科技只按原文分第二次送件、日期與啟動条件未載。其他32校沒有製造外校逐項清單。
+母校第一階9類準備文件、37筆當期逐校第二階要求、23校178項外校文件分開。178項均partial_not_exhaustive；26項附條件，19個已取得且hash核實的官方文件連結可開啟，含申請指引，不全部是空白表。55流程中52筆7步驟，忠南／HUFS／首爾科技三筆8步驟。忠南／HUFS的after_application表示補件不等錄取；首爾科技三項改為中性second_submission，逐項顯示時點待確認。其他32校沒有製造完整外校清單。
 
-待確認學院／學制的API及前端均不加符合分、不硬性排除；field_evidence不是verified_current亦保持unknown。ZHAW工學院字串有值但證據待確認，故可確定學院是1筆而不是2筆。
+待確認學院／學制的API及前端均不加符合分、不硬性排除。ZHAW工學院字串有值但證據待確認，故可確定學院是1筆。
+
+HCMUT當期公開公告及Updated August 2026 factsheet一致：2026-09-30提名、2026-10-15申請；2027-01-08 orientation、01-11至06-07課程及考試。新學生申請與母校提名範本內容已讀；提名信須負責人簽名及Seal，保險copy到校前一週送。個人線上表HTTP401未讀，不冒稱文件集合完整。March版舊截止日保留參考；兩版PDF抽取出的隱藏Kyoto／CoE文字經實際p4畫面排除，不能当作官方簽證政策。
+
+首爾科技新版p3／p7：非OECD在學／成績須依國別認證；銀行列本人名下USD6000一期／12000一年及非OECD正本，未列銀行認證。住宿條件、第一次與第二次送件分開。
 
 ## 欄位核實狀態
 
 | 17類海外接收欄位（55×17＝935） | 數量 |
 | --- | ---: |
-| 核 | 311 |
+| 核 | 312 |
 | 缺 | 229 |
-| 待 | 312 |
+| 待 | 313 |
 | 舊 | 20 |
-| 矛 | 62 |
+| 矛 | 60 |
 | 未公告 | 1 |
 
 39校至少一項當期外校事實已核實；0校17項全核實、0校完整外校文件集合，`functional_parity_complete=false`。僅HUFS到校前TB窗口是官方明示尚未公告。
@@ -55,20 +59,20 @@
 | website | 55 | 0 | 0 | 0 |
 | degree_levels | 9 | 14 | 0 | 32 |
 | colleges | 1 | 10 | 0 | 44 |
-| transport | 17 | 26 | 6 | 6 |
-| campus_life | 17 | 27 | 6 | 5 |
+| transport | 17 | 29 | 6 | 3 |
+| campus_life | 18 | 28 | 8 | 1 |
 
 ## 55筆逐校核對
 
-核／待／舊／缺／矛分別表示verified_current／needs_confirmation／reference_only／missing／conflict。所有母校當期收件已截止；3筆名額空白仍待確認。下列PDF頁是中正2026.09.17學校資訊的物理頁，host附件頁另存逐項證據。
+核／待／舊／缺／矛分別表示verified_current／needs_confirmation／reference_only／missing／conflict。所有母校當期收件已截止；3筆名額空白仍待確認。PDF頁是中正2026.09.17學校資訊的物理頁；host附件頁另存證據。
 
-| 中正PDF頁 | 合作校／計畫 | 外校17项核／待／缺／矛／舊 | 城市／交通／生活 | 外校個別文件數／階段 |
+| 中正PDF頁 | 合作校／計畫 | 外校17項核／待／缺／矛／舊 | 城市／交通／生活 | 外校個別文件數／階段 |
 | ---: | --- | --- | --- | --- |
 | 10 | Beijing Normal University 北京師範大學 | 12/1/4/0/0 | 核/舊/舊 | 6／student_application:6 |
-| 16 | Chongqing University 重慶大學 | 0/9/7/0/1 | 核/舊/缺 | 0／未建個別外校清單 |
+| 16 | Chongqing University 重慶大學 | 0/9/7/0/1 | 核/舊/舊 | 0／未建個別外校清單 |
 | 23 | Xiamen University 廈門大學 | 0/13/4/0/0 | 核/待/待 | 0／未建個別外校清單 |
 | 24 | Tianjin University 天津大學 | 8/1/6/2/0 | 核/核/舊 | 8／student_application:7, post_offer:1 |
-| 26 | Northeast Normal University 東北師範大學 | 0/15/2/0/0 | 待/待/缺 | 0／未建個別外校清單 |
+| 26 | Northeast Normal University 東北師範大學 | 0/15/2/0/0 | 待/待/待 | 0／未建個別外校清單 |
 | 27 | University of Electronic Science and Technology of China 電子科技大學 | 9/2/5/1/0 | 核/舊/待 | 8／student_application:7, post_offer:1 |
 | 29 | Central China Normal University 華中師範大學 | 11/2/4/0/0 | 核/核/核 | 8／student_application:8 |
 | 32 | Ryukoku University 龍谷大學 | 11/1/1/4/0 | 核/核/核 | 10／student_application:10 |
@@ -81,7 +85,7 @@
 | 43 | Pusan National University 釜山國立大學 | 14/1/2/0/0 | 核/核/核 | 7／student_application:7 |
 | 45 | Kyung Hee University 慶熙大學 | 14/2/1/0/0 | 核/核/核 | 11／student_application:9, post_offer:2 |
 | 47 | Hankuk University of Foreign Studies 韓國外國語大學 | 13/2/1/0/0 | 核/待/核 | 11／student_application:9, after_dorm_assignment:1, after_application:1 |
-| 48 | Seoul National University of Science and Technology 國立首爾科技大學 | 13/2/1/1/0 | 待/缺/核 | 12／student_application:7, after_application:3, conditional_program:2 |
+| 48 | Seoul National University of Science and Technology 國立首爾科技大學 | 13/2/1/1/0 | 待/待/核 | 12／student_application:7, second_submission:3, conditional_program:2 |
 | 49 | Sungshin Women's University 誠信女子大學 | 12/0/2/3/0 | 核/核/核 | 9／student_application:9 |
 | 50 | Chung Ang University 中央大學 | 0/17/0/0/0 | 待/待/待 | 0／未建個別外校清單 |
 | 52 | Gachon University 嘉泉大學 | 3/11/1/2/0 | 待/待/待 | 0／未建個別外校清單 |
@@ -90,8 +94,8 @@
 | 58 | Thammasat University 國立法政大學 | 0/14/2/1/0 | 待/待/待 | 0／未建個別外校清單 |
 | 61 | King Mongkut’s University of Technology Thonburi 蒙庫國王科技大學 | 0/13/2/2/0 | 待/待/待 | 0／未建個別外校清單 |
 | 65 | Universitas Bunda MuliaUK 慈育大學 | 0/11/6/0/0 | 核/待/待 | 0／未建個別外校清單 |
-| 67 | Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學 | 13/0/2/2/0 | 核/核/缺 | 8／student_application:8 |
-| 68 | Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學 | 11/1/4/1/0 | 核/缺/缺 | 7／student_application:7 |
+| 67 | Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學 | 14/1/2/0/0 | 核/核/核 | 9／student_application:7, nomination:1, post_offer:1 |
+| 68 | Ho Chi Minh City University of Technology and Engineering HCMUTE胡志明科技工程大學 | 11/1/4/1/0 | 核/缺/舊 | 7／student_application:7 |
 | 71 | Dong Nai Technology University (DNTU) 同奈科技大學 | 0/0/17/0/0 | 缺/缺/缺 | 0／未建個別外校清單 |
 | 73 | Chitkara University 吉特卡拉大學 | 4/5/7/1/0 | 核/核/待 | 0／未建個別外校清單 |
 | 74 | Saintigits Group of Institutions 聖基茲工學院 | 0/1/16/0/0 | 核/待/待 | 0／未建個別外校清單 |
@@ -106,13 +110,13 @@
 | 95 | Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學 | 2/6/6/0/3 | 核/舊/舊 | 0／未建個別外校清單 |
 | 98 | Ludwigshafen University of Business and Society 路德維希港社會應用科技大學 | 6/2/9/0/0 | 核/核/核 | 0／未建個別外校清單 |
 | 99 | Friedrich Schiller Universität Jena 耶拿大學 | 9/5/0/3/0 | 舊/待/舊 | 0／未建個別外校清單 |
-| 100 | Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學 | 1/12/4/0/0 | 核/缺/待 | 0／未建個別外校清單 |
+| 100 | Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學 | 1/12/4/0/0 | 核/待/待 | 0／未建個別外校清單 |
 | 101 | Deggendorf Institute of Technology 德根多夫應用科技大學 | 0/6/10/1/0 | 核/待/待 | 0／未建個別外校清單 |
 | 102 | Augsburg University of Applied Sciences 奧格斯堡應用科技大學 | 7/8/2/0/0 | 核/核/核 | 0／未建個別外校清單 |
 | 103 | ZHAW Zurich University of Applied Sciences-SoE 蘇黎世應用科技大學-工學院 | 0/9/6/2/0 | 核/待/待 | 0／未建個別外校清單 |
 | 104 | University of Applied Sciences and Arts Northwestern Switzerland – School of Business Fachhoschule Nordwestschweiz (FHNW) - Hochschule für Wirtschaft 西北應用科技與藝術大學 | 3/10/2/2/0 | 待/待/待 | 0／未建個別外校清單 |
 | 105 | Ankara Social Science University 土耳其安卡拉社會科技大學 | 1/11/3/2/0 | 舊/舊/舊 | 0／未建個別外校清單 |
-| 106 | Ç ukurova University 土耳其丘庫羅瓦大學 | 10/0/6/1/0 | 核/缺/核 | 7／student_application:7 |
+| 106 | Ç ukurova University 土耳其丘庫羅瓦大學 | 10/0/6/1/0 | 核/待/核 | 7／student_application:7 |
 | 107 | University of Pardubice 捷克巴爾杜比彩大學 | 13/0/3/1/0 | 待/待/待 | 3／student_application:3 |
 | 108 | Tomas Bata University in Zlí n 托馬斯拔佳大學 | 8/2/6/1/0 | 核/待/核 | 6／student_application:4, conditional_program:2 |
 | 109 | University of West Bohemia 西波希米亞大學 | 2/12/3/0/0 | 待/待/待 | 0／未建個別外校清單 |
@@ -122,10 +126,10 @@
 
 ## 尚待補查與實際限制
 
-公開查核缺口：交通6校、生活5校、學制32校、學院44校未載；其餘無年份／跨校區來源待確認適用性。未把所有缺值歸為只能聯絡學校。逐校checklist、research-gap-audit及acquired-content-review均保留。
+公開查核缺口：交通3校（HCMUTE、DNTU、UNINTER）、生活1校（DNTU）、學制32校、學院44校未載；其餘無年份／跨校區來源仍待確認適用性。未把公開缺值歸為只能聯絡學校。
 
-651個唯一來源對應651請求，83個可解析合作校附件；71筆fetch_failed，另7challenge、6空回應、2captcha及1不相關內容異常不採作政策。失敗followup中14筆實際重試，6筆首次失敗未重試。
+679個唯一來源對應679請求，87個可解析合作校附件；77筆fetch_failed，另7challenge、7空回應、2captcha及2不相關內容異常不採作政策。UNINTER指南三次503、HCMUT個人表兩次401；匿名瀏覽器遇憑證錯誤，改讀可匿名且正常TLS驗證的官方公開JSON，未登入或關閉憑證驗證。
 
-最新測試與套件證據見ccu-validation-2026-10-08/fourteenth-fifteenth-*；前次33瀏覽器、匿名即時官方DOCX及內容hash相容證據另見parent-fix-*。本輪8瀏覽器包括新版首爾科技。瀏覽器下載以保存的真實官方DOCX回放，匿名即時HTTP驗證獨立記錄，未將回放冒充即時外網請求。
+最新測試及套件證據見ccu-validation-2026-10-08/sixteenth-*。瀏覽器初次8 passed／2個HCMUT定位器失敗；修正只比對提名文件的定位器後兩項皆通過。包括手機／桌面逐項中性標籤、銀行範圍與新HCMUT DOCX下載。下載以保存的真實官方檔案回放；匿名即時來源HTTP及hash另存，不將回放稱為即時外網請求。
 
 中正母校與平台適配可用；外校完整度仍有上述缺口。未登入學校系統、提交資料、聯絡承辦、merge main或部署。

@@ -122,6 +122,40 @@ def public_content_blocks(soup):
                         )
 
 
+def public_hcmut_article(body: bytes, url: str):
+    """Read the anonymous news JSON used by HCMUT's public website."""
+    parsed = urlsplit(url)
+    if (
+        parsed.hostname != "hcmut.edu.vn"
+        or parsed.path != "/api/home/tt-tin-tuc/item"
+    ):
+        return None
+    payload = json.loads(body)
+    item = payload.get("item")
+    if payload.get("error") or not isinstance(item, dict):
+        raise ValueError("Public HCMUT article was not returned")
+    if item.get("noiBo") != 0 or item.get("kichHoat") != 1:
+        raise ValueError("HCMUT article is not marked public and active")
+    sections = []
+    for key in ("tieuDe", "tomTat", "noiDung"):
+        value = item.get(key) or "{}"
+        translations = json.loads(value) if isinstance(value, str) else value
+        sections.append(translations.get("en", ""))
+    if not sections[-1]:
+        raise ValueError("Public HCMUT article has no English body")
+    soup = BeautifulSoup(
+        "\n".join(sections).replace('\\"', '"'), "html.parser"
+    )
+    for node in soup(["script", "style"]):
+        node.decompose()
+    return soup, {
+        "public_article_id": item["ma"],
+        "public_page_url": f"https://hcmut.edu.vn/news-en/item/{item['ma']}",
+        "published_timestamp_ms": item.get("ngayDangBai"),
+        "extraction_method": "anonymous_public_news_json_english_fields_no_script_execution",
+    }
+
+
 def fetch_public_source(item: dict, output: Path, session=None) -> dict:
     url = item["url"]
     if urlsplit(url).scheme not in {"http", "https"}:
@@ -259,8 +293,28 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
                 result.update(status="downloaded_doc_unextracted", text_pages=[])
                 (output / (item["source_id"] + ".doc")).write_bytes(body)
         else:
-            soup = BeautifulSoup(body, "html.parser")
+            public_article = public_hcmut_article(body, response.url)
+            if public_article:
+                soup, metadata = public_article
+                result.update(metadata)
+                response_file = item["source_id"] + ".response.json"
+                (output / response_file).write_bytes(body)
+                result["raw_public_response_file"] = response_file
+            else:
+                soup = BeautifulSoup(body, "html.parser")
             public_blocks = list(public_content_blocks(soup))
+            if urlsplit(response.url).hostname == "drive.google.com":
+                public_files = {}
+                for node in soup.select("[data-id][data-tooltip]"):
+                    file_id = node.get("data-id", "")
+                    if re.fullmatch(r"[A-Za-z0-9_-]{20,}", file_id):
+                        public_files[file_id] = {
+                            "file_id": file_id,
+                            "label": node.get("data-tooltip"),
+                            "url": f"https://drive.google.com/file/d/{file_id}/view",
+                        }
+                if public_files:
+                    result["public_folder_files"] = list(public_files.values())
             result["links"] = [
                 {
                     "label": a.get_text(" ", strip=True),
