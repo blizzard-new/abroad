@@ -30,7 +30,18 @@ def main():
             for key, field in row["fields"].items():
                 for evidence in field["evidence"]:
                     if evidence.get("source_id"):
-                        mapped[evidence["source_id"]].append({"kind": kind, "field": key, "status": field["status"], "source_pages": evidence.get("source_pages", [])})
+                        mapped[evidence["source_id"]].append({"kind": kind, "field": key, "status": field["status"], "evidence_status": evidence.get("status"), "source_pages": evidence.get("source_pages", [])})
+    documents = read("partner-document-requirements.json")
+    for row in documents:
+        for item in row["requirements"]:
+            for evidence in item["evidence"]:
+                mapped[evidence["source_id"]].append({
+                    "kind": "document", "field": item["requirement"]["name"],
+                    "status": item.get("applicability_status", row["status"]),
+                    "evidence_status": evidence["status"], "stage": item["stage"],
+                    "conditional": item["conditional"],
+                    "source_pages": evidence.get("source_pages", []),
+                })
     reviews = defaultdict(list)
     ledger = read("semantic-review-ledger.json")
     for school in ledger:
@@ -38,6 +49,7 @@ def main():
             for sid in field.get("readable_source_ids", []):
                 reviews[sid].append({"ledger": "semantic-review-ledger.json", "extent": "specified_field_sections", "field": key, "checked_at": field.get("reviewed_at"), "result": field.get("result")})
     review_files = sorted(BUNDLE.glob("*source-review.json"))
+    dispositions = {}
     for path in review_files:
         for entry in read(path.name).get("source_reviews", []):
             sid = entry.get("source_id")
@@ -47,6 +59,15 @@ def main():
                 continue
             if entry.get("sha256") and entry["sha256"] != raw[sid].get("sha256"):
                 continue
+            text_hash = hashlib.sha256(json.dumps(raw[sid].get("text_pages", []), ensure_ascii=False).encode()).hexdigest()
+            if entry.get("text_sha256") and entry["text_sha256"] != text_hash:
+                raise ValueError("Changed CCU review body: " + sid)
+            for proof in entry.get("body_evidence", []):
+                text = " ".join(" ".join(raw[sid]["text_pages"][p - 1] for p in proof["source_pages"]).split())
+                if not proof["excerpt"] or proof["excerpt"] not in text:
+                    raise ValueError("Missing CCU review quotation: " + sid)
+            if entry.get("disposition") and entry.get("checked_at", "") >= dispositions.get(sid, {}).get("checked_at", ""):
+                dispositions[sid] = entry
             reviews[sid].append({"ledger": path.name, "extent": entry.get("review_extent", "necessary_sections"), "checked_at": entry.get("checked_at"), "note": entry.get("review_note"), "sha256": entry.get("sha256")})
     schools = []
     for host in hosts:
@@ -59,9 +80,22 @@ def main():
             body = raw[sid]
             readable = any(str(text).strip() for text in body.get("text_pages", []))
             limited = body.get("access_result") in LIMITS
+            disposition = dispositions.get(sid, {})
+            duplicate = disposition.get("disposition") == "duplicate_mapped_body"
+            if duplicate:
+                counterparts = disposition.get("matched_mapped_sources", [])
+                if not counterparts or not all(
+                    other in raw and mapped[other]
+                    and raw[other]["text_pages"] == body["text_pages"]
+                    for other in counterparts
+                ):
+                    raise ValueError("Unproved CCU mapped-body duplicate: " + sid)
             state = (
-                "access_limited_no_policy_body" if limited else
+                "access_limited_no_policy_body" if limited or disposition.get("disposition") == "access_limited_no_policy_body" else
                 "mapped_sections_remaining_body_unclaimed" if mapped[sid] else
+                "identical_body_to_mapped_sections" if duplicate else
+                "reviewed_index_linked_bodies_separate" if disposition.get("disposition") == "public_index_no_policy" else
+                "reviewed_scoped_exclusion" if disposition.get("disposition") in {"reference_only", "out_of_scope"} else
                 "read_body_not_mapped" if reviews[sid] else
                 "readable_body_not_semantically_reviewed" if readable else
                 "fetched_binary_not_extracted" if body.get("bundled_file") else
@@ -76,6 +110,7 @@ def main():
                 "sha256": source.get("sha256"), "text_sha256": source.get("text_sha256"),
                 "body_state": state, "read_evidence": reviews[sid],
                 "mapped_fields": mapped[sid],
+                "scoped_disposition": disposition or None,
                 "full_saved_body_read": any(r["extent"] == "complete_saved_text_body" for r in reviews[sid]),
                 "all_policy_review_complete": False,
             })
@@ -92,7 +127,7 @@ def main():
             "public_sources_exhausted": False,
             "next_action": "先讀可讀但尚無語意查核紀錄的正文；已讀未映射逐欄核對計畫、年度、身分與校區。只把明示未公告的具體項目列為未公告。",
         })
-    inputs = ["overseas-source-registry.json", "overseas-reviewed-fields.json", "profile-reviewed-fields.json", "semantic-review-ledger.json", *(p.name for p in review_files)]
+    inputs = ["overseas-source-registry.json", "overseas-reviewed-fields.json", "profile-reviewed-fields.json", "partner-document-requirements.json", "semantic-review-ledger.json", *(p.name for p in review_files)]
     school_pages = {s["ccu_page"] for s in schools}
     shared = [{
         "source_id": source["source_id"], "source_url": source["source_url"],
@@ -109,6 +144,7 @@ def main():
         "input_sha256": {name: hashlib.sha256((BUNDLE / name).read_bytes()).hexdigest() for name in inputs},
         "definition": "逐來源互斥分類；mapped只證明所列欄位段落，未推整份讀完。read_body_not_mapped須有實際閱讀紀錄。沒有閱讀紀錄不表示已證實他人未讀；表示本交接尚無可核查語意查核。未核實新版不等於官方未公告。",
         "explicit_unannounced_subclaims": read("twentyfourth-source-review.json")["explicit_unannounced_subclaims"],
+        "frozen_backlog_progress": {key: read("twentyfifth-source-review.json")[key] for key in ["backlog_processed", "backlog_remaining_without_disposition", "additional_review_sources", "disposition_counts", "processable_followups"]},
         "schools": schools,
     }
     assert len(schools) == len({s["ccu_page"] for s in schools}) == 55

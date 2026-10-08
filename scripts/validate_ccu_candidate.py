@@ -54,6 +54,13 @@ def data_proof():
         if raw.get("bundled_file"):
             assert sha(BUNDLE / raw["bundled_file"]) == raw["sha256"], source["source_id"]
             attachments += 1
+    immutable_paths = set(git("ls-tree", "-r", "--name-only", "77dfd84", "src/exchange_info/official_data/ccu/overseas_sources").splitlines())
+    for path in list(immutable_paths):
+        original_source = json.loads(subprocess.check_output(["git", "show", "77dfd84:" + path], cwd=ROOT))
+        if original_source.get("bundled_file"):
+            immutable_paths.add(str(BUNDLE.relative_to(ROOT) / original_source["bundled_file"]))
+    for path in immutable_paths:
+        assert (ROOT / path).read_bytes() == subprocess.check_output(["git", "show", "77dfd84:" + path], cwd=ROOT), path
     main_files = git("ls-tree", "-r", "--name-only", "origin/main", "src/exchange_info/official_data").splitlines()
     for path in main_files:
         original = subprocess.check_output(["git", "show", "origin/main:" + path], cwd=ROOT)
@@ -79,7 +86,9 @@ def data_proof():
     assert len(partners) == len({p.school_name for p in partners}) == 104
     assert len(reviewed_rows()) == len(reviewed_profiles()) == 55
     documents = reviewed_documents()
-    assert len(documents) == 32
+    document_rows = json.loads((BUNDLE / "partner-document-requirements.json").read_text())
+    assert len(documents) == len(document_rows) == len({r["ccu_page"] for r in document_rows})
+    assert set(documents) >= {r["ccu_page"] for r in json.loads(subprocess.check_output(["git", "show", "77dfd84:src/exchange_info/official_data/ccu/partner-document-requirements.json"], cwd=ROOT))}
     contract = json.loads((ROOT / "docs/api/openapi.json").read_text())
     main_contract = json.loads(subprocess.check_output(["git", "show", "origin/main:docs/api/openapi.json"], cwd=ROOT))
     assert contract["paths"].keys() == main_contract["paths"].keys()
@@ -89,7 +98,7 @@ def data_proof():
         assert current.get("required", []) == original.get("required", []), key
         if current != original:
             existing_changes.append(key)
-    return {"candidate_sha": git("rev-parse", "HEAD"), "main_sha": git("rev-parse", "origin/main"), "source_count": len(sources), "prior_sources_byte_identical": len(previous["prior_snapshot_hashes"]), "source_text_hashes_verified": with_hash, "sources_without_text_hash": len(sources) - with_hash, "bundled_source_files_hash_verified": attachments, "all_main_official_data_files_byte_identical": len(main_files), "published_cgu_hashes_identical_to_independent_main_proof": len(published_hashes), "catalogue_rows": len(partners), "reviewed_host_rows": 55, "host_document_schools": len(documents), "api_paths_preserved": len(contract["paths"]), "existing_schema_changes": existing_changes, "existing_required_fields_preserved": True, "new_schemas": sorted(set(contract["components"]["schemas"]) - set(main_contract["components"]["schemas"])), "full_openapi_identical_to_main": contract == main_contract}
+    return {"candidate_sha": git("rev-parse", "HEAD"), "main_sha": git("rev-parse", "origin/main"), "source_count": len(sources), "prior_sources_byte_identical": len(previous["prior_snapshot_hashes"]), "verified_77dfd84_source_and_attachment_files_byte_identical": len(immutable_paths), "source_text_hashes_verified": with_hash, "sources_without_text_hash": len(sources) - with_hash, "bundled_source_files_hash_verified": attachments, "all_main_official_data_files_byte_identical": len(main_files), "published_cgu_hashes_identical_to_independent_main_proof": len(published_hashes), "catalogue_rows": len(partners), "reviewed_host_rows": 55, "host_document_schools": len(documents), "api_paths_preserved": len(contract["paths"]), "existing_schema_changes": existing_changes, "existing_required_fields_preserved": True, "new_schemas": sorted(set(contract["components"]["schemas"]) - set(main_contract["components"]["schemas"])), "full_openapi_identical_to_main": contract == main_contract}
 
 
 def suite_stats(path):
@@ -138,7 +147,7 @@ def main():
     quick = [("lock", ["uvx", "--from", "uv==0.11.26", "uv", "lock", "--check"]), ("openapi", [sys.executable, "scripts/export_openapi.py", "--check"]), ("python-syntax", [sys.executable, "-m", "compileall", "-q", "src", "scripts/validate_ccu_candidate.py"]), ("ruff", ["uvx", "ruff", "check", "scripts/fetch_ccu_overseas_sources.py", "scripts/validate_ccu_candidate.py", "src/exchange_info/ccu_overseas.py", "src/exchange_info/ccu_profile.py", "tests/test_ccu_twentythird_pass.py", "tests/e2e/test_ccu_candidate_acceptance.py", "tests/e2e/test_ccu_school.py"])]
     for path in ["app.js", "ccu-academic-units.js", "ccu-language-conditions.js", "ccu-partner-details.js"]:
         quick.append(("js-" + path, ["node", "--check", "src/exchange_info/static/" + path]))
-    quick.append(("ruff-followup", ["uvx", "ruff", "check", "scripts/build_ccu_body_triage.py", "tests/test_ccu_followup_validation.py", "tests/e2e/test_ccu_delayed_switching.py"]))
+    quick.append(("ruff-followup", ["uvx", "ruff", "check", "scripts/build_ccu_body_triage.py", "tests/test_ccu_followup_validation.py", "tests/test_ccu_twentyfifth_pass.py", "tests/e2e/test_ccu_delayed_switching.py"]))
     for label, command in quick:
         results.append(run(label, command))
     regression = sorted({str(p.relative_to(ROOT)) for p in (ROOT / "tests").glob("test_ccu*.py")} | {"tests/" + name for name in ["test_advisor.py", "test_application_document_catalog.py", "test_application_documents_api.py", "test_application_rules.py", "test_application_workflow.py", "test_cgu_bundled_data.py", "test_ntpu_bundled_data.py", "test_ntpu_support.py", "test_ntu_audit.py", "test_ntu_integration.py", "test_ntu_school_board_migration.py", "test_qualification_scope_consistency.py", "test_school_photo_and_match.py", "test_selection_conditions_sync.py", "test_workflow_structuring.py", "test_account_workspace_api.py"]})

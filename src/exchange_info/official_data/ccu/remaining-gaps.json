@@ -4,9 +4,9 @@
   "round": "2027春季",
   "definition": "逐校實際取得與欄位映射清冊；未映射不自稱未讀，既有逐欄review也不推整份／全部政策已核。候選href不是政策事實或已驗證可開啟。",
   "input_sha256": {
-    "profile-reviewed-fields.json": "a2669bbf8aed603ce4bf1e55c7093d49516b8bccb824ef4dac993728de31bbd3",
-    "overseas-reviewed-fields.json": "0e5effff6d19b271175c23408f6494fb8f661748582280b73efeed174d869cb4",
-    "partner-document-requirements.json": "f7418d59b16e4c09e7f2cb7c80ce7270395674efc894102c5b75791ac2170052",
+    "profile-reviewed-fields.json": "bf7885186facd671e9a828cd0cc068af4782ed96e03f70b747ecc9f908d246d8",
+    "overseas-reviewed-fields.json": "b3f3ed6eddb3387f92a6b8cd3c5a8332a0b48d87eac203ce56ea1600cddeb39c",
+    "partner-document-requirements.json": "b6da91c1dd70c1db3364023cd540d413b7db06f33facf2fa0aa2c8563bc2502d",
     "overseas-source-registry.json": "5febc226a6b787b909a97196f42931820d7dc879cfe5eb04ad05cf62a1bc4389",
     "overseas-source-requests.json": "8be61be3ea9982af1ab4655ec1418a8aebaa960d6cfca4fbd88f717047f69121",
     "semantic-review-ledger.json": "9bb4b811c577b8b9200b6570d6ab29540e233c6ea75c77c35d1224f0530f44a5"
@@ -2665,7 +2665,7 @@
         },
         "campus_life": {
           "status": "needs_confirmation",
-          "known_value": "國際生服務頁提供E-hall校園信箱申請與WebVPN入口說明；帳號／信箱問題可找VisionBuilding315室。未標2027及臺灣HMT交換身分，尚需確認帳號權限；只提供公開服務資訊，本次未登入／提交或變更帳號。",
+          "known_value": "國際生服務頁提供E-hall校園信箱申請與WebVPN入口說明；帳號／信箱問題可找VisionBuilding315室。未標2027及臺灣HMT交換身分，尚需確認帳號權限；只提供公開服務資訊，本次未登入／提交或變更帳號。 一般校園地圖分 Renmin St. 與 Jingyue St. Campus；未指定2027交換學生的上課／宿舍分配。",
           "reason": "讀具體IT服務流程，不把登入步驟當取得學生帳號／國籍適用已核。",
           "evidence": [
             {
@@ -2693,6 +2693,21 @@
               "content_hash": "23d92c8378a1ebb0dbcc4e6a7fd2399b233935210293c17c9c26a6a60379b904",
               "text_sha256": "ea709a8dd8954b8e1647f39e1d9a88683ef13619862f3c01c85bdbcb9bf167d7",
               "note": "指定原文實讀；PDF頁碼為物理頁，DOCX不猜頁碼；不以舊版本或不可见PDF字串作新版政策。"
+            },
+            {
+              "source_id": "p26-r9-map",
+              "source_url": "https://iso.nenu.edu.cn/Campus_Life/Campus_Map.htm",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:43:29.989557+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Account Campus Map Campus Map Renmin St. Campus Jingyue St. Campus Follow Us： StudyatNENU Wechat Scan for Inquiries Copyright： International Students Office, Division of International Cooperation & Exchange Add：Room 624, Administration Building, Northeast Normal University, No. 5268, Re",
+              "note": "一般校園地圖分 Renmin St. 與 Jingyue St. Campus；未指定2027交換學生的上課／宿舍分配。",
+              "content_hash": "b98ca5668bd0dab9d5bafa7b7b7c918672db78ef2be17811166eda72758db546",
+              "text_sha256": "6ef50e5de828522c69159dd359bff0794c430932e359def4f6bb080a6906482c"
             }
           ],
           "next_public_action": "續查官方一般服務及校區指引，保留未標年度和交換身分限制。"
@@ -2935,7 +2950,7 @@
           "content_review_note": "第九輪分欄閱讀；校址與官方網站身分和申請年度分開核對。校址段和各指定交通／生活段已核；全站新聞、其他學位招生、圖像未全讀。成功下載不代表2027全部政策適用。",
           "sha256": "b98ca5668bd0dab9d5bafa7b7b7c918672db78ef2be17811166eda72758db546",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p26-r10-life",
@@ -3351,6 +3366,21 @@
               "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
               "content_hash": "c630104eebc36cac5f6dd606899c2b4a22522f7f627e0f0bf519de469f604765",
               "text_sha256": "71e7e9fbbcdbe64d6ca94e1834c2dceff7a1c2e431c7470552923ff7fa42c769"
+            },
+            {
+              "source_id": "p29-r4-procedure-web",
+              "source_url": "https://hmt.ccnu.edu.cn/jhjls1/lxjhs/bllc.htm",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:43:29.977093+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "和《华中师范大学第二校园学习证明》。 ↓ 第七步 成绩寄送：下学期开学后一个月内，我校院系和港澳台办将为交换学生统一制作成绩单并寄给学生所在学校主管交换学生部门。 Image L157: Copyright ©2015 华中师范大学港澳台事务办公室 All rights reserved. 地址：湖北省武汉市珞喻路152号国际文化交流园区一号楼三楼 电话：+86-27-67865079",
+              "note": "未標年離校流程先辦離校通知，成績及第二校園學習證明另發；成績一般在次學期開學後一個月內寄母校，不保證2027精確寄送日。",
+              "content_hash": "a79ac55572d1a68f0232f611ad41616234804b959e6a6bf9f0f701f230cb2e89",
+              "text_sha256": "a9da16ed3aecf4d456e589b84492647b0b09992b6f0fecd1233a547c3f8b01d8"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
@@ -3544,7 +3574,7 @@
           "content_review_note": "已讀報到、選課、離校流程；一般春季11/1–12/15不能取代2027簡章11/2。未使用頁面所示登入資訊。",
           "sha256": "a79ac55572d1a68f0232f611ad41616234804b959e6a6bf9f0f701f230cb2e89",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p29-r4-rules-index-web",
@@ -3575,7 +3605,7 @@
           "review_state": "content_not_obtained"
         }
       ],
-      "host_document_count": 8,
+      "host_document_count": 11,
       "host_list_completeness": "partial_not_exhaustive",
       "academic_scope_options": [],
       "document_access_constraints": [],
@@ -3780,7 +3810,7 @@
           "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。與Spring2027申請索引逐項對照；指定表實開，不代表提名後全部portal欄位已取。",
           "sha256": "2642222c8a346ffb11cbff09791ea75935dd457bc24085df2e37cf3c17e108e3",
           "bundled_file": "partner_forms/p32-r7-cefr-reference.pdf",
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p32-r7-dorm-house",
@@ -3808,7 +3838,7 @@
           "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
           "sha256": "bd0620f39cd5d6094089e42df810925b336990c17c8f05b4a2b0b777efdab652",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p32-r7-english",
@@ -3836,7 +3866,7 @@
           "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
           "sha256": "546b7e7ae886b33d6013fd7419832b7b22b19cf61b29030fe2c5b212f24672c9",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p32-r7-guide",
@@ -3920,7 +3950,7 @@
           "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。與Spring2027申請索引逐項對照；指定表實開，不代表提名後全部portal欄位已取。",
           "sha256": "5c07939a0e9f3f67044b1dfe11216dad9b2130a240803fb14484c116d018cf2d",
           "bundled_file": "partner_forms/p32-r7-jp-evaluation-form.docx",
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p32-r7-jsp",
@@ -3934,7 +3964,7 @@
           "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
           "sha256": "baa4de26cd5f10bedc9bb71977f4201742b4aee3a9cc856c2f7c48afba163947",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p32-r7-plan-form",
@@ -3990,7 +4020,7 @@
           "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。SPOT指引文字已讀；截圖操作細節未逐張核，不建立測驗帳號或代考。",
           "sha256": "17fdc8d4064bb5fbb0cb19a9e4772869e1530f2c160b07a6e4cd2d19ad367ed6",
           "bundled_file": "partner_forms/p32-r7-spot-instructions.pdf",
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p32-profile-root",
@@ -4719,7 +4749,7 @@
         },
         "application_forms": {
           "status": "needs_confirmation",
-          "known_value": "當期申請頁連結的空白模板均已實際開啟並保存：StudyPlan DOCX、ResearchPlan DOCX、推薦PDF、健康PDF2頁、限定研究生specificcategories DOCX、醫學StudyPlan_M DOCX及ClinicalClerkship PDF。學習計畫依英/日語與身分填；推薦由相關faculty以letterhead簽名/日期返PDF，健康由醫師簽日期及聯絡。醫學與研究模板不能普遍套本科，完整online欄位仍須母校提名入口。；完整online表未取得，表單欄整體保留待確認。",
+          "known_value": "當期申請頁連結的空白模板均已實際開啟並保存：StudyPlan DOCX、ResearchPlan DOCX、推薦PDF、健康PDF2頁、限定研究生specificcategories DOCX、醫學StudyPlan_M DOCX及ClinicalClerkship PDF。學習計畫依英/日語與身分填；推薦由相關faculty以letterhead簽名/日期返PDF，健康由醫師簽日期及聯絡。醫學與研究模板不能普遍套本科，完整online欄位仍須母校提名入口。；完整online表未取得，表單欄整體保留待確認。 醫學Clinical Clerkship專用學習表：按語言資格選英300詞或日600字，列交換前一學期已修／將修課；未載簽章，不替代一般NUPACE學習表。",
           "reason": "當期指定空白模板已開啟並核實；完整online申請欄位須母校提名入口，目前未取得，因此整個application_forms欄不宣稱完整已核。",
           "evidence": [
             {
@@ -4790,6 +4820,21 @@
               "note": "已實際開啟DOCX全文，研究計畫600–800英文字/1200–1600日文，不普遍套本科。",
               "content_hash": "e2557da8f753688dc9be63d62d3db769b9803530de386da3a00ee81dc9b51d24",
               "text_sha256": "164ff89ef2bc371f095a4187eff3c0e9a64e8c015e26fc761252ed0fded9d977"
+            },
+            {
+              "source_id": "p34-r5-medical-study-plan",
+              "source_url": "https://nupace.iee.nagoya-u.ac.jp/en/apply/doc/StudyPlan_M.docx",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:45:53.097520+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Study Plan/学習計画書 (For Medical Clerkship Students) Students who only meet the NUPACE English language requirement should complete this form in English. Students who only meet the Japanese language requirement should complete it in Japanese. Students who meet both English and Japanese lang",
+              "note": "醫學Clinical Clerkship專用學習表：按語言資格選英300詞或日600字，列交換前一學期已修／將修課；未載簽章，不替代一般NUPACE學習表。",
+              "content_hash": "5b2e028025de360bc7d2cc86c0163042188f3382ee4a7d110c63c2e19cff645f",
+              "text_sha256": "7d3a4e0397fccc662095fea8049caeb63ac3cc5b1293825a26c5ac90c41cc3ad"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
@@ -4836,7 +4881,7 @@
           "content_review_note": "已實際開啟PDF全文；臨床先修/獨立實習期間與宿舍資格不可套一般NUPACE。示例2014不是當期申請日。",
           "sha256": "ffbd7a478e78cf1cb1a7537b48946d85f335173993907fd79fd0d7cdfefd9b2d",
           "bundled_file": "partner_forms/p34-r5-clerkship-form.pdf",
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p34-r5-course-overview",
@@ -4864,7 +4909,7 @@
           "content_review_note": "一般官方頁/入口已取得；未明示當期適用。導覽年不替各欄定期；未載或未完成全文細核仍可續查。",
           "sha256": "1348457a41b938e9154442098f93889ccd3665cc6a36415b5a5a813a4330daa5",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p34-r5-financial",
@@ -4878,7 +4923,7 @@
           "content_review_note": "已全文讀；網站租金估20–40k與2026/27 PDF30–40k不同，採當期PDF估值；JASSO GPA3.1不是交換GPA3.0。",
           "sha256": "372cb3d205f93689dc9df73307134e15eeac99ded4ba0e16ffa827998ddcabc1",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p34-r5-health-form",
@@ -4906,7 +4951,7 @@
           "content_review_note": "已讀首頁当期申請資訊；導航2026/27不替所有子頁定年。",
           "sha256": "0dad321d00b3dcf03e5b1af75e6fccf6565f247e249e5d5453fc8a81740e800b",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p34-r5-housing",
@@ -4934,7 +4979,7 @@
           "content_review_note": "已實際開啟DOCX全文，醫學300英文字/600日文，獨立計畫不代表中正所有學生可修實習。",
           "sha256": "5b2e028025de360bc7d2cc86c0163042188f3382ee4a7d110c63c2e19cff645f",
           "bundled_file": "partner_forms/p34-r5-medical-study-plan.docx",
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p34-r5-partners",
@@ -4948,7 +4993,7 @@
           "content_review_note": "一般官方頁/入口已取得；未明示當期適用。導覽年不替各欄定期；未載或未完成全文細核仍可續查。",
           "sha256": "aa6b7ff960224f14cc2bd923c731a0184cbda54e2d73b5568b1b9954d4227356",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p34-r5-procedures",
@@ -5032,7 +5077,7 @@
           "content_review_note": "已實際開啟DOCX全文，三類聲明與證明，依學科學制範圍，非所有本科必填。",
           "sha256": "37b012c15ea9ab7ee129b46b681c655e4c277dde73a4746640c8005489a34295",
           "bundled_file": "partner_forms/p34-r5-specific-categories.docx",
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p34-r5-study-plan",
@@ -5088,7 +5133,7 @@
           "content_review_note": "第九輪分欄閱讀；校址與官方網站身分和申請年度分開核對。校址段和各指定交通／生活段已核；全站新聞、其他學位招生、圖像未全讀。成功下載不代表2027全部政策適用。",
           "sha256": "0dad321d00b3dcf03e5b1af75e6fccf6565f247e249e5d5453fc8a81740e800b",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p34-r10-life",
@@ -5130,7 +5175,7 @@
           "content_review_note": "已讀與必要欄位相關段落及實體頁；來源適用年、programme、degree、campus分開。未年／舊期不升2027。",
           "sha256": "74a6f1f8c0b288bd689a63b12d77930eccdb8fb5941a886de7726ae31034f027",
           "bundled_file": "partner_forms/p34-r20-61c3975b51.pdf",
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         }
       ],
       "host_document_count": 10,
@@ -5372,7 +5417,7 @@
         },
         "documents": {
           "status": "needs_confirmation",
-          "known_value": "COLABS請求表公開字段：合併本科/研究所英文成績與grading、研究背景/高中起含6monthgap、英語能力/目標研究所導師、250–400wordsproposal及≤5keywords。收到同意resultemail後保存PDF交TAO，並非10/15已取同意的證明；批次與Q5矛盾、完整TAO及院系追加文件待核。",
+          "known_value": "COLABS請求表公開字段：合併本科/研究所英文成績與grading、研究背景/高中起含6monthgap、英語能力/目標研究所導師、250–400wordsproposal及≤5keywords。收到同意resultemail後保存PDF交TAO，並非10/15已取同意的證明；批次與Q5矛盾、完整TAO及院系追加文件待核。 一般JYPE申請SOP列三位同department研究者、每位最多250詞，professor/associate可、assistant不可；申請前禁止直接contact，錄取後meeting另階段。JYPE為Fall入學，不能套Spring2027 IPLA。",
           "reason": "只核實所述來源/計畫及年度；未年條件與母校當期繳件分开，未取得新版/個人實表及席位，不猜缺值。",
           "evidence": [
             {
@@ -5400,6 +5445,21 @@
               "note": "第八輪實讀公開正文，逐欄分母校/接收校、校曆/申請期限、本科/研究所、主校/分校、交換/degree/專案、當期/舊年；未核新版不是官方明示尚未公告。Step4提交request截止與Step5 EarlyNovember結果通知分開，Q5要求期間內取得同意的舊句矛盾保留，不保10/15已同意。",
               "content_hash": "79bf3d04b28ace3949823f3a6881922a5222187ad775c7edef14336a09431740",
               "text_sha256": "c989605396924e2ae60b7faf85bb9436a5a69039631976ceabcbf8d642e082d6"
+            },
+            {
+              "source_id": "p35-hostf1",
+              "source_url": "https://www.insc.tohoku.ac.jp/english/exchange/jype/",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:48:24.030212+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "the \" statement of purpose \" (up to 250 words for each professor) on their application form. - Most of the TU laboratories have their own websites* to state details of their research works as well as their academic papers, so it is also strongly suggested to go through such publicly available materials ",
+              "note": "一般JYPE申請SOP列三位同department研究者、每位最多250詞，professor/associate可、assistant不可；申請前禁止直接contact，錄取後meeting另階段。JYPE為Fall入學，不能套Spring2027 IPLA。",
+              "content_hash": "0d81703fa681ce61b70faed92f78f3e29e325025694c1f997cde9a2b453219bc",
+              "text_sha256": "89b7cdce54087805b71b253ea69d1d4939c4f4cb65e7fae5e27c89dc7161ee0f"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
@@ -5507,7 +5567,7 @@
           "content_review_note": "現行交換總頁未標明2027春季；行前頁仍為Fall 2026，不能沿用其COE或宿舍截止。IPLA春季僅指定伙伴，JYPE僅秋季。",
           "sha256": "0d81703fa681ce61b70faed92f78f3e29e325025694c1f997cde9a2b453219bc",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p35-hostf2",
@@ -5647,7 +5707,7 @@
           "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
           "sha256": "abc04850233202c94a3993bbab8c24d7b4842b895a8adf792ee2f6f15769dcc2",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p35-r7-insurance",
@@ -5759,7 +5819,7 @@
           "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
           "sha256": "f4be197f62cd354fab4df15940b382be825fc9aa4518a62b723446ee877372b9",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p35-r8-colabs-procedures",
@@ -5871,7 +5931,7 @@
           "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。",
           "sha256": "8a3d05374b1c617f928d9fe7addc0aa86e1b55708cb8c61332d75c9d97decac9",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p35-r19-375a642a90",
@@ -5941,7 +6001,7 @@
           "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。",
           "sha256": "d4d6c8b49299ba814b2a6f967300c0b87927b2e4252ec5d2d94e327797c314b1",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p35-r20-a3ce996a54",
@@ -5969,7 +6029,7 @@
           "content_review_note": "已讀與必要欄位相關段落及實體頁；來源適用年、programme、degree、campus分開。未年／舊期不升2027。",
           "sha256": "6c9de50bb044f4f46150f14ff7b02c42d36f5032dbc05b12838ae6d26c983f78",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p35-r20-0b30dab851",
@@ -6442,7 +6502,7 @@
         },
         "campus_life": {
           "status": "needs_confirmation",
-          "known_value": "一般生活頁列Language Corner約每週、Sawakai約每月及文化／體育社團，想加入需直接詢問社團；頁面2025-05更新，2027各活動時段未核。 一般2026更新館藏含2025基準、多校區館hours季節變，不當2027sem時段／交換院系可申請證據。",
+          "known_value": "一般生活頁列Language Corner約每週、Sawakai約每月及文化／體育社團，想加入需直接詢問社團；頁面2025-05更新，2027各活動時段未核。 一般2026更新館藏含2025基準、多校區館hours季節變，不當2027sem時段／交換院系可申請證據。 一般校園生活頁updated2025-05-08分國際學生與國際教職員支持；只學生支援入口，不把教職員服務全作交換生福利。",
           "reason": "本輪讀取精確官方必要段落／附件，保存年度、實體頁、角色與矛盾；當期清單及未年／舊期補充分開，個人通知仍待核。",
           "evidence": [
             {
@@ -6469,6 +6529,21 @@
               "content_hash": "4ebd3ab895dc4d2f805e2c513cf0b16f5634d848cca529a5913e18f91f594be5",
               "text_sha256": "dc3df432e06b4e498f349195ba6799484f604a01f5f62bd4d7ac765caca388d3",
               "note": "evidence.status為欄位匯總；此原來源的適用年／身分由academic_year及content_applicability獨立保存，一般資料不升2027。"
+            },
+            {
+              "source_id": "p37-r10-life",
+              "source_url": "https://www.global.hokudai.ac.jp/campus-life/campus-life-overview/",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般校園生活2025-05-08更新",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:46:47.468214+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "OK for International Students For International Colleagues: The Information for International Colleagues at Hokkaido University Updated on May 8, 2025 Share Facebook X Linkedin Bluesky Threads Hokkaido University Kita 8, Nishi 5, Kita-ku, Sapporo, Hokkaido, 060-0808 Japan +81-11-716-2111 Contact U",
+              "note": "一般校園生活頁updated2025-05-08分國際學生與國際教職員支持；只學生支援入口，不把教職員服務全作交換生福利。",
+              "content_hash": "75888edfb0f72495971ff09cd12373d20d10b65cbf6303091812e6ebd55110fd",
+              "text_sha256": "1aea6c16c37c031be8082cf53b3fe891200c2509a8e39cb06e7f5c7f69a951d3"
             }
           ],
           "next_public_action": "續查官方一般服務及校區指引，保留未標年度和交換身分限制。"
@@ -6655,7 +6730,7 @@
           "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
           "sha256": "cbd635dfad757c3df13f44767e3665699d6a1e97cba886de0de97de8c5c6482d",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p37-r7-ccu-list",
@@ -6683,7 +6758,7 @@
           "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。表內簽名/日期/母校職員章及推薦人角色已核；學生與母校TAO提交角色分開。",
           "sha256": "579b76adc7592be8c789c7d6ea6ba628ca791ecfcdf7242f50d8d0156835e284",
           "bundled_file": "partner_forms/p37-r7-consent-form.docx",
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p37-r7-dorm-fees-xlsx",
@@ -6907,7 +6982,7 @@
           "content_review_note": "第十輪只核對指定交通／學生支援段落；導覽、全站新聞、圖片／影片與所有外連未逐一閱讀。未標2027服務不提升當期規定；入口只有導覽無內容者未映射。",
           "sha256": "75888edfb0f72495971ff09cd12373d20d10b65cbf6303091812e6ebd55110fd",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p37-r20-201a976753",
@@ -7054,7 +7129,7 @@
         },
         "campus_life": {
           "status": "reference_only",
-          "known_value": "Fall舊版文化參訪與公共設施只作參考；不承諾2027春有相同活動或費用補助。",
+          "known_value": "Fall舊版文化參訪與公共設施只作參考；不承諾2027春有相同活動或費用補助。 一般國際交流語言中心駐員支持與學期間/假期辦公時間，不等交換申請截止或2027活動保證。",
           "reason": "只依指定原文保存交通／生活事實；未年度服務不推定2027，不能用arrival欄複製代替。",
           "evidence": [
             {
@@ -7071,6 +7146,21 @@
               "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
               "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db",
               "note": "指定段原文；不由其他年份、全校學位或下載成功推定交換資格。"
+            },
+            {
+              "source_id": "p39-hostz1",
+              "source_url": "https://www.tokiwa.ac.jp/international/intlco/",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:46:47.475231+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "画 海外研修・派遣留学制度紹介動画 お問い合わせ 受付時間：平日 8時45分～18時00分（通常授業期間） 平日 9時00分～17時00分（春季/夏季休暇期間） 住所：〒310-8585 水戸市見和1-430-1 常磐大学 国際交流語学学習センター 電話：029-232-2828 FAX：029-232-3075 E-mail：intlco＠tokiwa.ac.jp 主な活動内容 フロアマップ 国際交流 国際交流語学学習センター 主な活動内容 フロアマップ 交換留学（派遣） 交換留学（受入） 科目等履修生（留学履修生）PART-TIME INTERN",
+              "note": "一般國際交流語言中心駐員支持與學期間/假期辦公時間，不等交換申請截止或2027活動保證。",
+              "content_hash": "bc6c0571fcf8d8451e275d6d5c8a59df9d70ee2995d6b45b9493a52ff790f9d5",
+              "text_sha256": "923def1b6043501c67b1865d008640278af6bacf205266ac8ee822c3f5d4dbe0"
             }
           ],
           "next_public_action": "續查官方一般服務及校區指引，保留未標年度和交換身分限制。"
@@ -7178,7 +7268,7 @@
           "content_review_note": "官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
           "sha256": "afe617b4c70b6428a594d61c9b57ce3867ce0ba4a833a5860869fabe450e4b35",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p39-hostz0",
@@ -7206,7 +7296,7 @@
           "content_review_note": "官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
           "sha256": "bc6c0571fcf8d8451e275d6d5c8a59df9d70ee2995d6b45b9493a52ff790f9d5",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p39-hostf0-r2retry",
@@ -7782,6 +7872,21 @@
               "note": "檔名含2026Fall，內容實為2026/2027並列春季申請；依正文核實，不沿用檔名。",
               "content_hash": "7e64de3d496952f23579ca70684ce8d407087e9ba15d014997b6492ca9347bc8",
               "text_sha256": "2e5563e6b9d4e2b418e74e74343e26b9ca85c58d5c32ad5f3e495edbb81420d5"
+            },
+            {
+              "source_id": "p43-hostf0",
+              "source_url": "https://international.pusan.ac.kr/international/15258/subview.do",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:47:14.941614+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "ort Certificate of Enrollment(Non-OECD applicants must submit an Apostille-certified original document by post.) Official Transcript(Non-OECD applicants must submit an Apostille-certified original document by post.) Bank Statement(Non-OECD applicants must submit the original document by p",
+              "note": "未載學期年incoming清單：護照／在學／正式成績／財力／Study Plan；non-OECD國籍在學與成績需apostille認證原件郵寄、財力原件郵寄，非所有學生同條件，臺籍個案仍待核。",
+              "content_hash": "425aacf1ad96cbfb58a5a246ed5038fcc931f68a4e41a2e17cf8c0f6e3603bc1",
+              "text_sha256": "b08e9366a3a5bbeb392a9eba378e6a5f2b8d06286ba9a56b293b492f09eb5d82"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
@@ -7866,7 +7971,7 @@
           "content_review_note": "中正附件公開下載404；已改查合作校Exchange / Visiting入口，未核實2027春季新版。",
           "sha256": "425aacf1ad96cbfb58a5a246ed5038fcc931f68a4e41a2e17cf8c0f6e3603bc1",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p43-hostz0",
@@ -8436,13 +8541,43 @@
               "content_hash": "4ff8a11af8fdbccbff04daf88face7da6c0e12e5f41b6e31684f466d5a470117",
               "text_sha256": "4ac94c3f79b09c1061f2beb17b5a775903f9d33894229a51e5234224a2af11ab",
               "note": "evidence.status為欄位匯總；來源角色／實際年度由academic_year與原來源分開保存，未年／舊期未升2027。"
+            },
+            {
+              "source_id": "p47-r19-f90256eda8",
+              "source_url": "https://exchange.hufs.ac.kr/Frequently-Asked-Questions/Application-FAQ",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:50:03.673099+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "bmit them. The health form is NOT related to admissions; it is only for when you check in to the dormitory. Just bring with the original copy of the form to hand in. Passport Validity - How long is a \"valid\" passport? You need a passport that has AT LEAST 6 months of validity to even travel to ",
+              "note": "一般FAQ明示健康表僅宿舍check-in、與錄取無關，可到校後補原件；不將入住health表當全体初始申請必件。",
+              "content_hash": "ba09ae902340d4a6727cae2bc37dc251ddf5f3619b554e4ffd6c17531df6bb42",
+              "text_sha256": "7b7f6b5d2d77e1ac433b4eec5c7ec25f88d8a7ddf299e6426e2bc2de2a03fe4e"
+            },
+            {
+              "source_id": "p47-r19-f90256eda8",
+              "source_url": "https://exchange.hufs.ac.kr/Frequently-Asked-Questions/Application-FAQ",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:50:03.673099+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "your statement must be issued within 30 days of the Certificate's issuance date. By submitting proof of this amount (when requested on the application), you are improving the chance of your visa application approval. The Exchange Visa Lengths As of Fall 2022, Immigration has changed ",
+              "note": "一般FAQ財力依交換4/6/10/12月額不同，COA發行時才要求且證明須COA發行前30日內；本人或父母帳戶、姓不符才關係證明，2027金額/適用性仍核。",
+              "content_hash": "ba09ae902340d4a6727cae2bc37dc251ddf5f3619b554e4ffd6c17531df6bb42",
+              "text_sha256": "7b7f6b5d2d77e1ac433b4eec5c7ec25f88d8a7ddf299e6426e2bc2de2a03fe4e"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
         },
         "application_forms": {
           "status": "needs_confirmation",
-          "known_value": "當期官網及新PDF：先OnlineExchangeApplication，審資料可至1週，再YourApplicationStatus提供GoogleForm個人附件入口；財力表於申請期結束後另發，實際個人申請／財力表未取得。已實開英語B2和韓語TOPIK3母校確認PDF，需Date/Name/Title/Signature，不稱取得全套。 宿舍空白表實開1頁：學生簽／日期，year/period留白；同FAQ另有不同header的1頁表。2027版尚未核實，交換要求與visiting／ISS選项分開。 Health表實開1頁：學生及clinician簽日期；僅成功宿舍申請者，採檢2027窗口仍依官方尚未公告狀態。",
+          "known_value": "當期官網及新PDF：先OnlineExchangeApplication，審資料可至1週，再YourApplicationStatus提供GoogleForm個人附件入口；財力表於申請期結束後另發，實際個人申請／財力表未取得。已實開英語B2和韓語TOPIK3母校確認PDF，需Date/Name/Title/Signature，不稱取得全套。 宿舍空白表實開1頁：學生簽／日期，year/period留白；同FAQ另有不同header的1頁表。2027版尚未核實，交換要求與visiting／ISS選项分開。 Health表實開1頁：學生及clinician簽日期；僅成功宿舍申請者，採檢2027窗口仍依官方尚未公告狀態。 另宿舍空白表含Exchange／Visiting／ISS及空白year/period、Signature/Date；Global僅HUFS Dorm、每期重申不保偏好，未替代當期指定另一宿舍表。weekday curfew12pm原文待核不猜改。",
           "reason": "本輪讀取精確官方必要段落／附件，保存年度、實體頁、角色與矛盾；當期清單及未年／舊期補充分開，個人通知仍待核。",
           "evidence": [
             {
@@ -8519,6 +8654,21 @@
               "content_hash": "fdaf31442b06ae8c61ed009c6667786547a1fa5ac949a41fdb1c4d9247a361d4",
               "text_sha256": "1855e1fa0902d2a363355bc18533d39b7bf7aff1384e3e4db0bb7fc4e55e88dd",
               "note": "evidence.status為欄位匯總；此原來源的適用年／身分由academic_year及content_applicability獨立保存，一般資料不升2027。"
+            },
+            {
+              "source_id": "p47-r20-f69aefa9fc",
+              "source_url": "https://drive.google.com/file/d/1lvasNGJ7SZXkSxMhv3jOYnWK_UWw3v1r/view?usp=share_link",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:50:03.693660+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "submit a request for housing. Signature Date",
+              "note": "另宿舍空白表含Exchange／Visiting／ISS及空白year/period、Signature/Date；Global僅HUFS Dorm、每期重申不保偏好，未替代當期指定另一宿舍表。weekday curfew12pm原文待核不猜改。",
+              "content_hash": "16dacdd93e600026e1b135eceb15cf63e3f943f945d0533265e8e8e46bfc06b9",
+              "text_sha256": "5e10a141460495b239d5ff0546a2882b9eb4ca82dbdd8986a79f7a65a57b8e66"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
@@ -8593,7 +8743,7 @@
           "content_review_note": "第九輪分欄閱讀；校址與官方網站身分和申請年度分開核對。校址段和各指定交通／生活段已核；全站新聞、其他學位招生、圖像未全讀。成功下載不代表2027全部政策適用。",
           "sha256": "91ac45e1edd3197a435ce88d02caa110d75dce669de2bde1590bb384e28f8223",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p47-r9-korean-form",
@@ -8663,7 +8813,7 @@
           "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。",
           "sha256": "ba09ae902340d4a6727cae2bc37dc251ddf5f3619b554e4ffd6c17531df6bb42",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p47-r19-a29e3b7993",
@@ -8691,7 +8841,7 @@
           "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。",
           "sha256": "514423d81a39d6611d05f27d0e2b68f13d5ba204fe4a5bcb360f9e075c48edda",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p47-r19-225758e036",
@@ -9326,6 +9476,21 @@
               "content_hash": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
               "text_sha256": "97ce1955cd99996302acddc74be914d3720d264df8f15dcec533b9f2e90caf10",
               "note": "指定正文已讀；年度／國籍／校區／階段以此項為準，不推完整文件清單。"
+            },
+            {
+              "source_id": "p48-mirror",
+              "source_url": "https://drive.google.com/file/d/1NSH9ButihpSHyaOam9ymIx-ZJLBrjSF2/view?usp=drive_link",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "正文FACTSHEET2026/2027，含Spring2027 tentative；按限定條款而非全校名額承諾",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:04:02.901880+00:00",
+              "status": "needs_confirmation",
+              "excerpt": " (Outgoing) +82-2-970-9214 Fall Semester 2026 1. Sep. – 21. Dec, 2026 Spring Semester 2027 2. Mar. – 22. Jun, 2027 (Tentive) Fall Semester 2027 1. Sep. – 21. Dec, 2027 (Tentive)",
+              "note": "2026/27正文確含Spring2027tentative及兩階段文件；官網與母校鏡像同本文，名額依往來最多2另一般名額須協議。",
+              "content_hash": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
+              "text_sha256": "0a89a729a7cdb580351aa46913b722782b34d1d40bfde478a4551a0d837a94b1"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
@@ -9380,7 +9545,7 @@
           "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。；第十四輪官方2027春新8頁PDF已取代此版本的當期文件／住宿／價格／校曆；保留原bytes及歷史矛盾，不能混入最新host清單。",
           "sha256": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p48-profile-root",
@@ -9436,7 +9601,7 @@
           "content_review_note": "7頁全部可讀文字核對；第3頁圖片未逐圖核。Spring2027Mar2–Jun22tentative；NHIS2026費79,310，其他網站2024費75,490為舊值。；第十四輪官方2027春新8頁PDF已取代此版本的當期文件／住宿／價格／校曆；保留原bytes及歷史矛盾，不能混入最新host清單。",
           "sha256": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
           "bundled_file": "partner_forms/p48-r9-factsheet2026.pdf",
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p48-r9-inbound",
@@ -9450,7 +9615,7 @@
           "content_review_note": "第九輪分欄閱讀；校址與官方網站身分和申請年度分開核對。校址段和各指定交通／生活段已核；全站新聞、其他學位招生、圖像未全讀。成功下載不代表2027全部政策適用。",
           "sha256": "fb52ec8ce29f7546865c6f5fed74e679ffa212d01571586937a248a87b63a53e",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p48-r9-international",
@@ -9478,7 +9643,7 @@
           "content_review_note": "全文分段讀，費/保險印2024：不升2027費率；一般ISC/宿舍設施可参考，2026/27新PDF另列。",
           "sha256": "9e9047cf591d8328616401d4fdcd599dc6563b058e7166494b3dbc9a2953cebc",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p48-r14-factsheet2027",
@@ -9534,7 +9699,7 @@
           "content_review_note": "第十四輪指定正文與年份實讀；導航、技術錯誤及缺值不當作當期規定。",
           "sha256": "f214b87f2e43427b541cfa3877edbfb8b607c5e9135911632d4eeef57465fc03",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p48-r14-inbound",
@@ -9576,7 +9741,7 @@
           "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。",
           "sha256": "7e8f39fe885cc4e1fc80138b1eed36cd24705577b5399db8f2b5ae3185fbb87a",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p48-r19-57c01fc319",
@@ -9590,7 +9755,7 @@
           "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。",
           "sha256": "050c03fabbf75a82732cc09ca2721084cace65d1ea993675d2fe22a3c9f70b7b",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p48-r20-0ddde8ee22",
@@ -10179,7 +10344,7 @@
           "content_review_note": "已讀與必要欄位相關段落及實體頁；來源適用年、programme、degree、campus分開。未年／舊期不升2027。",
           "sha256": "0c2b26d0453f282d1617fe67f6b23173c2824b9bb53a22f8460432992e4c0a37",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         }
       ],
       "host_document_count": 0,
@@ -10448,7 +10613,7 @@
         },
         "campus_life": {
           "status": "needs_confirmation",
-          "known_value": "一般資料按語言組分配buddy支援；2027個人配對與可修主修範圍另外確認。 一般buddy自動匹配、學期初聯絡，无独立申請；未年2027個案未核。 一般exchange到校前收到個人ID，course/timetable／COURSEMOS／MobileLibraryQR；未登入，2027具體啟用日待核。",
+          "known_value": "一般資料按語言組分配buddy支援；2027個人配對與可修主修範圍另外確認。 一般buddy自動匹配、學期初聯絡，无独立申請；未年2027個案未核。 一般exchange到校前收到個人ID，course/timetable／COURSEMOS／MobileLibraryQR；未登入，2027具體啟用日待核。 一般Language Exchange不同於buddy：1交換生配4韓生、每期至少5次、餐／活動費校方支持，細節學期初另给，未印2027活動保证。",
           "reason": "精確正文／附件核實；以年度、身分、學制、校區分流，矛盾與私人後發表單保留待核。",
           "evidence": [
             {
@@ -10491,13 +10656,28 @@
               "content_hash": "cc336d51ef944e8c888240e333d8e4e361f899937688620bdd4c07700ba81059",
               "text_sha256": "537cf224c52dfac89a602f803421c8161d44ca1c1b154138f410f5964b8b4059",
               "note": "evidence.status為欄位匯總；來源角色／實際年度由academic_year與原來源分開保存，未年／舊期未升2027。"
+            },
+            {
+              "source_id": "p52-r5-buddy",
+              "source_url": "https://sites.google.com/gachon.ac.kr/gachon-exchange/post-arrival/language-exchange",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:51:33.658361+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "roup of four Korean students. Unlike the buddy program, this program simply lets you share your language and culture with the Korena students. Each team is required to meet at least five times during the semester. Meal or activity expenses will be supported by the university. Applictation deta",
+              "note": "一般Language Exchange不同於buddy：1交換生配4韓生、每期至少5次、餐／活動費校方支持，細節學期初另给，未印2027活動保证。",
+              "content_hash": "5262ef6a88d30b66f867e7d62170e143d86f7bc7baa85d617eebee02dc0156bf",
+              "text_sha256": "263d5cea385758328e9683e49e831b0f51372e16c6e192900ffb26ffc7cfdee0"
             }
           ],
           "next_public_action": "續查官方一般服務及校區指引，保留未標年度和交換身分限制。"
         },
         "documents": {
           "status": "needs_confirmation",
-          "known_value": "未標年度：申請表、英文成績/在學、推薦、護照、旅行保險、適用語言證明、4000USD/期財力；非OECD認證附加條件。",
+          "known_value": "未標年度：申請表、英文成績/在學、推薦、護照、旅行保險、適用語言證明、4000USD/期財力；非OECD認證附加條件。 一般公開八項清單已實讀；4000USD/一學期財力與條件language/nonOECD在籍認證另列，不猜一年金額或2027適用。",
           "reason": "未載適用2027春季年，尚未核實新版。",
           "evidence": [
             {
@@ -10514,13 +10694,28 @@
               "note": "未載適用2027春季年，尚未核實新版。",
               "content_hash": "5428afd8cea42bb0775ab74dcdec53faf1994ad7a757b97c9ecf7365235adc89",
               "text_sha256": "5b0c8435f9e7b3ec159cafee9c2c787134a835997e3f642fe5f510d0f3b06f90"
+            },
+            {
+              "source_id": "p52-r5-documents",
+              "source_url": "https://sites.google.com/gachon.ac.kr/gachon-exchange/fact-sheet/required-documents",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:51:33.661088+00:00",
+              "status": "needs_confirmation",
+              "excerpt": " showing a minimum balance of USD 4,000 for one semester A recommendation letter from a faculty member or the office responsible for exchange students A copy of travel insurance Language proficiency certificate (if applicable) Report abuse Page details Page updated Report abuse",
+              "note": "一般公開八項清單已實讀；4000USD/一學期財力與條件language/nonOECD在籍認證另列，不猜一年金額或2027適用。",
+              "content_hash": "1bf1226d60699110fcc2627cfeb76d1ff9af67bbe60b1a102ba93c718ae0ccc9",
+              "text_sha256": "20d536ba1b5bbf729535694e393a43d198e3c135c9d1f27af647d88b1fd9fa3f"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
         },
         "application_forms": {
           "status": "needs_confirmation",
-          "known_value": "官網連結的ExchangeStudentProgramApplicationForm公開DOCX及PDF已實際開啟/保存：電腦填、個资須與護照一致、送後不能編輯；母校coord/学制GPA、英韓track/語言、交換期間、房型/roommate喜好及資料授權，申請人日期和簽名。表无年度，仅Apr30/Oct31一般期限，尚未核2027指定模板，不填表提交。",
+          "known_value": "官網連結的ExchangeStudentProgramApplicationForm公開DOCX及PDF已實際開啟/保存：電腦填、個资須與護照一致、送後不能編輯；母校coord/学制GPA、英韓track/語言、交換期間、房型/roommate喜好及資料授權，申請人日期和簽名。表无年度，仅Apr30/Oct31一般期限，尚未核2027指定模板，不填表提交。 實際Gachon空白DOCX要求電腦填寫、護照一致與學生日期／簽名；Apr30/Oct31未印年度，不聲稱2027模板修訂。",
           "reason": "核對實際正文、適用年/計畫與附件；verified_current只代表列出的已核事實，未列細節不宣稱完整。一般指引、舊年度、計畫差異或矛盾另標。",
           "evidence": [
             {
@@ -10546,6 +10741,21 @@
               "status": "needs_confirmation",
               "excerpt": "airs, Gachon University Date: Signature: Application Deadline | Apr 30 / Oct 31 Required Documents | (a) Application Form (b) Official Transcript (English) (c) Certificate of Enrollment (English) (d) Recommendation Letter (English or Korean) (e) Copy of Passport (f) Copy of Travel Insurance (g) Language Proficiency Certificate (if applicable) (h) Bank Statements (containing at least USD ",
               "note": "實際匿名下載GoogleDocs公開DOCX export並全文讀，電腦填寫/護照一致/日期親簽/資料授權；未填表提交。",
+              "content_hash": "e33e3e899a877f1c801e1577895cff41fbb0ab0886e2cd4da62a32be4c73025b",
+              "text_sha256": "861a9cdfbdb5e53f8d1ebe6af77931eb39dec76ccbc05541f49b6974102758dd"
+            },
+            {
+              "source_id": "p52-r5-form-docx",
+              "source_url": "https://docs.google.com/document/d/1w5Apu2HCrMCEirYsNF2XL4M2zSvlOmPP/export?format=docx",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:08:25.742023+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "al Affairs, Gachon University Date: Signature: Application Deadline | Apr 30 / Oct 31 Required Documents | (a) Application Form (b) Official Transcript (English) (c) Certificate of Enrollment (English) (d) Recommendation Letter (English or Korean) (e) Copy of Passport (f) Copy of Trave",
+              "note": "實際Gachon空白DOCX要求電腦填寫、護照一致與學生日期／簽名；Apr30/Oct31未印年度，不聲稱2027模板修訂。",
               "content_hash": "e33e3e899a877f1c801e1577895cff41fbb0ab0886e2cd4da62a32be4c73025b",
               "text_sha256": "861a9cdfbdb5e53f8d1ebe6af77931eb39dec76ccbc05541f49b6974102758dd"
             }
@@ -10608,7 +10818,7 @@
           "content_review_note": "一般官方頁/入口已取得；未明示當期適用。導覽年不替各欄定期；未載或未完成全文細核仍可續查。",
           "sha256": "fa910bf44841f0fb81c53f3821c12b716dc81c8337bea666377636193968367d",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p52-r5-airport",
@@ -10622,7 +10832,7 @@
           "content_review_note": "一般官方頁/入口已取得；未明示當期適用。導覽年不替各欄定期；未載或未完成全文細核仍可續查。",
           "sha256": "48ae82fd3dd52ae0c4e08f235890eb9e0646c0cf93deaf1cc775288084d27063",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p52-r5-alien-registration",
@@ -10650,7 +10860,7 @@
           "content_review_note": "一般官方頁/入口已取得；未明示當期適用。導覽年不替各欄定期；未載或未完成全文細核仍可續查。",
           "sha256": "5262ef6a88d30b66f867e7d62170e143d86f7bc7baa85d617eebee02dc0156bf",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p52-r5-calendar-embedded",
@@ -10692,7 +10902,7 @@
           "content_review_note": "一般官方頁/入口已取得；未明示當期適用。導覽年不替各欄定期；未載或未完成全文細核仍可續查。",
           "sha256": "1bf1226d60699110fcc2627cfeb76d1ff9af67bbe60b1a102ba93c718ae0ccc9",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p52-r5-faq",
@@ -10776,7 +10986,7 @@
           "content_review_note": "一般官方頁/入口已取得；未明示當期適用。導覽年不替各欄定期；未載或未完成全文細核仍可續查。",
           "sha256": "7564a0de974ee1fb52a0f508a17149e9d29773ff8916354311d5ac5af6a5dae7",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p52-r5-housing-expanded",
@@ -10877,8 +11087,8 @@
           "review_state": "mapped_field_evidence_not_whole_document_completion"
         }
       ],
-      "host_document_count": 0,
-      "host_list_completeness": "unverified",
+      "host_document_count": 8,
+      "host_list_completeness": "partial_not_exhaustive",
       "academic_scope_options": [],
       "document_access_constraints": [],
       "unrequested_discovered_links": [
@@ -11338,7 +11548,7 @@
           "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
           "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
           "bundled_file": "2027-spring-partners.pdf",
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p54-r7-exchange",
@@ -11352,7 +11562,7 @@
           "content_review_note": "實際可讀正文已核；母校/接收端、交換/學位/語言研修、學制/院系、年度及日期種類分開。未取得新版不等官方明示尚未公告。",
           "sha256": "5a74fb52721b4595754d98af6a63ae59ea4d8cbe01e90a06f111a7f3efc16c2a",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p54-r7-international",
@@ -11573,7 +11783,7 @@
           "content_review_note": "中正鏡像2025；合作校新附件內容更新2026-07-20但未載2027春季適用年，不能憑2027-28檔名判定。學院條件網頁部分分數標籤錯置，需逐學院確認。",
           "sha256": "9913a6e3e771e1ca80b427b5d14272144e1ffa69c59f6c0f07992477eed7b0c9",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p58-host1",
@@ -11587,7 +11797,7 @@
           "content_review_note": "中正鏡像2025；合作校新附件內容更新2026-07-20但未載2027春季適用年，不能憑2027-28檔名判定。學院條件網頁部分分數標籤錯置，需逐學院確認。",
           "sha256": "203c69a8de79f033015f819babd88c026cb981569eade3abeef0ff41ac47cfc4",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p58-hostf0",
@@ -12281,7 +12491,7 @@
           "content_review_note": "本快照只抽取此校頁，原PDF共121頁；轉載接收申請截止與同年度合作校文件比較，沒有個別延期通知。",
           "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p67-profile-root",
@@ -12866,7 +13076,7 @@
           "content_review_note": "第十七輪指定公開正文實讀；保留校區、服務對象及年度未核，不以HTTP成功升當期。",
           "sha256": "1423db43c04ac73c56f33f64998eb619d790a8d9f1dde4d1171a6fbdbe4b560f",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p68-r22-7e08592690",
@@ -12969,7 +13179,7 @@
         },
         "campus_life": {
           "status": "needs_confirmation",
-          "known_value": "獨立官方圖書館列借閱展延、查找支援、團體研讀室、電腦借用與Internet等一般服務；學生須先參加圖書館訓練才能啟用。未確認2027交換生帳號／借閱／房間使用资格，不保證免費或可直接預約。root頁尾與開館公告時段不一致，未寫確定開館時間或住宿資訊。",
+          "known_value": "獨立官方圖書館列借閱展延、查找支援、團體研讀室、電腦借用與Internet等一般服務；學生須先參加圖書館訓練才能啟用。未確認2027交換生帳號／借閱／房間使用资格，不保證免費或可直接預約。root頁尾與開館公告時段不一致，未寫確定開館時間或住宿資訊。 一般圖書館公告2025-12-31、自2026-01-19生效Mon–Sat08:00–17:00；同頁footer07:30–17:00不同，保留矛盾待核，非2027校曆/交換服務資格保證。",
           "reason": "由乾淨的官方圖書館子網頁補一般服務；未採不相關內容主站。時間差異另記，不複製root為2027確定時段。",
           "evidence": [
             {
@@ -13010,6 +13220,21 @@
               "content_hash": "bf49727d6c1fc997deb5f2b9447f4bb59c121669324784657079fcc21dfefe51",
               "text_sha256": "dd215ee486e145afd81add6bfe48a0bf56c66013d7eb53bdb237d83116c4e1af",
               "note": "指定正文實讀；物理頁／原文及取得狀態保留，不推缺值、不升未標年內容。"
+            },
+            {
+              "source_id": "p71-r17-library-hours2026",
+              "source_url": "https://lib.dntu.edu.vn/tin-tuc-153-thong-bao-ve-viec-dieu-chinh-thoi-gian-mo-cua-thu-vien.html",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "圖書館公告2025-12-31、2026-01-19生效",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:52:59.863610+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "a phục vụ Thư viện phục vụ từ 08 giờ 00 đến 17 giờ 00, các ngày trong tuần từ Thứ Hai đến Thứ Bảy (trừ các ngày lễ, Tết và ngày nghỉ theo quy định của Nhà trường). 2. Tổ chức thực hiện Thư viện có trách nhiệm tổ chức phục vụ theo đúng thời gian quy định; đồng thời thông báo, niêm yết công kha",
+              "note": "一般圖書館公告2025-12-31、自2026-01-19生效Mon–Sat08:00–17:00；同頁footer07:30–17:00不同，保留矛盾待核，非2027校曆/交換服務資格保證。",
+              "content_hash": "e85bdec19662695b9964a7b7dd827852dfeb6908c2aa75628df09fbd06f67ccb",
+              "text_sha256": "ec1b54b3258262d5a6c9ba4761220b4d572aa48846edb1ad54bd82d6f2a65b26"
             }
           ],
           "next_public_action": "續查官方一般服務及校區指引，保留未標年度和交換身分限制。"
@@ -13210,7 +13435,7 @@
           "content_review_note": "第十七輪指定公開正文實讀；保留校區、服務對象及年度未核，不以HTTP成功升當期。",
           "sha256": "e85bdec19662695b9964a7b7dd827852dfeb6908c2aa75628df09fbd06f67ccb",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         }
       ],
       "host_document_count": 0,
@@ -14350,7 +14575,7 @@
           "content_review_note": "9頁全文讀；普通課1/18–5/14、考5/24–6/12與main一致；末頁SoAHS年制時間與main不同，不套CS交換生。",
           "sha256": "cedc3063f550d92da4a12dbe5973d04798d19b4270646ae5cf5137013d3af1d9",
           "bundled_file": "partner_forms/p80-r6-calendar-cs-pdf.pdf",
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p80-r6-calendar-main-pdf",
@@ -14778,7 +15003,7 @@
         },
         "campus_life": {
           "status": "needs_confirmation",
-          "known_value": "TANDEM需學生登記期待／偏好，由International Welcome Desk配對後雙方自行安排，並有社交文化活動；未核2027招募時段，不是自動配對。 未年arrival頁exchange Aquipass可借BU書/打印/食堂支付；校方mail須啟用/常查，registration文字偏9月，不套2027January日。 未年頁exchange學生可免費DAPS活動；individual/freemover CVEC另制，醫療/社團/回收商店有服務但2027可用時間另核。",
+          "known_value": "TANDEM需學生登記期待／偏好，由International Welcome Desk配對後雙方自行安排，並有社交文化活動；未核2027招募時段，不是自動配對。 未年arrival頁exchange Aquipass可借BU書/打印/食堂支付；校方mail須啟用/常查，registration文字偏9月，不套2027January日。 未年頁exchange學生可免費DAPS活動；individual/freemover CVEC另制，醫療/社團/回收商店有服務但2027可用時間另核。 genericwelcome desk有ACC209/時段/保險住宿bank支援含nonexchange，未核2027活動保證。",
           "reason": "逐項原文、頁碼、年度及身分分開；當期與一般未年／舊期不能混為完整清單，來源差異保留。",
           "evidence": [
             {
@@ -14818,6 +15043,21 @@
               "content_hash": "69e92dbfb35ebff0be21d8b2d4d7d760f53d836b80a9b334104e4111d4b5c249",
               "text_sha256": "43c4b597c2504dfcd2b5aa331ae76eb51d9a507c28169d69a6d7d80bce0c2073",
               "note": "evidence.status是欄匯總狀態；原來源年度與計畫依academic_year/content_applicability；不由頁面下載成功升2027。"
+            },
+            {
+              "source_id": "p85-r5-welcome",
+              "source_url": "https://www.u-bordeaux-montaigne.fr/en/preparing-for-your-stay/international-welcome-desk.html",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:05:06.504914+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "students on their first steps in the French Higher Education system, whether they are exchange students or not. The Welcome Desk helps international students to find their way on campus and in Bordeaux, and provide advice on everyday matters (housing, insurance, banking, student jobs, etc.). The Welcome Desk is located in the \"Accueil\" Building, on the 2nd floor (ACC 209) and is open from Monday to Thursday (14:00 - 17:00) and on Friday morning (9:00 - 12:00). Postal address Direction des Relations Internationales Accueil Bu",
+              "note": "genericwelcome desk有ACC209/時段/保險住宿bank支援含nonexchange，未核2027活動保證。",
+              "content_hash": "9e9106f8bc363f97c51bd6d4db1a17213082362a1dd853f125b0e0cc4e8d9552",
+              "text_sha256": "1a66c0270f3c521ec9e1a5b40450ea3f942b634d09280f63425ac5b114ae0b3d"
             }
           ],
           "next_public_action": "續查官方一般服務及校區指引，保留未標年度和交換身分限制。"
@@ -15019,7 +15259,7 @@
           "content_review_note": "已取得25頁；政策/部分課表頁1–4、15–25讀到，抽字逐字換行且中段仍待核；不憑檔名或連結年提升所有課程為當期。",
           "sha256": "bf9cd1d4a0e69e20702a3e15b1a8f1bccb19b049ca6ca17dfad9a9156365b463",
           "bundled_file": "partner_forms/p85-r5-humanities-master.pdf",
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p85-r5-organize",
@@ -15047,7 +15287,7 @@
           "content_review_note": "一般官方頁/入口已取得；未明示當期適用。導覽年不替各欄定期；未載或未完成全文細核仍可續查。",
           "sha256": "9e9106f8bc363f97c51bd6d4db1a17213082362a1dd853f125b0e0cc4e8d9552",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p85-profile-root",
@@ -15103,7 +15343,7 @@
           "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。",
           "sha256": "aa768a2cb023c1b50698284e8a0a3aa98aea681331310de508f45623acaa1475",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p85-r19-cd9ffae29e",
@@ -15145,7 +15385,7 @@
           "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。",
           "sha256": "03d104179196a243c54fccd050d6fd4ad543a335d708959f835f1fe5d3ad2a61",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p85-r19-8cdcd38ba1",
@@ -15496,7 +15736,7 @@
         },
         "campus_life": {
           "status": "needs_confirmation",
-          "known_value": "一般國際welcome頁列Maison Universitaire Internationale多語服務、Campus Pass、6校區圖書網、Ernest數位環境、餐飲與文化體育；2027使用資格／價格未核。",
+          "known_value": "一般國際welcome頁列Maison Universitaire Internationale多語服務、Campus Pass、6校區圖書網、Ernest數位環境、餐飲與文化體育；2027使用資格／價格未核。 國際welcome服務同時學生/研究員/教職員；不把doctoral/staff福利做exchange保证。 額外2026doctoralresearcherwelcome活動與exchange分開，通用servicecatalog需個別profile。 studentInstabuddy/Buddy與PhDassociation/alumniprofessionalintegration分開，一般支援不保2027programme名額。",
           "reason": "指定實際原文已核，2027個人適用、票價／班次與活動安排依各欄年度另核；交通、buddy及生活各自獨立來源，不複製arrival。",
           "evidence": [
             {
@@ -15510,6 +15750,51 @@
               "excerpt": " research environment easier: The Multi-Service Desk , a reception area for international students in the Maison Universitaire Internationale; Events and welcome tools specially designed for you; The Campus Pass , a student or professional card, depending on your status; Solidarity . A dedicated service (the Pôle Solidarité ) and specific assistance (Crous assistance, grocery shop and second-hand shops); Equality, Parity & Diversity; University libraries; Digital access ; Campus catering ; Cultural activities ; Sports activities . Multi-services Desk The Maison Universitaire Internationale (International University House) is a flagship venue for international audience: your questions will be answered in 3 languages (French, English, and German). Welcome Events Events and tools to welcome, inform and help you get started in Strasbourg. Solidarity The University community is here to help you (financial aid, solidarity shops and flea markets,...) Equality, Parity and Diversity Are you a victim or a witness of sexist, sexual or homophobic violence? Speak out. Campus Pass The campus pass issued by the University of Strasbourg is a card that certifies your status (student, professional). Libraries A network of 20 university libraries covering all areas of education and research, spread over the 6 campuses of the University of Strasbourg. Digital Access Ernest: digital and social work environment accessible to all students, teachers, researchers and administrators. Food Services Restaurants, cafeterias, takeaways, you'll find quality meals accross all campuses. Culture Exhibitions, lectures, visits to museums, shows, concerts. The University of Strasbourg offers a wide range of cultural activities. Sport Over 70 indoor and outdoor recreational and competitive activities, and the opportunity to combine top-",
               "content_hash": "3d7910f3eac33bb26a36a34bfc812be5952228c6d92dd109e96d2381ba883cce",
               "text_sha256": "c2a58c992b7633edd3aa6b5bec87c65709d2a26464cdcd234e23c7a8c93999bd"
+            },
+            {
+              "source_id": "p87-host1",
+              "source_url": "https://international-welcome.unistra.fr/",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:06:02.323258+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "the University of Strasbourg International students and PhD students, teacher-researchers, you will find here all the information and contacts you need to prepare your visit, organize your stay and discover your new living environment. Better understand your student profile Better understand your researcher profile Before my arrival I am in Strasbourg Before my departure Our Events Cap sur l'international | European Parliament guided visit Concerned profiles : International As part of “Cap sur l’internat",
+              "note": "國際welcome服務同時學生/研究員/教職員；不把doctoral/staff福利做exchange保证。",
+              "content_hash": "60efd051be3f02808584a2d7e4efb6ef3a9685f8a9d2da031524195eff0abe17",
+              "text_sha256": "b9ce6eab845bdd94a1ec81333dfdda4e963a2b8a98017b9102a7d70d8f8a7e91"
+            },
+            {
+              "source_id": "p87-profile-root",
+              "source_url": "https://international-welcome.unistra.fr/",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:06:02.328273+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "al students and researchers classes to learn or improve their French. Services Pack catalog Welcome Explore the libraries' collection of objects 23/09/2026 University libraries are breaking new ground and now offer students the chance to borrow everyday items! Research Podcast | Materials of the Future: Gold, Light, and CO₂ 21/09/2026 Podcast | “Science Challenges, Society Challenges” Season 2, Episode 1. Can we draw inspiration from plants to turn carbon dioxide into a resource? How can light help us gene",
+              "note": "額外2026doctoralresearcherwelcome活動與exchange分開，通用servicecatalog需個別profile。",
+              "content_hash": "cf056cbfaf7154256af0a0aa7813c0a45b3cfcd9c3dfea37e1d3f3d2c8724ade",
+              "text_sha256": "aaf588626ff010df878a7e0414af1e46e0ee552511dc886c32076693cf7f2838"
+            },
+            {
+              "source_id": "p87-r10-buddy",
+              "source_url": "https://international-welcome.unistra.fr/buddy-program/",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:06:02.360245+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "ll benefit from student support to help you prepare for your arrival (Instabuddy) and integrate more easily into your new life (Buddy Program). Professional Integration Thanks to the University of Strasbourg's Alumni network and online resources, students and researchers can benefit from real support in their professional integration. Your questions about international welcome at the University of Strasbourg Follow us University of Strasbourg - All rights reserved - 2009-2026 - TYPO3 Design : A",
+              "note": "studentInstabuddy/Buddy與PhDassociation/alumniprofessionalintegration分開，一般支援不保2027programme名額。",
+              "content_hash": "11f69b1e7214b2027050737b3219e4b0a8cfbd889adf6d135d44da93cb87757a",
+              "text_sha256": "6d05e856a84a0b68f3b10ab475496c32745bccc890dcf48f6ac43c8cfba76124"
             }
           ],
           "next_public_action": "續查官方一般服務及校區指引，保留未標年度和交換身分限制。"
@@ -15630,7 +15915,7 @@
           "content_review_note": "中正附件公開下載404；Seafile頁僅Private Seafile，公開介紹頁未提供本期完整簡章。",
           "sha256": "60efd051be3f02808584a2d7e4efb6ef3a9685f8a9d2da031524195eff0abe17",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p87-hostf0",
@@ -15644,7 +15929,7 @@
           "content_review_note": "中正附件公開下載404；Seafile頁僅Private Seafile，公開介紹頁未提供本期完整簡章。",
           "sha256": "6d4d1db272afe2bfee69ee775a33a067731e89e3a7f9e5029be4c8d5dde15485",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p87-hostz0",
@@ -15728,7 +16013,7 @@
           "content_review_note": "第八輪實讀公開正文，逐欄分母校/接收校、校曆/申請期限、本科/研究所、主校/分校、交換/degree/專案、當期/舊年；未核新版不是官方明示尚未公告。",
           "sha256": "3abdd90b36f2f2bc9dcf3e53eea9b79bc32c3deaec472c854f4d5610acaec29c",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p87-r8-ccu-list",
@@ -15812,7 +16097,7 @@
           "content_review_note": "第八輪實讀公開正文，逐欄分母校/接收校、校曆/申請期限、本科/研究所、主校/分校、交換/degree/專案、當期/舊年；未核新版不是官方明示尚未公告。",
           "sha256": "17b4f7268fcf60b4acd35dc012af936bdfcb68f3af9dac0b3703e83e06e53d58",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p87-r8-interuniversity",
@@ -15882,7 +16167,7 @@
           "content_review_note": "第八輪實讀公開正文，逐欄分母校/接收校、校曆/申請期限、本科/研究所、主校/分校、交換/degree/專案、當期/舊年；未核新版不是官方明示尚未公告。",
           "sha256": "6d4d1db272afe2bfee69ee775a33a067731e89e3a7f9e5029be4c8d5dde15485",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p87-r8-seafile",
@@ -15924,7 +16209,7 @@
           "content_review_note": "第九輪分欄閱讀；校址與官方網站身分和申請年度分開核對。校址段和各指定交通／生活段已核；全站新聞、其他學位招生、圖像未全讀。成功下載不代表2027全部政策適用。",
           "sha256": "cf056cbfaf7154256af0a0aa7813c0a45b3cfcd9c3dfea37e1d3f3d2c8724ade",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p87-r10-life",
@@ -15966,7 +16251,7 @@
           "content_review_note": "第十輪只核對指定交通／學生支援段落；導覽、全站新聞、圖片／影片與所有外連未逐一閱讀。未標2027服務不提升當期規定；入口只有導覽無內容者未映射。",
           "sha256": "11f69b1e7214b2027050737b3219e4b0a8cfbd889adf6d135d44da93cb87757a",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p87-r19-5a6372841a",
@@ -16170,7 +16455,7 @@
         },
         "application_forms": {
           "status": "needs_confirmation",
-          "known_value": "Spring母校提名表已公開開啟並讀取字段（學生/母校承辦/交換領域），表本身未標年；不是學生申請表。學生applicationlink由提名後寄送，該完整表仍未核實。",
+          "known_value": "Spring母校提名表已公開開啟並讀取字段（學生/母校承辦/交換領域），表本身未標年；不是學生申請表。學生applicationlink由提名後寄送，該完整表仍未核實。 實際FGES Spring母校提名表一次一學生，含母校、學生資料、主修與母校負責人。可讀字段不等學生申請表或2027獨立版本，無代填/提交。",
           "reason": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
           "evidence": [
             {
@@ -16187,6 +16472,21 @@
               "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
               "content_hash": "c87dd8421eb814a5cc8282a3d98b6b01fe4db285c37b8c086947a754132f3247",
               "text_sha256": "29a37bdb67af69c4a570cc488a49bde6bf9caacdbdf3a2b432dd7de86c8b7171"
+            },
+            {
+              "source_id": "p88-hostv0",
+              "source_url": "https://sphinx.univ-catholille.fr/SurveyServer/s/publication/SPRING_Nomination/questionnaire.htm",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:52:59.874068+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "/ Computer sciences About the responsible person at the Sending University Full name Position Email address Submit VOTRE NAVIGATEUR EST OBSOLÈTE ! Mettez le à jour pour plus de sécurité, de vitesse et de confort. Google Chrome Mozilla Firefox Safari Opera Edge Fermer cette fenêtre ×",
+              "note": "實際FGES Spring母校提名表一次一學生，含母校、學生資料、主修與母校負責人。可讀字段不等學生申請表或2027獨立版本，無代填/提交。",
+              "content_hash": "5731796f2d1a6c646cd9459f11cbe41b107f6ab8617b85e769d6462f23f63cc8",
+              "text_sha256": "6368e37a4b1198b88374967880d6c9703d3b8133cfcbca287de0cc95e39608c5"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
@@ -16219,7 +16519,7 @@
           "content_review_note": "完整表格僅在可公開讀取時核實；HTTP401及JS載入頁不算已驗證表格。",
           "sha256": "5731796f2d1a6c646cd9459f11cbe41b107f6ab8617b85e769d6462f23f63cc8",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p88-r3-incoming",
@@ -16250,7 +16550,7 @@
           "review_state": "content_not_obtained"
         }
       ],
-      "host_document_count": 1,
+      "host_document_count": 2,
       "host_list_completeness": "partial_not_exhaustive",
       "academic_scope_options": [],
       "document_access_constraints": [],
@@ -16501,7 +16801,7 @@
           "content_review_note": "中正表列語言考試門檻，合作校鏡像要求母校簽B2證明、無需TOEFL/IELTS；附件無年度，適用性及差異待確認。",
           "sha256": "6b9d9f101a027e6eded086dbcb9361cde17afce75b54ea05d97894cf218c8ff5",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p89-hostf0",
@@ -17651,7 +17951,7 @@
           "content_review_note": "全頁已讀，博士申請者公費醫療資格不能套中正本科/一般碩士交換；保險欄不從此補肯定豁免。",
           "sha256": "a20289b75a22db20b78cc8b7a95658fa8ba616cc279d44e74a7188686e8c621b",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p95-r5-non-eu-agreements",
@@ -18181,7 +18481,7 @@
         },
         "application_forms": {
           "status": "needs_confirmation",
-          "known_value": "實開公开提名XLSX及6頁researchSupervisionPDF，均未印2027表年：XLSX可选bilateral/Erasmus、學制/主客科目/CEFR/學期/母校聯絡/研究导师；研究表学生及兩校导师簽名日期、导师章。完整学生portal表/打印親簽enrolmentPDF須提名後通知/登入，未取得，不建立申請。 已取得并读到交换延期DOC：学生签名，母校／Jena双方签名盖章；母校按协议名额再提名，6/30或11/30为下个学期延期，不是本期11/15首次nomination。未印年度，不保CCU可延期。 首次居留申请2页表已开并核本人签名，续居留另表；两者不是交换初次申请，表无2027版年。",
+          "known_value": "實開公开提名XLSX及6頁researchSupervisionPDF，均未印2027表年：XLSX可选bilateral/Erasmus、學制/主客科目/CEFR/學期/母校聯絡/研究导师；研究表学生及兩校导师簽名日期、导师章。完整学生portal表/打印親簽enrolmentPDF須提名後通知/登入，未取得，不建立申請。 已取得并读到交换延期DOC：学生签名，母校／Jena双方签名盖章；母校按协议名额再提名，6/30或11/30为下个学期延期，不是本期11/15首次nomination。未印年度，不保CCU可延期。 首次居留申请2页表已开并核本人签名，续居留另表；两者不是交换初次申请，表无2027版年。 actualforms頁明線上才收/舊紙本拒收；延長/DSH/permit各阶段/身分分開，extension DOC已讀另存，不是2027初申表。",
           "reason": "精確正文／附件核實；以年度、身分、學制、校區分流，矛盾與私人後發表單保留待核。",
           "evidence": [
             {
@@ -18253,6 +18553,21 @@
               "content_hash": "21e8c774ed5bda61802f63c9cfda2fe714122173dc04ee5b4095fae8eb4a99aa",
               "text_sha256": "4ff63279dcff8696d2571cef01b8159c2cad97cabfcdfdfc20e54012c5ac883b",
               "note": "evidence.status為欄位匯總；來源角色／實際年度由academic_year與原來源分開保存，未年／舊期未升2027。"
+            },
+            {
+              "source_id": "p99-r19-25080273d1",
+              "source_url": "https://www.uni-jena.de/en/2155/documents-and-forms",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:07:12.842966+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "application You can only submit an application to study online only . Old paper application forms will no longer be accepted. International applicants find more information about the application at: Degree programme in Jena DSH course Preparatory college ('Studienkolleg') Guest studies/Exchange studies (without studying in Jena) Master study programmes de Doctorate After admission, please also note the information about the documents required for the enrolment . Emergency contact data You may inform the Student administration abou the co",
+              "note": "actualforms頁明線上才收/舊紙本拒收；延長/DSH/permit各阶段/身分分開，extension DOC已讀另存，不是2027初申表。",
+              "content_hash": "5c40403bd2ead35a591b44c99af9502a27c9e67f2c8e424813e0f5f026d16e31",
+              "text_sha256": "271792dbd4d4d71c50f02e9788bbd5cf6fef7f6913b1c7bec0b174780f1a6e4b"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
@@ -18383,7 +18698,7 @@
           "content_review_note": "政策/入口正文已讀，來源年和交換適用性未明；未載不推定官方尚未公告。",
           "sha256": "f37f72e3bef1d31f472bf3741fdb995655d453c7875d0030228c76263ca42887",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p99-r6-gueststudies",
@@ -18411,7 +18726,7 @@
           "content_review_note": "政策/入口正文已讀，來源年和交換適用性未明；未載不推定官方尚未公告。",
           "sha256": "08735a28315be7cdaf262c2ba06a0f30be67af658182ebf518b63efe47fbb636",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p99-r6-medicine-subject",
@@ -18565,7 +18880,7 @@
           "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。",
           "sha256": "5c40403bd2ead35a591b44c99af9502a27c9e67f2c8e424813e0f5f026d16e31",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p99-r22-158b355f1a",
@@ -18745,7 +19060,7 @@
         },
         "campus_life": {
           "status": "needs_confirmation",
-          "known_value": "國際學生辦公室一般流程列開學前welcome介紹校內設施、協助抵達登記與教授討論課表；2027活動日期／服務承諾仍待接收通知。 一般借閱正常4週、短借1週，跨館到件／還書可選；2027時段與交換開通另核。 一般四campus staffed opening hours與延長limitedservice不同，後者有效啟用card及無未清費；2026/27holiday顯示不保Spring2027逐日開館表。 一般學生OstfaliaCard有librarynumber可續借／reserveditems；外部讀者另一卡，不列入學必繳。 OstfaliaCard就是大學成員借書證，不套externaluser付費辦卡；正常四週、最多七次續借，須無預約／欠費。通知僅Ostfaliaemail，還書可任一館，條件及2027個別服務變更另核。 2024-10-28公布翌日生效規則§2.2(4)：RZ發卡簽收即承認規則，首次借閱啟用；只有選用library服務之規範，不加為CCU初次交換文件，未核2027是否有更新。",
+          "known_value": "國際學生辦公室一般流程列開學前welcome介紹校內設施、協助抵達登記與教授討論課表；2027活動日期／服務承諾仍待接收通知。 一般借閱正常4週、短借1週，跨館到件／還書可選；2027時段與交換開通另核。 一般四campus staffed opening hours與延長limitedservice不同，後者有效啟用card及無未清費；2026/27holiday顯示不保Spring2027逐日開館表。 一般學生OstfaliaCard有librarynumber可續借／reserveditems；外部讀者另一卡，不列入學必繳。 OstfaliaCard就是大學成員借書證，不套externaluser付費辦卡；正常四週、最多七次續借，須無預約／欠費。通知僅Ostfaliaemail，還書可任一館，條件及2027個別服務變更另核。 2024-10-28公布翌日生效規則§2.2(4)：RZ發卡簽收即承認規則，首次借閱啟用；只有選用library服務之規範，不加為CCU初次交換文件，未核2027是否有更新。 genericlibrary四campus/degree論文借期延長與Winter26/27welcome，不保証2027exchange有degree論文extendedperiod。",
           "reason": "逐項正文核實適用年／對象；其他未知、不同版本與私人通知保留，不由單一服務證據宣稱整欄完整。",
           "evidence": [
             {
@@ -18826,6 +19141,21 @@
               "content_hash": "0e4d31a629c8d1c5fa167ef09d92990673f3c06d6bed2fa91119861b84a0e762",
               "text_sha256": "bba33b71a134ef8f9f8c485ca7f7c24c2a5f213e305cfbe71f0bda259c9242e0",
               "note": "來源實際年份及recipient分開；無年／2022版本／下載成功不升2027當期模板。"
+            },
+            {
+              "source_id": "p100-r19-d3e64a3db1",
+              "source_url": "https://www.ostfalia.de/en/university/campus-facilities/library",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:07:12.868978+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "our Bachelor’s or Master’s thesis or during your placement semester . At all four Ostfalia campuses, you’ll also find printing, scanning and photocopying facilities , as well as plenty of quiet study spaces and group rooms . We wish you a great and successful start to the new semester and look forward to seeing you! Unavailable e-books from Rheinwerkverlag in the Ostfalia library catalogue Unfortunately, problems have arisen with the automatic import of e-books from Rheinwerkverlag, meaning that more titles have b",
+              "note": "genericlibrary四campus/degree論文借期延長與Winter26/27welcome，不保証2027exchange有degree論文extendedperiod。",
+              "content_hash": "528626b72c09b9fc406e2fa5764bfe26560b57433fb93cf51267ae9589a3b00a",
+              "text_sha256": "a84d1ca46e69dd41c61c0d78d85ba2ac081407dd5c6641e2f7af3a345dfceb74"
             }
           ],
           "next_public_action": "續查官方一般服務及校區指引，保留未標年度和交換身分限制。"
@@ -18900,7 +19230,7 @@
           "content_review_note": "中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
           "sha256": "60393c1645fa546feaaca874639e7ac566dd02fdd3ba0e248f420a19b79ac7c2",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p100-hostz0",
@@ -19012,7 +19342,7 @@
           "content_review_note": "第十輪只核對指定交通／學生支援段落；導覽、全站新聞、圖片／影片與所有外連未逐一閱讀。未標2027服務不提升當期規定；入口只有導覽無內容者未映射。",
           "sha256": "4ffd4e9cca2cfa875525282ca520500ca2812cc9db8580b3afbf607c1b0f68ef",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p100-r10-life",
@@ -19068,7 +19398,7 @@
           "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。",
           "sha256": "528626b72c09b9fc406e2fa5764bfe26560b57433fb93cf51267ae9589a3b00a",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p100-r20-0217a4735b",
@@ -19780,7 +20110,7 @@
         },
         "documents": {
           "status": "needs_confirmation",
-          "known_value": "未標年度英德指引列六類上傳：證件照（無章/標記、最多500×500）、Learning Agreement、德/英CV含雙語程度、母校成績、護照/ID雙面（居留證若適用）、健保證明；Design與Architecture/Civil Engineering另附portfolio或CV作品連結。Non-EU使用NON ERASMUS LA：學生簽名/日期、母校與接收校signature AND STAMP。已讀完整LA一頁web提取；2027完整必繳與院系加件仍待確認，不稱六類為完整清單。",
+          "known_value": "未標年度英德指引列六類上傳：證件照（無章/標記、最多500×500）、Learning Agreement、德/英CV含雙語程度、母校成績、護照/ID雙面（居留證若適用）、健保證明；Design與Architecture/Civil Engineering另附portfolio或CV作品連結。Non-EU使用NON ERASMUS LA：學生簽名/日期、母校與接收校signature AND STAMP。已讀完整LA一頁web提取；2027完整必繳與院系加件仍待確認，不稱六類為完整清單。 當期母校第102頁BA-MA?未明、相關領域B2/7文件/Designportfolio、截止11/15/3/15–9/30及12–30ECTS；母校源與host獨立確認區別。",
           "reason": "第三輪逐欄核對公開正文；只列已讀要求及範圍，缺值和未核實新版另標。",
           "evidence": [
             {
@@ -19836,6 +20166,21 @@
               "note": "shell下載HTTP429仍保留；web工具實際讀取一頁PDF全文、學生簽名日期及兩校signature and STAMP。只有web提取回應SHA，沒有原始PDF下載，不宣稱2027專用表。",
               "content_hash": "fea8b06c8834d158434baeca8f8c20802f7c4411248a6e3f0832a994a70af918",
               "text_sha256": "fea7936cd7f7acbb0355ebf87384576ef7a2e4e52171019267fca95865eac026"
+            },
+            {
+              "source_id": "p102-r17-ccu-list",
+              "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+              "source_pages": [
+                102
+              ],
+              "academic_year": "母校2026-09-17版115學年度2027春季名單，物理第102頁",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:06:02.429051+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "2. Passport/identity photo(no stamps and marks, max. 500x500 pxls) 3. Learning Agreement (non-eramus) 4. CV in English or German (for the students of the Faculty of Design with a link to the portfolio) 5. Transcript of records 6. Copy of your national ID-card or passport (both sides), as well as residency permit (if necessary) 7. Valid health insurance** 相關資料 (Other documents) 學校網站：https://www.tha.de/en/ 英文授課課程連結：https://www.tha.de/en/International/Course-offer 交換生可選的課: https://www.tha.de/en/International/Exchange-S",
+              "note": "當期母校第102頁BA-MA?未明、相關領域B2/7文件/Designportfolio、截止11/15/3/15–9/30及12–30ECTS；母校源與host獨立確認區別。",
+              "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+              "text_sha256": "4988766ec98d077a2816a0fcafb7e21ae5b1c2e63ba205e6dc64d727a52fd85c"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
@@ -19958,7 +20303,7 @@
           "content_review_note": "第三輪實際讀取紀錄；取得成功不等於當期適用，未讀到的附件不猜。",
           "sha256": "6bedd6e12476820af98d63b6b71889a53ef36debefeb86cef965b6679eabd147",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p102-r3-exchange-de",
@@ -20000,7 +20345,7 @@
           "content_review_note": "第三輪實際讀取紀錄；取得成功不等於當期適用，未讀到的附件不猜。",
           "sha256": "e44ecbee1312145571fbc50a70d841e1c2d45152651377ffe8dfd7da4ac00f2d",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p102-r3-learning-agreement-alias",
@@ -20056,7 +20401,7 @@
           "content_review_note": "第三輪實際讀取紀錄；取得成功不等於當期適用，未讀到的附件不猜。",
           "sha256": "341943c7cd8fcbb65f95153fdc18edfd1dc41ad33dc82c1a863b74e23ad9934c",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p102-profile-root",
@@ -20250,7 +20595,7 @@
       "gaps": {
         "degree_scope": {
           "status": "needs_confirmation",
-          "known_value": "待確認：大學部、碩士班",
+          "known_value": "待確認：大學部、碩士班 actualSchoolEngineeringBAWinterthur/MAZurich/B2vsC1/GPA2.5/15–30ECTS分開；2026/27freemovers停止不等bilateral停止。genericdeadline未年。",
           "reason": "接收學制／學院與母校資格分開。待確認、排除或逐計畫條件不自動通過全校資格篩選。",
           "evidence": [
             {
@@ -20267,6 +20612,21 @@
               "note": "直連合作校SoE新版內容2026-04-22，學士及碩士、TOEFL新舊量尺不同；未明載2027春季年度，保留待確認。碩士春季intro week37疑似錯置。",
               "content_hash": "46f7a19cf0b6f9adcea86cf66debecfaab2ff86b1ee571d4623979b8623b29ed",
               "text_sha256": "5748881ec85c92d1bc0c76f0ae48d70c0829652e2e8d439f37051d7c5232df2d"
+            },
+            {
+              "source_id": "p103-host1",
+              "source_url": "https://www.zhaw.ch/en/engineering/study/international-office/incoming-exchange-students/",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:06:02.435078+00:00",
+              "status": "needs_confirmation",
+              "excerpt": " contact the International Office directly. These students, known as “freemovers”, pay the ZHAW tuition fee of CHF 1,275 per semester (as of January 2023). Due to the high number of incoming exchange students, we regret to inform you that we will not be able to accept “freemovers” for a study abroad semester in the 2026/2027 academic year . To help offset the cost of living in Switzerland, the ZHAW School of Engineering offers a scholarship programme. Students from European universities may rece",
+              "note": "actualSchoolEngineeringBAWinterthur/MAZurich/B2vsC1/GPA2.5/15–30ECTS分開；2026/27freemovers停止不等bilateral停止。genericdeadline未年。",
+              "content_hash": "47a6a9c363a4ec964dc80c1d99c1c69454bbb109dd5cfc2962e294e92ae3bb29",
+              "text_sha256": "32c1b2d7b94086b2a860e27ee6934a5c9e82d0422db554d6baf3b8a53efd12fa"
             }
           ],
           "next_public_action": "核對當期交換院系／學制及協議適用；一般學位目錄不等於incoming可申請範圍。"
@@ -20464,7 +20824,7 @@
           "content_review_note": "直連合作校SoE新版內容2026-04-22，學士及碩士、TOEFL新舊量尺不同；未明載2027春季年度，保留待確認。碩士春季intro week37疑似錯置。",
           "sha256": "47a6a9c363a4ec964dc80c1d99c1c69454bbb109dd5cfc2962e294e92ae3bb29",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p103-host2",
@@ -21052,7 +21412,7 @@
         },
         "documents": {
           "status": "needs_confirmation",
-          "known_value": "一般incoming流程母校MobilityOnline提名→學生email邀请填写资料/上传required documents，事先draft provisionalLearningAgreement，获录取可下载LetterofAcceptance；public页未列完整上传清单。SEMP或worldwide资助Agreement为另条件，不普遍當每位交换必交。2027清單未核。",
+          "known_value": "一般incoming流程母校MobilityOnline提名→學生email邀请填写资料/上传required documents，事先draft provisionalLearningAgreement，获录取可下载LetterofAcceptance；public页未列完整上传清单。SEMP或worldwide资助Agreement为另条件，不普遍當每位交换必交。2027清單未核。 一般流程先擬provisional Learning Agreement，實際MobilityOnline附件清單未全列；SEMP／worldwide资助合約是條件行前文件，在獲Letter of Acceptance後平台提供。",
           "reason": "核對實際正文、適用年/計畫與附件；verified_current只代表列出的已核事實，未列細節不宣稱完整。一般指引、舊年度、計畫差異或矛盾另標。",
           "evidence": [
             {
@@ -21080,6 +21440,21 @@
               "note": "12公開摺疊欄位全文已讀，HTTP200匿名HTML中的display data安全JSON解碼，不執行JavaScript；與SEMP/worldwide計畫分開。",
               "content_hash": "8c1a5fa796eb27e98807ef6f2ca7314abe64a7b437129a2cdc54042438f55f7f",
               "text_sha256": "b14bb781071981dde36e604df7705d91c60340eaa6ad4c5dd505686f2d747eb7"
+            },
+            {
+              "source_id": "p104-r5-embedded-content",
+              "source_url": "https://www.fhnw.ch/en/business/degree-programmes/international/exchange-semester",
+              "source_pages": [
+                6
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T22:45:00.794182+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "ty-Online after students have generated their Letter of Acceptance. Step 5: Plan your arrival. We will welcome you during the mandatory Info Session day! Step 1: Once incoming students have been officially nominated on Mobility-Online by one of our partner universities, students will receive an email invi",
+              "note": "一般流程先擬provisional Learning Agreement，實際MobilityOnline附件清單未全列；SEMP／worldwide资助合約是條件行前文件，在獲Letter of Acceptance後平台提供。",
+              "content_hash": "a0c183bb245538ddeef7aa055136974325dfe7f03b1561943f929743b81c2ab4",
+              "text_sha256": "43327ffc4c4da29158714265a87a9ffe23c27fa227be610f997648bbe7d206cf"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
@@ -21159,7 +21534,7 @@
           "content_review_note": "合作校直連檔名2026，但正文未標年度；僅undergraduate/School ofBusiness三校區；不凭檔名判定本期。",
           "sha256": "8b3d40d11b18e79f7b5ee3fd29916e5e5e5ea9d1d496242d74e7592f57cd06b8",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p104-host1",
@@ -21173,7 +21548,7 @@
           "content_review_note": "合作校直連檔名2026，但正文未標年度；僅undergraduate/School ofBusiness三校區；不凭檔名判定本期。",
           "sha256": "96f62c061b5b38fc7659eb71868e45fe2be26eaa74628934318c33b7d430969d",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p104-hostf0",
@@ -21201,7 +21576,7 @@
           "content_review_note": "一般官方頁/入口已取得；未明示當期適用。導覽年不替各欄定期；未載或未完成全文細核仍可續查。",
           "sha256": "a0c183bb245538ddeef7aa055136974325dfe7f03b1561943f929743b81c2ab4",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p104-r5-incoming-expanded",
@@ -21229,7 +21604,7 @@
           "content_review_note": "一般官方頁/入口已取得；未明示當期適用。導覽年不替各欄定期；未載或未完成全文細核仍可續查。",
           "sha256": "a0c183bb245538ddeef7aa055136974325dfe7f03b1561943f929743b81c2ab4",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p104-r5-offer-1",
@@ -21285,7 +21660,7 @@
           "content_review_note": "實際1頁全文讀；不同學期/學制與專門化先修，最多一專門化。",
           "sha256": "b2ad7fe097213a336d8199968b4cc3d5b47678351347824d0fc05d35e2775255",
           "bundled_file": "partner_forms/p104-r5-offer-4.pdf",
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p104-r5-offer-5",
@@ -21341,7 +21716,7 @@
           "content_review_note": "一般官方頁/入口已取得；未明示當期適用。導覽年不替各欄定期；未載或未完成全文細核仍可續查。",
           "sha256": "4d54a21aca09c7fec6ea75159080a4aae200f8602332d0fe82bbd143a71cc622",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p104-r5-study-info",
@@ -21355,7 +21730,7 @@
           "content_review_note": "一般官方頁/入口已取得；未明示當期適用。導覽年不替各欄定期；未載或未完成全文細核仍可續查。",
           "sha256": "04191b85f0be383be264b2f4bf629e389ac2383996ab25edc974eb798c731b86",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p104-profile-root",
@@ -22508,6 +22883,21 @@
               "note": "完整DOCX已讀：三方承諾、課程ECTS、母校recognition、簽名日期；模板的Erasmus/blended/doctoral定義不等於中正獲准期間或獎助。",
               "content_hash": "9fe2f174618009f181fac4a05cd3579fd23cb2b401737407278c17bdb50b9e43",
               "text_sha256": "2807c4a747ce22a0c44bc5e702dacc10498a9f1d6168e4bc5400acf7418db2bb"
+            },
+            {
+              "source_id": "p107-r19-b6d932a287",
+              "source_url": "https://www.upce.cz/sites/default/files/public/anpi3189/proof_of_accommodation_140338.pdf",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:07:12.966093+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "……………… Accommodation Provider In ……………………on ……………….** ……………………………………. Signature of Student*",
+              "note": "actual住宿LetterIntent有StudentSignature/PlaceDate與provider，要签才有效；visa住宿階段不是初始交換申请通用form，无個人資料與签署操作。",
+              "content_hash": "d3d5f8de207e1315d5fe19d71b56af1708c89ed90408765f7bacdb34fe8ddc71",
+              "text_sha256": "1477bbe4ade5e7098d997e5848d659fd00ac28177671acfc04bedf7ea7c642e9"
             }
           ],
           "next_public_action": "逐項核對當期清單、模板及公開程序；個人表與母校通用文件分開。"
@@ -22666,7 +23056,7 @@
           "content_review_note": "第三輪實際讀取紀錄；取得成功不等於當期適用，未讀到的附件不猜。",
           "sha256": "5e2720e3f25a28da433b81f6af2ae1a25c44e18959b1d010e14fdcb6107fad93",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p107-profile-root",
@@ -23283,7 +23673,7 @@
           "content_review_note": "指定正文核對；只有導覽／校址／舊新聞的頁面不代替交通與生活欄。所有外連與圖片未全读，未宣稱完整公開研究。",
           "sha256": "288dbaabe880d5c3c2268b23ae7a49d86d2a7ab7ab836f66b3170d8cd108683a",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p108-r14-transport",
@@ -23339,7 +23729,7 @@
           "content_review_note": "已讀與必要欄位直接相關的政策段落，依下列映射保存原文；無適用年不升級2027，導覽/一般目錄不當申請開放。",
           "sha256": "76b5218d5b83991ac9f49c777c7fe8474557e239d6f2b9dbc4e58876c02f95f0",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p108-r19-9b3552733e",
@@ -23666,7 +24056,7 @@
         },
         "campus_life": {
           "status": "needs_confirmation",
-          "known_value": "教育學院未標年度incoming指南列ESN UWB自願buddy，須自行註冊Buddy Database並選Foreign student，使用與Portal申請相同姓名／email，配對後由buddy聯絡，並非自動。另一校級buddy頁為Erasmus路徑；CCU雙邊身分適用、2027通知與配對結果未核，不保證名額或接送。 一般Bory map把Library/Canteen/Gym及HelpDesk標出；校區Univerzitní22國際處與Univerzitní8校本部不同，未推Cheb課程所在地。 一般卡製作300CZK到校付、ready通知才領，canteen／printing／washing與publictransport兩wallet；2027卡價及studentbus優惠另核。",
+          "known_value": "教育學院未標年度incoming指南列ESN UWB自願buddy，須自行註冊Buddy Database並選Foreign student，使用與Portal申請相同姓名／email，配對後由buddy聯絡，並非自動。另一校級buddy頁為Erasmus路徑；CCU雙邊身分適用、2027通知與配對結果未核，不保證名額或接送。 一般Bory map把Library/Canteen/Gym及HelpDesk標出；校區Univerzitní22國際處與Univerzitní8校本部不同，未推Cheb課程所在地。 一般卡製作300CZK到校付、ready通知才領，canteen／printing／washing與publictransport兩wallet；2027卡價及studentbus優惠另核。 genericlibrary亦generalpublic、IPCsupport/accessiblelinks不是所有服務2027exchangeguarantee。",
           "reason": "本輪讀取精確官方必要段落／附件，保存年度、實體頁、角色與矛盾；當期清單及未年／舊期補充分開，個人通知仍待核。",
           "evidence": [
             {
@@ -23723,6 +24113,21 @@
               "content_hash": "5ea3ec1c2791c927aad04c0059bdf618fdf2d318cb0a9c0ae8dddc49208d63eb",
               "text_sha256": "c8217af0976663847fc6892b36506b46594421b58db9c7a6c6ecb0af47f41901",
               "note": "evidence.status為欄位匯總；此原來源的適用年／身分由academic_year及content_applicability獨立保存，一般資料不升2027。"
+            },
+            {
+              "source_id": "p109-r11-student",
+              "source_url": "https://www.zcu.cz/en/Students/",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:07:13.062575+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "Library provides services to employees and students of UWB and to the general public. Study at UWB Enjoy studies at the modern university in the heart of Europe. BoostUp BoostUp is a business innovation club at UWB in Pilsen. Our goal is to guide young people on their journey to their own business. © ZČU 1991–Thu Oct 08 10:10:14 UTC 2026 CS EN Webmaster Cookies",
+              "note": "genericlibrary亦generalpublic、IPCsupport/accessiblelinks不是所有服務2027exchangeguarantee。",
+              "content_hash": "2d05747389e3b098982273146735c6f29a69b12ff5c25c82307a601a9a6451e7",
+              "text_sha256": "e600f9628b85ef2da5f748532dc7c87be44e6c7613ae5834b6ae924d6804ce02"
             }
           ],
           "next_public_action": "續查官方一般服務及校區指引，保留未標年度和交換身分限制。"
@@ -23882,7 +24287,7 @@
           "content_review_note": "全文已讀；HTML概覽合併考試5/3–8/31，正式PDF普通/Health/兩考試區間更細，不能把概覽作連續所有院系考試。",
           "sha256": "42cdddf80886a7473367e3c933bc1bf7279a1845521df8df9d739eec3fea7bdb",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p109-r6-application",
@@ -24022,7 +24427,7 @@
           "content_review_note": "政策/入口正文已讀，來源年和交換適用性未明；未載不推定官方尚未公告。",
           "sha256": "e9cf779714bbe0b0629fb86a865c98fcf394169c969f9853c55063bce0cc8598",
           "bundled_file": null,
-          "review_state": "existing_field_review_ledger_not_all_fields_complete"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p109-r6-erasmus-housing",
@@ -24176,7 +24581,7 @@
           "content_review_note": "指定正文核對；只有導覽／校址／舊新聞的頁面不代替交通與生活欄。所有外連與圖片未全读，未宣稱完整公開研究。",
           "sha256": "2d05747389e3b098982273146735c6f29a69b12ff5c25c82307a601a9a6451e7",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p109-r14-faculty-life-transport",
@@ -24922,7 +25327,7 @@
         },
         "campus_life": {
           "status": "needs_confirmation",
-          "known_value": "一般學生生活頁區分Halden HSS與Fredrikstad FSS，列quiz、party與團隊活動；另有buddy支援，但2027活動與exchange個人資格另核。 一般館有Oria/資料庫及學生助理寫作協助，不保交換個案時段/權限。 一般library Halden groundfloor／FredrikstadHbuilding，學生card/app借閱，textbook2wk／book4wk，各campus可還；2027hours／帳戶個案未核。",
+          "known_value": "一般學生生活頁區分Halden HSS與Fredrikstad FSS，列quiz、party與團隊活動；另有buddy支援，但2027活動與exchange個人資格另核。 一般館有Oria/資料庫及學生助理寫作協助，不保交換個案時段/權限。 一般library Halden groundfloor／FredrikstadHbuilding，學生card/app借閱，textbook2wk／book4wk，各campus可還；2027hours／帳戶個案未核。 一般buddy支援/WhatsApp，新2026修改不保2027活動；招募buddy與incoming學生申請不同。",
           "reason": "本輪讀取精確官方必要段落／附件，保存年度、實體頁、角色與矛盾；當期清單及未年／舊期補充分開，個人通知仍待核。",
           "evidence": [
             {
@@ -24962,6 +25367,21 @@
               "content_hash": "9eef47b3b6e196a417c2beffcc880d7ade095b70ae153cbbe5977ee1ac24ec6b",
               "text_sha256": "a059151983dbd2c8539ed7a32a8b8076c129033ef23f5c37f4b40a34058d5058",
               "note": "evidence.status為欄位匯總；此原來源的適用年／身分由academic_year及content_applicability獨立保存，一般資料不升2027。"
+            },
+            {
+              "source_id": "p114-r10-buddy",
+              "source_url": "https://www.hiof.no/english/studies/exchange-students/buddy-scheme/",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:04:03.037268+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "y of Applied Sciences with integration in the Norwegian student life. Our buddies are in contact with the exchange students over WhatsApp and work to ensure that the transition to our institution goes smoothly. « Exchange builds friendships that otherwise could not exist because of national borders and distances. We got close when we lived together, and then we moved apart. But we still keep in touch.» Joachim, buddy spring 2023. As a buddy you are invited to participate in all activities organized by the Inter",
+              "note": "一般buddy支援/WhatsApp，新2026修改不保2027活動；招募buddy與incoming學生申請不同。",
+              "content_hash": "22b16c4c7a24598b16c51517fd70877ade7a60a499f5425d13a51da5d1656e1a",
+              "text_sha256": "b533052e9fd85ee1ec337c20405fbe64e95b2bb43720bff7f943597f5c750a3f"
             }
           ],
           "next_public_action": "續查官方一般服務及校區指引，保留未標年度和交換身分限制。"
@@ -24981,6 +25401,21 @@
               "status": "verified_current",
               "excerpt": " make changes to your already approved Learning Agreement, you may do this after arrival in the section called \"During mobility\". Bilateral students Official Transcripts of Record of higher education in English (or in original language with a translated copy) Application form (signed and stamped by the student and home institution) Docu",
               "note": "由明示Spring2027的提名頁連結本文件要求頁，已確認bilateral與Erasmus不同。",
+              "content_hash": "faafcc9a256b2962658fedfc1248cf2d7538dbf319ea2654e7df7e25df439937",
+              "text_sha256": "91885e098657c46d72f24a9f78b31f959c015c7f243dc3685a5bc81059d57312"
+            },
+            {
+              "source_id": "p114-r19-637b03c272",
+              "source_url": "https://www.hiof.no/english/studies/exchange-students/how-to-apply/required-documentation/index.html",
+              "source_pages": [
+                1
+              ],
+              "academic_year": "一般公開正文未印2027春適用年度",
+              "application_round": "2027春季",
+              "checked_at": "2026-10-08T23:04:03.066143+00:00",
+              "status": "needs_confirmation",
+              "excerpt": "JPG format and name the documents so we understand what they contain. Necessary documentation Erasmus+ students Transcripts of Record of higher education in English (or in original language with a translated copy) Erasmus+ Learning Agreement for studies: Applicants are encouraged to submit an online learning agreement (OLA). how to fill out your OLA Students unable to assess OLA may upload a OUAS' paper version of the Learning Agreement or your home university’s version in your application. Erasmus+ Learning",
+              "note": "實際bilateral文件與Erasmus分列：在學階段成績、申請表簽章、英語證明、護照；healthplacement MRSA/TB及PoliceProof须開學前呈院系而不得上傳申請入口，沒有bilateral財力項，既有映射僅證所列範圍。",
               "content_hash": "faafcc9a256b2962658fedfc1248cf2d7538dbf319ea2654e7df7e25df439937",
               "text_sha256": "91885e098657c46d72f24a9f78b31f959c015c7f243dc3685a5bc81059d57312"
             }
@@ -25104,7 +25539,7 @@
           "content_review_note": "已讀取官方頁面，但適用2027春季年度未核實。",
           "sha256": "f9a70da6f20531d197cb406f803909bb389c2e0c59cbea07b3c8a114ccfd3bea",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p114-hostx0",
@@ -25132,7 +25567,7 @@
           "content_review_note": "已讀取官方頁面，但適用2027春季年度未核實。",
           "sha256": "f9a70da6f20531d197cb406f803909bb389c2e0c59cbea07b3c8a114ccfd3bea",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p114-hosty1",
@@ -25244,7 +25679,7 @@
           "content_review_note": "第十輪只核對指定交通／學生支援段落；導覽、全站新聞、圖片／影片與所有外連未逐一閱讀。未標2027服務不提升當期規定；入口只有導覽無內容者未映射。正文徵求本地buddy，免費活動對buddy而非保證全部交換生免費。",
           "sha256": "22b16c4c7a24598b16c51517fd70877ade7a60a499f5425d13a51da5d1656e1a",
           "bundled_file": null,
-          "review_state": "extracted_content_not_yet_mapped_requires_scope_year_review"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p114-r10-life",
@@ -25300,7 +25735,7 @@
           "content_review_note": "推薦提名10/15、申請11/1及nomination portal先由母校授權agreement；不註冊/登入/發email。",
           "sha256": "aa4d70869222a07a7a309ad5521e861de79211ca016f7b2765e89a04e1e9356b",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p114-r19-5fef8f87b6",
@@ -25356,7 +25791,7 @@
           "content_review_note": "bilateral4項、ErasmusLA、healthplacement敏感文件分開；與既有同正文頁年度範圍相同，不由修改日升2027。",
           "sha256": "faafcc9a256b2962658fedfc1248cf2d7538dbf319ea2654e7df7e25df439937",
           "bundled_file": null,
-          "review_state": "necessary_sections_reviewed_no_current_field_mapping"
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         },
         {
           "source_id": "p114-r19-9ac848ba5f",
