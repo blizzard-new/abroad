@@ -2453,7 +2453,16 @@
       "host-turku-courses",
       "host-turku-orient",
       "host-turku-languageform",
-      "host-turku-la"
+      "host-turku-la",
+      "host-fi-studies",
+      "host-fi-insurance",
+      "host-fi-exchange",
+      "host-fi-permit",
+      "host-fi-income",
+      "host-turku-tys",
+      "host-turku-tys-apply",
+      "host-turku-tys-payment",
+      "host-turku-tys-arrival"
     ],
     "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
     "fields": {
@@ -2490,7 +2499,8 @@
         "points": [
           "SoleMove收到母校提名後啟用，交英文正式簽章或電子驗證Transcript、Language Certificate、護照照片頁或official ID；居留卡或駕照不可替代ID。",
           "填proposed study plan並等外校endorse；非EU bilateral若母校要求LA則上傳學生／母校簽章PDF，Erasmus+ICM必繳LA、Erasmus OLA在錄取後按已核准課目填。方案不同不一律要求同一版LA。",
-          "Language Assessment Sheet由學生及具第一手認識的專業語言老師共同評估／簽名，老師加official stamp。non-EU LA現連Word有學生簽名、母校departmental與institutional coordinator、外校departmental與institutional coordinator欄；依交換方案確認核章次序。"
+          "Language Assessment Sheet由學生及具第一手認識的專業語言老師共同評估／簽名，老師加official stamp。non-EU LA現連Word有學生簽名、母校departmental與institutional coordinator、外校departmental與institutional coordinator欄；依交換方案確認核章次序。",
+          "現連Language Assessment Sheet已將DOC轉為兩頁並逐頁視覺核對：A1–C2六級，Listening、Reading、Spoken Interaction、Spoken Production、Writing五项，學生及教師各逐項選一級；兩方簽名／日期及教師official stamp。轉檔頁碼不是原件固定PDF頁碼。"
         ],
         "sources": [
           {
@@ -2506,7 +2516,7 @@
             "page": null
           }
         ],
-        "unresolved": "已讀官網現連表；Language Assessment Word評量矩陣抽取只見A1/A2，完整矩陣需視覺核對；116bilateral／ICM方案及簽章仍待確認。"
+        "unresolved": "已讀官網現連表並完成語言評量矩陣視覺核對；116bilateral／ICM方案及簽章適用仍待確認。"
       },
       "host_deadline": {
         "points": [
@@ -2572,19 +2582,24 @@
       },
       "housing": {
         "points": [
-          "AY2026–27可向TYS申請，房租EUR330–500／月；不是保證住宿。官網要求提早按housing provider期限，未在已讀頁列最終截止。"
+          "TYS供應者年例秋5/1、春10/1開始（三個月前），每人只填一份，可等錄取信後補。首頁卻稱spring2026於2026/10/1申請、11月出offer，年份矛盾保留；不是證實2028春開放。Offer僅一次且4天有效，接受具約束力；已讀頁無最後申請日。",
+          "整學期租約，遲到／早離仍付整期；每月6日繳租，確切租金以offer，官網租金含家具20／月、水／網路／每月4次sauna，未在同句確認電费。新約另一次EUR60；2026–27校表330–500舊估價不當2027最新報價。"
         ],
         "sources": [
           {
-            "id": "13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF",
-            "page": 2
+            "id": "host-turku-tys",
+            "page": null
           },
           {
-            "id": "host-turku-apply",
+            "id": "host-turku-tys-apply",
+            "page": null
+          },
+          {
+            "id": "host-turku-tys-payment",
             "page": null
           }
         ],
-        "unresolved": "2027TYS截止、房型、押金與供應待查。"
+        "unresolved": "116TYS實際開放／最後截止、房型報價、電費及首頁年份矛盾待確認。"
       },
       "cost": {
         "points": [
@@ -2600,35 +2615,60 @@
       },
       "insurance": {
         "points": [
-          "表稱學生自行負責保險，僅連實務入口，未提供保額／可接受公司／保障期間；不能當保險查完。"
+          "【芬蘭政府2026/10/8現行規則】少於兩年須醫療EUR120000，至少兩年為藥費40000，自負額最多300；一般交換適用短於兩年規則，須含疾病及意外、抵達時生效且覆蓋全留芬期間，不能用每趟90日限制旅平險。有效Kela／EHIC／GHIC另有豁免，需在移居後仍有效；不假設臺灣籍持有。",
+          "證明須姓名、保障期間／地域／內容、保額、自負額；Migri逐保單審查，列出的公司不是自動接受每個產品。Turku舊表只說自行保險，home要求與政府規則均須滿足。"
         ],
         "sources": [
           {
-            "id": "13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF",
-            "page": 2
+            "id": "host-fi-insurance",
+            "page": null
+          },
+          {
+            "id": "host-fi-exchange",
+            "page": null
           }
         ],
-        "unresolved": "芬蘭現行居留保險保額、期限與保障內容仍須政府官方核對。"
+        "unresolved": "個人保單、居留長度及2027政策须出發前重新確認。"
       },
       "visa": {
         "points": [
-          "舊表稱非EU／EEA須residence permit，個人國籍與短長期例外待核對。"
+          "【芬蘭政府2026/10/8】交換超90天通常須學習居留B permit；EU／Nordic等國籍或其他EU學生居留加合資格mobility notification有例外，不把台灣免短期簽證當交換長期居留豁免。首次在境外申請Enter Finland，預約使館親到驗身分／指紋並出示正本。",
+          "成人首次online EUR600／paper750，未成年400／430是當日價非2027保證。附件含有效護照、6月內相片、護照彩色個資頁、適用時所在國合法停留證明、host錄取、財力及過去6月bank statement、保險、適用時學費／獎學金；exchange不用一般學位／工作證明，未18另出生證明及家長同意。",
+          "財力原則EUR800／月、≥1年9600；第一件不能靠打工預期收入。獎學金可扣抵，有校方免費住宿則400／月、住宿餐皆免費270。一般頁不接受私人sponsorship函；income專頁明訂未成年或exchange可與guardian joint account且載明本人取用權，交換指南卻稱不接受shared account，兩頁差異保留需Migri確認。",
+          "原則等permit card再旅行；D visa可另申請並在permit核發後兩週內赴芬蘭領卡，與一般交換頁「不能在芬蘭領卡」須按D visa例外理解。不要用一般規則直接排除D visa。"
         ],
         "sources": [
           {
-            "id": "13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF",
-            "page": 2
+            "id": "host-fi-exchange",
+            "page": null
+          },
+          {
+            "id": "host-fi-permit",
+            "page": null
+          },
+          {
+            "id": "host-fi-income",
+            "page": null
+          },
+          {
+            "id": "host-fi-studies",
+            "page": null
           }
         ],
-        "unresolved": "當期芬蘭政府permit費用、財力與申請文件未讀完整。"
+        "unresolved": "申請地使館／2027費用及joint account差異、個人國籍和D visa條件待確認；未替使用者送件。"
       },
       "arrival": {
         "points": [
-          "已公告Spring2027orientation1/7–8，不當作116Spring2028日期。DVV身分登記須official ID、非EU居留卡、Peppi註冊證明，online form至少到辦公室前一天，護照本人到場；2026pop-in舊日期不用作2027提醒。"
+          "已公告Spring2027orientation1/7–8，不當作116Spring2028日期。DVV身分登記須official ID、非EU居留卡、Peppi註冊證明，online form至少到辦公室前一天，護照本人到場；2026pop-in舊日期不用作2027提醒。",
+          "TYS租約起月第一工作日中午後才可領鑰匙；非營業時間可安排tutor或key locker，locker需前一工作日中午前通知，入住需Tenant Pages檢查。領鑰匙時間不減租期，週末抵達需先安排；不替學生寄出通知。"
         ],
         "sources": [
           {
             "id": "host-turku-orient",
+            "page": null
+          },
+          {
+            "id": "host-turku-tys-arrival",
             "page": null
           }
         ],
@@ -2694,6 +2734,849 @@
           "母校"
         ],
         "official_form_url": "https://www.utu.fi/sites/default/files/media/Learning_Agreement_non-EU_0.docx"
+      }
+    ]
+  },
+  "ncu-169": {
+    "source_ids": [
+      "host-dhu-incoming",
+      "host-dhu-factsheet",
+      "host-dhu-courselist",
+      "host-dhu-coursedesc",
+      "host-dhu-visa",
+      "host-dhu-insurance"
+    ],
+    "applicability": "DHU2026秋international C.E.P（明列non-Chinese citizen）；中央116臺灣籍交換方案未核定，不將國際生規則直接套給台生。",
+    "fields": {
+      "eligibility": {
+        "points": [
+          "C.E.P適用校級有效交換協議、在學且學業／日常表現優秀的non-Chinese citizen，先母校提名才能開啟online application。2026國際生頁不能單獨證明臺灣籍學生走同一申請／校區／學制方案。"
+        ],
+        "sources": [
+          {
+            "id": "host-dhu-factsheet",
+            "page": 3
+          },
+          {
+            "id": "host-dhu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "116名額、臺灣籍接收指南及NCU協議範圍未取得；不是判定台生不能交換。"
+      },
+      "language": {
+        "points": [
+          "僅作國際C.E.P參考：英語課非native需IELTS6／TOEFL iBT80或母校授課語言證明；僅中文語言課無語言門檻。中文專業課逐課查，書畫HSK4 210、地理／商業文化HSK5 210，不能把語言班豁免套專業課。中央115列無語言要求，臺灣籍方案須另核對。"
+        ],
+        "sources": [
+          {
+            "id": "host-dhu-factsheet",
+            "page": 3
+          },
+          {
+            "id": "host-dhu-courselist",
+            "page": null
+          }
+        ],
+        "unresolved": "2027–28及臺灣籍host語言規則、語檢名稱與正式證明形式待核對。"
+      },
+      "host_documents": {
+        "points": [
+          "國際C.E.P2026清单為有效護照掃描、近期淺色底JPG證件照、英文或中文正式成績單與在學證明（母校official signature/stamp）、適用時語言證明；online guidance另提供。這是不同國籍方案的參考清單，不宣稱NCU臺灣籍外校文件包完成。"
+        ],
+        "sources": [
+          {
+            "id": "host-dhu-factsheet",
+            "page": 3
+          },
+          {
+            "id": "host-dhu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣籍最新版表格／台胞證與提名後實際portal欄位未取得。"
+      },
+      "host_deadline": {
+        "points": [
+          "2026秋提名5/15、申請5/20–5/30，6月錄取包、7月行前；均已過且非116，不能推算2027或啟用提醒。"
+        ],
+        "sources": [
+          {
+            "id": "host-dhu-factsheet",
+            "page": 1
+          }
+        ],
+        "unresolved": "2027秋／2028春與臺灣籍提名及申請截止尚未查到。"
+      },
+      "study_period": {
+        "points": [
+          "2026秋授課9/7–2027/1/8，2027春3/1–7/2暫定；同頁check-out條目卻寫Jan8,2026，原文年份矛盾保留不自動改。這兩個學期都不是中央116出發學期。"
+        ],
+        "sources": [
+          {
+            "id": "host-dhu-factsheet",
+            "page": 1
+          }
+        ],
+        "unresolved": "2027–28課曆及退宿年份矛盾待確認。"
+      },
+      "courses": {
+        "points": [
+          "已讀2026秋16課的Excel與6頁course description；至少8人才能開班，未開不提供replacement，申請選課可能因課表重選，到校確認學分。Mechanical Design需Mechanical Materials／Mechanical Principles／Theoretical Mechanics；Dielectric Physics需Solid State Physics／Crystallography或Materials Science，Interfacial Science需化學／物理背景。學分採認先與母校確認。"
+        ],
+        "sources": [
+          {
+            "id": "host-dhu-courselist",
+            "page": null
+          },
+          {
+            "id": "host-dhu-coursedesc",
+            "page": 3
+          },
+          {
+            "id": "host-dhu-coursedesc",
+            "page": 4
+          },
+          {
+            "id": "host-dhu-coursedesc",
+            "page": 5
+          }
+        ],
+        "unresolved": "116實際課單、臺灣籍可修範圍及當期開班待核對。"
+      },
+      "housing": {
+        "points": [
+          "2026國際C.E.P錄取後才可申請延安西路ISA；協議只允兩人房、每人CNY60或75／晚，到校整筆繳，網路自付；校外地址到校申報。這不是2027房價、保證房或臺灣籍住宿核定。"
+        ],
+        "sources": [
+          {
+            "id": "host-dhu-factsheet",
+            "page": 1
+          },
+          {
+            "id": "host-dhu-factsheet",
+            "page": 4
+          }
+        ],
+        "unresolved": "臺灣籍房型／價格、宿舍截止與當期入住規則待查。"
+      },
+      "insurance": {
+        "points": [
+          "國際C.E.P2026即使在母國已投保，仍須註冊前購Guoren指定保險CNY400／semester；X1轉居留一次付兩學期800。中文／臺灣籍方案、保額與最新版條款尚未核對。"
+        ],
+        "sources": [
+          {
+            "id": "host-dhu-factsheet",
+            "page": 4
+          },
+          {
+            "id": "host-dhu-insurance",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣籍是否同保險、116保費及保障範圍待確認，不視為生活查核完成。"
+      },
+      "visa": {
+        "points": [
+          "國際生網站列X1／X2，現連visa規定仍2013版；它是foreigners適用內容，不能當臺灣籍台胞證／居留要求。"
+        ],
+        "sources": [
+          {
+            "id": "host-dhu-visa",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣籍出入境證件與當期實務需另讀適用官方來源。"
+      },
+      "arrival": {
+        "points": [
+          "2026國際C.E.P最早9/1入住、9/1–2浦東接機、9/3ICES enrollment、9/7上課；接機細節錄取後提供，需更新簽證／航班。舊到校日期不做116提醒。"
+        ],
+        "sources": [
+          {
+            "id": "host-dhu-factsheet",
+            "page": 1
+          }
+        ],
+        "unresolved": "116接機、校區與到校註冊包未取得。"
+      }
+    },
+    "host_documents": []
+  },
+  "ncu-168": {
+    "source_ids": [
+      "host-sjtu-incoming",
+      "host-sjtu-hmt",
+      "host-sjtu-hmt-arrival",
+      "host-sjtu-hmt-notices"
+    ],
+    "applicability": "SJTU international factsheet2026–27與港澳台2026秋到校公告分開；中央115限定臺灣籍，116接收規則未核定。",
+    "fields": {
+      "eligibility": {
+        "points": [
+          "國際factsheet列non-Chinese citizen、GPA3/4、全時在學及至少兩學期；中央115卻限定臺灣籍。另港澳台辦2026/9/13公告已接收港澳台交換生，證明是另一接收脈絡，不能用國際頁國籍條件判臺灣籍不合格。"
+        ],
+        "sources": [
+          {
+            "id": "host-sjtu-incoming",
+            "page": null
+          },
+          {
+            "id": "host-sjtu-hmt-arrival",
+            "page": null
+          },
+          {
+            "id": "host-sjtu-hmt-notices",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣籍／港澳台完整當期交換指南、NCU協議／院級範圍待確認。"
+      },
+      "language": {
+        "points": [
+          "國際頁中文課HSK5原始證書、英語課IELTS6或TOEFL90（不要求original，native豁免）；中央115寫無語言要求。不同國籍／語言課track保留差異，不產生臺灣籍HSK或IELTS數字門檻。"
+        ],
+        "sources": [
+          {
+            "id": "host-sjtu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "116臺灣籍語言要求未取得。"
+      },
+      "host_documents": {
+        "points": [
+          "國際頁有護照（交換開始至少6月有效）、CV、最新成績、母校nomination/recommendation、無固定模板Study Plan、證件照、適用時語言證明；提名後發portal連結。此清單不能當中央臺灣籍完整host文件包，未加入可提交文件要求。"
+        ],
+        "sources": [
+          {
+            "id": "host-sjtu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "港澳台最新版申請表、臺灣籍證件及簽章未查到；需接收方／提名後包確認。"
+      },
+      "host_deadline": {
+        "points": [
+          "國際2026–27頁列年例Fall3/30、Spring10/30，不提供同等港澳台截止；保留為不同track的歷史參考。"
+        ],
+        "sources": [
+          {
+            "id": "host-sjtu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "116臺灣籍內外提名／申請日期未取得。"
+      },
+      "study_period": {
+        "points": [
+          "國際表Fall2026/9–2027/1、Spring2027/2–7；同頁deadline區Spring標2–6。Global College另校曆，不把不同學院或月份差異自動修正。"
+        ],
+        "sources": [
+          {
+            "id": "host-sjtu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "116港澳台校曆與實際學院學期待核對。"
+      },
+      "courses": {
+        "points": [
+          "國際交換先被某學院錄取，跨學院課須事先同意；醫學與SAIF關閉、CS席位少、安泰要求經管背景，但同頁安泰本科段又稱無主修限制，保留範圍差異。Global College及SPEIT只能該院錄取者修；UG／grad不可一律互修。港澳台2026到校公告列自動化、法學與外語接收院，不能推定116全院開放。"
+        ],
+        "sources": [
+          {
+            "id": "host-sjtu-incoming",
+            "page": null
+          },
+          {
+            "id": "host-sjtu-hmt-arrival",
+            "page": null
+          },
+          {
+            "id": "host-sjtu-hmt-notices",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣籍協議、安泰背景／限額及116可修課仍待查。"
+      },
+      "housing": {
+        "points": [
+          "國際頁列閔行／徐匯住宿不保證、錄取包通知訂房；18週費用表註2020核定，含閔行單人CNY10080／12600、徐匯雙人6600／單人10600–11900。不能當2027臺灣籍住宿報價。"
+        ],
+        "sources": [
+          {
+            "id": "host-sjtu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "港澳台住宿方案、116截止及價目未取得。"
+      },
+      "cost": {
+        "points": [
+          "國際頁估生活CNY4000／月、餐2000／月與校外房3000閔行／5000徐匯；未明總額包含哪些，不能再把所有子項相加或當臺灣籍當期預算通過。"
+        ],
+        "sources": [
+          {
+            "id": "host-sjtu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "116臺灣籍必要總費用與費用包含範圍待核對。"
+      },
+      "insurance": {
+        "points": [
+          "國際頁要求foreigners Ping An綜合保險400／半年、800／年；未證明港澳台採同保險或保障足夠，不替代中央行前保險。"
+        ],
+        "sources": [
+          {
+            "id": "host-sjtu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣籍保險方案／保額／當期費用未取得。"
+      },
+      "visa": {
+        "points": [
+          "國際頁X student visa與簽證表適用foreigners；中央115限定臺灣籍，不能套用X簽證而忽略台胞證。"
+        ],
+        "sources": [
+          {
+            "id": "host-sjtu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "港澳台當期證件與居留手續尚未核對。"
+      },
+      "arrival": {
+        "points": [
+          "港澳台公告確有2026/9/11到校與見面會、生活指南及各院學習說明，但只是新聞，不含可供116使用的註冊文件／時程。"
+        ],
+        "sources": [
+          {
+            "id": "host-sjtu-hmt-arrival",
+            "page": null
+          },
+          {
+            "id": "host-sjtu-hmt-notices",
+            "page": null
+          }
+        ],
+        "unresolved": "116到校包、check-in與學院註冊要求未取得。"
+      }
+    },
+    "host_documents": []
+  },
+  "ncu-185": {
+    "source_ids": [
+      "host-xjtlu-incoming",
+      "host-xjtlu-housing"
+    ],
+    "applicability": "XJTLU2026/10/8現行未標年度交換頁／住宿頁；中央115臺灣籍與學分不抵免註記，116適用待核對。",
+    "fields": {
+      "eligibility": {
+        "points": [
+          "partner學生可一學期／一學年、由母校提名，交換主要在蘇州SIP；太倉TC單程約1.5小時，選太倉只能太倉課。中央115限臺灣籍及學分回臺無法抵免，須先向系所確認116學籍／畢業規劃；不把四年制與英國module level自行換成臺灣年級。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtlu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "116協議、國籍／學制與學分採認限制未核對。"
+      },
+      "language": {
+        "points": [
+          "官網課程英語授課並可學中文，但未在已讀incoming頁列IELTS／TOEFL最低分或證明清單；這不能推論host免語檢，也不取消中央正式語檢。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtlu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "116host強制語言門檻／證明形式待接收包。"
+      },
+      "host_documents": {
+        "points": [
+          "母校提名後XJTLU邀請個別填application form；已讀公開incoming頁未提供完整附件／最新表格／簽章，所以不能用提名一般步驟當文件查完。module選課需先home批准。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtlu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "提名後form、完整附件與簽章仍未取得。"
+      },
+      "host_deadline": {
+        "points": [
+          "未標年官網年例：秋提名4/1／申請5/1；春提名10/31／申請11/30，提名與申請分開。沒有年份或時區，不推算116精確截止。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtlu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "2027秋／2028春適用及時區未確認。"
+      },
+      "study_period": {
+        "points": [
+          "官網只列一學期或一學年，沒有2027–28明確授課／考試日期。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtlu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "SIP／太倉2027–28校曆及到校日期待查。"
+      },
+      "courses": {
+        "points": [
+          "通常修10–25 credits／semester，強烈建議備選40credits不是必修40。限制CLT每學期最多1門5或10credits；CCT／PHE不開，level0僅CCS／CLT／SPA例外；本科不能修master，level3通常無補考、IMBA等不開；SIP與TC不能跨校區混選。選課依當期課表且要home預審，不能保證第一志願。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtlu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "116module catalogue、先修與席位待逐課核對。"
+      },
+      "tuition": {
+        "points": [
+          "官網一般exchange照繳home學費，但部分partner另有pay agreement需繳XJTLU，不能自動宣稱中央外校免學費。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtlu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "中央116協議付費方式未核對。"
+      },
+      "housing": {
+        "points": [
+          "交換頁稱接受offer後Global team代訂；住宿頁明列臺灣／港澳與international且房間由外部管理、非校方直營。SIP多數最短一學年，Wenhua可一學期或一年，延期不保證；單學期不能套全年的Parfait報價／租約。",
+          "未標年SIP參考：Wenhua北57／南62RMB每日，不含水電，單學期押金2000、全年4000及utilities600；Parfait International57／日但一年合約，其他房型各50–102／日，需按房型租約確認。太倉双人6000／床／年或650／月，單人14000／年或1500／月，日租25／60至少30天；到前整筆轉帳，入住現金押金300及utility300。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtlu-incoming",
+            "page": null
+          },
+          {
+            "id": "host-xjtlu-housing",
+            "page": null
+          }
+        ],
+        "unresolved": "2027價格、臺灣籍實際分配、租約保證與訂房截止未確認。"
+      },
+      "cost": {
+        "points": [
+          "住宿頁租金有不同計價單位；雙人房可能須一人先付整房、自己找室友。SIP仲介一般兩週租金／年，文華電器同時總功率不超800W；這些不是完整每月生活費估計，不相加為總預算。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtlu-housing",
+            "page": null
+          }
+        ],
+        "unresolved": "116伙食／交通／生活總費用与房型费用包含項待查。"
+      },
+      "visa": {
+        "points": [
+          "交換頁接受offer後協助JW202／DQ以申請X visa，但同頁沒有臺灣籍證件分支；臺灣籍不可直接套外国学生X visa。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtlu-incoming",
+            "page": null
+          }
+        ],
+        "unresolved": "臺灣籍台胞證與當期入境／居留方式待核對。"
+      },
+      "arrival": {
+        "points": [
+          "住宿需自備寢具、確認卡片在當地可用並帶足現金，入住檢查／報損；太倉3天內報既有損壞且禁止烹調／指定電器。退租可能不退押金與剩租，需選合適租期；到校註冊／orientation仍未取得。"
+        ],
+        "sources": [
+          {
+            "id": "host-xjtlu-housing",
+            "page": null
+          }
+        ],
+        "unresolved": "116到校日、迎新與身分證件（住宿頁寫original passport，臺灣籍另核對）未完成。"
+      }
+    },
+    "host_documents": []
+  },
+  "ncu-213": {
+    "source_ids": [
+      "host-tuaf-procedure",
+      "host-tuaf-program",
+      "host-tuaf-housing",
+      "host-tuaf-factsheet",
+      "host-tuaf-handbook",
+      "host-tuaf-2026",
+      "host-tuaf-newhandbook",
+      "host-tuaf-appform",
+      "host-tuaf-sample",
+      "host-tuaf-appendix"
+    ],
+    "applicability": "TUAF現連S.Y.2026–27手冊40頁、2026檔名年例factsheet、較舊2024–25表與未標年入口並列；不是116之2027–28核定。",
+    "fields": {
+      "eligibility": {
+        "points": [
+          "partner international students可申請AEP UG／graduate；新版手冊列Environmental Science and Management、Agricultural Economics、International Tourism Management及Master Environmental Science，另總覽提Food Technology／Biotechnology。AIMS頁只列8個會員國及9–12學分，不能把該方案直接當臺灣籍NCU bilateral。舊手冊GPA2.8在grading章，非清楚入學門檻，不硬判。"
+        ],
+        "sources": [
+          {
+            "id": "host-tuaf-procedure",
+            "page": null
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 8
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 10
+          },
+          {
+            "id": "host-tuaf-program",
+            "page": null
+          },
+          {
+            "id": "host-tuaf-handbook",
+            "page": 14
+          }
+        ],
+        "unresolved": "116NCU協議、bilateral／AIMS與實際開放課程學制仍需確認。"
+      },
+      "language": {
+        "points": [
+          "2026factsheet要求English proof但未給最低分；現連已填DOCX範例卻標English certificate optional。新版手冊第12頁IELTS5.5是本科program learning outcome，不能拿畢業標準當exchange入學門檻；中央115 IELTS5.0只保留舊年。全部home正式語檢另須満足。"
+        ],
+        "sources": [
+          {
+            "id": "host-tuaf-2026",
+            "page": 1
+          },
+          {
+            "id": "host-tuaf-appform",
+            "page": null
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 12
+          }
+        ],
+        "unresolved": "116強制門檻、正式語言證明與optional矛盾待核對。"
+      },
+      "host_documents": {
+        "points": [
+          "2026fact sheet完整列申請表加七項：Academic transcript、English proof、學生證、Motivation letter（動機與短期計畫）、Recommendation letter、護照、local hospital Health Check（翻英文）。current web要求合成一個PDF、checklist在最前且附件依其順序。新版到校章另要求所有所需文件正本及影本。",
+          "現連DOCX實際是已填2024–25範例，只保存必要欄位摘錄不複製個資；含250word Personal Statement、語言自評、選課、reference及學生簽名／日期，不能宣稱已取得空白當期表。2022sample第一頁另列degree認證、相片、CV、police clearance及birth certificate，和2026七項清單不同，不能全部硬加必繳。",
+          "新版手冊37／38頁兩個附錄連同一份Subject registration DOC，已讀學生欄與課名／學分表、AEP Office／Applicant欄；它是選課表，不是交換申請表。"
+        ],
+        "sources": [
+          {
+            "id": "host-tuaf-2026",
+            "page": 1
+          },
+          {
+            "id": "host-tuaf-procedure",
+            "page": null
+          },
+          {
+            "id": "host-tuaf-appform",
+            "page": null
+          },
+          {
+            "id": "host-tuaf-sample",
+            "page": 1
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 33
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 37
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 38
+          },
+          {
+            "id": "host-tuaf-appendix",
+            "page": null
+          }
+        ],
+        "unresolved": "Google Form local401未讀欄位；最新版空白申請／checklist、簽章、degree／CV／police／birth是否適用116未完成。"
+      },
+      "host_deadline": {
+        "points": [
+          "多版本保留：2026factsheet年例提名Fall7/15／Spring11/15，Acceptance段截止7/25／11/25，並未清楚說是學生application截止。S.Y.2026–27手冊申請Fall2/15–6/1／Spring8/15–11/30；現行webFall3/15–6/20／Spring8/15–9/30；2024–25表提名6/15／9/30。差異不可自動選最新版日期套116。"
+        ],
+        "sources": [
+          {
+            "id": "host-tuaf-2026",
+            "page": 1
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 18
+          },
+          {
+            "id": "host-tuaf-procedure",
+            "page": null
+          },
+          {
+            "id": "host-tuaf-factsheet",
+            "page": 1
+          }
+        ],
+        "unresolved": "2027–28提名／學生申請／acceptance／時區與多版本差異待接收方確認。"
+      },
+      "study_period": {
+        "points": [
+          "2026factsheet年例Fall8/15–12/30、Spring1/15–6/10；新版手冊課期Fall8/16–12/30、Spring1/11–5/30，考試12/1–30／5/1–30，迎新卻Fall9/10–15／Spring2/5–10晚於課始，均已視覺核對原文。2024–25表Spring1/5–6/10；不消除矛盾或推算2028。"
+        ],
+        "sources": [
+          {
+            "id": "host-tuaf-2026",
+            "page": 1
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 19
+          },
+          {
+            "id": "host-tuaf-factsheet",
+            "page": 1
+          }
+        ],
+        "unresolved": "116校曆／orientation與課始前後矛盾需確認。"
+      },
+      "courses": {
+        "points": [
+          "新版手冊：AEP寄academic plan，開課前一週交Enrollment Form，AEP代註冊後寄confirmation與timetable，前兩週add/drop需事先寄申請；到校表列15–24credits，但舊手冊14–22、AIMS頁9–12為不同版本／方案，不能自行取單一數字。未取得2027課單与先修，課程是否全英按實際課表確認。"
+        ],
+        "sources": [
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 20
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 33
+          },
+          {
+            "id": "host-tuaf-handbook",
+            "page": 10
+          },
+          {
+            "id": "host-tuaf-program",
+            "page": null
+          }
+        ],
+        "unresolved": "116學分上下限、課單及NCU學分採認未核定。"
+      },
+      "tuition": {
+        "points": [
+          "2026fact sheetpartner tuition FREE、nonpartner依課收；第2頁文字抽取把fee標題和金額順序混亂，視覺已確認Administration $70到校後付，Visa $95／6月與$135／12月。原文僅$符號未在已讀頁明寫幣別，不把抽取排序當收費分類或2027正式报价。"
+        ],
+        "sources": [
+          {
+            "id": "host-tuaf-2026",
+            "page": 2
+          }
+        ],
+        "unresolved": "116協議免學費、administration費用、幣別及支付時點待確認；舊手冊曾寫行前繳70亦不同。"
+      },
+      "cost": {
+        "points": [
+          "2026–27手冊：dorm $10／月、guesthouse $150／月是不同房型，food/living $90–110／月、bills7–15／月、health insurance60／年，Total vary不直接產生單一預算。舊手冊起119／月、新web宿舍15–65不同；年保費不是每月60，幣別仍待確認。"
+        ],
+        "sources": [
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 28
+          },
+          {
+            "id": "host-tuaf-handbook",
+            "page": 16
+          },
+          {
+            "id": "host-tuaf-housing",
+            "page": null
+          }
+        ],
+        "unresolved": "2027生活費、幣別／含項及房型未核對；不做預算合格判斷。"
+      },
+      "housing": {
+        "points": [
+          "新版K3／K5，dorm10–65／月、guesthouse150／月；官方住宿頁標2023且standard15、luxury65。協助安排不是保證床位，退宿前需告知AEP、缺房可求助；新版宿舍規定夜不歸／訪客須按管理規則。未見116住宿最後期限及押金。"
+        ],
+        "sources": [
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 28
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 29
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 25
+          },
+          {
+            "id": "host-tuaf-housing",
+            "page": null
+          }
+        ],
+        "unresolved": "116房型／價格／保證及申請截止、押金与付款期限未完整取得。"
+      },
+      "insurance": {
+        "points": [
+          "2026factsheet要求母國旅行保險；2026–27手冊另規定所有AEP international須在越南就學購health insurance且是延簽要求，表估60／年；舊手冊可母國或越南買旅保且6月一期。保險種類／新版衝突保留，不能只買旅平或單以60當保險查完。"
+        ],
+        "sources": [
+          {
+            "id": "host-tuaf-2026",
+            "page": 2
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 28
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 34
+          },
+          {
+            "id": "host-tuaf-handbook",
+            "page": 16
+          }
+        ],
+        "unresolved": "116兩種保險是否皆必需、保額／期間／指定公司／政府延簽要求待核對。"
+      },
+      "visa": {
+        "points": [
+          "新版要求遵守education visa用途，延簽最遲到期30日前申請；2026表簽證費95／6月、135／年只是校方參考。舊手冊協助approval letter、本人辦签證，另列NA1／機場簽證但不是最新政府證明，不能把一般tourist eVisa當交換可用。"
+        ],
+        "sources": [
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 25
+          },
+          {
+            "id": "host-tuaf-2026",
+            "page": 2
+          },
+          {
+            "id": "host-tuaf-handbook",
+            "page": 22
+          },
+          {
+            "id": "host-tuaf-handbook",
+            "page": 23
+          }
+        ],
+        "unresolved": "臺灣籍當期留學簽證／政府文件、approval letter與實際費用尚未完整核對。"
+      },
+      "arrival": {
+        "points": [
+          "新版Noi Bai Terminal A2由AEP接機，但須錄取後安排；到校24working hours內AEP確認與residential registration，帶申請文件正本／影本，課註冊與fee／dorm／insurance同表列24working hours，帶deposit invoice。不是calendar24h，不套舊迎新日。",
+          "新版提醒更新email／電話／ZALO及住址，旅行／疾病／缺席通知AEP；course form、到校指南正本清單與實際接機訂房確認待接收包。平台未替學生寄任何通知。"
+        ],
+        "sources": [
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 32
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 33
+          },
+          {
+            "id": "host-tuaf-newhandbook",
+            "page": 26
+          }
+        ],
+        "unresolved": "116接機、報到場次／地點及完整到校包需确认，沒有對外聯絡。"
+      }
+    },
+    "host_documents": [
+      {
+        "name": "交換申請表（須確認空白當期版，現連DOCX是範例）",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/file/d/1-7YYn79jkUc1rhlliyWYpRTA5FmZQc-t/view",
+          "https://aep.tuaf.edu.vn/public/en/admission/7-exchange-program-procedure-and-form"
+        ]
+      },
+      {
+        "name": "Academic transcript",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/file/d/1-7YYn79jkUc1rhlliyWYpRTA5FmZQc-t/view",
+          "https://aep.tuaf.edu.vn/public/en/admission/7-exchange-program-procedure-and-form"
+        ]
+      },
+      {
+        "name": "English proof（fact sheet必繳／範例optional待確認）",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/file/d/1-7YYn79jkUc1rhlliyWYpRTA5FmZQc-t/view",
+          "https://aep.tuaf.edu.vn/public/en/admission/7-exchange-program-procedure-and-form"
+        ]
+      },
+      {
+        "name": "學生證影本",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/file/d/1-7YYn79jkUc1rhlliyWYpRTA5FmZQc-t/view",
+          "https://aep.tuaf.edu.vn/public/en/admission/7-exchange-program-procedure-and-form"
+        ]
+      },
+      {
+        "name": "Motivation letter（動機與短期計畫）",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/file/d/1-7YYn79jkUc1rhlliyWYpRTA5FmZQc-t/view",
+          "https://aep.tuaf.edu.vn/public/en/admission/7-exchange-program-procedure-and-form"
+        ]
+      },
+      {
+        "name": "Recommendation letter",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/file/d/1-7YYn79jkUc1rhlliyWYpRTA5FmZQc-t/view",
+          "https://aep.tuaf.edu.vn/public/en/admission/7-exchange-program-procedure-and-form"
+        ]
+      },
+      {
+        "name": "護照影本",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/file/d/1-7YYn79jkUc1rhlliyWYpRTA5FmZQc-t/view",
+          "https://aep.tuaf.edu.vn/public/en/admission/7-exchange-program-procedure-and-form"
+        ]
+      },
+      {
+        "name": "Health Check（local hospital、翻成英文）",
+        "needs_confirmation": true,
+        "source_urls": [
+          "https://drive.google.com/file/d/1-7YYn79jkUc1rhlliyWYpRTA5FmZQc-t/view",
+          "https://aep.tuaf.edu.vn/public/en/admission/7-exchange-program-procedure-and-form"
+        ]
       }
     ]
   }

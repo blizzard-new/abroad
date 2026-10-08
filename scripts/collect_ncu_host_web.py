@@ -7,6 +7,7 @@ unannounced programme. Web-page text has no PDF page number.
 from pathlib import Path
 import concurrent.futures, gzip, hashlib, io, json, zipfile, os, subprocess, tempfile
 from xml.etree import ElementTree
+from urllib.parse import urlparse
 import requests
 from bs4 import BeautifulSoup
 from pypdf import PdfReader
@@ -20,6 +21,28 @@ def fetch(spec):
     result = {**spec, "label": spec["title"], "checked_at": "2026-10-08", "pages": []}
     try:
         response = requests.get(url, timeout=35)
+        if (
+            spec.get("expected_document_format") == "pdf"
+            and urlparse(url).hostname == "drive.google.com"
+            and response.ok
+            and not response.content.startswith(b"%PDF")
+        ):
+            form = BeautifulSoup(response.content, "html.parser").select_one(
+                "form#download-form"
+            )
+            if (
+                form
+                and urlparse(form.get("action", "")).hostname
+                == "drive.usercontent.google.com"
+            ):
+                response = requests.get(
+                    form["action"],
+                    params={
+                        node["name"]: node.get("value", "")
+                        for node in form.select("input[name]")
+                    },
+                    timeout=35,
+                )
         result.update(
             status=response.status_code,
             final_url=response.url,
@@ -27,6 +50,11 @@ def fetch(spec):
             content_type=response.headers.get("content-type"),
         )
         response.raise_for_status()
+        expected_format = spec.get("expected_document_format")
+        if expected_format == "pdf" and not response.content.startswith(b"%PDF"):
+            raise ValueError("公開下载回應不是PDF原件；不當成文件已取得或登入限定。")
+        if expected_format == "docx" and not response.content.startswith(b"PK"):
+            raise ValueError("公開下載回應不是Word原件；不當成文件已取得或登入限定。")
         if response.content.startswith(b"%PDF"):
             reader = PdfReader(io.BytesIO(response.content))
             result["pages"] = [
@@ -139,8 +167,41 @@ def fetch(spec):
                 {"label": a.get_text(" ", strip=True), "href": a.get("href")}
                 for a in main.select("a[href]")
             ]
+        incomplete = [p["page"] for p in result["pages"] if "\x00" in p["text"]]
+        if incomplete:
+            result["text_quality_issues"] = [
+                {
+                    "pages": incomplete,
+                    "reason": "原文字型映射含NUL，未修造缺字；仍須視覺核對。",
+                }
+            ]
+        blank = [p["page"] for p in result["pages"] if not p["text"].strip()]
+        if blank:
+            result["non_text_pages"] = blank
+        if spec.get("requires_public_field_excerpt"):
+            excerpt_path = OUT / f"{spec['id']}-public-excerpt.json"
+            excerpt = json.loads(excerpt_path.read_text())
+            result["pages"] = []
+            if excerpt["source_sha256"] != result["sha256"]:
+                raise ValueError(
+                    "已填範例原件已變更，須先重核必要欄位摘錄；不複製個資。"
+                )
+            result["pages"] = [{"page": None, "text": excerpt["public_field_excerpt"]}]
+            result["source_excerpt_only"] = True
+            result["privacy_note"] = excerpt["note_zh"]
+        visual_path = OUT / f"{spec['id']}-visual-review.json"
+        if visual_path.exists():
+            visual = json.loads(visual_path.read_text())
+            if visual["source_sha256"] == result["sha256"]:
+                result["visual_review"] = visual
+            else:
+                result["visual_review_note"] = (
+                    "原件已變更，須重新視覺核對；既有視覺紀錄不套用。"
+                )
         result["status_note"] = "public_source_extracted_scope_pending"
     except Exception as error:
+        if spec.get("requires_public_field_excerpt"):
+            result["pages"] = []
         result["error"] = str(error)
     return result
 

@@ -289,8 +289,101 @@ def test_new_host_track_year_and_document_conflicts_keep_original_evidence():
     for workflow in storage.load_bundled_application_workflows():
         if workflow.home_university == NCU.school_name:
             assert not any(
-                "service-public.gouv.fr" in s.source_url for s in workflow.sources
+                any(
+                    domain in s.source_url
+                    for domain in ("service-public.gouv.fr", "migri.fi", "tys.fi")
+                )
+                for s in workflow.sources
             )
+
+
+def test_new_mainland_scopes_and_tuaf_examples_cannot_become_current_requirements():
+    partners = fetch_ncu_partner_universities()
+    for name in ("Shanghai Jiao Tong", "Donghua", "Jiaotong-Liverpool"):
+        partner = next(p for p in partners if name in p.school_name)
+        audit = ncu_field_audit(partner.school_name)
+        assert partner.quota is None and partner.degree_levels is None
+        assert audit["fields"]["eligibility"]["status"] == "needs_confirmation"
+        assert "臺灣籍" in partner.eligibility
+    tuaf = next(p for p in partners if "THAI NGUYEN" in p.school_name)
+    audit = ncu_field_audit(tuaf.school_name)
+    assert "2026–27" in audit["fields"]["study_period"]["applicability"]
+    assert "IELTS5.5" in audit["fields"]["language"]["note"]
+    assert "不能拿畢業標準當exchange入學門檻" in audit["fields"]["language"]["note"]
+    assert tuaf.quota is None
+    assert "$70" in audit["fields"]["tuition"]["note"]
+    assert audit["fields"]["host_documents"]["status"] == "needs_confirmation"
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    example = next(x for x in raw if x["id"] == "host-tuaf-appform")
+    assert example["source_excerpt_only"]
+    assert "未複製姓名、生日、地址、證件號碼" in example["privacy_note"]
+    assert "250 words" in example["pages"][0]["text"]
+    assert "National identity number; Passport number" in example["pages"][0]["text"]
+    handbook = next(x for x in raw if x["id"] == "host-tuaf-newhandbook")
+    assert handbook["bytes"] == 207121010 and len(handbook["pages"]) == 40
+    visual = next(x for x in raw if x["id"] == "host-turku-languageform")
+    assert visual["visual_review"]["verified_levels"] == [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2",
+    ]
+    assert visual["pages"][0]["page"] is None
+
+
+@pytest.mark.parametrize("hash_matches", [True, False])
+def test_filled_form_snapshot_uses_reviewed_excerpt_and_fails_closed_on_change(
+    tmp_path, monkeypatch, hash_matches
+):
+    import hashlib
+    import importlib.util
+    import io
+    import zipfile
+    import requests
+
+    spec = importlib.util.spec_from_file_location(
+        "ncu_host_collector", ROOT / "scripts/collect_ncu_host_web.py"
+    )
+    collector = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(collector)
+    monkeypatch.setattr(collector, "OUT", tmp_path)
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w") as z:
+        z.writestr(
+            "word/document.xml",
+            '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:p><w:r><w:t>private-filled-example-value</w:t></w:r></w:p></w:document>',
+        )
+    response = requests.Response()
+    response.status_code = 200
+    response.url = "https://example.edu/form.docx"
+    response._content = buffer.getvalue()
+    monkeypatch.setattr(collector.requests, "get", lambda *args, **kwargs: response)
+    (tmp_path / "example-public-excerpt.json").write_text(
+        json.dumps(
+            {
+                "source_sha256": hashlib.sha256(response.content).hexdigest()
+                if hash_matches
+                else "changed",
+                "public_field_excerpt": "Applicant signature; date",
+                "note_zh": "只摘錄必要欄位，不複製個資",
+            }
+        )
+    )
+    result = collector.fetch(
+        {
+            "id": "example",
+            "title": "Filled example",
+            "url": response.url,
+            "requires_public_field_excerpt": True,
+        }
+    )
+    assert "private-filled-example-value" not in json.dumps(result)
+    if hash_matches:
+        assert result["source_excerpt_only"] and result["pages"][0]["page"] is None
+    else:
+        assert result["pages"] == [] and "原件已變更" in result["error"]
 
 
 def test_unverified_ncu_costs_cannot_pass_a_current_budget():

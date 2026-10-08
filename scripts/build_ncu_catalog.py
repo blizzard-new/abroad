@@ -887,8 +887,9 @@ def build(output):
                     "checked_at": CHECKED,
                 }
                 for fid in review["source_ids"]
-                if fid
-                != "host-fr-housing"  # Government housing policy is retained in destination/audit, not called a university authority.
+                if docs[fid].get("authority_kind", "partner_university")
+                == "partner_university"
+                and fid != "host-fr-housing"
             )
         for d in {
             d["id"]: d
@@ -1126,7 +1127,7 @@ def build(output):
     with (output / "field-coverage.csv").open(
         "w", encoding="utf-8", newline=""
     ) as handle:
-        writer = csv.writer(handle)
+        writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(
             [
                 "學校／track",

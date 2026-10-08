@@ -106,3 +106,72 @@ def test_ncu_grade_scale_year_exclusion_and_real_document_form(page, live_server
     expect(page.locator("#application-document-fields")).to_contain_text("實際考試日期")
     actual.fill("2100-01-01")
     assert actual.evaluate("node=>node.validity.rangeOverflow")
+
+
+@pytest.mark.parametrize(
+    "school,application_text,life_text,audit_text",
+    [
+        ("圖爾庫", "A1–C2六級", "EUR120000", "guardian joint account"),
+        (
+            "太原農林",
+            "現連DOCX實際是已填2024–25範例",
+            "60／年",
+            "未複製姓名、生日、地址、證件號碼",
+        ),
+    ],
+)
+def test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui(
+    page, live_server, school, application_text, life_text, audit_text
+):
+    page.set_viewport_size({"width": 390, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    enter_public_site(page, live_server, "partners")
+    open_navigation(page)
+    page.locator("#school-switcher").click()
+    page.locator('[data-home-school="國立中央大學"]').click()
+    page.locator("#confirm-school").click()
+    if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+        page.locator("#glass-menu-toggle").click()
+    wait_until(
+        page,
+        "state.dashboard?.school_name === '國立中央大學' && state.dashboard.partner_universities.length === 214",
+    )
+    page.locator('[data-partner-view="list"]').click()
+    page.locator("#partner-search").fill(school)
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+    page.locator("#partner-table .partner-card > summary").first.click()
+    page.locator("#partner-table .school-detail-trigger:visible").first.click()
+    page.locator("#ncu-source-audit > summary").click()
+    expect(page.locator("#ncu-source-audit-body")).to_contain_text(audit_text)
+    if school == "太原農林":
+        source = (
+            page.locator("#ncu-source-audit-body > details")
+            .filter(has_text="僅必要欄位摘錄")
+            .first
+        )
+        source.locator(":scope > summary").click()
+        source.locator("details > summary").click()
+        expect(source).to_contain_text("250 words")
+        expect(source).to_contain_text("必要欄位摘錄（無固定PDF頁碼）")
+    page.locator("#detail-tab-application").click()
+    expect(page.locator("#detail-application")).to_contain_text("家長同意書")
+    expect(page.locator("#detail-application")).to_contain_text(application_text)
+    page.locator("#detail-tab-life").click()
+    expect(page.locator("#detail-life")).to_contain_text(life_text)
+    page.locator("#detail-life .life-official-guide > summary").click()
+    expect(
+        page.locator("#destination-official-content li").filter(has_text=life_text).first
+    ).to_be_visible()
+    expect(page.locator("#detail-life")).to_contain_text(
+        "4天" if school == "圖爾庫" else "24working hours"
+    )
+    out = Path("/tmp/ncu-audit/browser")
+    out.mkdir(parents=True, exist_ok=True)
+    page.screenshot(
+        path=str(out / f"ncu-{'turku' if school == '圖爾庫' else 'tuaf'}-390.png"),
+        full_page=True,
+    )
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors
