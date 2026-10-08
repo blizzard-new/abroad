@@ -1,5 +1,7 @@
 # TKU 第三批：四校外校申請、生活資料與逐欄完整度
 
+> 此為第三批歷史交接。main 整合、文件中心目標切換修正、長崎 dashboard／搜尋來源、公告查核及桌機／手機實測，以[第四批交接](tku-batch-4-integration-2026-10-08.md)和 `tku-batch-4-validation-2026-10-08.json` 為最新狀態。以下基準 commit、未修正 UI 問題與測試數量均為當時紀錄。
+
 2026-10-08查核。`blizzard-new/abroad`、`data/tku-exchange-20261008`、獨立目錄`/workspace/abroad-tku`。本批開工及第一次重新fetch的main為`293546e807294dc0812f390b240a4cfb68e86cd0`，也是實際回歸比較基準。推送後最後檢查發現main已另整合臺大為`f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`；未重寫／重基這個多校共用整合，留給中央統一合併。此文件與本批validation JSON為目前交接；第一批文件、63.1%等舊統計僅歷史記錄。
 
 ## 可整合交付

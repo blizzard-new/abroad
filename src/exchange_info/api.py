@@ -3155,6 +3155,8 @@ def create_app(
         school: str | None = Query(default=None),
         program_type: str = Query(default="exchange"),
         flags: str = Query(default=""),
+        academic_year: str | None = Query(default=None, max_length=40),
+        application_round: str | None = Query(default=None, max_length=80),
         include_all: bool = Query(default=False),
     ) -> list[ApplicationDocumentTemplate]:
         university = university_for(school)
@@ -3165,6 +3167,8 @@ def create_app(
                 school_name=university.school_name,
                 program_type=program_type,
                 flags=[value.strip() for value in flags.split(",") if value.strip()],
+                academic_year=academic_year,
+                application_round=application_round,
             )
         except ValueError as error:
             raise HTTPException(status_code=422, detail="不支援的申請計畫類型。") from error

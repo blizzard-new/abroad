@@ -1,5 +1,7 @@
 # TKU 第二批：已查內容的詳頁顯示修正
 
+> 第二批歷史紀錄；最新整合及測試結果見[第四批交接](tku-batch-4-integration-2026-10-08.md)。
+
 第一批推送不代表全部交換生資料整理完成。2026-10-08 繼續在原分支補齊資料。
 
 `tku_student_view.py` 原本只填 raw eligibility/application_info/tuition_info，前端讀取的 `student_summary_zh` 為空。本批新增直接由已審查欄位生成的母校／外校摘要，保留 JLPT N2/N1、學制、總平均與前40%矛盾、系所推薦、校內已截止、文件步驟、淡江全額學雜費及外校費用，附適用年度與頁碼提示。未把已截止改成可申請。

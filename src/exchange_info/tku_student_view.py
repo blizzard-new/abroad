@@ -1,6 +1,7 @@
 """Conservative TKU adapter: current round and reference catalogue stay separate."""
 from __future__ import annotations
 
+import json
 from datetime import datetime, timezone
 
 from .models import (ApplicationPeriodItem, ExchangeInfo, PartnerStudentSummary, PartnerUniversity,
@@ -12,6 +13,17 @@ def _source(source_id: str, summary: str | None = None) -> SourceReference:
     row = next(s for s in load_tku_sources() if s["id"] == source_id)
     return SourceReference(title=row.get("title",source_id), source_url=row["source_url"],
                            summary=summary or f"適用：{row['applicable_year']}；查核2026-10-08；{row['role']}")
+
+
+def _notice_audit():
+    return json.loads((BUNDLE / "current_notice_audit.json").read_text(encoding="utf-8"))
+
+
+def _notice_audit_sources():
+    audit = _notice_audit()
+    return [SourceReference(title=f"淡江官方公告REST查核第{row['page']}/{audit['rest_pages']}頁",
+        source_url=row['url'], summary=f"查核2026-10-08；公開公告2025/9/1至2026/10/8，完整{audit['rest_total']}筆／{audit['rest_pages']}頁。{audit['finding']}")
+        for row in audit['evidence'] if 'entries' in row]
 
 
 def tku_partner_summary(record) -> PartnerStudentSummary:
@@ -137,7 +149,7 @@ def build_tku_student_dashboard(*, partner_universities=None, reference_time: da
             "上述費率不能套到其他長崎計畫；是否適用淡江本輪及研究生仍待確認。",
         ],source=_source("nagasaki-nics-2027","2027春NICS：費用、住宿、保險及餐費段；2026-10-08核對。"))],
         partner_universities=partner_universities if partner_universities is not None else fetch_tku_partner_universities(reference_time=now),
-        sources=[_source(s) for s in ["jp-revision","jp-revision-attachment-1","jp-revision-attachment-2","ritsumeikan-2027-guide","seikei-2027-sheet","nagasaki-nics-2027","nagasaki-partners","nagasaki-form-a-online","nagasaki-pledge","uec-application-recheck","uec-costs"]])
+        sources=[_source(s) for s in ["jp-revision","jp-revision-attachment-1","jp-revision-attachment-2","ritsumeikan-2027-guide","seikei-2027-sheet","nagasaki-nics-2027","nagasaki-partners","nagasaki-form-a-online","nagasaki-pledge","uec-application-recheck","uec-costs","tku-news-recheck","tku-outbound-recheck"]] + _notice_audit_sources())
 
 
 def tku_exchange_info(partners=None) -> ExchangeInfo:
@@ -164,6 +176,15 @@ def tku_processed_pages() -> list[ProcessedPage]:
         result.append(ProcessedPage(title=f"淡江 {row.get('title',row['id'])}",source_url=row["source_url"],text=text,
             summary=f"{row['applicable_year']}，{row['role']}，查核2026-10-08；日語二甄校內已截止，不能拿外校期限取代。一般／舊版僅依各來源適用期參考，不升為2027專屬。{caution}",
             category="exchange_application",crawled_at=CHECKED_AT,content_hash=row["sha256"]))
+    audit = _notice_audit()
+    for row in audit['evidence']:
+        if 'entries' not in row: continue
+        titles = '\n'.join(f"{entry['published']}：{entry['title']}；{entry['url']}" for entry in row['entries']
+                           if any(word in entry['title'] for word in ['交換生','Exchange Student','exchange student']))
+        result.append(ProcessedPage(title=f"淡江英歐／中文新版公告查核第{row['page']}頁",source_url=row['url'],
+            text=f"{audit['scope']}\n{audit['finding']}\n以下僅公告發現資料，舊期及結果公告不是本期申請文件：\n{titles}",
+            summary=f"公開REST完整{audit['rest_total']}筆／{audit['rest_pages']}頁；查核2026-10-08；狀態{audit['finding_status']}，不能推定官方尚未公告。",
+            category='exchange_application',crawled_at=CHECKED_AT,content_hash=row['sha256']))
     return result
 
 

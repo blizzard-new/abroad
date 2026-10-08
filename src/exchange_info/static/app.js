@@ -146,6 +146,7 @@ const state = {
   applicationFiles: {},
   activeApplicationTemplateId: "",
   applicationLoading: false,
+  homeSchoolLoading: false,
   advisorPlan: null,
   planningPreview: null,
   planningRequestId: 0,
@@ -1403,19 +1404,25 @@ async function refreshHomeUniversityData() {
   if (!canAccessPartnerCatalog()) { renderCatalogAccessGate(); return; }
   const requestedSchool = activeHomeSchool();
   const requestId = ++state.homeSchoolRequestId;
-  await Promise.all([
-    loadDashboard({ homeSchool: requestedSchool }),
-    loadApplicationTemplates({ homeSchool: requestedSchool }),
-    loadCoverage({ homeSchool: requestedSchool }),
-    loadDestinationProfiles({ homeSchool: requestedSchool }),
-  ]);
-  if (requestId !== state.homeSchoolRequestId || !isCurrentHomeSchool(requestedSchool)) return;
-  if (state.account) {
-    await loadAccountWorkspace({ homeSchool: requestedSchool });
+  state.homeSchoolLoading = true;
+  try {
+    await Promise.all([
+      loadDashboard({ homeSchool: requestedSchool }),
+      loadApplicationTemplates({ homeSchool: requestedSchool }),
+      loadCoverage({ homeSchool: requestedSchool }),
+      loadDestinationProfiles({ homeSchool: requestedSchool }),
+    ]);
+    if (requestId !== state.homeSchoolRequestId || !isCurrentHomeSchool(requestedSchool)) return;
+    if (state.account) {
+      await loadAccountWorkspace({ homeSchool: requestedSchool });
+    }
+    if (requestId !== state.homeSchoolRequestId || !isCurrentHomeSchool(requestedSchool)) return;
+    applyAppRoute({ loadFeed: false, resetScroll: false });
+    if (document.body.classList.contains("cgu-community-mode")) await loadGlobalCommunity();
+    announce(`${activeHomeSchool()}資料已切換`, "success");
+  } finally {
+    if (requestId === state.homeSchoolRequestId) state.homeSchoolLoading = false;
   }
-  applyAppRoute({ loadFeed: false, resetScroll: false });
-  if (document.body.classList.contains("cgu-community-mode")) await loadGlobalCommunity();
-  announce(`${activeHomeSchool()}資料已切換`, "success");
 }
 
 function initializeSchoolOnboarding() {
@@ -5961,6 +5968,9 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}
       program_type: context.program_type || "exchange",
     });
     if (context.flags?.length) params.set("flags", context.flags.join(","));
+    ["academic_year", "application_round"].forEach(key => {
+      if (context[key]) params.set(key, context[key]);
+    });
     const templates = await fetchJson(`/application-center/templates?${params}`);
     if (!isCurrent()) return false;
     let catalog = null;
@@ -6294,7 +6304,14 @@ async function handleApplicationContextChange(event) {
   if (event?.target === targetInput && targetInput.value !== state.applicationContext.target_school) {
     const owner = state.account?.id;
     const home = activeHomeSchool();
-    if (!await confirmPlanningTargetChange(proposed || "尚未決定") || owner !== state.account?.id || home !== activeHomeSchool()) { restoreApplicationContextForm(); return; }
+    targetInput.disabled = true;
+    let confirmed;
+    try {
+      confirmed = await confirmPlanningTargetChange(proposed || "尚未決定");
+    } finally {
+      targetInput.disabled = false;
+    }
+    if (!confirmed || owner !== state.account?.id || home !== activeHomeSchool()) { restoreApplicationContextForm(); return; }
   }
   state.planningPreview = null;
   state.planningLoading = false;

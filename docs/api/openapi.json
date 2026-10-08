@@ -14874,6 +14874,40 @@
           },
           {
             "in": "query",
+            "name": "academic_year",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 40,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Academic Year"
+            }
+          },
+          {
+            "in": "query",
+            "name": "application_round",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 80,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Application Round"
+            }
+          },
+          {
+            "in": "query",
             "name": "include_all",
             "required": false,
             "schema": {

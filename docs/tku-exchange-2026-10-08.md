@@ -1,6 +1,6 @@
 # 淡江大學校級交換資料與平台整合交接
 
-> 此文件保存第一批歷史交接，來源數、完整度、長崎缺口及測試數量已更新。請以[第三批交接](tku-batch-3-hosts-2026-10-08.md)與`tku-batch-3-validation-2026-10-08.json`為目前狀態；下文舊統計不是完整交付的最新數字。
+> 此文件保存第一批歷史交接，來源數、完整度、長崎缺口及測試數量已更新。請以[第四批交接](tku-batch-4-integration-2026-10-08.md)與`tku-batch-4-validation-2026-10-08.json`為目前狀態；下文舊統計不是完整交付的最新數字。
 
 查核日：2026-10-08（UTC）；校內期限保留臺北時區，外校期限保留外校時區。
 Repository：`blizzard-new/abroad`；獨立工作目錄：`/workspace/abroad-tku`；分支：`data/tku-exchange-20261008`。

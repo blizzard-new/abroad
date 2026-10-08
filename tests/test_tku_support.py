@@ -70,6 +70,59 @@ def test_dashboard_and_search_include_reviewed_nagasaki_evidence_without_expandi
     assert all(page.text and page.content_hash for page in pages)
     failed = {row["source_url"] for row in sources.values() if row.get("open_status") == "failed"}
     assert not failed.intersection(page.source_url for page in pages)
+    audit_pages=[page for page in pages if 'rest_route=' in page.source_url]
+    assert len(audit_pages)==3 and all('不是本期申請文件' in page.text for page in audit_pages)
+
+
+def test_new_notice_audit_covers_all_official_archive_pages_without_claiming_unpublished():
+    report=json.loads((BUNDLE/'current_notice_audit.json').read_text())
+    archive=[row for row in report['evidence'] if 'entries' in row]
+    entries=[entry for row in archive for entry in row['entries']]
+    assert len(archive)==report['rest_pages']==3
+    assert len(entries)==len({row['id'] for row in entries})==report['rest_total']==293
+    assert not report['new_english_chinese_candidates']
+    assert report['finding_status']=='not_verified_new'
+    assert '不是官方明示尚未公告' in report['finding']
+    assert len(report['conflicts_checked'])==13
+    assert all(row['http_status']==200 and row['sha256'] and row['checked_at'].startswith('2026-10-08') for row in archive)
+    assert any(row['http_status']==404 and 'OverseasStudents' in row['url'] for row in report['evidence'])
+
+
+def test_document_template_api_honours_tku_year_and_round(tmp_path):
+    client=TestClient(create_app(tmp_path))
+    query={'school':'TKU','academic_year':'2027-2028','application_round':'日語組第二次甄選'}
+    assert len(client.get('/application-center/templates',params=query).json())==2
+    assert client.get('/application-center/templates',params={**query,'academic_year':'2028-2029'}).json()==[]
+    assert client.get('/application-center/templates',params={**query,'application_round':'英歐語組'}).json()==[]
+
+
+def test_document_catalog_scopes_four_mothers_even_for_same_japanese_partner(tmp_path, monkeypatch):
+    from exchange_info.models import PartnerUniversity
+    from exchange_info.ntu_student_view import fetch_ntu_partner_universities
+    from exchange_info.storage import load_bundled_application_workflows
+    from exchange_info.application_documents import build_application_document_catalog
+    cgu=PartnerUniversity(program_type='交換學生',school_name='林肯大學 Lincoln University',country='紐西蘭',
+        source_url='https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554')
+    monkeypatch.setattr('exchange_info.api.fetch_partner_universities',lambda:[cgu])
+    client=TestClient(create_app(tmp_path))
+    ntu=fetch_ntu_partner_universities()
+    cases=[('CGU','長庚大學',cgu,'116'),
+        ('NTPU','國立臺北大學',fetch_ntpu_partner_universities()[0],'115'),
+        ('NTU','國立臺灣大學',next(p for p in ntu if '立命館' in p.school_name),'116'),
+        ('TKU','淡江大學',fetch_tku_partner_universities()[0],'2027-2028')]
+    workflows=load_bundled_application_workflows()
+    for alias,home,partner,year in cases:
+        context=ApplicationCenterContext(school_name=home,target_school=partner.school_name,academic_year=year)
+        expected=build_application_document_catalog(context,[w for w in workflows if w.home_university==home])
+        response=client.get('/application-center/catalog',params={'school':alias,'target_school':partner.school_name,'academic_year':year})
+        assert response.status_code==200,response.text
+        actual=response.json()
+        assert actual['context']['school_name']==home and actual['academic_year']==year
+        assert actual['workflow_found'] and actual['items']
+        assert actual['items']==expected.model_dump(mode='json')['items']
+        # A future unsupported cycle never falls back to the previous school's/year's files.
+        unknown=client.get('/application-center/catalog',params={'school':alias,'target_school':partner.school_name,'academic_year':'2099-2100'}).json()
+        assert not unknown['workflow_found'] and unknown['items']==[]
 
 
 def test_bundled_attachments_open_and_content_confirms_cycle():
