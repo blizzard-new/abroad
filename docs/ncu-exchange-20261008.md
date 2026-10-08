@@ -1,6 +1,6 @@
 # 中央116-1來源查核與平台接入（進行中）
 
-基底為合併PR #1後的`f6ad1b8`，已確認包含臺大六項修正`daad399`。獨立worktree `/workspace/abroad-ncu`、分支`data/ncu-exchange-20261008`；已推送checkpoint `dc126d2`、`95c883a`、`2865413`、`6f2f9d1`、`dd06632`、`0d91d46`、`5b0df5a`、`7b381ae`、`9d44a4e`、`7f0e1cc`、`a9c6fd0`、`a199426`、`719d523`、`fc876ca`，draft [PR #4](https://github.com/blizzard-new/abroad/pull/4)。原工作目錄、中正及淡江分支未改動。本文件不宣稱中央全部外校資料完備。
+基底為合併PR #1後的`f6ad1b8`，已確認包含臺大六項修正`daad399`。獨立worktree `/workspace/abroad-ncu`、分支`data/ncu-exchange-20261008`；已推送checkpoint `dc126d2`、`95c883a`、`2865413`、`6f2f9d1`、`dd06632`、`0d91d46`、`5b0df5a`、`7b381ae`、`9d44a4e`、`7f0e1cc`、`a9c6fd0`、`a199426`、`719d523`、`fc876ca`、`0b10d31`，draft [PR #4](https://github.com/blizzard-new/abroad/pull/4)。原工作目錄、中正及淡江分支未改動。本文件不宣稱中央全部外校資料完備。
 
 ## 適用年度與實際覆蓋
 
@@ -16,11 +16,11 @@
 | 公開附件下載成功 | 459，下載錯誤0 |
 | 至少一頁有可讀文字／全頁有文字 | 454／423；文字抽取不等於人工已讀 |
 | 完全無文字的附件 | 5份，33頁（URCA、Bolton、UOS、重慶、HUST） |
-| 有明確SHA與逐頁紀錄的全文已讀／視覺文件 | Drive附件10／4；UOS舊影像版11頁、SUFE與SHU各8頁、廣西16頁逐頁視覺讀完；OCR僅UOS舊版 |
+| 有明確SHA與逐頁紀錄的全文已讀／視覺文件 | Drive附件12／4；UOS舊影像版11頁、SUFE與SHU各8頁、廣西16頁逐頁視覺讀完；OCR僅UOS舊版 |
 | 部分或全部無文字頁／字型問題 | 36份含100頁、2份字型缺字 |
-| 另查公開host／home網頁 | 438筆公開頁／文件讀取紀錄（含browser選定摘錄）；68筆目前讀取錯誤分列 |
+| 另查公開host／home網頁 | 497筆公開頁／文件讀取紀錄（含browser選定摘錄）；71筆目前讀取錯誤分列 |
 | 有外校來源的目錄項 | 211（210項有文字）；214項有任意參考來源，另3項只有其他母校官方轉載、不可冒充host官網 |
-| 人工整理的host紀錄 | 56（全部partial）；158項尚未逐欄整理 |
+| 人工整理的host紀錄 | 57（全部partial）；157項尚未逐欄整理 |
 | 全部17欄完成116當期核准 | **0** |
 
 附件取得／文字抽取不是逐欄當期查核完成。其他資料仍可繼續查；未查完的欄位不稱「官方未公告」。
@@ -350,3 +350,34 @@ NCU builder新增before_host_application插入點，把提名課表／教授同�
 本批完整四module **175 passed（319.75s）**；新增兩API／九組條件聚焦先 **11 passed（27.20s）**。390px手機 **1 passed（86.55s）**，實際展開初次COE八件、健康矛盾與TIEC2027費用，三張已逐圖核對：[初次COE](ncu-browser-evidence/ncu-science-initial-coe-390.png)、[健康適用差異](ncu-browser-evidence/ncu-science-health-scope-390.png)、[2027 TIEC費率](ncu-browser-evidence/ncu-science-tiec2027-fee-390.png)。OpenAPI .5實際快照check exit0、git diff check通過；首次誤帶未支援--version參數的命令失敗已更正，未重產快照。共享runtime未變，前批共享113 passed／6 skipped及851份CGU／NTPU／NTU流程與main差異0仍是最新共享複驗。
 
 最新唯讀遠端main f6ad1b8、CCU4a299f5、TKU61659fe；共享合併點再次列出，未切換、合併或覆寫其他分支。Science公开搜索用JSON已另外定位中央伙伴列，暫存/tmp待下一批接入，不計438／56；伙伴身份不證明116名額或semester。千葉新版2026–27手冊原站與其他大學官方轉載空白表正在查，亦不計本批數字。158項與56校116各欄缺口仍須續查；未查完不寫成官方尚未公告。
+
+
+## 千葉：497來源、初次健康表、語言分流與宿舍／保險版本
+
+前批東京科學已推送`0b10d31`，PR4保持open draft。本批新增58筆千葉／日本政府及一筆Science伙伴JSON，497來源／71讀取錯誤、57人工partial／157未整理、0全116核准。Drive459份不變，明確全文已讀12份：新讀千葉2025/1/10五頁factsheet與未標年一頁介紹；舊2025–26 36頁outline僅12頁選讀並隔離全文索引。中央115千葉第5頁歷史4名（上2／下2）、限UG，116仍null，不當零名額／未開放。
+
+千葉官網2026–27新J-PAC 33頁全原生正文已讀，CAU官方轉載同SHA；2026/1/14五頁factsheet的UGM／CAU兩份轉載亦同SHA。J-PAC只UG、申請時二年級以上、日語已學50小時並滿足英語B2/iBT72/IELTS5.5或日語N2/B2其中一類。Faculty Direct的UG／grad、研究生先讀一學期及各學院程序另列，不以申請書Graduate checkbox或UGM自己的文章覆蓋J-PAC範圍。新版英文第7頁仍殘留舊兩course稱呼、日文第22頁沒有，不生成舊雙track選單；官網alternate檔正文其實2024–25，只讀封面。現連2025–26舊course list只選讀表頭；2026信息提到新版附表但未取得，推測URL404不能寫成官方尚未公告。
+
+七份Word空白表、checklist、deadline、course information逐件原生全文已讀，沒有虛構固定PDF頁碼。語言原圖第16／31頁均已視覺核對並追蹤PNG，YES/NO圖頁扁平文字不直接交regex/RAG判分流。英語native/semi-native勾申請書；非母語有test交score、無則母校英語教師指定表；日語有N1/N2交結果成績、無則日語教師表。英或日擇一、機構學日語另交教師證明；over B2與B2以上／英語大學與母語範圍差異保留。日語教師表須日文及教師簽名；host JLPT證书未到可網站暫代與中央正式語檢不接受截圖分開。
+
+初次共用八件是app／plan／reference／英文成績與評分／emergency／health／passport／貼表photo；健康在初次即交，醫師胸X光及簽日期、沒寫統一三月內檢查，不套東京科學入學前健康或廣島錄取後程序。申請書本人簽日期及Katakana；計畫約一頁、日語N2/B2以上用日文；推薦教師認識至少一年、confidential直接交母校，不同語言教師僅preferable。緊急表本人同意、母校人士及親屬兩個必填，日本聯絡人如有；不捏造三位皆必填或聯絡人簽名。checklist不用提交、每學生一資料夾，不加UGM自己的CV／動機／在學／三照片到host或home必繳。
+
+2026–27母校提名2/13及8/28、email申請2/27及9/11全過期；UGM自己的2/1／8/14／9/2和Fall2023殘句不是千葉／中央期限。最新nomination sheet、116日期與受邀系統仍未取得。COE錄取後依母校收到指示另準備；新空白表、bank清單／金額未知，不套Science初次五sheet或廣島480000。三program期Oct–Aug／Oct–Feb／Apr–Aug，舊中央MAR–AUG另隔離；每非春假Term6週7堂、每semester兩連續term共10credit，不變成每term10或週7credit；Japanese5xx以下每term一英語／雙語，未保證新課全開或中央採認。
+
+International House已2025/9關閉、舊218宿位與9–17入住仍留原頁但不提供舊宿舍申請。J-PAC校方另安排附近公寓，只住program期、不因實習延住；租50000–80000JPY已含在每月約100000伙食水電電話總估，教材休閒另計，不重複加租。自行租屋初期至少5倍租只是未標年概估、實際契約／家具／退租一月及清潔結算別核。使用校方機關保證才另需JEES租屋保障與指導教師簽名加章的Apartment Residence Guarantee Request，最新blank須ISD提供，不能因校內／校外住宿選項自動要求。
+
+現連保險15頁原图全視覺已讀且逐頁PNG/SHA追蹤，原native空頁保留，未OCR／未稱原生文字全文。它標AY2025及2024/7、11製作：A一年1860JPY不含醫療，B11500、醫療需NHI及至少4月，不能把手冊1860說成包含傷病費；四月A1030/B6330、六月A1310/B8060僅舊年參考。晚繳次日才開始；疾病／牙科／精神／孕產等除外、救援事件條件另列，不提供全包醫療承諾或個人方案推薦。三保險必需與母校海外全期／入日前旅保分開，沒有杜撰初次host保單上傳。千葉市2026/6/25新證件頁取代舊hokensho當場／掛號親收說法：MyNumber或資格確認書，資格資訊通知書單獨不看診，僅千葉市適用；不推2027郵寄日。
+
+政府年金原頁逐件核：20–59依法定資格、FY2026月17920JPY不是2027新價；nondegree exchange使用一般免除／猶予申請並獲批准，不能自動用degree學生納付特例或預設零支出。到校2026.10市役所協助手紙、三頁辦完程序、四頁2024到校程序、六頁疫苗建議與一頁self-check已原生全文讀；self-check不用提交。住址市區按實際住所、passport／在留卡／日文住址，銀行app無passbook且provider審查，不保證入境即開。J-PAC迎新直接由program通知，不用一般MEXT場次。最終退租結帳、確定自扣完才關銀行及NHI／年金／住址程序另段；暫離先告學院，政府ISA原頁403，完整再入境例外未讀，不捏造登入限定或个人入境核准。
+
+Science Tokyo公開原JSON262列中只選讀唯一中央列：type01校級、exchange02學生交流／exchange03互免學費均t，另讀官方JS及HTML控制對應；原JSON格式校驗與公開摘錄SHA綁定，變更原件立即拒絕沿用摘錄。只稱中央1列及對應控制已核，不說262伙伴都逐列讀。移除「尚未核中央列」缺口，116協議續效／名額／semester與個人接收仍未核。
+
+2026-10-08約17:45 UTC環境短暫回到starting；立即回報並在17:45:57最小healthcheck確認shell/date/Git與/tmp千葉JSON／保險PNG保留，HEAD仍0b10d31，沒有資料遺失。第一次build因舊五頁課表引用page=None被攔，改實際PDF第1頁後原子重建成功。新增JSONcollector二例2 passed；初次聚焦13 passed／9 failed是新增千葉測試誤放東京科學三條斷言，已移回原Science案例，完整回歸結果續記。2025生活指南92頁目前只讀8頁，剩餘84頁公開可續查，不以此當官方阻塞；各校當期未核欄位與157未整理仍需持續查。
+
+完整中央／條件／來源／completeness四module **188 passed（234.36s）**，包含新增JSON原件變更兩例、千葉初次健康／語言分流／COE／閉宿與三保險資料、九組錄取與住宿狀態。OpenAPI .5快照check與diff檢查通過。最新唯讀main f6ad1b8、CCU0e70dbf、TKU61659fe，共享13／14檔交集已更新；只更新遠端追蹤參照及合併點檔，沒有切換或更動其他工作分支。手機內容結果續記。
+
+390px真實Chromium初次 **1 passed（62.94s）**；逐圖發現confidential應為「保密」而非密封、off-white應為「乳白」，僅修精準譯名與学生文字後API/source **2 passed（10.05s）**。第二次手機在來源非同步載入前的5s等待失敗，未到內容，保留53.37s失敗紀錄；等實際workflow載入並給來源60s後 **1 passed（71.64s）**，未強制點擊或改遮罩。新版三張畫面全逐圖核對並追蹤：[初次醫師健康表](ncu-browser-evidence/ncu-chiba-initial-health-390.png)、[保險原圖閱讀狀態](ncu-browser-evidence/ncu-chiba-insurance-visual-390.png)、[AY2025 A/B保障及費率](ncu-browser-evidence/ncu-chiba-insurance-plan-390.png)。同樣實際展開語言三條件件、COE錄取後、關閉宿舍與健康Word原文，頁面無JS error及390px溢出。當前CGU154／NTPU409／NTU288共851流程再與未修改main匯出、同schema含重複multiset逐值比對 **差異0**。
+
+後續閱讀2025生活手冊原PDF54–63頁十頁（支援／學生分類／移民程序），與原8頁共18/92、剩74頁。舊school40h工時／6000費與延居所需hokensho不当116新規；全92頁仍隔離问答。PDF60頁另連政府special-reentry930002122.pdf，web與本地原件皆403，已新增獨立失敗紀錄；總497來源／71錯誤、57partial／157未整理與0全116不變。先前188完整module為496資料／8頁紀錄時通過，這筆原件失敗与閱讀範圍補充後僅再跑必要API/source案例，結果續記，不冒稱全部公開指南已讀。
+
+補充後API/source **2 passed（9.80s）**；續接tool回Unknown process id後，18:46:17 UTC立即最小healthcheck確認pwd/date/Git、HEAD0b10d31、變更與落盤測試日誌完整。屬工具無法續接已完成程序，未證明環境重啟；沒有遺失資料或重跑已通過重型測試。OpenAPI及diff結果另讀落盤／退出狀態確認。

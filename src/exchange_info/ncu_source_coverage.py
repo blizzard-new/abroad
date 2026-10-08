@@ -67,7 +67,7 @@ def attach_public_field_excerpt(source: dict, excerpt: dict) -> None:
         return
     if not source.get("sha256") or excerpt.get("source_sha256") != source["sha256"]:
         source["pages"] = []
-        source["error"] = "已填範例原件已變更，須重核必要欄位摘錄；不複製個資。"
+        source["error"] = "原件已變更，須重核公開欄位摘錄；不沿用舊摘錄或複製個資。"
         return
     source["pages"] = excerpt.get("public_pages") or [
         {"page": None, "text": excerpt["public_field_excerpt"]}

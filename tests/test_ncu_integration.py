@@ -1553,3 +1553,87 @@ def test_science_tokyo_original_forms_examples_years_and_partial_guide_read_are_
     course=sources['host-science-course-ug2026']
     assert course['content_status']['all_pages_read'] and len(course['pages'])==5
     assert 'Medical and Welfare' in course['pages'][0]['text']
+
+
+def test_chiba_initial_health_language_alternatives_and_later_coe_are_separate(tmp_path):
+    partner = next(p for p in fetch_ncu_partner_universities() if 'Chiba University' in p.school_name)
+    assert partner.quota is None and partner.degree_levels is None
+    client = TestClient(create_app(tmp_path))
+    workflow = client.get('/application-workflow', params={'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116'}).json()
+    steps = {s['rule_id']: s for s in workflow['steps']}
+    initial = steps['ncu-127-host-apply']
+    assert len(initial['document_requirements']) == 8
+    health = next(d for d in initial['document_requirements'] if '健康' in d['name'])
+    assert '初次申請即繳' in health['name'] and health['signatures'] == ['醫師']
+    assert health['official_form_url'].endswith('04-7.Certificate-of-Health.docx')
+    assert not any('COE' in d['name'] or '租屋' in d['name'] or 'checklist' in d['name'] for d in initial['document_requirements'])
+    assert len(steps['ncu-116-1-home-3']['document_requirements']) == 7
+    assert steps['ncu-127-host-mother-nomination']['order'] < steps['ncu-127-host-language-branches']['order'] < initial['order']
+    language = steps['ncu-127-host-language-branches']
+    assert len(language['document_requirements']) == 3 and '英或日擇一' in language['summary']
+    later = steps['ncu-127-host-post-selection-coe']
+    assert later['order'] > initial['order'] and len(later['document_requirements']) == 1
+    assert '未取得' in later['summary'] and not later['document_requirements'][0]['official_form_url']
+    guarantee = steps['ncu-127-host-institutional-guarantor']['document_requirements'][0]
+    assert guarantee['signatures'] == ['學術指導教師'] and guarantee['stamps'] == ['學術指導教師']
+    arrival = steps['ncu-116-1-home-8']['order']; returned = steps['ncu-116-1-home-9']['order']
+    for suffix in ['local-registration-insurance', 'temporary-travel', 'final-departure']:
+        step = steps['ncu-127-host-' + suffix]
+        assert arrival < step['order'] < returned and not step['document_requirements']
+    assert [s['order'] for s in workflow['steps']] == list(range(1, len(steps) + 1))
+    assert workflow['review_status'] == 'pending_review' and workflow['published_at'] is None
+    assert not any(s['deadline_reminder_eligible'] for s in workflow['steps'])
+    audit = ncu_field_audit(partner.school_name)
+    assert '4名上2／下2' in audit['fields']['eligibility']['note'] and 'Graduate checkbox' in audit['fields']['eligibility']['note']
+    assert '50小時與英日擇一' in audit['fields']['language']['note']
+    assert '母校英語教師' in audit['fields']['language']['note'] and '中央home正式語檢' in audit['fields']['language']['note']
+    assert '春2026/8/28' in audit['fields']['host_deadline']['note'] and '皆已過' in audit['fields']['host_deadline']['note']
+    assert '2027秋／2028春' in audit['fields']['host_deadline']['unresolved']
+    assert 'Term6' in audit['fields']['courses']['note'] and '每semester兩個連續terms' in audit['fields']['courses']['note']
+    assert '含租金' in audit['fields']['cost']['note'] and '17920' in audit['fields']['cost']['note']
+    assert '已2025/9關閉' in audit['fields']['housing']['note'] and '校區附近公寓' in audit['fields']['housing']['note']
+    assert 'A沒有傷病醫療費' in audit['fields']['insurance']['note'] and 'B一年11500' in audit['fields']['insurance']['note']
+    assert 'self-check明寫不需提交' in audit['fields']['arrival']['note']
+    catalog = client.get('/application-center/catalog', params={'school': 'NCU', 'target_school': partner.school_name, 'academic_year': '116'}).json()
+    scoped = [d for d in catalog['items'] if d['applicability']]
+    assert len(scoped) == 6 and all(d['applicability']['status'] == 'needs_confirmation' and not d['download_available'] for d in scoped)
+    assert all(not d['download_available'] for d in catalog['items'] if d['name'] in {x['name'] for x in initial['document_requirements']})
+
+
+def test_chiba_native_years_partial_read_and_complete_insurance_visual_evidence():
+    from exchange_info.ncu_source_coverage import indexable_source_text
+    sources = {s['id']: s for s in json.loads(gzip.decompress((BUNDLE / 'source-evidence.json.gz').read_bytes()))}
+    current = sources['host-chiba-outline2026-host']
+    assert len(current['pages']) == 33 and current['content_status']['all_pages_read']
+    assert current['content_status']['visual_reviewed_page_count'] == 2
+    assert current['visual_review']['pdf_pages_reviewed'] == [16, 31]
+    assert sources['host-chiba-outline2026-cau']['sha256'] == current['sha256']
+    assert 'YES' in current['pages'][15]['text'] and 'Are you a native' not in indexable_source_text(current)
+    old = sources['host-chiba-outline2026-host-alternate']
+    assert '2024' in old['pages'][0]['text'] and old['reading_review']['pages_reviewed'] == [1]
+    assert not old['content_status']['all_pages_read']
+    handbook = sources['host-chiba-student-handbook2025']
+    assert len(handbook['pages']) == 92 and len(handbook['reading_review']['pages_reviewed']) == 18
+    assert not handbook['content_status']['all_pages_read']
+    insurance = sources['host-chiba-insurance-pamphlet']
+    assert len(insurance['pages']) == 15 and insurance['content_status']['text_page_count'] == 1
+    assert insurance['content_status']['all_pages_read'] and insurance['content_status']['visual_reviewed_page_count'] == 15
+    assert insurance['content_status']['ocr_status'] == 'not_performed'
+    assert len(insurance['visual_review']['artifacts']) == 15
+    for ident in ['host-chiba-health2026-ugm', 'host-chiba-en-certificate2026-ugm', 'host-chiba-ja-certificate2026-ugm']:
+        form = sources[ident]
+        assert form['pages'][0]['page'] is None and form['content_status']['all_pages_read']
+        assert form['document_format'] == 'docx_no_fixed_pdf_pages'
+    assert sources['host-chiba-course2026-cie-probe']['status'] == 404
+    assert sources['government-japan-isa-special-reentry-new']['status'] == 403
+    assert not sources['government-japan-isa-special-reentry-new']['pages']
+    assert sources['government-japan-isa-special-reentry-pdf']['status'] == 403
+    assert not sources['government-japan-isa-special-reentry-pdf']['content_status']['downloaded']
+    partner = sources['host-science-partner-resultlist']
+    assert partner['pages'][0]['page'] is None and partner['source_excerpt_only']
+    assert partner['document_format'] == 'json_no_pdf_pages' and not partner['content_status']['all_pages_read']
+    row = json.loads(partner['pages'][0]['text'])
+    assert row['name'] == 'National Central University' and row['exchange02'] == row['exchange03'] == 't'
+    science = ncu_field_audit('東京科學大學 Institute of Science Tokyo')
+    assert '未核對中央這列' not in science['fields']['eligibility']['unresolved']
+    assert '不是262伙伴全文已讀' in science['fields']['tuition']['note']

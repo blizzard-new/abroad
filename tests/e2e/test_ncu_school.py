@@ -927,3 +927,58 @@ def test_ncu_science_tokyo_track_coe_health_and_2027_tiec_fee_reach_mobile_conte
     expect(housing).to_contain_text('現連2026表不到116')
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
     assert not errors
+
+
+def test_ncu_chiba_initial_health_language_choices_closed_dorm_and_insurance_reach_mobile_ui(page, live_server):
+    page.set_viewport_size({'width': 390, 'height': 956})
+    page.emulate_media(reduced_motion='reduce')
+    errors = []; page.on('pageerror', lambda error: errors.append(str(error)))
+    enter_public_site(page, live_server, 'partners')
+    expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+    open_navigation(page); page.locator('#school-switcher').click()
+    page.locator('[data-home-school="國立中央大學"]').click(); page.locator('#confirm-school').click()
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
+    if page.locator('#glass-menu-toggle').get_attribute('aria-expanded') == 'true':
+        page.locator('#glass-menu-toggle').click()
+    page.locator('[data-partner-view="list"]').click(); page.locator('#partner-search').fill('千葉')
+    expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+    page.locator('#partner-table .partner-card > summary').first.click()
+    page.locator('#partner-table .school-detail-trigger:visible').first.click()
+    expect(page.locator('#detail-overview .partner-student-summary li').filter(has_text='至少二年級').first).to_be_visible()
+    expect(page.locator('#detail-application .workflow-step').first).to_be_attached(timeout=60_000)
+    page.locator('#ncu-source-audit > summary').click()
+    insurance = page.locator('#ncu-source-audit-body > details').filter(has_text='千葉現連入學保險原圖15頁').first
+    expect(insurance.locator(':scope > summary')).to_contain_text('15頁已視覺查核', timeout=60_000)
+    insurance.locator(':scope > summary').click()
+    expect(insurance).to_contain_text('AY2025 A／B方案，非116新價')
+    expect(insurance).to_contain_text('A不含醫療')
+    out = Path('/tmp/ncu-audit/browser'); out.mkdir(parents=True, exist_ok=True)
+    insurance.locator(':scope > summary').scroll_into_view_if_needed()
+    page.screenshot(path=str(out / 'ncu-chiba-insurance-visual-390.png'))
+    health_source = page.locator('#ncu-source-audit-body > details').filter(has_text='04-7.Certificate-of-Health.docx').first
+    health_source.locator(':scope > summary').click()
+    health_source.locator('details > summary').first.click()
+    expect(health_source.locator('pre').first).to_contain_text('X')
+    expect(health_source.locator('details > summary').first).to_contain_text('無固定PDF頁碼')
+    page.locator('#detail-tab-life').click(); page.locator('#detail-life .life-official-guide > summary').click()
+    housing = page.locator('#destination-official-content li').filter(has_text='已2025/9關閉').first
+    expect(housing).to_be_visible(); expect(housing).to_contain_text('校區附近公寓')
+    fee = page.locator('#destination-official-content li').filter(has_text='B一年11500').first
+    expect(fee).to_be_visible(); expect(fee).to_contain_text('A沒有傷病醫療費')
+    expect(fee).to_contain_text('至少4月')
+    fee.scroll_into_view_if_needed(); page.screenshot(path=str(out / 'ncu-chiba-insurance-plan-390.png'))
+    page.locator('#detail-tab-application').click()
+    def step(title):
+        return page.locator('#detail-application .workflow-step').filter(has=page.locator('summary').filter(has_text=title)).first
+    language = step('僅J-PAC：50小時日語另必須'); language.locator(':scope > summary').click()
+    expect(language).to_contain_text('英或日擇一')
+    expect(language.locator('.workflow-documents > li')).to_have_count(3)
+    initial = step('核對外校當期文件並依通知申請'); initial.locator(':scope > summary').click()
+    expect(initial.locator('.workflow-documents > li')).to_have_count(8)
+    health = initial.get_by_text('初次申請即繳醫師健康指定表', exact=False).last
+    expect(health).to_be_visible(); expect(health).to_contain_text('胸部X光')
+    health.scroll_into_view_if_needed(); page.screenshot(path=str(out / 'ncu-chiba-initial-health-390.png'))
+    coe = step('僅J-PAC錄取後：依host另通知COE資料包'); coe.locator(':scope > summary').click()
+    expect(coe).to_contain_text('當期空白表、財力清單與金額未取得')
+    assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
+    assert not errors

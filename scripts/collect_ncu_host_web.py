@@ -56,7 +56,13 @@ def fetch(spec):
             raise ValueError("公開下载回應不是PDF原件；不當成文件已取得或登入限定。")
         if expected_format == "docx" and not response.content.startswith(b"PK"):
             raise ValueError("公開下載回應不是Word原件；不當成文件已取得或登入限定。")
-        if response.content.startswith(b"%PDF"):
+        if expected_format == "json":
+            # Public partner search data is an original JSON document, not an
+            # HTML page. Validate its bytes before applying any reviewed excerpt.
+            json.loads(response.content)
+            result["pages"] = [{"page": None, "text": response.content.decode("utf-8-sig")}]
+            result["document_format"] = "json_no_pdf_pages"
+        elif response.content.startswith(b"%PDF"):
             reader = PdfReader(io.BytesIO(response.content))
             result["pages"] = [
                 {"page": i + 1, "text": p.extract_text()}
@@ -249,7 +255,7 @@ def fetch(spec):
             result["pages"] = []
             if excerpt["source_sha256"] != result["sha256"]:
                 raise ValueError(
-                    "已填範例原件已變更，須先重核必要欄位摘錄；不複製個資。"
+                    "原件已變更，須先重核公開欄位摘錄；不沿用舊摘錄或複製個資。"
                 )
             result["pages"] = excerpt.get("public_pages") or [{"page": None, "text": excerpt["public_field_excerpt"]}]
             result["source_excerpt_only"] = True

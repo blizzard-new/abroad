@@ -223,3 +223,25 @@ def test_science_tokyo_track_risk_and_tiec_conditions_are_not_inferred_from_save
     assert any('YSEP非建築' in r.note for r in scoped)
     assert any('All students' in r.note for r in scoped)
     assert any('一般校內住宿或錄取不代表TIEC' in r.note for r in scoped)
+
+
+@pytest.mark.parametrize('admission', ['unknown', 'not_accepted', 'accepted'])
+@pytest.mark.parametrize('housing', ['unknown', 'on_campus', 'off_campus'])
+def test_chiba_language_coe_and_guarantor_scope_is_not_inferred_from_saved_state(admission, housing):
+    school = '千葉大學 Chiba University'
+    workflow = next(w for w in storage.load_bundled_application_workflows() if w.home_university == NCU and w.school_name == school)
+    state = PartnerDocumentPreparationState(host_admission_status=admission, housing_choice=housing)
+    scoped = []
+    for step in workflow.steps:
+        for doc in step.document_requirements:
+            result = document_applicability(NCU, school, doc, state)
+            if result:
+                scoped.append(result)
+                assert result.status == 'needs_confirmation' and not result.current_applicability_verified
+                assert result.source_urls and document_applicability('國立臺灣大學', school, doc, state) is None
+    assert len(scoped) == 6
+    assert any('英或日擇一' in item.note for item in scoped)
+    assert any('空白表未取得' in item.note for item in scoped)
+    initial = next(s for s in workflow.steps if s.rule_id == 'ncu-127-host-apply')
+    assert any('初次申請即繳' in d.name for d in initial.document_requirements)
+    assert all(document_applicability(NCU, school, d, state) is None for d in initial.document_requirements)

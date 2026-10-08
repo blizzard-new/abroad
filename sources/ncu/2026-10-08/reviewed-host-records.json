@@ -15266,7 +15266,8 @@
       "government-japan-jasso-health-insurance",
       "government-japan-mhlw-medicine-current",
       "government-japan-mhlw-medicine-qa",
-      "government-japan-mofa-student-visa"
+      "government-japan-mofa-student-visa",
+      "host-science-partner-resultlist"
     ],
     "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。",
     "fields": {
@@ -15325,7 +15326,8 @@
       "eligibility": {
         "points": [
           "中央115表明載限115-2，3名不是116名額或當期未開放。host校級互免協議的ACAP：到校UG至少完成1年、MA／DR；YSEP：UG至少完成2.5年、MA／DR。院級、付費其他交換、非伙伴visiting、CAMPUS Asia／夏冬專案各自範圍，不能混成此兩track。",
-          "ACAP依課程計畫由校方指定教師，申請前不要求直接找教授；申請截止後才向已指定教師問候確認。YSEP非建築要申請前取得希望教授同意，建築反而不得自行聯絡、由校方安排。Innovation Sciences目前ACAP不收，YSEP需先向承辦確認，不能因名稱相近一律拒收。兩track均不接醫／牙／健康照護學院，不以課名含Medical或Medicine作regex封鎖。"
+          "ACAP依課程計畫由校方指定教師，申請前不要求直接找教授；申請截止後才向已指定教師問候確認。YSEP非建築要申請前取得希望教授同意，建築反而不得自行聯絡、由校方安排。Innovation Sciences目前ACAP不收，YSEP需先向承辦確認，不能因名稱相近一律拒收。兩track均不接醫／牙／健康照護學院，不以課名含Medical或Medicine作regex封鎖。",
+          "2026/10官方伙伴原始JSON已核對唯一中央列：type01校級、exchange02學生交流／exchange03免學費皆t，另讀官方JS與搜尋控制對應。僅中央1列公開摘錄、不是262伙伴全文已讀；協議2007.10締結不代表116名額、當期接收或個人免學費核准。"
         ],
         "sources": [
           {
@@ -15347,9 +15349,17 @@
           {
             "id": "1_jNWLlS-y-ndrAXwzLiScNbhrcN6I7Hh",
             "page": 2
+          },
+          {
+            "id": "host-science-partner-resultlist",
+            "page": null
+          },
+          {
+            "id": "host-science-agreement-list",
+            "page": null
           }
         ],
-        "unresolved": "116中央開放semester／學制、當期互免協議／quota、系所容量、建築例外與YSEP接收研究室仍待核准；現行伙伴頁僅抽到搜尋控制，未核對中央這列。"
+        "unresolved": "116中央開放semester／學制、当期互免協議續效／quota、系所容量、建築例外與YSEP接收研究室待核准；伙伴中央身分與互免標记已核，未證明116個人可申請。"
       },
       "language": {
         "points": [
@@ -15501,7 +15511,8 @@
       },
       "tuition": {
         "points": [
-          "符合校級互免協議的ACAP／YSEP免host申請、入學及學費、母校仍繳；其他付費交換／visiting另料金，不把2023FAQ9800／84600／29700月套此兩track。JASSO80000JPY補助需選定且名額有限，非住宿或全生活費保證。"
+          "符合校級互免協議的ACAP／YSEP免host申請、入學及學費、母校仍繳；其他付費交換／visiting另料金，不把2023FAQ9800／84600／29700月套此兩track。JASSO80000JPY補助需選定且名額有限，非住宿或全生活費保證。",
+          "2026/10官方伙伴原始JSON已核對唯一中央列：type01校級、exchange02學生交流／exchange03免學費皆t，另讀官方JS與搜尋控制對應。僅中央1列公開摘錄、不是262伙伴全文已讀；協議2007.10締結不代表116名額、當期接收或個人免學費核准。"
         ],
         "sources": [
           {
@@ -15514,6 +15525,14 @@
           },
           {
             "id": "host-science-non-degree-index",
+            "page": null
+          },
+          {
+            "id": "host-science-partner-resultlist",
+            "page": null
+          },
+          {
+            "id": "host-science-agreement-list",
             "page": null
           }
         ],
@@ -16124,6 +16143,1092 @@
         "timing": "實際暫離日本前（個人在留／116新規待核）",
         "phase": "交換期間",
         "responsible_party": "學生與接收單位",
+        "position": "before_home_return"
+      }
+    ]
+  },
+  "ncu-127": {
+    "city": "千葉縣千葉市西千葉（J-PAC）；Faculty Direct依學院可能其他校區",
+    "source_ids": [
+      "host-chiba-jpac-ja",
+      "host-chiba-jpac-en",
+      "host-chiba-student-exchange-index",
+      "host-chiba-guidance",
+      "host-chiba-engineering",
+      "host-chiba-housing-index",
+      "host-chiba-housing-search",
+      "host-chiba-jpac-current-linked-outline",
+      "host-chiba-outline2026-host",
+      "host-chiba-outline2026-host-alternate",
+      "host-chiba-factsheet2026-cau",
+      "host-chiba-outline2026-cau",
+      "host-chiba-ugm-spring2027",
+      "host-chiba-ugm-2026-2027",
+      "host-chiba-procedure",
+      "host-chiba-arrival-procedures2024",
+      "host-chiba-student-handbook2025",
+      "host-chiba-calendar",
+      "host-chiba-cost",
+      "host-chiba-student-insurance",
+      "host-chiba-nhi",
+      "host-chiba-bank",
+      "host-chiba-visa",
+      "host-chiba-reentry",
+      "host-chiba-departure",
+      "host-chiba-dormitory-closed",
+      "host-chiba-short-housing",
+      "host-chiba-guarantor",
+      "host-chiba-housing-moving",
+      "host-chiba-isd-access",
+      "host-chiba-campus-access",
+      "host-chiba-course-list2025",
+      "host-chiba-factsheet2026-ugm",
+      "host-chiba-checklist2026-ugm",
+      "host-chiba-course-information2026-ugm",
+      "host-chiba-deadlines2026-ugm",
+      "host-chiba-application2026-ugm",
+      "host-chiba-plan2026-ugm",
+      "host-chiba-reference2026-ugm",
+      "host-chiba-ja-certificate2026-ugm",
+      "host-chiba-emergency2026-ugm",
+      "host-chiba-en-certificate2026-ugm",
+      "host-chiba-health2026-ugm",
+      "host-chiba-insurance-pamphlet",
+      "host-chiba-vaccination-check",
+      "host-chiba-vaccination-note",
+      "host-chiba-after-procedures",
+      "host-chiba-city-counter-letter",
+      "host-chiba-ward-locations",
+      "host-chiba-campus-access-route",
+      "host-chiba-factsheet2026-cau-later",
+      "host-chiba-course2026-cie-probe",
+      "government-japan-isa-special-reentry-new",
+      "government-chiba-city-nhi2026-card",
+      "government-japan-pension-enrollment",
+      "government-japan-pension-exemption",
+      "government-japan-pension-contribution2026",
+      "1LftaaM-nHa80NZgA88WJvO7fKKio-bkF",
+      "1Jrf5MU1S6JaNG5QGfVxGwzZabaAVtcxQ",
+      "1LOewSEJ2O6JJHCSpZ9dU9PcyKNnb12CF",
+      "government-japan-koryu-taiwan-coe",
+      "government-japan-koryu-visa-mandarin-blank",
+      "government-japan-koryu-forms-index",
+      "government-japan-koryu-fee-image-1",
+      "government-japan-mhlw-medicine-current",
+      "government-japan-mhlw-medicine-qa",
+      "government-japan-jasso-health-insurance",
+      "government-japan-koryu-visa-english-blank",
+      "government-japan-mofa-student-visa",
+      "government-japan-isa-special-reentry-pdf"
+    ],
+    "applicability": "中央115表4名（上2／下2）且限大學部，皆非116名額。千葉新J-PAC 2026–27原件33頁已讀，UG單一program與Faculty Direct分開；2026–27期限皆過期。116開放track、提名／表單／住宿與保險新價未核。",
+    "fields": {
+      "city": {
+        "points": [
+          "J-PAC在西千葉主校區，通常屬國際教養學部；千葉縣另有亥鼻／松戶／柏之葉、東京墨田衛星校區。Faculty Direct接收系所才決定實際校區，不把五個校區當J-PAC可任選。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 4
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 7
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 18
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 24
+          },
+          {
+            "id": "host-chiba-campus-access",
+            "page": null
+          }
+        ],
+        "unresolved": "116接收track／學院、實際住所與校區尚未核實。"
+      },
+      "transport": {
+        "points": [
+          "西千葉南門JR西千葉站步行2分、正門京成綠台7分、北門單軌天台10分；其他校區需按學院安排。2026–27手冊寫成田約45分／羽田約90分列車、factsheet概述雙機場約1小時，路線与方式不同，不當接機或到校deadline。",
+          "2025生活手冊選讀PDF79頁：科目等履修生不享通學定期，101km以上20%學割限degree學生。J-PAC實際學生身分與通學證明須由學院及運輸商核，不能套degree折扣；班次／票價未核。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-campus-access-route",
+            "page": null
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 4
+          },
+          {
+            "id": "host-chiba-factsheet2026-ugm",
+            "page": 1
+          },
+          {
+            "id": "host-chiba-student-handbook2025",
+            "page": 79
+          }
+        ],
+        "unresolved": "116機場路線圖／新票價、學院集合時間、J-PAC通學資格與接機服務未完整核對。"
+      },
+      "eligibility": {
+        "points": [
+          "中央115表歷史4名上2／下2、限大學部，不代表116開放或零名額。現J-PAC僅UG，申請時至少二年級、有校級交流協議、交換後返母校所在國；不限日本語／日本研究主修，2025舊雙track拆分不可沿用。",
+          "Faculty Direct是另一路：UG／grad深化專業，研究生至少先完成一semester、各學院另訂條件。2026申請書雖有Graduate checkbox、UGM文章也稱UG/grad，都不能覆蓋J-PAC官方UG範圍或中央115UG限制。新33頁英文7頁仍殘留兩舊course名稱、日文22頁已無，保留版本差異不提供舊兩track選單。",
+          "2026factsheet從2021起五年交流互惠可能調整接收數，為校方選考考量、非中央確定名額；2025舊表從2020起及March31接受說明不當新host截止。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-jpac-ja",
+            "page": null
+          },
+          {
+            "id": "host-chiba-jpac-en",
+            "page": null
+          },
+          {
+            "id": "host-chiba-student-exchange-index",
+            "page": null
+          },
+          {
+            "id": "host-chiba-application2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 6
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 7
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 14
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 22
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 29
+          },
+          {
+            "id": "host-chiba-factsheet2026-ugm",
+            "page": 2
+          },
+          {
+            "id": "host-chiba-factsheet2026-ugm",
+            "page": 3
+          },
+          {
+            "id": "host-chiba-factsheet2026-ugm",
+            "page": 4
+          },
+          {
+            "id": "1LftaaM-nHa80NZgA88WJvO7fKKio-bkF",
+            "page": 4
+          }
+        ],
+        "unresolved": "116中央實際開放J-PAC／Faculty Direct、學制／系所與互惠接收數仍待两校確認；表單可勾研究生或學校名稱並不代表接收資格已確認。"
+      },
+      "language": {
+        "points": [
+          "J-PAC申請時必須已學日語至少50小時，另滿足英語CEFR B2／TOEFL iBT72／IELTS5.5以上，或日語JLPT N2／CEFR B2以上；50小時與英日擇一是兩個條件，不因英語母語或日語強而自動免50。申請書可填機構／自學，中央未標年附件舊稱recognized institution，當期50小時認定待核。",
+          "英語分流：native／semi-native在申請書勾選；其他有正式iBT／IELTS合規成績則交，無則母校英語教師指定證明。日語分流：已過N1/N2交結果及成績、否則日語教師指定證明。英或日擇一、不要求兩套皆交。另曾在教育機構學日語者無論程度須日語教師證明，推薦教師不同僅建議。",
+          "原圖英語寫over CEFR B2、日文與網頁B2以上；申請書英語國家大學免正式score文字與母語圖範圍不同，不以中央英授／國籍自動免。host准JLPT紙本未到先附網站結果，中央home正式語檢不接受截圖／補繳仍另外必備。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-jpac-ja",
+            "page": null
+          },
+          {
+            "id": "host-chiba-jpac-en",
+            "page": null
+          },
+          {
+            "id": "host-chiba-checklist2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-application2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-ja-certificate2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-en-certificate2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 14
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 15
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 16
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 29
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 30
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 31
+          },
+          {
+            "id": "1Jrf5MU1S6JaNG5QGfVxGwzZabaAVtcxQ",
+            "page": 1
+          }
+        ],
+        "unresolved": "116門檻／50小時認定、B2邊界、母語及教師替代證明接受範圍、兩校語檢有效期仍待核，平台不作數值自動通過。"
+      },
+      "host_documents": {
+        "points": [
+          "J-PAC共用八件：2026–27申請書、計畫、推薦、英文成績與評分、緊急聯絡、健康表、護照頁、申請書上照片；語言條件另分流。每類1份、每學生全部檔放一資料夾，由母校承辦email納包，不要求單一PDF或必用zip。checklist明寫不用提交，不列第九件。",
+          "申請書本人簽日期、護照英文名及片假名；計畫約一頁、日語≥N2或B2用日文，說明專業／職涯與具體領域，不能只學日語。推薦教師認識至少一年、英文或日文typed及簽日期，confidential直接交母校；不同於語言教師僅preferable。",
+          "緊急表本人簽同意，兩人必填：熟悉申請人的母校指導教師／國際處職員及親屬，先取得聯絡人同意；日本聯絡人僅如有，不要強制三人或聯絡人親簽。health初次必繳，醫師胸X光日期／片號／肺部與整體評估、簽名日期；未明示統一三月內檢查，不能套Science入學前健康表。照片近三月正面白／乳白背景貼表，不用UGM自己三張3×4照片。",
+          "七份Word空白表與checklist／deadline／course信息原生全文已讀，沒有固定PDF頁碼；日語教師指定表須日文並由教師簽名，英語證明教師簽；其他文件原則EN或JA，緊急表語言欄另允中文。Faculty Direct、COE錄取後、租屋保證另程序未取得全套。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 15
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 16
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 17
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 30
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 31
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 32
+          },
+          {
+            "id": "host-chiba-checklist2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-application2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-plan2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-reference2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-ja-certificate2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-en-certificate2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-emergency2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-health2026-ugm",
+            "page": null
+          }
+        ],
+        "unresolved": "116受邀系統、母校提名sheet、當期最新七表與完整Faculty Direct包尚未核實。母校完成提名不代表外校文件全部齊備。"
+      },
+      "host_deadline": {
+        "points": [
+          "2026–27母校提名：秋2026/2/13、春2026/8/28；全套母校email申請：秋2/27、春9/11，查核10/8皆已過。UGM自己的2/1／8/14／9/2不是千葉或中央期限，其2026文章殘留Fall2023也保留為矛盾。Faculty Direct各學院另訂，不能套J-PAC。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-deadlines2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-factsheet2026-ugm",
+            "page": 3
+          },
+          {
+            "id": "host-chiba-factsheet2026-ugm",
+            "page": 4
+          }
+        ],
+        "unresolved": "2027秋／2028春提名及host申請deadline／時區、最新nomination sheet未找到；不稱官方尚未公告，不生成116提醒。"
+      },
+      "study_period": {
+        "points": [
+          "J-PAC三期：Oct–次年Aug、Oct–次年Feb、Apr–Aug，原則不可更改；中央舊一頁Spring MAR–AUG不同，不沿用。2026–27手冊2026/10/1開課、12/2Term5、2027/2/2離校休假，春季只寫4月初／6月／8月，沒有116新日程。選課每semester兩個連續Term，Term6春假另計。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 6
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 11
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 27
+          },
+          {
+            "id": "host-chiba-factsheet2026-ugm",
+            "page": 1
+          },
+          {
+            "id": "host-chiba-factsheet2026-ugm",
+            "page": 4
+          },
+          {
+            "id": "1Jrf5MU1S6JaNG5QGfVxGwzZabaAVtcxQ",
+            "page": 1
+          }
+        ],
+        "unresolved": "116實際交換期、2027–28課曆、報到／迎新／housing起迄未取得；學校degree學期Apr1–Sep30等不能當J-PAC可住房期。"
+      },
+      "courses": {
+        "points": [
+          "每個非春假Term6的term，每週至少7堂；每semester兩個連續terms合計至少10學分，不是每term10或每週7學分。英頁未明寫排除Term6、日文明示，保留範圍差異。其他系專業課依教師許可與先修，不能保證全採認；出發前向中央系所核credit。",
+          "2026–27原件8–10頁課名是2025例，不是全部新開課。2026課程信息：Japanese5xx以下每term至少一門英語或雙語，不是英語20%或全英program。原件仍附「不足50小時可行前線上自學建議」，不能取消申請時50小時強制。CIE另連AY2026 MEXT日本語日本文化研修為不同track，不套J-PAC。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-jpac-ja",
+            "page": null
+          },
+          {
+            "id": "host-chiba-jpac-en",
+            "page": null
+          },
+          {
+            "id": "host-chiba-course-information2026-ugm",
+            "page": null
+          },
+          {
+            "id": "host-chiba-course-list2025",
+            "page": 1
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 7
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 8
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 9
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 10
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 24
+          }
+        ],
+        "unresolved": "2026–27附表被文件提及但最新Course List未找到、猜測URL404不是尚未公告；116課表／syllabus／專業限制及採認待核。"
+      },
+      "tuition": {
+        "points": [
+          "現J-PAC官網及2026–27原件免千葉registration／admission／tuition fee，中央學籍及學費依home規定另繳，教材／住宿／保險不是全免。Faculty Direct依院級交流協議免考試入學學費，不推所有付費研究或訪問方案；工學頁2013獎學金數字不作當期補助。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-jpac-en",
+            "page": null
+          },
+          {
+            "id": "host-chiba-engineering",
+            "page": null
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 6
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 22
+          }
+        ],
+        "unresolved": "116互免協議／接收track、實驗材料等其他校方費、獎學金及接收核准仍待核；不先扣未獲補助。"
+      },
+      "cost": {
+        "points": [
+          "2026–27J-PAC每月約100000JPY含租金、伙食、水電、電話；教材與休閒／旅遊另計，不能再加50000–80000租金重複計算。校方安排公寓月租50000–80000視房型；全年NHI約20000／月約1600均參考、依住址收入核實。",
+          "自行租屋頁未標年、建議至少5倍月租作初期金（押金／禮金／仲介／保證／預付各別），不可把範圍加成確定個人帳單。生活價目明標2024/10不推116。日本年金官方FY2026月17920JPY，20–59及法定身分符合才適用；非degree exchange需申請一般免除／猶予並獲准，不能預設全免或把FY2026費當2027新價。短期交換原則不准打工，至少讀完一Term後例外才可能、仍需資格許可。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 12
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 13
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 28
+          },
+          {
+            "id": "host-chiba-factsheet2026-ugm",
+            "page": 5
+          },
+          {
+            "id": "host-chiba-housing-search",
+            "page": null
+          },
+          {
+            "id": "host-chiba-cost",
+            "page": null
+          },
+          {
+            "id": "government-japan-pension-enrollment",
+            "page": null
+          },
+          {
+            "id": "government-japan-pension-exemption",
+            "page": null
+          },
+          {
+            "id": "government-japan-pension-contribution2026",
+            "page": null
+          }
+        ],
+        "unresolved": "116實際房型／首期金、交通物價、保險與FY2027年金費／個人減免、全期預算及打工资格需續核。"
+      },
+      "housing": {
+        "points": [
+          "International House已2025/9關閉，頁內218宿位與9–17入住舊說明不可沿用。J-PAC2026–27由千葉安排校區附近公寓，與一般國際生「無校內宿舍自行找房」不同；只住到program結束、須速退返國，不因實習可延住。具體housing表與個人回覆截止未找到。",
+          "自行找房可能無家具、原則單人／兩年租約；短住公司與UR均各條件，TOKYObeta雖在短住頁實際要一年以上，不作一semester選項保證。若使用校方機關租屋保證，另加入JEES租屋綜合保障、Apartment Residence Guarantee Request由學術教師簽名及印章，空白需向ISD取得，並非所有J-PAC初次必繳。退租依契約通常至少一月通知、清潔費／押金結算、拍入住損壞紀錄。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-housing-search",
+            "page": null
+          },
+          {
+            "id": "host-chiba-dormitory-closed",
+            "page": null
+          },
+          {
+            "id": "host-chiba-short-housing",
+            "page": null
+          },
+          {
+            "id": "host-chiba-guarantor",
+            "page": null
+          },
+          {
+            "id": "host-chiba-housing-moving",
+            "page": null
+          },
+          {
+            "id": "host-chiba-departure",
+            "page": null
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 12
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 28
+          },
+          {
+            "id": "host-chiba-factsheet2026-ugm",
+            "page": 5
+          }
+        ],
+        "unresolved": "116校方安排住所／家具／首期金、最新住宿表及回覆deadline／違約退宿條款未取得；JEES保證資格與空白表需校內提供，不以一般校內住宿選項自動套用。"
+      },
+      "insurance": {
+        "points": [
+          "J-PAC參考NHI（約1600/月或20000/年）＋Gakkensai約1000/年＋Inbound Futai約1860/年三項必需。校內事故不涵蓋一般疾病，國際生頁A或B依加入期另選。現連15頁保險原圖全文視覺已讀但標AY2025，A一年1860／B一年11500JPY；A沒有傷病醫療費，B醫療需符合NHI且加入至少4月。4月A1030／B6330、6月A1310／B8060均2025參考，不能拿一月最低460估整學期或稱1860有醫療。",
+          "原圖2024/7與11製作、2025/4起期間；逾原預期日才繳，承保從實際繳費次日，不是未付也自動入學日起有保障。既病／牙科／精神／孕產等醫療除外依完整條款，救援也有住院等事件條件，不是全世界全疾病全家探視；母校海外全期保險與到日本前旅險另外確認，未杜撰host初次保單上傳。",
+          "千葉市2026/6/25新制：有MyNumber健保利用者用卡；沒有則資格確認書。資格資訊通知書單獨不能看診。旧校頁hokensho立即發卡／掛號當面收件與市府特定記錄郵寄不同，不推2027發卡日期。資格／減免依實際居住市與收入，不能套千葉市到東京地址。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-student-insurance",
+            "page": null
+          },
+          {
+            "id": "host-chiba-nhi",
+            "page": null
+          },
+          {
+            "id": "government-chiba-city-nhi2026-card",
+            "page": null
+          },
+          {
+            "id": "government-japan-jasso-health-insurance",
+            "page": null
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 13
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 28
+          },
+          {
+            "id": "host-chiba-factsheet2026-ugm",
+            "page": 5
+          },
+          {
+            "id": "host-chiba-insurance-pamphlet",
+            "page": 3
+          },
+          {
+            "id": "host-chiba-insurance-pamphlet",
+            "page": 5
+          },
+          {
+            "id": "host-chiba-insurance-pamphlet",
+            "page": 6
+          },
+          {
+            "id": "host-chiba-insurance-pamphlet",
+            "page": 12
+          },
+          {
+            "id": "host-chiba-insurance-pamphlet",
+            "page": 13
+          },
+          {
+            "id": "host-chiba-insurance-pamphlet",
+            "page": 15
+          }
+        ],
+        "unresolved": "116A/B新保費、實際保期／繳費截止、醫療補足與個人保障、當期NHI證件／收入／地方費待核，2025方案不是保險建議或已完成投保。"
+      },
+      "visa": {
+        "points": [
+          "J-PAC錄取後由host通知母校COE包，秋約八月底／春約二月底送母校只是2026–27年例，不是116初次COE Excel或財力金額；最新COE表／bank清單未取得，不能套Science初次表或廣島480000門檻。入境學生簽證、COE均需政府核准不保證。",
+          "臺灣護照持COE依交流協會五類：護照正本及舊passport、本人簽app、六個月內2吋白照、身份證正本及影本、COE正本／影本或電子印本；代理／未滿14等例外與單雙面差異另核。原費圖2026/7臺灣一般單次3120TWD不保證2027費。暫離日本先告學院，特別再入境一般一年或在留有效期較早，但政府原頁403、完整例外未讀，不能確認個人適用。",
+          "住址以實際居住地辦登記、NHI及20–59歲資格年金，不以校區決定市役所；非degree交流使用一般免除／猶予申請並待批准，不能自動用degree學生納付特例。常用藥依成分量及MHLW個人程序，不套全體都同一報關件。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 17
+          },
+          {
+            "id": "host-chiba-outline2026-host",
+            "page": 32
+          },
+          {
+            "id": "host-chiba-procedure",
+            "page": null
+          },
+          {
+            "id": "government-japan-koryu-taiwan-coe",
+            "page": null
+          },
+          {
+            "id": "government-japan-koryu-forms-index",
+            "page": null
+          },
+          {
+            "id": "government-japan-koryu-fee-image-1",
+            "page": null
+          },
+          {
+            "id": "host-chiba-reentry",
+            "page": null
+          },
+          {
+            "id": "government-japan-isa-special-reentry-new",
+            "page": null
+          },
+          {
+            "id": "government-japan-pension-enrollment",
+            "page": null
+          },
+          {
+            "id": "government-japan-pension-exemption",
+            "page": null
+          },
+          {
+            "id": "government-japan-mhlw-medicine-current",
+            "page": null
+          },
+          {
+            "id": "government-japan-koryu-visa-mandarin-blank",
+            "page": 1
+          },
+          {
+            "id": "government-japan-koryu-visa-mandarin-blank",
+            "page": 2
+          },
+          {
+            "id": "government-japan-mhlw-medicine-qa",
+            "page": 2
+          },
+          {
+            "id": "government-japan-mhlw-medicine-qa",
+            "page": 3
+          },
+          {
+            "id": "host-chiba-student-handbook2025",
+            "page": 60
+          },
+          {
+            "id": "government-japan-isa-special-reentry-pdf",
+            "page": null
+          }
+        ],
+        "unresolved": "116COE邀請清單／效期、最新財力條件、個人簽證管轄／再入境完整範圍、攜藥與居留程序仍待核；沒有送件或對外聯絡。 千葉2025指南另連政府PDF930002122也403，未讀完整原文。"
+      },
+      "arrival": {
+        "points": [
+          "J-PAC迎新由program直接通知，不用一般MEXT／Faculty Direct場次；秋2026說明會與SIM活動截止已過。指定入學前指南錄取後另寄，116到校與報到deadline未取得。可先自查疫苗史，指定self-check明寫不需提交，醫師疫苗安排按个人評估；不能列host mandatory疫苗upload。",
+          "有中長期在留資格的住址登記依14日與實際地址規則，帶在留卡／passport／日文寫的租住地址資料，所在市／區依住所。2026.10窓口協助手紙是參考，明寫今日無需住民票不代表永遠不用；學校入學學生系統、學籍／在留卡資料、銀行開戶各依正式指示。銀行依provider／身份／居留分類，郵局app無passbook、要等待，不保證入境即開成功。",
+          "到校辦NHI／事故與生活保險及年金資格、住所設備照片。暫離需告接收學院及確認再入境，與最终離校分開；最終退租通常一月前、 utilities約兩週前結帳、確定自動扣繳債務完才結清銀行，再按地方程序退出NHI／年金／住址及最終出境卡。2024表4/10或10/10不能生成116提醒，返國中央程序仍另一段。"
+        ],
+        "sources": [
+          {
+            "id": "host-chiba-guidance",
+            "page": null
+          },
+          {
+            "id": "host-chiba-procedure",
+            "page": null
+          },
+          {
+            "id": "host-chiba-bank",
+            "page": null
+          },
+          {
+            "id": "host-chiba-departure",
+            "page": null
+          },
+          {
+            "id": "host-chiba-housing-moving",
+            "page": null
+          },
+          {
+            "id": "host-chiba-reentry",
+            "page": null
+          },
+          {
+            "id": "host-chiba-vaccination-check",
+            "page": 1
+          },
+          {
+            "id": "host-chiba-vaccination-note",
+            "page": 1
+          },
+          {
+            "id": "host-chiba-vaccination-note",
+            "page": 2
+          },
+          {
+            "id": "host-chiba-vaccination-note",
+            "page": 3
+          },
+          {
+            "id": "host-chiba-vaccination-note",
+            "page": 4
+          },
+          {
+            "id": "host-chiba-vaccination-note",
+            "page": 5
+          },
+          {
+            "id": "host-chiba-vaccination-note",
+            "page": 6
+          },
+          {
+            "id": "host-chiba-arrival-procedures2024",
+            "page": 1
+          },
+          {
+            "id": "host-chiba-arrival-procedures2024",
+            "page": 2
+          },
+          {
+            "id": "host-chiba-arrival-procedures2024",
+            "page": 3
+          },
+          {
+            "id": "host-chiba-arrival-procedures2024",
+            "page": 4
+          },
+          {
+            "id": "host-chiba-after-procedures",
+            "page": 1
+          },
+          {
+            "id": "host-chiba-after-procedures",
+            "page": 2
+          },
+          {
+            "id": "host-chiba-after-procedures",
+            "page": 3
+          },
+          {
+            "id": "host-chiba-city-counter-letter",
+            "page": 1
+          },
+          {
+            "id": "host-chiba-ward-locations",
+            "page": 1
+          }
+        ],
+        "unresolved": "116實際迎新／tutor／報到日、銀行全套個人原件、住宿結清／離校表、到校指南剩餘74/92頁與政府再入境完整例外仍未查完；不是全部生活準備完成。"
+      }
+    },
+    "host_documents": [
+      {
+        "name": "J-PAC共用參考：2026–27指定申請書（本人簽名／日期，護照英文名及片假名）",
+        "source_urls": [
+          "https://www.chiba-u.ac.jp/global-edu/files/pdf/20260113_WEB%E7%94%A8PDF_light_J-PAC%202026-2027.pdf",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/05.J-PAC_Check_List_2026-2027.docx",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-1.J-PAC_Application_Forms_2026-2027.docx"
+        ],
+        "needs_confirmation": true,
+        "official_form_url": "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-1.J-PAC_Application_Forms_2026-2027.docx",
+        "signatures": [
+          "申請人"
+        ],
+        "copies_required": 1
+      },
+      {
+        "name": "J-PAC共用參考：指定學習計畫（約一頁，日語≥N2／CEFR B2須日文）",
+        "source_urls": [
+          "https://www.chiba-u.ac.jp/global-edu/files/pdf/20260113_WEB%E7%94%A8PDF_light_J-PAC%202026-2027.pdf",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/05.J-PAC_Check_List_2026-2027.docx",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-2.Plan-of-study.docx"
+        ],
+        "needs_confirmation": true,
+        "official_form_url": "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-2.Plan-of-study.docx",
+        "copies_required": 1
+      },
+      {
+        "name": "J-PAC共用參考：認識申請人至少一年教師之保密推薦表，直接交母校納包",
+        "source_urls": [
+          "https://www.chiba-u.ac.jp/global-edu/files/pdf/20260113_WEB%E7%94%A8PDF_light_J-PAC%202026-2027.pdf",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/05.J-PAC_Check_List_2026-2027.docx",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-3.Letter-of-Reference.docx"
+        ],
+        "needs_confirmation": true,
+        "official_form_url": "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-3.Letter-of-Reference.docx",
+        "signatures": [
+          "推薦教師"
+        ],
+        "copies_required": 1
+      },
+      {
+        "name": "J-PAC共用參考：英文正式成績及評分制度",
+        "source_urls": [
+          "https://www.chiba-u.ac.jp/global-edu/files/pdf/20260113_WEB%E7%94%A8PDF_light_J-PAC%202026-2027.pdf",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/05.J-PAC_Check_List_2026-2027.docx"
+        ],
+        "needs_confirmation": true,
+        "copies_required": 1
+      },
+      {
+        "name": "J-PAC共用參考：緊急聯絡指定表（本人簽同意，母校人士及親屬兩人必填）",
+        "source_urls": [
+          "https://www.chiba-u.ac.jp/global-edu/files/pdf/20260113_WEB%E7%94%A8PDF_light_J-PAC%202026-2027.pdf",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/05.J-PAC_Check_List_2026-2027.docx",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-6.Emergency-Contacts.docx"
+        ],
+        "needs_confirmation": true,
+        "official_form_url": "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-6.Emergency-Contacts.docx",
+        "signatures": [
+          "申請人；兩位聯絡人須先同意但不列聯絡人簽名"
+        ],
+        "copies_required": 1
+      },
+      {
+        "name": "J-PAC共用參考：初次申請即繳醫師健康指定表（含胸部X光與醫師簽名）",
+        "source_urls": [
+          "https://www.chiba-u.ac.jp/global-edu/files/pdf/20260113_WEB%E7%94%A8PDF_light_J-PAC%202026-2027.pdf",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/05.J-PAC_Check_List_2026-2027.docx",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-7.Certificate-of-Health.docx"
+        ],
+        "needs_confirmation": true,
+        "official_form_url": "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-7.Certificate-of-Health.docx",
+        "signatures": [
+          "醫師"
+        ],
+        "copies_required": 1
+      },
+      {
+        "name": "J-PAC共用參考：護照照片／身份頁影本",
+        "source_urls": [
+          "https://www.chiba-u.ac.jp/global-edu/files/pdf/20260113_WEB%E7%94%A8PDF_light_J-PAC%202026-2027.pdf",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/05.J-PAC_Check_List_2026-2027.docx"
+        ],
+        "needs_confirmation": true,
+        "copy_type": "copy",
+        "copies_required": 1
+      },
+      {
+        "name": "J-PAC共用參考：三月內正面白／乳白背景照片一張，貼在申請書",
+        "source_urls": [
+          "https://www.chiba-u.ac.jp/global-edu/files/pdf/20260113_WEB%E7%94%A8PDF_light_J-PAC%202026-2027.pdf",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/05.J-PAC_Check_List_2026-2027.docx",
+          "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-1.J-PAC_Application_Forms_2026-2027.docx"
+        ],
+        "needs_confirmation": true,
+        "copies_required": 1
+      }
+    ],
+    "host_document_stages": [
+      {
+        "id": "mother-nomination",
+        "title": "僅J-PAC受邀提名：中央承辦提交提名表",
+        "field": "host_documents",
+        "document_requirements": [
+          {
+            "name": "僅J-PAC受邀時：母校提名表由中央承辦提交（2026–27清單提及、最新空白表未取得）",
+            "source_urls": [
+              "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/02.J-PAC_Deadline_2026-2027.docx"
+            ],
+            "needs_confirmation": true
+          }
+        ],
+        "summary": "2026–27提名與申請兩截止分開，名單由母校提交；當期空白提名sheet未取得，不列為host文件全部完成。",
+        "timing": "母校提名deadline前（116未取得）",
+        "phase": "甄選與提名",
+        "responsible_party": "中央交換承辦與學生",
+        "position": "before_host_application"
+      },
+      {
+        "id": "language-branches",
+        "title": "僅J-PAC：50小時日語另必須，英語或日語證明依分流",
+        "field": "language",
+        "document_requirements": [
+          {
+            "name": "如曾於教育機構學日語：日本語教師能力證明指定表（無論程度）",
+            "source_urls": [
+              "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/05.J-PAC_Check_List_2026-2027.docx",
+              "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-4.Certificate-of-Japanese-Language-Proficiency-by-a-Japanese-Language-Instructor.docx",
+              "https://www.chiba-u.ac.jp/global-edu/files/pdf/20260113_WEB%E7%94%A8PDF_light_J-PAC%202026-2027.pdf"
+            ],
+            "needs_confirmation": true,
+            "official_form_url": "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-4.Certificate-of-Japanese-Language-Proficiency-by-a-Japanese-Language-Instructor.docx",
+            "signatures": [
+              "日本語教師"
+            ]
+          },
+          {
+            "name": "僅採英語條件且適用：TOEFL／IELTS成績或母校英語教師指定證明（二擇依分流，母語另勾）",
+            "source_urls": [
+              "https://www.chiba-u.ac.jp/global-edu/files/pdf/20260113_WEB%E7%94%A8PDF_light_J-PAC%202026-2027.pdf",
+              "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/05.J-PAC_Check_List_2026-2027.docx",
+              "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-5.English-Proficiency-Certificate.docx",
+              "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-1.J-PAC_Application_Forms_2026-2027.docx"
+            ],
+            "needs_confirmation": true,
+            "official_form_url": "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-5.English-Proficiency-Certificate.docx",
+            "signatures": [
+              "如使用教師替代證明，由母校英語教師簽名"
+            ]
+          },
+          {
+            "name": "僅採日語條件：JLPT N1／N2結果及成績或日語教師指定證明（分流擇適用件）",
+            "source_urls": [
+              "https://www.chiba-u.ac.jp/global-edu/files/pdf/20260113_WEB%E7%94%A8PDF_light_J-PAC%202026-2027.pdf",
+              "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/05.J-PAC_Check_List_2026-2027.docx",
+              "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-4.Certificate-of-Japanese-Language-Proficiency-by-a-Japanese-Language-Instructor.docx"
+            ],
+            "needs_confirmation": true,
+            "official_form_url": "https://oia.ugm.ac.id/wp-content/uploads/sites/326/2026/01/04-4.Certificate-of-Japanese-Language-Proficiency-by-a-Japanese-Language-Instructor.docx",
+            "signatures": [
+              "如使用教師替代證明，由日本語教師簽名"
+            ]
+          }
+        ],
+        "summary": "英或日擇一，不要求兩套皆交；在教育機構學日語另需教師證明、非等於N2人人門檻。母語／B2邊界／自學時數要確認，host網站暫代JLPT不能免中央正式語檢。",
+        "timing": "初次host申請前（116適用先確認）",
+        "phase": "合作校申請",
+        "responsible_party": "學生與語言教師／接收單位",
+        "position": "before_host_application"
+      },
+      {
+        "id": "post-selection-coe",
+        "title": "僅J-PAC錄取後：依host另通知COE資料包",
+        "field": "visa",
+        "document_requirements": [
+          {
+            "name": "僅J-PAC錄取後受通知：另辦COE資料包（當期空白表、財力清單與金額未取得）",
+            "source_urls": [
+              "https://www.chiba-u.ac.jp/global-edu/files/pdf/20260113_WEB%E7%94%A8PDF_light_J-PAC%202026-2027.pdf",
+              "https://www.chiba-u.jp/international/isd/en/procedure/index.html"
+            ],
+            "needs_confirmation": true
+          }
+        ],
+        "summary": "母校收到COE辦理指示才依新清單；初次八件不含COE，最新blank／bank要求／金額未取得，不套Science初次Excel或廣島480000。",
+        "timing": "host選考錄取後，依COE通知deadline",
+        "phase": "行前準備",
+        "responsible_party": "學生與兩校承辦"
+      },
+      {
+        "id": "institutional-guarantor",
+        "title": "僅使用校方租屋保證：另備指導教師簽章請求表",
+        "field": "housing",
+        "document_requirements": [
+          {
+            "name": "僅使用校方租屋保證時：Apartment Residence Guarantee Request（學術指導教師簽名及印章，空白表需向ISD取得）",
+            "source_urls": [
+              "https://www.chiba-u.jp/international/isd/en/housing/cosigner.html"
+            ],
+            "needs_confirmation": true,
+            "signatures": [
+              "學術指導教師"
+            ],
+            "stamps": [
+              "學術指導教師"
+            ]
+          }
+        ],
+        "summary": "需先確認實際房源／保證資格、加入JEES租屋保障與ISD提供空白表；校外租屋或選校內住宿都不自動強制，不是初次八件。",
+        "timing": "確定使用校方租屋保證後、依ISD通知",
+        "phase": "行前準備",
+        "responsible_party": "學生與接收指導教師／ISD"
+      },
+      {
+        "id": "japan-student-visa",
+        "title": "取得COE後依臺灣護照與居住地管轄準備簽證",
+        "field": "visa",
+        "document_requirements": [
+          {
+            "name": "臺灣護照持COE：護照正本及舊護照",
+            "source_urls": [
+              "https://www.koryu.or.jp/tw/visa/taipei/general/detail1/"
+            ],
+            "needs_confirmation": true
+          },
+          {
+            "name": "臺灣護照持COE：本人簽名簽證申請書",
+            "source_urls": [
+              "https://www.koryu.or.jp/tw/visa/taipei/general/detail1/",
+              "https://www.koryu.or.jp/Portals/0/taipei/2023/0317/（繁体字）VISA APPLICATION FORM.PDF",
+              "https://www.koryu.or.jp/tw/visa/taipei/application/"
+            ],
+            "needs_confirmation": true,
+            "official_form_url": "https://www.koryu.or.jp/Portals/0/taipei/2023/0317/（繁体字）VISA APPLICATION FORM.PDF"
+          },
+          {
+            "name": "臺灣護照持COE：六個月內2吋白底照一張",
+            "source_urls": [
+              "https://www.koryu.or.jp/tw/visa/taipei/general/detail1/"
+            ],
+            "needs_confirmation": true,
+            "copies_required": 1
+          },
+          {
+            "name": "臺灣護照持COE：身分證正本及正反影本（未滿14另軌）",
+            "source_urls": [
+              "https://www.koryu.or.jp/tw/visa/taipei/general/detail1/"
+            ],
+            "needs_confirmation": true
+          },
+          {
+            "name": "臺灣護照持COE：COE正本／影本或電子COE印本",
+            "source_urls": [
+              "https://www.koryu.or.jp/tw/visa/taipei/general/detail1/"
+            ],
+            "needs_confirmation": true
+          }
+        ],
+        "summary": "查核日臺灣護照五類；其他護照／管轄、代理與單雙面要求另核，3120TWD僅2026原圖，沒有代填代送。",
+        "timing": "收到COE後且出發前（116新規再核）",
+        "phase": "行前準備",
+        "responsible_party": "學生與簽證受理機構"
+      },
+      {
+        "id": "local-registration-insurance",
+        "title": "抵達後依住所登記、三保險與年金資格辦理",
+        "field": "insurance",
+        "document_requirements": [],
+        "source_urls": [
+          "https://www.chiba-u.jp/international/isd/en/procedure/index.html",
+          "https://www.chiba-u.jp/international/isd/en/living/safetyinfo/policy.html",
+          "https://www.city.chiba.jp/hokenfukushi/iryoeisei/hoken/nenjikoushin.html",
+          "https://www.nenkin.go.jp/international/english/purpose/enroll/index.html",
+          "https://www.nenkin.go.jp/international/english/japanese-system/nationalpension/np_exemption.html"
+        ],
+        "summary": "NHI／Gakkensai／Inbound Futai不同，AY2025 A1860沒有醫療、B11500與至少四月條件；晚繳次日生效。20–59個人年金資格與一般免除需申請批准，不虛構初次host保單上傳。",
+        "timing": "抵達後按資格、實際住址與繳費指示",
+        "phase": "抵達後",
+        "responsible_party": "學生與所在地市役所／接收單位",
+        "position": "before_home_return"
+      },
+      {
+        "id": "temporary-travel",
+        "title": "如交換期間暫離日本：先告學院並確認政府再入境",
+        "field": "visa",
+        "document_requirements": [],
+        "source_urls": [
+          "https://www.chiba-u.jp/international/isd/en/visa/permission.html",
+          "https://www.moj.go.jp/isa/immigration/procedures/minashisainyukoku_00001.html"
+        ],
+        "summary": "暫離與最终出境分開；校方原頁有舊alien card，政府原頁403、完整例外未读，不能當個人入境許可或套別校旅行表。",
+        "timing": "實際暫離日本前（個人適用及116新規待核）",
+        "phase": "交換期間",
+        "responsible_party": "學生與接收學院／政府機構",
+        "position": "before_home_return"
+      },
+      {
+        "id": "final-departure",
+        "title": "program結束前依契約退租、結帳與住所程序",
+        "field": "arrival",
+        "document_requirements": [],
+        "source_urls": [
+          "https://www.chiba-u.ac.jp/global-edu/files/pdf/20260113_WEB%E7%94%A8PDF_light_J-PAC%202026-2027.pdf",
+          "https://www.chiba-u.jp/international/isd/en/preparation.html",
+          "https://www.chiba-u.jp/international/isd/en/housing/moving.html",
+          "https://www.chiba-u.jp/international/isd/en/living/dailylife/health_insurance.html",
+          "https://www.chiba-u.jp/international/isd/en/living/dailylife/banking.html"
+        ],
+        "summary": "校方安排公寓僅program期，不可因實習延住；按契約一月退租通知、約兩週utilities結帳、扣款完才結清銀行及地方NHI／住所／年金程序，最終出境卡不套暫離旅行。",
+        "timing": "program結束前按契約及所在地程序（116日期未核）",
+        "phase": "交換結束",
+        "responsible_party": "學生與房東／地方政府／接收單位",
         "position": "before_home_return"
       }
     ]

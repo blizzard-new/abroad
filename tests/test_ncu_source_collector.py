@@ -12,6 +12,34 @@ import pytest
 
 
 @pytest.mark.parametrize("changed", [False, True])
+def test_public_partner_json_excerpt_is_validated_and_bound_to_original_bytes(tmp_path, monkeypatch, changed):
+    path = Path(__file__).parents[1] / "scripts/collect_ncu_host_web.py"
+    spec = importlib.util.spec_from_file_location("ncu_partner_json_collector_test", path)
+    collector = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(collector)
+    original = b'[{"name":"National Central University","exchange03":"t"}]'
+    pages = [{"page": None, "text": original.decode()}]
+    (tmp_path / "partner-data-public-excerpt.json").write_text(json.dumps({
+        "source_sha256": hashlib.sha256(original).hexdigest(),
+        "public_pages": pages,
+        "note_zh": "Only the identified partner row is reviewed; no quota inferred.",
+    }))
+    monkeypatch.setattr(collector, "OUT", tmp_path)
+    response = SimpleNamespace(status_code=200, ok=True,
+        content=original + (b" " if changed else b""),
+        url="https://example.edu/resultlist.json", headers={"content-type": "application/json"},
+        raise_for_status=lambda: None)
+    monkeypatch.setattr(collector.requests, "get", lambda *a, **k: response)
+    result = collector.fetch({"id": "partner-data", "title": "Public partner data", "url": response.url,
+        "expected_document_format": "json", "requires_public_field_excerpt": True})
+    if changed:
+        assert "原件已變更" in result["error"] and result["pages"] == []
+    else:
+        assert "error" not in result and result["source_excerpt_only"]
+        assert result["pages"] == pages and result["document_format"] == "json_no_pdf_pages"
+
+
+@pytest.mark.parametrize("changed", [False, True])
 @pytest.mark.parametrize("old_excel", [False, True])
 def test_old_office_conversion_is_bound_to_original_bytes(tmp_path, monkeypatch, changed, old_excel):
     path = Path(__file__).parents[1] / "scripts/collect_ncu_host_web.py"
