@@ -74,10 +74,12 @@ def test_overseas_counts_do_not_claim_full_coverage_or_turn_fetches_into_current
         len(matrix) == 104 and sum(bool(row["overseas_fields"]) for row in matrix) == 55
     )
     assert all(row["source_acquisition"] for row in matrix if row["overseas_fields"])
-    for page in (26, 33, 68, 71, 74, 100):
+    for page in (26, 33, 71, 74, 100):
         assert (
             at(page).partner_exchange_details["documents"].status != "verified_current"
         )
+    # HCMUTE's actual 2026/27 incoming PDF was opened in the sixth pass.
+    assert at(68).partner_exchange_details["documents"].status == "verified_current"
     # A misleading file name is not an academic-year check.
     assert (
         "2027-28"

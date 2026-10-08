@@ -323,3 +323,22 @@ UBM、EPITA、SDU的新接收資料顯示替代語言證明／program分流或�
 原始驗證失敗亦保留：新測試初次兩個文字斷言與實際內容措辭不同已修；第一次四校命令引用不存在檔而無測試執行；第一次hash比較與另一次重建重疊失敗，改順序後16份相同。有效結果見`validation.json.fifth_pass`及`ccu-validation-2026-10-08/fifth-pass-*`。
 
 本輪新增範圍僅CCU資料、兩個CCU script及CCU測試/交接證據；沒有新增核心registry/API/UI共用修改。全分支必要共用改動以前述合併清單為準。PR#3維持draft，未merge或部署，接續公開來源查核。
+
+## 第六批：接收政策、實際 XLSX 與複核同步
+
+本批保留104筆名單：52筆官方名額表列可交換但中正三梯次校內申請已截止、49筆未開放參考、3筆名額空白待確認；不把空白當零或新增名額。55筆逐校17欄（935欄）目前292欄當期原文支持、242欄適用年度／條件待確認、40欄其他年度／梯次參考、46欄來源矛盾、314欄缺值、1欄官方明示尚未公告。當期支持只限已列事實，0校宣稱17欄全部完整，研究尚在持續。
+
+第六批續讀千葉商科、HCMUTE、同奈、Presidency、Jena及西波希米亞，另修正Bordeaux、名古屋與AMU。新增69個來源紀錄：65次新匿名公開網頁／檔案取得、4次已保存官方PDF離線重讀；不是69次成功下載。62個本輪新取得來源可讀，3個ZCU錯誤公開索引host回應404保留，再從校方JavaScript文字的公開顯示端點取得真正索引與附件，沒有執行JS或登入。來源總數389，56個取得失敗；7個Anubis、2個HTTP202空回應、1個captcha仍無可讀政策。新增65個欄位映射，其中57個原缺值；3項複核另列 `sixth-pass-parent-corrections.json`。18校有逐欄完整／部分閱讀台帳，均不宣稱公開研究耗盡。
+
+- 千葉商科：N2是一般預期能力，沒造必繳JLPT證書；38,000 JPY/月含水電網但不含餐與床墊，2027價格未核。late-March與April迎新指引相異；2027完整申請guideline由母校承辦接收，未取得不等官方未公告。
+- HCMUTE：實開3頁2026Fall／2027Spring簡章；5項mandatory、2項optional與英語B2能力分開，接收校GPA不限不取消中正GPA3.0且平均70。中正2027-01-25與Spring兩term學生截止2027-01-04／04-12三者矛盾同步到主欄、summary、evidence及流程；後兩日期不是授課開始日。各宿舍月／年、整房／每人單位保留，不換成未核學期價格。
+- 同奈：仍17欄缺值及名額空白。新聞的Chinese Culture University(CCU)是文化大學；兩週Hoseo／PAS活動與一般本科表不能推中正學期incoming支援。未取到規定不寫成官方明示尚未公告。
+- Presidency：實開3頁Inbound申請表、12頁正文2025–26舊factsheet及2026/27校曆；PUoutgoing的CGPA6及9/30不套中正incoming。普通UG/PG1/18–5/14與MBA1/27–5/21不同，校級all字樣範圍矛盾保留。2025價格／截止／學分仍參考，名額空白未補。
+- Jena：2026/27指南Guest Studies第15頁summer母校提名11/15、學生申請1/15及住房1/15各自核對；申請時本科第4semester與一般頁已讀2semester差異保留。指南迎新4/1–9與現行校曆probably4/5–9、註冊範圍相異不任選。真實公開XLSX及研究supervision PDF保存；公式只讀文字不計算，不從研究表推一般課程生必繳。Winter2026/27費333.05+20不是Summer2027價格，2023財力數值不套當期。
+- 西波希米亞：3頁正式2026/27校曆支持普通summer2/15–8/31、授課至5/18、考試5/19–6/30及8/16–31；Health1/25起另院系。宿舍6,000 CZK含2,500 security及3,500 blocking，不宣稱全退押金；12/10一般住房付款日與學生申請／母校提名分開。公開房價表正文無生效年、索引標題與檔名相異仍待確認。
+
+三項複核已同步：Bordeaux APL政府原文的 `activité professionnelle` 或 `contrat d’apprentissage/de professionnalisation` 是從事工作或持學徒／職業化培訓合約者可能符合，不能泛化一般stage實習，個人／臺籍與2027補貼不保證。名古屋母校第34頁4/12與NUPACE2026/27第6頁暫定4/9授課均保留，`semester_dates`、summary、home evidence、校曆、交換期間及指南均標來源差異；4/1抵達迎新另列。AMU2026/27第2、10頁承認B2證書或Rector／Dean／Coordinator確認函，独立證照為recommended；中正當期逐校數字及簡章第3頁兩年內有效檢定仍另有母校繳件層級，是否接受函替代未核。數字條件改needs_confirmation及scope_choice_required並新增other確認函路徑；IELTS5.0加持函的API／JS不直接fail，也不自動pass。
+
+實際驗證：最終四校選定測試251 passed、5 skipped、1既有NTPU destination_profile_count失敗（58.00s）；其中130個CCU案例全部passed。初次三個新增測試斷言錯誤的原始log保留，修正後重跑。手機390／桌面1440及NTU四校瀏覽器22 passed（150.50s），含名古屋雙開課日、HCMUTE三截止日與AMU替代函提示；六張實際截圖保存在本批驗證目錄。16輸出離線重建hash一致，49個最新main既有CGU/NTPU/NTU資料檔hash不變，110條API路由及required欄位不變。Python編譯、改動檔ruff、JS語法及OpenAPI contract檢查成功；完整wheel附件包裝證據另見sixth-pass-final-wheel-proof.json。
+
+本批唯一新增共用檔變更是 `pyproject.toml` 的CCU partner_forms XLSX glob。資料／fetcher、AMU與名古屋適配均在CCU獨立檔；共用registry/API/UI等先前分支改動仍按本文件既有整合清單協調。未merge或部署，沒有改NTU工作、憑證、權限、付款或安全設定。第七批已開始龍谷、東北、北海道、常磐、東亞、慶星公開来源續查；本批推送是可複核檢查點，不能當研究完成。

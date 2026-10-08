@@ -13,10 +13,12 @@ import io
 import json
 import re
 import sys
+import zipfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit
+from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -26,6 +28,48 @@ from docx import Document
 from pypdf import PdfReader
 
 from exchange_info.ccu_sources import BUNDLE
+
+
+def public_spreadsheet_pages(body: bytes) -> list[str] | None:
+    """Read public XLSX cell values; never evaluate formulas or external links."""
+    archive = zipfile.ZipFile(io.BytesIO(body))
+    if "xl/workbook.xml" not in archive.namelist():
+        return None
+    ns = {"x": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
+    strings = []
+    if "xl/sharedStrings.xml" in archive.namelist():
+        root = ElementTree.fromstring(archive.read("xl/sharedStrings.xml"))
+        strings = ["".join(item.itertext()) for item in root.findall("x:si", ns)]
+    pages = []
+    sheets = sorted(
+        name
+        for name in archive.namelist()
+        if name.startswith("xl/worksheets/sheet") and name.endswith(".xml")
+    )
+    for name in sheets:
+        lines = [name]
+        root = ElementTree.fromstring(archive.read(name))
+        for row in root.findall(".//x:sheetData/x:row", ns):
+            values = []
+            for cell in row.findall("x:c", ns):
+                value = cell.find("x:v", ns)
+                inline = cell.find("x:is", ns)
+                formula = cell.find("x:f", ns)
+                content = (
+                    (value.text or "")
+                    if value is not None
+                    else "".join(inline.itertext()) if inline is not None else ""
+                )
+                if cell.get("t") == "s" and content:
+                    content = strings[int(content)]
+                if formula is not None:
+                    content = "FORMULA (not evaluated): " + (formula.text or "")
+                if content:
+                    values.append(str(cell.get("r", "")) + ": " + content)
+            if values:
+                lines.append(" | ".join(values))
+        pages.append("\n".join(lines))
+    return pages
 
 
 def public_content_blocks(soup):
@@ -116,21 +160,26 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
             )
             (output / (item["source_id"] + ".pdf")).write_bytes(body)
         elif body.startswith(b"PK"):
-            doc = Document(io.BytesIO(body))
-            result.update(
-                status="docx",
-                text_pages=[
-                    "\n".join(
-                        [paragraph.text for paragraph in doc.paragraphs]
-                        + [
-                            " | ".join(cell.text for cell in row.cells)
-                            for table in doc.tables
-                            for row in table.rows
-                        ]
-                    )
-                ],
-            )
-            (output / (item["source_id"] + ".docx")).write_bytes(body)
+            spreadsheet = public_spreadsheet_pages(body)
+            if spreadsheet is not None:
+                result.update(status="xlsx", text_pages=spreadsheet)
+                (output / (item["source_id"] + ".xlsx")).write_bytes(body)
+            else:
+                doc = Document(io.BytesIO(body))
+                result.update(
+                    status="docx",
+                    text_pages=[
+                        "\n".join(
+                            [paragraph.text for paragraph in doc.paragraphs]
+                            + [
+                                " | ".join(cell.text for cell in row.cells)
+                                for table in doc.tables
+                                for row in table.rows
+                            ]
+                        )
+                    ],
+                )
+                (output / (item["source_id"] + ".docx")).write_bytes(body)
         elif body.startswith(b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1"):
             # A legacy Word binary is not HTML. Preserve it for a real DOC
             # converter rather than treating decoded binary strings as evidence.

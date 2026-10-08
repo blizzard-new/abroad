@@ -7,8 +7,8 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from exchange_info.api import create_app
 from exchange_info.advisor import _partner_language_threshold as advisor_threshold
+from exchange_info.api import create_app
 from exchange_info.application_rules import (
     _partner_language_threshold as plan_threshold,
 )
@@ -76,6 +76,8 @@ def client_for(tmp_path):
         (65, "toefl"),
         (86, "ielts"),
         (89, "ielts"),
+        (95, "ielts"),
+        (95, "other"),
     ],
 )
 def test_reviewed_uncertainty_never_becomes_a_scalar_threshold(page, test):
@@ -166,35 +168,46 @@ def test_document_coverage_means_actual_listed_requirements_not_complete_oversea
         (58, "ielts", 7.0),
         (74, "toefl", 85),
         (74, "toefl", 100),
+        (95, "ielts", 5.0),
+        (95, "ielts", 7.0),
+        (95, "other", None),
     ],
 )
 def test_api_plan_and_advisor_return_language_confirmation(page, test, score, tmp_path):
     client = client_for(tmp_path)
     partner = at(page)
-    common = dict(
-        college="工學院",
-        department="資訊工程學系",
-        degree_level="大學部",
-        academic_score=85,
-        academic_gpa=3.5,
-        language_test=test,
-        language_score=score,
-    )
+    common = {
+        "college": "工學院",
+        "department": "資訊工程學系",
+        "degree_level": "大學部",
+        "academic_score": 85,
+        "academic_gpa": 3.5,
+        "language_test": test,
+        "language_score": score,
+    }
     response = client.post(
         "/application-plan/evaluate",
         json=dict(
             home_school=HOME,
             **common,
-            preferences=[dict(rank=1, school_name=partner.school_name)],
+            preferences=[{"rank": 1, "school_name": partner.school_name}],
         ),
     )
     assert response.status_code == 200, response.text
     checks = {check["code"]: check for check in response.json()["choices"][0]["checks"]}
     assert checks["language_score"]["status"] == "needs_confirmation"
-    assert checks["language_score"]["detail"] == partner.language_review_note
+    if test == "other":
+        assert HOME in checks["language_score"]["detail"]
+    else:
+        assert checks["language_score"]["detail"] == partner.language_review_note
     response = client.post(
         "/advisor/plan",
-        json=dict(school_name=HOME, target_school=partner.school_name, **common),
+        json=dict(
+            school_name=HOME,
+            target_school=partner.school_name,
+            question="持有母校Coordinator英語B2確認函" if page == 95 else None,
+            **common,
+        ),
     )
     assert response.status_code == 200, response.text
     target = response.json()["target_match"]
@@ -202,7 +215,8 @@ def test_api_plan_and_advisor_return_language_confirmation(page, test, score, tm
     assert not any(
         "IELTS" in text or "TOEFL" in text for text in target["blocking_reasons"]
     )
-    assert partner.language_review_note in target["confirmation_items"]
+    if test != "other":
+        assert partner.language_review_note in target["confirmation_items"]
 
 
 def test_other_homes_keep_the_original_language_parser():
@@ -212,8 +226,8 @@ def test_other_homes_keep_the_original_language_parser():
         source_url="https://example.edu/official",
         eligibility="IELTS 6.0",
         program_options=[
-            dict(program_type="A", source_url="https://example.edu/a"),
-            dict(program_type="B", source_url="https://example.edu/b"),
+            {"program_type": "A", "source_url": "https://example.edu/a"},
+            {"program_type": "B", "source_url": "https://example.edu/b"},
         ],
     )
     assert advisor_threshold(partner, "ielts") == 6
@@ -222,7 +236,7 @@ def test_other_homes_keep_the_original_language_parser():
 
 def test_frontend_matches_structured_language_and_document_statuses():
     cases = [
-        dict(partner=at(p).model_dump(mode="json"), test=t, score=s)
+        {"partner": at(p).model_dump(mode="json"), "test": t, "score": s}
         for p, t, s in [
             (45, "ielts", 6),
             (58, "ielts", 5),
@@ -232,6 +246,9 @@ def test_frontend_matches_structured_language_and_document_statuses():
             (65, "toefl", 70),
             (86, "ielts", 6.5),
             (89, "ielts", 7),
+            (95, "ielts", 5),
+            (95, "ielts", 7),
+            (95, "other", None),
         ]
     ]
     script = r"""
@@ -257,7 +274,7 @@ def test_frontend_matches_structured_language_and_document_statuses():
       const match=partnerMatch(test.partner,profile);
       assert.equal(match.tone,'review');
       assert.ok(!match.risks.some(text=>text.includes('語言分數未達')));
-      assert.ok(match.risks.includes(test.partner.language_review_note));
+      if (test.test !== 'other') assert.ok(match.risks.includes(test.partner.language_review_note));
     }
     const direct=payload.direct;
     assert.equal(languageThresholdFromPartner(direct,'ielts','大學部'),6.0);
@@ -278,18 +295,19 @@ def test_frontend_matches_structured_language_and_document_statuses():
             str(Path("src/exchange_info/static/ccu-language-conditions.js").resolve()),
         ],
         input=json.dumps(
-            dict(
-                cases=cases,
-                direct=at(67).model_dump(mode="json"),
-                document_cases=[
+            {
+                "cases": cases,
+                "direct": at(67).model_dump(mode="json"),
+                "document_cases": [
                     at(p).model_dump(mode="json")
                     for p in (26, 32, 33, 39, 71, 103, 104, 74)
                 ],
-            ),
+            },
             ensure_ascii=False,
         ),
         capture_output=True,
         text=True,
+        check=False,
     )
     assert result.returncode == 0, result.stderr
 

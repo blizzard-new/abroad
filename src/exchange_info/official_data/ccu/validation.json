@@ -883,5 +883,95 @@
       "Initial four-school command referenced nonexistent test file; no tests ran, final corrected command evidence retained.",
       "Initial integrity check overlapped another rebuild and failed three hashes; sequential rerun compared all 16 files identically."
     ]
+  },
+  "sixth_pass": {
+    "base_commit": "f53e43edfc672b8fc5ffb9ce22ab538e13faed44",
+    "latest_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "ccu_tests": {
+      "passed": 130,
+      "failed": 0,
+      "log": "docs/ccu-validation-2026-10-08/sixth-pass-four-school.txt",
+      "count_method": "CCU testcases from final four-school JUnit XML"
+    },
+    "four_school_tests": {
+      "passed": 251,
+      "skipped": 5,
+      "failed": 1,
+      "seconds": 58.0,
+      "known_failure": "tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+      "log": "docs/ccu-validation-2026-10-08/sixth-pass-four-school.txt"
+    },
+    "browser_tests": {
+      "passed": 22,
+      "failed": 0,
+      "seconds": 150.5,
+      "log": "docs/ccu-validation-2026-10-08/sixth-pass-browser.txt"
+    },
+    "integrity": {
+      "rebuild": {
+        "identical": true,
+        "files_compared": 16,
+        "sha256": {
+          "partners.jsonl": "8b8e3e1010eba84929af2838cba5c0aed6ab90c51a8e9516fb03431d183fe8e9",
+          "application_workflows.jsonl": "4bb99f907a6669cf92db79861ff4c5348ca79b6b2f1d77df212f474a1408775d",
+          "destination_profiles.jsonl": "672ab4ee82fbad1c833b1359f1afd20376c235175523c33ce94472cd9b72b2de",
+          "field-audit.json": "9021c731661270ac42a626467a6996819c64c848d2662a03c8b8a62fbeb39f99",
+          "completeness.json": "8263d4b9503645fe9a7f4a1491c2bcb74cd2d9576d7d5fe8d08710a7c758b225",
+          "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
+          "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
+          "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040",
+          "field-completeness-matrix.json": "ad136b2d0ccce8d25085fde07fa44948e216f09c17d4bf002b4596381bb362e9",
+          "confirmation-questions.json": "268790746ba05228eee1fa3862f4afa97bea3fe7a276c416ed22cda6f8b223f0",
+          "overseas-completeness.json": "8b8d29be80aad26782ef5e15556901601e0eb608cb5b9f50d4fdee1efdb8643d",
+          "overseas-conflicts.json": "61da46246b24bea6db8f30d32e38f135033542e27f259dc91572f1690612dc2b",
+          "research-gap-audit.json": "19693ee2c45232565fa3c806fb12c5fa090666d46107b7c8d25496c6437afac8",
+          "acquired-content-review.json": "3804eb1d8040a36122acb47b74fc1f8797876d4dfdc0e66e9d96ea4846848c74",
+          "source-failure-followup.json": "ef42a306ded21adb03e5699f875d4ae95948b89b506f34ee54600034abc01938",
+          "overseas-reviewed-fields.json": "bf4f396a94446eb90d47b5e47b88d6126cd9db26f78bc73dcc6dbe325c354508"
+        }
+      },
+      "existing_main_files_compared": 49,
+      "existing_main_files_changed": 0,
+      "api_paths": 110,
+      "api_routes_changed": false,
+      "api_required_fields_changed": false
+    },
+    "source_count": 389,
+    "new_source_count": 69,
+    "new_network_acquisition_records": 65,
+    "reread_existing_bundled_sources": 4,
+    "field_changes": 65,
+    "previously_missing_filled": 57,
+    "parent_corrections": [
+      "Bordeaux APL activity/apprenticeship/professionalisation scope",
+      "Nagoya home-vs-host tentative class dates propagated through calendar/period/evidence/summary/guide",
+      "AMU host B2 confirmation-letter alternative vs home independent-test requirement: structured conditions, low IELTS API/JS needs_confirmation"
+    ],
+    "overseas_field_status_counts": {
+      "verified_current": 292,
+      "missing": 314,
+      "needs_confirmation": 242,
+      "reference_only": 40,
+      "conflict": 46,
+      "explicit_not_announced": 1
+    },
+    "complete_research_claimed": false,
+    "initial_validation_errors": [
+      "openpyxl unavailable; replaced by ZIP/XML XLSX reader with no formula execution, real downloaded XLSX preserved",
+      "First field integration preflight found three excerpt needles absent from actual text; corrected before integration",
+      "Three new regression assertions did not account for generic other-test wording, frontend missing-score path and provenance IDs omitted from API; corrected final four-school run passed all 130 CCU tests",
+      "Prior NTPU destination profile count test remains failed; 49 main data hashes unchanged"
+    ],
+    "common_file_changes_this_pass": [
+      "pyproject.toml: one CCU-specific XLSX package-data glob"
+    ],
+    "next_research_pages": [
+      32,
+      35,
+      37,
+      39,
+      42,
+      54
+    ]
   }
 }

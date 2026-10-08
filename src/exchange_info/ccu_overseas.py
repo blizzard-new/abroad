@@ -13,8 +13,10 @@ from .models import (
     ApplicationStep,
     ApplicationWorkflowSource,
     DestinationProfile,
+    ExchangeFieldEvidence,
     PageCategory,
     PartnerExchangeDetailField,
+    PartnerLanguageCondition,
     PartnerUniversity,
     SourceReference,
     StudentGuideSection,
@@ -154,6 +156,57 @@ def apply_overseas_review(partner: PartnerUniversity) -> PartnerUniversity:
         if home_evidence:
             home_evidence.status = "conflict"
             home_evidence.note = deadline.reason + "；" + (deadline.value or "")
+    calendar = partner.partner_exchange_details["academic_calendar"]
+    if partner.source_pages[0] == 34 and calendar.status == "conflict":
+        if partner.semester_dates:
+            partner.reference_data["semester_dates"] = partner.semester_dates
+        partner.semester_dates = calendar.value
+        partner.student_summary_zh.study_period = (
+            (partner.study_period or "") + "；" + (calendar.value or "")
+        )
+        home_evidence = partner.field_evidence.get("semester_dates")
+        if home_evidence:
+            home_evidence.status = "conflict"
+            home_evidence.note = calendar.value
+    if partner.source_pages[0] == 95:
+        detail = partner.partner_exchange_details["language"]
+        partner.language_review_note = detail.value or detail.reason
+        home_evidence = partner.field_evidence["language_requirement"]
+        home_evidence.status = "needs_confirmation"
+        home_evidence.note = partner.language_review_note
+        for condition in partner.language_conditions:
+            condition.requirement_level = "needs_confirmation"
+            condition.scope_choice_required = True
+            condition.additional_conditions = [
+                "接收校B2證書或母校Rector／Dean／Coordinator確認函為替代路徑；獨立證照僅recommended",
+                "中正逐校數字及簡章兩年內有效檢定證明另須確認，母校函不自動豁免校內繳件",
+            ]
+            condition.evidence.status = "needs_confirmation"
+            condition.evidence.note = partner.language_review_note
+        alternative = detail.evidence[0]
+        partner.language_conditions.append(
+            PartnerLanguageCondition(
+                test="other",
+                requirement_level="needs_confirmation",
+                scope_choice_required=True,
+                additional_conditions=[
+                    "母校Rector／Dean／Coordinator簽署英語B2確認函；中正是否接受替代檢定仍待確認"
+                ],
+                evidence=ExchangeFieldEvidence(
+                    source_url=alternative.source_url,
+                    source_pages=alternative.source_pages,
+                    academic_year=alternative.academic_year,
+                    application_round=alternative.application_round,
+                    checked_at=alternative.checked_at,
+                    status="needs_confirmation",
+                    excerpt=alternative.excerpt,
+                    note=partner.language_review_note,
+                ),
+            )
+        )
+        partner.student_summary_zh.eligibility_points.append(
+            partner.language_review_note
+        )
     # The new receiving-school source introduces an alternative certificate or
     # program scope. Do not classify a student's lone test score as mandatory.
     if partner.source_pages[0] in {65, 86, 89}:

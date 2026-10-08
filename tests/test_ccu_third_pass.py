@@ -179,7 +179,8 @@ def test_chitkara_generic_docs_and_brochure_do_not_override_current_deadlines():
     assert "未標交換適用年度" in brochure["content_academic_year"]
     for key in ["housing_deadline", "costs", "insurance", "visa", "host_tuition"]:
         assert fields[key].status == "missing"
-    assert at(33).partner_exchange_details["academic_calendar"].status == "missing"
+    # New general English pages disagree on orientation; no 2027 date is invented.
+    assert at(33).partner_exchange_details["academic_calendar"].status == "conflict"
 
 
 def test_conflicts_are_research_gaps_instead_of_invented_login_blockers():

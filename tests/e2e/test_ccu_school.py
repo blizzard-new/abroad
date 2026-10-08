@@ -6,7 +6,9 @@ from urllib.parse import quote
 
 import pytest
 from playwright.sync_api import expect
+
 from exchange_info.ccu_student_view import fetch_ccu_partner_universities
+
 from .conftest import enter_public_site, open_navigation
 from .test_open_catalog import wait_until
 
@@ -15,7 +17,7 @@ CCU = "國立中正大學"
 
 @pytest.mark.parametrize("width", [390, 1440])
 def test_ccu_deadlines_forms_and_research_progress(page, live_server, width):
-    page.set_viewport_size(dict(width=width, height=956))
+    page.set_viewport_size({"width": width, "height": 956})
     page.emulate_media(reduced_motion="reduce")
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
@@ -72,8 +74,53 @@ def test_ccu_deadlines_forms_and_research_progress(page, live_server, width):
     assert not errors
 
 
+@pytest.mark.parametrize("width", [390, 1440])
+@pytest.mark.parametrize("source_page", [34, 68, 95])
+def test_ccu_sixth_batch_conflicts_and_amu_alternative_proof(page, live_server, width, source_page):
+    page.set_viewport_size({"width": width, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+    partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == source_page)
+    page.goto(live_server.base_url + "/?school=" + quote(CCU) + "#school=" + quote(partner.school_name))
+    section = page.locator("#detail-overview .ccu-receiving-school-details")
+    expect(section).to_be_visible(timeout=30_000)
+    key = {34:"academic_calendar", 68:"application_deadline", 95:"language"}[source_page]
+    field = section.locator(f'[data-ccu-field="{key}"]')
+    field.locator("> summary").click()
+    if source_page == 34:
+        expect(field).to_contain_text("來源差異未解")
+        expect(field).to_contain_text("2027-04-09")
+        expect(field).to_contain_text("2027-04-12")
+        arrival = section.locator('[data-ccu-field="arrival"]')
+        arrival.locator("> summary").click()
+        expect(arrival).to_contain_text("04-01")
+        expect(arrival).to_contain_text("抵達不等開課")
+    elif source_page == 68:
+        expect(field).to_contain_text("2027-01-25")
+        expect(field).to_contain_text("2027-01-04")
+        expect(field).to_contain_text("2027-04-12")
+        expect(field).to_contain_text("來源矛盾")
+    else:
+        expect(field).to_contain_text("適用年度或條件待確認")
+        expect(field).to_contain_text("Rector／Dean／Coordinator")
+        expect(field).to_contain_text("recommended")
+        expect(field).to_contain_text("兩年內有效檢定")
+        assert page.evaluate(
+            "item => window.UniWayCcuLanguage.assess(item, 'ielts', '大學部').threshold",
+            partner.model_dump(mode="json"),
+        ) is None
+    field.scroll_into_view_if_needed()
+    output = Path("/tmp/ccu-sixth-pass-browser")
+    output.mkdir(exist_ok=True)
+    page.screenshot(path=str(output / f"ccu-sixth-{source_page}-{width}.png"))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors
+
+
 def test_all_four_school_grade_fields_remain_isolated(page, live_server):
-    page.set_viewport_size(dict(width=1440, height=956))
+    page.set_viewport_size({"width": 1440, "height": 956})
     page.add_init_script(
         "localStorage.setItem('exchange-guide-home-school','國立中正大學')"
     )
@@ -114,7 +161,7 @@ def test_all_four_school_grade_fields_remain_isolated(page, live_server):
 def test_ccu_new_public_forms_and_source_conflict_categories(
     page, live_server, width, source_page
 ):
-    page.set_viewport_size(dict(width=width, height=956))
+    page.set_viewport_size({"width": width, "height": 956})
     page.emulate_media(reduced_motion="reduce")
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))
