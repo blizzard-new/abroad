@@ -16,4 +16,6 @@ Mapúa 實際展開 AY2026–2027 校曆內嵌 JPEG 並目視核讀：第三季�
 
 完整回歸在 `6ea9368` 找到 AMU 的博士生保險誤入一般交換欄位，該次中止並保留失敗證據；`d3b97d9` 恢復 AMU 保險 missing，同時明確保留龍谷當期索引的機構核章要求，沒有放寬舊測試。之後的完整結果只歸屬新的最終候選 SHA。舊 `77dfd84` 的 88 份父 session 核驗證據保持逐位元組不變。
 
-本輪新增程式、測試、資料與生成產物皆在 CCU 範圍。沒有額外共用 registry/API/UI/資格邏輯修改；分支既有共享適配仍依交接清單由父 session 統一整合。未 merge、部署、聯絡學校、登入、提交申請或操作其他 session 的工作目錄。
+`73cb7ca` 的完整候選檢查另找到 DNTU 生活摘要混入待核的頁尾時段，以及 wheel 少包八份公開 HTML 與一份 JPEG。保留該次中止證據；DNTU 摘要恢复先前保守內容，詳細時段矛盾仍在 research_note／逐條 evidence，不放寬既有測試。共用 `pyproject.toml` 只追加兩項中正專屬 `public_responses/*.html`、`*.jpg` package-data 規則，使來源檔隨 wheel 一起交付。
+
+本輪新增程式、測試、資料與生成產物皆在 CCU 範圍。沒有額外共用 registry/API/UI/資格邏輯修改；新增共用打包設定及分支既有共享適配仍依交接清單由父 session 統一整合。未 merge、部署、聯絡學校、登入、提交申請或操作其他 session 的工作目錄。

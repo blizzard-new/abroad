@@ -28,5 +28,13 @@
   },
   "previous_overlap_matrix_is_historical": true,
   "cross_branch_merge_or_runtime_validation_performed": false,
-  "notes": "其他分支正在更新，统一整合需固定各head逐hunk核對；不可繼承77dfd84的13/9重疊數或單分支驗收。"
+  "notes": "其他分支正在更新，统一整合需固定各head逐hunk核對；不可繼承77dfd84的13/9重疊數或單分支驗收。",
+  "this_followup_shared_packaging_delta": {
+    "path": "pyproject.toml",
+    "added_patterns": [
+      "official_data/ccu/public_responses/*.html",
+      "official_data/ccu/public_responses/*.jpg"
+    ],
+    "reason": "Nine new saved official render/image files must be included and hash-verified in wheel"
+  }
 }
