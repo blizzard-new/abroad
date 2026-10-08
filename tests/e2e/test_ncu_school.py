@@ -710,3 +710,41 @@ def test_ncu_housing_and_admission_conditions_are_visible_saved_and_period_scope
     page.screenshot(path=str(out / "ncu-hust-deferred-task-390.png"))
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors
+
+
+@pytest.mark.parametrize("school,phase,document,filename", [
+    ("Xian Jiaotong University", "甄選與提名", "母校填送推薦學生交換信息匯總Excel（學生不用自行代填）", "ncu-xjtu-mother-nomination-390.png"),
+    ("Huazhong University", "行前準備", "境外保單證明（行前購買；電子版寄送或到校繳交擇一）", "ncu-hust-insurance-alternatives-390.png"),
+])
+def test_ncu_mother_nomination_and_insurance_alternatives_are_visible_catalog_items(page, live_server, school, phase, document, filename):
+    session = sign_in_cookie(live_server, school="國立中央大學")
+    live_server.verify_student(session["profile"]["id"], university="國立中央大學")
+    attach_session(page, live_server, session)
+    page.set_viewport_size({"width":390,"height":956})
+    page.emulate_media(reduced_motion="reduce")
+    errors=[]
+    page.on("pageerror",lambda error:errors.append(str(error)))
+    enter_public_site(page,live_server,"application-center")
+    expect(page.locator("#boot-splash")).to_be_hidden(timeout=60_000)
+    wait_until(page,"state.dashboard?.school_name === '國立中央大學' && !state.applicationLoading && state.accountWorkspaceLoadingCount === 0")
+    target=page.locator("#application-target-school")
+    target.select_option(target.locator("option").filter(has_text=school).first.get_attribute("value"))
+    group=page.locator("#application-requirement-list .application-requirement-group").filter(has=page.locator(":scope > summary").filter(has_text=phase))
+    group.locator(":scope > summary").click()
+    item=group.locator(".application-requirement-item").filter(has_text=document)
+    expect(item).to_have_count(1)
+    expect(item).to_be_visible()
+    expect(item).to_contain_text("Spring2027")
+    expect(item).to_contain_text("待確認")
+    expect(item).not_to_contain_text("官方表格")
+    if "Jiaotong" in school:
+        expect(item).to_contain_text("由母校填送")
+        expect(item).to_contain_text("學生不用自行代填")
+    else:
+        expect(item).to_contain_text("行前購買")
+        expect(item).to_contain_text("電子版寄送或到校繳交擇一")
+    item.scroll_into_view_if_needed()
+    out=Path("/tmp/ncu-audit/browser");out.mkdir(parents=True,exist_ok=True)
+    page.screenshot(path=str(out/filename))
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors

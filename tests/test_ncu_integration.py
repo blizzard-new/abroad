@@ -737,6 +737,10 @@ def test_dut_xjtu_forms_keep_track_signature_and_strict_gpa_scope():
     xjtu = next(w for w in workflows if w.home_university == NCU.school_name and "Xian Jiaotong University" in w.school_name)
     xjtu_host = next(s for s in xjtu.steps if s.rule_id.endswith("host-apply"))
     assert len(xjtu_host.document_requirements) == 5
+    nomination = next(s for s in xjtu.steps if s.rule_id.endswith("host-nomination-documents"))
+    assert nomination.responsible_party == "母校國際事務處" and nomination.phase == "甄選與提名"
+    assert len(nomination.document_requirements) == 1
+    assert "學生不用自行代填" in nomination.document_requirements[0].name
     assert "母校派出交換承辦老師手寫簽名" in xjtu_host.document_requirements[0].signatures
     audit = ncu_field_audit(xjtu.school_name)
     assert "GPA>2.8" in audit["fields"]["eligibility"]["note"]
@@ -1118,3 +1122,44 @@ def test_new_mainland_2027_packets_keep_date_examples_track_and_document_stages(
     workflow = next(w for w in workflows if w.home_university == NCU.school_name and w.school_name == tju.school_name)
     arrival = [d for s in workflow.steps if s.phase == "抵達後" for d in s.document_requirements]
     assert len(arrival) == 1 and "2027春臺灣" in arrival[0].name and "保險" in arrival[0].name
+
+
+def test_xjtu_mother_nomination_and_hust_insurance_are_real_catalog_and_task_requirements(tmp_path):
+    from exchange_info.application_rules import build_personal_application_plan
+    from exchange_info.models import PersonalApplicationPlanRequest
+
+    workflows = storage.load_bundled_application_workflows()
+    partners = fetch_ncu_partner_universities()
+    xjtu = next(p for p in partners if "Xian Jiaotong University" in p.school_name)
+    hust = next(p for p in partners if "Huazhong University" in p.school_name)
+    client = TestClient(create_app(tmp_path))
+    for partner in (xjtu, hust):
+        workflow = next(w for w in workflows if w.home_university == NCU.school_name and w.school_name == partner.school_name)
+        assert len({s.order for s in workflow.steps}) == len(workflow.steps)
+        assert workflow.review_status == "pending_review" and workflow.published_at is None
+        assert not any(s.deadline_reminder_eligible for s in workflow.steps)
+        catalog = client.get("/application-center/catalog", params={"school":"NCU","target_school":partner.school_name,"academic_year":"116"}).json()
+        plan = build_personal_application_plan(PersonalApplicationPlanRequest(home_school=NCU.school_name, academic_year="116", application_round="第一梯次", preferences=[{"rank":1,"school_name":partner.school_name}]), partners, workflows, academic_score_minimum=None)
+        if partner == xjtu:
+            item = next(d for d in catalog["items"] if "母校填送" in d["name"])
+            assert item["phase"] == "甄選與提名" and "學生不用自行代填" in item["name"]
+            assert "1FPQvfD47cwrtkzk0_QwN4XnZtrt-RGI5" in item["official_form_url"]
+            task = next(t for t in plan.tasks if "由母校填送" in t.title)
+            assert task.responsible_unit == "中央國際事務處" and "不自行代填" in task.detail
+        else:
+            initial = next(s for s in workflow.steps if s.rule_id.endswith("host-apply"))
+            assert not any("保單" in d.name for d in initial.document_requirements)
+            insurance = [d for s in workflow.steps for d in s.document_requirements if "境外保單證明" in d.name]
+            assert len(insurance) == 1 and "擇一" in insurance[0].name
+            item = next(d for d in catalog["items"] if "境外保單證明" in d["name"])
+            assert item["phase"] == "行前準備" and "電子版寄送或到校繳交擇一" in item["name"]
+            assert any(u.endswith("#page=7") for u in item["source_urls"])
+            task = next(t for t in plan.tasks if "擇一提交證明" in t.title)
+            assert "不要求電子與到校兩次皆交" in task.detail
+            assert len(task.document_link.requirement_names) == 1 and "境外保單證明" in task.document_link.requirement_names[0]
+            report = ncu_field_audit(partner.school_name)
+            assert "2024 flyer八頁逐頁視覺已讀" in report["fields"]["city"]["applicability"]
+            assert "影像未讀" not in report["fields"]["city"]["applicability"]
+        assert item["needs_confirmation"] and not item["download_available"] and task.needs_confirmation
+        assert task.official_deadline_at is None
+        assert "Spring2027" in item["name"]

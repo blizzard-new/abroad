@@ -219,7 +219,7 @@ NCU builder新增第二批host申請步驟，仍使用既有「合作校申請�
 
 NUIST成功browser摘錄先列、同URL失敗local後列曾使pages.jsonl五頁空白。builder現在先排除失敗及只有空頁標記的來源，URL去重優先非空正文且穩定選擇可用內容；失敗仍留source-evidence、field-audit及未取得清單。兩種來源順序與最後輸出去重均測試，實際中文／英文費用頁各建本機索引並取回費用原文；不接正式DB。初次聚焦2 passed／3 failed（8.26s）中，實際檢索測試把數字與CNY連成單一關鍵字，另兩項是保險用字及phase型別錯誤；修正測試後4 passed／1 failed（7.55s），膳食費用字亦已對齊原始資料。沒有為測試改共享RAG規則。
 
-西安交通新增2027春兩頁、申請／推薦DOC與母校Excel；GPA嚴格大於2.8／4.3、五項合一PDF、10/30、表頭2027卻仍2025日期範例、最低學分或門數原文均保留。DOC轉DOCX兩SHA綁定、母校Excel整筆示例移除。華中科技臺灣2027春仍計算機／集成電路暫不開放、11/3、3–6課計畫；健康報告錄取後、保單兩交件選項分開。所附2024八頁影像宣傳冊尚未視覺讀，未計已讀。天津2027春臺灣PDF與DOC確認七初次件、到校後保單、11/15與秋季標題矛盾；原先2025／港澳參考仍另存。
+西安交通新增2027春兩頁、申請／推薦DOC與母校Excel；GPA嚴格大於2.8／4.3、五項合一PDF、10/30、表頭2027卻仍2025日期範例、最低學分或門數原文均保留。DOC轉DOCX兩SHA綁定、母校Excel整筆示例移除。華中科技臺灣2027春仍計算機／集成電路暫不開放、11/3、3–6課計畫；健康報告錄取後、保單兩交件選項分開。所附2024八頁影像宣傳冊於7b381ae checkpoint尚未視覺讀；其後9d44a4e已完成同SHA八頁視覺核對，2／3／7／8頁選定摘錄另存，仍是2024歷史參考而非116接收包。天津2027春臺灣PDF與DOC確認七初次件、到校後保單、11/15與秋季標題矛盾；原先2025／港澳參考仍另存。
 
 完整NCU／collector／completeness為80 passed、1 failed（92.67s）：HUST來源排序已因2027春新文件改變，原斷言只准第一URL是舊PDF第7頁；改驗證新來源優先且舊第7頁仍保留。修正後六項聚焦全部通過（16.10s），包含來源正反排序、實際NUIST檢索、新包及UNDIP既有條件。OpenAPI2026-10-08.4、JS syntax及diff檢查通過；既有main失敗仍按前述紀錄保留。
 
@@ -235,7 +235,7 @@ UOS兩份住宿健康文件與HUST一份錄取後健康報告已實作四態条�
 
 真實手機測試曾1 failed（68.53s）發現同步整理函式遺漏新狀態；已補必要值、每期間快照及跨裝置不同鍵合併。另兩次1 failed（48.07s／53.71s）是在boot仍載入時以select_option直接操作後被初始化覆寫；測試改等待既有boot自然消失，沒有移除遮罩或force。新catalog請求另按相關條件快照防止舊回應覆蓋新選擇。文件目錄、四態、遠端JSON確實保存、重載及切學期後未知、HUST延後健康已1 passed（61.06s）。
 
-補讀HUST所附2024八頁全影像宣傳冊：逐頁視覺核對，原空文字頁保持，兩頁少量內容及圖片SHA可審阅；第3頁三校區、第7頁Junshan仍「upcoming」、第8頁含outgoing／international，不能補成116臺灣接收包。聚焦新條件／NUIST檢索／來源順序／原件年度／離線重建30 passed（25.60s）。sourcecoverage仍276／44錯誤、44partial／170未整理／0全116核實；閱讀一份宣傳冊不增加完成校數。
+補讀HUST所附2024八頁全影像宣傳冊：逐頁視覺核對，原空文字頁保持，2／3／7／8頁少量選定內容及八張圖片SHA可審阅；第3頁三校區、第7頁Junshan仍「upcoming」、第8頁含outgoing／international，不能補成116臺灣接收包。聚焦新條件／NUIST檢索／來源順序／原件年度／離線重建30 passed（25.60s）。sourcecoverage仍276／44錯誤、44partial／170未整理／0全116核實；閱讀一份宣傳冊不增加完成校數。
 
 追加統一任務的真實操作時1 failed（88.66s）：其既有選單只列availability=open，使中央pending資料不可選，先前只驗證catalog不足以發現此點。已僅為中央加入本期名額待公告候選標籤；零名額／封鎖校不進候選，其他母校篩選規則保持。完整任務畫面複驗及最新SHA在後續紀錄。
 
@@ -246,3 +246,13 @@ UOS兩份住宿健康文件與HUST一份錄取後健康報告已實作四態条�
 條件來源新增逐原件SHA版本綁定；原件改變／錯誤／URL或版本缺失不能沿用已讀政策，四種失效情況連同條件、來源與離線重建 **34 passed（46.48s）**。JavaScript syntax、diff及uv lock check通過。第一次OpenAPI check省略PYTHONPATH，載入另一未修改/workspace/abroad的安裝路徑而報drift；已用兩個實際import __file__命令確認，改用本worktree的PYTHONPATH=src核對，沒有以重產快照掩蓋差異。
 
 本worktree OpenAPI .5快照檢查已成功（exit0），2026-10-08 11:49:55 UTC唯讀healthcheck與ls-remote也成功；main仍f6ad1b8、當時中央遠端7b381ae，沒有卡住或換環境。
+
+## XJTU母校提名與HUST擇一保單接線修正
+
+XJTU五項學生合一PDF維持獨立；另將已取得的2027春母校提名Excel接入母校負責步驟與document_requirements、catalog、個人／統一任務，不要求學生自行代填整校名單或代母校寄送。HUST保單另列一件行前文件：出境前購買涵蓋全期的醫療／意外／急難救援保險，電子版寄送或到校繳交擇一，不建兩件必繳、不移初次host包；HKBU原保險文字在第7頁。健康錄取後條件仍獨立。两件都保留Spring2027參考、116待查／未發布／無正式下載與host精確提醒。
+
+HUST applicability已同步為同SHA八頁逐頁視覺已讀、2／3／7／8選定原文另存；2024歷史、Junshan upcoming及116未核實界線保留，沒有用閱讀完成當當期核准。gh更新PR說明曾401 Bad credentials，保存說明稿後以既有GitHub連接器更新成功並確認draft／未合併／head9d44a4e；未修改憑證。2026-10-08 12:00:04 UTC shell與ls-remote exit0，main仍f6ad1b8。
+
+两项修正後API／任務／年度／條件及離線重建聚焦 **34 passed（29.69s）**；新手機實際目錄 **2 passed（74.13s）**，已展開母校提名及行前保單條目，明列母校負責／擇一提交與待確認，未啟用正式下載。完整module複驗續行。
+
+最終本輪四module **111 passed（154.93s）**；OpenAPI .5與snapshot一致、diff check通過。兩張新增[XJTU母校匯總表](ncu-browser-evidence/ncu-xjtu-mother-nomination-390.png)、[HUST擇一保單](ncu-browser-evidence/ncu-hust-insurance-alternatives-390.png)已逐圖檢視。摘要／workflow／destination／field-audit四份實際產物均查無舊flyer未讀文字且仍含2024；sourcecoverage保持276／44 errors、44 partial／170未整理／0全116核實。

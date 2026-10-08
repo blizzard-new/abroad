@@ -709,6 +709,29 @@ def build(output):
             )
             for step in tail[arrival_position + 1:]:
                 step["order"] += 1
+        if review and review.get("host_insurance_documents"):
+            requirements = review["host_insurance_documents"]
+            position = next(i for i, step in enumerate(tail) if step["phase"] == "抵達後")
+            tail.insert(position, dict(
+                order=tail[position]["order"],
+                rule_id=f"{rowids[0]}-host-insurance-documents",
+                phase="行前準備",
+                title="行前購買外校所需保險並擇一提交證明",
+                responsible_party="學生",
+                responsible_unit="外校接收單位",
+                timing="出境前購買；證明電子寄送或到校後交擇一（Spring2027參考）",
+                summary="同一份保單證明有兩種替代交件方式，擇一完成；不列初次host申請文件，也不要求電子與到校兩次皆交。116當期仍待核實。",
+                details=reviewed_points("insurance"),
+                document_requirements=requirements,
+                source_urls=list(dict.fromkeys(u for d in requirements for u in d["source_urls"])),
+                submission={"method": "unknown", "deadline_note": "行前購買；電子版寄送或到校後繳交擇一，當期收件管道及期限依接收通知核對。"},
+                checked_at=CHECKED,
+                support_status="needs_confirmation",
+                needs_confirmation=True,
+                scope={"home_universities": [HOME], "partner_universities": [name], "academic_years": ["116"]},
+            ))
+            for step in tail[position + 1:]:
+                step["order"] += 1
         host_followup_steps = []
         if review and review.get("host_followup_documents"):
             # A host's second application batch can precede its invitation.
@@ -734,6 +757,29 @@ def build(output):
                     scope={"home_universities": [HOME], "partner_universities": [name], "academic_years": ["116"]},
                 )
             )
+        host_nomination_steps = []
+        if review and review.get("host_nomination_documents"):
+            requirements = review["host_nomination_documents"]
+            host_step["order"] += 1
+            for step in host_followup_steps + tail:
+                step["order"] += 1
+            host_nomination_steps.append(dict(
+                order=5,
+                rule_id=f"{rowids[0]}-host-nomination-documents",
+                phase="甄選與提名",
+                title="由母校填送外校提名匯總表",
+                responsible_party="母校國際事務處",
+                responsible_unit="中央國際事務處",
+                summary="外校提名匯總表由母校彙整及提交；學生提供所需個人資訊，不自行代填整校名單或代母校寄送。Spring2027參考，116適用性仍待核實。",
+                details=reviewed_points("host_documents") + reviewed_points("host_deadline"),
+                document_requirements=requirements,
+                official_form_urls=[d["official_form_url"] for d in requirements if d.get("official_form_url")],
+                source_urls=list(dict.fromkeys(u for d in requirements for u in d["source_urls"])),
+                checked_at=CHECKED,
+                support_status="needs_confirmation",
+                needs_confirmation=True,
+                scope={"home_universities": [HOME], "partner_universities": [name], "academic_years": ["116"]},
+            ))
         workflows.append(
             dict(
                 home_university=HOME,
@@ -747,7 +793,7 @@ def build(output):
                 applicability_note="中央母校116-1已公告；外校當期名額、track與文件未完整查核，流程仅供準備參考。",
                 review_status="pending_review",
                 published_at=None,
-                steps=[*home_steps, host_step, *host_followup_steps, *tail],
+                steps=[*home_steps, *host_nomination_steps, host_step, *host_followup_steps, *tail],
                 sources=[
                     {
                         "title": "中央116-1甄選簡章",
