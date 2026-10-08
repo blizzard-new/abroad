@@ -1,6 +1,6 @@
 # TKU 第三批：四校外校申請、生活資料與逐欄完整度
 
-2026-10-08查核。`blizzard-new/abroad`、`data/tku-exchange-20261008`、獨立目錄`/workspace/abroad-tku`。再次fetch的main仍為`293546e807294dc0812f390b240a4cfb68e86cd0`。此文件與本批validation JSON為目前交接；第一批文件、63.1%等舊統計僅歷史記錄。
+2026-10-08查核。`blizzard-new/abroad`、`data/tku-exchange-20261008`、獨立目錄`/workspace/abroad-tku`。本批開工及第一次重新fetch的main為`293546e807294dc0812f390b240a4cfb68e86cd0`，也是實際回歸比較基準。推送後最後檢查發現main已另整合臺大為`f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`；未重寫／重基這個多校共用整合，留給中央統一合併。此文件與本批validation JSON為目前交接；第一批文件、63.1%等舊統計僅歷史記錄。
 
 ## 可整合交付
 
@@ -57,14 +57,14 @@ CGU/NTPU官方資料相對main沒有diff；CGU116的77目的地（75校級＋2�
 
 ## 實際測試
 
-TKU16 tests通過。擴大回歸**199 passed／9 failed／6 skipped**，九個failure ID均在未改main既有集合，new failures為0；此批因增加4校引起的舊硬編碼總數測試已修正。完整機器證據：`tku-batch-3-validation-2026-10-08.json`。
+TKU16 tests通過。擴大回歸**199 passed／9 failed／6 skipped**，九個failure ID均在未改main基準293546e既有集合，new failures相對該基準為0；不是對新臺大整合main f6ad的回歸結論。此批因增加4校引起的舊硬編碼總數測試已修正。完整機器證據：`tku-batch-3-validation-2026-10-08.json`。
 
 Chromium逐校實際展開詳情、外校文件流程、生活14區塊、完整度38格，無page error。文件中心在各校獨立新學生情境驗證當期／一般參考文件與條件。桌面1280×900、手機390×844；4列、open篩選0、closed4、East Asia4。截圖在`/tmp/tku-detail-{0..3}.png`及`/tmp/tku-browser-*.png`，可用`scripts/check_tku_browser.py`重做。
 
 另觀察到共用文件中心「已有目標→換另一目標」確認後仍停原校，catalog仍是原目標、loading=false、dialog已關，造成測試timeout；不是文件API無資料。此跨目標規劃狀態問題的main重現尚未核實，沒有擴大改所有學校的計畫遷移處理；交中央整合查明。逐校新情境的文件顯示驗證與此問題分開。
 
 OpenAPI --check、Python／JavaScript語法、diff --check、離線重建逐位元相同通過。`uv lock --check`在本分支及未改main都實際失敗：`The lockfile at uv.lock needs to be updated`，未改lockfile。使用既有venv／frozen安裝。
-遠端quality run37719707403（92fc2fe）failure、無jobs/check-runs，取log為`failed to get run log: log not found`。原因未核實；推送後新run另記錄。本地通過項目不表示CI通過。
+最新資料commit`1e893ea0f424b2013ff3f3e9d80650ebdcbfdc54`已推送，`git ls-remote`與本地HEAD一致。其[quality run37724259135](https://github.com/blizzard-new/abroad/actions/runs/37724259135)為completed/failure、jobs空、check-runs總數0；取log實際exit1：`failed to get run log: log not found`。此前92fc2fe／91ed51f亦failure。原因未核實；main f6ad的quality run37723868722也failure。本地通過項目不表示CI通過。
 
 兩次健康命令實際成功（原分支、Python讀檔與JSON數量），環境可用。回傳session訊息工具另報`entitlement_required`（Business以上），訊息未送出；不把它當作shell離線，不改方案或另開環境。
 

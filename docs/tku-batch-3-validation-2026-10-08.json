@@ -237,7 +237,26 @@
     "diff_check": "passed",
     "offline_rebuild": "passed",
     "lockfile_check": "failed on both this branch and untouched main: lockfile needs update; no lockfile change",
-    "remote_ci": "Previous quality run 37719707403 failed with no jobs/checks; log unavailable. Latest run status recorded separately after push."
+    "remote_ci": "failure; actual run details in remote_ci; no CI pass claimed"
   },
-  "remaining_scope": "124 archived rows have home sources; their host current fields are explicitly not individually researched. Four latest Japanese choices have reviewed public host material and field-specific gaps. Not all application forms are public, and not all 2027 dates/prices are verified."
+  "remaining_scope": "124 archived rows have home sources; their host current fields are explicitly not individually researched. Four latest Japanese choices have reviewed public host material and field-specific gaps. Not all application forms are public, and not all 2027 dates/prices are verified.",
+  "latest_main_at_handoff": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "baseline_comparison_scope": "Only integration_main293546e; latest main independently merged NTU after these tests. Do not infer zero new failures on f6ad.",
+  "push_evidence": {
+    "data_commit": "1e893ea0f424b2013ff3f3e9d80650ebdcbfdc54",
+    "remote_ref": "refs/heads/data/tku-exchange-20261008",
+    "ls_remote_matches_head": true,
+    "repository": "https://github.com/blizzard-new/abroad"
+  },
+  "remote_ci": {
+    "run_id": 37724259135,
+    "head_sha": "1e893ea0f424b2013ff3f3e9d80650ebdcbfdc54",
+    "status": "completed",
+    "conclusion": "failure",
+    "jobs": [],
+    "check_runs_total": 0,
+    "log_error": "failed to get run log: log not found",
+    "url": "https://github.com/blizzard-new/abroad/actions/runs/37724259135",
+    "cause": "not verified"
+  }
 }
