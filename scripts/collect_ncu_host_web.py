@@ -219,7 +219,7 @@ def fetch(spec):
                 raise ValueError(
                     "已填範例原件已變更，須先重核必要欄位摘錄；不複製個資。"
                 )
-            result["pages"] = [{"page": None, "text": excerpt["public_field_excerpt"]}]
+            result["pages"] = excerpt.get("public_pages") or [{"page": None, "text": excerpt["public_field_excerpt"]}]
             result["source_excerpt_only"] = True
             result["privacy_note"] = excerpt["note_zh"]
         visual_path = OUT / f"{spec['id']}-visual-review.json"

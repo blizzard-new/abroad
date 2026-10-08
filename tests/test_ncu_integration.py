@@ -940,3 +940,90 @@ def test_ncu_packet_rejects_future_expired_or_other_school_proof(test, date, err
         for f in item.preview_fields
         if f.field_id in {"language_test", "language_score", "language_result_date"}
     )
+
+
+def test_nju_second_batch_precedes_invitation_and_keeps_conflicting_sources():
+    workflow = next(w for w in storage.load_bundled_application_workflows() if w.home_university == NCU.school_name and "Nanjing University" in w.school_name and "Information" not in w.school_name)
+    initial = next(s for s in workflow.steps if s.rule_id.endswith("host-apply"))
+    followup = next(s for s in workflow.steps if s.rule_id.endswith("host-followup-documents"))
+    assert len(initial.document_requirements) == 7
+    assert not any("體檢" in d.name or "保險" in d.name for d in initial.document_requirements)
+    assert len(followup.document_requirements) == 3 and followup.phase == "合作校申請"
+    assert initial.order < followup.order < next(s.order for s in workflow.steps if s.phase == "行前準備")
+    assert [s.order for s in workflow.steps] == sorted({s.order for s in workflow.steps})
+    assert not any("第二批" in d.name for s in workflow.steps if s.phase == "抵達後" for d in s.document_requirements)
+    health = next(d for d in followup.document_requirements if "體檢" in d.name)
+    assert health.official_form_url and "胸透" in health.name
+    assert "貼照醫院騎縫章" in health.stamps
+    audit = ncu_field_audit(workflow.school_name)
+    assert all(x in audit["fields"]["host_deadline"]["note"] for x in ("10/20", "11/20", "12/10", "差異"))
+    assert "港澳通行證" in audit["fields"]["eligibility"]["note"]
+    assert "2026秋" in audit["fields"]["host_documents"]["note"]
+    assert "1500字以上" in audit["fields"]["arrival"]["note"]
+    assert "10元封頂" in audit["fields"]["cost"]["note"] and "最多20元" in audit["fields"]["cost"]["note"]
+    assert all(not s.deadline_reminder_eligible for s in workflow.steps)
+    assert workflow.review_status == "pending_review" and workflow.published_at is None
+
+
+def test_tongji_new_taiwan_packet_replaces_old_learning_plan_without_creating_current_rules():
+    workflow = next(w for w in storage.load_bundled_application_workflows() if w.home_university == NCU.school_name and "Tongji University" in w.school_name)
+    initial = next(s for s in workflow.steps if s.rule_id.endswith("host-apply"))
+    assert len(initial.document_requirements) == 7
+    assert any("通行證" in d.name or "台胞證" in d.name for d in initial.document_requirements)
+    assert not any("學習計畫" in d.name for d in initial.document_requirements)
+    assert not any(d.official_form_url for d in initial.document_requirements)
+    audit = ncu_field_audit(workflow.school_name)
+    assert "2026春" in audit["fields"]["host_documents"]["note"]
+    assert "2027春" in audit["fields"]["host_documents"]["note"]
+    assert "英授工商碩士在新版未列" in audit["fields"]["courses"]["note"]
+    assert "不跨校區選課" in audit["fields"]["courses"]["note"]
+    partner = next(p for p in fetch_ncu_partner_universities() if p.school_name == workflow.school_name)
+    assert partner.quota is None and partner.colleges is None and partner.degree_levels is None
+    assert all(audit["fields"][key]["status"] == "needs_confirmation" for key in ("eligibility", "language", "host_documents", "host_deadline", "housing"))
+
+
+def test_fudan_initial_insurance_paper_translation_and_old_platform_are_distinct():
+    from exchange_info.ncu_source_coverage import indexable_source_text
+    workflow = next(w for w in storage.load_bundled_application_workflows() if w.home_university == NCU.school_name and "Fudan University" in w.school_name)
+    initial = next(s for s in workflow.steps if s.rule_id.endswith("host-apply"))
+    assert len(initial.document_requirements) == 6
+    assert any("初次電子件" in d.name for d in initial.document_requirements)
+    assert any("學習計畫單獨附頁" in d.name for d in initial.document_requirements)
+    assert any("認證英文＋自行中譯" in d.name for d in initial.document_requirements)
+    assert not any("保單" in d.name for s in workflow.steps if s.phase == "抵達後" for d in s.document_requirements)
+    audit = ncu_field_audit(workflow.school_name)
+    assert "6／8人套間、2人一房" in audit["fields"]["housing"]["note"]
+    assert "新聞學院" in audit["fields"]["city"]["note"]
+    raw = json.loads(gzip.decompress((BUNDLE / "source-evidence.json.gz").read_bytes()))
+    guide = next(s for s in raw if s["id"] == "host-fudan-nccu-attachment-1rCxNqeHb7l5WBolmzfJyxB4Njorv4c4W")
+    assert "2022 年秋季" in guide["pages"][1]["text"]
+    assert guide["content_status"]["visual_reviewed_page_count"] == 2
+    assert "2022 年秋季" not in indexable_source_text(guide) and "已隔離" in indexable_source_text(guide)
+    courses = next(s for s in raw if s["id"] == "host-fudan-nccu-attachment-1sjQ2AhMo0ZpJCf8N6zVsoG4qqPwGrXgQ")
+    assert len(courses["pages"]) == 318 and not courses["content_status"]["all_pages_read"]
+    for source_id, forbidden in (("host-fudan-nccu-attachment-1KXECul-C7ZG7i76as6qDHnxcjapOKkFm", "H12345678"), ("host-nju-mcu2027-1wX-kZ1wHakbnlyLMfAeYNsIm0bhRcBut", "zhaoyiyi@gmail.com")):
+        sheet = next(s for s in raw if s["id"] == source_id)
+        assert sheet["source_excerpt_only"] and forbidden not in "\n".join(p["text"] for p in sheet["pages"])
+        assert all(p["page"] is None for p in sheet["pages"])
+
+
+def test_jlu_failed_2026_attachment_does_not_become_read_evidence():
+    workflow = next(w for w in storage.load_bundled_application_workflows() if w.home_university == NCU.school_name and "Jilin University" in w.school_name)
+    audit = ncu_field_audit(workflow.school_name)
+    assert "未標年" in audit["fields"]["host_documents"]["note"]
+    failed = next(s for s in audit["unretrieved_sources"] if s["id"] == "host-jlu-exchange-2026")
+    assert "404" in failed["reason"]
+    assert all(e["source_url"] != failed["url"] for e in audit["fields"]["host_documents"]["original_evidence"])
+    assert all(d.needs_confirmation for s in workflow.steps for d in s.document_requirements if "吉林" in d.name)
+
+
+def test_nju_document_catalog_preserves_separate_pending_second_batch(tmp_path):
+    workflow = next(w for w in storage.load_bundled_application_workflows() if w.home_university == NCU.school_name and "Nanjing University" in w.school_name and "Information" not in w.school_name)
+    client = TestClient(create_app(tmp_path))
+    response = client.get("/application-center/catalog", params={"school": "NCU", "target_school": workflow.school_name, "academic_year": "116"})
+    assert response.status_code == 200
+    items = response.json()["items"]
+    assert len([d for d in items if "第二批" in d["name"]]) == 3
+    assert all(d["phase"] == "合作校申請" for d in items if "第二批" in d["name"])
+    assert not any(d["phase"] == "抵達後" and "第二批" in d["name"] for d in items)
+    assert all(not d["download_available"] and d["needs_confirmation"] for d in items)

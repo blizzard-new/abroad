@@ -22,7 +22,7 @@ from exchange_info.models import (
     PartnerResearchRecord,
 )
 from exchange_info.ncu_eligibility import SCORE_MINIMUMS, EXCLUDED_YEARS
-from exchange_info.ncu_source_coverage import attach_visual_review, indexable_source_text, source_content_status
+from exchange_info.ncu_source_coverage import attach_public_field_excerpt, attach_visual_review, indexable_source_text, source_content_status
 from exchange_info.ncu_student_view import (
     NCU_GUIDELINES_URL as NOTICE,
     NCU_INDEX_URL as INDEX,
@@ -191,6 +191,9 @@ def build(output):
     )
     docs = {x["id"]: x for x in evidence + web_evidence}
     for d in docs.values():
+        excerpt_path = SOURCES / f"{d['id']}-public-excerpt.json"
+        if excerpt_path.exists():
+            attach_public_field_excerpt(d, load_json(excerpt_path))
         visual_path = SOURCES / f"{d['id']}-visual-review.json"
         if visual_path.exists():
             attach_visual_review(d, load_json(visual_path))
@@ -647,6 +650,31 @@ def build(output):
             )
             for step in tail[arrival_position + 1:]:
                 step["order"] += 1
+        host_followup_steps = []
+        if review and review.get("host_followup_documents"):
+            # A host's second application batch can precede its invitation.
+            # Keep this separate from post-admission/predeparture documents.
+            requirements = review["host_followup_documents"]
+            for step in tail:
+                step["order"] += 1
+            host_followup_steps.append(
+                dict(
+                    order=6,
+                    rule_id=f"{rowids[0]}-host-followup-documents",
+                    phase="合作校申請",
+                    title="核對外校第二階段補件",
+                    responsible_party="學生與接收單位",
+                    summary="外校來源另列第二批交件，可能早於錄取邀請；不併入母校甄選或初次host附件，當期仍待確認。",
+                    details=reviewed_points("host_documents") + reviewed_points("host_deadline"),
+                    document_requirements=requirements,
+                    official_form_urls=[d["official_form_url"] for d in requirements if d.get("official_form_url")],
+                    source_urls=list(dict.fromkeys(u for d in requirements for u in d["source_urls"])),
+                    checked_at=CHECKED,
+                    support_status="needs_confirmation",
+                    needs_confirmation=True,
+                    scope={"home_universities": [HOME], "partner_universities": [name], "academic_years": ["116"]},
+                )
+            )
         workflows.append(
             dict(
                 home_university=HOME,
@@ -660,7 +688,7 @@ def build(output):
                 applicability_note="中央母校116-1已公告；外校當期名額、track與文件未完整查核，流程仅供準備參考。",
                 review_status="pending_review",
                 published_at=None,
-                steps=[*home_steps, host_step, *tail],
+                steps=[*home_steps, host_step, *host_followup_steps, *tail],
                 sources=[
                     {
                         "title": "中央116-1甄選簡章",

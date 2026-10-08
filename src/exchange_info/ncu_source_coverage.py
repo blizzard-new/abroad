@@ -58,6 +58,22 @@ def indexable_source_text(source: dict) -> str:
     return "\n\n".join(parts)
 
 
+def attach_public_field_excerpt(source: dict, excerpt: dict) -> None:
+    """Enforce a reviewed public excerpt during both collection and rebuild."""
+    if source.get("error"):
+        source["pages"] = []
+        return
+    if not source.get("sha256") or excerpt.get("source_sha256") != source["sha256"]:
+        source["pages"] = []
+        source["error"] = "已填範例原件已變更，須重核必要欄位摘錄；不複製個資。"
+        return
+    source["pages"] = excerpt.get("public_pages") or [
+        {"page": None, "text": excerpt["public_field_excerpt"]}
+    ]
+    source["source_excerpt_only"] = True
+    source["privacy_note"] = excerpt["note_zh"]
+
+
 def source_content_status(source: dict) -> dict:
     pages = source.get("pages", [])
     text_pages = sum(

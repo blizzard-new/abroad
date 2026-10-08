@@ -66,3 +66,19 @@ def test_spreadsheet_reading_requires_each_sheet_and_matching_original_sha():
     assert not source_content_status(source)["all_pages_have_text"]
     source["sha256"] = "changed-original"
     assert not source_content_status(source)["all_pages_read"]
+
+
+def test_rebuild_public_excerpt_cannot_reintroduce_full_example_or_reuse_changed_sha():
+    from exchange_info.ncu_source_coverage import attach_public_field_excerpt
+    public_pages = [{"page": None, "sheet": "sheet1", "text": "Name | Permit | Email"}, {"page": None, "sheet": "sheet2", "text": ""}]
+    excerpt = {"source_sha256": "same-sha", "public_field_excerpt": public_pages[0]["text"], "public_pages": public_pages, "note_zh": "空白欄位、兩工作表；不複製示例"}
+    source = {"sha256": "same-sha", "pages": [{"page": None, "text": "filled-example-private-data"}]}
+    attach_public_field_excerpt(source, excerpt)
+    assert source["pages"] == public_pages and source["source_excerpt_only"]
+    assert "filled-example-private-data" not in str(source)
+    source = {"sha256": "changed-sha", "pages": [{"page": None, "text": "changed-private-example"}]}
+    attach_public_field_excerpt(source, excerpt)
+    assert source["pages"] == [] and "原件已變更" in source["error"]
+    failed = {"sha256": "same-sha", "error": "not the requested original", "pages": [{"page": None, "text": "response-body"}]}
+    attach_public_field_excerpt(failed, excerpt)
+    assert failed["pages"] == [] and failed["error"] == "not the requested original"

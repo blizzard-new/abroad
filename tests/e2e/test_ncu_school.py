@@ -521,3 +521,58 @@ def test_ncu_uny_degree_history_and_empty_exchange_resources_are_visible(page, l
     page.screenshot(path=str(out / "ncu-uny-life-390.png"))
     assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
     assert not errors
+
+
+@pytest.mark.parametrize("school,life_text,source_text,application_text,filename", [
+    ("南京大學", "10元封頂", "港澳通行證掃描件", "核對外校第二階段補件", "ncu-nju-second-batch-390.png"),
+    ("同濟", "統一安排校內住宿", "通行证扫描件", "台胞證／回鄉證掃描", "ncu-tongji-new-list-390.png"),
+    ("復旦", "6／8人套間、2人一房", "个人境外保险单", "上海全期醫療／人身意外保單PDF", "ncu-fudan-initial-insurance-390.png"),
+])
+def test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life(page, live_server, school, life_text, source_text, application_text, filename):
+    page.set_viewport_size({"width": 390, "height": 956})
+    page.emulate_media(reduced_motion="reduce")
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    enter_public_site(page, live_server, "partners")
+    open_navigation(page)
+    page.locator("#school-switcher").click()
+    page.locator('[data-home-school="國立中央大學"]').click()
+    page.locator("#confirm-school").click()
+    if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+        page.locator("#glass-menu-toggle").click()
+    wait_until(page, "state.dashboard?.school_name === '國立中央大學'")
+    page.locator('[data-partner-view="list"]').click()
+    page.locator("#partner-search").fill(school)
+    expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+    page.locator("#partner-table .partner-card > summary").first.click()
+    page.locator("#partner-table .school-detail-trigger:visible").first.click()
+    page.locator("#ncu-source-audit > summary").click()
+    source = page.locator("#ncu-source-audit-body > details").filter(has_text=source_text).first
+    source.locator(":scope > summary").click()
+    part = source.locator("details").filter(has_text=source_text).first
+    part.locator(":scope > summary").click()
+    expect(part.locator("pre")).to_be_visible()
+    expect(part.locator("pre")).to_contain_text(source_text)
+    page.locator("#detail-tab-life").click()
+    page.locator("#detail-life .life-official-guide > summary").click()
+    point = page.locator("#destination-official-content li").filter(has_text=life_text).first
+    expect(point).to_be_visible()
+    page.locator("#detail-tab-application").click()
+    step = page.locator("#detail-application .workflow-step").filter(has_text=application_text).first
+    step.locator(":scope > summary").click()
+    content = step.get_by_text(application_text, exact=False).first
+    expect(content).to_be_visible()
+    expect(step).to_contain_text("待確認")
+    if school == "南京大學":
+        content = step.get_by_text("2027春第二批參考：醫療／意外保險證明一份", exact=False).first
+        expect(content).to_be_visible()
+        expect(step.get_by_text("2027春第二批參考：常規體檢表", exact=False).first).to_be_visible()
+    content.scroll_into_view_if_needed()
+    out = Path("/tmp/ncu-audit/browser")
+    out.mkdir(parents=True, exist_ok=True)
+    page.screenshot(path=str(out / filename))
+    if school == "南京大學":
+        expect(step).to_contain_text("11/20、早於邀請函")
+        expect(step).to_contain_text("胸透必檢")
+    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+    assert not errors
