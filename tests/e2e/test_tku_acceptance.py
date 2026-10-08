@@ -3,6 +3,7 @@ import json
 import re
 import os
 import subprocess
+import shutil
 from pathlib import Path
 
 import pytest
@@ -10,7 +11,7 @@ from playwright.sync_api import expect
 
 from .conftest import enter_public_site, open_navigation
 from .test_open_catalog import attach_session, sign_in_cookie, wait_until
-from .test_web_next_phase import _fill_required_application_fields, _wait_for_workspace
+from .test_web_next_phase import _wait_for_workspace
 
 HOME = "淡江大學"
 OUTPUT = Path(os.environ.get("TKU_ACCEPTANCE_OUTPUT", "/tmp/tku-acceptance/browser"))
@@ -142,7 +143,21 @@ def test_tku_documents_stages_conditions_official_sources_and_target_persistence
         assert any(row["conditional"] and row["condition"] for row in catalog["items"])
         expect(page.locator("#application-requirement-list")).to_contain_text("符合條件才需要")
         host_items = [row for row in catalog["items"] if row["phase"] in ("外校申請", "行前")]
-        assert all(row["stage"] == ("student_application" if row["phase"] == "外校申請" else "post_offer") for row in host_items)
+        for row in host_items:
+            expected_stage="after_application" if "Ritsumeikan" in name and "COE網路表" in row["name"] else "student_application" if row["phase"]=="外校申請" else "post_offer"
+            assert row["stage"]==expected_stage
+        if "Ritsumeikan" in name:
+            coe=next(row for row in host_items if "COE網路表" in row["name"])
+            assert coe['stage']=='after_application'
+            assert '11月上旬至12月上旬' in coe['applicability_note'] and '早於12月下旬錄取結果' in coe['applicability_note']
+            card=page.locator('.application-requirement-item').filter(has_text='COE網路表')
+            expect(card).to_contain_text('階段：外校申請後')
+            expect(card).to_contain_text('行政書士另通知')
+            assert '階段：錄取後' not in card.inner_text()
+            workflow=page.request.get(live_server.base_url+'/application-workflow',params={'school':name,'home_school':HOME,'academic_year':'2027-2028'}).json()
+            requirements=[r for step in workflow['steps'] for r in step['document_requirements'] if 'COE網路表' in r['name']]
+            assert len(requirements)==1 and requirements[0]['stage']=='after_application'
+            assert any('11月上旬至12月上旬' in detail for step in workflow['steps'] for detail in step['details'])
         assert all(row["applicability_year"] and row["applicability_note"] for row in host_items)
         links = page.locator("#application-requirement-list .application-requirement-source a")
         expected = [row["official_form_url"] if row["download_available"] else row["source_urls"][0] for row in catalog["items"]]
@@ -182,7 +197,11 @@ def test_tku_preparation_pdf_is_not_an_official_application_form(page, live_serv
     assert page.evaluate("state.applicationTemplates.length===2 && state.applicationTemplates.every(row=>row.official_layout===false)")
     page.locator(f'[data-open-application-template="{template_id}"]').first.click()
     expect(page.locator("#application-document-form")).to_be_visible()
-    _fill_required_application_fields(page)
+    title='自伝' if 'autobiography' in template_id else '研修計画'
+    values={'chinese_text':f'淡江驗收中文內容：{template_id}。隔離測試假資料。',
+        'japanese_text':f'淡江の検証用：日本語の{title}です。これはテスト用データです。'}
+    for field,value in values.items():
+        page.locator(f'#application-document-fields textarea[name="{field}"]').fill(value)
     page.locator("#application-document-form button[type=submit]").click()
     review = page.locator("[data-application-review-template]")
     expect(review).to_be_enabled(timeout=15000)
@@ -202,6 +221,27 @@ def test_tku_preparation_pdf_is_not_an_official_application_form(page, live_serv
     text = " ".join(page.extract_text() or "" for page in PdfReader(filename).pages)
     assert "淡江" in text and "長庚" not in text
     assert "準備稿" in text
+    for value in values.values():
+        assert re.sub(r'\s+','',value) in re.sub(r'\s+','',text)
+    assert shutil.which('pdftoppm'), 'PDF rendering check requires pdftoppm; do not report this check passed without it'
+    prefix=OUTPUT / f'{template_id}-{width}-render'
+    rendering=subprocess.run(['pdftoppm','-png','-r','110',str(filename),str(prefix)],check=True,capture_output=True,timeout=40)
+    assert b'CMap' not in rendering.stderr and b'Unknown font' not in rendering.stderr, rendering.stderr.decode(errors='replace')
+    rendered=sorted(OUTPUT.glob(prefix.name+'-*.png'))
+    assert len(rendered)==len(PdfReader(filename).pages)
+    from PIL import Image,ImageChops
+    for path in rendered:
+        with Image.open(path) as bitmap:
+            assert bitmap.width>=800 and bitmap.height>=1000
+            assert ImageChops.difference(bitmap.convert('RGB'),Image.new('RGB',bitmap.size,'white')).getbbox() is not None
+            # Table borders alone previously satisfied a nonblank-page check.
+            # Require substantial dark glyph pixels as well as embedded fonts.
+            dark=bitmap.convert('L').histogram()
+            assert sum(dark[:100])>1500, 'Rendered page has no readable text'
+    descriptors=[font.get_object().get('/FontDescriptor')
+        for pdf_page in PdfReader(filename).pages for font in pdf_page['/Resources']['/Font'].values()]
+    embedded=[descriptor for descriptor in descriptors if descriptor and '/FontFile2' in descriptor.get_object()]
+    assert embedded, 'CJK preparation font must be embedded in the actual PDF'
     field_values = page.locator("#application-document-fields textarea").evaluate_all("rows=>rows.map(row=>({name:row.name,value:row.value}))")
     expect(page.locator("#application-draft-sync-status")).to_contain_text("一般欄位已加密同步", timeout=15000)
     page.reload()
@@ -210,4 +250,5 @@ def test_tku_preparation_pdf_is_not_an_official_application_form(page, live_serv
         expect(page.locator(f'#application-document-fields textarea[name="{field["name"]}"]')).to_have_value(field["value"], timeout=15000)
     record(page, template_id, width, errors, official_layout=False,
         templates=2, actual_pdf=str(filename), mother_school_name_correct=True, draft_reload_preserved=True,
+        rendered_pages=[str(path) for path in rendered], pdf_contains_both_answers=True,
         official_source=source.get_attribute("href"))

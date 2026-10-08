@@ -1215,6 +1215,18 @@ class ApplicationDocumentRequirement(BaseModel):
     applicability_year: str | None = None
     applicability_note: str | None = None
 
+    @model_serializer(mode="wrap")
+    def serialize_applicability(self, handler):
+        payload = handler(self)
+        fields = ("stage", "conditional", "condition", "official_form_verified",
+            "applicability_status", "applicability_year", "applicability_note")
+        # An additive school adapter must not invalidate old published snapshots.
+        # Preserve the original payload when none of the new metadata is present.
+        if not any(getattr(self, name) for name in fields):
+            for name in fields:
+                payload.pop(name, None)
+        return payload
+
 
 class ApplicationWorkflowSource(BaseModel):
     title: str

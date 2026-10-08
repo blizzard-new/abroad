@@ -96,15 +96,27 @@ def test_document_template_api_honours_tku_year_and_round(tmp_path):
     assert client.get('/application-center/templates',params={**query,'application_round':'英歐語組'}).json()==[]
 
 
-def test_native_context_empty_strings_keep_preparation_manifest_and_wrong_round_does_not():
+@pytest.mark.parametrize('template_id,missing_label', [
+    ('tku-autobiography-preparation','日文自傳'),
+    ('tku-study-plan-preparation','日文研習計畫'),
+])
+def test_native_context_empty_strings_keep_preparation_manifest_and_wrong_round_does_not(template_id, missing_label):
     from exchange_info.application_documents import build_packet_manifest
     from exchange_info.models import ApplicationPacketRequest
     request=ApplicationPacketRequest(context={"school_name":"淡江大學", "academic_year":"2027-2028",
         "application_round":"", "target_school":""},
-        answers={"tku-autobiography-preparation":{"autobiography_zh":"自傳內容", "autobiography_ja":"自伝の内容"}},
-        selections=[{"template_id":"tku-autobiography-preparation", "copies":1}])
+        answers={template_id:{"chinese_text":"中文測試內容", "japanese_text":"日本語の内容"}},
+        selections=[{"template_id":template_id, "copies":1}])
     manifest=build_packet_manifest(request)
-    assert len(manifest.items)==1 and manifest.items[0].template_id=="tku-autobiography-preparation"
+    assert len(manifest.items)==1 and manifest.items[0].template_id==template_id
+    assert manifest.items[0].missing_required_fields==[] and manifest.items[0].invalid_attachment_fields==[]
+    preview={field.field_id:field for field in manifest.items[0].preview_fields}
+    assert preview['chinese_text'].display_value=='中文測試內容' and not preview['chinese_text'].is_blank
+    assert preview['japanese_text'].display_value=='日本語の内容' and not preview['japanese_text'].is_blank
+    blank=request.model_copy(update={'answers':{template_id:{'chinese_text':'中文測試內容'}}})
+    missing=build_packet_manifest(blank).items[0]
+    assert missing.missing_required_fields==[missing_label]
+    assert next(f for f in missing.preview_fields if f.field_id=='japanese_text').is_blank
     assert manifest.source_checked_at.date().isoformat()=="2026-10-08"
     for field,value in [("academic_year","2028-2029"),("application_round","英歐語組")]:
         other=request.model_copy(update={"context":request.context.model_copy(update={field:value})})
@@ -139,7 +151,7 @@ def test_acceptance_gap_audit_does_not_promote_missing_forms_or_department_metad
     assert len(audit['field_gaps'])==67 and len(audit['documents'])==53
     assert audit['official_not_announced_claims']==[]
     assert all(row['evidence'] and row['status']!='verified' for row in audit['field_gaps'])
-    assert len(audit['access_rules'])==6 and all(r['source_url'].startswith('https://') and r['locator'] and r['quote'] and r['applicable_year'] and r['checked_at'] for r in audit['access_rules'])
+    assert len(audit['access_rules'])==7 and all(r['source_url'].startswith('https://') and r['locator'] and r['quote'] and r['applicable_year'] and r['checked_at'] for r in audit['access_rules'])
     candidate=audit['department_candidate']
     assert candidate['detail_http_status']==502 and candidate['promoted_to_field'] is False
     seikei=[d for d in audit['documents'] if 'Seikei' in d['school_name']]
@@ -147,6 +159,27 @@ def test_acceptance_gap_audit_does_not_promote_missing_forms_or_department_metad
     assert not any(d['original_form_contents_verified'] for d in seikei)
     uec=[d for d in audit['documents'] if 'Electro' in d['school_name']]
     assert all(d['status']=='reference_only' and not d['current_host_notice_form_link_verified'] for d in uec)
+
+
+def test_added_document_metadata_preserves_three_mothers_existing_snapshot_hashes():
+    from exchange_info.content_governance import workflow_content_hash
+    from exchange_info.storage import load_bundled_application_workflows
+    baseline={
+        ('長庚大學','上海交通大學 Shanghai Jiao Tong University','115'): '4d9024354c59c80e3ddf82d4109d252a014b3918a36f81ec8587ad65a9491d93',
+        ('國立臺北大學','ESIC大學(ESIC University)','115'): '3fba89101ee8ab1fd5c98bbdd9275efee1f0ffcdf007b1f8c0ea9b33501aad55',
+        ('國立臺灣大學','聖保羅大學','116'): '384c16b99e474e65fc5f0e36c6b66a293b72473ee2e045a7d728f831bffb5fba',
+    }
+    # Exact snapshots read from untouched f6ad; no implementation-shaped oracle.
+    workflows=load_bundled_application_workflows()
+    for (home,school,year),digest in baseline.items():
+        row=next(w for w in workflows if (w.home_university,w.school_name,w.academic_year)==(home,school,year))
+        assert workflow_content_hash(row)==digest
+    rit=next(w for w in load_tku_workflows() if 'Ritsumeikan' in w.school_name)
+    coe=next(d for d in rit.steps[4].document_requirements if 'COE網路表' in d.name)
+    assert coe.stage=='after_application' and '11月上旬至12月上旬' in coe.applicability_note
+    changed=rit.model_copy(deep=True)
+    next(d for d in changed.steps[4].document_requirements if 'COE網路表' in d.name).stage='post_offer'
+    assert workflow_content_hash(changed)!=workflow_content_hash(rit)
 
 
 def test_document_catalog_scopes_four_mothers_even_for_same_japanese_partner(tmp_path, monkeypatch):

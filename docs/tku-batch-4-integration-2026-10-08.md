@@ -2,7 +2,7 @@
 
 2026-10-08 查核；repository `blizzard-new/abroad`；獨立目錄 `/workspace/abroad-tku`；分支 `data/tku-exchange-20261008`。本批已依後續授權將最新 main `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59` 合併到本分支，merge commit `1bbb150f738bb5a9eac5d5166b489d449d27bc22`。没有反向 merge main、部署或 force push，未使用其他 session 的工作目錄。
 
-本文件與 [實際驗證 JSON](tku-batch-4-validation-2026-10-08.json) 是最新交接；前三批檔案保留歷史。校別資料與原附件不重寫，已核實的 53 項外校文件與 28 份附件仍保留。
+本文件與 [實際驗證 JSON](tku-batch-4-validation-2026-10-08.json) 保留第四批歷史結果；最新交接見 [使用者驗收候選](tku-acceptance-2026-10-08.md) 及原 draft PR #2。校別資料與原附件保留，53 項外校文件與 28 份附件仍保留。
 
 ## 資料範圍與完整度
 

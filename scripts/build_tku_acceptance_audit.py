@@ -50,6 +50,8 @@ def build():
         "provided separately to admitted students", "official_post_offer_gate", 21)
     rule("rit-coe", "ritsumeikan-2027-guide", "PDF p.20 Student Visa Applicants",
         "provided separately", "official_separate_instructions", 20)
+    rule("rit-coe-schedule", "ritsumeikan-2027-guide", "PDF p.2 COE Application Procedure / Application Results",
+        "Early November to Early December", "official_pre_offer_coe_window", 2)
     rule("seikei-materials", "seikei-host", "Program / application details and materials",
         "Please contact your home university international office exchange coordinator for application details and materials.",
         "official_contact_route_private_restriction_not_verified")
@@ -72,6 +74,8 @@ def build():
             form = sources.get(doc["form_source_id"])
             document_access.append(dict(school_name=school["school_name"], key=doc["key"], name=doc["name"],
                 phase=doc["phase"], condition=doc["condition"], status=doc["status"], form_access=access,
+                stage=doc['stage'], timing=doc['timing'],
+                timing_rule='rit-coe-schedule' if school['partner_id'].endswith('ritsumeikan') and doc['key']=='coe' else None,
                 official_restriction_rule=rule_id, original_form_contents_verified=bool(form and form.get("open_status") == "verified_open"),
                 current_host_notice_form_link_verified=bool(form and doc["status"] == "verified" and doc["applicable_year"] == "2027 Spring"),
                 applicability_caution=school["programme_mapping"], evidence=doc["evidence"],

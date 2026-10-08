@@ -6126,6 +6126,7 @@ function applicationRequirementMeta(item) {
   ];
   if (item.signatures?.length) parts.push(`簽名：${item.signatures.join("、")}`);
   if (item.stamps?.length) parts.push(`核章：${item.stamps.join("、")}`);
+  if (item.stage) parts.push(`階段：${({nomination:"提名",student_application:"學生申請",after_application:"外校申請後",second_submission:"第二次送件",post_offer:"錄取後",after_dorm_assignment:"住宿分配後",conditional_program:"特定計畫條件"})[item.stage]}`);
   if (item.conditional) parts.push(`適用條件：${item.condition || item.name}`);
   if (item.applicability_status) parts.push(`適用性：${({verified_current:"當期依據已核",needs_confirmation:"當期適用待確認",reference_only:"一般／歷史參考"})[item.applicability_status]}`);
   if (item.applicability_year) parts.push(item.applicability_year);

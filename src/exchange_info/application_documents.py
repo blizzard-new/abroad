@@ -1357,7 +1357,16 @@ def build_packet_manifest(
     )
 
 
-def _register_pdf_font() -> tuple[str, str]:
+def _register_pdf_font(home_school: str | None = None) -> tuple[str, str]:
+    if home_school and require_university(home_school).id == "tku":
+        # Embed the school adapter's CJK font so Chinese/Japanese preparation
+        # answers remain visible without a viewer's optional external CMaps.
+        regular = "TKUPreparationCJK"
+        if regular not in pdfmetrics.getRegisteredFontNames():
+            from reportlab.pdfbase.ttfonts import TTFont
+            font_path = Path(__file__).parent / "official_data/tku/fonts/NotoSansCJKtc-Regular.ttf"
+            pdfmetrics.registerFont(TTFont(regular, str(font_path)))
+        return regular, regular
     regular = "ApplicationCJK"
     bold = "ApplicationCJKBold"
     candidates = [
@@ -1382,8 +1391,8 @@ def _register_pdf_font() -> tuple[str, str]:
     return "MSung-Light", "MSung-Light"
 
 
-def _styles() -> dict[str, ParagraphStyle]:
-    regular, bold = _register_pdf_font()
+def _styles(home_school: str | None = None) -> dict[str, ParagraphStyle]:
+    regular, bold = _register_pdf_font(home_school)
     base = getSampleStyleSheet()
     return {
         "title": ParagraphStyle(
@@ -1491,7 +1500,7 @@ def _pdf_document(
 
 
 def _manifest_cover(request: ApplicationPacketRequest, manifest: ApplicationPacketManifest) -> bytes:
-    styles = _styles()
+    styles = _styles(request.context.school_name)
     program_labels = {
         "exchange": "學期／學年交換",
         "dual_degree": "雙聯學位",
@@ -1623,7 +1632,7 @@ def _generic_template_pdf(
     request: ApplicationPacketRequest,
     copy_number: int,
 ) -> bytes:
-    styles = _styles()
+    styles = _styles(request.context.school_name)
     answers = request.answers.get(template.id, {})
     story: list[Any] = [
         Paragraph(html.escape(template.title), styles["title"]),

@@ -47,11 +47,11 @@ def enrich_current(record):
         f['housing_costs'].evidence += [host_fact('',s,'Fee Table (Ritsumeikan Students)').evidence[0] for s in ['ritsumeikan-bkc-housing','ritsumeikan-oic-housing']]
         put('living_costs','一般SKP頁估一學期798,000／兩學期1,582,000日圓，含住宿、食物、交通、手機、休閒及保險；該預算表保險項目與2027新增支援費包含項目可能重複，年度亦未明示，須確認後才可合計。','ritsumeikan-fees','Estimated Living Expenses',status='needs_confirmation',reason='一般預算表未明示年度，academic/liability insurance與2027支援費內容可能重複；不產出確定總預算。')
         put('insurance','50,000日圓SKP支援費包含Gakkensai／Gakkenbai及COE行政服務；不含國民健康保險與個人選擇保險，後者入境後另辦另付。',guide,'PDF p.4 support fee inclusions/exclusions')
-        put('arrival_preparation','3月上中旬抵達／orientation；COE預計2月中寄出，須依指定行政書士另外送件；錄取後全體填健康資訊（1月中暫定），患病／用藥或需學習調整者另附指定證明；住宿結果預計2月底。',guide,'PDF p.2, p.20–22')
+        put('arrival_preparation','COE申請程序為11月上旬至12月上旬，早於12月下旬錄取結果；依行政書士另通知送件，不能等錄取才辦。COE核發文件預計2月中寄出；3月上中旬抵達／orientation。錄取後全體填健康資訊（1月中暫定），患病／用藥或需學習調整者另附指定證明；住宿結果預計2月底。',guide,'PDF p.2, p.20–22')
         put('arrival_date',None,guide,'PDF p.2 Arrival / Orientation (Early to Mid-March)',status='missing_in_source',reason='只載區間，精確抵達日待錄取生通知，不能自行建立航班日期。')
         put('course_restrictions','每週至少7堂95分鐘課、上限20學分；依track／校區核對可選院系及歷年課表，2027課程可能變動；大學部只選大學部課，研究生可選兩層級但SKP不提供研究指導；跨校區需許可，Design and Art不開放。',guide,'PDF p.5–8')
         put('course_schedule_2027',None,guide,'PDF p.5 and p.8 Course Lists From Previous Semesters',status='not_verified_new',reason='簡章要求核對歷年課表，公開2027實際課表未核實；不是官方明示尚未公告。')
-        put('latest_forms','2027簡章文件清單已核實；SKP申請網址／帳號提名核准後寄送，COE及健康表另寄錄取生，非公開下載空白表。','ritsumeikan-howto-2027','Application Process Step 2; guide p.20–21',status='needs_confirmation',reason='當期清單／提供方式已核實，但未獲提名後的實際網路表及錄取後健康表內容，不能稱全部表單已驗證。')
+        put('latest_forms','2027簡章文件清單已核實；SKP申請網址／帳號提名核准後寄送。COE程序11月上旬至12月上旬（錄取前），行政書士另提供指定網路表；健康表錄取後另提供。實際表單內容尚未取得。','ritsumeikan-howto-2027','Application Process Step 2; guide p.2/p.20–21',status='needs_confirmation',reason='當期清單／提供方式已核實，但未取得提名後SKP網路表、錄取前COE表及錄取後健康表內容，不能稱全部表單已驗證。')
         put('transport','衣笠各宿舍官方一般估步行／單車約10–30分鐘；OIC宿舍步行約18分鐘。實際校區依提名及track，跨校區通學需另計。','ritsumeikan-kinugasa-housing','Access to campus for Taishogun/Tokiwa/Utano',status='reference_only',reason='一般宿舍交通估計，住宿分配與2027路線尚未確定。')
         record.conflicts.append('ritsumeikan-budget-insurance')
     elif slug=='nagasaki':
@@ -137,11 +137,12 @@ def enrich_current(record):
 def host_documents(slug):
     """Named items preserve conditions, phase, version and public-form access."""
     rows=[]
-    def doc(key,name,source,locator,*,phase=4,condition='所有申請人',form=None,status='verified',copy_type='unspecified',signatures=None,access=None):
+    def doc(key,name,source,locator,*,phase=4,condition='所有申請人',form=None,status='verified',copy_type='unspecified',signatures=None,access=None,stage=None,timing=None):
         s=source_map()[source]
         form_source=source_map().get(form) if form else None
         rows.append(dict(key=key,name=name,phase='外校申請' if phase==4 else '行前',step_order=phase,
             condition=condition,status=status,applicable_year=s['applicable_year'],checked_at=CHECKED_AT.isoformat(),
+            stage=stage or ('student_application' if phase==4 else 'post_offer'), timing=timing,
             evidence=host_fact('',source,locator).evidence[0].model_dump(mode='json'),
             form_source_id=form,official_form_url=form_source['source_url'] if form_source else None,
             form_access=access or ('verified_public' if form_source else 'own_document'),
@@ -158,7 +159,7 @@ def host_documents(slug):
         doc('statement','個人聲明PDF：日文500–700字或英文500–700 words',s,'PDF p.16–17; p.19')
         doc('passport','護照姓名／國籍／照片等相關頁；曾入境日本者併入出境章頁PDF',s,'PDF p.18–19',copy_type='copy')
         doc('residence-card','有效在留卡正面影本，My Number背面不得提交',s,'PDF p.19–20',condition='持有效日本在留卡者',copy_type='copy')
-        doc('coe','指定行政書士COE網路表，另依通知補件',s,'PDF p.20',phase=5,condition='非日本籍且無有效在留卡者；有在留卡者由外校判斷',access='separately_sent_to_applicant')
+        doc('coe','指定行政書士COE網路表，另依通知補件',s,'PDF p.2 Schedule／p.20 COE',phase=5,condition='非日本籍且無有效在留卡者；有在留卡者由外校判斷',access='separately_sent_to_applicant',stage='after_application',timing='11月上旬至12月上旬，早於12月下旬錄取結果；行政書士另通知，未載確切截止，不能等offer。')
         doc('health','Health Information Registration Form',s,'PDF p.21',phase=5,access='after_admission_separately_provided')
         doc('medical','指定診斷證明及處方',s,'PDF p.21–22',phase=5,condition='治療／服藥／定期觀察或需醫療支持者',access='after_admission_separately_provided')
         doc('accommodation-support','診斷證明及母校學習調整證明；預期困難聲明可選',s,'PDF p.21–22',phase=5,condition='申請合理學習調整者；困難聲明選附',access='after_admission_separately_provided')
@@ -226,8 +227,8 @@ def document_requirement(item):
     return dict(name=name,copy_type=item['copy_type'],signatures=item['signatures'],
         official_form_url=item['official_form_url'],source_urls=list(dict.fromkeys(urls)),
         needs_confirmation=item['status']!='verified',
-        stage='student_application' if item['step_order']==4 else 'post_offer',
+        stage=item['stage'],
         conditional=conditional,condition=item['condition'],official_form_verified=form_verified,
         applicability_status='reference_only' if item['status']=='reference_only' else 'needs_confirmation' if item['status']!='verified' or mapping_note else 'verified_current',
         applicability_year=item['applicable_year'],
-        applicability_note=f"外校incoming，僅已獲母校推薦者；{item['evidence']['locator']}；{access_labels[item['form_access']]}。{mapping_note}")
+        applicability_note=f"外校incoming，僅已獲母校推薦者；{item['evidence']['locator']}；{access_labels[item['form_access']]}。{item['timing'] or ''}{mapping_note}")

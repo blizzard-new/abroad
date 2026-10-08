@@ -20,12 +20,62 @@ BROWSERS = ["test_tku_acceptance.py", "test_ntu_school.py", "test_application_wo
     "test_planning_workspace.py"]
 
 
+def candidate_state(root, commit):
+    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+    dirty = subprocess.check_output(["git", "status", "--porcelain"], cwd=root, text=True).strip()
+    return dict(commit=head, worktree_status=dirty, valid=head == commit and not dirty)
+
+
+def execute_checks(root, out, commit, checks, env, report):
+    """Fail the process for failed children or changes to the candidate under test."""
+    report.update(tested_commit=commit, started_at=time.time(), checks=[])
+    report["starting_state"] = candidate_state(root, commit)
+    exit_code = 0
+    for name, command in checks:
+        before = candidate_state(root, commit)
+        if not before["valid"]:
+            report["candidate_guard_failure"] = dict(check=name, when="before", **before)
+            exit_code = 2
+            break
+        print(f"Running {name} at {commit}", flush=True)
+        start = time.time()
+        log = out / f"{name}.log"
+        with log.open("w") as handle:
+            try:
+                result = subprocess.run(command, cwd=root, env=env, stdout=handle, stderr=subprocess.STDOUT)
+                child_exit = result.returncode
+            except OSError as error:
+                handle.write(f"Cannot execute command: {error}\n")
+                child_exit = 127
+        after = candidate_state(root, commit)
+        report["checks"].append(dict(name=name, command=command, exit_code=child_exit,
+            elapsed_seconds=round(time.time() - start, 2), log=str(log), before=before, after=after))
+        if child_exit:
+            exit_code = 1
+        print(f"{name}: actual exit {child_exit}; {log}", flush=True)
+        (out / "run.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+        if not after["valid"]:
+            report["candidate_guard_failure"] = dict(check=name, when="after", **after)
+            exit_code = 2
+            break
+    ending = candidate_state(root, commit)
+    if not ending["valid"]:
+        exit_code = 2
+    report.update(ended_at=time.time(), ending_commit=ending["commit"],
+        ending_worktree_status=ending["worktree_status"], runner_exit_code=exit_code,
+        all_checks_executed=len(report["checks"]) == len(checks),
+        all_checks_passed=exit_code == 0 and len(report["checks"]) == len(checks))
+    (out / "run.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+    return exit_code
+
+
 def run(args):
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
-    commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+    commit = args.candidate_sha
     env = dict(os.environ, PYTHONPATH=str(ROOT / "src"),
-        TKU_ACCEPTANCE_OUTPUT=str(out / "browser"), TKU_SWITCH_OUTPUT=str(out / "switch.json"))
+        TKU_ACCEPTANCE_OUTPUT=str(out / "browser"), TKU_SWITCH_OUTPUT=str(out / "switch.json"),
+        UV_CACHE_DIR=str(out / "uv-cache"))
     units = [str(p.relative_to(ROOT)) for p in sorted((ROOT / "tests").glob("test_*.py"))
         if p.name != "test_content_governance_wrapper.py"]
     browser = [f"tests/e2e/{name}" for name in BROWSERS]
@@ -40,26 +90,15 @@ def run(args):
         ("inherited-wrapper-collection", [sys.executable, "-m", "pytest", "tests/test_content_governance_wrapper.py", "--collect-only", "-q", f"--junitxml={out / 'wrapper.xml'}"]),
         ("lockfile", ["uv", "lock", "--check"]),
     ]
-    report = dict(tested_commit=commit, started_at=time.time(), browser_files=BROWSERS,
+    report = dict(browser_files=BROWSERS,
         unit_file_count=len(units), deliberately_not_run=["tests/integration/test_local_ai_runtime.py: unrelated Ollama hardware/runtime integration"], checks=[])
-    for name, command in checks:
-        print(f"Running {name} at {commit}", flush=True)
-        start = time.time()
-        log = out / f"{name}.log"
-        with log.open("w") as handle:
-            result = subprocess.run(command, cwd=ROOT, env=env, stdout=handle, stderr=subprocess.STDOUT)
-        report["checks"].append(dict(name=name, command=command, exit_code=result.returncode,
-            elapsed_seconds=round(time.time() - start, 2), log=str(log)))
-        print(f"{name}: actual exit {result.returncode}; {log}", flush=True)
-        (out / "run.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
-    report["ended_at"] = time.time()
-    report["ending_commit"] = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
-    report["ending_worktree_status"] = subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip()
-    (out / "run.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
+    exit_code = execute_checks(ROOT, out, commit, checks, env, report)
     print(json.dumps(report, ensure_ascii=False), flush=True)
+    return exit_code
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    run(parser.parse_args())
+    parser.add_argument("--candidate-sha", required=True, help="Exact full HEAD SHA; requires a clean unchanged worktree")
+    sys.exit(run(parser.parse_args()))

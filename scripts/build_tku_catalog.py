@@ -268,7 +268,7 @@ def build_platform_data(current):
                 selected=[item for item in host_items if item['step_order']==order]
                 requirements=[document_requirement(item) for item in selected]
                 documents=[r['name'] for r in requirements]
-                details += [f"{item['name']}；適用：{item['condition']}；{item['applicable_year']}／{item['evidence']['locator']}；表單取得：{item['form_access']}" for item in selected]
+                details += [f"{item['name']}；適用：{item['condition']}；{item['applicable_year']}／{item['evidence']['locator']}；表單取得：{item['form_access']}；{item['timing'] or ''}" for item in selected]
                 details += [str(fields[k].value or fields[k].reason) for k in
                     (['host_nomination_deadline','host_programme_mapping','latest_forms'] if order==4 else ['insurance','visa_residence','arrival_preparation','housing_application_deadline'])]
             extra={}
