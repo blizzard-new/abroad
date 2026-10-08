@@ -117,18 +117,27 @@ def build_tku_student_dashboard(*, partner_universities=None, reference_time: da
         ],source=_source("ritsumeikan-2027-guide","PDF p.2時程，p.20–22 COE與健康；2027 Spring；2026-10-08核對。")),
         StudentInfoItem(title="成蹊2027春季外校期限",details=[
             "提名10/1、申請10/15（未載時刻）；文件須由母校承辦人寄送。不能作校內新申請期限。",
-        ],source=_source("seikei-2027-sheet","2027 Spring fact sheet PDF p.1–2，2026-10-08核對。"))],
+        ],source=_source("seikei-2027-sheet","2027 Spring fact sheet PDF p.1–2，2026-10-08核對。")),
+        StudentInfoItem(title="長崎2027春NICS外校申請：計畫對應仍待確認",details=[
+            "官方NICS公告載2026/10/31消印有效，未載時刻；未另列提名截止。Form A線上申請及誓約書內文已核對2027春。",
+            "母校本輪未明示NICS；淡江→NICS及研究生適用尚待確認。照片份數、志望動機書日英語言／字數、交換期間仍有來源矛盾。",
+        ],source=_source("nagasaki-nics-2027","2027春NICS：出願期限、応募資格、応募書類段；已核實外校公告，不等於核實母校計畫對應。"))],
         scholarship_info=[StudentInfoItem(title="費用、住宿與獎助",details=[
             "須繳淡江全額學雜費及註冊，外校主要學費互惠免繳，其他費用自付；不保證宿舍與獎學金。",
-            "長崎的正確交換頁及2027期限、住宿價目尚未核實；電氣通信只有一般JUSST頁資料，2027專屬表單費率待確認。",
+            "長崎2027春NICS公告、期限及住宿價目已核對；淡江本輪NICS／研究生對應仍待確認。電氣通信只有一般JUSST頁資料，2027專屬表單費率待確認。",
         ],source=guide), StudentInfoItem(title="立命館2027春季新增費用與獎助",details=[
             "所有SKP學生含交換生新增JPY50,000 Student Support Fee；RUSSES於2026秋季結束，JASSO不保證。",
         ],source=_source("ritsumeikan-2027-guide","2027 Spring PDF p.4 Changes，2026-10-08核對。")),
         StudentInfoItem(title="成蹊2027住宿分期費用",details=[
             "2027/8前Dormy及會館月租JPY93,000但費用包含不同；2027/9起校內住宿學生搬至MICHI，JPY120,000/月含餐寢具水電網路、無押金。",
-        ],source=_source("seikei-2027-sheet","2027 Spring PDF p.3–4 Accommodation and cost of living，2026-10-08核對。"))],
+        ],source=_source("seikei-2027-sheet","2027 Spring PDF p.3–4 Accommodation and cost of living，2026-10-08核對。")),
+        StudentInfoItem(title="長崎2027春NICS住宿及費用：限該計畫",details=[
+            "互惠交換學費0；活动費半年JPY50,000／一年53,100含指定A/B保險；行政費15,000／20,000含福岡接送，國民健康保險約2,000/月另付。",
+            "Ampelos雙人21,000／單人42,000每月，入寮費20,000／30,000；餐費30,000/月且至6月底早餐晚餐必訂。房型偏好不保證，住房申請確切截止仍未載。",
+            "上述費率不能套到其他長崎計畫；是否適用淡江本輪及研究生仍待確認。",
+        ],source=_source("nagasaki-nics-2027","2027春NICS：費用、住宿、保險及餐費段；2026-10-08核對。"))],
         partner_universities=partner_universities if partner_universities is not None else fetch_tku_partner_universities(reference_time=now),
-        sources=[_source(s) for s in ["jp-revision","jp-revision-attachment-1","jp-revision-attachment-2","ritsumeikan-2027-guide","seikei-2027-sheet","uec-application","uec-costs"]])
+        sources=[_source(s) for s in ["jp-revision","jp-revision-attachment-1","jp-revision-attachment-2","ritsumeikan-2027-guide","seikei-2027-sheet","nagasaki-nics-2027","nagasaki-partners","nagasaki-form-a-online","nagasaki-pledge","uec-application-recheck","uec-costs"]])
 
 
 def tku_exchange_info(partners=None) -> ExchangeInfo:
@@ -143,13 +152,17 @@ def tku_exchange_info(partners=None) -> ExchangeInfo:
 
 
 def tku_processed_pages() -> list[ProcessedPage]:
-    ids = {"jp-revision", "jp-revision-attachment-1", "jp-revision-attachment-2", "ritsumeikan-2027-guide", "seikei-2027-sheet"}
+    ids = {"jp-revision", "jp-revision-attachment-1", "jp-revision-attachment-2", "nagasaki-partners",
+           "taiwan-coe-visa", "taiwan-visa-form-index", "japan-student-visa"}
     result=[]
     for row in load_tku_sources():
-        if row["id"] not in ids: continue
+        if row["id"] not in ids and row.get("role") != "host_incoming": continue
+        if row.get("http_status") != 200 or not row.get("sha256"): continue
         text = row.get("text") or "\n".join(f"[PDF p.{p['page']}] {p['text']}" for p in row.get("pages",[]))
+        if not text: continue
+        caution = "長崎NICS與淡江本輪／研究生的對應尚未核實；照片、作文及期間矛盾須另確認。" if row["id"].startswith("nagasaki-") else ""
         result.append(ProcessedPage(title=f"淡江 {row.get('title',row['id'])}",source_url=row["source_url"],text=text,
-            summary=f"{row['applicable_year']}，{row['role']}，查核2026-10-08；日語二甄校內已截止，不能拿外校期限取代。",
+            summary=f"{row['applicable_year']}，{row['role']}，查核2026-10-08；日語二甄校內已截止，不能拿外校期限取代。一般／舊版僅依各來源適用期參考，不升為2027專屬。{caution}",
             category="exchange_application",crawled_at=CHECKED_AT,content_hash=row["sha256"]))
     return result
 

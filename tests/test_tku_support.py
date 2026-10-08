@@ -52,6 +52,26 @@ def test_current_fields_have_year_role_date_and_official_evidence():
                     assert evidence.applicable_year=="2027-2028"
 
 
+def test_dashboard_and_search_include_reviewed_nagasaki_evidence_without_expanding_mapping():
+    from exchange_info.tku_student_view import tku_processed_pages
+    dashboard = build_tku_student_dashboard()
+    wording = " ".join(detail for item in dashboard.scholarship_info for detail in item.details)
+    assert "正確交換頁及2027期限、住宿價目尚未核實" not in wording
+    assert "NICS／研究生對應仍待確認" in wording
+    assert "53,100" in wording and "21,000" in wording
+    required = {"nagasaki-nics-2027", "nagasaki-partners", "nagasaki-form-a-online", "nagasaki-pledge"}
+    sources = {row["id"]:row for row in load_tku_sources()}
+    urls = {sources[id]["source_url"] for id in required}
+    assert urls <= {source.source_url for source in dashboard.sources}
+    pages = tku_processed_pages()
+    assert urls <= {page.source_url for page in pages}
+    naga = [page for page in pages if "nagasaki-gaigo.ac.jp" in page.source_url]
+    assert all("本輪／研究生的對應尚未核實" in page.summary for page in naga)
+    assert all(page.text and page.content_hash for page in pages)
+    failed = {row["source_url"] for row in sources.values() if row.get("open_status") == "failed"}
+    assert not failed.intersection(page.source_url for page in pages)
+
+
 def test_bundled_attachments_open_and_content_confirms_cycle():
     sources=load_tku_sources()
     for source in sources:

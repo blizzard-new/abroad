@@ -112,6 +112,8 @@ const state = {
   applicationTemplates: [],
   applicationDocumentCatalog: null,
   applicationDocumentCatalogError: "",
+  applicationDocumentCatalogContextKey: "",
+  applicationTemplateRequestId: 0,
   applicationContext: {
     school_name: "長庚大學",
     target_school: "",
@@ -1264,6 +1266,13 @@ function setHomeSchool(schoolName, { reload = true } = {}) {
   state.selectedHomeSchool = nextSchool;
   state.applicationContext.school_name = nextSchool;
   if (needsRefresh) {
+    // Invalidate even an A → B → A response before the next school load starts.
+    state.applicationTemplateRequestId += 1;
+    state.applicationTemplates = [];
+    state.applicationDocumentCatalog = null;
+    state.applicationDocumentCatalogError = "";
+    state.applicationDocumentCatalogContextKey = "";
+    state.applicationLoading = false;
     state.applicationContext.target_school = "";
     state.applicationContext.target_country = "";
     state.coverage = null;
@@ -5707,10 +5716,9 @@ function applicationFlagsFromForm(form) {
   return ["subsidy", "military_service", "full_year"].filter((name) => form.elements[name]?.checked);
 }
 
-function readApplicationContextForm() {
+function readApplicationContextForm({ targetSchool = $("#application-target-school")?.value || "" } = {}) {
   const form = $("#application-context-form");
   if (!form) return state.applicationContext;
-  const targetSchool = form.elements.target_school.value;
   const partner = state.dashboard?.partner_universities?.find((item) => item.school_name === targetSchool);
   state.applicationContext = {
     ...state.applicationContext,
@@ -5785,20 +5793,37 @@ function initializeApplicationSelections() {
   persistApplicationContext({ sync: false });
 }
 
+function applicationCatalogContextKey(homeSchool = activeHomeSchool(), context = state.applicationContext) {
+  return JSON.stringify([homeSchool, ...["target_school", "program_type", "college", "department", "degree_level", "academic_year", "application_round", "semester"].map(key => context[key] || ""), [...(context.flags || [])].sort()]);
+}
+
 async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}) {
   if (!canAccessPartnerCatalog()) return false;
   const requestedSchool = homeSchool;
+  const context = { ...state.applicationContext, flags: [...(state.applicationContext.flags || [])] };
+  const contextKey = applicationCatalogContextKey(requestedSchool, context);
+  const requestId = ++state.applicationTemplateRequestId;
+  const requestOwner = captureAuthenticatedRequestContext();
+  const isCurrent = () => requestId === state.applicationTemplateRequestId
+    && authenticatedRequestContextIsCurrent(requestOwner)
+    && isCurrentHomeSchool(requestedSchool) && contextKey === applicationCatalogContextKey();
   const container = $("#application-template-list");
-  if (container) container.innerHTML = '<div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>';
+  state.applicationTemplates = [];
+  state.applicationDocumentCatalog = null;
+  state.applicationDocumentCatalogError = "";
+  state.applicationDocumentCatalogContextKey = "";
   state.applicationLoading = true;
+  renderApplicationDocumentCatalog();
+  renderApplicationPacket();
+  if (container) container.innerHTML = '<div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div>';
   try {
-    const context = state.applicationContext;
     const params = new URLSearchParams({
       school: requestedSchool,
       program_type: context.program_type || "exchange",
     });
     if (context.flags?.length) params.set("flags", context.flags.join(","));
     const templates = await fetchJson(`/application-center/templates?${params}`);
+    if (!isCurrent()) return false;
     let catalog = null;
     let catalogError = "";
     if (context.program_type === "exchange" && context.target_school) {
@@ -5815,13 +5840,15 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}
         catalogError = error.message;
       }
     }
-    if (!isCurrentHomeSchool(requestedSchool)) return false;
-    state.applicationTemplates = templates;
-    state.applicationDocumentCatalog = catalog;
-    state.applicationDocumentCatalogError = catalogError;
+    if (!isCurrent()) return false;
     if (state.account && state.applicationFormDraftLoadedSchool !== requestedSchool) {
       await loadApplicationFormDrafts({ homeSchool: requestedSchool });
     }
+    if (!isCurrent()) return false;
+    state.applicationTemplates = templates;
+    state.applicationDocumentCatalog = catalog;
+    state.applicationDocumentCatalogError = catalogError;
+    state.applicationDocumentCatalogContextKey = contextKey;
     initializeApplicationSelections();
     renderApplicationCenter();
     refreshSelectedApplicationPreviews();
@@ -5834,11 +5861,16 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}
     }
     return true;
   } catch (error) {
-    if (!isCurrentHomeSchool(requestedSchool)) return false;
+    if (!isCurrent()) return false;
+    state.applicationDocumentCatalogError = error.message;
     if (container) renderEmpty("#application-template-list", "暫時無法取得申請文件", error.message, "error");
     return false;
   } finally {
-    if (isCurrentHomeSchool(requestedSchool)) state.applicationLoading = false;
+    if (isCurrent()) {
+      state.applicationLoading = false;
+      renderApplicationDocumentCatalog();
+      renderApplicationPacket();
+    }
   }
 }
 
@@ -5953,13 +5985,20 @@ function renderApplicationDocumentCatalog() {
   const count = $("#application-requirement-count");
   const summary = $("#application-requirement-summary");
   if (!container) return;
+  if (state.applicationLoading && state.applicationContext.target_school) {
+    if (count) count.textContent = "載入中";
+    if (summary) summary.textContent = `${state.applicationContext.target_school} · 正在核對本次年度與官方文件來源…`;
+    container.innerHTML = '<p class="workspace-empty" role="status">正在載入這所學校的文件清單。</p>';
+    return;
+  }
   if (state.applicationDocumentCatalogError) {
     if (count) count.textContent = "讀取失敗";
     if (summary) summary.textContent = "準備工具仍可使用，但當期文件需求暫時無法讀取。";
     container.innerHTML = `<div class="document-source-gap" role="alert"><p>${escapeHtml(state.applicationDocumentCatalogError)}</p><button type="button" class="secondary-button" data-retry-application-catalog>重新載入官方清單</button></div>`;
     return;
   }
-  const catalog = state.applicationDocumentCatalog;
+  const catalog = state.applicationDocumentCatalogContextKey === applicationCatalogContextKey()
+    ? state.applicationDocumentCatalog : null;
   if (!state.applicationContext.target_school) {
     if (count) count.textContent = "請選擇學校";
     if (summary) summary.textContent = "選擇目標學校後，會依學系、年度與梯次列出文件；沒有確認的份數或表格不會被當成正式版本。";
@@ -6111,8 +6150,9 @@ function saveApplicationProfile(event) {
 
 async function handleApplicationContextChange(event) {
   const targetInput = $("#application-target-school");
+  // A background workspace render may restore the select while confirmation is open.
+  const proposed = targetInput.value;
   if (event?.target === targetInput && targetInput.value !== state.applicationContext.target_school) {
-    const proposed = targetInput.value;
     const owner = state.account?.id;
     const home = activeHomeSchool();
     if (!await confirmPlanningTargetChange(proposed || "尚未決定") || owner !== state.account?.id || home !== activeHomeSchool()) { restoreApplicationContextForm(); return; }
@@ -6121,7 +6161,7 @@ async function handleApplicationContextChange(event) {
   state.planningLoading = false;
   state.planningRequestId += 1;
   invalidateAllApplicationReviews();
-  readApplicationContextForm();
+  readApplicationContextForm({ targetSchool: proposed });
   await loadApplicationTemplates();
   renderPersonalPlanSnapshot();
 }
