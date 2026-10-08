@@ -3064,11 +3064,15 @@
           "name": "（宿舍申請者）宿舍申請表",
           "copies": null,
           "copy_type": "unspecified",
-          "signatures": [],
+          "signatures": [
+            "學生簽名／日期（一般空白宿舍表）"
+          ],
           "stamps": [],
-          "official_form_url": null,
+          "official_form_url": "https://drive.google.com/file/d/1xThdiWsgT4IZ5Tco7UZnpUGFDA16Hknf/view?usp=drive_link",
           "source_urls": [
-            "https://drive.google.com/file/d/1icSAoboQ-IOpl-R0rDGKLhioriFkklrP/view?usp=sharing"
+            "https://drive.google.com/file/d/1icSAoboQ-IOpl-R0rDGKLhioriFkklrP/view?usp=sharing",
+            "https://drive.google.com/file/d/1xThdiWsgT4IZ5Tco7UZnpUGFDA16Hknf/view?usp=drive_link",
+            "https://drive.google.com/file/d/1lvasNGJ7SZXkSxMhv3jOYnWK_UWw3v1r/view?usp=share_link"
           ],
           "needs_confirmation": true
         },
@@ -3087,21 +3091,57 @@
             "content_hash": "e9a182a98cdb644afe239c13245ad58fde4238b4d18616dfca5b27fe40dda11a",
             "text_sha256": "50a3edc0aad8944a3ee8b1822ad7495ac68fe5b25886daff79fbc09004e70c1c",
             "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+          },
+          {
+            "source_id": "p47-r20-af16c19647",
+            "source_url": "https://drive.google.com/file/d/1xThdiWsgT4IZ5Tco7UZnpUGFDA16Hknf/view?usp=drive_link",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "1頁Dormitory Application Form；year/period空白，未明示2027適用",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:46:57.739184+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Dormitory Application Form Office of International Admissions and Management Historical Archives Building #102 107 Imun-ro, Dongdaemun-gu, Seoul 02450, Korea 82-2-2173-2068 / exchange@hufs.ac.kr / visiting@hufs.ac.kr 1. Personal Information Directions : Fill in/circle the requested information Application/ID Number Campus Seoul | Global Campus (Yongin City) Name Gender: Male | Female Nationality Email Address Program Exchange | Visiting | ISS Year/Period Year: Period: Spring | Summer | Fall | Winter *Global Campus (Yongin City) students must choose HUFS Dorm (Global Campus). 2. Dorm Request Information Directions : Select the desired dorm/period Dorm Name House A (Female Only) | House E | GlobeeDorm | HUFS Dorm (Global Campus) Duration of Stay One Semester | Two Semesters | ISS * House E, GlobeeDorm, and HUFS Dorm are mixed-gender buildings by floor *You need to confirm/reapply for dorms each semester (including summer/winter sessions) *Single semester students who wish to stay during winter/summer must enroll in Intensive Korean/ISS to be eligible for dorm residence *Due to limited capacity, there is NO GUARANTEE you will receive a dorm assignment or your desired dorm assignment 3. Basic Dorm Information Directions : Read the bas",
+            "content_hash": "d124815551e6e12a2a1748c1d11e22769aabe824c570475d6504f60b86ea7440",
+            "text_sha256": "e1c454b69f621045bbad27154d53a365e51bcc346bac4cf45d3afa24d96bc278",
+            "note": "evidence.status為欄位匯總；此原來源的適用年／身分由academic_year及content_applicability獨立保存，一般資料不升2027。"
+          },
+          {
+            "source_id": "p47-r20-f69aefa9fc",
+            "source_url": "https://drive.google.com/file/d/1lvasNGJ7SZXkSxMhv3jOYnWK_UWw3v1r/view?usp=share_link",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "另一1頁Dormitory Application Form；year/period空白，header只有visiting email，Exchange選項仍在",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:46:57.742642+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Dormitory Application Form Office of International Admissions and Management Historical Archives Building #102 107 Imun-ro, Dongdaemun-gu, Seoul 02450, Korea 82-2-2173-2068 / visiting@hufs.ac.kr 1. Personal Information Directions : Fill in/circle the requested information Application/ID Number Campus Seoul | Global Campus (Yongin City) Name Gender: Male | Female Nationality Email Address Program Exchange | Visiting | ISS Year/Period Year: Period: Spring | Summer | Fall | Winter *Global Campus (Yongin City) students must choose HUFS Dorm (Global Campus). 2. Dorm Request Information Directions : Select the desired dorm/period Dorm Name House A (Female Only) | House E | GlobeeDorm | HUFS Dorm (Global Campus) Duration of Stay One Semester | Two Semesters | ISS * House E, GlobeeDorm, and HUFS Dorm are mixed-gender buildings by floor *You need to confirm/reapply for dorms each semester (including summer/winter sessions) *Single semester students who wish to stay during winter/summer must enroll in Intensive Korean/ISS to be eligible for dorm residence *Due to limited capacity, there is NO GUARANTEE you will receive a dorm assignment or your desired dorm assignment 3. Basic Dorm Information Directions : Read the basic information for cur",
+            "content_hash": "16dacdd93e600026e1b135eceb15cf63e3f943f945d0533265e8e8e46bfc06b9",
+            "text_sha256": "5e10a141460495b239d5ff0546a2882b9eb4ca82dbdd8986a79f7a65a57b8e66",
+            "note": "evidence.status為欄位匯總；此原來源的適用年／身分由academic_year及content_applicability獨立保存，一般資料不升2027。"
           }
         ],
         "conditional": true,
-        "stage": "student_application"
+        "stage": "student_application",
+        "condition": "僅宿舍申請者；當期factsheet要求表，公開空白表年期未填，2027模板版本待核。Global校區須選Yongin HUFS Dorm，每學期重新確認／申請且不保分配。",
+        "applicability_note": "當期文件要求已核；兩份公開空白表實開各1頁但年度空白／header有差，2027模板新版尚未核實。學生簽日期原文已核。"
       },
       {
         "requirement": {
           "name": "（宿舍後補）健康／TB資料",
           "copies": null,
           "copy_type": "unspecified",
-          "signatures": [],
+          "signatures": [
+            "學生簽名／日期",
+            "Clinician簽名／日期"
+          ],
           "stamps": [],
-          "official_form_url": null,
+          "official_form_url": "https://drive.google.com/file/d/1NwoAHiWT7p3yJO1s-YqyhZCSRN0YQiBy/view?usp=drive_link",
           "source_urls": [
-            "https://drive.google.com/file/d/1icSAoboQ-IOpl-R0rDGKLhioriFkklrP/view?usp=sharing"
+            "https://drive.google.com/file/d/1icSAoboQ-IOpl-R0rDGKLhioriFkklrP/view?usp=sharing",
+            "https://drive.google.com/file/d/1NwoAHiWT7p3yJO1s-YqyhZCSRN0YQiBy/view?usp=drive_link"
           ],
           "needs_confirmation": true
         },
@@ -3120,11 +3160,27 @@
             "content_hash": "e9a182a98cdb644afe239c13245ad58fde4238b4d18616dfca5b27fe40dda11a",
             "text_sha256": "50a3edc0aad8944a3ee8b1822ad7495ac68fe5b25886daff79fbc09004e70c1c",
             "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+          },
+          {
+            "source_id": "p47-r20-7a942ad4ae",
+            "source_url": "https://drive.google.com/file/d/1NwoAHiWT7p3yJO1s-YqyhZCSRN0YQiBy/view?usp=drive_link",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "1頁Health Examination Form；未標年度／有效採檢窗，僅宿舍成功申請者",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:46:57.741243+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Health Examination Form for All Dormitory Applicants Hankuk University of Foreign Studies ※ Important : All successful applicants to both on-campus and off-campus HUFS housing are required to submit proof of an authorized health exam report (including Tuberculosis ), in accordance with the requirements of the Korean Immigration Service and our dormitory regulation. 3. Personal Medical Assessment a) Have you had any serious illness or injury that required hospitalization in the last two years? Haveb) you ever made repeated visits to a doctor for an illness or injury? c)Have you ever had any of the followings? (hepatitis, tuberculosis, close contact with any infectious disease) d) Do you have any allergies? Have you ever cared for by a mental clinician? *If the answer to any of above questions is Yes, please provide the question number and specify Yes ( ) No ( ) in detail below: Student Signature Date 4. Health Examination Report (This form is VALID only if completed and signed by a clinician) - Tuberculosis Test (please select the test applicable for you) Globee Dorm: x-ray only, International House: both x-ray and skin test acceptable Clinician’s Signature MD/NP/PA Name (Please Print) Signature Date Address Country Telephone Number Family Name(姓): First Name(名): Date of Birth(dd/mm/yy): Gender: Male Female Nationality: Home University: I HEREBY STATE THAT THE INFORMATION SUBMITTED ON THIS FORM IS TRUE. Please answer all questions below correctly. 2. Personal Medical Assessment e) Yes ( ) No ( ) Yes ( ) No ( ) Yes ( ) No ( ) Yes ( ) No ( ) Date Taken: Results: Positive Date Taken: Please Describe: a) Chest X-Ray b) Skin Test Negative 1. Please check your housing Globee Dorm International House HUFS Dorm (Global Campus)",
+            "content_hash": "fdaf31442b06ae8c61ed009c6667786547a1fa5ac949a41fdb1c4d9247a361d4",
+            "text_sha256": "1855e1fa0902d2a363355bc18533d39b7bf7aff1384e3e4db0bb7fc4e55e88dd",
+            "note": "evidence.status為欄位匯總；此原來源的適用年／身分由academic_year及content_applicability獨立保存，一般資料不升2027。"
           }
         ],
         "conditional": true,
         "stage": "after_dorm_assignment",
-        "condition": "僅宿舍申請者，宿舍分配後依校方要求提交"
+        "condition": "宿舍成功申請者、分配後依2027校方採檢期間提交；一般表Globee限x-ray，International House可x-ray或skin test，Global未明示可用skin test。2027採檢窗口官方尚未公告。",
+        "applicability_note": "當期宿舍後補要求與尚未公告採檢期另存；實開未年空白表可下载參考，不由表中沒有時間自造2027窗口。"
       },
       {
         "requirement": {
@@ -3193,6 +3249,41 @@
         "conditional": true,
         "stage": "student_application",
         "condition": "僅Intensive Korean Program申請者；一般brief essay未載最少頁數"
+      },
+      {
+        "requirement": {
+          "name": "（Intensive Korean申請後）Google Form確認／分級",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://exchange.hufs.ac.kr/Korean-Courses/Non-Credit-Programs/Intensive-Korean-Program"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p47-r20-ae525a1d6a",
+            "source_url": "https://exchange.hufs.ac.kr/Korean-Courses/Non-Credit-Programs/Intensive-Korean-Program",
+            "source_pages": [],
+            "academic_year": "一般官方incoming／生活／課程政策未明示2027適用年",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:37:25.975226+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "separate Google Form after the exchange application process is completed. This form is required to confirm your application and arrange your level test. Your application for the Intensive Korean Program will be finalized after you submit the Google Form. Please email us if you wish to make any changes. 1. Certificate of Completion You will receive a certificate from the Center upon completing the program. Some of your home universities might allow credits upon completion of this program. Talk with your home university’s coordinator about if and how many credits you can receive. 2. Complementary Periods (FREE/Partially free) - exchange student",
+            "content_hash": "968d4a14cd57767e40c5dde748bd14b44877bf6b51735b5b02295108312ae712",
+            "text_sha256": "2e9c755059fdff7217867b785f1f253aa0ef8e808233f619de323edacc4461d6",
+            "note": "evidence.status為欄位匯總；此原來源的適用年／身分由academic_year及content_applicability獨立保存，一般資料不升2027。"
+          }
+        ],
+        "stage": "after_application",
+        "conditional": true,
+        "condition": "僅在exchange online選Intensive Korean者；交換申請程序完成後HUFS另發GoogleForm，提交後才finalized。2027個人表URL與日期未核。",
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "一般官方incoming／生活／課程政策未明示2027適用年",
+        "applicability_note": "公開一般頁明示先後順序；不等待錄取、不造精確截止、不把未取得個人GoogleForm當可下載空白版。"
       }
     ],
     "review_note": "清單按實讀要求拆成逐項；conditional與分期文字保留，整個workflow仍需覆核。已取得模板才設official_form_url，不是全部附件或可代送申請。"
@@ -5947,13 +6038,28 @@
             "content_hash": "312b13ad896bdfb9de35c4fdbd91f8f03337f692556fdddec44dbc4077c3a076",
             "text_sha256": "8456b236307ac9c7f4ea2ee2d73f1bdd6a8c1fd881a3a79c63ab014fa8a41d77",
             "note": "已讀1頁；母校email提名→Mobility Online上傳CV/在學/成績/護照/英文能力證據，行前與母校制定LA。2027適用和個人追加欄位未核。"
+          },
+          {
+            "source_id": "p101-r20-1e8ffcbb39",
+            "source_url": "https://th-deg.de/Studieninteressierte/infos-fuer-internationale-studieninteressierte/International_Prospectus_2026_web.pdf",
+            "source_pages": [
+              44
+            ],
+            "academic_year": "PDF第44實體頁版權09.2026；exchange程序未明示2027學年；regular degree另段分開",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:37:06.694327+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "scan of passport photos or national ID card, exam grade sheet, proof of English language, minimum requirement B1. Application period • 01 April – 01 June for entry in October • 01 Oct – 01 Dec for entry in March All applicants are encouraged to research their course choices and check that they fulfill every prerequisite before applying. Please note that the online application form is only visible during the application period. How to apply: www.th-deg.de/exchange-students How to apply? TECHNISCHE HOCHSCHULE DEGGENDORF / DEGGENDORF INSTITUTE OF TECHNOLOGY Dieter-Görlitz-Platz 1 94469 Deggendorf, Germany www.dit.edu GENERAL ENQUIRIES ABOUT STUDYING AT DIT welcome@th-deg.de www.th-deg.de/en/advice /HochschuleDeggendorf /th_deggendorf /TH_Deggendorf /thdeggendorf /THDeggendorf /european.campus.pfarrkirchen DIT marketing department, Adobe Stock © DIT marketing department 09.2026 Contact Social Media Photo credits & copyright 86 87",
+            "content_hash": "0efcb89a073e2a570ed2d9469ac33a54429ba7d9f7725deafb9b176abe5a339e",
+            "text_sha256": "6045fd661f05d11fca65d7fa53937cfb56d6be999b76145d190d8729941992b7",
+            "note": "evidence.status為欄位匯總；此原來源的適用年／身分由academic_year及content_applicability獨立保存，一般資料不升2027。"
           }
         ],
         "conditional": false,
         "stage": "student_application",
         "applicability_status": "needs_confirmation",
         "applicability_year": "未標年度的一般incoming exchange申請程序",
-        "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+        "applicability_note": "既有checklist為passport copy；09.2026exchange段寫passport photos or national ID，語意差异待核，不自行把護照改照片／猜同義。"
       },
       {
         "requirement": {
@@ -6026,6 +6132,43 @@
         "applicability_status": "needs_confirmation",
         "applicability_year": "未標年度的一般incoming exchange申請程序",
         "applicability_note": "公開exchange checklist未標年度，2027及個人追加要求待核；清單PDF不是空白申請／LA模板。"
+      },
+      {
+        "requirement": {
+          "name": "（09.2026手冊追加待核）exam grade sheet",
+          "copies": null,
+          "copy_type": "unspecified",
+          "signatures": [],
+          "stamps": [],
+          "official_form_url": null,
+          "source_urls": [
+            "https://th-deg.de/Studieninteressierte/infos-fuer-internationale-studieninteressierte/International_Prospectus_2026_web.pdf"
+          ],
+          "needs_confirmation": true
+        },
+        "evidence": [
+          {
+            "source_id": "p101-r20-1e8ffcbb39",
+            "source_url": "https://th-deg.de/Studieninteressierte/infos-fuer-internationale-studieninteressierte/International_Prospectus_2026_web.pdf",
+            "source_pages": [
+              44
+            ],
+            "academic_year": "PDF第44實體頁版權09.2026；exchange程序未明示2027學年；regular degree另段分開",
+            "application_round": null,
+            "checked_at": "2026-10-08T16:37:06.694327+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "exam grade sheet, proof of English language, minimum requirement B1. Application period • 01 April – 01 June for entry in October • 01 Oct – 01 Dec for entry in March All applicants are encouraged to research their course choices and check that they fulfill every prerequisite before applying. Please note that the online application form is only visible during the application period. How to apply: www.th-deg.de/exchange-students How to apply? TECHNISCHE HOCHSCHULE DEGGENDORF / DEGGENDORF INSTITUTE OF TECHNOLOGY Dieter-Görlitz-Platz 1 94469 Deggendorf, Germany www.dit.edu GENERAL ENQUIRIES ABOUT STUDYING AT DIT welcome@th-deg.de www.th-deg.de/en/advice /HochschuleDeggendorf /th_deggendorf /TH_Deggendorf /thdeggendorf /THDeggendorf /european.campus.pfarrkirchen DIT marketing department, Adobe Stock © DIT marketing department 09.2026 Contact Social Media Photo credits & copyright 86 87",
+            "content_hash": "0efcb89a073e2a570ed2d9469ac33a54429ba7d9f7725deafb9b176abe5a339e",
+            "text_sha256": "6045fd661f05d11fca65d7fa53937cfb56d6be999b76145d190d8729941992b7",
+            "note": "evidence.status為欄位匯總；此原來源的適用年／身分由academic_year及content_applicability獨立保存，一般資料不升2027。"
+          }
+        ],
+        "stage": "student_application",
+        "conditional": true,
+        "condition": "09.2026公開exchange清單列明，另一5項流程單未列；是否與transcript相同及2027個人portal要求待核。",
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "PDF第44實體頁版權09.2026；exchange程序未明示2027學年；regular degree另段分開",
+        "applicability_note": "保存真正清單差異；不自動當成額外本期必繳、不猜是否重複成績單。"
       }
     ],
     "review_note": "1頁一般incoming checklist逐項讀；五項online上傳與行前LA分階段，不把簽證/保險行動猜成申請附件。學院／學制及2027清單、個人表未核。"

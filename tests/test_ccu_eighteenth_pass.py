@@ -101,14 +101,14 @@ def test_pilsen_routes_project_transfer_points_without_year_upgrade(tmp_path):
 
 def test_dit_public_documents_and_wrong_program_templates_remain_pending(tmp_path):
     row = reviewed_documents()[101]
-    assert len(row["requirements"]) == 6
-    assert Counter(r["stage"] for r in row["requirements"]) == {"student_application": 5, "post_offer": 1}
+    assert len(row["requirements"]) == 7
+    assert Counter(r["stage"] for r in row["requirements"]) == {"student_application": 6, "post_offer": 1}
     assert all(r["applicability_status"] == "needs_confirmation" for r in row["requirements"])
     assert not any(r["requirement"]["official_form_url"] for r in row["requirements"])
     client = TestClient(create_app(tmp_path))
     catalog = client.get("/application-center/catalog", params={"school": HOME, "target_school": at(101).school_name}).json()
     items = [r for r in catalog["items"] if r.get("stage")]
-    assert len(items) == 6 and all(r["applicability_year"] for r in items)
+    assert len(items) == 7 and all(r["applicability_year"] for r in items)
     assert all(not r["official_form_verified"] for r in items)
     assert "EU/associated countries" in json.loads((BUNDLE / "overseas_sources/p114-r18-study-la.json").read_text())["content_academic_year"]
     assert "p114-r18-study-la" not in {e["source_id"] for r in reviewed_documents()[114]["requirements"] for e in r["evidence"]}

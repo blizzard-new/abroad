@@ -1,0 +1,121 @@
+CONFTEST LOADED!
+.....................................................ss.............FF.. [ 17%]
+.................................................................F...... [ 35%]
+........................................................................ [ 53%]
+..............................................sss................s.F.... [ 71%]
+......................................................................s. [ 89%]
+...........................................                              [100%]
+=================================== FAILURES ===================================
+_____ test_dit_public_documents_and_wrong_program_templates_remain_pending _____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-111/test_dit_public_documents_and_0')
+
+    def test_dit_public_documents_and_wrong_program_templates_remain_pending(tmp_path):
+        row = reviewed_documents()[101]
+>       assert len(row["requirements"]) == 6
+E       AssertionError: assert 7 == 6
+E        +  where 7 = len([{'requirement': {'name': 'CV', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}, 'evidence': [{'sou...': [1], 'academic_year': '未標年度的一般incoming exchange申請程序', ...}], 'conditional': False, 'stage': 'post_offer', ...}, ...])
+
+tests/test_ccu_eighteenth_pass.py:104: AssertionError
+_______ test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate _______
+
+    def test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate():
+        report = json.loads((BUNDLE / "public-link-queue.json").read_text())
+        gaps = json.loads((BUNDLE / "remaining-gaps.json").read_text())
+        assert hashlib.sha256((BUNDLE / "remaining-gaps.json").read_bytes()).hexdigest() == report["input_sha256"]
+        original = Counter((s["ccu_page"], l["url"], l["discovered_in_source"])
+                           for s in gaps["schools"] for l in s["unrequested_discovered_links"])
+        grouped = Counter((o["ccu_page"], o["url"], o["discovered_in_source"])
+                          for c in report["candidates"] for o in c["occurrences"])
+        assert original == grouped
+        assert report["raw_href_count"] == sum(grouped.values())
+        assert report["raw_href_count"] == report["unique_url_count"] + report["collapsed_href_count"]
+        assert len({c["url"] for c in report["candidates"]}) == report["unique_url_count"]
+        assert len(report["schools"]) == 55 and all(not r["public_sources_exhausted"] for r in report["schools"])
+        for c in report["candidates"]:
+            if c["source_content_read"]:
+                review = c["content_review"]
+>               assert review and review["review_extent"] in {
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+                    "necessary_policy_sections", "role_and_relevant_sections",
+                }
+E               KeyError: 'review_extent'
+
+tests/test_ccu_eighteenth_pass.py:140: KeyError
+__ test_hufs_general_essay_has_no_page_minimum_and_program_condition_survives __
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-111/test_hufs_general_essay_has_no0')
+
+    def test_hufs_general_essay_has_no_page_minimum_and_program_condition_survives(
+        tmp_path,
+    ):
+        client = TestClient(create_app(tmp_path))
+        catalog = client.get(
+            "/application-center/catalog",
+            params={"school": HOME, "target_school": at(47).school_name},
+        ).json()
+        general = next(r for r in catalog["items"] if "brief essay" in r["name"])
+        intensive = next(r for r in catalog["items"] if "Intensive Korean" in r["name"])
+        assert "未載最少頁數" in general["name"] and not general["conditional"]
+        assert "至少1頁" in intensive["name"] and intensive["conditional"]
+        assert "Intensive Korean" in intensive["condition"]
+        assert (
+            next(r for r in catalog["items"] if "財力表" in r["name"])["stage"]
+            == "after_application"
+        )
+        health = next(r for r in catalog["items"] if "健康／TB" in r["name"])
+        assert health["conditional"] and health["stage"] == "after_dorm_assignment"
+>       assert "宿舍申請者" in health["condition"]
+E       AssertionError: assert '宿舍申請者' in '宿舍成功申請者、分配後依2027校方採檢期間提交；一般表Globee限x-ray，International House可x-ray或skin test，Global未明示可用skin test。2027採檢窗口官方尚未公告。'
+
+tests/test_ccu_parent_fixes.py:108: AssertionError
+_ test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7efee1a54050>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-111/test_runtime_includes_tracked_0')
+
+    def test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data(
+        monkeypatch,
+        tmp_path,
+    ) -> None:
+        research = storage.read_jsonl(
+            storage.BUNDLED_NTPU_DIR / "partner_research.jsonl",
+            PartnerResearchRecord,
+        )[0]
+        partner = PartnerUniversity(
+            program_type="交換學生（英語組）",
+            country=research.country,
+            school_name=research.school_name,
+            source_url="https://new.ntpu.edu.tw/oia/sister-schools",
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.fetch_ntpu_partner_universities",
+            lambda: [partner],
+        )
+    
+        client = TestClient(create_app(tmp_path))
+        coverage = client.get(
+            "/coverage",
+            params={"school": "國立臺北大學"},
+        ).json()
+        destination = client.get(
+            "/destination-profile",
+            params={
+                "school": partner.school_name,
+                "home_school": "國立臺北大學",
+            },
+        ).json()
+    
+        assert coverage["total_partner_schools"] == 1
+        assert coverage["official_website_count"] == 1
+        assert coverage["partners"][0]["official_website_url"] == research.official_website
+>       assert coverage["destination_profile_count"] == 1
+E       assert 0 == 1
+
+tests/test_ntpu_bundled_data.py:110: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_eighteenth_pass.py::test_dit_public_documents_and_wrong_program_templates_remain_pending
+FAILED tests/test_ccu_eighteenth_pass.py::test_link_queue_accounts_for_all_hrefs_and_keeps_checks_separate
+FAILED tests/test_ccu_parent_fixes.py::test_hufs_general_essay_has_no_page_minimum_and_program_condition_survives
+FAILED tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data
+4 failed, 392 passed, 7 skipped in 314.38s (0:05:14)

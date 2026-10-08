@@ -105,7 +105,7 @@ def test_hufs_general_essay_has_no_page_minimum_and_program_condition_survives(
     )
     health = next(r for r in catalog["items"] if "健康／TB" in r["name"])
     assert health["conditional"] and health["stage"] == "after_dorm_assignment"
-    assert "宿舍申請者" in health["condition"]
+    assert "宿舍成功申請者" in health["condition"]
     assert (
         "brief essay（未載最少頁數）"
         in at(47).partner_exchange_details["documents"].value
