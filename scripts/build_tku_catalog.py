@@ -76,7 +76,7 @@ def current_rows():
         fields["home_costs"] = fields["costs"].model_copy(deep=True)
         conflicts = ["jp-academic-rank-alternative", "jp-stale-dates", "jp-departure-before-start"]
         if slug == "ritsumeikan":
-            fields["host_deadline"] = jp_fact("2026-11-02T09:00:00+09:00（已獲淡江推薦者；2027春季SKP申請）", "ritsumeikan-2027-guide", "PDF p.2 Schedule")
+            fields["host_deadline"] = jp_fact("2027春季SKP：2026/11/2 09:00 JST截止（已獲淡江推薦者；10/2 10:00 JST開始）", "ritsumeikan-2027-guide", "PDF p.2 Schedule")
             fields["costs"] = jp_fact("2027春季起所有SKP學生（含交換生）繳JPY50,000 Student Support Fee；錄取後兩週內一次付清。自費生學費規定不當作淡江互惠交換生學費。", "ritsumeikan-2027-guide", "PDF p.4 Changes / Student Support Fee")
             fields["housing"] = jp_fact("SKP一般住宿頁：可申請I-House；依選定校區分配，不保證；私人租屋需自理押金、禮金、保證人等。2027床位與費率仍須確認。", "ritsumeikan-housing", "Accommodations / International Houses / Private Apartments", status="reference_only")
             fields["course_restrictions"] = jp_fact("必須先選study track及校區，核對可選學院及研究所；不能在申請後延長交換期間。", "ritsumeikan-2027-guide", "PDF p.3–7")
@@ -163,7 +163,7 @@ def reference_rows():
             if country is None and row["C"].startswith("德國"):
                 country = "德國"
             yield reference_row(row["C"].replace("\n", " "),country,row.get("F"),row.get("E"),row.get("D"),row.get("G"),row.get("H"),
-                                "english-115-partners",f"XLSX sheet '{sheet['name']}' row {index} (C:I)","english-european-115",sheet["name"] + "第一輪（舊期參考）",row.get("I"))
+                                "english-115-partners",f"XLSX sheet '{sheet['name']}' row {index} (B:I; merged B ranges preserved)","english-european-115",sheet["name"] + "第一輪（舊期參考）",row.get("I"))
     table = SOURCES["mainland-115-attachment-1"]["tables"][0]
     for index,cells in enumerate(table[1:],2):
         if cells[0].startswith("合計"):continue

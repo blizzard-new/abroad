@@ -7371,6 +7371,11 @@ function localizedPartnerValue(item, summaryKey, rawKey, fallback = "依公告")
 function partnerDeadlineReference(item) {
   const rawValue = partnerStudentSummary(item).application_deadline || item?.application_deadline;
   const value = String(rawValue || "").trim();
+  if (activeUniversityProfile().id === "tku") {
+    const hostDeadline = value || "外校當期期限尚未核實";
+    return { label: "外校申請期限（獲母校推薦後）", value: hostDeadline,
+      compact: `外校期限：${hostDeadline}` };
+  }
   const fallback = "當期公告待確認";
   if (!value) {
     return {
@@ -7522,7 +7527,7 @@ function renderComparison(items) {
     ["我的備註", (item) => discoveryData().school_preferences[item.school_name]?.note || "—"],
     ["名額", (item) => item.quota || "依公告"],
     ["研修期間", (item) => item.study_period || "依公告"],
-    ["合作校參考時程", (item) => partnerDeadlineReference(item).value],
+    [activeUniversityProfile().id === "tku" ? "外校申請期限（獲母校推薦後）" : "合作校參考時程", (item) => partnerDeadlineReference(item).value],
     ["適用身分", (item) => [item.colleges, item.degree_levels].filter(Boolean).join("／") || "依公告"],
   ];
   return `

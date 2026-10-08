@@ -39,7 +39,9 @@ def fetch_tku_partner_universities(*, reference_time: datetime | None = None) ->
             degree_levels=value("degree_levels"), study_period=value("study_period"),
             quota=value("quota"),
             eligibility="\n".join(str(value(k)) for k in ["home_eligibility","host_eligibility","department_scope"] if value(k)),
-            application_deadline=str(value("home_deadline")),
+            # The shared partner table uses this column for the host application.
+            # Exact home dates remain in the dashboard and availability_note.
+            application_deadline=str(value("host_deadline") or "外校當期期限尚未核實；不能沿用其他學校日期"),
             application_info=f"{value('documents')} 外校期限：{value('host_deadline') or '未核實'}。矛盾項：{', '.join(record.conflicts)}；詳細來源見TKU evidence catalogue。",
             tuition_info=str(value("costs")), source_url=evidence.source_url,
         ))

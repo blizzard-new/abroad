@@ -120,6 +120,8 @@ def test_offline_api_registry_documents_search_and_life_profile(tmp_path,monkeyp
     dashboard=response.json()
     assert dashboard["school_name"]=="淡江大學" and len(dashboard["partner_universities"])==4
     assert all(p["availability_status"]=="closed" for p in dashboard["partner_universities"])
+    assert "JST" in dashboard["partner_universities"][0]["application_deadline"]
+    assert "9/30" in dashboard["partner_universities"][0]["availability_note"]
     assert "系前40%" in dashboard["academic_score_rule"]
     assert "長庚" not in json.dumps(dashboard,ensure_ascii=False)
     results=client.get("/search",params={"school":"TKU","q":"日語"}).json()
@@ -127,6 +129,14 @@ def test_offline_api_registry_documents_search_and_life_profile(tmp_path,monkeyp
     name=load_tku_records()[0].fields["school_name"].value
     profile=client.get("/destination-profile",params={"school":name,"home_school":"TKU"})
     assert profile.status_code==200 and "50,000" in profile.json()["cost_summary"]
+    workflow=client.get("/application-workflow",params={"school":name,"home_school":"TKU",
+        "academic_year":"2027-2028","application_round":"日語組第二次甄選"})
+    assert workflow.status_code==200 and len(workflow.json()["steps"])==6
+    catalog=client.get("/application-center/catalog",params={"school":"TKU","target_school":name,
+        "academic_year":"2027-2028","application_round":"日語組第二次甄選"})
+    assert catalog.status_code==200 and catalog.json()["workflow_found"] is True
+    assert len(catalog.json()["items"])==8
+    assert all(i["needs_confirmation"] and not i["download_available"] for i in catalog.json()["items"])
 
 
 def test_documents_and_workflows_do_not_invent_official_layout_or_new_year():
@@ -201,3 +211,9 @@ def test_frontend_marks_closed_and_reference_choices_unavailable():
     if (partnerAvailabilityMeta({availability_status: 'open'}).blocked) throw new Error('open');
     """
     subprocess.run(["node","-e",javascript],check=True,capture_output=True,timeout=10)
+    deadline=script.split("function partnerDeadlineReference(item) {",1)[1].split("function partnerSummaryPoints",1)[0]
+    code="const activeUniversityProfile = () => ({id:'tku'}); const partnerStudentSummary = () => ({});\nfunction partnerDeadlineReference(item) {"+deadline+"""
+    const result = partnerDeadlineReference({application_deadline: '2027春季：2026/11/2 09:00 JST'});
+    if (!result.label.includes('外校') || !result.value.includes('JST') || result.value.includes('適用年度待確認')) throw new Error('host deadline');
+    """
+    subprocess.run(["node","-e",code],check=True,capture_output=True,timeout=10)

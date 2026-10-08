@@ -3169,8 +3169,9 @@ def create_app(
         application_round: str | None = Query(default=None, max_length=80),
     ) -> ApplicationDocumentCatalog:
         partner = partner_for_school(target_school, school)
+        university = university_for(school)
         context = ApplicationCenterContext(
-            school_name=school,
+            school_name=university.school_name if university.id == "tku" else school,
             target_school=partner.school_name,
             college=college,
             department=department,
@@ -3179,7 +3180,11 @@ def create_app(
             academic_year=academic_year,
             application_round=application_round,
         )
-        workflows = load_application_workflows(resolved_data_dir)
+        workflows = (
+            workflows_for_university(context.school_name)
+            if require_university(context.school_name).id == "tku"
+            else load_application_workflows(resolved_data_dir)
+        )
         return build_application_document_catalog(context, workflows)
 
     @app.post(

@@ -87,10 +87,10 @@ Repository：`blizzard-new/abroad`；獨立工作目錄：`/workspace/abroad-tku
 | --- | --- |
 | university_registry.py | 匯入校別 PROFILE、登錄 TKU 與別名；support_level=basic |
 | models.py | PartnerUniversity availability 增加 closed／reference_only／quota_unconfirmed；既有預設不變 |
-| api.py | TKU 的選校、頁面、info、dashboard 分派；按請求重算時窗，避免快取把已截止資料留成開放 |
+| api.py | TKU 的選校、頁面、info、dashboard、文件目錄分派；別名正規化；按請求重算時窗，避免快取把已截止資料留成開放 |
 | storage.py | 讀 TKU bundled workflow／destination；仍按母校分流 |
 | application_documents.py | 讀兩份 TKU 準備稿；不同年度／梯次返回空；TKU 查核日期獨立 |
-| static/app.js | 新狀態提示與 blocked；TKU 資格總結要求語組／學制確認；通用開放標籤移除固定 115 年度 |
+| static/app.js | 新狀態提示與 blocked；TKU 資格總結要求語組／學制確認；外校期限與校內期限分開，保留既有其他校參考時程處理 |
 | static/index.html | 增加三種狀態篩選；保留最新 main 地區篩選與資產版本 |
 | pyproject.toml | 打包官方 DOCX／XLSX 原附件 |
 
@@ -106,6 +106,7 @@ UV_CACHE_DIR=/tmp/tku-uv-cache uv sync --frozen --extra dev
 .venv/bin/python scripts/refresh_tku_sources.py --manifest src/exchange_info/official_data/tku/sources.json --output /tmp/tku-refetched-evidence
 .venv/bin/python -m pytest tests/test_tku_support.py -q
 node --check src/exchange_info/static/app.js
+PLAYWRIGHT_BROWSERS_PATH=/tmp/tku-browsers PYTHONPATH=src .venv/bin/python scripts/check_tku_browser.py
 git diff --check
 ```
 
@@ -115,5 +116,6 @@ git diff --check
 初始 HTTPS git 認證失敗已如實回報；後續找到環境既有 gh 認證，使用單次 credential helper，未改憑證或 git 全域設定。
 `uv sync --locked --extra dev` 遇現有 lockfile 不一致；改用 `--frozen` 成功，未更新 lockfile。
 
-測試實際數量及既有失敗比較見 `tku-validation-2026-10-08.json`。初始基準 f741d54 的擴展回歸為 118 passed／9 failed／4 skipped；9 個失敗均在未修改基準重現（8 前端舊文字 contract、1 NTPU destination coverage），沒有用「全部通過」描述。最新基準重新驗證結果另存證據。
+測試實際數量及既有失敗比較見 `tku-validation-2026-10-08.json`。初始基準 f741d54 的擴展回歸為 118 passed／9 failed／4 skipped；9 個失敗均在未修改基準重現（8 前端舊文字 contract、1 NTPU destination coverage），沒有用「全部通過」描述。最新基準重新驗證為 128 passed／9 failed／4 skipped，失敗 ID 與最新 main 基準完全相同。淡江 13 個測試全數通過。
+Chromium 原未安裝；在獨立 `/tmp/tku-browsers` 安裝後，桌面 1280×900 與手機 390×844 實際測試通過，四校顯示、開放篩選 0、已截止篩選 4、東亞篩選 4、JavaScript page errors 0。截圖僅保留 `/tmp/tku-browser-desktop.png`、`/tmp/tku-browser-mobile.png`，可用上述程式重做。
 未執行合併 main 或部署；流程未進行發布審查。
