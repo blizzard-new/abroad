@@ -1,7 +1,7 @@
 [project]
 name = "taiwan-exchange-info"
 version = "0.1.0"
-description = "Web-first exchange application guide for Taiwan university students, with Chang Gung University and National Taipei University support."
+description = "Web-first exchange application guide supporting CGU, NTPU, NTU and CCU students."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
@@ -50,6 +50,7 @@ exchange_info = [
     "official_data/ccu/*.doc",
     "official_data/ccu/*.odt",
     "official_data/ccu/partner_forms/*.docx",
+    "official_data/ccu/partner_forms/*.doc",
     "official_data/**/*.json",
     "official_data/**/*.jsonl",
 ]

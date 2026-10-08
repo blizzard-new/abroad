@@ -57,8 +57,9 @@ from .models import (
     UniversityApplicationWorkflow,
 )
 from .application_rules import select_application_workflow
-from .university_registry import NTPU, require_university
+from .university_registry import NTPU, NTU, require_university
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
+from .ntu_student_view import NTU_GUIDELINES_URL
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -70,6 +71,7 @@ SHORT_TERM_SOURCE_URL = (
 )
 SOURCE_CHECKED_AT = datetime(2026, 7, 16, tzinfo=timezone.utc)
 NTPU_SOURCE_CHECKED_AT = datetime(2026, 7, 20, tzinfo=timezone.utc)
+NTU_SOURCE_CHECKED_AT = datetime(2026, 10, 7, tzinfo=timezone.utc)
 NTPU_EXCHANGE_GUIDELINES_URL = (
     "https://cms-carrier.ntpu.edu.tw/uploads/"
     "2026_2027_Academic_Year_Outbound_Exchange_Program_Guidelines_1e5870e83d.pdf"
@@ -754,12 +756,121 @@ def _ntpu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return template.model_copy(deep=True, update=updates)
 
 
+def _ntu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理臺大116-1校級甄選個人資料與附件；正式報名須在校方甄選系統完成。學士生以學年GPA至少2.44或班排前50%擇一符合，研究生無校內成績門檻。",
+        "study-plan": "撰寫臺大出國交換計畫書：中／英文、A4兩面、至少500字；履歷另備A4兩面。正式附件以當期簡章為準。",
+        "course-preapproval": "整理預計修課、課程大綱與學分採認問題，向臺大所屬系所確認；這份準備表不代替校方正式表格。",
+        "predeparture-notice": "整理航班、住宿、保險與緊急聯絡資料；正式繳交內容與期限依臺大當期行前通知。",
+        "return-report": "整理交換學習與生活成果；正式心得格式、繳交方式與期限依臺大當期返國及補助通知。",
+        "credit-transfer": "整理合作校成績單、課程大綱與學分採認需求；採認須依臺大所屬系所及教務規定辦理。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺灣大學").replace("長庚", "臺大")
+        if isinstance(value, list):
+            return [adapt(item) for item in value]
+        if isinstance(value, dict):
+            return {key: adapt(item) for key, item in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    language_groups = ["一般組", "日語組", "德語組", "法語組", "韓語組", "西語組", "中語組"]
+    english_tests = ["TOEFL iBT（舊制120分）", "TOEFL iBT（新制6分）", "IELTS Academic", "GEPT", "BESTEP"]
+    substitutes = ["母語證明（須先洽國際處）", "國外前一學位證明（須先洽國際處）"]
+    group_tests = {
+        "一般組": english_tests + ["其他簡章列明語言證明"] + substitutes,
+        "日語組": ["JLPT"] + substitutes,
+        "德語組": ["德語檢定", "FLPT（德語）"] + english_tests + substitutes,
+        "法語組": ["法語檢定", "FLPT（法語）"] + english_tests + substitutes,
+        "韓語組": ["TOPIK", "KLAT"] + english_tests + substitutes,
+        "西語組": ["西語檢定", "FLPT（西語）"] + english_tests + substitutes,
+        "中語組": ["TOCFL", "HSK"],
+    }
+    if template.id == "exchange-application-data":
+        payload["fields"][0:0] = [
+            _field("language_group", "臺大甄選語組", required=True,
+                   field_type=ApplicationFieldType.SELECT, options=language_groups).model_dump(mode="json"),
+            _field("international_degree_student", "是否為國際學位生", required=True,
+                   field_type=ApplicationFieldType.SELECT, options=["否", "是"],
+                   help_text="中語組一般申請者無校內語檢要求；國際學位生須提供TOCFL或HSK。合作校要求另查。").model_dump(mode="json"),
+        ]
+    for field in payload["fields"]:
+        if field["id"] == "academic_average":
+            field.update({"label": "適用學年GPA或班排名", "field_type": "text", "required": False,
+                          "help_text": "學士生填名次證明上的GPA或前幾%；研究生可留空。此欄不用百分制平均代替GPA。"})
+        if field["id"] in {"language_test", "language_score", "language_result_date"}:
+            field["required"] = False
+            field["required_when"] = [
+                {"language_group": language_groups[:-1]},
+                {"language_group": ["中語組"], "international_degree_student": ["是"]},
+            ]
+        if field["id"] == "language_test":
+            field["options"] = list(dict.fromkeys(test for tests in group_tests.values() for test in tests))
+            field["options_by_field"] = {"language_group": group_tests}
+            field["help_text"] = "依116-1簡章第4個PDF頁的語組規定；TOEIC及Duolingo不列為臺大校內英語證明。替代證明須於報名前洽國際處，合作校仍可能要求語檢。"
+        if field["id"] == "language_score":
+            field["label"] = "語言成績／級別／替代證明說明"
+        if field["id"] == "language_result_date":
+            field["label"] = "實際考試日期／替代證明日期"
+            field["help_text"] = "英語檢定須於2025-05-01（含）後考試取得；填實際考試日，預計取得日不能充作有效證明。替代證明填文件日期，效力須先洽國際處。"
+    if template.id == "exchange-application-data":
+        payload["fields"].append(_field("language_planned_result_date", "預計取得語檢成績日（規劃用）",
+            field_type=ApplicationFieldType.DATE, help_text="僅供個人規劃，不代替實際考試日期或正式語言證明。").model_dump(mode="json"))
+    payload.update({
+        "description": descriptions[template.id], "stage": {
+            "predeparture-notice": "出國前（依當期通知）", "return-report": "返國後（依當期通知）",
+        }.get(template.id, "申請與文件準備（依當期通知）"),
+        "source_url": NTU_GUIDELINES_URL, "source_checked_at": NTU_SOURCE_CHECKED_AT,
+        "official_layout": False, "official_form_number": None, "official_file_name": None,
+        "official_download_url": None, "version": "116-1準備工具-2026-10-08.3",
+        "destinations": ["學生自存備份"], "signatures": [], "stamps": [],
+        "conditional_note": "此為個人準備工具；正式表格、簽章、送件與期限以臺大當期系統及通知為準。系所推薦表由校方系統產生，研究生推薦信由系統邀請教授完成。",
+    })
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
+def application_field_required(field: ApplicationFormField, values: dict[str, Any]) -> bool:
+    return field.required or any(
+        all(str(values.get(key, "")) in allowed for key, allowed in clause.items())
+        for clause in field.required_when
+    )
+
+
+def _ntu_language_validation(template: ApplicationDocumentTemplate, values: dict[str, Any]) -> dict[str, str]:
+    if template.source_url != NTU_GUIDELINES_URL or template.id != "exchange-application-data":
+        return {}
+    errors = {}
+    test = str(values.get("language_test") or "")
+    group = str(values.get("language_group") or "")
+    for field in template.fields:
+        if field.id in {"language_group", "international_degree_student"} and values.get(field.id) and values[field.id] not in field.options:
+            errors[field.id] = "請選擇清單中的有效身分／語組。"
+    test_field = next(field for field in template.fields if field.id == "language_test")
+    allowed = test_field.options_by_field["language_group"].get(group, test_field.options)
+    if test and test not in allowed:
+        errors["language_test"] = "此語檢種類不適用所選臺大甄選語組；請依簡章提供證明。"
+    if test in {"TOEFL iBT（舊制120分）", "TOEFL iBT（新制6分）", "IELTS Academic", "GEPT", "BESTEP"}:
+        actual = str(values.get("language_result_date") or "")
+        if actual:
+            try:
+                exam_date = datetime.strptime(actual, "%Y-%m-%d").date()
+                if not datetime(2025, 5, 1).date() <= exam_date <= datetime.now(timezone.utc).date():
+                    errors["language_result_date"] = "須填2025-05-01（含）後且已發生的實際考試日期；預計日期不具證明效力。"
+            except ValueError:
+                errors["language_result_date"] = "請填有效的實際考試日期。"
+    return errors
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university = require_university(school_name)
     if university.id == "ccu":
         from .ccu_application_documents import ccu_application_templates
 
         return ccu_application_templates()
+    if university.id == NTU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntu_template(template)) is not None]
     if university.id != NTPU.id:
         return [template.model_copy(deep=True) for template in APPLICATION_TEMPLATES]
     return [
@@ -1130,6 +1241,7 @@ def build_packet_manifest(
             field.id: answer_for_field(field, request.profile, answers)
             for field in template.fields
         }
+        language_errors = _ntu_language_validation(template, field_values)
         attachment_payloads: list[_AttachmentPayload] = []
         attachment_errors: dict[str, str] = {}
         for field in _attachment_fields_in_order(template):
@@ -1151,18 +1263,19 @@ def build_packet_manifest(
                     field_id=field.id,
                     label=field.label,
                     field_type=field.field_type,
-                    required=field.required,
+                    required=application_field_required(field, field_values),
                     sensitive=field.sensitive,
                     display_value=_format_value(value),
                     is_blank=_field_is_blank(field, value),
-                    validation_error=attachment_errors.get(field.id),
+                    validation_error=attachment_errors.get(field.id) or language_errors.get(field.id),
                 )
             )
         missing = [
             field.label
             for field in template.fields
-            if field.required and not _has_field_value(field, field_values[field.id])
+            if application_field_required(field, field_values) and not _has_field_value(field, field_values[field.id])
         ]
+        missing.extend(f"{field.label}：{language_errors[field.id]}" for field in template.fields if field.id in language_errors)
         attachments = [
             ApplicationPacketAttachmentItem(
                 order=index,
@@ -1220,6 +1333,8 @@ def build_packet_manifest(
         source_checked_at=(
             CCU_SOURCE_CHECKED_AT
             if require_university(request.context.school_name).id == "ccu"
+            else NTU_SOURCE_CHECKED_AT
+            if require_university(request.context.school_name).id == NTU.id
             else NTPU_SOURCE_CHECKED_AT
             if require_university(request.context.school_name).id == NTPU.id
             else SOURCE_CHECKED_AT

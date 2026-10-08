@@ -94,7 +94,7 @@ window.UniWayJourney = (() => {
     if (!pendingDocument || pendingDocument.templateId !== template.id || pendingDocument.owner !== ownerKey()) return;
     window.UniWayDocumentWorkbench?.select("edit");
     const revision = ++focusRevision;
-    const field = template.fields.find(item=>item.required && !applicationFieldHasValue(template, item));
+    const field = template.fields.find(item=>applicationFieldRequired(template, item) && !applicationFieldHasValue(template, item));
     // Both hashchange and popstate can render this route. Focus the settled
     // field tree rather than a node replaced by the second route render.
     requestAnimationFrame(()=>requestAnimationFrame(()=>{

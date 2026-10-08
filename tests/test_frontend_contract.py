@@ -481,7 +481,8 @@ def test_first_visit_school_choice_is_optional_and_current() -> None:
     assert "先看看全部交換學校" in html
     assert "75 所合作校" in html
     assert "partner_count: 75" in script
-    assert "partner_count: 155" in script
+    assert "partner_count: 206" in script
+    assert "partner_count: 288" in script
     assert "browseWithoutSchoolSelection" in script
 
 

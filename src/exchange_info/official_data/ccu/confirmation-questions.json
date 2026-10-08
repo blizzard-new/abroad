@@ -40,15 +40,6 @@
         ]
       },
       {
-        "field": "housing_deadline",
-        "label": "住宿申請／付款截止",
-        "status": "missing",
-        "question": "請確認Beijing Normal University 北京師範大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
         "field": "visa",
         "label": "簽證與居留",
         "status": "missing",
@@ -366,6 +357,46 @@
         "content_academic_year": "未標示",
         "content_review_note": "已讀取官方頁面，但適用2027春季年度未核實。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p16-host1-r2retry",
+        "source_url": "https://jwc.cqu.edu.cn/",
+        "status": "fetch_failed",
+        "http_status": 412,
+        "error": "HTTPError: 412 Client Error: Precondition Failed for url: https://jwc.cqu.edu.cn/",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:47.914724+00:00"
+      },
+      {
+        "source_id": "p16-hostf0-r2retry",
+        "source_url": "https://intex.cqu.edu.cn/",
+        "status": "fetch_failed",
+        "http_status": 412,
+        "error": "HTTPError: 412 Client Error: Precondition Failed for url: https://intex.cqu.edu.cn/",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:49.893045+00:00"
+      },
+      {
+        "source_id": "p16-r2-deep",
+        "source_url": "https://international.cqu.edu.cn/",
+        "status": "fetch_failed",
+        "http_status": 503,
+        "error": "HTTPError: 503 Server Error: Service Unavailable for url: https://international.cqu.edu.cn/",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:37:52.960724+00:00"
+      },
+      {
+        "source_id": "p16-r2-international",
+        "source_url": "https://study.cqu.edu.cn/",
+        "status": "fetch_failed",
+        "http_status": 412,
+        "error": "HTTPError: 412 Client Error: Precondition Failed for url: https://study.cqu.edu.cn/",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:31:35.184399+00:00"
       }
     ]
   },
@@ -803,92 +834,232 @@
       {
         "field": "program_scope",
         "label": "接收計畫、學制及校區",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的接收計畫、學制及校區，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "非中國籍、姊妹校全職學生之一般交換入口；名額由雙方協商。未標2027春季，臺籍港澳臺路徑未核實。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "l-time students from partner institutions who are non-Chinese citizens. 2. A GPA of 3.0/4.0 or above. 3. Students must comply with Chinese laws, respect Chinese culture, and adhere to NENU's regulations. II. Required Documents 1. Certificate of Enrollment 2. University Transcript 3. Recommendation Letter from the International Office of the Home University 4. Copy of ",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       },
       {
         "field": "eligibility",
         "label": "合作校接收資格",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的合作校接收資格，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "一般非中國籍入口列全職伙伴校學生、GPA至少3.0/4.0；未標年度，不能套作中正臺籍交換硬門檻。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ner institutions who are non-Chinese citizens. 2. A GPA of 3.0/4.0 or above. 3. Students must comply with Chinese laws, respect Chinese culture, and adhere to NENU's regulations. II. Required Documents 1. Certificate of Enrollment 2. University Transcript 3. Recommendation Letter from the International Office of the Home University 4. Copy of Passport 5. HSK Score Rep",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       },
       {
         "field": "language",
         "label": "合作校語言條件與替代證明",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的合作校語言條件與替代證明，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "一般非中國籍入口要求HSK成績，語言培訓除外；未列級數及當期年，不能代填中正臺籍語言門檻。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ice of the Home University 4. Copy of Passport 5. HSK Score Report (excluding language training) All documents can be uploaded to the application system (studyatnenu.nenu.edu.cn), and there is no need to mail hard copies. III. Application Procedures 1. Students should obtain the recommendation qualification from their home institutions. The specific process and notifi",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       },
       {
         "field": "nomination_deadline",
         "label": "合作校提名截止",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的合作校提名截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "一般非中國籍Spring提名前一年11/10；未標2027年度或臺籍流程，不用此日替換中正提名通知。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "d. IV. Application Deadlines 1. Spring Semester: •Nomination: November 10th of the previous year •Application: November 20th of the previous year 2. Fall Semester: •Nomination: May 10th •Application: May 20th V. Semester Schedule 1. Spring Semester: Early March to late July 2. Fall Semester: Early September to mid-January VI. Airport Pickup Service NENU will arrange a",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       },
       {
         "field": "application_deadline",
         "label": "合作校申請截止",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的合作校申請截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "一般非中國籍Spring申請前一年11/20，與中正轉載10/15不同；年度及國籍路徑未確認，不能認定臺籍可延至11/20。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": " •Nomination: November 10th of the previous year •Application: November 20th of the previous year 2. Fall Semester: •Nomination: May 10th •Application: May 20th V. Semester Schedule 1. Spring Semester: Early March to late July 2. Fall Semester: Early September to mid-January VI. Airport Pickup Service NENU will arrange airport pickup on specified dates, which will be ",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       },
       {
         "field": "documents",
         "label": "合作校文件要求（僅列已核實項目）",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的合作校文件要求（僅列已核實項目），提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "一般非中國籍入口：在學證明、成績、母校國際處推薦、護照、HSK（語言培訓除外）；線上上傳且不須郵寄。2027臺籍文件清單仍待確認。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "hinese culture, and adhere to NENU's regulations. II. Required Documents 1. Certificate of Enrollment 2. University Transcript 3. Recommendation Letter from the International Office of the Home University 4. Copy of Passport 5. HSK Score Report (excluding language training) All documents can be uploaded to the application system (studyatnenu.nenu.edu.cn), and there is",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       },
       {
         "field": "application_forms",
         "label": "合作校申請表取得方式",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "一般非中國籍交換指向studyatnenu.nenu.edu.cn線上申請；已核實公開指引，登入後表單內容及2027臺籍適用性尚未取得。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ion's exchange student dispatching department. 2. Complete the online application(studyatnenu.nenu.edu.cn) within the specified timeframe. 3. NENU will review the materials and inform applicants of the admission results, emailing the \"Admission Notice\" and related visa application materials. 4. Students are required to register at NENU within the designated period. IV",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       },
       {
         "field": "academic_calendar",
         "label": "合作校校曆及考試",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的合作校校曆及考試，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "未標年一般Spring為3月初至7月下旬；不是已核實2027逐日校曆。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "th •Application: May 20th V. Semester Schedule 1. Spring Semester: Early March to late July 2. Fall Semester: Early September to mid-January VI. Airport Pickup Service NENU will arrange airport pickup on specified dates, which will be notified when sending the admission notice. Students arriving on non-designated dates must arrange their own transportation to campus f",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       },
       {
         "field": "course_restrictions",
         "label": "課程與學分限制",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的課程與學分限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "一般非中國籍接收原則按申請專業就讀，不任意轉專業，最低12學分；當期臺籍流程仍待核對。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": " the major list for application requirements. The minimum credit requirement during the study period at NENU is 12 credits. IX. Contact Information International Students Office, Division of International Cooperation & Exchange, Office Number: +86-431-85099754 Email: cuiy738@nenu.edu.cn Address: Room 624, Administration Building, Northeast Normal University, No. 5268 ",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       },
       {
         "field": "housing",
         "label": "住宿與床位",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的住宿與床位，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "第二輪重讀已取得內容或官方替代入口；仍只列來源實際載明的範圍。",
+        "reference_value": "一般國際學生宿舍單/雙人房，獨立衛浴、空調、TV/WiFi，每層共用廚房及洗衣；未載2027臺籍床位保證、租金或期限。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-housing",
+            "source_url": "https://iso.nenu.edu.cn/Campus_Life/Accommodation.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.337094+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ENU’s international student dormitory consists of single or double rooms with private bathrooms, air-conditioners, TV, and WIFI. Each floor of the dormitory is equipped with a communal kitchen and laundry facilities. The dormitory follows a standardized management mode, and a professional service team is available to provide comprehensive assistance to international s",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "413b8aa6dd0b180ae0ec53b754327b595189cce0c163d7c925e595be217fa564",
+            "text_sha256": "5a92d964d7e2feb627603fec572bb194e5cf6c8a8e307e1816178af503e4d216"
+          }
+        ]
       },
       {
         "field": "housing_deadline",
@@ -911,47 +1082,117 @@
       {
         "field": "insurance",
         "label": "保險",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的保險，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "一般非中國籍入口要求來華留學生綜合保險，海外個人保險不能取代；臺籍及2027保額/保費適用待核對。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "d university requirements for insurance coverage. Personal insurance purchased overseas cannot replace the comprehensive insurance for international students studying in China. 2. In principle, exchange students should study according to the major specified in the admission application and are generally not allowed to change majors during the semester unless there are",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       },
       {
         "field": "visa",
         "label": "簽證與居留",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的簽證與居留，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "此非中國籍路徑列一學期X2、一年X1，非臺灣居民台胞證路徑；不據此提供臺籍簽證辦理結論。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "d documents, please consult local authorities. 2. One-semester exchange students should apply for an X2 visa, while one-year exchange students should apply for an X1 visa. 3. Refer to the registration guide for other important details. VIII. Regulations 1. According to relevant regulations from the Ministry of Education, the university implements a comprehensive insur",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       },
       {
         "field": "arrival",
         "label": "抵達與迎新",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的抵達與迎新，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "一般入口說接機指定日期隨錄取通知提供，其他日期自行到校；2027接機或報到確切日未核實。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ickup Service NENU will arrange airport pickup on specified dates, which will be notified when sending the admission notice. Students arriving on non-designated dates must arrange their own transportation to campus for registration. VII. Visa Information 1. After receiving the electronic version of the admission documents, apply for an entry visa at the nearest Chines",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       },
       {
         "field": "host_tuition",
         "label": "合作校學費",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "一般交換通常由協議議定學費豁免，住宿生活交通自付或另議；非保證2027中正每一費用皆免。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ssions between NENU and the partner institutions. Typically, this support includes tuition waivers, meaning students do not have to pay tuition fees at NENU during the exchange period. Other expenses, such as accommodation, living costs, and travel expenses, are generally the responsibility of the students themselves or are subject to separate discussions. Participati",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       },
       {
         "field": "exchange_duration",
         "label": "交換期間及延長限制",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Northeast Normal University 東北師範大學中正2027春季的交換期間及延長限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官方替代入口可讀，但明載非中國籍且未標年度；與臺籍母校outbound分開。",
+        "reference_value": "一般非中國籍伙伴校交換一學期或一年，須母校推薦及NENU審查；中正臺籍路徑年度及延長規則未核實。",
+        "evidence": [
+          {
+            "source_id": "p26-r2-exchange",
+            "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+            "source_pages": [],
+            "academic_year": "未標年；國際學生／非中國籍路徑",
+            "application_round": "未標年；國際學生／非中國籍路徑",
+            "checked_at": "2026-10-08T04:40:21.336655+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "NENU's qualification review, can participate in a one-semester or one-year study program at NENU. The funding support for exchange student programs is determined through discussions between NENU and the partner institutions. Typically, this support includes tuition waivers, meaning students do not have to pay tuition fees at NENU during the exchange period. Other expe",
+            "note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+            "content_hash": "10a36b3d5af243f649735bfe687a127b0f31026057019ff6f3a39322f1cb8cd8",
+            "text_sha256": "63465ba3f8e452afd78831782f4600c3b7881d2152366f3a68959856bfa6eba2"
+          }
+        ]
       }
     ],
     "source_acquisition": [
@@ -963,6 +1204,78 @@
         "content_academic_year": "未標示",
         "content_review_note": "中正未提供合作校簡章附件；官方首頁連線逾時，尚未核實新版。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p26-host0-r2retry",
+        "source_url": "https://www.nenu.edu.cn/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:49.217830+00:00"
+      },
+      {
+        "source_id": "p26-r2-english",
+        "source_url": "https://en.nenu.edu.cn/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:50.675257+00:00"
+      },
+      {
+        "source_id": "p26-r2-exchange",
+        "source_url": "https://iso.nenu.edu.cn/Admission/Exchange_Student_Program.htm",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標年；國際學生／非中國籍路徑",
+        "content_review_note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+        "checked_at": "2026-10-08T04:40:21.336655+00:00"
+      },
+      {
+        "source_id": "p26-r2-housing",
+        "source_url": "https://iso.nenu.edu.cn/Campus_Life/Accommodation.htm",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標年；國際學生／非中國籍路徑",
+        "content_review_note": "可讀官方替代入口，但非中國籍接收路徑與中正臺籍港澳臺交換須分開；不能推定2027春季適用。",
+        "checked_at": "2026-10-08T04:40:21.337094+00:00"
+      },
+      {
+        "source_id": "p26-r2-insurance",
+        "source_url": "https://iso.nenu.edu.cn/Campus_Life/Insurance.htm",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:40:21.338555+00:00"
+      },
+      {
+        "source_id": "p26-r2-iso",
+        "source_url": "https://iso.nenu.edu.cn/",
+        "status": "fetch_failed",
+        "error": "ProxyError: HTTPSConnectionPool(host='iso.nenu.edu.cn', port=443): Max retries exceeded with url: / (Caused by ProxyError('Unable to connect to proxy', OSError('Tunnel connection failed: 403 Forbidden')))",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:31:33.230941+00:00"
+      },
+      {
+        "source_id": "p26-r2-notice",
+        "source_url": "https://iso.nenu.edu.cn/Notice/2.htm",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:38:54.467656+00:00"
+      },
+      {
+        "source_id": "p26-r2-oice",
+        "source_url": "https://oice.nenu.edu.cn/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:37:50.922821+00:00"
       }
     ]
   },
@@ -989,6 +1302,46 @@
         "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
         "reference_value": null,
         "evidence": []
+      },
+      {
+        "field": "application_deadline",
+        "label": "合作校申請截止",
+        "status": "conflict",
+        "question": "請確認University of Electronic Science and Technology of China 電子科技大學中正2027春季的合作校申請截止，提供明載年度／計畫的官方文件或提名通知。",
+        "reason": "母校當期轉載與合作校同學年度／同交換申請流程載不同截止；未查得對中正的特別延期，不能任選其中一天。",
+        "reference_value": "跨來源矛盾：中正2027春季轉載「Application deadline申請截止日: 2026/11/30」；合作校當期來源「春季受理每年10/30–12/31；文件適用2026/27，對應2026-12-31，未載截止時間。」。須確認中正個別通知及實際收件日，不承諾較晚日期。",
+        "evidence": [
+          {
+            "source_id": "p27-mirror",
+            "source_url": "https://drive.google.com/file/d/1nSgO6-CsLVbLD35TmniN39qOG7RXnzat/view?usp=drive_link",
+            "source_pages": [
+              2
+            ],
+            "academic_year": "2026/2027臺灣校交流生",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "conflict",
+            "excerpt": "2026/2027年臺灣校交流生申請計劃 一、名額：2026/2027年交換生5名並請平均分布于不同學院之學生。大學部（本科生）一年級、大四請勿申請。 三、申請截止時間：春季班——每年的10月30日至12月31日止；秋季班——每年的3月1日至5月31日止。 四、提交的申請材料：交換生申請表（張貼兩寸白底彩照1張）；交流學生匯總表；學生證復印件；在學證明書；臺胞證影印本；個人簡歷；在校期間成績單；交換學習計劃書；醫療/意外保險證明。所有材料由學校方遞傳（不含醫療/意外保險證明）提交至gatsw@uestc.edu.cn。 七、申請系所及選課：交換生至少修讀5門課12個學分，其中至少一門課需",
+            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+            "content_hash": "33eaf841b21f11d757dfbf0974dd3e6940950c664bdf868fd159e671cd8c1f85",
+            "text_sha256": "14290e351a5772badd738e2fc976de1f12c3e77f855b304dfd46d4748db3bcd7"
+          },
+          {
+            "source_id": "p27-ccu-deadline-crosscheck",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              27
+            ],
+            "academic_year": "中正2027春季名額表，2026.09.17版",
+            "application_round": "中正2027春季名額表，2026.09.17版",
+            "checked_at": "2026-10-08T04:48:35.526956+00:00",
+            "status": "conflict",
+            "excerpt": "estc.edu.cn/ 備註(Notes) Application deadline申請截止日: 2026/11/30 學期期間: 2027/03/02 – 2027/07/17",
+            "note": "本快照只抽取此校頁，原PDF共121頁；轉載接收申請截止與同年度合作校文件比較，沒有個別延期通知。",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "c4266365ae6d7cf73feb6a1303a5ac449aab16bed8a63a729c331733d24c12e4"
+          }
+        ]
       },
       {
         "field": "application_forms",
@@ -1062,6 +1415,14 @@
         "content_academic_year": "2026/2027臺灣校交流生",
         "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p27-ccu-deadline-crosscheck",
+        "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+        "status": "pdf",
+        "content_academic_year": "中正2027春季名額表，2026.09.17版",
+        "content_review_note": "本快照只抽取此校頁，原PDF共121頁；轉載接收申請截止與同年度合作校文件比較，沒有個別延期通知。",
+        "checked_at": "2026-10-08T04:48:35.526956+00:00"
       }
     ]
   },
@@ -2291,11 +2652,27 @@
       {
         "field": "host_tuition",
         "label": "合作校學費",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Hokkaido University 北海道大學中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "第二輪重讀已取得內容或官方替代入口；仍只列來源實際載明的範圍。",
+        "reference_value": "HUSTEP要求交換全程維持母校全職學籍並在母校繳學費；此段未完整列北大費用，不能由此保證所有合作校費用全免。其他四計畫須分開核對。",
+        "evidence": [
+          {
+            "source_id": "p37-mirror",
+            "source_url": "https://drive.google.com/file/d/1yxYubWpQ5lXhVFqczKHQofRsKhozJSGz/view?usp=drive_link",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "2026–2027各交換計畫",
+            "application_round": "2026–2027各交換計畫",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "needs_confirmation",
+            "excerpt": "ment with Hokkaido University. 2. be enrolled and pay tuition fees at their home universities as full-time students during the entire period of study in Japan. 3. have completed at least two years of undergraduate study at their own university prior to arrival in Japan. 4. have a cumulative grade point average (GPA) of 3.0 or better on a 4.0 scale or equivalent. 5. be",
+            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+            "content_hash": "32fa69f8b9639e6a259b700f386c277c23dcb3995ad7483f91f93756983d62ee",
+            "text_sha256": "128b729e333f11d6b8c5a0618fedc5c600a83903a0143fb30d60d10978134b75"
+          }
+        ]
       }
     ],
     "source_acquisition": [
@@ -2318,43 +2695,77 @@
       {
         "field": "program_scope",
         "label": "接收計畫、學制及校區",
-        "status": "needs_confirmation",
+        "status": "reference_only",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的接收計畫、學制及校區，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-        "reference_value": "官方受入頁：每年春/秋接收海外學術伙伴交換生；僅一般介紹及2025活動，未載2027申請要項，不能用一般學位入學簡章代替。",
+        "reason": "官網現行連結的文件內容僅FALL且未標年度，清楚作其他梯次參考。",
+        "reference_value": "僅Fall交換（9月中至1月初），未標年份；不是中正2027春季簡章。",
         "evidence": [
           {
-            "source_id": "p39-hosty0",
-            "source_url": "https://www.tokiwa.ac.jp/international/exchange-a/index.html",
-            "source_pages": [],
-            "academic_year": "未標示",
-            "application_round": "未標示",
-            "checked_at": "2026-10-08T00:00:00Z",
-            "status": "needs_confirmation",
-            "excerpt": "・常磐短期大学 グローバルナビゲーションへ 本文へ ローカルナビゲーションへ フッターへ 国際交流 ホーム > 国際交流 > 交換留学（受入） [印刷ボタン機能]JavaScript推奨 交換留学（受入） 常磐大学では、毎年、春セメスターおよび秋セメスターに、海外の学術連携協定校から交換留学生を受け入れています。受入期間中は、パーティーや遠足など、本学学生との交流の機会が数多く用意されます。また、交換留学生が中心となって、さまざまな言語のTalk Timeを開催し、自国の言語だけでなく、文化や習慣も紹介してくれます。 活動報告（News） 一覧 2026年04月15日 2025年度秋セメスター Final Slides, Bus Rides, and Goodbye",
-            "note": "官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-            "content_hash": "afe617b4c70b6428a594d61c9b57ce3867ce0ba4a833a5860869fabe450e4b35",
-            "text_sha256": "fc2e7aa39718c09f889c6d111e1d524f5f82826fcebb591e5c3289ee48145ebb"
+            "source_id": "p39-r2-guidelines",
+            "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "未標年；僅FALL計畫",
+            "application_round": "未標年；僅FALL計畫",
+            "checked_at": "2026-10-08T04:40:21.339992+00:00",
+            "status": "reference_only",
+            "excerpt": "1 TOKIWA UNIVERSITY STUDENT EXCHANGE PROGRAM-FALL This document contains the guidelines for the Tokiwa University Student Exchange Program, which is held during the Fall Semester, from mid-September to early January . Eligible students are encouraged to apply for the program through the relevant department at their home institution. 1. COURSES Exchange students s",
+            "note": "當前官網交換頁所連，但正文只載FALL，無2027春季；作其他梯次參考，不套中正當期。",
+            "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
+            "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db"
           }
         ]
       },
       {
         "field": "eligibility",
         "label": "合作校接收資格",
-        "status": "missing",
+        "status": "reference_only",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的合作校接收資格，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官網現行連結的文件內容僅FALL且未標年度，清楚作其他梯次參考。",
+        "reference_value": "Fall参考：伙伴校在學、返母校完成degree、累積GPA2.5/4、學過2門日語與1門文化；2027春季待確認。",
+        "evidence": [
+          {
+            "source_id": "p39-r2-guidelines",
+            "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+            "source_pages": [
+              2
+            ],
+            "academic_year": "未標年；僅FALL計畫",
+            "application_round": "未標年；僅FALL計畫",
+            "checked_at": "2026-10-08T04:40:21.339992+00:00",
+            "status": "reference_only",
+            "excerpt": "urse before the Fall semester; (3) Has acquired a cumulative grade point average of 2.5 or higher (on a 4 -point scale) for all undergraduate courses at the time of the application deadline; (4) Has the intention to return to his/her home institution and complete his/her degree; and (5) Will abide by Japanese law and all regulations set forth by Tokiwa University. (* ",
+            "note": "當前官網交換頁所連，但正文只載FALL，無2027春季；作其他梯次參考，不套中正當期。",
+            "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
+            "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db"
+          }
+        ]
       },
       {
         "field": "language",
         "label": "合作校語言條件與替代證明",
-        "status": "missing",
+        "status": "reference_only",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的合作校語言條件與替代證明，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官網現行連結的文件內容僅FALL且未標年度，清楚作其他梯次參考。",
+        "reference_value": "Fall参考兩門日語或JLPT N5等同；不得代替中正2027春季JLPT要求。",
+        "evidence": [
+          {
+            "source_id": "p39-r2-guidelines",
+            "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+            "source_pages": [
+              2
+            ],
+            "academic_year": "未標年；僅FALL計畫",
+            "application_round": "未標年；僅FALL計畫",
+            "checked_at": "2026-10-08T04:40:21.339992+00:00",
+            "status": "reference_only",
+            "excerpt": "pleted at least two Japanese language courses (or equivalent to N5 * of the Japanese Language Proficiency Test) and one Japanese culture or related course before the Fall semester; (3) Has acquired a cumulative grade point average of 2.5 or higher (on a 4 -point scale) for all undergraduate courses at the time of the application deadline; (4) Has the intention to retu",
+            "note": "當前官網交換頁所連，但正文只載FALL，無2027春季；作其他梯次參考，不套中正當期。",
+            "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
+            "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db"
+          }
+        ]
       },
       {
         "field": "nomination_deadline",
@@ -2368,20 +2779,52 @@
       {
         "field": "application_deadline",
         "label": "合作校申請截止",
-        "status": "missing",
+        "status": "reference_only",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的合作校申請截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官網現行連結的文件內容僅FALL且未標年度，清楚作其他梯次參考。",
+        "reference_value": "僅未標年Fall参考：early March email，母校寄PDF；不能當2027春季10月截止。",
+        "evidence": [
+          {
+            "source_id": "p39-r2-guidelines",
+            "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+            "source_pages": [
+              5
+            ],
+            "academic_year": "未標年；僅FALL計畫",
+            "application_round": "未標年；僅FALL計畫",
+            "checked_at": "2026-10-08T04:40:21.339992+00:00",
+            "status": "reference_only",
+            "excerpt": " TO APPLY] Applications must be sent via email by early March. Please scan and submit documents as PDFs through your university’s office. See your university’s office in charge of international programs for details. [SELECTION] The selection committee at Tokiwa University will review the application forms and decide on the successful candidates from the recommendation",
+            "note": "當前官網交換頁所連，但正文只載FALL，無2027春季；作其他梯次參考，不套中正當期。",
+            "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
+            "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db"
+          }
+        ]
       },
       {
         "field": "documents",
         "label": "合作校文件要求（僅列已核實項目）",
-        "status": "missing",
+        "status": "reference_only",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的合作校文件要求（僅列已核實項目），提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官網現行連結的文件內容僅FALL且未標年度，清楚作其他梯次參考。",
+        "reference_value": "僅Fall参考：申請表、500英文words或400日文characters essay、成績、健康證明/自述、日語教師及導師2封推薦；2027春季未核。",
+        "evidence": [
+          {
+            "source_id": "p39-r2-guidelines",
+            "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+            "source_pages": [
+              5
+            ],
+            "academic_year": "未標年；僅FALL計畫",
+            "application_round": "未標年；僅FALL計畫",
+            "checked_at": "2026-10-08T04:40:21.339992+00:00",
+            "status": "reference_only",
+            "excerpt": "5 6. SELECTION PROCEDURE [APPLICATION] All of the following documents are required with the application form: (1) Paper entitled “My Readiness to Study in Japan (My Past, Present, and Future)” (500 words in English OR 400 characters in Japanese); (2) Official transcript of undergraduate course work; (3) Certificate of Health OR Self Report Health Form* (for",
+            "note": "當前官網交換頁所連，但正文只載FALL，無2027春季；作其他梯次參考，不套中正當期。",
+            "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
+            "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db"
+          }
+        ]
       },
       {
         "field": "application_forms",
@@ -2413,11 +2856,27 @@
       {
         "field": "housing",
         "label": "住宿與床位",
-        "status": "missing",
+        "status": "reference_only",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的住宿與床位，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官網現行連結的文件內容僅FALL且未標年度，清楚作其他梯次參考。",
+        "reference_value": "Fall參考為Tokiwa International Hall，三間臥室套房共用衛浴、廚房、公共間WiFi；2027春季房型/床位未核。",
+        "evidence": [
+          {
+            "source_id": "p39-r2-guidelines",
+            "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+            "source_pages": [
+              4
+            ],
+            "academic_year": "未標年；僅FALL計畫",
+            "application_round": "未標年；僅FALL計畫",
+            "checked_at": "2026-10-08T04:40:21.339992+00:00",
+            "status": "reference_only",
+            "excerpt": "4 4. HOUSING Students will stay in the Tokiwa International Hall (a university dormitory) during the Fall Semester where they can enjoy the following conveniences: (1) Less than a 5 minute-walk to the campus. (2) Wi-Fi internet access in the hall’s Common Meeting Room. (3) An air-conditioned suite consisting of 3 bedrooms, a shared",
+            "note": "當前官網交換頁所連，但正文只載FALL，無2027春季；作其他梯次參考，不套中正當期。",
+            "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
+            "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db"
+          }
+        ]
       },
       {
         "field": "housing_deadline",
@@ -2431,20 +2890,52 @@
       {
         "field": "costs",
         "label": "住宿與生活費用",
-        "status": "missing",
+        "status": "reference_only",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的住宿與生活費用，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官網現行連結的文件內容僅FALL且未標年度，清楚作其他梯次參考。",
+        "reference_value": "Fall参考保險NHI約2000JPY/月、傷害責任1340JPY/年、綜合保險7480JPY/5月；住宿豁免依協議，未載實際2027租金。",
+        "evidence": [
+          {
+            "source_id": "p39-r2-guidelines",
+            "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+            "source_pages": [
+              3
+            ],
+            "academic_year": "未標年；僅FALL計畫",
+            "application_round": "未標年；僅FALL計畫",
+            "checked_at": "2026-10-08T04:40:21.339992+00:00",
+            "status": "reference_only",
+            "excerpt": "All students will bear the costs of NHI, which is roughly 2,000 yen a month. This insurance covers the time students spend in Japan. ② Student Insurance for Injuries from Accidents with Liability Insurance All Tokiwa University students are required to enroll in this insurance plan. This insurance covers injuries sustained in class and while commuting to the campus, a",
+            "note": "當前官網交換頁所連，但正文只載FALL，無2027春季；作其他梯次參考，不套中正當期。",
+            "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
+            "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db"
+          }
+        ]
       },
       {
         "field": "insurance",
         "label": "保險",
-        "status": "missing",
+        "status": "reference_only",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的保險，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官網現行連結的文件內容僅FALL且未標年度，清楚作其他梯次參考。",
+        "reference_value": "Fall参考列NHI、學生傷害責任及國際生綜合保險三種，費率未核2027；不當當期固定保費。",
+        "evidence": [
+          {
+            "source_id": "p39-r2-guidelines",
+            "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+            "source_pages": [
+              3
+            ],
+            "academic_year": "未標年；僅FALL計畫",
+            "application_round": "未標年；僅FALL計畫",
+            "checked_at": "2026-10-08T04:40:21.339992+00:00",
+            "status": "reference_only",
+            "excerpt": " and from Japan/Tokiwa University. (6) Insurance: All exchange students are required to enroll in the following insurance plans: ① National Health Insurance (NHI). All exchange students will be enrolled in Japan ’s National Health Insurance (NHI) upon arriving in Japan for the entire period of their stay until the final day in Japan. The NHI covers 70% of the fees for",
+            "note": "當前官網交換頁所連，但正文只載FALL，無2027春季；作其他梯次參考，不套中正當期。",
+            "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
+            "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db"
+          }
+        ]
       },
       {
         "field": "visa",
@@ -2467,20 +2958,52 @@
       {
         "field": "host_tuition",
         "label": "合作校學費",
-        "status": "missing",
+        "status": "reference_only",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官網現行連結的文件內容僅FALL且未標年度，清楚作其他梯次參考。",
+        "reference_value": "Fall参考依協議免Tokiwa學費，書本與課程field trip自付；2027春季適用未核。",
+        "evidence": [
+          {
+            "source_id": "p39-r2-guidelines",
+            "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+            "source_pages": [
+              3
+            ],
+            "academic_year": "未標年；僅FALL計畫",
+            "application_round": "未標年；僅FALL計畫",
+            "checked_at": "2026-10-08T04:40:21.339992+00:00",
+            "status": "reference_only",
+            "excerpt": "wa University and the participating institutions, exchange students pay no tuition fees at Tokiwa University. All individual class-related expenses such as textbooks and class-related field trips, however, must be borne by the exchange students. (2) Accommodation fee for the Tokiwa International Hall: Exchange students reside i n the Tokiwa International Hall. Dependi",
+            "note": "當前官網交換頁所連，但正文只載FALL，無2027春季；作其他梯次參考，不套中正當期。",
+            "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
+            "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db"
+          }
+        ]
       },
       {
         "field": "exchange_duration",
         "label": "交換期間及延長限制",
-        "status": "missing",
+        "status": "reference_only",
         "question": "請確認Tokiwa University 常磐大學中正2027春季的交換期間及延長限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "官網現行連結的文件內容僅FALL且未標年度，清楚作其他梯次參考。",
+        "reference_value": "所查文件只列Fall從9月中至1月初；本期春季期間與延長規定尚未核实。",
+        "evidence": [
+          {
+            "source_id": "p39-r2-guidelines",
+            "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "未標年；僅FALL計畫",
+            "application_round": "未標年；僅FALL計畫",
+            "checked_at": "2026-10-08T04:40:21.339992+00:00",
+            "status": "reference_only",
+            "excerpt": "ram, which is held during the Fall Semester, from mid-September to early January . Eligible students are encouraged to apply for the program through the relevant department at their home institution. 1. COURSES Exchange students study at Tokiwa University campus, a vibrant academic environment located near several historic sites and surrounded by the beautiful nature ",
+            "note": "當前官網交換頁所連，但正文只載FALL，無2027春季；作其他梯次參考，不套中正當期。",
+            "content_hash": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
+            "text_sha256": "a8760ea3a5bbc4579513566d1ac974733f6e35704da535aba4a4d910cdbaa9db"
+          }
+        ]
       }
     ],
     "source_acquisition": [
@@ -2529,6 +3052,43 @@
         "content_academic_year": "未標示",
         "content_review_note": "官方首頁僅查得一般入學2027要項，不能視為交換生文件；/english/探索回傳404。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p39-hostf0-r2retry",
+        "source_url": "https://www.tokiwa.ac.jp/english/",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://www.tokiwa.ac.jp/english/",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:48.779846+00:00"
+      },
+      {
+        "source_id": "p39-r2-english",
+        "source_url": "https://www.tokiwa.ac.jp/en/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:31:34.162970+00:00"
+      },
+      {
+        "source_id": "p39-r2-exchange",
+        "source_url": "https://www.tokiwa.ac.jp/en/about/exchange/",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:38:54.468962+00:00"
+      },
+      {
+        "source_id": "p39-r2-guidelines",
+        "source_url": "https://www.tokiwa.ac.jp/en/media/tokiwa_university_student_exchange_pg.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "未標年；僅FALL計畫",
+        "content_review_note": "當前官網交換頁所連，但正文只載FALL，無2027春季；作其他梯次參考，不套中正當期。",
+        "checked_at": "2026-10-08T04:40:21.339992+00:00"
       }
     ]
   },
@@ -2805,33 +3365,8 @@
     "school_name": "Pusan National University 釜山國立大學",
     "ccu_page": 43,
     "quota_status": "published",
-    "review_note": "中正附件公開下載404；已改查合作校Exchange / Visiting入口，未核實2027春季新版。",
+    "review_note": "中正Drive附件404仍保留紀錄；已查合作校官方2026/2027 PDF並重讀完整附表，春季提名／申請與文件逐欄核實，未載資訊仍待補查。",
     "questions": [
-      {
-        "field": "application_forms",
-        "label": "合作校申請表取得方式",
-        "status": "needs_confirmation",
-        "question": "請確認Pusan National University 釜山國立大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "檔名含2026Fall，內容實為2026/2027並列春季申請；依正文核實，不沿用檔名。",
-        "reference_value": "提名後寄學生申請指引；公開PDF寫studyplan及financialsupport form attached，但實際表格檔未查得，須核對提名後當期附件。",
-        "evidence": [
-          {
-            "source_id": "p43-hostz0",
-            "source_url": "https://international.pusan.ac.kr/sites/international/download/Exchange_Student_Program_Fact Sheet_2026Fall.pdf",
-            "source_pages": [
-              4
-            ],
-            "academic_year": "2026/2027（封面與內頁正文）",
-            "application_round": "2026/2027（封面與內頁正文）",
-            "checked_at": "2026-10-08T00:00:00Z",
-            "status": "needs_confirmation",
-            "excerpt": "ent is Not in Your Name ‣ If the bank statement is in your parent’s name, you must submit both an Affidavit of Financial Support (form attached) and an Official Family Certificate. You may submit a scholarship certificate instead. 3) Document Submission ‣ Always ensure that all submitted documents are in English or are accompanied ",
-            "note": "檔名含2026Fall，內容實為2026/2027並列春季申請；依正文核實，不沿用檔名。",
-            "content_hash": "7e64de3d496952f23579ca70684ce8d407087e9ba15d014997b6492ca9347bc8",
-            "text_sha256": "2e5563e6b9d4e2b418e74e74343e26b9ca85c58d5c32ad5f3e495edbb81420d5"
-          }
-        ]
-      },
       {
         "field": "housing_deadline",
         "label": "住宿申請／付款截止",
@@ -2922,6 +3457,35 @@
         "content_academic_year": "未標示",
         "content_review_note": "中正附件公開下載404；已改查合作校Exchange / Visiting入口，未核實2027春季新版。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p43-hostz1-r2retry",
+        "source_url": "https://drive.google.com/file/d/162voaC-uaqrQmH2fqSQHKOW0iFKA99dQ/view",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/162voaC-uaqrQmH2fqSQHKOW0iFKA99dQ/view",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:49.898243+00:00"
+      },
+      {
+        "source_id": "p43-mirror-r2retry",
+        "source_url": "https://drive.google.com/file/d/162voaC-uaqrQmH2fqSQHKOW0iFKA99dQ/view?usp=sharing",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=162voaC-uaqrQmH2fqSQHKOW0iFKA99dQ&export=download",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:47.913846+00:00"
+      },
+      {
+        "source_id": "p43-r2-factsheet",
+        "source_url": "https://international.pusan.ac.kr/sites/international/download/Exchange_Student_Program_Fact%20Sheet_2026Fall.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "2026/2027（正文）",
+        "content_review_note": "重取成功並讀附表第14/15頁；檔名2026Fall不代表只適用秋季。",
+        "checked_at": "2026-10-08T04:31:35.534487+00:00"
       }
     ]
   },
@@ -3307,15 +3871,6 @@
         "label": "合作校學費",
         "status": "missing",
         "question": "請確認Sungshin Women's University 誠信女子大學中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "exchange_duration",
-        "label": "交換期間及延長限制",
-        "status": "missing",
-        "question": "請確認Sungshin Women's University 誠信女子大學中正2027春季的交換期間及延長限制，提供明載年度／計畫的官方文件或提名通知。",
         "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
         "reference_value": null,
         "evidence": []
@@ -4058,6 +4613,26 @@
         "content_academic_year": "完整表內容未核實；由2026/27 factsheet所連",
         "content_review_note": "完整表格僅在可公開讀取時核實；HTTP401及JS載入頁不算已驗證表格。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p53-hostv0-r2retry",
+        "source_url": "https://forms.gle/tnxvZPTKKqJjamTP7",
+        "status": "fetch_failed",
+        "http_status": 401,
+        "error": "HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLScPZGWnnLQKrmsK99IRvcaQyQ-ivKWig34w4ekiiiyyEAYIFQ/viewform?usp=send_form",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:48.672031+00:00"
+      },
+      {
+        "source_id": "p53-hostv1-r2retry",
+        "source_url": "https://forms.gle/oV4XP9rRp7aTF2Cw7",
+        "status": "fetch_failed",
+        "http_status": 401,
+        "error": "HTTPError: 401 Client Error: Unauthorized for url: https://docs.google.com/forms/d/e/1FAIpQLSfTPObyibS_s40UUQySHq6QwMdz810JE7d5SelPx1qbCP1hgg/viewform?usp=send_form",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:47.911582+00:00"
       }
     ]
   },
@@ -5270,6 +5845,46 @@
     "review_note": "合作校已查資料之各欄分別核對；未載資訊保持空值，不把部分清單聲稱完整。",
     "questions": [
       {
+        "field": "application_deadline",
+        "label": "合作校申請截止",
+        "status": "conflict",
+        "question": "請確認Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學中正2027春季的合作校申請截止，提供明載年度／計畫的官方文件或提名通知。",
+        "reason": "母校當期轉載與合作校同學年度／同交換申請流程載不同截止；未查得對中正的特別延期，不能任選其中一天。",
+        "reference_value": "跨來源矛盾：中正2027春季轉載「Application deadline申請截止日: 2026/10/15」；合作校當期來源「第二學期10/1（對應2026-10-01，已過）；表單由提名後提供。」。須確認中正個別通知及實際收件日，不承諾較晚日期。",
+        "evidence": [
+          {
+            "source_id": "p67-mirror",
+            "source_url": "https://drive.google.com/file/d/1b_SpJGCnx-Sn6PDjscWjbmQsFuvnPgoK/view?usp=drive_link",
+            "source_pages": [
+              2
+            ],
+            "academic_year": "2026/2027（2026年3月更新）",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "conflict",
+            "excerpt": "ing) 2) Nomination deadline 1st Semester 8 May 2nd Semester 15 September 3) Application deadline 1st Semester 15 May 2nd Semester 1 October 4) Orientation for new international students 1st Semester Middle August, 2026 2nd Semester Late December 2026/Early 2027 III. Nomination / Application process Nomination process Please inf",
+            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+            "content_hash": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
+            "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
+          },
+          {
+            "source_id": "p67-ccu-deadline-crosscheck",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              67
+            ],
+            "academic_year": "中正2027春季名額表，2026.09.17版",
+            "application_round": "中正2027春季名額表，2026.09.17版",
+            "checked_at": "2026-10-08T04:48:35.526956+00:00",
+            "status": "conflict",
+            "excerpt": "ang=en&tab=1 備註(Notes) Application deadline申請截止日: 2026/10/15 學期時間: 2027/01/11– 2027/06/07 每學期至少修讀11學分 不可跨學制（學士班／碩士班）修課",
+            "note": "本快照只抽取此校頁，原PDF共121頁；轉載接收申請截止與同年度合作校文件比較，沒有個別延期通知。",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "815f16e6ed3b0f256215baf6346a19284f905af2893c37ac51f831537a32f40f"
+          }
+        ]
+      },
+      {
         "field": "housing_deadline",
         "label": "住宿申請／付款截止",
         "status": "missing",
@@ -5302,15 +5917,6 @@
             "text_sha256": "6391a3e128797a5719a6e0021afd3e642bcb37b18c6a5d92fe25d34efcab2e26"
           }
         ]
-      },
-      {
-        "field": "arrival",
-        "label": "抵達與迎新",
-        "status": "missing",
-        "question": "請確認Ho Chi Minh City University of Technology HCMUT胡志明市國家大學所屬百科大學中正2027春季的抵達與迎新，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
       },
       {
         "field": "exchange_duration",
@@ -5348,6 +5954,14 @@
         "content_academic_year": "未標年表格；由AY2026/27 factsheet學生專用連結取得",
         "content_review_note": "已下載DOCX並讀取全部段落及表格；以當期factsheet連結確認學生用途，表本身未標年；與scholar/staff表分開。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p67-ccu-deadline-crosscheck",
+        "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+        "status": "pdf",
+        "content_academic_year": "中正2027春季名額表，2026.09.17版",
+        "content_review_note": "本快照只抽取此校頁，原PDF共121頁；轉載接收申請截止與同年度合作校文件比較，沒有個別延期通知。",
+        "checked_at": "2026-10-08T04:48:35.526956+00:00"
       }
     ]
   },
@@ -5745,6 +6359,46 @@
         "evidence": []
       },
       {
+        "field": "application_deadline",
+        "label": "合作校申請截止",
+        "status": "conflict",
+        "question": "請確認Chitkara University 吉特卡拉大學中正2027春季的合作校申請截止，提供明載年度／計畫的官方文件或提名通知。",
+        "reason": "母校當期轉載與合作校同學年度／同交換申請流程載不同截止；未查得對中正的特別延期，不能任選其中一天。",
+        "reference_value": "跨來源矛盾：中正2027春季轉載「Application deadline申請截止日: 2026/10/20」；合作校當期來源「Spring2027：10/30（2026/27年度內前一年2026-10-30，未載時刻）。」。須確認中正個別通知及實際收件日，不承諾較晚日期。",
+        "evidence": [
+          {
+            "source_id": "p73-mirror",
+            "source_url": "https://drive.google.com/file/d/1-pQRoH4H7Sqxa7bl3oOPBcyZb-bVo4FP/view?usp=drive_link",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "2026/27",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "conflict",
+            "excerpt": "Office of International Affairs Website www.chitkara.edu.in/international Semester Application Deadline Fall Semester 2026 May 15 Spring Semester 2027 October 30 D. REQUIREMENTS AND ACADEMICS Entry Requirements  Regular Exchange: minimum Cumulative GPA of 2.5 on a 4.0 scale; must be a currently enrolled student.  Must have completed at least two s",
+            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+            "content_hash": "bfc388eb4e0897377a4a1c825be2676083d0b3e3af37c65190cb8362adfbedd4",
+            "text_sha256": "8c2ee74b827d50a1b363f50c4ad60c8c463ef7b3f00aaa780cc17cdb62b55a27"
+          },
+          {
+            "source_id": "p73-ccu-deadline-crosscheck",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              73
+            ],
+            "academic_year": "中正2027春季名額表，2026.09.17版",
+            "application_round": "中正2027春季名額表，2026.09.17版",
+            "checked_at": "2026-10-08T04:48:35.526956+00:00",
+            "status": "conflict",
+            "excerpt": "nd-mobility/ 備註(Notes) Application deadline申請截止日: 2026/10/20 學期時間: 2027/01/10~2027/07/15 一學期修習學分：12-19",
+            "note": "本快照只抽取此校頁，原PDF共121頁；轉載接收申請截止與同年度合作校文件比較，沒有個別延期通知。",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "a6fbd6a90767d1e2129ddaaa5b2c6eb804b45f51b63466020465254ce821e24b"
+          }
+        ]
+      },
+      {
         "field": "documents",
         "label": "合作校文件要求（僅列已核實項目）",
         "status": "missing",
@@ -5843,6 +6497,14 @@
         "content_academic_year": "2026/27",
         "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p73-ccu-deadline-crosscheck",
+        "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+        "status": "pdf",
+        "content_academic_year": "中正2027春季名額表，2026.09.17版",
+        "content_review_note": "本快照只抽取此校頁，原PDF共121頁；轉載接收申請截止與同年度合作校文件比較，沒有個別延期通知。",
+        "checked_at": "2026-10-08T04:48:35.526956+00:00"
       }
     ]
   },
@@ -6973,13 +7635,69 @@
         "evidence": []
       },
       {
+        "field": "application_deadline",
+        "label": "合作校申請截止",
+        "status": "conflict",
+        "question": "請確認EPITA (School of engineering & computer science) 法國高等工程技術學院中正2027春季的合作校申請截止，提供明載年度／計畫的官方文件或提名通知。",
+        "reason": "母校當期轉載與合作校同學年度／同交換申請流程載不同截止；未查得對中正的特別延期，不能任選其中一天。",
+        "reference_value": "跨來源矛盾：中正2027春季轉載「Application deadline申請截止日: 2026/10/30」；合作校當期來源「春季10/31（對應2026-10-31）；錄取通知最遲11/30。」。須確認中正個別通知及實際收件日，不承諾較晚日期。",
+        "evidence": [
+          {
+            "source_id": "p86-mirror",
+            "source_url": "https://drive.google.com/file/d/1CWna-SM8eTKClo9767T0DsIYT3ZRRtbh/view?usp=drive_link",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "2026–2027",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "conflict",
+            "excerpt": ") Year 3 / Year 4 KEY DATES FALL SEMESTER SPRING SEMESTER NOMINATION DEADLINE May 15ᵗʰ October 15ᵗʰ APPLICATION DEADLINE May 30ᵗʰ October 31ˢᵗ ADMISSION NOTIFICATION by June 30ᵗʰ by November 30ᵗʰ ORIENTATION WEEK 1 week before the semester starts REQUIREMENTS Exchange students must have a strong IT, mathematics & algorithmic bac",
+            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+            "content_hash": "da7b5db4137c9cc3fed5cf2b1e0f7e0dc9e33026dc2366de161eeb3702fa3a87",
+            "text_sha256": "0673823372d78581f23b29a8b251d2f660c603c9b0114ede9484c79af759e4ca"
+          },
+          {
+            "source_id": "p86-ccu-deadline-crosscheck",
+            "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+            "source_pages": [
+              86
+            ],
+            "academic_year": "中正2027春季名額表，2026.09.17版",
+            "application_round": "中正2027春季名額表，2026.09.17版",
+            "checked_at": "2026-10-08T04:48:35.526956+00:00",
+            "status": "conflict",
+            "excerpt": "ence System 備註 (Notes) Application deadline申請截止日: 2026/10/30 學期時間: 2027/01/11 – 2027/06/30 (The programs are focused on computer science and strong background in mathematics, algorithms, programming will be needed. Students must choose one year of study and cannot mix courses of different years due to schedule conflict. Students can take French classes Beginner level ",
+            "note": "本快照只抽取此校頁，原PDF共121頁；轉載接收申請截止與同年度合作校文件比較，沒有個別延期通知。",
+            "content_hash": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+            "text_sha256": "cb215dd8e706d8e5e3b50a46b5710f0824cf0c44dc5a92e5410316feb637e610"
+          }
+        ]
+      },
+      {
         "field": "application_forms",
         "label": "合作校申請表取得方式",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認EPITA (School of engineering & computer science) 法國高等工程技術學院中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "第二輪重讀已取得內容或官方替代入口；仍只列來源實際載明的範圍。",
+        "reference_value": "學生申請連結由EPITA寄送，提名由母校協調人另填Microsoft表，兩者不同。公開完整學生表尚未取得；送件時提供fee waiver code，不推定該code免除所有學費。",
+        "evidence": [
+          {
+            "source_id": "p86-mirror",
+            "source_url": "https://drive.google.com/file/d/1CWna-SM8eTKClo9767T0DsIYT3ZRRtbh/view?usp=drive_link",
+            "source_pages": [
+              2
+            ],
+            "academic_year": "2026–2027",
+            "application_round": "2026–2027",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "needs_confirmation",
+            "excerpt": "ps://forms.office.com/e/HvG2CnRFEz?origin=lprLink Application for students: Link sent by email by EPITA When applying, students receive a fee waiver code. Documents to provide (in jpg or pdf format): A digital picture (passport size) Curriculum Vitae Statement of purpose Transcripts of records (In French or English) English Test results (TOEIC, IELTS…)* Passport copie",
+            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+            "content_hash": "da7b5db4137c9cc3fed5cf2b1e0f7e0dc9e33026dc2366de161eeb3702fa3a87",
+            "text_sha256": "0673823372d78581f23b29a8b251d2f660c603c9b0114ede9484c79af759e4ca"
+          }
+        ]
       },
       {
         "field": "academic_calendar",
@@ -7027,20 +7745,27 @@
       {
         "field": "host_tuition",
         "label": "合作校學費",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認EPITA (School of engineering & computer science) 法國高等工程技術學院中正2027春季的合作校學費，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "exchange_duration",
-        "label": "交換期間及延長限制",
-        "status": "missing",
-        "question": "請確認EPITA (School of engineering & computer science) 法國高等工程技術學院中正2027春季的交換期間及延長限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "第二輪重讀已取得內容或官方替代入口；仍只列來源實際載明的範圍。",
+        "reference_value": "來源提供申請時fee waiver code，但未明示是否為完整交換學費豁免；須核對個別錄取條件，不把申請費code當作學費全免。",
+        "evidence": [
+          {
+            "source_id": "p86-mirror",
+            "source_url": "https://drive.google.com/file/d/1CWna-SM8eTKClo9767T0DsIYT3ZRRtbh/view?usp=drive_link",
+            "source_pages": [
+              2
+            ],
+            "academic_year": "2026–2027",
+            "application_round": "2026–2027",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "needs_confirmation",
+            "excerpt": " email by EPITA When applying, students receive a fee waiver code. Documents to provide (in jpg or pdf format): A digital picture (passport size) Curriculum Vitae Statement of purpose Transcripts of records (In French or English) English Test results (TOEIC, IELTS…)* Passport copies (main pages) or ID card for EU students International health insurance --> optional 10",
+            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+            "content_hash": "da7b5db4137c9cc3fed5cf2b1e0f7e0dc9e33026dc2366de161eeb3702fa3a87",
+            "text_sha256": "0673823372d78581f23b29a8b251d2f660c603c9b0114ede9484c79af759e4ca"
+          }
+        ]
       }
     ],
     "source_acquisition": [
@@ -7051,6 +7776,14 @@
         "content_academic_year": "2026–2027",
         "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p86-ccu-deadline-crosscheck",
+        "source_url": "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf",
+        "status": "pdf",
+        "content_academic_year": "中正2027春季名額表，2026.09.17版",
+        "content_review_note": "本快照只抽取此校頁，原PDF共121頁；轉載接收申請截止與同年度合作校文件比較，沒有個別延期通知。",
+        "checked_at": "2026-10-08T04:48:35.526956+00:00"
       }
     ]
   },
@@ -7321,6 +8054,26 @@
         "content_academic_year": "未標示",
         "content_review_note": "中正附件公開下載404；Seafile頁僅Private Seafile，公開介紹頁未提供本期完整簡章。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p87-hostz1-r2retry",
+        "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:48.208630+00:00"
+      },
+      {
+        "source_id": "p87-mirror-r2retry",
+        "source_url": "https://drive.google.com/file/d/1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B/view?usp=drive_link",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=1ff-PXi8-Kkfvoyj-K6CmnOZ7ALmhIT_B&export=download",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:47.911047+00:00"
       }
     ]
   },
@@ -7501,7 +8254,7 @@
         "status": "conflict",
         "question": "請確認University of Southern Denmark 南丹麥大學中正2027春季的合作校語言條件與替代證明，提供明載年度／計畫的官方文件或提名通知。",
         "reason": "中正表列語言考試門檻，合作校鏡像要求母校簽B2證明、無需TOEFL/IELTS；附件無年度，適用性及差異待確認。",
-        "reference_value": "官方镜像无TOEFL/IELTS要求，母校签CEFRB2form；現行網頁允许其他英语能力证明，與中正数值条件不同；年度適用未核。",
+        "reference_value": "官方镜像无TOEFL/IELTS要求，母校签CEFRB2form；現行網頁允许其他英语能力证明，與中正数值条件不同；年度適用未核。；現行語言表另寫英語能力等同IELTS6.5/TOEFL88（不等於強制考試），已讀學生及母校簽章。",
         "evidence": [
           {
             "source_id": "p89-mirror",
@@ -7517,6 +8270,21 @@
             "note": "中正表列語言考試門檻，合作校鏡像要求母校簽B2證明、無需TOEFL/IELTS；附件無年度，適用性及差異待確認。",
             "content_hash": "af02439182a554a5c78119c86c98423e2b03c69fde7507130faa2ca80714d24e",
             "text_sha256": "7779652da37d951ee2560d3227439050c4ab93b456606ad920aae2641b8bf521"
+          },
+          {
+            "source_id": "p89-r2-languageform",
+            "source_url": "https://www.sdu.dk/-/media/files/information_til/internationalstudents/exchange/sdulanguagerequirementform.pdf",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "共用英文能力表，未標年度",
+            "application_round": "共用英文能力表，未標年度",
+            "checked_at": "2026-10-08T04:34:50.684904+00:00",
+            "status": "conflict",
+            "excerpt": "language equivalent of the IELTS score 6.5 or the TOEFL score 88. We ask you and your home university to document your English skills through this language requirement form which in words describes the required English level. To follow courses offered in English, your English skills must as a minimum compare to the below description: You must: • understand general and",
+            "note": "完整表已讀，學生及母校簽章；表內等同IELTS6.5/TOEFL88，與中正轉載83及網站B2敘述須分別核對，不宣稱強制考試。",
+            "content_hash": "fdf3e501549dfeb4b7760ca7b1e3f49b35fa5567b503573fdcd9a0d6af253b2a",
+            "text_sha256": "ad9939c2c55195fc85713b94dda2fe1b17e060e97721c31f4a01fc7900393f79"
           }
         ]
       },
@@ -7594,11 +8362,27 @@
       {
         "field": "application_forms",
         "label": "合作校申請表取得方式",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認University of Southern Denmark 南丹麥大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正表列語言考試門檻，合作校鏡像要求母校簽B2證明、無需TOEFL/IELTS；附件無年度，適用性及差異待確認。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "第二輪重讀已取得內容或官方替代入口；仍只列來源實際載明的範圍。",
+        "reference_value": "現行交換申請頁可下載完整English Language Requirement Form：學生與母校負責人簽名、日期、母校stamp/seal。表未標年度，且88分敘述與中正83待核；不能當作2027唯一必繳證明。",
+        "evidence": [
+          {
+            "source_id": "p89-r2-languageform",
+            "source_url": "https://www.sdu.dk/-/media/files/information_til/internationalstudents/exchange/sdulanguagerequirementform.pdf",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "共用英文能力表，未標年度",
+            "application_round": "共用英文能力表，未標年度",
+            "checked_at": "2026-10-08T04:34:50.684904+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "English Language Requirement Form for Exchange and Guest Students - this form must be signed by the student and the responsible person at the home university - to be enclosed to the application form to become an exchange or guest student A good standard of English is required to become an exchange student at the Univer",
+            "note": "完整表已讀，學生及母校簽章；表內等同IELTS6.5/TOEFL88，與中正轉載83及網站B2敘述須分別核對，不宣稱強制考試。",
+            "content_hash": "fdf3e501549dfeb4b7760ca7b1e3f49b35fa5567b503573fdcd9a0d6af253b2a",
+            "text_sha256": "ad9939c2c55195fc85713b94dda2fe1b17e060e97721c31f4a01fc7900393f79"
+          }
+        ]
       },
       {
         "field": "academic_calendar",
@@ -7828,6 +8612,34 @@
         "content_academic_year": "未標示",
         "content_review_note": "中正表列語言考試門檻，合作校鏡像要求母校簽B2證明、無需TOEFL/IELTS；附件無年度，適用性及差異待確認。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p89-hostf1-r2retry",
+        "source_url": "https://www.sdu.dk/en/uddannelse/exchange/apply/entry-requirements",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://www.sdu.dk/en/uddannelse/exchange/apply/entry-requirements",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:47.910630+00:00"
+      },
+      {
+        "source_id": "p89-r2-apply",
+        "source_url": "https://www.sdu.dk/en/uddannelse/exchange/apply",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "現行官網未標2027年度",
+        "content_review_note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+        "checked_at": "2026-10-08T04:31:34.620319+00:00"
+      },
+      {
+        "source_id": "p89-r2-languageform",
+        "source_url": "https://www.sdu.dk/-/media/files/information_til/internationalstudents/exchange/sdulanguagerequirementform.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "共用英文能力表，未標年度",
+        "content_review_note": "完整表已讀，學生及母校簽章；表內等同IELTS6.5/TOEFL88，與中正轉載83及網站B2敘述須分別核對，不宣稱強制考試。",
+        "checked_at": "2026-10-08T04:34:50.684904+00:00"
       }
     ]
   },
@@ -8189,6 +9001,16 @@
         "content_academic_year": "2027春季校曆（2026年3月更新）",
         "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p98-r2-before",
+        "source_url": "https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1",
+        "status": "fetch_failed",
+        "http_status": 418,
+        "error": "HTTPError: 418 Client Error: Unknown for url: https://www.hwg-lu.de/international/exchange-students-from-partner-institutions/before-mobility-1",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:40:23.858380+00:00"
       }
     ]
   },
@@ -8454,11 +9276,25 @@
       {
         "field": "program_scope",
         "label": "接收計畫、學制及校區",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學中正2027春季的接收計畫、學制及校區，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "由官方交換生替代頁取得，未標2027年；保留可用一般資料及個別計畫待核範圍。",
+        "reference_value": "一般伙伴校交換一或兩學期；雙聯另有協議，未明載2027中正計畫。",
+        "evidence": [
+          {
+            "source_id": "p100-r2-exchange",
+            "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+            "source_pages": [],
+            "academic_year": "現行官網未標2027年度",
+            "application_round": "現行官網未標2027年度",
+            "checked_at": "2026-10-08T04:31:33.228010+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "e partnerships are aimed at student exchanges for one or two semesters. There are also co-operation agreements with partner universities that allow students from both institutions to obtain a double degree. Plan your stay at Ostfalia If you are a student at one of our partner universities and would like to spend part of your studies at Ostfalia, all you need is to be ",
+            "note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+            "content_hash": "a86446d284f17d63ca4684190c0e01da4dfbeb0f17802e070dd7994c314715f8",
+            "text_sha256": "7ed1f6ee956c71d55856ae5ccb7221b9f0c4fb583b4dad67eafa232d0628190f"
+          }
+        ]
       },
       {
         "field": "eligibility",
@@ -8481,11 +9317,25 @@
       {
         "field": "nomination_deadline",
         "label": "合作校提名截止",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學中正2027春季的合作校提名截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "由官方交換生替代頁取得，未標2027年；保留可用一般資料及個別計畫待核範圍。",
+        "reference_value": "一般Summer母校提名11/15；未標具體2027年，不自動視為確定本期截止。",
+        "evidence": [
+          {
+            "source_id": "p100-r2-exchange",
+            "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+            "source_pages": [],
+            "academic_year": "現行官網未標2027年度",
+            "application_round": "現行官網未標2027年度",
+            "checked_at": "2026-10-08T04:31:33.228010+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "ollowing winter semester (start in September) and 15 November for the following summer semester (start in March). After your nomination, we will contact you directly and explain the application process and the necessary documents and guide you through the steps you need to take. Facts for our partner universities can be found here [link]. Here you will find Your semes",
+            "note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+            "content_hash": "a86446d284f17d63ca4684190c0e01da4dfbeb0f17802e070dd7994c314715f8",
+            "text_sha256": "7ed1f6ee956c71d55856ae5ccb7221b9f0c4fb583b4dad67eafa232d0628190f"
+          }
+        ]
       },
       {
         "field": "application_deadline",
@@ -8499,92 +9349,209 @@
       {
         "field": "documents",
         "label": "合作校文件要求（僅列已核實項目）",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學中正2027春季的合作校文件要求（僅列已核實項目），提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "由官方交換生替代頁取得，未標2027年；保留可用一般資料及個別計畫待核範圍。",
+        "reference_value": "未標年一般清單：護照/ID、成績、簡表CV、EU才用EHIC；非EHIC須德國保險入學前辦理。Learning Agreement此清單只列Erasmus，不能套中正雙邊必繳。",
+        "evidence": [
+          {
+            "source_id": "p100-r2-exchange",
+            "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+            "source_pages": [],
+            "academic_year": "現行官網未標2027年度",
+            "application_round": "現行官網未標2027年度",
+            "checked_at": "2026-10-08T04:31:33.228010+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "he application process and enrolment at Ostfalia. Documents you will need for this : 1) a scan of your passport or ID 2) an overview of your academic achievements to date at your home university (transcript) 3) a short curriculum vitae in tabular form 4) a scan of your European Health Insurance Card (EHIC) - if you are European. If you do not have an EHIC, you must ob",
+            "note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+            "content_hash": "a86446d284f17d63ca4684190c0e01da4dfbeb0f17802e070dd7994c314715f8",
+            "text_sha256": "7ed1f6ee956c71d55856ae5ccb7221b9f0c4fb583b4dad67eafa232d0628190f"
+          }
+        ]
       },
       {
         "field": "application_forms",
         "label": "合作校申請表取得方式",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
-        "reference_value": null,
-        "evidence": []
-      },
-      {
-        "field": "academic_calendar",
-        "label": "合作校校曆及考試",
-        "status": "missing",
-        "question": "請確認Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學中正2027春季的合作校校曆及考試，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "由官方交換生替代頁取得，未標2027年；保留可用一般資料及個別計畫待核範圍。",
+        "reference_value": "提名後Ostfalia聯絡學生解釋申請/註冊；完整表單及2027附件未公開取得，須依該通知。",
+        "evidence": [
+          {
+            "source_id": "p100-r2-exchange",
+            "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+            "source_pages": [],
+            "academic_year": "現行官網未標2027年度",
+            "application_round": "現行官網未標2027年度",
+            "checked_at": "2026-10-08T04:31:33.228010+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Student Office will then contact you directly and guide you through the application process and enrolment at Ostfalia. Documents you will need for this : 1) a scan of your passport or ID 2) an overview of your academic achievements to date at your home university (transcript) 3) a short curriculum vitae in tabular form 4) a scan of your European Health Insurance Card ",
+            "note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+            "content_hash": "a86446d284f17d63ca4684190c0e01da4dfbeb0f17802e070dd7994c314715f8",
+            "text_sha256": "7ed1f6ee956c71d55856ae5ccb7221b9f0c4fb583b4dad67eafa232d0628190f"
+          }
+        ]
       },
       {
         "field": "course_restrictions",
         "label": "課程與學分限制",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學中正2027春季的課程與學分限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "由官方交換生替代頁取得，未標2027年；保留可用一般資料及個別計畫待核範圍。",
+        "reference_value": "一般頁列各院英語短課或项目須另安排，非全英完整degree；課程由接收教授討論，未核實2027單校區課表。",
+        "evidence": [
+          {
+            "source_id": "p100-r2-exchange",
+            "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+            "source_pages": [],
+            "academic_year": "現行官網未標2027年度",
+            "application_round": "現行官網未標2027年度",
+            "checked_at": "2026-10-08T04:31:33.228010+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "are not complete study programmes in English, but individual courses that are offered in English in a short programme depending on the semester. International Academic Year - Faculty of Business [LINK] Lectures in English - Faculty of Mechanical Engineering [LINK] International Business Law Semester - Faculty of Law, BELS [LINK] All other faculties offer supervision o",
+            "note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+            "content_hash": "a86446d284f17d63ca4684190c0e01da4dfbeb0f17802e070dd7994c314715f8",
+            "text_sha256": "7ed1f6ee956c71d55856ae5ccb7221b9f0c4fb583b4dad67eafa232d0628190f"
+          }
+        ]
       },
       {
         "field": "housing",
         "label": "住宿與床位",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學中正2027春季的住宿與床位，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "由官方交換生替代頁取得，未標2027年；保留可用一般資料及個別計畫待核範圍。",
+        "reference_value": "校方無自營宿舍；Wolfenbüttel/Wolfsburg/Suderburg的Studierendenwerk住宿須自行申請，無床位保證。",
+        "evidence": [
+          {
+            "source_id": "p100-r2-exchange",
+            "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+            "source_pages": [],
+            "academic_year": "現行官網未標2027年度",
+            "application_round": "現行官網未標2027年度",
+            "checked_at": "2026-10-08T04:31:33.228010+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "s extended. Living in Germany Ostfalia University does not maintain any accommodation itself and is therefore unable to allocate rooms to international students. However, there are student halls of residence at the Ostfalia campuses in Wolfenbüttel, Wolfsburg and Suderburg, which are managed by the Studierendenwerk Ostniedersachsen. Information on the respective halls",
+            "note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+            "content_hash": "a86446d284f17d63ca4684190c0e01da4dfbeb0f17802e070dd7994c314715f8",
+            "text_sha256": "7ed1f6ee956c71d55856ae5ccb7221b9f0c4fb583b4dad67eafa232d0628190f"
+          }
+        ]
       },
       {
         "field": "housing_deadline",
         "label": "住宿申請／付款截止",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學中正2027春季的住宿申請／付款截止，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "由官方交換生替代頁取得，未標2027年；保留可用一般資料及個別計畫待核範圍。",
+        "reference_value": "一般頁說房屋offer後僅2日簽約接受，未載2027統一申請截止；時限相對於個別通知，不造固定日期。",
+        "evidence": [
+          {
+            "source_id": "p100-r2-exchange",
+            "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+            "source_pages": [],
+            "academic_year": "現行官網未標2027年度",
+            "application_round": "現行官網未標2027年度",
+            "checked_at": "2026-10-08T04:31:33.228010+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "rooms, StwON will send you a room offer. You then only have 2 days to accept it and return the signed documents. After that, the offer expires for you. So check your emails regularly after sending your application. Your costs The cost of living is the monthly cost of meeting basic needs such as housing, food and living. Even with a frugal lifestyle, there are items th",
+            "note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+            "content_hash": "a86446d284f17d63ca4684190c0e01da4dfbeb0f17802e070dd7994c314715f8",
+            "text_sha256": "7ed1f6ee956c71d55856ae5ccb7221b9f0c4fb583b4dad67eafa232d0628190f"
+          }
+        ]
       },
       {
         "field": "costs",
         "label": "住宿與生活費用",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學中正2027春季的住宿與生活費用，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "由官方交換生替代頁取得，未標2027年；保留可用一般資料及個別計畫待核範圍。",
+        "reference_value": "未標年一般估算最低983 EUR/月，列租金420/月、保險120/月、semester fee443/期（頁面折73.84/月）；實際2027費率未核，不當固定報價。",
+        "evidence": [
+          {
+            "source_id": "p100-r2-exchange",
+            "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+            "source_pages": [],
+            "academic_year": "現行官網未標2027年度",
+            "application_round": "現行官網未標2027年度",
+            "checked_at": "2026-10-08T04:31:33.228010+00:00",
+            "status": "needs_confirmation",
+            "excerpt": " great way to save money. You will therefore need at least €983.00 per month for your studies This does not include extras such as holidays, electrical appliances and consumables. Your to dos Before your journey If you are studying at one of Ostfalia's partner universities, we would be delighted to welcome you to Ostfalia for one or two semesters as a temporarily enro",
+            "note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+            "content_hash": "a86446d284f17d63ca4684190c0e01da4dfbeb0f17802e070dd7994c314715f8",
+            "text_sha256": "7ed1f6ee956c71d55856ae5ccb7221b9f0c4fb583b4dad67eafa232d0628190f"
+          }
+        ]
       },
       {
         "field": "insurance",
         "label": "保險",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學中正2027春季的保險，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "由官方交換生替代頁取得，未標2027年；保留可用一般資料及個別計畫待核範圍。",
+        "reference_value": "非EHIC學生在註冊前加入德國保險；頁面一般估120 EUR/月，2027費率、臺籍/國籍及承保例外仍待核對。",
+        "evidence": [
+          {
+            "source_id": "p100-r2-exchange",
+            "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+            "source_pages": [],
+            "academic_year": "現行官網未標2027年度",
+            "application_round": "現行官網未標2027年度",
+            "checked_at": "2026-10-08T04:31:33.228010+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "pean. If you do not have an EHIC, you must obtain membership of a German health insurance scheme before enrolling at Ostfalia. 5) Your Learning Agreement (either as a digital Online Learning Agreement - OLA or as a pdf) if you are coming to us as an ERASMUS+ exchange student. VISUM If you are a European citizen, you do not need to apply for a visa for the Federal Repu",
+            "note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+            "content_hash": "a86446d284f17d63ca4684190c0e01da4dfbeb0f17802e070dd7994c314715f8",
+            "text_sha256": "7ed1f6ee956c71d55856ae5ccb7221b9f0c4fb583b4dad67eafa232d0628190f"
+          }
+        ]
       },
       {
         "field": "visa",
         "label": "簽證與居留",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學中正2027春季的簽證與居留，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "由官方交換生替代頁取得，未標2027年；保留可用一般資料及個別計畫待核範圍。",
+        "reference_value": "校方一般指引區分國籍與停留天數，非EU須核對使領館要求；未核實2027臺籍實際辦理規定，不由此給個人入境保證。",
+        "evidence": [
+          {
+            "source_id": "p100-r2-exchange",
+            "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+            "source_pages": [],
+            "academic_year": "現行官網未標2027年度",
+            "application_round": "現行官網未標2027年度",
+            "checked_at": "2026-10-08T04:31:33.228010+00:00",
+            "status": "needs_confirmation",
+            "excerpt": " or residence authorisation) to study in Germany. Current entry requirements and application forms can be found on the homepage of the Federal Foreign Office (external link, opens in a new window) . Financial requirements According to German law, non-EU citizens must provide proof of financial resources in the amount of the currently applicable BAföG maximum rate (ext",
+            "note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+            "content_hash": "a86446d284f17d63ca4684190c0e01da4dfbeb0f17802e070dd7994c314715f8",
+            "text_sha256": "7ed1f6ee956c71d55856ae5ccb7221b9f0c4fb583b4dad67eafa232d0628190f"
+          }
+        ]
       },
       {
         "field": "arrival",
         "label": "抵達與迎新",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學中正2027春季的抵達與迎新，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "由官方交換生替代頁取得，未標2027年；保留可用一般資料及個別計畫待核範圍。",
+        "reference_value": "一般Summer建議2月底抵達，welcome phase在授課前；指定2027迎新日及宿舍取鑰匙須依提名/住宿通知。",
+        "evidence": [
+          {
+            "source_id": "p100-r2-exchange",
+            "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+            "source_pages": [],
+            "academic_year": "現行官網未標2027年度",
+            "application_round": "現行官網未標2027年度",
+            "checked_at": "2026-10-08T04:31:33.228010+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "e period February Summer term Summer term Arrival End of February Start of semester approx. 1 March End of lectures Mid-June Examination period Mid-June to mid-July Announcement of results Mid-July Lecture-free period approx. mid-July to end of August Your course choice - our range of courses Study programmes in German Study programmes in German Ostfalia offers its st",
+            "note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+            "content_hash": "a86446d284f17d63ca4684190c0e01da4dfbeb0f17802e070dd7994c314715f8",
+            "text_sha256": "7ed1f6ee956c71d55856ae5ccb7221b9f0c4fb583b4dad67eafa232d0628190f"
+          }
+        ]
       },
       {
         "field": "host_tuition",
@@ -8598,11 +9565,25 @@
       {
         "field": "exchange_duration",
         "label": "交換期間及延長限制",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Ostfalia University of Applied Sciences 奧斯特法利亞應用科技大學中正2027春季的交換期間及延長限制，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "由官方交換生替代頁取得，未標2027年；保留可用一般資料及個別計畫待核範圍。",
+        "reference_value": "一般伙伴校交換一或兩學期；未載2027中正學生延長限制或離校確切日。",
+        "evidence": [
+          {
+            "source_id": "p100-r2-exchange",
+            "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+            "source_pages": [],
+            "academic_year": "現行官網未標2027年度",
+            "application_round": "現行官網未標2027年度",
+            "checked_at": "2026-10-08T04:31:33.228010+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "e partnerships are aimed at student exchanges for one or two semesters. There are also co-operation agreements with partner universities that allow students from both institutions to obtain a double degree. Plan your stay at Ostfalia If you are a student at one of our partner universities and would like to spend part of your studies at Ostfalia, all you need is to be ",
+            "note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+            "content_hash": "a86446d284f17d63ca4684190c0e01da4dfbeb0f17802e070dd7994c314715f8",
+            "text_sha256": "7ed1f6ee956c71d55856ae5ccb7221b9f0c4fb583b4dad67eafa232d0628190f"
+          }
+        ]
       }
     ],
     "source_acquisition": [
@@ -8633,6 +9614,53 @@
         "content_academic_year": "未標示",
         "content_review_note": "中正附件公開下載404；官方查得一般國際生指引，未核實交換生2027春季簡章，不能混入一般入學資格。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p100-hostz0-r2retry",
+        "source_url": "https://drive.google.com/file/d/1SQg2YDNO8OcryE-9wUAuF1qtCn-6Txus/view",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://drive.google.com/file/d/1SQg2YDNO8OcryE-9wUAuF1qtCn-6Txus/view",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:49.537994+00:00"
+      },
+      {
+        "source_id": "p100-mirror-r2retry",
+        "source_url": "https://drive.google.com/file/d/1SQg2YDNO8OcryE-9wUAuF1qtCn-6Txus/view?usp=drive_link",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://drive.usercontent.google.com/download?id=1SQg2YDNO8OcryE-9wUAuF1qtCn-6Txus&export=download",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:48.194238+00:00"
+      },
+      {
+        "source_id": "p100-r2-calendar",
+        "source_url": "https://www.ostfalia.de/en/studying/at-university/study-organisation/semester-dates",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:37:50.921010+00:00"
+      },
+      {
+        "source_id": "p100-r2-calendarpdf",
+        "source_url": "https://www.ostfalia.de/fileadmin/user_upload/Einrichtungen/QM/Semesterzeitplaene/Semesterzeitplaene_SoSe_2027_bis_WS_2028-29.pdf",
+        "status": "pdf",
+        "http_status": 200,
+        "content_academic_year": "Sommersemester 2027（正文）",
+        "content_review_note": "正文逐日列2027夏季授課與放假；考試由各院另公告，不把一般交換頁約略日期取代此校曆。",
+        "checked_at": "2026-10-08T04:38:54.466075+00:00"
+      },
+      {
+        "source_id": "p100-r2-exchange",
+        "source_url": "https://www.ostfalia.de/en/studying/at-university/international/international-students-and-applicants-welcome-at-ostfalia/your-exchange-programme-at-ostfalia",
+        "status": "html",
+        "http_status": 200,
+        "content_academic_year": "現行官網未標2027年度",
+        "content_review_note": "已讀與交換生相關公開內容，年度未明載，保留本期待確認；一般degree/guest及EU路徑須分開。",
+        "checked_at": "2026-10-08T04:31:33.228010+00:00"
       }
     ]
   },
@@ -9042,6 +10070,36 @@
         "content_academic_year": "2026/2027",
         "content_review_note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p102-r2-application",
+        "source_url": "https://www.tha.de/en/International/Exchange-Students/Application-and-Arrival.html",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://www.tha.de/en/International/Exchange-Students/Application-and-Arrival.html",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:31:33.227089+00:00"
+      },
+      {
+        "source_id": "p102-r2-root",
+        "source_url": "https://www.tha.de/en/International.html",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://www.tha.de/en/International.html",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:37:52.392220+00:00"
+      },
+      {
+        "source_id": "p102-r2-short",
+        "source_url": "https://www.tha.de/en/International/Exchange-Students.html",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://www.tha.de/en/International/Exchange-Students.html",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:37:50.924210+00:00"
       }
     ]
   },
@@ -10317,11 +11375,27 @@
       {
         "field": "application_forms",
         "label": "合作校申請表取得方式",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Tomas Bata University in Zlí n 托馬斯拔佳大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "第二輪重讀已取得內容或官方替代入口；仍只列來源實際載明的範圍。",
+        "reference_value": "當期清單中的Student Application Form / Learning Agreement只列freemover路徑，Erasmus另為OLA；中正雙邊交換採哪一表尚未核實，不直接把freemover表列必繳。",
+        "evidence": [
+          {
+            "source_id": "p108-mirror",
+            "source_url": "https://drive.google.com/file/d/1h1TO-BajNoyRWJG9Npw3Q6qva_sn2stj/view?usp=drive_link",
+            "source_pages": [
+              6
+            ],
+            "academic_year": "2026/2027",
+            "application_round": "2026/2027",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "needs_confirmation",
+            "excerpt": " ERASMUS STUDENTS Online Learning Agreement (OLA) ADDITIONAL DOCUMENTS REQUIRED FOR FREEMOVER STUDENTS Student Application Form (SAF) Learning Agreement (LA) LANGUAGE CERTIFICATES Not required, recommended level of English B2",
+            "note": "內容明載適用年及計畫；逐欄仍可能有未載或矛盾。",
+            "content_hash": "8f45edd8287afce3fc57daaa2fc140a1144926b5e05d7b7e29c5f53f2b58145e",
+            "text_sha256": "6b9572d6515b490655db634efda5c558fc524b4994379e170a8928e771d6627d"
+          }
+        ]
       },
       {
         "field": "course_restrictions",
@@ -10942,13 +12016,40 @@
         "evidence": []
       },
       {
-        "field": "application_forms",
-        "label": "合作校申請表取得方式",
-        "status": "missing",
-        "question": "請確認Ø stfold University of Applied Sciences 厄斯特福德應用科學大學中正2027春季的合作校申請表取得方式，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "field": "application_deadline",
+        "label": "合作校申請截止",
+        "status": "conflict",
+        "question": "請確認Ø stfold University of Applied Sciences 厄斯特福德應用科學大學中正2027春季的合作校申請截止，提供明載年度／計畫的官方文件或提名通知。",
+        "reason": "2027官方提名入口11/1與目前仍連結的共用表11/15矛盾；不得據模板推延截止。",
+        "reference_value": "跨來源矛盾：2027春季提名入口學生申請2026-11-01；現行文件頁連結的共用DOC印Spring November15th。須確認使用表版本與實際截止，不能擅選較晚11/15。",
+        "evidence": [
+          {
+            "source_id": "p114-hostf1",
+            "source_url": "https://www.hiof.no/english/studies/exchange-students/how-to-apply/nomination-process/",
+            "source_pages": [],
+            "academic_year": "2027春季（正文）",
+            "application_round": "2027春季",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "status": "conflict",
+            "excerpt": "ominating students for the spring 2027 semester no later that 1 September . Recommended nomination deadline is 15 October and the deadline for students to complete their applications is 1 November . Nomination Process STEP 1 - Log in: Username: Your username is your email-address. If you are not a registered user, please contact us at international@hiof.no Password: To ",
+            "note": "已讀取官方頁面，但適用2027春季年度未核實。",
+            "content_hash": "06a5585986c7c9a50f428906a32c709d4160d0af2e63db731f36422215cb6c9d",
+            "text_sha256": "51df8475cbe6bb722ccb697fc7c17894c53036224b14c108ec78265819398728"
+          },
+          {
+            "source_id": "p114-r2-form",
+            "source_url": "https://www.hiof.no/english/studies/exchange-students/how-to-apply/required-documentation/applicationformfelles_rev2018.doc",
+            "source_pages": [],
+            "academic_year": "共用模板年度空白；現行bilateral文件頁仍連結，檔名rev2018",
+            "application_round": "共用模板年度空白；現行bilateral文件頁仍連結，檔名rev2018",
+            "checked_at": "2026-10-08T04:31:33.227620+00:00",
+            "status": "conflict",
+            "excerpt": "1st Application deadline for the spring semester: November 15th I want to apply for: Full Year Autumn Semester Spring Semester Please enclose the following documents: - certified copy of your Transcript of Records/University Diplomas HOME INSTITUTION | | |Name and full address: | | | | | |Departmental coordinator - name, telephone and email: | | | | | |Institutional c",
+            "note": "完整DOC已讀；簽名、母校驗證及上傳要求可核實，但表內spring11/15與2027提名頁11/1衝突，不能使用模板截止代替當期入口。",
+            "content_hash": "961c3146e7569eefeacf15b219cdb9f7f69021d7c16d046bbfd12aa3fedc89bf",
+            "text_sha256": "ff6dcb3b41c5f91f576c21296ca058869019676412131eb295ee17c4198f2027"
+          }
+        ]
       },
       {
         "field": "course_restrictions",
@@ -11017,11 +12118,25 @@
       {
         "field": "insurance",
         "label": "保險",
-        "status": "missing",
+        "status": "needs_confirmation",
         "question": "請確認Ø stfold University of Applied Sciences 厄斯特福德應用科學大學中正2027春季的保險，提供明載年度／計畫的官方文件或提名通知。",
-        "reason": "已查核所列來源的取得結果及可讀內容，未核實本期此欄；不得猜測缺值。",
-        "reference_value": null,
-        "evidence": []
+        "reason": "第二輪重讀已取得內容或官方替代入口；仍只列來源實際載明的範圍。",
+        "reference_value": "完整共用表要求自行安排必要保險，並建議醫療、人身傷害、財物與責任保險；表未標2027保額、保單範圍或國籍例外，須依個別錄取/居留要求確認。",
+        "evidence": [
+          {
+            "source_id": "p114-r2-form",
+            "source_url": "https://www.hiof.no/english/studies/exchange-students/how-to-apply/required-documentation/applicationformfelles_rev2018.doc",
+            "source_pages": [],
+            "academic_year": "共用模板年度空白；現行bilateral文件頁仍連結，檔名rev2018",
+            "application_round": "共用模板年度空白；現行bilateral文件頁仍連結，檔名rev2018",
+            "checked_at": "2026-10-08T04:31:33.227620+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "udy abroad. It is your responsibility to make any insurance arrangements that may be necessary. Your attention is drawn to the advisability of taking out medical, personal injury, personal property, liability and other relevant insurance for the period of the placement. SIGNED ________________________________ DATE Your institution must verify this application. On beha",
+            "note": "完整DOC已讀；簽名、母校驗證及上傳要求可核實，但表內spring11/15與2027提名頁11/1衝突，不能使用模板截止代替當期入口。",
+            "content_hash": "961c3146e7569eefeacf15b219cdb9f7f69021d7c16d046bbfd12aa3fedc89bf",
+            "text_sha256": "ff6dcb3b41c5f91f576c21296ca058869019676412131eb295ee17c4198f2027"
+          }
+        ]
       },
       {
         "field": "visa",
@@ -11122,7 +12237,7 @@
         "status": "html",
         "http_status": 200,
         "content_academic_year": "2027春季（正文）",
-        "content_review_note": "已讀取官方頁面，但適用2027春季年度未核實。",
+        "content_review_note": "正文明示Spring2027申請期限與提名流程；已核實該梯次，校區／院系特殊文件及共用模板的不同期限另列矛盾。",
         "checked_at": "2026-10-08T00:00:00Z"
       },
       {
@@ -11188,6 +12303,25 @@
         "content_academic_year": "未標示",
         "content_review_note": "已讀取官方頁面，但適用2027春季年度未核實。",
         "checked_at": "2026-10-08T00:00:00Z"
+      },
+      {
+        "source_id": "p114-hosty1-r2retry",
+        "source_url": "https://www.hiof.no/english/studies/international-students/before-arrival/academic-calendar/",
+        "status": "fetch_failed",
+        "http_status": 404,
+        "error": "HTTPError: 404 Client Error: Not Found for url: https://www.hiof.no/english/studies/international-students/before-arrival/academic-calendar/",
+        "content_academic_year": "未標年度或尚未讀取",
+        "content_review_note": "第二輪實際取得紀錄；下載成功不代表年度、身分或計畫已核實。",
+        "checked_at": "2026-10-08T04:34:48.501198+00:00"
+      },
+      {
+        "source_id": "p114-r2-form",
+        "source_url": "https://www.hiof.no/english/studies/exchange-students/how-to-apply/required-documentation/applicationformfelles_rev2018.doc",
+        "status": "doc",
+        "http_status": 200,
+        "content_academic_year": "共用模板年度空白；現行bilateral文件頁仍連結，檔名rev2018",
+        "content_review_note": "完整DOC已讀；簽名、母校驗證及上傳要求可核實，但表內spring11/15與2027提名頁11/1衝突，不能使用模板截止代替當期入口。",
+        "checked_at": "2026-10-08T04:31:33.227620+00:00"
       }
     ]
   },

@@ -138,7 +138,7 @@ window.UniWayDocumentWorkbench = (() => {
     if (!template) return;
     if (id === "fill") {
       select("edit");
-      const field = template.fields.find(item => item.required && !applicationFieldHasValue(template, item));
+      const field = template.fields.find(item => applicationFieldRequired(template, item) && !applicationFieldHasValue(template, item));
       const input = field ? document.querySelector(`#application-document-fields [data-application-field="${CSS.escape(field.id)}"]`) : document.querySelector("#application-document-fields input, #application-document-fields textarea, #application-document-fields select");
       input?.focus(); input?.scrollIntoView({block:"center", behavior:window.UniWayMotion?.reduced ? "instant" : "smooth"});
     } else if (id === "review") {

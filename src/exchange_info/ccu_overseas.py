@@ -42,7 +42,7 @@ LABELS = {
 }
 STATUS_LABELS = {
     "verified_current": "當期已核實",
-    "reference_only": "歷史參考，不能作本期申請依據",
+    "reference_only": "其他年度／梯次參考，不能作本期申請依據",
     "missing": "本期未核實／來源未載",
     "needs_confirmation": "適用年度或條件待確認",
     "conflict": "來源矛盾，待確認",
@@ -127,6 +127,19 @@ def apply_overseas_review(partner: PartnerUniversity) -> PartnerUniversity:
         key: PartnerExchangeDetailField.model_validate(value)
         for key, value in row["fields"].items()
     }
+    deadline = partner.partner_exchange_details["application_deadline"]
+    if deadline.status == "conflict":
+        # Preserve the mother's original transcription separately. Every public
+        # projection must carry the comparison, not silently choose a later date.
+        raw_home = partner.partner_application_deadline
+        if raw_home:
+            partner.reference_data["partner_application_deadline"] = raw_home
+        partner.partner_application_deadline = deadline.value
+        partner.student_summary_zh.application_deadline = deadline.value
+        home_evidence = partner.field_evidence.get("partner_application_deadline")
+        if home_evidence:
+            home_evidence.status = "conflict"
+            home_evidence.note = deadline.reason + "；" + (deadline.value or "")
     # The new receiving-school source introduces an alternative certificate or
     # program scope. Do not classify a student's lone test score as mandatory.
     if partner.source_pages[0] in {65, 86, 89}:

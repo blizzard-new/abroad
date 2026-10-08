@@ -11,9 +11,14 @@
     host_tuition: "合作校學費", exchange_duration: "交換期間及延長",
   };
   const statuses = {
-    verified_current: "當期已核實", reference_only: "歷史參考，不能作本期申請依據",
+    verified_current: "當期已核實", reference_only: "其他年度／梯次參考，不能作本期申請依據",
     missing: "本期未核實／來源未載", needs_confirmation: "適用年度或條件待確認",
     conflict: "來源矛盾，待確認", explicit_not_announced: "官方明示尚未公告",
+  };
+  const researchLabels = {
+    verified_supported: "已有當期依據", official_not_announced: "官方明示尚未公告",
+    login_or_school_confirmation: "須個別通知或校方釐清", source_technical_failure: "已查入口技術失敗，替代來源續查",
+    alternative_official_sources_not_fully_checked: "官方替代來源尚待補查",
   };
   function render(partner, escapeHtml, keys) {
     const fields = partner.partner_exchange_details;
@@ -27,12 +32,16 @@
         return `<details class="overview-more" data-ccu-field="${escapeHtml(key)}"><summary>${escapeHtml(labels[key])} · ${escapeHtml(statuses[field.status] || field.status)}</summary>
           <p>${escapeHtml(field.value || field.reason)}</p>
           ${field.value ? `<p>${escapeHtml(field.reason)}</p>` : ""}
+          ${field.research_category ? `<p>查核進度：${escapeHtml(researchLabels[field.research_category])}。${escapeHtml(field.research_note || "")}</p>` : ""}
           ${(field.evidence || []).map(ev => {
             const pages = ev.source_pages?.length ? ` · PDF第${ev.source_pages.join("、")}頁` : " · 官方文件／網頁原文";
-            return `<a href="${escapeHtml(ev.source_url)}" target="_blank" rel="noreferrer">資料來源${escapeHtml(pages)}</a>
+            const sourceUrl = ev.source_pages?.length ? `${ev.source_url.split("#")[0]}#page=${ev.source_pages[0]}` : ev.source_url;
+            return `<a href="${escapeHtml(sourceUrl)}" target="_blank" rel="noreferrer">資料來源${escapeHtml(pages)}</a>
               <p>適用：${escapeHtml(ev.academic_year || "年度未核實")} · 查核${escapeHtml((ev.checked_at || "").slice(0, 10))}</p>
               <details><summary>查核原文與適用限制</summary><p>${escapeHtml(ev.excerpt || "")}</p><p>${escapeHtml(ev.note || "")}</p></details>`;
-          }).join("")}</details>`;
+          }).join("")}
+          ${field.source_checks?.length ? `<details><summary>已查來源與實際結果</summary>${field.source_checks.map(check => `<p><a href="${escapeHtml(check.source_url)}" target="_blank" rel="noreferrer">${escapeHtml(check.source_id)}</a> · ${escapeHtml(check.timestamp_precision === "date" ? check.checked_at.slice(0, 10) : check.checked_at)} · ${escapeHtml(check.result)}</p>`).join("")}</details>` : ""}
+          </details>`;
       }).join("")}</section>`;
   }
   window.UniWayCcuDetails = { render };

@@ -813,6 +813,12 @@ def main():
     from exchange_info.ccu_overseas import apply_overseas_review, destination_profile
 
     rows = [apply_overseas_review(row) for row in rows]
+    for row, detail in zip(rows, details, strict=True):
+        detail["fields"] = {
+            key: value.model_dump(mode="json")
+            for key, value in row.field_evidence.items()
+        }
+        detail["reference_data"] = row.reference_data
     (BUNDLE / "partners.jsonl").write_text(
         "".join(r.model_dump_json() + "\n" for r in rows), encoding="utf-8"
     )

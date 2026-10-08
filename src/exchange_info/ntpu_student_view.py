@@ -154,7 +154,7 @@ COUNTRY_PREFIXES = (
     (r"加拿大(?:\s*Canada)?", "加拿大"),
     (r"美國\s*America", "美國"),
     (r"英國\s*U\.?K", "英國"),
-    (r"捷克\s*Czech", "捷克"),
+    (r"捷克\s*Czech(?:\s*Republic)?", "捷克"),
     (r"奧地利\s*Austria", "奧地利"),
     (r"義大利\s*Italia", "義大利"),
     (r"波蘭\s*Poland", "波蘭"),

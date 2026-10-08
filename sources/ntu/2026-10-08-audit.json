@@ -1,0 +1,432 @@
+{
+  "checked_at": "2026-10-08",
+  "source_evidence_snapshot": "2026-10-08-audit-evidence.json.gz",
+  "partners": {
+    "107": {
+      "school_name": "筑波大學",
+      "scope": "2027/28筑波官方網頁與指南有截止日衝突，未選定任一日期為已確認；不啟用確定日期提醒。",
+      "source_url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/",
+      "fields": {
+        "deadlines": {
+          "value": "2027年10月入學：提名2027/2/1–2/28。線上申請／CoE文件截止，官方主頁列2027/3/5，2027–2028指南PDF第3頁列2027/3/6，狀態conflict，須向筑波及臺大承辦確認；不可視3/6為已確認截止。2027年4月另一輪同樣有主頁2026/10/9與指南10/10差異，非116-1秋季期限。",
+          "source_urls": [
+            "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/",
+            "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/application-guide.pdf"
+          ],
+          "remaining_questions": [
+            "筑波確認2027秋實際截止日期、時區／時分；臺大提名適用輪次。"
+          ],
+          "status": "conflict",
+          "pdf_pages": [
+            3
+          ],
+          "academic_year": "2027-2028",
+          "deadline_candidates": [
+            {
+              "date": "2027-03-05",
+              "source_url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/"
+            },
+            {
+              "date": "2027-03-06",
+              "source_url": "https://www.tsukuba.ac.jp/en/academics/international-exchange-students/programs/application-guide.pdf",
+              "pdf_page": 3
+            }
+          ],
+          "confirmed_deadline_at": null,
+          "reminder_eligible": false
+        }
+      },
+      "remaining": [
+        "官方主頁與2027/28指南截止衝突尚未解除，不建立確定日期提醒。"
+      ]
+    },
+    "62": {
+      "school_name": "赫爾辛基大學",
+      "scope": "Meilahti官方通知：僅2027–2028 Medicine交換修課無課程供應；不得泛化成Helsinki全校、Psychology、Translational Medicine或研究實習停開。其他計畫當期是否可修另確認。",
+      "source_url": "https://studies.helsinki.fi/instructions/article/courses-exchange-students-meilahti-campus",
+      "fields": {
+        "courses": {
+          "value": "2027–2028學年度因學程重整，Medicine不提供交換學生修課。此通知範圍是Medicine課程交換，並非全校停開，也未宣布Psychology、Translational Medicine或研究實習停開；網站其他課表仍列2026–2027，不能當作2027/28開課保證。",
+          "source_urls": [
+            "https://studies.helsinki.fi/instructions/article/courses-exchange-students-meilahti-campus"
+          ],
+          "remaining_questions": [
+            "2027/28非Medicine學程課表及臺大協議准入；研究實習另依計畫確認。"
+          ],
+          "status": "reviewed_partial_current_document",
+          "pdf_pages": [],
+          "academic_year": "2027-2028",
+          "affected_programme": "Medicine",
+          "activity": "exchange_course_offer",
+          "unaffected_by_notice": [
+            "Psychology",
+            "Translational Medicine",
+            "research traineeships"
+          ]
+        }
+      },
+      "remaining": [
+        "Medicine 2027/28課程交換無課；其他計畫／研究實習須獨立確認。"
+      ]
+    },
+    "1306": {
+      "school_name": "蒙大拿州立大學",
+      "scope": "MSU Incoming Exchange現行公開申請頁未標年度；補充Direct Exchange文件文字，不冒稱2027/28完整清單。Direct與ISEP範圍不同，host incoming條件不替代臺大校內甄選。",
+      "source_url": "https://www.montana.edu/international/studyabroad/incomingexchange/IncomingHowtoApply.html",
+      "fields": {
+        "documents": {
+          "value": "母校正式提名後透過My Global Connection申請。Direct Exchange需財力證明、英語證明、申請短文（申請動機與個人／學術／職涯目標）、正式成績單、護照、擬修課表、兩封推薦信。ISEP交換此頁另說僅需護照、成績單及閱讀重要資訊，不能把此例外套給臺大雙邊交換。錄取後註冊前另繳MMR疫苗紀錄與TB screening表。",
+          "source_urls": [
+            "https://www.montana.edu/international/studyabroad/incomingexchange/IncomingHowtoApply.html",
+            "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/MSU-Factsheet-27-28.pdf"
+          ],
+          "remaining_questions": [
+            "2027/28提名後實際系統清單、財力格式、推薦信提交方式及疫苗文件。"
+          ],
+          "status": "reviewed_current_reference_cycle_unconfirmed",
+          "pdf_pages": [],
+          "source_academic_year": null,
+          "scope": "host incoming / Direct Exchange; ISEP separately"
+        }
+      },
+      "remaining": [
+        "現行無年份公開文件已補；2027/28系統格式與額外文件仍待確認。"
+      ]
+    },
+    "38": {
+      "school_name": "岡山大學",
+      "scope": "岡山EPOK Online Instruction 2027–2028 PDF第1–2頁已讀取，僅適用EPOK且須母校提名；host GPA及英語測驗要求不代替臺大校內語組門檻。",
+      "source_url": "https://intl.okayama-u.ac.jp/master/wp-content/uploads/2026/09/Online-Instruction-2027-2028.pdf",
+      "fields": {
+        "documents": {
+          "value": "EPOK申請須先獲母校提名並取得線上密碼，全件以英文完成：Statement of Purpose、Certificate of Health、Letter of Recommendation（前三件用EPOK表格）、護照資料頁、母校正式成績單、照片；非英語母語者另上傳英語能力證明。文件備齊後完成所有線上頁面並上傳，提交成功寄確認email。",
+          "source_urls": [
+            "https://intl.okayama-u.ac.jp/master/wp-content/uploads/2026/09/Online-Instruction-2027-2028.pdf"
+          ],
+          "remaining_questions": [
+            "各表格簽署及提名後系統格式、臺大116-1 EPOK適用性。"
+          ],
+          "status": "reviewed_partial_current_document",
+          "pdf_pages": [
+            2,
+            3,
+            4
+          ],
+          "source_academic_year": "2027-2028",
+          "scope": "host incoming / EPOK"
+        },
+        "eligibility": {
+          "value": "EPOK合作校在學全時學生，申請與交換期間須維持母校學籍，完成至少第一年且學業良好；host最低GPA2.0，原文未明列換算尺度，不能當臺大校內門檻。",
+          "source_urls": [
+            "https://intl.okayama-u.ac.jp/master/wp-content/uploads/2026/09/Online-Instruction-2027-2028.pdf"
+          ],
+          "remaining_questions": [
+            "臺大本期提名及EPOK適用性；GPA尺度與換算方式。"
+          ],
+          "status": "reviewed_partial_current_document",
+          "pdf_pages": [
+            1
+          ]
+        },
+        "language": {
+          "value": "EPOK非英語系國家申請者須英語證明，列TOEFL PBT500／iBT61或4.0、IELTS overall5.5、MUET4、GEPT中高級、DAAD各項至少四星。文件項目第7點限非英語母語者，兩種措辭的例外適用須與EPOK確認。這是host要求；臺大一般組校內IELTS6／TOEFL79或4.0等門檻仍獨立適用。",
+          "source_urls": [
+            "https://intl.okayama-u.ac.jp/master/wp-content/uploads/2026/09/Online-Instruction-2027-2028.pdf"
+          ],
+          "remaining_questions": [
+            "國家／母語例外的適用、證明效期、臺大提名語組。"
+          ],
+          "status": "reviewed_partial_current_document",
+          "pdf_pages": [
+            1,
+            2
+          ]
+        },
+        "deadlines": {
+          "value": "2027秋EPOK線上申請與文件截止2027/5/15；2027春另一輪為2026/11/15，不套到116-1秋季。文件未列時分／時區，不建立確定日期提醒。",
+          "source_urls": [
+            "https://intl.okayama-u.ac.jp/master/wp-content/uploads/2026/09/Online-Instruction-2027-2028.pdf"
+          ],
+          "remaining_questions": [
+            "母校提名截止、系統截止時分與時區。"
+          ],
+          "status": "reviewed_partial_current_document",
+          "pdf_pages": [
+            2
+          ],
+          "reminder_eligible": false
+        }
+      },
+      "remaining": [
+        "EPOK公開文件已讀取；表格簽署／系統細節與當期名額仍待確認。"
+      ]
+    },
+    "115": {
+      "school_name": "蒙特婁大學",
+      "scope": "UdeM現行Application documents公開頁未標年度，補足文件名稱、格式及依學程條件；保留2027/28 factsheet作為另一來源，未把無年份清單標成當期完整。",
+      "source_url": "https://international.umontreal.ca/english/international-students/choosing-udem/student-exchange-program/application-documents/",
+      "fields": {
+        "documents": {
+          "value": "申請階段四項：母校交換承辦簽署的Tentative Learning Agreement；至多一頁的電腦繕打動機信（法語，英語授課學程可用英語）；大學各年含當年正式成績單合併單一PDF，非英法語須附英法譯本；當期修課清單PDF。出生證明只在錄取後Student Centre出現，不是初次審查必繳。依學程另需法語證明、作品集（建築／工業設計／室內設計／景觀）、音樂演出音檔／影像、英語證明或推薦信；多數法語學程B2，特殊學程可更高或指定正式考試，須查programs with particular requirements。",
+          "source_urls": [
+            "https://international.umontreal.ca/english/international-students/choosing-udem/student-exchange-program/application-documents/",
+            "https://international.umontreal.ca/fileadmin/international/documents/Mobilite/Factsheet_UdeM.pdf"
+          ],
+          "remaining_questions": [
+            "2027/28實際Student Centre清單、所選學程附加要求及研究生文件。"
+          ],
+          "status": "reviewed_current_reference_cycle_unconfirmed",
+          "pdf_pages": [],
+          "source_academic_year": null,
+          "scope": "host incoming / exchange; programme-specific additions"
+        }
+      },
+      "remaining": [
+        "現行文件清單已補；2027/28學程與系統清單仍待確認。"
+      ]
+    },
+    "1202": {
+      "school_name": "北卡羅來納大學格林斯伯勒分校",
+      "scope": "UNCG來源／年度／身分差異：2027/28 incoming factsheet列Student Blue USD1616估價；現行SHS2026/27改依簽證F-1→Student Blue、J-1→Global Solutions。不能推定2027/28估價錯，也不能替J-1學生確認Student Blue。",
+      "source_url": "https://shs.uncg.edu/student-insurance/",
+      "fields": {
+        "insurance_visa": {
+          "value": "2027/28 incoming factsheet的Student Blue USD1616為費用估價，不能單憑估價確定所有交換生方案。SHS現行2026/27規定所有國際生須保險：F-1適用Student Blue、J-1適用Global Solutions，合格自備保險可申請waiver；2026秋期限9/10（僅2026/27參考，不套為2027/28期限）。2027/28 J-1方案、保費、waiver資格與期限尚待確認，並保留原J-1／DS-2019簽證流程。",
+          "source_urls": [
+            "https://global.uncg.edu/wp-content/uploads/2026/06/UNCG-IN-fact-sheet-web-version-27-28-US-Letter-1.pdf",
+            "https://shs.uncg.edu/student-insurance/"
+          ],
+          "remaining_questions": [
+            "2027/28 J-1實際方案與保費；waiver資格、申請方式、截止；臺大提名簽證身分。"
+          ],
+          "status": "source_scope_difference",
+          "pdf_pages": [],
+          "source_years": [
+            "2027-2028 factsheet estimate",
+            "2026-2027 SHS current policy"
+          ],
+          "visa_plan_reference": {
+            "F-1": "Student Blue",
+            "J-1": "Global Solutions"
+          },
+          "confirmed_2027_28_j1_plan": null
+        },
+        "cost": {
+          "value": "以下為2027/28 factsheet估算，Student Blue USD1616並非已確認的2027/28 J-1保費。SHS2026/27則依F-1／J-1分流，2027/28方案與費用待確認。2027–28每學期估算：Tower Village USD3838；餐費USD2000–2424；Student Blue保險USD1616；書籍用品USD500–909；交通／個人USD300–800。均為估算，未包含機票等所有支出。",
+          "source_urls": [
+            "https://global.uncg.edu/wp-content/uploads/2026/06/UNCG-IN-fact-sheet-web-version-27-28-US-Letter-1.pdf",
+            "https://shs.uncg.edu/student-insurance/"
+          ],
+          "remaining_questions": [
+            "2027/28 J-1保費與實際必繳費用；不可套用2026/27舊年度價格。"
+          ],
+          "status": "source_scope_difference",
+          "pdf_pages": [
+            4,
+            5
+          ]
+        }
+      },
+      "remaining": [
+        "2027/28 J-1方案、保費及waiver期限未核實；來源年度與身分差異已並列。"
+      ]
+    }
+  },
+  "language_requirement": [
+    "一般組：TOEFL iBT 79（舊制）／4.0（新制），或IELTS Academic 6.0，或GEPT中高級，或BESTEP B2；亦可持簡章列明的其他語言證明。",
+    "日語組：須JLPT合格證書或成績單；程度依選填學校要求。",
+    "德語組：德語正式語檢，或符合簡章英語門檻；不得推定有足夠英語課程。",
+    "法語組：法語正式語檢，或符合簡章英語門檻；不得推定有足夠英語課程。",
+    "韓語組：TOPIK／KLAT，或符合簡章英語門檻；不得推定有足夠英語課程。",
+    "西語組：西語正式語檢，或符合簡章英語門檻；不得推定有足夠英語課程。",
+    "中語組：一般申請者無校內語言能力要求；國際學位生須TOCFL（華語文能力測驗）或HSK（漢語水平考試）檢定證明，另核對學校國籍限制。",
+    "英語證明：2025-05-01（含）後考試取得；GEPT／BESTEP須含聽說讀寫。TOEFL MyBest、IELTS General Training／One Skill Retake、TOEIC及未列明英語檢定不接受。",
+    "母語（不含中文）或國外前一學位替代證明：報名前須洽國際處；合作校仍可能另要求語檢。德法韓西語證明須涵蓋聽說讀寫。"
+  ],
+  "scholarship_updates": {
+    "applicable_cycle": "116-1 / 2027秋校級甄選",
+    "award_results_at": "2026-12-10T16:00:00+08:00",
+    "economic_certificate_valid_on": "2026-12-31",
+    "important_rules": [
+      {
+        "rule": "116-1校級甄選申請者適用；一般與經濟不利身分規則分開，院級另依正式公告。2026-11-09 16:00臺灣時間前於甄選報名系統勾選申請。",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "applicable_cycle": "116-1",
+        "pdf_pages": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ]
+      },
+      {
+        "rule": "經濟不利申請者：2026-12-02前email提交證明；公告只列日期，未補造時分。政府低／中低收入或特殊境遇證明須於2026-12-31有效並載本人；其他所得或外國證明依附件三。",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "applicable_cycle": "116-1",
+        "pdf_pages": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ]
+      },
+      {
+        "rule": "2026-12-10 16:00臺灣時間公布獲獎；2026-12-29 16:00前繳交已簽署行政契約正本一式三份，逾期視同放棄獲獎資格。",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "applicable_cycle": "116-1",
+        "pdf_pages": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ]
+      },
+      {
+        "rule": "一般學生：第一階段放榜後放棄錄取交換學校（含轉入第二階段選填），取消獎學金資格且不遞補；經濟不利學生不受這條取消限制，仍須符合其他資格與契約義務。",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "applicable_cycle": "116-1",
+        "pdf_pages": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ]
+      },
+      {
+        "rule": "未取得入學許可或未按時入學，喪失獲獎資格；交换取消或延遲原則不保留，除非國際處另通知。",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "applicable_cycle": "116-1",
+        "pdf_pages": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ]
+      },
+      {
+        "rule": "返國核銷：交換結束後須繳心得、正式成績單及核銷文件；未繳者於計畫終止後三個月內全額繳回。退學、休學、不返國接續學業或擅自提早返國者，於計畫終止後兩個月內全額繳回。",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "applicable_cycle": "116-1",
+        "pdf_pages": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ]
+      },
+      {
+        "rule": "重複獲獎原則不核發；本獎學金較高時須持證明申請並經核定才可領差額。獲獎學生與保證人須簽約、提供撥款帳戶並參與指定海外及返國教育展活動。",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "applicable_cycle": "116-1",
+        "pdf_pages": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ]
+      },
+      {
+        "rule": "116-1公告核撥：一學期全額於2027年10月；一學年60%於2027年10月、40%於2028年3月；月份不是確定日，實際依國際處及契約。",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "applicable_cycle": "116-1",
+        "pdf_pages": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ]
+      }
+    ],
+    "cancellation_rules": [
+      {
+        "identity": "一般學生",
+        "trigger": "第一階段放榜後放棄錄取交換學校（含第二階段選填）",
+        "result": "取消獎學金資格且不遞補",
+        "exception": "經濟不利學生不受此條限制",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "pdf_page": 2
+      },
+      {
+        "identity": "全體獲獎學生",
+        "trigger": "2026-12-29 16:00前未交契約正本三份",
+        "result": "視同放棄獲獎資格",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "pdf_page": 2
+      },
+      {
+        "identity": "全體獲獎學生",
+        "trigger": "未取得入學許可或未按時入學",
+        "result": "喪失獲獎資格",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "pdf_page": 3
+      },
+      {
+        "identity": "全體獲獎學生",
+        "trigger": "計畫取消或延遲",
+        "result": "原則不保留資格，國際處另通知除外",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "pdf_page": 3
+      }
+    ],
+    "repayment_rules": [
+      {
+        "trigger": "未繳交換結束心得／正式成績單／核銷文件",
+        "repay_within_months_after_termination": 3,
+        "amount": "full",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "pdf_page": 3
+      },
+      {
+        "trigger": "退學／休學／不返國接續學業／擅自提早返國",
+        "repay_within_months_after_termination": 2,
+        "amount": "full",
+        "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf",
+        "pdf_page": 3
+      }
+    ],
+    "disbursement_reference": [
+      {
+        "scope": "一學期",
+        "month": "2027-10",
+        "percentage": 100
+      },
+      {
+        "scope": "一學年",
+        "month": "2027-10",
+        "percentage": 60
+      },
+      {
+        "scope": "一學年",
+        "month": "2028-03",
+        "percentage": 40
+      }
+    ],
+    "checked_at": "2026-10-08",
+    "source_review_method": "官方116-1 PDF（瀏覽工具取得；本地HTTP503未視為未公告）"
+  },
+  "scholarship_explanation": {
+    "title": "116-1希望出航期限、撤銷資格與返還義務",
+    "details": [
+      "116-1校級甄選申請者適用；一般與經濟不利身分規則分開，院級另依正式公告。2026-11-09 16:00臺灣時間前於甄選報名系統勾選申請。",
+      "經濟不利申請者：2026-12-02前email提交證明；公告只列日期，未補造時分。政府低／中低收入或特殊境遇證明須於2026-12-31有效並載本人；其他所得或外國證明依附件三。",
+      "2026-12-10 16:00臺灣時間公布獲獎；2026-12-29 16:00前繳交已簽署行政契約正本一式三份，逾期視同放棄獲獎資格。",
+      "一般學生：第一階段放榜後放棄錄取交換學校（含轉入第二階段選填），取消獎學金資格且不遞補；經濟不利學生不受這條取消限制，仍須符合其他資格與契約義務。",
+      "未取得入學許可或未按時入學，喪失獲獎資格；交换取消或延遲原則不保留，除非國際處另通知。",
+      "返國核銷：交換結束後須繳心得、正式成績單及核銷文件；未繳者於計畫終止後三個月內全額繳回。退學、休學、不返國接續學業或擅自提早返國者，於計畫終止後兩個月內全額繳回。",
+      "重複獲獎原則不核發；本獎學金較高時須持證明申請並經核定才可領差額。獲獎學生與保證人須簽約、提供撥款帳戶並參與指定海外及返國教育展活動。",
+      "116-1公告核撥：一學期全額於2027年10月；一學年60%於2027年10月、40%於2028年3月；月份不是確定日，實際依國際處及契約。"
+    ],
+    "source": {
+      "title": "116-1希望出航獎學金申請公告（PDF第1–3、5–6頁）",
+      "source_url": "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/09/116學年度第1學期-國立臺灣大學希望出航出國交換學生獎學金-申請公告.pdf"
+    }
+  }
+}

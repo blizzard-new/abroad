@@ -175,6 +175,9 @@ class ApplicationFormField(BaseModel):
     label: str
     field_type: ApplicationFieldType = ApplicationFieldType.TEXT
     required: bool = False
+    # OR between clauses; AND between the field/value tests in each clause.
+    required_when: list[dict[str, list[str]]] = Field(default_factory=list)
+    options_by_field: dict[str, dict[str, list[str]]] = Field(default_factory=dict)
     reusable_profile_key: str | None = None
     placeholder: str | None = None
     help_text: str | None = None
@@ -377,6 +380,7 @@ class SupportedUniversity(BaseModel):
     school_name: str
     short_name: str
     english_name: str | None = None
+    aliases: list[str] = Field(default_factory=list)
     hero_image: str | None = None
     official_url: str | None = None
     supported: bool = True
@@ -577,6 +581,14 @@ class PartnerLanguageCondition(BaseModel):
     evidence: ExchangeFieldEvidence
 
 
+class ExchangeSourceCheck(BaseModel):
+    source_id: str
+    source_url: str
+    checked_at: datetime
+    result: str
+    timestamp_precision: Literal["date", "datetime"] = "datetime"
+
+
 class PartnerExchangeDetailField(BaseModel):
     """Receiving-school facts retain their own year, scope and source evidence."""
 
@@ -584,6 +596,13 @@ class PartnerExchangeDetailField(BaseModel):
     status: Literal["verified_current", "reference_only", "missing", "needs_confirmation", "conflict", "explicit_not_announced"]
     reason: str
     evidence: list[ExchangeFieldEvidence] = Field(default_factory=list)
+    research_category: Literal[
+        "verified_supported", "official_not_announced",
+        "login_or_school_confirmation", "source_technical_failure",
+        "alternative_official_sources_not_fully_checked",
+    ] | None = None
+    research_note: str | None = None
+    source_checks: list[ExchangeSourceCheck] = Field(default_factory=list)
 
 
 class PartnerUniversity(BaseModel):
@@ -633,6 +652,26 @@ class PartnerUniversity(BaseModel):
     image_status: str = "missing"
     program_options: list[PartnerProgramOption] = Field(default_factory=list)
     student_summary_zh: PartnerStudentSummary = Field(default_factory=PartnerStudentSummary)
+
+    @model_serializer(mode="wrap")
+    def serialize_source_details(self, handler):
+        payload = handler(self)
+        # Older school bundles have no structured source evidence. Keep their
+        # tracked serialization stable while allowing populated optional fields.
+        optional_source_fields = (
+            "academic_year", "application_round", "checked_at", "source_pages",
+            "quota_status", "application_window_status", "field_evidence",
+            "reference_data", "language_requirement", "language_conditions",
+            "language_review_note", "partner_application_prerequisite",
+            "partner_exchange_details", "partner_application_deadline",
+            "nomination_deadline", "semester_dates", "housing_info",
+            "course_restrictions",
+        )
+        if not self.field_evidence and not self.source_pages:
+            for key in optional_source_fields:
+                if payload.get(key) in (None, [], {}):
+                    payload.pop(key, None)
+        return payload
 
 
 class SchoolCompletenessItem(BaseModel):
@@ -1393,6 +1432,7 @@ class ApplicationPlanEligibilityCheck(BaseModel):
         "home_deadline",
         "source_cycle",
         "language_score",
+        "home_language_score",
         "academic_year",
         "application_round",
         "workflow",
@@ -1449,9 +1489,10 @@ class PersonalApplicationPlanRequest(BaseModel):
     department: str | None = Field(default=None, max_length=120)
     degree_level: str | None = Field(default=None, max_length=80)
     academic_score: float | None = Field(default=None, ge=0, le=100)
-    academic_gpa: float | None = Field(default=None, ge=0, le=4.5)
+    academic_gpa: float | None = Field(default=None, ge=0, le=4.3)
     current_year: str | None = Field(default=None, max_length=40)
-    language_test: Literal["toeic", "ielts", "toefl", "duolingo", "other"] | None = None
+    class_rank_percent: float | None = Field(default=None, gt=0, le=100)
+    language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
     academic_year: str | None = Field(default=None, max_length=20)
     application_round: str | None = Field(default=None, max_length=80)
@@ -2532,6 +2573,17 @@ class ApplicationWorkflowReviewBatchRuleRow(BaseModel):
     workbench_path: str
 
 
+class HomeSelectionRules(BaseModel):
+    academic_policy: Literal["percentage", "gpa_or_rank"] = "percentage"
+    academic_reference_year: str | None = None
+    undergraduate_gpa_minimum: float | None = None
+    undergraduate_rank_maximum: float | None = None
+    graduate_academic_exempt: bool = False
+    exclude_in_service: bool = False
+    pending_quota_planning: bool = False
+    partner_requirements_need_confirmation: bool = False
+
+
 class StudentDashboard(BaseModel):
     school_name: str = "長庚大學"
     last_checked: datetime | None = None
@@ -2539,6 +2591,7 @@ class StudentDashboard(BaseModel):
     academic_score_rule: str | None = None
     academic_gpa_minimum: float | None = None
     maximum_preferences: int = 5
+    selection_rules: HomeSelectionRules = Field(default_factory=HomeSelectionRules)
     language_score_minimums: dict[str, float] = Field(default_factory=dict)
     application_periods: list[ApplicationPeriodItem] = Field(default_factory=list)
     program_overview: list[StudentInfoItem] = Field(default_factory=list)
@@ -2600,8 +2653,9 @@ class AdvisorProfile(BaseModel):
     current_year: str | None = Field(default=None, max_length=40)
     degree_level: str | None = Field(default=None, max_length=80)
     academic_score: float | None = Field(default=None, ge=0, le=100)
-    academic_gpa: float | None = Field(default=None, ge=0, le=4.5)
-    language_test: Literal["toeic", "ielts", "toefl", "duolingo", "other"] | None = None
+    academic_gpa: float | None = Field(default=None, ge=0, le=4.3)
+    class_rank_percent: float | None = Field(default=None, gt=0, le=100)
+    language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
     target_term: str | None = Field(default=None, max_length=40)
     preferred_country: str | None = Field(default=None, max_length=80)
@@ -3728,8 +3782,9 @@ class AccountSelectionProfile(BaseModel):
     current_year: str = Field(default="", max_length=40)
     degree_level: str = Field(default="", max_length=80)
     academic_score: float | None = Field(default=None, ge=0, le=100)
-    academic_gpa: float | None = Field(default=None, ge=0, le=4.5)
-    language_test: Literal["toeic", "ielts", "toefl", "duolingo", "other"] | None = None
+    academic_gpa: float | None = Field(default=None, ge=0, le=4.3)
+    class_rank_percent: float | None = Field(default=None, gt=0, le=100)
+    language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
     target_term: str = Field(default="", max_length=40)
     preferred_country: str = Field(default="", max_length=80)
@@ -3739,15 +3794,6 @@ class AccountSelectionProfile(BaseModel):
     application_round: str = Field(default="", max_length=80)
     preferred_teaching_language: TeachingLanguage | None = None
     course_interests: str = Field(default="", max_length=120)
-
-    @model_serializer(mode="wrap")
-    def serialize_optional_gpa(self, handler):
-        payload = handler(self)
-        # Preserve the serialized shape of existing CGU/NTPU saved conditions.
-        if self.academic_gpa is None:
-            payload.pop("academic_gpa", None)
-        return payload
-
 
 class AccountSelectionConditions(BaseModel):
     model_config = ConfigDict(extra="forbid")

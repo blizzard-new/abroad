@@ -303,15 +303,18 @@ def test_ccu_frontend_preferences_gpa_and_legacy_restoration():
     };
     const activeHomeSchool = () => state.homeSchool;
     const fillSelect = (selector,values,placeholder,selected) => calls.set(selector,values);
+    const document={querySelectorAll:()=>[]};
+    const homeSelectionRules=()=>state.dashboard.selection_rules || {};
+    eval(source.match(/^function renderAcademicFields\([^]*?^}/m)[0]);
     eval(source.match(/^function renderEligibilityOptions\([^]*?^}/m)[0]);
     renderEligibilityOptions();
-    assert.equal($('#advisor-academic-gpa').closest().hidden,false);
+    assert.equal($('#advisor-gpa-field').hidden,false);
     assert.equal($('#eligibility-preference-4').closest().hidden,true);
     assert.equal($('#eligibility-preference-4').value,'');
     assert.equal(calls.size,3);
     state.dashboard={maximum_preferences:5,academic_gpa_minimum:null,partner_universities:[]};
     renderEligibilityOptions();
-    assert.equal($('#advisor-academic-gpa').closest().hidden,true);
+    assert.equal($('#advisor-gpa-field').hidden,true);
     assert.equal($('#eligibility-preference-4').closest().hidden,false);
     assert.equal(calls.size,5);
     """

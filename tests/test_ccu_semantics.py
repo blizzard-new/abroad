@@ -242,6 +242,8 @@ def test_frontend_matches_structured_language_and_document_statuses():
     const payload=JSON.parse(fs.readFileSync(0,'utf8'));
     const cases=payload.cases;
     const state={dashboard:{academic_gpa_minimum:3,academic_score_minimum:70}};
+    const homeSelectionRules=()=>state.dashboard.selection_rules || {};
+    const homeAcademicPass=profile=>profile.academicScore>=70 && profile.academicGpa>=3;
     const partnerSummaryPoints=(item)=>item.student_summary_zh.eligibility_points;
     const homeCollegeValue=value=>value,normalize=value=>String(value||''),academicMinimum=()=>70;
     const collegeMatches=()=>true,degreeMatches=()=>true,coverageForSchool=()=>null,destinationProfileForSchool=()=>null;

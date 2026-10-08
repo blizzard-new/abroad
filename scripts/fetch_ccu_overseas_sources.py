@@ -82,6 +82,11 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
                 ],
             )
             (output / (item["source_id"] + ".docx")).write_bytes(body)
+        elif body.startswith(b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1"):
+            # A legacy Word binary is not HTML. Preserve it for a real DOC
+            # converter rather than treating decoded binary strings as evidence.
+            result.update(status="downloaded_doc_unextracted", text_pages=[])
+            (output / (item["source_id"] + ".doc")).write_bytes(body)
         else:
             soup = BeautifulSoup(body, "html.parser")
             result["links"] = [
@@ -90,7 +95,8 @@ def fetch_public_source(item: dict, output: Path, session=None) -> dict:
                     "url": urljoin(response.url, a["href"]),
                 }
                 for a in soup.select("a[href]")
-                if a["href"].startswith(("http", "/"))
+                if urlsplit(urljoin(response.url, a["href"])).scheme
+                in {"http", "https"}
             ]
             for node in soup(["script", "style", "nav", "footer", "header"]):
                 node.decompose()

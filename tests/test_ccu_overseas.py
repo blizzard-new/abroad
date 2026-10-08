@@ -61,8 +61,8 @@ def test_overseas_counts_do_not_claim_full_coverage_or_turn_fetches_into_current
     assert report["overseas_field_status_counts"] == counts
     assert sum(counts.values()) == 55 * 17
     assert report["schools_with_all_overseas_fields_current"] == 0
-    assert report["schools_with_at_least_one_current_overseas_fact"] == 27
-    assert counts["verified_current"] == 213 and counts["conflict"] == 24
+    assert report["schools_with_at_least_one_current_overseas_fact"] == 28
+    assert counts["verified_current"] == 215 and counts["conflict"] == 29
     questions = json.loads((BUNDLE / "confirmation-questions.json").read_text())
     assert len(questions) == 55 and all(row["questions"] for row in questions)
     matrix = json.loads((BUNDLE / "field-completeness-matrix.json").read_text())
@@ -282,7 +282,7 @@ def test_life_renderer_keeps_ccu_reference_and_missing_fields_visible():
     const item=JSON.parse(fs.readFileSync(0,'utf8'));
     renderDestinationProfile(item,{coverage_status:'needs_confirmation',coverage_note:'未核實2027版',last_checked:'2026-10-08'});
     assert.ok(container.innerHTML.includes('合作校生活資料仍待確認'));
-    assert.ok(container.innerHTML.includes('歷史參考，不能作本期申請依據'));
+    assert.ok(container.innerHTML.includes('其他年度／梯次參考，不能作本期申請依據'));
     assert.ok(container.innerHTML.includes('2025'));
     assert.ok(container.innerHTML.includes('本期未核實／來源未載'));
     assert.equal((container.innerHTML.match(/data-ccu-field=/g)||[]).length,8);

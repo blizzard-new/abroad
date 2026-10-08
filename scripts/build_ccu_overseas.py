@@ -136,8 +136,11 @@ def main():
         "source_acquisition_statuses": dict(
             Counter(s["status"] for s in snapshots.values())
         ),
+        "research_gap_audit": "research-gap-audit.json",
+        "acquired_content_review_queue": "acquired-content-review.json",
+        "source_failure_followup": "source-failure-followup.json",
         "definition": "只計內容、年度及計畫已核實之欄位；下載成功、一般現行未標年網頁、灰字、舊年度及只載提名前提不算當期完整。",
-        "remaining_blockers": "各校具體缺值／矛盾／無法下載已列confirmation-questions.json；未聯絡學校或登入校方帳號。下一季新版未核實不等同官方尚未公告。",
+        "remaining_work": "缺值及已取得未映射段落繼續查官方替代來源；逐欄進度見research-gap-audit.json。矛盾／個別通知另見confirmation-questions.json，不把整體缺值當作承辦阻塞。未聯絡學校或登入校方帳號。新版未核實不等同官方尚未公告。",
     }
     write("field-completeness-matrix.json", matrix)
     write("confirmation-questions.json", questions)

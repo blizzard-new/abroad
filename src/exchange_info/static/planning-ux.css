@@ -99,3 +99,6 @@ body.unified-shell .match-more:not([open]) .when-open, body.unified-shell .match
 /* How many schools the list holds, so nobody mistakes the first page for all of them. */
 body.unified-shell .partner-result-count { margin:10px 4px; font-size:13px; color:var(--uw-muted); }
 body.unified-shell .partner-result-count:empty { display:none; }
+
+/* Under the "no quota this year" chip: one plain sentence, so a signed school is not mistaken for a missing one. */
+body.unified-shell .availability-hint { display:block; margin-top:6px; font-size:12px; line-height:1.5; color:var(--uw-muted); }

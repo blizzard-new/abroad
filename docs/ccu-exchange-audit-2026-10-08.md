@@ -3,8 +3,10 @@
 查核日：2026-10-08。Repository：`blizzard-new/abroad`。
 獨立 clone：`/workspace/abroad-ccu-20261008`；分支：`data/ccu-exchange-20261008`。
 基準：從 GitHub 最新 main 取得 `f741d540f546d6ddbbf3174c9a34b5ef103c8816`，建分支前未發現同名遠端分支。
-交付前遠端 main 已前進至 `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`（第一批交付時為 `293546e807294dc0812f390b240a4cfb68e86cd0`）；本分支保留開工時基準，未重寫其他 session 工作或自行整合 main。
+交付前遠端 main 已前進至 `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`（第一批交付時為 `293546e807294dc0812f390b240a4cfb68e86cd0`）；第一批交付保留開工基準；第二輪依使用者要求安全整合此最新main，保留臺大與既有資料，未寫入其他session工作目錄。
 本 clone 未找到 AGENTS.md 或適用 `.agents/skills`。未寫入其他學校 session 的工作目錄。
+
+最新數量、分類及最新main整合結果見末節「第二輪可審查檢查點」；前節保留歷史檢查點的資料與驗證。
 
 ## 已核實適用範圍
 
@@ -151,7 +153,7 @@ OpenAPI 由 `.venv/bin/python scripts/export_openapi.py` 產生，`--check` 通�
 
 本checkpoint仍在完成生活頁的瀏覽器驗證及最終交接文件，不宣稱55校完整。遠端main已到f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59，本分支未整合或改動其他session。
 
-## 海外來源與平台適配最終交接
+## 第一階段海外來源與平台適配交接（歷史檢查點，以下數量已由第二輪更新）
 
 Checkpoint `abce2c7ec1d6184031ba36cc45910f3b7f2d6e69` 已推送；後續補查4個官方表格入口，來源紀錄為 **131筆、128個不同URL**。47筆PDF來源及2筆DOCX已下载並解析（UESTC中文掃描頁以渲染圖人工核對）；68筆HTML包含介紹／JS載入頁，不能把HTML成功下載等同已核實表格。14筆取得失敗分別保留HTTP／連線錯誤。來源全文、SHA-256、正文年度、計畫、查核日、連結及取得結果存 `overseas_sources/`；47筆PDF是取得紀錄數，部分官方重下載有重複内容，不能宣稱47份不同當期簡章。
 
@@ -200,3 +202,39 @@ UBM、EPITA、SDU的新接收資料顯示替代語言證明／program分流或�
 ```
 
 海外fetch腳本只向已記錄公開來源取資料，記錄真實成功／失敗，候選目錄不可放在reviewed bundle內。下載成功仍是needs_confirmation，未標年/不同program不自動升為當期；修改正文或表格hash會要求重新查核。此次整理保留整批legacy／partial狀態，沒有正式發布、merge main或部署。
+
+
+## 第二輪可審查檢查點：最新main整合與官方深查
+
+本輪不是全資料完成。從已推送 `bd740bc29ce76e4704a8bca4f6809f3c3769f71c` 繼續，安全合入 `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59` 的臺大功能，未force push、merge回main或部署。CGU/NTPU/NTU與既有`data`共49份main資料檔逐byte不變；證據在`ccu-validation-2026-10-08/preservation-latest-main.json`。
+
+中正仍為104所：52有當期名額、49未開放協議參考、3空白名額；55申請流程／生活指南。海外取得紀錄172份（增加41），56個欄位已新增或修正，缺值515→467。當期已核實215/935（23.0%）、待確認182、其他年度／梯次參考41、矛盾29、官方明示TBC1；28/55校至少一欄當期核實，0/55校全17欄核實。
+
+| 查核工作進度 | 欄數 | 實際含義 |
+| --- | ---: | --- |
+| 已有當期依據 | 215 | 僅本欄所列事實，不保證清單或所有細節完整 |
+| 官方明示未公告 | 1 | 只有HUFS迎新TBC，無把缺值改稱未公告 |
+| 個別通知／須校方釐清 | 38 | 29矛盾及實際通知／授權限制；未登入或聯絡 |
+| 已查入口技術失敗 | 2 | Augsburg申請入口404、Ludwigshafen418；替代入口仍可續查 |
+| 官方替代來源尚未查完 | 679 | 含已取得尚未映射段落、年度／身分未核，繼續查，不當作阻塞結案 |
+
+`research-gap-audit.json`把55×17欄逐一分類，保存本校已查URL、實際日期／時間及結果；舊快照00:00Z只聲明日期精度，不假裝精確讀取時間。`acquired-content-review.json`列17類關鍵字候選及本輪人工重讀欄位，索引不當作已核實證據。`source-failure-followup.json`列14個原失敗來源的實際重試，東北師大首頁200，其餘13原入口仍失敗，均列安全替代入口結果。來源失敗不代表全校全部資料不存在。
+
+本轮具體修正：
+
+- 釜山：全文重讀2026/27 PDF14頁`STUDY PLAN [FORM #1]`、15頁`AFFIDAVIT OF SUPPORT [FORM #2]`、直系支持人原則／銀行與親屬證明／簽名日期／non-OECD郵寄條件；保存可讀原PDF並在UI加頁碼錨點，移除「附表未查得」的錯誤結論。
+- HCMUT：2026/27 PDF迎新明載2026年12月下旬／2027年初，補入arrival，沒有造精確報到日。中正轉載10/15與同梯次合作校10/1無延期依據，兩者一律列跨來源矛盾；9/15提名保持分開。
+- UESTC（中正11/30／合作校12/31）、Chitkara（10/20／10/30）、EPITA（10/30／10/31）同梯次申請截止一併標矛盾；Østfold2027入口11/1與現行共用DOC11/15也保留矛盾。原中正文字留在`reference_data.partner_application_deadline`，主要欄、摘要、home field evidence、卡片、詳頁與workflow均顯示比較，不任選較晚日期，不開精確提醒。
+- Østfold：當前bilateral文件頁仍連完整`rev2018.doc`，讀全部DOC實際內容，年度20__/20__、課程ECTS、語言、學生及母校簽名／上傳要求；以現行連結核實「取得方式」，不以舊檔名排除或把11/15當本期延期。保險是共用模板一般建議，2027及國籍適用待確認。
+- Ostfalia：可讀替代交換頁與2027夏季正式校曆已取得；3/1授課開始、7/9授課末，考試另公告。一般估算費用、非EHIC保險、住房自申請、offer後2日接受均未標2027，保留待確認，房屋接受2日不是統一申請截止。
+- 東北師大：官方交換、住房及保險入口取得；交換正文明載「非中國籍」且未標年，保留一般資訊及臺籍流程未核，不能將X1/X2或11/20 deadline套臺籍當期。
+- 常磐：官網所連6頁guideline只載FALL且未標年；文件、住房、費用及保險以其他梯次參考保存，不混入2027春季必交文件。SDU完整語言表已讀簽章，但88分與中正83／現行B2文字另記適用性差異。
+- Augsburg：當期PDF官方Application-and-Arrival連結及其他安全入口實測404。沒有把搜尋摘要或別處可見的七類文件冒充已全文取得；繼續列技術失敗及替代查核工作。
+
+共享合併範圍：registry、API與storage四校dispatch；advisor與application_rules維持中正GPA3.0 **且** 平均70、最多3志願，保留臺大GPA/排名擇一與研究生豁免；文件入口、collector／CLI、model可選接收證據與查核狀態、主UI/index、OpenAPI及wheel資料包含。NTU舊資料的空CCU欄不額外序列化，NTU離線重建仍逐byte相同；既有GPA4.3輸入上限保留。其餘爬取、人工來源與renderer均校別獨立。API共110 routes，沒有增加必填欄位；沒有修改憑證、權限、付款或安全設定。
+
+實際驗證：最後參考標籤修正後中正專用 **87 passed**；資料／資格／文件／四校回歸 **208 passed、5 skipped、1 failed**（最新main同一NTPU destination count失敗）。既有前端契約 **8失敗** 與最新main逐名稱相同；API契約 **8 passed、12 failed** 與最新main相同，不隱藏失敗、不增skip。實機瀏覽器中正桌面／手機、四校切換、臺大GPA排名／保存條件／新TOEFL／文件語組共 **10個不同案例已通過**（四校案例初次因測試未等待onboarding失敗，修正測試進站流程後重跑通過）。中正兩種螢幕無page error或水平溢出；證據與實際log保存在本交接驗證目錄。OpenAPI快照檢查、JS語法、ruff、git diff檢查通過；16份離線輸出重建hash一致；wheel含DOC/DOCX/PDF、來源、查核分類與校別JS。
+
+本輪仍剩467缺值欄及其他年度／條件、個別通知與矛盾核對工作；3空白名額、2027秋季新版／補助尚未核實，不等同官方未公告。Draft PR是可審查資料與適配檢查點，後續依工作佇列續查；無聯絡學校、無建立校方帳號、无繞過憑證警告。
+
+重建順序先跑`build_ccu_research_audit.py`，再依前節順序重建catalog、source audit、overseas。第二輪實際結果與hash見`validation.json`的`second_pass`，第一階段資料保留為歷史驗證。

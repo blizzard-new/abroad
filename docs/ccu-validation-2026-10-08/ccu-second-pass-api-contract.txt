@@ -1,0 +1,231 @@
+CONFTEST LOADED!
+..FFFF..FFFF.FFFF...                                                     [100%]
+=================================== FAILURES ===================================
+__________ test_private_community_writes_expose_retry_mutation_header __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-25/test_private_community_writes_0')
+
+    def test_private_community_writes_expose_retry_mutation_header(tmp_path) -> None:
+        paths = TestClient(create_app(tmp_path)).get("/openapi.json").json()["paths"]
+        writes = (
+            ("/community/conversations", "post"),
+            ("/community/conversations/{conversation_id}/accept", "post"),
+            ("/community/conversations/{conversation_id}/messages", "post"),
+            ("/community/blocks", "post"),
+            ("/community/reports", "post"),
+            ("/admin/community/reports/{report_id}", "patch"),
+        )
+
+        for path, method in writes:
+            parameters = paths[path][method]["parameters"]
+>           mutation_header = next(
+                row for row in parameters if row["name"] == "X-Community-Mutation-ID"
+            )
+E           StopIteration
+
+tests/test_next_phase_contract.py:64: StopIteration
+___ test_workflow_issue_report_contract_exposes_retry_and_admin_review_paths ___
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-25/test_workflow_issue_report_con0')
+
+    def test_workflow_issue_report_contract_exposes_retry_and_admin_review_paths(tmp_path) -> None:
+        schema = TestClient(create_app(tmp_path)).get("/openapi.json").json()
+        paths = schema["paths"]
+
+        assert "post" in paths["/application-workflow-issue-reports"]
+        assert "get" in paths["/admin/application-workflow-issue-reports"]
+        assert "patch" in paths[
+            "/admin/application-workflow-issue-reports/{report_id}"
+        ]
+        for path, method in (
+            ("/application-workflow-issue-reports", "post"),
+            ("/admin/application-workflow-issue-reports/{report_id}", "patch"),
+        ):
+            mutation_header = next(
+                row
+>               for row in paths[path][method]["parameters"]
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                if row["name"] == "X-Content-Report-Mutation-ID"
+            )
+E           KeyError: 'parameters'
+
+tests/test_next_phase_contract.py:89: KeyError
+________ test_account_deletion_exposes_dedicated_retry_mutation_header _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-25/test_account_deletion_exposes_0')
+
+    def test_account_deletion_exposes_dedicated_retry_mutation_header(tmp_path) -> None:
+        operation = TestClient(create_app(tmp_path)).get("/openapi.json").json()[
+            "paths"
+        ]["/auth/me"]["delete"]
+        mutation_header = next(
+            row
+>           for row in operation["parameters"]
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+            if row["name"] == "X-Account-Deletion-Mutation-ID"
+        )
+E       KeyError: 'parameters'
+
+tests/test_next_phase_contract.py:107: KeyError
+_________ test_api_contract_page_does_not_depend_on_csp_blocked_assets _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-25/test_api_contract_page_does_no0')
+
+    def test_api_contract_page_does_not_depend_on_csp_blocked_assets(tmp_path) -> None:
+        client = TestClient(create_app(tmp_path))
+
+        docs = client.get("/docs")
+        assert docs.status_code == 200
+        assert docs.headers["content-type"].startswith("text/html")
+>       assert 'href="/openapi.json"' in docs.text
+E       assert 'href="/openapi.json"' in '\n    <!DOCTYPE html>\n    <html>\n    <head>\n    <meta name="viewport" content="width=device-width, initial-scale=1...\n        SwaggerUIBundle.SwaggerUIStandalonePreset\n        ],\n    })\n    </script>\n    </body>\n    </html>\n    '
+E        +  where '\n    <!DOCTYPE html>\n    <html>\n    <head>\n    <meta name="viewport" content="width=device-width, initial-scale=1...\n        SwaggerUIBundle.SwaggerUIStandalonePreset\n        ],\n    })\n    </script>\n    </body>\n    </html>\n    ' = <Response [200 OK]>.text
+
+tests/test_next_phase_contract.py:124: AssertionError
+_______ test_external_calendar_contract_documents_subscription_boundary ________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-25/test_external_calendar_contrac0')
+
+    def test_external_calendar_contract_documents_subscription_boundary(tmp_path) -> None:
+        client = TestClient(create_app(tmp_path))
+        paths = client.get("/openapi.json").json()["paths"]
+
+>       assert "403" in paths["/calendar-sync"]["get"]["responses"]
+E       AssertionError: assert '403' in {'200': {'description': 'Successful Response', 'content': {'application/json': {'schema': {'$ref': '#/components/schemas/CalendarSyncStatus'}}}}}
+
+tests/test_next_phase_contract.py:202: AssertionError
+_ test_application_document_contract_keeps_official_forms_public_and_gates_generation _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-25/test_application_document_cont0')
+
+    def test_application_document_contract_keeps_official_forms_public_and_gates_generation(
+        tmp_path,
+    ) -> None:
+        client = TestClient(create_app(tmp_path))
+        paths = client.get("/openapi.json").json()["paths"]
+
+        assert "get" in paths["/application-center/templates"]
+        assert "get" in paths["/application-center/catalog"]
+        assert "401" not in paths["/application-center/templates"]["get"]["responses"]
+        assert "403" not in paths["/application-center/catalog"]["get"]["responses"]
+>       assert "401" in paths["/application-center/manifest"]["post"]["responses"]
+E       AssertionError: assert '401' in {'200': {'description': 'Successful Response', 'content': {'application/json': {'schema': {'$ref': '#/components/schem...'Validation Error', 'content': {'application/json': {'schema': {'$ref': '#/components/schemas/HTTPValidationError'}}}}}
+
+tests/test_next_phase_contract.py:218: AssertionError
+_ test_document_completeness_contract_is_subscription_gated_and_ai_stays_paused _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-25/test_document_completeness_con0')
+
+    def test_document_completeness_contract_is_subscription_gated_and_ai_stays_paused(
+        tmp_path,
+    ) -> None:
+        client = TestClient(create_app(tmp_path))
+        paths = client.get("/openapi.json").json()["paths"]
+
+        for path in ("/document-check", "/ai/review-document"):
+            operation = paths[path]["post"]
+            responses = operation["responses"]
+>           assert "401" in responses
+E           AssertionError: assert '401' in {'200': {'description': 'Successful Response', 'content': {'application/json': {'schema': {'$ref': '#/components/schem...'Validation Error', 'content': {'application/json': {'schema': {'$ref': '#/components/schemas/HTTPValidationError'}}}}}
+
+tests/test_next_phase_contract.py:233: AssertionError
+_____________ test_ai_compatibility_contract_is_explicitly_paused ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-25/test_ai_compatibility_contract0')
+
+    def test_ai_compatibility_contract_is_explicitly_paused(tmp_path) -> None:
+        client = TestClient(create_app(tmp_path))
+        paths = client.get("/openapi.json").json()["paths"]
+
+        for path in ("/ai/chat", "/ai/rewrite-document"):
+            operation = paths[path]["post"]
+>           assert operation["deprecated"] is True
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'deprecated'
+
+tests/test_next_phase_contract.py:253: KeyError
+_____ test_content_review_contract_exposes_nonpublishing_source_candidates _____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-25/test_content_review_contract_e0')
+
+    def test_content_review_contract_exposes_nonpublishing_source_candidates(tmp_path) -> None:
+        client = TestClient(create_app(tmp_path))
+        openapi = client.get("/openapi.json").json()
+        candidate_path = (
+            "/admin/application-workflow-source-replacement-candidates"
+        )
+        candidate_export_path = (
+            "/admin/application-workflow-source-replacement-review-queue.csv"
+        )
+        source_evidence_export_path = (
+            "/admin/application-workflow-review-backlog/source-evidence.csv"
+        )
+>       candidate = openapi["components"]["schemas"][
+            "ApplicationWorkflowSourceReplacementCandidate"
+        ]["properties"]
+E       KeyError: 'ApplicationWorkflowSourceReplacementCandidate'
+
+tests/test_next_phase_contract.py:314: KeyError
+____ test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing ____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-25/test_workflow_batch_stage_cont0')
+
+    def test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing(
+        tmp_path,
+    ) -> None:
+        client = TestClient(create_app(tmp_path))
+        openapi = client.get("/openapi.json").json()
+        path = "/admin/application-workflow-review-batches/{batch_id}/stage"
+        schemas = openapi["components"]["schemas"]
+
+>       assert "post" in openapi["paths"][path]
+                         ^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: '/admin/application-workflow-review-batches/{batch_id}/stage'
+
+tests/test_next_phase_contract.py:388: KeyError
+_ test_destination_profile_review_contract_requires_explicit_audited_promotion _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-25/test_destination_profile_revie0')
+
+    def test_destination_profile_review_contract_requires_explicit_audited_promotion(
+        tmp_path,
+    ) -> None:
+        client = TestClient(create_app(tmp_path))
+        openapi = client.get("/openapi.json").json()
+        paths = openapi["paths"]
+        schemas = openapi["components"]["schemas"]
+
+>       assert "get" in paths["/admin/destination-profile-review-queue"]
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: '/admin/destination-profile-review-queue'
+
+tests/test_next_phase_contract.py:415: KeyError
+_____ test_application_workflow_publication_contract_exposes_safe_rollback _____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-25/test_application_workflow_publ0')
+
+    def test_application_workflow_publication_contract_exposes_safe_rollback(tmp_path) -> None:
+        client = TestClient(create_app(tmp_path))
+        openapi = client.get("/openapi.json").json()
+        paths = openapi["paths"]
+        schemas = openapi["components"]["schemas"]
+
+>       assert "get" in paths["/admin/application-workflow-publications"]
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: '/admin/application-workflow-publications'
+
+tests/test_next_phase_contract.py:542: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_next_phase_contract.py::test_private_community_writes_expose_retry_mutation_header
+FAILED tests/test_next_phase_contract.py::test_workflow_issue_report_contract_exposes_retry_and_admin_review_paths
+FAILED tests/test_next_phase_contract.py::test_account_deletion_exposes_dedicated_retry_mutation_header
+FAILED tests/test_next_phase_contract.py::test_api_contract_page_does_not_depend_on_csp_blocked_assets
+FAILED tests/test_next_phase_contract.py::test_external_calendar_contract_documents_subscription_boundary
+FAILED tests/test_next_phase_contract.py::test_application_document_contract_keeps_official_forms_public_and_gates_generation
+FAILED tests/test_next_phase_contract.py::test_document_completeness_contract_is_subscription_gated_and_ai_stays_paused
+FAILED tests/test_next_phase_contract.py::test_ai_compatibility_contract_is_explicitly_paused
+FAILED tests/test_next_phase_contract.py::test_content_review_contract_exposes_nonpublishing_source_candidates
+FAILED tests/test_next_phase_contract.py::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing
+FAILED tests/test_next_phase_contract.py::test_destination_profile_review_contract_requires_explicit_audited_promotion
+FAILED tests/test_next_phase_contract.py::test_application_workflow_publication_contract_exposes_safe_rollback
+12 failed, 8 passed in 19.30s

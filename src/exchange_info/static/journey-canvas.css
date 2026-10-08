@@ -285,7 +285,7 @@ body.unified-shell #dashboard-view > #partners:has([data-partner-view="list"][ar
 }
 #partners:has([data-partner-view="list"][aria-pressed="true"]) .journey-filter-drawer { grid-row: 1; }
 body.unified-shell #partners:has([data-partner-view="list"][aria-pressed="true"]) .filter-panel {
-  grid-template-columns: repeat(4, minmax(0, 1fr)) auto; align-items: end; gap: 16px;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) auto; align-items: end; gap: 16px;
 }
 body.unified-shell #partners .desktop-partner-table { overflow-x: visible; }
 body.unified-shell #partners .partner-table { width: 100%; min-width: 0; table-layout: fixed; }

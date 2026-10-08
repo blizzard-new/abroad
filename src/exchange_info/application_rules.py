@@ -8,6 +8,7 @@ from collections.abc import Iterable
 from .application_task_identity import preparation_identity
 from .plan_defaults import suggest_effort_hours
 from .school_identity import same_school
+from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
 from .task_documents import document_link_for_step
 from .qualification_scopes import (
     college_scope_needs_confirmation, degree_scope_needs_confirmation,
@@ -384,7 +385,7 @@ def _eligibility_checks(
         checks.append(
             _check(
                 "availability",
-                "needs_confirmation" if partner.availability_status == "needs_confirmation" else "fail",
+                "needs_confirmation" if partner.availability_status == "needs_confirmation" or (is_ntu(request.home_school) and partner.quota is None) else "fail",
                 "當期名額",
                 partner.availability_note
                 or "這筆資料目前未列入當期公開開放名單。",
@@ -403,7 +404,11 @@ def _eligibility_checks(
             )
         )
 
-    if not request.college and not request.department:
+    if is_ntu(request.home_school):
+        checks.append(_check("college", "needs_confirmation", "學院／學系範圍",
+                             "合作校本期學院與系所範圍尚未全面確認；詳情頁的既有條件僅供參考。",
+                             source_url=partner_source, contact_unit=contact_unit))
+    elif not request.college and not request.department:
         checks.append(
             _check(
                 "college",
@@ -445,7 +450,11 @@ def _eligibility_checks(
             )
         )
 
-    if not request.degree_level:
+    if is_ntu(request.home_school):
+        checks.append(_check("degree_level", "needs_confirmation", "學制與學籍",
+                             "校內須為在學學士二年級以上或研究生；合作校本期可提名學制、在學狀態與年級仍須確認。",
+                             source_url=partner_source, contact_unit=contact_unit))
+    elif not request.degree_level:
         checks.append(
             _check(
                 "degree_level",
@@ -486,7 +495,13 @@ def _eligibility_checks(
             )
         )
 
-    if academic_score_minimum is None:
+    if is_ntu(request.home_school):
+        status, detail = ntu_academic_check(request.degree_level, request.academic_gpa, request.class_rank_percent)
+        checks.append(_check(
+            "academic_score", status, "校內成績門檻", detail,
+            source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit,
+        ))
+    elif academic_score_minimum is None:
         checks.append(
             _check(
                 "academic_score",
@@ -522,10 +537,16 @@ def _eligibility_checks(
         )
 
     language_threshold = _partner_language_threshold(partner, request.language_test, request.degree_level)
+    if is_ntu(request.home_school):
+        # NTU's partner requirements in this bundle are not cycle-confirmed.
+        language_threshold = None
+        home_status, home_detail = ntu_language_check(request.language_test, request.language_score)
+        checks.append(_check("home_language_score", home_status, "校內語組門檻", home_detail, source_url=academic_source_url, contact_unit=contact_unit))
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",
         "toefl": "TOEFL iBT",
+        "toefl_new": "TOEFL iBT（新制6分制）",
         "duolingo": "Duolingo",
         "other": "其他語言證明",
     }.get(request.language_test or "", "語言證明")
@@ -844,9 +865,7 @@ def _choice_status(
     partner: PartnerUniversity,
     checks: list[ApplicationPlanEligibilityCheck],
 ) -> ApplicationPlanEligibilityStatus:
-    if partner.availability_status == "needs_confirmation":
-        return ApplicationPlanEligibilityStatus.NEEDS_CONFIRMATION
-    if partner.availability_status != "open":
+    if partner.availability_status != "open" and any(check.code == "availability" and check.status == "fail" for check in checks):
         return ApplicationPlanEligibilityStatus.UNAVAILABLE
     if any(check.status == "fail" for check in checks):
         return ApplicationPlanEligibilityStatus.INELIGIBLE
@@ -900,6 +919,9 @@ def _partner_language_threshold(
         "toefl": r"TOEFL(?:\s*iBT)?\s*(?:總分|達|至少)?\s*(\d{2,3})",
         "duolingo": r"Duolingo\s*(?:達|至少)?\s*(\d{2,3})",
     }
+    # Never convert a partner's old TOEFL score into the six-point scale.
+    if language_test not in patterns:
+        return None
     match = re.search(patterns[language_test], text, re.IGNORECASE)
     return float(match.group(1)) if match else None
 
