@@ -2812,7 +2812,7 @@ def create_app(
                 if destination_audit
                 else (
                     destination.coverage_status
-                    if university.id in {CGU.id, NTU.id, NCU.id} and destination
+                    if university.id in {CGU.id, NTPU.id, NTU.id, NCU.id} and destination
                     else "not_collected"
                 )
             )
@@ -2852,7 +2852,7 @@ def create_app(
                         destination_audit.checked_at
                         if destination_audit
                         else destination.last_checked
-                        if university.id in {CGU.id, NTU.id, NCU.id} and destination
+                        if university.id in {CGU.id, NTPU.id, NTU.id, NCU.id} and destination
                         else None
                     ),
                 )

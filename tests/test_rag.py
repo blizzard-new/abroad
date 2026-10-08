@@ -220,9 +220,17 @@ def test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused(
         files={"file": ("讀書計畫.txt", "申請動機與學習計畫。" * 30, "text/plain")},
         data={"document_type": "study_plan", "consent": "true"},
     )
-    rewrite = client.post(
+    unconsented_rewrite = client.post(
         "/ai/rewrite-document",
         json={"text": "這是我自行撰寫且需要調整語氣的交換申請內容。" * 2, "action": "formalize"},
+    )
+    rewrite = client.post(
+        "/ai/rewrite-document",
+        json={
+            "text": "這是我自行撰寫且需要調整語氣的交換申請內容。" * 2,
+            "action": "formalize",
+            "ai_consent_granted": True,
+        },
     )
 
     assert answer.status_code == 200
@@ -238,6 +246,8 @@ def test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused(
     assert paused_chat.status_code == 503
     assert review.status_code == 503
     assert "AI 深度檢查目前暫緩" in review.json()["detail"]
+    assert unconsented_rewrite.status_code == 422
+    assert unconsented_rewrite.json()["detail"] == "AI consent required"
     assert rewrite.status_code == 503
     assert "AI API 與本地 AI 目前暫緩" in rewrite.json()["detail"]
     assert ai_requests == []
