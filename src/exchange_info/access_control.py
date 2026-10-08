@@ -25,6 +25,7 @@ HOME_UNIVERSITY_UNSET = "尚未選擇"
 SCHOOL_EMAIL_DOMAINS: dict[str, tuple[str, ...]] = {
     "cgu": ("cgu.edu.tw",),
     "ntpu": ("ntpu.edu.tw",),
+    "ntu": ("ntu.edu.tw",),
 }
 
 SchoolBasis = Literal["student_verified", "school_email", "self_declared"]

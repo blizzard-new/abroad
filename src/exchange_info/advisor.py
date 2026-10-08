@@ -8,6 +8,7 @@ from typing import Iterable
 
 from .ai_gateway import structured_response
 from .fit_signals import course_interest_fit, school_budget_fit, teaching_language_fit
+from .ntu_eligibility import is_ntu, ntu_academic_check
 from .qualification_scopes import (
     college_scope_needs_confirmation as _college_scope_needs_confirmation,
     degree_scope_needs_confirmation as _degree_scope_needs_confirmation,
@@ -37,6 +38,7 @@ LANGUAGE_LABELS = {
     "toeic": "TOEIC",
     "ielts": "IELTS",
     "toefl": "TOEFL iBT",
+    "toefl_new": "TOEFL iBT（新制6分制）",
     "duolingo": "Duolingo",
     "other": "其他語言證明",
 }
@@ -282,7 +284,19 @@ def _score_partner(
         confirmation_items.append(gaps[-1])
 
     academic_minimum = dashboard.academic_score_minimum
-    if profile.academic_score is None:
+    if is_ntu(dashboard.school_name):
+        status, detail = ntu_academic_check(profile.degree_level, profile.academic_gpa, profile.class_rank_percent)
+        if status == "pass":
+            score += 15
+            reasons.append(detail)
+        else:
+            gaps.append(detail)
+            if status == "fail":
+                blocking_reasons.append(detail)
+                blocked = True
+            else:
+                confirmation_items.append(detail)
+    elif profile.academic_score is None:
         gaps.append("尚未填學業平均")
         confirmation_items.append(gaps[-1])
     elif academic_minimum is None:
@@ -413,7 +427,9 @@ def _qualification_summary(
 ) -> list[str]:
     rows: list[str] = []
     academic_minimum = dashboard.academic_score_minimum
-    if profile.academic_score is None:
+    if is_ntu(dashboard.school_name):
+        rows.append(ntu_academic_check(profile.degree_level, profile.academic_gpa, profile.class_rank_percent)[1])
+    elif profile.academic_score is None:
         rows.append("學業平均尚未填寫")
     elif academic_minimum is None:
         rows.append("本校學業平均門檻待確認")
@@ -867,6 +883,8 @@ def _partner_language_threshold(
         "toefl": r"TOEFL(?:\s*iBT)?\s*(?:總分|達|至少)?\s*(\d{2,3})",
         "duolingo": r"Duolingo\s*(?:達|至少)?\s*(\d{2,3})",
     }
+    if language_test not in patterns:
+        return None
     match = re.search(patterns[language_test], text, re.IGNORECASE)
     return float(match.group(1)) if match else None
 
@@ -882,7 +900,12 @@ def _missing_profile_fields(profile: AdvisorProfile) -> list[str]:
         (profile.language_score, "語言成績"),
         (profile.target_term, "預計學期"),
     ]
-    return [label for value, label in fields if value is None or value == ""]
+    missing = [label for value, label in fields if value is None or value == ""]
+    if is_ntu(profile.school_name):
+        missing = [label for label in missing if label != "學業平均"]
+        if ntu_academic_check(profile.degree_level, profile.academic_gpa, profile.class_rank_percent)[0] == "needs_confirmation":
+            missing.append("學年GPA或班排名")
+    return missing
 
 
 def _first_source(items: Iterable) -> str | None:

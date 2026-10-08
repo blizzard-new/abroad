@@ -377,6 +377,7 @@ class SupportedUniversity(BaseModel):
     school_name: str
     short_name: str
     english_name: str | None = None
+    aliases: list[str] = Field(default_factory=list)
     hero_image: str | None = None
     official_url: str | None = None
     supported: bool = True
@@ -1334,6 +1335,7 @@ class ApplicationPlanEligibilityCheck(BaseModel):
         "degree_level",
         "academic_score",
         "language_score",
+        "home_language_score",
         "academic_year",
         "application_round",
         "workflow",
@@ -1390,7 +1392,9 @@ class PersonalApplicationPlanRequest(BaseModel):
     department: str | None = Field(default=None, max_length=120)
     degree_level: str | None = Field(default=None, max_length=80)
     academic_score: float | None = Field(default=None, ge=0, le=100)
-    language_test: Literal["toeic", "ielts", "toefl", "duolingo", "other"] | None = None
+    academic_gpa: float | None = Field(default=None, ge=0, le=4.3)
+    class_rank_percent: float | None = Field(default=None, ge=0, le=100)
+    language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
     academic_year: str | None = Field(default=None, max_length=20)
     application_round: str | None = Field(default=None, max_length=80)
@@ -2537,7 +2541,9 @@ class AdvisorProfile(BaseModel):
     current_year: str | None = Field(default=None, max_length=40)
     degree_level: str | None = Field(default=None, max_length=80)
     academic_score: float | None = Field(default=None, ge=0, le=100)
-    language_test: Literal["toeic", "ielts", "toefl", "duolingo", "other"] | None = None
+    academic_gpa: float | None = Field(default=None, ge=0, le=4.3)
+    class_rank_percent: float | None = Field(default=None, ge=0, le=100)
+    language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
     target_term: str | None = Field(default=None, max_length=40)
     preferred_country: str | None = Field(default=None, max_length=80)
@@ -3664,7 +3670,9 @@ class AccountSelectionProfile(BaseModel):
     current_year: str = Field(default="", max_length=40)
     degree_level: str = Field(default="", max_length=80)
     academic_score: float | None = Field(default=None, ge=0, le=100)
-    language_test: Literal["toeic", "ielts", "toefl", "duolingo", "other"] | None = None
+    academic_gpa: float | None = Field(default=None, ge=0, le=4.3)
+    class_rank_percent: float | None = Field(default=None, ge=0, le=100)
+    language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
     target_term: str = Field(default="", max_length=40)
     preferred_country: str = Field(default="", max_length=80)

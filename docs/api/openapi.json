@@ -1145,6 +1145,19 @@
         "additionalProperties": false,
         "description": "Student supplied conditions, separate from admission or source verification.",
         "properties": {
+          "academic_gpa": {
+            "anyOf": [
+              {
+                "maximum": 4.3,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Gpa"
+          },
           "academic_score": {
             "anyOf": [
               {
@@ -1169,6 +1182,19 @@
             "maxLength": 80,
             "title": "Application Round",
             "type": "string"
+          },
+          "class_rank_percent": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Class Rank Percent"
           },
           "college": {
             "default": "",
@@ -1220,6 +1246,7 @@
                   "toeic",
                   "ielts",
                   "toefl",
+                  "toefl_new",
                   "duolingo",
                   "other"
                 ],
@@ -1638,6 +1665,19 @@
       },
       "AdvisorProfile": {
         "properties": {
+          "academic_gpa": {
+            "anyOf": [
+              {
+                "maximum": 4.3,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Gpa"
+          },
           "academic_score": {
             "anyOf": [
               {
@@ -1650,6 +1690,19 @@
               }
             ],
             "title": "Academic Score"
+          },
+          "class_rank_percent": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Class Rank Percent"
           },
           "college": {
             "anyOf": [
@@ -1731,6 +1784,7 @@
                   "toeic",
                   "ielts",
                   "toefl",
+                  "toefl_new",
                   "duolingo",
                   "other"
                 ],
@@ -3966,6 +4020,7 @@
               "degree_level",
               "academic_score",
               "language_score",
+              "home_language_score",
               "academic_year",
               "application_round",
               "workflow"
@@ -9899,6 +9954,19 @@
       "PersonalApplicationPlanRequest": {
         "additionalProperties": false,
         "properties": {
+          "academic_gpa": {
+            "anyOf": [
+              {
+                "maximum": 4.3,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Gpa"
+          },
           "academic_score": {
             "anyOf": [
               {
@@ -9935,6 +10003,19 @@
               }
             ],
             "title": "Application Round"
+          },
+          "class_rank_percent": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Class Rank Percent"
           },
           "college": {
             "anyOf": [
@@ -9998,6 +10079,7 @@
                   "toeic",
                   "ielts",
                   "toefl",
+                  "toefl_new",
                   "duolingo",
                   "other"
                 ],
@@ -11961,6 +12043,13 @@
       },
       "SupportedUniversity": {
         "properties": {
+          "aliases": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Aliases",
+            "type": "array"
+          },
           "colleges": {
             "items": {
               "type": "string"
@@ -18417,7 +18506,7 @@
     "resource_not_found": 404,
     "validation_failed": 422
   },
-  "x-contract-version": "2026-10-02.1",
+  "x-contract-version": "2026-10-08.1",
   "x-product-boundaries": {
     "account_routes_require_bearer_session": true,
     "ai_features": "paused",

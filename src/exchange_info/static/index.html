@@ -143,7 +143,7 @@
           <span>搜尋台灣的大學</span>
           <span class="control-with-icon">
             <i data-lucide="search" aria-hidden="true"></i>
-            <input id="school-search" autocomplete="off" placeholder="輸入學校名稱，例如：長庚大學、國立臺北大學" />
+            <input id="school-search" autocomplete="off" placeholder="輸入學校名稱，例如：長庚、臺北大學、臺大" />
           </span>
         </label>
 
@@ -158,8 +158,13 @@
             <span><strong>國立臺北大學</strong><small>169 所本期開放 · 37 所交換合作校備查</small></span>
             <i data-lucide="circle" aria-hidden="true"></i>
           </button>
+          <button type="button" class="school-option" data-home-school="國立臺灣大學" role="option" aria-selected="false">
+            <img src="/static/assets/ntu-campus.svg" alt="國立臺灣大學識別圖" />
+            <span><strong>國立臺灣大學</strong><small>288項合作資料 · 282項名額待公布 · 6項零名額</small></span>
+            <i data-lucide="circle" aria-hidden="true"></i>
+          </button>
         </div>
-        <p id="school-search-empty" class="school-search-empty" hidden>目前已提供長庚大學與國立臺北大學；其他台灣大學會依資料查核進度加入。</p>
+        <p id="school-search-empty" class="school-search-empty" hidden>目前提供長庚大學、國立臺北大學與國立臺灣大學；其他學校會依資料查核進度加入。</p>
 
         <div class="onboarding-actions">
           <button id="browse-first" type="button" class="secondary-button">先看看全部交換學校</button>
@@ -596,12 +601,15 @@
                   <label><span>學院</span><select id="advisor-college" name="college"></select></label>
                   <label><span>所屬系所</span><select id="advisor-department" name="department" aria-describedby="advisor-department-note" disabled><option value="">請先選擇學院</option></select></label>
                   <label><span>學制</span><select id="advisor-degree" name="degree_level"><option value="">尚未設定</option><option value="大學部">大學部</option><option value="研究所">研究所</option></select></label>
-                  <label><span>學業平均</span><input id="advisor-academic-score" name="academic_score" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="例如 82" /></label>
-                  <label><span>語言測驗</span><select id="advisor-language-test" name="language_test"><option value="">尚未考／尚未決定</option><option value="toeic">TOEIC</option><option value="ielts">IELTS</option><option value="toefl">TOEFL iBT</option><option value="duolingo">Duolingo</option><option value="other">其他</option></select></label>
+                  <label id="advisor-percent-field"><span>學業平均</span><input id="advisor-academic-score" name="academic_score" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="例如 82" /></label>
+                  <label data-ntu-academic-field hidden><span>適用學年GPA（4.3制）</span><input id="advisor-academic-gpa" name="academic_gpa" type="number" min="0" max="4.3" step="0.01" inputmode="decimal" placeholder="例如 2.44；與排名擇一" disabled /></label>
+                  <label data-ntu-academic-field hidden><span>適用學年班排名（前幾%）</span><input id="advisor-class-rank" name="class_rank_percent" type="number" min="0" max="100" step="0.01" inputmode="decimal" placeholder="例如前30%填30" disabled /></label>
+                  <label><span>語言測驗</span><select id="advisor-language-test" name="language_test"><option value="">尚未考／尚未決定</option><option value="toeic">TOEIC</option><option value="ielts">IELTS Academic</option><option value="toefl">TOEFL iBT（舊制120分）</option><option value="toefl_new">TOEFL iBT（新制6分）</option><option value="duolingo">Duolingo</option><option value="other">其他</option></select></label>
                   <label><span>語言分數</span><input placeholder="尚未考可留空" id="advisor-language-score" name="language_score" type="number" min="0" step="0.5" inputmode="decimal" /></label>
                   <label><span>想去的國家／地區</span><select id="advisor-country" name="preferred_country"></select></label>
                   <label><span>預計出國學期</span><select id="advisor-target-term" name="target_term"><option value="">尚未決定</option><option value="2027-spring">2027 春季</option><option value="2027-fall">2027 秋季</option><option value="2028-spring">2028 春季</option><option value="2028-fall">2028 秋季</option></select></label>
                 </div>
+                <p id="advisor-academic-rule" class="academic-directory-note" hidden>臺大116-1學士生：114學年度GPA至少2.44或班排前50%，擇一符合；例外適用年度依名次證明與簡章。研究生無校內成績門檻，合作校要求另行確認。</p>
                 <p class="academic-directory-note"><span id="advisor-department-note">選擇學院後顯示所屬系所。</span><a id="advisor-department-source" target="_blank" rel="noopener noreferrer" hidden>官方名單</a></p>
                 <details class="advisor-more-fields">
                   <summary><span><i data-lucide="sliders-horizontal" aria-hidden="true"></i><strong>更多條件</strong></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
@@ -1194,6 +1202,6 @@
     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
     <script src="/static/analytics.js?v=20261003-analytics-1" defer></script>
     <script src="/static/feedback.js?v=20261008-2" defer></script>
-    <script src="/static/app.js?v=20261008-regions-1" defer></script>
+    <script src="/static/app.js?v=20261008-ntu-regions-1" defer></script>
   </body>
 </html>

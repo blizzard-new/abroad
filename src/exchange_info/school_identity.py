@@ -12,6 +12,9 @@ def school_identity_key(value: str) -> str:
     """Return a stable institution key across translated display-name variants."""
     normalized = re.sub(r"\s+", " ", unicodedata.normalize("NFKC", value)).strip()
     normalized = re.sub(r"\s*黑龍江省哈爾\s*濱市\s*$", "", normalized).strip()
+    # NTU annotates several different schools with the same E/V programme note.
+    # Those Latin letters describe the programme, not the institution's name.
+    normalized = re.sub(r"\s*\([^()]*(?:交換學生計畫|訪問學生計畫)[^()]*\)\s*$", "", normalized).strip()
     english_start = re.search(r"[A-Za-z]", normalized)
     identity = normalized[english_start.start() :] if english_start else normalized
     return identity.strip(" ()（）[]【】,，;；").casefold()

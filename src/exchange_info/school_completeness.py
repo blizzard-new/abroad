@@ -21,6 +21,7 @@ from .models import (
     UniversityApplicationWorkflow,
 )
 from .qualification_scopes import college_scope_needs_confirmation, degree_scope_needs_confirmation
+from .ntu_eligibility import is_ntu
 
 _UNPUBLISHED = re.compile(r"未公開|尚未|未取得|待補|未提供|未完成|無法.*核對|未公布|未列")
 _CJK = re.compile(r"[一-鿿]")
@@ -41,7 +42,7 @@ def _summary_item(key: str, label: str, text: str | None, urls: Iterable[str | N
     if not value:
         return _item(key, label, "missing", "目前沒有這項資料。", urls)
     if _UNPUBLISHED.search(value) and len(value) < 120:
-        return _item(key, label, "missing", "官方頁面未公開可核對的內容，需向學校確認。", urls)
+        return _item(key, label, "missing", "尚未取得可核對的內容，需向學校確認。", urls)
     if _UNPUBLISHED.search(value):
         return _item(key, label, "partial", "已有部分內容，但來源也註明仍有未公開或待核對的部分。", urls)
     return _item(key, label, "available", "已有來源整理的內容。", urls)
@@ -59,6 +60,7 @@ def build_school_completeness(
     urls = [source.source_url for source in destination.sources]
     items: list[SchoolCompletenessItem] = []
 
+    ntu = is_ntu(home_university or destination.home_university or (workflow.home_university if workflow else ""))
     known = [
         bool(partner.colleges and not college_scope_needs_confirmation(partner.colleges)),
         bool(partner.degree_levels and not degree_scope_needs_confirmation(partner.degree_levels)),
@@ -73,6 +75,9 @@ def build_school_completeness(
             else "公開資料沒有明確資格範圍。",
             [partner.source_url],
         ))
+        if ntu:
+            items[-1] = _item("eligibility", "申請資格與範圍", "needs_confirmation",
+                              "已有官方參考條件，但合作校116-1名額、資格及學院／學制範圍尚未全面確認。", [partner.source_url])
 
     exact = [
         step for step in (workflow.steps if workflow else [])
@@ -120,11 +125,16 @@ def build_school_completeness(
     elif cost_text and not _UNPUBLISHED.search(cost_text):
         items.append(_item("cost", "每月生活費", "partial", "有費用片段，但沒有可直接比對的每月總額。", urls))
     else:
-        items.append(_item("cost", "每月生活費", "missing", "官方未公開可核對的每月生活費。", urls))
+        items.append(_item("cost", "每月生活費", "missing", "尚未取得可核對的每月生活費。", urls))
 
     items.append(_summary_item("housing", "住宿", destination.housing_summary, urls))
     items.append(_summary_item("transport", "交通", destination.transport_summary, urls))
     items.append(_summary_item("campus_life", "校園生活", destination.campus_life_summary, urls))
+    if ntu:
+        for index, item in enumerate(items):
+            if item.key in {"cost", "housing", "transport", "campus_life"} and item.status == "available":
+                items[index] = _item(item.key, item.label, "needs_confirmation",
+                                     "已有官方參考內容；116-1適用性、當期金額及完整條件仍須確認。", item.source_urls)
     items.append(_item(
         "city", "城市", "available" if destination.city else "missing",
         "已標示所在城市。" if destination.city else "尚未標示城市。", urls,

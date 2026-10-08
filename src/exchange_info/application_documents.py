@@ -57,7 +57,8 @@ from .models import (
     UniversityApplicationWorkflow,
 )
 from .application_rules import select_application_workflow
-from .university_registry import NTPU, require_university
+from .university_registry import NTPU, NTU, require_university
+from .ntu_student_view import NTU_GUIDELINES_URL
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -69,6 +70,7 @@ SHORT_TERM_SOURCE_URL = (
 )
 SOURCE_CHECKED_AT = datetime(2026, 7, 16, tzinfo=timezone.utc)
 NTPU_SOURCE_CHECKED_AT = datetime(2026, 7, 20, tzinfo=timezone.utc)
+NTU_SOURCE_CHECKED_AT = datetime(2026, 10, 7, tzinfo=timezone.utc)
 NTPU_EXCHANGE_GUIDELINES_URL = (
     "https://cms-carrier.ntpu.edu.tw/uploads/"
     "2026_2027_Academic_Year_Outbound_Exchange_Program_Guidelines_1e5870e83d.pdf"
@@ -753,8 +755,47 @@ def _ntpu_template(template: ApplicationDocumentTemplate) -> ApplicationDocument
     return template.model_copy(deep=True, update=updates)
 
 
+def _ntu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理臺大116-1校級甄選個人資料與附件；正式報名須在校方甄選系統完成。學士生以學年GPA至少2.44或班排前50%擇一符合，研究生無校內成績門檻。",
+        "study-plan": "撰寫臺大出國交換計畫書：中／英文、A4兩面、至少500字；履歷另備A4兩面。正式附件以當期簡章為準。",
+        "course-preapproval": "整理預計修課、課程大綱與學分採認問題，向臺大所屬系所確認；這份準備表不代替校方正式表格。",
+        "predeparture-notice": "整理航班、住宿、保險與緊急聯絡資料；正式繳交內容與期限依臺大當期行前通知。",
+        "return-report": "整理交換學習與生活成果；正式心得格式、繳交方式與期限依臺大當期返國及補助通知。",
+        "credit-transfer": "整理合作校成績單、課程大綱與學分採認需求；採認須依臺大所屬系所及教務規定辦理。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str):
+            return value.replace("長庚大學", "國立臺灣大學").replace("長庚", "臺大")
+        if isinstance(value, list):
+            return [adapt(item) for item in value]
+        if isinstance(value, dict):
+            return {key: adapt(item) for key, item in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "academic_average":
+            field.update({"label": "適用學年GPA或班排名", "field_type": "text", "required": False,
+                          "help_text": "學士生填名次證明上的GPA或前幾%；研究生可留空。此欄不用百分制平均代替GPA。"})
+    payload.update({
+        "description": descriptions[template.id], "stage": {
+            "predeparture-notice": "出國前（依當期通知）", "return-report": "返國後（依當期通知）",
+        }.get(template.id, "申請與文件準備（依當期通知）"),
+        "source_url": NTU_GUIDELINES_URL, "source_checked_at": NTU_SOURCE_CHECKED_AT,
+        "official_layout": False, "official_form_number": None, "official_file_name": None,
+        "official_download_url": None, "version": "116-1準備工具",
+        "destinations": ["學生自存備份"], "signatures": [], "stamps": [],
+        "conditional_note": "此為個人準備工具；正式表格、簽章、送件與期限以臺大當期系統及通知為準。系所推薦表由校方系統產生，研究生推薦信由系統邀請教授完成。",
+    })
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
     university = require_university(school_name)
+    if university.id == NTU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntu_template(template)) is not None]
     if university.id != NTPU.id:
         return [template.model_copy(deep=True) for template in APPLICATION_TEMPLATES]
     return [
@@ -1213,7 +1254,9 @@ def build_packet_manifest(
             for item in items
         ),
         source_checked_at=(
-            NTPU_SOURCE_CHECKED_AT
+            NTU_SOURCE_CHECKED_AT
+            if require_university(request.context.school_name).id == NTU.id
+            else NTPU_SOURCE_CHECKED_AT
             if require_university(request.context.school_name).id == NTPU.id
             else SOURCE_CHECKED_AT
         ),

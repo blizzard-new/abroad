@@ -687,7 +687,31 @@ function activeUniversityProfile() {
 }
 
 function academicMinimum() {
-  return Number(state.dashboard?.academic_score_minimum) || 70;
+  if (activeHomeSchool() === "國立臺灣大學") return null;
+  return state.dashboard?.academic_score_minimum == null ? null : Number(state.dashboard.academic_score_minimum);
+}
+
+function homeAcademicPass(profile) {
+  if (activeHomeSchool() === "國立臺灣大學") {
+    if (/研究所|碩士|博士/.test(profile.degree || "")) return true;
+    return /大學部|學士/.test(profile.degree || "") && (
+      (profile.academicGpa != null && profile.academicGpa >= 2.44) ||
+      (profile.classRankPercent != null && profile.classRankPercent <= 50)
+    );
+  }
+  const minimum = academicMinimum();
+  return minimum != null && profile.academicScore != null && profile.academicScore >= minimum;
+}
+
+function renderAcademicFields() {
+  const ntu = activeHomeSchool() === "國立臺灣大學";
+  $("#advisor-percent-field").hidden = ntu;
+  $("#advisor-academic-score").disabled = ntu;
+  document.querySelectorAll("[data-ntu-academic-field]").forEach((label) => {
+    label.hidden = !ntu;
+    label.querySelector("input").disabled = !ntu;
+  });
+  $("#advisor-academic-rule").hidden = !ntu;
 }
 
 function homeCollegeOptions() {
@@ -702,9 +726,29 @@ function homeCollegeValue(value) {
 
 function renderDepartmentOptions(prefix, selected = "") {
   const college = $(`#${prefix}-college`)?.value || "";
-  const select = $(`#${prefix}-department`);
+  let select = $(`#${prefix}-department`);
   if (!select) return;
   const directory = window.UniWayAcademicUnits?.[activeHomeSchool()];
+  // A student may enter the exact registered unit when a directory is unavailable.
+  const tag = directory ? "SELECT" : "INPUT";
+  if (select.tagName !== tag) {
+    const replacement = document.createElement(tag.toLowerCase());
+    for (const attribute of select.attributes) replacement.setAttribute(attribute.name, attribute.value);
+    select.replaceWith(replacement);
+    select = replacement;
+  }
+  if (!directory) {
+    select.type = "text";
+    select.maxLength = 120;
+    select.placeholder = "請填學籍上的系所或學位學程";
+    select.value = selected;
+    select.disabled = !college;
+    const note = $(`#${prefix}-department-note`);
+    if (note) note.textContent = "請依學籍填寫系所或學位學程；可申請範圍仍須核對合作校規定。";
+    const link = $(`#${prefix}-department-source`);
+    if (link) link.hidden = true;
+    return;
+  }
   const options = directory?.colleges?.[college] || [];
   // Recognize saved shorthand only when it resolves to an entry in the directory.
   const canonical = options.find((option) => option === selected || option.replace(/學系$/, "系") === selected) || "";
@@ -975,8 +1019,15 @@ async function loadSupportedUniversities() {
         hero_image: "/static/assets/ntpu-campus.jpg",
         official_url: "https://new.ntpu.edu.tw/oia",
         supported: true,
-        partner_count: 155,
-        coverage_note: "完整支援試點：已套用交換申請流程與 115 學年度三語組官方名額表。",
+        partner_count: 206,
+        coverage_note: "116學年度三語組官方名額表：169項開放，37項合作校備查。",
+      },
+      {
+        id: "ntu", school_name: "國立臺灣大學", short_name: "臺大",
+        aliases: ["台大", "台灣大學", "國立台灣大學"],
+        english_name: "National Taiwan University", hero_image: "/static/assets/ntu-campus.svg",
+        official_url: "https://studyabroad.ntu.edu.tw/", supported: true,
+        partner_count: 288, coverage_note: "116-1校級甄選、文件與補助；282項名額待公布，6項零名額。",
       },
     ];
   }
@@ -1133,7 +1184,7 @@ function renderSchoolOptions(query = "") {
   if (!container) return;
   const normalizedQuery = normalize(query);
   const universities = state.supportedUniversities.filter((item) => {
-    const text = normalize([item.school_name, item.short_name, item.english_name].filter(Boolean).join(" "));
+    const text = normalize([item.school_name, item.short_name, item.english_name, ...(item.aliases || [])].filter(Boolean).join(" "));
     return !normalizedQuery || text.includes(normalizedQuery);
   });
   $("#school-search-empty").hidden = universities.length > 0;
@@ -1141,7 +1192,7 @@ function renderSchoolOptions(query = "") {
     .map(
       (item) => `
         <button type="button" class="school-option${item.school_name === state.selectedHomeSchool ? " selected" : ""}" data-home-school="${escapeHtml(item.school_name)}" role="option" aria-selected="${item.school_name === state.selectedHomeSchool}">
-          <img src="${escapeHtml(item.hero_image || "/static/assets/cgu-campus.jpg")}" alt="${escapeHtml(item.school_name)}校園" />
+          <img src="${escapeHtml(item.hero_image || "/static/assets/cgu-campus.jpg")}" alt="${escapeHtml(item.school_name)}識別圖" />
           <span><strong>${escapeHtml(item.school_name)}</strong><small>${escapeHtml(item.coverage_note)}</small></span>
           <span class="school-option-status">${item.partner_count ? `${item.partner_count} 間合作校` : "資料建置中"}</span>
           <i data-lucide="${item.school_name === state.selectedHomeSchool ? "circle-check" : "circle"}" aria-hidden="true"></i>
@@ -1302,6 +1353,7 @@ function setHomeSchool(schoolName, { reload = true } = {}) {
 }
 
 function updateSchoolContext() {
+  renderAcademicFields();
   const selected = state.homeSchool || "";
   document.body.dataset.schoolSelected = selected ? "true" : "false";
   const profile = activeUniversityProfile();
@@ -2302,7 +2354,8 @@ function sanitizeSelectionConditions(value) {
     college:text(profile.college,120), department:text(profile.department,120),
     current_year:text(profile.current_year,40), degree_level:text(profile.degree_level,80),
     academic_score:number(profile.academic_score,100),
-    language_test:["toeic","ielts","toefl","duolingo","other"].includes(profile.language_test) ? profile.language_test : null,
+    academic_gpa:number(profile.academic_gpa,4.3), class_rank_percent:number(profile.class_rank_percent,100),
+    language_test:["toeic","ielts","toefl","toefl_new","duolingo","other"].includes(profile.language_test) ? profile.language_test : null,
     language_score:number(profile.language_score,1000),
     target_term:text(profile.target_term,40), preferred_country:text(profile.preferred_country,80),
     monthly_budget:number(profile.monthly_budget,10000000), needs_scholarship:profile.needs_scholarship === true,
@@ -2316,6 +2369,7 @@ function selectionConditionsPayload(profile = state.eligibilityProfile) {
   return sanitizeSelectionConditions({profile:profile ? {
     college:profile.college, department:profile.department, current_year:profile.currentYear,
     degree_level:profile.degree, academic_score:profile.academicScore,
+    academic_gpa:profile.academicGpa, class_rank_percent:profile.classRankPercent,
     language_test:profile.languageTest, language_score:profile.languageScore,
     target_term:profile.targetTerm, preferred_country:profile.preferredCountry,
     monthly_budget:profile.monthlyBudget, needs_scholarship:profile.scholarshipNeeded,
@@ -2331,6 +2385,7 @@ function selectionProfileFromWorkspace(conditions) {
   return {
     college:profile.college, department:profile.department, currentYear:profile.current_year,
     degree:profile.degree_level, academicScore:profile.academic_score,
+    academicGpa:profile.academic_gpa, classRankPercent:profile.class_rank_percent,
     languageTest:profile.language_test || "", languageScore:profile.language_score,
     languageLabel:threshold ? `${threshold.label} ${profile.language_score ?? "待補"}` : "語言能力待確認",
     targetTerm:profile.target_term, preferredCountry:profile.preferred_country,
@@ -3796,6 +3851,9 @@ function partnerAvailabilityMeta(item) {
     };
   }
   if (status === "agreement_only") {
+    if (activeHomeSchool() === "國立臺灣大學" && /^0\s*名?$/.test(item.quota || "")) {
+      return {status, shortLabel:"116-1零名額", cardLabel:"116-1零名額／本期未開放", matchLabel:"本期未開放", reason:"官方名單已更新為零名額", blocked:true};
+    }
     return {
       status,
       shortLabel: "合作備查／本期未公告",
@@ -3942,7 +4000,7 @@ async function refreshPlanningRecommendations() {
   try {
     const plan = await fetchJson("/advisor/plan", {
       method:"POST", headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({school_name:activeHomeSchool(),target_school:targetSchool || null,college:profile.college,department:profile.department || null,current_year:profile.currentYear || null,degree_level:profile.degree,academic_score:profile.academicScore ?? null,language_test:profile.languageTest,language_score:profile.languageScore ?? null,target_term:profile.targetTerm || null,preferred_country:profile.preferredCountry || null,monthly_budget:profile.monthlyBudget || null,needs_scholarship:Boolean(profile.scholarshipNeeded),preferred_teaching_language:profile.teachingLanguage || null,course_interests:profile.courseInterests || null}),
+      body:JSON.stringify({school_name:activeHomeSchool(),target_school:targetSchool || null,college:profile.college,department:profile.department || null,current_year:profile.currentYear || null,degree_level:profile.degree,academic_score:profile.academicScore ?? null,academic_gpa:profile.academicGpa ?? null,class_rank_percent:profile.classRankPercent ?? null,language_test:profile.languageTest,language_score:profile.languageScore ?? null,target_term:profile.targetTerm || null,preferred_country:profile.preferredCountry || null,monthly_budget:profile.monthlyBudget || null,needs_scholarship:Boolean(profile.scholarshipNeeded),preferred_teaching_language:profile.teachingLanguage || null,course_interests:profile.courseInterests || null}),
     });
     if (planningProfileKey() !== profileKey || state.applicationContext.target_school !== targetSchool || state.advisorLoading) return;
     state.advisorPlan = plan;
@@ -4213,12 +4271,12 @@ function eligibilitySummary() {
   const review = statuses.length - likely;
   const profile = state.eligibilityProfile;
   const threshold = languageThreshold(profile.languageTest);
-  const academicPass = profile.academicScore >= academicMinimum();
+  const academicPass = homeAcademicPass(profile);
   const languagePass = threshold ? profile.languageScore >= threshold.minimum : false;
   return {
     likely,
     review,
-    qualificationLabel: academicPass && languagePass ? `符合${activeUniversityProfile().short_name}基本門檻` : "仍有基本條件要確認",
+    qualificationLabel: academicPass && languagePass ? (activeHomeSchool() === "國立臺灣大學" ? "所填成績與英語分數達基本門檻" : `符合${activeUniversityProfile().short_name}基本門檻`) : "仍有基本條件要確認",
   };
 }
 
@@ -10284,7 +10342,7 @@ function scholarshipMatch(item) {
   if (!profile) return { tone: "setup", label: "尚未比對", note: "先完成資格初判，再依成績與需求提示。" };
   const text = `${item.title} ${item.summary} ${(item.key_points || []).join(" ")}`;
   const minimum = academicMinimum();
-  if (profile.academicScore < minimum && /70\s*分|75\s*分|歷年學業成績|領航者|學海/.test(text)) {
+  if (minimum != null && profile.academicScore != null && profile.academicScore < minimum && /70\s*分|75\s*分|歷年學業成績|領航者|學海/.test(text)) {
     return { tone: "blocked", label: "目前有門檻", note: `平均成績尚未達公開的 ${minimum} 分參考門檻。` };
   }
   if (/惜珠|低收入|中低收入|經濟/.test(text)) {
@@ -10853,6 +10911,9 @@ async function checkEligibility(event) {
   const academicYear = $("#eligibility-academic-year").value;
   const applicationRound = $("#eligibility-application-round").value;
   const academicScore = optionalNumber($("#advisor-academic-score").value);
+  const ntu = activeHomeSchool() === "國立臺灣大學";
+  const academicGpa = ntu ? optionalNumber($("#advisor-academic-gpa").value) : null;
+  const classRankPercent = ntu ? optionalNumber($("#advisor-class-rank").value) : null;
   const languageTest = $("#advisor-language-test").value;
   const languageScore = Number($("#advisor-language-score").value);
   const targetTerm = $("#advisor-target-term").value;
@@ -10867,7 +10928,7 @@ async function checkEligibility(event) {
     .filter((item) => item.school_name)
     .map((item, index) => ({ ...item, rank: index + 1 }));
 
-  if (!college || !department || !degree || !academicYear || !applicationRound || academicScore === null || !Number.isFinite(academicScore) || !languageTest || !preferences.length) {
+  if (!college || !department || !degree || !academicYear || !applicationRound || (!ntu && (academicScore === null || !Number.isFinite(academicScore))) || !languageTest || !preferences.length) {
     announce("請完成所有必填欄位", "error");
     return;
   }
@@ -10896,6 +10957,8 @@ async function checkEligibility(event) {
     department,
     degree,
     academicScore,
+    academicGpa,
+    classRankPercent,
     languageTest,
     languageScore,
     languageLabel: languageScore > 0 ? `${languageTest.toUpperCase()} ${languageScore}` : "語言能力待確認",
@@ -10914,7 +10977,9 @@ async function checkEligibility(event) {
     college,
     department,
     degree_level: degree,
-    academic_score: academicScore,
+    academic_score: ntu ? null : academicScore,
+    academic_gpa: academicGpa,
+    class_rank_percent: classRankPercent,
     language_test: languageTest,
     language_score: Number.isFinite(languageScore) && languageScore > 0 ? languageScore : null,
     academic_year: academicYear,
@@ -11074,6 +11139,9 @@ function renderAdvisorForm() {
   $("#advisor-degree").value = profile.degree || "";
   $("#advisor-current-year").value = profile.currentYear || "";
   $("#advisor-academic-score").value = profile.academicScore ?? "";
+  $("#advisor-academic-gpa").value = profile.academicGpa ?? "";
+  $("#advisor-class-rank").value = profile.classRankPercent ?? "";
+  renderAcademicFields();
   $("#advisor-language-test").value = profile.languageTest || "";
   $("#advisor-language-score").value = profile.languageScore ?? "";
   $("#advisor-target-term").value = profile.targetTerm || "";
@@ -11301,6 +11369,8 @@ async function submitAdvisorPlan(event) {
     current_year: formData.get("current_year") || null,
     degree_level: formData.get("degree_level") || null,
     academic_score: optionalNumber(formData.get("academic_score")),
+    academic_gpa: optionalNumber(formData.get("academic_gpa")),
+    class_rank_percent: optionalNumber(formData.get("class_rank_percent")),
     language_test: formData.get("language_test") || null,
     language_score: optionalNumber(formData.get("language_score")),
     target_term: formData.get("target_term") || null,
@@ -11348,6 +11418,8 @@ async function submitAdvisorPlan(event) {
         currentYear: payload.current_year || "",
         degree: payload.degree_level,
         academicScore: payload.academic_score,
+        academicGpa: payload.academic_gpa,
+        classRankPercent: payload.class_rank_percent,
         languageTest: payload.language_test,
         languageScore: payload.language_score,
         languageLabel: threshold ? `${threshold.label} ${payload.language_score || "待補"}` : "語言能力待確認",

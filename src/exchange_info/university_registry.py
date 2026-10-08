@@ -18,7 +18,7 @@ class UniversityProfile:
     coverage_note: str
     support_level: Literal["full", "basic", "pending"]
     partner_count_hint: int
-    academic_score_minimum: float
+    academic_score_minimum: float | None
     student_card_signals: tuple[str, ...]
     colleges: tuple[str, ...] = ()
 
@@ -77,7 +77,25 @@ NTPU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU)
+NTU = UniversityProfile(
+    id="ntu",
+    school_name="國立臺灣大學",
+    short_name="臺大",
+    english_name="National Taiwan University",
+    aliases=("國立臺灣大學", "國立台灣大學", "臺灣大學", "台灣大學", "臺大", "台大", "NTU", "National Taiwan University"),
+    hero_image="/static/assets/ntu-campus.svg",
+    official_url="https://studyabroad.ntu.edu.tw/",
+    coverage_note="已整理116-1校級甄選、文件、補助與288個合作項目；合作校本期名額與未核實條件標示待確認。",
+    support_level="basic",
+    partner_count_hint=288,
+    # NTU uses undergraduate GPA OR class rank, with no home GPA gate for graduates.
+    academic_score_minimum=None,
+    student_card_signals=("國立臺灣大學", "國立台灣大學", "NATIONALTAIWANUNIVERSITY", "NTU"),
+    colleges=("文學院", "理學院", "社會科學院", "醫學院", "工學院", "生物資源暨農學院", "管理學院", "公共衛生學院", "電機資訊學院", "法律學院", "生命科學院", "國際政經學院"),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU)
 DEFAULT_UNIVERSITY = CGU
 
 
