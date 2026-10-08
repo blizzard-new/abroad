@@ -3770,8 +3770,10 @@ function renderPersonalPlanSnapshot() {
   initIcons();
 }
 
-function languageThresholdFromPartner(item, languageTest) {
-  if ((item.program_options || []).length > 1) return null;
+function languageThresholdFromPartner(item, languageTest, degreeLevel = null) {
+  if (item.source_url?.startsWith("https://oia.ccu.edu.tw/")) {
+    return window.UniWayCcuLanguage?.assess(item, languageTest, degreeLevel).threshold ?? null;
+  }
   const text = partnerSummaryPoints(item, "eligibility_points").join(" ");
   const patterns = {
     toeic: /(?:TOEIC|多益)\s*(?:達|至少|總分|成績)?\s*(\d{3})/i,
@@ -3876,13 +3878,13 @@ function partnerMatch(item, profile = state.eligibilityProfile) {
   else if (degreePass) { score += 20; reasons.push("符合目前學制"); }
   else { mismatches.push("學制範圍待確認"); risks.push(`你的學制：${profile.degree}；學校範圍：${item.degree_levels}`); }
   if (profile.preferredCountry && item.country === profile.preferredCountry) { score += 15; reasons.push(`位於優先國家 ${item.country}`); }
-  const threshold = languageThresholdFromPartner(item, profile.languageTest);
+  const threshold = languageThresholdFromPartner(item, profile.languageTest, profile.degree);
   const hasLanguageScore = Boolean(profile.languageTest) && Number.isFinite(Number(profile.languageScore)) && Number(profile.languageScore) > 0;
   if (!hasLanguageScore) {
     risks.push("尚未填寫語言測驗或分數");
   } else if (threshold === null) {
     score += 8;
-    risks.push("合作校語言門檻需另查");
+    risks.push(item.language_review_note || "合作校語言門檻需另查");
   } else if (Number(profile.languageScore) >= threshold) {
     score += 20;
     reasons.push(`目前語言分數達公開門檻 ${threshold}`);
@@ -7831,7 +7833,7 @@ function renderPartnerStudentSummary(item) {
 
 function renderPartnerFieldEvidence(item) {
   if (!item.field_evidence || !Object.keys(item.field_evidence).length) return "";
-  const labels = {study_period:"交換期間", quota:"名額", eligibility:"合作校接收資格", language_requirement:"合作校語言", partner_documents:"合作校申請文件", partner_application_deadline:"合作校申請截止", application_deadline:"中正校內截止", semester_dates:"學期日期", housing_info:"住宿資訊", tuition_info:"費用原文", course_restrictions:"課程限制", fact_sheet:"合作校簡章連結"};
+  const labels = {study_period:"交換期間", quota:"名額", eligibility:"合作校接收資格", language_requirement:"合作校語言", partner_application_prerequisite:"母校甄選／提名前提（非文件清單）", partner_documents:"合作校申請文件要求（未聲稱完整）", partner_application_deadline:"合作校申請截止", application_deadline:"中正校內截止", semester_dates:"學期日期", housing_info:"住宿資訊", tuition_info:"費用原文", course_restrictions:"課程限制", fact_sheet:"合作校簡章連結"};
   const statuses = {verified_current:"當期已核實",reference_only:"歷史參考",missing:"未載／未核實",needs_confirmation:"待確認",conflict:"來源矛盾，待確認",explicit_not_announced:"官方明示尚未公告"};
   return `<details class="overview-more"><summary>當期資料與官方依據（${escapeHtml(item.application_round || "")}）</summary>
     <p>合作校接收條件須與中正校內資格分別核對；灰字歷史資料不作當期申請依據。</p>

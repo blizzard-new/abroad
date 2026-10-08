@@ -1145,6 +1145,19 @@
         "additionalProperties": false,
         "description": "Student supplied conditions, separate from admission or source verification.",
         "properties": {
+          "academic_gpa": {
+            "anyOf": [
+              {
+                "maximum": 4.5,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Gpa"
+          },
           "academic_score": {
             "anyOf": [
               {
@@ -1638,6 +1651,19 @@
       },
       "AdvisorProfile": {
         "properties": {
+          "academic_gpa": {
+            "anyOf": [
+              {
+                "maximum": 4.5,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Gpa"
+          },
           "academic_score": {
             "anyOf": [
               {
@@ -3965,6 +3991,10 @@
               "college",
               "degree_level",
               "academic_score",
+              "academic_gpa",
+              "home_year",
+              "home_deadline",
+              "source_cycle",
               "language_score",
               "academic_year",
               "application_round",
@@ -8503,6 +8533,100 @@
         "title": "EmailVerificationRequest",
         "type": "object"
       },
+      "ExchangeFieldEvidence": {
+        "properties": {
+          "academic_year": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Year"
+          },
+          "application_round": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Round"
+          },
+          "checked_at": {
+            "format": "date-time",
+            "title": "Checked At",
+            "type": "string"
+          },
+          "excerpt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Excerpt"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "reference_excerpt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference Excerpt"
+          },
+          "source_pages": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Source Pages",
+            "type": "array"
+          },
+          "source_url": {
+            "title": "Source Url",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "verified_current",
+              "reference_only",
+              "missing",
+              "needs_confirmation",
+              "conflict",
+              "explicit_not_announced"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_url",
+          "checked_at",
+          "status"
+        ],
+        "title": "ExchangeFieldEvidence",
+        "type": "object"
+      },
       "ExchangeInfo": {
         "properties": {
           "academic_year": {
@@ -9392,6 +9516,106 @@
         "title": "PartnerCoverage",
         "type": "object"
       },
+      "PartnerLanguageCondition": {
+        "description": "A reviewed condition, separate from unparsed source text or CEFR ranges.",
+        "properties": {
+          "additional_conditions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Additional Conditions",
+            "type": "array"
+          },
+          "degree_levels": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Degree Levels",
+            "type": "array"
+          },
+          "evidence": {
+            "$ref": "#/components/schemas/ExchangeFieldEvidence"
+          },
+          "host_faculties": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Host Faculties",
+            "type": "array"
+          },
+          "minimum_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minimum Score"
+          },
+          "requirement_level": {
+            "enum": [
+              "required",
+              "recommended",
+              "no_score_minimum",
+              "needs_confirmation",
+              "conflict"
+            ],
+            "title": "Requirement Level",
+            "type": "string"
+          },
+          "scope_choice_required": {
+            "default": false,
+            "title": "Scope Choice Required",
+            "type": "boolean"
+          },
+          "teaching_language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Teaching Language"
+          },
+          "test": {
+            "title": "Test",
+            "type": "string"
+          },
+          "test_variant": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Test Variant"
+          },
+          "track": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Track"
+          }
+        },
+        "required": [
+          "test",
+          "requirement_level",
+          "evidence"
+        ],
+        "title": "PartnerLanguageCondition",
+        "type": "object"
+      },
       "PartnerProgramOption": {
         "properties": {
           "application_deadline": {
@@ -9557,6 +9781,17 @@
       },
       "PartnerUniversity": {
         "properties": {
+          "academic_year": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Year"
+          },
           "agreement_level": {
             "anyOf": [
               {
@@ -9601,6 +9836,33 @@
             ],
             "title": "Application Info"
           },
+          "application_round": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Round"
+          },
+          "application_window_status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "open",
+                  "closed",
+                  "needs_confirmation"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Window Status"
+          },
           "availability_note": {
             "anyOf": [
               {
@@ -9617,10 +9879,26 @@
             "enum": [
               "open",
               "agreement_only",
-              "departmental_reference"
+              "departmental_reference",
+              "not_open",
+              "needs_confirmation",
+              "zero_quota",
+              "fee_paying"
             ],
             "title": "Availability Status",
             "type": "string"
+          },
+          "checked_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checked At"
           },
           "colleges": {
             "anyOf": [
@@ -9644,6 +9922,17 @@
             ],
             "title": "Country"
           },
+          "course_restrictions": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Course Restrictions"
+          },
           "degree_levels": {
             "anyOf": [
               {
@@ -9665,6 +9954,24 @@
               }
             ],
             "title": "Eligibility"
+          },
+          "field_evidence": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ExchangeFieldEvidence"
+            },
+            "title": "Field Evidence",
+            "type": "object"
+          },
+          "housing_info": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Housing Info"
           },
           "image_page_url": {
             "anyOf": [
@@ -9704,6 +10011,35 @@
             ],
             "title": "Image Url"
           },
+          "language_conditions": {
+            "items": {
+              "$ref": "#/components/schemas/PartnerLanguageCondition"
+            },
+            "title": "Language Conditions",
+            "type": "array"
+          },
+          "language_requirement": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language Requirement"
+          },
+          "language_review_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language Review Note"
+          },
           "location": {
             "anyOf": [
               {
@@ -9713,6 +10049,39 @@
                 "type": "null"
               }
             ]
+          },
+          "nomination_deadline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nomination Deadline"
+          },
+          "partner_application_deadline": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Partner Application Deadline"
+          },
+          "partner_application_prerequisite": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Partner Application Prerequisite"
           },
           "program_options": {
             "items": {
@@ -9736,6 +10105,24 @@
             ],
             "title": "Quota"
           },
+          "quota_status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "published",
+                  "zero",
+                  "not_published",
+                  "reference_only",
+                  "fee_paying"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quota Status"
+          },
           "ranking_info": {
             "anyOf": [
               {
@@ -9758,9 +10145,34 @@
             ],
             "title": "Ranking Source Url"
           },
+          "reference_data": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Reference Data",
+            "type": "object"
+          },
           "school_name": {
             "title": "School Name",
             "type": "string"
+          },
+          "semester_dates": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Semester Dates"
+          },
+          "source_pages": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Source Pages",
+            "type": "array"
           },
           "source_url": {
             "title": "Source Url",
@@ -9899,6 +10311,19 @@
       "PersonalApplicationPlanRequest": {
         "additionalProperties": false,
         "properties": {
+          "academic_gpa": {
+            "anyOf": [
+              {
+                "maximum": 4.5,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Gpa"
+          },
           "academic_score": {
             "anyOf": [
               {
@@ -9947,6 +10372,18 @@
               }
             ],
             "title": "College"
+          },
+          "current_year": {
+            "anyOf": [
+              {
+                "maxLength": 40,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Year"
           },
           "degree_level": {
             "anyOf": [
@@ -11205,6 +11642,17 @@
       },
       "StudentDashboard": {
         "properties": {
+          "academic_gpa_minimum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Gpa Minimum"
+          },
           "academic_score_minimum": {
             "anyOf": [
               {
@@ -11273,6 +11721,11 @@
               }
             ],
             "title": "Last Checked"
+          },
+          "maximum_preferences": {
+            "default": 5,
+            "title": "Maximum Preferences",
+            "type": "integer"
           },
           "partner_universities": {
             "items": {

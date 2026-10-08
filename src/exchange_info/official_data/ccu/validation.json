@@ -3,13 +3,13 @@
   "base_commit": "f741d540f546d6ddbbf3174c9a34b5ef103c8816",
   "rebuild_identical": true,
   "rebuild_sha256": {
-    "partners.jsonl": "59eac517d145ab802ea07ad30c7209c3b88dd2d66911e083598fb5f226607820",
-    "application_workflows.jsonl": "defbddb331e99116cee666be439124abc30b2419a34ffaaf5fa483d9d9ebacde",
-    "field-audit.json": "9d7ce5f06b63dcb1ebf223c8d0eb6290e07d2b1da7bc803723ac2c79e01f900b",
-    "completeness.json": "aa32b1a1ecc6734a9b251f42ccee3b88831a3bd4437120e2d7fbc446a30de856",
+    "partners.jsonl": "97c7c73cea99734c393464bdcf0671e1b4afe8f4803a7c23f110cd1978404620",
+    "application_workflows.jsonl": "cae54cb2be2d9401241d1745014b1378e1cafde13f17627b7eefde2e08ae7605",
+    "field-audit.json": "d8d76ff57d1b65291da5e7047f3ad77fe3460b6b72b18d3562139457c6ea76e4",
+    "completeness.json": "bcc39b617847581745b917d273303ac836dccce8fd11cc0f4b9672efdc7d4210",
     "source-manifest.json": "e0fa46a9a0f82259b70a7a59ff32b8090f28cb159ef732926708ecf3b76730a3",
     "home-rules.json": "4e4a4b005f25b46849cbb87e0330d85e2f97b461e72b1c112187a0dc6d4680dc",
-    "conflicts.json": "213566f1ca2f565c2513aa91691d17540b145e56776f884531866abcb4e5747a"
+    "conflicts.json": "3af53b0f0d14f079c636e67098762f499e6071c19d1f7cea49add2d84fb17040"
   },
   "ccu_tests": {
     "passed": 16,
@@ -49,5 +49,36 @@
       "tests/test_ccu_support.py",
       "tests/test_selection_conditions_sync.py"
     ]
+  },
+  "semantic_correction_tests": {
+    "passed": 91,
+    "failed": 0,
+    "duration_seconds": 12.24
+  },
+  "openapi_correction": {
+    "drift_check": true,
+    "before_contract_tests": {
+      "passed": 7,
+      "failed": 13
+    },
+    "after_contract_tests": {
+      "passed": 8,
+      "failed": 12
+    },
+    "existing_failures_unchanged": true,
+    "route_changes": 0,
+    "new_schemas": [
+      "ExchangeFieldEvidence",
+      "PartnerLanguageCondition"
+    ],
+    "updated_schema_count": 6
+  },
+  "document_coverage": {
+    "listed_current_requirements": 37,
+    "needs_confirmation": 8,
+    "missing": 6,
+    "reference_only": 4,
+    "denominator": 55,
+    "complete_overseas_lists_claimed": false
   }
 }

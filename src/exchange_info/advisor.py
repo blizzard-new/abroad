@@ -306,7 +306,7 @@ def _score_partner(
         blocking_reasons.append(gaps[-1])
         blocked = True
 
-    threshold = _partner_language_threshold(partner, profile.language_test)
+    threshold = _partner_language_threshold(partner, profile.language_test, profile.degree_level)
     if not profile.language_test or profile.language_test == "other":
         gaps.append("語言證明需逐校確認")
         confirmation_items.append(gaps[-1])
@@ -315,7 +315,7 @@ def _score_partner(
         confirmation_items.append(gaps[-1])
     elif threshold is None:
         score += 7
-        gaps.append("合作校語言門檻需核對官方來源")
+        gaps.append(partner.language_review_note or "合作校語言門檻需核對官方來源")
         confirmation_items.append(gaps[-1])
     elif profile.language_score >= threshold:
         score += 20
@@ -862,8 +862,13 @@ def _question_prompt(question: str, rows: list[Evidence]) -> str:
 def _partner_language_threshold(
     partner: PartnerUniversity,
     language_test: str | None,
+    degree_level: str | None = None,
 ) -> float | None:
-    if not language_test or language_test == "other" or len(partner.program_options) > 1:
+    from .ccu_language import assess_ccu_language, is_ccu_partner
+
+    if is_ccu_partner(partner):
+        return assess_ccu_language(partner, language_test, degree_level).threshold
+    if not language_test or language_test == "other":
         return None
     text = " ".join(
         value

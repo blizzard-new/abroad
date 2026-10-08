@@ -187,6 +187,22 @@ def main():
     }
     conflicts = [
         dict(
+            id="saintgits-toefl",
+            official_url=PARTNERS_URL,
+            pages=[74],
+            excerpt="iBT 92 / IELTS 6.5 / TOEIC 860 / TOEFL 80",
+            status="conflict",
+            resolution="TOEFL種類及門檻矛盾，未採80或92為強制最低分。",
+        ),
+        dict(
+            id="sungshin-language-mandatory",
+            official_url=PARTNERS_URL,
+            pages=[49],
+            excerpt="語言欄列TOEFL iBT71／IELTS5.5；文件欄Language proficiency score Not mandatory",
+            status="conflict",
+            resolution="語言證明強制性待確認，不硬判符合或不符。",
+        ),
+        dict(
             id="guideline-heading",
             official_url=GUIDELINES_URL,
             pages=[2],

@@ -521,7 +521,7 @@ def _eligibility_checks(
             )
         )
 
-    language_threshold = _partner_language_threshold(partner, request.language_test)
+    language_threshold = _partner_language_threshold(partner, request.language_test, request.degree_level)
     language_label = {
         "toeic": "TOEIC",
         "ielts": "IELTS",
@@ -557,7 +557,7 @@ def _eligibility_checks(
                 "language_score",
                 "needs_confirmation",
                 "語言門檻",
-                f"公開資料無法可靠解析 {language_label} 最低分，請向{contact_unit}確認。",
+                (partner.language_review_note or f"公開資料無法可靠解析 {language_label} 最低分，請向{contact_unit}確認。"),
                 source_url=partner_source,
                 contact_unit=contact_unit,
             )
@@ -877,8 +877,13 @@ def _check(
 def _partner_language_threshold(
     partner: PartnerUniversity,
     language_test: str | None,
+    degree_level: str | None = None,
 ) -> float | None:
-    if not language_test or language_test == "other" or len(partner.program_options) > 1:
+    from .ccu_language import assess_ccu_language, is_ccu_partner
+
+    if is_ccu_partner(partner):
+        return assess_ccu_language(partner, language_test, degree_level).threshold
+    if not language_test or language_test == "other":
         return None
     text = " ".join(
         value

@@ -561,6 +561,22 @@ class ExchangeFieldEvidence(BaseModel):
     note: str | None = None
 
 
+class PartnerLanguageCondition(BaseModel):
+    """A reviewed condition, separate from unparsed source text or CEFR ranges."""
+
+    test: str
+    test_variant: str | None = None
+    minimum_score: float | None = None
+    requirement_level: Literal["required", "recommended", "no_score_minimum", "needs_confirmation", "conflict"]
+    degree_levels: list[str] = Field(default_factory=list)
+    track: str | None = None
+    host_faculties: list[str] = Field(default_factory=list)
+    teaching_language: str | None = None
+    scope_choice_required: bool = False
+    additional_conditions: list[str] = Field(default_factory=list)
+    evidence: ExchangeFieldEvidence
+
+
 class PartnerUniversity(BaseModel):
     program_type: str
     availability_status: Literal[
@@ -580,6 +596,9 @@ class PartnerUniversity(BaseModel):
     field_evidence: dict[str, ExchangeFieldEvidence] = Field(default_factory=dict)
     reference_data: dict[str, str] = Field(default_factory=dict)
     language_requirement: str | None = None
+    language_conditions: list[PartnerLanguageCondition] = Field(default_factory=list)
+    language_review_note: str | None = None
+    partner_application_prerequisite: str | None = None
     partner_application_deadline: str | None = None
     nomination_deadline: str | None = None
     semester_dates: str | None = None

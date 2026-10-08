@@ -721,6 +721,9 @@ def row_for(reader, start, end):
             pages,
             note="逐計畫學制分開；不可跨計畫套用語言或課程限制。",
         )
+    from exchange_info.ccu_partner_semantics import apply_ccu_semantic_review
+
+    apply_ccu_semantic_review(row)
     return row, dict(
         school_name=name,
         source_pages=pages,
@@ -843,6 +846,14 @@ def main():
             )
             for k in sorted({k for r in rows for k in r.field_evidence})
         },
+        partner_document_states=dict(
+            Counter(
+                r.field_evidence["partner_documents"].status
+                for r in rows
+                if r.availability_status != "not_open"
+            )
+        ),
+        document_coverage_definition="僅計算當期PDF含實際文件要求；不代表完整清單、海外附件獨立核實或僅有母校提名前提。",
         checked_at=CHECKED_AT.isoformat(),
         academic_year=YEAR,
         application_round=ROUND,
