@@ -1,0 +1,50 @@
+{
+  "key": "visa",
+  "label": "簽證／居留",
+  "status": "needs_confirmation",
+  "note": "提名後的Letter of Acceptance可支持簽證申請；官網未提供各國籍完整簽證／居留清單，不能由此判定免簽或許可。 Word要求education visa並避免tourist visa，以免居留問題；這是未標年外校指引，仍須查本人國籍的土耳其官方規定。",
+  "source_urls": [
+    "https://erasmus.alanya.edu.tr/en/incoming-student/application-process/",
+    "https://erasmus.alanya.edu.tr/en/about-us/erasmus-fact-sheet/"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://erasmus.alanya.edu.tr/en/incoming-student/application-process/",
+      "source_id": "host-alku-apply",
+      "page": null,
+      "source_title": "ALKU Erasmus Incoming申請",
+      "applicability": "ALKU（Alanya Alaaddin Keykubat University）未標學年Erasmus incoming官網與圖片；不能與Alanya University混用，不能先認定中央116一般交換屬KA171。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 96,
+        "field": "visa",
+        "evidence_array_index": 0,
+        "text_sha256": "f31519ab54216dac1659d58b052acccafc130b929f83c67e0b6543b40177832b",
+        "char_count": 2100
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://erasmus.alanya.edu.tr/en/about-us/erasmus-fact-sheet/",
+      "source_id": "host-alku-factsheet",
+      "page": null,
+      "source_title": "ALKU Erasmus factsheet官方入口",
+      "applicability": "ALKU（Alanya Alaaddin Keykubat University）未標學年Erasmus incoming官網與圖片；不能與Alanya University混用，不能先認定中央116一般交換屬KA171。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 96,
+        "field": "visa",
+        "evidence_array_index": 1,
+        "text_sha256": "ea940ed125e0c0a596a0fe36dbb8be113b37b8d569dad275d77ec6debbe66f5e",
+        "char_count": 7326
+      }
+    }
+  ],
+  "unresolved": "仍須查土耳其官方及ALKU當期居留文件、保險与到校流程。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "ALKU（Alanya Alaaddin Keykubat University）未標學年Erasmus incoming官網與圖片；不能與Alanya University混用，不能先認定中央116一般交換屬KA171。"
+}

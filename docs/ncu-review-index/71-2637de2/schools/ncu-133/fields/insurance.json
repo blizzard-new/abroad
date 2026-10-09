@@ -1,0 +1,86 @@
+{
+  "key": "insurance",
+  "label": "保險",
+  "status": "needs_confirmation",
+  "note": "現行學生指南理工學生必須Gakkensai＋Gakkenbai，交換／visiting一年共1340JPY、e-shiharai入學繳，未繳到承辦取單；僅校內教育／通勤等範圍，不代表全期海外醫療救援。2023 FAQ強烈建議與現行必須分開，未標年中央一頁兩項都GAKKENBAI名稱錯誤不沿用。NHI依住址登記及地方收入計費、host估30000或減免10000都未標年地方參考，不保證個人費；JASSO3月以上官方範圍與host文字more than3m保留待確認，不杜撰初次保單件。",
+  "source_urls": [
+    "https://students.isct.ac.jp/en/012/student-life-and-support/international-student-guide",
+    "https://www.studyinjapan.go.jp/en/life/insurance/",
+    "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/non-degree-faq",
+    "https://drive.google.com/file/d/1QDIYU7Djia2QCK6wI6q-TXkQ4I5Ey78N/view"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://students.isct.ac.jp/en/012/student-life-and-support/international-student-guide",
+      "source_id": "host-science-current-guide",
+      "page": null,
+      "source_title": "東京科學官方：current-guide",
+      "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 132,
+        "field": "insurance",
+        "evidence_array_index": 0,
+        "text_sha256": "64ea8093c0151a35dceb57d05809713073d24eeac8de58f2e33a2369695e95d4",
+        "char_count": 72567
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.studyinjapan.go.jp/en/life/insurance/",
+      "source_id": "government-japan-jasso-health-insurance",
+      "page": null,
+      "source_title": "JASSO日本留學保險官方指南",
+      "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 132,
+        "field": "insurance",
+        "evidence_array_index": 1,
+        "text_sha256": "ccda34abd3759ee0bfb259687c1f807270710b7c8aeccb21071f2a0d44edd491",
+        "char_count": 3460
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/non-degree-faq",
+      "source_id": "host-science-exchange-faq",
+      "page": null,
+      "source_title": "東京科學官方：exchange-faq",
+      "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 132,
+        "field": "insurance",
+        "evidence_array_index": 2,
+        "text_sha256": "80483c40a383f84cafa7ef536a7359a4986717543c7dee2f2ac842c51f7bfe9b",
+        "char_count": 20606
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://drive.google.com/file/d/1QDIYU7Djia2QCK6wI6q-TXkQ4I5Ey78N/view",
+      "source_id": "1QDIYU7Djia2QCK6wI6q-TXkQ4I5Ey78N",
+      "page": 1,
+      "source_title": "東京科學大學.pdf PDF",
+      "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 132,
+        "field": "insurance",
+        "evidence_array_index": 3,
+        "text_sha256": "6048c608eea86c1786546b3ac718f812a4a845fd66843bddd2119bf9d36c60ca",
+        "char_count": 1372
+      }
+    }
+  ],
+  "unresolved": "116現行事故／責任保額與全period醫療補足、個人NHI資格／收入／地方費及校方繳費憑證是否須提交待核。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。"
+}

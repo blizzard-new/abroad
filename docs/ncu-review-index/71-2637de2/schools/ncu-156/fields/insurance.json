@@ -1,0 +1,68 @@
+{
+  "key": "insurance",
+  "label": "保險",
+  "status": "needs_confirmation",
+  "note": "UOS現行FAQ與新版PDF說D-2外國學生自外國人登錄日起自動加入NHIS並按月繳費；欠繳可能影響給付／居留延長。是否可排除須按NHIS申請與核准，不能因已有臺灣旅保自動豁免。 舊影像第6頁KRW56030明標2022，新版沒有該金額；不作2027保費。中央另要求醫療／意外／急難救助，NHIS不能直接當全部海外保障。",
+  "source_urls": [
+    "https://eng.uos.ac.kr/oia/web/file/download/uu/328b55bd2562426e9fc9284bed1a49fc",
+    "https://eng.uos.ac.kr/oia/web/bbs/oia_faq02/list",
+    "https://drive.google.com/file/d/1YTU2HTNgu80it9DHNHy-2OVZSFu7tEqd/view"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "human_visual_selected_passages",
+      "source_url": "https://eng.uos.ac.kr/oia/web/file/download/uu/328b55bd2562426e9fc9284bed1a49fc",
+      "source_id": "host-uos-partner-current",
+      "page": 6,
+      "source_title": "UOS 現連Partner Information；未標年，有舊圖層須視覺核對",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "insurance",
+        "evidence_array_index": 0,
+        "text_sha256": "d0b36d719f288bac71a9f8d078953e8befdd357cd554c28edcf0113aee6dcbd1",
+        "char_count": 487
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://eng.uos.ac.kr/oia/web/bbs/oia_faq02/list",
+      "source_id": "host-uos-faq",
+      "page": null,
+      "source_title": "UOS Exchange FAQ索引",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "insurance",
+        "evidence_array_index": 1,
+        "text_sha256": "9246f6ccd3af18473f0fd01cbabd9f2e663e57b945342e4c1c97d76e60f83fc0",
+        "char_count": 8691
+      }
+    },
+    {
+      "text_method": "human_visual_selected_passages",
+      "source_url": "https://drive.google.com/file/d/1YTU2HTNgu80it9DHNHy-2OVZSFu7tEqd/view",
+      "source_id": "1YTU2HTNgu80it9DHNHy-2OVZSFu7tEqd",
+      "page": 6,
+      "source_title": "UOS Partner Information_Web.pdf PDF",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "insurance",
+        "evidence_array_index": 2,
+        "text_sha256": "9c06628ca15d715e5b5a091781c52f66b1c7adfe983daf3b7421cf922c995248",
+        "char_count": 422
+      }
+    }
+  ],
+  "unresolved": "2027保費、個人加入／排除資格與保險期間須政府當期規則確認。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。"
+}

@@ -1,0 +1,50 @@
+{
+  "key": "insurance",
+  "label": "保險",
+  "status": "needs_confirmation",
+  "note": "國際C.E.P2026即使在母國已投保，仍須註冊前購Guoren指定保險CNY400／semester；X1轉居留一次付兩學期800。中文／臺灣籍方案、保額與最新版條款尚未核對。",
+  "source_urls": [
+    "https://english.dhu.edu.cn/_upload/article/files/7f/f2/818c82aa4993b0f17f7b3bd5c5e4/20d3958e-3a3e-4b1a-888e-dd9738603094.pdf",
+    "https://english.dhu.edu.cn/insurance/list.htm"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://english.dhu.edu.cn/_upload/article/files/7f/f2/818c82aa4993b0f17f7b3bd5c5e4/20d3958e-3a3e-4b1a-888e-dd9738603094.pdf",
+      "source_id": "host-dhu-factsheet",
+      "page": 4,
+      "source_title": "DHU 2026F C.E.P Fact Sheet",
+      "applicability": "DHU2026秋international C.E.P（明列non-Chinese citizen）；中央116臺灣籍交換方案未核定，不將國際生規則直接套給台生。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 166,
+        "field": "insurance",
+        "evidence_array_index": 0,
+        "text_sha256": "ec8669311b99e2f3fd1ced7a95e64541d7392484e6c9c2ba61ff7b72cd218591",
+        "char_count": 1850
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://english.dhu.edu.cn/insurance/list.htm",
+      "source_id": "host-dhu-insurance",
+      "page": null,
+      "source_title": "DHU international insurance and health",
+      "applicability": "DHU2026秋international C.E.P（明列non-Chinese citizen）；中央116臺灣籍交換方案未核定，不將國際生規則直接套給台生。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 166,
+        "field": "insurance",
+        "evidence_array_index": 1,
+        "text_sha256": "b52f978486620d2b0fd9a15b9bcaf65ecf0e1ba28f730cddbcc11006ac0f07ad",
+        "char_count": 3183
+      }
+    }
+  ],
+  "unresolved": "臺灣籍是否同保險、116保費及保障範圍待確認，不視為生活查核完成。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "DHU2026秋international C.E.P（明列non-Chinese citizen）；中央116臺灣籍交換方案未核定，不將國際生規則直接套給台生。"
+}

@@ -1,0 +1,50 @@
+{
+  "key": "visa",
+  "label": "簽證／居留",
+  "status": "needs_confirmation",
+  "note": "COE Excel在初次10件先繳，雖為錄取後簽證必要程序也不代表預先取得admission；最新financial／COE空白未取得。 外交部Student visa一般4件與電子COE可呈現email／印本是另階段，個人國籍追加資料與現行居留要求另核。",
+  "source_urls": [
+    "https://www.u-toyama.ac.jp/wp/wp-content/uploads/study-abroad_exchange_students_inbound_en.pdf",
+    "https://www.mofa.go.jp/j_info/visit/visa/long/visa6.html"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.u-toyama.ac.jp/wp/wp-content/uploads/study-abroad_exchange_students_inbound_en.pdf",
+      "source_id": "host-toyama-inbound-en-pdf",
+      "page": 2,
+      "source_title": "toyama-inbound-en-pdf",
+      "applicability": "現網一般全校級／faculty-level接收、2023住宿、2026秋生活及AY2024中央舊包分開；非116核准。",
+      "checked_at": "2026-10-09",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 123,
+        "field": "visa",
+        "evidence_array_index": 0,
+        "text_sha256": "9980d47137b4f4ffc620f37f25bb464411184f2a4c1df809a027eb0fe7e82e82",
+        "char_count": 1828
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.mofa.go.jp/j_info/visit/visa/long/visa6.html",
+      "source_id": "host-gov-mofa-student-visa",
+      "page": null,
+      "source_title": "gov-mofa-student-visa",
+      "applicability": "現網一般全校級／faculty-level接收、2023住宿、2026秋生活及AY2024中央舊包分開；非116核准。",
+      "checked_at": "2026-10-09",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 123,
+        "field": "visa",
+        "evidence_array_index": 1,
+        "text_sha256": "f80bea3cdef681afc8748a1cd638609933973a99746c3a5da1158013f017687f",
+        "char_count": 2331
+      }
+    }
+  ],
+  "unresolved": "116指定COE版本／財力金額及政府當期／本人國籍、居留與追加件待核。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "現網一般全校級／faculty-level接收、2023住宿、2026秋生活及AY2024中央舊包分開；非116核准。"
+}

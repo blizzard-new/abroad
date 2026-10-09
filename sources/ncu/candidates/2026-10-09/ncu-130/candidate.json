@@ -1,0 +1,954 @@
+{
+  "school_row_id": "ncu-130",
+  "school_name": "名古屋外國語大學 Nagoya University of Foreign Studies",
+  "research_only": true,
+  "integrated": false,
+  "frozen_catalog_sha": "2637de25490e47bbb3987617bceefce02ae78446",
+  "checked_at": "2026-10-09T06:07:16.036647+00:00",
+  "reference_scope": "2027Spring明示日程＋未標年一般程序／current linked checklist；116Fall2027／Spring2028完整包未取得。",
+  "quota": null,
+  "availability_status": "agreement_only",
+  "current_116_applicability_verified": false,
+  "publication_status": "latest_cycle_packet_not_retrieved; not an assertion that officially unpublished",
+  "fields": {
+    "city": {
+      "status": "reference_candidate_needs_review",
+      "note": "愛知縣日進市，NUFS地址57 Takenoyama, Iwasaki；不是名古屋市中心校區。",
+      "sources": [
+        {
+          "source_id": "application",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/application/",
+          "sha256": "3cfcd788560d569f0e4a3631fdb63cae39298da284db90360e404befc1d67324",
+          "checked_at": "2026-10-09T05:50:55.242452+00:00",
+          "metadata_path": "sources/application/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "a6d74ba7d4a0ac0408403eda0c8556d20e4d2ec59f3c26f218ed484bd9c251b5",
+              "char_count": 5835
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "transport": {
+      "status": "reference_candidate_needs_review",
+      "note": "宿舍至校步行5分鐘；Centrair指定到達日接駁一般14:00／21:30，時刻可變，以acceptance package確認後安排航班。",
+      "sources": [
+        {
+          "source_id": "housing",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/housing/index.html",
+          "sha256": "0cd9e404caf16e763b33940f4c8bd7827fcc0db04ca2d0cb0fd399c3b462ab36",
+          "checked_at": "2026-10-09T05:52:32.405856+00:00",
+          "metadata_path": "sources/housing/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "4d4b174ef877bdc37ff634b437dd5245a358b56577d97d643f8a4f3998480e6a",
+              "char_count": 4560
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "pickup",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/pickupservice/index.html",
+          "sha256": "1a6d43cf4c33ea5f80b1a564726343427191fa5b1cfe343ae1dedcd1c2367b60",
+          "checked_at": "2026-10-09T05:52:34.613855+00:00",
+          "metadata_path": "sources/pickup/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "ce6c4e4003199edf105af1f3d7b52b27e82743e4e52339a2420ee21c73f8e1d2",
+              "char_count": 1943
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "quota": {
+      "status": "needs_confirmation",
+      "note": "116名額官方預定2026/10/12公告；115額度僅參考，未填入當期。",
+      "original_locator": {
+        "candidate_sha": "2637de25490e47bbb3987617bceefce02ae78446",
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 129,
+        "field": "quota"
+      },
+      "source_urls": [
+        "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf"
+      ],
+      "unresolved": null,
+      "current_116_host_verified": false
+    },
+    "eligibility": {
+      "status": "reference_candidate_needs_review",
+      "note": "協定校在籍並經母校提名；GPA至少2.0／4.0，不換算百分制。GJP、UG／Grad特別聽講分開；Grad須現為母校研究生，赴NUFS研究所卻只修本科不允許。",
+      "sources": [
+        {
+          "source_id": "application",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/application/",
+          "sha256": "3cfcd788560d569f0e4a3631fdb63cae39298da284db90360e404befc1d67324",
+          "checked_at": "2026-10-09T05:50:55.242452+00:00",
+          "metadata_path": "sources/application/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "a6d74ba7d4a0ac0408403eda0c8556d20e4d2ec59f3c26f218ed484bd9c251b5",
+              "char_count": 5835
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "study-abroad",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/tokubetsu/index.html",
+          "sha256": "096f9cd9a0937f27116901b38886ed5cad0aaa0fc11c4301c8199fa1806af925",
+          "checked_at": "2026-10-09T05:52:32.404973+00:00",
+          "metadata_path": "sources/study-abroad/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "f9cb65a7c43a09beb0698405a2c1b7f32a559219840a3292f71a753e5dd7f1e3",
+              "char_count": 5849
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "language": {
+      "status": "reference_candidate_needs_review",
+      "note": "GJP可零日文、JLPT不是必要件，持有者附；UG特別聽講至少N2、Grad N1或經事前確認的其他官方測驗。2026春起不接受母校自行開的日語證明。GJP英語硬分數尚未由所讀primary頁取得，不借他校fact sheet補值。",
+      "sources": [
+        {
+          "source_id": "checklist",
+          "url": "https://www-e.nufs.ac.jp/media/2026078-123101-750.pdf",
+          "sha256": "c925314d136384fc1f5efef74c5b2609ec8894fe0c37cd43835719d39facf717",
+          "checked_at": "2026-10-09T05:52:35.633602+00:00",
+          "metadata_path": "sources/checklist/metadata.json",
+          "original_text_pages": [
+            {
+              "page": 1,
+              "text_path": "page-001.txt",
+              "text_sha256": "b5c4dbab9e416b41f27e67094346f91029b1b6951380c291b3c93986b8095668",
+              "char_count": 1320
+            },
+            {
+              "page": 2,
+              "text_path": "page-002.txt",
+              "text_sha256": "8cd21a70d7420a4797669697ea91b7d2171e45ddfe735cf60ad31146b3b83f04",
+              "char_count": 1954
+            },
+            {
+              "page": 3,
+              "text_path": "page-003.txt",
+              "text_sha256": "e15be970c564988e5f5b2af6c43b1407fffeae1958521f55132a857f293f07d2",
+              "char_count": 2247
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "study-abroad",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/tokubetsu/index.html",
+          "sha256": "096f9cd9a0937f27116901b38886ed5cad0aaa0fc11c4301c8199fa1806af925",
+          "checked_at": "2026-10-09T05:52:32.404973+00:00",
+          "metadata_path": "sources/study-abroad/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "f9cb65a7c43a09beb0698405a2c1b7f32a559219840a3292f71a753e5dd7f1e3",
+              "char_count": 5849
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "faq",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/faq/index.html",
+          "sha256": "008f6b42fd4f93c805050b024a47c6fb32f30cdf3679859e00720e2a719b441e",
+          "checked_at": "2026-10-09T05:52:35.578730+00:00",
+          "metadata_path": "sources/faq/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "29d6ec203e10a71c20c20d1c3f73d89b4100530d802228166da477baee92da65",
+              "char_count": 6442
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "home_documents": {
+      "status": "available",
+      "note": "116母校簡章第4頁及首頁現行下載表格；home文件不代表host清單完整。",
+      "original_locator": {
+        "candidate_sha": "2637de25490e47bbb3987617bceefce02ae78446",
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 129,
+        "field": "home_documents"
+      },
+      "source_urls": [
+        "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf#page=4",
+        "https://oia.ncu.edu.tw/static/file/26/1026/img/272/forms-2022.pdf#page=1",
+        "https://oia.ncu.edu.tw/static/file/26/1026/img/272/forms-2022.pdf#page=2"
+      ],
+      "unresolved": null,
+      "current_116_host_verified": false
+    },
+    "host_documents": {
+      "status": "reference_candidate_needs_review",
+      "note": "線上申請；初次護照photo（辦理中駕照／其他ID，取得後email補護照）、三月內JPG數位照（非掃紙照）、完整官方成績＋grading scale、三月內財力、醫師填簽Medical Information、教師／advisor／coordinator Personal Reference。醫療免責僅Medical Information有病史／治療／藥物時；NUFS scholarship申请僅欲申者；曾赴日者全ENTRY／EXIT章、舊護照photo，無出境章則e-ticket／boarding pass／itinerary；JLPT依track；JPETS三國且住於該國按指南，不能硬套臺灣全員。",
+      "sources": [
+        {
+          "source_id": "checklist",
+          "url": "https://www-e.nufs.ac.jp/media/2026078-123101-750.pdf",
+          "sha256": "c925314d136384fc1f5efef74c5b2609ec8894fe0c37cd43835719d39facf717",
+          "checked_at": "2026-10-09T05:52:35.633602+00:00",
+          "metadata_path": "sources/checklist/metadata.json",
+          "original_text_pages": [
+            {
+              "page": 1,
+              "text_path": "page-001.txt",
+              "text_sha256": "b5c4dbab9e416b41f27e67094346f91029b1b6951380c291b3c93986b8095668",
+              "char_count": 1320
+            },
+            {
+              "page": 2,
+              "text_path": "page-002.txt",
+              "text_sha256": "8cd21a70d7420a4797669697ea91b7d2171e45ddfe735cf60ad31146b3b83f04",
+              "char_count": 1954
+            },
+            {
+              "page": 3,
+              "text_path": "page-003.txt",
+              "text_sha256": "e15be970c564988e5f5b2af6c43b1407fffeae1958521f55132a857f293f07d2",
+              "char_count": 2247
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "package",
+          "url": "https://www-e.nufs.ac.jp/media/2026078-123043-598.zip",
+          "sha256": "ae413da08c9569f5774b246143216e6a26aa378e9d4bd8ecc53e095b89a24bfe",
+          "checked_at": "2026-10-09T05:52:35.816656+00:00",
+          "metadata_path": "sources/package/metadata.json",
+          "original_text_pages": [
+            {
+              "page": 1,
+              "archive_member": "Application Package/5 Medical Information Form 健康診断書.pdf",
+              "member_sha256": "130af713265712f17834b8a39418861c39fcdc127e7614354388509b734a1ee4",
+              "text_path": "member-01-page-001.txt",
+              "text_sha256": "aa43dcb652c941ddb06496fb5bddd9bd224bd899008d5764f622bd3fded1e41a",
+              "char_count": 1635
+            },
+            {
+              "page": 2,
+              "archive_member": "Application Package/5 Medical Information Form 健康診断書.pdf",
+              "member_sha256": "130af713265712f17834b8a39418861c39fcdc127e7614354388509b734a1ee4",
+              "text_path": "member-01-page-002.txt",
+              "text_sha256": "28e1b064ec378e34dff2f0a6eeb2e08d1d12bb625093a7c9d503f613e6657974",
+              "char_count": 954
+            },
+            {
+              "page": 1,
+              "archive_member": "Application Package/6 Medical Liability Release Agreement - English.pdf",
+              "member_sha256": "7d885312885450eab4e3e65d783b24c6bd442a42e6d2803615dd2fb809cc9fee",
+              "text_path": "member-02-page-001.txt",
+              "text_sha256": "1fc34e7f8ee1aa6ba08556940d86dd025a41945ef86126d2839785a093e4a825",
+              "char_count": 1813
+            },
+            {
+              "page": 1,
+              "archive_member": "Application Package/6 Medical Liability Release Agreement - Japanese (疾病免責誓約書).pdf",
+              "member_sha256": "cca069245e6c2528f6411d7ef7dbf68ae73f265754bd2e3309ad5dd42f5455ff",
+              "text_path": "member-03-page-001.txt",
+              "text_sha256": "c44b2b257fbd90d330f01502657b11d922c550eb8ad446673b7f951c717acc14",
+              "char_count": 519
+            },
+            {
+              "page": 1,
+              "archive_member": "Application Package/8 Application for NUFS scholarship NUFS奨学金申請書.pdf",
+              "member_sha256": "572bc03cc971e6fd54dfa3ec5b751cee856695dc060dc3fd51dda296d54b0386",
+              "text_path": "member-05-page-001.txt",
+              "text_sha256": "7e5b81d49de8d6c4a8e482396dc3613fc89ada47f22b5a2d48d239fa1a45b7d8",
+              "char_count": 1512
+            },
+            {
+              "page": null,
+              "sheet": "Sheet1",
+              "archive_member": "Application Package/7 Personal Reference Form 推薦書.xlsx",
+              "member_sha256": "b733862db275a8a17ebfc164fd9c68797d0de6c95044fe0ee5dcd69628a79c14",
+              "text_path": "member-reference-sheet-00.txt",
+              "text_sha256": "0384f2316c0ac3f6110b3020ec0ec8e998769a4a0c300db1370ceadf858c9ac8",
+              "char_count": 473,
+              "text_method": "xlsx cells in row order; not rendered page numbers"
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "instructions-en",
+          "url": "https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf",
+          "sha256": "1c9b5cd2042e5c60360bcdfea9af5a3019fb1e3d1b1f6907578bbc6e85f6442a",
+          "checked_at": "2026-10-09T05:52:35.875454+00:00",
+          "metadata_path": "sources/instructions-en/metadata.json",
+          "original_text_pages": [
+            {
+              "page": 1,
+              "text_path": "page-001.txt",
+              "text_sha256": "315d1ff3c718ab6f0a7da841476660292d25ba3910bbcee0f5b8e7be1f48e825",
+              "char_count": 294
+            },
+            {
+              "page": 2,
+              "text_path": "page-002.txt",
+              "text_sha256": "5247d7d4e2d75084bb42d8fc998808acd4ac39486fb8f22da4962bb3538ada7e",
+              "char_count": 141
+            },
+            {
+              "page": 3,
+              "text_path": "page-003.txt",
+              "text_sha256": "11d9008be6efadb831fcdd6c56627cb9b8a9b4a5ba844468c33d9b8a2437d16c",
+              "char_count": 55
+            },
+            {
+              "page": 4,
+              "text_path": "page-004.txt",
+              "text_sha256": "610d1a5894a9a6ae9b3a7df21cb54eab769e5c4b64a3cfdc034a08f1dfb58d0c",
+              "char_count": 246
+            },
+            {
+              "page": 5,
+              "text_path": "page-005.txt",
+              "text_sha256": "3182f961eff76b33dab4577a82fb72735a9489eea610a917463cd0a040fe2124",
+              "char_count": 544
+            },
+            {
+              "page": 6,
+              "text_path": "page-006.txt",
+              "text_sha256": "636f6f76b8e47ced8111c3d8513377dccbd26e9d3d5afde8dc3879a0adb78dd2",
+              "char_count": 932
+            },
+            {
+              "page": 7,
+              "text_path": "page-007.txt",
+              "text_sha256": "38b5f333390b5f63aa63c98048e3cc2354334fdf37f801d692ffa5163107e581",
+              "char_count": 1018
+            },
+            {
+              "page": 8,
+              "text_path": "page-008.txt",
+              "text_sha256": "c72375a3728f81669c030c68fa65c41d7fea6efd4519f65117810f1fc105a767",
+              "char_count": 1322
+            },
+            {
+              "page": 9,
+              "text_path": "page-009.txt",
+              "text_sha256": "8545dff270f482ac80d35ae8fb7f5dd76081b11e1da3c48200a944bd71a27ec9",
+              "char_count": 904
+            },
+            {
+              "page": 10,
+              "text_path": "page-010.txt",
+              "text_sha256": "5df9c888dbd7550b149da18464298860d85e3b93f4f7f4f69c928e4075a204c4",
+              "char_count": 1121
+            },
+            {
+              "page": 11,
+              "text_path": "page-011.txt",
+              "text_sha256": "e5599b1067dcb203165f4dc2d26be68c3c56ffb3ef0898b27c7e773593e90c5e",
+              "char_count": 166
+            },
+            {
+              "page": 12,
+              "text_path": "page-012.txt",
+              "text_sha256": "bd1bf6fa5709b0a14693b92a30113df3047471a7a9a54c9a29f4414d39ecc4de",
+              "char_count": 262
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "home_deadline": {
+      "status": "available",
+      "note": "116線上12/4中午12時、系所紙本12/11下午5時（臺灣時間）；系所12/18送件不屬學生期限。",
+      "original_locator": {
+        "candidate_sha": "2637de25490e47bbb3987617bceefce02ae78446",
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 129,
+        "field": "home_deadline"
+      },
+      "source_urls": [
+        "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf"
+      ],
+      "unresolved": null,
+      "current_116_host_verified": false
+    },
+    "host_deadline": {
+      "status": "reference_candidate_needs_review",
+      "note": "一般提名春10/15／秋3/15、申請春10/31／秋3/31；Important Dates明示Spring2027申請2026/10/31。116／Fall2027／Spring2028指定包未取得，不能把週期直接生成精確提醒。",
+      "sources": [
+        {
+          "source_id": "application",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/application/",
+          "sha256": "3cfcd788560d569f0e4a3631fdb63cae39298da284db90360e404befc1d67324",
+          "checked_at": "2026-10-09T05:50:55.242452+00:00",
+          "metadata_path": "sources/application/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "a6d74ba7d4a0ac0408403eda0c8556d20e4d2ec59f3c26f218ed484bd9c251b5",
+              "char_count": 5835
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "dates",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/dates/",
+          "sha256": "0e14e40581bc34f6cc4ca68939c60b4004bcd6046701ea3ba33d1edb9dd3324c",
+          "checked_at": "2026-10-09T05:50:55.243410+00:00",
+          "metadata_path": "sources/dates/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "35a3bc41e6a7f09b84c31f177b2100d9512fd1c1a7558e21a51bc8f69603c0ea",
+              "char_count": 4772
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "study_period": {
+      "status": "reference_candidate_needs_review",
+      "note": "一般一學期／一學年。2027春GJP4/12–7/20；Study Abroad4/12–7/27。2026秋兩track開始／結束不同，僅舊梯次參考。",
+      "sources": [
+        {
+          "source_id": "application",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/application/",
+          "sha256": "3cfcd788560d569f0e4a3631fdb63cae39298da284db90360e404befc1d67324",
+          "checked_at": "2026-10-09T05:50:55.242452+00:00",
+          "metadata_path": "sources/application/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "a6d74ba7d4a0ac0408403eda0c8556d20e4d2ec59f3c26f218ed484bd9c251b5",
+              "char_count": 5835
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "dates",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/dates/",
+          "sha256": "0e14e40581bc34f6cc4ca68939c60b4004bcd6046701ea3ba33d1edb9dd3324c",
+          "checked_at": "2026-10-09T05:50:55.243410+00:00",
+          "metadata_path": "sources/dates/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "35a3bc41e6a7f09b84c31f177b2100d9512fd1c1a7558e21a51bc8f69603c0ea",
+              "char_count": 4772
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "courses": {
+      "status": "reference_candidate_needs_review",
+      "note": "GJP至少7個90分鐘classroom hours／週、一般不建議超過11；JLC欲修日文須core、全員placement test一般秋入學6月初／春12月初，網頁另稱arrival時測試，時序待確認。真初學者開課前須掌握平假／片假。GJP不修UG／Grad日本人課，Study Abroad不得修GJP；admission letter發出後不得轉program。UG／Grad聽講7classes／10.5h最低，10–12門為建議，Grad主要Grad＋約1–3本科課。",
+      "sources": [
+        {
+          "source_id": "gjp-courses",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/exchange/courses/index.html",
+          "sha256": "1185a0ef71db1099ea8fa82988093a75d3f3109894fcbb366b1c5a2626c78f11",
+          "checked_at": "2026-10-09T05:58:05.340764+00:00",
+          "metadata_path": "sources/gjp-courses/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "6ac7626c4600b892e0ff176bc6eb96eda36c5297a4a3fd9a8ef73ecfc3564ab8",
+              "char_count": 12605
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "study-abroad",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/tokubetsu/index.html",
+          "sha256": "096f9cd9a0937f27116901b38886ed5cad0aaa0fc11c4301c8199fa1806af925",
+          "checked_at": "2026-10-09T05:52:32.404973+00:00",
+          "metadata_path": "sources/study-abroad/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "f9cb65a7c43a09beb0698405a2c1b7f32a559219840a3292f71a753e5dd7f1e3",
+              "char_count": 5849
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "faq",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/faq/index.html",
+          "sha256": "008f6b42fd4f93c805050b024a47c6fb32f30cdf3679859e00720e2a719b441e",
+          "checked_at": "2026-10-09T05:52:35.578730+00:00",
+          "metadata_path": "sources/faq/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "29d6ec203e10a71c20c20d1c3f73d89b4100530d802228166da477baee92da65",
+              "char_count": 6442
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "tuition": {
+      "status": "reference_candidate_needs_review",
+      "note": "Estimated Costs明示交換學生tuition none、admission N/A；依當期協議核，不把一般學位學費套入。",
+      "sources": [
+        {
+          "source_id": "costs",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/costs/index.html",
+          "sha256": "1a75f0406e253d35294a4a974296e978cc165d701c02738f8dad2bcd23f61960",
+          "checked_at": "2026-10-09T05:52:32.406151+00:00",
+          "metadata_path": "sources/costs/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "ecce5f69520ec877d8ace299536ccd59123bbafbaac5e3db83e5f5baeabe292e",
+              "char_count": 2129
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "cost": {
+      "status": "reference_candidate_needs_review",
+      "note": "一般預算月97000–137000，含房租水電35000、國保約2000、食費30000–50000、其他30000–50000；一次宿舍application／maintenance10000不退、可選寢具6600、書15000–30000／學期。財力分申NUFS scholarship最低40000/月（200000／400000），未申100000/月（500000／1000000）；申請不保證得獎。NUFS獎60000/月最多12月、需申請且有年度枠，約到校兩月後首次發，租金扣獎學金；JASSO只獲採擇年度、不可NUFS併領。",
+      "sources": [
+        {
+          "source_id": "costs",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/costs/index.html",
+          "sha256": "1a75f0406e253d35294a4a974296e978cc165d701c02738f8dad2bcd23f61960",
+          "checked_at": "2026-10-09T05:52:32.406151+00:00",
+          "metadata_path": "sources/costs/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "ecce5f69520ec877d8ace299536ccd59123bbafbaac5e3db83e5f5baeabe292e",
+              "char_count": 2129
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "checklist",
+          "url": "https://www-e.nufs.ac.jp/media/2026078-123101-750.pdf",
+          "sha256": "c925314d136384fc1f5efef74c5b2609ec8894fe0c37cd43835719d39facf717",
+          "checked_at": "2026-10-09T05:52:35.633602+00:00",
+          "metadata_path": "sources/checklist/metadata.json",
+          "original_text_pages": [
+            {
+              "page": 1,
+              "text_path": "page-001.txt",
+              "text_sha256": "b5c4dbab9e416b41f27e67094346f91029b1b6951380c291b3c93986b8095668",
+              "char_count": 1320
+            },
+            {
+              "page": 2,
+              "text_path": "page-002.txt",
+              "text_sha256": "8cd21a70d7420a4797669697ea91b7d2171e45ddfe735cf60ad31146b3b83f04",
+              "char_count": 1954
+            },
+            {
+              "page": 3,
+              "text_path": "page-003.txt",
+              "text_sha256": "e15be970c564988e5f5b2af6c43b1407fffeae1958521f55132a857f293f07d2",
+              "char_count": 2247
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "scholarships",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/scholarships/index.html",
+          "sha256": "72e1c5ff314fb31fc6761681c176fa8782133aa88e8071c918d2223530ae846f",
+          "checked_at": "2026-10-09T05:52:34.137545+00:00",
+          "metadata_path": "sources/scholarships/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "e908212b53a031e8cb3089a20d8c151235f9c8c0cfd252e5359d2389e7740d11",
+              "char_count": 5601
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "scholarship-regulations",
+          "url": "https://www-e.nufs.ac.jp/media/20210215-164401-188.pdf",
+          "sha256": "9ce5fbdf76117b7171a713b40ea23948b7aec12d7b28750464d2bb68cc293586",
+          "checked_at": "2026-10-09T05:58:05.341580+00:00",
+          "metadata_path": "sources/scholarship-regulations/metadata.json",
+          "original_text_pages": [
+            {
+              "page": 1,
+              "text_path": "page-001.txt",
+              "text_sha256": "cfbb5f0a8e5d514a61b2393ee0d7cca609fcfafdfde259dc9eb06d2a572fed49",
+              "char_count": 2784
+            },
+            {
+              "page": 2,
+              "text_path": "page-002.txt",
+              "text_sha256": "9403d25028aee6e37d53b874310d4a373f2d9f6060df4f5b43eb9424e71c4029",
+              "char_count": 3473
+            },
+            {
+              "page": 3,
+              "text_path": "page-003.txt",
+              "text_sha256": "d63de327d4b6effe02f6195f5db4706e88251724e147f3bd253046c5e1ad24da",
+              "char_count": 1242
+            },
+            {
+              "page": 4,
+              "text_path": "page-004.txt",
+              "text_sha256": "2e3374bbf52ec2bddd92c8a632b5c9d75d38b8c0e5d17d319d8447c0378cfedd",
+              "char_count": 1913
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "package",
+          "url": "https://www-e.nufs.ac.jp/media/2026078-123043-598.zip",
+          "sha256": "ae413da08c9569f5774b246143216e6a26aa378e9d4bd8ecc53e095b89a24bfe",
+          "checked_at": "2026-10-09T05:52:35.816656+00:00",
+          "metadata_path": "sources/package/metadata.json",
+          "original_text_pages": [
+            {
+              "page": 1,
+              "archive_member": "Application Package/5 Medical Information Form 健康診断書.pdf",
+              "member_sha256": "130af713265712f17834b8a39418861c39fcdc127e7614354388509b734a1ee4",
+              "text_path": "member-01-page-001.txt",
+              "text_sha256": "aa43dcb652c941ddb06496fb5bddd9bd224bd899008d5764f622bd3fded1e41a",
+              "char_count": 1635
+            },
+            {
+              "page": 2,
+              "archive_member": "Application Package/5 Medical Information Form 健康診断書.pdf",
+              "member_sha256": "130af713265712f17834b8a39418861c39fcdc127e7614354388509b734a1ee4",
+              "text_path": "member-01-page-002.txt",
+              "text_sha256": "28e1b064ec378e34dff2f0a6eeb2e08d1d12bb625093a7c9d503f613e6657974",
+              "char_count": 954
+            },
+            {
+              "page": 1,
+              "archive_member": "Application Package/6 Medical Liability Release Agreement - English.pdf",
+              "member_sha256": "7d885312885450eab4e3e65d783b24c6bd442a42e6d2803615dd2fb809cc9fee",
+              "text_path": "member-02-page-001.txt",
+              "text_sha256": "1fc34e7f8ee1aa6ba08556940d86dd025a41945ef86126d2839785a093e4a825",
+              "char_count": 1813
+            },
+            {
+              "page": 1,
+              "archive_member": "Application Package/6 Medical Liability Release Agreement - Japanese (疾病免責誓約書).pdf",
+              "member_sha256": "cca069245e6c2528f6411d7ef7dbf68ae73f265754bd2e3309ad5dd42f5455ff",
+              "text_path": "member-03-page-001.txt",
+              "text_sha256": "c44b2b257fbd90d330f01502657b11d922c550eb8ad446673b7f951c717acc14",
+              "char_count": 519
+            },
+            {
+              "page": 1,
+              "archive_member": "Application Package/8 Application for NUFS scholarship NUFS奨学金申請書.pdf",
+              "member_sha256": "572bc03cc971e6fd54dfa3ec5b751cee856695dc060dc3fd51dda296d54b0386",
+              "text_path": "member-05-page-001.txt",
+              "text_sha256": "7e5b81d49de8d6c4a8e482396dc3613fc89ada47f22b5a2d48d239fa1a45b7d8",
+              "char_count": 1512
+            },
+            {
+              "page": null,
+              "sheet": "Sheet1",
+              "archive_member": "Application Package/7 Personal Reference Form 推薦書.xlsx",
+              "member_sha256": "b733862db275a8a17ebfc164fd9c68797d0de6c95044fe0ee5dcd69628a79c14",
+              "text_path": "member-reference-sheet-00.txt",
+              "text_sha256": "0384f2316c0ac3f6110b3020ec0ec8e998769a4a0c300db1370ceadf858c9ac8",
+              "char_count": 473,
+              "text_method": "xlsx cells in row order; not rendered page numbers"
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "housing": {
+      "status": "reference_candidate_needs_review",
+      "note": "全exchange須住校，申請時填選擇但校方分配不保第一／二志願、不接受後續更換。三宿舍月35000含utilities、application／maintenance10000不退。2027春到達日官方To be determined；學期結束一週內退宿16:00前與離日。",
+      "sources": [
+        {
+          "source_id": "housing",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/housing/index.html",
+          "sha256": "0cd9e404caf16e763b33940f4c8bd7827fcc0db04ca2d0cb0fd399c3b462ab36",
+          "checked_at": "2026-10-09T05:52:32.405856+00:00",
+          "metadata_path": "sources/housing/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "4d4b174ef877bdc37ff634b437dd5245a358b56577d97d643f8a4f3998480e6a",
+              "char_count": 4560
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "dates",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/dates/",
+          "sha256": "0e14e40581bc34f6cc4ca68939c60b4004bcd6046701ea3ba33d1edb9dd3324c",
+          "checked_at": "2026-10-09T05:50:55.243410+00:00",
+          "metadata_path": "sources/dates/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "35a3bc41e6a7f09b84c31f177b2100d9512fd1c1a7558e21a51bc8f69603c0ea",
+              "char_count": 4772
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "insurance": {
+      "status": "reference_candidate_needs_review",
+      "note": "出國前須母國購全期海外travel＋health；到校住宿／居民登記後辦日本國保，官方一般頁≥3月、約2000/月、通常70%給付／自付30%，非承保項目全自付。費額及當期個人情況待核。",
+      "sources": [
+        {
+          "source_id": "insurance",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/insurance/index.html",
+          "sha256": "b7fc2d83f99bcd55ea4714a55982c2a97a81cb78e522d316bba972862273b8fe",
+          "checked_at": "2026-10-09T05:52:34.362520+00:00",
+          "metadata_path": "sources/insurance/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "b3c0717ee5f56ebdc1ae3fa5cd35d24de1f505a62c141d5a011b9e8ec00aede6",
+              "char_count": 3679
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "visa": {
+      "status": "reference_candidate_needs_review",
+      "note": "NUFS代申COE、email給本人後於居住國使領館申Student visa，入境前取得；不能觀光入境後轉辦。護照辦理中初次可ID、取得後補不代表簽證免護照。COE一般時間頁與FAQ到達前2–3週不同，不保證出件。",
+      "sources": [
+        {
+          "source_id": "application",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/application/",
+          "sha256": "3cfcd788560d569f0e4a3631fdb63cae39298da284db90360e404befc1d67324",
+          "checked_at": "2026-10-09T05:50:55.242452+00:00",
+          "metadata_path": "sources/application/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "a6d74ba7d4a0ac0408403eda0c8556d20e4d2ec59f3c26f218ed484bd9c251b5",
+              "char_count": 5835
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "faq",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/faq/index.html",
+          "sha256": "008f6b42fd4f93c805050b024a47c6fb32f30cdf3679859e00720e2a719b441e",
+          "checked_at": "2026-10-09T05:52:35.578730+00:00",
+          "metadata_path": "sources/faq/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "29d6ec203e10a71c20c20d1c3f73d89b4100530d802228166da477baee92da65",
+              "char_count": 6442
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "checklist",
+          "url": "https://www-e.nufs.ac.jp/media/2026078-123101-750.pdf",
+          "sha256": "c925314d136384fc1f5efef74c5b2609ec8894fe0c37cd43835719d39facf717",
+          "checked_at": "2026-10-09T05:52:35.633602+00:00",
+          "metadata_path": "sources/checklist/metadata.json",
+          "original_text_pages": [
+            {
+              "page": 1,
+              "text_path": "page-001.txt",
+              "text_sha256": "b5c4dbab9e416b41f27e67094346f91029b1b6951380c291b3c93986b8095668",
+              "char_count": 1320
+            },
+            {
+              "page": 2,
+              "text_path": "page-002.txt",
+              "text_sha256": "8cd21a70d7420a4797669697ea91b7d2171e45ddfe735cf60ad31146b3b83f04",
+              "char_count": 1954
+            },
+            {
+              "page": 3,
+              "text_path": "page-003.txt",
+              "text_sha256": "e15be970c564988e5f5b2af6c43b1407fffeae1958521f55132a857f293f07d2",
+              "char_count": 2247
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "arrival": {
+      "status": "reference_candidate_needs_review",
+      "note": "接收包有錄取信與行前guide、指定日期／Centrair接駁；先核包再安排機票，visa取得後赴日。2027春到達日明示待決，不能套2026日期。正式選課到校完成；獎學金銀行資料一般春6/15／秋11/15前登記，未登記失资格；個人当期核對。",
+      "sources": [
+        {
+          "source_id": "application",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/application/",
+          "sha256": "3cfcd788560d569f0e4a3631fdb63cae39298da284db90360e404befc1d67324",
+          "checked_at": "2026-10-09T05:50:55.242452+00:00",
+          "metadata_path": "sources/application/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "a6d74ba7d4a0ac0408403eda0c8556d20e4d2ec59f3c26f218ed484bd9c251b5",
+              "char_count": 5835
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "dates",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/dates/",
+          "sha256": "0e14e40581bc34f6cc4ca68939c60b4004bcd6046701ea3ba33d1edb9dd3324c",
+          "checked_at": "2026-10-09T05:50:55.243410+00:00",
+          "metadata_path": "sources/dates/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "35a3bc41e6a7f09b84c31f177b2100d9512fd1c1a7558e21a51bc8f69603c0ea",
+              "char_count": 4772
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "pickup",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/pickupservice/index.html",
+          "sha256": "1a6d43cf4c33ea5f80b1a564726343427191fa5b1cfe343ae1dedcd1c2367b60",
+          "checked_at": "2026-10-09T05:52:34.613855+00:00",
+          "metadata_path": "sources/pickup/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "ce6c4e4003199edf105af1f3d7b52b27e82743e4e52339a2420ee21c73f8e1d2",
+              "char_count": 1943
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "faq",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/faq/index.html",
+          "sha256": "008f6b42fd4f93c805050b024a47c6fb32f30cdf3679859e00720e2a719b441e",
+          "checked_at": "2026-10-09T05:52:35.578730+00:00",
+          "metadata_path": "sources/faq/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "29d6ec203e10a71c20c20d1c3f73d89b4100530d802228166da477baee92da65",
+              "char_count": 6442
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "scholarships",
+          "url": "https://www-e.nufs.ac.jp/interchange/incoming/scholarships/index.html",
+          "sha256": "72e1c5ff314fb31fc6761681c176fa8782133aa88e8071c918d2223530ae846f",
+          "checked_at": "2026-10-09T05:52:34.137545+00:00",
+          "metadata_path": "sources/scholarships/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "e908212b53a031e8cb3089a20d8c151235f9c8c0cfd252e5359d2389e7740d11",
+              "char_count": 5601
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    }
+  }
+}

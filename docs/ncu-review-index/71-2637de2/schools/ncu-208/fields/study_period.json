@@ -1,0 +1,50 @@
+{
+  "key": "study_period",
+  "label": "交換期間／校曆",
+  "status": "needs_confirmation",
+  "note": "現行首頁只見2025活動；PMB頁2021年學位入學校曆，不用來推出2027交換學期或考試／到校日。",
+  "source_urls": [
+    "https://io.uny.ac.id/",
+    "https://pmb.uny.ac.id/international-students/program"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://io.uny.ac.id/",
+      "source_id": "host-uny-index",
+      "page": null,
+      "source_title": "UNY國際處現行首頁；仍列2025例",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "study_period",
+        "evidence_array_index": 0,
+        "text_sha256": "10272e4b919930f836bafb75d544e04a586d439e2ade53343e6382e07383f5eb",
+        "char_count": 671
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://pmb.uny.ac.id/international-students/program",
+      "source_id": "host-uny-old-degree",
+      "page": null,
+      "source_title": "UNY PMB國際Degree申請頁；仍列2021時程非交換",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "study_period",
+        "evidence_array_index": 1,
+        "text_sha256": "dfff6352f024a2ca1b39206866cbea2b8d3c9d85a97c8151a4f69c368ae804bf",
+        "char_count": 8400
+      }
+    }
+  ],
+  "unresolved": "116交換學期、正式校曆、迎新與最晚考試日待交換接收通知。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。"
+}

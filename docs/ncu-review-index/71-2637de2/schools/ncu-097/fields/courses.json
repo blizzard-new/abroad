@@ -1,0 +1,50 @@
+{
+  "key": "courses",
+  "label": "課程限制與選課",
+  "status": "needs_confirmation",
+  "note": "官方有大學部與associate課程列表，明載實際學期開課可不同，須當期課表確認；課程清單不表示每個領域皆對中央開放。 未標年Word稱Turkish課可為incoming以英文教，當期課程頁卻提醒依學期開课；語言及教授安排需每門課確認，不推定所有土語課保證英文開課。",
+  "source_urls": [
+    "https://erasmus.alanya.edu.tr/en/incoming-student/our-programs-and-course-lists/",
+    "https://erasmus.alanya.edu.tr/en/about-us/erasmus-fact-sheet/"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://erasmus.alanya.edu.tr/en/incoming-student/our-programs-and-course-lists/",
+      "source_id": "host-alku-courses",
+      "page": null,
+      "source_title": "ALKU Incoming課程",
+      "applicability": "ALKU（Alanya Alaaddin Keykubat University）未標學年Erasmus incoming官網與圖片；不能與Alanya University混用，不能先認定中央116一般交換屬KA171。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 96,
+        "field": "courses",
+        "evidence_array_index": 0,
+        "text_sha256": "02f6b818e50c11f90f8929203e012f107a342a2c04cc78630188dd44740593c5",
+        "char_count": 2462
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://erasmus.alanya.edu.tr/en/about-us/erasmus-fact-sheet/",
+      "source_id": "host-alku-factsheet",
+      "page": null,
+      "source_title": "ALKU Erasmus factsheet官方入口",
+      "applicability": "ALKU（Alanya Alaaddin Keykubat University）未標學年Erasmus incoming官網與圖片；不能與Alanya University混用，不能先認定中央116一般交換屬KA171。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 96,
+        "field": "courses",
+        "evidence_array_index": 1,
+        "text_sha256": "ea940ed125e0c0a596a0fe36dbb8be113b37b8d569dad275d77ec6debbe66f5e",
+        "char_count": 7326
+      }
+    }
+  ],
+  "unresolved": "116課目、先修、課程語言及可交換系所待核對。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "ALKU（Alanya Alaaddin Keykubat University）未標學年Erasmus incoming官網與圖片；不能與Alanya University混用，不能先認定中央116一般交換屬KA171。"
+}

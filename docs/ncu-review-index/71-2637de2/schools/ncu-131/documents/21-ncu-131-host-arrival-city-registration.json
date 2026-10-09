@@ -1,0 +1,83 @@
+{
+  "document_owner": "host",
+  "step": {
+    "rule_id": "ncu-131-host-arrival-city-registration",
+    "order": 21,
+    "phase": "抵達後",
+    "title": "依住所與資格：住址／國保／年金",
+    "responsible_party": "學生與所在地區役所／NU",
+    "timing": "2027春僅參考；中央116當期／適用身分與通知待核",
+    "summary": "MyNumber不強制作卡、可資格確認書；nondegree年金一般免除需批准，不預設零費。",
+    "details": [
+      "2026兩頁Life Startup已讀：passport／在留卡先辦住所、國保與年金／免除申請，再帶登錄後卡與學生證、學研災receipt；bankbook只是領獎學金者。2026 Oct13註冊MFA／ANPIC與場次不是2027期限，degree／nondegree分開影片未觀看；原完整guidebook真的指定帳密401，本批不能讀正文。",
+      "年金20–59按政府資格、FY2026月17920JPY不是2027價；nondegree學生一般免除／猶予需申請獲准，不自動套degree學生納付特例或預設0。按真住所市役所，不照教學校區自動推手續轄區。",
+      "NU國保頁原則未滿75住新潟加入，保費依身分住所收入，通常保險範圍自付30%／不包含治療100%；個人政府資格／費率與豁免尚未逐條核。MyNumber可當保險證但非強制作卡，沒卡免費資格確認書；不沿用2024停止核發的舊healthcard。"
+    ],
+    "document_requirements": [
+      {
+        "name": "僅按實際住所及資格辦理：國保／住址登記、資格確認書或MyNumber",
+        "source_urls": [
+          "https://www.niigata-u.ac.jp/en/study/life/insurance/",
+          "https://www.niigata-u.ac.jp/en/information/17345/",
+          "https://www.niigata-u.ac.jp/wp-content/uploads/2026/08/ad93cd12fb9defcb2b7005afd44a0407.pdf"
+        ],
+        "needs_confirmation": true
+      }
+    ],
+    "scope": {
+      "home_universities": [
+        "國立中央大學"
+      ],
+      "partner_universities": [
+        "新潟大學 Niigata University"
+      ],
+      "academic_years": [
+        "116"
+      ]
+    },
+    "source_urls": [
+      "https://www.niigata-u.ac.jp/en/study/life/insurance/",
+      "https://www.niigata-u.ac.jp/en/information/17345/",
+      "https://www.niigata-u.ac.jp/wp-content/uploads/2026/08/ad93cd12fb9defcb2b7005afd44a0407.pdf"
+    ],
+    "checked_at": "2026-10-08T00:00:00Z",
+    "support_status": "needs_confirmation",
+    "needs_confirmation": true
+  },
+  "policies": [
+    {
+      "school_name": "新潟大學 Niigata University",
+      "rule_id": "ncu-131-host-arrival-city-registration",
+      "requirement_name": "僅按實際住所及資格辦理：國保／住址登記、資格確認書或MyNumber",
+      "requires_host_admission": true,
+      "requires_on_campus_housing": false,
+      "requires_institutional_confirmation": true,
+      "confirmation_note": "MyNumber不強制作卡、可資格確認書；nondegree年金一般免除需批准，不預設零費。",
+      "scope_note": "2027春／一般生活參考；不是中央116當期接收核准，IEC／研究科、支應／网站失败／国籍所在地等条件由兩校确认。",
+      "source_urls": [
+        "https://www.niigata-u.ac.jp/en/study/life/insurance/",
+        "https://www.niigata-u.ac.jp/en/information/17345/",
+        "https://www.niigata-u.ac.jp/wp-content/uploads/2026/08/ad93cd12fb9defcb2b7005afd44a0407.pdf"
+      ],
+      "checked_at": "2026-10-08",
+      "current_applicability_verified": false,
+      "source_versions": [
+        {
+          "source_id": "host-niigata-insurance",
+          "url": "https://www.niigata-u.ac.jp/en/study/life/insurance/",
+          "sha256": "964d82933f56efa6b80cb16671c1558fdb067fead3c18a59df537bdbac22cc74"
+        },
+        {
+          "source_id": "host-niigata-startup2026",
+          "url": "https://www.niigata-u.ac.jp/wp-content/uploads/2026/08/ad93cd12fb9defcb2b7005afd44a0407.pdf",
+          "sha256": "54f4e741a3c40275151a0c49309bf444ecc6b2638bec4229574e1df01ae441d2"
+        },
+        {
+          "source_id": "host-niigata-nhi-new-card",
+          "url": "https://www.niigata-u.ac.jp/en/information/17345/",
+          "sha256": "c7fc6cbce7c22b544751108da699bc16bc6590143c5cb4086019a3f2bc5cdad6"
+        }
+      ]
+    }
+  ]
+}

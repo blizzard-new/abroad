@@ -1,0 +1,50 @@
+{
+  "key": "tuition",
+  "label": "兩校學費／其他校方收費",
+  "status": "needs_confirmation",
+  "note": "協議範圍內免host學費，超協議可能Special Auditing每credit14800或Special Research每semester163800，須兩校核適用；FAQ degree入學282000與年535800不是交換費。",
+  "source_urls": [
+    "https://www.u-fukui.ac.jp/wp/wp-content/uploads/FACT-SHEET-2026-2027_ver6.pdf",
+    "https://www.u-fukui.ac.jp/eng/inbound/faq/"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.u-fukui.ac.jp/wp/wp-content/uploads/FACT-SHEET-2026-2027_ver6.pdf",
+      "source_id": "host-fukui-factsheet-v6",
+      "page": 9,
+      "source_title": "fukui-factsheet-v6",
+      "applicability": "2026–2027v5／v6、Spring2027guide／四原件與一般生活資料分開；全部仍非中央116對應2027秋／2028春完整核准。",
+      "checked_at": "2026-10-09",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 124,
+        "field": "tuition",
+        "evidence_array_index": 0,
+        "text_sha256": "730e635f27a2604601ec46cc1cc27910e93749732fb1e7e3a05419519dbb6799",
+        "char_count": 3866
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.u-fukui.ac.jp/eng/inbound/faq/",
+      "source_id": "host-fukui-faq",
+      "page": null,
+      "source_title": "fukui-faq",
+      "applicability": "2026–2027v5／v6、Spring2027guide／四原件與一般生活資料分開；全部仍非中央116對應2027秋／2028春完整核准。",
+      "checked_at": "2026-10-09",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 124,
+        "field": "tuition",
+        "evidence_array_index": 1,
+        "text_sha256": "093c380ec6012d014fcb59088b71b00ab0f3d974c6303b96bfbd2cb6ef924e0c",
+        "char_count": 11458
+      }
+    }
+  ],
+  "unresolved": "116中央協議額度／免學費及額外費用條款待核，不能以generic1–2當每期中央名額。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "2026–2027v5／v6、Spring2027guide／四原件與一般生活資料分開；全部仍非中央116對應2027秋／2028春完整核准。"
+}

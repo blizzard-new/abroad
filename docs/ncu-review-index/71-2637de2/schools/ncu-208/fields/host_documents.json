@@ -1,0 +1,86 @@
+{
+  "key": "host_documents",
+  "label": "外校申請文件／最新表格",
+  "status": "needs_confirmation",
+  "note": "PMB2021八項學位申請文件包含畢業證、使館推薦及USD4000財力，是degree track。未建立為中央交換生必繳清單；中央通用提名也不代表UNY的host文件已查完。 現行Study與Current International Students入口只有標題與导航，未提供交換申請包；Programs內容多為degree／短期，無最新semester exchange模板。",
+  "source_urls": [
+    "https://pmb.uny.ac.id/international-students/program",
+    "https://io.uny.ac.id/content/study-uny",
+    "https://io.uny.ac.id/content/current-intl-students",
+    "https://io.uny.ac.id/programs"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://pmb.uny.ac.id/international-students/program",
+      "source_id": "host-uny-old-degree",
+      "page": null,
+      "source_title": "UNY PMB國際Degree申請頁；仍列2021時程非交換",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "host_documents",
+        "evidence_array_index": 0,
+        "text_sha256": "dfff6352f024a2ca1b39206866cbea2b8d3c9d85a97c8151a4f69c368ae804bf",
+        "char_count": 8400
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://io.uny.ac.id/content/study-uny",
+      "source_id": "host-uny-study",
+      "page": null,
+      "source_title": "UNY現行Study at UNY入口；正文不足",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "host_documents",
+        "evidence_array_index": 1,
+        "text_sha256": "6603100ea54202550a8887551887572739ca6b1b78060f11a8da90016c9ce7b7",
+        "char_count": 12
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://io.uny.ac.id/content/current-intl-students",
+      "source_id": "host-uny-current",
+      "page": null,
+      "source_title": "UNY現行學生資源入口；正文不足",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "host_documents",
+        "evidence_array_index": 2,
+        "text_sha256": "95fc826fb4bc193a6a824734fe519c49551ff4d0a5f79d4ad809871477c31260",
+        "char_count": 21
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://io.uny.ac.id/programs",
+      "source_id": "host-uny-programs",
+      "page": null,
+      "source_title": "UNY現行國際學生programs；degree／短期分開",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "host_documents",
+        "evidence_array_index": 3,
+        "text_sha256": "ec3d07db283106c5205a4a81be65a4242a2504a25f078c0ca048e1d704bebd7d",
+        "char_count": 1491
+      }
+    }
+  ],
+  "unresolved": "116提名後host完整附件／空白表、語言／签名／章戳／份數／財力条件未取得；不聲稱官方未公告或登入限定。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。"
+}

@@ -1,0 +1,50 @@
+{
+  "key": "housing",
+  "label": "住宿與申請期限",
+  "status": "needs_confirmation",
+  "note": "住宿可於交換申請時一併申請AU Housing；另有Student Housing Aarhus、私人市場。AU furnished及Student Housing unfurnished是不同方案，Herning與Emdrup住宿另頁，不套用Aarhus市價目。 2026–27 factsheet：housing與admission同系統同截止；offer預計Fall7/1前、Spring12/15前，收到後48小時內接受並以信用卡付首月租金與booking fee。這不是2027–28已確認時程。",
+  "source_urls": [
+    "https://international.au.dk/life/locations/housing/auhousing/exchange-student",
+    "https://drive.google.com/file/d/1AdVkwhgEY3gs_o9SnS1uXCWXKGMIFQuP/view"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://international.au.dk/life/locations/housing/auhousing/exchange-student",
+      "source_id": "host-au-housing",
+      "page": null,
+      "source_title": "Aarhus交換住宿",
+      "applicability": "Aarhus官方2026/8–10更新；Technical Sciences頁2026/10/6修訂，含2027變更與仍列2026的課目。中央115僅School of Engineering，116方案與院別待確認。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 82,
+        "field": "housing",
+        "evidence_array_index": 0,
+        "text_sha256": "c7b6c07370e9437a6ce3ea7fa18a5718176bea270964fd070bf66e020bdf00f3",
+        "char_count": 1458
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://drive.google.com/file/d/1AdVkwhgEY3gs_o9SnS1uXCWXKGMIFQuP/view",
+      "source_id": "1AdVkwhgEY3gs_o9SnS1uXCWXKGMIFQuP",
+      "page": 2,
+      "source_title": "Aarhus_University_Fact_Sheet_2026-2027.pdf PDF",
+      "applicability": "Aarhus官方2026/8–10更新；Technical Sciences頁2026/10/6修訂，含2027變更與仍列2026的課目。中央115僅School of Engineering，116方案與院別待確認。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 82,
+        "field": "housing",
+        "evidence_array_index": 1,
+        "text_sha256": "66169fe615d41eba98fa207aa6c47fd821bfee16c51b17d4db4a45b12ae107c0",
+        "char_count": 2060
+      }
+    }
+  ],
+  "unresolved": "工程校區、2027住宿截止／價目與保證尚須核對。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Aarhus官方2026/8–10更新；Technical Sciences頁2026/10/6修訂，含2027變更與仍列2026的課目。中央115僅School of Engineering，116方案與院別待確認。"
+}

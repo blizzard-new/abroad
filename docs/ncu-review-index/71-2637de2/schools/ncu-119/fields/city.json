@@ -1,0 +1,50 @@
+{
+  "key": "city",
+  "label": "城市與校區位置",
+  "status": "needs_confirmation",
+  "note": "日本東京世田谷駒澤大學，官方英文首頁地址1-23-1 Komazawa；不是駒澤女子大學。2025交換指南國際中心地址與實際接收校區／研究所仍需核。",
+  "source_urls": [
+    "https://www.komazawa-u.ac.jp/english/",
+    "https://drive.google.com/file/d/10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w/view"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.komazawa-u.ac.jp/english/",
+      "source_id": "host-komazawa-home",
+      "page": null,
+      "source_title": "komazawa-home",
+      "applicability": "最新取得2025Exchange Program、未標年度宿舍及2026一般外國學生頁；UG／Grad／学位與交換分身分。不是116核准，全部host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 118,
+        "field": "city",
+        "evidence_array_index": 0,
+        "text_sha256": "4a85de93c01ac1f166ba2cb52ddabdf3bc09063470afa4275f9e2df8be0d70ef",
+        "char_count": 1124
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://drive.google.com/file/d/10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w/view",
+      "source_id": "10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w",
+      "page": 1,
+      "source_title": "1 Admission Information.pdf PDF",
+      "applicability": "最新取得2025Exchange Program、未標年度宿舍及2026一般外國學生頁；UG／Grad／学位與交換分身分。不是116核准，全部host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 118,
+        "field": "city",
+        "evidence_array_index": 1,
+        "text_sha256": "51f6f27585f7d46ecb2eb3d94cc4656f4683e21e047c2af3015a6b774c2977de",
+        "char_count": 1716
+      }
+    }
+  ],
+  "unresolved": "116實際接收學部／研究室與校區未取得。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "最新取得2025Exchange Program、未標年度宿舍及2026一般外國學生頁；UG／Grad／学位與交換分身分。不是116核准，全部host流程pending。"
+}

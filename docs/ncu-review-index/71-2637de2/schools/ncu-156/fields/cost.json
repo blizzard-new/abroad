@@ -1,0 +1,50 @@
+{
+  "key": "cost",
+  "label": "生活費",
+  "status": "needs_confirmation",
+  "note": "未標年新版PDF估生活KRW800000–1000000／月，含餐食、交通、書籍、娛樂等；未明言住宿是否已含，不與房費重複或省略估算。 舊2023版互惠／ISEP獎學金與新版GKS金額不同，均非中央生保證補助，不拿補助扣抵预算。",
+  "source_urls": [
+    "https://eng.uos.ac.kr/oia/web/file/download/uu/328b55bd2562426e9fc9284bed1a49fc",
+    "https://drive.google.com/file/d/1YTU2HTNgu80it9DHNHy-2OVZSFu7tEqd/view"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "human_visual_selected_passages",
+      "source_url": "https://eng.uos.ac.kr/oia/web/file/download/uu/328b55bd2562426e9fc9284bed1a49fc",
+      "source_id": "host-uos-partner-current",
+      "page": 10,
+      "source_title": "UOS 現連Partner Information；未標年，有舊圖層須視覺核對",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "cost",
+        "evidence_array_index": 0,
+        "text_sha256": "eca1de1bb7facf6e9402d6290f09233504f84b5229c1521a931fc4f58721697a",
+        "char_count": 440
+      }
+    },
+    {
+      "text_method": "human_visual_selected_passages",
+      "source_url": "https://drive.google.com/file/d/1YTU2HTNgu80it9DHNHy-2OVZSFu7tEqd/view",
+      "source_id": "1YTU2HTNgu80it9DHNHy-2OVZSFu7tEqd",
+      "page": 9,
+      "source_title": "UOS Partner Information_Web.pdf PDF",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "cost",
+        "evidence_array_index": 1,
+        "text_sha256": "0fe0d241c50c13b0569b22f40b7b23d229073acf6440816fa367aaf6c0cd45bb",
+        "char_count": 359
+      }
+    }
+  ],
+  "unresolved": "當期各項生活費、住宿是否含在月費及獎學金資格未核實。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。"
+}

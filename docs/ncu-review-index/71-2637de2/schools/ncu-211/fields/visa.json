@@ -1,0 +1,50 @@
+{
+  "key": "visa",
+  "label": "簽證／居留",
+  "status": "needs_confirmation",
+  "note": "政府E30F交換簽證正文Data Belum Tersedia；E30B／未標代碼教育FAQ是另一適用類別，不補造中央交換文件。",
+  "source_urls": [
+    "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E30F",
+    "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E30B"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E30F",
+      "source_id": "gov-id-e30f",
+      "page": null,
+      "source_title": "印尼政府E30F交換生頁正文Data Belum Tersedia",
+      "applicability": "ITERA現行設施與宿舍頁仍含2020 SOP／2021–22疫情國內TPB新生規則；已讀住宿與交通／合作部分，非全文／116交換接收包。International Office入口proxy403，OAIL是天文台而非國際處。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 208,
+        "field": "visa",
+        "evidence_array_index": 0,
+        "text_sha256": "1baf7e8c04de7b64f5d4e8f3a9b46a6438a1e7ea4abbba4f9b899050b74d2e3e",
+        "char_count": 995
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E30B",
+      "source_id": "gov-id-e30b",
+      "page": null,
+      "source_title": "印尼政府E30B高等教育；不自動套交換",
+      "applicability": "ITERA現行設施與宿舍頁仍含2020 SOP／2021–22疫情國內TPB新生規則；已讀住宿與交通／合作部分，非全文／116交換接收包。International Office入口proxy403，OAIL是天文台而非國際處。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 208,
+        "field": "visa",
+        "evidence_array_index": 1,
+        "text_sha256": "b7aa70a3f39f6a88749de125c5fc117060e66b8ecf36ac31b4cdbddae2bf08e4",
+        "char_count": 5347
+      }
+    }
+  ],
+  "unresolved": "ITERA當期交換sponsor、E30F文件／費率／时效及ITAS未核實。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "ITERA現行設施與宿舍頁仍含2020 SOP／2021–22疫情國內TPB新生規則；已讀住宿與交通／合作部分，非全文／116交換接收包。International Office入口proxy403，OAIL是天文台而非國際處。"
+}

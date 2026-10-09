@@ -1,0 +1,50 @@
+{
+  "key": "insurance",
+  "label": "保險",
+  "status": "needs_confirmation",
+  "note": "停留超過三月須加入國保，費用由住地與收入定，合資格低收入者可申請減額，原文一般醫療cover70%。 Gakkensai及Gakkenbai需包含通學／學研保障，非degree向系所留學生承辦辦理；Personal Liability原則也須加入。中央海外醫療／意外／急難救助要求另核，不以國保取代。 一般20歲以上住民年金須辦理，學生例外／減免需依本人資格申請，不能自動免繳。",
+  "source_urls": [
+    "https://www.suoic.shizuoka.ac.jp/english/international/medical-insurance/",
+    "https://www.suoic.shizuoka.ac.jp/wp-content/uploads/2026/09/General-Information-for-Exchange-Program-2027.pdf"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.suoic.shizuoka.ac.jp/english/international/medical-insurance/",
+      "source_id": "host-shizuoka-insurance-correct",
+      "page": null,
+      "source_title": "靜岡Health Care and Insurance",
+      "applicability": "2027春university-agreement事實表與2027一般介紹、現網一般生活及正文未標年舊中央工學院介紹分開；不當中央116當期開放／配額核准。",
+      "checked_at": "2026-10-09T04:27:34.932386+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 125,
+        "field": "insurance",
+        "evidence_array_index": 0,
+        "text_sha256": "23b5769909458a31f63d1007364ecd790d4386989cb11cb3fbc2140f02f6f6bf",
+        "char_count": 4132
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.suoic.shizuoka.ac.jp/wp-content/uploads/2026/09/General-Information-for-Exchange-Program-2027.pdf",
+      "source_id": "host-shizuoka-next-01",
+      "page": 12,
+      "source_title": "General Information for Exchange Program 2027",
+      "applicability": "2027春university-agreement事實表與2027一般介紹、現網一般生活及正文未標年舊中央工學院介紹分開；不當中央116當期開放／配額核准。",
+      "checked_at": "2026-10-09T04:22:39.908260+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 125,
+        "field": "insurance",
+        "evidence_array_index": 1,
+        "text_sha256": "b3b7540b8533c51a6c9eb793c056568b6517065e774f2527b68a680382b75190",
+        "char_count": 883
+      }
+    }
+  ],
+  "unresolved": "116保費、non-degree減免資格與國籍／住所及母校足額保障待確認；此為程序資訊非醫療判斷。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "2027春university-agreement事實表與2027一般介紹、現網一般生活及正文未標年舊中央工學院介紹分開；不當中央116當期開放／配額核准。"
+}

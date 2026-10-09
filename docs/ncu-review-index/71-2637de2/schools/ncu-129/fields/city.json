@@ -1,0 +1,68 @@
+{
+  "key": "city",
+  "label": "城市與校區位置",
+  "status": "needs_confirmation",
+  "note": "大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Takatsuki／Muse／Sakai／Suita Mirai等校區，不能用單一吹田地址當全部通勤。",
+  "source_urls": [
+    "https://www.kansai-u.ac.jp/Kokusai/future/about_en/",
+    "https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory01.php",
+    "https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory05.php"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.kansai-u.ac.jp/Kokusai/future/about_en/",
+      "source_id": "host-kansai-about-current",
+      "page": null,
+      "source_title": "關西交換方案",
+      "applicability": "現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。",
+      "checked_at": "2026-10-09T04:22:48.611954+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 128,
+        "field": "city",
+        "evidence_array_index": 0,
+        "text_sha256": "feca3f60646731db0060c7136aa8c497c918451c61424d282ea395bbfde6c297",
+        "char_count": 18558
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory01.php",
+      "source_id": "host-kansai-third-4",
+      "page": null,
+      "source_title": "Student House Shurei-ryo",
+      "applicability": "現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。",
+      "checked_at": "2026-10-09T04:27:35.992389+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 128,
+        "field": "city",
+        "evidence_array_index": 1,
+        "text_sha256": "1a9494e6977e073add722b007cfb27216ef204fe05e1c3b6edf58b8abb79ff80",
+        "char_count": 2016
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory05.php",
+      "source_id": "host-kansai-third-6",
+      "page": null,
+      "source_title": "Kansai University Global House (KU G-House)",
+      "applicability": "現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。",
+      "checked_at": "2026-10-09T04:27:36.205518+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 128,
+        "field": "city",
+        "evidence_array_index": 2,
+        "text_sha256": "151a3c2f34ec6fd007a3e2b23a0697513bda27685cde1fda95a21cedd7990445",
+        "char_count": 2773
+      }
+    }
+  ],
+  "unresolved": "116實際選課校區與分配房源／交通待確認。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。"
+}

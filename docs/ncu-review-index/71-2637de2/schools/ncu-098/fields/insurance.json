@@ -1,0 +1,32 @@
+{
+  "key": "insurance",
+  "label": "保險",
+  "status": "needs_confirmation",
+  "note": "SDU說明要求health insurance；有土耳其社會保險協定者須本國提供有印章保障證明，無協定者須符合居留規定的private health insurance。EHIC不可直接在土耳其用。 這是外校未標年说明，個人國籍／協定與現行移民規定尚須另查；另應符合中央醫療、意外與海外急難救助。",
+  "source_urls": [
+    "https://erasmus.sdu.edu.tr/en/mobilities/general-health-insurance-6578s.html"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://erasmus.sdu.edu.tr/en/mobilities/general-health-insurance-6578s.html",
+      "source_id": "host-sdu-insurance",
+      "page": null,
+      "source_title": "SDU健康保險說明",
+      "applicability": "Süleyman Demirel University官方未標年Erasmus申請頁；2026/10/8重讀HTTP200，先前HTTP500是讀取失敗紀錄。中央116與KA171適用待核對。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 97,
+        "field": "insurance",
+        "evidence_array_index": 0,
+        "text_sha256": "5311481fc7503eb38e5a127608d6a149f05357cb2a3cb9e5bead406c039eb853",
+        "char_count": 1516
+      }
+    }
+  ],
+  "unresolved": "尚未核對土耳其當期官方居留保險額度、學籍／國籍例外與購買流程。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Süleyman Demirel University官方未標年Erasmus申請頁；2026/10/8重讀HTTP200，先前HTTP500是讀取失敗紀錄。中央116與KA171適用待核對。"
+}

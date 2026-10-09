@@ -1,0 +1,50 @@
+{
+  "key": "city",
+  "label": "城市與校區位置",
+  "status": "needs_confirmation",
+  "note": "官方交換／生活頁地址為哈爾濱香坊區和興路26號；三棟國際生宿舍與第七學生公寓為舊指南，不能保證116臺灣學生上課／入住樓。",
+  "source_urls": [
+    "https://siee.nefu.edu.cn/jjy/jhsxm.htm",
+    "https://siee.nefu.edu.cn/info/1054/1144.htm"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://siee.nefu.edu.cn/jjy/jhsxm.htm",
+      "source_id": "host-nefu-exchange",
+      "page": null,
+      "source_title": "東北林業官方交換生項目（未標年／國際生範圍待確認）",
+      "applicability": "東北林業官網交換正文未標年度，生活指南搜尋索引標2017、正文未標適用學年；護照／外國人體檢及JW國際生程序不自动套臺灣track。公開表格入口已讀，但兩下載200不是原件；臺灣116包仍未取得。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 178,
+        "field": "city",
+        "evidence_array_index": 0,
+        "text_sha256": "fef0d1ee237183b7c8a87a8f2454e2b2cb660d6672ef3e313255abae94a14284",
+        "char_count": 1449
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://siee.nefu.edu.cn/info/1054/1144.htm",
+      "source_id": "host-nefu-life-2017",
+      "page": null,
+      "source_title": "東北林業2017生活指南（舊國際生參考）",
+      "applicability": "東北林業官網交換正文未標年度，生活指南搜尋索引標2017、正文未標適用學年；護照／外國人體檢及JW國際生程序不自动套臺灣track。公開表格入口已讀，但兩下載200不是原件；臺灣116包仍未取得。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 178,
+        "field": "city",
+        "evidence_array_index": 1,
+        "text_sha256": "66eb7da6cc1df36a57617b01785aa83e3f3501cc3e15ff0ed3b86ffc2edb666d",
+        "char_count": 29207
+      }
+    }
+  ],
+  "unresolved": "116教學與住宿楼、具體报到单位及校區仍待確認。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "東北林業官網交換正文未標年度，生活指南搜尋索引標2017、正文未標適用學年；護照／外國人體檢及JW國際生程序不自动套臺灣track。公開表格入口已讀，但兩下載200不是原件；臺灣116包仍未取得。"
+}

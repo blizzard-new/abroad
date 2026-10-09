@@ -1,0 +1,50 @@
+{
+  "key": "insurance",
+  "label": "保險",
+  "status": "needs_confirmation",
+  "note": "【芬蘭政府2026/10/8現行規則】少於兩年須醫療EUR120000，至少兩年為藥費40000，自負額最多300；一般交換適用短於兩年規則，須含疾病及意外、抵達時生效且覆蓋全留芬期間，不能用每趟90日限制旅平險。有效Kela／EHIC／GHIC另有豁免，需在移居後仍有效；不假設臺灣籍持有。 證明須姓名、保障期間／地域／內容、保額、自負額；Migri逐保單審查，列出的公司不是自動接受每個產品。Turku舊表只說自行保險，home要求與政府規則均須滿足。",
+  "source_urls": [
+    "https://migri.fi/en/insurance",
+    "https://migri.fi/en/instructions-for-exchange-students"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://migri.fi/en/insurance",
+      "source_id": "host-fi-insurance",
+      "page": null,
+      "source_title": "芬蘭Migri學生保險（政府規則）",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "insurance",
+        "evidence_array_index": 0,
+        "text_sha256": "3b6608f9f0739019268ebbe556535bf3150080cf408ce508567dcf967d1d0cc8",
+        "char_count": 5201
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://migri.fi/en/instructions-for-exchange-students",
+      "source_id": "host-fi-exchange",
+      "page": null,
+      "source_title": "芬蘭Migri交換生居留說明",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "insurance",
+        "evidence_array_index": 1,
+        "text_sha256": "3ab81ae742dbf9e42c468bd331a21bbe01469bdf1f22af9f0a06d536ead857ec",
+        "char_count": 7025
+      }
+    }
+  ],
+  "unresolved": "個人保單、居留長度及2027政策须出發前重新確認。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。"
+}

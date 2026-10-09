@@ -1,0 +1,86 @@
+{
+  "key": "visa",
+  "label": "簽證／居留",
+  "status": "needs_confirmation",
+  "note": "2025交換錄取後email COE及Acceptance Letter，持兩件申請student visa；最新版COE Excel／財力表未取得。與2026degree付款／不發LoA不同。JPETS僅個人適用按政府核，不全設臺灣學生檢查。 現在外國學生頁延簽通常在期限三月前開始，由校方委任行政書士处理；學位新生首次延簽前校證明、part-time許可／薪資只對有工作者，銀行與在學／成績／護照／在留卡原件按該程序，不当incoming初次八件。費用要查ISA當期，未造6000新價格。 臨時離日約一周前交校方表，再入境不得超過個人在留期限；打工須個人許可，host春假仍28h週的文字不是自行核發許可。年金減免需申請，不套自動免繳。",
+  "source_urls": [
+    "https://drive.google.com/file/d/10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w/view",
+    "https://www.komazawa-u.ac.jp/campuslife/international/foreign-students.html",
+    "https://jpets.mhlw.go.jp/index.html",
+    "https://www.nenkin.go.jp/international/english/purpose/enroll/index.html"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://drive.google.com/file/d/10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w/view",
+      "source_id": "10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w",
+      "page": 2,
+      "source_title": "1 Admission Information.pdf PDF",
+      "applicability": "最新取得2025Exchange Program、未標年度宿舍及2026一般外國學生頁；UG／Grad／学位與交換分身分。不是116核准，全部host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 118,
+        "field": "visa",
+        "evidence_array_index": 0,
+        "text_sha256": "40b15599433dbcab33cda5e5fec286e3ec05af5241fe5ec8dc71067593c14140",
+        "char_count": 2420
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.komazawa-u.ac.jp/campuslife/international/foreign-students.html",
+      "source_id": "host-komazawa-foreign-students2026",
+      "page": null,
+      "source_title": "komazawa-foreign-students2026",
+      "applicability": "最新取得2025Exchange Program、未標年度宿舍及2026一般外國學生頁；UG／Grad／学位與交換分身分。不是116核准，全部host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 118,
+        "field": "visa",
+        "evidence_array_index": 1,
+        "text_sha256": "d9c652679c6fb3d5a8991a5c220ae024836e47070cfb0684bfc3f2b31d618a3e",
+        "char_count": 3498
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://jpets.mhlw.go.jp/index.html",
+      "source_id": "host-niigata-government-jpets",
+      "page": null,
+      "source_title": "日本厚生勞動省JPETS入國前結核篩檢官網",
+      "applicability": "最新取得2025Exchange Program、未標年度宿舍及2026一般外國學生頁；UG／Grad／学位與交換分身分。不是116核准，全部host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 118,
+        "field": "visa",
+        "evidence_array_index": 2,
+        "text_sha256": "0a50939e70605b625722b79e971cfbc40887985e539111de9c21c9ec8975f380",
+        "char_count": 26286
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.nenkin.go.jp/international/english/purpose/enroll/index.html",
+      "source_id": "host-hokkaido-government-pension-enroll",
+      "page": null,
+      "source_title": "日本年金20–59歲及14日登錄指南",
+      "applicability": "最新取得2025Exchange Program、未標年度宿舍及2026一般外國學生頁；UG／Grad／学位與交換分身分。不是116核准，全部host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 118,
+        "field": "visa",
+        "evidence_array_index": 3,
+        "text_sha256": "85eb8618b1d051bf80f7b0453e6853b1a54fcfd2fa52e6ee22ac6715e083b4db",
+        "char_count": 2485
+      }
+    }
+  ],
+  "unresolved": "116COE／財力新表、個人簽證與延簽機關費用／條件未核。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "最新取得2025Exchange Program、未標年度宿舍及2026一般外國學生頁；UG／Grad／学位與交換分身分。不是116核准，全部host流程pending。"
+}

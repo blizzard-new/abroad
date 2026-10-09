@@ -1,0 +1,50 @@
+{
+  "key": "housing",
+  "label": "住宿與申請期限",
+  "status": "needs_confirmation",
+  "note": "交換頁稱接受offer後Global team代訂；住宿頁明列臺灣／港澳與international且房間由外部管理、非校方直營。SIP多數最短一學年，Wenhua可一學期或一年，延期不保證；單學期不能套全年的Parfait報價／租約。 未標年SIP參考：Wenhua北57／南62RMB每日，不含水電，單學期押金2000、全年4000及utilities600；Parfait International57／日但一年合約，其他房型各50–102／日，需按房型租約確認。太倉双人6000／床／年或650／月，單人14000／年或1500／月，日租25／60至少30天；到前整筆轉帳，入住現金押金300及utility300。",
+  "source_urls": [
+    "https://www.xjtlu.edu.cn/en/study/international-mobility/exchange-students",
+    "https://www.xjtlu.edu.cn/en/admissions/global/accommodation"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.xjtlu.edu.cn/en/study/international-mobility/exchange-students",
+      "source_id": "host-xjtlu-incoming",
+      "page": null,
+      "source_title": "XJTLU incoming Exchange and Partner Visiting（非outbound）",
+      "applicability": "XJTLU2026/10/8現行未標年度交換頁／住宿頁；中央115臺灣籍與學分不抵免註記，116適用待核對。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 182,
+        "field": "housing",
+        "evidence_array_index": 0,
+        "text_sha256": "c4954ea11fed29c8c59c93700b1dc3adc20ced5fd0bc3f706c966ccf7cf194fc",
+        "char_count": 6400
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.xjtlu.edu.cn/en/admissions/global/accommodation",
+      "source_id": "host-xjtlu-housing",
+      "page": null,
+      "source_title": "XJTLU accommodation（房型校區須分開）",
+      "applicability": "XJTLU2026/10/8現行未標年度交換頁／住宿頁；中央115臺灣籍與學分不抵免註記，116適用待核對。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 182,
+        "field": "housing",
+        "evidence_array_index": 1,
+        "text_sha256": "ae3a7e464c0a089c6a5d2a01cf94ed75845b8ebe1a630b2127720c04265ac4a3",
+        "char_count": 17472
+      }
+    }
+  ],
+  "unresolved": "2027價格、臺灣籍實際分配、租約保證與訂房截止未確認。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "XJTLU2026/10/8現行未標年度交換頁／住宿頁；中央115臺灣籍與學分不抵免註記，116適用待核對。"
+}

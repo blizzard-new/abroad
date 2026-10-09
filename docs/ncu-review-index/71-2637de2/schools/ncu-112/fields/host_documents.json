@@ -1,0 +1,50 @@
+{
+  "key": "host_documents",
+  "label": "外校申請文件／最新表格",
+  "status": "needs_confirmation",
+  "note": "獲母校指定後交International Student Admission Application、official／certified transcript、certified bank statement、語言佐證、DS-2019 Information Form、Transcript Release Form、保險證明；兩項form可先傳影本但最後須正式本。",
+  "source_urls": [
+    "https://www.murraystate.edu/admissions/international/Admissions/ExchangeStudent/index.aspx",
+    "https://www.murraystate.edu/admissions/international/Admissions/ExchangeStudent/ExchangeChecklist.aspx"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.murraystate.edu/admissions/international/Admissions/ExchangeStudent/index.aspx",
+      "source_id": "host-murray-apply",
+      "page": null,
+      "source_title": "Murray交換及訪問學生申請",
+      "applicability": "Murray官方交換／訪問頁，未標年；中央115列為自費，不能套一般exchange免申請費／免學費。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 111,
+        "field": "host_documents",
+        "evidence_array_index": 0,
+        "text_sha256": "a953f3fcdcabf1edfdeddb7b00c25a8c2aa9ff8436a137eeb10e7fa752d8bcaa",
+        "char_count": 7968
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.murraystate.edu/admissions/international/Admissions/ExchangeStudent/ExchangeChecklist.aspx",
+      "source_id": "host-murray-checklist",
+      "page": null,
+      "source_title": "Murray文件／語言／生活checklist",
+      "applicability": "Murray官方交換／訪問頁，未標年；中央115列為自費，不能套一般exchange免申請費／免學費。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 111,
+        "field": "host_documents",
+        "evidence_array_index": 1,
+        "text_sha256": "c54d80d33c44a921c974ac405216b63968b53b3320ec83b3d1abbfb724c524c7",
+        "char_count": 3903
+      }
+    }
+  ],
+  "unresolved": "此為designated exchange清單；中央自費訪問方案是否同樣適用、最新版forms須確認。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Murray官方交換／訪問頁，未標年；中央115列為自費，不能套一般exchange免申請費／免學費。"
+}

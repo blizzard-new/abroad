@@ -1,0 +1,50 @@
+{
+  "key": "host_documents",
+  "label": "外校申請文件／最新表格",
+  "status": "needs_confirmation",
+  "note": "提名後申請附件含護照影本、線上Student Application Form、成績單、英文能力文件及護照規格照片；官方圖另列Learning Agreement，共六項，不能以母校提名替代完整host文件。 ALKU確認後填studies或traineeship Learning Agreement，可依方案用OLA或KA171文件；學生與母校Erasmus coordinator先簽，掃描送外校系所coordinator countersign，再退回LA及acceptance。官網所連Google Form目前local HTTP401，未讀到欄位／附件容量，也未證明登入限制。",
+  "source_urls": [
+    "https://erasmus.alanya.edu.tr/en/incoming-student/application-process/",
+    "https://erasmus.alanya.edu.tr/media/xrtncz12/documents-to-send.jpg"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://erasmus.alanya.edu.tr/en/incoming-student/application-process/",
+      "source_id": "host-alku-apply",
+      "page": null,
+      "source_title": "ALKU Erasmus Incoming申請",
+      "applicability": "ALKU（Alanya Alaaddin Keykubat University）未標學年Erasmus incoming官網與圖片；不能與Alanya University混用，不能先認定中央116一般交換屬KA171。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 96,
+        "field": "host_documents",
+        "evidence_array_index": 0,
+        "text_sha256": "f31519ab54216dac1659d58b052acccafc130b929f83c67e0b6543b40177832b",
+        "char_count": 2100
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://erasmus.alanya.edu.tr/media/xrtncz12/documents-to-send.jpg",
+      "source_id": "host-alku-checklist",
+      "page": null,
+      "source_title": "ALKU官方Application Checklist圖片",
+      "applicability": "ALKU（Alanya Alaaddin Keykubat University）未標學年Erasmus incoming官網與圖片；不能與Alanya University混用，不能先認定中央116一般交換屬KA171。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 96,
+        "field": "host_documents",
+        "evidence_array_index": 1,
+        "text_sha256": "de0af2ab50929bfccf80b39802f38e837aa38123189b66c5ffe76e86188f53e1",
+        "char_count": 210
+      }
+    }
+  ],
+  "unresolved": "表格Google Form欄位未取得；學年／KA171適用、截止、簽章要求需提名通知確認。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "ALKU（Alanya Alaaddin Keykubat University）未標學年Erasmus incoming官網與圖片；不能與Alanya University混用，不能先認定中央116一般交換屬KA171。"
+}

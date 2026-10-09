@@ -1,0 +1,107 @@
+{
+  "document_owner": "host",
+  "step": {
+    "rule_id": "ncu-156-host-predeparture-documents",
+    "order": 8,
+    "phase": "行前準備",
+    "title": "核對外校錄取後與住宿行前文件",
+    "responsible_party": "學生與接收單位",
+    "summary": "依外校錄取及住宿適用条件另備文件；不是中央校內甄選必繳附件或一般申請上傳清單。",
+    "details": [
+      "【UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。】先取得正式入學文件再訂機票，按2027/8/31迎新與已核准宿舍入住安排抵達。準備健康證明、MMR英文證明、居留照片，依入境／入住當期清單核對。",
+      "【UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。】SeoulMate約開學前一個月email聯絡；到校迎新會說明選課、帳戶、居留、住宿，接收單位與教授決定課程及缺席處理，不假定晚到可不影響成績。"
+    ],
+    "document_requirements": [
+      {
+        "name": "校內住宿者：英文MMR兩劑日期／依宿舍規則核准之醫師證明",
+        "source_urls": [
+          "https://eng.uos.ac.kr/oia/web/contents/OIA_Studyat_01_04",
+          "https://eng.uos.ac.kr/oia/web/bbs/oia_faq02/list"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "校內住宿者：Health & Medical Clearance Form（6個月內TB，醫師及學生簽名）",
+        "signatures": [
+          "醫師填寫及簽名、日期",
+          "學生簽名及日期"
+        ],
+        "official_form_url": "https://eng.uos.ac.kr/oia/web/file/download/uu/d373b8995c2949b595c6d1b2ef6e0777",
+        "source_urls": [
+          "https://eng.uos.ac.kr/oia/web/file/download/uu/d373b8995c2949b595c6d1b2ef6e0777"
+        ],
+        "needs_confirmation": true
+      }
+    ],
+    "official_form_urls": [
+      "https://eng.uos.ac.kr/oia/web/file/download/uu/d373b8995c2949b595c6d1b2ef6e0777"
+    ],
+    "scope": {
+      "home_universities": [
+        "國立中央大學"
+      ],
+      "partner_universities": [
+        "首爾市立大學 University of Seoul"
+      ],
+      "academic_years": [
+        "116"
+      ]
+    },
+    "source_urls": [
+      "https://eng.uos.ac.kr/oia/web/contents/OIA_Studyat_01_04",
+      "https://eng.uos.ac.kr/oia/web/bbs/oia_faq02/list",
+      "https://eng.uos.ac.kr/oia/web/file/download/uu/d373b8995c2949b595c6d1b2ef6e0777"
+    ],
+    "checked_at": "2026-10-08T00:00:00Z",
+    "support_status": "needs_confirmation",
+    "needs_confirmation": true
+  },
+  "policies": [
+    {
+      "school_name": "首爾市立大學 University of Seoul",
+      "rule_id": "ncu-156-host-predeparture-documents",
+      "requirement_name": "校內住宿者：英文MMR兩劑日期／依宿舍規則核准之醫師證明",
+      "requires_host_admission": true,
+      "requires_on_campus_housing": true,
+      "scope_note": "MMR两劑日期或宿舍核准醫師替代證明；未獲核准不能自行免交。",
+      "source_urls": [
+        "https://eng.uos.ac.kr/oia/web/contents/OIA_Studyat_01_04",
+        "https://eng.uos.ac.kr/oia/web/bbs/oia_faq02/list"
+      ],
+      "checked_at": "2026-10-08",
+      "current_applicability_verified": false,
+      "source_versions": [
+        {
+          "source_id": "host-uos-housing",
+          "url": "https://eng.uos.ac.kr/oia/web/contents/OIA_Studyat_01_04",
+          "sha256": "638d0e5dfcd0bc938f9c47ec4bec20addbee38589a7c398b83fa1e2fad7a13bc"
+        },
+        {
+          "source_id": "host-uos-faq",
+          "url": "https://eng.uos.ac.kr/oia/web/bbs/oia_faq02/list",
+          "sha256": "bba78e21576f653bbbee530120088a0d7b72ba7165ba9dc605e875e5edc74b0d"
+        }
+      ]
+    },
+    {
+      "school_name": "首爾市立大學 University of Seoul",
+      "rule_id": "ncu-156-host-predeparture-documents",
+      "requirement_name": "校內住宿者：Health & Medical Clearance Form（6個月內TB，醫師及學生簽名）",
+      "requires_host_admission": true,
+      "requires_on_campus_housing": true,
+      "scope_note": "Health Form仍另需醫師及本人簽名、TB六個月內；不能代替MMR另件。",
+      "source_urls": [
+        "https://eng.uos.ac.kr/oia/web/file/download/uu/d373b8995c2949b595c6d1b2ef6e0777"
+      ],
+      "checked_at": "2026-10-08",
+      "current_applicability_verified": false,
+      "source_versions": [
+        {
+          "source_id": "host-uos-health-form",
+          "url": "https://eng.uos.ac.kr/oia/web/file/download/uu/d373b8995c2949b595c6d1b2ef6e0777",
+          "sha256": "d3652e4e3998e058acd3405d3b587cadb624f02948d19040aba21b5ee83f6f63"
+        }
+      ]
+    }
+  ]
+}

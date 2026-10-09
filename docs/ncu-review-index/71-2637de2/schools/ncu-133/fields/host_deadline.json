@@ -1,0 +1,68 @@
+{
+  "key": "host_deadline",
+  "label": "提名與外校申請期限",
+  "status": "needs_confirmation",
+  "note": "現行表只列2026入學：Apr提名2025/10/15、申請11/10；Oct提名2026/4/6、申請4/30。ACAP另June提名1/15申請2/10、Dec提名7/15申請8/10，YSEP僅Apr／Oct。這些都已過查核日；年例headline未標年，不能生成2027秋或2028春提醒；2025簡報May9也不沿用。",
+  "source_urls": [
+    "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap",
+    "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep",
+    "https://drive.google.com/file/d/16biupyf0pJEINQCZ5_Dlr4vMnMhKjKt0/view"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap",
+      "source_id": "host-science-acap",
+      "page": null,
+      "source_title": "東京科學官方：acap",
+      "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 132,
+        "field": "host_deadline",
+        "evidence_array_index": 0,
+        "text_sha256": "8a223f135df0d2b870845c8e82d8eac150512aee5019ba014ba1cdac904ae8fc",
+        "char_count": 18637
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep",
+      "source_id": "host-science-ysep",
+      "page": null,
+      "source_title": "東京科學官方：ysep",
+      "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 132,
+        "field": "host_deadline",
+        "evidence_array_index": 1,
+        "text_sha256": "1501762be4c68dc7cf50435f458792edc54597f5ffab17f2b901d0f1b23da890",
+        "char_count": 17065
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://drive.google.com/file/d/16biupyf0pJEINQCZ5_Dlr4vMnMhKjKt0/view",
+      "source_id": "16biupyf0pJEINQCZ5_Dlr4vMnMhKjKt0",
+      "page": 8,
+      "source_title": "14_Studying at Science Tokyo Programs for International Students.pdf PDF",
+      "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 132,
+        "field": "host_deadline",
+        "evidence_array_index": 2,
+        "text_sha256": "d6d0b6050aef906bf34acbb1b4d994d71c105c322304e4e6496e477440a268e8",
+        "char_count": 330
+      }
+    }
+  ],
+  "unresolved": "116可送梯次及2027／2028提名、host上傳deadline／時區尚未找到；不稱官方尚未公告或用11/10年例填當期。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。"
+}

@@ -1,0 +1,117 @@
+{
+  "document_owner": "host",
+  "step": {
+    "rule_id": "ncu-081-host-apply",
+    "order": 5,
+    "phase": "合作校申請",
+    "title": "核對外校當期文件並依通知申請",
+    "responsible_party": "學生與兩校國際處",
+    "summary": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+    "details": [
+      "【Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。】SoleMove收到母校提名後啟用，交英文正式簽章或電子驗證Transcript、Language Certificate、護照照片頁或official ID；居留卡或駕照不可替代ID。",
+      "【Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。】填proposed study plan並等外校endorse；非EU bilateral若母校要求LA則上傳學生／母校簽章PDF，Erasmus+ICM必繳LA、Erasmus OLA在錄取後按已核准課目填。方案不同不一律要求同一版LA。",
+      "【Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。】Language Assessment Sheet由學生及具第一手認識的專業語言老師共同評估／簽名，老師加official stamp。non-EU LA現連Word有學生簽名、母校departmental與institutional coordinator、外校departmental與institutional coordinator欄；依交換方案確認核章次序。",
+      "【Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。】現連Language Assessment Sheet已將DOC轉為兩頁並逐頁視覺核對：A1–C2六級，Listening、Reading、Spoken Interaction、Spoken Production、Writing五项，學生及教師各逐項選一級；兩方簽名／日期及教師official stamp。轉檔頁碼不是原件固定PDF頁碼。",
+      "【Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。】PDF Fall2026非EU提名3/1–4/1申請3/15–4/15；Spring2027提名卻寫2027/8/15–10/1，申請為2026/9/1–10/15，原文順序矛盾。官網年例申請Fall非EU4/15、EU4/30、Spring10/15 Finnish23:59；不自動校正PDF提名年或推定116截止。",
+      "【Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。】官網B2與兩年內語言證明；可用母校蓋章簽名B2函／Language Assessment Sheet／認可測驗，不接受OLS、TOEIC、Duolingo。全英文學士以上學位或native有transcript重傳形式豁免。中央接受TOEIC，不等於Turku也接受。",
+      "【Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。】官網TOEFL段落標ITP但值為iBT，分界寫2026/1/26，舊總72／新4各科4；另IELTS6、PTE62、不收MyBest、IELTS單科60天內重考。保留ITP／iBT及日期差異，不由regex自行改為ETS分界。"
+    ],
+    "document_requirements": [
+      {
+        "name": "英文正式Transcript（手簽章或電子驗證）",
+        "signatures": [
+          "母校正式認證"
+        ],
+        "stamps": [
+          "母校章戳或電子驗證"
+        ],
+        "source_urls": [
+          "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "兩年內語言證明／Language Assessment Sheet（簽章）",
+        "signatures": [
+          "學生與language assessor（Assessment Sheet）"
+        ],
+        "stamps": [
+          "母校章戳"
+        ],
+        "official_form_url": "https://www.utu.fi/sites/default/files/media/Language_Assessment_Sheet.doc",
+        "source_urls": [
+          "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "護照照片頁／official ID（非駕照／居留卡）",
+        "source_urls": [
+          "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "SoleMove Proposed Study Plan",
+        "source_urls": [
+          "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+        ],
+        "needs_confirmation": true
+      },
+      {
+        "name": "依bilateral／ICM方案Learning Agreement PDF",
+        "signatures": [
+          "學生",
+          "母校departmental coordinator",
+          "母校institutional coordinator",
+          "外校departmental coordinator",
+          "外校institutional coordinator"
+        ],
+        "stamps": [
+          "母校"
+        ],
+        "official_form_url": "https://www.utu.fi/sites/default/files/media/Learning_Agreement_non-EU_0.docx",
+        "source_urls": [
+          "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+        ],
+        "needs_confirmation": true
+      }
+    ],
+    "official_form_urls": [
+      "https://www.utu.fi/sites/default/files/media/Language_Assessment_Sheet.doc",
+      "https://www.utu.fi/sites/default/files/media/Learning_Agreement_non-EU_0.docx"
+    ],
+    "scope": {
+      "home_universities": [
+        "國立中央大學"
+      ],
+      "partner_universities": [
+        "圖爾庫大學 University of Turku"
+      ],
+      "academic_years": [
+        "116"
+      ]
+    },
+    "source_urls": [
+      "https://drive.google.com/file/d/13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF/view",
+      "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies",
+      "https://www.utu.fi/en/study-at-utu/courses-in-english-for-exchange-students",
+      "https://www.utu.fi/en/study-at-utu/accepted-exchange-students/orientation",
+      "https://www.utu.fi/sites/default/files/media/Language_Assessment_Sheet.doc",
+      "https://www.utu.fi/sites/default/files/media/Learning_Agreement_non-EU_0.docx",
+      "https://migri.fi/en/studying-in-finland",
+      "https://migri.fi/en/insurance",
+      "https://migri.fi/en/instructions-for-exchange-students",
+      "https://migri.fi/en/residence-permit-application-for-studies",
+      "https://migri.fi/en/income-requirement-for-students",
+      "https://tys.fi/en/exchange-students",
+      "https://tys.fi/exchange-students/when-and-how-to-apply",
+      "https://tys.fi/exchange-students/payments",
+      "https://tys.fi/exchange-students/arrival-and-keys"
+    ],
+    "checked_at": "2026-10-08T00:00:00Z",
+    "support_status": "needs_confirmation",
+    "needs_confirmation": true
+  },
+  "policies": []
+}

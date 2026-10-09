@@ -1,0 +1,10 @@
+{
+  "checked_at": "2026-10-09T06:02:16.907906+00:00",
+  "failure_candidate": "823450500cc32eb1ccc1e37f7fdefbcdcdf5754e",
+  "browser_failure": "6/6 Target/Page crashed",
+  "observed_tmp_at_failure": "8.8G/8.9G, 50M free, 100%",
+  "recovery": "clean identical candidate copied to /workspace; own temporary checkout removed; use TMPDIR under /workspace",
+  "causal_status": "resource exhaustion observed; do not treat it as a proven application regression or Kyutech diagnosis",
+  "df": "Filesystem      Size  Used Avail Use% Mounted on\nnone            8.9G  8.2G  706M  93% /tmp\noverlay          32G  3.4G   27G  12% /workspace\n",
+  "memory": "               total        used        free      shared  buff/cache   available\nMem:           18055        9151        7061        8322       10538        8903\nSwap:              0           0           0\n"
+}
