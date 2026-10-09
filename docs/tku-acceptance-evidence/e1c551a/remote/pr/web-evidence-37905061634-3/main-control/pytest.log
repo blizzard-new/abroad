@@ -1,0 +1,335 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.6.0 -- /home/runner/work/abroad/abroad/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/runner/work/_temp/tku-main-control-checkout-3
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 4 items
+
+tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete FAILED [ 25%]
+tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure FAILED [ 50%]
+tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return FAILED [ 75%]
+tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward FAILED [100%]
+
+=================================== FAILURES ===================================
+________ test_reply_thread_reaction_retry_persistence_and_author_delete ________
+tests/e2e/test_discussion_round2.py:25: in test_reply_thread_reaction_retry_persistence_and_author_delete
+    search(page, marker)
+tests/e2e/test_discussion_reader.py:34: in search
+    expect(page).to_have_url(re.compile("discussion_q=.*" + marker[-8:]))
+E   AssertionError: Page URL expected to be 're.compile('discussion_q=.*7a72b728')'
+E   Actual value: http://127.0.0.1:39875/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#public-board 
+E   Call log:
+E     - Expect "to_have_url" with timeout 5000ms
+E       13 × locator resolved to <html lang="zh-Hant" data-theme="light" class="splash-on uw-motion-ready" data-icon-motion-engine="morphicons@1.7.0">…</html>
+E          - unexpected value "http://127.0.0.1:39875/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#public-board"
+E   
+E   Aria snapshot:
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - complementary "系統功能":
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - navigation "公開探索導覽":
+E       - link "首頁":
+E         - /url: "#home"
+E       - link "學校搜尋":
+E         - /url: "#partners"
+E       - link "論壇":
+E         - /url: "#forum"
+E       - link "用戶評價":
+E         - /url: "#feedback"
+E       - group:
+E         - link "我的申請":
+E           - /url: "#advisor"
+E     - button "返回上一頁": 返回
+E     - button "長庚大學":
+E       - strong: 長庚大學
+E     - button "切換為深色模式"
+E     - button "重新整理最新資料"
+E     - button "開啟通知中心"
+E     - status "已同步": 已同步 條件、收藏與申請進度已同步。
+E     - button "開啟E2E 測試學生帳號設定": E2E 測試學生
+E   - main:
+E     - status
+E     - region "公共留學板":
+E       - heading "公共留學板" [level=1]
+E       - button "發一篇文章"
+E       - navigation "貼文動態篩選":
+E         - link "全部":
+E           - /url: "#forum"
+E         - link "追蹤":
+E           - /url: "#following"
+E         - link "公共板":
+E           - /url: "#public-board"
+E         - link "語言學校":
+E           - /url: "#language-school-board"
+E         - link "長庚板":
+E           - /url: "#university-feed"
+E       - region "留學看板":
+E         - article:
+E           - text: 公共看板
+E           - heading "公共留學板" [level=2]
+E           - paragraph: 跨校申請、簽證、住宿與海外生活。
+E           - link "查看貼文":
+E             - /url: "#public-board"
+E         - article:
+E           - text: 校級看板
+E           - heading "長庚大學板" [level=2]
+E           - paragraph: 長庚學生的交換申請資訊與討論。
+E           - button "追蹤長庚大學板": 追蹤
+E           - link "進入看板":
+E             - /url: "#board=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8"
+E         - article:
+E           - text: 公共主題板
+E           - heading "語言學校板" [level=2]
+E           - paragraph: 課程與海外生活交流；不提供申請代辦。
+E           - link "查看討論":
+E             - /url: "#language-school-board"
+E       - text: 每一段旅程，都有人同行
+E       - heading "聊聊留學大小事" [level=2]
+E       - textbox "搜尋學校、國家或問題"
+E       - group "文章分類":
+E         - button "全部" [pressed]
+E         - button "申請"
+E         - button "獎學金"
+E         - button "住宿"
+E         - button "生活費"
+E         - button "簽證"
+E         - button "課程"
+E         - button "生活"
+E         - button "就業"
+E         - button "避雷"
+E       - text: 文章排序
+E       - combobox "文章排序":
+E         - option "最新文章" [selected]
+E         - option "較早文章"
+E         - option "待回覆"
+E       - button "我的文章收藏"
+E       - status: 收藏同步到登入帳號
+E       - article:
+E         - text: 公共留學板
+E         - time: 2026/10/09 上午07:40
+E         - heading "討論測試7a72b728 日本交換經驗 00" [level=3]:
+E           - link "討論測試7a72b728 日本交換經驗 00":
+E             - /url: /?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&discussion=7171b045099e4447a705d11702698ece#public-board
+E         - paragraph: 這是日本交換申請經驗，請核對你申請年度的官方公告。 第二段分享住宿與簽證準備。
+E         - text: 申請 日本 2027 秋季 準備申請 匿名學生
+E         - link "2 則回覆":
+E           - /url: /?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&discussion=7171b045099e4447a705d11702698ece#public-board
+E         - button "收藏文章：討論測試7a72b728 日本交換經驗 00": 收藏
+E       - status: 已載入 1 篇文章
+E       - complementary:
+E         - region "你的經驗，會是誰的起點":
+E           - heading "你的經驗，會是誰的起點" [level=3]
+E           - paragraph: 一個提醒，就能讓同學少走彎路。
+E           - list:
+E             - listitem: 01 說說你去了哪裡
+E             - listitem: 02 帶上年份與申請階段
+E             - listitem: 03 分享遇到的問題或心得
+E           - button "寫下我的經驗"
+E         - region "安心交流，一起守護":
+E           - heading "安心交流，一起守護" [level=3]
+E           - paragraph: 暱稱發文，保護彼此的隱私。
+E           - list:
+E             - listitem: 不公開電話、信箱或社群帳號
+E             - listitem: 私訊需對方接受，可檢舉與封鎖
+E             - listitem: 申請資訊請再核對官方公告
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms
+____________ test_life_fallback_retains_evidence_on_refresh_failure ____________
+tests/e2e/test_life_context.py:39: in test_life_fallback_retains_evidence_on_refresh_failure
+    food.get_by_text("原文與來源", exact=True).click()
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("[data-life-theme=\"food\"]").get_by_text("原文與來源", exact=True)
+_______________ test_every_tool_has_shared_navigation_and_return _______________
+tests/e2e/test_navigation_guide.py:95: in test_every_tool_has_shared_navigation_and_return
+    page.locator(f'.application-tools-panel a[href="#{route}"]').click()
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator(".application-tools-panel a[href=\"#favorites\"]")
+____________ test_school_return_retains_filters_scroll_and_forward _____________
+tests/e2e/test_navigation_guide.py:124: in test_school_return_retains_filters_scroll_and_forward
+    assert tabs["y"] >= toolbar["y"] + toolbar["height"]
+E   assert 8 >= (383 + 119)
+- generated xml file: /home/runner/work/_temp/web-evidence/main-control/suite.xml -
+============================= slowest 20 durations =============================
+34.77s call     tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure
+33.09s call     tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return
+19.12s call     tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete
+3.42s call     tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward
+0.71s setup    tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete
+0.23s teardown tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward
+0.20s teardown tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete
+0.18s teardown tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure
+0.14s setup    tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return
+0.14s setup    tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure
+0.06s setup    tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward
+0.01s teardown tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return
+=========================== short test summary info ============================
+FAILED tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete - AssertionError: Page URL expected to be 're.compile('discussion_q=.*7a72b728')'
+Actual value: http://127.0.0.1:39875/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#public-board 
+Call log:
+  - Expect "to_have_url" with timeout 5000ms
+    13 × locator resolved to <html lang="zh-Hant" data-theme="light" class="splash-on uw-motion-ready" data-icon-motion-engine="morphicons@1.7.0">…</html>
+       - unexpected value "http://127.0.0.1:39875/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#public-board"
+
+Aria snapshot:
+- link "跳到主要內容":
+  - /url: "#main-content"
+- complementary "系統功能":
+  - link "UniWay 首頁":
+    - /url: "#home"
+    - strong: UniWay
+  - navigation "公開探索導覽":
+    - link "首頁":
+      - /url: "#home"
+    - link "學校搜尋":
+      - /url: "#partners"
+    - link "論壇":
+      - /url: "#forum"
+    - link "用戶評價":
+      - /url: "#feedback"
+    - group:
+      - link "我的申請":
+        - /url: "#advisor"
+  - button "返回上一頁": 返回
+  - button "長庚大學":
+    - strong: 長庚大學
+  - button "切換為深色模式"
+  - button "重新整理最新資料"
+  - button "開啟通知中心"
+  - status "已同步": 已同步 條件、收藏與申請進度已同步。
+  - button "開啟E2E 測試學生帳號設定": E2E 測試學生
+- main:
+  - status
+  - region "公共留學板":
+    - heading "公共留學板" [level=1]
+    - button "發一篇文章"
+    - navigation "貼文動態篩選":
+      - link "全部":
+        - /url: "#forum"
+      - link "追蹤":
+        - /url: "#following"
+      - link "公共板":
+        - /url: "#public-board"
+      - link "語言學校":
+        - /url: "#language-school-board"
+      - link "長庚板":
+        - /url: "#university-feed"
+    - region "留學看板":
+      - article:
+        - text: 公共看板
+        - heading "公共留學板" [level=2]
+        - paragraph: 跨校申請、簽證、住宿與海外生活。
+        - link "查看貼文":
+          - /url: "#public-board"
+      - article:
+        - text: 校級看板
+        - heading "長庚大學板" [level=2]
+        - paragraph: 長庚學生的交換申請資訊與討論。
+        - button "追蹤長庚大學板": 追蹤
+        - link "進入看板":
+          - /url: "#board=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8"
+      - article:
+        - text: 公共主題板
+        - heading "語言學校板" [level=2]
+        - paragraph: 課程與海外生活交流；不提供申請代辦。
+        - link "查看討論":
+          - /url: "#language-school-board"
+    - text: 每一段旅程，都有人同行
+    - heading "聊聊留學大小事" [level=2]
+    - textbox "搜尋學校、國家或問題"
+    - group "文章分類":
+      - button "全部" [pressed]
+      - button "申請"
+      - button "獎學金"
+      - button "住宿"
+      - button "生活費"
+      - button "簽證"
+      - button "課程"
+      - button "生活"
+      - button "就業"
+      - button "避雷"
+    - text: 文章排序
+    - combobox "文章排序":
+      - option "最新文章" [selected]
+      - option "較早文章"
+      - option "待回覆"
+    - button "我的文章收藏"
+    - status: 收藏同步到登入帳號
+    - article:
+      - text: 公共留學板
+      - time: 2026/10/09 上午07:40
+      - heading "討論測試7a72b728 日本交換經驗 00" [level=3]:
+        - link "討論測試7a72b728 日本交換經驗 00":
+          - /url: /?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&discussion=7171b045099e4447a705d11702698ece#public-board
+      - paragraph: 這是日本交換申請經驗，請核對你申請年度的官方公告。 第二段分享住宿與簽證準備。
+      - text: 申請 日本 2027 秋季 準備申請 匿名學生
+      - link "2 則回覆":
+        - /url: /?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&discussion=7171b045099e4447a705d11702698ece#public-board
+      - button "收藏文章：討論測試7a72b728 日本交換經驗 00": 收藏
+    - status: 已載入 1 篇文章
+    - complementary:
+      - region "你的經驗，會是誰的起點":
+        - heading "你的經驗，會是誰的起點" [level=3]
+        - paragraph: 一個提醒，就能讓同學少走彎路。
+        - list:
+          - listitem: 01 說說你去了哪裡
+          - listitem: 02 帶上年份與申請階段
+          - listitem: 03 分享遇到的問題或心得
+        - button "寫下我的經驗"
+      - region "安心交流，一起守護":
+        - heading "安心交流，一起守護" [level=3]
+        - paragraph: 暱稱發文，保護彼此的隱私。
+        - list:
+          - listitem: 不公開電話、信箱或社群帳號
+          - listitem: 私訊需對方接受，可檢舉與封鎖
+          - listitem: 申請資訊請再核對官方公告
+- paragraph:
+  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+  - button "停用匿名使用統計"
+  - text: 。
+  - link "隱私權政策":
+    - /url: /privacy
+  - link "使用條款":
+    - /url: /terms
+FAILED tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("[data-life-theme=\"food\"]").get_by_text("原文與來源", exact=True)
+FAILED tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator(".application-tools-panel a[href=\"#favorites\"]")
+FAILED tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward - assert 8 >= (383 + 119)
+========================= 4 failed in 92.91s (0:01:32) =========================

@@ -1,0 +1,125 @@
+CONFTEST LOADED!
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_verified_student_reports_workflow_issue_and_admin_closes_it _______
+
+page = <Page url='http://127.0.0.1:40669/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&view=list&q=%E6%9E%97%E8%82%AF#school=%E6%9E%97%E8%82%AF%E5%A4%A7%E5%AD%B8%20Lincoln%20University'>
+browser = <Browser type=<BrowserType name=chromium executable_path=/tmp/tku-browsers/chromium-1234/chrome-linux64/chrome> version=151.0.7922.34>
+live_server = LiveServer(base_url='http://127.0.0.1:40669', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-174/web-e2e-data0'))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5fe6d82c90>
+
+    def test_verified_student_reports_workflow_issue_and_admin_closes_it(
+        page: Page,
+        browser: Browser,
+        live_server: LiveServer,
+        monkeypatch,
+    ) -> None:
+        student_email = _email("workflow-issue-student")
+        student_session = live_server.register(student_email, "E2E 規定回報學生")
+        live_server.verify_student(student_session["profile"]["id"])
+        login_through_web(page, live_server, student_email)
+    
+        page.evaluate("window.location.hash = '#partners'")
+        expect(page.locator("#partner-search")).to_be_visible()
+        page.locator("#partner-search").fill("林肯")
+        page.locator(
+            f'#partner-table .school-detail-trigger[data-school-name="{LINCOLN}"]'
+        ).first.click()
+        page.locator("#detail-tab-application").click()
+    
+        report_button = page.locator("[data-workflow-issue-report]").first
+        expect(report_button).to_be_visible(timeout=15_000)
+        report_button.click()
+        dialog = page.locator("#workflow-issue-report-dialog")
+        expect(dialog).to_be_visible()
+        expect(dialog).to_contain_text("回報不會直接修改學生看到的正式規定")
+    
+        description = "官方頁面的截止日期與目前流程不同，請重新核對後續正式修正。"
+        dialog.locator('select[name="category"]').select_option("deadline")
+        dialog.locator('textarea[name="description"]').fill(description)
+        dialog.locator('input[name="official_source_url"]').fill(
+            "https://www.lincoln.ac.nz/study/international-students/"
+        )
+        dialog.locator('input[name="confirm_boundary"]').check()
+        with page.expect_response(
+            lambda response: response.url
+            == f"{live_server.base_url}/application-workflow-issue-reports"
+            and response.request.method == "POST"
+        ) as submitted_response_info:
+            dialog.locator('button[type="submit"]').click()
+        submitted_response = submitted_response_info.value
+        assert submitted_response.status == 202
+        report = submitted_response.json()
+        assert report["status"] == "pending"
+        assert report["description"] == description
+        expect(dialog).to_be_hidden()
+        expect(page.locator("#page-status")).to_contain_text(
+            "回報已送出。管理員會先核對"
+        )
+    
+        reviewer_email = _email("workflow-issue-reviewer")
+        monkeypatch.setenv("EXCHANGE_CONTENT_ADMIN_EMAILS", reviewer_email)
+        reviewer_session = live_server.register(reviewer_email, "E2E 規定核對管理員")
+        admin_context = browser.new_context(viewport={"width": 390, "height": 844})
+        admin_page = admin_context.new_page()
+        try:
+            _open_content_review_workbench(
+                admin_page,
+                live_server,
+                reviewer_email,
+                reviewer_session,
+            )
+            card = admin_page.locator(
+                f'[data-workflow-issue-report-id="{report["id"]}"]'
+            )
+            expect(card).to_be_visible(timeout=15_000)
+            expect(card).to_contain_text(description)
+            expect(card).to_contain_text("回報成立只會關閉本案")
+            card.locator("[data-workflow-issue-report-note]").fill(
+                "已核對學生提供的官方頁面，確認截止日期需要另開 revision 修正。"
+            )
+            with admin_page.expect_response(
+                lambda response: response.url
+                == (
+                    f"{live_server.base_url}/admin/"
+                    f"application-workflow-issue-reports/{report['id']}"
+                )
+                and response.request.method == "PATCH"
+            ) as reviewed_response_info:
+                card.locator('[data-workflow-issue-review="resolved"]').click()
+            reviewed_response = reviewed_response_info.value
+            assert reviewed_response.status == 200
+            expect(admin_page.locator("#review-announcement")).to_contain_text(
+                "正式規定尚未變更"
+            )
+>           expect(card).to_be_hidden()
+E           AssertionError: Locator expected to be hidden
+E           Actual value: visible 
+E           Call log:
+E             - Expect "to_be_hidden" with timeout 5000ms
+E             - waiting for locator("[data-workflow-issue-report-id=\"c9667827a5fa4e6c9354271fef1a94cc\"]")
+E               14 × locator resolved to <article class="workflow-issue-report-card status-resolved" data-workflow-issue-report-id="c9667827a5fa4e6c9354271fef1a94cc">…</article>
+E                  - unexpected value "visible"
+E           
+E           Aria snapshot:
+E           - article:
+E             - text: 長庚大學 → 林肯大學 Lincoln University
+E             - heading "完整申請流程" [level=3]
+E             - strong: 已確認
+E             - term: 類型
+E             - definition: 截止期限
+E             - term: 流程版本
+E             - definition
+E             - term: 回報時間
+E             - definition: 2026年10月9日 清晨7:49
+E             - strong: 學生說明
+E             - paragraph: 官方頁面的截止日期與目前流程不同，請重新核對後續正式修正。
+E             - link "開啟學生附上的官方來源 ↗":
+E               - /url: https://www.lincoln.ac.nz/study/international-students/
+E             - strong: E2E 規定核對管理員 · 2026年10月9日 清晨7:49
+E             - paragraph: 已核對學生提供的官方頁面，確認截止日期需要另開 revision 修正。
+
+tests/e2e/test_web_next_phase.py:1518: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_web_next_phase.py::test_verified_student_reports_workflow_issue_and_admin_closes_it
+1 failed in 33.71s

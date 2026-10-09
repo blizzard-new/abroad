@@ -1,0 +1,3 @@
+# TKU governance adapter milestone e1c551a
+
+Both completeCI runs:1786 passed/0 failed/16 skipped,1802 uniqueIDs/185 files. All1789 original093 IDs and all66 original4e failure IDs retained and actually exercised passing. Eight originalZIPs and all original members/XML/control logs/real exits preserved. Six actualcomplete runtime reports and eight original successful runtime steps validate33migrations; atomicgovernance is later3a8ca75, not claimed here. LocalfixedSHA57unit/1originalbrowser passes with cleanstart/endguards. Historicale300 browserfailure and5af fullCI failures remain attached to their own SHAs. No acceptance waiver; no mainmerge/deploy/productionDB or credentials/permission changes.

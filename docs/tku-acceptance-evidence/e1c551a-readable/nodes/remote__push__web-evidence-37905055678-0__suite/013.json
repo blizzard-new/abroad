@@ -1,0 +1,502 @@
+[
+  {
+    "id": "tests.test_source_applicability_cleanup::test_cleanup_clears_pre_review_source_applicability",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_source_applicability_cleanup::test_cleanup_preserves_formally_published_source_applicability",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_source_metadata_research_audit::test_inspection_recognizes_real_pdf_magic_with_bounded_read",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_source_metadata_research_audit::test_inspection_distinguishes_html_not_found_page_from_http_success",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_source_metadata_research_audit::test_inspection_finds_late_not_found_marker_within_default_bound",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_source_metadata_research_audit::test_inspection_rejects_fake_pdf_and_fails_closed_on_network_error",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_source_metadata_research_audit::test_manifest_audit_deduplicates_urls_and_accepts_normalized_html_title",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_source_metadata_research_audit::test_manifest_audit_reports_status_title_and_safety_mismatches",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_source_replacement_transport_audit::test_transport_inspection_detects_https_downgrade_without_reading_body",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_source_replacement_transport_audit::test_transport_inspection_fails_closed_on_network_error",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_source_replacement_transport_audit::test_manifest_audit_deduplicates_urls_and_reports_live_mismatch",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_source_replacement_transport_audit::test_manifest_audit_checks_supporting_urls_and_ineligible_research_leads",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_static_caching::test_a_versioned_script_may_be_kept_for_a_day_and_an_unversioned_one_is_always_checked",
+    "status": "passed",
+    "seconds": "0.166"
+  },
+  {
+    "id": "tests.test_static_caching::test_fonts_named_after_their_content_are_kept_for_good",
+    "status": "passed",
+    "seconds": "0.154"
+  },
+  {
+    "id": "tests.test_static_caching::test_pictures_are_kept_for_a_day",
+    "status": "passed",
+    "seconds": "0.156"
+  },
+  {
+    "id": "tests.test_static_caching::test_only_successful_static_answers_get_the_header_and_nothing_else_changes",
+    "status": "passed",
+    "seconds": "1.507"
+  },
+  {
+    "id": "tests.test_static_caching::test_pictures_on_pages_nobody_has_opened_yet_wait_but_the_ones_everyone_sees_first_do_not",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_static_caching::test_the_pictures_every_visitor_downloads_first_stay_small",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_student_view::test_cgu_dashboard_uses_verified_home_cycle_without_yearless_fallbacks",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_student_view::test_cgu_fall_round_is_announced_but_its_deadline_is_never_guessed",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_student_view::test_cgu_home_cycle_status_changes_without_changing_verified_dates",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_student_view::test_partner_rows_for_same_school_are_merged_into_program_options",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_student_view::test_partner_rows_merge_when_only_chinese_school_prefix_differs",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_student_view::test_partner_rows_replace_known_misdirected_official_websites",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_student_view::test_departmental_reference_partners_are_explicitly_not_central_open",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_student_view::test_partner_fetch_adds_missing_departmental_references_after_central_success",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_student_view::test_central_open_row_wins_over_same_departmental_reference",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_student_view::test_fetch_rule_explanations_builds_student_friendly_points",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_student_view::test_fetch_document_explanations_includes_related_forms",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_student_view::test_repurposed_teep_page_is_not_shown_as_teep_rules",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_submission_progress::test_all_supported_submission_methods_advance_and_revert[paper]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_submission_progress::test_all_supported_submission_methods_advance_and_revert[online]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_submission_progress::test_all_supported_submission_methods_advance_and_revert[email]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_submission_progress::test_all_supported_submission_methods_advance_and_revert[in_person]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_submission_progress::test_all_supported_submission_methods_advance_and_revert[mixed]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_submission_progress::test_paper_arrival_must_be_confirmed_before_completion[paper]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_submission_progress::test_paper_arrival_must_be_confirmed_before_completion[mixed]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_submission_progress::test_non_paper_methods_can_be_manually_completed_without_a_receipt[online]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_submission_progress::test_non_paper_methods_can_be_manually_completed_without_a_receipt[email]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_submission_progress::test_non_paper_methods_can_be_manually_completed_without_a_receipt[in_person]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_submission_progress::test_transition_rejects_skipped_states_and_changed_official_context",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_submission_progress::test_receipt_metadata_is_server_recorded_and_never_claims_a_file_was_stored",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_submission_progress::test_submission_progress_api_requires_login_and_syncs_metadata_only",
+    "status": "passed",
+    "seconds": "0.197"
+  },
+  {
+    "id": "tests.test_supabase_migration_syntax::test_all_supabase_migrations_parse_including_nested_function_bodies",
+    "status": "passed",
+    "seconds": "0.123"
+  },
+  {
+    "id": "tests.test_supabase_migration_syntax::test_nested_plpgsql_syntax_error_is_rejected",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_supabase_repositories::test_jsonl_repository_remains_an_explicit_local_fallback",
+    "status": "passed",
+    "seconds": "0.009"
+  },
+  {
+    "id": "tests.test_supabase_repositories::test_repository_factory_fails_closed_in_production_without_supabase",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_supabase_repositories::test_create_app_rejects_injected_local_backends_in_production",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_repositories::test_create_app_accepts_complete_supabase_production_configuration",
+    "status": "passed",
+    "seconds": "0.152"
+  },
+  {
+    "id": "tests.test_supabase_repositories::test_supabase_repository_keeps_secret_server_side_and_uses_atomic_workspace_rpc",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_repositories::test_supabase_account_deletion_uses_rpc_and_acknowledges_storage_cleanup",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_repositories::test_supabase_direct_account_delete_is_disabled",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_repositories::test_supabase_account_deletion_storage_jobs_use_service_rpcs",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_repositories::test_supabase_repository_hydrates_workspace_rows",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_repositories::test_api_can_use_injected_repository_without_reading_account_jsonl",
+    "status": "passed",
+    "seconds": "0.164"
+  },
+  {
+    "id": "tests.test_supabase_repositories::test_accounts_migration_denies_direct_client_roles",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_compose_is_pinned_isolated_and_loopback_only",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_account_deletion_payload_uses_canonical_application_fingerprint",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_account_deletion_replay_omits_deleted_actor_shape",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_public_moderation_rollback_payload_is_canonical",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_account_deletion_validates_workflow_issue_lifecycle_and_purge",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_harness_validates_real_storage_cleanup_scope",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_schema_gate_includes_workflow_issue_report_tables",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_workflow_issue_payloads_use_canonical_fingerprints",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_workflow_issue_rpc_permissions_are_service_role_only",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_workflow_issue_phase_is_wired_into_summary",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_report_review_payload_uses_canonical_community_fingerprint",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_harness_declares_two_instance_community_invariants",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_subprocess_timeout_is_bounded_and_redacts_sensitive_context",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_project_names_are_reserved_unique_and_ci_run_bound",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_rejects_arbitrary_project_names_and_invalid_ci_identity",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_compose_commands_forward_bounded_timeouts",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_cleanup_fails_when_project_resources_remain",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_cleanup_stops_before_resource_queries_when_down_fails",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_success_is_not_reported_when_final_cleanup_fails",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_preflight_cleanup_failure_prevents_validation",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_clean_success_reports_cleanup_only_after_both_cleanup_phases",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_primary_failure_is_not_hidden_by_diagnostics_or_cleanup",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_source_keeps_all_subprocesses_bounded_and_project_scoped",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_new_style_keys_go_in_apikey_only_and_legacy_jwts_in_both",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_repositories_use_those_headers",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_a_fully_set_up_project_passes_and_never_prints_the_key",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_missing_tables_function_and_bucket_are_each_reported",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_a_public_bucket_is_a_failure",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_a_rejected_key_stops_early_with_advice",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_publishable_keys_and_missing_settings_are_caught_before_any_request",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_a_public_key_that_can_read_the_accounts_table_is_a_failure",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_unreachable_projects_are_explained",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_environment_check_flags_what_production_needs",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_tables_hidden_from_the_api_are_confirmed_through_their_function",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_every_function_only_table_is_one_the_migrations_really_hide_from_service_role",
+    "status": "passed",
+    "seconds": "0.007"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_all_zero_keys_left_by_a_failed_generator_are_rejected",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_the_documented_key_generator_works_in_windows_powershell",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_setup_check::test_the_checker_knows_every_table_the_migrations_create",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_task_documents_and_reference_plan::test_document_names_decide_the_tool_before_stage_defaults",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_task_documents_and_reference_plan::test_uploads_without_a_tool_stay_listed_but_are_not_linked",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_task_documents_and_reference_plan::test_steps_without_documents_or_a_matching_stage_have_no_link",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_task_documents_and_reference_plan::test_stage_only_match_is_last_resort_and_labelled",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_task_documents_and_reference_plan::test_every_bundled_step_is_either_linked_listed_or_documentless",
+    "status": "passed",
+    "seconds": "0.137"
+  },
+  {
+    "id": "tests.test_task_documents_and_reference_plan::test_partner_application_data_does_not_open_the_home_application_tool",
+    "status": "passed",
+    "seconds": "0.000"
+  }
+]

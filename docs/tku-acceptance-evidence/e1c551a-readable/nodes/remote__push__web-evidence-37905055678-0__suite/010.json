@@ -1,0 +1,502 @@
+[
+  {
+    "id": "tests.test_next_phase_contract::test_frozen_openapi_contract_matches_live_schema",
+    "status": "passed",
+    "seconds": "1.584"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_next_phase_keeps_public_discovery_routes_available",
+    "status": "passed",
+    "seconds": "2.885"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_private_community_writes_expose_retry_mutation_header",
+    "status": "passed",
+    "seconds": "1.604"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_workflow_issue_report_contract_exposes_retry_and_admin_review_paths",
+    "status": "passed",
+    "seconds": "1.603"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_account_deletion_exposes_dedicated_retry_mutation_header",
+    "status": "passed",
+    "seconds": "1.593"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_api_contract_page_does_not_depend_on_csp_blocked_assets",
+    "status": "passed",
+    "seconds": "0.165"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_calendar_conflict_contract_preserves_application_plan_identity",
+    "status": "passed",
+    "seconds": "1.582"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_calendar_task_schedule_contract_is_explicit_and_non_ai",
+    "status": "passed",
+    "seconds": "2.841"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_external_calendar_contract_documents_subscription_boundary",
+    "status": "passed",
+    "seconds": "1.607"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_application_document_contract_keeps_official_forms_public_and_gates_generation",
+    "status": "passed",
+    "seconds": "1.575"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_document_completeness_contract_is_subscription_gated_and_ai_stays_paused",
+    "status": "passed",
+    "seconds": "1.610"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_ai_compatibility_contract_is_explicitly_paused",
+    "status": "passed",
+    "seconds": "1.562"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_application_workflow_contract_exposes_structured_rule_fields",
+    "status": "passed",
+    "seconds": "2.706"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_content_review_contract_exposes_nonpublishing_source_candidates",
+    "status": "passed",
+    "seconds": "1.588"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing",
+    "status": "passed",
+    "seconds": "1.570"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_destination_profile_review_contract_requires_explicit_audited_promotion",
+    "status": "passed",
+    "seconds": "1.575"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_application_workflow_publication_contract_exposes_safe_rollback",
+    "status": "passed",
+    "seconds": "1.552"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_application_document_review_contract_tracks_the_reviewed_version",
+    "status": "passed",
+    "seconds": "1.549"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_submission_progress_contract_tracks_manual_status_and_proof_metadata",
+    "status": "passed",
+    "seconds": "2.789"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_notification_contract_exposes_center_read_and_admin_run_routes",
+    "status": "passed",
+    "seconds": "1.576"
+  },
+  {
+    "id": "tests.test_notification_changes::test_changes_are_owned_and_hide_unrelated_department_and_reviewer",
+    "status": "passed",
+    "seconds": "0.194"
+  },
+  {
+    "id": "tests.test_notification_changes::test_review_gate_rejects_non_admin_duplicate_and_incomplete_publication",
+    "status": "passed",
+    "seconds": "0.280"
+  },
+  {
+    "id": "tests.test_notifications::test_five_default_deadline_nodes_are_idempotent",
+    "status": "passed",
+    "seconds": "0.015"
+  },
+  {
+    "id": "tests.test_notifications::test_paper_reminder_uses_arrival_deadline_not_send_by_date",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_notifications::test_deadline_reminders_can_be_customized_or_fully_disabled",
+    "status": "passed",
+    "seconds": "0.009"
+  },
+  {
+    "id": "tests.test_notifications::test_smart_reminder_uses_user_estimated_start_and_stops_when_ready",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_notifications::test_personal_calendar_task_uses_its_own_reminder_offset",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_notifications::test_public_free_account_does_not_receive_smart_start_reminder",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_notifications::test_email_is_not_queued_without_account_opt_in",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_notifications::test_email_failure_retries_without_storing_raw_error",
+    "status": "passed",
+    "seconds": "0.012"
+  },
+  {
+    "id": "tests.test_notifications::test_email_stops_after_four_failed_attempts",
+    "status": "passed",
+    "seconds": "0.015"
+  },
+  {
+    "id": "tests.test_notifications::test_pending_email_is_cancelled_after_user_opt_out",
+    "status": "passed",
+    "seconds": "0.011"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_targets_only_matching_established_plan",
+    "status": "passed",
+    "seconds": "0.021"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_uses_saved_plan_department_without_student_verification",
+    "status": "passed",
+    "seconds": "0.010"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_matches_college_scoped_rule_to_saved_plan",
+    "status": "passed",
+    "seconds": "0.012"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_email_is_opt_in_idempotent_and_includes_source",
+    "status": "passed",
+    "seconds": "0.014"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_email_is_cancelled_when_plan_no_longer_matches",
+    "status": "passed",
+    "seconds": "0.013"
+  },
+  {
+    "id": "tests.test_notifications::test_safe_workflow_rollback_notifies_only_affected_saved_plan",
+    "status": "passed",
+    "seconds": "0.086"
+  },
+  {
+    "id": "tests.test_notifications::test_pending_or_rejected_revision_never_creates_content_notification",
+    "status": "passed",
+    "seconds": "0.014"
+  },
+  {
+    "id": "tests.test_notifications::test_admin_publish_immediately_creates_one_content_update_notification",
+    "status": "passed",
+    "seconds": "0.201"
+  },
+  {
+    "id": "tests.test_notifications::test_dual_review_formalization_with_identical_content_sends_no_update",
+    "status": "passed",
+    "seconds": "0.017"
+  },
+  {
+    "id": "tests.test_notifications::test_notifications_migration_is_server_only",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_notifications::test_notification_center_requires_login_and_supports_read_state",
+    "status": "passed",
+    "seconds": "0.186"
+  },
+  {
+    "id": "tests.test_notifications::test_notification_center_can_mark_all_owned_notifications_read",
+    "status": "passed",
+    "seconds": "0.173"
+  },
+  {
+    "id": "tests.test_notifications::test_notification_center_queues_email_only_after_opt_in",
+    "status": "passed",
+    "seconds": "0.186"
+  },
+  {
+    "id": "tests.test_notifications::test_admin_can_run_due_notification_job",
+    "status": "passed",
+    "seconds": "0.168"
+  },
+  {
+    "id": "tests.test_ntpu_bundled_data::test_bundled_ntpu_catalog_is_complete",
+    "status": "passed",
+    "seconds": "2.476"
+  },
+  {
+    "id": "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+    "status": "passed",
+    "seconds": "0.497"
+  },
+  {
+    "id": "tests.test_ntpu_bundled_data::test_bundled_ntpu_completeness_report_has_all_required_fields",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_ntpu_bundled_data::test_default_loader_structures_local_overrides_before_merging_bundle",
+    "status": "passed",
+    "seconds": "0.182"
+  },
+  {
+    "id": "tests.test_ntpu_support::test_ntpu_aliases_resolve_to_the_same_home_university",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_ntpu_support::test_ntpu_partner_identity_ignores_pdf_location_suffix",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_ntpu_support::test_bundled_official_ntpu_lists_are_available_offline",
+    "status": "passed",
+    "seconds": "1.127"
+  },
+  {
+    "id": "tests.test_ntpu_support::test_ntpu_application_templates_do_not_leak_cgu_copy",
+    "status": "passed",
+    "seconds": "0.008"
+  },
+  {
+    "id": "tests.test_ntpu_support::test_ntpu_web_api_exposes_dashboard_rules_documents_and_search",
+    "status": "passed",
+    "seconds": "1.024"
+  },
+  {
+    "id": "tests.test_ntpu_support::test_ntpu_116_round_status_follows_the_announced_window_without_guessing",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_ntpu_support::test_116_quota_sheets_replace_the_115_lists_and_keep_every_continuing_school",
+    "status": "passed",
+    "seconds": "1.119"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_all_288_summaries_reach_dashboard_and_keep_source_text",
+    "status": "passed",
+    "seconds": "0.460"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_deadline_conflict_keeps_two_sources_without_confirmed_reminder",
+    "status": "passed",
+    "seconds": "0.231"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_helsinki_closure_is_limited_to_medicine_2027_28",
+    "status": "passed",
+    "seconds": "0.048"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u4e2d\\u8a9e\\u7d44-\\u5426-False]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u4e2d\\u8a9e\\u7d44-\\u662f-True]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u4e00\\u822c\\u7d44-\\u5426-True]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u65e5\\u8a9e\\u7d44-\\u5426-True]",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u5fb7\\u8a9e\\u7d44-\\u5426-True]",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u6cd5\\u8a9e\\u7d44-\\u5426-True]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u97d3\\u8a9e\\u7d44-\\u5426-True]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_language_fields_required_by_group_and_identity[\\u897f\\u8a9e\\u7d44-\\u5426-True]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e00\\u822c\\u7d44-\\u5426-GEPT-False]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e00\\u822c\\u7d44-\\u5426-BESTEP-False]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e00\\u822c\\u7d44-\\u5426-TOEIC-True]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e00\\u822c\\u7d44-\\u5426-Duolingo-True]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u65e5\\u8a9e\\u7d44-\\u5426-JLPT-False]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u65e5\\u8a9e\\u7d44-\\u5426-IELTS Academic-True]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e2d\\u8a9e\\u7d44-\\u662f-TOCFL-False]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e2d\\u8a9e\\u7d44-\\u662f-HSK-False]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_host_or_other_school_tests_cannot_replace_ntu_group_proof[\\u4e2d\\u8a9e\\u7d44-\\u662f-JLPT-True]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_planned_result_does_not_substitute_for_actual_valid_exam_date[2025-04-30-2026-11-01-True]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_planned_result_does_not_substitute_for_actual_valid_exam_date[2025-05-01--False]",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_planned_result_does_not_substitute_for_actual_valid_exam_date[2099-01-01--True]",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_planned_result_does_not_substitute_for_actual_valid_exam_date[not-a-date--True]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_planned_result_does_not_substitute_for_actual_valid_exam_date[-2026-11-01-False]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_ntu_manifest_api_accepts_chinese_exemption_and_enforces_international_exception",
+    "status": "passed",
+    "seconds": "0.236"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_documents_supplement_has_read_content_and_truthful_cycle_scope",
+    "status": "passed",
+    "seconds": "0.012"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_uncg_preserves_both_year_and_visa_scope_without_confirming_future_plan",
+    "status": "passed",
+    "seconds": "0.013"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_hope_deadlines_identity_exceptions_and_repayment_are_visible_in_api",
+    "status": "passed",
+    "seconds": "0.252"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_existing_document_templates_keep_language_fields_and_no_ntu_conditions[\\u9577\\u5e9a\\u5927\\u5b78]",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_ntu_audit::test_existing_document_templates_keep_language_fields_and_no_ntu_conditions[\\u570b\\u7acb\\u81fa\\u5317\\u5927\\u5b78]",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_ntu_integration::test_ntu_aliases_resolve_to_the_third_school[\\u81fa\\u5927]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_ntu_integration::test_ntu_aliases_resolve_to_the_third_school[\\u53f0\\u5927]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_ntu_integration::test_ntu_aliases_resolve_to_the_third_school[\\u53f0\\u7063\\u5927\\u5b78]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_ntu_integration::test_ntu_aliases_resolve_to_the_third_school[\\u570b\\u7acb\\u81fa\\u7063\\u5927\\u5b78]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_ntu_integration::test_ntu_aliases_resolve_to_the_third_school[NTU]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_ntu_integration::test_ntu_aliases_resolve_to_the_third_school[National Taiwan University]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_ntu_integration::test_shared_exchange_visiting_note_does_not_merge_different_schools",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_ntu_integration::test_ntu_email_domain_and_subdomains_are_recognized",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u5927\\u5b78\\u90e8-2.44-70-pass]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u5927\\u5b78\\u90e8-2-50-pass]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u5927\\u5b78\\u90e8-2.43-50.01-fail]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_ntu_integration::test_ntu_gpa_or_rank_and_graduate_exception[\\u5927\\u5b78\\u90e8-2.43-None-needs_confirmation]",
+    "status": "passed",
+    "seconds": "0.000"
+  }
+]

@@ -1,0 +1,854 @@
+{
+  "run": {
+    "id": 37905055678,
+    "name": "Web quality",
+    "node_id": "WFR_kwLOU62qx88AAAAI01E_vg",
+    "head_branch": "data/tku-exchange-20261008",
+    "head_sha": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c",
+    "path": ".github/workflows/quality.yml",
+    "display_title": "fix(tku): filter terminal issue reports from pending admin queue",
+    "run_number": 156,
+    "event": "push",
+    "status": "completed",
+    "conclusion": "success",
+    "workflow_id": 374368612,
+    "check_suite_id": 102699084883,
+    "check_suite_node_id": "CS_kwDOU62qx88AAAAX6VesUw",
+    "url": "https://api.github.com/repos/blizzard-new/abroad/actions/runs/37905055678",
+    "html_url": "https://github.com/blizzard-new/abroad/actions/runs/37905055678",
+    "pull_requests": [
+      {
+        "url": "https://api.github.com/repos/blizzard-new/abroad/pulls/2",
+        "id": 4781104031,
+        "number": 2,
+        "head": {
+          "ref": "data/tku-exchange-20261008",
+          "sha": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c",
+          "repo": {
+            "id": 1403890375,
+            "url": "https://api.github.com/repos/blizzard-new/abroad",
+            "name": "abroad"
+          }
+        },
+        "base": {
+          "ref": "main",
+          "sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+          "repo": {
+            "id": 1403890375,
+            "url": "https://api.github.com/repos/blizzard-new/abroad",
+            "name": "abroad"
+          }
+        }
+      }
+    ],
+    "created_at": "2026-10-09T08:27:25Z",
+    "updated_at": "2026-10-09T09:00:21Z",
+    "actor": {
+      "login": "blizzard-new",
+      "id": 262101326,
+      "node_id": "U_kgDOD59ZTg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/262101326?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/blizzard-new",
+      "html_url": "https://github.com/blizzard-new",
+      "followers_url": "https://api.github.com/users/blizzard-new/followers",
+      "following_url": "https://api.github.com/users/blizzard-new/following{/other_user}",
+      "gists_url": "https://api.github.com/users/blizzard-new/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/blizzard-new/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/blizzard-new/subscriptions",
+      "organizations_url": "https://api.github.com/users/blizzard-new/orgs",
+      "repos_url": "https://api.github.com/users/blizzard-new/repos",
+      "events_url": "https://api.github.com/users/blizzard-new/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/blizzard-new/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "run_attempt": 1,
+    "referenced_workflows": [],
+    "run_started_at": "2026-10-09T08:27:25Z",
+    "triggering_actor": {
+      "login": "blizzard-new",
+      "id": 262101326,
+      "node_id": "U_kgDOD59ZTg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/262101326?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/blizzard-new",
+      "html_url": "https://github.com/blizzard-new",
+      "followers_url": "https://api.github.com/users/blizzard-new/followers",
+      "following_url": "https://api.github.com/users/blizzard-new/following{/other_user}",
+      "gists_url": "https://api.github.com/users/blizzard-new/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/blizzard-new/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/blizzard-new/subscriptions",
+      "organizations_url": "https://api.github.com/users/blizzard-new/orgs",
+      "repos_url": "https://api.github.com/users/blizzard-new/repos",
+      "events_url": "https://api.github.com/users/blizzard-new/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/blizzard-new/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "jobs_url": "https://api.github.com/repos/blizzard-new/abroad/actions/runs/37905055678/jobs",
+    "logs_url": "https://api.github.com/repos/blizzard-new/abroad/actions/runs/37905055678/logs",
+    "check_suite_url": "https://api.github.com/repos/blizzard-new/abroad/check-suites/102699084883",
+    "artifacts_url": "https://api.github.com/repos/blizzard-new/abroad/actions/runs/37905055678/artifacts",
+    "cancel_url": "https://api.github.com/repos/blizzard-new/abroad/actions/runs/37905055678/cancel",
+    "rerun_url": "https://api.github.com/repos/blizzard-new/abroad/actions/runs/37905055678/rerun",
+    "previous_attempt_url": null,
+    "workflow_url": "https://api.github.com/repos/blizzard-new/abroad/actions/workflows/374368612",
+    "head_commit": {
+      "id": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c",
+      "tree_id": "fd41c7c59be2541950d062ac85ed8d55241cce52",
+      "message": "fix(tku): filter terminal issue reports from pending admin queue",
+      "timestamp": "2026-10-09T07:54:20Z",
+      "author": {
+        "name": "瀚澤 郭",
+        "email": "joseph20021021@gmail.com"
+      },
+      "committer": {
+        "name": "瀚澤 郭",
+        "email": "joseph20021021@gmail.com"
+      }
+    },
+    "repository": {
+      "id": 1403890375,
+      "node_id": "R_kgDOU62qxw",
+      "name": "abroad",
+      "full_name": "blizzard-new/abroad",
+      "private": true,
+      "owner": {
+        "login": "blizzard-new",
+        "id": 262101326,
+        "node_id": "U_kgDOD59ZTg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/262101326?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/blizzard-new",
+        "html_url": "https://github.com/blizzard-new",
+        "followers_url": "https://api.github.com/users/blizzard-new/followers",
+        "following_url": "https://api.github.com/users/blizzard-new/following{/other_user}",
+        "gists_url": "https://api.github.com/users/blizzard-new/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/blizzard-new/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/blizzard-new/subscriptions",
+        "organizations_url": "https://api.github.com/users/blizzard-new/orgs",
+        "repos_url": "https://api.github.com/users/blizzard-new/repos",
+        "events_url": "https://api.github.com/users/blizzard-new/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/blizzard-new/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/blizzard-new/abroad",
+      "description": "給台灣學生的交換平台",
+      "fork": false,
+      "url": "https://api.github.com/repos/blizzard-new/abroad",
+      "forks_url": "https://api.github.com/repos/blizzard-new/abroad/forks",
+      "keys_url": "https://api.github.com/repos/blizzard-new/abroad/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/blizzard-new/abroad/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/blizzard-new/abroad/teams",
+      "hooks_url": "https://api.github.com/repos/blizzard-new/abroad/hooks",
+      "issue_events_url": "https://api.github.com/repos/blizzard-new/abroad/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/blizzard-new/abroad/events",
+      "assignees_url": "https://api.github.com/repos/blizzard-new/abroad/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/blizzard-new/abroad/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/blizzard-new/abroad/tags",
+      "blobs_url": "https://api.github.com/repos/blizzard-new/abroad/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/blizzard-new/abroad/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/blizzard-new/abroad/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/blizzard-new/abroad/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/blizzard-new/abroad/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/blizzard-new/abroad/languages",
+      "stargazers_url": "https://api.github.com/repos/blizzard-new/abroad/stargazers",
+      "contributors_url": "https://api.github.com/repos/blizzard-new/abroad/contributors",
+      "subscribers_url": "https://api.github.com/repos/blizzard-new/abroad/subscribers",
+      "subscription_url": "https://api.github.com/repos/blizzard-new/abroad/subscription",
+      "commits_url": "https://api.github.com/repos/blizzard-new/abroad/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/blizzard-new/abroad/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/blizzard-new/abroad/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/blizzard-new/abroad/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/blizzard-new/abroad/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/blizzard-new/abroad/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/blizzard-new/abroad/merges",
+      "archive_url": "https://api.github.com/repos/blizzard-new/abroad/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/blizzard-new/abroad/downloads",
+      "issues_url": "https://api.github.com/repos/blizzard-new/abroad/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/blizzard-new/abroad/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/blizzard-new/abroad/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/blizzard-new/abroad/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/blizzard-new/abroad/labels{/name}",
+      "releases_url": "https://api.github.com/repos/blizzard-new/abroad/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/blizzard-new/abroad/deployments"
+    },
+    "head_repository": {
+      "id": 1403890375,
+      "node_id": "R_kgDOU62qxw",
+      "name": "abroad",
+      "full_name": "blizzard-new/abroad",
+      "private": true,
+      "owner": {
+        "login": "blizzard-new",
+        "id": 262101326,
+        "node_id": "U_kgDOD59ZTg",
+        "avatar_url": "https://avatars.githubusercontent.com/u/262101326?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/blizzard-new",
+        "html_url": "https://github.com/blizzard-new",
+        "followers_url": "https://api.github.com/users/blizzard-new/followers",
+        "following_url": "https://api.github.com/users/blizzard-new/following{/other_user}",
+        "gists_url": "https://api.github.com/users/blizzard-new/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/blizzard-new/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/blizzard-new/subscriptions",
+        "organizations_url": "https://api.github.com/users/blizzard-new/orgs",
+        "repos_url": "https://api.github.com/users/blizzard-new/repos",
+        "events_url": "https://api.github.com/users/blizzard-new/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/blizzard-new/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/blizzard-new/abroad",
+      "description": "給台灣學生的交換平台",
+      "fork": false,
+      "url": "https://api.github.com/repos/blizzard-new/abroad",
+      "forks_url": "https://api.github.com/repos/blizzard-new/abroad/forks",
+      "keys_url": "https://api.github.com/repos/blizzard-new/abroad/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/blizzard-new/abroad/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/blizzard-new/abroad/teams",
+      "hooks_url": "https://api.github.com/repos/blizzard-new/abroad/hooks",
+      "issue_events_url": "https://api.github.com/repos/blizzard-new/abroad/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/blizzard-new/abroad/events",
+      "assignees_url": "https://api.github.com/repos/blizzard-new/abroad/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/blizzard-new/abroad/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/blizzard-new/abroad/tags",
+      "blobs_url": "https://api.github.com/repos/blizzard-new/abroad/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/blizzard-new/abroad/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/blizzard-new/abroad/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/blizzard-new/abroad/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/blizzard-new/abroad/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/blizzard-new/abroad/languages",
+      "stargazers_url": "https://api.github.com/repos/blizzard-new/abroad/stargazers",
+      "contributors_url": "https://api.github.com/repos/blizzard-new/abroad/contributors",
+      "subscribers_url": "https://api.github.com/repos/blizzard-new/abroad/subscribers",
+      "subscription_url": "https://api.github.com/repos/blizzard-new/abroad/subscription",
+      "commits_url": "https://api.github.com/repos/blizzard-new/abroad/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/blizzard-new/abroad/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/blizzard-new/abroad/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/blizzard-new/abroad/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/blizzard-new/abroad/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/blizzard-new/abroad/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/blizzard-new/abroad/merges",
+      "archive_url": "https://api.github.com/repos/blizzard-new/abroad/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/blizzard-new/abroad/downloads",
+      "issues_url": "https://api.github.com/repos/blizzard-new/abroad/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/blizzard-new/abroad/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/blizzard-new/abroad/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/blizzard-new/abroad/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/blizzard-new/abroad/labels{/name}",
+      "releases_url": "https://api.github.com/repos/blizzard-new/abroad/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/blizzard-new/abroad/deployments"
+    }
+  },
+  "jobs": {
+    "jobs": [
+      {
+        "id": 113736410228,
+        "name": "test (2)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 37905055678,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Check out repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Set up Python",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Set isolated test data directory",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Install project and browser",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Install PDF rendering tools from Ubuntu packages",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Check Python and JavaScript syntax",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Check frozen OpenAPI contract",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Parse Supabase migrations and function bodies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Audit runtime dependencies for known vulnerabilities",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Validate isolated Supabase runtime",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Run Web test suite",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          },
+          {
+            "name": "Run immutable main control for prior shared failures",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14
+          },
+          {
+            "name": "Retain original test evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15
+          },
+          {
+            "name": "Confirm bundled official data was not mutated",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16
+          },
+          {
+            "name": "Post Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 30
+          },
+          {
+            "name": "Post Set up Python",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 31
+          },
+          {
+            "name": "Post Check out repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 32
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33
+          }
+        ]
+      },
+      {
+        "id": 113736410274,
+        "name": "test (0)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 37905055678,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Check out repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Set up Python",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Set isolated test data directory",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Install project and browser",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Install PDF rendering tools from Ubuntu packages",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Check Python and JavaScript syntax",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Check frozen OpenAPI contract",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Parse Supabase migrations and function bodies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Audit runtime dependencies for known vulnerabilities",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Validate isolated Supabase runtime",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Run Web test suite",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          },
+          {
+            "name": "Run immutable main control for prior shared failures",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14
+          },
+          {
+            "name": "Retain original test evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15
+          },
+          {
+            "name": "Confirm bundled official data was not mutated",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16
+          },
+          {
+            "name": "Post Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 30
+          },
+          {
+            "name": "Post Set up Python",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 31
+          },
+          {
+            "name": "Post Check out repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 32
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33
+          }
+        ]
+      },
+      {
+        "id": 113736410389,
+        "name": "test (3)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 37905055678,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Check out repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Set up Python",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Set isolated test data directory",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Install project and browser",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Install PDF rendering tools from Ubuntu packages",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Check Python and JavaScript syntax",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Check frozen OpenAPI contract",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Parse Supabase migrations and function bodies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Audit runtime dependencies for known vulnerabilities",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Validate isolated Supabase runtime",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Run Web test suite",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          },
+          {
+            "name": "Run immutable main control for prior shared failures",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14
+          },
+          {
+            "name": "Retain original test evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15
+          },
+          {
+            "name": "Confirm bundled official data was not mutated",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16
+          },
+          {
+            "name": "Post Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 30
+          },
+          {
+            "name": "Post Set up Python",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 31
+          },
+          {
+            "name": "Post Check out repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 32
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33
+          }
+        ]
+      },
+      {
+        "id": 113736411329,
+        "name": "test (1)",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 37905055678,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Check out repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Set up Python",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Set isolated test data directory",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Install project and browser",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Install PDF rendering tools from Ubuntu packages",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Check Python and JavaScript syntax",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Check frozen OpenAPI contract",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Parse Supabase migrations and function bodies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Audit runtime dependencies for known vulnerabilities",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Validate isolated Supabase runtime",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Run Web test suite",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13
+          },
+          {
+            "name": "Run immutable main control for prior shared failures",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14
+          },
+          {
+            "name": "Retain original test evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15
+          },
+          {
+            "name": "Confirm bundled official data was not mutated",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16
+          },
+          {
+            "name": "Post Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 30
+          },
+          {
+            "name": "Post Set up Python",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 31
+          },
+          {
+            "name": "Post Check out repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 32
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33
+          }
+        ]
+      }
+    ]
+  },
+  "arts": {
+    "artifacts": [
+      {
+        "id": 11605716955,
+        "name": "web-evidence-37905055678-0",
+        "size_in_bytes": 4738176,
+        "url": "https://api.github.com/repos/blizzard-new/abroad/actions/artifacts/11605716955",
+        "archive_download_url": "https://api.github.com/repos/blizzard-new/abroad/actions/artifacts/11605716955/zip",
+        "expired": false,
+        "created_at": "2026-10-09T09:00:14Z",
+        "expires_at": "2026-11-08T09:00:12Z",
+        "updated_at": "2026-10-09T09:00:14Z",
+        "digest": "sha256:e04f4ad7244641d95cdd533fab77a1d3fbf21675cb113319d4d9faeabf9e5e9b",
+        "workflow_run": {
+          "id": 37905055678,
+          "repository_id": 1403890375,
+          "head_repository_id": 1403890375,
+          "head_branch": "data/tku-exchange-20261008",
+          "head_sha": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c"
+        }
+      },
+      {
+        "id": 11604727970,
+        "name": "web-evidence-37905055678-1",
+        "size_in_bytes": 16677,
+        "url": "https://api.github.com/repos/blizzard-new/abroad/actions/artifacts/11604727970",
+        "archive_download_url": "https://api.github.com/repos/blizzard-new/abroad/actions/artifacts/11604727970/zip",
+        "expired": false,
+        "created_at": "2026-10-09T08:44:12Z",
+        "expires_at": "2026-11-08T08:44:11Z",
+        "updated_at": "2026-10-09T08:44:12Z",
+        "digest": "sha256:f7aa3c6986dda1f2e7acca04c8df60d7fe10830e39f116cc5930bde9cebf231f",
+        "workflow_run": {
+          "id": 37905055678,
+          "repository_id": 1403890375,
+          "head_repository_id": 1403890375,
+          "head_branch": "data/tku-exchange-20261008",
+          "head_sha": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c"
+        }
+      },
+      {
+        "id": 11603939824,
+        "name": "web-evidence-37905055678-3",
+        "size_in_bytes": 4860390,
+        "url": "https://api.github.com/repos/blizzard-new/abroad/actions/artifacts/11603939824",
+        "archive_download_url": "https://api.github.com/repos/blizzard-new/abroad/actions/artifacts/11603939824/zip",
+        "expired": false,
+        "created_at": "2026-10-09T08:44:29Z",
+        "expires_at": "2026-11-08T08:44:27Z",
+        "updated_at": "2026-10-09T08:44:29Z",
+        "digest": "sha256:e9a6fb1cb4bca8b33423b789253266c897274a2e1e0a83fc66535b73a932c477",
+        "workflow_run": {
+          "id": 37905055678,
+          "repository_id": 1403890375,
+          "head_repository_id": 1403890375,
+          "head_branch": "data/tku-exchange-20261008",
+          "head_sha": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c"
+        }
+      },
+      {
+        "id": 11603749873,
+        "name": "web-evidence-37905055678-2",
+        "size_in_bytes": 14599,
+        "url": "https://api.github.com/repos/blizzard-new/abroad/actions/artifacts/11603749873",
+        "archive_download_url": "https://api.github.com/repos/blizzard-new/abroad/actions/artifacts/11603749873/zip",
+        "expired": false,
+        "created_at": "2026-10-09T08:41:50Z",
+        "expires_at": "2026-11-08T08:41:49Z",
+        "updated_at": "2026-10-09T08:41:50Z",
+        "digest": "sha256:90ee4aba7425f73d23508941b3915865679548926a8f5321150e3a8d82def6e6",
+        "workflow_run": {
+          "id": 37905055678,
+          "repository_id": 1403890375,
+          "head_repository_id": 1403890375,
+          "head_branch": "data/tku-exchange-20261008",
+          "head_sha": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c"
+        }
+      }
+    ]
+  }
+}

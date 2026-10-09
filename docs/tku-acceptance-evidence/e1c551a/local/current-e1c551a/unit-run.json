@@ -1,0 +1,27 @@
+{
+  "tested_commit": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c",
+  "starting_state": {
+    "commit": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c",
+    "dirty": ""
+  },
+  "ending_state": {
+    "commit": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "command": [
+    "/workspace/abroad-tku/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_next_phase_contract.py",
+    "tests/test_tku_governance_routes.py",
+    "tests/test_application_workflow_issue_reports.py",
+    "-q",
+    "-ra",
+    "--junitxml=/tmp/tku-governance-e1c551a/unit.xml"
+  ],
+  "actual_exit_code": 0,
+  "elapsed_seconds": 70.85,
+  "production_access": false,
+  "scope": "Governance adapter OpenAPI, admin/read-only snapshot boundary and every original issue-report repository/API case"
+}

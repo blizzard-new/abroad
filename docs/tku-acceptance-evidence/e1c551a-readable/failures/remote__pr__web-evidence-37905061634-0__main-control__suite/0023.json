@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/pr/web-evidence-37905061634-0/main-control/suite.xml",
+  "original_xml_sha256": "6969905b17a06ae38d87ef7eecb42ddc9930e22c1f30f24ddb1789cbb19bb8ec",
+  "case_attributes": {
+    "classname": "tests.e2e.test_web_next_phase",
+    "name": "test_reload_drains_pending_workspace_for_inactive_home_school",
+    "time": "23.796"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: Workspace did not reach the expected state: {'exists': False, 'workspace': {'home_school': '國立臺北大學', 'revision': 0, 'favorite_schools': [], 'discovery': {'school_preferences': {}, 'preference_order': [], 'saved_experiences': {}, 'recent_views': []}, 'application_schools': [], 'application_progress': {}, 'document_readiness': {}, 'application_context': {'school_name': '國立臺北大學', 'target_school': None, 'target_country': None, 'program_type': 'exchange', 'college': None, 'department': None, 'degree_level': None, 'academic_year': None, 'application_round': None, 'semester': None, 'flags': []}, 'selection_conditions': None, 'application_selections': {}, 'submission_progress': {}, 'budget_plans': {}, 'deadline_events': [], 'planning_availability': None, 'preparation_tasks': {}, 'updated_at': '2026-10-09T08:57:43.079100Z'}}"
+  },
+  "full_text": "tests/e2e/test_web_next_phase.py:2441: in test_reload_drains_pending_workspace_for_inactive_home_school\n    ntpu_workspace = _wait_for_workspace(\ntests/e2e/test_web_next_phase.py:106: in _wait_for_workspace\n    raise AssertionError(f\"Workspace did not reach the expected state: {latest}\")\nE   AssertionError: Workspace did not reach the expected state: {'exists': False, 'workspace': {'home_school': '國立臺北大學', 'revision': 0, 'favorite_schools': [], 'discovery': {'school_preferences': {}, 'preference_order': [], 'saved_experiences': {}, 'recent_views': []}, 'application_schools': [], 'application_progress': {}, 'document_readiness': {}, 'application_context': {'school_name': '國立臺北大學', 'target_school': None, 'target_country': None, 'program_type': 'exchange', 'college': None, 'department': None, 'degree_level': None, 'academic_year': None, 'application_round': None, 'semester': None, 'flags': []}, 'selection_conditions': None, 'application_selections': {}, 'submission_progress': {}, 'budget_plans': {}, 'deadline_events': [], 'planning_availability': None, 'preparation_tasks': {}, 'updated_at': '2026-10-09T08:57:43.079100Z'}}"
+}

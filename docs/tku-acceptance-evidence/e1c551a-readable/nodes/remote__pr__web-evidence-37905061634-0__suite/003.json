@@ -1,0 +1,502 @@
+[
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_supabase_repository_rejects_malformed_mutation_responses[payload1]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_supabase_repository_rejects_malformed_mutation_responses[payload2]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_supabase_repository_sends_only_fingerprinted_fields_and_reads_one_snapshot",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_account_deletion_migration::test_account_deletion_receipt_is_private_durable_and_non_identifying",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_account_deletion_migration::test_account_deletion_rebuilds_fingerprint_and_supports_authenticated_replay",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_account_deletion_migration::test_account_deletion_uses_fixed_actor_lock_order_and_one_transaction",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_account_deletion_migration::test_account_deletion_captures_storage_then_applies_retention_and_cascades",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_account_deletion_migration::test_storage_ack_is_proof_bound_and_only_completed_receipts_expire",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_account_deletion_migration::test_admin_cleanup_can_resume_pending_storage_without_exposing_table",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_jsonl_oauth_login_commits_account_link_and_session_together",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_jsonl_oauth_login_rejects_same_provider_conflict_without_session",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_jsonl_concurrent_same_oauth_identity_resolves_one_account",
+    "status": "passed",
+    "seconds": "0.008"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_jsonl_concurrent_different_subjects_for_same_email_have_one_winner",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_jsonl_known_oauth_identity_cannot_switch_trusted_email",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_oauth_mutation_request_rejects_unsupported_provider_contracts",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_jsonl_oauth_rechecks_expiry_immediately_before_write",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_jsonl_student_verification_is_exact_session_cas_and_never_upserts",
+    "status": "passed",
+    "seconds": "0.011"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_jsonl_stale_profile_save_cannot_downgrade_committed_auth_fields",
+    "status": "passed",
+    "seconds": "0.009"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_jsonl_update_only_never_resurrects_deleted_account",
+    "status": "passed",
+    "seconds": "0.007"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_jsonl_field_patch_preserves_disjoint_security_state",
+    "status": "passed",
+    "seconds": "0.011"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_jsonl_calendar_expected_token_blocks_stale_reenable",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_jsonl_field_patch_rejects_auth_owned_fields",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_jsonl_student_session_expiry_uses_repository_clock",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_supabase_repository_uses_atomic_auth_rpcs",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_supabase_repository_maps_controlled_auth_statuses",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_supabase_repository_uses_field_patch_rpc_and_expected_values",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_supabase_field_patch_maps_controlled_statuses[account_missing-AccountNotFoundError]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_supabase_field_patch_maps_controlled_statuses[conflict-AccountConflictError]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_supabase_field_patch_maps_controlled_statuses[unknown-AccountRepositoryError]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_supabase_full_account_update_is_disabled_without_request",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_supabase_compatibility_upsert_is_disabled",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_supabase_create_returns_canonical_row_and_full_update_is_disabled",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_supabase_hydrate_uses_table_identity_over_stale_profile",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_atomic_auth_migration_enforces_private_unique_transactional_mutations",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_auth_mutations::test_atomic_auth_migration_exposes_service_only_field_level_profile_cas",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_private_community_tables_are_server_only_and_index_every_fk",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_private_mutations_share_idempotency_and_fixed_pair_lock_order",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_private_idempotency_hash_excludes_server_generated_resource_fields",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_each_private_write_has_one_service_role_rpc_wrapper",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_conversation_message_block_and_report_invariants_are_locked_in_sql",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_report_review_updates_report_and_audit_in_one_transaction",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_account_deletion_preflight_removes_private_rows_and_deidentifies_pending_reports",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_private_tables_cascade_identity_data_but_retain_deidentified_reports",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_public_community_api::test_same_public_mutation_replays_one_resource_and_one_rate_event",
+    "status": "passed",
+    "seconds": "0.188"
+  },
+  {
+    "id": "tests.test_atomic_public_community_api::test_same_public_mutation_id_rejects_a_different_payload",
+    "status": "passed",
+    "seconds": "0.182"
+  },
+  {
+    "id": "tests.test_atomic_public_community_api::test_two_app_instances_atomically_limit_six_parallel_new_account_posts",
+    "status": "passed",
+    "seconds": "0.389"
+  },
+  {
+    "id": "tests.test_atomic_public_community_api::test_missing_answer_and_comment_parents_do_not_consume_publish_quota",
+    "status": "passed",
+    "seconds": "0.178"
+  },
+  {
+    "id": "tests.test_atomic_public_community_api::test_committed_suspension_blocks_publication_without_content_or_rate_event",
+    "status": "passed",
+    "seconds": "1.059"
+  },
+  {
+    "id": "tests.test_atomic_public_community_api::test_parallel_same_status_moderation_has_one_winner_and_one_audit",
+    "status": "passed",
+    "seconds": "0.361"
+  },
+  {
+    "id": "tests.test_atomic_public_community_migration::test_schema_has_identity_six_public_resources_and_operational_tables",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_atomic_public_community_migration::test_every_fk_lookup_and_retention_path_has_an_index",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_public_community_migration::test_tables_are_force_rls_and_service_role_has_read_only_table_access",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_atomic_public_community_migration::test_adapter_rpcs_are_security_definer_and_service_role_only",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_atomic_public_community_migration::test_identity_rpc_supports_legacy_but_publish_requires_exact_link",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_atomic_public_community_migration::test_database_rebuilds_canonical_fingerprint_and_publication_uses_semantics",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_atomic_public_community_migration::test_publish_is_atomic_parent_validated_and_rate_limited_under_account_lock",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_atomic_public_community_migration::test_delete_uses_owner_binding_parent_before_child_and_same_receipt",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_public_community_migration::test_moderation_is_status_cas_with_parent_locks_audit_and_receipt",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_public_community_migration::test_moderation_audits_are_append_only_retained_90_days_and_purge_guarded",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_atomic_public_community_migration::test_account_delete_anonymization_is_atomic_and_keeps_identity_for_later_fk",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_public_community_migration::test_private_chat_block_and_report_persistence_remain_out_of_this_stage",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_jsonl_two_repository_instances_allow_one_same_revision_commit",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_jsonl_workspace_commit_preserves_other_home_schools",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_jsonl_workspace_replace_preserves_latest_submission_progress",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_jsonl_submission_transition_uses_workspace_revision_cas",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_jsonl_workspace_commit_cannot_recreate_deleted_account",
+    "status": "passed",
+    "seconds": "0.007"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_jsonl_generic_profile_patch_rejects_dedicated_mutation_fields[application_workspaces-value0]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_jsonl_generic_profile_patch_rejects_dedicated_mutation_fields[community_suspended_until-None]",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_jsonl_suspension_commit_is_audited_idempotent_and_cas_guarded",
+    "status": "passed",
+    "seconds": "0.010"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_suspension_request_requires_timezone_and_nonblank_reason",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_jsonl_suspension_audit_write_failure_leaves_account_unsuspended",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_jsonl_suspension_audit_list_purges_expired_identity_events",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_supabase_account_create_rejects_suspension_without_audit_rpc",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_supabase_workspace_adapter_uses_exactly_one_atomic_rpc",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_supabase_suspension_adapter_uses_exactly_one_atomic_rpc",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_supabase_suspension_audit_list_purges_then_reads_private_rows",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_atomic_workspace_migration_has_db_owned_revision_and_private_rpc",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_workspace_moderation::test_atomic_suspension_migration_is_audited_retained_and_service_only",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_auth_api::test_optional_auth_session_returns_null_for_public_browsing",
+    "status": "passed",
+    "seconds": "0.300"
+  },
+  {
+    "id": "tests.test_auth_api::test_private_account_responses_are_never_cacheable",
+    "status": "passed",
+    "seconds": "0.344"
+  },
+  {
+    "id": "tests.test_auth_api::test_documented_secure_cookie_flag_and_browser_security_headers",
+    "status": "passed",
+    "seconds": "0.320"
+  },
+  {
+    "id": "tests.test_auth_api::test_auth_cookie_is_fail_closed_in_production",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_auth_api::test_email_account_profile_and_account_linked_community_identity",
+    "status": "passed",
+    "seconds": "0.348"
+  },
+  {
+    "id": "tests.test_auth_api::test_supabase_account_deletion_replays_after_session_cascade",
+    "status": "passed",
+    "seconds": "0.357"
+  },
+  {
+    "id": "tests.test_auth_api::test_login_rejects_wrong_password_and_accepts_correct_password",
+    "status": "passed",
+    "seconds": "0.529"
+  },
+  {
+    "id": "tests.test_auth_api::test_registration_without_a_verified_email_is_rejected",
+    "status": "passed",
+    "seconds": "0.162"
+  },
+  {
+    "id": "tests.test_auth_api::test_profile_update_racing_account_delete_never_resurrects_account",
+    "status": "passed",
+    "seconds": "0.301"
+  },
+  {
+    "id": "tests.test_auth_api::test_global_community_posts_can_be_filtered_by_topic",
+    "status": "passed",
+    "seconds": "0.319"
+  },
+  {
+    "id": "tests.test_auth_api::test_public_and_cgu_boards_can_be_posted_and_filtered",
+    "status": "passed",
+    "seconds": "0.327"
+  },
+  {
+    "id": "tests.test_auth_api::test_social_provider_buttons_report_configuration_state",
+    "status": "passed",
+    "seconds": "0.164"
+  },
+  {
+    "id": "tests.test_auth_api::test_google_oauth_state_is_bound_to_initiating_browser_cookie",
+    "status": "passed",
+    "seconds": "0.188"
+  },
+  {
+    "id": "tests.test_auth_api::test_google_oauth_callback_can_finish_on_another_app_instance",
+    "status": "passed",
+    "seconds": "0.340"
+  },
+  {
+    "id": "tests.test_auth_api::test_google_oauth_terminal_failures_consume_state_and_clear_flow_cookie",
+    "status": "passed",
+    "seconds": "1.135"
+  },
+  {
+    "id": "tests.test_auth_api::test_google_oauth_start_rate_limit_bounds_state_creation",
+    "status": "passed",
+    "seconds": "0.228"
+  },
+  {
+    "id": "tests.test_auth_api::test_oauth_provider_path_mismatch_does_not_consume_valid_state",
+    "status": "passed",
+    "seconds": "0.177"
+  },
+  {
+    "id": "tests.test_auth_api::test_google_verified_email_can_link_existing_email_account",
+    "status": "passed",
+    "seconds": "0.315"
+  },
+  {
+    "id": "tests.test_auth_api::test_verified_oauth_email_cannot_claim_legacy_unverified_email_account",
+    "status": "passed",
+    "seconds": "0.175"
+  },
+  {
+    "id": "tests.test_auth_api::test_provider_subject_cannot_claim_verified_email_owned_by_another_account",
+    "status": "passed",
+    "seconds": "0.326"
+  },
+  {
+    "id": "tests.test_auth_api::test_same_provider_different_subject_cannot_share_verified_email",
+    "status": "passed",
+    "seconds": "0.191"
+  },
+  {
+    "id": "tests.test_auth_api::test_facebook_unverified_email_does_not_link_or_persist_by_email",
+    "status": "passed",
+    "seconds": "0.328"
+  }
+]

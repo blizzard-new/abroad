@@ -1,0 +1,502 @@
+[
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_concurrent_jsonl_append_operations_do_not_lose_rows[<lambda>-append_experience_submission-load_experience_submissions]",
+    "status": "passed",
+    "seconds": "0.035"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestSSRFProtection::test_ollama_url_is_loopback",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestSSRFProtection::test_no_cloud_fallback_in_gateway",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestPromptInjection::test_injections_still_get_redacted",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestPromptInjection::test_injection_in_filename",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestOversizedBody::test_very_large_text_redaction",
+    "status": "passed",
+    "seconds": "0.111"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestOversizedBody::test_large_text_with_pii",
+    "status": "passed",
+    "seconds": "0.021"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestLogPrivacy::test_log_entry_has_no_content_fields",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestLogPrivacy::test_traceback_should_not_contain_pii",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestTempFileCleanup::test_redaction_is_pure_function",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestNetworkIsolation::test_no_openai_key_required",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestNetworkIsolation::test_gateway_returns_none_without_cloud",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_both_pages_are_public_html_with_the_contact_address_filled_in",
+    "status": "passed",
+    "seconds": "0.936"
+  },
+  {
+    "id": "tests.test_legal_pages::test_the_pages_are_not_part_of_the_api_contract",
+    "status": "passed",
+    "seconds": "1.671"
+  },
+  {
+    "id": "tests.test_legal_pages::test_the_privacy_policy_says_what_google_and_the_law_expect",
+    "status": "passed",
+    "seconds": "0.163"
+  },
+  {
+    "id": "tests.test_legal_pages::test_the_terms_say_the_data_is_not_official_and_the_service_is_not_an_agency",
+    "status": "passed",
+    "seconds": "0.167"
+  },
+  {
+    "id": "tests.test_legal_pages::test_each_page_links_to_the_other_and_back_to_the_home_page",
+    "status": "passed",
+    "seconds": "0.165"
+  },
+  {
+    "id": "tests.test_legal_pages::test_the_home_page_links_to_both_pages",
+    "status": "passed",
+    "seconds": "0.166"
+  },
+  {
+    "id": "tests.test_legal_pages::test_without_a_configured_address_the_pages_say_so_instead_of_inventing_one",
+    "status": "passed",
+    "seconds": "0.163"
+  },
+  {
+    "id": "tests.test_legal_pages::test_an_odd_contact_setting_never_becomes_markup[\"><script>alert(1)</script>]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_an_odd_contact_setting_never_becomes_markup[not an address]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_an_odd_contact_setting_never_becomes_markup[a@b]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_an_odd_contact_setting_never_becomes_markup[x@y.z]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_an_odd_contact_setting_never_becomes_markup[a b@example.com]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_an_odd_contact_setting_never_becomes_markup[javascript:alert(1)]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_the_stylesheet_exists_and_the_pages_load_nothing_from_other_sites",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_life_context::test_verified_reference_and_foreign_student_are_distinct",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_life_context::test_no_evidence_no_inference_and_no_made_up_budget",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_life_context::test_profile_requires_reviewed_status_and_source",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_life_context::test_unknown_coordinates_never_search_nearby",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_map_records_require_valid_coordinates_and_supported_kind",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_life_context::test_official_search_snippet_and_offsite_redirect_are_not_facts",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_life_context::test_official_excerpts_do_not_classify_train_as_rain_or_different_as_rent",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_life_context::test_failed_refresh_preserves_old_facts_and_their_dates",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_life_context::test_changed_campus_invalidates_cached_nearby_places",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_life_context::test_multilingual_queries_and_pdf_candidate",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_life_context::test_pdf_reader_extracts_body_and_html_ignores_navigation",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_life_context::test_page_reader_rejects_unsafe_url_shapes[http://example.edu]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_page_reader_rejects_unsafe_url_shapes[https://x:y@example.edu]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_page_reader_rejects_unsafe_url_shapes[https://example.edu:8080]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_page_reader_rejects_unsafe_url_shapes[javascript:alert(1)]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_page_reader_rejects_unsafe_url_shapes[https://[bad]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_context_api_reads_without_network_and_rejects_unknown_school",
+    "status": "passed",
+    "seconds": "1.425"
+  },
+  {
+    "id": "tests.test_loading_screen::test_the_loading_screen_is_the_first_thing_in_the_body_and_is_announced_politely",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_loading_screen::test_its_script_is_an_external_file_because_the_page_forbids_inline_scripts",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_loading_screen::test_with_scripts_turned_off_the_screen_is_hidden_instead_of_covering_the_page",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_loading_screen::test_it_hides_itself_even_if_the_page_script_never_finishes",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_loading_screen::test_a_fast_load_never_shows_it_and_a_shown_one_does_not_flicker",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_loading_screen::test_the_page_tells_it_to_go_only_when_everything_is_loaded_and_whatever_happens",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_loading_screen::test_the_motion_includes_blinking_hopping_and_turning_and_stops_for_reduced_motion",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_loading_screen::test_tapping_the_mascot_cycles_hop_spin_wink",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_loading_screen::test_the_script_and_style_versions_are_in_the_page",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_loading_screen::test_it_cannot_show_before_the_saved_theme_is_applied",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_loading_screen::test_the_mascot_is_a_solid_with_sides_a_front_and_light",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_loading_screen::test_the_home_page_header_shows_the_mascot_where_the_traveller_drawing_was",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_provider_requires_explicit_prototype_mode",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_BASE_URL-https://127.0.0.1:11434]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_BASE_URL-http://192.168.1.50:11434]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_BASE_URL-http://127.0.0.1:11434/api]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_BASE_URL-http://127.0.0.1:11435]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_CHAT_MODEL-gemma4:cloud]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_CHAT_MODEL-gemma4:e4b]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_EMBEDDING_MODEL-embeddinggemma:cloud]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_CONTEXT_WINDOW-999999]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_REQUEST_TIMEOUT_SECONDS-nan]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_accept_only_the_fixed_loopback_models",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_provider_constructor_cannot_bypass_loopback_validation",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_provider_disables_proxy_environment_on_injected_requests_session",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_health_check_requires_both_pinned_models",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_health_check_reports_missing_model_without_fallback",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_uses_schema_and_deterministic_local_options",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_fails_closed_for_invalid_or_failed_responses[<lambda>0]",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_fails_closed_for_invalid_or_failed_responses[<lambda>1]",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_fails_closed_for_invalid_or_failed_responses[<lambda>2]",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_fails_closed_for_invalid_or_failed_responses[<lambda>3]",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_fails_closed_for_invalid_or_failed_responses[<lambda>4]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_rejects_bad_schema_and_oversized_input_before_request",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_local_ai::test_single_inference_slot_returns_busy_without_request",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_local_ai::test_canceled_request_is_not_sent_or_returned",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_local_ai::test_embedding_uses_pinned_model_and_validates_vectors",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_embedding_rejects_invalid_vectors[body0]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_embedding_rejects_invalid_vectors[body1]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_embedding_rejects_invalid_vectors[body2]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_embedding_rejects_invalid_vectors[body3]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_embedding_rejects_invalid_vectors[body4]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_match_document_chunks_migration::test_the_search_path_is_pinned_to_the_vector_schema_and_the_built_ins_only",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_match_document_chunks_migration::test_it_alters_the_function_the_original_migration_created_with_the_same_signature",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_match_document_chunks_migration::test_the_function_body_needs_nothing_outside_that_path",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_multi_application_plan::test_shared_home_work_once_and_host_branches_remain_distinct",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_multi_application_plan::test_reordering_and_removing_preferences_does_not_change_task_identity",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_multi_application_plan::test_identical_title_does_not_merge_partner_scoped_or_conflicting_rules",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_multi_application_plan::test_changed_deadline_gets_new_identity_but_checked_timestamp_does_not",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_multi_application_plan::test_ntpu_legacy_shared_rule_is_source_and_year_bound",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_my_application_entry::test_the_rail_entry_opens_selection_and_confirmation_first",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_my_application_entry::test_the_dropdown_still_lists_the_three_stages_selection_first",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_my_application_entry::test_an_account_less_student_is_sent_to_the_same_page_after_choosing_a_school",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_my_application_entry::test_the_rail_entry_stays_highlighted_on_every_application_page",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_my_application_entry::test_other_deliberate_links_into_preparation_are_unchanged",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_native_app_contract::test_legacy_native_apps_are_preserved_as_migration_references",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_native_app_contract::test_flutter_is_the_shared_android_ios_app",
+    "status": "passed",
+    "seconds": "0.002"
+  }
+]

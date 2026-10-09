@@ -1,0 +1,25 @@
+{
+  "tested_commit": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c",
+  "starting_state": {
+    "commit": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c",
+    "dirty": ""
+  },
+  "ending_state": {
+    "commit": "e1c551a80ae4503a0c3be4359d028dd1562f3c6c",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "command": [
+    "/workspace/abroad-tku/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/e2e/test_web_next_phase.py::test_verified_student_reports_workflow_issue_and_admin_closes_it",
+    "-q",
+    "-ra",
+    "--junitxml=/tmp/tku-governance-e1c551a/browser.xml"
+  ],
+  "actual_exit_code": 0,
+  "elapsed_seconds": 34.42,
+  "production_access": false,
+  "scope": "Original case: verified student issue report, real admin workbench and terminal queue filtering"
+}

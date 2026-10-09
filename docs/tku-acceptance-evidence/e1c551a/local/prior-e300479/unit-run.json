@@ -1,0 +1,26 @@
+{
+  "tested_commit": "e300479cb263019528c6f5f4dc4df69017f020ca",
+  "starting_state": {
+    "commit": "e300479cb263019528c6f5f4dc4df69017f020ca",
+    "dirty": ""
+  },
+  "ending_state": {
+    "commit": "e300479cb263019528c6f5f4dc4df69017f020ca",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "command": [
+    "/workspace/abroad-tku/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_next_phase_contract.py",
+    "tests/test_tku_governance_routes.py",
+    "-q",
+    "-ra",
+    "--junitxml=/tmp/tku-governance-e300479/unit.xml"
+  ],
+  "actual_exit_code": 0,
+  "elapsed_seconds": 43.5,
+  "production_access": false,
+  "scope": "Twelve corrected original contracts and related source/display/catalog/notification checks"
+}
