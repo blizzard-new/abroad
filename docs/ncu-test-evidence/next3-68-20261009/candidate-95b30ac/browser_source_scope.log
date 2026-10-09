@@ -1,0 +1,325 @@
+CONFTEST LOADED!
+..........FF....FFFF                                                     [100%]
+=================================== FAILURES ===================================
+_ test_ncu_japan3_actual_language_packet_read_scope_and_life[tohoku-\u6771\u5317\u5927\u5b78-\u4e09\u985e\u521d\u6b21\u652f\u63f4\u4ef6-3-https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf-\u539f\u4ef657\u9801-390] _
+
+page = <Page url='http://127.0.0.1:58407/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E6%9D%B1%E5%8C%97%E5%A4%A7%E5%AD%B8#school=%E6%9D%B1%E5%8C%97%E5%A4%A7%E5%AD%B8%20Tohoku%20University'>
+live_server = LiveServer(base_url='http://127.0.0.1:58407', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-221/web-e2e-data1'))
+width = 390, slug = 'tohoku', name = '東北大學', initial = '三類初次支援件', count = 3
+source_url = 'https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf'
+scope_text = '原件57頁'
+
+    @pytest.mark.parametrize('width', [390, 1440])
+    @pytest.mark.parametrize('slug,name,initial,count,source_url,scope_text', CASES)
+    def test_ncu_japan3_actual_language_packet_read_scope_and_life(
+        page, live_server, width, slug, name, initial, count, source_url, scope_text,
+    ):
+        page.set_viewport_size({'width': width, 'height': 956})
+        page.emulate_media(reduced_motion='reduce')
+        errors = []
+        page.on('pageerror', lambda e: errors.append(str(e)))
+        enter_public_site(page, live_server, 'partners')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+        open_navigation(page)
+        page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立中央大學"]').click()
+        page.locator('#confirm-school').click()
+        wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60)
+        if width < 700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded') == 'true':
+            page.locator('#glass-menu-toggle').click()
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(name)
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        if width < 700:
+            page.locator('#partner-table .partner-card > summary').first.click()
+        page.locator('#partner-table .school-detail-trigger:visible').first.click()
+        summary = page.locator('#detail-overview .partner-student-summary')
+        if slug == 'kuins':
+            for text in ['N2或同等能力', 'N3或同等能力', 'JLPT證明if any', '反向套']:
+                expect(summary).to_contain_text(text)
+        elif slug == 'komazawa':
+            for text in ['desirable', '未到N2仍可申請', '不提供Grad']:
+                expect(summary).to_contain_text(text)
+            programme = page.locator('#detail-overview > details').filter(has=page.locator(':scope > summary').filter(has_text='方案資料'))
+            programme.locator(':scope > summary').click()
+            expect(programme.locator('.university-facts')).to_contain_text('研究所地理與經營管理是全年')
+        else:
+            for text in ['GPA2.30／3是獎學金', '臺灣列NTU／CCU／NYCU而未列NCU', '不硬拒博士', 'M1／M2']:
+                expect(summary).to_contain_text(text)
+        page.locator('#ncu-source-audit > summary').click()
+        source = page.locator('#ncu-source-audit-body > details').filter(has=page.locator(f'a[href="{source_url}"]')).first
+        expect(source.locator(':scope > summary')).to_be_visible(timeout=60_000)
+        source.locator(':scope > summary').click()
+        scope = source.locator('.ncu-source-reading-scope')
+>       expect(scope).to_contain_text(scope_text)
+E       AssertionError: Locator expected to contain text '原件57頁'
+E       Actual value: 閱讀範圍：已取得抽字但尚未人工讀；未當已核內容。 
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#ncu-source-audit-body > details").filter(has=locator("a[href=\"https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf\"]")).first.locator(".ncu-source-reading-scope")
+E           13 × locator resolved to <p class="ncu-source-reading-scope">閱讀範圍：已取得抽字但尚未人工讀；未當已核內容。</p>
+E              - unexpected value "閱讀範圍：已取得抽字但尚未人工讀；未當已核內容。"
+E       
+E       Aria snapshot:
+E       - paragraph: 閱讀範圍：已取得抽字但尚未人工讀；未當已核內容。
+
+tests/e2e/test_ncu_japan3.py:63: AssertionError
+_ test_ncu_japan3_actual_language_packet_read_scope_and_life[tohoku-\u6771\u5317\u5927\u5b78-\u4e09\u985e\u521d\u6b21\u652f\u63f4\u4ef6-3-https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf-\u539f\u4ef657\u9801-1440] _
+
+page = <Page url='http://127.0.0.1:58407/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E6%9D%B1%E5%8C%97%E5%A4%A7%E5%AD%B8#school=%E6%9D%B1%E5%8C%97%E5%A4%A7%E5%AD%B8%20Tohoku%20University'>
+live_server = LiveServer(base_url='http://127.0.0.1:58407', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-221/web-e2e-data1'))
+width = 1440, slug = 'tohoku', name = '東北大學', initial = '三類初次支援件', count = 3
+source_url = 'https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf'
+scope_text = '原件57頁'
+
+    @pytest.mark.parametrize('width', [390, 1440])
+    @pytest.mark.parametrize('slug,name,initial,count,source_url,scope_text', CASES)
+    def test_ncu_japan3_actual_language_packet_read_scope_and_life(
+        page, live_server, width, slug, name, initial, count, source_url, scope_text,
+    ):
+        page.set_viewport_size({'width': width, 'height': 956})
+        page.emulate_media(reduced_motion='reduce')
+        errors = []
+        page.on('pageerror', lambda e: errors.append(str(e)))
+        enter_public_site(page, live_server, 'partners')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+        open_navigation(page)
+        page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立中央大學"]').click()
+        page.locator('#confirm-school').click()
+        wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60)
+        if width < 700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded') == 'true':
+            page.locator('#glass-menu-toggle').click()
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(name)
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        if width < 700:
+            page.locator('#partner-table .partner-card > summary').first.click()
+        page.locator('#partner-table .school-detail-trigger:visible').first.click()
+        summary = page.locator('#detail-overview .partner-student-summary')
+        if slug == 'kuins':
+            for text in ['N2或同等能力', 'N3或同等能力', 'JLPT證明if any', '反向套']:
+                expect(summary).to_contain_text(text)
+        elif slug == 'komazawa':
+            for text in ['desirable', '未到N2仍可申請', '不提供Grad']:
+                expect(summary).to_contain_text(text)
+            programme = page.locator('#detail-overview > details').filter(has=page.locator(':scope > summary').filter(has_text='方案資料'))
+            programme.locator(':scope > summary').click()
+            expect(programme.locator('.university-facts')).to_contain_text('研究所地理與經營管理是全年')
+        else:
+            for text in ['GPA2.30／3是獎學金', '臺灣列NTU／CCU／NYCU而未列NCU', '不硬拒博士', 'M1／M2']:
+                expect(summary).to_contain_text(text)
+        page.locator('#ncu-source-audit > summary').click()
+        source = page.locator('#ncu-source-audit-body > details').filter(has=page.locator(f'a[href="{source_url}"]')).first
+        expect(source.locator(':scope > summary')).to_be_visible(timeout=60_000)
+        source.locator(':scope > summary').click()
+        scope = source.locator('.ncu-source-reading-scope')
+>       expect(scope).to_contain_text(scope_text)
+E       AssertionError: Locator expected to contain text '原件57頁'
+E       Actual value: 閱讀範圍：已取得抽字但尚未人工讀；未當已核內容。 
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#ncu-source-audit-body > details").filter(has=locator("a[href=\"https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf\"]")).first.locator(".ncu-source-reading-scope")
+E           13 × locator resolved to <p class="ncu-source-reading-scope">閱讀範圍：已取得抽字但尚未人工讀；未當已核內容。</p>
+E              - unexpected value "閱讀範圍：已取得抽字但尚未人工讀；未當已核內容。"
+E       
+E       Aria snapshot:
+E       - paragraph: 閱讀範圍：已取得抽字但尚未人工讀；未當已核內容。
+
+tests/e2e/test_ncu_japan3.py:63: AssertionError
+_ test_ncu_hokkaido_two_agreements_documents_scope_and_life[\u9662\u7d1a-390] __
+
+page = <Page url='http://127.0.0.1:33711/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E5%8C%97%E...7%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%B8(%E9%99%A2%E7%B4%9A)%20Hokkaido%20University%EF%BC%88%E9%99%A2%E7%B4%9A%EF%BC%89'>
+live_server = LiveServer(base_url='http://127.0.0.1:33711', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-221/web-e2e-data4'))
+width = 390, level = '院級'
+
+    @pytest.mark.parametrize('width',[390,1440])
+    @pytest.mark.parametrize('level',['院級','校級'])
+    def test_ncu_hokkaido_two_agreements_documents_scope_and_life(page,live_server,width,level):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        enter_public_site(page,live_server,'partners')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+        open_navigation(page);page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立中央大學"]').click();page.locator('#confirm-school').click()
+        wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60)
+        if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
+            page.locator('#glass-menu-toggle').click()
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(f'北海道大學({level})')
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        if width<700:page.locator('#partner-table .partner-card > summary').first.click()
+        page.locator('#partner-table .school-detail-trigger:visible').first.click()
+        expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('2027春')
+        expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('不得修讀與日本語／日本學無關的課程')
+        if level == '院級':
+            expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('Internship program')
+            expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('僅A學術交流')
+        page.locator('#ncu-source-audit > summary').click()
+        source=page.locator('#ncu-source-audit-body > details').filter(has_text='HUSTEP2026春syllabus83頁').first
+        expect(source.locator(':scope > summary')).to_be_visible(timeout=60_000)
+        source.locator(':scope > summary').click()
+        scope=source.locator('.ncu-source-reading-scope')
+>       expect(scope).to_contain_text('原件83頁')
+E       AssertionError: Locator expected to contain text '原件83頁'
+E       Actual value: 閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀。2026春不是2027／2028當期。 
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#ncu-source-audit-body > details").filter(has_text="HUSTEP2026春syllabus83頁").first.locator(".ncu-source-reading-scope")
+E           11 × locator resolved to <p class="ncu-source-reading-scope">閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀…</p>
+E              - unexpected value "閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀。2026春不是2027／2028當期。"
+E       
+E       Aria snapshot:
+E       - paragraph: 閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀。2026春不是2027／2028當期。
+
+tests/e2e/test_ncu_hokkaido.py:39: AssertionError
+_ test_ncu_hokkaido_two_agreements_documents_scope_and_life[\u9662\u7d1a-1440] _
+
+page = <Page url='http://127.0.0.1:33711/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E5%8C%97%E...7%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%B8(%E9%99%A2%E7%B4%9A)%20Hokkaido%20University%EF%BC%88%E9%99%A2%E7%B4%9A%EF%BC%89'>
+live_server = LiveServer(base_url='http://127.0.0.1:33711', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-221/web-e2e-data4'))
+width = 1440, level = '院級'
+
+    @pytest.mark.parametrize('width',[390,1440])
+    @pytest.mark.parametrize('level',['院級','校級'])
+    def test_ncu_hokkaido_two_agreements_documents_scope_and_life(page,live_server,width,level):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        enter_public_site(page,live_server,'partners')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+        open_navigation(page);page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立中央大學"]').click();page.locator('#confirm-school').click()
+        wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60)
+        if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
+            page.locator('#glass-menu-toggle').click()
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(f'北海道大學({level})')
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        if width<700:page.locator('#partner-table .partner-card > summary').first.click()
+        page.locator('#partner-table .school-detail-trigger:visible').first.click()
+        expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('2027春')
+        expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('不得修讀與日本語／日本學無關的課程')
+        if level == '院級':
+            expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('Internship program')
+            expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('僅A學術交流')
+        page.locator('#ncu-source-audit > summary').click()
+        source=page.locator('#ncu-source-audit-body > details').filter(has_text='HUSTEP2026春syllabus83頁').first
+        expect(source.locator(':scope > summary')).to_be_visible(timeout=60_000)
+        source.locator(':scope > summary').click()
+        scope=source.locator('.ncu-source-reading-scope')
+>       expect(scope).to_contain_text('原件83頁')
+E       AssertionError: Locator expected to contain text '原件83頁'
+E       Actual value: 閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀。2026春不是2027／2028當期。 
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#ncu-source-audit-body > details").filter(has_text="HUSTEP2026春syllabus83頁").first.locator(".ncu-source-reading-scope")
+E           12 × locator resolved to <p class="ncu-source-reading-scope">閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀…</p>
+E              - unexpected value "閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀。2026春不是2027／2028當期。"
+E       
+E       Aria snapshot:
+E       - paragraph: 閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀。2026春不是2027／2028當期。
+
+tests/e2e/test_ncu_hokkaido.py:39: AssertionError
+_ test_ncu_hokkaido_two_agreements_documents_scope_and_life[\u6821\u7d1a-390] __
+
+page = <Page url='http://127.0.0.1:33711/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E5%8C%97%E...7%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%B8(%E6%A0%A1%E7%B4%9A)%20Hokkaido%20University%EF%BC%88%E6%A0%A1%E7%B4%9A%EF%BC%89'>
+live_server = LiveServer(base_url='http://127.0.0.1:33711', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-221/web-e2e-data4'))
+width = 390, level = '校級'
+
+    @pytest.mark.parametrize('width',[390,1440])
+    @pytest.mark.parametrize('level',['院級','校級'])
+    def test_ncu_hokkaido_two_agreements_documents_scope_and_life(page,live_server,width,level):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        enter_public_site(page,live_server,'partners')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+        open_navigation(page);page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立中央大學"]').click();page.locator('#confirm-school').click()
+        wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60)
+        if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
+            page.locator('#glass-menu-toggle').click()
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(f'北海道大學({level})')
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        if width<700:page.locator('#partner-table .partner-card > summary').first.click()
+        page.locator('#partner-table .school-detail-trigger:visible').first.click()
+        expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('2027春')
+        expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('不得修讀與日本語／日本學無關的課程')
+        if level == '院級':
+            expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('Internship program')
+            expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('僅A學術交流')
+        page.locator('#ncu-source-audit > summary').click()
+        source=page.locator('#ncu-source-audit-body > details').filter(has_text='HUSTEP2026春syllabus83頁').first
+        expect(source.locator(':scope > summary')).to_be_visible(timeout=60_000)
+        source.locator(':scope > summary').click()
+        scope=source.locator('.ncu-source-reading-scope')
+>       expect(scope).to_contain_text('原件83頁')
+E       AssertionError: Locator expected to contain text '原件83頁'
+E       Actual value: 閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀。2026春不是2027／2028當期。 
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#ncu-source-audit-body > details").filter(has_text="HUSTEP2026春syllabus83頁").first.locator(".ncu-source-reading-scope")
+E           12 × locator resolved to <p class="ncu-source-reading-scope">閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀…</p>
+E              - unexpected value "閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀。2026春不是2027／2028當期。"
+E       
+E       Aria snapshot:
+E       - paragraph: 閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀。2026春不是2027／2028當期。
+
+tests/e2e/test_ncu_hokkaido.py:39: AssertionError
+_ test_ncu_hokkaido_two_agreements_documents_scope_and_life[\u6821\u7d1a-1440] _
+
+page = <Page url='http://127.0.0.1:33711/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E5%8C%97%E...7%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%B8(%E6%A0%A1%E7%B4%9A)%20Hokkaido%20University%EF%BC%88%E6%A0%A1%E7%B4%9A%EF%BC%89'>
+live_server = LiveServer(base_url='http://127.0.0.1:33711', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-221/web-e2e-data4'))
+width = 1440, level = '校級'
+
+    @pytest.mark.parametrize('width',[390,1440])
+    @pytest.mark.parametrize('level',['院級','校級'])
+    def test_ncu_hokkaido_two_agreements_documents_scope_and_life(page,live_server,width,level):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+        enter_public_site(page,live_server,'partners')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+        open_navigation(page);page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立中央大學"]').click();page.locator('#confirm-school').click()
+        wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60)
+        if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
+            page.locator('#glass-menu-toggle').click()
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(f'北海道大學({level})')
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        if width<700:page.locator('#partner-table .partner-card > summary').first.click()
+        page.locator('#partner-table .school-detail-trigger:visible').first.click()
+        expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('2027春')
+        expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('不得修讀與日本語／日本學無關的課程')
+        if level == '院級':
+            expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('Internship program')
+            expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('僅A學術交流')
+        page.locator('#ncu-source-audit > summary').click()
+        source=page.locator('#ncu-source-audit-body > details').filter(has_text='HUSTEP2026春syllabus83頁').first
+        expect(source.locator(':scope > summary')).to_be_visible(timeout=60_000)
+        source.locator(':scope > summary').click()
+        scope=source.locator('.ncu-source-reading-scope')
+>       expect(scope).to_contain_text('原件83頁')
+E       AssertionError: Locator expected to contain text '原件83頁'
+E       Actual value: 閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀。2026春不是2027／2028當期。 
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#ncu-source-audit-body > details").filter(has_text="HUSTEP2026春syllabus83頁").first.locator(".ncu-source-reading-scope")
+E           11 × locator resolved to <p class="ncu-source-reading-scope">閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀…</p>
+E              - unexpected value "閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀。2026春不是2027／2028當期。"
+E       
+E       Aria snapshot:
+E       - paragraph: 閱讀範圍：僅讀PDF1–4課目表、重複課及quarter限制；PDF5–83公開可查，尚未逐門詳讀。2026春不是2027／2028當期。
+
+tests/e2e/test_ncu_hokkaido.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[tohoku-\u6771\u5317\u5927\u5b78-\u4e09\u985e\u521d\u6b21\u652f\u63f4\u4ef6-3-https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf-\u539f\u4ef657\u9801-390]
+FAILED tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[tohoku-\u6771\u5317\u5927\u5b78-\u4e09\u985e\u521d\u6b21\u652f\u63f4\u4ef6-3-https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf-\u539f\u4ef657\u9801-1440]
+FAILED tests/e2e/test_ncu_hokkaido.py::test_ncu_hokkaido_two_agreements_documents_scope_and_life[\u9662\u7d1a-390]
+FAILED tests/e2e/test_ncu_hokkaido.py::test_ncu_hokkaido_two_agreements_documents_scope_and_life[\u9662\u7d1a-1440]
+FAILED tests/e2e/test_ncu_hokkaido.py::test_ncu_hokkaido_two_agreements_documents_scope_and_life[\u6821\u7d1a-390]
+FAILED tests/e2e/test_ncu_hokkaido.py::test_ncu_hokkaido_two_agreements_documents_scope_and_life[\u6821\u7d1a-1440]
+6 failed, 14 passed in 431.81s (0:07:11)
