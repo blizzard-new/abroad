@@ -1,0 +1,251 @@
+CONFTEST LOADED!
+.....................F......F......................F.F..                 [100%]
+=================================== FAILURES ===================================
+_ test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui[\u592a\u539f\u8fb2\u6797-\u73fe\u9023DOCX\u5be6\u969b\u662f\u5df2\u586b2024\u201325\u7bc4\u4f8b-60\uff0f\u5e74-\u672a\u8907\u88fd\u59d3\u540d\u3001\u751f\u65e5\u3001\u5730\u5740\u3001\u8b49\u4ef6\u865f\u78bc] _
+
+page = <Page url='http://127.0.0.1:38739/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E5%A4%AA%E...5%8E%9F%E8%BE%B2%E6%9E%97%E5%A4%A7%E5%AD%B8%20THAI%20NGUYEN%20UNIVERSITY%20OF%20AGRICULTURE%20AND%20FORESTRY%20(TUAF)'>
+live_server = LiveServer(base_url='http://127.0.0.1:38739', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-188/web-e2e-data4'))
+school = '太原農林', application_text = '現連DOCX實際是已填2024–25範例', life_text = '60／年'
+audit_text = '未複製姓名、生日、地址、證件號碼'
+
+    @pytest.mark.parametrize(
+        "school,application_text,life_text,audit_text",
+        [
+            ("圖爾庫", "A1–C2六級", "EUR120000", "guardian joint account"),
+            (
+                "太原農林",
+                "現連DOCX實際是已填2024–25範例",
+                "60／年",
+                "未複製姓名、生日、地址、證件號碼",
+            ),
+        ],
+    )
+    def test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui(
+        page, live_server, school, application_text, life_text, audit_text
+    ):
+        page.set_viewport_size({"width": 390, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, "partners")
+        open_navigation(page)
+        page.locator("#school-switcher").click()
+        page.locator('[data-home-school="國立中央大學"]').click()
+        page.locator("#confirm-school").click()
+        if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+            page.locator("#glass-menu-toggle").click()
+        wait_until(
+            page,
+            "state.dashboard?.school_name === '國立中央大學' && state.dashboard.partner_universities.length === 214",
+        )
+        page.locator('[data-partner-view="list"]').click()
+        page.locator("#partner-search").fill(school)
+        expect(page.locator("#partner-table")).to_contain_text("本期名額待公告")
+        page.locator("#partner-table .partner-card > summary").first.click()
+        page.locator("#partner-table .school-detail-trigger:visible").first.click()
+        page.locator("#ncu-source-audit > summary").click()
+>       expect(page.locator("#ncu-source-audit-body")).to_contain_text(audit_text)
+E       AssertionError: Locator expected to contain text '未複製姓名、生日、地址、證件號碼'
+E       Actual value: 展開讀取逐欄查核與原文頁碼。 
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#ncu-source-audit-body")
+E           5 × locator resolved to <div id="ncu-source-audit-body">展開讀取逐欄查核與原文頁碼。</div>
+E             - unexpected value "展開讀取逐欄查核與原文頁碼。"
+E       
+E       Aria snapshot:
+E       - text: 展開讀取逐欄查核與原文頁碼。
+
+tests/e2e/test_ncu_school.py:465: AssertionError
+_ test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5fa9\u65e6-6\uff0f8\u4eba\u5957\u9593\u30012\u4eba\u4e00\u623f-\u4e2a\u4eba\u5883\u5916\u4fdd\u9669\u5355-\u4e0a\u6d77\u5168\u671f\u91ab\u7642\uff0f\u4eba\u8eab\u610f\u5916\u4fdd\u55aePDF-ncu-fudan-initial-insurance-390.png] _
+
+page = <Page url='http://127.0.0.1:38739/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E5%BE%A9%E6%97%A6#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:38739', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-188/web-e2e-data4'))
+school = '復旦', life_text = '6／8人套間、2人一房', source_text = '个人境外保险单'
+application_text = '上海全期醫療／人身意外保單PDF'
+filename = 'ncu-fudan-initial-insurance-390.png'
+
+    @pytest.mark.parametrize("school,life_text,source_text,application_text,filename", [
+        ("南京大學", "10元封頂", "港澳通行證掃描件", "核對外校第二階段補件", "ncu-nju-second-batch-390.png"),
+        ("同濟", "統一安排校內住宿", "通行证扫描件", "台胞證／回鄉證掃描", "ncu-tongji-new-list-390.png"),
+        ("復旦", "6／8人套間、2人一房", "个人境外保险单", "上海全期醫療／人身意外保單PDF", "ncu-fudan-initial-insurance-390.png"),
+        ("北京師範", "60–80 RMB／天／人", "最低6学分", "近期藍／白底JPEG照", "ncu-bnu-slides-workflow-390.png"),
+        ("東南大學", "床品先自備", "無須接機服務者", "先由兩校確認體檢對等互免", "ncu-seu-reciprocal-health-390.png"),
+        ("浙江大學", "宿位緊張可能跨校區", "保险单扫描件可待收到入学通知后再提交", "可錄取後補，亦可先備", "ncu-zju-insurance-later-390.png"),
+        ("重慶大學", "不一定能提供校內宿舍", "2026年10月30日", "最晚開學報到提供", "ncu-cqu-latest-registration-390.png"),
+        ("廈門", "漳州3設計類", "Statement of Health Condition", "健康狀況聲明（實際DOCX", "ncu-xmu-health-docx-390.png"),
+        ("西南大學", "不能替PG2人房填同價", "第三頁", "藝術等专业作品集", "ncu-swu-major-portfolio-390.png"),
+        ("華中師範", "房型不保证", "最近 6个月内体检报告", "到校後交，行前購買", "ncu-ccnu-arrival-insurance-390.png"),
+        ("北京郵電", "不帶淋浴", "二寸藍底", "藍底／白底版本差異待確認", "ncu-bupt-photo-conflict-390.png"),
+        ("華南理工", "600–1500", "申請文件電子檔", "空白附表未取得", "ncu-scut-missing-blank-form-390.png"),
+        ("廣西大學", "普通疾病不賠", "每年 3 月至次年 7 月", "指定意外醫療保險", "ncu-gxu-local-accident-insurance-390.png"),
+    ])
+    def test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life(page, live_server, school, life_text, source_text, application_text, filename):
+        page.set_viewport_size({"width": 390, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, "partners")
+        expect(page.locator("#boot-splash")).to_be_hidden(timeout=60_000)
+        open_navigation(page)
+        page.locator("#school-switcher").click()
+        page.locator('[data-home-school="國立中央大學"]').click()
+        page.locator("#confirm-school").click()
+        if page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":
+            page.locator("#glass-menu-toggle").click()
+        wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60.0)
+        page.locator('[data-partner-view="list"]').click()
+>       page.locator("#partner-search").fill(school)
+
+tests/e2e/test_ncu_school.py:672: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:18242: in fill
+    self._sync(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:219: in fill
+    return await self._frame.fill(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:636: in fill
+    await self._fill(**locals_to_params(locals()))
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:648: in _fill
+    await self._channel.send("fill", self._timeout, locals_to_params(locals()))
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f89a901b620>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f8962aa8860>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.fill: Timeout 30000ms exceeded.
+E           Call log:
+E             - waiting for locator("#partner-search")
+E               - locator resolved to <input id="partner-search" placeholder="學校、國家或申請條件"/>
+E               - fill("復旦")
+E             - attempting fill action
+E               - waiting for element to be visible, enabled and editable
+
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: TimeoutError
+____ test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion ____
+
+page = <Page url='http://127.0.0.1:46073/#advisor'>
+live_server = LiveServer(base_url='http://127.0.0.1:46073', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-188/web-e2e-data5'))
+
+    def test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion(page, live_server):
+        session = sign_in_cookie(live_server, school="國立臺灣大學")
+        attach_session(page, live_server, session)
+>       enter_public_site(page, live_server, "advisor")
+
+tests/e2e/test_ntu_school.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:475: in enter_public_site
+    page.goto(f"{live_server.base_url}/#{route}")
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:9875: in goto
+    self._sync(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:560: in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:156: in goto
+    await self._channel.send(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f89a901b620>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f8994a97420>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Page.goto: Timeout 30000ms exceeded.
+E           Call log:
+E             - navigating to "http://127.0.0.1:46073/#advisor", waiting until "load"
+
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: TimeoutError
+_ test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u570b\u7acb\u81fa\u5317\u5927\u5b78] _
+
+page = <Page url='http://127.0.0.1:46073/#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:46073', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-188/web-e2e-data5'))
+school = '國立臺北大學'
+
+    @pytest.mark.parametrize("school", ["長庚大學", "國立臺北大學"])
+    def test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools(page, live_server, school):
+        session = sign_in_cookie(live_server, school=school)
+        attach_session(page, live_server, session)
+>       enter_public_site(page, live_server, "partners")
+
+tests/e2e/test_ntu_school.py:126: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:475: in enter_public_site
+    page.goto(f"{live_server.base_url}/#{route}")
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:9875: in goto
+    self._sync(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:560: in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:156: in goto
+    await self._channel.send(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f89a901b620>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f897b908860>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Page.goto: Timeout 30000ms exceeded.
+E           Call log:
+E             - navigating to "http://127.0.0.1:46073/#partners", waiting until "load"
+
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: TimeoutError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ncu_school.py::test_ncu_new_host_forms_insurance_and_arrival_reach_mobile_ui[\u592a\u539f\u8fb2\u6797-\u73fe\u9023DOCX\u5be6\u969b\u662f\u5df2\u586b2024\u201325\u7bc4\u4f8b-60\uff0f\u5e74-\u672a\u8907\u88fd\u59d3\u540d\u3001\u751f\u65e5\u3001\u5730\u5740\u3001\u8b49\u4ef6\u865f\u78bc]
+FAILED tests/e2e/test_ncu_school.py::test_ncu_new_mainland_batches_reach_visible_mobile_source_workflow_and_life[\u5fa9\u65e6-6\uff0f8\u4eba\u5957\u9593\u30012\u4eba\u4e00\u623f-\u4e2a\u4eba\u5883\u5916\u4fdd\u9669\u5355-\u4e0a\u6d77\u5168\u671f\u91ab\u7642\uff0f\u4eba\u8eab\u610f\u5916\u4fdd\u55aePDF-ncu-fudan-initial-insurance-390.png]
+FAILED tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion
+FAILED tests/e2e/test_ntu_school.py::test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u570b\u7acb\u81fa\u5317\u5927\u5b78]
+4 failed, 52 passed in 1256.38s (0:20:56)
