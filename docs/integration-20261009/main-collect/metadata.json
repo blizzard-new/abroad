@@ -1,0 +1,26 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "--collect-only",
+    "-q"
+  ],
+  "cwd": "/workspace/abroad-integration",
+  "started_at": "2026-10-09T12:56:56.516724+00:00",
+  "start_guard": {
+    "sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "tree": "b238bbb6a27ac78dfa407dbed4e8d5a3d84cc7f6",
+    "status": ""
+  },
+  "timeout_seconds": 180,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 2,
+  "finished_at": "2026-10-09T12:57:02.400712+00:00",
+  "end_guard": {
+    "sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "tree": "b238bbb6a27ac78dfa407dbed4e8d5a3d84cc7f6",
+    "status": ""
+  }
+}

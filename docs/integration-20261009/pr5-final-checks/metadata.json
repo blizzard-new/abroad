@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "/workspace/integration-tools/pr5_checks.py"
+  ],
+  "cwd": "/workspace/abroad-pr5",
+  "started_at": "2026-10-09T13:28:44.880702+00:00",
+  "start_guard": {
+    "sha": "106db4389bbd8442cc0ee0e20dca03ba3eaac87b",
+    "tree": "f106dc55db332bc044c16453b678c4e04604997a",
+    "status": ""
+  },
+  "timeout_seconds": 1200,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-09T13:28:54.027763+00:00",
+  "end_guard": {
+    "sha": "106db4389bbd8442cc0ee0e20dca03ba3eaac87b",
+    "tree": "f106dc55db332bc044c16453b678c4e04604997a",
+    "status": "?? build/"
+  }
+}

@@ -1,0 +1,85 @@
+.F
+=================================== FAILURES ===================================
+_______ test_ntu_forum_rpc_migration_preserves_authorization_and_replays _______
+
+    @pytest.mark.skipif(os.environ.get("EXCHANGE_TEST_POSTGRES") != "1", reason="opt in to isolated Docker PostgreSQL")
+    def test_ntu_forum_rpc_migration_preserves_authorization_and_replays():
+        name = "exchange-ntu-migration-" + uuid.uuid4().hex[:10]
+    
+        def docker(*args, input=None, check=True):
+            result = subprocess.run(["docker", *args], input=input, text=True, capture_output=True, check=False, timeout=60)
+            if check and result.returncode:
+                pytest.fail(result.stderr)
+            return result
+    
+        def sql(text):
+            return docker("exec", "-i", name, "psql", "-U", "postgres", "-qAt", "-v", "ON_ERROR_STOP=1", input=text).stdout.strip()
+    
+        def apply(filename):
+            sql((MIGRATIONS / filename).read_text(encoding="utf-8"))
+    
+        def definition():
+            return sql(f"select pg_get_functiondef('{FUNCTION}'::regprocedure);")
+    
+        def metadata():
+            return sql(f"select jsonb_build_array(proowner,proacl,prosecdef,proconfig) from pg_proc where oid='{FUNCTION}'::regprocedure;")
+    
+        def publish(event, board="ntu", school="國立臺灣大學", account="ntu-test", token="a" * 64, kind="post", extra=None):
+            payload = {"board_id":board,"board_kind":"university_exchange","school_name":school,
+                       "post_type":"discussion","topic":"application","title":"論壇測試標題",
+                       "body":"隔離資料庫測試內文，不會寫入正式平台。","identity_mode":"anonymous","status":"approved"}
+            if kind == "comment":
+                payload = {"post_id":"post-ntu-before","body":"隔離資料庫測試留言。","identity_mode":"anonymous","status":"approved"}
+            payload.update(extra or {})
+            payload["id"] = f"{kind}-{event}"
+            payload["author_id"] = "identity-" + account
+            payload["display_name"] = "用戶端提供的名稱"
+            mutation_id = "runtime-ntu-migration-" + event
+            request = PublicCommunityPublicationRequest(mutation_id=mutation_id, account_id=account, identity_id="identity-"+account,
+                                                       access_token_hash=token, resource_type=PublicCommunityResourceType(kind), content=payload)
+            fingerprint = public_community_publication_fingerprint(request)
+            payload = request.content
+            result = sql("begin; set local role service_role; select public.exchange_commit_public_community_publication("
+                         f"'{mutation_id}','{fingerprint}','{account}','identity-{account}','{token}','{kind}',"
+                         "$payload$" + json.dumps(payload, ensure_ascii=False) + "$payload$::jsonb); commit;")
+            return json.loads(result)
+    
+>       docker("run", "--detach", "--name", name, "--network", "none", "--tmpfs", "/var/lib/postgresql/data",
+               "--env", "POSTGRES_PASSWORD=isolated-ntu-test-only", POSTGRES_IMAGE)
+
+../integration-tools/test_forum_probe.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../integration-tools/test_forum_probe.py:30: in docker
+    result = subprocess.run(["docker", *args], input=input, text=True, capture_output=True, check=False, timeout=60)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:550: in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1209: in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:2116: in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Popen: returncode: -9 args: ['docker', 'run', '--detach', '--name', 'exchan...>
+endtime = 1878.155161928, orig_timeout = 60, stdout_seq = []
+stderr_seq = [b"Unable to find image 'postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24' l...cksum\n4ece9a32c307: Download complete\n', b'43f9814c9a3b: Verifying Checksum\n43f9814c9a3b: Download complete\n', ...]
+skip_check_and_raise = False
+
+    def _check_timeout(self, endtime, orig_timeout, stdout_seq, stderr_seq,
+                       skip_check_and_raise=False):
+        """Convenience for checking if a timeout has expired."""
+        if endtime is None:
+            return
+        if skip_check_and_raise or _time() > endtime:
+>           raise TimeoutExpired(
+                    self.args, orig_timeout,
+                    output=b''.join(stdout_seq) if stdout_seq else None,
+                    stderr=b''.join(stderr_seq) if stderr_seq else None)
+E           subprocess.TimeoutExpired: Command '['docker', 'run', '--detach', '--name', 'exchange-ntu-migration-d36e422832', '--network', 'none', '--tmpfs', '/var/lib/postgresql/data', '--env', 'POSTGRES_PASSWORD=isolated-ntu-test-only', 'postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24']' timed out after 60 seconds
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1253: TimeoutExpired
+=========================== short test summary info ============================
+FAILED ../integration-tools/test_forum_probe.py::test_ntu_forum_rpc_migration_preserves_authorization_and_replays
+1 failed, 1 passed in 60.32s (0:01:00)

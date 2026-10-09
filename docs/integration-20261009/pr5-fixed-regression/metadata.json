@@ -1,0 +1,39 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_ntu_destination_enrichment.py",
+    "tests/test_ntu_audit.py",
+    "tests/test_ntu_integration.py",
+    "tests/test_life_context.py",
+    "tests/test_school_image_collector.py",
+    "tests/test_school_photo_and_match.py",
+    "tests/test_university_locations.py",
+    "tests/test_cgu_bundled_data.py",
+    "tests/test_ntpu_bundled_data.py",
+    "tests/test_school_completeness.py",
+    "tests/test_task_documents_and_reference_plan.py",
+    "tests/test_account_workspace_api.py",
+    "tests/test_selection_conditions_sync.py",
+    "--junitxml=/workspace/integration-evidence/pr5-fixed-regression/results.xml"
+  ],
+  "cwd": "/workspace/abroad-pr5",
+  "started_at": "2026-10-09T13:21:22.992597+00:00",
+  "start_guard": {
+    "sha": "1d63d77d8b2b1f351255d0beb30968d497d15b7c",
+    "tree": "66eba9d445d12bf291656619104b79e2d184235e",
+    "status": ""
+  },
+  "timeout_seconds": 900,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T13:21:47.092003+00:00",
+  "end_guard": {
+    "sha": "1d63d77d8b2b1f351255d0beb30968d497d15b7c",
+    "tree": "66eba9d445d12bf291656619104b79e2d184235e",
+    "status": ""
+  }
+}

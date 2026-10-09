@@ -1,0 +1,50 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_ncu_document_conditions.py",
+    "tests/test_ncu_integration.py",
+    "tests/test_ncu_japan3.py",
+    "tests/test_ncu_next3_review_corrections.py",
+    "tests/test_ncu_nufs_kumamoto_ryukoku.py",
+    "tests/test_ncu_shizuoka_chuo_kansai.py",
+    "tests/test_ncu_snapshot_cache.py",
+    "tests/test_ncu_source_collector.py",
+    "tests/test_ncu_tcu_toyama_fukui.py",
+    "tests/test_advisor.py",
+    "tests/test_application_document_catalog.py",
+    "tests/test_application_documents_api.py",
+    "tests/test_application_rules.py",
+    "tests/test_application_workflow.py",
+    "tests/test_cgu_bundled_data.py",
+    "tests/test_ntpu_bundled_data.py",
+    "tests/test_ntpu_support.py",
+    "tests/test_ntu_audit.py",
+    "tests/test_ntu_integration.py",
+    "tests/test_ntu_school_board_migration.py",
+    "tests/test_task_documents_and_reference_plan.py",
+    "tests/test_selection_conditions_sync.py",
+    "tests/test_workflow_structuring.py",
+    "tests/test_account_workspace_api.py",
+    "--junitxml=/workspace/integration-evidence/pr4-regression/results.xml"
+  ],
+  "cwd": "/workspace/abroad-pr4",
+  "started_at": "2026-10-09T13:05:27.286964+00:00",
+  "start_guard": {
+    "sha": "eddd7af6e700e2d7685be95e3c96484a9fa378b1",
+    "tree": "c5722eee235efd9aee95122ccf814b336f53a33c",
+    "status": ""
+  },
+  "timeout_seconds": 1200,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T13:08:18.132187+00:00",
+  "end_guard": {
+    "sha": "eddd7af6e700e2d7685be95e3c96484a9fa378b1",
+    "tree": "c5722eee235efd9aee95122ccf814b336f53a33c",
+    "status": ""
+  }
+}

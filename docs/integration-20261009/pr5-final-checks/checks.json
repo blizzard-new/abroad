@@ -1,0 +1,96 @@
+[
+  {
+    "name": "lock",
+    "command": [
+      "/workspace/.abroad-cloud-tools/python/bin/uv",
+      "lock",
+      "--check"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "openapi",
+    "command": [
+      "/workspace/abroad-pr5/.venv/bin/python",
+      "scripts/export_openapi.py",
+      "--check"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "python",
+    "command": [
+      "/workspace/abroad-pr5/.venv/bin/python",
+      "-m",
+      "compileall",
+      "-q",
+      "src"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "js",
+    "command": [
+      "node",
+      "--check",
+      "src/exchange_info/static/app.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sql-parser",
+    "command": [
+      "/workspace/abroad-pr5/.venv/bin/python",
+      "scripts/validate_supabase_migrations.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "dependencies",
+    "command": [
+      "/workspace/abroad-pr5/.venv/bin/python",
+      "scripts/audit_python_dependencies.py"
+    ],
+    "exit_code": 1
+  },
+  {
+    "name": "replay",
+    "command": [
+      "/workspace/abroad-pr5/.venv/bin/python",
+      "-m",
+      "scripts.build_ntu_destination_enrichment"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "clean",
+    "command": [
+      "git",
+      "diff",
+      "--exit-code"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "f6ad1b8",
+      "HEAD"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "wheel",
+    "command": [
+      "/workspace/.abroad-cloud-tools/python/bin/uv",
+      "build",
+      "--wheel",
+      "--out-dir",
+      "/workspace/integration-evidence/pr5-final-checks/wheel"
+    ],
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "command": [
+    "docker",
+    "pull",
+    "supabase/postgres:17.6.1.136@sha256:f371b5f3f2ac0a05703f33d6e6134515fb2498cab708fb948a0aeb7481467c00"
+  ],
+  "cwd": "/workspace/abroad-integration",
+  "started_at": "2026-10-09T12:57:15.036341+00:00",
+  "start_guard": {
+    "sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "tree": "b238bbb6a27ac78dfa407dbed4e8d5a3d84cc7f6",
+    "status": ""
+  },
+  "timeout_seconds": 600,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-09T13:02:33.531767+00:00",
+  "end_guard": {
+    "sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "tree": "b238bbb6a27ac78dfa407dbed4e8d5a3d84cc7f6",
+    "status": ""
+  }
+}

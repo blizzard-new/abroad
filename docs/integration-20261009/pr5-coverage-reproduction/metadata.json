@@ -1,0 +1,27 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_ntu_destination_enrichment.py::test_same_named_schools_use_their_own_country_photo",
+    "--junitxml=/workspace/integration-evidence/pr5-coverage-reproduction/results.xml"
+  ],
+  "cwd": "/workspace/abroad-pr5",
+  "started_at": "2026-10-09T13:20:54.932686+00:00",
+  "start_guard": {
+    "sha": "1f57df2c225b042c519eda0deb9ce73bbf35bd35",
+    "tree": "813c723b8c00eaa98e1535a89530bff0da0b5a71",
+    "status": ""
+  },
+  "timeout_seconds": 180,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-09T13:20:58.412997+00:00",
+  "end_guard": {
+    "sha": "1f57df2c225b042c519eda0deb9ce73bbf35bd35",
+    "tree": "813c723b8c00eaa98e1535a89530bff0da0b5a71",
+    "status": ""
+  }
+}

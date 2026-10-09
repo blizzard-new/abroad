@@ -1,0 +1,24 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-c",
+    "import os,pytest; os.environ[\"EXCHANGE_TEST_POSTGRES\"]=\"1\"; raise SystemExit(pytest.main([\"-q\",\"-s\",\"/workspace/integration-tools/test_forum_probe.py\",\"--junitxml=/workspace/integration-evidence/new-school-forum-db-probe/results.xml\"]))"
+  ],
+  "cwd": "/workspace/abroad-pr3",
+  "started_at": "2026-10-09T13:22:51.489034+00:00",
+  "start_guard": {
+    "sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+    "tree": "b4877fcbacaf50d92ea24d46c81ebe55f7835f0e",
+    "status": ""
+  },
+  "timeout_seconds": 300,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-09T13:23:52.046791+00:00",
+  "end_guard": {
+    "sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+    "tree": "b4877fcbacaf50d92ea24d46c81ebe55f7835f0e",
+    "status": ""
+  }
+}

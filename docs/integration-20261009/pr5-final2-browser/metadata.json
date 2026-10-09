@@ -1,0 +1,31 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/e2e/test_ntu_destination_enrichment.py",
+    "tests/e2e/test_life_context.py",
+    "tests/e2e/test_ntu_school.py",
+    "tests/e2e/test_conditions_account_sync.py",
+    "tests/e2e/test_school_lists.py",
+    "--junitxml=/workspace/integration-evidence/pr5-final2-browser/results.xml"
+  ],
+  "cwd": "/workspace/abroad-pr5",
+  "started_at": "2026-10-09T13:33:48.401526+00:00",
+  "start_guard": {
+    "sha": "b33ad27ff13912780dfb94f91504dd11b1ef6a21",
+    "tree": "510235883bcd6b98b7eeb6e3cb66b1d318feeae8",
+    "status": ""
+  },
+  "timeout_seconds": 1200,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T13:35:55.704691+00:00",
+  "end_guard": {
+    "sha": "b33ad27ff13912780dfb94f91504dd11b1ef6a21",
+    "tree": "510235883bcd6b98b7eeb6e3cb66b1d318feeae8",
+    "status": ""
+  }
+}

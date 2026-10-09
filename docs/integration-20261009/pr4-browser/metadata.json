@@ -1,0 +1,30 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/e2e/test_ncu_acceptance.py",
+    "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py",
+    "tests/e2e/test_ncu_kyutech.py",
+    "tests/e2e/test_ntu_school.py",
+    "--junitxml=/workspace/integration-evidence/pr4-browser/results.xml"
+  ],
+  "cwd": "/workspace/abroad-pr4",
+  "started_at": "2026-10-09T13:06:01.270942+00:00",
+  "start_guard": {
+    "sha": "eddd7af6e700e2d7685be95e3c96484a9fa378b1",
+    "tree": "c5722eee235efd9aee95122ccf814b336f53a33c",
+    "status": ""
+  },
+  "timeout_seconds": 1500,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T13:10:01.712436+00:00",
+  "end_guard": {
+    "sha": "eddd7af6e700e2d7685be95e3c96484a9fa378b1",
+    "tree": "c5722eee235efd9aee95122ccf814b336f53a33c",
+    "status": ""
+  }
+}

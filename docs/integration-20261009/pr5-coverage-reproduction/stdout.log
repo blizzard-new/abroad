@@ -1,0 +1,30 @@
+CONFTEST LOADED!
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_same_named_schools_use_their_own_country_photo ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-7/test_same_named_schools_use_th0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f472205a960>
+
+    def test_same_named_schools_use_their_own_country_photo(tmp_path, monkeypatch):
+        from exchange_info import api
+        path = tmp_path / "images.json"
+        rows = [{"school_name": "City University", "country": country, "status": "verified",
+                 "local_path": "/static/" + code + ".jpg"} for country, code in (("美國", "us"), ("英國", "gb"))]
+        path.write_text(json.dumps({"schools": rows}))
+        monkeypatch.setattr(api, "SCHOOL_IMAGE_MANIFEST", path)
+        partners = [PartnerUniversity(school_name="City University", country=c, program_type="交換學生",
+                                      source_url="https://example.edu/partners") for c in ("美國", "英國", "法國")]
+        result = api._attach_school_images(StudentDashboard(partner_universities=partners), base_url="https://example.org")
+        assert [p.image_url for p in result.partner_universities] == ["https://example.org/static/us.jpg", "https://example.org/static/gb.jpg", None]
+        monkeypatch.setattr(api, "fetch_ntu_partner_universities", lambda: partners)
+        with TestClient(create_app(tmp_path / "runtime")) as client:
+            coverage = client.get("/coverage", params={"school": "NTU"})
+        assert coverage.status_code == 200
+>       assert coverage.json()["image_count"] == 2
+E       assert 0 == 2
+
+tests/test_ntu_destination_enrichment.py:58: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ntu_destination_enrichment.py::test_same_named_schools_use_their_own_country_photo
+1 failed in 2.00s

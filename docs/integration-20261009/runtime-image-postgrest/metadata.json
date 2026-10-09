@@ -1,0 +1,24 @@
+{
+  "command": [
+    "docker",
+    "pull",
+    "postgrest/postgrest:v14.12@sha256:54000f24847d01a2c2302e0041cf0618b875c57fb48507d743cfa9aaa50bf43c"
+  ],
+  "cwd": "/workspace/abroad-integration",
+  "started_at": "2026-10-09T12:58:03.779657+00:00",
+  "start_guard": {
+    "sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "tree": "b238bbb6a27ac78dfa407dbed4e8d5a3d84cc7f6",
+    "status": ""
+  },
+  "timeout_seconds": 600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T12:58:12.466431+00:00",
+  "end_guard": {
+    "sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "tree": "b238bbb6a27ac78dfa407dbed4e8d5a3d84cc7f6",
+    "status": ""
+  }
+}
