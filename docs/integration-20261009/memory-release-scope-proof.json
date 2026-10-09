@@ -1,0 +1,47 @@
+{
+  "at": "2026-10-09T16:20:34.736899+00:00",
+  "base": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
+  "head": "bedc9a03c0968a57728d1d08f6654404a3474269",
+  "tree": "5a705d568d52ab249baeb5b808ed9a29ca6fd1a8",
+  "unchanged_subtrees": {
+    "supabase/migrations": {
+      "base": "ef5298dec9aa4a0a797b5b2eb84b60bd42125be2",
+      "candidate": "ef5298dec9aa4a0a797b5b2eb84b60bd42125be2"
+    },
+    "src/exchange_info/official_data": {
+      "base": "5ecaa84489b38d0470545c1d2dd0c6da8789feda",
+      "candidate": "5ecaa84489b38d0470545c1d2dd0c6da8789feda"
+    },
+    "src/exchange_info/static": {
+      "base": "1660e3d597120e55478d691c3873d129aaca0e76",
+      "candidate": "1660e3d597120e55478d691c3873d129aaca0e76"
+    },
+    "sources": {
+      "base": "aaa185399e9d3e2e1eba740e9917446f20106025",
+      "candidate": "aaa185399e9d3e2e1eba740e9917446f20106025"
+    },
+    "pyproject.toml": {
+      "base": "46170146171fe7b40f1842c71255d6d8f1d1ad37",
+      "candidate": "46170146171fe7b40f1842c71255d6d8f1d1ad37"
+    },
+    "uv.lock": {
+      "base": "72a4b1691f8718ea632cd95d68c1a251a4b53496",
+      "candidate": "72a4b1691f8718ea632cd95d68c1a251a4b53496"
+    },
+    ".github/workflows": {
+      "base": "5792ee86d9e8c161c2eee12f76292b170f7d6d71",
+      "candidate": "5792ee86d9e8c161c2eee12f76292b170f7d6d71"
+    },
+    "docs/api/openapi.json": {
+      "base": "cc6fec65ce3c2921552c078509ec388de72ff46a",
+      "candidate": "cc6fec65ce3c2921552c078509ec388de72ff46a"
+    }
+  },
+  "changed_paths": [
+    "M\tsrc/exchange_info/api.py",
+    "M\tsrc/exchange_info/partner_research.py",
+    "M\tsrc/exchange_info/storage.py",
+    "A\ttests/test_catalogue_memory.py",
+    "M\ttests/test_workflow_catalog_cache.py"
+  ]
+}

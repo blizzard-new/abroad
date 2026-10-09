@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "/workspace/integration-tools/profile_six_school_memory.py",
+    "memory-scoped-profiles-browser",
+    "--parallel",
+    "--translations",
+    "--browser"
+  ],
+  "cwd": "/workspace/abroad-memory",
+  "started_at": "2026-10-09T16:13:16.443756+00:00",
+  "start_guard": {
+    "sha": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
+    "tree": "7a9736031fb9e2d440426e14c1ca03f5438aca97",
+    "status": "M src/exchange_info/api.py\n M src/exchange_info/partner_research.py\n M src/exchange_info/storage.py"
+  },
+  "timeout_seconds": 1200,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T16:14:39.258096+00:00",
+  "end_guard": {
+    "sha": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
+    "tree": "7a9736031fb9e2d440426e14c1ca03f5438aca97",
+    "status": "M src/exchange_info/api.py\n M src/exchange_info/partner_research.py\n M src/exchange_info/storage.py\n M tests/test_workflow_catalog_cache.py"
+  }
+}

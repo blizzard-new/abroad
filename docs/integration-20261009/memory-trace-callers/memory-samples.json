@@ -1,0 +1,3154 @@
+[
+  {
+    "label": "startup",
+    "time": "2026-10-09T16:06:44.981260+00:00",
+    "pid": 214312,
+    "rss_bytes": 182722560,
+    "peak_rss_bytes": 182439936,
+    "gc_collected": null,
+    "traced_bytes": 58047170,
+    "traced_peak_bytes": 58066182,
+    "largest_allocations": [
+      {
+        "trace": "<frozen importlib._bootstrap_external>:757",
+        "bytes": 24542937,
+        "count": 215240
+      },
+      {
+        "trace": "<frozen importlib._bootstrap>:488",
+        "bytes": 2445136,
+        "count": 20578
+      },
+      {
+        "trace": "<frozen abc>:106",
+        "bytes": 1370351,
+        "count": 4712
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567",
+        "bytes": 1063392,
+        "count": 5582
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic_core/core_schema.py:4350",
+        "bytes": 742000,
+        "count": 10872
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/typing_inspection/introspection.py:444",
+        "bytes": 590328,
+        "count": 2733
+      },
+      {
+        "trace": "<frozen abc>:123",
+        "bytes": 586371,
+        "count": 5928
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:237",
+        "bytes": 522872,
+        "count": 5413
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/linecache.py:142",
+        "bytes": 435088,
+        "count": 4343
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:280",
+        "bytes": 422928,
+        "count": 1958
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/_codecs/adobe_glyphs.py:126",
+        "bytes": 415152,
+        "count": 2
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:316",
+        "bytes": 412368,
+        "count": 1562
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py:473",
+        "bytes": 398933,
+        "count": 3766
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:904",
+        "bytes": 390692,
+        "count": 3907
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:595",
+        "bytes": 332961,
+        "count": 1071
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:2906",
+        "bytes": 329646,
+        "count": 1391
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:277",
+        "bytes": 281232,
+        "count": 1674
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263",
+        "bytes": 277456,
+        "count": 1425
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:1033",
+        "bytes": 273880,
+        "count": 501
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/_compiler.py:766",
+        "bytes": 264472,
+        "count": 478
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/uvloop/__init__.py:24",
+        "bytes": 262072,
+        "count": 32
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+        "bytes": 252240,
+        "count": 2102
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:566",
+        "bytes": 234000,
+        "count": 1950
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:128",
+        "bytes": 229776,
+        "count": 1661
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_known_annotated_metadata.py:193",
+        "bytes": 227656,
+        "count": 2347
+      },
+      {
+        "trace": "<frozen abc>:107",
+        "bytes": 214032,
+        "count": 1290
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:354",
+        "bytes": 206580,
+        "count": 2735
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/plugin/_schema_validator.py:53",
+        "bytes": 200393,
+        "count": 1872
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py:1328",
+        "bytes": 192256,
+        "count": 3004
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:831",
+        "bytes": 185264,
+        "count": 1647
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py:2849",
+        "bytes": 162640,
+        "count": 820
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:507",
+        "bytes": 152992,
+        "count": 2732
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_config.py:201",
+        "bytes": 133808,
+        "count": 1459
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:1232",
+        "bytes": 133600,
+        "count": 3340
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/attr/_make.py:226",
+        "bytes": 122300,
+        "count": 1031
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/charset_normalizer/constant.py:2457",
+        "bytes": 118168,
+        "count": 83
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py:1233",
+        "bytes": 117969,
+        "count": 445
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:842",
+        "bytes": 116400,
+        "count": 1602
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:395",
+        "bytes": 114672,
+        "count": 961
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:1273",
+        "bytes": 111856,
+        "count": 1984
+      }
+    ],
+    "largest_traces": [
+      {
+        "trace": [
+          "<frozen importlib._bootstrap_external>:995",
+          "<frozen importlib._bootstrap_external>:1128",
+          "<frozen importlib._bootstrap_external>:757"
+        ],
+        "bytes": 24533225,
+        "count": 215138
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap>:935",
+          "<frozen importlib._bootstrap_external>:1301",
+          "<frozen importlib._bootstrap>:488"
+        ],
+        "bytes": 1935999,
+        "count": 16399
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:381",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567"
+        ],
+        "bytes": 796320,
+        "count": 4146
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:381",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:414",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/typing_inspection/introspection.py:444"
+        ],
+        "bytes": 448200,
+        "count": 2075
+      },
+      {
+        "trace": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/inspect.py:1092",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/linecache.py:46",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/linecache.py:142"
+        ],
+        "bytes": 435088,
+        "count": 4343
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap_external>:999",
+          "<frozen importlib._bootstrap>:488",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/_codecs/adobe_glyphs.py:126"
+        ],
+        "bytes": 415152,
+        "count": 2
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/_compat/shared.py:51",
+          "<frozen abc>:123",
+          "<frozen abc>:123"
+        ],
+        "bytes": 371314,
+        "count": 3735
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:1357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:316",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:280"
+        ],
+        "bytes": 337392,
+        "count": 1562
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap_external>:1133",
+          "<frozen importlib._bootstrap_external>:1063",
+          "<frozen importlib._bootstrap>:488"
+        ],
+        "bytes": 285444,
+        "count": 2007
+      },
+      {
+        "trace": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:193",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:171",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:904"
+        ],
+        "bytes": 280875,
+        "count": 2882
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:2939",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:1193",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:1033"
+        ],
+        "bytes": 273880,
+        "count": 501
+      },
+      {
+        "trace": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py:58",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/asyncio/runners.py:144",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/uvloop/__init__.py:24"
+        ],
+        "bytes": 262072,
+        "count": 32
+      },
+      {
+        "trace": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/__init__.py:228",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/__init__.py:307",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/_compiler.py:766"
+        ],
+        "bytes": 260656,
+        "count": 466
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:1357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:316",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:237"
+        ],
+        "bytes": 259568,
+        "count": 1961
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:349",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567"
+        ],
+        "bytes": 245568,
+        "count": 1282
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_model_construction.py:579",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:381",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472"
+        ],
+        "bytes": 239760,
+        "count": 1998
+      },
+      {
+        "trace": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py:346",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:338",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:354"
+        ],
+        "bytes": 206580,
+        "count": 2735
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py:1246",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic_core/core_schema.py:3109",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic_core/core_schema.py:4350"
+        ],
+        "bytes": 192000,
+        "count": 3000
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py:868",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py:1245",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py:1328"
+        ],
+        "bytes": 192000,
+        "count": 3000
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py:2426",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py:2368",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_known_annotated_metadata.py:193"
+        ],
+        "bytes": 179240,
+        "count": 1846
+      }
+    ]
+  },
+  {
+    "label": "round-0-CGU",
+    "time": "2026-10-09T16:07:37.549114+00:00",
+    "pid": 214312,
+    "rss_bytes": 557486080,
+    "peak_rss_bytes": 556933120,
+    "gc_collected": null,
+    "traced_bytes": 164682732,
+    "traced_peak_bytes": 222571173,
+    "largest_allocations": [
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71",
+        "bytes": 52806376,
+        "count": 192778
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:757",
+        "bytes": 24583970,
+        "count": 215573
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782",
+        "bytes": 20535191,
+        "count": 312995
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424",
+        "bytes": 13072896,
+        "count": 10959
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974",
+        "bytes": 3854376,
+        "count": 53533
+      },
+      {
+        "trace": "<frozen importlib._bootstrap>:488",
+        "bytes": 2643044,
+        "count": 22850
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263",
+        "bytes": 1906025,
+        "count": 13572
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042",
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": "<frozen abc>:106",
+        "bytes": 1369963,
+        "count": 4706
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/generic/_data_structures.py:683",
+        "bytes": 1228147,
+        "count": 111
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567",
+        "bytes": 1063392,
+        "count": 5582
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601",
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic_core/core_schema.py:4350",
+        "bytes": 742000,
+        "count": 10872
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/encodings/utf_16_be.py:16",
+        "bytes": 737520,
+        "count": 12292
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/filters.py:93",
+        "bytes": 655309,
+        "count": 71
+      },
+      {
+        "trace": "<frozen abc>:123",
+        "bytes": 595933,
+        "count": 5907
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/typing_inspection/introspection.py:444",
+        "bytes": 590328,
+        "count": 2733
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/_compiler.py:766",
+        "bytes": 533656,
+        "count": 707
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:237",
+        "bytes": 522872,
+        "count": 5413
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:368",
+        "bytes": 520536,
+        "count": 9655
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:327",
+        "bytes": 509768,
+        "count": 9103
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/linecache.py:142",
+        "bytes": 435088,
+        "count": 4343
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:280",
+        "bytes": 422928,
+        "count": 1958
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/_codecs/adobe_glyphs.py:126",
+        "bytes": 415152,
+        "count": 2
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:354",
+        "bytes": 413205,
+        "count": 5286
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:316",
+        "bytes": 412368,
+        "count": 1562
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py:473",
+        "bytes": 398933,
+        "count": 3766
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:904",
+        "bytes": 390692,
+        "count": 3907
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:660",
+        "bytes": 360506,
+        "count": 3401
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:595",
+        "bytes": 332961,
+        "count": 1071
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:2906",
+        "bytes": 329646,
+        "count": 1391
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/_cmap.py:125",
+        "bytes": 297728,
+        "count": 64
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:617",
+        "bytes": 288232,
+        "count": 5147
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/generic/_base.py:920",
+        "bytes": 286419,
+        "count": 5432
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:277",
+        "bytes": 281232,
+        "count": 1674
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:1033",
+        "bytes": 273880,
+        "count": 501
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/uvloop/__init__.py:24",
+        "bytes": 261944,
+        "count": 31
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+        "bytes": 252240,
+        "count": 2102
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/_cmap.py:363",
+        "bytes": 251912,
+        "count": 20
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:128",
+        "bytes": 251131,
+        "count": 1803
+      }
+    ],
+    "largest_traces": [
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:977",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 29014392,
+        "count": 85495
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap_external>:995",
+          "<frozen importlib._bootstrap_external>:1128",
+          "<frozen importlib._bootstrap_external>:757"
+        ],
+        "bytes": 24583786,
+        "count": 215570
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:975",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 23736608,
+        "count": 107066
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/storage.py:632",
+          "/workspace/abroad-memory/src/exchange_info/storage.py:388",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 20224915,
+        "count": 308364
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:40",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 9949184,
+        "count": 4858
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 3123712,
+        "count": 6101
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap>:935",
+          "<frozen importlib._bootstrap_external>:1301",
+          "<frozen importlib._bootstrap>:488"
+        ],
+        "bytes": 1935759,
+        "count": 16394
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:651",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:827",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042"
+        ],
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 1275192,
+        "count": 17711
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:537",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601"
+        ],
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:381",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567"
+        ],
+        "bytes": 796320,
+        "count": 4146
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:308",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:291",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:229",
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263"
+        ],
+        "bytes": 649376,
+        "count": 1694
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/storage.py:634",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:40",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:368"
+        ],
+        "bytes": 520536,
+        "count": 9655
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:261",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 514008,
+        "count": 7139
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/storage.py:634",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:40",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:327"
+        ],
+        "bytes": 509768,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap_external>:1133",
+          "<frozen importlib._bootstrap_external>:1063",
+          "<frozen importlib._bootstrap>:488"
+        ],
+        "bytes": 482708,
+        "count": 4286
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:381",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:414",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/typing_inspection/introspection.py:444"
+        ],
+        "bytes": 448200,
+        "count": 2075
+      }
+    ]
+  },
+  {
+    "label": "round-0-NTPU",
+    "time": "2026-10-09T16:07:54.247714+00:00",
+    "pid": 214312,
+    "rss_bytes": 644919296,
+    "peak_rss_bytes": 721793024,
+    "gc_collected": null,
+    "traced_bytes": 160906489,
+    "traced_peak_bytes": 222571173,
+    "largest_allocations": [
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71",
+        "bytes": 52800256,
+        "count": 192699
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:757",
+        "bytes": 24583721,
+        "count": 215569
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782",
+        "bytes": 20542144,
+        "count": 313104
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424",
+        "bytes": 13072896,
+        "count": 10959
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974",
+        "bytes": 3854376,
+        "count": 53533
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263",
+        "bytes": 3379116,
+        "count": 20237
+      },
+      {
+        "trace": "<frozen importlib._bootstrap>:488",
+        "bytes": 2641492,
+        "count": 22838
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042",
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": "<frozen abc>:106",
+        "bytes": 1369963,
+        "count": 4706
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567",
+        "bytes": 1063392,
+        "count": 5582
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601",
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic_core/core_schema.py:4350",
+        "bytes": 742000,
+        "count": 10872
+      },
+      {
+        "trace": "<frozen abc>:123",
+        "bytes": 594778,
+        "count": 5886
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/typing_inspection/introspection.py:444",
+        "bytes": 590328,
+        "count": 2733
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/_compiler.py:766",
+        "bytes": 581896,
+        "count": 899
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:237",
+        "bytes": 522872,
+        "count": 5413
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:368",
+        "bytes": 520536,
+        "count": 9655
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:327",
+        "bytes": 509768,
+        "count": 9103
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/linecache.py:142",
+        "bytes": 435088,
+        "count": 4343
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:280",
+        "bytes": 422928,
+        "count": 1958
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/_codecs/adobe_glyphs.py:126",
+        "bytes": 415152,
+        "count": 2
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:354",
+        "bytes": 412989,
+        "count": 5281
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:316",
+        "bytes": 412368,
+        "count": 1562
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py:473",
+        "bytes": 398933,
+        "count": 3766
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:904",
+        "bytes": 390692,
+        "count": 3907
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:660",
+        "bytes": 360506,
+        "count": 3401
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:595",
+        "bytes": 332961,
+        "count": 1071
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:2906",
+        "bytes": 329646,
+        "count": 1391
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:617",
+        "bytes": 288232,
+        "count": 5147
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:277",
+        "bytes": 281232,
+        "count": 1674
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:1033",
+        "bytes": 273880,
+        "count": 501
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/uvloop/__init__.py:24",
+        "bytes": 261944,
+        "count": 31
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+        "bytes": 252240,
+        "count": 2102
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:128",
+        "bytes": 251131,
+        "count": 1803
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:566",
+        "bytes": 234000,
+        "count": 1950
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:319",
+        "bytes": 232512,
+        "count": 7266
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_known_annotated_metadata.py:193",
+        "bytes": 227656,
+        "count": 2347
+      },
+      {
+        "trace": "<frozen abc>:107",
+        "bytes": 213480,
+        "count": 1280
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/type_adapter.py:677",
+        "bytes": 213431,
+        "count": 3355
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:682",
+        "bytes": 209088,
+        "count": 3168
+      }
+    ],
+    "largest_traces": [
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:977",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 29014392,
+        "count": 85495
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap_external>:995",
+          "<frozen importlib._bootstrap_external>:1128",
+          "<frozen importlib._bootstrap_external>:757"
+        ],
+        "bytes": 24583721,
+        "count": 215569
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:975",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 23736608,
+        "count": 107066
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/storage.py:632",
+          "/workspace/abroad-memory/src/exchange_info/storage.py:388",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 20224915,
+        "count": 308364
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:40",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 9949184,
+        "count": 4858
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 3123712,
+        "count": 6101
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap>:935",
+          "<frozen importlib._bootstrap_external>:1301",
+          "<frozen importlib._bootstrap>:488"
+        ],
+        "bytes": 1935759,
+        "count": 16394
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:651",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:827",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042"
+        ],
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 1275192,
+        "count": 17711
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:537",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601"
+        ],
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:381",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567"
+        ],
+        "bytes": 796320,
+        "count": 4146
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/ntpu_student_view.py:439",
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263"
+        ],
+        "bytes": 712512,
+        "count": 1859
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:308",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:291",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:229",
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263"
+        ],
+        "bytes": 649376,
+        "count": 1694
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/storage.py:634",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:40",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:368"
+        ],
+        "bytes": 520536,
+        "count": 9655
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:261",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 514008,
+        "count": 7139
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/storage.py:634",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:40",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:327"
+        ],
+        "bytes": 509768,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap_external>:1133",
+          "<frozen importlib._bootstrap_external>:1063",
+          "<frozen importlib._bootstrap>:488"
+        ],
+        "bytes": 482708,
+        "count": 4286
+      }
+    ]
+  },
+  {
+    "label": "round-0-NTU",
+    "time": "2026-10-09T16:08:04.676862+00:00",
+    "pid": 214312,
+    "rss_bytes": 694685696,
+    "peak_rss_bytes": 833351680,
+    "gc_collected": null,
+    "traced_bytes": 164952945,
+    "traced_peak_bytes": 222571173,
+    "largest_allocations": [
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71",
+        "bytes": 53613568,
+        "count": 193851
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:757",
+        "bytes": 24583721,
+        "count": 215569
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782",
+        "bytes": 21656223,
+        "count": 316738
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424",
+        "bytes": 13072896,
+        "count": 10959
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974",
+        "bytes": 3875112,
+        "count": 53821
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263",
+        "bytes": 3738876,
+        "count": 23127
+      },
+      {
+        "trace": "<frozen importlib._bootstrap>:488",
+        "bytes": 2641445,
+        "count": 22837
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042",
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": "<frozen abc>:106",
+        "bytes": 1369963,
+        "count": 4706
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567",
+        "bytes": 1063392,
+        "count": 5582
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/__init__.py:186",
+        "bytes": 977933,
+        "count": 1728
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/type_adapter.py:677",
+        "bytes": 967073,
+        "count": 5146
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601",
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic_core/core_schema.py:4350",
+        "bytes": 742000,
+        "count": 10872
+      },
+      {
+        "trace": "<frozen abc>:123",
+        "bytes": 594448,
+        "count": 5880
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/typing_inspection/introspection.py:444",
+        "bytes": 590328,
+        "count": 2733
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/_compiler.py:766",
+        "bytes": 582312,
+        "count": 901
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:237",
+        "bytes": 522872,
+        "count": 5413
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:368",
+        "bytes": 520536,
+        "count": 9655
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:327",
+        "bytes": 509768,
+        "count": 9103
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/linecache.py:142",
+        "bytes": 435088,
+        "count": 4343
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:354",
+        "bytes": 430837,
+        "count": 5486
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:280",
+        "bytes": 422928,
+        "count": 1958
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/_codecs/adobe_glyphs.py:126",
+        "bytes": 415152,
+        "count": 2
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:316",
+        "bytes": 412368,
+        "count": 1562
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py:473",
+        "bytes": 398933,
+        "count": 3766
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:904",
+        "bytes": 390692,
+        "count": 3907
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:660",
+        "bytes": 360506,
+        "count": 3401
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:595",
+        "bytes": 332961,
+        "count": 1071
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:2906",
+        "bytes": 329646,
+        "count": 1391
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:617",
+        "bytes": 288232,
+        "count": 5147
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:277",
+        "bytes": 281232,
+        "count": 1674
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:1033",
+        "bytes": 273880,
+        "count": 501
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/uvloop/__init__.py:24",
+        "bytes": 261944,
+        "count": 31
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+        "bytes": 252240,
+        "count": 2102
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:128",
+        "bytes": 251131,
+        "count": 1803
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:566",
+        "bytes": 234000,
+        "count": 1950
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:319",
+        "bytes": 232512,
+        "count": 7266
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_known_annotated_metadata.py:193",
+        "bytes": 227656,
+        "count": 2347
+      },
+      {
+        "trace": "<frozen abc>:107",
+        "bytes": 213480,
+        "count": 1280
+      }
+    ],
+    "largest_traces": [
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:977",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 29371512,
+        "count": 86071
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap_external>:995",
+          "<frozen importlib._bootstrap_external>:1128",
+          "<frozen importlib._bootstrap_external>:757"
+        ],
+        "bytes": 24583721,
+        "count": 215569
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:975",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 24192800,
+        "count": 107642
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/storage.py:632",
+          "/workspace/abroad-memory/src/exchange_info/storage.py:388",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 20224915,
+        "count": 308364
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:40",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 9949184,
+        "count": 4858
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 3123712,
+        "count": 6101
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap>:935",
+          "<frozen importlib._bootstrap_external>:1301",
+          "<frozen importlib._bootstrap>:488"
+        ],
+        "bytes": 1935759,
+        "count": 16394
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:651",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:827",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042"
+        ],
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 1275192,
+        "count": 17711
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/api.py:1142",
+          "/workspace/abroad-memory/src/exchange_info/ntu_student_view.py:24",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 1107133,
+        "count": 3516
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:330",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/_compat/v2.py:231",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/type_adapter.py:677"
+        ],
+        "bytes": 967073,
+        "count": 5146
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:537",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601"
+        ],
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:381",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567"
+        ],
+        "bytes": 796320,
+        "count": 4146
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/ntpu_student_view.py:439",
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263"
+        ],
+        "bytes": 712512,
+        "count": 1859
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:308",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:291",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:229",
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263"
+        ],
+        "bytes": 649376,
+        "count": 1694
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/ntu_partner_summary.py:24",
+          "/workspace/abroad-memory/src/exchange_info/ntu_partner_summary.py:16",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/__init__.py:186"
+        ],
+        "bytes": 642458,
+        "count": 283
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/storage.py:634",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:40",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:368"
+        ],
+        "bytes": 520536,
+        "count": 9655
+      }
+    ]
+  },
+  {
+    "label": "round-0-CCU",
+    "time": "2026-10-09T16:08:19.308887+00:00",
+    "pid": 214312,
+    "rss_bytes": 822325248,
+    "peak_rss_bytes": 859299840,
+    "gc_collected": null,
+    "traced_bytes": 197642419,
+    "traced_peak_bytes": 265806520,
+    "largest_allocations": [
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71",
+        "bytes": 53613568,
+        "count": 193851
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782",
+        "bytes": 51098716,
+        "count": 505698
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:757",
+        "bytes": 24591695,
+        "count": 215636
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424",
+        "bytes": 13072896,
+        "count": 10959
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/type_adapter.py:677",
+        "bytes": 4217629,
+        "count": 28247
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974",
+        "bytes": 3875112,
+        "count": 53821
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263",
+        "bytes": 3739176,
+        "count": 23132
+      },
+      {
+        "trace": "<frozen importlib._bootstrap>:488",
+        "bytes": 2641400,
+        "count": 22836
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042",
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": "<frozen abc>:106",
+        "bytes": 1369900,
+        "count": 4705
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567",
+        "bytes": 1063392,
+        "count": 5582
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/__init__.py:186",
+        "bytes": 977933,
+        "count": 1728
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601",
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic_core/core_schema.py:4350",
+        "bytes": 742000,
+        "count": 10872
+      },
+      {
+        "trace": "<frozen abc>:123",
+        "bytes": 593788,
+        "count": 5868
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/typing_inspection/introspection.py:444",
+        "bytes": 590328,
+        "count": 2733
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/_compiler.py:766",
+        "bytes": 582312,
+        "count": 901
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:237",
+        "bytes": 522872,
+        "count": 5413
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:368",
+        "bytes": 520536,
+        "count": 9655
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:327",
+        "bytes": 509768,
+        "count": 9103
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/linecache.py:142",
+        "bytes": 435088,
+        "count": 4343
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:354",
+        "bytes": 430741,
+        "count": 5482
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:280",
+        "bytes": 422928,
+        "count": 1958
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/_codecs/adobe_glyphs.py:126",
+        "bytes": 415152,
+        "count": 2
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:316",
+        "bytes": 412368,
+        "count": 1562
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py:473",
+        "bytes": 398933,
+        "count": 3766
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:904",
+        "bytes": 390692,
+        "count": 3907
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:660",
+        "bytes": 360506,
+        "count": 3401
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:595",
+        "bytes": 332961,
+        "count": 1071
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:2906",
+        "bytes": 329646,
+        "count": 1391
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:617",
+        "bytes": 288232,
+        "count": 5147
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:277",
+        "bytes": 281232,
+        "count": 1674
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:1033",
+        "bytes": 273880,
+        "count": 501
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/uvloop/__init__.py:24",
+        "bytes": 261944,
+        "count": 31
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+        "bytes": 252240,
+        "count": 2102
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:128",
+        "bytes": 251380,
+        "count": 1805
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:566",
+        "bytes": 234000,
+        "count": 1950
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:319",
+        "bytes": 232512,
+        "count": 7266
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_known_annotated_metadata.py:193",
+        "bytes": 227656,
+        "count": 2347
+      },
+      {
+        "trace": "<frozen abc>:107",
+        "bytes": 213480,
+        "count": 1280
+      }
+    ],
+    "largest_traces": [
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/api.py:1138",
+          "/workspace/abroad-memory/src/exchange_info/ccu_student_view.py:35",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 29431761,
+        "count": 188831
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:977",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 29371512,
+        "count": 86071
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap_external>:995",
+          "<frozen importlib._bootstrap_external>:1128",
+          "<frozen importlib._bootstrap_external>:757"
+        ],
+        "bytes": 24591695,
+        "count": 215636
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:975",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 24192800,
+        "count": 107642
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/storage.py:632",
+          "/workspace/abroad-memory/src/exchange_info/storage.py:388",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 20224915,
+        "count": 308364
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:40",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 9949184,
+        "count": 4858
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:330",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/_compat/v2.py:231",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/type_adapter.py:677"
+        ],
+        "bytes": 4217629,
+        "count": 28247
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 3123712,
+        "count": 6101
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap>:935",
+          "<frozen importlib._bootstrap_external>:1301",
+          "<frozen importlib._bootstrap>:488"
+        ],
+        "bytes": 1935759,
+        "count": 16394
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:651",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:827",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042"
+        ],
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 1275192,
+        "count": 17711
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/api.py:1142",
+          "/workspace/abroad-memory/src/exchange_info/ntu_student_view.py:24",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 1107133,
+        "count": 3516
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:537",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601"
+        ],
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:381",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567"
+        ],
+        "bytes": 796320,
+        "count": 4146
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/ntpu_student_view.py:439",
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263"
+        ],
+        "bytes": 712512,
+        "count": 1859
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:308",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:291",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:229",
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263"
+        ],
+        "bytes": 649376,
+        "count": 1694
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/ntu_partner_summary.py:24",
+          "/workspace/abroad-memory/src/exchange_info/ntu_partner_summary.py:16",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/__init__.py:186"
+        ],
+        "bytes": 642458,
+        "count": 283
+      }
+    ]
+  },
+  {
+    "label": "round-0-NCU",
+    "time": "2026-10-09T16:08:30.769695+00:00",
+    "pid": 214312,
+    "rss_bytes": 879067136,
+    "peak_rss_bytes": 1005023232,
+    "gc_collected": null,
+    "traced_bytes": 203676779,
+    "traced_peak_bytes": 265806520,
+    "largest_allocations": [
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782",
+        "bytes": 54730105,
+        "count": 516599
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71",
+        "bytes": 53613568,
+        "count": 193851
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:757",
+        "bytes": 24591695,
+        "count": 215636
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424",
+        "bytes": 13072896,
+        "count": 10959
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/type_adapter.py:677",
+        "bytes": 6673390,
+        "count": 34174
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974",
+        "bytes": 3875112,
+        "count": 53821
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263",
+        "bytes": 3741280,
+        "count": 23150
+      },
+      {
+        "trace": "<frozen importlib._bootstrap>:488",
+        "bytes": 2641400,
+        "count": 22836
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042",
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": "<frozen abc>:106",
+        "bytes": 1369900,
+        "count": 4705
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567",
+        "bytes": 1063392,
+        "count": 5582
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/__init__.py:186",
+        "bytes": 977933,
+        "count": 1728
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601",
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic_core/core_schema.py:4350",
+        "bytes": 742000,
+        "count": 10872
+      },
+      {
+        "trace": "<frozen abc>:123",
+        "bytes": 593128,
+        "count": 5856
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/typing_inspection/introspection.py:444",
+        "bytes": 590328,
+        "count": 2733
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/_compiler.py:766",
+        "bytes": 582312,
+        "count": 901
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:237",
+        "bytes": 522872,
+        "count": 5413
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:368",
+        "bytes": 520536,
+        "count": 9655
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:327",
+        "bytes": 509768,
+        "count": 9103
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/linecache.py:142",
+        "bytes": 435088,
+        "count": 4343
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:354",
+        "bytes": 430693,
+        "count": 5480
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:280",
+        "bytes": 422928,
+        "count": 1958
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/_codecs/adobe_glyphs.py:126",
+        "bytes": 415152,
+        "count": 2
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:316",
+        "bytes": 412368,
+        "count": 1562
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py:473",
+        "bytes": 398933,
+        "count": 3766
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:904",
+        "bytes": 390692,
+        "count": 3907
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:660",
+        "bytes": 360506,
+        "count": 3401
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:595",
+        "bytes": 332961,
+        "count": 1071
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:2906",
+        "bytes": 329646,
+        "count": 1391
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:617",
+        "bytes": 288232,
+        "count": 5147
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:277",
+        "bytes": 281232,
+        "count": 1674
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:1033",
+        "bytes": 273880,
+        "count": 501
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/uvloop/__init__.py:24",
+        "bytes": 261944,
+        "count": 31
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+        "bytes": 252240,
+        "count": 2102
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:128",
+        "bytes": 251380,
+        "count": 1805
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:566",
+        "bytes": 234000,
+        "count": 1950
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:319",
+        "bytes": 232512,
+        "count": 7266
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_known_annotated_metadata.py:193",
+        "bytes": 227656,
+        "count": 2347
+      },
+      {
+        "trace": "<frozen abc>:107",
+        "bytes": 213480,
+        "count": 1280
+      }
+    ],
+    "largest_traces": [
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/api.py:1138",
+          "/workspace/abroad-memory/src/exchange_info/ccu_student_view.py:35",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 29431641,
+        "count": 188830
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:977",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 29371512,
+        "count": 86071
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap_external>:995",
+          "<frozen importlib._bootstrap_external>:1128",
+          "<frozen importlib._bootstrap_external>:757"
+        ],
+        "bytes": 24591695,
+        "count": 215636
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:975",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 24192800,
+        "count": 107642
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/storage.py:632",
+          "/workspace/abroad-memory/src/exchange_info/storage.py:388",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 20224915,
+        "count": 308364
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:40",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 9949184,
+        "count": 4858
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:330",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/_compat/v2.py:231",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/type_adapter.py:677"
+        ],
+        "bytes": 6673390,
+        "count": 34174
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/api.py:1140",
+          "/workspace/abroad-memory/src/exchange_info/ncu_student_view.py:52",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 3637277,
+        "count": 10961
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 3123712,
+        "count": 6101
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap>:935",
+          "<frozen importlib._bootstrap_external>:1301",
+          "<frozen importlib._bootstrap>:488"
+        ],
+        "bytes": 1935759,
+        "count": 16394
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:651",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:827",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042"
+        ],
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 1275192,
+        "count": 17711
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/api.py:1142",
+          "/workspace/abroad-memory/src/exchange_info/ntu_student_view.py:24",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 1107133,
+        "count": 3516
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:537",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601"
+        ],
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:381",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567"
+        ],
+        "bytes": 796320,
+        "count": 4146
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/ntpu_student_view.py:439",
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263"
+        ],
+        "bytes": 712512,
+        "count": 1859
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:308",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:291",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:229",
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263"
+        ],
+        "bytes": 649376,
+        "count": 1694
+      }
+    ]
+  },
+  {
+    "label": "round-0-TKU",
+    "time": "2026-10-09T16:08:41.399663+00:00",
+    "pid": 214312,
+    "rss_bytes": 918499328,
+    "peak_rss_bytes": 1028628480,
+    "gc_collected": null,
+    "traced_bytes": 203706510,
+    "traced_peak_bytes": 265806520,
+    "largest_allocations": [
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782",
+        "bytes": 54735926,
+        "count": 516732
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71",
+        "bytes": 53613632,
+        "count": 193852
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:757",
+        "bytes": 24595194,
+        "count": 215672
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424",
+        "bytes": 13072896,
+        "count": 10959
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/type_adapter.py:677",
+        "bytes": 6678863,
+        "count": 34230
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974",
+        "bytes": 3875112,
+        "count": 53821
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263",
+        "bytes": 3739574,
+        "count": 23138
+      },
+      {
+        "trace": "<frozen importlib._bootstrap>:488",
+        "bytes": 2641353,
+        "count": 22835
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042",
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": "<frozen abc>:106",
+        "bytes": 1369900,
+        "count": 4705
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567",
+        "bytes": 1063392,
+        "count": 5582
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/__init__.py:186",
+        "bytes": 977933,
+        "count": 1728
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601",
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic_core/core_schema.py:4350",
+        "bytes": 742000,
+        "count": 10872
+      },
+      {
+        "trace": "<frozen abc>:123",
+        "bytes": 592248,
+        "count": 5840
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/typing_inspection/introspection.py:444",
+        "bytes": 590328,
+        "count": 2733
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/_compiler.py:766",
+        "bytes": 582312,
+        "count": 901
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:237",
+        "bytes": 522872,
+        "count": 5413
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:368",
+        "bytes": 520536,
+        "count": 9655
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:327",
+        "bytes": 509768,
+        "count": 9103
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:354",
+        "bytes": 444533,
+        "count": 5638
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/linecache.py:142",
+        "bytes": 435088,
+        "count": 4343
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:280",
+        "bytes": 422928,
+        "count": 1958
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/_codecs/adobe_glyphs.py:126",
+        "bytes": 415152,
+        "count": 2
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:316",
+        "bytes": 412368,
+        "count": 1562
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py:473",
+        "bytes": 398933,
+        "count": 3766
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:904",
+        "bytes": 390692,
+        "count": 3907
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:660",
+        "bytes": 360506,
+        "count": 3401
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:595",
+        "bytes": 332961,
+        "count": 1071
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:2906",
+        "bytes": 329646,
+        "count": 1391
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:617",
+        "bytes": 288232,
+        "count": 5147
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:277",
+        "bytes": 281232,
+        "count": 1674
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:1033",
+        "bytes": 273880,
+        "count": 501
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/uvloop/__init__.py:24",
+        "bytes": 261944,
+        "count": 31
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+        "bytes": 252240,
+        "count": 2102
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:128",
+        "bytes": 251605,
+        "count": 1807
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:566",
+        "bytes": 234000,
+        "count": 1950
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:319",
+        "bytes": 232512,
+        "count": 7266
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_known_annotated_metadata.py:193",
+        "bytes": 227656,
+        "count": 2347
+      },
+      {
+        "trace": "<frozen abc>:107",
+        "bytes": 213480,
+        "count": 1280
+      }
+    ],
+    "largest_traces": [
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/api.py:1138",
+          "/workspace/abroad-memory/src/exchange_info/ccu_student_view.py:35",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 29431641,
+        "count": 188830
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:977",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 29371512,
+        "count": 86071
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap_external>:995",
+          "<frozen importlib._bootstrap_external>:1128",
+          "<frozen importlib._bootstrap_external>:757"
+        ],
+        "bytes": 24595194,
+        "count": 215672
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:975",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 24192800,
+        "count": 107642
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/storage.py:632",
+          "/workspace/abroad-memory/src/exchange_info/storage.py:388",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 20224915,
+        "count": 308364
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:40",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 9949184,
+        "count": 4858
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:330",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/_compat/v2.py:231",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/type_adapter.py:677"
+        ],
+        "bytes": 6678863,
+        "count": 34230
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/api.py:1140",
+          "/workspace/abroad-memory/src/exchange_info/ncu_student_view.py:52",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 3637277,
+        "count": 10961
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 3123712,
+        "count": 6101
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap>:935",
+          "<frozen importlib._bootstrap_external>:1301",
+          "<frozen importlib._bootstrap>:488"
+        ],
+        "bytes": 1935759,
+        "count": 16394
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:651",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:827",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042"
+        ],
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 1275192,
+        "count": 17711
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/api.py:1142",
+          "/workspace/abroad-memory/src/exchange_info/ntu_student_view.py:24",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 1107133,
+        "count": 3516
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:537",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601"
+        ],
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:381",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567"
+        ],
+        "bytes": 796320,
+        "count": 4146
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/ntpu_student_view.py:439",
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263"
+        ],
+        "bytes": 712512,
+        "count": 1859
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:308",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:291",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:229",
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263"
+        ],
+        "bytes": 649376,
+        "count": 1694
+      }
+    ]
+  },
+  {
+    "label": "after-explicit-gc",
+    "time": "2026-10-09T16:08:51.024203+00:00",
+    "pid": 214312,
+    "rss_bytes": 921579520,
+    "peak_rss_bytes": 1028628480,
+    "gc_collected": 25,
+    "traced_bytes": 203600814,
+    "traced_peak_bytes": 265806520,
+    "largest_allocations": [
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782",
+        "bytes": 54735926,
+        "count": 516732
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71",
+        "bytes": 53613568,
+        "count": 193851
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:757",
+        "bytes": 24595194,
+        "count": 215672
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424",
+        "bytes": 13072896,
+        "count": 10959
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/type_adapter.py:677",
+        "bytes": 6678863,
+        "count": 34230
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974",
+        "bytes": 3875112,
+        "count": 53821
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263",
+        "bytes": 3739254,
+        "count": 23133
+      },
+      {
+        "trace": "<frozen importlib._bootstrap>:488",
+        "bytes": 2641353,
+        "count": 22835
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042",
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": "<frozen abc>:106",
+        "bytes": 1369900,
+        "count": 4705
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567",
+        "bytes": 1063392,
+        "count": 5582
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/__init__.py:186",
+        "bytes": 977933,
+        "count": 1728
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601",
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic_core/core_schema.py:4350",
+        "bytes": 742000,
+        "count": 10872
+      },
+      {
+        "trace": "<frozen abc>:123",
+        "bytes": 592248,
+        "count": 5840
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/typing_inspection/introspection.py:444",
+        "bytes": 590328,
+        "count": 2733
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/re/_compiler.py:766",
+        "bytes": 582312,
+        "count": 901
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:237",
+        "bytes": 522872,
+        "count": 5413
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:368",
+        "bytes": 520536,
+        "count": 9655
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:327",
+        "bytes": 509768,
+        "count": 9103
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/linecache.py:142",
+        "bytes": 435088,
+        "count": 4343
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:354",
+        "bytes": 428941,
+        "count": 5395
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:280",
+        "bytes": 422928,
+        "count": 1958
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pypdf/_codecs/adobe_glyphs.py:126",
+        "bytes": 415152,
+        "count": 2
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:316",
+        "bytes": 412368,
+        "count": 1562
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/dataclasses.py:473",
+        "bytes": 398933,
+        "count": 3766
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:904",
+        "bytes": 390692,
+        "count": 3907
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:660",
+        "bytes": 360506,
+        "count": 3401
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:595",
+        "bytes": 332961,
+        "count": 1071
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/typing.py:2906",
+        "bytes": 329646,
+        "count": 1391
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:617",
+        "bytes": 288232,
+        "count": 5147
+      },
+      {
+        "trace": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/enum.py:277",
+        "bytes": 281232,
+        "count": 1674
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:1033",
+        "bytes": 273880,
+        "count": 501
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/uvloop/__init__.py:24",
+        "bytes": 261944,
+        "count": 31
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+        "bytes": 252240,
+        "count": 2102
+      },
+      {
+        "trace": "<frozen importlib._bootstrap_external>:128",
+        "bytes": 251605,
+        "count": 1807
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:566",
+        "bytes": 234000,
+        "count": 1950
+      },
+      {
+        "trace": "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:319",
+        "bytes": 232512,
+        "count": 7266
+      },
+      {
+        "trace": "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_known_annotated_metadata.py:193",
+        "bytes": 227656,
+        "count": 2347
+      },
+      {
+        "trace": "<frozen abc>:107",
+        "bytes": 213480,
+        "count": 1280
+      }
+    ],
+    "largest_traces": [
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/api.py:1138",
+          "/workspace/abroad-memory/src/exchange_info/ccu_student_view.py:35",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 29431641,
+        "count": 188830
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:977",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 29371512,
+        "count": 86071
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap_external>:995",
+          "<frozen importlib._bootstrap_external>:1128",
+          "<frozen importlib._bootstrap_external>:757"
+        ],
+        "bytes": 24595194,
+        "count": 215672
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:975",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/copy.py:71"
+        ],
+        "bytes": 24192800,
+        "count": 107642
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/storage.py:632",
+          "/workspace/abroad-memory/src/exchange_info/storage.py:388",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 20224915,
+        "count": 308364
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:40",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 9949184,
+        "count": 4858
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/routing.py:330",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/fastapi/_compat/v2.py:231",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/type_adapter.py:677"
+        ],
+        "bytes": 6678863,
+        "count": 34230
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/api.py:1140",
+          "/workspace/abroad-memory/src/exchange_info/ncu_student_view.py:52",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 3637277,
+        "count": 10961
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:424"
+        ],
+        "bytes": 3123712,
+        "count": 6101
+      },
+      {
+        "trace": [
+          "<frozen importlib._bootstrap>:935",
+          "<frozen importlib._bootstrap_external>:1301",
+          "<frozen importlib._bootstrap>:488"
+        ],
+        "bytes": 1935759,
+        "count": 16394
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:651",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/sessions.py:827",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/requests/models.py:1042"
+        ],
+        "bytes": 1752798,
+        "count": 11
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:547",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 1275192,
+        "count": 17711
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/api.py:1142",
+          "/workspace/abroad-memory/src/exchange_info/ntu_student_view.py:24",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:782"
+        ],
+        "bytes": 1107133,
+        "count": 3516
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:328",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:537",
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:601"
+        ],
+        "bytes": 805224,
+        "count": 14379
+      },
+      {
+        "trace": [
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:381",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:472",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/fields.py:567"
+        ],
+        "bytes": 796320,
+        "count": 4146
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/ntpu_student_view.py:439",
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263"
+        ],
+        "bytes": 712512,
+        "count": 1859
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:373",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:308",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/workflow_structuring.py:291",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:412",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:974"
+        ],
+        "bytes": 655416,
+        "count": 9103
+      },
+      {
+        "trace": [
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:229",
+          "/workspace/abroad-memory/src/exchange_info/student_view.py:357",
+          "/workspace/abroad-six-final/.venv/lib/python3.12/site-packages/pydantic/main.py:263"
+        ],
+        "bytes": 649376,
+        "count": 1694
+      }
+    ]
+  }
+]

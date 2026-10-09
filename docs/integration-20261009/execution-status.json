@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-09T15:59:00+00:00",
+  "timestamp": "2026-10-09T16:21:27.342274+00:00",
   "environment": "exec recovered; latest commands succeed",
   "production": {
     "main": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
@@ -52,7 +52,7 @@
     "exact_deployed_python_source_and_models": "passed in separate interpreter, stage/dual-review/publish/readback, 12 HTTP200",
     "final_31234305_applied_filename_order": "passed full35, Storage and original five-school code/models; clean start/end"
   },
-  "remaining_gate": "BLOCKED: confirmed Render 512Mi OOM during final NTU regression; isolate/profile memory and prepare concrete fix",
+  "remaining_gate": "Memory fix full regression and comparative soak, then authorized fix PR merge/deploy and low-load live stability verification.",
   "tku_production_migrations_applied": true,
   "pr2_merged": true,
   "original_full": {
@@ -101,5 +101,19 @@
       "readback_passed": true
     }
   ],
-  "pr2_merge_sha": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1"
+  "pr2_merge_sha": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
+  "memory_fix": {
+    "sha": "bedc9a03c0968a57728d1d08f6654404a3474269",
+    "branch": "integration/six-school-memory-20261009",
+    "status": "fixed SHA full suite and comparative soak running; not merged",
+    "scope": "3 source files + 2 test files; all data, migrations, static assets, workflows, lock and OpenAPI unchanged",
+    "tests": "fixed SHA 4 new regression tests and OpenAPI check passed; earlier focused 84 passed; full 2645 cases now running",
+    "preliminary_peak_mib": {
+      "baseline": 489.8,
+      "shallow_partner": 453.5,
+      "scoped_profiles": 445.3,
+      "streamed_workflows": 435.0,
+      "bounded_catalogue_diagnostic": 410.1
+    }
+  }
 }

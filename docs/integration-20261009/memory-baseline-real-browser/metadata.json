@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "/workspace/integration-tools/profile_six_school_memory.py",
+    "memory-baseline-real-browser",
+    "--parallel",
+    "--translations",
+    "--browser"
+  ],
+  "cwd": "/workspace/abroad-six-final",
+  "started_at": "2026-10-09T16:11:44.723091+00:00",
+  "start_guard": {
+    "sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+    "tree": "7a9736031fb9e2d440426e14c1ca03f5438aca97",
+    "status": ""
+  },
+  "timeout_seconds": 1200,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T16:13:35.983104+00:00",
+  "end_guard": {
+    "sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+    "tree": "7a9736031fb9e2d440426e14c1ca03f5438aca97",
+    "status": ""
+  }
+}
