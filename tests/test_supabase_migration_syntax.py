@@ -9,10 +9,15 @@ from scripts.validate_supabase_migrations import (
 
 def test_all_supabase_migrations_parse_including_nested_function_bodies() -> None:
     summary = validate_migrations(DEFAULT_MIGRATION_DIR.glob("*.sql"))
-    assert len(summary.results) == 31
-    assert summary.statement_count == 556
+    assert len(summary.results) == 32
+    assert summary.statement_count == 557
     assert summary.sql_body_count == 11
-    assert summary.plpgsql_unit_count == 68
+    assert summary.plpgsql_unit_count == 69
+
+    school_boards = next(result for result in summary.results
+                         if result.path.name == "20261009135343_ccu_ncu_school_board_compatibility.sql")
+    assert school_boards.statement_count == 1
+    assert school_boards.plpgsql_unit_count == 1
 
     account_deletion = next(
         result
