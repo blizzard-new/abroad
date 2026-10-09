@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="60.219" timestamp="2026-10-09T08:49:11.841637+00:00" hostname="f6ad0b7a0286"><testcase classname="tests.e2e.test_tku_governance_transactions" name="test_current_admin_workbench_source_attestations_publish_and_destination_rollback" time="60.065"><failure message="StopIteration">page = &lt;Page url='http://127.0.0.1:36285/admin/content-review?review_status=pending_review&amp;workflow_revision=1e32afd38660457c9095c7b1d8816f85'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:36285', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-193/web-e2e-data0'))
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f917bf50200&gt;
+
+    def test_current_admin_workbench_source_attestations_publish_and_destination_rollback(page, live_server, monkeypatch):
+        a = live_server.register("synthetic-tku-governance-a@example.com", "Synthetic governance A")
+        b = live_server.register("synthetic-tku-governance-b@example.com", "Synthetic governance B")
+        monkeypatch.setenv("EXCHANGE_CONTENT_ADMIN_EMAILS", f"{a['profile']['email']},{b['profile']['email']}")
+        headers_a, headers_b = _auth_headers(a), _auth_headers(b)
+        base = live_server.base_url
+        store = LocalContentGovernanceStore(live_server.data_dir)
+        school = "Synthetic TKU governance host"
+        workflow = UniversityApplicationWorkflow(home_university="淡江大學", school_name=school,
+            academic_year="117", application_round="Synthetic round", applicability_status="verified",
+            coverage_status="official_verified", last_checked=datetime(2026,10,9,tzinfo=timezone.utc),
+            sources=[ApplicationWorkflowSource(title="Synthetic official source", source_url="https://synthetic.edu/exchange",
+                role="home_university", authority="home_official_notice", effective_academic_year="117",
+                application_round="Synthetic round", checked_at=datetime(2026,10,9,tzinfo=timezone.utc))],
+            steps=[ApplicationStep(rule_id="synthetic-rule", order=1, phase="Synthetic phase", title="Synthetic requirement",
+                responsible_party="Synthetic student", summary="Synthetic bounded rule",
+                source_urls=["https://synthetic.edu/exchange"], support_status="verified")])
+        revision = stage_workflow_refresh(store, workflow).revision
+        profile = DestinationProfile(home_university="淡江大學", school_name=school,
+            coverage_status="official_partial", coverage_note="Synthetic scope boundaries; no real official verification claim",
+            cost_summary="Synthetic bounded cost", sources=[SourceReference(title="Synthetic official source", source_url="https://synthetic.edu/exchange")],
+            last_checked=datetime(2026,10,9,tzinfo=timezone.utc))
+        upsert_destination_profile(profile, live_server.data_dir)
+    
+        _open_content_review_workbench(page, live_server, a['profile']['email'], a)
+        expect(page.locator("#reviewer-email")).to_have_text(a['profile']['email'])
+        page.goto(f"{base}/admin/content-review?review_status=pending_review&amp;workflow_revision={revision.id}")
+        card = page.locator(f'[data-revision-id="{revision.id}"]')
+        expect(card).to_be_visible(timeout=30000)
+        expect(card).to_contain_text(school)
+        expect(card.locator('[data-review-action="publish"]')).to_be_disabled()
+    
+        def approve(headers, row):
+            response = requests.post(f"{base}/admin/application-workflow-revisions/{row['id']}/approve", headers=headers,
+                json={"expected_content_hash":row['content_hash'], "reviewed_source_urls":workflow_review_source_urls(workflow),
+                    "reviewed_rule_keys":workflow_review_rule_keys(workflow), "note":"Synthetic independent review of every source and rule"}, timeout=30)
+            assert response.status_code == 200, response.text
+            return response.json()
+        payload = revision.model_dump(mode="json")
+        approve(headers_a, payload)
+        one = requests.post(f"{base}/admin/application-workflow-revisions/{revision.id}/publish", headers=headers_a,
+            json={"note":"Synthetic explicit publication"}, timeout=30)
+        assert one.status_code == 409
+        approved = approve(headers_b, payload)
+        assert len(approved['review_approvals']) == 2
+        edited = requests.patch(f"{base}/admin/application-workflow-revisions/{revision.id}/applicability", headers=headers_a,
+            json={"expected_content_hash":revision.content_hash,"academic_year":"117","application_round":"Synthetic round",
+                "source_updates":[{"source_url":"https://synthetic.edu/exchange","effective_academic_year":"117",
+                    "application_round":"Synthetic round","title":"Synthetic revised source title"}],
+                "note":"Synthetic source change requires two new independent attestations"}, timeout=30)
+        assert edited.status_code == 200, edited.text
+        updated = edited.json()
+        assert updated['review_approvals'] == []
+        assert len(updated['edit_history'][-1]['invalidated_review_approvals']) == 2
+        stale = requests.post(f"{base}/admin/application-workflow-revisions/{revision.id}/approve", headers=headers_b,
+            json={"expected_content_hash":revision.content_hash,"reviewed_source_urls":workflow_review_source_urls(workflow),
+                "reviewed_rule_keys":workflow_review_rule_keys(workflow),"note":"Synthetic stale evidence must be rejected"}, timeout=30)
+        assert stale.status_code == 409
+        approve(headers_a, updated)
+        approve(headers_b, updated)
+        published = requests.post(f"{base}/admin/application-workflow-revisions/{revision.id}/publish", headers=headers_a,
+            json={"note":"Synthetic explicit publication"}, timeout=30)
+        assert published.status_code == 200, published.text
+        visible_workflow = next(row for row in store.load_published_workflows() if row.school_name == school)
+        assert visible_workflow.version == published.json()['version']
+        assert visible_workflow.sources[0].title == 'Synthetic revised source title'
+        history = requests.get(f"{base}/admin/application-workflow-publications", headers=headers_a, timeout=30)
+        assert history.status_code == 200 and any(row['school_name']==school for row in history.json()['items'])
+    
+        def queue():
+            result = requests.get(f"{base}/admin/destination-profile-review-queue", headers=headers_a,
+                params={"home_university":"淡江大學"}, timeout=30)
+            assert result.status_code == 200
+            return result.json()
+        def attest(headers):
+            current = queue()
+            row = next(item for item in current['items'] if item['school_name']==school)
+            result = requests.post(f"{base}/admin/destination-profile-reviews", headers=headers,
+                json={"home_university":"淡江大學","school_name":school,"expected_snapshot":current['snapshot_fingerprint'],
+                    "expected_profile_content_hash":row['profile_content_hash'],"decision":"approve",
+                    "reviewed_source_urls":[source.source_url for source in profile.sources],
+                    "reviewed_section_keys":[section.key for section in REQUIRED_DESTINATION_PROFILE_REVIEW_SECTIONS],
+                    "note":"Synthetic independent destination source and section attestation"}, timeout=30)
+            assert result.status_code == 200, result.text
+        def promotion_request():
+            current = queue()
+            row = next(item for item in current['items'] if item['school_name']==school)
+            return {"home_university":"淡江大學","school_name":school,"expected_snapshot":current['snapshot_fingerprint'],
+                "expected_profile_content_hash":row['profile_content_hash'],"note":"Synthetic explicit destination promotion"}
+        attest(headers_a)
+        denied = requests.post(f"{base}/admin/destination-profile-promotions", headers=headers_a, json=promotion_request(), timeout=30)
+        assert denied.status_code == 409
+        attest(headers_b)
+        request = promotion_request()
+        promoted = requests.post(f"{base}/admin/destination-profile-promotions", headers=headers_a, json=request, timeout=30)
+        assert promoted.status_code == 200, promoted.text
+        replay = requests.post(f"{base}/admin/destination-profile-promotions", headers=headers_a, json=request, timeout=30)
+        assert replay.status_code == 200 and replay.json()['id']==promoted.json()['id']
+        public = requests.get(f"{base}/destination-profiles", params={"home_school":"淡江大學"}, timeout=30).json()
+&gt;       assert next(row for row in public if row['school_name']==school)['coverage_status'] == 'official_verified'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+tests/e2e/test_tku_governance_transactions.py:115: StopIteration</failure></testcase></testsuite></testsuites>

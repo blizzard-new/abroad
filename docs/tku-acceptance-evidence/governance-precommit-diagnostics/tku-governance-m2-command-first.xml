@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="8" skipped="0" tests="8" time="2.080" timestamp="2026-10-09T08:11:28.349871+00:00" hostname="f6ad0b7a0286"><testcase classname="tests.test_tku_governance_commands" name="test_late_publication_failure_restores_every_byte_before_retry" time="0.003"><failure message="TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_late_publication_failure_0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f57e612c290&gt;
+
+    def test_late_publication_failure_restores_every_byte_before_retry(tmp_path, monkeypatch):
+&gt;       store, baseline, candidate = ready_store(tmp_path)
+                                     ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_tku_governance_commands.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_late_publication_failure_0')
+
+    def ready_store(path):
+        store = LocalContentGovernanceStore(path)
+&gt;       baseline = stage_workflow_refresh(store, _content_workflow("Synthetic original")).revision
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'
+
+tests/test_tku_governance_commands.py:32: TypeError</failure></testcase><testcase classname="tests.test_tku_governance_commands" name="test_process_crash_recovers_before_public_read_and_can_retry" time="0.001"><failure message="TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_process_crash_recovers_be0')
+
+    def test_process_crash_recovers_before_public_read_and_can_retry(tmp_path):
+&gt;       store, baseline, candidate = ready_store(tmp_path)
+                                     ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_tku_governance_commands.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_process_crash_recovers_be0')
+
+    def ready_store(path):
+        store = LocalContentGovernanceStore(path)
+&gt;       baseline = stage_workflow_refresh(store, _content_workflow("Synthetic original")).revision
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'
+
+tests/test_tku_governance_commands.py:32: TypeError</failure></testcase><testcase classname="tests.test_tku_governance_commands" name="test_concurrent_approval_snapshot_conflicts_without_lost_evidence" time="0.001"><failure message="TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_concurrent_approval_snaps0')
+
+    def test_concurrent_approval_snapshot_conflicts_without_lost_evidence(tmp_path):
+        store = LocalContentGovernanceStore(tmp_path)
+&gt;       candidate = stage_workflow_refresh(store, _content_workflow("Synthetic pending")).revision
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'
+
+tests/test_tku_governance_commands.py:107: TypeError</failure></testcase><testcase classname="tests.test_tku_governance_commands" name="test_batch_staging_has_zero_approval_publication_and_is_idempotent" time="0.001"><failure message="TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_batch_staging_has_zero_ap0')
+
+    def test_batch_staging_has_zero_approval_publication_and_is_idempotent(tmp_path):
+        store = LocalContentGovernanceStore(tmp_path)
+&gt;       store.publish_workflow(_content_workflow("Synthetic reference"), "synthetic-baseline")
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'
+
+tests/test_tku_governance_commands.py:123: TypeError</failure></testcase><testcase classname="tests.test_tku_governance_commands" name="test_source_edit_clears_approvals_and_retains_complete_old_attestations" time="0.001"><failure message="TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_source_edit_clears_approv0')
+
+    def test_source_edit_clears_approvals_and_retains_complete_old_attestations(tmp_path):
+&gt;       store, _, candidate = ready_store(tmp_path)
+                              ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_tku_governance_commands.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_source_edit_clears_approv0')
+
+    def ready_store(path):
+        store = LocalContentGovernanceStore(path)
+&gt;       baseline = stage_workflow_refresh(store, _content_workflow("Synthetic original")).revision
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'
+
+tests/test_tku_governance_commands.py:32: TypeError</failure></testcase><testcase classname="tests.test_tku_governance_commands" name="test_duplicate_original_url_roles_are_preserved_in_nonreplacement_edit" time="0.001"><failure message="TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_duplicate_original_url_ro0')
+
+    def test_duplicate_original_url_roles_are_preserved_in_nonreplacement_edit(tmp_path):
+        store = LocalContentGovernanceStore(tmp_path)
+&gt;       workflow = _content_workflow("Synthetic shared URL roles")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'
+
+tests/test_tku_governance_commands.py:161: TypeError</failure></testcase><testcase classname="tests.test_tku_governance_commands" name="test_safe_rollback_restores_content_with_new_version_and_replays_without_new_audit" time="0.001"><failure message="TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_safe_rollback_restores_co0')
+
+    def test_safe_rollback_restores_content_with_new_version_and_replays_without_new_audit(tmp_path):
+&gt;       store, baseline, candidate = ready_store(tmp_path)
+                                     ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_tku_governance_commands.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_safe_rollback_restores_co0')
+
+    def ready_store(path):
+        store = LocalContentGovernanceStore(path)
+&gt;       baseline = stage_workflow_refresh(store, _content_workflow("Synthetic original")).revision
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'
+
+tests/test_tku_governance_commands.py:32: TypeError</failure></testcase><testcase classname="tests.test_tku_governance_commands" name="test_older_supabase_schema_is_read_only_before_any_command_envelope" time="0.000"><failure message="TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'">def test_older_supabase_schema_is_read_only_before_any_command_envelope():
+        calls = []
+        class Response:
+            def raise_for_status(self): pass
+            def json(self): return []
+        def request(method, url, **kwargs):
+            calls.append((method, url))
+            return Response()
+        store = SupabaseContentGovernanceStore("https://synthetic.invalid", "synthetic-key", request_func=request)
+        with pytest.raises(RuntimeError, match="migration"):
+&gt;           stage_workflow_refresh(store, _content_workflow("Synthetic capability test"))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'
+
+tests/test_tku_governance_commands.py:206: TypeError</failure></testcase></testsuite></testsuites>

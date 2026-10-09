@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "tku-governance-m2-unit-diagnostic.xml",
+  "original_xml_sha256": "152489a6e299a5fa53d9df9b7c45bbdcb222de9c47690f43fa21f135184fa490",
+  "case_attributes": {
+    "classname": "tests.test_next_phase_contract",
+    "name": "test_frozen_openapi_contract_matches_live_schema",
+    "time": "2.302"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: assert {'components'...}}, ...}, ...} == {'openapi': '...}, ...}}, ...}\n  \n  Omitting 5 identical items, use -vv to show\n  Differing items:\n  {'components': {'schemas': {'AccountApplicationSelection': {'properties': {'copies': {'default': 1, 'maximum': 10.0, '....0, 'minimum': 1.0, 'title': 'Months', ...}, ...}, 'required': ['saved_at'], 'title': 'AccountBudgetPlan', ...}, ...}}} != {'components': {'schemas': {'AccountApplicationSelection': {'properties': {'selected': {'type': 'boolean', 'title': 'S...0, 'title': 'Food', ...}, ...}, 'additionalProperties': False, 'type': 'object', 'required': ['saved_at'], ...}, ...}}}\n  {'paths': {'/': {'get': {'operati...\n  \n  ...Full output truncated (2 lines hidden), use '-vv' to show"
+  },
+  "full_text": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-180/test_frozen_openapi_contract_m0')\n\n    def test_frozen_openapi_contract_matches_live_schema(tmp_path) -> None:\n        client = TestClient(create_app(tmp_path))\n        live_schema = client.get(\"/openapi.json\").json()\n        snapshot = json.loads(OPENAPI_SNAPSHOT.read_text(encoding=\"utf-8\"))\n    \n>       assert snapshot == live_schema\nE       AssertionError: assert {'components'...}}, ...}, ...} == {'openapi': '...}, ...}}, ...}\nE         \nE         Omitting 5 identical items, use -vv to show\nE         Differing items:\nE         {'components': {'schemas': {'AccountApplicationSelection': {'properties': {'copies': {'default': 1, 'maximum': 10.0, '....0, 'minimum': 1.0, 'title': 'Months', ...}, ...}, 'required': ['saved_at'], 'title': 'AccountBudgetPlan', ...}, ...}}} != {'components': {'schemas': {'AccountApplicationSelection': {'properties': {'selected': {'type': 'boolean', 'title': 'S...0, 'title': 'Food', ...}, ...}, 'additionalProperties': False, 'type': 'object', 'required': ['saved_at'], ...}, ...}}}\nE         {'paths': {'/': {'get': {'operati...\nE         \nE         ...Full output truncated (2 lines hidden), use '-vv' to show\n\ntests/test_next_phase_contract.py:19: AssertionError"
+}

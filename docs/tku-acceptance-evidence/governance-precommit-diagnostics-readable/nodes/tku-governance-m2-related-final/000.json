@@ -1,0 +1,502 @@
+[
+  {
+    "id": "tests.test_next_phase_contract::test_frozen_openapi_contract_matches_live_schema",
+    "status": "passed",
+    "seconds": "1.797"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_next_phase_keeps_public_discovery_routes_available",
+    "status": "passed",
+    "seconds": "1.683"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_private_community_writes_expose_retry_mutation_header",
+    "status": "passed",
+    "seconds": "1.678"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_workflow_issue_report_contract_exposes_retry_and_admin_review_paths",
+    "status": "passed",
+    "seconds": "1.601"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_account_deletion_exposes_dedicated_retry_mutation_header",
+    "status": "passed",
+    "seconds": "1.842"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_api_contract_page_does_not_depend_on_csp_blocked_assets",
+    "status": "passed",
+    "seconds": "0.396"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_calendar_conflict_contract_preserves_application_plan_identity",
+    "status": "passed",
+    "seconds": "1.441"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_calendar_task_schedule_contract_is_explicit_and_non_ai",
+    "status": "passed",
+    "seconds": "1.770"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_external_calendar_contract_documents_subscription_boundary",
+    "status": "passed",
+    "seconds": "1.702"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_application_document_contract_keeps_official_forms_public_and_gates_generation",
+    "status": "passed",
+    "seconds": "1.391"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_document_completeness_contract_is_subscription_gated_and_ai_stays_paused",
+    "status": "passed",
+    "seconds": "1.628"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_ai_compatibility_contract_is_explicitly_paused",
+    "status": "passed",
+    "seconds": "1.706"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_application_workflow_contract_exposes_structured_rule_fields",
+    "status": "passed",
+    "seconds": "1.551"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_content_review_contract_exposes_nonpublishing_source_candidates",
+    "status": "passed",
+    "seconds": "1.731"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing",
+    "status": "passed",
+    "seconds": "1.384"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_destination_profile_review_contract_requires_explicit_audited_promotion",
+    "status": "passed",
+    "seconds": "1.581"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_application_workflow_publication_contract_exposes_safe_rollback",
+    "status": "passed",
+    "seconds": "1.875"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_application_document_review_contract_tracks_the_reviewed_version",
+    "status": "passed",
+    "seconds": "1.366"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_submission_progress_contract_tracks_manual_status_and_proof_metadata",
+    "status": "passed",
+    "seconds": "1.931"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_notification_contract_exposes_center_read_and_admin_run_routes",
+    "status": "passed",
+    "seconds": "1.413"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/content-review]",
+    "status": "passed",
+    "seconds": "0.207"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/session]",
+    "status": "passed",
+    "seconds": "0.350"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-review-backlog]",
+    "status": "passed",
+    "seconds": "0.634"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-source-replacement-candidates]",
+    "status": "passed",
+    "seconds": "0.165"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-publications]",
+    "status": "passed",
+    "seconds": "0.156"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-release-readiness]",
+    "status": "passed",
+    "seconds": "0.147"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/web-release-readiness]",
+    "status": "passed",
+    "seconds": "0.306"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/destination-profile-review-queue]",
+    "status": "passed",
+    "seconds": "1.053"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/destination-profile-publications]",
+    "status": "passed",
+    "seconds": "0.212"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-review-batches.csv]",
+    "status": "passed",
+    "seconds": "0.174"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_readiness_and_exports_do_not_stage_approve_or_publish",
+    "status": "passed",
+    "seconds": "0.325"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_stale_workflow_exports_fail_closed_without_mutation",
+    "status": "passed",
+    "seconds": "0.170"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_issue_report_status_filter_excludes_terminal_reports",
+    "status": "passed",
+    "seconds": "4.018"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-review-backlog/synthetic-missing/stage-None]",
+    "status": "passed",
+    "seconds": "0.916"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-review-batches/synthetic-missing/stage-payload1]",
+    "status": "passed",
+    "seconds": "0.162"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[patch-/admin/application-workflow-revisions/synthetic-missing/applicability-payload2]",
+    "status": "passed",
+    "seconds": "0.170"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-revisions/synthetic-missing/approve-payload3]",
+    "status": "passed",
+    "seconds": "0.209"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-revisions/synthetic-missing/publish-payload4]",
+    "status": "passed",
+    "seconds": "0.165"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-revisions/synthetic-missing/reject-payload5]",
+    "status": "passed",
+    "seconds": "0.170"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-rollbacks-payload6]",
+    "status": "passed",
+    "seconds": "0.148"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/destination-profile-reviews-payload7]",
+    "status": "passed",
+    "seconds": "0.213"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/destination-profile-promotions-payload8]",
+    "status": "passed",
+    "seconds": "0.216"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/destination-profile-rollbacks-payload9]",
+    "status": "passed",
+    "seconds": "0.203"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_late_publication_failure_restores_every_byte_before_retry",
+    "status": "passed",
+    "seconds": "0.058"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_process_crash_recovers_before_public_read_and_can_retry",
+    "status": "passed",
+    "seconds": "0.628"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_concurrent_approval_snapshot_conflicts_without_lost_evidence",
+    "status": "passed",
+    "seconds": "0.015"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_batch_staging_has_zero_approval_publication_and_is_idempotent",
+    "status": "passed",
+    "seconds": "0.017"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_source_edit_clears_approvals_and_retains_complete_old_attestations",
+    "status": "passed",
+    "seconds": "0.046"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_duplicate_original_url_roles_are_preserved_in_nonreplacement_edit",
+    "status": "passed",
+    "seconds": "0.009"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_safe_rollback_restores_content_with_new_version_and_replays_without_new_audit",
+    "status": "passed",
+    "seconds": "0.074"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_older_supabase_schema_is_read_only_before_any_command_envelope",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_old_workflow_rollback_cannot_replace_a_later_publication",
+    "status": "passed",
+    "seconds": "0.244"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_destination_double_review_failure_atomicity_and_rollback_replay",
+    "status": "passed",
+    "seconds": "0.046"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_destination_concurrent_reviews_and_source_change_keep_old_evidence",
+    "status": "passed",
+    "seconds": "0.010"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[http://official.example.edu/rules]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://student:secret@official.example.edu/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://localhost/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://127.0.0.1/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://224.0.0.1/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://240.0.0.1/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://192.0.2.1/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://198.51.100.1/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://203.0.113.1/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_only_accounts_with_a_school_can_submit_without_mutating_formal_content",
+    "status": "passed",
+    "seconds": "6.415"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_submit_is_idempotent_and_rejects_target_or_payload_tampering",
+    "status": "passed",
+    "seconds": "1.958"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_report_rejects_contact_details_and_rate_limits_new_submissions",
+    "status": "passed",
+    "seconds": "3.182"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_admin_queue_and_terminal_review_are_protected_and_append_only",
+    "status": "passed",
+    "seconds": "1.640"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_local_account_deletion_deidentifies_reporter_without_deleting_report",
+    "status": "passed",
+    "seconds": "4.501"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_account_export_includes_only_public_issue_report_fields",
+    "status": "passed",
+    "seconds": "1.469"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_local_account_deletion_removes_closed_report",
+    "status": "passed",
+    "seconds": "1.632"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_review_of_deidentified_pending_report_is_replayable_during_cleanup_grace",
+    "status": "passed",
+    "seconds": "2.038"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_reviewer_account_deletion_removes_reviewer_identity",
+    "status": "passed",
+    "seconds": "4.915"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_local_repository_owns_status_timestamps_and_physically_purges_expiry",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_workflow_issue_repository_factory_rejects_partial_supabase_configuration",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_supabase_repository_rejects_malformed_mutation_responses[payload0]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_supabase_repository_rejects_malformed_mutation_responses[payload1]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_supabase_repository_rejects_malformed_mutation_responses[payload2]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_supabase_repository_sends_only_fingerprinted_fields_and_reads_one_snapshot",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_notifications::test_five_default_deadline_nodes_are_idempotent",
+    "status": "passed",
+    "seconds": "0.010"
+  },
+  {
+    "id": "tests.test_notifications::test_paper_reminder_uses_arrival_deadline_not_send_by_date",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_notifications::test_deadline_reminders_can_be_customized_or_fully_disabled",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_notifications::test_smart_reminder_uses_user_estimated_start_and_stops_when_ready",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_notifications::test_personal_calendar_task_uses_its_own_reminder_offset",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_notifications::test_public_free_account_does_not_receive_smart_start_reminder",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_notifications::test_email_is_not_queued_without_account_opt_in",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_notifications::test_email_failure_retries_without_storing_raw_error",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_notifications::test_email_stops_after_four_failed_attempts",
+    "status": "passed",
+    "seconds": "0.009"
+  },
+  {
+    "id": "tests.test_notifications::test_pending_email_is_cancelled_after_user_opt_out",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_targets_only_matching_established_plan",
+    "status": "passed",
+    "seconds": "0.013"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_uses_saved_plan_department_without_student_verification",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_matches_college_scoped_rule_to_saved_plan",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_email_is_opt_in_idempotent_and_includes_source",
+    "status": "passed",
+    "seconds": "0.009"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_email_is_cancelled_when_plan_no_longer_matches",
+    "status": "passed",
+    "seconds": "0.008"
+  },
+  {
+    "id": "tests.test_notifications::test_safe_workflow_rollback_notifies_only_affected_saved_plan",
+    "status": "passed",
+    "seconds": "0.125"
+  },
+  {
+    "id": "tests.test_notifications::test_pending_or_rejected_revision_never_creates_content_notification",
+    "status": "passed",
+    "seconds": "0.009"
+  },
+  {
+    "id": "tests.test_notifications::test_admin_publish_immediately_creates_one_content_update_notification",
+    "status": "passed",
+    "seconds": "28.150"
+  },
+  {
+    "id": "tests.test_notifications::test_dual_review_formalization_with_identical_content_sends_no_update",
+    "status": "passed",
+    "seconds": "0.041"
+  },
+  {
+    "id": "tests.test_notifications::test_notifications_migration_is_server_only",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_notifications::test_notification_center_requires_login_and_supports_read_state",
+    "status": "passed",
+    "seconds": "0.300"
+  },
+  {
+    "id": "tests.test_notifications::test_notification_center_can_mark_all_owned_notifications_read",
+    "status": "passed",
+    "seconds": "0.201"
+  }
+]

@@ -1,0 +1,91 @@
+{
+  "tested_commit": "5d48a01a7a58aad7fe972e7ec1434e0fb74e93c3",
+  "starting_state": {
+    "commit": "5d48a01a7a58aad7fe972e7ec1434e0fb74e93c3",
+    "dirty": ""
+  },
+  "ending_state": {
+    "commit": "5d48a01a7a58aad7fe972e7ec1434e0fb74e93c3",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "checks": [
+    {
+      "name": "openapi",
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 3.944
+    },
+    {
+      "name": "migrations-parse",
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/validate_supabase_migrations.py"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.222
+    },
+    {
+      "name": "dependency-audit",
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "-m",
+        "pip_audit",
+        ".",
+        "--strict",
+        "--progress-spinner",
+        "off",
+        "--cache-dir",
+        "/tmp/tku-governance-5d48a01/dependency-cache"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 15.319
+    },
+    {
+      "name": "JS-app",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/app.js"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.061
+    },
+    {
+      "name": "JS-content-review",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/content-review.js"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.04
+    },
+    {
+      "name": "JS-icon-motion",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/icon-motion.js"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.048
+    },
+    {
+      "name": "git-diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.007
+    }
+  ],
+  "production_access": false,
+  "dependency_cache_note": "First original wrapper run failed on read-only /home/agent/.cache/pip-audit. Rerun retains exact original audit arguments and adds supported --cache-dir within task /tmp; no auth/permission/billing/config changes."
+}

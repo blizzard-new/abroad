@@ -1,0 +1,502 @@
+[
+  {
+    "id": "tests.test_experience_collector::test_experience_link_uses_full_page_summary_and_theme_points",
+    "status": "passed",
+    "seconds": "0.011"
+  },
+  {
+    "id": "tests.test_experience_collector::test_experience_queries_use_university_and_country",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_chinese_partner_queries_use_verified_english_school_name",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_school_search_name_preserves_accented_characters",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_sorbonne_queries_use_unambiguous_english_alias",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_normalize_source_url_removes_tracking_but_keeps_video_id",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_normalize_source_url_collapses_review_pagination",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_candidate_rejects_generic_recruitment_page",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_candidate_rejects_institutional_partnership_news",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_candidate_rejects_study_agency_marketing_page",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_candidate_rejects_generic_course_fee_ranking_catalog",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_candidate_rejects_exchange_program_announcement",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_candidate_rejects_cooperation_partner_directory",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_candidate_rejects_cooperation_directory_by_url_path",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_eduopinions_school_page_gets_clean_review_title",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_experience_collector::test_refresh_preserves_previously_accepted_source_when_search_is_empty",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_refresh_cleans_title_of_previously_accepted_iagora_source",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_refresh_keeps_clean_study_abroad_review_title_idempotent",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_refresh_removes_previously_stored_marketing_catalog",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_candidate_rejects_academgo_university_catalog",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_candidate_rejects_acceptance_rate_discussion",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_warsaw_technology_rejects_university_of_warsaw_review",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_wuhan_rejects_science_and_technology_university_video",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_candidate_rejects_studyabroad_city_landing_page",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_studyabroad_program_index_ignores_unrelated_snippet_claims",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_candidate_rejects_broken_replacement_character_url",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_cityu_candidate_rejects_chinese_university_false_positive",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_cityu_candidate_accepts_exact_school_identity",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_sorbonne_candidate_rejects_pantheon_sorbonne",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_sorbonne_candidate_rejects_new_sorbonne_paris_three",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_sorbonne_candidate_accepts_paris_sorbonne_review",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_tsinghua_candidate_rejects_generic_wentchina_guide",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_tsinghua_iagora_candidate_gets_concise_title",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_fuzhou_candidate_rejects_different_international_studies_university",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_fuzhou_candidate_rejects_generic_university_catalog",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_ostrava_candidate_rejects_technical_university",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_go_minnesota_candidate_rejects_unrelated_outbound_program",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_go_minnesota_candidate_accepts_exact_inbound_program_story",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_go_minnesota_refresh_removes_stored_outbound_review_with_generated_title",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_minnesota_candidate_rejects_unrelated_outbound_program",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_minnesota_candidate_accepts_exact_twin_cities_review_page",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_job_review_hosts_are_not_student_experiences",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_uc_irvine_candidate_rejects_outbound_provider_and_internship_pages",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_fordham_candidate_rejects_outbound_london_program",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_generic_directory_and_impostor_hosts_are_not_student_experiences",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_rennes_candidate_rejects_unrelated_ciee_liberal_arts_program",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_youtube_candidate_removes_concatenated_search_results",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_sorbonne_candidate_rejects_third_party_language_program",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_study_abroad_review_title_removes_concatenated_results",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_official_about_page_is_not_a_student_experience",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_official_student_story_is_kept",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_official_sibling_subdomain_is_not_a_student_experience",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_video_candidate_keeps_public_author_name",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_digest_counts_sources_and_builds_theme_highlights",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_experience_collector::test_digest_does_not_present_generic_source_description_as_a_key_point",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_digest_does_not_treat_discovery_date_as_publication_year",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_digest_filters_challenge_pages_navigation_and_wrong_chinese_school",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_digest_integrates_visible_source_summaries_into_three_decision_groups",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_experience_collector::test_replace_school_experiences_preserves_other_schools",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_experience_collector::test_replace_school_experiences_consolidates_alias_and_duplicate_url",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_experience_collector::test_collection_audit_upserts_by_school_and_collector",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_experience_collector::test_collection_audit_upserts_across_chinese_name_aliases",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_experience_collector::test_destination_profile_upserts_across_chinese_name_aliases",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_experience_collector::test_destination_profile_storage_preserves_same_partner_for_two_home_schools",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_experience_collector::test_ambiguous_legacy_destination_profile_fails_closed",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_experience_collector::test_experience_api_reads_cache_and_refreshes_selected_school",
+    "status": "passed",
+    "seconds": "3.676"
+  },
+  {
+    "id": "tests.test_experience_collector::test_experience_refresh_records_verified_no_results",
+    "status": "passed",
+    "seconds": "0.376"
+  },
+  {
+    "id": "tests.test_experience_collector::test_destination_profile_api_returns_verified_official_summary",
+    "status": "passed",
+    "seconds": "0.496"
+  },
+  {
+    "id": "tests.test_experience_collector::test_destination_profile_api_never_shares_research_between_home_schools",
+    "status": "passed",
+    "seconds": "0.717"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_content_review_workbench_exposes_dual_review_without_student_navigation",
+    "status": "passed",
+    "seconds": "0.010"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_first_visit_school_choice_is_optional_and_current",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_web_routes_states_and_touch_targets_are_consistent",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_partner_schools_use_verified_official_photo_manifest",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_school_onboarding_supports_keyboard_dismissal_and_focus_return",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_school_detail_does_not_recrawl_empty_experiences_on_open",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_destination_profiles_follow_the_active_home_university",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_destination_profiles_distinguish_partial_from_verified_coverage",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_public_workflow_ui_never_publishes_collected_content_directly",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_workflow_ui_exposes_structured_submission_and_confirmation_details",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_web_consumes_shared_entitlement_contract_without_payment",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_account_workspace_sync_excludes_sensitive_form_content",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_progressive_login_keeps_device_selection_separate_from_private_plans",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_ntpu_uses_the_same_dynamic_web_shell",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_home_school_switch_rejects_stale_dashboard_responses",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_home_school_switch_closes_an_open_partner_detail",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_school_detail_uses_accessible_real_tabs",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_student_life_has_ten_decision_categories_and_progressive_disclosure",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_student_life_prioritizes_sources_and_uses_concrete_points",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_direct_school_link_returns_to_partner_list",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_quick_overview_explains_fit_strengths_and_risks",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_partner_pages_use_chinese_bullet_summaries_instead_of_raw_english",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_school_detail_uses_full_background_photo_liquid_panels_and_scroll_motion",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_school_detail_cards_wrap_highlights_and_replace_long_urls_with_links",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_premium_web_material_keeps_glass_hierarchy_without_heavy_button_chrome",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_grounded_advisor_and_document_checker_are_independent_pages",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_frontend_avoids_inline_script_handlers_for_strict_csp",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_repeated_information_cards_use_compact_progressive_disclosure",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_wide_desktop_workspace_fills_the_canvas_without_centered_cut_edges",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_school_community_has_posts_chat_invitation_only_messages_and_safety",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_frontend_contract::test_account_and_global_community_web_flows_are_present",
+    "status": "passed",
+    "seconds": "0.003"
+  }
+]

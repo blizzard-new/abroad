@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "tku-governance-m2-command-first.xml",
+  "original_xml_sha256": "47375c65311dc81da0d5309c1ede5c448619ccde3c7d9b93d18665c0d5ee58a6",
+  "case_attributes": {
+    "classname": "tests.test_tku_governance_commands",
+    "name": "test_process_crash_recovers_before_public_read_and_can_retry",
+    "time": "0.001"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'"
+  },
+  "full_text": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_process_crash_recovers_be0')\n\n    def test_process_crash_recovers_before_public_read_and_can_retry(tmp_path):\n>       store, baseline, candidate = ready_store(tmp_path)\n                                     ^^^^^^^^^^^^^^^^^^^^^\n\ntests/test_tku_governance_commands.py:80: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\npath = PosixPath('/tmp/pytest-of-agent/pytest-182/test_process_crash_recovers_be0')\n\n    def ready_store(path):\n        store = LocalContentGovernanceStore(path)\n>       baseline = stage_workflow_refresh(store, _content_workflow(\"Synthetic original\")).revision\n                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'\n\ntests/test_tku_governance_commands.py:32: TypeError"
+}

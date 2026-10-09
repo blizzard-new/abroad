@@ -1,0 +1,39 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/abroad-tku/.venv/lib/python3.12/site-packages/pip_audit/__main__.py", line 8, in <module>
+    audit()
+  File "/workspace/abroad-tku/.venv/lib/python3.12/site-packages/pip_audit/_cli.py", line 452, in audit
+    service = PyPIService(cache_dir=args.cache_dir, timeout=args.timeout)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-tku/.venv/lib/python3.12/site-packages/pip_audit/_service/pypi.py", line 48, in __init__
+    self.session = caching_session(cache_dir)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-tku/.venv/lib/python3.12/site-packages/pip_audit/_cache.py", line 177, in caching_session
+    cache=_SafeFileCache(_get_cache_dir(cache_dir, use_pip=use_pip)),
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-tku/.venv/lib/python3.12/site-packages/pip_audit/_cache.py", line 66, in _get_cache_dir
+    pip_audit_cache_dir = user_cache_path("pip-audit", appauthor=False, ensure_exists=True)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-tku/.venv/lib/python3.12/site-packages/platformdirs/__init__.py", line 667, in user_cache_path
+    ).user_cache_path
+      ^^^^^^^^^^^^^^^
+  File "/workspace/abroad-tku/.venv/lib/python3.12/site-packages/platformdirs/api.py", line 293, in user_cache_path
+    return Path(self.user_cache_dir)
+                ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-tku/.venv/lib/python3.12/site-packages/platformdirs/unix.py", line 286, in user_cache_dir
+    return self.site_cache_dir if self._use_site else super().user_cache_dir
+                                                      ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-tku/.venv/lib/python3.12/site-packages/platformdirs/_xdg.py", line 56, in user_cache_dir
+    return super().user_cache_dir
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-tku/.venv/lib/python3.12/site-packages/platformdirs/unix.py", line 61, in user_cache_dir
+    return self._append_app_name_and_version(os.path.expanduser("~/.cache"))  # ruff:ignore[os-path-expanduser]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-tku/.venv/lib/python3.12/site-packages/platformdirs/api.py", line 110, in _append_app_name_and_version
+    self._optionally_create_directory(path)
+  File "/workspace/abroad-tku/.venv/lib/python3.12/site-packages/platformdirs/api.py", line 115, in _optionally_create_directory
+    Path(path).mkdir(parents=True, exist_ok=True)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+OSError: [Errno 30] Read-only file system: '/home/agent/.cache/pip-audit'

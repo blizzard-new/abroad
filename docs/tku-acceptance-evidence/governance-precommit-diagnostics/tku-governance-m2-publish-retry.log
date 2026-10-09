@@ -1,0 +1,26 @@
+CONFTEST LOADED!
+...................................F...................                  [100%]
+=================================== FAILURES ===================================
+_______________ test_frozen_openapi_contract_matches_live_schema _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-191/test_frozen_openapi_contract_m0')
+
+    def test_frozen_openapi_contract_matches_live_schema(tmp_path) -> None:
+        client = TestClient(create_app(tmp_path))
+        live_schema = client.get("/openapi.json").json()
+        snapshot = json.loads(OPENAPI_SNAPSHOT.read_text(encoding="utf-8"))
+    
+>       assert snapshot == live_schema
+E       AssertionError: assert {'components'...}}, ...}, ...} == {'openapi': '...}, ...}}, ...}
+E         
+E         Omitting 5 identical items, use -vv to show
+E         Differing items:
+E         {'paths': {'/': {'get': {'operationId': 'frontend__get', 'responses': {'200': {'description': 'Successful Response'}},...ccessful Response'}, '422': {'content': {...}, 'description': 'Validation Error'}}, 'summary': 'Notifications'}}, ...}} != {'paths': {'/account/notifications': {'get': {'summary': 'Notifications', 'operationId': 'notifications_account_notifi...in_notifications_run_due_post', 'responses': {'200': {'description': 'Successful Response', 'content': {...}}}}}, ...}}
+E         {'components': {'schemas': {'Acco...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_next_phase_contract.py:19: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_next_phase_contract.py::test_frozen_openapi_contract_matches_live_schema
+1 failed, 54 passed in 58.69s

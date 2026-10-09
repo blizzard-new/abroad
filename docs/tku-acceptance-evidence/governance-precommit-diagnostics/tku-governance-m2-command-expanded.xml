@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="11" time="3.491" timestamp="2026-10-09T08:31:43.361915+00:00" hostname="f6ad0b7a0286"><testcase classname="tests.test_tku_governance_commands" name="test_late_publication_failure_restores_every_byte_before_retry" time="0.079" /><testcase classname="tests.test_tku_governance_commands" name="test_process_crash_recovers_before_public_read_and_can_retry" time="0.787" /><testcase classname="tests.test_tku_governance_commands" name="test_concurrent_approval_snapshot_conflicts_without_lost_evidence" time="0.014" /><testcase classname="tests.test_tku_governance_commands" name="test_batch_staging_has_zero_approval_publication_and_is_idempotent" time="0.014" /><testcase classname="tests.test_tku_governance_commands" name="test_source_edit_clears_approvals_and_retains_complete_old_attestations" time="0.040" /><testcase classname="tests.test_tku_governance_commands" name="test_duplicate_original_url_roles_are_preserved_in_nonreplacement_edit" time="0.006" /><testcase classname="tests.test_tku_governance_commands" name="test_safe_rollback_restores_content_with_new_version_and_replays_without_new_audit" time="0.061" /><testcase classname="tests.test_tku_governance_commands" name="test_older_supabase_schema_is_read_only_before_any_command_envelope" time="0.000" /><testcase classname="tests.test_tku_governance_commands" name="test_old_workflow_rollback_cannot_replace_a_later_publication" time="0.093" /><testcase classname="tests.test_tku_governance_commands" name="test_destination_double_review_failure_atomicity_and_rollback_replay" time="0.003"><failure message="exchange_info.destination_profile_review.DestinationProfileReviewConflictError: 這份生活情報審查畫面已過期；請重新載入目前內容。">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-187/test_destination_double_review0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f31b0b862d0&gt;
+
+    def test_destination_double_review_failure_atomicity_and_rollback_replay(tmp_path, monkeypatch):
+        from exchange_info.destination_profile_review import (LocalDestinationProfileReviewStore,
+            promote_destination_profile, rollback_destination_profile, apply_destination_profile_promotions,
+            build_destination_profile_publication_history)
+        from exchange_info.models import DestinationProfileRollbackRequest
+        store = LocalDestinationProfileReviewStore(tmp_path)
+        profile = destination_fixture()
+&gt;       destination_review(store, profile, "synthetic-a")
+
+tests/test_tku_governance_commands.py:287: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_tku_governance_commands.py:261: in destination_review
+    return record_destination_profile_review(store, [profile], request, reviewer_id=reviewer, reviewer_display_name=reviewer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/exchange_info/governance_commands.py:363: in command
+    result = function(buffer, profiles, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+store = &lt;exchange_info.governance_commands.DestinationCommandBuffer object at 0x7f31b0c37bc0&gt;
+profiles = [DestinationProfile(home_university='淡江大學', school_name='Synthetic governance host', country=None, city=None, cost_sum...etime.timezone.utc), coverage_status='official_partial', coverage_note='Synthetic facts remain scoped to one program')]
+request = DestinationProfileReviewSubmitRequest(home_university='淡江大學', school_name='Synthetic governance host', expected_snapsh...ent_guide', 'first_72_hours', 'packing', 'buy_after_arrival', 'coverage_boundary', 'official_sources', 'last_checked'])
+reviewer_id = 'synthetic-a', reviewer_display_name = 'synthetic-a'
+
+    @atomic_destination_command
+    def record_destination_profile_review(
+        store: DestinationProfileReviewStore,
+        profiles: list[DestinationProfile],
+        request: DestinationProfileReviewSubmitRequest,
+        *,
+        reviewer_id: str,
+        reviewer_display_name: str,
+    ) -&gt; DestinationProfileReviewEvent:
+        queue = build_destination_profile_review_queue(
+            profiles,
+            home_university=request.home_university,
+            review_events=store.list_events(),
+            promotion_events=store.list_promotion_events(),
+            rollback_events=store.list_rollback_events(),
+            current_reviewer_id=reviewer_id,
+        )
+        if request.expected_snapshot != queue.snapshot_fingerprint:
+&gt;           raise DestinationProfileReviewConflictError(
+                "這份生活情報審查畫面已過期；請重新載入目前內容。"
+            )
+E           exchange_info.destination_profile_review.DestinationProfileReviewConflictError: 這份生活情報審查畫面已過期；請重新載入目前內容。
+
+src/exchange_info/destination_profile_review.py:1504: DestinationProfileReviewConflictError</failure></testcase><testcase classname="tests.test_tku_governance_commands" name="test_destination_concurrent_reviews_and_source_change_keep_old_evidence" time="0.002"><failure message="exchange_info.destination_profile_review.DestinationProfileReviewConflictError: 這份生活情報審查畫面已過期；請重新載入目前內容。">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-187/test_destination_concurrent_re0')
+
+    def test_destination_concurrent_reviews_and_source_change_keep_old_evidence(tmp_path):
+        from exchange_info.destination_profile_review import LocalDestinationProfileReviewStore, promote_destination_profile
+        store = LocalDestinationProfileReviewStore(tmp_path)
+        profile = destination_fixture()
+        first, second = commands.DestinationCommandBuffer(store), commands.DestinationCommandBuffer(store)
+&gt;       destination_review(first, profile, "synthetic-a")
+
+tests/test_tku_governance_commands.py:346: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_tku_governance_commands.py:261: in destination_review
+    return record_destination_profile_review(store, [profile], request, reviewer_id=reviewer, reviewer_display_name=reviewer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/exchange_info/governance_commands.py:359: in command
+    return function(store, profiles, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+store = &lt;exchange_info.governance_commands.DestinationCommandBuffer object at 0x7f31b0b866c0&gt;
+profiles = [DestinationProfile(home_university='淡江大學', school_name='Synthetic governance host', country=None, city=None, cost_sum...etime.timezone.utc), coverage_status='official_partial', coverage_note='Synthetic facts remain scoped to one program')]
+request = DestinationProfileReviewSubmitRequest(home_university='淡江大學', school_name='Synthetic governance host', expected_snapsh...ent_guide', 'first_72_hours', 'packing', 'buy_after_arrival', 'coverage_boundary', 'official_sources', 'last_checked'])
+reviewer_id = 'synthetic-a', reviewer_display_name = 'synthetic-a'
+
+    @atomic_destination_command
+    def record_destination_profile_review(
+        store: DestinationProfileReviewStore,
+        profiles: list[DestinationProfile],
+        request: DestinationProfileReviewSubmitRequest,
+        *,
+        reviewer_id: str,
+        reviewer_display_name: str,
+    ) -&gt; DestinationProfileReviewEvent:
+        queue = build_destination_profile_review_queue(
+            profiles,
+            home_university=request.home_university,
+            review_events=store.list_events(),
+            promotion_events=store.list_promotion_events(),
+            rollback_events=store.list_rollback_events(),
+            current_reviewer_id=reviewer_id,
+        )
+        if request.expected_snapshot != queue.snapshot_fingerprint:
+&gt;           raise DestinationProfileReviewConflictError(
+                "這份生活情報審查畫面已過期；請重新載入目前內容。"
+            )
+E           exchange_info.destination_profile_review.DestinationProfileReviewConflictError: 這份生活情報審查畫面已過期；請重新載入目前內容。
+
+src/exchange_info/destination_profile_review.py:1504: DestinationProfileReviewConflictError</failure></testcase></testsuite></testsuites>

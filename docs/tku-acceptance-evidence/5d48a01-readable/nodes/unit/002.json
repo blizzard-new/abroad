@@ -1,0 +1,502 @@
+[
+  {
+    "id": "tests.test_next_phase_contract::test_submission_progress_contract_tracks_manual_status_and_proof_metadata",
+    "status": "passed",
+    "seconds": "1.587"
+  },
+  {
+    "id": "tests.test_next_phase_contract::test_notification_contract_exposes_center_read_and_admin_run_routes",
+    "status": "passed",
+    "seconds": "2.716"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/content-review]",
+    "status": "passed",
+    "seconds": "0.153"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/session]",
+    "status": "passed",
+    "seconds": "0.164"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-review-backlog]",
+    "status": "passed",
+    "seconds": "0.161"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-source-replacement-candidates]",
+    "status": "passed",
+    "seconds": "0.138"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-publications]",
+    "status": "passed",
+    "seconds": "0.180"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-release-readiness]",
+    "status": "passed",
+    "seconds": "0.142"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/web-release-readiness]",
+    "status": "passed",
+    "seconds": "0.512"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/destination-profile-review-queue]",
+    "status": "passed",
+    "seconds": "0.336"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/destination-profile-publications]",
+    "status": "passed",
+    "seconds": "0.232"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-review-batches.csv]",
+    "status": "passed",
+    "seconds": "0.149"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_readiness_and_exports_do_not_stage_approve_or_publish",
+    "status": "passed",
+    "seconds": "1.446"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_stale_workflow_exports_fail_closed_without_mutation",
+    "status": "passed",
+    "seconds": "0.185"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_issue_report_status_filter_excludes_terminal_reports",
+    "status": "passed",
+    "seconds": "4.463"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-review-backlog/synthetic-missing/stage-None]",
+    "status": "passed",
+    "seconds": "0.227"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-review-batches/synthetic-missing/stage-payload1]",
+    "status": "passed",
+    "seconds": "0.172"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[patch-/admin/application-workflow-revisions/synthetic-missing/applicability-payload2]",
+    "status": "passed",
+    "seconds": "0.204"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-revisions/synthetic-missing/approve-payload3]",
+    "status": "passed",
+    "seconds": "0.246"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-revisions/synthetic-missing/publish-payload4]",
+    "status": "passed",
+    "seconds": "0.236"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-revisions/synthetic-missing/reject-payload5]",
+    "status": "passed",
+    "seconds": "0.219"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-rollbacks-payload6]",
+    "status": "passed",
+    "seconds": "0.196"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/destination-profile-reviews-payload7]",
+    "status": "passed",
+    "seconds": "0.388"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/destination-profile-promotions-payload8]",
+    "status": "passed",
+    "seconds": "1.320"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/destination-profile-rollbacks-payload9]",
+    "status": "passed",
+    "seconds": "0.186"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_late_publication_failure_restores_every_byte_before_retry",
+    "status": "passed",
+    "seconds": "0.060"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_process_crash_recovers_before_public_read_and_can_retry",
+    "status": "passed",
+    "seconds": "0.927"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_concurrent_approval_snapshot_conflicts_without_lost_evidence",
+    "status": "passed",
+    "seconds": "0.021"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_batch_staging_has_zero_approval_publication_and_is_idempotent",
+    "status": "passed",
+    "seconds": "0.020"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_legacy_public_refresh_keeps_a_reference_baseline_without_publishing",
+    "status": "passed",
+    "seconds": "0.007"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_capped_snapshot_reads_all_rows_and_rejects_unverifiable_truncation[id]",
+    "status": "passed",
+    "seconds": "0.041"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_capped_snapshot_reads_all_rows_and_rejects_unverifiable_truncation[workflow_key]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_source_edit_clears_approvals_and_retains_complete_old_attestations",
+    "status": "passed",
+    "seconds": "0.060"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_duplicate_original_url_roles_are_preserved_in_nonreplacement_edit",
+    "status": "passed",
+    "seconds": "0.026"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_safe_rollback_restores_content_with_new_version_and_replays_without_new_audit",
+    "status": "passed",
+    "seconds": "0.072"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_older_supabase_schema_is_read_only_before_any_command_envelope",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_old_workflow_rollback_cannot_replace_a_later_publication",
+    "status": "passed",
+    "seconds": "0.130"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_destination_double_review_failure_atomicity_and_rollback_replay",
+    "status": "passed",
+    "seconds": "0.049"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_destination_concurrent_reviews_and_source_change_keep_old_evidence",
+    "status": "passed",
+    "seconds": "0.010"
+  },
+  {
+    "id": "tests.test_content_governance_wrapper::test_supabase_store_writes_revision_and_published_payload_through_backend",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[http://official.example.edu/rules]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://student:secret@official.example.edu/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://localhost/rules]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://127.0.0.1/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://224.0.0.1/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://240.0.0.1/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://192.0.2.1/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://198.51.100.1/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_issue_report_model_rejects_unsafe_official_source_urls[https://203.0.113.1/rules]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_only_accounts_with_a_school_can_submit_without_mutating_formal_content",
+    "status": "passed",
+    "seconds": "6.647"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_submit_is_idempotent_and_rejects_target_or_payload_tampering",
+    "status": "passed",
+    "seconds": "2.812"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_report_rejects_contact_details_and_rate_limits_new_submissions",
+    "status": "passed",
+    "seconds": "2.863"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_admin_queue_and_terminal_review_are_protected_and_append_only",
+    "status": "passed",
+    "seconds": "1.871"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_local_account_deletion_deidentifies_reporter_without_deleting_report",
+    "status": "passed",
+    "seconds": "3.698"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_account_export_includes_only_public_issue_report_fields",
+    "status": "passed",
+    "seconds": "2.649"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_local_account_deletion_removes_closed_report",
+    "status": "passed",
+    "seconds": "1.858"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_review_of_deidentified_pending_report_is_replayable_during_cleanup_grace",
+    "status": "passed",
+    "seconds": "1.823"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_reviewer_account_deletion_removes_reviewer_identity",
+    "status": "passed",
+    "seconds": "3.451"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_local_repository_owns_status_timestamps_and_physically_purges_expiry",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_workflow_issue_repository_factory_rejects_partial_supabase_configuration",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_supabase_repository_rejects_malformed_mutation_responses[payload0]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_supabase_repository_rejects_malformed_mutation_responses[payload1]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_supabase_repository_rejects_malformed_mutation_responses[payload2]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_application_workflow_issue_reports::test_supabase_repository_sends_only_fingerprinted_fields_and_reads_one_snapshot",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_notification_changes::test_changes_are_owned_and_hide_unrelated_department_and_reviewer",
+    "status": "passed",
+    "seconds": "0.252"
+  },
+  {
+    "id": "tests.test_notification_changes::test_review_gate_rejects_non_admin_duplicate_and_incomplete_publication",
+    "status": "passed",
+    "seconds": "0.287"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_storage_lock_key_does_not_change_when_parent_and_file_appear",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_jsonl_replacement_never_exposes_a_partially_written_destination",
+    "status": "passed",
+    "seconds": "0.009"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_jsonl_write_failure_preserves_previous_file_and_cleans_temporary",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_concurrent_jsonl_repository_account_upserts_do_not_lose_rows",
+    "status": "passed",
+    "seconds": "0.079"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_concurrent_jsonl_append_operations_do_not_lose_rows[<lambda>-append_community_question-load_community_questions]",
+    "status": "passed",
+    "seconds": "0.048"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_concurrent_jsonl_append_operations_do_not_lose_rows[<lambda>-append_community_answer-load_community_answers]",
+    "status": "passed",
+    "seconds": "0.032"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_concurrent_jsonl_append_operations_do_not_lose_rows[<lambda>-append_experience_submission-load_experience_submissions]",
+    "status": "passed",
+    "seconds": "0.046"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_compose_is_pinned_isolated_and_loopback_only",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_account_deletion_payload_uses_canonical_application_fingerprint",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_account_deletion_replay_omits_deleted_actor_shape",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_public_moderation_rollback_payload_is_canonical",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_account_deletion_validates_workflow_issue_lifecycle_and_purge",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_harness_validates_real_storage_cleanup_scope",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_schema_gate_includes_workflow_issue_report_tables",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_workflow_issue_payloads_use_canonical_fingerprints",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_workflow_issue_rpc_permissions_are_service_role_only",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_workflow_issue_phase_is_wired_into_summary",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_report_review_payload_uses_canonical_community_fingerprint",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_harness_declares_two_instance_community_invariants",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_subprocess_timeout_is_bounded_and_redacts_sensitive_context",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_project_names_are_reserved_unique_and_ci_run_bound",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_rejects_arbitrary_project_names_and_invalid_ci_identity",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_compose_commands_forward_bounded_timeouts",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_cleanup_fails_when_project_resources_remain",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_cleanup_stops_before_resource_queries_when_down_fails",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_success_is_not_reported_when_final_cleanup_fails",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_preflight_cleanup_failure_prevents_validation",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_clean_success_reports_cleanup_only_after_both_cleanup_phases",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_primary_failure_is_not_hidden_by_diagnostics_or_cleanup",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_source_keeps_all_subprocesses_bounded_and_project_scoped",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_workflow_catalog_cache::test_indexed_merge_returns_exactly_what_the_scanning_merge_returned",
+    "status": "passed",
+    "seconds": "0.204"
+  },
+  {
+    "id": "tests.test_workflow_catalog_cache::test_a_later_override_can_replace_an_earlier_one",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_workflow_catalog_cache::test_loading_the_bundled_catalogue_is_remembered_but_each_caller_gets_its_own_list",
+    "status": "passed",
+    "seconds": "2.266"
+  },
+  {
+    "id": "tests.test_workflow_catalog_cache::test_local_workflows_are_reread_when_the_file_changes",
+    "status": "passed",
+    "seconds": "0.011"
+  }
+]

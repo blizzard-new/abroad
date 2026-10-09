@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "tku-governance-m2-command-first.xml",
+  "original_xml_sha256": "47375c65311dc81da0d5309c1ede5c448619ccde3c7d9b93d18665c0d5ee58a6",
+  "case_attributes": {
+    "classname": "tests.test_tku_governance_commands",
+    "name": "test_batch_staging_has_zero_approval_publication_and_is_idempotent",
+    "time": "0.001"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'"
+  },
+  "full_text": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_batch_staging_has_zero_ap0')\n\n    def test_batch_staging_has_zero_approval_publication_and_is_idempotent(tmp_path):\n        store = LocalContentGovernanceStore(tmp_path)\n>       store.publish_workflow(_content_workflow(\"Synthetic reference\"), \"synthetic-baseline\")\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'\n\ntests/test_tku_governance_commands.py:123: TypeError"
+}

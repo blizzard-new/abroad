@@ -1,0 +1,25 @@
+{
+  "tested_commit": "5d48a01a7a58aad7fe972e7ec1434e0fb74e93c3",
+  "ending_state": {
+    "commit": "5d48a01a7a58aad7fe972e7ec1434e0fb74e93c3",
+    "dirty": ""
+  },
+  "command": [
+    "/workspace/abroad-tku/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_tku_support.py",
+    "tests/test_tku_continuation.py",
+    "tests/test_tku_privacy_regressions.py",
+    "tests/test_tku_acceptance_runner.py",
+    "tests/test_tku_web_evidence.py",
+    "tests/test_tku_community_boundaries.py",
+    "-q",
+    "--junitxml=/tmp/tku-governance-5d48a01/tku-data.xml"
+  ],
+  "actual_exit_code": 0,
+  "actual_pytest_summary": "86 passed in 35.01s",
+  "production_access": false,
+  "scope": "TKU bundled data, provenance/year/null states, boundaries and evidence regressions; separate from selected governance unit total.",
+  "guard_limitation": "Direct supplemental command; latest fixed worktree and ending clean SHA verified. No separate recorded per-command start guard, so not attributed the primary guarded run metadata."
+}

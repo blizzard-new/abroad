@@ -1,0 +1,173 @@
+[
+  {
+    "id": "tests.test_notifications::test_notification_center_queues_email_only_after_opt_in",
+    "status": "passed",
+    "seconds": "0.196"
+  },
+  {
+    "id": "tests.test_notifications::test_admin_can_run_due_notification_job",
+    "status": "passed",
+    "seconds": "0.162"
+  },
+  {
+    "id": "tests.test_notification_changes::test_changes_are_owned_and_hide_unrelated_department_and_reviewer",
+    "status": "passed",
+    "seconds": "0.176"
+  },
+  {
+    "id": "tests.test_notification_changes::test_review_gate_rejects_non_admin_duplicate_and_incomplete_publication",
+    "status": "failure",
+    "seconds": "0.289",
+    "failure_file": "failures/tku-governance-m2-related-final/0103.json"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_storage_lock_key_does_not_change_when_parent_and_file_appear",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_jsonl_replacement_never_exposes_a_partially_written_destination",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_jsonl_write_failure_preserves_previous_file_and_cleans_temporary",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_concurrent_jsonl_repository_account_upserts_do_not_lose_rows",
+    "status": "passed",
+    "seconds": "0.061"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_concurrent_jsonl_append_operations_do_not_lose_rows[<lambda>-append_community_question-load_community_questions]",
+    "status": "passed",
+    "seconds": "0.027"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_concurrent_jsonl_append_operations_do_not_lose_rows[<lambda>-append_community_answer-load_community_answers]",
+    "status": "passed",
+    "seconds": "0.024"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_concurrent_jsonl_append_operations_do_not_lose_rows[<lambda>-append_experience_submission-load_experience_submissions]",
+    "status": "passed",
+    "seconds": "0.026"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_compose_is_pinned_isolated_and_loopback_only",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_account_deletion_payload_uses_canonical_application_fingerprint",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_account_deletion_replay_omits_deleted_actor_shape",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_public_moderation_rollback_payload_is_canonical",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_account_deletion_validates_workflow_issue_lifecycle_and_purge",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_harness_validates_real_storage_cleanup_scope",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_schema_gate_includes_workflow_issue_report_tables",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_workflow_issue_payloads_use_canonical_fingerprints",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_workflow_issue_rpc_permissions_are_service_role_only",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_workflow_issue_phase_is_wired_into_summary",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_report_review_payload_uses_canonical_community_fingerprint",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_harness_declares_two_instance_community_invariants",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_subprocess_timeout_is_bounded_and_redacts_sensitive_context",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_project_names_are_reserved_unique_and_ci_run_bound",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_rejects_arbitrary_project_names_and_invalid_ci_identity",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_compose_commands_forward_bounded_timeouts",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_cleanup_fails_when_project_resources_remain",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_cleanup_stops_before_resource_queries_when_down_fails",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_success_is_not_reported_when_final_cleanup_fails",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_preflight_cleanup_failure_prevents_validation",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_clean_success_reports_cleanup_only_after_both_cleanup_phases",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_primary_failure_is_not_hidden_by_diagnostics_or_cleanup",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_supabase_runtime_validation::test_runtime_source_keeps_all_subprocesses_bounded_and_project_scoped",
+    "status": "passed",
+    "seconds": "0.001"
+  }
+]

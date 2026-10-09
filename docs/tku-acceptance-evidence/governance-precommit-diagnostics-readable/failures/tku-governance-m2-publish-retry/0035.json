@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "tku-governance-m2-publish-retry.xml",
+  "original_xml_sha256": "9e0db6e2affa12e2ecc31c68f0ba220fed47bf01006a952a7baed1f51a82f7bb",
+  "case_attributes": {
+    "classname": "tests.test_next_phase_contract",
+    "name": "test_frozen_openapi_contract_matches_live_schema",
+    "time": "2.612"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: assert {'components'...}}, ...}, ...} == {'openapi': '...}, ...}}, ...}\n  \n  Omitting 5 identical items, use -vv to show\n  Differing items:\n  {'paths': {'/': {'get': {'operationId': 'frontend__get', 'responses': {'200': {'description': 'Successful Response'}},...ccessful Response'}, '422': {'content': {...}, 'description': 'Validation Error'}}, 'summary': 'Notifications'}}, ...}} != {'paths': {'/account/notifications': {'get': {'summary': 'Notifications', 'operationId': 'notifications_account_notifi...in_notifications_run_due_post', 'responses': {'200': {'description': 'Successful Response', 'content': {...}}}}}, ...}}\n  {'components': {'schemas': {'Acco...\n  \n  ...Full output truncated (2 lines hidden), use '-vv' to show"
+  },
+  "full_text": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-191/test_frozen_openapi_contract_m0')\n\n    def test_frozen_openapi_contract_matches_live_schema(tmp_path) -> None:\n        client = TestClient(create_app(tmp_path))\n        live_schema = client.get(\"/openapi.json\").json()\n        snapshot = json.loads(OPENAPI_SNAPSHOT.read_text(encoding=\"utf-8\"))\n    \n>       assert snapshot == live_schema\nE       AssertionError: assert {'components'...}}, ...}, ...} == {'openapi': '...}, ...}}, ...}\nE         \nE         Omitting 5 identical items, use -vv to show\nE         Differing items:\nE         {'paths': {'/': {'get': {'operationId': 'frontend__get', 'responses': {'200': {'description': 'Successful Response'}},...ccessful Response'}, '422': {'content': {...}, 'description': 'Validation Error'}}, 'summary': 'Notifications'}}, ...}} != {'paths': {'/account/notifications': {'get': {'summary': 'Notifications', 'operationId': 'notifications_account_notifi...in_notifications_run_due_post', 'responses': {'200': {'description': 'Successful Response', 'content': {...}}}}}, ...}}\nE         {'components': {'schemas': {'Acco...\nE         \nE         ...Full output truncated (2 lines hidden), use '-vv' to show\n\ntests/test_next_phase_contract.py:19: AssertionError"
+}

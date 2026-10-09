@@ -1,0 +1,63 @@
+{
+  "head_sha": "3cbe9760802b7cf72b6ba8d220505697dc92ad46",
+  "main_baseline": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "official_trees": [
+    {
+      "path": "src/exchange_info/official_data/cgu",
+      "previous_e1_tree": "f958c1c64dcf05baebc7b3193c5745ba5d99ab6e",
+      "candidate_tree": "f958c1c64dcf05baebc7b3193c5745ba5d99ab6e",
+      "identical": true
+    },
+    {
+      "path": "src/exchange_info/official_data/ntpu",
+      "previous_e1_tree": "05f5b97db2fb967c27d87472704015942361c2c3",
+      "candidate_tree": "05f5b97db2fb967c27d87472704015942361c2c3",
+      "identical": true
+    },
+    {
+      "path": "src/exchange_info/official_data/ntu",
+      "previous_e1_tree": "f4e7c085e3b6a63daaeba6fa0cb6bddc2bd2a606",
+      "candidate_tree": "f4e7c085e3b6a63daaeba6fa0cb6bddc2bd2a606",
+      "identical": true
+    },
+    {
+      "path": "src/exchange_info/official_data/tku",
+      "previous_e1_tree": "a48f9a08417e03f56074b05479498e2b11a37101",
+      "candidate_tree": "a48f9a08417e03f56074b05479498e2b11a37101",
+      "identical": true
+    }
+  ],
+  "original_browser_bodies": [
+    {
+      "id": "tests/e2e/test_web_next_phase.py::test_content_admin_explicitly_stages_one_review_batch_without_publication",
+      "body_ast_sha256": "0b998b594b323849f8d6bdeec2bade853520abe00b9f8a8b4be709a8dfbc1434",
+      "body_identical": true,
+      "original_skip_retained": false
+    },
+    {
+      "id": "tests/e2e/test_web_next_phase.py::test_content_admin_replaces_insecure_source_only_in_pending_revision",
+      "body_ast_sha256": "23cc9bbee49c9e706135b3b0fee1b778beda283c472972cf4d998e26c1da4f9a",
+      "body_identical": true,
+      "original_skip_retained": false
+    },
+    {
+      "id": "tests/e2e/test_web_next_phase.py::test_content_admins_independently_attest_every_source_before_publish",
+      "body_ast_sha256": "a4e1939cdb770e840b349afdcc6929d3a70b2db9714e5a17a3eb7e9f8ba5d2e2",
+      "body_identical": true,
+      "original_skip_retained": true
+    },
+    {
+      "id": "tests/e2e/test_web_next_phase.py::test_content_admin_downloads_snapshot_bound_destination_profile_review_queue",
+      "body_ast_sha256": "47c01846d7abe0dd0cd36be3cb9a4d63ff8fc018f214dacf44dbffc470a47fa7",
+      "body_identical": true,
+      "original_skip_retained": true
+    }
+  ],
+  "official_counts": {
+    "cgu": 154,
+    "ntpu": 409,
+    "ntu": 288,
+    "tku": 4
+  },
+  "original_browser_source_entire_file_identical_to_3a8": true
+}

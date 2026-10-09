@@ -1,0 +1,12 @@
+{
+  "scope": "Historical uncommitted diagnosis only; separate from every fixed SHA acceptance run.",
+  "source_commit": null,
+  "includes": [
+    "Initial SQL and synthetic browser/service failures and retries",
+    "Original two historical PhaseC cases explicitly enabled during diagnosis but retained original skip in candidate",
+    "Queue-first / readonly readiness failure before pure URL caching",
+    "Complete normalization-body AST and 1062 URL equivalence proof",
+    "Exact migration count increase diagnosis"
+  ],
+  "caveat": "No result in this folder is relabeled as a fixed commit or full CI success. Earlier source-cache diagnostic only partially compared AST; complete-body proof supersedes that interpretation while both original files remain."
+}

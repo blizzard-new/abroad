@@ -1,0 +1,47 @@
+CONFTEST LOADED!
+........................................................................ [ 53%]
+...............................F..............................           [100%]
+=================================== FAILURES ===================================
+___ test_review_gate_rejects_non_admin_duplicate_and_incomplete_publication ____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-194/test_review_gate_rejects_non_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd6b81ae900>
+
+    def test_review_gate_rejects_non_admin_duplicate_and_incomplete_publication(tmp_path,monkeypatch):
+        repository=JsonlAccountRepository(tmp_path/'accounts')
+        store=LocalContentGovernanceStore(tmp_path/'content')
+        store.publish_workflow(_content_workflow('舊版本',version=1),'baseline')
+        revision=stage_workflow_refresh(store,_content_workflow('新版本',version=1),detected_by='fixture').revision
+        admin=UserAccount(email='admin@example.com',display_name='審查 A')
+        second=UserAccount(email='second@example.com',display_name='審查 B')
+        outsider=UserAccount(email='outsider@example.com',display_name='一般學生')
+        headers=session(repository,admin,'admin-review')
+        second_headers=session(repository,second,'second-review')
+        foreign=session(repository,outsider,'outsider-review')
+        monkeypatch.setenv('EXCHANGE_CONTENT_ADMIN_EMAILS',f'{admin.email},{second.email}')
+        client=TestClient(create_app(tmp_path/'app',account_repository=repository,content_governance_store=store))
+        endpoint=f'/admin/application-workflow-revisions/{revision.id}'
+        payload={'expected_content_hash':revision.content_hash,'reviewed_source_urls':workflow_review_source_urls(revision.workflow),
+                 'reviewed_rule_keys':workflow_review_rule_keys(revision.workflow),'note':'測試資料已核對'}
+        assert client.get('/admin/application-workflow-revisions').status_code==401
+        assert client.get('/admin/application-workflow-revisions',headers=foreign).status_code==403
+        assert client.post(endpoint+'/approve',headers=foreign,json=payload).status_code==403
+        assert client.post(endpoint+'/publish',headers=headers,json={}).status_code==409
+        assert client.post(endpoint+'/approve',headers=headers,json={**payload,'expected_content_hash':'0'*64}).status_code==409
+        assert client.post(endpoint+'/approve',headers=headers,json={**payload,'reviewer_id':second.id}).status_code==422
+        approved=client.post(endpoint+'/approve',headers=headers,json=payload)
+        assert approved.status_code==200 and approved.json()['review_approvals'][0]['reviewer_id']==admin.id
+        assert client.post(endpoint+'/approve',headers=headers,json=payload).status_code==409
+        assert client.post(endpoint+'/publish',headers=headers,json={}).status_code==409
+        assert client.post(endpoint+'/approve',headers=second_headers,json=payload).status_code==200
+        assert client.post(endpoint+'/publish',headers=second_headers,json={}).status_code==200
+>       assert client.post(endpoint+'/publish',headers=second_headers,json={}).status_code==409
+E       AssertionError: assert 200 == 409
+E        +  where 200 = <Response [200 OK]>.status_code
+E        +    where <Response [200 OK]> = post(('/admin/application-workflow-revisions/c34128acc0db4a1d975c18f3699f1101' + '/publish'), headers={'Authorization': 'Bearer second-review'}, json={})
+E        +      where post = <starlette.testclient.TestClient object at 0x7fd6b320c530>.post
+
+tests/test_notification_changes.py:87: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_notification_changes.py::test_review_gate_rejects_non_admin_duplicate_and_incomplete_publication
+1 failed, 133 passed in 102.95s (0:01:42)

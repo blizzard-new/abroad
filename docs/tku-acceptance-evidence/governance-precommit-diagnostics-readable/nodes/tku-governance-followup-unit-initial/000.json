@@ -1,0 +1,192 @@
+[
+  {
+    "id": "tests.test_tku_governance_commands::test_late_publication_failure_restores_every_byte_before_retry",
+    "status": "passed",
+    "seconds": "0.150"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_process_crash_recovers_before_public_read_and_can_retry",
+    "status": "passed",
+    "seconds": "2.101"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_concurrent_approval_snapshot_conflicts_without_lost_evidence",
+    "status": "passed",
+    "seconds": "0.049"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_batch_staging_has_zero_approval_publication_and_is_idempotent",
+    "status": "passed",
+    "seconds": "0.043"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_legacy_public_refresh_keeps_a_reference_baseline_without_publishing",
+    "status": "passed",
+    "seconds": "0.029"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_capped_snapshot_reads_all_rows_and_rejects_unverifiable_truncation[id]",
+    "status": "passed",
+    "seconds": "0.059"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_capped_snapshot_reads_all_rows_and_rejects_unverifiable_truncation[workflow_key]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_source_edit_clears_approvals_and_retains_complete_old_attestations",
+    "status": "passed",
+    "seconds": "0.219"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_duplicate_original_url_roles_are_preserved_in_nonreplacement_edit",
+    "status": "passed",
+    "seconds": "0.032"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_safe_rollback_restores_content_with_new_version_and_replays_without_new_audit",
+    "status": "passed",
+    "seconds": "0.323"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_older_supabase_schema_is_read_only_before_any_command_envelope",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_old_workflow_rollback_cannot_replace_a_later_publication",
+    "status": "passed",
+    "seconds": "0.368"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_destination_double_review_failure_atomicity_and_rollback_replay",
+    "status": "passed",
+    "seconds": "0.087"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_destination_concurrent_reviews_and_source_change_keep_old_evidence",
+    "status": "passed",
+    "seconds": "0.029"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/content-review]",
+    "status": "passed",
+    "seconds": "0.845"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/session]",
+    "status": "passed",
+    "seconds": "0.807"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-review-backlog]",
+    "status": "passed",
+    "seconds": "1.144"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-source-replacement-candidates]",
+    "status": "passed",
+    "seconds": "1.597"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-publications]",
+    "status": "passed",
+    "seconds": "0.849"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-release-readiness]",
+    "status": "passed",
+    "seconds": "0.621"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/web-release-readiness]",
+    "status": "passed",
+    "seconds": "1.822"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/destination-profile-review-queue]",
+    "status": "passed",
+    "seconds": "1.450"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/destination-profile-publications]",
+    "status": "passed",
+    "seconds": "1.988"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_governance_reads_require_actual_admin_and_are_private[/admin/application-workflow-review-batches.csv]",
+    "status": "passed",
+    "seconds": "0.662"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_readiness_and_exports_do_not_stage_approve_or_publish",
+    "status": "passed",
+    "seconds": "1.569"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_stale_workflow_exports_fail_closed_without_mutation",
+    "status": "passed",
+    "seconds": "0.612"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_issue_report_status_filter_excludes_terminal_reports",
+    "status": "passed",
+    "seconds": "12.256"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-review-backlog/synthetic-missing/stage-None]",
+    "status": "passed",
+    "seconds": "0.469"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-review-batches/synthetic-missing/stage-payload1]",
+    "status": "passed",
+    "seconds": "0.281"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[patch-/admin/application-workflow-revisions/synthetic-missing/applicability-payload2]",
+    "status": "passed",
+    "seconds": "0.312"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-revisions/synthetic-missing/approve-payload3]",
+    "status": "passed",
+    "seconds": "0.433"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-revisions/synthetic-missing/publish-payload4]",
+    "status": "passed",
+    "seconds": "0.358"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-revisions/synthetic-missing/reject-payload5]",
+    "status": "passed",
+    "seconds": "0.593"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/application-workflow-rollbacks-payload6]",
+    "status": "passed",
+    "seconds": "0.482"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/destination-profile-reviews-payload7]",
+    "status": "passed",
+    "seconds": "1.830"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/destination-profile-promotions-payload8]",
+    "status": "passed",
+    "seconds": "0.878"
+  },
+  {
+    "id": "tests.test_tku_governance_routes::test_every_governance_write_requires_actual_admin_before_mutation[post-/admin/destination-profile-rollbacks-payload9]",
+    "status": "passed",
+    "seconds": "1.268"
+  },
+  {
+    "id": "tests.test_content_governance_wrapper::test_supabase_store_writes_revision_and_published_payload_through_backend",
+    "status": "passed",
+    "seconds": "0.002"
+  }
+]

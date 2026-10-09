@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "tku-governance-m2-active-browser-remaining-retry.xml",
+  "original_xml_sha256": "7051b2f150d94e63dc5abba7864357fd4cc58b9b34858bce0a7d353162a91d64",
+  "case_attributes": {
+    "classname": "tests.e2e.test_web_next_phase",
+    "name": "test_content_admins_independently_attest_every_source_before_publish",
+    "time": "7.775"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert 1160 == 215"
+  },
+  "full_text": "page = <Page url='about:blank'>\nbrowser = <Browser type=<BrowserType name=chromium executable_path=/tmp/tku-browsers/chromium-1234/chrome-linux64/chrome> version=151.0.7922.34>\nlive_server = LiveServer(base_url='http://127.0.0.1:43687', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-186/web-e2e-data0'))\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fcafd2da360>\n\n    def test_content_admins_independently_attest_every_source_before_publish(\n        page: Page,\n        browser: Browser,\n        live_server: LiveServer,\n        monkeypatch,\n    ) -> None:\n        reviewer_a_email = _email(\"content-reviewer-a\")\n        reviewer_b_email = _email(\"content-reviewer-b\")\n        monkeypatch.setenv(\n            \"EXCHANGE_CONTENT_ADMIN_EMAILS\",\n            f\"{reviewer_a_email},{reviewer_b_email}\",\n        )\n        reviewer_a = live_server.register(reviewer_a_email, \"內容審查者 A\")\n        reviewer_b = live_server.register(reviewer_b_email, \"內容審查者 B\")\n        reviewer_a_headers = _auth_headers(reviewer_a)\n        reviewer_b_headers = _auth_headers(reviewer_b)\n    \n        backlog = requests.get(\n            f\"{live_server.base_url}/admin/application-workflow-review-backlog\",\n            headers=reviewer_a_headers,\n            timeout=15,\n        )\n        backlog.raise_for_status()\n        backlog_payload = backlog.json()\n>       assert backlog_payload[\"source_metadata_gap_reference_count\"] == 215\nE       assert 1160 == 215\n\ntests/e2e/test_web_next_phase.py:3586: AssertionError"
+}

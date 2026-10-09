@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="154.446" timestamp="2026-10-09T08:01:27.656115+00:00" hostname="f6ad0b7a0286"><testcase classname="tests.e2e.test_web_next_phase" name="test_content_admin_explicitly_stages_one_review_batch_without_publication" time="133.396"><failure message="AssertionError: Locator expected to contain text '候選內容已改變審查指紋，原批次因此過期'&#10;Actual value: 替代網址會與未合併的官方來源重複。 &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 30000ms&#10;  - waiting for locator(&quot;#review-announcement&quot;)&#10;    13 × locator resolved to &lt;div role=&quot;status&quot; aria-live=&quot;polite&quot; id=&quot;review-announcement&quot; class=&quot;review-announcement&quot;&gt;正在儲存適用範圍修正…&lt;/div&gt;&#10;       - unexpected value &quot;正在儲存適用範圍修正…&quot;&#10;    49 × locator resolved to &lt;div role=&quot;status&quot; aria-live=&quot;polite&quot; id=&quot;review-announcement&quot; class=&quot;review-announcement is-error&quot;&gt;替代網址會與未合併的官方來源重複。&lt;/div&gt;&#10;       - unexpected value &quot;替代網址會與未合併的官方來源重複。&quot;&#10;&#10;Aria snapshot:&#10;- status: 替代網址會與未合併的官方來源重複。">page = &lt;Page url='http://127.0.0.1:57003/admin/content-review?review_batch=review-6f527fd9ccae-010-001&amp;batch_size=10&amp;review_s...b92388259e12434e15347a14633a54761b987&amp;review_status=pending_review&amp;workflow_revision=b796a2874ac24041866d7d330a8c9516'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:57003', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-179/web-e2e-data0'))
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f3439c96f00&gt;
+request = &lt;FixtureRequest for &lt;Function test_content_admin_explicitly_stages_one_review_batch_without_publication&gt;&gt;
+
+    def test_content_admin_explicitly_stages_one_review_batch_without_publication(
+        page: Page,
+        live_server: LiveServer,
+        monkeypatch,
+        request,
+    ) -&gt; None:
+        reviewer_email = _email("batch-stage-reviewer")
+        monkeypatch.setenv("EXCHANGE_CONTENT_ADMIN_EMAILS", reviewer_email)
+        reviewer = live_server.register(reviewer_email, "批次建立審查者")
+        reviewer_headers = _auth_headers(reviewer)
+        store = LocalContentGovernanceStore(
+            live_server.data_dir,
+            include_bundled_baseline=True,
+        )
+        revisions_before = store.list_revisions()
+        request.addfinalizer(
+            lambda: save_application_workflow_revisions(
+                revisions_before,
+                live_server.data_dir,
+            )
+        )
+        public_before = [
+            workflow.model_dump_json()
+            for workflow in store.load_published_workflows()
+        ]
+    
+        _open_content_review_workbench(
+            page,
+            live_server,
+            reviewer_email,
+            reviewer,
+        )
+        page.locator("#review-status-filter").select_option("backlog")
+        with page.expect_download() as batch_download_info:
+            page.locator("#review-batch-export").click()
+        batch_rows = list(
+            csv.DictReader(
+                StringIO(
+                    batch_download_info.value.path().read_bytes().decode("utf-8-sig")
+                )
+            )
+        )
+        first_batch_rows = [
+            row
+            for row in batch_rows
+            if row["審查批次"] == batch_rows[0]["審查批次"]
+        ]
+        assert len(first_batch_rows) == 10
+        page.goto(f"{live_server.base_url}{first_batch_rows[0]['批次工作台路徑']}")
+        stage_button = page.locator("#stage-workflow-review-batch")
+        expect(stage_button).to_be_visible(timeout=15_000)
+        expect(stage_button).to_contain_text("10 筆")
+    
+        dismissed_messages: list[str] = []
+    
+        def dismiss_batch_stage(dialog) -&gt; None:
+            dismissed_messages.append(dialog.message)
+            dialog.dismiss()
+    
+        page.once("dialog", dismiss_batch_stage)
+        stage_button.click()
+        assert dismissed_messages
+        assert "不會核准、發布" in dismissed_messages[0]
+        pending_before_confirmation = requests.get(
+            f"{live_server.base_url}/admin/application-workflow-revisions",
+            params={"status": "pending_review"},
+            headers=reviewer_headers,
+            timeout=15,
+        )
+        pending_before_confirmation.raise_for_status()
+        assert pending_before_confirmation.json() == []
+    
+        page.once("dialog", lambda dialog: dialog.accept())
+        stage_button.click()
+        expect(page.locator("#review-announcement")).to_contain_text(
+            "新建立 10 筆、沿用 0 筆",
+            timeout=30_000,
+        )
+        expect(page.locator("#workflow-deep-link-description")).to_contain_text(
+            "已建立待審 10"
+        )
+        first_pending = requests.get(
+            f"{live_server.base_url}/admin/application-workflow-revisions",
+            params={"status": "pending_review"},
+            headers=reviewer_headers,
+            timeout=15,
+        )
+        first_pending.raise_for_status()
+        assert len(first_pending.json()) == 10
+        assert all(row["review_approvals"] == [] for row in first_pending.json())
+        first_revision_ids = {row["id"] for row in first_pending.json()}
+    
+        page.once("dialog", lambda dialog: dialog.accept())
+        stage_button.click()
+        expect(page.locator("#review-announcement")).to_contain_text(
+            "新建立 0 筆、沿用 10 筆",
+            timeout=30_000,
+        )
+        repeated_pending = requests.get(
+            f"{live_server.base_url}/admin/application-workflow-revisions",
+            params={"status": "pending_review"},
+            headers=reviewer_headers,
+            timeout=15,
+        )
+        repeated_pending.raise_for_status()
+        assert {row["id"] for row in repeated_pending.json()} == first_revision_ids
+        first_batch_workflow_keys = {row["workflow_key"] for row in first_batch_rows}
+        outside_batch = next(
+            row for row in batch_rows
+            if row["workflow_key"] not in first_batch_workflow_keys
+        )
+        outside_stage = requests.post(
+            f"{live_server.base_url}/admin/application-workflow-review-backlog/"
+            f"{requests.utils.quote(outside_batch['workflow_key'], safe='')}/stage",
+            headers=reviewer_headers,
+            timeout=15,
+        )
+        outside_stage.raise_for_status()
+    
+        page.set_viewport_size({"width": 390, "height": 844})
+        batch_review_button = page.locator("#open-workflow-review-batch")
+        expect(batch_review_button).to_be_visible()
+        expect(batch_review_button).to_contain_text("10 筆")
+        batch_review_button.click()
+        expect(page.locator("#review-status-filter")).to_have_value(
+            "pending_review",
+            timeout=15_000,
+        )
+        expect(page.locator("#workflow-review-owner-filter")).to_have_value(
+            "mine_unreviewed"
+        )
+        expect(page.locator("#review-queue")).to_have_attribute(
+            "aria-busy",
+            "false",
+            timeout=30_000,
+        )
+        expect(page.locator("#workflow-review-focus-filter")).to_be_visible()
+        expect(page.locator("#workflow-review-focus-description")).to_contain_text(
+            first_batch_rows[0]["審查批次"]
+        )
+        expect(page.locator("#workflow-review-focus-description")).to_contain_text(
+            "我的待辦 10 筆"
+        )
+        expect(page.locator("#workflow-review-focus-description")).to_contain_text(
+            "可開始真人核對 0 筆、須先補資料 10 筆"
+        )
+        expect(page.locator("#review-count")).to_have_text("10")
+        assert page.locator("[data-revision-id]").count() == 10
+        next_review_button = page.locator("#open-next-workflow-review")
+        expect(next_review_button).to_be_visible()
+        expect(next_review_button).to_contain_text("開啟第一筆待辦（10 筆）")
+        readiness_filter = page.locator("#workflow-review-readiness-filter")
+        expect(readiness_filter).to_be_visible()
+        readiness_filter.select_option("correction_ready")
+        expect(page.locator("#review-count")).to_have_text("0")
+        expect(next_review_button).to_be_disabled()
+        expect(next_review_button).to_contain_text("目前沒有可開始核對項目")
+        readiness_filter.select_option("correction_blocked")
+        expect(page.locator("#review-count")).to_have_text("10")
+        expect(next_review_button).to_be_enabled()
+        expect(next_review_button).to_contain_text("開啟第一筆待補資料（10 筆）")
+        readiness_filter.select_option("")
+        expect(page.locator("#review-count")).to_have_text("10")
+        batch_location = parse_qs(urlparse(page.url).query)
+        assert batch_location["review_status"] == ["pending_review"]
+        assert batch_location["review_batch"] == [first_batch_rows[0]["審查批次"]]
+        assert batch_location["batch_size"] == ["10"]
+        assert batch_location["review_snapshot"] == [
+            first_batch_rows[0]["審查內容指紋"]
+        ]
+        assert "workflow_revision" not in batch_location
+        assert page.evaluate("document.documentElement.scrollWidth") &lt;= 390
+    
+        next_review_button.click()
+        expect(page.locator("#review-count")).to_have_text("1")
+        expect(page.locator("[data-revision-id]")).to_have_count(1)
+        first_focused_revision = page.locator("[data-revision-id]").get_attribute(
+            "data-revision-id"
+        )
+        assert first_focused_revision
+        correction_summary = page.locator(
+            f'[data-revision-id="{first_focused_revision}"] .review-correction-summary'
+        )
+        expect(correction_summary).to_contain_text("先補資料才能核准")
+        expect(correction_summary).to_contain_text("來源年度缺漏或不一致")
+        correction_summary.locator("[data-review-jump-corrections]").click()
+        expect(
+            page.locator(
+                f'[data-revision-id="{first_focused_revision}"] .applicability-editor'
+            )
+        ).to_have_attribute("open", "")
+        focused_card = page.locator(f'[data-revision-id="{first_focused_revision}"]')
+        expect(focused_card.locator("[data-applicability-progress]")).to_contain_text(
+            "已選擇 0 /"
+        )
+        expect(focused_card.locator("[data-review-applicability-save]")).to_be_disabled()
+        expect(page.locator("#review-announcement")).to_contain_text(
+            "系統不會替你猜值"
+        )
+        assert page.evaluate("document.documentElement.scrollWidth") &lt;= 390
+        expect(page.locator("#show-workflow-review-batch")).to_be_visible()
+        focused_location = parse_qs(urlparse(page.url).query)
+        assert focused_location["workflow_revision"] == [first_focused_revision]
+        assert focused_location["review_batch"] == [first_batch_rows[0]["審查批次"]]
+    
+        next_review_button.click()
+        expect(page.locator("[data-revision-id]")).to_have_count(1)
+        second_focused_revision = page.locator("[data-revision-id]").get_attribute(
+            "data-revision-id"
+        )
+        assert second_focused_revision
+        assert second_focused_revision != first_focused_revision
+        assert parse_qs(urlparse(page.url).query)["workflow_revision"] == [
+            second_focused_revision
+        ]
+    
+        page.locator("#show-workflow-review-batch").click()
+        expect(page.locator("#review-count")).to_have_text("10")
+        expect(page.locator("[data-revision-id]")).to_have_count(10)
+        assert "workflow_revision" not in parse_qs(urlparse(page.url).query)
+        next_review_button.click()
+        expect(page.locator("[data-revision-id]")).to_have_count(1)
+        reloaded_focus_revision = page.locator("[data-revision-id]").get_attribute(
+            "data-revision-id"
+        )
+        assert reloaded_focus_revision
+    
+        page.reload()
+        expect(page.locator("#reviewer-email")).to_have_text(
+            reviewer_email,
+            timeout=15_000,
+        )
+        expect(page.locator("#workflow-review-focus-description")).to_contain_text(
+            "重新整理仍會重新驗證並維持此批次"
+        )
+        expect(page.locator("#review-queue")).to_have_attribute(
+            "aria-busy",
+            "false",
+            timeout=30_000,
+        )
+        expect(page.locator("#review-count")).to_have_text("1")
+        expect(page.locator("[data-revision-id]")).to_have_count(1)
+        assert page.locator("[data-revision-id]").get_attribute(
+            "data-revision-id"
+        ) == reloaded_focus_revision
+    
+        reloaded_card = page.locator(
+            f'[data-revision-id="{reloaded_focus_revision}"]'
+        )
+        reloaded_card.locator(".applicability-editor &gt; summary").click()
+        reloaded_card.locator("[data-applicability-academic-year]").fill("115")
+        secure_source_rows = reloaded_card.locator(
+            '[data-applicability-source-row][data-source-url^="https://"]'
+        )
+        assert secure_source_rows.count() &gt; 0
+        corrected_source_row = secure_source_rows.first
+        corrected_source_row.locator("[data-applicability-source]").check()
+        corrected_source_row.locator("[data-source-academic-year]").fill("115")
+        if corrected_source_row.get_attribute("data-source-metadata-complete") == "false":
+            corrected_source_row.locator("[data-source-title]").fill(
+                "E2E 批次失效人工來源"
+            )
+            corrected_source_row.locator("[data-source-role]").select_option(
+                "home_university"
+            )
+            corrected_source_row.locator("[data-source-authority]").select_option(
+                "home_official_notice"
+            )
+        reloaded_card.locator("[data-applicability-note]").fill(
+            "E2E 明確儲存候選修正後，舊批次必須立即失效並清除單筆定位。"
+        )
+        applicability_save = reloaded_card.locator(
+            "[data-review-applicability-save]"
+        )
+        expect(applicability_save).to_be_enabled()
+        applicability_save.click()
+&gt;       expect(page.locator("#review-announcement")).to_contain_text(
+            "候選內容已改變審查指紋，原批次因此過期",
+            timeout=30_000,
+        )
+E       AssertionError: Locator expected to contain text '候選內容已改變審查指紋，原批次因此過期'
+E       Actual value: 替代網址會與未合併的官方來源重複。 
+E       Call log:
+E         - Expect "to_contain_text" with timeout 30000ms
+E         - waiting for locator("#review-announcement")
+E           13 × locator resolved to &lt;div role="status" aria-live="polite" id="review-announcement" class="review-announcement"&gt;正在儲存適用範圍修正…&lt;/div&gt;
+E              - unexpected value "正在儲存適用範圍修正…"
+E           49 × locator resolved to &lt;div role="status" aria-live="polite" id="review-announcement" class="review-announcement is-error"&gt;替代網址會與未合併的官方來源重複。&lt;/div&gt;
+E              - unexpected value "替代網址會與未合併的官方來源重複。"
+E       
+E       Aria snapshot:
+E       - status: 替代網址會與未合併的官方來源重複。
+
+tests/e2e/test_web_next_phase.py:3529: AssertionError</failure></testcase><testcase classname="tests.e2e.test_web_next_phase" name="test_content_admin_replaces_insecure_source_only_in_pending_revision" time="20.644"><failure message="AssertionError: assert False&#10; +  where False = &lt;built-in method startswith of str object at 0x7f34044330c0&gt;('source-replacement-review-')&#10; +    where &lt;built-in method startswith of str object at 0x7f34044330c0&gt; = 'application-workflow-source-replacement-review-queue.csv'.startswith&#10; +      where 'application-workflow-source-replacement-review-queue.csv' = &lt;Download url='http://127.0.0.1:57003/admin/application-workflow-source-replacement-review-queue.csv' suggested_filename='application-workflow-source-replacement-review-queue.csv'&gt;.suggested_filename">page = &lt;Page url='http://127.0.0.1:57003/admin/content-review'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:57003', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-179/web-e2e-data0'))
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7f3432246300&gt;
+
+    def test_content_admin_replaces_insecure_source_only_in_pending_revision(
+        page: Page,
+        live_server: LiveServer,
+        monkeypatch,
+    ) -&gt; None:
+        reviewer_email = _email("source-replacement-reviewer")
+        monkeypatch.setenv("EXCHANGE_CONTENT_ADMIN_EMAILS", reviewer_email)
+        reviewer = live_server.register(reviewer_email, "來源修正審查者")
+        headers = _auth_headers(reviewer)
+    
+        backlog = requests.get(
+            f"{live_server.base_url}/admin/application-workflow-review-backlog",
+            headers=headers,
+            timeout=15,
+        )
+        backlog.raise_for_status()
+        backlog_payload = backlog.json()
+        candidate_workflow_count = backlog_payload[
+            "workflows_with_source_replacement_candidates"
+        ]
+        candidate_count = backlog_payload["source_replacement_candidate_count"]
+        transport_blocked_count = backlog_payload[
+            "transport_blocked_source_replacement_candidate_count"
+        ]
+        assert candidate_workflow_count == len(
+            [
+                row
+                for row in backlog_payload["items"]
+                if row["source_replacement_candidate_count"] &gt; 0
+            ]
+        )
+        assert candidate_count == sum(
+            row["source_replacement_candidate_count"]
+            for row in backlog_payload["items"]
+        )
+        assert candidate_workflow_count &gt; 0
+        assert candidate_count &gt;= candidate_workflow_count
+        assert transport_blocked_count == 2
+        target = next(
+            row
+            for row in backlog_payload["items"]
+            if (
+                not row["has_pending_revision"]
+                and row["insecure_source_count"] == 1
+                and row["source_replacement_candidate_count"] &gt; 0
+                and row["transport_blocked_source_replacement_candidate_count"] == 0
+                and row["school_name"] == "梨花女子大學"
+            )
+        )
+        blocked_target = next(
+            row
+            for row in backlog_payload["items"]
+            if (
+                not row["has_pending_revision"]
+                and row["transport_blocked_source_replacement_candidate_count"] &gt; 0
+            )
+        )
+    
+        login_through_web(page, live_server, reviewer_email)
+        page.goto(f"{live_server.base_url}/admin/content-review")
+        expect(page.locator("#reviewer-email")).to_have_text(reviewer_email)
+        candidate_summary = page.locator("#source-replacement-candidate-summary")
+        expect(candidate_summary).to_be_visible(timeout=15_000)
+        expect(candidate_summary).to_contain_text(
+            f"目前 {candidate_workflow_count} 筆流程共有 {candidate_count} 個研究候選"
+        )
+        expect(candidate_summary).to_contain_text(
+            f"傳輸阻擋 {transport_blocked_count}"
+        )
+        with page.expect_download() as candidate_download_info:
+            candidate_summary.locator(
+                "#download-source-replacement-candidates"
+            ).click()
+        candidate_download = candidate_download_info.value
+&gt;       assert candidate_download.suggested_filename.startswith(
+            "source-replacement-review-"
+        )
+E       AssertionError: assert False
+E        +  where False = &lt;built-in method startswith of str object at 0x7f34044330c0&gt;('source-replacement-review-')
+E        +    where &lt;built-in method startswith of str object at 0x7f34044330c0&gt; = 'application-workflow-source-replacement-review-queue.csv'.startswith
+E        +      where 'application-workflow-source-replacement-review-queue.csv' = &lt;Download url='http://127.0.0.1:57003/admin/application-workflow-source-replacement-review-queue.csv' suggested_filename='application-workflow-source-replacement-review-queue.csv'&gt;.suggested_filename
+
+tests/e2e/test_web_next_phase.py:5300: AssertionError</failure></testcase></testsuite></testsuites>

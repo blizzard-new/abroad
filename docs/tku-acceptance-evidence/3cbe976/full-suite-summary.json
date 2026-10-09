@@ -1,0 +1,41 @@
+{
+  "tested_commit": "3cbe9760802b7cf72b6ba8d220505697dc92ad46",
+  "counts": {
+    "passed": 1808,
+    "failure": 2,
+    "skipped": 14
+  },
+  "unique_ids": 1824,
+  "files": 187,
+  "all_collected_ids_executed": true,
+  "all_four_start_end_guards_clean": true,
+  "failed_ids": [
+    "tests/e2e/test_web_next_phase.py::test_content_admin_explicitly_stages_one_review_batch_without_publication",
+    "tests/test_supabase_migration_syntax.py::test_all_supabase_migrations_parse_including_nested_function_bodies"
+  ],
+  "skipped_ids": [
+    "tests/e2e/test_web_next_phase.py::test_content_admin_downloads_snapshot_bound_destination_profile_review_queue",
+    "tests/e2e/test_web_next_phase.py::test_content_admins_independently_attest_every_source_before_publish",
+    "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_cold_start_under_90s",
+    "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_fixed_10_questions_no_oom",
+    "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_overlong_prompt_handled",
+    "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_service_recovers_after_timeout",
+    "tests/test_application_plan_api.py::test_application_plan_api_uses_bundled_workflow_with_isolated_runtime_data",
+    "tests/test_application_workflow.py::test_workflow_api_applies_department_override",
+    "tests/test_application_workflow.py::test_workflow_api_reads_cache_and_rejects_public_refresh",
+    "tests/test_cgu_bundled_data.py::test_backfilled_cgu_workflows_keep_current_details_reference_only",
+    "tests/test_cgu_bundled_data.py::test_bundled_cgu_completeness_report_matches_export",
+    "tests/test_cgu_bundled_data.py::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+    "tests/test_cgu_bundled_data.py::test_bundled_cgu_workflows_are_available_without_local_cache",
+    "tests/test_ntu_school_board_migration.py::test_ntu_forum_rpc_migration_preserves_authorization_and_replays"
+  ],
+  "original_093_ids_preserved": 1789,
+  "added_ids": 35,
+  "removed_ids": [],
+  "added_skips": [],
+  "enabled_original_skips": [
+    "tests/e2e/test_web_next_phase.py::test_content_admin_explicitly_stages_one_review_batch_without_publication",
+    "tests/e2e/test_web_next_phase.py::test_content_admin_replaces_insecure_source_only_in_pending_revision"
+  ],
+  "scope": "Local complete partition command, not GitHubCI or full SupabaseStorage runtime; sourcebefore3 bounded followupfixes"
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="8" time="3.306" timestamp="2026-10-09T08:13:04.081450+00:00" hostname="f6ad0b7a0286"><testcase classname="tests.test_tku_governance_commands" name="test_late_publication_failure_restores_every_byte_before_retry" time="0.090" /><testcase classname="tests.test_tku_governance_commands" name="test_process_crash_recovers_before_public_read_and_can_retry" time="0.873" /><testcase classname="tests.test_tku_governance_commands" name="test_concurrent_approval_snapshot_conflicts_without_lost_evidence" time="0.016" /><testcase classname="tests.test_tku_governance_commands" name="test_batch_staging_has_zero_approval_publication_and_is_idempotent" time="0.026"><failure message="assert False&#10; +  where False = all(&lt;generator object test_batch_staging_has_zero_approval_publication_and_is_idempotent.&lt;locals&gt;.&lt;genexpr&gt; at 0x7fd2df8ffac0&gt;)">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-183/test_batch_staging_has_zero_ap0')
+
+    def test_batch_staging_has_zero_approval_publication_and_is_idempotent(tmp_path):
+        store = LocalContentGovernanceStore(tmp_path)
+        store.publish_workflow(_content_workflow("Synthetic reference"), "synthetic-baseline")
+        public = [row.model_dump_json() for row in store.load_published_workflows()]
+        row = build_application_workflow_review_batch_rows(store, batch_size=1)[0]
+        first = stage_application_workflow_review_batch(store, row.batch_id, batch_size=1,
+            expected_snapshot=row.review_content_fingerprint, detected_by="synthetic-a")
+        before = persisted_bytes(store)
+        second = stage_application_workflow_review_batch(store, row.batch_id, batch_size=1,
+            expected_snapshot=row.review_content_fingerprint, detected_by="synthetic-a")
+        assert first.created_count == 1 and second.existing_count == 1 and second.created_count == 0
+        assert first.items[0].revision_id == second.items[0].revision_id
+        assert first.approvals_created is False and first.workflows_published is False and first.public_student_data_changed is False
+&gt;       assert all(not row.review_approvals and row.status.value == "pending_review" for row in store.list_revisions())
+E       assert False
+E        +  where False = all(&lt;generator object test_batch_staging_has_zero_approval_publication_and_is_idempotent.&lt;locals&gt;.&lt;genexpr&gt; at 0x7fd2df8ffac0&gt;)
+
+tests/test_tku_governance_commands.py:138: AssertionError</failure></testcase><testcase classname="tests.test_tku_governance_commands" name="test_source_edit_clears_approvals_and_retains_complete_old_attestations" time="0.086" /><testcase classname="tests.test_tku_governance_commands" name="test_duplicate_original_url_roles_are_preserved_in_nonreplacement_edit" time="0.007" /><testcase classname="tests.test_tku_governance_commands" name="test_safe_rollback_restores_content_with_new_version_and_replays_without_new_audit" time="0.072"><failure message="assert ('0d9f5ef9ec4f...ce06dc7ad87be' == '0d9f5ef9ec4f...ce06dc7ad87be'&#10;  &#10;    0d9f5ef9ec4f46acb4ece06dc7ad87be and {'revisions':...27fade2&quot;}}\n'} == {'revisions':...d3e0b78&quot;}}\n'}&#10;  &#10;  Omitting 2 identical items, use -vv to show&#10;  Differing items:&#10;  {'audit': b'{&quot;actor_id&quot;:&quot;automated_refresh&quot;,&quot;created_at&quot;:&quot;2026-10-09T08:13:07.311077+00:00&quot;,&quot;id&quot;:&quot;248b36ef-e837-4379-9...9e3c96318a87d9363b01f202ec0949063&quot;,&quot;workflows&quot;:&quot;c03e7f9c81bcdc8530c002e223b1c102fe9700033b6be51cbe5e128a427fade2&quot;}}\n'} != {'audit': b'{&quot;actor_id&quot;:&quot;automated_refresh&quot;,&quot;created_at&quot;:&quot;2026-10-09T08:13:07.311077+00:00&quot;,&quot;id&quot;:&quot;248b36ef-e837-4379-9...2e5a5e28256a1f2528b6ab2d456c6ac95&quot;,&quot;workflows&quot;:&quot;ba86d8ea69701a7ac53f2581f62dc7e4a17878a83a7ffd2e17f842beed3e0b78&quot;}}\n'}&#10;  Use -v to get more diff)">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-183/test_safe_rollback_restores_co0')
+
+    def test_safe_rollback_restores_content_with_new_version_and_replays_without_new_audit(tmp_path):
+        store, baseline, candidate = ready_store(tmp_path)
+        publish_workflow_revision(store, candidate.id, reviewer_id="synthetic-a")
+        history = build_application_workflow_publication_history(store)
+        item = history.items[0]
+        request = ApplicationWorkflowRollbackRequest(workflow_key=item.workflow_key, expected_current_revision_id=item.current_revision_id,
+            expected_current_version=item.current_version, expected_current_content_hash=item.current_content_hash,
+            restore_revision_id=baseline.id, note="Synthetic emergency restoration of independently reviewed baseline")
+        before = persisted_bytes(store)
+        with pytest.raises(ValueError):
+            rollback_published_workflow(store, request.model_copy(update={"expected_current_content_hash": "0" * 64}), rolled_back_by="synthetic-a")
+        assert persisted_bytes(store) == before
+        restored = rollback_published_workflow(store, request, rolled_back_by="synthetic-a")
+        after = persisted_bytes(store)
+        replay = rollback_published_workflow(store, request, rolled_back_by="synthetic-a")
+&gt;       assert replay.id == restored.id and persisted_bytes(store) == after
+E       assert ('0d9f5ef9ec4f...ce06dc7ad87be' == '0d9f5ef9ec4f...ce06dc7ad87be'
+E         
+E           0d9f5ef9ec4f46acb4ece06dc7ad87be and {'revisions':...27fade2"}}\n'} == {'revisions':...d3e0b78"}}\n'}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'audit': b'{"actor_id":"automated_refresh","created_at":"2026-10-09T08:13:07.311077+00:00","id":"248b36ef-e837-4379-9...9e3c96318a87d9363b01f202ec0949063","workflows":"c03e7f9c81bcdc8530c002e223b1c102fe9700033b6be51cbe5e128a427fade2"}}\n'} != {'audit': b'{"actor_id":"automated_refresh","created_at":"2026-10-09T08:13:07.311077+00:00","id":"248b36ef-e837-4379-9...2e5a5e28256a1f2528b6ab2d456c6ac95","workflows":"ba86d8ea69701a7ac53f2581f62dc7e4a17878a83a7ffd2e17f842beed3e0b78"}}\n'}
+E         Use -v to get more diff)
+
+tests/test_tku_governance_commands.py:192: AssertionError</failure></testcase><testcase classname="tests.test_tku_governance_commands" name="test_older_supabase_schema_is_read_only_before_any_command_envelope" time="0.001" /></testsuite></testsuites>

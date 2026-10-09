@@ -1,0 +1,50 @@
+[
+  {
+    "id": "tests.test_tku_governance_commands::test_late_publication_failure_restores_every_byte_before_retry",
+    "status": "failure",
+    "seconds": "0.003",
+    "failure_file": "failures/tku-governance-m2-command-first/0000.json"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_process_crash_recovers_before_public_read_and_can_retry",
+    "status": "failure",
+    "seconds": "0.001",
+    "failure_file": "failures/tku-governance-m2-command-first/0001.json"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_concurrent_approval_snapshot_conflicts_without_lost_evidence",
+    "status": "failure",
+    "seconds": "0.001",
+    "failure_file": "failures/tku-governance-m2-command-first/0002.json"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_batch_staging_has_zero_approval_publication_and_is_idempotent",
+    "status": "failure",
+    "seconds": "0.001",
+    "failure_file": "failures/tku-governance-m2-command-first/0003.json"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_source_edit_clears_approvals_and_retains_complete_old_attestations",
+    "status": "failure",
+    "seconds": "0.001",
+    "failure_file": "failures/tku-governance-m2-command-first/0004.json"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_duplicate_original_url_roles_are_preserved_in_nonreplacement_edit",
+    "status": "failure",
+    "seconds": "0.001",
+    "failure_file": "failures/tku-governance-m2-command-first/0005.json"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_safe_rollback_restores_content_with_new_version_and_replays_without_new_audit",
+    "status": "failure",
+    "seconds": "0.001",
+    "failure_file": "failures/tku-governance-m2-command-first/0006.json"
+  },
+  {
+    "id": "tests.test_tku_governance_commands::test_older_supabase_schema_is_read_only_before_any_command_envelope",
+    "status": "failure",
+    "seconds": "0.000",
+    "failure_file": "failures/tku-governance-m2-command-first/0007.json"
+  }
+]

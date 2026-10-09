@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "tku-governance-m2-command-first.xml",
+  "original_xml_sha256": "47375c65311dc81da0d5309c1ede5c448619ccde3c7d9b93d18665c0d5ee58a6",
+  "case_attributes": {
+    "classname": "tests.test_tku_governance_commands",
+    "name": "test_older_supabase_schema_is_read_only_before_any_command_envelope",
+    "time": "0.000"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'"
+  },
+  "full_text": "def test_older_supabase_schema_is_read_only_before_any_command_envelope():\n        calls = []\n        class Response:\n            def raise_for_status(self): pass\n            def json(self): return []\n        def request(method, url, **kwargs):\n            calls.append((method, url))\n            return Response()\n        store = SupabaseContentGovernanceStore(\"https://synthetic.invalid\", \"synthetic-key\", request_func=request)\n        with pytest.raises(RuntimeError, match=\"migration\"):\n>           stage_workflow_refresh(store, _content_workflow(\"Synthetic capability test\"))\n                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'\n\ntests/test_tku_governance_commands.py:206: TypeError"
+}

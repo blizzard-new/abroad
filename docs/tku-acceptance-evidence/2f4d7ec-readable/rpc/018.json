@@ -1,0 +1,254 @@
+{
+  "method": "POST",
+  "path": "/rest/v1/rpc/exchange_commit_application_workflow_revision",
+  "instance": "http://127.0.0.1:34207",
+  "envelope": {
+    "p_revision_id": "governance-command",
+    "p_workflow_key": "governance-command",
+    "p_version": 1,
+    "p_base_version": null,
+    "p_status": "pending_review",
+    "p_content_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "p_change_summary": {
+      "governance_command": {
+        "kind": "destination",
+        "expected": {
+          "reviews": [],
+          "promotions": [],
+          "rollbacks": []
+        },
+        "added": {
+          "reviews": [
+            {
+              "id": "bbc256d7-1ff0-484c-815a-b555344e9c36",
+              "home_university": "Synthetic governance home",
+              "school_name": "Synthetic governance host",
+              "profile_content_hash": "c853b84b8149976c6a3a955bb9dd35151003ee853b1b6be98353187713e71959",
+              "snapshot_fingerprint": "761a9cc6afe76a3006141f9672afede5a9c00d81266a84dae4394cdbdceca889",
+              "reviewer_id": "synthetic-a",
+              "reviewer_display_name": "synthetic-a",
+              "decision": "approve",
+              "note": "Synthetic full independent destination attestation",
+              "reviewed_source_urls": [
+                "https://synthetic.edu/exchange"
+              ],
+              "reviewed_section_keys": [
+                "identity_location",
+                "cost",
+                "housing",
+                "transport",
+                "campus_life",
+                "student_guide",
+                "first_72_hours",
+                "packing",
+                "buy_after_arrival",
+                "coverage_boundary",
+                "official_sources",
+                "last_checked"
+              ],
+              "reviewed_at": "2026-10-09T10:11:29.863613Z",
+              "supersedes_event_id": null
+            }
+          ],
+          "promotions": [],
+          "rollbacks": []
+        },
+        "source_profiles": [
+          {
+            "profile_key": "synthetic governance home::synthetic governance host",
+            "profile": {
+              "home_university": "Synthetic governance home",
+              "school_name": "Synthetic governance host",
+              "country": null,
+              "city": null,
+              "cost_summary": "Synthetic bounded cost",
+              "housing_summary": null,
+              "transport_summary": null,
+              "campus_life_summary": null,
+              "guide_photos": [],
+              "student_guide_sections": [],
+              "first_72_hours": [],
+              "packing_from_taiwan": [],
+              "buy_after_arrival": [],
+              "sources": [
+                {
+                  "title": "Synthetic official source",
+                  "source_url": "https://synthetic.edu/exchange",
+                  "category": null,
+                  "summary": null
+                }
+              ],
+              "last_checked": "2026-10-09T00:00:00Z",
+              "coverage_status": "official_partial",
+              "coverage_note": "Synthetic scope boundaries remain unchanged"
+            }
+          }
+        ],
+        "operation": "record_destination_profile_review",
+        "actor": "synthetic-a"
+      }
+    },
+    "p_workflow_payload": {},
+    "p_detected_by": "synthetic-a",
+    "p_detected_at": "2026-10-09T10:11:29.864096+00:00",
+    "p_required_review_count": 2,
+    "p_review_approvals": [],
+    "p_edit_history": [],
+    "p_reviewed_by": null,
+    "p_reviewed_at": null,
+    "p_review_note": null,
+    "p_publication_action": "standard",
+    "p_rolled_back_from_revision_id": null,
+    "p_restored_revision_id": null,
+    "p_home_university": "",
+    "p_partner_university": "",
+    "p_program_type": null,
+    "p_academic_year": null,
+    "p_application_round": null,
+    "p_updated_at": "2026-10-09T10:11:29.864101+00:00"
+  },
+  "http_status": 200,
+  "response": {
+    "committed": true,
+    "operation": "record_destination_profile_review"
+  },
+  "snapshot_unchanged": false,
+  "full_delta": {
+    "audit": {
+      "before": [],
+      "after": [
+        {
+          "id": 30,
+          "note": "record_destination_profile_review",
+          "action": "submitted",
+          "actor_id": "synthetic-a",
+          "metadata": {
+            "kind": "destination",
+            "actor": "synthetic-a",
+            "added": {
+              "reviews": [
+                {
+                  "id": "bbc256d7-1ff0-484c-815a-b555344e9c36",
+                  "note": "Synthetic full independent destination attestation",
+                  "decision": "approve",
+                  "reviewed_at": "2026-10-09T10:11:29.863613Z",
+                  "reviewer_id": "synthetic-a",
+                  "school_name": "Synthetic governance host",
+                  "home_university": "Synthetic governance home",
+                  "supersedes_event_id": null,
+                  "profile_content_hash": "c853b84b8149976c6a3a955bb9dd35151003ee853b1b6be98353187713e71959",
+                  "reviewed_source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "snapshot_fingerprint": "761a9cc6afe76a3006141f9672afede5a9c00d81266a84dae4394cdbdceca889",
+                  "reviewed_section_keys": [
+                    "identity_location",
+                    "cost",
+                    "housing",
+                    "transport",
+                    "campus_life",
+                    "student_guide",
+                    "first_72_hours",
+                    "packing",
+                    "buy_after_arrival",
+                    "coverage_boundary",
+                    "official_sources",
+                    "last_checked"
+                  ],
+                  "reviewer_display_name": "synthetic-a"
+                }
+              ],
+              "rollbacks": [],
+              "promotions": []
+            },
+            "expected": {
+              "reviews": [],
+              "rollbacks": [],
+              "promotions": []
+            },
+            "operation": "record_destination_profile_review",
+            "source_profiles": [
+              {
+                "profile": {
+                  "city": null,
+                  "country": null,
+                  "sources": [
+                    {
+                      "title": "Synthetic official source",
+                      "summary": null,
+                      "category": null,
+                      "source_url": "https://synthetic.edu/exchange"
+                    }
+                  ],
+                  "school_name": "Synthetic governance host",
+                  "cost_summary": "Synthetic bounded cost",
+                  "guide_photos": [],
+                  "last_checked": "2026-10-09T00:00:00Z",
+                  "coverage_note": "Synthetic scope boundaries remain unchanged",
+                  "first_72_hours": [],
+                  "coverage_status": "official_partial",
+                  "home_university": "Synthetic governance home",
+                  "housing_summary": null,
+                  "buy_after_arrival": [],
+                  "transport_summary": null,
+                  "campus_life_summary": null,
+                  "packing_from_taiwan": [],
+                  "student_guide_sections": []
+                },
+                "profile_key": "synthetic governance home::synthetic governance host"
+              }
+            ],
+            "governance_command_hash": "580f466beee989652c9869be4965177f9bf11850eea40f7c97d8bc72d1bb7310"
+          },
+          "created_at": "2026-10-09T10:11:29.864101+00:00",
+          "revision_id": null,
+          "workflow_key": "__governance_command_schema__"
+        }
+      ]
+    },
+    "reviews": {
+      "before": [],
+      "after": [
+        {
+          "id": "bbc256d7-1ff0-484c-815a-b555344e9c36",
+          "decision": "approve",
+          "created_at": "2026-10-09T10:11:30.114335+00:00",
+          "profile_key": "synthetic governance home::synthetic governance host",
+          "reviewed_at": "2026-10-09T10:11:29.863613+00:00",
+          "reviewer_id": "synthetic-a",
+          "event_payload": {
+            "id": "bbc256d7-1ff0-484c-815a-b555344e9c36",
+            "note": "Synthetic full independent destination attestation",
+            "decision": "approve",
+            "reviewed_at": "2026-10-09T10:11:29.863613Z",
+            "reviewer_id": "synthetic-a",
+            "school_name": "Synthetic governance host",
+            "home_university": "Synthetic governance home",
+            "supersedes_event_id": null,
+            "profile_content_hash": "c853b84b8149976c6a3a955bb9dd35151003ee853b1b6be98353187713e71959",
+            "reviewed_source_urls": [
+              "https://synthetic.edu/exchange"
+            ],
+            "snapshot_fingerprint": "761a9cc6afe76a3006141f9672afede5a9c00d81266a84dae4394cdbdceca889",
+            "reviewed_section_keys": [
+              "identity_location",
+              "cost",
+              "housing",
+              "transport",
+              "campus_life",
+              "student_guide",
+              "first_72_hours",
+              "packing",
+              "buy_after_arrival",
+              "coverage_boundary",
+              "official_sources",
+              "last_checked"
+            ],
+            "reviewer_display_name": "synthetic-a"
+          },
+          "profile_content_hash": "c853b84b8149976c6a3a955bb9dd35151003ee853b1b6be98353187713e71959"
+        }
+      ]
+    }
+  }
+}

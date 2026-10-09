@@ -1,0 +1,117 @@
+{
+  "method": "POST",
+  "path": "/rest/v1/rpc/exchange_commit_application_workflow_revision",
+  "instance": "http://127.0.0.1:34207",
+  "envelope": {
+    "p_revision_id": "governance-command",
+    "p_workflow_key": "governance-command",
+    "p_version": 1,
+    "p_base_version": null,
+    "p_status": "pending_review",
+    "p_content_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "p_change_summary": {
+      "governance_command": {
+        "kind": "destination",
+        "expected": {
+          "reviews": [],
+          "promotions": [],
+          "rollbacks": []
+        },
+        "added": {
+          "reviews": [
+            {
+              "id": "bbc256d7-1ff0-484c-815a-b555344e9c36",
+              "home_university": "Synthetic governance home",
+              "school_name": "Synthetic governance host",
+              "profile_content_hash": "c853b84b8149976c6a3a955bb9dd35151003ee853b1b6be98353187713e71959",
+              "snapshot_fingerprint": "761a9cc6afe76a3006141f9672afede5a9c00d81266a84dae4394cdbdceca889",
+              "reviewer_id": "synthetic-a",
+              "reviewer_display_name": "synthetic-a",
+              "decision": "approve",
+              "note": "Synthetic full independent destination attestation",
+              "reviewed_source_urls": [
+                "https://synthetic.edu/exchange"
+              ],
+              "reviewed_section_keys": [
+                "identity_location",
+                "cost",
+                "housing",
+                "transport",
+                "campus_life",
+                "student_guide",
+                "first_72_hours",
+                "packing",
+                "buy_after_arrival",
+                "coverage_boundary",
+                "official_sources",
+                "last_checked"
+              ],
+              "reviewed_at": "2026-10-09T10:11:29.863613Z",
+              "supersedes_event_id": null
+            }
+          ],
+          "promotions": [],
+          "rollbacks": []
+        },
+        "source_profiles": [
+          {
+            "profile_key": "synthetic governance home::synthetic governance host",
+            "profile": {
+              "home_university": "Synthetic governance home",
+              "school_name": "Synthetic governance host",
+              "country": null,
+              "city": null,
+              "cost_summary": "Synthetic bounded cost",
+              "housing_summary": null,
+              "transport_summary": null,
+              "campus_life_summary": null,
+              "guide_photos": [],
+              "student_guide_sections": [],
+              "first_72_hours": [],
+              "packing_from_taiwan": [],
+              "buy_after_arrival": [],
+              "sources": [
+                {
+                  "title": "Synthetic official source",
+                  "source_url": "https://synthetic.edu/exchange",
+                  "category": null,
+                  "summary": null
+                }
+              ],
+              "last_checked": "2026-10-09T00:00:00Z",
+              "coverage_status": "official_partial",
+              "coverage_note": "Synthetic scope boundaries remain unchanged"
+            }
+          }
+        ],
+        "operation": "record_destination_profile_review",
+        "actor": "synthetic-a"
+      }
+    },
+    "p_workflow_payload": {},
+    "p_detected_by": "synthetic-a",
+    "p_detected_at": "2026-10-09T10:11:29.864096+00:00",
+    "p_required_review_count": 2,
+    "p_review_approvals": [],
+    "p_edit_history": [],
+    "p_reviewed_by": null,
+    "p_reviewed_at": null,
+    "p_review_note": null,
+    "p_publication_action": "standard",
+    "p_rolled_back_from_revision_id": null,
+    "p_restored_revision_id": null,
+    "p_home_university": "",
+    "p_partner_university": "",
+    "p_program_type": null,
+    "p_academic_year": null,
+    "p_application_round": null,
+    "p_updated_at": "2026-10-09T10:11:29.864101+00:00"
+  },
+  "http_status": 200,
+  "response": {
+    "committed": true,
+    "operation": "record_destination_profile_review"
+  },
+  "snapshot_unchanged": true,
+  "full_delta": {}
+}

@@ -1,0 +1,123 @@
+CONFTEST LOADED!
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____ test_content_admins_independently_attest_every_source_before_publish _____
+
+page = <Page url='about:blank'>
+browser = <Browser type=<BrowserType name=chromium executable_path=/tmp/tku-browsers/chromium-1234/chrome-linux64/chrome> version=151.0.7922.34>
+live_server = LiveServer(base_url='http://127.0.0.1:43687', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-186/web-e2e-data0'))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fcafd2da360>
+
+    def test_content_admins_independently_attest_every_source_before_publish(
+        page: Page,
+        browser: Browser,
+        live_server: LiveServer,
+        monkeypatch,
+    ) -> None:
+        reviewer_a_email = _email("content-reviewer-a")
+        reviewer_b_email = _email("content-reviewer-b")
+        monkeypatch.setenv(
+            "EXCHANGE_CONTENT_ADMIN_EMAILS",
+            f"{reviewer_a_email},{reviewer_b_email}",
+        )
+        reviewer_a = live_server.register(reviewer_a_email, "內容審查者 A")
+        reviewer_b = live_server.register(reviewer_b_email, "內容審查者 B")
+        reviewer_a_headers = _auth_headers(reviewer_a)
+        reviewer_b_headers = _auth_headers(reviewer_b)
+    
+        backlog = requests.get(
+            f"{live_server.base_url}/admin/application-workflow-review-backlog",
+            headers=reviewer_a_headers,
+            timeout=15,
+        )
+        backlog.raise_for_status()
+        backlog_payload = backlog.json()
+>       assert backlog_payload["source_metadata_gap_reference_count"] == 215
+E       assert 1160 == 215
+
+tests/e2e/test_web_next_phase.py:3586: AssertionError
+_ test_content_admin_downloads_snapshot_bound_destination_profile_review_queue _
+
+page = <Page url='http://127.0.0.1:43687/admin/content-review'>
+live_server = LiveServer(base_url='http://127.0.0.1:43687', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-186/web-e2e-data0'))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fcaef302330>
+
+    def test_content_admin_downloads_snapshot_bound_destination_profile_review_queue(
+        page: Page,
+        live_server: LiveServer,
+        monkeypatch,
+    ) -> None:
+        reviewer_email = _email("destination-reviewer")
+        second_reviewer_email = _email("destination-second-reviewer")
+        monkeypatch.setenv(
+            "EXCHANGE_CONTENT_ADMIN_EMAILS",
+            f"{reviewer_email},{second_reviewer_email}",
+        )
+        live_server.register(reviewer_email, "生活情報審查者")
+        second_reviewer = live_server.register(
+            second_reviewer_email,
+            "生活情報第二審查者",
+        )
+        second_reviewer_headers = _auth_headers(second_reviewer)
+        public_before = requests.get(
+            f"{live_server.base_url}/destination-profiles",
+            params={"home_school": "長庚大學"},
+            timeout=15,
+        )
+        public_before.raise_for_status()
+    
+        login_through_web(page, live_server, reviewer_email)
+        page.goto(f"{live_server.base_url}/admin/content-review")
+        expect(page.locator("#reviewer-email")).to_have_text(reviewer_email)
+        summary = page.locator("#destination-profile-review-summary")
+        expect(summary).to_be_visible(timeout=15_000)
+        expect(summary).to_contain_text("共有 77 筆生活情報")
+>       expect(summary).to_contain_text("19 筆完整查核、58 筆待人工續審")
+E       AssertionError: Locator expected to contain text '19 筆完整查核、58 筆待人工續審'
+E       Actual value: 
+E               
+E                 DATA-006 人工查核
+E                 長庚大學生活情報獨立雙人審查
+E                 長庚大學共有 77 筆生活情報；77 筆完整查核、0 筆待人工續審。其中 0 筆明確等待第二位真人，待審資料共有 0 個官方來源。目前 0 筆已有真人證據、0 筆完成兩人核對、0 筆被要求修正。
+E                 CSV 維持唯讀；雙審只保存真人證據，不會自動變更學生資料。兩人核可後，仍須由其中一位核可者明確確認，才會升級學生可見的生活情報狀態。
+E               
+E               
+E                 下載生活情報雙人分工 CSV
+E                 下載生活情報唯讀審查 CSV
+E               
+E              
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#destination-profile-review-summary")
+E           14 × locator resolved to <section aria-busy="false" id="destination-profile-review-summary" class="source-replacement-candidate-summary" aria-labelledby="destination-profile-review-title">…</section>
+E              - unexpected value "
+E               
+E                 DATA-006 人工查核
+E                 長庚大學生活情報獨立雙人審查
+E                 長庚大學共有 77 筆生活情報；77 筆完整查核、0 筆待人工續審。其中 0 筆明確等待第二位真人，待審資料共有 0 個官方來源。目前 0 筆已有真人證據、0 筆完成兩人核對、0 筆被要求修正。
+E                 CSV 維持唯讀；雙審只保存真人證據，不會自動變更學生資料。兩人核可後，仍須由其中一位核可者明確確認，才會升級學生可見的生活情報狀態。
+E               
+E               
+E                 下載生活情報雙人分工 CSV
+E                 下載生活情報唯讀審查 CSV
+E               
+E             "
+E       
+E       Aria snapshot:
+E       - region "長庚大學生活情報獨立雙人審查":
+E         - paragraph: DATA-006 人工查核
+E         - heading "長庚大學生活情報獨立雙人審查" [level=3]
+E         - paragraph: 長庚大學共有 77 筆生活情報；77 筆完整查核、0 筆待人工續審。其中 0 筆明確等待第二位真人，待審資料共有 0 個官方來源。目前 0 筆已有真人證據、0 筆完成兩人核對、0 筆被要求修正。
+E         - text: CSV 維持唯讀；雙審只保存真人證據，不會自動變更學生資料。兩人核可後，仍須由其中一位核可者明確確認，才會升級學生可見的生活情報狀態。
+E         - link "下載 0 筆生活情報、每批 10 筆的雙人分工清單":
+E           - /url: /admin/destination-profile-review-batches.csv?home_university=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&batch_size=10
+E           - text: 下載生活情報雙人分工 CSV
+E         - link "下載 0 筆生活情報的唯讀人工審查清單":
+E           - /url: /admin/destination-profile-review-queue.csv?expected_snapshot=7789de9f110376ed51841636401e0cc37fd5c1b70e53eb8504709153b80f29eb&home_university=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8
+E           - text: 下載生活情報唯讀審查 CSV
+
+tests/e2e/test_web_next_phase.py:4567: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_web_next_phase.py::test_content_admins_independently_attest_every_source_before_publish
+FAILED tests/e2e/test_web_next_phase.py::test_content_admin_downloads_snapshot_bound_destination_profile_review_queue
+2 failed in 28.16s

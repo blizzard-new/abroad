@@ -1,0 +1,2946 @@
+{
+  "method": "POST",
+  "path": "/rest/v1/rpc/exchange_commit_application_workflow_revision",
+  "instance": "http://127.0.0.1:43049",
+  "envelope": {
+    "p_revision_id": "governance-command",
+    "p_workflow_key": "governance-command",
+    "p_version": 1,
+    "p_base_version": null,
+    "p_status": "pending_review",
+    "p_content_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "p_change_summary": {
+      "governance_command": {
+        "kind": "workflow",
+        "expected": {
+          "revisions": [
+            {
+              "id": "12a8b41dd12647c0bc45f5aff36452d5",
+              "workflow_key": "741d0a737f9d41aaba26f3ed22c1f152",
+              "version": 1,
+              "base_version": null,
+              "status": "superseded",
+              "content_hash": "8dd4aa06a155c103c2d44e50e2fc69c49db86f746e6b5eb669674b2abd992337",
+              "change_summary": [
+                "匯入既有已發布流程作為版本基線。"
+              ],
+              "workflow_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [],
+                      "home_universities": [],
+                      "application_rounds": [],
+                      "partner_universities": []
+                    },
+                    "title": "Synthetic legacy original",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": null,
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "needs_confirmation",
+                    "responsible_unit": null,
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": null,
+                    "deadline_source_url": null,
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": null,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T00:00:00Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "117"
+                  }
+                ],
+                "version": 1,
+                "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                "school_name": "Synthetic legacy host",
+                "workflow_id": null,
+                "last_checked": "2026-10-09T00:00:00Z",
+                "program_type": null,
+                "published_at": null,
+                "academic_year": "117",
+                "coverage_note": "尚未查核合作校官方申請流程。",
+                "review_status": "legacy",
+                "governance_key": null,
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "適用學年度或申請梯次尚未完成官方來源確認。",
+                "supersedes_version": null,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": []
+              },
+              "required_review_count": 2,
+              "review_approvals": [],
+              "edit_history": [],
+              "reviewed_by": "legacy_import",
+              "reviewed_at": "2026-10-09T00:00:00+00:00",
+              "review_note": "系統導入內容治理前已存在的公開流程。",
+              "publication_action": "standard",
+              "rolled_back_from_revision_id": null,
+              "restored_revision_id": null,
+              "detected_by": "legacy_import",
+              "detected_at": "2026-10-09T09:56:13.139309+00:00"
+            },
+            {
+              "id": "1ab749a61b4a4629adb10e1a07356b0e",
+              "workflow_key": "69f544188667215ffb25ff4de38b288c",
+              "version": 2,
+              "base_version": 1,
+              "status": "superseded",
+              "content_hash": "f5171b8ccafa747f550868908d44351adef2084f02e66723daf0a8fa3c50cb26",
+              "change_summary": [
+                "調整 1 個步驟：Synthetic changed",
+                "synthetic-a 已更新候選適用範圍；修正說明：Synthetic official source applicability changed"
+              ],
+              "workflow_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [
+                        "117"
+                      ],
+                      "home_universities": [
+                        "Synthetic governance home"
+                      ],
+                      "application_rounds": [
+                        "Synthetic round"
+                      ],
+                      "partner_universities": [
+                        "Synthetic governance host"
+                      ]
+                    },
+                    "title": "Synthetic changed",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": "2026-10-09T09:55:48.137498Z",
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "not_applicable",
+                    "responsible_unit": "Synthetic student",
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": "2026-10-09T00:00:00Z",
+                    "deadline_source_url": "https://synthetic.edu/exchange",
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": 1,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T09:55:48.137498Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "118"
+                  }
+                ],
+                "version": 2,
+                "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                "school_name": "Synthetic governance host",
+                "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                "last_checked": "2026-10-09T09:55:48.137498Z",
+                "program_type": null,
+                "published_at": "2026-10-09T09:55:52.156730Z",
+                "academic_year": "118",
+                "coverage_note": "尚未查核合作校官方申請流程。",
+                "review_status": "published",
+                "governance_key": "69f544188667215ffb25ff4de38b288c",
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "官方來源適用 118 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                "supersedes_version": 1,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": [
+                  "Synthetic round"
+                ]
+              },
+              "required_review_count": 2,
+              "review_approvals": [
+                {
+                  "note": "Synthetic complete independent attestation",
+                  "reviewed_at": "2026-10-09T09:55:46.613465Z",
+                  "reviewer_id": "synthetic-a",
+                  "reviewed_rule_keys": [
+                    "workflow:applicability",
+                    "step:0"
+                  ],
+                  "reviewed_source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "reviewed_content_hash": "f5171b8ccafa747f550868908d44351adef2084f02e66723daf0a8fa3c50cb26"
+                },
+                {
+                  "note": "Synthetic complete independent attestation",
+                  "reviewed_at": "2026-10-09T09:55:48.137498Z",
+                  "reviewer_id": "synthetic-b",
+                  "reviewed_rule_keys": [
+                    "workflow:applicability",
+                    "step:0"
+                  ],
+                  "reviewed_source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "reviewed_content_hash": "f5171b8ccafa747f550868908d44351adef2084f02e66723daf0a8fa3c50cb26"
+                }
+              ],
+              "edit_history": [
+                {
+                  "note": "Synthetic official source applicability changed",
+                  "edited_at": "2026-10-09T09:55:44.734348Z",
+                  "edited_by": "synthetic-a",
+                  "content_hash": "f5171b8ccafa747f550868908d44351adef2084f02e66723daf0a8fa3c50cb26",
+                  "previous_content_hash": "8cdd021ba6de2bb861243f22b40bd664c863d3a632297264d79b80a1579c4aeb",
+                  "invalidated_review_approvals": [
+                    {
+                      "note": "Synthetic complete independent attestation",
+                      "reviewed_at": "2026-10-09T09:55:41.337820Z",
+                      "reviewer_id": "synthetic-a",
+                      "reviewed_rule_keys": [
+                        "workflow:applicability",
+                        "step:0"
+                      ],
+                      "reviewed_source_urls": [
+                        "https://synthetic.edu/exchange"
+                      ],
+                      "reviewed_content_hash": "8cdd021ba6de2bb861243f22b40bd664c863d3a632297264d79b80a1579c4aeb"
+                    },
+                    {
+                      "note": "Synthetic complete independent attestation",
+                      "reviewed_at": "2026-10-09T09:55:42.417594Z",
+                      "reviewer_id": "synthetic-b",
+                      "reviewed_rule_keys": [
+                        "workflow:applicability",
+                        "step:0"
+                      ],
+                      "reviewed_source_urls": [
+                        "https://synthetic.edu/exchange"
+                      ],
+                      "reviewed_content_hash": "8cdd021ba6de2bb861243f22b40bd664c863d3a632297264d79b80a1579c4aeb"
+                    }
+                  ]
+                }
+              ],
+              "reviewed_by": "synthetic-a",
+              "reviewed_at": "2026-10-09T09:55:52.15673+00:00",
+              "review_note": null,
+              "publication_action": "standard",
+              "rolled_back_from_revision_id": null,
+              "restored_revision_id": null,
+              "detected_by": "automated_refresh",
+              "detected_at": "2026-10-09T09:55:39.971712+00:00"
+            },
+            {
+              "id": "414c74730b184e44929a9266e5b481bd",
+              "workflow_key": "892af2d6ca9df2dee8cb4199958650fa",
+              "version": 1,
+              "base_version": null,
+              "status": "pending_review",
+              "content_hash": "16e117baf0f3628ecdd44d60887a57e45bcc9085d83efd40905f5f3e62e3721d",
+              "change_summary": [
+                "建立第一版申請流程，發布前需確認所有官方來源與適用梯次。"
+              ],
+              "workflow_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [
+                        "117"
+                      ],
+                      "home_universities": [
+                        "Synthetic governance home"
+                      ],
+                      "application_rounds": [],
+                      "partner_universities": [
+                        "Synthetic cap host 0"
+                      ]
+                    },
+                    "title": "Synthetic cap candidate",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": "2026-10-09T00:00:00Z",
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "not_applicable",
+                    "responsible_unit": "Synthetic student",
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": "2026-10-09T00:00:00Z",
+                    "deadline_source_url": "https://synthetic.edu/exchange",
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": 1,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T00:00:00Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "117"
+                  }
+                ],
+                "version": 1,
+                "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                "school_name": "Synthetic cap host 0",
+                "workflow_id": "workflow-3290c81dee339f2beded8027",
+                "last_checked": "2026-10-09T00:00:00Z",
+                "program_type": null,
+                "published_at": null,
+                "academic_year": "117",
+                "coverage_note": "尚未查核合作校官方申請流程。",
+                "review_status": "pending_review",
+                "governance_key": "892af2d6ca9df2dee8cb4199958650fa",
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                "supersedes_version": null,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": [
+                  "Synthetic round"
+                ]
+              },
+              "required_review_count": 2,
+              "review_approvals": [],
+              "edit_history": [],
+              "reviewed_by": null,
+              "reviewed_at": null,
+              "review_note": null,
+              "publication_action": "standard",
+              "rolled_back_from_revision_id": null,
+              "restored_revision_id": null,
+              "detected_by": "automated_refresh",
+              "detected_at": "2026-10-09T09:56:19.843937+00:00"
+            },
+            {
+              "id": "62445ab1549c4c719679c8bbdb28d7fe",
+              "workflow_key": "9918e3c31bc38f1ea501bfdfb79f3239",
+              "version": 1,
+              "base_version": null,
+              "status": "pending_review",
+              "content_hash": "e85194b1c0adb401ab5147e79bf1b7f18e481d1c264d91bff22418b30a28a683",
+              "change_summary": [
+                "建立第一版申請流程，發布前需確認所有官方來源與適用梯次。"
+              ],
+              "workflow_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [
+                        "117"
+                      ],
+                      "home_universities": [
+                        "Synthetic governance home"
+                      ],
+                      "application_rounds": [],
+                      "partner_universities": [
+                        "Synthetic cap host 1"
+                      ]
+                    },
+                    "title": "Synthetic cap candidate",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": "2026-10-09T00:00:00Z",
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "not_applicable",
+                    "responsible_unit": "Synthetic student",
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": "2026-10-09T00:00:00Z",
+                    "deadline_source_url": "https://synthetic.edu/exchange",
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": 1,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T00:00:00Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "117"
+                  }
+                ],
+                "version": 1,
+                "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                "school_name": "Synthetic cap host 1",
+                "workflow_id": "workflow-ec69c29b75ea36fd9db9f83e",
+                "last_checked": "2026-10-09T00:00:00Z",
+                "program_type": null,
+                "published_at": null,
+                "academic_year": "117",
+                "coverage_note": "尚未查核合作校官方申請流程。",
+                "review_status": "pending_review",
+                "governance_key": "9918e3c31bc38f1ea501bfdfb79f3239",
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                "supersedes_version": null,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": [
+                  "Synthetic round"
+                ]
+              },
+              "required_review_count": 2,
+              "review_approvals": [],
+              "edit_history": [],
+              "reviewed_by": null,
+              "reviewed_at": null,
+              "review_note": null,
+              "publication_action": "standard",
+              "rolled_back_from_revision_id": null,
+              "restored_revision_id": null,
+              "detected_by": "automated_refresh",
+              "detected_at": "2026-10-09T09:56:21.853908+00:00"
+            },
+            {
+              "id": "950509f7a88748ef951cc029da8e1b3e",
+              "workflow_key": "741d0a737f9d41aaba26f3ed22c1f152",
+              "version": 2,
+              "base_version": 1,
+              "status": "pending_review",
+              "content_hash": "c8c49f9afc5eec56ed28fbe714ae3f217cfd9b3a020d89e6d6c420c2e912367e",
+              "change_summary": [
+                "調整 1 個步驟：Synthetic legacy changed"
+              ],
+              "workflow_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [
+                        "117"
+                      ],
+                      "home_universities": [
+                        "Synthetic governance home"
+                      ],
+                      "application_rounds": [],
+                      "partner_universities": [
+                        "Synthetic legacy host"
+                      ]
+                    },
+                    "title": "Synthetic legacy changed",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": "2026-10-09T00:00:00Z",
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "not_applicable",
+                    "responsible_unit": "Synthetic student",
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": "2026-10-09T00:00:00Z",
+                    "deadline_source_url": "https://synthetic.edu/exchange",
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": 1,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T00:00:00Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "117"
+                  }
+                ],
+                "version": 2,
+                "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                "school_name": "Synthetic legacy host",
+                "workflow_id": "workflow-d40a24e7d6db8d2e213f3d7f",
+                "last_checked": "2026-10-09T00:00:00Z",
+                "program_type": null,
+                "published_at": null,
+                "academic_year": "117",
+                "coverage_note": "尚未查核合作校官方申請流程。",
+                "review_status": "pending_review",
+                "governance_key": "741d0a737f9d41aaba26f3ed22c1f152",
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                "supersedes_version": 1,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": [
+                  "Synthetic round"
+                ]
+              },
+              "required_review_count": 2,
+              "review_approvals": [],
+              "edit_history": [],
+              "reviewed_by": null,
+              "reviewed_at": null,
+              "review_note": null,
+              "publication_action": "standard",
+              "rolled_back_from_revision_id": null,
+              "restored_revision_id": null,
+              "detected_by": "automated_refresh",
+              "detected_at": "2026-10-09T09:56:13.139413+00:00"
+            },
+            {
+              "id": "a00c182a8d584c1487e20445f5df452e",
+              "workflow_key": "69f544188667215ffb25ff4de38b288c",
+              "version": 3,
+              "base_version": 2,
+              "status": "published",
+              "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+              "change_summary": [
+                "緊急復原：撤回版本 2，恢復曾完成雙審的版本 1。",
+                "復原建立新版本並保留全部歷史；後續修改仍須重新雙審。"
+              ],
+              "workflow_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [
+                        "117"
+                      ],
+                      "home_universities": [
+                        "Synthetic governance home"
+                      ],
+                      "application_rounds": [],
+                      "partner_universities": [
+                        "Synthetic governance host"
+                      ]
+                    },
+                    "title": "Synthetic original",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": "2026-10-09T09:55:37.320025Z",
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "not_applicable",
+                    "responsible_unit": "Synthetic student",
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": "2026-10-09T00:00:00Z",
+                    "deadline_source_url": "https://synthetic.edu/exchange",
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": 1,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T09:55:37.320025Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "117"
+                  }
+                ],
+                "version": 3,
+                "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                "school_name": "Synthetic governance host",
+                "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                "last_checked": "2026-10-09T09:55:37.320025Z",
+                "program_type": null,
+                "published_at": "2026-10-09T09:55:54.774302Z",
+                "academic_year": "117",
+                "coverage_note": "尚未查核合作校官方申請流程。",
+                "review_status": "published",
+                "governance_key": "69f544188667215ffb25ff4de38b288c",
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                "supersedes_version": 2,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": [
+                  "Synthetic round"
+                ]
+              },
+              "required_review_count": 2,
+              "review_approvals": [
+                {
+                  "note": "Synthetic complete independent attestation",
+                  "reviewed_at": "2026-10-09T09:55:27.907998Z",
+                  "reviewer_id": "synthetic-a",
+                  "reviewed_rule_keys": [
+                    "workflow:applicability",
+                    "step:0"
+                  ],
+                  "reviewed_source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+                },
+                {
+                  "note": "Synthetic complete independent attestation",
+                  "reviewed_at": "2026-10-09T09:55:37.320025Z",
+                  "reviewer_id": "synthetic-b",
+                  "reviewed_rule_keys": [
+                    "workflow:applicability",
+                    "step:0"
+                  ],
+                  "reviewed_source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+                }
+              ],
+              "edit_history": [],
+              "reviewed_by": "synthetic-a",
+              "reviewed_at": "2026-10-09T09:55:54.774302+00:00",
+              "review_note": "Synthetic audited restoration of the first reviewed version",
+              "publication_action": "rollback",
+              "rolled_back_from_revision_id": "1ab749a61b4a4629adb10e1a07356b0e",
+              "restored_revision_id": "c6fb02fed8884f0aa94948a61631e997",
+              "detected_by": "synthetic-a",
+              "detected_at": "2026-10-09T09:55:54.774302+00:00"
+            },
+            {
+              "id": "c6fb02fed8884f0aa94948a61631e997",
+              "workflow_key": "69f544188667215ffb25ff4de38b288c",
+              "version": 1,
+              "base_version": null,
+              "status": "superseded",
+              "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+              "change_summary": [
+                "建立第一版申請流程，發布前需確認所有官方來源與適用梯次。"
+              ],
+              "workflow_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [
+                        "117"
+                      ],
+                      "home_universities": [
+                        "Synthetic governance home"
+                      ],
+                      "application_rounds": [],
+                      "partner_universities": [
+                        "Synthetic governance host"
+                      ]
+                    },
+                    "title": "Synthetic original",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": "2026-10-09T09:55:37.320025Z",
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "not_applicable",
+                    "responsible_unit": "Synthetic student",
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": "2026-10-09T00:00:00Z",
+                    "deadline_source_url": "https://synthetic.edu/exchange",
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": 1,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T09:55:37.320025Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "117"
+                  }
+                ],
+                "version": 1,
+                "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                "school_name": "Synthetic governance host",
+                "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                "last_checked": "2026-10-09T09:55:37.320025Z",
+                "program_type": null,
+                "published_at": "2026-10-09T09:55:38.744163Z",
+                "academic_year": "117",
+                "coverage_note": "尚未查核合作校官方申請流程。",
+                "review_status": "published",
+                "governance_key": "69f544188667215ffb25ff4de38b288c",
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                "supersedes_version": null,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": [
+                  "Synthetic round"
+                ]
+              },
+              "required_review_count": 2,
+              "review_approvals": [
+                {
+                  "note": "Synthetic complete independent attestation",
+                  "reviewed_at": "2026-10-09T09:55:27.907998Z",
+                  "reviewer_id": "synthetic-a",
+                  "reviewed_rule_keys": [
+                    "workflow:applicability",
+                    "step:0"
+                  ],
+                  "reviewed_source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+                },
+                {
+                  "note": "Synthetic complete independent attestation",
+                  "reviewed_at": "2026-10-09T09:55:37.320025Z",
+                  "reviewer_id": "synthetic-b",
+                  "reviewed_rule_keys": [
+                    "workflow:applicability",
+                    "step:0"
+                  ],
+                  "reviewed_source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+                }
+              ],
+              "edit_history": [],
+              "reviewed_by": "synthetic-a",
+              "reviewed_at": "2026-10-09T09:55:38.744163+00:00",
+              "review_note": null,
+              "publication_action": "standard",
+              "rolled_back_from_revision_id": null,
+              "restored_revision_id": null,
+              "detected_by": "automated_refresh",
+              "detected_at": "2026-10-09T09:55:26.165047+00:00"
+            },
+            {
+              "id": "fb1be2c8ea954926990a9c5214131b36",
+              "workflow_key": "fded79f21a7fc1529968024bd36133c8",
+              "version": 1,
+              "base_version": null,
+              "status": "pending_review",
+              "content_hash": "d36e25b8190612e4b6141e92f1bb9ba4fc87cc8d970076d0283e063181131ba5",
+              "change_summary": [
+                "建立第一版申請流程，發布前需確認所有官方來源與適用梯次。"
+              ],
+              "workflow_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [
+                        "117"
+                      ],
+                      "home_universities": [
+                        "Synthetic governance home"
+                      ],
+                      "application_rounds": [],
+                      "partner_universities": [
+                        "Synthetic overlapping host"
+                      ]
+                    },
+                    "title": "Synthetic overlapping CAS",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": "2026-10-09T09:56:15.945139Z",
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "not_applicable",
+                    "responsible_unit": "Synthetic student",
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": "2026-10-09T00:00:00Z",
+                    "deadline_source_url": "https://synthetic.edu/exchange",
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": 1,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T09:56:15.945139Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "117"
+                  }
+                ],
+                "version": 1,
+                "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                "school_name": "Synthetic overlapping host",
+                "workflow_id": "workflow-50be235a4c6b6e18d60f2369",
+                "last_checked": "2026-10-09T09:56:15.945139Z",
+                "program_type": null,
+                "published_at": null,
+                "academic_year": "117",
+                "coverage_note": "尚未查核合作校官方申請流程。",
+                "review_status": "pending_review",
+                "governance_key": "fded79f21a7fc1529968024bd36133c8",
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                "supersedes_version": null,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": [
+                  "Synthetic round"
+                ]
+              },
+              "required_review_count": 2,
+              "review_approvals": [
+                {
+                  "note": "Synthetic complete independent attestation",
+                  "reviewed_at": "2026-10-09T09:56:15.945139Z",
+                  "reviewer_id": "synthetic-b",
+                  "reviewed_rule_keys": [
+                    "workflow:applicability",
+                    "step:0"
+                  ],
+                  "reviewed_source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "reviewed_content_hash": "d36e25b8190612e4b6141e92f1bb9ba4fc87cc8d970076d0283e063181131ba5"
+                }
+              ],
+              "edit_history": [],
+              "reviewed_by": null,
+              "reviewed_at": null,
+              "review_note": null,
+              "publication_action": "standard",
+              "rolled_back_from_revision_id": null,
+              "restored_revision_id": null,
+              "detected_by": "automated_refresh",
+              "detected_at": "2026-10-09T09:56:14.940072+00:00"
+            }
+          ],
+          "workflows": [
+            {
+              "workflow_key": "69f544188667215ffb25ff4de38b288c",
+              "published_version": 3,
+              "published_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [
+                        "117"
+                      ],
+                      "home_universities": [
+                        "Synthetic governance home"
+                      ],
+                      "application_rounds": [],
+                      "partner_universities": [
+                        "Synthetic governance host"
+                      ]
+                    },
+                    "title": "Synthetic original",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": "2026-10-09T09:55:37.320025Z",
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "not_applicable",
+                    "responsible_unit": "Synthetic student",
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": "2026-10-09T00:00:00Z",
+                    "deadline_source_url": "https://synthetic.edu/exchange",
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": 1,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T09:55:37.320025Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "117"
+                  }
+                ],
+                "version": 3,
+                "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                "school_name": "Synthetic governance host",
+                "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                "last_checked": "2026-10-09T09:55:37.320025Z",
+                "program_type": null,
+                "published_at": "2026-10-09T09:55:54.774302Z",
+                "academic_year": "117",
+                "coverage_note": "尚未查核合作校官方申請流程。",
+                "review_status": "published",
+                "governance_key": "69f544188667215ffb25ff4de38b288c",
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                "supersedes_version": 2,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": [
+                  "Synthetic round"
+                ]
+              },
+              "current_revision_id": "a00c182a8d584c1487e20445f5df452e",
+              "home_university": "Synthetic governance home",
+              "partner_university": "Synthetic governance host",
+              "program_type": null,
+              "academic_year": "117",
+              "application_round": "Synthetic round",
+              "published_at": "2026-10-09T09:55:54.774302+00:00"
+            },
+            {
+              "workflow_key": "741d0a737f9d41aaba26f3ed22c1f152",
+              "published_version": null,
+              "published_payload": null,
+              "current_revision_id": null,
+              "home_university": "Synthetic governance home",
+              "partner_university": "Synthetic legacy host",
+              "program_type": null,
+              "academic_year": "117",
+              "application_round": "Synthetic round",
+              "published_at": null
+            },
+            {
+              "workflow_key": "892af2d6ca9df2dee8cb4199958650fa",
+              "published_version": null,
+              "published_payload": null,
+              "current_revision_id": null,
+              "home_university": "Synthetic governance home",
+              "partner_university": "Synthetic cap host 0",
+              "program_type": null,
+              "academic_year": "117",
+              "application_round": "Synthetic round",
+              "published_at": null
+            },
+            {
+              "workflow_key": "9918e3c31bc38f1ea501bfdfb79f3239",
+              "published_version": null,
+              "published_payload": null,
+              "current_revision_id": null,
+              "home_university": "Synthetic governance home",
+              "partner_university": "Synthetic cap host 1",
+              "program_type": null,
+              "academic_year": "117",
+              "application_round": "Synthetic round",
+              "published_at": null
+            },
+            {
+              "workflow_key": "__governance_command_schema__",
+              "published_version": null,
+              "published_payload": null,
+              "current_revision_id": null,
+              "home_university": "Internal governance schema",
+              "partner_university": "No public workflow",
+              "program_type": null,
+              "academic_year": null,
+              "application_round": null,
+              "published_at": null
+            },
+            {
+              "workflow_key": "fded79f21a7fc1529968024bd36133c8",
+              "published_version": null,
+              "published_payload": null,
+              "current_revision_id": null,
+              "home_university": "Synthetic governance home",
+              "partner_university": "Synthetic overlapping host",
+              "program_type": null,
+              "academic_year": "117",
+              "application_round": "Synthetic round",
+              "published_at": null
+            }
+          ]
+        },
+        "revisions": [
+          {
+            "id": "0f2099285fcc4405a3e0ae7b3086ac12",
+            "workflow_key": "7326656a554de244790c9e68d2066d35",
+            "version": 1,
+            "base_version": null,
+            "status": "pending_review",
+            "content_hash": "e3bde20541016326f3d35dd4b4bea4969aa29e0e1517d1e16d109521478f3bc3",
+            "change_summary": [
+              "建立第一版申請流程，發布前需確認所有官方來源與適用梯次。"
+            ],
+            "workflow_payload": {
+              "workflow_id": "workflow-6909a56ba46918e15a7c9570",
+              "governance_key": "7326656a554de244790c9e68d2066d35",
+              "issue_report_snapshot": null,
+              "home_university": "Synthetic governance home",
+              "school_name": "Synthetic cap host 2",
+              "partner_website": null,
+              "country": null,
+              "program_type": null,
+              "academic_year": "117",
+              "application_round": "Synthetic round",
+              "effective_application_rounds": [
+                "Synthetic round"
+              ],
+              "applicability_status": "verified",
+              "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+              "version": 1,
+              "review_status": "pending_review",
+              "published_at": null,
+              "supersedes_version": null,
+              "applied_context": null,
+              "steps": [
+                {
+                  "rule_id": "synthetic-rule",
+                  "overrides_rule_id": null,
+                  "order": 1,
+                  "phase": "Synthetic phase",
+                  "title": "Synthetic cap candidate",
+                  "responsible_party": "Synthetic student",
+                  "responsible_unit": "Synthetic student",
+                  "timing": null,
+                  "deadline_at": null,
+                  "deadline_status": "not_applicable",
+                  "deadline_source_url": "https://synthetic.edu/exchange",
+                  "deadline_checked_at": "2026-10-09T00:00:00Z",
+                  "deadline_reminder_eligible": false,
+                  "summary": "Synthetic bounded requirement",
+                  "details": [],
+                  "required_documents": [],
+                  "document_requirements": [],
+                  "signature_requirements": [],
+                  "official_form_urls": [],
+                  "scope": {
+                    "home_universities": [
+                      "Synthetic governance home"
+                    ],
+                    "partner_universities": [
+                      "Synthetic cap host 2"
+                    ],
+                    "colleges": [],
+                    "departments": [],
+                    "academic_years": [
+                      "117"
+                    ],
+                    "application_rounds": []
+                  },
+                  "submission": {
+                    "method": "unknown",
+                    "address": null,
+                    "office": null,
+                    "receiving_hours": null,
+                    "email": null,
+                    "portal_url": null,
+                    "send_by_at": null,
+                    "arrival_deadline_at": null,
+                    "deadline_note": null
+                  },
+                  "action_url": null,
+                  "source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "checked_at": "2026-10-09T00:00:00Z",
+                  "support_status": "verified",
+                  "confirmation_contact": null,
+                  "needs_confirmation": false
+                }
+              ],
+              "sources": [
+                {
+                  "title": "Synthetic official notice",
+                  "source_url": "https://synthetic.edu/exchange",
+                  "role": "home_university",
+                  "authority": "home_official_notice",
+                  "priority": 1,
+                  "effective_academic_year": "117",
+                  "application_round": "Synthetic round",
+                  "content_hash": null,
+                  "checked_at": "2026-10-09T00:00:00Z"
+                }
+              ],
+              "last_checked": "2026-10-09T00:00:00Z",
+              "coverage_status": "official_verified",
+              "coverage_note": "尚未查核合作校官方申請流程。",
+              "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。"
+            },
+            "detected_by": "automated_refresh",
+            "detected_at": "2026-10-09T09:56:24.409447+00:00",
+            "required_review_count": 2,
+            "review_approvals": [],
+            "edit_history": [],
+            "reviewed_by": null,
+            "reviewed_at": null,
+            "review_note": null,
+            "publication_action": "standard",
+            "rolled_back_from_revision_id": null,
+            "restored_revision_id": null,
+            "required_source_urls": [
+              "https://synthetic.edu/exchange"
+            ],
+            "required_rule_keys": [
+              "workflow:applicability",
+              "step:0"
+            ]
+          }
+        ],
+        "published": [],
+        "operation": "stage_workflow_refresh",
+        "actor": "automated_refresh"
+      }
+    },
+    "p_workflow_payload": {},
+    "p_detected_by": "automated_refresh",
+    "p_detected_at": "2026-10-09T09:56:24.410003+00:00",
+    "p_required_review_count": 2,
+    "p_review_approvals": [],
+    "p_edit_history": [],
+    "p_reviewed_by": null,
+    "p_reviewed_at": null,
+    "p_review_note": null,
+    "p_publication_action": "standard",
+    "p_rolled_back_from_revision_id": null,
+    "p_restored_revision_id": null,
+    "p_home_university": "",
+    "p_partner_university": "",
+    "p_program_type": null,
+    "p_academic_year": null,
+    "p_application_round": null,
+    "p_updated_at": "2026-10-09T09:56:24.410006+00:00"
+  },
+  "http_status": 200,
+  "response": {
+    "committed": true,
+    "operation": "stage_workflow_refresh"
+  },
+  "snapshot_unchanged": false,
+  "full_delta": {
+    "audit": {
+      "before": [],
+      "after": [
+        {
+          "id": 48,
+          "note": null,
+          "action": "detected",
+          "actor_id": null,
+          "metadata": {
+            "status": "pending_review",
+            "version": 1,
+            "publication_action": "standard",
+            "review_approvals_count": 0
+          },
+          "created_at": "2026-10-09T09:56:24.410006+00:00",
+          "revision_id": "0f2099285fcc4405a3e0ae7b3086ac12",
+          "workflow_key": "7326656a554de244790c9e68d2066d35"
+        },
+        {
+          "id": 49,
+          "note": "stage_workflow_refresh",
+          "action": "submitted",
+          "actor_id": "automated_refresh",
+          "metadata": {
+            "kind": "workflow",
+            "actor": "automated_refresh",
+            "expected": {
+              "revisions": [
+                {
+                  "id": "12a8b41dd12647c0bc45f5aff36452d5",
+                  "status": "superseded",
+                  "version": 1,
+                  "detected_at": "2026-10-09T09:56:13.139309+00:00",
+                  "detected_by": "legacy_import",
+                  "review_note": "系統導入內容治理前已存在的公開流程。",
+                  "reviewed_at": "2026-10-09T00:00:00+00:00",
+                  "reviewed_by": "legacy_import",
+                  "base_version": null,
+                  "content_hash": "8dd4aa06a155c103c2d44e50e2fc69c49db86f746e6b5eb669674b2abd992337",
+                  "edit_history": [],
+                  "workflow_key": "741d0a737f9d41aaba26f3ed22c1f152",
+                  "change_summary": [
+                    "匯入既有已發布流程作為版本基線。"
+                  ],
+                  "review_approvals": [],
+                  "workflow_payload": {
+                    "steps": [
+                      {
+                        "order": 1,
+                        "phase": "Synthetic phase",
+                        "scope": {
+                          "colleges": [],
+                          "departments": [],
+                          "academic_years": [],
+                          "home_universities": [],
+                          "application_rounds": [],
+                          "partner_universities": []
+                        },
+                        "title": "Synthetic legacy original",
+                        "timing": null,
+                        "details": [],
+                        "rule_id": "synthetic-rule",
+                        "summary": "Synthetic bounded requirement",
+                        "action_url": null,
+                        "checked_at": null,
+                        "submission": {
+                          "email": null,
+                          "method": "unknown",
+                          "office": null,
+                          "address": null,
+                          "portal_url": null,
+                          "send_by_at": null,
+                          "deadline_note": null,
+                          "receiving_hours": null,
+                          "arrival_deadline_at": null
+                        },
+                        "deadline_at": null,
+                        "source_urls": [
+                          "https://synthetic.edu/exchange"
+                        ],
+                        "support_status": "verified",
+                        "deadline_status": "needs_confirmation",
+                        "responsible_unit": null,
+                        "overrides_rule_id": null,
+                        "responsible_party": "Synthetic student",
+                        "needs_confirmation": false,
+                        "official_form_urls": [],
+                        "required_documents": [],
+                        "deadline_checked_at": null,
+                        "deadline_source_url": null,
+                        "confirmation_contact": null,
+                        "document_requirements": [],
+                        "signature_requirements": [],
+                        "deadline_reminder_eligible": false
+                      }
+                    ],
+                    "country": null,
+                    "sources": [
+                      {
+                        "role": "home_university",
+                        "title": "Synthetic official notice",
+                        "priority": null,
+                        "authority": "home_official_notice",
+                        "checked_at": "2026-10-09T00:00:00Z",
+                        "source_url": "https://synthetic.edu/exchange",
+                        "content_hash": null,
+                        "application_round": "Synthetic round",
+                        "effective_academic_year": "117"
+                      }
+                    ],
+                    "version": 1,
+                    "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                    "school_name": "Synthetic legacy host",
+                    "workflow_id": null,
+                    "last_checked": "2026-10-09T00:00:00Z",
+                    "program_type": null,
+                    "published_at": null,
+                    "academic_year": "117",
+                    "coverage_note": "尚未查核合作校官方申請流程。",
+                    "review_status": "legacy",
+                    "governance_key": null,
+                    "applied_context": null,
+                    "coverage_status": "official_verified",
+                    "home_university": "Synthetic governance home",
+                    "partner_website": null,
+                    "application_round": "Synthetic round",
+                    "applicability_note": "適用學年度或申請梯次尚未完成官方來源確認。",
+                    "supersedes_version": null,
+                    "applicability_status": "verified",
+                    "issue_report_snapshot": null,
+                    "effective_application_rounds": []
+                  },
+                  "publication_action": "standard",
+                  "restored_revision_id": null,
+                  "required_review_count": 2,
+                  "rolled_back_from_revision_id": null
+                },
+                {
+                  "id": "1ab749a61b4a4629adb10e1a07356b0e",
+                  "status": "superseded",
+                  "version": 2,
+                  "detected_at": "2026-10-09T09:55:39.971712+00:00",
+                  "detected_by": "automated_refresh",
+                  "review_note": null,
+                  "reviewed_at": "2026-10-09T09:55:52.15673+00:00",
+                  "reviewed_by": "synthetic-a",
+                  "base_version": 1,
+                  "content_hash": "f5171b8ccafa747f550868908d44351adef2084f02e66723daf0a8fa3c50cb26",
+                  "edit_history": [
+                    {
+                      "note": "Synthetic official source applicability changed",
+                      "edited_at": "2026-10-09T09:55:44.734348Z",
+                      "edited_by": "synthetic-a",
+                      "content_hash": "f5171b8ccafa747f550868908d44351adef2084f02e66723daf0a8fa3c50cb26",
+                      "previous_content_hash": "8cdd021ba6de2bb861243f22b40bd664c863d3a632297264d79b80a1579c4aeb",
+                      "invalidated_review_approvals": [
+                        {
+                          "note": "Synthetic complete independent attestation",
+                          "reviewed_at": "2026-10-09T09:55:41.337820Z",
+                          "reviewer_id": "synthetic-a",
+                          "reviewed_rule_keys": [
+                            "workflow:applicability",
+                            "step:0"
+                          ],
+                          "reviewed_source_urls": [
+                            "https://synthetic.edu/exchange"
+                          ],
+                          "reviewed_content_hash": "8cdd021ba6de2bb861243f22b40bd664c863d3a632297264d79b80a1579c4aeb"
+                        },
+                        {
+                          "note": "Synthetic complete independent attestation",
+                          "reviewed_at": "2026-10-09T09:55:42.417594Z",
+                          "reviewer_id": "synthetic-b",
+                          "reviewed_rule_keys": [
+                            "workflow:applicability",
+                            "step:0"
+                          ],
+                          "reviewed_source_urls": [
+                            "https://synthetic.edu/exchange"
+                          ],
+                          "reviewed_content_hash": "8cdd021ba6de2bb861243f22b40bd664c863d3a632297264d79b80a1579c4aeb"
+                        }
+                      ]
+                    }
+                  ],
+                  "workflow_key": "69f544188667215ffb25ff4de38b288c",
+                  "change_summary": [
+                    "調整 1 個步驟：Synthetic changed",
+                    "synthetic-a 已更新候選適用範圍；修正說明：Synthetic official source applicability changed"
+                  ],
+                  "review_approvals": [
+                    {
+                      "note": "Synthetic complete independent attestation",
+                      "reviewed_at": "2026-10-09T09:55:46.613465Z",
+                      "reviewer_id": "synthetic-a",
+                      "reviewed_rule_keys": [
+                        "workflow:applicability",
+                        "step:0"
+                      ],
+                      "reviewed_source_urls": [
+                        "https://synthetic.edu/exchange"
+                      ],
+                      "reviewed_content_hash": "f5171b8ccafa747f550868908d44351adef2084f02e66723daf0a8fa3c50cb26"
+                    },
+                    {
+                      "note": "Synthetic complete independent attestation",
+                      "reviewed_at": "2026-10-09T09:55:48.137498Z",
+                      "reviewer_id": "synthetic-b",
+                      "reviewed_rule_keys": [
+                        "workflow:applicability",
+                        "step:0"
+                      ],
+                      "reviewed_source_urls": [
+                        "https://synthetic.edu/exchange"
+                      ],
+                      "reviewed_content_hash": "f5171b8ccafa747f550868908d44351adef2084f02e66723daf0a8fa3c50cb26"
+                    }
+                  ],
+                  "workflow_payload": {
+                    "steps": [
+                      {
+                        "order": 1,
+                        "phase": "Synthetic phase",
+                        "scope": {
+                          "colleges": [],
+                          "departments": [],
+                          "academic_years": [
+                            "117"
+                          ],
+                          "home_universities": [
+                            "Synthetic governance home"
+                          ],
+                          "application_rounds": [
+                            "Synthetic round"
+                          ],
+                          "partner_universities": [
+                            "Synthetic governance host"
+                          ]
+                        },
+                        "title": "Synthetic changed",
+                        "timing": null,
+                        "details": [],
+                        "rule_id": "synthetic-rule",
+                        "summary": "Synthetic bounded requirement",
+                        "action_url": null,
+                        "checked_at": "2026-10-09T09:55:48.137498Z",
+                        "submission": {
+                          "email": null,
+                          "method": "unknown",
+                          "office": null,
+                          "address": null,
+                          "portal_url": null,
+                          "send_by_at": null,
+                          "deadline_note": null,
+                          "receiving_hours": null,
+                          "arrival_deadline_at": null
+                        },
+                        "deadline_at": null,
+                        "source_urls": [
+                          "https://synthetic.edu/exchange"
+                        ],
+                        "support_status": "verified",
+                        "deadline_status": "not_applicable",
+                        "responsible_unit": "Synthetic student",
+                        "overrides_rule_id": null,
+                        "responsible_party": "Synthetic student",
+                        "needs_confirmation": false,
+                        "official_form_urls": [],
+                        "required_documents": [],
+                        "deadline_checked_at": "2026-10-09T00:00:00Z",
+                        "deadline_source_url": "https://synthetic.edu/exchange",
+                        "confirmation_contact": null,
+                        "document_requirements": [],
+                        "signature_requirements": [],
+                        "deadline_reminder_eligible": false
+                      }
+                    ],
+                    "country": null,
+                    "sources": [
+                      {
+                        "role": "home_university",
+                        "title": "Synthetic official notice",
+                        "priority": 1,
+                        "authority": "home_official_notice",
+                        "checked_at": "2026-10-09T09:55:48.137498Z",
+                        "source_url": "https://synthetic.edu/exchange",
+                        "content_hash": null,
+                        "application_round": "Synthetic round",
+                        "effective_academic_year": "118"
+                      }
+                    ],
+                    "version": 2,
+                    "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                    "school_name": "Synthetic governance host",
+                    "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                    "last_checked": "2026-10-09T09:55:48.137498Z",
+                    "program_type": null,
+                    "published_at": "2026-10-09T09:55:52.156730Z",
+                    "academic_year": "118",
+                    "coverage_note": "尚未查核合作校官方申請流程。",
+                    "review_status": "published",
+                    "governance_key": "69f544188667215ffb25ff4de38b288c",
+                    "applied_context": null,
+                    "coverage_status": "official_verified",
+                    "home_university": "Synthetic governance home",
+                    "partner_website": null,
+                    "application_round": "Synthetic round",
+                    "applicability_note": "官方來源適用 118 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                    "supersedes_version": 1,
+                    "applicability_status": "verified",
+                    "issue_report_snapshot": null,
+                    "effective_application_rounds": [
+                      "Synthetic round"
+                    ]
+                  },
+                  "publication_action": "standard",
+                  "restored_revision_id": null,
+                  "required_review_count": 2,
+                  "rolled_back_from_revision_id": null
+                },
+                {
+                  "id": "414c74730b184e44929a9266e5b481bd",
+                  "status": "pending_review",
+                  "version": 1,
+                  "detected_at": "2026-10-09T09:56:19.843937+00:00",
+                  "detected_by": "automated_refresh",
+                  "review_note": null,
+                  "reviewed_at": null,
+                  "reviewed_by": null,
+                  "base_version": null,
+                  "content_hash": "16e117baf0f3628ecdd44d60887a57e45bcc9085d83efd40905f5f3e62e3721d",
+                  "edit_history": [],
+                  "workflow_key": "892af2d6ca9df2dee8cb4199958650fa",
+                  "change_summary": [
+                    "建立第一版申請流程，發布前需確認所有官方來源與適用梯次。"
+                  ],
+                  "review_approvals": [],
+                  "workflow_payload": {
+                    "steps": [
+                      {
+                        "order": 1,
+                        "phase": "Synthetic phase",
+                        "scope": {
+                          "colleges": [],
+                          "departments": [],
+                          "academic_years": [
+                            "117"
+                          ],
+                          "home_universities": [
+                            "Synthetic governance home"
+                          ],
+                          "application_rounds": [],
+                          "partner_universities": [
+                            "Synthetic cap host 0"
+                          ]
+                        },
+                        "title": "Synthetic cap candidate",
+                        "timing": null,
+                        "details": [],
+                        "rule_id": "synthetic-rule",
+                        "summary": "Synthetic bounded requirement",
+                        "action_url": null,
+                        "checked_at": "2026-10-09T00:00:00Z",
+                        "submission": {
+                          "email": null,
+                          "method": "unknown",
+                          "office": null,
+                          "address": null,
+                          "portal_url": null,
+                          "send_by_at": null,
+                          "deadline_note": null,
+                          "receiving_hours": null,
+                          "arrival_deadline_at": null
+                        },
+                        "deadline_at": null,
+                        "source_urls": [
+                          "https://synthetic.edu/exchange"
+                        ],
+                        "support_status": "verified",
+                        "deadline_status": "not_applicable",
+                        "responsible_unit": "Synthetic student",
+                        "overrides_rule_id": null,
+                        "responsible_party": "Synthetic student",
+                        "needs_confirmation": false,
+                        "official_form_urls": [],
+                        "required_documents": [],
+                        "deadline_checked_at": "2026-10-09T00:00:00Z",
+                        "deadline_source_url": "https://synthetic.edu/exchange",
+                        "confirmation_contact": null,
+                        "document_requirements": [],
+                        "signature_requirements": [],
+                        "deadline_reminder_eligible": false
+                      }
+                    ],
+                    "country": null,
+                    "sources": [
+                      {
+                        "role": "home_university",
+                        "title": "Synthetic official notice",
+                        "priority": 1,
+                        "authority": "home_official_notice",
+                        "checked_at": "2026-10-09T00:00:00Z",
+                        "source_url": "https://synthetic.edu/exchange",
+                        "content_hash": null,
+                        "application_round": "Synthetic round",
+                        "effective_academic_year": "117"
+                      }
+                    ],
+                    "version": 1,
+                    "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                    "school_name": "Synthetic cap host 0",
+                    "workflow_id": "workflow-3290c81dee339f2beded8027",
+                    "last_checked": "2026-10-09T00:00:00Z",
+                    "program_type": null,
+                    "published_at": null,
+                    "academic_year": "117",
+                    "coverage_note": "尚未查核合作校官方申請流程。",
+                    "review_status": "pending_review",
+                    "governance_key": "892af2d6ca9df2dee8cb4199958650fa",
+                    "applied_context": null,
+                    "coverage_status": "official_verified",
+                    "home_university": "Synthetic governance home",
+                    "partner_website": null,
+                    "application_round": "Synthetic round",
+                    "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                    "supersedes_version": null,
+                    "applicability_status": "verified",
+                    "issue_report_snapshot": null,
+                    "effective_application_rounds": [
+                      "Synthetic round"
+                    ]
+                  },
+                  "publication_action": "standard",
+                  "restored_revision_id": null,
+                  "required_review_count": 2,
+                  "rolled_back_from_revision_id": null
+                },
+                {
+                  "id": "62445ab1549c4c719679c8bbdb28d7fe",
+                  "status": "pending_review",
+                  "version": 1,
+                  "detected_at": "2026-10-09T09:56:21.853908+00:00",
+                  "detected_by": "automated_refresh",
+                  "review_note": null,
+                  "reviewed_at": null,
+                  "reviewed_by": null,
+                  "base_version": null,
+                  "content_hash": "e85194b1c0adb401ab5147e79bf1b7f18e481d1c264d91bff22418b30a28a683",
+                  "edit_history": [],
+                  "workflow_key": "9918e3c31bc38f1ea501bfdfb79f3239",
+                  "change_summary": [
+                    "建立第一版申請流程，發布前需確認所有官方來源與適用梯次。"
+                  ],
+                  "review_approvals": [],
+                  "workflow_payload": {
+                    "steps": [
+                      {
+                        "order": 1,
+                        "phase": "Synthetic phase",
+                        "scope": {
+                          "colleges": [],
+                          "departments": [],
+                          "academic_years": [
+                            "117"
+                          ],
+                          "home_universities": [
+                            "Synthetic governance home"
+                          ],
+                          "application_rounds": [],
+                          "partner_universities": [
+                            "Synthetic cap host 1"
+                          ]
+                        },
+                        "title": "Synthetic cap candidate",
+                        "timing": null,
+                        "details": [],
+                        "rule_id": "synthetic-rule",
+                        "summary": "Synthetic bounded requirement",
+                        "action_url": null,
+                        "checked_at": "2026-10-09T00:00:00Z",
+                        "submission": {
+                          "email": null,
+                          "method": "unknown",
+                          "office": null,
+                          "address": null,
+                          "portal_url": null,
+                          "send_by_at": null,
+                          "deadline_note": null,
+                          "receiving_hours": null,
+                          "arrival_deadline_at": null
+                        },
+                        "deadline_at": null,
+                        "source_urls": [
+                          "https://synthetic.edu/exchange"
+                        ],
+                        "support_status": "verified",
+                        "deadline_status": "not_applicable",
+                        "responsible_unit": "Synthetic student",
+                        "overrides_rule_id": null,
+                        "responsible_party": "Synthetic student",
+                        "needs_confirmation": false,
+                        "official_form_urls": [],
+                        "required_documents": [],
+                        "deadline_checked_at": "2026-10-09T00:00:00Z",
+                        "deadline_source_url": "https://synthetic.edu/exchange",
+                        "confirmation_contact": null,
+                        "document_requirements": [],
+                        "signature_requirements": [],
+                        "deadline_reminder_eligible": false
+                      }
+                    ],
+                    "country": null,
+                    "sources": [
+                      {
+                        "role": "home_university",
+                        "title": "Synthetic official notice",
+                        "priority": 1,
+                        "authority": "home_official_notice",
+                        "checked_at": "2026-10-09T00:00:00Z",
+                        "source_url": "https://synthetic.edu/exchange",
+                        "content_hash": null,
+                        "application_round": "Synthetic round",
+                        "effective_academic_year": "117"
+                      }
+                    ],
+                    "version": 1,
+                    "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                    "school_name": "Synthetic cap host 1",
+                    "workflow_id": "workflow-ec69c29b75ea36fd9db9f83e",
+                    "last_checked": "2026-10-09T00:00:00Z",
+                    "program_type": null,
+                    "published_at": null,
+                    "academic_year": "117",
+                    "coverage_note": "尚未查核合作校官方申請流程。",
+                    "review_status": "pending_review",
+                    "governance_key": "9918e3c31bc38f1ea501bfdfb79f3239",
+                    "applied_context": null,
+                    "coverage_status": "official_verified",
+                    "home_university": "Synthetic governance home",
+                    "partner_website": null,
+                    "application_round": "Synthetic round",
+                    "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                    "supersedes_version": null,
+                    "applicability_status": "verified",
+                    "issue_report_snapshot": null,
+                    "effective_application_rounds": [
+                      "Synthetic round"
+                    ]
+                  },
+                  "publication_action": "standard",
+                  "restored_revision_id": null,
+                  "required_review_count": 2,
+                  "rolled_back_from_revision_id": null
+                },
+                {
+                  "id": "950509f7a88748ef951cc029da8e1b3e",
+                  "status": "pending_review",
+                  "version": 2,
+                  "detected_at": "2026-10-09T09:56:13.139413+00:00",
+                  "detected_by": "automated_refresh",
+                  "review_note": null,
+                  "reviewed_at": null,
+                  "reviewed_by": null,
+                  "base_version": 1,
+                  "content_hash": "c8c49f9afc5eec56ed28fbe714ae3f217cfd9b3a020d89e6d6c420c2e912367e",
+                  "edit_history": [],
+                  "workflow_key": "741d0a737f9d41aaba26f3ed22c1f152",
+                  "change_summary": [
+                    "調整 1 個步驟：Synthetic legacy changed"
+                  ],
+                  "review_approvals": [],
+                  "workflow_payload": {
+                    "steps": [
+                      {
+                        "order": 1,
+                        "phase": "Synthetic phase",
+                        "scope": {
+                          "colleges": [],
+                          "departments": [],
+                          "academic_years": [
+                            "117"
+                          ],
+                          "home_universities": [
+                            "Synthetic governance home"
+                          ],
+                          "application_rounds": [],
+                          "partner_universities": [
+                            "Synthetic legacy host"
+                          ]
+                        },
+                        "title": "Synthetic legacy changed",
+                        "timing": null,
+                        "details": [],
+                        "rule_id": "synthetic-rule",
+                        "summary": "Synthetic bounded requirement",
+                        "action_url": null,
+                        "checked_at": "2026-10-09T00:00:00Z",
+                        "submission": {
+                          "email": null,
+                          "method": "unknown",
+                          "office": null,
+                          "address": null,
+                          "portal_url": null,
+                          "send_by_at": null,
+                          "deadline_note": null,
+                          "receiving_hours": null,
+                          "arrival_deadline_at": null
+                        },
+                        "deadline_at": null,
+                        "source_urls": [
+                          "https://synthetic.edu/exchange"
+                        ],
+                        "support_status": "verified",
+                        "deadline_status": "not_applicable",
+                        "responsible_unit": "Synthetic student",
+                        "overrides_rule_id": null,
+                        "responsible_party": "Synthetic student",
+                        "needs_confirmation": false,
+                        "official_form_urls": [],
+                        "required_documents": [],
+                        "deadline_checked_at": "2026-10-09T00:00:00Z",
+                        "deadline_source_url": "https://synthetic.edu/exchange",
+                        "confirmation_contact": null,
+                        "document_requirements": [],
+                        "signature_requirements": [],
+                        "deadline_reminder_eligible": false
+                      }
+                    ],
+                    "country": null,
+                    "sources": [
+                      {
+                        "role": "home_university",
+                        "title": "Synthetic official notice",
+                        "priority": 1,
+                        "authority": "home_official_notice",
+                        "checked_at": "2026-10-09T00:00:00Z",
+                        "source_url": "https://synthetic.edu/exchange",
+                        "content_hash": null,
+                        "application_round": "Synthetic round",
+                        "effective_academic_year": "117"
+                      }
+                    ],
+                    "version": 2,
+                    "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                    "school_name": "Synthetic legacy host",
+                    "workflow_id": "workflow-d40a24e7d6db8d2e213f3d7f",
+                    "last_checked": "2026-10-09T00:00:00Z",
+                    "program_type": null,
+                    "published_at": null,
+                    "academic_year": "117",
+                    "coverage_note": "尚未查核合作校官方申請流程。",
+                    "review_status": "pending_review",
+                    "governance_key": "741d0a737f9d41aaba26f3ed22c1f152",
+                    "applied_context": null,
+                    "coverage_status": "official_verified",
+                    "home_university": "Synthetic governance home",
+                    "partner_website": null,
+                    "application_round": "Synthetic round",
+                    "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                    "supersedes_version": 1,
+                    "applicability_status": "verified",
+                    "issue_report_snapshot": null,
+                    "effective_application_rounds": [
+                      "Synthetic round"
+                    ]
+                  },
+                  "publication_action": "standard",
+                  "restored_revision_id": null,
+                  "required_review_count": 2,
+                  "rolled_back_from_revision_id": null
+                },
+                {
+                  "id": "a00c182a8d584c1487e20445f5df452e",
+                  "status": "published",
+                  "version": 3,
+                  "detected_at": "2026-10-09T09:55:54.774302+00:00",
+                  "detected_by": "synthetic-a",
+                  "review_note": "Synthetic audited restoration of the first reviewed version",
+                  "reviewed_at": "2026-10-09T09:55:54.774302+00:00",
+                  "reviewed_by": "synthetic-a",
+                  "base_version": 2,
+                  "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+                  "edit_history": [],
+                  "workflow_key": "69f544188667215ffb25ff4de38b288c",
+                  "change_summary": [
+                    "緊急復原：撤回版本 2，恢復曾完成雙審的版本 1。",
+                    "復原建立新版本並保留全部歷史；後續修改仍須重新雙審。"
+                  ],
+                  "review_approvals": [
+                    {
+                      "note": "Synthetic complete independent attestation",
+                      "reviewed_at": "2026-10-09T09:55:27.907998Z",
+                      "reviewer_id": "synthetic-a",
+                      "reviewed_rule_keys": [
+                        "workflow:applicability",
+                        "step:0"
+                      ],
+                      "reviewed_source_urls": [
+                        "https://synthetic.edu/exchange"
+                      ],
+                      "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+                    },
+                    {
+                      "note": "Synthetic complete independent attestation",
+                      "reviewed_at": "2026-10-09T09:55:37.320025Z",
+                      "reviewer_id": "synthetic-b",
+                      "reviewed_rule_keys": [
+                        "workflow:applicability",
+                        "step:0"
+                      ],
+                      "reviewed_source_urls": [
+                        "https://synthetic.edu/exchange"
+                      ],
+                      "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+                    }
+                  ],
+                  "workflow_payload": {
+                    "steps": [
+                      {
+                        "order": 1,
+                        "phase": "Synthetic phase",
+                        "scope": {
+                          "colleges": [],
+                          "departments": [],
+                          "academic_years": [
+                            "117"
+                          ],
+                          "home_universities": [
+                            "Synthetic governance home"
+                          ],
+                          "application_rounds": [],
+                          "partner_universities": [
+                            "Synthetic governance host"
+                          ]
+                        },
+                        "title": "Synthetic original",
+                        "timing": null,
+                        "details": [],
+                        "rule_id": "synthetic-rule",
+                        "summary": "Synthetic bounded requirement",
+                        "action_url": null,
+                        "checked_at": "2026-10-09T09:55:37.320025Z",
+                        "submission": {
+                          "email": null,
+                          "method": "unknown",
+                          "office": null,
+                          "address": null,
+                          "portal_url": null,
+                          "send_by_at": null,
+                          "deadline_note": null,
+                          "receiving_hours": null,
+                          "arrival_deadline_at": null
+                        },
+                        "deadline_at": null,
+                        "source_urls": [
+                          "https://synthetic.edu/exchange"
+                        ],
+                        "support_status": "verified",
+                        "deadline_status": "not_applicable",
+                        "responsible_unit": "Synthetic student",
+                        "overrides_rule_id": null,
+                        "responsible_party": "Synthetic student",
+                        "needs_confirmation": false,
+                        "official_form_urls": [],
+                        "required_documents": [],
+                        "deadline_checked_at": "2026-10-09T00:00:00Z",
+                        "deadline_source_url": "https://synthetic.edu/exchange",
+                        "confirmation_contact": null,
+                        "document_requirements": [],
+                        "signature_requirements": [],
+                        "deadline_reminder_eligible": false
+                      }
+                    ],
+                    "country": null,
+                    "sources": [
+                      {
+                        "role": "home_university",
+                        "title": "Synthetic official notice",
+                        "priority": 1,
+                        "authority": "home_official_notice",
+                        "checked_at": "2026-10-09T09:55:37.320025Z",
+                        "source_url": "https://synthetic.edu/exchange",
+                        "content_hash": null,
+                        "application_round": "Synthetic round",
+                        "effective_academic_year": "117"
+                      }
+                    ],
+                    "version": 3,
+                    "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                    "school_name": "Synthetic governance host",
+                    "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                    "last_checked": "2026-10-09T09:55:37.320025Z",
+                    "program_type": null,
+                    "published_at": "2026-10-09T09:55:54.774302Z",
+                    "academic_year": "117",
+                    "coverage_note": "尚未查核合作校官方申請流程。",
+                    "review_status": "published",
+                    "governance_key": "69f544188667215ffb25ff4de38b288c",
+                    "applied_context": null,
+                    "coverage_status": "official_verified",
+                    "home_university": "Synthetic governance home",
+                    "partner_website": null,
+                    "application_round": "Synthetic round",
+                    "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                    "supersedes_version": 2,
+                    "applicability_status": "verified",
+                    "issue_report_snapshot": null,
+                    "effective_application_rounds": [
+                      "Synthetic round"
+                    ]
+                  },
+                  "publication_action": "rollback",
+                  "restored_revision_id": "c6fb02fed8884f0aa94948a61631e997",
+                  "required_review_count": 2,
+                  "rolled_back_from_revision_id": "1ab749a61b4a4629adb10e1a07356b0e"
+                },
+                {
+                  "id": "c6fb02fed8884f0aa94948a61631e997",
+                  "status": "superseded",
+                  "version": 1,
+                  "detected_at": "2026-10-09T09:55:26.165047+00:00",
+                  "detected_by": "automated_refresh",
+                  "review_note": null,
+                  "reviewed_at": "2026-10-09T09:55:38.744163+00:00",
+                  "reviewed_by": "synthetic-a",
+                  "base_version": null,
+                  "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+                  "edit_history": [],
+                  "workflow_key": "69f544188667215ffb25ff4de38b288c",
+                  "change_summary": [
+                    "建立第一版申請流程，發布前需確認所有官方來源與適用梯次。"
+                  ],
+                  "review_approvals": [
+                    {
+                      "note": "Synthetic complete independent attestation",
+                      "reviewed_at": "2026-10-09T09:55:27.907998Z",
+                      "reviewer_id": "synthetic-a",
+                      "reviewed_rule_keys": [
+                        "workflow:applicability",
+                        "step:0"
+                      ],
+                      "reviewed_source_urls": [
+                        "https://synthetic.edu/exchange"
+                      ],
+                      "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+                    },
+                    {
+                      "note": "Synthetic complete independent attestation",
+                      "reviewed_at": "2026-10-09T09:55:37.320025Z",
+                      "reviewer_id": "synthetic-b",
+                      "reviewed_rule_keys": [
+                        "workflow:applicability",
+                        "step:0"
+                      ],
+                      "reviewed_source_urls": [
+                        "https://synthetic.edu/exchange"
+                      ],
+                      "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+                    }
+                  ],
+                  "workflow_payload": {
+                    "steps": [
+                      {
+                        "order": 1,
+                        "phase": "Synthetic phase",
+                        "scope": {
+                          "colleges": [],
+                          "departments": [],
+                          "academic_years": [
+                            "117"
+                          ],
+                          "home_universities": [
+                            "Synthetic governance home"
+                          ],
+                          "application_rounds": [],
+                          "partner_universities": [
+                            "Synthetic governance host"
+                          ]
+                        },
+                        "title": "Synthetic original",
+                        "timing": null,
+                        "details": [],
+                        "rule_id": "synthetic-rule",
+                        "summary": "Synthetic bounded requirement",
+                        "action_url": null,
+                        "checked_at": "2026-10-09T09:55:37.320025Z",
+                        "submission": {
+                          "email": null,
+                          "method": "unknown",
+                          "office": null,
+                          "address": null,
+                          "portal_url": null,
+                          "send_by_at": null,
+                          "deadline_note": null,
+                          "receiving_hours": null,
+                          "arrival_deadline_at": null
+                        },
+                        "deadline_at": null,
+                        "source_urls": [
+                          "https://synthetic.edu/exchange"
+                        ],
+                        "support_status": "verified",
+                        "deadline_status": "not_applicable",
+                        "responsible_unit": "Synthetic student",
+                        "overrides_rule_id": null,
+                        "responsible_party": "Synthetic student",
+                        "needs_confirmation": false,
+                        "official_form_urls": [],
+                        "required_documents": [],
+                        "deadline_checked_at": "2026-10-09T00:00:00Z",
+                        "deadline_source_url": "https://synthetic.edu/exchange",
+                        "confirmation_contact": null,
+                        "document_requirements": [],
+                        "signature_requirements": [],
+                        "deadline_reminder_eligible": false
+                      }
+                    ],
+                    "country": null,
+                    "sources": [
+                      {
+                        "role": "home_university",
+                        "title": "Synthetic official notice",
+                        "priority": 1,
+                        "authority": "home_official_notice",
+                        "checked_at": "2026-10-09T09:55:37.320025Z",
+                        "source_url": "https://synthetic.edu/exchange",
+                        "content_hash": null,
+                        "application_round": "Synthetic round",
+                        "effective_academic_year": "117"
+                      }
+                    ],
+                    "version": 1,
+                    "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                    "school_name": "Synthetic governance host",
+                    "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                    "last_checked": "2026-10-09T09:55:37.320025Z",
+                    "program_type": null,
+                    "published_at": "2026-10-09T09:55:38.744163Z",
+                    "academic_year": "117",
+                    "coverage_note": "尚未查核合作校官方申請流程。",
+                    "review_status": "published",
+                    "governance_key": "69f544188667215ffb25ff4de38b288c",
+                    "applied_context": null,
+                    "coverage_status": "official_verified",
+                    "home_university": "Synthetic governance home",
+                    "partner_website": null,
+                    "application_round": "Synthetic round",
+                    "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                    "supersedes_version": null,
+                    "applicability_status": "verified",
+                    "issue_report_snapshot": null,
+                    "effective_application_rounds": [
+                      "Synthetic round"
+                    ]
+                  },
+                  "publication_action": "standard",
+                  "restored_revision_id": null,
+                  "required_review_count": 2,
+                  "rolled_back_from_revision_id": null
+                },
+                {
+                  "id": "fb1be2c8ea954926990a9c5214131b36",
+                  "status": "pending_review",
+                  "version": 1,
+                  "detected_at": "2026-10-09T09:56:14.940072+00:00",
+                  "detected_by": "automated_refresh",
+                  "review_note": null,
+                  "reviewed_at": null,
+                  "reviewed_by": null,
+                  "base_version": null,
+                  "content_hash": "d36e25b8190612e4b6141e92f1bb9ba4fc87cc8d970076d0283e063181131ba5",
+                  "edit_history": [],
+                  "workflow_key": "fded79f21a7fc1529968024bd36133c8",
+                  "change_summary": [
+                    "建立第一版申請流程，發布前需確認所有官方來源與適用梯次。"
+                  ],
+                  "review_approvals": [
+                    {
+                      "note": "Synthetic complete independent attestation",
+                      "reviewed_at": "2026-10-09T09:56:15.945139Z",
+                      "reviewer_id": "synthetic-b",
+                      "reviewed_rule_keys": [
+                        "workflow:applicability",
+                        "step:0"
+                      ],
+                      "reviewed_source_urls": [
+                        "https://synthetic.edu/exchange"
+                      ],
+                      "reviewed_content_hash": "d36e25b8190612e4b6141e92f1bb9ba4fc87cc8d970076d0283e063181131ba5"
+                    }
+                  ],
+                  "workflow_payload": {
+                    "steps": [
+                      {
+                        "order": 1,
+                        "phase": "Synthetic phase",
+                        "scope": {
+                          "colleges": [],
+                          "departments": [],
+                          "academic_years": [
+                            "117"
+                          ],
+                          "home_universities": [
+                            "Synthetic governance home"
+                          ],
+                          "application_rounds": [],
+                          "partner_universities": [
+                            "Synthetic overlapping host"
+                          ]
+                        },
+                        "title": "Synthetic overlapping CAS",
+                        "timing": null,
+                        "details": [],
+                        "rule_id": "synthetic-rule",
+                        "summary": "Synthetic bounded requirement",
+                        "action_url": null,
+                        "checked_at": "2026-10-09T09:56:15.945139Z",
+                        "submission": {
+                          "email": null,
+                          "method": "unknown",
+                          "office": null,
+                          "address": null,
+                          "portal_url": null,
+                          "send_by_at": null,
+                          "deadline_note": null,
+                          "receiving_hours": null,
+                          "arrival_deadline_at": null
+                        },
+                        "deadline_at": null,
+                        "source_urls": [
+                          "https://synthetic.edu/exchange"
+                        ],
+                        "support_status": "verified",
+                        "deadline_status": "not_applicable",
+                        "responsible_unit": "Synthetic student",
+                        "overrides_rule_id": null,
+                        "responsible_party": "Synthetic student",
+                        "needs_confirmation": false,
+                        "official_form_urls": [],
+                        "required_documents": [],
+                        "deadline_checked_at": "2026-10-09T00:00:00Z",
+                        "deadline_source_url": "https://synthetic.edu/exchange",
+                        "confirmation_contact": null,
+                        "document_requirements": [],
+                        "signature_requirements": [],
+                        "deadline_reminder_eligible": false
+                      }
+                    ],
+                    "country": null,
+                    "sources": [
+                      {
+                        "role": "home_university",
+                        "title": "Synthetic official notice",
+                        "priority": 1,
+                        "authority": "home_official_notice",
+                        "checked_at": "2026-10-09T09:56:15.945139Z",
+                        "source_url": "https://synthetic.edu/exchange",
+                        "content_hash": null,
+                        "application_round": "Synthetic round",
+                        "effective_academic_year": "117"
+                      }
+                    ],
+                    "version": 1,
+                    "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                    "school_name": "Synthetic overlapping host",
+                    "workflow_id": "workflow-50be235a4c6b6e18d60f2369",
+                    "last_checked": "2026-10-09T09:56:15.945139Z",
+                    "program_type": null,
+                    "published_at": null,
+                    "academic_year": "117",
+                    "coverage_note": "尚未查核合作校官方申請流程。",
+                    "review_status": "pending_review",
+                    "governance_key": "fded79f21a7fc1529968024bd36133c8",
+                    "applied_context": null,
+                    "coverage_status": "official_verified",
+                    "home_university": "Synthetic governance home",
+                    "partner_website": null,
+                    "application_round": "Synthetic round",
+                    "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                    "supersedes_version": null,
+                    "applicability_status": "verified",
+                    "issue_report_snapshot": null,
+                    "effective_application_rounds": [
+                      "Synthetic round"
+                    ]
+                  },
+                  "publication_action": "standard",
+                  "restored_revision_id": null,
+                  "required_review_count": 2,
+                  "rolled_back_from_revision_id": null
+                }
+              ],
+              "workflows": [
+                {
+                  "program_type": null,
+                  "published_at": "2026-10-09T09:55:54.774302+00:00",
+                  "workflow_key": "69f544188667215ffb25ff4de38b288c",
+                  "academic_year": "117",
+                  "home_university": "Synthetic governance home",
+                  "application_round": "Synthetic round",
+                  "published_payload": {
+                    "steps": [
+                      {
+                        "order": 1,
+                        "phase": "Synthetic phase",
+                        "scope": {
+                          "colleges": [],
+                          "departments": [],
+                          "academic_years": [
+                            "117"
+                          ],
+                          "home_universities": [
+                            "Synthetic governance home"
+                          ],
+                          "application_rounds": [],
+                          "partner_universities": [
+                            "Synthetic governance host"
+                          ]
+                        },
+                        "title": "Synthetic original",
+                        "timing": null,
+                        "details": [],
+                        "rule_id": "synthetic-rule",
+                        "summary": "Synthetic bounded requirement",
+                        "action_url": null,
+                        "checked_at": "2026-10-09T09:55:37.320025Z",
+                        "submission": {
+                          "email": null,
+                          "method": "unknown",
+                          "office": null,
+                          "address": null,
+                          "portal_url": null,
+                          "send_by_at": null,
+                          "deadline_note": null,
+                          "receiving_hours": null,
+                          "arrival_deadline_at": null
+                        },
+                        "deadline_at": null,
+                        "source_urls": [
+                          "https://synthetic.edu/exchange"
+                        ],
+                        "support_status": "verified",
+                        "deadline_status": "not_applicable",
+                        "responsible_unit": "Synthetic student",
+                        "overrides_rule_id": null,
+                        "responsible_party": "Synthetic student",
+                        "needs_confirmation": false,
+                        "official_form_urls": [],
+                        "required_documents": [],
+                        "deadline_checked_at": "2026-10-09T00:00:00Z",
+                        "deadline_source_url": "https://synthetic.edu/exchange",
+                        "confirmation_contact": null,
+                        "document_requirements": [],
+                        "signature_requirements": [],
+                        "deadline_reminder_eligible": false
+                      }
+                    ],
+                    "country": null,
+                    "sources": [
+                      {
+                        "role": "home_university",
+                        "title": "Synthetic official notice",
+                        "priority": 1,
+                        "authority": "home_official_notice",
+                        "checked_at": "2026-10-09T09:55:37.320025Z",
+                        "source_url": "https://synthetic.edu/exchange",
+                        "content_hash": null,
+                        "application_round": "Synthetic round",
+                        "effective_academic_year": "117"
+                      }
+                    ],
+                    "version": 3,
+                    "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                    "school_name": "Synthetic governance host",
+                    "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                    "last_checked": "2026-10-09T09:55:37.320025Z",
+                    "program_type": null,
+                    "published_at": "2026-10-09T09:55:54.774302Z",
+                    "academic_year": "117",
+                    "coverage_note": "尚未查核合作校官方申請流程。",
+                    "review_status": "published",
+                    "governance_key": "69f544188667215ffb25ff4de38b288c",
+                    "applied_context": null,
+                    "coverage_status": "official_verified",
+                    "home_university": "Synthetic governance home",
+                    "partner_website": null,
+                    "application_round": "Synthetic round",
+                    "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                    "supersedes_version": 2,
+                    "applicability_status": "verified",
+                    "issue_report_snapshot": null,
+                    "effective_application_rounds": [
+                      "Synthetic round"
+                    ]
+                  },
+                  "published_version": 3,
+                  "partner_university": "Synthetic governance host",
+                  "current_revision_id": "a00c182a8d584c1487e20445f5df452e"
+                },
+                {
+                  "program_type": null,
+                  "published_at": null,
+                  "workflow_key": "741d0a737f9d41aaba26f3ed22c1f152",
+                  "academic_year": "117",
+                  "home_university": "Synthetic governance home",
+                  "application_round": "Synthetic round",
+                  "published_payload": null,
+                  "published_version": null,
+                  "partner_university": "Synthetic legacy host",
+                  "current_revision_id": null
+                },
+                {
+                  "program_type": null,
+                  "published_at": null,
+                  "workflow_key": "892af2d6ca9df2dee8cb4199958650fa",
+                  "academic_year": "117",
+                  "home_university": "Synthetic governance home",
+                  "application_round": "Synthetic round",
+                  "published_payload": null,
+                  "published_version": null,
+                  "partner_university": "Synthetic cap host 0",
+                  "current_revision_id": null
+                },
+                {
+                  "program_type": null,
+                  "published_at": null,
+                  "workflow_key": "9918e3c31bc38f1ea501bfdfb79f3239",
+                  "academic_year": "117",
+                  "home_university": "Synthetic governance home",
+                  "application_round": "Synthetic round",
+                  "published_payload": null,
+                  "published_version": null,
+                  "partner_university": "Synthetic cap host 1",
+                  "current_revision_id": null
+                },
+                {
+                  "program_type": null,
+                  "published_at": null,
+                  "workflow_key": "__governance_command_schema__",
+                  "academic_year": null,
+                  "home_university": "Internal governance schema",
+                  "application_round": null,
+                  "published_payload": null,
+                  "published_version": null,
+                  "partner_university": "No public workflow",
+                  "current_revision_id": null
+                },
+                {
+                  "program_type": null,
+                  "published_at": null,
+                  "workflow_key": "fded79f21a7fc1529968024bd36133c8",
+                  "academic_year": "117",
+                  "home_university": "Synthetic governance home",
+                  "application_round": "Synthetic round",
+                  "published_payload": null,
+                  "published_version": null,
+                  "partner_university": "Synthetic overlapping host",
+                  "current_revision_id": null
+                }
+              ]
+            },
+            "operation": "stage_workflow_refresh",
+            "published": [],
+            "revisions": [
+              {
+                "id": "0f2099285fcc4405a3e0ae7b3086ac12",
+                "status": "pending_review",
+                "version": 1,
+                "detected_at": "2026-10-09T09:56:24.409447+00:00",
+                "detected_by": "automated_refresh",
+                "review_note": null,
+                "reviewed_at": null,
+                "reviewed_by": null,
+                "base_version": null,
+                "content_hash": "e3bde20541016326f3d35dd4b4bea4969aa29e0e1517d1e16d109521478f3bc3",
+                "edit_history": [],
+                "workflow_key": "7326656a554de244790c9e68d2066d35",
+                "change_summary": [
+                  "建立第一版申請流程，發布前需確認所有官方來源與適用梯次。"
+                ],
+                "review_approvals": [],
+                "workflow_payload": {
+                  "steps": [
+                    {
+                      "order": 1,
+                      "phase": "Synthetic phase",
+                      "scope": {
+                        "colleges": [],
+                        "departments": [],
+                        "academic_years": [
+                          "117"
+                        ],
+                        "home_universities": [
+                          "Synthetic governance home"
+                        ],
+                        "application_rounds": [],
+                        "partner_universities": [
+                          "Synthetic cap host 2"
+                        ]
+                      },
+                      "title": "Synthetic cap candidate",
+                      "timing": null,
+                      "details": [],
+                      "rule_id": "synthetic-rule",
+                      "summary": "Synthetic bounded requirement",
+                      "action_url": null,
+                      "checked_at": "2026-10-09T00:00:00Z",
+                      "submission": {
+                        "email": null,
+                        "method": "unknown",
+                        "office": null,
+                        "address": null,
+                        "portal_url": null,
+                        "send_by_at": null,
+                        "deadline_note": null,
+                        "receiving_hours": null,
+                        "arrival_deadline_at": null
+                      },
+                      "deadline_at": null,
+                      "source_urls": [
+                        "https://synthetic.edu/exchange"
+                      ],
+                      "support_status": "verified",
+                      "deadline_status": "not_applicable",
+                      "responsible_unit": "Synthetic student",
+                      "overrides_rule_id": null,
+                      "responsible_party": "Synthetic student",
+                      "needs_confirmation": false,
+                      "official_form_urls": [],
+                      "required_documents": [],
+                      "deadline_checked_at": "2026-10-09T00:00:00Z",
+                      "deadline_source_url": "https://synthetic.edu/exchange",
+                      "confirmation_contact": null,
+                      "document_requirements": [],
+                      "signature_requirements": [],
+                      "deadline_reminder_eligible": false
+                    }
+                  ],
+                  "country": null,
+                  "sources": [
+                    {
+                      "role": "home_university",
+                      "title": "Synthetic official notice",
+                      "priority": 1,
+                      "authority": "home_official_notice",
+                      "checked_at": "2026-10-09T00:00:00Z",
+                      "source_url": "https://synthetic.edu/exchange",
+                      "content_hash": null,
+                      "application_round": "Synthetic round",
+                      "effective_academic_year": "117"
+                    }
+                  ],
+                  "version": 1,
+                  "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+                  "school_name": "Synthetic cap host 2",
+                  "workflow_id": "workflow-6909a56ba46918e15a7c9570",
+                  "last_checked": "2026-10-09T00:00:00Z",
+                  "program_type": null,
+                  "published_at": null,
+                  "academic_year": "117",
+                  "coverage_note": "尚未查核合作校官方申請流程。",
+                  "review_status": "pending_review",
+                  "governance_key": "7326656a554de244790c9e68d2066d35",
+                  "applied_context": null,
+                  "coverage_status": "official_verified",
+                  "home_university": "Synthetic governance home",
+                  "partner_website": null,
+                  "application_round": "Synthetic round",
+                  "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+                  "supersedes_version": null,
+                  "applicability_status": "verified",
+                  "issue_report_snapshot": null,
+                  "effective_application_rounds": [
+                    "Synthetic round"
+                  ]
+                },
+                "publication_action": "standard",
+                "required_rule_keys": [
+                  "workflow:applicability",
+                  "step:0"
+                ],
+                "required_source_urls": [
+                  "https://synthetic.edu/exchange"
+                ],
+                "restored_revision_id": null,
+                "required_review_count": 2,
+                "rolled_back_from_revision_id": null
+              }
+            ],
+            "governance_command_hash": "3ec4999868bc571a0a36873d0cfa6bf6020286813cfa79d15daf16ec21f8339b"
+          },
+          "created_at": "2026-10-09T09:56:24.410006+00:00",
+          "revision_id": null,
+          "workflow_key": "7326656a554de244790c9e68d2066d35"
+        }
+      ]
+    },
+    "revisions": {
+      "before": [],
+      "after": [
+        {
+          "id": "0f2099285fcc4405a3e0ae7b3086ac12",
+          "status": "pending_review",
+          "version": 1,
+          "detected_at": "2026-10-09T09:56:24.409447+00:00",
+          "detected_by": "automated_refresh",
+          "review_note": null,
+          "reviewed_at": null,
+          "reviewed_by": null,
+          "base_version": null,
+          "content_hash": "e3bde20541016326f3d35dd4b4bea4969aa29e0e1517d1e16d109521478f3bc3",
+          "edit_history": [],
+          "workflow_key": "7326656a554de244790c9e68d2066d35",
+          "change_summary": [
+            "建立第一版申請流程，發布前需確認所有官方來源與適用梯次。"
+          ],
+          "review_approvals": [],
+          "workflow_payload": {
+            "steps": [
+              {
+                "order": 1,
+                "phase": "Synthetic phase",
+                "scope": {
+                  "colleges": [],
+                  "departments": [],
+                  "academic_years": [
+                    "117"
+                  ],
+                  "home_universities": [
+                    "Synthetic governance home"
+                  ],
+                  "application_rounds": [],
+                  "partner_universities": [
+                    "Synthetic cap host 2"
+                  ]
+                },
+                "title": "Synthetic cap candidate",
+                "timing": null,
+                "details": [],
+                "rule_id": "synthetic-rule",
+                "summary": "Synthetic bounded requirement",
+                "action_url": null,
+                "checked_at": "2026-10-09T00:00:00Z",
+                "submission": {
+                  "email": null,
+                  "method": "unknown",
+                  "office": null,
+                  "address": null,
+                  "portal_url": null,
+                  "send_by_at": null,
+                  "deadline_note": null,
+                  "receiving_hours": null,
+                  "arrival_deadline_at": null
+                },
+                "deadline_at": null,
+                "source_urls": [
+                  "https://synthetic.edu/exchange"
+                ],
+                "support_status": "verified",
+                "deadline_status": "not_applicable",
+                "responsible_unit": "Synthetic student",
+                "overrides_rule_id": null,
+                "responsible_party": "Synthetic student",
+                "needs_confirmation": false,
+                "official_form_urls": [],
+                "required_documents": [],
+                "deadline_checked_at": "2026-10-09T00:00:00Z",
+                "deadline_source_url": "https://synthetic.edu/exchange",
+                "confirmation_contact": null,
+                "document_requirements": [],
+                "signature_requirements": [],
+                "deadline_reminder_eligible": false
+              }
+            ],
+            "country": null,
+            "sources": [
+              {
+                "role": "home_university",
+                "title": "Synthetic official notice",
+                "priority": 1,
+                "authority": "home_official_notice",
+                "checked_at": "2026-10-09T00:00:00Z",
+                "source_url": "https://synthetic.edu/exchange",
+                "content_hash": null,
+                "application_round": "Synthetic round",
+                "effective_academic_year": "117"
+              }
+            ],
+            "version": 1,
+            "disclaimer": "截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。",
+            "school_name": "Synthetic cap host 2",
+            "workflow_id": "workflow-6909a56ba46918e15a7c9570",
+            "last_checked": "2026-10-09T00:00:00Z",
+            "program_type": null,
+            "published_at": null,
+            "academic_year": "117",
+            "coverage_note": "尚未查核合作校官方申請流程。",
+            "review_status": "pending_review",
+            "governance_key": "7326656a554de244790c9e68d2066d35",
+            "applied_context": null,
+            "coverage_status": "official_verified",
+            "home_university": "Synthetic governance home",
+            "partner_website": null,
+            "application_round": "Synthetic round",
+            "applicability_note": "官方來源適用 117 學年度，梯次為Synthetic round；仍應在送件前核對當期公告。",
+            "supersedes_version": null,
+            "applicability_status": "verified",
+            "issue_report_snapshot": null,
+            "effective_application_rounds": [
+              "Synthetic round"
+            ]
+          },
+          "publication_action": "standard",
+          "restored_revision_id": null,
+          "required_review_count": 2,
+          "rolled_back_from_revision_id": null
+        }
+      ]
+    },
+    "workflows": {
+      "before": [],
+      "after": [
+        {
+          "created_at": "2026-10-09T09:56:24.96282+00:00",
+          "updated_at": "2026-10-09T09:56:24.410006+00:00",
+          "program_type": null,
+          "published_at": null,
+          "workflow_key": "7326656a554de244790c9e68d2066d35",
+          "academic_year": "117",
+          "home_university": "Synthetic governance home",
+          "application_round": "Synthetic round",
+          "published_payload": null,
+          "published_version": null,
+          "partner_university": "Synthetic cap host 2",
+          "current_revision_id": null
+        }
+      ]
+    }
+  }
+}

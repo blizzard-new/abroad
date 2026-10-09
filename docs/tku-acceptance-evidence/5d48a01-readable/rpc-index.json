@@ -1,0 +1,721 @@
+[
+  {
+    "index": 0,
+    "operation": "stage_workflow_refresh",
+    "actor": "automated_refresh",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "stage_workflow_refresh"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/000.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 20662,
+    "derived_sha256": "9bfe2d69c09fa439731e4d2b43d79acd9a2954cb0ab8ab85100b4619d5ce3951"
+  },
+  {
+    "index": 1,
+    "operation": "approve_workflow_revision",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "approve_workflow_revision"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/001.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 40208,
+    "derived_sha256": "71b6081d4fd490eb21a714e65cc9412fcd092476b56ca580e0b64197c822d113"
+  },
+  {
+    "index": 2,
+    "operation": "approve_workflow_revision",
+    "actor": "synthetic-b",
+    "instance": "http://127.0.0.1:58907",
+    "http_status": 409,
+    "response": {
+      "code": "PT409",
+      "details": null,
+      "hint": null,
+      "message": "Governance snapshot changed"
+    },
+    "snapshot_unchanged": true,
+    "full_envelope_and_delta": "rpc/002.json",
+    "delta_tables": [],
+    "derived_bytes": 13857,
+    "derived_sha256": "4c87ab1a87e5bf070023fa98d78e16c0227e3027785f75533b00a5ed408e792e"
+  },
+  {
+    "index": 3,
+    "operation": "publish_workflow_revision",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 409,
+    "response": {
+      "code": "PT409",
+      "details": null,
+      "hint": null,
+      "message": "Publication requires independent complete double review"
+    },
+    "snapshot_unchanged": true,
+    "full_envelope_and_delta": "rpc/003.json",
+    "delta_tables": [],
+    "derived_bytes": 18579,
+    "derived_sha256": "eebb336d79f706dacbd94ba9d57e249258f82e63ca059d2ee9294983ad4d211c"
+  },
+  {
+    "index": 4,
+    "operation": "publish_workflow_revision",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 409,
+    "response": {
+      "code": "PT409",
+      "details": null,
+      "hint": null,
+      "message": "Publication cannot introduce or change stored approvals"
+    },
+    "snapshot_unchanged": true,
+    "full_envelope_and_delta": "rpc/004.json",
+    "delta_tables": [],
+    "derived_bytes": 19140,
+    "derived_sha256": "f26ed66957dbe1be5888d1eb3872e8f975e2cc61cbc078b9a08a2febe987baae"
+  },
+  {
+    "index": 5,
+    "operation": "publish_workflow_revision",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 409,
+    "response": {
+      "code": "PT409",
+      "details": null,
+      "hint": null,
+      "message": "Publication cannot introduce or change stored approvals"
+    },
+    "snapshot_unchanged": true,
+    "full_envelope_and_delta": "rpc/005.json",
+    "delta_tables": [],
+    "derived_bytes": 19140,
+    "derived_sha256": "eb1bbe08b85f2a4739fd58f13cac55a517558449278f31fe277cffc312ac61f4"
+  },
+  {
+    "index": 6,
+    "operation": "approve_workflow_revision",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 409,
+    "response": {
+      "code": "PT409",
+      "details": null,
+      "hint": null,
+      "message": "Approval must independently append one actor-bound attestation to the stored revision"
+    },
+    "snapshot_unchanged": true,
+    "full_envelope_and_delta": "rpc/006.json",
+    "delta_tables": [],
+    "derived_bytes": 15098,
+    "derived_sha256": "d792e3177cc64acff5f1f108d1f5a3bbbdb7cb281bb33fc784760b54751e326b"
+  },
+  {
+    "index": 7,
+    "operation": "approve_workflow_revision",
+    "actor": "synthetic-b",
+    "instance": "http://127.0.0.1:58907",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "approve_workflow_revision"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/007.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 43783,
+    "derived_sha256": "a3a9226928fbd97cd93d4e4d5b6ced6fc3ec361b4729be324ccb660b5b98869b"
+  },
+  {
+    "index": 8,
+    "operation": "publish_workflow_revision",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "publish_workflow_revision"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/008.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 58182,
+    "derived_sha256": "48f95c988918ec0f9eb1af7bea2b809e4bcb5523065011ac18a6a18af27da996"
+  },
+  {
+    "index": 9,
+    "operation": "stage_workflow_refresh",
+    "actor": "automated_refresh",
+    "instance": "http://127.0.0.1:58907",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "stage_workflow_refresh"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/009.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 53328,
+    "derived_sha256": "e3dbd40eb2493da3e51131e69aa4eb0d4a5d68426f91d0b0a5ca1ed1df674dc3"
+  },
+  {
+    "index": 10,
+    "operation": "approve_workflow_revision",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "approve_workflow_revision"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/010.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 71032,
+    "derived_sha256": "cb780e3f315a93e24d5d27e044ab79ddbaeb6218d19db50f1833da8beb6b5937"
+  },
+  {
+    "index": 11,
+    "operation": "approve_workflow_revision",
+    "actor": "synthetic-b",
+    "instance": "http://127.0.0.1:58907",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "approve_workflow_revision"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/011.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 74611,
+    "derived_sha256": "fc7728ddbd075a6fc61d32d44186a53f3732bd70d070443fa025bdebcb6356d5"
+  },
+  {
+    "index": 12,
+    "operation": "update_pending_workflow_applicability",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "update_pending_workflow_applicability"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/012.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 78771,
+    "derived_sha256": "57de2412c2c5b1b1f9b4a5867644a4fd17990fa14609d914d1830c6a29993aeb"
+  },
+  {
+    "index": 13,
+    "operation": "approve_workflow_revision",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "approve_workflow_revision"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/013.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 82867,
+    "derived_sha256": "21d9d74625053f2ee517f40ed1e132f79f1a7d57275b506d99361927871997b6"
+  },
+  {
+    "index": 14,
+    "operation": "approve_workflow_revision",
+    "actor": "synthetic-b",
+    "instance": "http://127.0.0.1:58907",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "approve_workflow_revision"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/014.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 86379,
+    "derived_sha256": "3e3dfba7779f50f66ae7f7af3767684220d3a45da28e93489087ffabb4f64d75"
+  },
+  {
+    "index": 15,
+    "operation": "publish_workflow_revision",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 400,
+    "response": {
+      "code": "P0001",
+      "details": null,
+      "hint": null,
+      "message": "synthetic late workflow publication failure"
+    },
+    "snapshot_unchanged": true,
+    "full_envelope_and_delta": "rpc/015.json",
+    "delta_tables": [],
+    "derived_bytes": 41148,
+    "derived_sha256": "cad59bed1462e38a215228d40ca4f1bb34345854c88c0adc34520ba80339b9e6"
+  },
+  {
+    "index": 16,
+    "operation": "publish_workflow_revision",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:58907",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "publish_workflow_revision"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/016.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 123170,
+    "derived_sha256": "ac6540be29f399a60130ae5b69772a1888a2e5c4089423d9e3b7cf4c8df51eb0"
+  },
+  {
+    "index": 17,
+    "operation": "rollback_published_workflow",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "rollback_published_workflow"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/017.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 117925,
+    "derived_sha256": "f53628d39fe7d40beabba379e8edc2f1f19f8eba562bc622f8af2ada78aec01c"
+  },
+  {
+    "index": 18,
+    "operation": "record_destination_profile_review",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "record_destination_profile_review"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/018.json",
+    "delta_tables": [
+      "audit",
+      "reviews"
+    ],
+    "derived_bytes": 9513,
+    "derived_sha256": "4d60d0362a77f4af36319afae175d76e0d7772ac0338f5e35e65fd2aa766f7d4"
+  },
+  {
+    "index": 19,
+    "operation": "record_destination_profile_review",
+    "actor": "synthetic-b",
+    "instance": "http://127.0.0.1:58907",
+    "http_status": 409,
+    "response": {
+      "code": "PT409",
+      "details": null,
+      "hint": null,
+      "message": "Destination review snapshot changed"
+    },
+    "snapshot_unchanged": true,
+    "full_envelope_and_delta": "rpc/019.json",
+    "delta_tables": [],
+    "derived_bytes": 4138,
+    "derived_sha256": "0c00a69e4dc3c6e16ee2341b2a89c5440c530e87c0cd96485d137486a3d18a14"
+  },
+  {
+    "index": 20,
+    "operation": "record_destination_profile_review",
+    "actor": "synthetic-b",
+    "instance": "http://127.0.0.1:58907",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "record_destination_profile_review"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/020.json",
+    "delta_tables": [
+      "audit",
+      "reviews"
+    ],
+    "derived_bytes": 12217,
+    "derived_sha256": "1d867c16db0ad5976bb3c7a5f2af54091302d1eda30407f589603e326c2d871a"
+  },
+  {
+    "index": 21,
+    "operation": "promote_destination_profile",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 400,
+    "response": {
+      "code": "P0001",
+      "details": null,
+      "hint": null,
+      "message": "synthetic late destination audit failure"
+    },
+    "snapshot_unchanged": true,
+    "full_envelope_and_delta": "rpc/021.json",
+    "delta_tables": [],
+    "derived_bytes": 7774,
+    "derived_sha256": "794824d431c82f9c87b8238fa98b79444bb4554cf0672656d71453d0a0aa4b6d"
+  },
+  {
+    "index": 22,
+    "operation": "promote_destination_profile",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:58907",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "promote_destination_profile"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/022.json",
+    "delta_tables": [
+      "audit",
+      "promotions"
+    ],
+    "derived_bytes": 18136,
+    "derived_sha256": "4cc14878b449c69a94b5e26435c094f8693c6cd4b0e60747f6eca2f3119156ad"
+  },
+  {
+    "index": 23,
+    "operation": "rollback_destination_profile",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "rollback_destination_profile"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/023.json",
+    "delta_tables": [
+      "audit",
+      "rollbacks"
+    ],
+    "derived_bytes": 22048,
+    "derived_sha256": "8afc5f2d2bb11b4cc4110d7bf1b77388e8f3bdc60e97439e3fe62737952df5cb"
+  },
+  {
+    "index": 24,
+    "operation": "stage_workflow_refresh",
+    "actor": "automated_refresh",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "stage_workflow_refresh"
+    },
+    "snapshot_unchanged": true,
+    "full_envelope_and_delta": "rpc/024.json",
+    "delta_tables": [],
+    "derived_bytes": 7358,
+    "derived_sha256": "f586c79403f41838835bdedddc73db4e65ccaf1679e46964e1325522798d6907"
+  },
+  {
+    "index": 25,
+    "operation": "record_destination_profile_review",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "record_destination_profile_review"
+    },
+    "snapshot_unchanged": true,
+    "full_envelope_and_delta": "rpc/025.json",
+    "delta_tables": [],
+    "derived_bytes": 4101,
+    "derived_sha256": "10f6bcfbdd7786bab52bcf00e6a6e9a69ee00a3cbfc047fd89e593fcb4a665b9"
+  },
+  {
+    "index": 26,
+    "operation": "stage_workflow_refresh",
+    "actor": "automated_refresh",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "stage_workflow_refresh"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/026.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 92146,
+    "derived_sha256": "8029d8a98aaa3022db0ea707504def73a52c9667b6a716835d21d76abce6c40e"
+  },
+  {
+    "index": 27,
+    "operation": "stage_workflow_refresh",
+    "actor": "automated_refresh",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "stage_workflow_refresh"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/027.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 99356,
+    "derived_sha256": "d7ff45d3c076ba8accc79648cc61825a2ca8d6984e8666069d93891057e21630"
+  },
+  {
+    "index": 28,
+    "operation": "approve_workflow_revision",
+    "actor": "synthetic-b",
+    "instance": "http://127.0.0.1:58907",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "approve_workflow_revision"
+    },
+    "snapshot_unchanged": null,
+    "full_envelope_and_delta": "rpc/028.json",
+    "delta_tables": [],
+    "derived_bytes": 51557,
+    "derived_sha256": "df7199dc020c4ee881399a4a143a5f5f78313845c3f54847eacae490c965ea8c"
+  },
+  {
+    "index": 29,
+    "operation": "approve_workflow_revision",
+    "actor": "synthetic-a",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 409,
+    "response": {
+      "code": "PT409",
+      "details": null,
+      "hint": null,
+      "message": "Governance snapshot changed"
+    },
+    "snapshot_unchanged": null,
+    "full_envelope_and_delta": "rpc/029.json",
+    "delta_tables": [],
+    "derived_bytes": 51594,
+    "derived_sha256": "0aeb677c501164c0ddd2ab59aac923269547a008c4f269b3ad667196b38d9877"
+  },
+  {
+    "index": 30,
+    "operation": "approve_workflow_revision",
+    "actor": "synthetic-b",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "approve_workflow_revision"
+    },
+    "snapshot_unchanged": true,
+    "full_envelope_and_delta": "rpc/030.json",
+    "delta_tables": [],
+    "derived_bytes": 51527,
+    "derived_sha256": "52be37bcd90318889d7260984d16a016b17b427e0b6a86dfffbeac04a374a577"
+  },
+  {
+    "index": 31,
+    "operation": "stage_workflow_refresh",
+    "actor": "automated_refresh",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "stage_workflow_refresh"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/031.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 112873,
+    "derived_sha256": "fca10b0090cfa1be7c350712e1f4da6c00db9e3e34332cefc868836da44b56a5"
+  },
+  {
+    "index": 32,
+    "operation": "record_destination_profile_review",
+    "actor": "synthetic-cap-reviewer",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "record_destination_profile_review"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/032.json",
+    "delta_tables": [
+      "audit",
+      "reviews"
+    ],
+    "derived_bytes": 23897,
+    "derived_sha256": "16765b40a9a47844b1516777b03b555a6405a8033a990d7485ff9f4b00b1fa74"
+  },
+  {
+    "index": 33,
+    "operation": "stage_workflow_refresh",
+    "actor": "automated_refresh",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "stage_workflow_refresh"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/033.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 125099,
+    "derived_sha256": "51ac2529245c41c5d4aa7e52f7d54b0cdb7e162b9109233c28db6cefb072fdc9"
+  },
+  {
+    "index": 34,
+    "operation": "record_destination_profile_review",
+    "actor": "synthetic-cap-reviewer",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "record_destination_profile_review"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/034.json",
+    "delta_tables": [
+      "audit",
+      "reviews"
+    ],
+    "derived_bytes": 26555,
+    "derived_sha256": "bc0d708b73cf0f69f1e2f29abf4c7136a7820766c9b2588a91a03a32d5f8bc1a"
+  },
+  {
+    "index": 35,
+    "operation": "stage_workflow_refresh",
+    "actor": "automated_refresh",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "stage_workflow_refresh"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/035.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 137325,
+    "derived_sha256": "45b06e5523ab09ac9c786c2480d079251d6fa8f03531115137a6e07559c9c4e2"
+  },
+  {
+    "index": 36,
+    "operation": "record_destination_profile_review",
+    "actor": "synthetic-cap-reviewer",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "record_destination_profile_review"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/036.json",
+    "delta_tables": [
+      "audit",
+      "reviews"
+    ],
+    "derived_bytes": 29211,
+    "derived_sha256": "c933a39398412e11fc77b591bebf06fe38e79db7a0d3dda80675c47025af9005"
+  },
+  {
+    "index": 37,
+    "operation": "approve_workflow_revision",
+    "actor": "synthetic-cap-reviewer",
+    "instance": "http://127.0.0.1:42595",
+    "http_status": 200,
+    "response": {
+      "committed": true,
+      "operation": "approve_workflow_revision"
+    },
+    "snapshot_unchanged": false,
+    "full_envelope_and_delta": "rpc/037.json",
+    "delta_tables": [
+      "audit",
+      "revisions",
+      "workflows"
+    ],
+    "derived_bytes": 156897,
+    "derived_sha256": "504ae951ab9405e61d5e93513e362359f3232999ac3c1c0097c2b118d5d02cd4"
+  }
+]

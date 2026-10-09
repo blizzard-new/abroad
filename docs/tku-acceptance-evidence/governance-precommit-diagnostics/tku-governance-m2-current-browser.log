@@ -1,0 +1,271 @@
+CONFTEST LOADED!
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_current_admin_workbench_source_attestations_publish_and_destination_rollback _
+
+page = <Page url='http://127.0.0.1:41213/admin/content-review?review_status=pending_review&workflow_revision=9f61b666e9f842be8a78e825acca3d69'>
+live_server = LiveServer(base_url='http://127.0.0.1:41213', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-192/web-e2e-data0'))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fdbf8ab72f0>
+
+    def test_current_admin_workbench_source_attestations_publish_and_destination_rollback(page, live_server, monkeypatch):
+        a = live_server.register("synthetic-tku-governance-a@example.com", "Synthetic governance A")
+        b = live_server.register("synthetic-tku-governance-b@example.com", "Synthetic governance B")
+        monkeypatch.setenv("EXCHANGE_CONTENT_ADMIN_EMAILS", f"{a['profile']['email']},{b['profile']['email']}")
+        headers_a, headers_b = _auth_headers(a), _auth_headers(b)
+        base = live_server.base_url
+        store = LocalContentGovernanceStore(live_server.data_dir)
+        school = "Synthetic TKU governance host"
+        workflow = UniversityApplicationWorkflow(home_university="淡江大學", school_name=school,
+            academic_year="117", application_round="Synthetic round", applicability_status="verified",
+            coverage_status="official_verified", last_checked=datetime(2026,10,9,tzinfo=timezone.utc),
+            sources=[ApplicationWorkflowSource(title="Synthetic official source", source_url="https://synthetic.edu/exchange",
+                role="home_university", authority="home_official_notice", effective_academic_year="117",
+                application_round="Synthetic round", checked_at=datetime(2026,10,9,tzinfo=timezone.utc))],
+            steps=[ApplicationStep(rule_id="synthetic-rule", order=1, phase="Synthetic phase", title="Synthetic requirement",
+                responsible_party="Synthetic student", summary="Synthetic bounded rule",
+                source_urls=["https://synthetic.edu/exchange"], support_status="verified")])
+        revision = stage_workflow_refresh(store, workflow).revision
+        profile = DestinationProfile(home_university="淡江大學", school_name=school,
+            coverage_status="official_partial", coverage_note="Synthetic scope boundaries; no real official verification claim",
+            cost_summary="Synthetic bounded cost", sources=[SourceReference(title="Synthetic official source", source_url="https://synthetic.edu/exchange")],
+            last_checked=datetime(2026,10,9,tzinfo=timezone.utc))
+        upsert_destination_profile(profile, live_server.data_dir)
+    
+        _open_content_review_workbench(page, live_server, a['profile']['email'], a)
+        expect(page.locator("#reviewer-email")).to_have_text(a['profile']['email'])
+        page.goto(f"{base}/admin/content-review?review_status=pending_review&workflow_revision={revision.id}")
+        card = page.locator(f'[data-revision-id="{revision.id}"]')
+        expect(card).to_be_visible(timeout=30000)
+        expect(card).to_contain_text(school)
+>       expect(card.locator('[data-review-publish]')).to_be_disabled()
+E       AssertionError: Locator expected to be disabled
+E       Actual value: None
+E       Error: element(s) not found 
+E       Call log:
+E         - Expect "to_be_disabled" with timeout 5000ms
+E         - waiting for locator("[data-revision-id=\"9f61b666e9f842be8a78e825acca3d69\"]").locator("[data-review-publish]")
+E       
+E       Aria snapshot:
+E       - link "跳到審查內容":
+E         - /url: "#review-main"
+E       - banner:
+E         - link "← 返回學生版":
+E           - /url: /
+E         - paragraph: 平台內部工具
+E         - heading "申請流程雙審工作台" [level=1]
+E         - paragraph: 兩個不同管理帳號必須分別核對；核准不足、同一帳號不能重複核准，未參與核准者也不能發布。
+E         - complementary "目前審查者":
+E           - text: 目前審查者
+E           - strong: Synthetic governance A
+E           - text: synthetic-tku-governance-a@example.com
+E       - main:
+E         - region "流程版本佇列":
+E           - paragraph: 人工發布閘門
+E           - heading "流程版本佇列" [level=2]
+E           - paragraph: 先開啟官方來源逐項核對，再留下可追溯的核准或退回說明；未送出的表單只暫存在目前瀏覽器分頁，不能當成核准證據。
+E           - text: 清單類型
+E           - combobox "清單類型":
+E             - option "既有流程待納入雙審"
+E             - option "待審" [selected]
+E             - option "已發布"
+E             - option "已退回"
+E             - option "全部"
+E           - text: 我的審查狀態
+E           - combobox "我的審查狀態":
+E             - option "全部待審版本" [selected]
+E             - option "我的待辦"
+E             - option "我已核准"
+E             - option "可由我發布"
+E           - text: 資料補正狀態
+E           - combobox "資料補正狀態":
+E             - option "全部資料狀態" [selected]
+E             - option "可開始真人核對"
+E             - option "須先補資料"
+E           - button "重新整理"
+E         - region "申請規定待核對佇列":
+E           - paragraph: 學生錯誤回報
+E           - heading "申請規定待核對佇列" [level=2]
+E           - paragraph: 先依學生附上的官方來源核對回報是否成立，再標記為已確認或不成立。學生回報不會自動建立 revision、核准或發布；需要更正時仍須回到正式雙審流程。
+E           - text: 處理狀態
+E           - combobox "處理狀態":
+E             - option "待處理" [selected]
+E             - option "已確認"
+E             - option "不成立"
+E             - option "全部"
+E           - button "重新整理回報"
+E           - paragraph: 這個佇列只能結束學生回報，不能直接修改正式規定。若回報成立，請另外建立 revision，並完成兩位不同管理員核准後才可發布。
+E           - text: 這個狀態目前沒有學生錯誤回報。
+E         - text: 目前定位：Synthetic TKU governance host · revision 9f61b666e9f8。重新整理仍會回到這個待審版本。
+E         - button "查看全部待審版本"
+E         - region "Web 發布就緒閘門":
+E           - paragraph: 即時資料快照
+E           - heading "Web 發布就緒閘門" [level=2]
+E           - status: NOT READY
+E           - paragraph: 目前仍有 11 項發布阻擋；修正資料並完成雙審後重新整理即可重算。
+E           - term: 全部流程
+E           - definition: "855"
+E           - term: 正式發布
+E           - definition: "77"
+E           - term: 關鍵規定
+E           - definition: "21470"
+E           - term: 生活情報
+E           - definition: "576"
+E           - term: 生活待審
+E           - definition: "295"
+E           - term: 阻擋檢查
+E           - definition: "11"
+E           - link "下載雙人審查分工 CSV":
+E             - /url: /admin/application-workflow-review-batches.csv?batch_size=10
+E           - text: 每批 10 筆；同一列保留審查者 A、B、疑義與處置欄位。
+E           - group:
+E             - text: 查看 11 項阻擋
+E             - list:
+E               - listitem:
+E                 - strong: 所有流程均已正式發布：778
+E                 - text: legacy、draft、待審或缺 published_at 的流程都維持發布阻擋。
+E               - listitem:
+E                 - strong: 已發布流程具有完整雙審證據：77
+E                 - text: 每份 published 流程都必須有相同版本、內容雜湊、兩位不同審查者、完整來源與規定清單。
+E               - listitem:
+E                 - strong: 申請流程發布與復原稽核鏈完整：77
+E                 - text: 目前公開版、發布快照、撤回版本、恢復目標與原雙審證據必須形成同一流程內可驗證且不可重複的稽核鏈。
+E               - listitem:
+E                 - strong: 沒有尚未處置的待審版本：1
+E                 - text: 仍在 pending_review 的候選內容必須先核准發布或明確退回。
+E               - listitem:
+E                 - strong: 每份流程具有可驗證精確期限：489
+E                 - text: 精確期限必須同時有日期、HTTPS 官方來源與查核日期。
+E               - listitem:
+E                 - strong: 來源證據資料完整：1165
+E                 - text: 每個規定引用的網址都必須有正式名稱、角色與權威層級。
+E               - listitem:
+E                 - strong: 來源適用學年度完整且一致：4966
+E                 - text: 每個來源年度必須逐頁確認，不能由流程年度自動回填。
+E               - listitem:
+E                 - strong: 流程、來源與步驟查核日期完整：1165
+E                 - text: 最後查核日期必須來自實際審查紀錄。
+E               - listitem:
+E                 - strong: 所有官方來源均使用 HTTPS：26
+E                 - text: 非 HTTPS 網址只能在真人核實替代頁後於 pending revision 修正。
+E               - listitem:
+E                 - strong: 沒有尚待確認的流程、步驟或文件：17653
+E                 - text: 仍標示待確認的規定不能支持學生只依產品指示完成申請。
+E               - listitem:
+E                 - strong: 所有生活情報均達完整查核或已完成雙審升級：295
+E                 - text: 既有 official_verified 基準可保留；official_partial、未收集、仍待雙審或尚未明確升級的生活情報都維持 Web 發布阻擋。
+E           - paragraph:
+E             - text: 快照指紋：
+E             - code: 6ac74699985aa549bfe6ba3709157ac2981442432eebedca9baafd7e13a78326
+E             - text: · 產生時間：2026年10月9日 上午8:48
+E           - paragraph: 這是唯讀、自動化的 fail-closed 總檢查；不能取代兩位真人逐頁確認申請規定與生活情報來源，也不能自動升級或發布內容。
+E         - group: 查看申請流程公開版本與安全復原紀錄
+E         - region "長庚大學生活情報獨立雙人審查":
+E           - paragraph: DATA-006 人工查核
+E           - heading "長庚大學生活情報獨立雙人審查" [level=3]
+E           - paragraph: 長庚大學共有 77 筆生活情報；77 筆完整查核、0 筆待人工續審。其中 0 筆明確等待第二位真人，待審資料共有 0 個官方來源。目前 0 筆已有真人證據、0 筆完成兩人核對、0 筆被要求修正。
+E           - text: CSV 維持唯讀；雙審只保存真人證據，不會自動變更學生資料。兩人核可後，仍須由其中一位核可者明確確認，才會升級學生可見的生活情報狀態。
+E           - link "下載 0 筆生活情報、每批 10 筆的雙人分工清單":
+E             - /url: /admin/destination-profile-review-batches.csv?home_university=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&batch_size=10
+E             - text: 下載生活情報雙人分工 CSV
+E           - link "下載 0 筆生活情報的唯讀人工審查清單":
+E             - /url: /admin/destination-profile-review-queue.csv?expected_snapshot=7789de9f110376ed51841636401e0cc37fd5c1b70e53eb8504709153b80f29eb&home_university=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8
+E             - text: 下載生活情報唯讀審查 CSV
+E         - group: 逐筆開啟生活情報並留下真人審查證據
+E         - group: 查看已升級生活情報的公開版本與復原紀錄
+E         - region "審查摘要":
+E           - article:
+E             - text: 目前筆數
+E             - strong: "1"
+E           - article:
+E             - text: 等待第一位
+E             - strong: "1"
+E           - article:
+E             - text: 等待第二位
+E             - strong: "0"
+E           - article:
+E             - text: 可發布
+E             - strong: "0"
+E         - status
+E         - article:
+E           - text: 待審 版本 1 淡江大學
+E           - heading "Synthetic TKU governance host" [level=3]
+E           - paragraph: 交換申請流程 · 偵測 2026年10月9日 上午8:48
+E           - strong: 0 / 2 位核准
+E           - text: 還需 2 位不同審查者
+E           - status:
+E             - strong: 資料門檻完成，可開始真人核對
+E             - paragraph: 仍須載入版本對照、逐頁開啟全部官方來源並逐項核對規定；這不代表已核准或可發布。
+E           - heading "適用範圍" [level=4]
+E           - term: 學年度
+E           - definition: "117"
+E           - term: 梯次
+E           - definition: Synthetic round
+E           - term: 適用狀態
+E           - definition: 適用範圍已核對
+E           - term: 來源年度
+E           - definition: 1 / 1
+E           - term: 資料涵蓋
+E           - definition: 官方資料已核對
+E           - term: 步驟數
+E           - definition: "1"
+E           - heading "偵測到的變更" [level=4]
+E           - list:
+E             - listitem: 建立第一版申請流程，發布前需確認所有官方來源與適用梯次。
+E           - heading "基準版本與候選版本" [level=4]
+E           - strong: 逐欄版本對照尚未載入
+E           - paragraph: 這是第一版流程，沒有既有基準版本。
+E           - button "載入版本對照"
+E           - heading "官方來源（1）" [level=4]
+E           - list:
+E             - listitem:
+E               - link "Synthetic official source":
+E                 - /url: https://synthetic.edu/exchange
+E               - text: home_official_notice · 117 學年度 · 查核 2026年10月9日 凌晨12:00
+E               - strong: 此網址支援的規定（3）
+E               - list:
+E                 - listitem: 流程適用範圍來源清單
+E                 - listitem: 第 1 步「Synthetic requirement」的內容與要求
+E                 - listitem: 第 1 步「Synthetic requirement」的期限
+E               - checkbox "我已親自開啟並逐頁確認這個來源"
+E               - text: 我已親自開啟並逐頁確認這個來源
+E           - paragraph: 已逐頁確認 0 / 1 個來源；尚有 1 個未確認。
+E           - heading "關鍵規定（2）" [level=4]
+E           - paragraph: 流程適用範圍、每個步驟與每份文件都必須逐項核對；每列直接列出對應來源，勾選代表你已開啟並對照該頁。
+E           - list:
+E             - listitem:
+E               - strong: 流程適用學年度、梯次與適用狀態
+E               - text: 117 · Synthetic round 對應來源：
+E               - link "Synthetic official source":
+E                 - /url: https://synthetic.edu/exchange
+E               - checkbox "我已逐項核對這條規定及其官方來源"
+E               - text: 我已逐項核對這條規定及其官方來源
+E             - listitem:
+E               - strong: 1. Synthetic phase · Synthetic requirement
+E               - text: Synthetic student · unknown 對應來源：
+E               - link "Synthetic official source":
+E                 - /url: https://synthetic.edu/exchange
+E               - checkbox "我已逐項核對這條規定及其官方來源"
+E               - text: 我已逐項核對這條規定及其官方來源
+E           - paragraph: 已逐項確認 0 / 2 個關鍵規定；尚有 2 個未確認。
+E           - heading "完整流程步驟" [level=4]
+E           - group: 1. Synthetic phase｜Synthetic requirement 適用範圍已核對
+E           - complementary "審查操作":
+E             - group: 補正適用學年度與來源證據
+E             - heading "獨立核准紀錄" [level=4]
+E             - text: 尚未有人核准；請先完成官方來源查核。
+E             - strong: 尚有 1 個來源、2 個關鍵規定未確認。
+E             - text: 官方來源 0／1 關鍵規定 0／2 查核說明未填寫
+E             - button "前往下一個未確認來源"
+E             - text: 本次查核說明
+E             - textbox "本次查核說明":
+E               - /placeholder: 請寫明核對的官方來源、學年度、梯次、文件、期限與仍有疑問之處。
+E             - paragraph: 尚未建立本頁暫存；勾選或輸入後會自動保存在這個分頁工作階段。
+E             - button "核准此版本" [disabled]
+E             - button "退回修正"
+E             - button "正式發布" [disabled]
+E             - paragraph: 有基準版本時，核准前請先載入並逐欄核對版本差異；每位審查者還必須獨立開啟並勾選全部官方來源，以及逐項核對流程適用範圍、步驟與文件。核准會綁定目前內容版本、來源清單與關鍵規定清單。正式發布只開放給已參與核准、且已達 2 人門檻的審查者。
+
+tests/e2e/test_tku_governance_transactions.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_tku_governance_transactions.py::test_current_admin_workbench_source_attestations_publish_and_destination_rollback
+1 failed in 19.81s

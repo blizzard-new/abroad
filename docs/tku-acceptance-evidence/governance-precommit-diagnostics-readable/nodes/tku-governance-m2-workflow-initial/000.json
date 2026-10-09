@@ -1,0 +1,132 @@
+[
+  {
+    "id": "tests.test_notifications::test_five_default_deadline_nodes_are_idempotent",
+    "status": "passed",
+    "seconds": "0.011"
+  },
+  {
+    "id": "tests.test_notifications::test_paper_reminder_uses_arrival_deadline_not_send_by_date",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_notifications::test_deadline_reminders_can_be_customized_or_fully_disabled",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_notifications::test_smart_reminder_uses_user_estimated_start_and_stops_when_ready",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_notifications::test_personal_calendar_task_uses_its_own_reminder_offset",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_notifications::test_public_free_account_does_not_receive_smart_start_reminder",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_notifications::test_email_is_not_queued_without_account_opt_in",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_notifications::test_email_failure_retries_without_storing_raw_error",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_notifications::test_email_stops_after_four_failed_attempts",
+    "status": "passed",
+    "seconds": "0.008"
+  },
+  {
+    "id": "tests.test_notifications::test_pending_email_is_cancelled_after_user_opt_out",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_targets_only_matching_established_plan",
+    "status": "passed",
+    "seconds": "0.013"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_uses_saved_plan_department_without_student_verification",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_matches_college_scoped_rule_to_saved_plan",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_email_is_opt_in_idempotent_and_includes_source",
+    "status": "passed",
+    "seconds": "0.008"
+  },
+  {
+    "id": "tests.test_notifications::test_content_update_email_is_cancelled_when_plan_no_longer_matches",
+    "status": "passed",
+    "seconds": "0.007"
+  },
+  {
+    "id": "tests.test_notifications::test_safe_workflow_rollback_notifies_only_affected_saved_plan",
+    "status": "passed",
+    "seconds": "0.083"
+  },
+  {
+    "id": "tests.test_notifications::test_pending_or_rejected_revision_never_creates_content_notification",
+    "status": "passed",
+    "seconds": "0.007"
+  },
+  {
+    "id": "tests.test_notifications::test_admin_publish_immediately_creates_one_content_update_notification",
+    "status": "passed",
+    "seconds": "20.372"
+  },
+  {
+    "id": "tests.test_notifications::test_dual_review_formalization_with_identical_content_sends_no_update",
+    "status": "passed",
+    "seconds": "0.021"
+  },
+  {
+    "id": "tests.test_notifications::test_notifications_migration_is_server_only",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_notifications::test_notification_center_requires_login_and_supports_read_state",
+    "status": "passed",
+    "seconds": "0.165"
+  },
+  {
+    "id": "tests.test_notifications::test_notification_center_can_mark_all_owned_notifications_read",
+    "status": "passed",
+    "seconds": "0.152"
+  },
+  {
+    "id": "tests.test_notifications::test_notification_center_queues_email_only_after_opt_in",
+    "status": "passed",
+    "seconds": "0.155"
+  },
+  {
+    "id": "tests.test_notifications::test_admin_can_run_due_notification_job",
+    "status": "passed",
+    "seconds": "0.128"
+  },
+  {
+    "id": "tests.test_notification_changes::test_changes_are_owned_and_hide_unrelated_department_and_reviewer",
+    "status": "passed",
+    "seconds": "0.135"
+  },
+  {
+    "id": "tests.test_notification_changes::test_review_gate_rejects_non_admin_duplicate_and_incomplete_publication",
+    "status": "passed",
+    "seconds": "0.270"
+  }
+]

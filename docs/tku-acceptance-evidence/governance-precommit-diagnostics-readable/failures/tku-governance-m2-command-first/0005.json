@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "tku-governance-m2-command-first.xml",
+  "original_xml_sha256": "47375c65311dc81da0d5309c1ede5c448619ccde3c7d9b93d18665c0d5ee58a6",
+  "case_attributes": {
+    "classname": "tests.test_tku_governance_commands",
+    "name": "test_duplicate_original_url_roles_are_preserved_in_nonreplacement_edit",
+    "time": "0.001"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'"
+  },
+  "full_text": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-182/test_duplicate_original_url_ro0')\n\n    def test_duplicate_original_url_roles_are_preserved_in_nonreplacement_edit(tmp_path):\n        store = LocalContentGovernanceStore(tmp_path)\n>       workflow = _content_workflow(\"Synthetic shared URL roles\")\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       TypeError: _content_workflow() missing 1 required keyword-only argument: 'version'\n\ntests/test_tku_governance_commands.py:161: TypeError"
+}
