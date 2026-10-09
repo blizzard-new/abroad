@@ -2065,3 +2065,44 @@ def test_hokkaido_original_scope_failed_interface_and_image_form_are_preserved()
     bank = sources['host-hokkaido-bank-online2025']
     assert bank['reading_review']['pages_reviewed']==list(range(2,21))
     assert bank['content_status']['all_pages_read'] and bank['content_status']['visual_reviewed_page_count']==4
+
+
+def test_hokkaido_department_agreement_legend_is_internship_not_faculty_exchange():
+    sources = {s['id']: s for s in json.loads(gzip.decompress((BUNDLE / 'source-evidence.json.gz').read_bytes()))}
+    original = sources['host-hokkaido-department-partners2026sep']
+    page = next(p['text'] for p in original['pages'] if p['page'] == 7)
+    assert 'I: Internship program' in page
+    partner = next(p for p in fetch_ncu_partner_universities() if '北海道大學(院級)' in p.school_name)
+    field = ncu_field_audit(partner.school_name)['fields']['eligibility']
+    assert '學術交流／學生交流／實習（Internship program）' in field['note']
+    assert '2018/2/5' in field['note'] and '2024/6/28' in field['note']
+    assert '僅A學術交流' in field['note']
+    assert '學術／學生／教員交流' not in field['note']
+    assert any(s.get('page') == 7 for s in field['original_evidence'])
+    assert partner.quota is None and partner.degree_levels is None
+
+
+@pytest.mark.parametrize('level', ['院級', '校級'])
+def test_hokkaido_jlcsp_unrelated_courses_prohibited_only_for_that_programme(tmp_path, level):
+    partner = next(p for p in fetch_ncu_partner_universities() if f'北海道大學({level})' in p.school_name)
+    audit = ncu_field_audit(partner.school_name)
+    courses = audit['fields']['courses']
+    assert '不得修讀與日本語／日本學無關的課程' in courses['note']
+    assert '即使母校要求亦不允許' in courses['note']
+    assert '不套HUSTEP／SA／SRS' in courses['note']
+    assert any(s.get('page') == 11 and '4d39ab11' in s.get('source_url', '') for s in courses['original_evidence'])
+    client = TestClient(create_app(tmp_path))
+    shown = next(p for p in client.get('/student-dashboard', params={'school': 'NCU'}).json()['partner_universities'] if p['school_name'] == partner.school_name)
+    assert '不得修讀與日本語／日本學無關的課程' in json.dumps(shown['student_summary_zh'], ensure_ascii=False)
+    workflow = client.get('/application-workflow', params={'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116'}).json()
+    jlcsp = [s for s in workflow['steps'] if 'jlcsp-' in s['rule_id']]
+    if level == '院級':
+        assert not jlcsp
+        assert '院級已被JLCSP排除' in courses['note']
+    else:
+        student = next(s for s in jlcsp if s['rule_id'].endswith('jlcsp-student-initial'))
+        assert '即使母校要求亦不允許' in student['summary']
+        for step in workflow['steps']:
+            if 'hustep-' in step['rule_id'] or 'sasrs-' in step['rule_id']:
+                assert '不得修讀與日本語／日本學無關的課程' not in step['summary']
+    assert not any(s['deadline_reminder_eligible'] for s in workflow['steps'])

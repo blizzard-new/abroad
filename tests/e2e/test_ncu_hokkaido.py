@@ -27,6 +27,10 @@ def test_ncu_hokkaido_two_agreements_documents_scope_and_life(page,live_server,w
     if width<700:page.locator('#partner-table .partner-card > summary').first.click()
     page.locator('#partner-table .school-detail-trigger:visible').first.click()
     expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('2027春')
+    expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('不得修讀與日本語／日本學無關的課程')
+    if level == '院級':
+        expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('Internship program')
+        expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('僅A學術交流')
     page.locator('#ncu-source-audit > summary').click()
     source=page.locator('#ncu-source-audit-body > details').filter(has_text='HUSTEP2026春syllabus83頁').first
     expect(source.locator(':scope > summary')).to_be_visible(timeout=60_000)
@@ -54,6 +58,8 @@ def test_ncu_hokkaido_two_agreements_documents_scope_and_life(page,live_server,w
             group=step(title);group.locator(':scope > summary').click()
             expect(group.locator('.workflow-documents > li')).to_have_count(count)
         mother=step('JLCSP：母校三件')
+        expect(step('JLCSP：學生五件')).to_contain_text('即使母校要求亦不允許')
+        expect(step('HUSTEP：學生六件')).not_to_contain_text('不得修讀與日本語／日本學無關的課程')
         expect(mother).to_contain_text('母校系所／國際事務承辦簽名')
         expect(mother).to_contain_text('Official Stamp')
         expect(mother).not_to_contain_text('簽署：本人')

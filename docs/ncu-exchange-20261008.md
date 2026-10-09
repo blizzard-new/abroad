@@ -484,3 +484,5 @@ COE接收後另寄母校清單，日本籍含雙重不申COE；新版財力／�
 北海道預驗紀錄：新23項API／來源／18組身分與住房條件第一版19 passed／4 failed（測試誤把既有agreement_only寫needs_confirmation及生活摘要當完整guide），修正檢查實際API後23 passed；browser初版2 passed／2 failed發現流程只有名稱／簽章而漏表格連結。已限NCU補官方參考表格連結，當期適用警語及正式下載封鎖不變，第二版4 passed（144.78s）。兩次原始失敗未抹除。畫面另顯示生活每欄重複全校93來源，改NCU builder依逐欄refs供連結，到校段亦只列arrival已查來源；全部原件仍保留在來源稽核。最後版本提交後以新SHA再跑，不將preview改標提交結果。
 
 2026-10-08 23:18 UTC唯讀fetch：main `f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59`、CCU `0e70dbf29d0830ed3733c46090d5b7126689b958`、TKU `61659fe12cf5bb5f3fed2502f112039c7f8abd92`。新增NCU builder是獨立檔；共用app.js的表格參考連結只對NCU workflow啟用，其餘母校渲染不加連結。仍須按兩分支最新14共檔逐段整合；沒有合併、覆蓋或重複改TKU正在處理的CI workflow。
+
+北海道獨立複核修正（2026/10/9）：院級協議原圖PDF7的A／S／I已改為學術交流／學生交流／實習（Internship program）；2018/2/5工／理與2024/6/28 Polar Institute僅A維持分流，沒有套116名額。JLCSP2027春指南PDF11已公開「不得修日本語／日本學無關科目，即使母校要求亦不允許」與不考慮母校學分互換需求，補兩筆逐欄／學生摘要，校級JLCSP流程顯示；院級仍排除JLCSP，HUSTEP／SA／SRS專屬流程沒有套此禁修。全部離線產物重建，新增3項回歸及4個既有390／1440 browser內容斷言；固定新SHA驗證另以manifest記錄。舊fff2760結果不回改為修正後已驗證。
