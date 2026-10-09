@@ -1,0 +1,41 @@
+{
+  "tested_commit": "3a8ca75680e941da478e06ec1162cebeb8152619",
+  "starting_state": {
+    "commit": "3a8ca75680e941da478e06ec1162cebeb8152619",
+    "dirty": ""
+  },
+  "ending_state": {
+    "commit": "3a8ca75680e941da478e06ec1162cebeb8152619",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "command": [
+    "/workspace/abroad-tku/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_experience_collector.py",
+    "tests/test_frontend_contract.py",
+    "tests/test_independent_page_routing.py",
+    "tests/test_experience_digests.py",
+    "tests/test_school_content.py",
+    "tests/test_notifications.py",
+    "tests/test_application_document_catalog.py",
+    "tests/test_next_phase_contract.py",
+    "tests/test_tku_governance_routes.py",
+    "tests/test_tku_governance_commands.py",
+    "tests/test_application_workflow_issue_reports.py",
+    "tests/test_notification_changes.py",
+    "tests/test_jsonl_storage_integrity.py",
+    "tests/test_supabase_runtime_validation.py",
+    "tests/test_workflow_catalog_cache.py",
+    "tests/test_cgu_bundled_data.py",
+    "tests/test_ntpu_bundled_data.py",
+    "-q",
+    "-ra",
+    "--junitxml=/tmp/tku-governance-3a8ca75/unit.xml"
+  ],
+  "actual_exit_code": 0,
+  "elapsed_seconds": 137.43,
+  "production_access": false,
+  "scope": "Original twelve contracts plus all governance/admin/source/replay/audit/storage/OpenAPI/runtime-harness and CGU/NTPU bundled regressions"
+}

@@ -1,0 +1,43 @@
+{
+  "head_sha": "3a8ca75680e941da478e06ec1162cebeb8152619",
+  "checked_at": "2026-10-09T09:26:13.357037+00:00",
+  "scope": "Fixed local M2 evidence and actual CI startup denial; original failures preserved. Not full CI or full34 runtime success.",
+  "unit": {
+    "passed": 316,
+    "skipped": 4,
+    "failed": 0
+  },
+  "browser": {
+    "passed": 35,
+    "failed": 1,
+    "skipped": 0
+  },
+  "SQL": {
+    "groups": 8,
+    "RPC": 22,
+    "command_audit": 16,
+    "migration_count": 10,
+    "canonical_functions": 2,
+    "postgrest_instances": 2,
+    "full_supabase_storage_runtime": false
+  },
+  "collection": {
+    "unique": 1824,
+    "files": 187,
+    "original_preserved": 1789,
+    "added": 35,
+    "removed": 0,
+    "duplicated": 0
+  },
+  "remote_ci": {
+    "pr_run": 37909160698,
+    "push_run": 37909153439,
+    "all_eight_jobs_steps_empty": true,
+    "artifacts_empty": true,
+    "actual_test_counts": null,
+    "actual_reason": "The job was not started because recent account payments have failed or your spending limit needs to be increased.",
+    "billing_changed": false
+  },
+  "environment_probe": "Same /workspace/abroad-tku environment responded with exact HEAD/gitstatus/filechecks at2026-10-09 09:25:41 UTC. No processes for earlier tests remained. No newenvironment or escalation.",
+  "production_access": false
+}

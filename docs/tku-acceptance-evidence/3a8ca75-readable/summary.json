@@ -1,0 +1,26 @@
+{
+  "originals_preserved": true,
+  "original_xml_reconstruction": false,
+  "xml_files": [
+    {
+      "raw_xml": "browser.xml",
+      "counts": {
+        "passed": 35,
+        "failure": 1
+      },
+      "node_count": 36,
+      "index": "nodes/browser/index.json"
+    },
+    {
+      "raw_xml": "unit.xml",
+      "counts": {
+        "passed": 316,
+        "skipped": 4
+      },
+      "node_count": 320,
+      "index": "nodes/unit/index.json"
+    }
+  ],
+  "chunk_bytes": 150000,
+  "limitation": "Indexes and extracted failure JSON are derived; original XML remains untouched and its byte-exact base64 reassembly is verified. Each result is bound to its own raw run metadata; no relabeling."
+}
