@@ -1,0 +1,113 @@
+CONFTEST LOADED!
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception[unknown-unknown] _
+
+tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-3/test_kansai_initial_api_notes_0')
+admission = 'unknown', housing = 'unknown'
+
+    @pytest.mark.parametrize('admission,housing', [
+        ('unknown', 'unknown'), ('accepted', 'on_campus'), ('accepted', 'off_campus')])
+    def test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception(tmp_path, admission, housing):
+        client = TestClient(create_app(tmp_path))
+        workflow = client.get('/application-workflow', params={
+            'home_school': 'NCU', 'school': '關西大學 Kansai University', 'academic_year': '116'})
+        assert workflow.status_code == 200
+        initial_step = next(step for step in workflow.json()['steps']
+                            if step['rule_id'] == 'ncu-129-host-initial-reference')
+        initial_names = {requirement['name'] for requirement in initial_step['document_requirements']}
+        assert len(initial_names) == 6
+        response = client.get('/application-center/catalog', params={
+            'school': 'NCU', 'target_school': '關西大學 Kansai University',
+            'academic_year': '116', 'host_admission_status': admission, 'housing_choice': housing})
+        assert response.status_code == 200
+        initial = [item for item in response.json()['items'] if item['name'] in initial_names]
+        assert len(initial) == 6
+        for item in initial:
+            applicability = item['applicability']
+            assert applicability['status'] == 'needs_confirmation'
+            assert not applicability['current_applicability_verified'] and not item['download_available']
+            note = applicability['note']
+>           assert '所有發出三月內' not in note
+E           AssertionError: assert '所有發出三月內' not in '2027春10/16–...合不代表當期必繳已核准。'
+E             
+E             '所有發出三月內' is contained here:
+E               2027春10/16–31 JST upload，所有發出三月內；推薦／誓約／健康原件不用郵寄。 兩校須確認本人學制／學院、年度／學期、國籍／住地與條件件；不由平台判定醫療／移民資格。 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。 116當期來源適用性仍待核實，條件符合不代表當期必繳已核准。
+E             ?                          +++++++
+
+tests/test_ncu_shizuoka_chuo_kansai.py:99: AssertionError
+_ test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception[accepted-on_campus] _
+
+tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-3/test_kansai_initial_api_notes_1')
+admission = 'accepted', housing = 'on_campus'
+
+    @pytest.mark.parametrize('admission,housing', [
+        ('unknown', 'unknown'), ('accepted', 'on_campus'), ('accepted', 'off_campus')])
+    def test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception(tmp_path, admission, housing):
+        client = TestClient(create_app(tmp_path))
+        workflow = client.get('/application-workflow', params={
+            'home_school': 'NCU', 'school': '關西大學 Kansai University', 'academic_year': '116'})
+        assert workflow.status_code == 200
+        initial_step = next(step for step in workflow.json()['steps']
+                            if step['rule_id'] == 'ncu-129-host-initial-reference')
+        initial_names = {requirement['name'] for requirement in initial_step['document_requirements']}
+        assert len(initial_names) == 6
+        response = client.get('/application-center/catalog', params={
+            'school': 'NCU', 'target_school': '關西大學 Kansai University',
+            'academic_year': '116', 'host_admission_status': admission, 'housing_choice': housing})
+        assert response.status_code == 200
+        initial = [item for item in response.json()['items'] if item['name'] in initial_names]
+        assert len(initial) == 6
+        for item in initial:
+            applicability = item['applicability']
+            assert applicability['status'] == 'needs_confirmation'
+            assert not applicability['current_applicability_verified'] and not item['download_available']
+            note = applicability['note']
+>           assert '所有發出三月內' not in note
+E           AssertionError: assert '所有發出三月內' not in '2027春10/16–...合不代表當期必繳已核准。'
+E             
+E             '所有發出三月內' is contained here:
+E               2027春10/16–31 JST upload，所有發出三月內；推薦／誓約／健康原件不用郵寄。 兩校須確認本人學制／學院、年度／學期、國籍／住地與條件件；不由平台判定醫療／移民資格。 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。 116當期來源適用性仍待核實，條件符合不代表當期必繳已核准。
+E             ?                          +++++++
+
+tests/test_ncu_shizuoka_chuo_kansai.py:99: AssertionError
+_ test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception[accepted-off_campus] _
+
+tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-3/test_kansai_initial_api_notes_2')
+admission = 'accepted', housing = 'off_campus'
+
+    @pytest.mark.parametrize('admission,housing', [
+        ('unknown', 'unknown'), ('accepted', 'on_campus'), ('accepted', 'off_campus')])
+    def test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception(tmp_path, admission, housing):
+        client = TestClient(create_app(tmp_path))
+        workflow = client.get('/application-workflow', params={
+            'home_school': 'NCU', 'school': '關西大學 Kansai University', 'academic_year': '116'})
+        assert workflow.status_code == 200
+        initial_step = next(step for step in workflow.json()['steps']
+                            if step['rule_id'] == 'ncu-129-host-initial-reference')
+        initial_names = {requirement['name'] for requirement in initial_step['document_requirements']}
+        assert len(initial_names) == 6
+        response = client.get('/application-center/catalog', params={
+            'school': 'NCU', 'target_school': '關西大學 Kansai University',
+            'academic_year': '116', 'host_admission_status': admission, 'housing_choice': housing})
+        assert response.status_code == 200
+        initial = [item for item in response.json()['items'] if item['name'] in initial_names]
+        assert len(initial) == 6
+        for item in initial:
+            applicability = item['applicability']
+            assert applicability['status'] == 'needs_confirmation'
+            assert not applicability['current_applicability_verified'] and not item['download_available']
+            note = applicability['note']
+>           assert '所有發出三月內' not in note
+E           AssertionError: assert '所有發出三月內' not in '2027春10/16–...合不代表當期必繳已核准。'
+E             
+E             '所有發出三月內' is contained here:
+E               2027春10/16–31 JST upload，所有發出三月內；推薦／誓約／健康原件不用郵寄。 兩校須確認本人學制／學院、年度／學期、國籍／住地與條件件；不由平台判定醫療／移民資格。 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。 116當期來源適用性仍待核實，條件符合不代表當期必繳已核准。
+E             ?                          +++++++
+
+tests/test_ncu_shizuoka_chuo_kansai.py:99: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_shizuoka_chuo_kansai.py::test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception[unknown-unknown]
+FAILED tests/test_ncu_shizuoka_chuo_kansai.py::test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception[accepted-on_campus]
+FAILED tests/test_ncu_shizuoka_chuo_kansai.py::test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception[accepted-off_campus]
+3 failed in 10.47s
