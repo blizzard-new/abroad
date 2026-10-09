@@ -26,15 +26,27 @@ def test_next3_reference_packets_and_living_content(page,live_server,width,slug,
     page.locator('[data-partner-view="list"]').click();page.locator('#partner-search').fill(name)
     expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
     trigger=f'.school-detail-trigger[data-school-name="{full_name}"]'
-    if width<700:page.locator('#partner-table .partner-card').filter(has=page.locator(trigger)).locator(':scope > summary').click()
+    card_term={'nufs':'GJP不強制JLPT','kumamoto':'TOEFL iBT61','ryukoku':'建議300小時或N4'}[slug]
+    if width<700:
+        card=page.locator('#partner-table .partner-card').filter(has=page.locator(trigger))
+        card.locator(':scope > summary').click()
+        assert card_term in card.locator('.partner-card-summary').inner_text()
+        card.scroll_into_view_if_needed()
+    else:
+        row=page.locator('#partner-table tr').filter(has=page.locator(trigger))
+        row.locator('.partner-condition-disclosure > summary').click()
+        assert card_term in row.locator('.partner-condition-disclosure').inner_text()
+        row.scroll_into_view_if_needed()
+    page.screenshot(path=str(out/f'{slug}-{width}-card-or-row.png'))
     page.locator(f'#partner-table {trigger}:visible').first.click()
     assert page.evaluate('new URLSearchParams(location.hash.slice(1)).get("school")')==full_name
     summary=page.locator('#detail-overview .partner-student-summary')
     terms={'nufs':['GJP','N2','N1','2026/10/31','不是所有文件三月內'],
            'kumamoto':['packet','三年級','594,600','平台加總'],
            'ryukoku':['建議','300','N4','JEP','正式結果']}
-    for term in terms[slug]:expect(summary).to_contain_text(term)
-    summary.scroll_into_view_if_needed();page.screenshot(path=str(out/f'{slug}-{width}-overview.png'))
+    for toggle in summary.locator('.partner-summary-more > summary').all():toggle.click()
+    for term in terms[slug]:assert term in summary.inner_text(),term
+    summary.scroll_into_view_if_needed();page.screenshot(path=str(out/f'{slug}-{width}-overview.png'),full_page=True)
     page.locator('#ncu-source-audit > summary').click()
     expect(page.locator('#ncu-source-audit-body > p').first).to_contain_text('2026-10-09',timeout=60_000)
     if slug!='nufs':
@@ -56,9 +68,9 @@ def test_next3_reference_packets_and_living_content(page,live_server,width,slug,
         for term in ['不能Xray可其他結核檢查','正式結果','零學習也交']:
             expect(group).to_contain_text(term)
     group.scroll_into_view_if_needed();page.screenshot(path=str(out/f'{slug}-{width}-packet.png'))
-    titles={'nufs':['NUFS審查與COE代辦','NUFS取得COE後申請學生簽證','NUFS依指定到達安排航班及接送','NUFS入寮、orientation、登記與NHI'],
+    titles={'nufs':['NUFS審查與COE代辦','NUFS取得COE後申請學生簽證','NUFS依指定到達安排航班及接送','NUFS入寮、新生說明會、登記與NHI'],
             'kumamoto':['熊本录取後核對COE材料','熊本COE及入學許可後申請學生簽證','熊本指定日自行購票與提供行程','熊本抵達、定址與註冊準備'],
-            'ryukoku':['龍谷審查錄取與COE代辦','龍谷收到COE後申請學生簽證','龍谷核對簽證與暫定入寮後安排航班','龍谷到校orientation、NHI與銀行扣款']}
+            'ryukoku':['龍谷審查錄取與COE代辦','龍谷收到COE後申請學生簽證','龍谷核對簽證與暫定入寮後安排航班','龍谷到校新生說明會、NHI與銀行扣款']}
     phase_terms=['錄取與COE','簽證準備','機票與行程','到校準備']
     groups=[]
     for stage_title,phase in zip(titles[slug],phase_terms):
