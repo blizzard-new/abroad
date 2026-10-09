@@ -62,17 +62,28 @@ def test_expired_school_reader_closes_and_discards_drafts_and_late_responses(pag
             page.evaluate("window.UniWayCommunity.refresh()")
         page.wait_for_function("() => window.__lateReader.captured")
         assert page.evaluate("window.__lateReader.status") == 200
+    if late_kind == "none":
+        # Focus before revocation; the real keyboard action may immediately
+        # remove its own control when 401 cleanup closes the native dialog.
+        sort = page.locator("#discussion-comment-sort")
+        expect(sort).to_have_value("oldest")
+        sort.focus()
+        expect(sort).to_be_focused()
     cookies = {c["name"]: c["value"] for c in page.context.cookies() if c["name"] == "exchange_guide_session"}
     assert requests.post(f"{live_server.base_url}/auth/logout", cookies=cookies, timeout=10).status_code == 204
-    with page.expect_response(lambda r: r.status == 401 and "/community/" in r.url):
+    with page.expect_response(lambda r: r.status == 401 and "/community/" in r.url) as expired_response:
         if late_kind == "none":
-            page.locator("#discussion-comment-sort").select_option("latest")
+            page.keyboard.press("ArrowDown")
         elif late_kind == "comments":
             page.locator('#discussion-reader [data-discussion-react="helpful"][data-resource-type="post"]').click()
         else:
             # The original detail has replaced the action controls with its loading
             # state; exercise the same real comments transport while that GET waits.
             page.evaluate("id => { void fetchJson(`/community/posts/${id}/comments?sort=latest&limit=20`).catch(() => {}); }", post.id)
+    if late_kind == "none":
+        assert expired_response.value.request.method == "GET"
+        assert f"/community/posts/{post.id}/comments?" in expired_response.value.url
+        assert "sort=latest" in expired_response.value.url
     expect(page.locator("#auth-dialog")).to_be_visible()
     expect(page.locator("#discussion-reader")).not_to_be_visible()
     expect(page.locator("#discussion-reader-body")).to_be_empty()
