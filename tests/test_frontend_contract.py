@@ -14,8 +14,8 @@ def test_content_review_workbench_exposes_dual_review_without_student_navigation
     student_html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
 
     assert "申請流程雙審工作台" in html
-    assert "content-review.css?v=20261009-governance-2" in html
-    assert "content-review.js?v=20261009-governance-2" in html
+    assert "content-review.css?v=20261009-governance-3" in html
+    assert "content-review.js?v=20261009-governance-3" in html
     assert 'value="review_unstarted"' in html
     assert 'value="review_partial"' in html
     assert 'value="review_ready"' in html
