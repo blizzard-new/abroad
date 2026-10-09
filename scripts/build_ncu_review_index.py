@@ -51,7 +51,7 @@ def field_index(field, audit_i: int, key: str):
     return result
 
 
-def build(sha: str, out: Path):
+def build(sha: str, out: Path, row_ids: set[str] | None = None):
     raw, manual, audit, workflows, policies, sources = load_candidate(sha)
     records = []
     used_sources = set()
@@ -60,6 +60,8 @@ def build(sha: str, out: Path):
         if not reviewed_ids:
             continue
         ident = reviewed_ids[0]
+        if row_ids is not None and ident not in row_ids:
+            continue
         school = out / "schools" / ident
         fields = {k: f"fields/{k}.json" for k in row["fields"]}
         assert len(fields) == 17
@@ -104,7 +106,9 @@ def build(sha: str, out: Path):
                  "fields": fields, "documents": "documents.json", "sources": "sources.json", "gaps": "gaps.json"}
         write(school / "index.json", entry)
         records.append({"id": ident, "school_name": row["school_name"], "path": f"schools/{ident}/index.json"})
-    assert len(records) == len(manual) == 71
+    assert len(records) == (len(row_ids) if row_ids is not None else len(manual))
+    if row_ids is not None:
+        assert {r['id'] for r in records} == row_ids
     for source_i, source in enumerate(sources):
         if source["id"] not in used_sources:
             continue
@@ -128,6 +132,7 @@ def build(sha: str, out: Path):
         "input_sha256": {p: digest(b) for p, b in raw.items()},
         "catalog_coverage": json.loads(raw[f"{BUNDLE}/catalog-completeness.json"]),
         "school_count": len(records), "fields_per_school": 17,
+        "selected_row_ids": sorted(row_ids) if row_ids is not None else None,
         "indexed_source_count": len(used_sources), "schools": records,
         "note_zh": "原始大檔保留。索引不修改資料／補核當期；共享來源去重，原文由不可變Git候選與精確位置／hash讀回。",
     })
@@ -195,6 +200,7 @@ def main():
     parser.add_argument("--school")
     parser.add_argument("--field")
     parser.add_argument("--original", action="store_true")
+    parser.add_argument("--row-ids", nargs="+", help="Build a separate subset index; existing frozen indexes are not rewritten")
     args = parser.parse_args()
     if args.check:
         validate(args.output_dir)
@@ -213,7 +219,7 @@ def main():
         if not args.candidate_sha:
             parser.error("--candidate-sha is required to build an immutable index")
         sha = subprocess.check_output(["git", "rev-parse", args.candidate_sha], cwd=ROOT, text=True).strip()
-        build(sha, args.output_dir)
+        build(sha, args.output_dir, set(args.row_ids) if args.row_ids else None)
 
 
 if __name__ == "__main__":
