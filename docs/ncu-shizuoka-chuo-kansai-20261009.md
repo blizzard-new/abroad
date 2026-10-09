@@ -39,3 +39,5 @@
 Kyutech先前原事件與兩次有瑕疵的有界診斷證據見[診斷紀錄](ncu-test-evidence/kyutech-bounded-diagnosis-20261009/README.md)，不得把一次通過或profiling造成500當根因修復／重現。原e79整組19 pass／1 fail仍有效，本批不再重跑該診斷。
 
 最新main f6ad1b8、CCU5eadeb5與TKU4133667；與NCU分支共享路徑交集15／20，需逐段整合，未merge／覆蓋。本批只改NCU資料、來源metadata、測試與說明，未再改共用實作。未部署、套正式DB、改credentials／security或對外聯絡。
+
+第一固定候選672eb58：315中央、193共享＋2skip、65gate、OpenAPI／851流程0差異／JS／lock均過；6 browser為4 pass／2 fail。兩個關西案例用搜尋結果第一項誤開關西國際（其文字包含「不是關西大學」），原始URL／畫面與失敗斷言已保留。測試改依完整school identity精確選卡並核對實際網址，沒有改平台搜尋規則或調長斷言timeout。32ead78另補原健康表持續治療medical information及三月規則護照範圍；最终固定候選將含這兩個修正另驗，672結果不改標為新版通過。

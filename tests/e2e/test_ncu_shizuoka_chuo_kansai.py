@@ -31,9 +31,14 @@ def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,nam
     page.locator('[data-partner-view="list"]').click()
     page.locator('#partner-search').fill(name)
     expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+    full_name={'shizuoka':'靜岡大學 Shizuoka University',
+               'chuo':'日本中央大學 Chuo University',
+               'kansai':'關西大學 Kansai University'}[slug]
+    exact_trigger=f'.school-detail-trigger[data-school-name="{full_name}"]'
     if width<700:
-        page.locator('#partner-table .partner-card > summary').first.click()
-    page.locator('#partner-table .school-detail-trigger:visible').first.click()
+        page.locator('#partner-table .partner-card').filter(has=page.locator(exact_trigger)).locator(':scope > summary').click()
+    page.locator(f'#partner-table {exact_trigger}:visible').first.click()
+    assert page.evaluate('new URLSearchParams(location.hash.slice(1)).get("school")') == full_name
     summary=page.locator('#detail-overview .partner-student-summary')
     terms={'shizuoka':['不是正式申請門檻','10/1','10/14','closed'],
            'chuo':['Tentative','N3','Kenkyusei','五門','六列'],
