@@ -26,4 +26,4 @@ Kyutech原e79的20案例19 pass／1 fail仍有效，後續一次3 pass不關閉�
 
 [合併點](merge-points.json)記錄main f6ad1b8、CCU5eadeb5／15交集、TKU4133667／20交集。本批只NCU資料／測試／說明，沒有merge、部署、正式DB、credentials／security變更或對外聯絡。
 
-[checksums](checksums.json)的179筆均驗證一致；README與checksums本身不作自我checksum。只有`candidate-672eb58/browser_next3_content.xml`與`candidate-16e95c3/browser_next3_content.xml`因原始失敗包含native trailing whitespace，保留原位元組且僅這兩檔從diff空白檢查排除；其他staged檔全通過，未改全域設定。
+[checksums](checksums.json)的179筆均驗證一致；README與checksums本身不作自我checksum。`candidate-672eb58/browser_next3_content.log`／`.xml`及`candidate-16e95c3/browser_next3_content.log`／`.xml`四檔因原始失敗包含native trailing whitespace，保留原位元組且僅這四檔從diff空白檢查排除；其他staged檔全通過，未改全域設定。Repo預設忽略log，35份必要原始log已逐檔強制加入；驗證179筆每一檔都存在Git tracked內容，沒有只留工作目錄副本。
