@@ -131,6 +131,8 @@ def test_guest_can_read_every_board_but_unverified_email_cannot_publish(
         "ntpu",
         "ntu",
         "tku",
+        "ccu",
+        "ncu",
     }
     assert all(row["can_read"] == (row["kind"] != "university_exchange") for row in guest_boards.json())
     assert all(row["can_post"] is False for row in guest_boards.json())

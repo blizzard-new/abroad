@@ -60,7 +60,7 @@ def test_ncu_hiroshima_fee_image_coe_and_departure_stages_reach_mobile_ui(page,l
     departure.locator(':scope > summary').click()
     form=departure.get_by_text('如入住池之上：退居屆',exact=False).first
     expect(form).to_be_visible();expect(departure).to_contain_text('先確認點檢日')
-    expect(departure.locator('.workflow-documents > li.needs-confirmation')).to_contain_text('待官方確認')
+    expect(departure.locator('.workflow-documents > li.needs-confirmation')).to_contain_text('適用性及送件細節待確認')
     expect(departure).to_contain_text('個人住處仍需核')
     form.scroll_into_view_if_needed()
     page.screenshot(path=str(out/'ncu-hiroshima-departure-stage-390.png'))

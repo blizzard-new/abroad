@@ -83,7 +83,7 @@ def test_advisor_does_not_borrow_latest_jlpt_rule_for_unknown_year_or_round(year
     from types import SimpleNamespace
     from exchange_info.advisor import _qualification_summary
     summary = _qualification_summary(AdvisorProfile(school_name='淡江大學',academic_year=year,
-        application_round=round_name,jlpt_level='N1',academic_score=90),SimpleNamespace(school_name='淡江大學'))
+        application_round=round_name,jlpt_level='N1',academic_score=90),SimpleNamespace(school_name='淡江大學', academic_gpa_minimum=None))
     assert '尚未核實新版' in summary[0]
     assert not any('符合已知門檻' in line for line in summary)
 

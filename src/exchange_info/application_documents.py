@@ -1048,7 +1048,8 @@ def build_application_document_catalog(
                     id=hashlib.sha256(identity.encode("utf-8")).hexdigest()[:20],
                     sequence=sequence,
                     phase=(
-                        step.phase if requirement.stage in {"after_application", "second_submission"}
+                        step.phase if workflow.home_university == "淡江大學"
+                        or requirement.stage in {"after_application", "second_submission"}
                         else stages.get(requirement.stage, step.phase)
                     ),
                     step_title=step.title,

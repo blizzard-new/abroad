@@ -57,7 +57,8 @@ def test_school_page_lists_what_data_is_missing(page, live_server, width):
     items = page.locator('#school-data-completeness-body .school-completeness-list li')
     expect(items).to_have_count(10, timeout=15_000)
     body = page.locator('#school-data-completeness-body')
-    expect(body).to_contain_text('項資料完整')
+    expect(body).to_contain_text('項已提供資料')
+    expect(body).not_to_contain_text('項資料完整')
     expect(body).to_contain_text('不代表學校沒有公開')
     statuses = items.evaluate_all("rows => rows.map(row => row.dataset.completenessStatus)")
     assert set(statuses) <= {'available', 'partial', 'needs_confirmation', 'missing'}

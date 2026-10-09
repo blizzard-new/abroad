@@ -222,7 +222,7 @@ def test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused(
     )
     unconsented_rewrite = client.post(
         "/ai/rewrite-document",
-        json={"text": "這是我自行撰寫且需要調整語氣的交換申請內容。" * 2, "action": "formalize", "ai_consent_granted": True},
+        json={"text": "這是我自行撰寫且需要調整語氣的交換申請內容。" * 2, "action": "formalize"},
     )
     rewrite = client.post(
         "/ai/rewrite-document",

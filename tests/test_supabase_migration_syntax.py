@@ -37,11 +37,10 @@ def test_all_supabase_migrations_parse_including_nested_function_bodies() -> Non
     assert issue_reports.sql_body_count == 0
     assert issue_reports.plpgsql_unit_count == 4
 
-    governance = next(
-        result
-        for result in summary.results
-        if result.path.name == "20261009080000_atomic_governance_commands.sql"
-    )
+    governance_results = [result for result in summary.results
+                          if result.path.name.endswith("_atomic_governance_commands.sql")]
+    assert len(governance_results) == 1
+    governance = governance_results[0]
     assert governance.statement_count == 4
     assert governance.sql_body_count == 0
     assert governance.plpgsql_unit_count == 2

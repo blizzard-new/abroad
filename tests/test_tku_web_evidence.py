@@ -1,5 +1,6 @@
 """Reproduce the filled nonblocking CI pipe that interrupted real pytest."""
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -32,7 +33,9 @@ else:
     print(f'WEB_CASE {{report.nodeid}} call failed', flush=True)
     print(str(report.longrepr), flush=True)
 """
-    process = subprocess.Popen([sys.executable, "-c", program], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # Reproduce the original buffered logger regardless of the outer test runner.
+    environment = {key: value for key, value in os.environ.items() if key != "PYTHONUNBUFFERED"}
+    process = subprocess.Popen([sys.executable, "-c", program], stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=environment)
     assert process.stderr.readline() == b"PIPE_FULL\n"
     if not repair:
         # Keep the reader stopped until the original logger reaches EAGAIN.

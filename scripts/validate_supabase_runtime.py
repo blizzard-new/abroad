@@ -260,8 +260,10 @@ def _apply_migrations(context: ValidationContext) -> int:
     migration_files = sorted(MIGRATIONS_DIR.glob("*.sql"))
     if not migration_files:
         raise RuntimeValidationError("No Supabase migrations were found.")
+    if sum(path.name.endswith("_atomic_governance_commands.sql") for path in migration_files) != 1:
+        raise RuntimeValidationError("Exactly one atomic governance migration is required.")
     for migration in migration_files:
-        governance_migration = migration.name == "20261009080000_atomic_governance_commands.sql"
+        governance_migration = migration.name.endswith("_atomic_governance_commands.sql")
         permission_sql = """select jsonb_build_object(
             'functions',(select jsonb_agg(jsonb_build_object('identity',p.oid::regprocedure::text,
                 'owner',pg_get_userbyid(p.proowner),'acl',p.proacl,'security_definer',p.prosecdef,'config',p.proconfig) order by p.proname)

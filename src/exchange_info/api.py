@@ -3281,11 +3281,7 @@ def create_app(
                 host_admission_status=host_admission_status, housing_choice=housing_choice,
             )} if university.id == NCU.id else {},
         )
-        workflows = (
-            workflows_for_university(university)
-            if university.id in {"ccu", NCU.id, "tku"}
-            else load_application_workflows(resolved_data_dir)
-        )
+        workflows = workflows_for_university(university)
         return build_application_document_catalog(context, workflows)
 
     @app.post(

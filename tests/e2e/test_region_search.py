@@ -117,7 +117,8 @@ def test_the_czech_schools_have_no_stray_republic_in_their_names(page, live_serv
 def test_the_quota_filter_says_this_period_and_a_signed_school_without_places_is_explained(page, live_server):
     start(page, live_server)
     labels = page.locator("#availability-filter option").all_text_contents()
-    assert "本期開放" in labels and not any("115" in label for label in labels), labels
+    assert "當期名額已列" in labels and not any("115" in label for label in labels), labels
+    assert {"名額尚未核實", "零名額", "當期名額或期間待確認"} <= set(labels), labels
     page.locator("#availability-filter").select_option("agreement_only")
     signed = shown_total(page)
     assert signed >= 30

@@ -1329,8 +1329,9 @@ class ApplicationDocumentRequirement(BaseModel):
         fields = ("stage", "conditional", "condition", "official_form_verified",
             "applicability_status", "applicability_year", "applicability_note")
         # An additive school adapter must not invalidate old published snapshots.
-        # Preserve the original payload when none of the new metadata is present.
-        if not any(getattr(self, name) for name in fields):
+        # Omitted legacy metadata stays omitted; explicitly supplied null/false
+        # metadata remains part of the newer school's API and stored payload.
+        if not any(getattr(self, name) for name in fields) and not self.model_fields_set.intersection(fields):
             for name in fields:
                 payload.pop(name, None)
         return payload
