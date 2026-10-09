@@ -24,6 +24,16 @@ def test_expired_school_reader_closes_and_discards_drafts_and_late_responses(pag
     page.goto(f"{live_server.base_url}/?discussion={post.id}#university-posts")
     expect(page.locator("#discussion-article-title")).to_have_text(marker)
     expect(page.locator("#discussion-comments")).to_contain_text("合成校板回覆")
+    # Permalink boot can still hydrate account/workspace/bookmarks after the
+    # first detail renders. Drain those real requests before revoking the cookie,
+    # so this case exercises the intended sort/reaction 401 rather than a
+    # background request closing the reader during Playwright's selection.
+    page.wait_for_function("() => !state.homeSchoolLoading && state.accountWorkspaceLoadingCount === 0", timeout=60_000)
+    page.wait_for_load_state("networkidle", timeout=60_000)
+    expect(page.locator("#boot-splash")).to_be_hidden()
+    expect(page.locator("#auth-dialog")).not_to_be_visible()
+    expect(page.locator("#discussion-reader")).to_be_visible()
+    assert page.evaluate("state.account !== null")
     page.locator("#discussion-reply-body").fill("合成私人草稿，失效後必須清除。")
     page.wait_for_function("() => Object.keys(sessionStorage).some(k => k.startsWith('uniway-discussion-draft:'))")
     if late_kind != "none":
