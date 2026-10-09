@@ -1,35 +1,38 @@
-# 15:31 UTC：六校正式發布前驗證完成
+# 六校整合發布驗收：2026-10-09 15:41 UTC
 
-固定 `0fdc6cfa6a4902fb83374a77025f45dffb071562` 的完整2641案例已結束：**2627 passed／0 failed／14既有skipped**；collection、逐案例log及JUnit三方一致、四片起訖來源均clean。见 [six-final-full-summary.json](six-final-full-summary.json)。
+**四支授權PR皆已合併；最後Render建置及六校實站驗收仍在進行，尚未宣稱上線完成。**
 
-同SHA全35 migration、Storage、治理交易、六校跨校政策、原五校client相容全部passed。另把正式 `e5c6d5c` **完整Python原始碼與原模型**放入獨立程序，執行stage／雙審／publish／新舊client一致讀回，全部12 HTTP200；不再只依賴舊client配新模型的較窄證據。见 [six-final-deployed-source-runtime-fixed-result.json](six-final-deployed-source-runtime-fixed-result.json)。輔助程式原模型名稱拼寫錯誤run仍保留。
-
-正式四個函式15:31前重讀與備份相同。現在準備三份精確TKU migration；此checkpoint尚未套用、PR2尚未合併。下面是15:12歷史狀態。
-
-# 六校整合／發布驗收：2026-10-09 15:12 UTC
-
-PR #5、#3、#4 已依序合併，且各自 Render 對應 commit live 後通過實站驗收。現在正式 main 為 `e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86`，Render `dep-db4feg0ae00c73a276s0`，五校 5 HTTP＋390/1440 共 10 browser passed。PR #2 尚未合併、TKU 三份正式 DB migration 尚未套用。
-
-固定候選 `0fdc6cfa6a4902fb83374a77025f45dffb071562` 已推 `integration/six-schools-release-20261009`。完整 2,641 案例正在四片重跑，精確進度見 [final-full-progress.json](final-full-progress.json)；完成前不報全套 passed。工作樹凍結，所有 raw run 都記錄開始／結束 SHA、tree、dirty status、命令、時間及 exit。
-
-- 原完整 `d1827d75`：2,599 passed／28 failed／14 既有 skipped，原始 logs/XML 與逐案例摘要全部保留。離線 TKU builder 造成 35 metadata 差異也記為 source-guard failed；等該 run 結束後才恢復自有生成差異。
-- 修正候選 `0fdc6cfa`：原 18 個後端失敗與 10 個瀏覽器失敗全部重跑 passed，65 項契約／SQL／workflow 解析、2 項額外 CCU/NCU API 權限邊界、wheel、uv lock、OpenAPI、JS syntax 通過。無新增 skip 或放寬 skip 條件。
-- 全 35 migration runtime 在新建排序、實際部署排序均 passed；另以原五校 `e5c6d5c` 治理 client 連新 DB，stage、雙審、publish、readback 12 次 HTTP 200。真 Storage、2 PostgREST、CAS overlap、late-failure atomicity、17 治理安全組／74 RPC／31 audit、六校跨校 verified-email 政策均已驗證。
-- CGU154／NTPU409／NTU288 完整模型 payload 與最初 main `f6ad1b8` canonical hash 逐校相同。wheel 2527 檔確認排除 15 張無授權新照片、納入 TKU 字型 OFL。
-
-## 固定發布紀錄
-
-|PR|合併前 HEAD|main merge SHA|Render deploy|
+|PR|驗收HEAD|main merge SHA|Render|
 |---|---|---|---|
-|#5|b33ad27ff13912780dfb94f91504dd11b1ef6a21|58a6b7cf09a36d1892a1ac14a71332f1e8747a33|dep-db4ethpbgiqc738r2iag|
-|#3|dc4d054c2746388c40bd256f4203ef066b60be03|b22220f811f91cd4b86e16da25da8e0684123d87|dep-db4f56rbc2fs73bo5ok0|
-|#4|4a28daaa682b7aa55e6bb0497a8a6cde315a967f|e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86|dep-db4feg0ae00c73a276s0|
-|#2|候選0fdc6cfa；原上游b67d79aa|未合併|未部署|
+|#5|b33ad27ff13912780dfb94f91504dd11b1ef6a21|58a6b7cf09a36d1892a1ac14a71332f1e8747a33|dep-db4ethpbgiqc738r2iag；當時live及NTU/三校實站passed|
+|#3|dc4d054c2746388c40bd256f4203ef066b60be03|b22220f811f91cd4b86e16da25da8e0684123d87|dep-db4f56rbc2fs73bo5ok0；當時live及四校實站passed|
+|#4|4a28daaa682b7aa55e6bb0497a8a6cde315a967f|e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86|dep-db4feg0ae00c73a276s0；當時live及5 HTTP/10 browser passed|
+|#2|31234305f6ecd477ff8eb3915dd2d3d6f4141477|1c715d21d1fd23a87087b74bbb068f4efbe74aa1|dep-db4gm549v7es73an3su0；build_in_progress|
 
-## 發布與資料界線
+## 完整驗證
 
-[release-plan.md](release-plan.md) 記錄依賴圖、三份精確 TKU SQL、正式 DB 定義前置核對、逐份 readback、實際 version 與檔名對齊、程式回退保留相容 DB 的程序。目前正式 DB 僅新增 CCU/NCU allowlist `20261009135343`；四個函式 15:11 UTC 再核對無變動。既有五個 migration timestamp 差異不 repair、不 bulk db push。Quality 374368612 仍 disabled_manually；原 TKU quality.yml 的測試流程改動保留，整合者未修改該檔。Render autoDeploy/trigger/main、branch protection、憑證、費用均未調整。
+固定`0fdc6cfa6a4902fb83374a77025f45dffb071562`：**2641唯一案例，2627 passed／0 failed／14既有skipped**。468 browser為466P/2S，2173 nonbrowser為2161P/12S；collection、原log及JUnit完全對應，四片起訖SHA/tree與clean status一致。詳見[six-final-full-summary.json](six-final-full-summary.json)及各shard原檔。
 
-資料仍有明示缺口：CCU55 legacy、NCU214 pending、TKU4 partial 與124旧年參考不升格為全校當期完整。NTU266 licensed／20 needs_review／2 missing，269代表位置；1622有效生活節錄／124校保留來源年度。14地區出發提醒缺研究資料，API清楚回404。missing／pending／zero維持不同。14原skip詳見 [original-full-skips.json](original-full-skips.json)，其中4項本機Ollama未啟動、9項既有Phase C、1項pytest opt-in Docker（另完整runtime已執行）。
+最終HEAD`31234305`只比上述增加一份發布說明、三份SQL依實際version重命名；app src、tests、SQL bytes及migration執行順序完全相同，merge tree也與最終HEAD相同。[機器比對](six-release-identity-proof.json)。最終HEAD再次通過35 migration/2 PostgREST/真Storage完整runtime及cleanup，[原始结果](six-final-applied-version-runtime-result.json)。原pinned DB rootfs與runtime config保留，只有本機VFS單層封裝調整。
 
-精確狀態：[execution-status.json](execution-status.json)。原始失敗與較早 checkpoint：[checkpoint-before-final-full.md](checkpoint-before-final-full.md)。所有交付檔案 SHA256：[file-manifest.json](file-manifest.json)。
+17組治理安全案例、74 RPC、31 audit；六校12跨校發文留言、12未驗證拒絕、40 alias vectors通過。原正式e5c6d5c的102個Python模組與原模型在獨立程序完成stage/雙審/publish/readback，12 HTTP200，新舊payload一致。原helper仍未授權service_role。uv lock、OpenAPI、JS/SQL、strict dependency audit、wheel通過；wheel2527檔排除15張無授權新照片並保留TKU字型OFL。
+
+## 正式DB已完成
+
+按序成功套用並逐份readback：`20261009153249_verified_email_school_community`、`20261009153347_community_byline_aliases`、`20261009153438_atomic_governance_commands`。函式source hash符合已驗證SQL，signature、owner、ACL、security、search_path及五函式角色存取均不變。内部capability marker恰1筆、公開payload0、receipt1。
+
+[SQL實際版本mapping](production-tku-migration-mapping.json)、[第1份讀回](production-tku-01-readback.json)、[第2份讀回](production-tku-02-readback.json)、[第3份讀回](production-tku-03-readback.json)。原五個migration版本差異保持原狀，未repair或bulk db push。CCU/NCU compatibility早已先於PR3套用`20261009135343`。
+
+Quality374368612持續disabled_manually，沒有為綠燈啟用Actions。原TKU quality.yml改動保留、整合者未修改該檔；Supabase deploy workflow、Render autoDeploy/main、branch protection、憑證及費用不變。main合併觸發的Supabase workflow failure另留原紀錄，不冒充DB部署成功；DB成功以工具回執及實際定義核對為準。
+
+## 保留的失敗、未跑與資料界線
+
+原完整d182為2599P/28F/14S，離線builder造成35個metadata差異的source-guard失敗保留；原28失敗修正後逐項passed，再完整跑固定0fdc。原b67 runtime403、ENOSPC、正式站初次timeout、audit唯讀快取及新增舊程式輔助驗證的模型名稱錯誤均保留，沒有覆寫成成功。大型原stdout/XML以無損gzip交付，[原始及壓縮SHA256](lossless-compression-manifest.json)。
+
+14原skip：[清單](original-full-skips.json)，9 Phase C、4 Ollama未啟動、1 pytest opt-in Docker（完整runtime另已執行）。正式站只作guest讀取，不建立正式測試帳號或寫合成內容。
+
+CGU154/NTPU409/NTU288完整model payload與原main f6ad canonical hash逐校相同。CCU55 legacy、NCU214 pending、TKU4 partial+124舊年參考不代表全校完整；missing/pending/zero分開。NTU266 licensed/20 needs_review/2 missing、269代表位置、1622生活節錄/124校保留來源年度；14地區出發提醒仍缺研究、API明確404。
+
+回退：正常revert PR2 merge還原五校程式，保留相容DB與append-only audit；等待revert SHA live並重驗。不要在capability marker/新版client存在時盲目還原舊RPC，DB問題按備份作精確forward migration。詳見[release-plan.md](release-plan.md)。
+
+最新機器狀態：[execution-status.json](execution-status.json)。歷史階段：[checkpoint-before-pr2-merge.md](checkpoint-before-pr2-merge.md)。全檔SHA256：[file-manifest.json](file-manifest.json)。

@@ -1,8 +1,8 @@
 [
   {
     "path": "README.md",
-    "bytes": 4597,
-    "sha256": "19193d155f27ed17cd0aca4308f7b7f6636ac5f9dca54349caff3afd964fe3d0"
+    "bytes": 4714,
+    "sha256": "c3db0e794b566590fa204e2386acc24d617fcb9b261e3592591ca92d4d884697"
   },
   {
     "path": "baseline-three-school-workflow-payloads.json",
@@ -40,6 +40,11 @@
     "sha256": "188d505c4da305053a049da952c59a8510917b139c8196c839f0c247c2db0b94"
   },
   {
+    "path": "checkpoint-before-pr2-merge.md",
+    "bytes": 4597,
+    "sha256": "19193d155f27ed17cd0aca4308f7b7f6636ac5f9dca54349caff3afd964fe3d0"
+  },
+  {
     "path": "evidence-commit.log",
     "bytes": 12746,
     "sha256": "9cd29e693898dd1934c3a683ec0c5506560ce2dc8ffe563bbd36c3f0f67b5571"
@@ -51,8 +56,8 @@
   },
   {
     "path": "execution-status.json",
-    "bytes": 2593,
-    "sha256": "6688fbe8461173cfa6fe912e82c4e03d3f1604833ba1845a551b87e3624c17c0"
+    "bytes": 4025,
+    "sha256": "bd5bb6946dbcddf98c061d97e6f0c38f525230dcb611bd7a90d73e6608f97b95"
   },
   {
     "path": "final-full-progress.json",
@@ -163,6 +168,11 @@
     "path": "harness/check_extra_school_api_boundaries.py",
     "bytes": 943,
     "sha256": "62eacedc914ad6aae33548b8cd8bbc415b82da3d01116af2f077544bc23a1819"
+  },
+  {
+    "path": "harness/check_final_release_identity.py",
+    "bytes": 2805,
+    "sha256": "6dbaa52ce86b9539914a1b960415c9bb2e950a84e3cf3abcd0d711fa35f1f0f4"
   },
   {
     "path": "harness/final_full_progress.py",
@@ -455,6 +465,16 @@
     "sha256": "f519727303f0af6862882be2a30f420e28710d4209226e681aaddb2c01d12d9b"
   },
   {
+    "path": "pr2-actions-jobs.json",
+    "bytes": 184,
+    "sha256": "1a0008e45c38e989095f56a697ed211e14e0fbcdab056da18ca775cbd8653213"
+  },
+  {
+    "path": "pr2-actions-runs.json",
+    "bytes": 286,
+    "sha256": "36c6a16964d15166ee8ce1a5fb9252d35b7cfb1c75af25de8cd54f822c3d3529"
+  },
+  {
     "path": "pr2-final-install.log",
     "bytes": 2112,
     "sha256": "b29555a1d5020ccb05da3d9517707cf633460042f8199750d492656c013288d2"
@@ -463,6 +483,11 @@
     "path": "pr2-final-worktree.log",
     "bytes": 144,
     "sha256": "f55b6d943a525105886a5d612e7653bf08efaeb42d544fec95f06efe875d0c2a"
+  },
+  {
+    "path": "pr2-merge-result.json",
+    "bytes": 266,
+    "sha256": "b428975081bb6dc697523767d588c2dba64f7eaa681cdb15e61f3c9258f83339"
   },
   {
     "path": "pr2-provisional-atomic-governance.sql",
@@ -1445,6 +1470,11 @@
     "sha256": "61d7395984d5b2bb81915761f5c03591ea96e521d6c8a56bc33cb02483512d68"
   },
   {
+    "path": "production-migrations-after-tku.json",
+    "bytes": 3243,
+    "sha256": "e940d6356579baebd609771a3f6ba455ac6c559bdb753977db789fd5209e5718"
+  },
+  {
     "path": "production-migrations-before-tku.json",
     "bytes": 2967,
     "sha256": "c6dc8701f25e9379abd17d291336a983085cca6290a3d1b258d2440003c5043a"
@@ -1473,6 +1503,31 @@
     "path": "production-readonly-fingerprint-equivalence.sql",
     "bytes": 87435,
     "sha256": "2f146c071bab2e44e850f30d2adc37e5c63485488dfbabf0fe43c60cf471751b"
+  },
+  {
+    "path": "production-tku-01-readback.json",
+    "bytes": 30113,
+    "sha256": "a87ddff522b7071e18dc71600a1fda21e662d52ce159b01870850c40356dbe37"
+  },
+  {
+    "path": "production-tku-02-readback.json",
+    "bytes": 31905,
+    "sha256": "88d9fde6a9a2a73e7d428fe5511740bbd4a898e0becb2c9aa053dde390cfa2a6"
+  },
+  {
+    "path": "production-tku-03-readback.json",
+    "bytes": 86311,
+    "sha256": "530ba38ca4572be0564d8701ab7e6d07aa7c1de98eba60e3c0991cf6df2d3662"
+  },
+  {
+    "path": "production-tku-capability-readback.json",
+    "bytes": 93,
+    "sha256": "e1f7016e98e22f5b2841f296af3b622a43dbb89caee3836824a034da5db843ff"
+  },
+  {
+    "path": "production-tku-migration-mapping.json",
+    "bytes": 1131,
+    "sha256": "1d0c4d2c9247198b8153c41a94767eb8d341e01a11d6f46184ef57919c8c4eee"
   },
   {
     "path": "proposed-board-patch-fresh-actor/metadata.json",
@@ -1760,6 +1815,26 @@
     "sha256": "71f4aa19674e80439004c75279fdc8c58eaac3a043a5cdcd4666e8e74e64e33d"
   },
   {
+    "path": "six-final-applied-version-runtime/metadata.json",
+    "bytes": 783,
+    "sha256": "6ef06f5107afdf970557155c6628759fd5e6309b19e97afbbc64a49e0fe302ce"
+  },
+  {
+    "path": "six-final-applied-version-runtime/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "six-final-applied-version-runtime/stdout.log",
+    "bytes": 3979430,
+    "sha256": "0c1fce706e774f8918961886161b95ce9eaefdfdbbb6e1641f7aa431169aa77d"
+  },
+  {
+    "path": "six-final-applied-version-runtime-result.json",
+    "bytes": 7382438,
+    "sha256": "161031f9dbd8304fc489ec9ab8e2c26188d2f0a5cb05aadbc3748c9963198675"
+  },
+  {
     "path": "six-final-collection-vs-tku.json",
     "bytes": 110577,
     "sha256": "d1de328268fa67f9025aeebb2668931805293f2e0d2f1ff3e3517b6bb0c4f29a"
@@ -1998,6 +2073,26 @@
     "path": "six-final-parser.log",
     "bytes": 3343,
     "sha256": "12854cb6c019e99cfd7a593310b2109d8c617f2a52ea26c15a2303b39c6a742a"
+  },
+  {
+    "path": "six-final-release-identity/metadata.json",
+    "bytes": 747,
+    "sha256": "82f1cd385075b1322ecd5b741aeaed9bac5f86f8daf5816df789d1b102704829"
+  },
+  {
+    "path": "six-final-release-identity/results.xml",
+    "bytes": 523,
+    "sha256": "33f3174e01af000733210060d0a51b78fc5a83d5a0cf4f5a95d9b1302a797538"
+  },
+  {
+    "path": "six-final-release-identity/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "six-final-release-identity/stdout.log",
+    "bytes": 4307,
+    "sha256": "72ca39f9d1f7386e9e6f883318303bcae211ab1b7952fe8f6272e7d39909d40c"
   },
   {
     "path": "six-final-shared-integration-hunks.patch",
@@ -2358,6 +2453,11 @@
     "path": "six-pre-full-contracts.log",
     "bytes": 197,
     "sha256": "e56e0a0d9502fb9b49997d681bb4ff659e946ec999628f0555bf8b43140b175c"
+  },
+  {
+    "path": "six-release-identity-proof.json",
+    "bytes": 7813,
+    "sha256": "ca89545d440cc50eee717a441268028f4c3a57e82709b65b5ff4b9d0bf73525c"
   },
   {
     "path": "six-release-nonbrowser/metadata.json",

@@ -1,13 +1,12 @@
 {
-  "timestamp": "2026-10-09T15:31:38.502807+00:00",
+  "timestamp": "2026-10-09T15:41:20+00:00",
   "environment": "exec recovered; latest commands succeed",
   "production": {
-    "main": "e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86",
-    "render_deploy": "dep-db4feg0ae00c73a276s0",
-    "render_verified_live": true,
-    "five_school_http": 5,
-    "five_school_browser_passed": 10,
-    "production_smoke_finished_at": "2026-10-09T14:29:06.181519+00:00"
+    "main": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
+    "render_deploy": "dep-db4gm549v7es73an3su0",
+    "render_status": "build_in_progress",
+    "render_verified_live": false,
+    "previous_five_school_live": "e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86"
   },
   "original_browser": {
     "sha": "d1827d75f801921e49c67e29ecedecc85083ec7b",
@@ -38,11 +37,12 @@
     "full35_and_deployed_client_compatibility": "passed",
     "production_readonly_317_hash_vectors": "zero mismatches; no mutation; helper service permission false",
     "full35_on_final_fixed_sha": "passed, 0fdc6cfa, clean source guards",
-    "exact_deployed_python_source_and_models": "passed in separate interpreter, stage/dual-review/publish/readback, 12 HTTP200"
+    "exact_deployed_python_source_and_models": "passed in separate interpreter, stage/dual-review/publish/readback, 12 HTTP200",
+    "final_31234305_applied_filename_order": "passed full35, Storage and original five-school code/models; clean start/end"
   },
-  "remaining_gate": "TKU exact three DB migrations/readback, filename version mapping, PR2 merge and Render six-school acceptance",
-  "tku_production_migrations_applied": false,
-  "pr2_merged": false,
+  "remaining_gate": "Render exact merge SHA live, six-school production HTTP/browser and NTU regression, final evidence",
+  "tku_production_migrations_applied": true,
+  "pr2_merged": true,
   "original_full": {
     "sha": "d1827d75f801921e49c67e29ecedecc85083ec7b",
     "unique": 2641,
@@ -61,5 +61,33 @@
       "skipped": 14
     },
     "all_source_guards_passed": true
-  }
+  },
+  "release_candidate": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+  "tku_production_migrations": [
+    {
+      "name": "verified_email_school_community",
+      "version": "20261009153249",
+      "sql_sha256": "8bd1f0fc162a5b6353e9d2a29c857657b2d69e87c0aaa2019295b7dbcc25d045",
+      "original_path": "supabase/migrations/20261009040000_verified_email_school_community.sql",
+      "new_path": "supabase/migrations/20261009153249_verified_email_school_community.sql",
+      "readback_passed": true
+    },
+    {
+      "name": "community_byline_aliases",
+      "version": "20261009153347",
+      "sql_sha256": "a4ef4b272ffeb5bc6f44edd112f0269c203160238fc276b60f3621cb53ca0ba2",
+      "original_path": "supabase/migrations/20261009060000_community_byline_aliases.sql",
+      "new_path": "supabase/migrations/20261009153347_community_byline_aliases.sql",
+      "readback_passed": true
+    },
+    {
+      "name": "atomic_governance_commands",
+      "version": "20261009153438",
+      "sql_sha256": "dad7ca35dffbc2bab52d086b7ba8e0726c2736430f083a1c6e3cb2fa18990f49",
+      "original_path": "supabase/migrations/20261009080000_atomic_governance_commands.sql",
+      "new_path": "supabase/migrations/20261009153438_atomic_governance_commands.sql",
+      "readback_passed": true
+    }
+  ],
+  "pr2_merge_sha": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1"
 }
