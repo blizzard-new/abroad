@@ -39,7 +39,7 @@ home 七件與 host 分開。NUFS 初次 13 項、熊本 COE 4 項、龍谷 14 �
 - [手機三階段保存回應](candidate-f99644ad/browser/ryukoku-390-saved-checklist.json)、[桌面保存回應](candidate-f99644ad/browser/ryukoku-1440-saved-checklist.json)，不含帳號 token 或真實個資。
 - [18 份實際 API payload 與 digest](candidate-2159409c/api/manifest.json)、[source coverage](source-coverage.json)、[精確修正範圍與並行合併点](committed-scope.json)。其他 211 校資料、71 其他手寫記錄、1,454 其他來源不變；唯一來源 metadata 差異為熊本同原件視覺摘錄補句。
 
-來源仍是同一 75 attempts：73 完整閱讀、207 native parts、104 unique 附件圖、74 份保留 response bodies 已複驗。ISA 403 原採集只有 metadata、未保留正文；龍谷 syllabus 200 僅 JS 入口。這些與真正官方明列待定日期分開。未增加新學校或來源查核數。
+來源仍是同一 75 attempts：73 完整閱讀、207 native parts、104 個來源／頁渲染紀錄，103 個不同圖片 SHA、74 份保留 response bodies 已複驗。ISA 403 原採集只有 metadata、未保留正文；龍谷 syllabus 200 僅 JS 入口。這些與真正官方明列待定日期分開。未增加新學校或來源查核數。
 
 具體當期缺口仍包括中央 116 名額／學制／track、NUFS nomination 表及 arrival package、熊本承辦 STEP packet／住宿 system／當期指南、龍谷 116 入口與財力／表格版本、NASIC 回覆／Pledge／開戶表本體與指定期限、床具及退宿矛盾。未取得不冒稱官方未公告。851 跨校 workflow parity 專項及既有 Kyutech 根因未於本輪結案，未聲稱 full CI equivalence。
 
