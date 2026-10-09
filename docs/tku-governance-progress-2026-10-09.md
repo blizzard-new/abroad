@@ -6,7 +6,7 @@
 
 治理第一階段將管理 HTML、admin session、來源候選／缺口／快照 CSV、deterministic staging、目的地審核／promote／history／rollback、流程 history／readiness／rollback 接到原有服務。既有 approve/reject/publish 與新增接線共用程序內鎖，所有入口仍用原有管理員驗證，private/no-store。CSV 是唯讀清單，沒有匯入 approvals；工作台沿用現有 UI，沒有自動批准或填補官方缺值。
 
-尚不能由 API 接線宣稱交易驗收完成：現有 workflow publication 先分次儲存 revision 再改公開資料，目的地 Supabase event 寫入亦缺少跨程序 CAS。下一階段需補既有 stores 的原子命令提交／精確 snapshot 校驗、故障回復與冪等測試；不擴出平行審核機制，不降低雙審與來源／rule hash 門檻。readiness 僅呈現資料阻擋原因，並非部署許可。TKU 63 項官方缺口、未發布的 4 個 workflow 與所有既有學校資料保持原狀。
+第一階段當時尚不能由 API 接線宣稱交易驗收完成：原 workflow publication 先分次儲存 revision 再改公開資料，目的地 Supabase event 寫入亦缺少跨程序 CAS。當時下一階段需補既有 stores 的原子命令提交／精確 snapshot 校驗、故障回復與冪等測試；不擴出平行審核機制，不降低雙審與來源／rule hash 門檻。readiness 僅呈現資料阻擋原因，並非部署許可。TKU 63 項官方缺口、未發布的 4 個 workflow 與所有既有學校資料保持原狀。
 
 固定 SHA `e300479` 複核：32 項 API／權限／快照單元通過，但原有管理台錯誤回報 browser case 實際失敗（已結案卡片仍在待處理清單）。API 原本忽略 status query；第一次未固定 SHA 的短暫通過及本次真實失敗分別保留。後續追加 API enum 篩選與隔離回歸，不移除原卡片消失／完整 audit 等斷言。
 
@@ -25,3 +25,11 @@ Supabase 候選 migration `20261009080000_atomic_governance_commands.sql` 擴充
 後續診斷將 CAS 擴及 required-review-count、base version、發布／復原鏈與審核 metadata，另直接繞過 service 呼叫既有 RPC，驗證 DB 本身拒絕單人或同一人重複的發布。實際第七輪 8 組檢查、22 RPC、16 command audit 通過；migration SHA256 `9db91b01337c77a60a9114a0fb68acbd8f99e3561451bd3b4f357a590029cf5e`，隔離 cleanup 通過。現行 synthetic browser 情境完整通過；加入母校目錄 fixture 與等待真正完成的 publication history，原始診斷失敗仍保存。這些都是提交前診斷，固定 SHA 的起迄 guards、完整 collection 與最終 CI另作驗收。
 
 共用整合點：`api.py`（publication overlay／issue status／shared lock）、`content_governance_routes.py`、`workflow_review_routes.py`、`content_governance.py`、`destination_profile_review.py`、`storage.py`、`release_readiness.py`、`models.py` 的失效 approvals 欄位、`static/content-review.html/js`、`docs/api/openapi.json`、兩個 runtime scripts 與新增 migration。測試共用變更僅對應 cache version、實際非同步 handler 完成 barrier 與上述兩個舊 skip 的解除；新的 API/store/browser 情境放獨立 TKU 檔。CGU／NTPU／NTU official_data 和 TKU 128 records／4 partial workflows／63 gaps 均未在治理階段變更。
+
+固定第二階段候選 `3a8ca75680e941da478e06ec1162cebeb8152619` 已正常推送。開始／結束 clean guard 的 unit 實際 316 passed／4 個原有 skipped，SQL subset 實際 8 組／22 RPC／16 audit，collect 1,824 unique IDs／187 檔，原 1,789 IDs 全保留、增加 35、沒有重複或移除。固定 browser 實際 35 passed／1 failed：原批次 staging case 重新進入工作台時，15 秒內 queue 尚未讀完，按鈕仍 hidden；沒有改動原 body／斷言或再加 skip。後續修正管理台初始化順序，先讀取選定 queue 再讀獨立 history／目的地面板，減少無關讀取爭用同一 snapshot lock；保留全部來源、雙審及 POST 的 hash／CAS 檢查。
+
+`3a8ca756` 完整 CI PR run `37909160698` 與 push run `37909153439` 均失敗，但八個 job 約兩秒結束、steps 全空、artifacts 為空、log 404。八份 GitHub check annotations 明示「The job was not started because recent account payments have failed or your spending limit needs to be increased.」因此不是 1,824 案已執行後的測試失敗，沒有可偽造的完整 XML／34-migration runtime 成功。本批不改付款或 spending limit，固定本機測試和 CI 平台阻塞各自封存。
+
+M1 `e1c551a` 完整原始 PR `37905061634`／push `37905055678` 各實際 1,786 passed／0 failed／16 skipped，1,802 unique IDs／185 檔全部執行，原 1,789 IDs 及 66 個歷史失敗 IDs 保留且實際 PASS。純證據分支 `artifacts/tku-governance-e1c551a` 的 payload `7b1aa1a1c4935247bb7dafca532b25b8bf36fd8d` 含八個原 ZIP／152 members／20 原 XML；每份 XML 實際 CLI 重組與原 bytes 相同，211 raw＋545 readable 的全部 756 remote blobs 的 paths／sizes／git hashes 逐筆相同，readable 每檔小於 500 KB。外加 remote proof commit `da081b9412fc2091fadcddd502a8b52c4c16c4c4` 已正常推送。M1 通過不代替第二階段原子治理候選的固定驗收。
+
+批次 queue 優先載入修正的提交前診斷：原 staging browser body 與全部斷言未修改，實際 1 passed／110.48 秒。後續接受結果仍以新固定 SHA 的起迄 guard、全量 collection 與原始 XML 為準。

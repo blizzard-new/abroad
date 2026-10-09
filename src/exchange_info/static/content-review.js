@@ -4139,8 +4139,11 @@ async function initialize() {
   }
   $("#destination-review-home-university").value = state.destinationReviewHomeUniversity;
   await loadDestinationReviewBatch();
+  // Render the selected review queue before the independent history panels.
+  // Their read requests share the governance snapshot lock; starting all of
+  // them together can leave a batch deep link hidden behind unrelated work.
+  await loadQueue();
   await Promise.all([
-    loadQueue(),
     loadWorkflowPublicationHistory(),
     loadWorkflowIssueReports(),
     loadDestinationProfileReviewQueue(),
