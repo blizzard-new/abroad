@@ -33,6 +33,7 @@ from .models import (
 from .school_identity import school_identity_key
 from .settings import DEFAULT_DATA_DIR
 from .storage import data_paths, read_jsonl, storage_path_lock, write_jsonl
+from .governance_commands import atomic_destination_command, local_store_command_lock
 
 
 _SECOND_REVIEW_NOTICE = "尚未完成第二位真人內容審查"
@@ -137,6 +138,7 @@ class LocalDestinationProfileReviewStore:
     backend_name = "local-jsonl"
 
     def __init__(self, data_dir: Path = DEFAULT_DATA_DIR) -> None:
+        self.data_dir = Path(data_dir)
         self.path = data_paths(Path(data_dir))["destination_profile_reviews"]
         self.promotion_path = data_paths(Path(data_dir))[
             "destination_profile_promotions"
@@ -145,9 +147,19 @@ class LocalDestinationProfileReviewStore:
             "destination_profile_rollbacks"
         ]
 
+    def command_snapshot(self):
+        from .governance_commands import local_destination_snapshot
+        return local_destination_snapshot(self)
+
+    def commit_command(self, expected, added, *, profiles, operation, actor):
+        from .governance_commands import local_commit_destination_command
+        return local_commit_destination_command(self, expected, added, profiles=profiles, operation=operation, actor=actor)
+
+    @local_store_command_lock
     def list_events(self) -> list[DestinationProfileReviewEvent]:
         return read_jsonl(self.path, DestinationProfileReviewEvent)
 
+    @local_store_command_lock
     def save_event(
         self,
         event: DestinationProfileReviewEvent,
@@ -215,9 +227,11 @@ class LocalDestinationProfileReviewStore:
             )
         return event
 
+    @local_store_command_lock
     def list_promotion_events(self) -> list[DestinationProfilePromotionEvent]:
         return read_jsonl(self.promotion_path, DestinationProfilePromotionEvent)
 
+    @local_store_command_lock
     def save_promotion_event(
         self,
         event: DestinationProfilePromotionEvent,
@@ -246,9 +260,11 @@ class LocalDestinationProfileReviewStore:
             )
         return event
 
+    @local_store_command_lock
     def list_rollback_events(self) -> list[DestinationProfileRollbackEvent]:
         return read_jsonl(self.rollback_path, DestinationProfileRollbackEvent)
 
+    @local_store_command_lock
     def save_rollback_event(
         self,
         event: DestinationProfileRollbackEvent,
@@ -302,6 +318,14 @@ class SupabaseDestinationProfileReviewStore:
             **supabase_key_headers(self.service_role_key),
             "Content-Type": "application/json",
         }
+
+    def command_snapshot(self):
+        from .governance_commands import supabase_destination_snapshot
+        return supabase_destination_snapshot(self)
+
+    def commit_command(self, expected, added, *, profiles, operation, actor):
+        from .governance_commands import supabase_commit_destination_command
+        return supabase_commit_destination_command(self, expected, added, profiles=profiles, operation=operation, actor=actor)
 
     def list_events(self) -> list[DestinationProfileReviewEvent]:
         response = self._request(
@@ -1459,6 +1483,7 @@ def build_destination_profile_review_batch_checklist_rows(
     return output
 
 
+@atomic_destination_command
 def record_destination_profile_review(
     store: DestinationProfileReviewStore,
     profiles: list[DestinationProfile],
@@ -1564,6 +1589,7 @@ def _promoted_coverage_note(profile: DestinationProfile) -> str:
     return f"{original}；{promotion_note}" if original else promotion_note
 
 
+@atomic_destination_command
 def promote_destination_profile(
     store: DestinationProfileReviewStore,
     profiles: list[DestinationProfile],
@@ -1668,6 +1694,7 @@ def promote_destination_profile(
     return store.save_promotion_event(event)
 
 
+@atomic_destination_command
 def rollback_destination_profile(
     store: DestinationProfileReviewStore,
     profiles: list[DestinationProfile],
@@ -1697,6 +1724,15 @@ def rollback_destination_profile(
         None,
     )
     if existing:
+        history = build_destination_profile_publication_history(
+            profiles, promotions, rollbacks, home_university=request.home_university,
+        )
+        state = next((item for item in history.items if
+            _profile_identity_key(item.home_university, item.school_name) == identity), None)
+        if state is None or state.latest_event_id != existing.id:
+            raise DestinationProfileReviewConflictError(
+                "生活情報已有後續公開版本，舊復原請求不能重新套用。"
+            )
         return existing
     history = build_destination_profile_publication_history(
         profiles,

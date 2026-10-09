@@ -82,3 +82,42 @@ def test_issue_report_status_filter_excludes_terminal_reports(tmp_path, monkeypa
     assert client.get(endpoint, headers=admin, params={"status": "resolved"}).json()[0]["id"] == report_id
     assert len(client.get(endpoint, headers=admin).json()) == 1
     assert client.get(endpoint, headers=admin, params={"status": "invalid"}).status_code == 422
+
+
+WRITE_REQUESTS = [
+    ("post", "/admin/application-workflow-review-backlog/synthetic-missing/stage", None),
+    ("post", "/admin/application-workflow-review-batches/synthetic-missing/stage",
+        {"expected_snapshot":"0"*64,"batch_size":1}),
+    ("patch", "/admin/application-workflow-revisions/synthetic-missing/applicability",
+        {"expected_content_hash":"0"*64,"academic_year":"117","note":"Synthetic scoped applicability edit"}),
+    ("post", "/admin/application-workflow-revisions/synthetic-missing/approve",
+        {"expected_content_hash":"0"*64,"reviewed_source_urls":["https://synthetic.edu/exchange"],
+            "reviewed_rule_keys":["synthetic-rule"],"note":"Synthetic full independent attestation"}),
+    ("post", "/admin/application-workflow-revisions/synthetic-missing/publish", {"note":"Synthetic explicit publication"}),
+    ("post", "/admin/application-workflow-revisions/synthetic-missing/reject", {"note":"Synthetic request for correction"}),
+    ("post", "/admin/application-workflow-rollbacks", {"workflow_key":"synthetic-missing",
+        "expected_current_revision_id":"synthetic-current","expected_current_version":2,
+        "expected_current_content_hash":"0"*64,"restore_revision_id":"synthetic-older","note":"Synthetic scoped restoration"}),
+    ("post", "/admin/destination-profile-reviews", {"home_university":"Synthetic home","school_name":"Synthetic host",
+        "expected_snapshot":"0"*64,"expected_profile_content_hash":"0"*64,"decision":"approve",
+        "reviewed_source_urls":["https://synthetic.edu/exchange"],"reviewed_section_keys":["synthetic-section"],
+        "note":"Synthetic full independent destination attestation"}),
+    ("post", "/admin/destination-profile-promotions", {"home_university":"Synthetic home","school_name":"Synthetic host",
+        "expected_snapshot":"0"*64,"expected_profile_content_hash":"0"*64,"note":"Synthetic explicit audited promotion"}),
+    ("post", "/admin/destination-profile-rollbacks", {"home_university":"Synthetic home","school_name":"Synthetic host",
+        "expected_active_promotion_event_id":"synthetic-active","expected_latest_publication_event_id":"synthetic-active",
+        "expected_public_profile_content_hash":"0"*64,"note":"Synthetic explicit audited restoration"}),
+]
+
+
+@pytest.mark.parametrize("method,path,payload", WRITE_REQUESTS)
+def test_every_governance_write_requires_actual_admin_before_mutation(governance_client, method, path, payload):
+    client, admin, outsider, store = governance_client
+    before = store.command_snapshot()
+    assert getattr(client, method)(path, json=payload).status_code == 401
+    assert getattr(client, method)(path, json=payload, headers=outsider).status_code == 403
+    # The actual admin reaches lookup/snapshot guards with a valid request;
+    # a schema422 would conceal an untested authorization boundary.
+    authorized = getattr(client, method)(path, json=payload, headers=admin)
+    assert authorized.status_code in {404,409}, authorized.text
+    assert store.command_snapshot() == before

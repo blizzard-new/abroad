@@ -20,7 +20,7 @@
 
 共用測試 helper：`tests/static_asset_contract.py`，只解析既有 HTML，不改產品資產。三個既有測試檔合計 126 個 test functions，AST 比對名稱與順序均相同。正式驗證在提交後以固定 SHA、乾淨起迄工作樹執行，結果另保存，不把 precommit inspection 當成驗收。
 
-五組治理產品能力維持 pending：管理工作台、來源替換、snapshot staging、目的地審核／發布／回滾、流程歷史／readiness／回滾。尚未收到本批範圍選擇，不擴張接線；亦不刪除這五個失敗測試。
+在 `c6e6155` 舊契約里程碑完成時，五組治理產品能力仍 pending，當時尚未收到範圍選擇，故保留五個真實失敗測試。使用者於 2026-10-09 07:33 UTC 已選選項 3：本批補齊管理工作台、來源替換、snapshot staging、目的地審核／發布／回滾、流程歷史／readiness／回滾，優先復用既有 commands/services。後續進度與交易驗收另見 `tku-governance-progress-2026-10-09.md`；這不包含正式 DB 操作、main merge 或部署，也不豁免歷史失敗。
 
 ## 全量 CI 發現的額外 router fixture 時序
 

@@ -1,7 +1,7 @@
 "use strict";
 
 const initialQueryParams = new URLSearchParams(window.location.search);
-const destinationReviewHomeUniversities = ["長庚大學", "國立臺北大學"];
+const destinationReviewHomeUniversities = ["長庚大學", "國立臺北大學", "淡江大學"];
 const requestedDestinationReviewHome = initialQueryParams.get("destination_home") || "";
 const destinationReviewDraftStoragePrefix = "exchange.destination-review-draft.v1";
 const workflowReviewDraftStoragePrefix = "exchange.workflow-review-draft.v1";

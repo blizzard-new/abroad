@@ -22,6 +22,7 @@ from .review_source_candidates import (
     list_source_replacement_candidates,
 )
 from .storage import load_destination_profiles
+from .governance_commands import local_governance_lock
 
 
 PRIVATE_HEADERS = {"Cache-Control": "private, no-store, max-age=0"}
@@ -103,7 +104,7 @@ def register_content_governance_routes(app: FastAPI, authenticated_admin, *,
     @app.get("/admin/application-workflow-review-backlog", response_model=m.ApplicationWorkflowReviewBacklog)
     def backlog(request: Request, response: Response, expected_snapshot: str | None = OPTIONAL_SNAPSHOT):
         authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             check_snapshot(expected_snapshot, readiness.build_application_workflow_review_content_fingerprint(store))
             return enrich_source_replacement_candidate_counts(
                 workflows.list_workflow_review_backlog(store), store.load_published_workflows(), store.list_revisions())
@@ -111,14 +112,14 @@ def register_content_governance_routes(app: FastAPI, authenticated_admin, *,
     @app.post("/admin/application-workflow-review-backlog/{workflow_key}/stage", response_model=m.ApplicationWorkflowRevision)
     def stage_one(workflow_key: str, request: Request, response: Response):
         account = authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             return execute(workflows.stage_existing_workflow_for_review, store, workflow_key, detected_by=account.id)
 
     @app.patch("/admin/application-workflow-revisions/{revision_id}/applicability", response_model=m.ApplicationWorkflowRevision)
     def applicability(revision_id: str, payload: m.ApplicationWorkflowApplicabilityUpdateRequest,
                       request: Request, response: Response):
         account = authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             return execute(workflows.update_pending_workflow_applicability, store, revision_id, payload, edited_by=account.id)
 
     @app.get("/admin/application-workflow-source-replacement-candidates", response_model=list[m.ApplicationWorkflowSourceReplacementCandidate])
@@ -127,18 +128,20 @@ def register_content_governance_routes(app: FastAPI, authenticated_admin, *,
         return list_source_replacement_candidates(store.list_revisions())
 
     @app.get("/admin/application-workflow-source-replacement-review-queue.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
-    def source_candidates_csv(request: Request, response: Response, expected_snapshot: str = SNAPSHOT):
+    def source_candidates_csv(request: Request, response: Response, expected_snapshot: str | None = OPTIONAL_SNAPSHOT):
         authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             actual = readiness.build_application_workflow_review_content_fingerprint(store)
             check_snapshot(expected_snapshot, actual)
             rows = list_source_replacement_candidate_review_rows(store.load_published_workflows(), store.list_revisions(), review_content_fingerprint=actual)
+            backlog_keys = {row.workflow_key for row in workflows.list_workflow_review_backlog(store).items}
+            rows = [row for row in rows if row.workflow_key in backlog_keys]
             return _csv_response(rows, SOURCE_REPLACEMENT_COLUMNS, f"source-replacement-review-{actual[:12]}.csv")
 
     @app.get("/admin/application-workflow-review-backlog/source-evidence.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
     def source_evidence_csv(request: Request, response: Response, source_url: str = Query(min_length=8, max_length=2000), expected_snapshot: str = SNAPSHOT):
         authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             rows = workflows.list_source_evidence_gap_review_rows(store, source_url)
             if not rows:
                 raise HTTPException(404, "找不到這個來源證據缺口。")
@@ -148,14 +151,14 @@ def register_content_governance_routes(app: FastAPI, authenticated_admin, *,
     @app.get("/admin/application-workflow-review-batches.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
     def workflow_batches_csv(request: Request, response: Response, batch_size: int = Query(10, ge=1, le=50), expected_snapshot: str | None = OPTIONAL_SNAPSHOT):
         authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             rows = batch_rows(batch_size, expected_snapshot)
             return _csv_response(rows, WORKFLOW_BATCH_COLUMNS, "workflow-dual-review-batches.csv")
 
     @app.get("/admin/application-workflow-review-batches/{batch_id}", response_model=list[m.ApplicationWorkflowReviewBatchRow])
     def workflow_batch(batch_id: str, request: Request, response: Response, batch_size: int = Query(10, ge=1, le=50), expected_snapshot: str = SNAPSHOT):
         authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             selected = [row for row in batch_rows(batch_size, expected_snapshot) if row.batch_id == batch_id]
             if not selected:
                 raise HTTPException(404, "找不到目前快照中的這個審查批次。")
@@ -164,7 +167,7 @@ def register_content_governance_routes(app: FastAPI, authenticated_admin, *,
     @app.get("/admin/application-workflow-review-batches/{batch_id}/rules.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
     def workflow_batch_rules(batch_id: str, request: Request, response: Response, expected_snapshot: str = SNAPSHOT, batch_size: int = Query(10, ge=1, le=50)):
         authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             rows = execute(readiness.build_application_workflow_review_batch_rule_rows, store, batch_id=batch_id, batch_size=batch_size, expected_snapshot=expected_snapshot)
             if not rows:
                 raise HTTPException(404, "找不到目前快照中的這個審查批次。")
@@ -173,19 +176,19 @@ def register_content_governance_routes(app: FastAPI, authenticated_admin, *,
     @app.post("/admin/application-workflow-review-batches/{batch_id}/stage", response_model=m.ApplicationWorkflowReviewBatchStageResult)
     def stage_batch(batch_id: str, payload: m.ApplicationWorkflowReviewBatchStageRequest, request: Request, response: Response):
         account = authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             return execute(readiness.stage_application_workflow_review_batch, store, batch_id, batch_size=payload.batch_size, expected_snapshot=payload.expected_snapshot, detected_by=account.id)
 
     @app.get("/admin/application-workflow-publications", response_model=m.ApplicationWorkflowPublicationHistory)
     def workflow_history(request: Request, response: Response, home_university: str | None = Query(None, max_length=200)):
         authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             return execute(workflows.build_application_workflow_publication_history, store, home_university=home_university)
 
     @app.post("/admin/application-workflow-rollbacks", response_model=m.ApplicationWorkflowRevision)
     def workflow_rollback(payload: m.ApplicationWorkflowRollbackRequest, request: Request, response: Response):
         account = authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             result = execute(workflows.rollback_published_workflow, store, payload, rolled_back_by=account.id)
             app.state.notification_service.refresh_content_updates()
             return result
@@ -193,25 +196,25 @@ def register_content_governance_routes(app: FastAPI, authenticated_admin, *,
     @app.get("/admin/web-release-readiness", response_model=m.WebReleaseReadinessReport)
     def release_readiness(request: Request, response: Response):
         authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             return execute(readiness.build_web_release_readiness, store, profiles(), destination_store)
 
     @app.get("/admin/application-workflow-release-readiness", response_model=m.ApplicationWorkflowReleaseReadinessReport)
     def workflow_readiness(request: Request, response: Response):
         authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             return execute(readiness.build_application_workflow_release_readiness, store)
 
     @app.get("/admin/destination-profile-review-queue", response_model=m.DestinationProfileReviewQueue)
     def destination_review_queue(request: Request, response: Response, home_university: str | None = Query(None, max_length=200)):
         account = authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             return destination_queue(home_university, account)
 
     @app.get("/admin/destination-profile-review-queue.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
     def destination_review_csv(request: Request, response: Response, home_university: str = Query(min_length=1, max_length=200), expected_snapshot: str = SNAPSHOT):
         account = authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             queue = destination_queue(home_university, account)
             check_snapshot(expected_snapshot, queue.snapshot_fingerprint)
             return _csv_response(queue.items, DESTINATION_COLUMNS, f"destination-profile-review-{expected_snapshot[:12]}.csv")
@@ -224,7 +227,7 @@ def register_content_governance_routes(app: FastAPI, authenticated_admin, *,
     @app.get("/admin/destination-profile-review-batches.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
     def destination_batches_csv(request: Request, response: Response, home_university: str = Query(min_length=1, max_length=200), expected_snapshot: str | None = OPTIONAL_SNAPSHOT, batch_size: int = Query(10, ge=1, le=50)):
         account = authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             queue, rows = destination_batches(home_university, account, batch_size, expected_snapshot)
             fingerprint = destinations.destination_profile_review_content_fingerprint(queue)
             return _csv_response(rows, DESTINATION_BATCH_COLUMNS, f"destination-dual-review-{fingerprint[:12]}.csv")
@@ -232,7 +235,7 @@ def register_content_governance_routes(app: FastAPI, authenticated_admin, *,
     @app.get("/admin/destination-profile-review-batches/{batch_id}", response_model=list[m.DestinationProfileReviewBatchRow])
     def destination_batch(batch_id: str, request: Request, response: Response, home_university: str = Query(min_length=1, max_length=200), expected_snapshot: str = SNAPSHOT, batch_size: int = Query(10, ge=1, le=50)):
         account = authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             _, rows = destination_batches(home_university, account, batch_size, expected_snapshot)
             selected = [row for row in rows if row.batch_id == batch_id]
             if not selected:
@@ -242,7 +245,7 @@ def register_content_governance_routes(app: FastAPI, authenticated_admin, *,
     @app.get("/admin/destination-profile-review-batches/{batch_id}/checklist.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
     def destination_checklist(batch_id: str, request: Request, response: Response, home_university: str = Query(min_length=1, max_length=200), expected_snapshot: str = SNAPSHOT, batch_size: int = Query(10, ge=1, le=50)):
         account = authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             queue, rows = destination_batches(home_university, account, batch_size, expected_snapshot)
             if not any(row.batch_id == batch_id for row in rows):
                 raise HTTPException(404, "找不到目前快照中的生活情報批次。")
@@ -252,25 +255,25 @@ def register_content_governance_routes(app: FastAPI, authenticated_admin, *,
     @app.post("/admin/destination-profile-reviews", response_model=m.DestinationProfileReviewEvent)
     def destination_review(payload: m.DestinationProfileReviewSubmitRequest, request: Request, response: Response):
         account = authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             return execute(destinations.record_destination_profile_review, destination_store, profiles(), payload, reviewer_id=account.id, reviewer_display_name=account.display_name)
 
     @app.post("/admin/destination-profile-promotions", response_model=m.DestinationProfilePromotionEvent)
     def destination_promotion(payload: m.DestinationProfilePromotionRequest, request: Request, response: Response):
         account = authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             return execute(destinations.promote_destination_profile, destination_store, profiles(), payload, promoted_by_id=account.id, promoted_by_display_name=account.display_name)
 
     @app.get("/admin/destination-profile-publications", response_model=m.DestinationProfilePublicationHistory)
     def destination_history(request: Request, response: Response, home_university: str | None = Query(None, max_length=200)):
         authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             return execute(destinations.build_destination_profile_publication_history, profiles(), destination_store.list_promotion_events(), destination_store.list_rollback_events(), home_university=home_university)
 
     @app.post("/admin/destination-profile-rollbacks", response_model=m.DestinationProfileRollbackEvent)
     def destination_rollback(payload: m.DestinationProfileRollbackRequest, request: Request, response: Response):
         account = authorize(request, response)
-        with lock:
+        with lock, local_governance_lock(data_dir):
             return execute(destinations.rollback_destination_profile, destination_store, profiles(), payload, rolled_back_by_id=account.id, rolled_back_by_display_name=account.display_name)
 
 

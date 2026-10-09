@@ -3250,7 +3250,6 @@ def test_permissions_sensitive_consent_and_account_deletion_are_fail_closed(
     expect(page.locator("#global-community-feed")).to_contain_text("已刪除帳號")
 
 
-@pytest.mark.skip(reason="Phase C")
 def test_content_admin_explicitly_stages_one_review_batch_without_publication(
     page: Page,
     live_server: LiveServer,
@@ -5226,7 +5225,6 @@ def test_content_admin_downloads_snapshot_bound_destination_profile_review_queue
     assert restored_icd["coverage_status"] == "official_partial"
 
 
-@pytest.mark.skip(reason="Phase C")
 def test_content_admin_replaces_insecure_source_only_in_pending_revision(
     page: Page,
     live_server: LiveServer,

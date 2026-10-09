@@ -58,6 +58,9 @@ def test_shared_progress_survives_reorder_removal_and_reload(page,live_server,wi
             and (r.request.post_data_json or {}).get('application_progress', {}).get('長庚大學', {}).get(task_id) is True) as progress_saved:
         shared.check()
     assert progress_saved.value.status == 200
+    # The response event precedes the client's acknowledgement handler. Wait
+    # until its lane has drained before editing selects that handler can render.
+    page.wait_for_function("() => Object.keys(state.accountWorkspaceSyncLanes).length === 0 && Object.keys(state.accountWorkspacePending).length === 0 && state.accountWorkspaceSyncTimer === null")
     page.wait_for_function("() => document.querySelector('#account-workspace-sync-label').textContent === '已同步'")
     selects.nth(0).select_option(names[1]); selects.nth(1).select_option(names[0])
     # The previous save can still show 已同步 before this click's debounce runs.

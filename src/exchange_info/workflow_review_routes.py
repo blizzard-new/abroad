@@ -22,7 +22,8 @@ from .models import (
 
 def register_workflow_review_routes(app: FastAPI, authenticated_admin) -> None:
     # All workflow, source and destination commands share this app's lock.
-    review_lock = app.state.content_review_lock = RLock()
+    review_lock = getattr(app.state, "content_review_lock", None) or RLock()
+    app.state.content_review_lock = review_lock
     store = app.state.content_governance_store
 
     def authorize(request: Request, response: Response):
@@ -77,6 +78,9 @@ def register_workflow_review_routes(app: FastAPI, authenticated_admin) -> None:
                 request: Request, response: Response):
         account = authorize(request, response)
         with review_lock:
+            _, current = revision_by_id(revision_id)
+            if current.status != ApplicationWorkflowReviewStatus.PENDING_REVIEW:
+                raise HTTPException(status_code=409, detail="只有待審版本可以正式發布；已發布請求不會重複寫入。")
             try:
                 published = publish_workflow_revision(
                     store, revision_id, reviewer_id=account.id, note=payload.note,

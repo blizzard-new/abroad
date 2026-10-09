@@ -4,6 +4,8 @@ import json
 import os
 import tempfile
 import threading
+from functools import wraps
+from inspect import signature
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Generator, Iterable, TextIO, TypeVar
@@ -559,6 +561,18 @@ def _bundled_workflow_signature() -> tuple:
     return tuple((str(path), _file_signature(path)) for path in _bundled_workflow_paths())
 
 
+def _locked_governance_io(function):
+    parameters = signature(function)
+    @wraps(function)
+    def locked(*args, **kwargs):
+        from .governance_commands import local_governance_lock
+        data_dir = parameters.bind_partial(*args, **kwargs).arguments.get("data_dir", DEFAULT_DATA_DIR)
+        with local_governance_lock(data_dir):
+            return function(*args, **kwargs)
+    return locked
+
+
+@_locked_governance_io
 def load_application_workflows(
     data_dir: Path = DEFAULT_DATA_DIR,
 ) -> list[UniversityApplicationWorkflow]:
@@ -595,6 +609,7 @@ def load_bundled_application_workflows() -> list[UniversityApplicationWorkflow]:
     return _cached_workflows(("bundled", _bundled_workflow_signature()), build)
 
 
+@_locked_governance_io
 def save_application_workflows(
     rows: Iterable[UniversityApplicationWorkflow],
     data_dir: Path = DEFAULT_DATA_DIR,
@@ -602,6 +617,7 @@ def save_application_workflows(
     return write_jsonl(data_paths(data_dir)["application_workflows"], rows)
 
 
+@_locked_governance_io
 def replace_application_workflow(
     workflow: UniversityApplicationWorkflow,
     data_dir: Path = DEFAULT_DATA_DIR,
@@ -632,6 +648,7 @@ def replace_application_workflow(
     return ordered
 
 
+@_locked_governance_io
 def load_application_workflow_revisions(
     data_dir: Path = DEFAULT_DATA_DIR,
 ) -> list[ApplicationWorkflowRevision]:
@@ -641,6 +658,7 @@ def load_application_workflow_revisions(
     )
 
 
+@_locked_governance_io
 def save_application_workflow_revisions(
     rows: Iterable[ApplicationWorkflowRevision],
     data_dir: Path = DEFAULT_DATA_DIR,
@@ -688,6 +706,7 @@ def upsert_collection_audit(
     return ordered
 
 
+@_locked_governance_io
 def load_destination_profiles(
     data_dir: Path = DEFAULT_DATA_DIR,
     *,
@@ -788,6 +807,7 @@ def upsert_partner_research(
     return ordered
 
 
+@_locked_governance_io
 def save_destination_profiles(
     rows: Iterable[DestinationProfile], data_dir: Path = DEFAULT_DATA_DIR
 ) -> int:

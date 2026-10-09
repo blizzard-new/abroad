@@ -59,6 +59,7 @@ from .storage import (
 )
 from .workflow_structuring import structure_application_workflow
 from .workflow_identity import workflow_storage_key
+from .governance_commands import atomic_workflow_command, local_store_command_lock
 
 
 class ContentGovernanceStore(Protocol):
@@ -174,6 +175,15 @@ class LocalContentGovernanceStore:
     def catalog_token(self) -> tuple:
         return workflow_catalog_token(self.data_dir)
 
+    def command_snapshot(self):
+        from .governance_commands import local_workflow_snapshot
+        return local_workflow_snapshot(self)
+
+    def commit_command(self, expected, changed, published, *, operation, actor):
+        from .governance_commands import local_commit_workflow_command
+        return local_commit_workflow_command(self, expected, changed, published, operation=operation, actor=actor)
+
+    @local_store_command_lock
     def load_published_workflows(self) -> list[UniversityApplicationWorkflow]:
         def build() -> list[UniversityApplicationWorkflow]:
             local = load_application_workflows(self.data_dir)
@@ -186,9 +196,11 @@ class LocalContentGovernanceStore:
 
         return cached_workflow_catalog(("published", self.catalog_token(), self.include_bundled_baseline), build)
 
+    @local_store_command_lock
     def list_revisions(self) -> list[ApplicationWorkflowRevision]:
         return load_application_workflow_revisions(self.data_dir)
 
+    @local_store_command_lock
     def save_revision(
         self, revision: ApplicationWorkflowRevision
     ) -> ApplicationWorkflowRevision:
@@ -202,6 +214,7 @@ class LocalContentGovernanceStore:
         )
         return revision
 
+    @local_store_command_lock
     def publish_workflow(
         self,
         workflow: UniversityApplicationWorkflow,
@@ -248,6 +261,14 @@ class SupabaseContentGovernanceStore:
     def _forget_published(self) -> None:
         with self._published_lock:
             self._published = None
+
+    def command_snapshot(self):
+        from .governance_commands import supabase_workflow_snapshot
+        return supabase_workflow_snapshot(self)
+
+    def commit_command(self, expected, changed, published, *, operation, actor):
+        from .governance_commands import supabase_commit_workflow_command
+        return supabase_commit_workflow_command(self, expected, changed, published, operation=operation, actor=actor)
 
     def load_published_workflows(self) -> list[UniversityApplicationWorkflow]:
         token = self.fallback.catalog_token() if hasattr(self.fallback, "catalog_token") else None
@@ -825,6 +846,7 @@ def list_workflow_review_backlog(
     )
 
 
+@atomic_workflow_command
 def stage_existing_workflow_for_review(
     store: ContentGovernanceStore,
     workflow_key: str,
@@ -888,7 +910,9 @@ def stage_existing_workflow_for_review(
             workflow_key=workflow_key,
             version=current.version,
             base_version=None,
-            status=ApplicationWorkflowReviewStatus.PUBLISHED,
+            # A historical unreviewed reference is a comparison baseline,
+            # never evidence of an independently reviewed publication.
+            status=ApplicationWorkflowReviewStatus.SUPERSEDED,
             content_hash=current_hash,
             change_summary=["匯入既有公開流程作為雙人審核基準。"],
             workflow=current,
@@ -925,6 +949,7 @@ def stage_existing_workflow_for_review(
     return store.save_revision(revision)
 
 
+@atomic_workflow_command
 def stage_workflow_refresh(
     store: ContentGovernanceStore,
     candidate: UniversityApplicationWorkflow,
@@ -1023,6 +1048,7 @@ def stage_workflow_refresh(
     )
 
 
+@atomic_workflow_command
 def update_pending_workflow_applicability(
     store: ContentGovernanceStore,
     revision_id: str,
@@ -1108,6 +1134,11 @@ def update_pending_workflow_applicability(
         ).append(source)
     for target_key, grouped_sources in resulting_source_groups.items():
         if len(grouped_sources) < 2:
+            continue
+        # Existing evidence can cite one URL for different official roles.
+        # An applicability edit does not merge those records or replace a URL.
+        if not any(canonical_source_url_identity(source.source_url) in replacement_urls
+                   for source in grouped_sources):
             continue
         grouped_updates = [
             source_updates.get(
@@ -1196,7 +1227,8 @@ def update_pending_workflow_applicability(
         updated_source_key = canonical_source_url_identity(
             updated_source.source_url
         )
-        if updated_source_key in updated_source_keys:
+        if (updated_source_key in updated_source_keys
+            and canonical_source_url_identity(source.source_url) in replacement_urls):
             continue
         updated_source_keys.add(updated_source_key)
         updated_sources.append(updated_source)
@@ -1345,6 +1377,7 @@ def update_pending_workflow_applicability(
         note=payload.note,
         previous_content_hash=revision.content_hash,
         content_hash=updated_hash,
+        invalidated_review_approvals=revision.review_approvals,
     )
     change_summary = summarize_workflow_changes(baseline, updated_workflow)
     change_summary.append(
@@ -1722,6 +1755,7 @@ def workflow_review_rule_keys(
     return keys
 
 
+@atomic_workflow_command
 def approve_workflow_revision(
     store: ContentGovernanceStore,
     revision_id: str,
@@ -1830,6 +1864,7 @@ def approve_workflow_revision(
     return store.save_revision(approved)
 
 
+@atomic_workflow_command
 def publish_workflow_revision(
     store: ContentGovernanceStore,
     revision_id: str,
@@ -1838,6 +1873,17 @@ def publish_workflow_revision(
     note: str | None = None,
 ) -> UniversityApplicationWorkflow:
     revisions = store.list_revisions()
+    previous = next((row for row in revisions if row.id == revision_id), None)
+    if previous is not None and previous.status == ApplicationWorkflowReviewStatus.PUBLISHED:
+        public = next((row for row in store.load_published_workflows()
+            if workflow_storage_key(row) == previous.workflow_key), None)
+        if (not _revision_has_complete_publication_evidence(previous)
+            or application_workflow_publication_integrity_issues(previous.workflow_key, revisions, public)
+            or previous.review_note != note
+            or (previous.reviewed_by or "").casefold() != reviewer_id.strip().casefold()
+            or reviewer_id.strip().casefold() not in {row.reviewer_id.casefold() for row in previous.review_approvals}):
+            raise ValueError("目前發布版本與重試請求或完整雙審證據不一致，請重新載入。")
+        return previous.workflow
     revision = _revision_for_review(revisions, revision_id)
     approval_count = len(revision.review_approvals)
     if approval_count < revision.required_review_count:
@@ -2255,6 +2301,7 @@ def build_application_workflow_publication_history(
     )
 
 
+@atomic_workflow_command
 def rollback_published_workflow(
     store: ContentGovernanceStore,
     request: ApplicationWorkflowRollbackRequest,
@@ -2291,6 +2338,10 @@ def rollback_published_workflow(
             != request.expected_current_content_hash
         ):
             raise ValueError("申請流程復原請求與既有稽核事件不一致。")
+        current_rows = [row for row in revisions if row.workflow_key == request.workflow_key
+                        and row.status == ApplicationWorkflowReviewStatus.PUBLISHED]
+        if len(current_rows) != 1 or current_rows[0].id != matching_retry.id:
+            raise ValueError("此復原後已有其他公開版本；舊請求不能撤回後續發布。")
         for revision in revisions:
             if (
                 revision.workflow_key == request.workflow_key
@@ -2406,6 +2457,7 @@ def rollback_published_workflow(
     return rollback_revision
 
 
+@atomic_workflow_command
 def reject_workflow_revision(
     store: ContentGovernanceStore,
     revision_id: str,

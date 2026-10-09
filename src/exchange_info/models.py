@@ -1546,6 +1546,7 @@ class ApplicationWorkflowRevisionEdit(BaseModel):
     note: str = Field(min_length=1, max_length=1000)
     previous_content_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
     content_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
+    invalidated_review_approvals: list[ApplicationWorkflowReviewApproval] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def validate_edit(self) -> "ApplicationWorkflowRevisionEdit":

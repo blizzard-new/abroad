@@ -66,6 +66,7 @@ from .notification_routes import register_notification_routes
 from .openapi_contract import install_openapi_contract
 from .workflow_review_routes import register_workflow_review_routes
 from .content_governance_routes import register_content_governance_routes
+from .destination_profile_review import apply_destination_profile_promotions
 from .tku_eligibility_routes import register_tku_eligibility_routes
 from .ai_gateway import (
     ai_embedding_model,
@@ -835,7 +836,7 @@ def create_app(
     partner_cache: dict[str, list] = {}
     partner_cache_lock = threading.Lock()
     experience_collection_lock = threading.Lock()
-    workflow_collection_lock = threading.Lock()
+    workflow_collection_lock = app.state.content_review_lock = threading.RLock()
     community_lock = threading.Lock()
     auth_lock = threading.RLock()
     oauth_states: dict[str, tuple[AuthProvider, datetime, str]] = {}
@@ -937,6 +938,13 @@ def create_app(
     register_content_governance_routes(app, authenticated_content_admin,
                                       data_dir=resolved_data_dir, static_dir=STATIC_DIR)
     register_tku_eligibility_routes(app)
+
+    def published_destination_profiles():
+        from .governance_commands import local_governance_lock
+        with app.state.content_review_lock, local_governance_lock(resolved_data_dir):
+            return apply_destination_profile_promotions(
+                load_destination_profiles(resolved_data_dir, include_bundled_baseline=True),
+                dest_store.list_promotion_events(), dest_store.list_rollback_events())
     analytics_countries: dict[str, Any] = {"at": 0.0, "value": {}}
 
     def catalogue_countries() -> dict[str, str]:
@@ -2785,7 +2793,7 @@ def create_app(
         partners = partners_for_university(university)
         experiences = load_student_experiences(resolved_data_dir)
         workflows = workflows_for_university(university)
-        destination_profiles = load_destination_profiles(resolved_data_dir, include_bundled_baseline=True)
+        destination_profiles = published_destination_profiles()
         audits = load_collection_audits(resolved_data_dir)
         research = load_partner_research(resolved_data_dir, include_bundled_baseline=True)
         school_images = _load_school_image_manifest()
@@ -3006,7 +3014,7 @@ def create_app(
             dashboard,
             pages,
             workflows_for_university(university),
-            load_destination_profiles(resolved_data_dir),
+            published_destination_profiles(),
             retrieved_chunks=retrieved_chunks,
         )
 
@@ -3037,7 +3045,7 @@ def create_app(
             dashboard,
             pages,
             workflows_for_university(university),
-            load_destination_profiles(resolved_data_dir),
+            published_destination_profiles(),
             retrieved_chunks=retrieved_chunks,
         )
 
@@ -3613,7 +3621,7 @@ def create_app(
         partner = partner_for_school(school, home_school)
         normalized = normalize_school(partner.school_name)
         target_home = normalize_school(home_school) if home_school else None
-        profiles = load_destination_profiles(resolved_data_dir, include_bundled_baseline=True)
+        profiles = published_destination_profiles()
         if target_home:
             for profile in profiles:
                 if (
@@ -3688,7 +3696,7 @@ def create_app(
         university = university_for(home_school)
         names = {school_identity_key(p.school_name) for p in partners_for_university(university)}
         locations = load_university_locations(resolved_data_dir)
-        profiles = [complete_destination_profile(row, resolved_data_dir, locations=locations) for row in load_destination_profiles(resolved_data_dir, include_bundled_baseline=True)
+        profiles = [complete_destination_profile(row, resolved_data_dir, locations=locations) for row in published_destination_profiles()
                     if school_identity_key(row.school_name) in names
                     and (not row.home_university or normalize_school(row.home_university) == normalize_school(university.school_name))]
         if not compact:

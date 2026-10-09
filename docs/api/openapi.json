@@ -6940,6 +6940,13 @@
             "title": "Edited By",
             "type": "string"
           },
+          "invalidated_review_approvals": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowReviewApproval"
+            },
+            "title": "Invalidated Review Approvals",
+            "type": "array"
+          },
           "note": {
             "maxLength": 1000,
             "minLength": 1,
@@ -18145,13 +18152,20 @@
           {
             "in": "query",
             "name": "expected_snapshot",
-            "required": true,
+            "required": false,
             "schema": {
-              "maxLength": 64,
-              "minLength": 64,
-              "pattern": "^[0-9a-f]{64}$",
-              "title": "Expected Snapshot",
-              "type": "string"
+              "anyOf": [
+                {
+                  "maxLength": 64,
+                  "minLength": 64,
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Expected Snapshot"
             }
           }
         ],
