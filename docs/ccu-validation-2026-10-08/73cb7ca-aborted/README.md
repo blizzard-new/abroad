@@ -1,0 +1,3 @@
+# 73cb7ca 中止的候選驗證
+
+此candidate的DNTU摘要待核時段觸發既有保護測試，wheel另缺九份新HTML/JPEG。完整gate未完成；保留原partial log、選檔與停止收據，没有成功JUnit。0765054修正摘要與CCU專屬打包規則，後續另有HCMUTE單項失敗；最終92e66f3另重跑完整gate。

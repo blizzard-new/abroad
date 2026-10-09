@@ -1,3 +1,5 @@
+本輪最新候選為 `92e66f365d66c87889c8ddff82e9675327b66366`；462 回歸passed／7skip、102瀏覽器passed，同SHA完整本地gate通過。原始證據見[最終驗證](ccu-validation-2026-10-08/92e66f3-final/README.md)，最新數量／來源範圍見[第二十六輪](ccu-twentysixth-review-2026-10-08.md)。以下各舊候選與輪次為歷史記錄，不能當最新結果。資料仍部分、CI及跨分支整合限制另列；未merge或部署。
+
 # 中正大學 2027 春季校級薦外交換資料交接
 
 本輪最終程式候選 **`77dfd84008d438d3602da61991733ecfdf8d65a8`** 已完整執行選定gate：459回歸 **452passed／7skipped／0failed／0errors**，102瀏覽器 **102passed／0skip／0failed／0errors**。两端HEAD不變、working tree乾淨；7 builders與wheel均1162檔逐byte一致，46main官方data／77CGU published hash保留。原始[summary、JUnit、logs、案例集合、HEAD/dirty及manifest](ccu-validation-2026-10-08/77dfd84-final/README.md)均版本化。**測試只屬77dfd84，後續純證據commit沒有重新執行測試**。下方較早輪次結果為歷史紀錄，不能混作本候選结果。

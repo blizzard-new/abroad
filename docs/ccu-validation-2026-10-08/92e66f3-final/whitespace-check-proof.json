@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-10-09T00:08:26.890038+00:00",
+  "tested_program_sha": "92e66f365d66c87889c8ddff82e9675327b66366",
+  "full_diff_check_returncode": 2,
+  "full_diff_check_stdout": "docs/ccu-validation-2026-10-08/0765054-failed/regression.txt:27: trailing whitespace.\n+E         \ndocs/ccu-validation-2026-10-08/0765054-failed/regression.xml:16: trailing whitespace.\n+E         \n",
+  "preserved_raw_artifacts": [
+    "docs/ccu-validation-2026-10-08/0765054-failed/regression.txt",
+    "docs/ccu-validation-2026-10-08/0765054-failed/regression.xml"
+  ],
+  "scoped_diff_check_returncode": 0,
+  "reason": "Two original pytest failure-output lines contain trailing spaces. Original failed XML/log retained byte-exact; authored changes pass whitespace check."
+}
