@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-10-09T17:19:22.422536+00:00",
+  "timestamp": "2026-10-09T17:21:05.577049+00:00",
   "environment": "exec recovered; latest commands succeed",
   "production": {
-    "main": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
+    "main": "8139be4d3604a60265029dbbe41af21c094e609d",
     "render_deploy": "dep-db4gm549v7es73an3su0",
     "render_status": "live",
     "render_verified_live": true,
@@ -52,7 +52,7 @@
     "exact_deployed_python_source_and_models": "passed in separate interpreter, stage/dual-review/publish/readback, 12 HTTP200",
     "final_31234305_applied_filename_order": "passed full35, Storage and original five-school code/models; clean start/end"
   },
-  "remaining_gate": "Merge only49882dfc after final main/PR/Quality/config readback; exact Render deploy live and low-load six-school/NTU/memory/events acceptance pending.",
+  "remaining_gate": "Exact Render merge8139 live; static bytes, low-load6school/NTU flows, memory and failure/restart events, quiet observation.",
   "tku_production_migrations_applied": true,
   "pr2_merged": true,
   "original_full": {
@@ -105,7 +105,7 @@
   "memory_fix": {
     "sha": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
     "branch": "integration/six-school-memory-20261009",
-    "status": "All local gates accepted; PR6 premerge readback next; not yet deployed",
+    "status": "PR6 merged; exact Render auto-deploy building, production stability pending",
     "scope": "3 Python source files, stable SVG rendering and asset URL, 4 test files, incident documentation; source datasets, migrations, dependencies, workflows unchanged",
     "tests": "fixed SHA 4 new regression tests and OpenAPI check passed; earlier focused 84 passed; full 2645 cases now running",
     "preliminary_peak_mib": {
@@ -211,6 +211,9 @@
       "source_files_byte_identical": 2522,
       "quarantined_new_photos_excluded": 15,
       "no_tracked_or_untracked_changes": true
-    }
+    },
+    "merge_sha": "8139be4d3604a60265029dbbe41af21c094e609d",
+    "render_deploy": "dep-db4i4obrjlhs738ng200",
+    "render_status": "build_in_progress"
   }
 }

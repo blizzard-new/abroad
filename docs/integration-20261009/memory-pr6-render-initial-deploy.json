@@ -1,0 +1,46 @@
+{
+  "at": "2026-10-09T17:21:05.576719+00:00",
+  "deploys": [
+    {
+      "commit": {
+        "createdAt": "2026-10-09T17:20:30Z",
+        "id": "8139be4d3604a60265029dbbe41af21c094e609d",
+        "message": "Merge pull request #6 from blizzard-new/integration/six-school-memory-20261009\n\nFix catalogue memory spikes and preserve navigation clicks"
+      },
+      "createdAt": "2026-10-09T17:20:33.552355Z",
+      "id": "dep-db4i4obrjlhs738ng200",
+      "startedAt": "2026-10-09T17:20:33.530665Z",
+      "status": "build_in_progress",
+      "trigger": "new_commit",
+      "updatedAt": "2026-10-09T17:20:33.552355Z"
+    },
+    {
+      "commit": {
+        "createdAt": "2026-10-09T15:41:05Z",
+        "id": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
+        "message": "Merge PR #2: release validated six-school TKU and atomic governance\n\nAccept fixed candidate 31234305 after the complete 2,641-case six-school suite and full 35-migration, Storage and deployed-source compatibility validation. Apply and verify the three backward-compatible TKU migrations before this application release; preserve existing role access, Quality disabled state and deployment settings."
+      },
+      "createdAt": "2026-10-09T15:41:08.725415Z",
+      "finishedAt": "2026-10-09T15:46:11.867025Z",
+      "id": "dep-db4gm549v7es73an3su0",
+      "startedAt": "2026-10-09T15:41:08.694756Z",
+      "status": "live",
+      "trigger": "new_commit",
+      "updatedAt": "2026-10-09T15:46:42.253474Z"
+    },
+    {
+      "commit": {
+        "createdAt": "2026-10-09T14:16:27Z",
+        "id": "e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86",
+        "message": "Merge PR #4: integrate reviewed NCU support across five schools\n\nReconciled shared qualification, document condition, loading race and source coverage changes with released CCU and NTU. Fixed application candidate 2233286 passed 850 regression tests with 7 existing skips and 48 mobile/desktop browser tests. Final head adds only accurate school-search copy and combined inventory assertions; 88 release contract tests passed. Original 154 CGU, 409 NTPU and 288 NTU workflows retained; 55 CCU legacy and 214 NCU pending workflows remain explicitly incomplete. DB board compatibility was applied/read back before PR3; no additional production migration required here. Quality remains disabled and Render is verified separately."
+      },
+      "createdAt": "2026-10-09T14:16:32.366606Z",
+      "finishedAt": "2026-10-09T14:21:46.663207Z",
+      "id": "dep-db4feg0ae00c73a276s0",
+      "startedAt": "2026-10-09T14:16:32.333324Z",
+      "status": "deactivated",
+      "trigger": "new_commit",
+      "updatedAt": "2026-10-09T15:46:11.865002Z"
+    }
+  ]
+}
