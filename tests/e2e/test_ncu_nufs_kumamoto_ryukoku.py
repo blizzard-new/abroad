@@ -131,9 +131,9 @@ def test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account(page,liv
     branch=page.locator('.multi-plan-branch').filter(has=page.locator(':scope > summary').filter(has_text='Ryukoku University'))
     branch.locator(':scope > summary').click()
     saved_ids=[]
-    stages=[('龍谷初次申請與十項參考文件',RYU_INITIAL,10),('龍谷等候交換宿舍另送申請資訊',RYU_HOUSING,2),('龍谷到校新生說明會、NHI與銀行扣款',RYU_ARRIVAL,2)]
-    for title,documents,count in stages:
-        task=branch.locator('.multi-plan-task').filter(has=page.locator(':scope > label strong').filter(has_text=title))
+    stages=[(RYU_INITIAL,10),(RYU_HOUSING,2),(RYU_ARRIVAL,2)]
+    for documents,count in stages:
+        task=branch.locator('.multi-plan-task').filter(has=page.locator('.document-applicability > strong').filter(has_text=documents[0]))
         expect(task).to_have_count(1)
         # Pending references stay in the confirmation list, excluded from the
         # active document/tool link until the institutional conditions are met.
