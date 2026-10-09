@@ -1,0 +1,30 @@
+CONFTEST LOADED!
+........................................................................ [ 39%]
+.................................................F...................... [ 79%]
+......................................                                   [100%]
+=================================== FAILURES ===================================
+_ test_departmental_partner_references_are_visible_but_blocked_from_formal_plans _
+
+    def test_departmental_partner_references_are_visible_but_blocked_from_formal_plans() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert '<option value="departmental_reference">院級參考／當期需確認</option>' in html
+        assert "中央當期名單未列，請先向所屬學院或國際處確認是否開放" in script
+        availability = script.split('if (status === "departmental_reference")', 1)[1].split(
+            'if (status === "agreement_only")', 1
+        )[0]
+        assert "blocked: true" in availability
+        assert "function partnerAvailabilityMeta" in script
+        assert "function renderPartnerAvailabilityNotice" in script
+        assert 'status === "departmental_reference"' in script
+        assert 'button.disabled = blocked' in script
+        assert 'if (availability.blocked)' in script
+>       assert '.filter((item) => (item.availability_status || "open") === "open")' in script
+E       assert '.filter((item) => (item.availability_status || "open") === "open")' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1789: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_frontend_contract.py::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans
+1 failed, 181 passed in 15.68s

@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/push/web-evidence-37895968868-0/main-control/suite.xml",
+  "original_xml_sha256": "46eb4895d4ca493b6b6054dd2a4f37d64ebc84725a07c21744c79df5eda27538",
+  "case_attributes": {
+    "classname": "tests.test_community_permissions",
+    "name": "test_identity_is_selected_per_submission_and_public_name_is_server_derived",
+    "time": "0.460"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: assert ['匿名學生', '陳小華', '長庚大學學生', '長庚大學 資訊工程學系學生'] == ['匿名學生', '陳小華', '長庚大學學生', '長庚大學 資訊工程學系']\n  \n  At index 3 diff: '長庚大學 資訊工程學系學生' != '長庚大學 資訊工程學系'\n  \n  Full diff:\n    [\n        '匿名學生',\n        '陳小華',\n        '長庚大學學生',\n  -     '長庚大學 資訊工程學系',\n  +     '長庚大學 資訊工程學系學生',\n  ?                 ++\n    ]"
+  },
+  "full_text": "tests/test_community_permissions.py:404: in test_identity_is_selected_per_submission_and_public_name_is_server_derived\n    assert [row[\"label\"] for row in options[\"options\"]] == [\nE   AssertionError: assert ['匿名學生', '陳小華', '長庚大學學生', '長庚大學 資訊工程學系學生'] == ['匿名學生', '陳小華', '長庚大學學生', '長庚大學 資訊工程學系']\nE     \nE     At index 3 diff: '長庚大學 資訊工程學系學生' != '長庚大學 資訊工程學系'\nE     \nE     Full diff:\nE       [\nE           '匿名學生',\nE           '陳小華',\nE           '長庚大學學生',\nE     -     '長庚大學 資訊工程學系',\nE     +     '長庚大學 資訊工程學系學生',\nE     ?                 ++\nE       ]"
+}

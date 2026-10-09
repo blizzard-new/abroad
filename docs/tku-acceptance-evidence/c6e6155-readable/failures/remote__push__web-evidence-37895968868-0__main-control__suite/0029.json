@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/push/web-evidence-37895968868-0/main-control/suite.xml",
+  "original_xml_sha256": "46eb4895d4ca493b6b6054dd2a4f37d64ebc84725a07c21744c79df5eda27538",
+  "case_attributes": {
+    "classname": "tests.test_community_permissions",
+    "name": "test_ntpu_student_can_use_only_ntpu_board_for_posts_and_comments",
+    "time": "0.442"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "KeyError: 'university:ntpu'"
+  },
+  "full_text": "tests/test_community_permissions.py:327: in test_ntpu_student_can_use_only_ntpu_board_for_posts_and_comments\n    assert access[\"university:ntpu\"][\"can_post\"] is True\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\nE   KeyError: 'university:ntpu'"
+}

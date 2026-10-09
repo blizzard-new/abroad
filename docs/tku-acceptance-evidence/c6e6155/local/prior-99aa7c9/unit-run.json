@@ -1,0 +1,31 @@
+{
+  "tested_commit": "99aa7c9f04a8ec2109bab32b85a3fb7edc5ec667",
+  "starting_state": {
+    "commit": "99aa7c9f04a8ec2109bab32b85a3fb7edc5ec667",
+    "dirty": ""
+  },
+  "ending_state": {
+    "commit": "99aa7c9f04a8ec2109bab32b85a3fb7edc5ec667",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "command": [
+    "/workspace/abroad-tku/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_experience_collector.py",
+    "tests/test_frontend_contract.py",
+    "tests/test_independent_page_routing.py",
+    "tests/test_experience_digests.py",
+    "tests/test_school_content.py",
+    "tests/test_notifications.py",
+    "tests/test_application_document_catalog.py",
+    "-q",
+    "-ra",
+    "--junitxml=/tmp/tku-acceptance-contract-99aa7c9/unit.xml"
+  ],
+  "actual_exit_code": 1,
+  "elapsed_seconds": 20.84,
+  "production_access": false,
+  "scope": "Twelve corrected original contracts and related source/display/catalog/notification checks"
+}

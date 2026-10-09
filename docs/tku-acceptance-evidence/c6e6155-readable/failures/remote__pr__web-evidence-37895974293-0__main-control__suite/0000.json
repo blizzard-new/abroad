@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/pr/web-evidence-37895974293-0/main-control/suite.xml",
+  "original_xml_sha256": "2318a82d327fc6a57252804ac17a16ae7b75788bf91fee249918c1fb5d70b1ca",
+  "case_attributes": {
+    "classname": "tests.e2e.test_discovery_workspace",
+    "name": "test_combined_search_map_preview_and_chinese_reader",
+    "time": "31.842"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: Locator expected to contain text 'I cooked'\nActual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for locator(\".discovery-reader-original\")\n    10 × locator resolved to <details open=\"\" class=\"discovery-reader-original\">…</details>\n       - unexpected value \"資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。\"\n\nAria snapshot:\n- group:\n  - text: 資料來源\n  - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。"
+  },
+  "full_text": "tests/e2e/test_discovery_workspace.py:56: in test_combined_search_map_preview_and_chinese_reader\n    expect(page.locator(\".discovery-reader-original\")).to_contain_text(\"I cooked\")\nE   AssertionError: Locator expected to contain text 'I cooked'\nE   Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 \nE   Call log:\nE     - Expect \"to_contain_text\" with timeout 5000ms\nE     - waiting for locator(\".discovery-reader-original\")\nE       10 × locator resolved to <details open=\"\" class=\"discovery-reader-original\">…</details>\nE          - unexpected value \"資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。\"\nE   \nE   Aria snapshot:\nE   - group:\nE     - text: 資料來源\nE     - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。"
+}

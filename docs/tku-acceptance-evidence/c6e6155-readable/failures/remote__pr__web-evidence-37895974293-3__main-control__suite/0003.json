@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/pr/web-evidence-37895974293-3/main-control/suite.xml",
+  "original_xml_sha256": "70913723235cd6f5a91eda07998bd3bda6fd6c69c533c2300ad51085773faa42",
+  "case_attributes": {
+    "classname": "tests.e2e.test_navigation_guide",
+    "name": "test_school_return_retains_filters_scroll_and_forward",
+    "time": "5.626"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert 8 >= (383 + 119)"
+  },
+  "full_text": "tests/e2e/test_navigation_guide.py:124: in test_school_return_retains_filters_scroll_and_forward\n    assert tabs[\"y\"] >= toolbar[\"y\"] + toolbar[\"height\"]\nE   assert 8 >= (383 + 119)"
+}

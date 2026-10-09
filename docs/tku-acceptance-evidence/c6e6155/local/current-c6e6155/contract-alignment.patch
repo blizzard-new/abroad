@@ -1,0 +1,290 @@
+diff --git a/docs/tku-contract-alignment-2026-10-09.md b/docs/tku-contract-alignment-2026-10-09.md
+new file mode 100644
+index 0000000..3962a85
+--- /dev/null
++++ b/docs/tku-contract-alignment-2026-10-09.md
+@@ -0,0 +1,23 @@
++# TKU 候選的十二項既有契約校正
++
++基準：`09386aa318c9574862a6f3b1447c5022a6c26433`；查核日：2026-10-09。
++本批只校正下列既有測試的 fixture、現行介面與公開資料契約；不改 production source、官方資料、migration、OpenAPI 或治理路由。所有 test function names／IDs 保留，沒有新增 skip／xfail、降低登入門檻、還原舊資產版本或添加僅供字串比對的無效 production 文案。
++
++| 原測試 | 實際原因 | 校正後保留的檢查 |
++|---|---|---|
++| `test_experience_api_reads_cache_and_refreshes_selected_school` | 當前 API 會加入林肯大學兩篇 bundled digest sources；原單一快取 fixture 未隔離這個額外資料來源 | 只在此 fixture 將 digest bundle loader 設為空；原 cache=1、coverage、refresh 合併新舊 URL、實際儲存與 audit 全保留。正式 bundle 不改，既有 digest／生活來源測試另行執行 |
++| `test_destination_profile_api_returns_verified_official_summary` | 公開 city 已中文化；不是原資料被覆寫 | API 單筆／列表均為「林肯, 坎特伯里」；新增實際儲存仍為 `Lincoln, Canterbury` 與原 review status 不變的斷言 |
++| `test_web_routes_states_and_touch_targets_are_consistent` | feed 已由獨立 reader 處理錯誤，舊 app 字串不再存在 | 現行 reader 錯誤回應、status、retry、escape；保留路由 heading、觸控尺寸及其他狀態斷言 |
++| `test_community_identity_preview_matches_public_name_and_resets_per_submission` | transport 現行呼叫帶 options，舊字串只接受單一參數 | 真 transport 呼叫、same-origin credentials、request context；原署名預覽、reset、delete 斷言保留 |
++| `test_web_notification_center_and_explicit_email_opt_in_are_present` | 通知已提供「查看逐項變更」而非舊文案 | 現行變更按鈕、目前 plan 一致性及歷史通知提示；原明確 email opt-in、讀取／標已讀、官方來源與觸控尺寸保留 |
++| `test_application_center_separates_official_requirements_from_preparation_tools` | 未找到正式目錄時，現行 UI 引導向校方確認，旧文案已移除 | 目錄的母校／目標／系所／年度／梯次 context key、無適用 workflow 時的 guard；原官方表格與準備工具隔離保留 |
++| `test_successful_login_closes_before_noncritical_account_hydration` | 固定在歷史 app／CSS cache tag | 解析真 HTML 資產、要求唯一引用／本地檔存在／有效 cache version；登入視窗先關閉、全部 hydration tasks 和 partial failure 斷言保留 |
++| `test_personal_application_plan_uses_structured_api_and_progressive_login` | 系所改為共用 `advisor-department`，仍屬同一份條件表 | 真 department name／advisor form／submit 接線、年度梯次、原三志願及現行四五志願；原 API 與 progressive login 保留 |
++| `test_global_home_board_routing_and_following_are_present` | 政策已明確改為跨校 verified-Email，舊學籍驗證文案不適用 | 現行驗證狀態入口、verified-Email 跨校政策；原板路由、發文權限、unavailable reason 和追蹤保留 |
++| `test_departmental_partner_references_are_visible_but_blocked_from_formal_plans` | 說明改為向學院／國際處確認，舊 HTML 固定文案已移除；志願選項現在共用 availability 判定，以保留其他母校待公告規劃政策 | departmental branch 明確 `blocked:true`、確認提示；原按鈕 disabled、blocked guard 保留，志願 filter 必須實際使用同一 blocked 判定，院級參考仍被排除 |
++| `test_hash_router_shows_one_feature_page_without_scroll_spying` | 搜尋入口是 `#partners`，`#search` 保留舊連結支援而無舊 submit handler | 真搜尋入口／輸入、舊 hash 被接受、既有 showUniversityPage 路由；原單頁 hidden／active dataset／無 scroll spying 保留 |
++| `test_route_assets_are_cache_busted_together` | 多個資產已更新，但舊測試固定七個歷史版本 | 真 HTML 中八個唯一、可解析、本地存在且有 version 的資產；app／reader 配對版本及載入順序；原 scroll／invite 行為斷言保留 |
++
++共用測試 helper：`tests/static_asset_contract.py`，只解析既有 HTML，不改產品資產。三個既有測試檔合計 126 個 test functions，AST 比對名稱與順序均相同。正式驗證在提交後以固定 SHA、乾淨起迄工作樹執行，結果另保存，不把 precommit inspection 當成驗收。
++
++五組治理產品能力維持 pending：管理工作台、來源替換、snapshot staging、目的地審核／發布／回滾、流程歷史／readiness／回滾。尚未收到本批範圍選擇，不擴張接線；亦不刪除這五個失敗測試。
+diff --git a/tests/static_asset_contract.py b/tests/static_asset_contract.py
+new file mode 100644
+index 0000000..30e3b5a
+--- /dev/null
++++ b/tests/static_asset_contract.py
+@@ -0,0 +1,34 @@
++"""Check actual local asset references without freezing a historical release tag."""
++import re
++from html.parser import HTMLParser
++from pathlib import Path
++from urllib.parse import parse_qs, urlsplit
++
++
++STATIC_DIR = Path(__file__).resolve().parents[1] / "src" / "exchange_info" / "static"
++
++
++def assert_versioned_static_assets(html: str, names: tuple[str, ...]) -> dict[str, str]:
++    class AssetReferences(HTMLParser):
++        def __init__(self) -> None:
++            super().__init__()
++            self.urls: list[str] = []
++
++        def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
++            attribute = "src" if tag == "script" else "href" if tag == "link" else None
++            if attribute and (url := dict(attrs).get(attribute)):
++                self.urls.append(url)
++
++    parser = AssetReferences()
++    parser.feed(html)
++    versions = {}
++    for name in names:
++        matches = [urlsplit(url) for url in parser.urls if urlsplit(url).path == f"/static/{name}"]
++        assert len(matches) == 1, f"{name} must have exactly one asset reference"
++        assert (STATIC_DIR / name).is_file(), f"{name} must resolve to a local asset"
++        values = parse_qs(matches[0].query).get("v", [])
++        assert len(values) == 1 and re.fullmatch(r"\d{8}-[a-z0-9-]+", values[0]), (
++            f"{name} must have a nonempty versioned cache key"
++        )
++        versions[name] = values[0]
++    return versions
+diff --git a/tests/test_experience_collector.py b/tests/test_experience_collector.py
+index 78ac79d..9654a12 100644
+--- a/tests/test_experience_collector.py
++++ b/tests/test_experience_collector.py
+@@ -1381,6 +1381,9 @@ def test_ambiguous_legacy_destination_profile_fails_closed(tmp_path) -> None:
+ 
+ def test_experience_api_reads_cache_and_refreshes_selected_school(tmp_path, monkeypatch) -> None:
+     ensure_data_dirs(tmp_path)
++    # This fixture tests cache/refresh persistence. Curated bundled stories have
++    # their own source/digest tests and must not inflate this isolated cache count.
++    monkeypatch.setattr("exchange_info.experience_digests._load", lambda: ({}, {}))
+     partner = _partner()
+     cached = _source()
+     replace_school_experiences(partner.school_name, [cached], tmp_path)
+@@ -1464,14 +1467,19 @@ def test_destination_profile_api_returns_verified_official_summary(tmp_path, mon
+     coverage = client.get("/coverage").json()
+ 
+     assert response.status_code == 200
+-    assert response.json()["city"] == "Lincoln, Canterbury"
++    assert response.json()["city"] == "林肯, 坎特伯里"
+     assert list_response.status_code == 200
+     listed = next(
+         row
+         for row in list_response.json()
+         if row["school_name"] == partner.school_name
+     )
+-    assert listed["city"] == "Lincoln, Canterbury"
++    assert listed["city"] == "林肯, 坎特伯里"
++    # Public display localization must not overwrite the original stored record
++    # or promote its review status.
++    assert load_destination_profiles(tmp_path)[0].city == "Lincoln, Canterbury"
++    assert response.json()["coverage_status"] == "official_verified"
++    assert listed["coverage_status"] == "official_verified"
+     assert coverage["destination_profile_count"] == 1
+     assert coverage["partners"][0]["destination_status"] == "official_verified"
+ 
+diff --git a/tests/test_frontend_contract.py b/tests/test_frontend_contract.py
+index e9f2328..99e21a7 100644
+--- a/tests/test_frontend_contract.py
++++ b/tests/test_frontend_contract.py
+@@ -1,6 +1,8 @@
+ import json
+ from pathlib import Path
+ 
++from static_asset_contract import assert_versioned_static_assets
++
+ 
+ STATIC_DIR = Path(__file__).resolve().parents[1] / "src" / "exchange_info" / "static"
+ 
+@@ -499,7 +501,12 @@ def test_web_routes_states_and_touch_targets_are_consistent() -> None:
+     assert '? "我的追蹤"' in script
+     assert "跨校討論交換申請、簽證、住宿與海外生活。" in script
+     assert 'role="${isError ? "alert" : "status"}"' in script
+-    assert "renderCommunityEmpty(\"社群暫時無法載入\", error.message, \"error\")" in script
++    reader = (STATIC_DIR / "community-reader.js").read_text(encoding="utf-8")
++    assert 'window.UniWayCommunity.load({ force })' in script
++    assert 'feed.innerHTML = message("文章暫時無法載入", error.message, true)' in reader
++    assert 'role="status"' in reader
++    assert 'data-discussion-retry' in reader
++    assert '${escape(text)}' in reader
+     assert "/* B6-01: consistent states, touch targets and zoom-safe wrapping */" in styles
+     assert ".application-copy-input {\n  min-height: 44px;" in styles
+ 
+@@ -999,7 +1006,10 @@ def test_community_identity_preview_matches_public_name_and_resets_per_submissio
+     assert "resetCommunityIdentityPreviews(form);" in script
+     assert "post.viewer_can_delete" in script
+     assert "comment.viewer_can_delete" in script
+-    assert "fetchCommunityAuth(url)" in script
++    assert "async function fetchCommunityAuth(url, options = {})" in script
++    assert "return fetchCommunityAuth(url, {" in script
++    assert 'credentials: "same-origin"' in script
++    assert "assertAuthenticatedRequestCurrent(requestContext)" in script
+ 
+ 
+ def test_community_mutations_reuse_id_only_for_ambiguous_results() -> None:
+@@ -1051,7 +1061,10 @@ def test_web_notification_center_and_explicit_email_opt_in_are_present() -> None
+     assert 'values.get("email_notifications") === "on"' in script
+     assert "紙本送件以送達日計算" in html
+     assert "官方規定更新" in script
+-    assert "重新核對申請清單" in script
++    assert "查看逐項變更" in script
++    assert 'data-notification-changes' in script
++    assert "result.matches_current_plan" in script
++    assert "請先確認目前的申請背景，再核對這則歷史通知" in script
+     assert "查看官方來源" in script
+     assert 'target="_blank" rel="noreferrer"' in script
+     assert "notificationOfficialSourceUrl" in script
+@@ -1293,7 +1306,18 @@ def test_application_center_separates_official_requirements_from_preparation_too
+     assert "下載校方正式表格" in script
+     assert "查看官方規定" in script
+     assert "份數待確認" in script
+-    assert "不會用其他年度或其他學校的文件代替" in script
++    catalog = script.split("function renderApplicationDocumentCatalog()", 1)[1].split(
++        "\nfunction ", 1
++    )[0]
++    key = script.split("function applicationCatalogContextKey(", 1)[1].split(
++        "\nasync function ", 1
++    )[0]
++    assert "state.applicationDocumentCatalogContextKey === applicationCatalogContextKey()" in catalog
++    assert "!catalog?.workflow_found || !catalog.items?.length" in catalog
++    assert "目前沒有可安全套用的結構化文件目錄" in catalog
++    assert "JSON.stringify([homeSchool" in key
++    for field in ("target_school", "department", "academic_year", "application_round"):
++        assert f'"{field}"' in key
+     assert "template.official_download_url" in script
+     assert "下載校方原始表格" in script
+     assert ".application-requirement-item" in styles
+@@ -1656,8 +1680,7 @@ def test_successful_login_closes_before_noncritical_account_hydration() -> None:
+         "async function saveAccountProfile", 1
+     )[0]
+ 
+-    assert "app.js?v=20260929-chinese-1" in html
+-    assert "product-v2.css?v=20260831-workflow-issue-1" in html
++    assert_versioned_static_assets(html, ("app.js", "product-v2.css"))
+     assert accept_block.index("closeAuthDialog();") < accept_block.index(
+         "await Promise.allSettled(hydrationTasks)"
+     )
+@@ -1691,14 +1714,19 @@ def test_personal_application_plan_uses_structured_api_and_progressive_login() -
+     styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+ 
+     for element_id in (
+-        "eligibility-department",
++        "advisor-department",
+         "eligibility-academic-year",
+         "eligibility-application-round",
+         "eligibility-preference-1",
+         "eligibility-preference-2",
+         "eligibility-preference-3",
++        "eligibility-preference-4",
++        "eligibility-preference-5",
+     ):
+         assert f'id="{element_id}"' in html
++    assert 'id="advisor-department" name="department"' in html
++    assert 'id="advisor-form"' in html
++    assert '$("#advisor-form").addEventListener("submit"' in script
+     assert "建立個人清單時才需要登入" in html
+     assert 'fetchJson("/application-plan/evaluate"' in script
+     assert 'if (!state.account)' in script
+@@ -1731,7 +1759,8 @@ def test_global_home_board_routing_and_following_are_present() -> None:
+     assert "function activeCommunityBoardAccess()" in script
+     assert "activeBoard && !activeBoard.can_post" in script
+     assert "activeBoard.unavailable_reason" in script
+-    assert "查看學生身分驗證" in script
++    assert "查看驗證狀態" in script
++    assert "校級看板限已驗證 Email 的會員查看、發文與留言，不限同校" in script
+     assert 'document.body.classList.contains("global-home-mode")' in script
+     assert 'document.body.classList.contains("cgu-community-mode")' in script
+     assert 'renderCommunityPageContext(["cgu", "university"].includes(globalFeed))' in script
+@@ -1747,13 +1776,20 @@ def test_departmental_partner_references_are_visible_but_blocked_from_formal_pla
+     styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+ 
+     assert '<option value="departmental_reference">院級參考／當期需確認</option>' in html
+-    assert "暫不可建立正式申請計畫" in html
++    assert "中央當期名單未列，請先向所屬學院或國際處確認是否開放" in script
++    availability = script.split('if (status === "departmental_reference")', 1)[1].split(
++        'if (status === "agreement_only")', 1
++    )[0]
++    assert "blocked: true" in availability
+     assert "function partnerAvailabilityMeta" in script
+     assert "function renderPartnerAvailabilityNotice" in script
+     assert 'status === "departmental_reference"' in script
+     assert 'button.disabled = blocked' in script
+     assert 'if (availability.blocked)' in script
+-    assert '.filter((item) => (item.availability_status || "open") === "open")' in script
++    choices = script.split("function renderEligibilityOptions(", 1)[1].split(
++        "\nfunction ", 1
++    )[0]
++    assert '.filter(item=>!partnerAvailabilityMeta(item).blocked)' in choices
+     assert ".partner-availability-notice" in styles
+ 
+ 
+diff --git a/tests/test_independent_page_routing.py b/tests/test_independent_page_routing.py
+index 4445d40..a2aa5a5 100644
+--- a/tests/test_independent_page_routing.py
++++ b/tests/test_independent_page_routing.py
+@@ -1,5 +1,7 @@
+ from pathlib import Path
+ 
++from static_asset_contract import assert_versioned_static_assets
++
+ 
+ STATIC_DIR = Path(__file__).resolve().parents[1] / "src" / "exchange_info" / "static"
+ 
+@@ -38,7 +40,14 @@ def test_hash_router_shows_one_feature_page_without_scroll_spying() -> None:
+     assert "document.body.dataset.activeUniversityPage" in script
+     assert "document.body.dataset.universityPage" not in script
+     assert 'window.location.hash = "#partners"' in script
+-    assert 'window.location.hash = "#search"' in script
++    html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
++    assert 'href="#partners"' in html
++    assert 'id="partner-search"' in html
++    public_routes = script.split("function isPublicExplorationRoute(", 1)[1].split(
++        "\nfunction ", 1
++    )[0]
++    assert 'hash === "#search"' in public_routes
++    assert 'showUniversityPage(UNIVERSITY_PAGE_ROUTES.has(sectionId)' in script
+     assert "IntersectionObserver" not in script
+ 
+ 
+@@ -46,13 +55,14 @@ def test_route_assets_are_cache_busted_together() -> None:
+     html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+     script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+ 
+-    assert "styles.css?v=20260729-b306-progress-2" in html
+-    assert "product-v2.css?v=20260929-scholarship-height-1" in html
+-    assert "app.js?v=20260929-chinese-1" in html
+-    assert "discovery-core.js?v=20260924-selection-1" in html
+-    assert "discovery-ui.js?v=20260929-chinese-1" in html
+-    assert "uniway.css?v=20260820-uniway-1" in html
+-    assert "advisor-mascot.css?v=20260820-advisor-mascot-1" in html
++    versions = assert_versioned_static_assets(html, (
++        "styles.css", "product-v2.css", "app.js", "discovery-core.js",
++        "discovery-ui.js", "uniway.css", "advisor-mascot.css", "community-reader.js",
++    ))
++    # The paired expiry fix must load both cooperating scripts at the same
++    # version; never restore a historical URL merely to satisfy a literal test.
++    assert versions["app.js"] == versions["community-reader.js"]
++    assert html.index('/static/community-reader.js?') < html.index('/static/app.js?')
+     assert "function resetRouteScroll()" in script
+     assert "window.requestAnimationFrame(scrollToTop)" in script
+     assert (

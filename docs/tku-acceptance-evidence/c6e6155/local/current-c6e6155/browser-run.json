@@ -1,0 +1,29 @@
+{
+  "tested_commit": "c6e6155f2268a029f8dff0020f658d95b4c0ecc1",
+  "starting_state": {
+    "commit": "c6e6155f2268a029f8dff0020f658d95b4c0ecc1",
+    "dirty": ""
+  },
+  "ending_state": {
+    "commit": "c6e6155f2268a029f8dff0020f658d95b4c0ecc1",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "command": [
+    "/workspace/abroad-tku/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/e2e/test_notification_changes.py",
+    "tests/e2e/test_shared_conditions.py",
+    "tests/e2e/test_navigation_guide.py",
+    "tests/e2e/test_open_catalog.py",
+    "tests/e2e/test_document_flow.py",
+    "-q",
+    "-ra",
+    "--junitxml=/tmp/tku-acceptance-contract-c6e6155/browser.xml"
+  ],
+  "actual_exit_code": 0,
+  "elapsed_seconds": 186.33,
+  "production_access": false,
+  "scope": "Original notification comparison, shared conditions, routing/public catalog and document-flow browser cases; closed reader/alias/case4 checks not repeated"
+}

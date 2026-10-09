@@ -1,0 +1,274 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.6.0 -- /home/runner/work/abroad/abroad/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/runner/work/_temp/tku-main-control-checkout-1
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 6 items
+
+tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters FAILED [ 16%]
+tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history FAILED [ 33%]
+tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393] FAILED [ 50%]
+tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834] FAILED [ 66%]
+tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive FAILED [ 83%]
+tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city FAILED [100%]
+
+=================================== FAILURES ===================================
+____________ test_direct_query_without_hash_and_all_shared_filters _____________
+tests/e2e/test_partner_globe.py:230: in test_direct_query_without_hash_and_all_shared_filters
+    page.locator("#college-filter").select_option("商管")
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:20069: in select_option
+    self._sync(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:633: in select_option
+    return await self._frame.select_option(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:814: in select_option
+    return await self._channel.send("selectOption", self._timeout, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("#college-filter")
+E       - locator resolved to <select id="college-filter">…</select>
+E     - attempting select option action
+E       2 × waiting for element to be visible and enabled
+E         - did not find some options
+E       - retrying select option action
+E       - waiting 20ms
+E       2 × waiting for element to be visible and enabled
+E         - did not find some options
+E       - retrying select option action
+E         - waiting 100ms
+E       52 × waiting for element to be visible and enabled
+E          - did not find some options
+E        - retrying select option action
+E          - waiting 500ms
+________ test_all_routes_share_motion_and_back_retains_working_history _________
+tests/e2e/test_system_motion.py:51: in test_all_routes_share_motion_and_back_retains_working_history
+    page.locator("#page-back").click()
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("#page-back")
+E       - locator resolved to <button type="button" id="page-back" class="route-back" aria-label="返回上一頁">…</button>
+E     - attempting click action
+E       2 × waiting for element to be visible, enabled and stable
+E         - element is not visible
+E       - retrying click action
+E       - waiting 20ms
+E       2 × waiting for element to be visible, enabled and stable
+E         - element is not visible
+E       - retrying click action
+E         - waiting 100ms
+E       57 × waiting for element to be visible, enabled and stable
+E          - element is not visible
+E        - retrying click action
+E          - waiting 500ms
+_____________ test_dialog_menu_details_tabs_and_mobile_layout[393] _____________
+tests/e2e/test_system_motion.py:63: in test_dialog_menu_details_tabs_and_mobile_layout
+    page.locator("#school-switcher").click()
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("#school-switcher")
+E       - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+E     - attempting click action
+E       2 × waiting for element to be visible, enabled and stable
+E         - element is not visible
+E       - retrying click action
+E       - waiting 20ms
+E       2 × waiting for element to be visible, enabled and stable
+E         - element is not visible
+E       - retrying click action
+E         - waiting 100ms
+E       56 × waiting for element to be visible, enabled and stable
+E          - element is not visible
+E        - retrying click action
+E          - waiting 500ms
+_____________ test_dialog_menu_details_tabs_and_mobile_layout[834] _____________
+tests/e2e/test_system_motion.py:63: in test_dialog_menu_details_tabs_and_mobile_layout
+    page.locator("#school-switcher").click()
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("#school-switcher")
+E       - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+E     - attempting click action
+E       2 × waiting for element to be visible, enabled and stable
+E         - element is not visible
+E       - retrying click action
+E       - waiting 20ms
+E       2 × waiting for element to be visible, enabled and stable
+E         - element is not visible
+E       - retrying click action
+E         - waiting 100ms
+E       55 × waiting for element to be visible, enabled and stable
+E          - element is not visible
+E        - retrying click action
+E          - waiting 500ms
+__________ test_home_search_navigation_school_switcher_and_responsive __________
+tests/e2e/test_travel_theme.py:51: in test_home_search_navigation_school_switcher_and_responsive
+    page.locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True).click()
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True)
+__________ test_ticket_collection_and_destination_stamp_missing_city ___________
+tests/e2e/test_travel_theme.py:78: in test_ticket_collection_and_destination_stamp_missing_city
+    expect(page.locator(".travel-stamp-city")).to_have_text("林肯")
+E   AssertionError: Locator expected to have text '林肯'
+E   Actual value: 林肯, 坎特伯里（鄰近 基督城） 
+E   Call log:
+E     - Expect "to_have_text" with timeout 5000ms
+E     - waiting for locator(".travel-stamp-city")
+E       13 × locator resolved to <span class="travel-stamp-city">林肯, 坎特伯里（鄰近 基督城）</span>
+E          - unexpected value "林肯, 坎特伯里（鄰近 基督城）"
+E   
+E   Aria snapshot:
+E   - text: 林肯, 坎特伯里（鄰近 基督城）
+- generated xml file: /home/runner/work/_temp/web-evidence/main-control/suite.xml -
+============================= slowest 20 durations =============================
+52.86s call     tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters
+43.73s call     tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive
+34.28s call     tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history
+33.62s call     tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393]
+33.59s call     tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834]
+17.92s call     tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city
+0.76s setup    tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters
+0.22s setup    tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history
+0.21s teardown tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834]
+0.20s teardown tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters
+0.18s teardown tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city
+0.17s setup    tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive
+0.07s setup    tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city
+0.07s setup    tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393]
+0.06s setup    tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834]
+0.01s teardown tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393]
+0.01s teardown tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history
+0.01s teardown tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive
+=========================== short test summary info ============================
+FAILED tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters - playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#college-filter")
+    - locator resolved to <select id="college-filter">…</select>
+  - attempting select option action
+    2 × waiting for element to be visible and enabled
+      - did not find some options
+    - retrying select option action
+    - waiting 20ms
+    2 × waiting for element to be visible and enabled
+      - did not find some options
+    - retrying select option action
+      - waiting 100ms
+    52 × waiting for element to be visible and enabled
+       - did not find some options
+     - retrying select option action
+       - waiting 500ms
+FAILED tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#page-back")
+    - locator resolved to <button type="button" id="page-back" class="route-back" aria-label="返回上一頁">…</button>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    57 × waiting for element to be visible, enabled and stable
+       - element is not visible
+     - retrying click action
+       - waiting 500ms
+FAILED tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393] - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#school-switcher")
+    - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    56 × waiting for element to be visible, enabled and stable
+       - element is not visible
+     - retrying click action
+       - waiting 500ms
+FAILED tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834] - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#school-switcher")
+    - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+  - attempting click action
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+    - waiting 20ms
+    2 × waiting for element to be visible, enabled and stable
+      - element is not visible
+    - retrying click action
+      - waiting 100ms
+    55 × waiting for element to be visible, enabled and stable
+       - element is not visible
+     - retrying click action
+       - waiting 500ms
+FAILED tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True)
+FAILED tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city - AssertionError: Locator expected to have text '林肯'
+Actual value: 林肯, 坎特伯里（鄰近 基督城） 
+Call log:
+  - Expect "to_have_text" with timeout 5000ms
+  - waiting for locator(".travel-stamp-city")
+    13 × locator resolved to <span class="travel-stamp-city">林肯, 坎特伯里（鄰近 基督城）</span>
+       - unexpected value "林肯, 坎特伯里（鄰近 基督城）"
+
+Aria snapshot:
+- text: 林肯, 坎特伯里（鄰近 基督城）
+======================== 6 failed in 220.09s (0:03:40) =========================

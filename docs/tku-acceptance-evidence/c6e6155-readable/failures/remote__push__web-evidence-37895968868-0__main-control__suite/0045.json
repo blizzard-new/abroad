@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/push/web-evidence-37895968868-0/main-control/suite.xml",
+  "original_xml_sha256": "46eb4895d4ca493b6b6054dd2a4f37d64ebc84725a07c21744c79df5eda27538",
+  "case_attributes": {
+    "classname": "tests.test_next_phase_contract",
+    "name": "test_private_community_writes_expose_retry_mutation_header",
+    "time": "0.917"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "StopIteration"
+  },
+  "full_text": "tests/test_next_phase_contract.py:64: in test_private_community_writes_expose_retry_mutation_header\n    mutation_header = next(\nE   StopIteration"
+}

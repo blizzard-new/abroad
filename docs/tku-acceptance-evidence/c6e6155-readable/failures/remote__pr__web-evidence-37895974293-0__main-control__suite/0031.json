@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/pr/web-evidence-37895974293-0/main-control/suite.xml",
+  "original_xml_sha256": "2318a82d327fc6a57252804ac17a16ae7b75788bf91fee249918c1fb5d70b1ca",
+  "case_attributes": {
+    "classname": "tests.test_community_permissions",
+    "name": "test_reports_and_blocks_validate_targets_and_report_review_is_audited",
+    "time": "0.184"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert 403 == 422\n +  where 403 = <Response [403 Forbidden]>.status_code"
+  },
+  "full_text": "tests/test_community_permissions.py:636: in test_reports_and_blocks_validate_targets_and_report_review_is_audited\n    assert own_report.status_code == 422\nE   assert 403 == 422\nE    +  where 403 = <Response [403 Forbidden]>.status_code"
+}
