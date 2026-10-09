@@ -2,6 +2,8 @@ import json
 import re
 from pathlib import Path
 
+from static_asset_contract import assert_versioned_static_assets
+
 
 STATIC_DIR = Path(__file__).resolve().parents[1] / "src" / "exchange_info" / "static"
 
@@ -13,8 +15,8 @@ def test_content_review_workbench_exposes_dual_review_without_student_navigation
     student_html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
 
     assert "申請流程雙審工作台" in html
-    assert "content-review.css?v=20260831-workflow-issue-1" in html
-    assert "content-review.js?v=20260831-workflow-issue-1" in html
+    assert "content-review.css?v=20261009-governance-3" in html
+    assert "content-review.js?v=20261009-governance-3" in html
     assert 'value="review_unstarted"' in html
     assert 'value="review_partial"' in html
     assert 'value="review_ready"' in html
@@ -501,11 +503,11 @@ def test_web_routes_states_and_touch_targets_are_consistent() -> None:
     assert "跨校討論交換申請、簽證、住宿與海外生活。" in script
     assert 'role="${isError ? "alert" : "status"}"' in script
     reader = (STATIC_DIR / "community-reader.js").read_text(encoding="utf-8")
-    assert "return window.UniWayCommunity.load({ force });" in script
-    assert 'feed.innerHTML = message("文章暫時無法載入", error.message, true);' in reader
-    assert '${escape(text)}' in reader
+    assert 'window.UniWayCommunity.load({ force })' in script
+    assert 'feed.innerHTML = message("文章暫時無法載入", error.message, true)' in reader
+    assert 'role="status"' in reader
     assert 'data-discussion-retry' in reader
-    assert 'load({ force: true })' in reader
+    assert '${escape(text)}' in reader
     assert "/* B6-01: consistent states, touch targets and zoom-safe wrapping */" in styles
     assert ".application-copy-input {\n  min-height: 44px;" in styles
 
@@ -1005,8 +1007,10 @@ def test_community_identity_preview_matches_public_name_and_resets_per_submissio
     assert "resetCommunityIdentityPreviews(form);" in script
     assert "post.viewer_can_delete" in script
     assert "comment.viewer_can_delete" in script
-    assert "fetchCommunityAuth(url, { method, body: JSON.stringify(payload) })" in script
-    assert "return fetchCommunityAuth(url, { ...options, communityIdentityRetry: true });" in script
+    assert "async function fetchCommunityAuth(url, options = {})" in script
+    assert "return fetchCommunityAuth(url, {" in script
+    assert 'credentials: "same-origin"' in script
+    assert "assertAuthenticatedRequestCurrent(requestContext)" in script
 
 
 def test_community_mutations_reuse_id_only_for_ambiguous_results() -> None:
@@ -1058,9 +1062,10 @@ def test_web_notification_center_and_explicit_email_opt_in_are_present() -> None
     assert 'values.get("email_notifications") === "on"' in script
     assert "紙本送件以送達日計算" in html
     assert "官方規定更新" in script
+    assert "查看逐項變更" in script
     assert 'data-notification-changes' in script
-    assert 'aria-expanded="false">查看逐項變更' in script
-    assert 'contentUpdate ? "查看這所學校"' in script
+    assert "result.matches_current_plan" in script
+    assert "請先確認目前的申請背景，再核對這則歷史通知" in script
     assert "查看官方來源" in script
     assert 'target="_blank" rel="noreferrer"' in script
     assert "notificationOfficialSourceUrl" in script
@@ -1303,16 +1308,17 @@ def test_application_center_separates_official_requirements_from_preparation_too
     assert "查看官方規定" in script
     assert "份數待確認" in script
     catalog = script.split("function renderApplicationDocumentCatalog()", 1)[1].split(
-        "function updateApplicationPacketCopies", 1
+        "\nfunction ", 1
     )[0]
-    missing_catalog = catalog.split("if (!catalog?.workflow_found || !catalog.items?.length)", 1)[1].split(
-        "const confirmed", 1
+    key = script.split("function applicationCatalogContextKey(", 1)[1].split(
+        "\nasync function ", 1
     )[0]
-    assert 'document-source-gap' in missing_catalog
-    assert '適用的年度、梯次與申請資格' in missing_catalog
-    assert 'href="#documents"' in missing_catalog
-    assert 'return;' in missing_catalog
-    assert 'official_download_url' not in missing_catalog
+    assert "state.applicationDocumentCatalogContextKey === applicationCatalogContextKey()" in catalog
+    assert "!catalog?.workflow_found || !catalog.items?.length" in catalog
+    assert "目前沒有可安全套用的結構化文件目錄" in catalog
+    assert "JSON.stringify([homeSchool" in key
+    for field in ("target_school", "department", "academic_year", "application_round"):
+        assert f'"{field}"' in key
     assert "template.official_download_url" in script
     assert "下載校方原始表格" in script
     assert ".application-requirement-item" in styles
@@ -1675,8 +1681,7 @@ def test_successful_login_closes_before_noncritical_account_hydration() -> None:
         "async function saveAccountProfile", 1
     )[0]
 
-    assert re.search(r'<script src="/static/app\.js\?v=[A-Za-z0-9-]+" defer>', html)
-    assert re.search(r'<link rel="stylesheet" href="/static/product-v2\.css\?v=[A-Za-z0-9-]+"', html)
+    assert_versioned_static_assets(html, ("app.js", "product-v2.css"))
     assert accept_block.index("closeAuthDialog();") < accept_block.index(
         "await Promise.allSettled(hydrationTasks)"
     )
@@ -1718,8 +1723,13 @@ def test_personal_application_plan_uses_structured_api_and_progressive_login() -
         "eligibility-preference-1",
         "eligibility-preference-2",
         "eligibility-preference-3",
+        "eligibility-preference-4",
+        "eligibility-preference-5",
     ):
         assert f'id="{element_id}"' in html
+    assert 'id="advisor-department" name="department"' in html
+    assert 'id="advisor-form"' in html
+    assert '$("#advisor-form").addEventListener("submit"' in script
     assert "建立個人清單時才需要登入" in html
     assert 'fetchJson("/application-plan/evaluate"' in script
     assert 'if (!state.account)' in script
@@ -1752,8 +1762,8 @@ def test_global_home_board_routing_and_following_are_present() -> None:
     assert "function activeCommunityBoardAccess()" in script
     assert "activeBoard && !activeBoard.can_post" in script
     assert "activeBoard.unavailable_reason" in script
-    assert 'data-open-verification>查看驗證狀態' in script
-    assert 'if (!board?.can_comment)' in script
+    assert "查看驗證狀態" in script
+    assert "校級看板限已驗證 Email 的會員查看、發文與留言，不限同校" in script
     assert 'document.body.classList.contains("global-home-mode")' in script
     assert 'document.body.classList.contains("cgu-community-mode")' in script
     assert 'renderCommunityPageContext(["cgu", "university"].includes(globalFeed))' in script
@@ -1769,18 +1779,20 @@ def test_departmental_partner_references_are_visible_but_blocked_from_formal_pla
     styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
 
     assert '<option value="departmental_reference">院級參考／當期需確認</option>' in html
-    availability_block = script.split("function partnerAvailabilityMeta(item)", 1)[1].split(
+    assert "中央當期名單未列，請先向所屬學院或國際處確認是否開放" in script
+    availability = script.split('if (status === "departmental_reference")', 1)[1].split(
         'if (status === "agreement_only")', 1
     )[0]
-    assert 'status === "departmental_reference"' in availability_block
-    assert 'blocked: true' in availability_block
-    assert '中央當期名單未列，請先向所屬學院或國際處確認是否開放。' in script
+    assert "blocked: true" in availability
     assert "function partnerAvailabilityMeta" in script
     assert "function renderPartnerAvailabilityNotice" in script
     assert 'status === "departmental_reference"' in script
     assert 'button.disabled = blocked' in script
     assert 'if (availability.blocked)' in script
-    assert '.filter(item=>!partnerAvailabilityMeta(item).blocked)' in script
+    choices = script.split("function renderEligibilityOptions(", 1)[1].split(
+        "\nfunction ", 1
+    )[0]
+    assert '.filter(item=>!partnerAvailabilityMeta(item).blocked)' in choices
     assert ".partner-availability-notice" in styles
 
 

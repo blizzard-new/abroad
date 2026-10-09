@@ -56,8 +56,43 @@ def verified_university(account: UserAccount | None) -> str | None:
     """The school a student card or school sign-in proved; nothing else counts."""
     if not account or not account.student_status_verified:
         return None
-    university = resolve_university(account.verified_university) if account.verified_university else None
+    value = (account.verified_university or "").strip()
+    university = resolve_university(value) if value else None
     return university.school_name if university else None
+
+
+def community_author_display_name(account: UserAccount, mode) -> str | None:
+    """Derive bylines from server fields; a catalogue choice proves no enrolment."""
+    mode = getattr(mode, "value", mode)
+    if mode == "anonymous":
+        return "匿名學生"
+    if mode == "real_name":
+        return account.display_name
+    school = verified_university(account)
+    if not school:
+        return None
+    if mode == "verified_school":
+        return f"{school}學生"
+    if mode == "verified_department" and account.verified_department:
+        return f"{school} {account.verified_department}學生"
+    return None
+
+
+def university_community_board(value: str | None) -> UniversityProfile | None:
+    """Recognize current IDs, school names, and the prior university:<id> alias."""
+    if not value or not value.strip():
+        return None
+    target = value.strip().removeprefix("university:").strip()
+    return resolve_university(target) if target else None
+
+
+def is_university_community_post(post) -> bool:
+    return (getattr(post.board_kind, "value", post.board_kind) == "university_exchange"
+            or university_community_board(post.board_id or post.school_name) is not None)
+
+
+def can_read_university_community(account: UserAccount | None) -> bool:
+    return bool(account and account.email_verified)
 
 
 def catalog_home_university(account: UserAccount | None) -> str | None:

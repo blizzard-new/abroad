@@ -33,6 +33,10 @@ def test_shared_progress_survives_reorder_removal_and_reload(page,live_server,wi
     page.emulate_media(reduced_motion="reduce")
     page.route("**/application-plan/evaluate",evaluate_fixture)
     session=verified_login(page,live_server)
+    # Sign-in closes before noncritical hydration. Finish the real initial
+    # workspace load before this persistence scenario starts editing its form.
+    page.wait_for_function("() => state.accountWorkspaceHasSynced && state.accountWorkspaceLoadingCount === 0")
+    page.wait_for_load_state("networkidle")
     errors=[]
     page.on("pageerror",lambda error:errors.append(str(error)))
     page.evaluate("location.hash='#overview'")
@@ -48,10 +52,25 @@ def test_shared_progress_survives_reorder_removal_and_reload(page,live_server,wi
     shared=page.locator('.multi-plan-shared [data-multi-task]')
     expect(shared).to_have_count(1)
     task_id=shared.get_attribute('data-multi-task')
-    shared.check()
+    with page.expect_response(lambda r: r.request.method == 'PUT'
+            and '/account/workspace' in r.url
+            and (r.request.post_data_json or {}).get('application_schools') == names
+            and (r.request.post_data_json or {}).get('application_progress', {}).get('長庚大學', {}).get(task_id) is True) as progress_saved:
+        shared.check()
+    assert progress_saved.value.status == 200
+    # The response event precedes the client's acknowledgement handler. Wait
+    # until its lane has drained before editing selects that handler can render.
+    page.wait_for_function("() => Object.keys(state.accountWorkspaceSyncLanes).length === 0 && Object.keys(state.accountWorkspacePending).length === 0 && state.accountWorkspaceSyncTimer === null")
     page.wait_for_function("() => document.querySelector('#account-workspace-sync-label').textContent === '已同步'")
     selects.nth(0).select_option(names[1]); selects.nth(1).select_option(names[0])
-    page.locator('#multi-plan-preferences button').click()
+    # The previous save can still show 已同步 before this click's debounce runs.
+    # Wait for this exact reordered payload to be acknowledged, then retain the
+    # original direct server/readback/progress/reload assertions below.
+    with page.expect_response(lambda r: r.request.method == 'PUT'
+            and '/account/workspace' in r.url
+            and (r.request.post_data_json or {}).get('application_schools') == [names[1], names[0]]) as reordered:
+        page.locator('#multi-plan-preferences button').click()
+    assert reordered.value.status == 200
     expect(page.locator('.multi-plan-branch').first).to_contain_text(names[1])
     expect(page.locator(f'[data-multi-task="{task_id}"]')).to_be_checked()
     page.wait_for_function("() => document.querySelector('#account-workspace-sync-label').textContent === '已同步'")

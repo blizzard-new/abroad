@@ -28,6 +28,50 @@
   const escape = (value) => api.escape(String(value ?? ""));
   const storageKey = (kind) => `uniway-discussion-${kind}:${api.context().accountId || "guest"}`;
 
+  function clearAuthenticatedState(accountId) {
+    ++feedVersion;
+    ++detailVersion;
+    ++bookmarkVersion;
+    feedController?.abort();
+    feedController = null;
+    observer?.disconnect();
+    cache.clear();
+    current = null;
+    detail = null;
+    detailId = "";
+    detailPermissionKey = "";
+    comments = [];
+    threads.clear();
+    replyTarget = "";
+    commentCursor = null;
+    commentSort = "oldest";
+    commentLoading = false;
+    openedHere = false;
+    returnFocus = null;
+    draftOwner = "";
+    cloudOwner = "";
+    cloudSaved = null;
+    bookmarkBusy.clear();
+    if (accountId) {
+      try {
+        const prefix = `uniway-discussion-draft:${accountId}:`;
+        Object.keys(sessionStorage).filter((key) => key.startsWith(prefix))
+          .forEach((key) => sessionStorage.removeItem(key));
+      } catch (_) { /* Unavailable storage does not prevent in-memory cleanup. */ }
+    }
+    const form = $("#global-community-form");
+    form?.reset();
+    if (form) form.hidden = true;
+    $("#discussion-reader-body")?.replaceChildren();
+    $("#global-community-feed")?.replaceChildren();
+    $("#global-community-feed")?.setAttribute("aria-busy", "false");
+    const dialog = $("#discussion-reader");
+    if (dialog?.open) dialog.close();
+    const url = new URL(location.href);
+    url.searchParams.delete("discussion");
+    window.UniWayNavigation.replaceState(history.state, "", url);
+  }
+
   function saved() {
     if (api.context().accountId) return cloudOwner === api.context().accountId ? new Set(cloudSaved || []) : new Set();
     try {
@@ -452,7 +496,7 @@
         ++bookmarkVersion;
       } else localStorage.setItem(storageKey("saved"), JSON.stringify([...ids]));
     }
-    catch (error) { api.announce(owner ? `收藏暫時無法儲存：${error.message}` : "無法保存收藏，請檢查瀏覽器儲存設定。", "error"); return; }
+    catch (error) { if (owner !== api.context().accountId) return; api.announce(owner ? `收藏暫時無法儲存：${error.message}` : "無法保存收藏，請檢查瀏覽器儲存設定。", "error"); return; }
     finally { bookmarkBusy.delete(id); }
     for (const [key, entry] of cache) if (entry.filters.saved) cache.delete(key);
     // Patch only bookmark controls; preserve an in-progress reply and its caret.
@@ -597,7 +641,7 @@
       if (!document.hidden && api.context().active && api.context().accountId) { cache.clear(); load(); }
     });
   }
-  window.UniWayCommunity = { init, load, updateFilters, syncDetail, clearDraft,
+  window.UniWayCommunity = { init, load, updateFilters, syncDetail, clearDraft, clearAuthenticatedState,
     refresh: () => { cache.clear(); detailId = ""; load({ force: true }); },
     restorePostDraft: () => restoreDraft($("#global-community-form"), "post") };
 })();

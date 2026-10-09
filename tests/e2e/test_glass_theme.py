@@ -151,7 +151,11 @@ def test_expanded_tools_do_not_overlap_account_controls(page, live_server, width
     tools = page.locator("#application-tools")
     tools.locator(".application-nav-chevron").click()
     expect(tools).to_have_attribute("open", "")
-    expect(tools.locator(".application-tools-panel a")).to_have_count(6)
+    expect(tools.locator(".application-tools-panel a")).to_have_count(13)
+    assert tools.locator(".application-tools-panel a").evaluate_all("links => links.map(link => link.hash)") == [
+        "#advisor", "#overview", "#application-center", "#favorites", "#calendar", "#eligibility",
+        "#document-check", "#writing-assistant", "#documents", "#university-posts", "#deadlines", "#budget", "#scholarships",
+    ]
     tools.locator(".application-extra-tools > summary").click()
     bounds = page.locator("#glass-navigation").evaluate("""rail => {
         const toolbar = rail.querySelector('.route-toolbar').getBoundingClientRect();

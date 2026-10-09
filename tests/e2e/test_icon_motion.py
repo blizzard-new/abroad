@@ -32,11 +32,22 @@ def test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph(
     theme = page.locator("#theme-toggle")
     path = theme.locator("svg path")
     start = path.get_attribute("d")
+    # Observe real SVG mutations, including intermediate paths, instead of
+    # assuming a busy runner presents a frame exactly 35 ms after the click.
+    theme.evaluate("""el => {
+      window.__themePaths = [el.querySelector('svg path').getAttribute('d')];
+      window.__themeObserver = new MutationObserver(() => {
+        const d = el.querySelector('svg path')?.getAttribute('d');
+        if (d && d !== __themePaths.at(-1)) __themePaths.push(d);
+      });
+      __themeObserver.observe(el, {subtree:true, childList:true, attributes:true, attributeFilter:['d']});
+    }""")
     theme.click()
-    page.wait_for_timeout(35)
-    middle = theme.locator("svg path").get_attribute("d")
+    page.wait_for_function("() => new Set(__themePaths).size >= 3")
     page.wait_for_timeout(650)
     end = theme.locator("svg path").get_attribute("d")
+    paths = page.evaluate("() => { __themeObserver.disconnect(); return __themePaths; }")
+    middle = next(d for d in paths if d not in {start, end})
 
     assert theme.locator("svg").get_attribute("data-icon-motion-engine") == "morphicons"
     assert start != middle

@@ -1,0 +1,215 @@
+{
+  "checked_at": "2026-10-08",
+  "repository": "blizzard-new/abroad",
+  "branch": "data/tku-exchange-20261008",
+  "initial_main": "f741d540f546d6ddbbf3174c9a34b5ef103c8816",
+  "integration_main": "293546e807294dc0812f390b240a4cfb68e86cd0",
+  "data": {
+    "records": 128,
+    "current_round_records": 4,
+    "reference_records": 124,
+    "confirmed_current_quota": 7,
+    "fact_states": {
+      "verified": 53,
+      "missing_in_source": 664,
+      "needs_confirmation": 9,
+      "reference_only": 1590
+    },
+    "issues": [],
+    "current_fact_states": {
+      "verified": 53,
+      "missing_in_source": 16,
+      "needs_confirmation": 9,
+      "reference_only": 6
+    },
+    "current_fact_count": 84,
+    "current_verified_percent": 63.1,
+    "currently_open_choices": 0,
+    "distinct_raw_school_names": 119,
+    "quota_states": {
+      "numeric": 109,
+      "provisional": 19
+    },
+    "source_count": 29,
+    "downloaded_original_attachments": 11,
+    "failed_obsolete_links": [
+      "jp-original-attachment-2"
+    ]
+  },
+  "test_command": ".venv/bin/python -m pytest tests/test_tku_support.py tests/test_application_rules.py tests/test_application_documents_api.py tests/test_application_document_catalog.py tests/test_advisor.py tests/test_frontend_contract.py tests/test_ntpu_support.py tests/test_ntpu_bundled_data.py tests/test_cgu_bundled_data.py tests/test_regions.py -q --disable-warnings --junitxml=/tmp/tku-final-tests.xml",
+  "current_tests": {
+    "tests": 141,
+    "passed": 128,
+    "failed": 9,
+    "skipped": 4,
+    "failure_ids": [
+      "tests.test_frontend_contract::test_web_routes_states_and_touch_targets_are_consistent",
+      "tests.test_frontend_contract::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+      "tests.test_frontend_contract::test_web_notification_center_and_explicit_email_opt_in_are_present",
+      "tests.test_frontend_contract::test_application_center_separates_official_requirements_from_preparation_tools",
+      "tests.test_frontend_contract::test_successful_login_closes_before_noncritical_account_hydration",
+      "tests.test_frontend_contract::test_personal_application_plan_uses_structured_api_and_progressive_login",
+      "tests.test_frontend_contract::test_global_home_board_routing_and_following_are_present",
+      "tests.test_frontend_contract::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+      "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+    ],
+    "skips": [
+      {
+        "test": "tests.test_cgu_bundled_data::test_bundled_cgu_workflows_are_available_without_local_cache",
+        "reason": "Phase C data reviewed"
+      },
+      {
+        "test": "tests.test_cgu_bundled_data::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+        "reason": "Phase C data reviewed"
+      },
+      {
+        "test": "tests.test_cgu_bundled_data::test_bundled_cgu_completeness_report_matches_export",
+        "reason": "Phase C data reviewed"
+      },
+      {
+        "test": "tests.test_cgu_bundled_data::test_backfilled_cgu_workflows_keep_current_details_reference_only",
+        "reason": "Phase C data reviewed"
+      }
+    ],
+    "by_module": {
+      "tests.test_tku_support": {
+        "passed": 13
+      },
+      "tests.test_application_rules": {
+        "passed": 8
+      },
+      "tests.test_application_documents_api": {
+        "passed": 10
+      },
+      "tests.test_application_document_catalog": {
+        "passed": 3
+      },
+      "tests.test_advisor": {
+        "passed": 14
+      },
+      "tests.test_frontend_contract": {
+        "passed": 46,
+        "failed": 8
+      },
+      "tests.test_ntpu_support": {
+        "passed": 7
+      },
+      "tests.test_ntpu_bundled_data": {
+        "passed": 3,
+        "failed": 1
+      },
+      "tests.test_cgu_bundled_data": {
+        "skipped": 4,
+        "passed": 16
+      },
+      "tests.test_regions": {
+        "passed": 8
+      }
+    },
+    "junit_sha256": "2bb7b19213b73b0c11da6132f3163715ae04e7080889d7364ab6ccb661d1675a"
+  },
+  "updated_main_comparison": {
+    "tests": 66,
+    "passed": 57,
+    "failed": 9,
+    "skipped": 0,
+    "failure_ids": [
+      "tests.test_frontend_contract::test_web_routes_states_and_touch_targets_are_consistent",
+      "tests.test_frontend_contract::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+      "tests.test_frontend_contract::test_web_notification_center_and_explicit_email_opt_in_are_present",
+      "tests.test_frontend_contract::test_application_center_separates_official_requirements_from_preparation_tools",
+      "tests.test_frontend_contract::test_successful_login_closes_before_noncritical_account_hydration",
+      "tests.test_frontend_contract::test_personal_application_plan_uses_structured_api_and_progressive_login",
+      "tests.test_frontend_contract::test_global_home_board_routing_and_following_are_present",
+      "tests.test_frontend_contract::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+      "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+    ],
+    "skips": [],
+    "by_module": {
+      "tests.test_frontend_contract": {
+        "passed": 46,
+        "failed": 8
+      },
+      "tests.test_ntpu_bundled_data": {
+        "passed": 3,
+        "failed": 1
+      },
+      "tests.test_regions": {
+        "passed": 8
+      }
+    },
+    "junit_sha256": "03b5d057d19c157ebfe8a9fa5aa465ff9e56212137747f52551aa9e6a78e6baf"
+  },
+  "initial_main_comparison": {
+    "tests": 58,
+    "passed": 49,
+    "failed": 9,
+    "skipped": 0,
+    "failure_ids": [
+      "tests.test_frontend_contract::test_web_routes_states_and_touch_targets_are_consistent",
+      "tests.test_frontend_contract::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+      "tests.test_frontend_contract::test_web_notification_center_and_explicit_email_opt_in_are_present",
+      "tests.test_frontend_contract::test_application_center_separates_official_requirements_from_preparation_tools",
+      "tests.test_frontend_contract::test_successful_login_closes_before_noncritical_account_hydration",
+      "tests.test_frontend_contract::test_personal_application_plan_uses_structured_api_and_progressive_login",
+      "tests.test_frontend_contract::test_global_home_board_routing_and_following_are_present",
+      "tests.test_frontend_contract::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+      "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+    ],
+    "skips": [],
+    "by_module": {
+      "tests.test_frontend_contract": {
+        "passed": 46,
+        "failed": 8
+      },
+      "tests.test_ntpu_bundled_data": {
+        "passed": 3,
+        "failed": 1
+      }
+    },
+    "junit_sha256": "6e0419598f0f930e54d3cbfcbbe17e2ebf55679ac621794bc577205bdc9f3b71"
+  },
+  "new_failure_ids": [],
+  "all_current_failure_ids_reproduced_on_main": true,
+  "protected_data_diff_from_integration_main": "",
+  "existing_scope_checks": {
+    "cgu_current_116_destination_count": 77,
+    "cgu_current_central": 75,
+    "cgu_current_departmental_reference": 2,
+    "cgu_115_workflow_count_preserved": 77,
+    "ntpu_total": 206,
+    "ntpu_open": 169,
+    "ntpu_agreement_reference": 37
+  },
+  "other_checks": {
+    "node_syntax": "passed",
+    "python_compile": "passed",
+    "git_diff_check": "passed",
+    "offline_rebuild_byte_identical": "passed"
+  },
+  "browser": {
+    "status": "passed",
+    "home_school": "淡江大學",
+    "listed_records": 4,
+    "open_filter_records": 0,
+    "closed_filter_records": 4,
+    "east_asia_filter_records": 4,
+    "viewports": [
+      [
+        1280,
+        900
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "page_errors": []
+  },
+  "permissions": {
+    "other_session_directory_modified": false,
+    "main_merged": false,
+    "deployed": false,
+    "credentials_modified": false
+  }
+}

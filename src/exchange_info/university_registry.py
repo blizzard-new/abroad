@@ -5,6 +5,8 @@ import unicodedata
 from dataclasses import dataclass
 from typing import Literal
 
+from .tku_university import PROFILE as TKU_PROFILE
+
 
 @dataclass(frozen=True)
 class UniversityProfile:
@@ -89,6 +91,7 @@ CCU = UniversityProfile(
     # https://s2.exam.ccu.edu.tw/ccuee_intro/stu/intro_index.php
     colleges=("文學院", "理學院", "社會科學院", "工學院", "管理學院", "法學院", "教育學院"),
 )
+TKU = UniversityProfile(**TKU_PROFILE)
 
 NTU = UniversityProfile(
     id="ntu",
@@ -126,7 +129,7 @@ NCU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU)
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU)
 DEFAULT_UNIVERSITY = CGU
 
 

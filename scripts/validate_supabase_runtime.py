@@ -89,6 +89,7 @@ from exchange_info.workflow_issue_reports import (  # noqa: E402
 COMPOSE_FILE = PROJECT_ROOT / "supabase" / "runtime-validation" / "docker-compose.yml"
 MIGRATIONS_DIR = PROJECT_ROOT / "supabase" / "migrations"
 PROJECT_NAME_PREFIX = "exchange-supabase-runtime"
+GOVERNANCE_MIGRATION_INVARIANTS: dict[str, Any] | None = None
 DOCKER_INFO_TIMEOUT_SECONDS = 30.0
 COMPOSE_START_TIMEOUT_SECONDS = 600.0
 COMPOSE_CONTROL_TIMEOUT_SECONDS = 120.0
@@ -254,10 +255,24 @@ def _compose_with_input(
 
 
 def _apply_migrations(context: ValidationContext) -> int:
+    global GOVERNANCE_MIGRATION_INVARIANTS
+    GOVERNANCE_MIGRATION_INVARIANTS = None
     migration_files = sorted(MIGRATIONS_DIR.glob("*.sql"))
     if not migration_files:
         raise RuntimeValidationError("No Supabase migrations were found.")
     for migration in migration_files:
+        governance_migration = migration.name == "20261009080000_atomic_governance_commands.sql"
+        permission_sql = """select jsonb_build_object(
+            'functions',(select jsonb_agg(jsonb_build_object('identity',p.oid::regprocedure::text,
+                'owner',pg_get_userbyid(p.proowner),'acl',p.proacl,'security_definer',p.prosecdef,'config',p.proconfig) order by p.proname)
+                from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='public'
+                and p.proname in ('exchange_commit_application_workflow_revision','exchange_commit_application_workflow_publication')),
+            'tables',(select jsonb_agg(jsonb_build_object('name',c.relname,'owner',pg_get_userbyid(c.relowner),
+                'acl',c.relacl,'rls',c.relrowsecurity,'force_rls',c.relforcerowsecurity) order by c.relname)
+                from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='public' and c.relkind in ('r','S')),
+            'policies',(select jsonb_agg(to_jsonb(t) order by schemaname,tablename,policyname) from pg_policies t where schemaname='public'));"""
+        if governance_migration:
+            before_permissions = _psql(context, permission_sql)
         _compose_with_input(
             context,
             [
@@ -276,6 +291,12 @@ def _apply_migrations(context: ValidationContext) -> int:
             migration.read_text(encoding="utf-8"),
         )
         print(f"  migration applied: {migration.name}")
+        if governance_migration:
+            after_permissions = _psql(context, permission_sql)
+            _require(before_permissions == after_permissions, "Governance migration changed grants, owners, RLS, policies or security mode.")
+            GOVERNANCE_MIGRATION_INVARIANTS = {"migration": migration.name,
+                "before": json.loads(before_permissions), "after": json.loads(after_permissions),
+                "identical": True, "expanded_permissions": False}
     return len(migration_files)
 
 
@@ -2720,6 +2741,11 @@ def validate_runtime(context: ValidationContext) -> dict[str, Any]:
     transient = _validate_transient_auth_concurrency(context)
     print("Validating workspace CAS concurrency...")
     workspace = _validate_workspace_cas(context)
+    print("Validating atomic governance commands across two API instances...")
+    from validate_governance_runtime import validate_atomic_governance
+    atomic_governance = validate_atomic_governance(context, psql=_psql)
+    _require(GOVERNANCE_MIGRATION_INVARIANTS is not None, "Governance permission invariants were not actually verified.")
+    atomic_governance["migration_permission_invariants"] = GOVERNANCE_MIGRATION_INVARIANTS
     print("Validating application-workflow issue report RPCs...")
     workflow_issue_reports = _validate_workflow_issue_reports(context)
     print("Validating public/private community concurrency across two API instances...")
@@ -2736,6 +2762,7 @@ def validate_runtime(context: ValidationContext) -> dict[str, Any]:
         "permissions": permissions,
         "transient_auth": transient,
         "workspace": workspace,
+        "atomic_governance": atomic_governance,
         "workflow_issue_reports": workflow_issue_reports,
         "community_multi_instance": community_multi_instance,
         "community_rollbacks": community_rollbacks,

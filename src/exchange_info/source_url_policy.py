@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+from functools import lru_cache
 from urllib.parse import urlsplit
 
 
+@lru_cache(maxsize=4096)
 def canonical_source_url_identity(source_url: str) -> str:
     """Normalize only URL components whose identity is case-insensitive."""
 

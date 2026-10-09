@@ -82,6 +82,13 @@
                   <a href="#application-center" data-requires-home-school>申請文件</a>
                 </div>
                 <details class="application-extra-tools"><summary>其他工具<i data-lucide="chevron-down" aria-hidden="true"></i></summary><div>
+                  <a href="#favorites" data-requires-home-school>收藏與比較</a>
+                  <a href="#calendar" data-requires-home-school>申請日曆</a>
+                  <a href="#eligibility" data-requires-home-school>資格與志願</a>
+                  <a href="#document-check" data-requires-home-school>文件檢查</a>
+                  <a href="#writing-assistant" data-requires-home-school>文件改寫（暫緩）</a>
+                  <a href="#documents" data-requires-home-school>文件庫</a>
+                  <a href="#university-posts" data-requires-home-school>本校討論板</a>
                   <a href="#deadlines" data-requires-home-school>官方期限來源</a>
                   <a href="#budget" data-requires-home-school>交換預算</a>
                   <a href="#scholarships" data-requires-home-school>補助資訊</a>
@@ -165,7 +172,7 @@
           </button>
           <button type="button" class="school-option" data-home-school="國立中央大學" role="option" aria-selected="false"><img src="/static/assets/ncu-campus.svg" alt="國立中央大學文字識別圖" /><span><strong>國立中央大學</strong><small>116-1簡章已公告 · 名額预定10/12公告</small></span><i data-lucide="circle" aria-hidden="true"></i></button>
         </div>
-        <p id="school-search-empty" class="school-search-empty" hidden>目前提供長庚大學、國立臺北大學、國立臺灣大學與國立中央大學；其他學校會依資料查核進度加入。</p>
+        <p id="school-search-empty" class="school-search-empty" hidden>未找到這所學校；目前支援的學校請查看選單，其他台灣大學會依資料查核進度加入。</p>
 
         <div class="onboarding-actions">
           <button id="browse-first" type="button" class="secondary-button">先看看全部交換學校</button>
@@ -257,7 +264,7 @@
         <div id="profile-entitlement-status" class="profile-entitlement-status" hidden></div>
         <div id="profile-verification-summary" class="profile-verification-summary" aria-live="polite"></div>
         <section id="profile-email-verification" class="profile-email-verification" hidden>
-          <p><strong>完成 電子郵件 驗證後才能在公共板發文或留言。</strong><span id="profile-email-verification-address"></span></p>
+          <p><strong>校級看板限已驗證 Email 的會員查看、發文與留言，不限同校；公共板發文或留言也需要驗證。</strong><span id="profile-email-verification-address"></span></p>
           <button id="request-profile-email-verification" type="button" class="secondary-button"><i data-lucide="mail-check" aria-hidden="true"></i><span>寄送驗證碼</span></button>
           <div id="profile-email-verification-step" class="email-verification-code" hidden>
             <label><span>六位數驗證碼</span><input id="profile-email-verification-code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" /></label>
@@ -607,10 +614,16 @@
                   <label data-ntu-academic-field hidden><span>適用學年班排名（前幾%）</span><input id="advisor-class-rank" name="class_rank_percent" type="number" min="0.01" max="100" step="0.01" inputmode="decimal" placeholder="例如前30%填30" disabled /></label>
                   <label><span>語言測驗</span><select id="advisor-language-test" name="language_test"><option value="">尚未考／尚未決定</option><option value="toeic">TOEIC</option><option value="ielts">IELTS Academic</option><option value="toefl">TOEFL iBT（舊制120分）</option><option value="toefl_new">TOEFL iBT（新制6分）</option><option value="duolingo">Duolingo</option><option value="other">其他</option></select></label>
                   <label><span>語言分數</span><input placeholder="尚未考可留空" id="advisor-language-score" name="language_score" type="number" min="0" step="0.5" inputmode="decimal" /></label>
+                  <label data-tku-eligibility hidden><span>JLPT 級別</span><select id="advisor-jlpt-level" name="jlpt_level" disabled><option value="">尚未考／待補</option><option value="N1">N1</option><option value="N2">N2</option><option value="N3">N3</option><option value="N4">N4</option><option value="N5">N5</option></select></label>
                   <label><span>想去的國家／地區</span><select id="advisor-country" name="preferred_country"></select></label>
                   <label><span>預計出國學期</span><select id="advisor-target-term" name="target_term"><option value="">尚未決定</option><option value="2027-spring">2027 春季</option><option value="2027-fall">2027 秋季</option><option value="2028-spring">2028 春季</option><option value="2028-fall">2028 秋季</option></select></label>
                 </div>
                 <p id="advisor-academic-rule" class="academic-directory-note" hidden>依本校當期簡章確認成績門檻。</p>
+                <div id="tku-eligibility-check" data-tku-eligibility hidden>
+                  <p class="academic-directory-note">淡江2027–2028日語二甄條件查核（校內已截止）。JLPT 與英語成績分開核對；研究所年級、外校入學及提名仍須確認。</p>
+                  <label><span>查核外校</span><select id="tku-eligibility-partner"><option value="seikei">成蹊大學</option><option value="ritsumeikan">立命館大學</option><option value="nagasaki">長崎外國語大學（NICS 對應待確認）</option><option value="uec">電氣通信大學（JUSST）</option></select></label>
+                  <p id="tku-eligibility-result" class="academic-directory-note" aria-live="polite"></p>
+                </div>
                 <p class="academic-directory-note"><span id="advisor-department-note">選擇學院後顯示所屬系所。</span><a id="advisor-department-source" target="_blank" rel="noopener noreferrer" hidden>官方名單</a></p>
                 <details class="advisor-more-fields">
                   <summary><span><i data-lucide="sliders-horizontal" aria-hidden="true"></i><strong>更多條件</strong></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
@@ -731,7 +744,7 @@
             <details class="journey-filter-drawer" open>
               <summary><i data-lucide="sliders-horizontal" aria-hidden="true"></i>篩選<i data-lucide="chevron-down" aria-hidden="true"></i></summary>
             <div class="filter-panel" aria-label="合作學校篩選條件">
-              <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">當期名額已列</option><option value="not_open">本季未開放（官方灰字）</option><option value="needs_confirmation">名額尚未核實</option><option value="zero_quota">零名額</option><option value="fee_paying">自費計畫</option><option value="agreement_only">合作備查／本期未公告</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
+              <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">當期名額已列</option><option value="not_open">本季未開放（官方灰字）</option><option value="needs_confirmation">名額尚未核實</option><option value="zero_quota">零名額</option><option value="fee_paying">自費計畫</option><option value="closed">表列交換校／校內申請已截止</option><option value="reference_only">舊期參考／不能作當期申請</option><option value="quota_unconfirmed">當期名額或期間待確認</option><option value="agreement_only">合作備查／本期未公告</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
               <label for="region-filter"><span>地區</span><select id="region-filter"></select></label>
               <label for="country-filter"><span>國家</span><select id="country-filter"></select></label>
               <label for="college-filter"><span>學院</span><select id="college-filter"></select></label>
@@ -1196,12 +1209,13 @@
     <script src="/static/discovery-ui.js?v=20261004-digest-2" defer></script>
     <script src="/static/navigation.js?v=20261001-planning-workspace-1" defer></script>
     <script src="/static/motion.js?v=20261007-forum-1" defer></script>
-    <script src="/static/community-reader.js?v=20260930-forum-1" defer></script>
+    <script src="/static/community-reader.js?v=20261009-tku-reader-expiry-1" defer></script>
     <script src="/static/community-moderation.js?v=20260930-discussion-2b" defer></script>
     <script src="/static/academic-units.js?v=20261001-departments-1" defer></script>
     <script src="/static/ccu-academic-units.js?v=20261008-ccu-filter-23" defer></script>
     <script src="/static/ccu-language-conditions.js?v=20261008" defer></script>
     <script src="/static/ccu-partner-details.js?v=20261008-life-1" defer></script>
+    <script src="/static/tku-academic-units.js?v=20261008-tku-acceptance-1" defer></script>
     <dialog id="planning-target-change-dialog" class="planning-change-dialog" aria-labelledby="planning-target-change-title">
       <form method="dialog"><span class="section-kicker">更換目標前，先確認影響</span><h2 id="planning-target-change-title">改用這所學校規劃？</h2><p id="planning-target-change-summary"></p><ul id="planning-target-change-impact"></ul><footer><button id="planning-target-change-cancel" class="secondary-button" value="cancel">保留原目標</button><button class="primary-button" value="confirm">確認更換目標</button></footer></form>
     </dialog>
@@ -1212,6 +1226,7 @@
     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
     <script src="/static/analytics.js?v=20261003-analytics-1" defer></script>
     <script src="/static/feedback.js?v=20261008-2" defer></script>
-    <script src="/static/app.js?v=20261009-five-schools-integration-1" defer></script>
+    <script src="/static/tku-eligibility.js?v=20261008-1" defer></script>
+    <script src="/static/app.js?v=20261009-six-schools-integration-1" defer></script>
   </body>
 </html>

@@ -33,7 +33,7 @@ def test_school_life_uses_offline_chinese_and_retains_original(page, live_server
     evidence = page.locator('.life-evidence-item').filter(has_text="東京市中心租金較高").first
     expect(evidence.locator(".life-evidence-text")).to_have_text("東京市中心租金較高，因此許多學生從市區以外通勤。")
     expect(evidence.locator(".life-evidence-source p")).not_to_be_visible()
-    evidence.get_by_text("資料來源", exact=True).click()
+    evidence.locator(".life-evidence-source > summary").click()
     expect(evidence.locator(".life-evidence-source p")).to_have_text(original)
     expect(evidence.get_by_role("link")).to_have_attribute("href", url)
     assert "中文翻譯待補" not in page.locator("#life-content").inner_text()

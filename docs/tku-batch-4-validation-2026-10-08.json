@@ -1,0 +1,770 @@
+{
+  "checked_at": "2026-10-08",
+  "branch": "data/tku-exchange-20261008",
+  "integration_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "merge_commit": "1bbb150f738bb5a9eac5d5166b489d449d27bc22",
+  "main_is_ancestor": true,
+  "data": {
+    "records": 128,
+    "current_round_records": 4,
+    "reference_records": 124,
+    "confirmed_current_quota": 7,
+    "fact_states": {
+      "verified": 85,
+      "missing_in_source": 665,
+      "needs_confirmation": 19,
+      "reference_only": 1604,
+      "not_verified_new": 11
+    },
+    "issues": [],
+    "unique_original_school_names": 119,
+    "current_matrix": [
+      {
+        "id": "jp-2027-2028-round-2-ritsumeikan",
+        "school_name": "立命館大學 Ritsumeikan University",
+        "field_states": {
+          "verified": 26,
+          "missing_in_source": 4,
+          "needs_confirmation": 4,
+          "reference_only": 3,
+          "not_verified_new": 1
+        }
+      },
+      {
+        "id": "jp-2027-2028-round-2-nagasaki",
+        "school_name": "長崎外國語大學 Nagasaki University of Foreign Studies",
+        "field_states": {
+          "verified": 22,
+          "missing_in_source": 6,
+          "needs_confirmation": 6,
+          "not_verified_new": 2,
+          "reference_only": 2
+        }
+      },
+      {
+        "id": "jp-2027-2028-round-2-seikei",
+        "school_name": "成蹊大學 Seikei University",
+        "field_states": {
+          "verified": 26,
+          "missing_in_source": 5,
+          "needs_confirmation": 5,
+          "reference_only": 1,
+          "not_verified_new": 1
+        }
+      },
+      {
+        "id": "jp-2027-2028-round-2-uec",
+        "school_name": "電氣通信大學 University of Electro-Communications",
+        "field_states": {
+          "verified": 11,
+          "missing_in_source": 2,
+          "reference_only": 14,
+          "needs_confirmation": 4,
+          "not_verified_new": 7
+        }
+      }
+    ],
+    "current_matrix_totals": {
+      "verified": 85,
+      "missing_in_source": 17,
+      "needs_confirmation": 19,
+      "reference_only": 20,
+      "not_verified_new": 11
+    },
+    "current_verified_fraction": 0.5592105263157895,
+    "matrix_school_count": 128,
+    "matrix_fields_per_school": 38,
+    "currently_open_choices": 0,
+    "source_count": 72,
+    "unique_source_urls": 67,
+    "downloaded_original_attachments": 28,
+    "source_failures": [
+      {
+        "id": "jp-original-attachment-2",
+        "url": "https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/09/2027-28日語組二甄簡章.pdf",
+        "error": "404 Client Error: Not Found for url: https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/09/2027-28%E6%97%A5%E8%AA%9E%E7%B5%84%E4%BA%8C%E7%94%84%E7%B0%A1%E7%AB%A0.pdf"
+      },
+      {
+        "id": "uec-life",
+        "url": "https://www.fedu.uec.ac.jp/en/current_students/everyday-life/",
+        "error": "404 Client Error: Not Found for url: https://www.fedu.uec.ac.jp/en/current_students/everyday-life/"
+      },
+      {
+        "id": "japan-residence",
+        "url": "https://www.moj.go.jp/isa/applications/status/student.html",
+        "error": "403 Client Error: Forbidden for url: https://www.moj.go.jp/isa/applications/status/student.html"
+      }
+    ],
+    "host_documents_by_school": [
+      {
+        "school": "立命館大學 Ritsumeikan University",
+        "phases": {
+          "外校申請": 9,
+          "行前": 6
+        }
+      },
+      {
+        "school": "長崎外國語大學 Nagasaki University of Foreign Studies",
+        "phases": {
+          "外校申請": 11
+        }
+      },
+      {
+        "school": "成蹊大學 Seikei University",
+        "phases": {
+          "外校申請": 10
+        }
+      },
+      {
+        "school": "電氣通信大學 University of Electro-Communications",
+        "phases": {
+          "外校申請": 15,
+          "行前": 2
+        }
+      }
+    ]
+  },
+  "current_tests": {
+    "tests": 316,
+    "passed": 301,
+    "failed": 9,
+    "skipped": 6,
+    "failure_ids": [
+      "tests.test_frontend_contract::test_web_routes_states_and_touch_targets_are_consistent",
+      "tests.test_frontend_contract::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+      "tests.test_frontend_contract::test_web_notification_center_and_explicit_email_opt_in_are_present",
+      "tests.test_frontend_contract::test_application_center_separates_official_requirements_from_preparation_tools",
+      "tests.test_frontend_contract::test_successful_login_closes_before_noncritical_account_hydration",
+      "tests.test_frontend_contract::test_personal_application_plan_uses_structured_api_and_progressive_login",
+      "tests.test_frontend_contract::test_global_home_board_routing_and_following_are_present",
+      "tests.test_frontend_contract::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+      "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+    ],
+    "junit_sha256": "89aa1611ce57c38c202ee7073de3781d80096019cc033dc9ee3ed258a3343dcc"
+  },
+  "baseline_failure_comparison": {
+    "tests": 58,
+    "passed": 49,
+    "failed": 9,
+    "skipped": 0,
+    "failure_ids": [
+      "tests.test_frontend_contract::test_web_routes_states_and_touch_targets_are_consistent",
+      "tests.test_frontend_contract::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+      "tests.test_frontend_contract::test_web_notification_center_and_explicit_email_opt_in_are_present",
+      "tests.test_frontend_contract::test_application_center_separates_official_requirements_from_preparation_tools",
+      "tests.test_frontend_contract::test_successful_login_closes_before_noncritical_account_hydration",
+      "tests.test_frontend_contract::test_personal_application_plan_uses_structured_api_and_progressive_login",
+      "tests.test_frontend_contract::test_global_home_board_routing_and_following_are_present",
+      "tests.test_frontend_contract::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+      "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+    ],
+    "junit_sha256": "aa0291b4218c69516afee56d0a3b4aebf7d043d12448787288abc631334b0db7"
+  },
+  "ntu_browser_tests": {
+    "tests": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "failure_ids": [],
+    "junit_sha256": "c1d1232543f01c203b2abd8f7782e5f830b19af1079d528199536381574236b3"
+  },
+  "new_failure_ids": [],
+  "browser": {
+    "status": "passed",
+    "checks": [
+      {
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "checks": [
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "電氣通信大學 University of Electro-Communications",
+            "academic_year": "2027-2028",
+            "visible_documents": 25,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "電氣通信大學 University of Electro-Communications",
+            "academic_year": "2027-2028",
+            "visible_documents": 25,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "電氣通信大學 University of Electro-Communications",
+            "academic_year": "2027-2028",
+            "visible_documents": 25,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "國立臺北大學",
+            "target": "關西學院大學 (Kwansei Gakuin University)",
+            "academic_year": "115",
+            "visible_documents": 20,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "長庚大學",
+            "target": "林肯大學 Lincoln University",
+            "academic_year": "116",
+            "visible_documents": 27,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "國立臺灣大學",
+            "target": "聖保羅大學",
+            "academic_year": "116",
+            "visible_documents": 12,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          }
+        ],
+        "detail_checks": [
+          {
+            "school": "立命館大學 Ritsumeikan University",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          },
+          {
+            "school": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          },
+          {
+            "school": "成蹊大學 Seikei University",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          },
+          {
+            "school": "電氣通信大學 University of Electro-Communications",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          }
+        ],
+        "cancel_keeps_original": true,
+        "stale_response_ignored": true,
+        "wrong_year_does_not_reuse_documents": true,
+        "page_errors": []
+      },
+      {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "checks": [
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "電氣通信大學 University of Electro-Communications",
+            "academic_year": "2027-2028",
+            "visible_documents": 25,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "電氣通信大學 University of Electro-Communications",
+            "academic_year": "2027-2028",
+            "visible_documents": 25,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "電氣通信大學 University of Electro-Communications",
+            "academic_year": "2027-2028",
+            "visible_documents": 25,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "成蹊大學 Seikei University",
+            "academic_year": "2027-2028",
+            "visible_documents": 18,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "academic_year": "2027-2028",
+            "visible_documents": 19,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "國立臺北大學",
+            "target": "關西學院大學 (Kwansei Gakuin University)",
+            "academic_year": "115",
+            "visible_documents": 20,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "長庚大學",
+            "target": "林肯大學 Lincoln University",
+            "academic_year": "116",
+            "visible_documents": 27,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "國立臺灣大學",
+            "target": "聖保羅大學",
+            "academic_year": "116",
+            "visible_documents": 12,
+            "sources_and_title_match": true
+          },
+          {
+            "home": "淡江大學",
+            "target": "立命館大學 Ritsumeikan University",
+            "academic_year": "2027-2028",
+            "visible_documents": 23,
+            "sources_and_title_match": true
+          }
+        ],
+        "detail_checks": [
+          {
+            "school": "立命館大學 Ritsumeikan University",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          },
+          {
+            "school": "長崎外國語大學 Nagasaki University of Foreign Studies",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          },
+          {
+            "school": "成蹊大學 Seikei University",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          },
+          {
+            "school": "電氣通信大學 University of Electro-Communications",
+            "host_workflow_expanded": true,
+            "life_sections": 14,
+            "completeness_fields": 38
+          }
+        ],
+        "cancel_keeps_original": true,
+        "stale_response_ignored": true,
+        "wrong_year_does_not_reuse_documents": true,
+        "page_errors": []
+      }
+    ]
+  },
+  "target_reproduction": {
+    "baseline_frontend": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "scope": "Latest-main app.js intercepted in isolated local TKU server; rerender while native confirmation is open.",
+    "before": [
+      {
+        "label": "first target",
+        "input": "立命館大學 Ritsumeikan University",
+        "context": "立命館大學 Ritsumeikan University",
+        "catalog": "立命館大學 Ritsumeikan University",
+        "loading": false,
+        "dialog": false
+      },
+      {
+        "label": "dialog opened",
+        "input": "長崎外國語大學 Nagasaki University of Foreign Studies",
+        "context": "立命館大學 Ritsumeikan University",
+        "catalog": "立命館大學 Ritsumeikan University",
+        "loading": false,
+        "dialog": true
+      },
+      {
+        "label": "workspace rerender during confirmation",
+        "input": "立命館大學 Ritsumeikan University",
+        "context": "立命館大學 Ritsumeikan University",
+        "catalog": "立命館大學 Ritsumeikan University",
+        "loading": false,
+        "dialog": true
+      },
+      {
+        "label": "confirmed",
+        "input": "立命館大學 Ritsumeikan University",
+        "context": "立命館大學 Ritsumeikan University",
+        "catalog": "立命館大學 Ritsumeikan University",
+        "loading": false,
+        "dialog": false
+      }
+    ],
+    "after": [
+      {
+        "label": "first target",
+        "input": "立命館大學 Ritsumeikan University",
+        "context": "立命館大學 Ritsumeikan University",
+        "catalog": "立命館大學 Ritsumeikan University",
+        "loading": false,
+        "dialog": false
+      },
+      {
+        "label": "dialog opened",
+        "input": "長崎外國語大學 Nagasaki University of Foreign Studies",
+        "context": "立命館大學 Ritsumeikan University",
+        "catalog": "立命館大學 Ritsumeikan University",
+        "loading": false,
+        "dialog": true
+      },
+      {
+        "label": "workspace rerender during confirmation",
+        "input": "立命館大學 Ritsumeikan University",
+        "context": "立命館大學 Ritsumeikan University",
+        "catalog": "立命館大學 Ritsumeikan University",
+        "loading": false,
+        "dialog": true
+      },
+      {
+        "label": "confirmed",
+        "input": "長崎外國語大學 Nagasaki University of Foreign Studies",
+        "context": "長崎外國語大學 Nagasaki University of Foreign Studies",
+        "catalog": "長崎外國語大學 Nagasaki University of Foreign Studies",
+        "loading": false,
+        "dialog": false
+      }
+    ]
+  },
+  "announcement_audit": {
+    "path": "src/exchange_info/official_data/tku/current_notice_audit.json",
+    "sha256": "75738817ffa1fb88732af6141a8ada6866afa2c930a5f9726d8725d1ba0405a5",
+    "capture_count": 25,
+    "rest_records": 293,
+    "rest_pages": 3,
+    "status": "not_verified_new",
+    "finding": "查過的公開入口與完整日期範圍REST公告標題未找到英歐／中文2027–2028新甄選公告；既有英歐及中文簡章仍為115（2026–2027）。這是有界負面查核，不是官方明示尚未公告，也不證明所有網站或非公開檔案均無新版。",
+    "unresolved_conflicts": 13
+  },
+  "protected_files": {
+    "diff_from_main": [],
+    "bundled_workflows": {
+      "國立臺北大學": 409,
+      "長庚大學": 154,
+      "國立臺灣大學": 288,
+      "淡江大學": 4
+    },
+    "bundled_destinations": {
+      "國立臺北大學": 206,
+      "淡江大學": 4,
+      "長庚大學": 77,
+      "國立臺灣大學": 288
+    }
+  },
+  "shared_files": [
+    "docs/api/openapi.json",
+    "pyproject.toml",
+    "src/exchange_info/api.py",
+    "src/exchange_info/application_documents.py",
+    "src/exchange_info/models.py",
+    "src/exchange_info/static/app.js",
+    "src/exchange_info/static/index.html",
+    "src/exchange_info/storage.py",
+    "src/exchange_info/university_registry.py",
+    "tests/e2e/test_ntu_school.py",
+    "tests/test_fit_signals.py",
+    "tests/test_ntu_integration.py",
+    "tests/test_school_completeness.py",
+    "tests/test_task_documents_and_reference_plan.py"
+  ],
+  "checks": {
+    "openapi": "passed",
+    "python_syntax": "passed",
+    "javascript_syntax": "passed",
+    "diff_check": "passed",
+    "offline_rebuild": "passed in TKU regression test",
+    "lockfile_check": "exit 1 on this branch and untouched f6ad: The lockfile at uv.lock needs to be updated; uv.lock unchanged",
+    "remote_ci": "quality run37728615498 failure, zero jobs, log not found; one separate Supabase Preview check skipped; cause unverified"
+  },
+  "remaining_scope": "124 archived programme rows are reference-only; current host details are reviewed only for the four latest Japanese choices. Nagasaki NICS/graduate mapping, UEC 2027-specific forms, and 13 source conflicts remain explicit.",
+  "delivery_evidence": {
+    "application_commit": "78849153528068a61aabec9de0437d4ee9d132ba",
+    "remote_branch_head_verified": "78849153528068a61aabec9de0437d4ee9d132ba",
+    "main_head_verified": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "push": "normal fast-forward, no force",
+    "pr": {
+      "url": "https://github.com/blizzard-new/abroad/pull/2",
+      "state": "OPEN",
+      "is_draft": true,
+      "mergeable": "MERGEABLE"
+    },
+    "quality_run": {
+      "id": 37728615498,
+      "url": "https://github.com/blizzard-new/abroad/actions/runs/37728615498",
+      "status": "completed",
+      "conclusion": "failure",
+      "jobs": 0,
+      "failed_log_exit_code": 1,
+      "failed_log_error": "failed to get run log: log not found",
+      "cause": "not verified"
+    },
+    "check_runs": [
+      {
+        "name": "Supabase Preview",
+        "status": "completed",
+        "conclusion": "skipped"
+      }
+    ],
+    "following_evidence_commit": "documentation only; final HEAD verification is reported in PR/final reply"
+  }
+}

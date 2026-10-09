@@ -94,7 +94,7 @@ def test_ntu_catalog_api_works_offline_and_keeps_pending_visible(monkeypatch, tm
     monkeypatch.setattr("exchange_info.api.fetch_partner_universities", network_not_allowed)
     monkeypatch.setattr("exchange_info.api.fetch_ntpu_partner_universities", network_not_allowed)
     client = TestClient(create_app(tmp_path))
-    assert [row["id"] for row in client.get("/universities").json()] == ["cgu", "ntpu", "ntu", "ccu", "ncu"]
+    assert [row["id"] for row in client.get("/universities").json()] == ["cgu", "ntpu", "ntu", "ccu", "ncu", "tku"]
     dashboard = client.get("/student-dashboard", params={"school": "台大"})
     assert dashboard.status_code == 200
     assert dashboard.json()["school_name"] == NTU.school_name

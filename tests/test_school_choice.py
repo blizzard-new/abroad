@@ -126,6 +126,8 @@ def test_the_student_card_endpoints_are_gone(tmp_path: Path) -> None:
 
 
 def test_the_school_identity_option_needs_a_school_not_a_verified_student(tmp_path: Path) -> None:
+    # Historical node ID retained. A self-declared catalogue school now explicitly
+    # must not authorize a verified-student byline.
     app, client = _client(tmp_path)
     _, no_school = _account(app, email="none@example.com")
     _, with_school = _account(app, home_university=CGU, email="has@example.com")
@@ -135,8 +137,8 @@ def test_the_school_identity_option_needs_a_school_not_a_verified_student(tmp_pa
         return next(item for item in options if item["mode"] == "verified_school")
 
     assert option(no_school)["enabled"] is False
-    assert option(with_school)["enabled"] is True
-    assert option(with_school)["label"] == f"{CGU}學生"
+    assert option(with_school)["enabled"] is False
+    assert "自填母校不代表認證" in option(with_school)["unavailable_reason"]
 
 
 def test_school_bound_posts_follow_the_picked_school(tmp_path: Path) -> None:
@@ -146,7 +148,7 @@ def test_school_bound_posts_follow_the_picked_school(tmp_path: Path) -> None:
     assert JsonlCommunityRepository._verified_for_school(pick, NTPU) is True
     assert JsonlCommunityRepository._verified_for_school(pick, CGU) is False, "a school's Q&A is for that school's people"
     assert JsonlCommunityRepository._verified_for_school(none, NTPU) is False
-    assert JsonlCommunityRepository._display_name_status(pick, CommunityIdentityMode.VERIFIED_SCHOOL) == (None, f"{NTPU}學生")
+    assert JsonlCommunityRepository._display_name_status(pick, CommunityIdentityMode.VERIFIED_SCHOOL) == (PublicCommunityPublicationStatus.STUDENT_VERIFICATION_REQUIRED, None)
     status, name = JsonlCommunityRepository._display_name_status(none, CommunityIdentityMode.VERIFIED_SCHOOL)
     assert status == PublicCommunityPublicationStatus.STUDENT_VERIFICATION_REQUIRED and name is None
 

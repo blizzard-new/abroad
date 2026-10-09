@@ -187,8 +187,8 @@ def test_a_school_byline_still_needs_a_verified_student(catalog):
     for mode in ("verified_school", "verified_department"):
         denied = catalog.post("/community/posts", json={**payload, "identity_mode": mode}, headers=no_school)
         assert denied.status_code == 403, (mode, denied.text)
-    # Nobody checks enrolment any more: the school an account picked is what its byline shows.
+    # A picked catalogue school is not verified enrolment; it may post anonymously.
     picked = catalog.post("/community/posts", json={**payload, "identity_mode": "verified_school"}, headers=declared)
-    assert picked.status_code == 201, picked.text
-    assert picked.json()["display_name"] == f"{NTPU}學生"
+    assert picked.status_code == 403, picked.text
+    assert catalog.post("/community/posts", json=payload, headers=declared).status_code == 201
     assert catalog.post("/community/posts", json={**payload, "identity_mode": "verified_school"}, headers=verified).status_code == 201

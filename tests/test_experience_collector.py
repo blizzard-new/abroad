@@ -1381,6 +1381,9 @@ def test_ambiguous_legacy_destination_profile_fails_closed(tmp_path) -> None:
 
 def test_experience_api_reads_cache_and_refreshes_selected_school(tmp_path, monkeypatch) -> None:
     ensure_data_dirs(tmp_path)
+    # This fixture tests cache/refresh persistence. Curated bundled stories have
+    # their own source/digest tests and must not inflate this isolated cache count.
+    monkeypatch.setattr("exchange_info.experience_digests._load", lambda: ({}, {}))
     partner = _partner()
     cached = _source()
     replace_school_experiences(partner.school_name, [cached], tmp_path)
@@ -1464,14 +1467,19 @@ def test_destination_profile_api_returns_verified_official_summary(tmp_path, mon
     coverage = client.get("/coverage").json()
 
     assert response.status_code == 200
-    assert response.json()["city"] == "Lincoln, Canterbury"
+    assert response.json()["city"] == "林肯, 坎特伯里"
     assert list_response.status_code == 200
     listed = next(
         row
         for row in list_response.json()
         if row["school_name"] == partner.school_name
     )
-    assert listed["city"] == "Lincoln, Canterbury"
+    assert listed["city"] == "林肯, 坎特伯里"
+    # Public display localization must not overwrite the original stored record
+    # or promote its review status.
+    assert load_destination_profiles(tmp_path)[0].city == "Lincoln, Canterbury"
+    assert response.json()["coverage_status"] == "official_verified"
+    assert listed["coverage_status"] == "official_verified"
     assert coverage["destination_profile_count"] == 1
     assert coverage["partners"][0]["destination_status"] == "official_verified"
 

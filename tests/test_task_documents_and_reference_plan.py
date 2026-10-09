@@ -51,7 +51,7 @@ def test_stage_only_match_is_last_resort_and_labelled():
 def test_every_bundled_step_is_either_linked_listed_or_documentless():
     workflows = storage.load_bundled_application_workflows()
     # CGU 77 (115) + 77 (116); NTPU 203 (115) + 206 (116); NTU 288 (116-1).
-    assert len(workflows) == 1065
+    assert len(workflows) == 1069
     ncu = [w for w in workflows if w.home_university == "國立中央大學"]
     assert len(ncu) == 214 and all(w.review_status == "pending_review" for w in ncu)
     overall = audit_task_document_links(workflows)
@@ -59,7 +59,7 @@ def test_every_bundled_step_is_either_linked_listed_or_documentless():
     # Keep the established schools' reviewed linkage contract separate from the
     # new NCU pending host reference steps (including later health/arrival files).
     workflows = [w for w in workflows if w.home_university != "國立中央大學"]
-    assert len(workflows) == 851
+    assert len(workflows) == 855
     audit = audit_task_document_links(workflows)
     assert audit["steps"] == sum(len(row.steps) for row in workflows)
     assert audit["tool_linked"] + audit["requirements_only"] + audit["no_documents"] == audit["steps"]
@@ -68,6 +68,12 @@ def test_every_bundled_step_is_either_linked_listed_or_documentless():
     # school's own path must reach a preparation tool.
     allowed = ("依提名信", "辦理學生簽證")
     for row in audit["requirements_only_patterns"]:
+        if row["home_university"] == "淡江大學":
+            assert row["step_title"] == "獲母校推薦後完成外校申請", row
+            # Host-specific forms and nomination conditions are catalog items,
+            # never the mother's generic application generator.
+            assert row["required_documents"]
+            continue
         assert row["step_title"].startswith(allowed), row
     assert audit["tool_linked"] >= 1400
 
@@ -193,7 +199,7 @@ def test_every_bundled_workflow_yields_a_schedulable_estimated_plan_for_an_unpub
     from exchange_info.models import PartnerUniversity
 
     workflows = storage.load_bundled_application_workflows()
-    assert len(workflows) == 1065
+    assert len(workflows) == 1069
     empty, unplannable = [], []
     for workflow in workflows:
         if len(workflow.school_name) > 200:
@@ -207,7 +213,8 @@ def test_every_bundled_workflow_yields_a_schedulable_estimated_plan_for_an_unpub
         )
         request = PersonalApplicationPlanRequest(
             home_school=workflow.home_university, college="工學院", degree_level="大學部", academic_score=90,
-            academic_year="120", application_round="第一梯次",
+            academic_year="2031-2032" if workflow.home_university == "淡江大學" else "120",
+            application_round="第一梯次",
             preferences=[{"rank": 1, "school_name": workflow.school_name}],
         )
         plan = build_personal_application_plan(
