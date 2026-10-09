@@ -1,0 +1,27 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "/workspace/integration-tools/production_school_smoke.py",
+    "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
+    "pr2-production-six-school-smoke",
+    "--ncu",
+    "--tku"
+  ],
+  "cwd": "/workspace/abroad-six-final",
+  "started_at": "2026-10-09T15:46:59.693560+00:00",
+  "start_guard": {
+    "sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+    "tree": "7a9736031fb9e2d440426e14c1ca03f5438aca97",
+    "status": ""
+  },
+  "timeout_seconds": 1200,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-09T15:48:03.190698+00:00",
+  "end_guard": {
+    "sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+    "tree": "7a9736031fb9e2d440426e14c1ca03f5438aca97",
+    "status": ""
+  }
+}

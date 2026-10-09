@@ -1,0 +1,24 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-c",
+    "import json,requests,tempfile; from pathlib import Path; from fastapi.testclient import TestClient; from exchange_info.api import create_app; remote=requests.get('https://uniway-1167.onrender.com/student-dashboard',params={'school':'\u6de1\u6c5f\u5927\u5b78'},timeout=90); remote.raise_for_status(); public=remote.json(); temp=tempfile.TemporaryDirectory(); local=TestClient(create_app(Path(temp.name))).get('/student-dashboard',params={'school':'\u6de1\u6c5f\u5927\u5b78'}).json(); r={'remote_school':public['school_name'],'local_school':local['school_name'],'remote_partner_count':len(public['partner_universities']),'local_partner_count':len(local['partner_universities']),'remote_partners':public['partner_universities'],'local_partners':local['partner_universities'],'partner_lists_identical':public['partner_universities']==local['partner_universities']}; Path('/workspace/integration-evidence/pr2-production-tku-count-diagnostic-result.json').write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\\n'); print(json.dumps({k:v for k,v in r.items() if k not in ('remote_partners','local_partners')},ensure_ascii=False)); temp.cleanup()"
+  ],
+  "cwd": "/workspace/abroad-six-final",
+  "started_at": "2026-10-09T15:48:29.370439+00:00",
+  "start_guard": {
+    "sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+    "tree": "7a9736031fb9e2d440426e14c1ca03f5438aca97",
+    "status": ""
+  },
+  "timeout_seconds": 240,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T15:48:32.390304+00:00",
+  "end_guard": {
+    "sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+    "tree": "7a9736031fb9e2d440426e14c1ca03f5438aca97",
+    "status": ""
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "service_id": "srv-db26bgjbc2fs73fdsmhg",
+  "autoDeploy": "yes",
+  "autoDeployTrigger": "commit",
+  "branch": "main",
+  "plan": "free",
+  "buildPlan": "starter",
+  "environment": {
+    "buildCommand": "pip install .",
+    "startCommand": "uvicorn exchange_info.api:app --host 0.0.0.0 --port $PORT --workers 1"
+  },
+  "unchanged_from_pre_release": true
+}

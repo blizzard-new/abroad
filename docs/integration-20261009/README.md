@@ -1,3 +1,9 @@
+# 發布穩定性阻擋：2026-10-09 15:59 UTC
+
+四支PR與DB已合併／套用，Render merge SHA `1c715d21` 曾於15:46:11 live；六校6 HTTP、6 guest forum拒絕、12手機桌面切換passed。但其後台大照片/地球/生活回歸在15:54:55遭多個502，Render事件明確確認512Mi OOM kill，15:55:31自動恢復。**尚未完成穩定上線驗收。**
+
+[OOM事件](pr2-render-oom-events.json)、[記憶體指標](pr2-render-memory-502-metrics.json)、[原失敗run](pr2-production-ntu-regression/metadata.json)。記憶體從約207MB持續上升到533MB，再隨重啟下降；不是單純放寬timeout可以解決。新隔離分支 `integration/six-school-memory-20261009` 正定位原因，未改付費/Render設定/Quality/憑證。下面保留較早發布紀錄。
+
 # 六校整合發布驗收：2026-10-09 15:41 UTC
 
 **四支授權PR皆已合併；最後Render建置及六校實站驗收仍在進行，尚未宣稱上線完成。**

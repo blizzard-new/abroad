@@ -16,7 +16,7 @@ from tests.e2e.conftest import enter_public_site, open_navigation
 commit, output_name = sys.argv[1:3]
 schools = [('長庚大學', 77), ('國立臺北大學', 206), ('國立臺灣大學', 288), ('國立中正大學', 104)]
 if '--ncu' in sys.argv: schools.append(('國立中央大學', 214))
-if '--tku' in sys.argv: schools.append(('淡江大學', 128))
+if '--tku' in sys.argv: schools.append(('淡江大學', 4))
 base = 'https://uniway-1167.onrender.com'
 output = Path('/workspace/integration-evidence') / (output_name + '-result.json')
 proof = {'commit': commit, 'checked_at': datetime.now(timezone.utc).isoformat(), 'http': [], 'browser': [], 'browser_proxy_ca_workaround': True}

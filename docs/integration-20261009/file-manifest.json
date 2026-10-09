@@ -1,8 +1,13 @@
 [
   {
     "path": "README.md",
-    "bytes": 4714,
-    "sha256": "c3db0e794b566590fa204e2386acc24d617fcb9b261e3592591ca92d4d884697"
+    "bytes": 5499,
+    "sha256": "e4438a5982ad3b14e64a375eb773c703c70201dc26ae932e3be8d8c67d637ef5"
+  },
+  {
+    "path": "acceptance-runs-index.json",
+    "bytes": 28948,
+    "sha256": "84c795940e16875cc88334318aaef92f2eee5c565e756b5405eb8dd57fe7f4ae"
   },
   {
     "path": "baseline-three-school-workflow-payloads.json",
@@ -56,13 +61,23 @@
   },
   {
     "path": "execution-status.json",
-    "bytes": 4025,
-    "sha256": "bd5bb6946dbcddf98c061d97e6f0c38f525230dcb611bd7a90d73e6608f97b95"
+    "bytes": 4568,
+    "sha256": "4c0fa2316abdfbbd2d6ccc0dda8415884705526a20864fb67e708b12c63a6d20"
   },
   {
     "path": "final-full-progress.json",
     "bytes": 961,
     "sha256": "0a8c2db4b7798ba547de58812ae2403b052c03c428f2407e998fae6a0ead7ee6"
+  },
+  {
+    "path": "final-quality-state.json",
+    "bytes": 84,
+    "sha256": "1e3c4aab323c3d4d820376fdeb36e622f20c50159773e769c2bc561d1c6a54ea"
+  },
+  {
+    "path": "final-render-settings.json",
+    "bytes": 358,
+    "sha256": "c5ef0bec1ecaf0a5f19142c3cbde25b81b47fcad5cde3d9f9d81af445aecb206"
   },
   {
     "path": "five-school-browser-2233286/metadata.json",
@@ -160,6 +175,16 @@
     "sha256": "cc8ad00a90e0e3645218ea9564ad694ef17d3a15202de87d916f35d44b8fa147"
   },
   {
+    "path": "four-pr-final-github-state.json",
+    "bytes": 1191,
+    "sha256": "a94b6813b5da065a9d0fdb9d60c6a2e638455ce18f309a9f76742481b5df6d3f"
+  },
+  {
+    "path": "four-pr-release-sha-ledger.json",
+    "bytes": 1991,
+    "sha256": "a40d3e3b29750d1adcc81848344e16ef659151e2e903fe04c05ad2ca35e5dbc3"
+  },
+  {
     "path": "harness/apply_release_followups.py",
     "bytes": 8258,
     "sha256": "95e1a1d2575b9bddd08cb22feab0473fab248f846292345754d2f1174309caa0"
@@ -241,8 +266,8 @@
   },
   {
     "path": "harness/production_school_smoke.py",
-    "bytes": 5781,
-    "sha256": "8d2bcaaa99f2c97939d9954af75653156d24136584d8205fc6c9e86a0631ac95"
+    "bytes": 5779,
+    "sha256": "5a3ba224b89287ef3bc230f65f9e0c5cf33d7f868a47c305e2abfa253e140edb"
   },
   {
     "path": "harness/rerun_browser_failures.py",
@@ -465,6 +490,11 @@
     "sha256": "f519727303f0af6862882be2a30f420e28710d4209226e681aaddb2c01d12d9b"
   },
   {
+    "path": "pr2-actions-annotations.json",
+    "bytes": 858,
+    "sha256": "b253091cfe6b54182e04b56c79c905664cbe6e42b64866a8c6256a0625d1d735"
+  },
+  {
     "path": "pr2-actions-jobs.json",
     "bytes": 184,
     "sha256": "1a0008e45c38e989095f56a697ed211e14e0fbcdab056da18ca775cbd8653213"
@@ -473,6 +503,16 @@
     "path": "pr2-actions-runs.json",
     "bytes": 286,
     "sha256": "36c6a16964d15166ee8ce1a5fb9252d35b7cfb1c75af25de8cd54f822c3d3529"
+  },
+  {
+    "path": "pr2-after-502-http-diagnostic.json",
+    "bytes": 966,
+    "sha256": "2d55494a74d8c782cbed3292bb2c088e1809509a28e8ece16d99a8d2351f9f04"
+  },
+  {
+    "path": "pr2-deploy-live.json",
+    "bytes": 803,
+    "sha256": "4d00ec44f1f48c0952984aaed185b0db742b24cdac0ea687a14410f2a07b7870"
   },
   {
     "path": "pr2-final-install.log",
@@ -490,9 +530,109 @@
     "sha256": "b428975081bb6dc697523767d588c2dba64f7eaa681cdb15e61f3c9258f83339"
   },
   {
+    "path": "pr2-production-ntu-regression/metadata.json",
+    "bytes": 829,
+    "sha256": "3584a784f5142c8a5b9cd95b494083fa849c061f2bcd83f4e468a5bb16c9ed5a"
+  },
+  {
+    "path": "pr2-production-ntu-regression/stderr.log",
+    "bytes": 850,
+    "sha256": "64f7eb154c55ca8dcc8a133f045c194c7150391910f92cc01e792f1729894048"
+  },
+  {
+    "path": "pr2-production-ntu-regression/stdout.log",
+    "bytes": 62650,
+    "sha256": "37b6ee90a71b49145e9270beeffd5176ff9fc1df17145576f318c0f766248a35"
+  },
+  {
+    "path": "pr2-production-ntu-regression-diagnostic-390.json",
+    "bytes": 70802,
+    "sha256": "29eefc7dc343eb63c8197916a09debf6fccbdada900e28440e25ff67e85cbc48"
+  },
+  {
+    "path": "pr2-production-ntu-regression-failure-390.png",
+    "bytes": 546099,
+    "sha256": "f261f737190deb2039db29dcc91f411c0b9ba93b061d6e338beb2a2f6244e924"
+  },
+  {
+    "path": "pr2-production-six-school-smoke/metadata.json",
+    "bytes": 856,
+    "sha256": "4a3636d11f26e925501cd84f69164380a97a1b5e1cb5c6fae088e6711c5d2080"
+  },
+  {
+    "path": "pr2-production-six-school-smoke/stderr.log",
+    "bytes": 317,
+    "sha256": "02d8c933afbdd2967d9c2ec7ea38aba3e8a816b6007abb4125dbd6df2ba9783c"
+  },
+  {
+    "path": "pr2-production-six-school-smoke/stdout.log",
+    "bytes": 210,
+    "sha256": "66a64389745a1ba8ef4d71811f61303f8081e1ae356b549895bc455350e20f7c"
+  },
+  {
+    "path": "pr2-production-six-school-smoke-corrected-contract/metadata.json",
+    "bytes": 875,
+    "sha256": "5e643a89626e7bf480a71fbb33a2594c950996b51cbe9829e001708d0594d2a5"
+  },
+  {
+    "path": "pr2-production-six-school-smoke-corrected-contract/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "pr2-production-six-school-smoke-corrected-contract/stdout.log",
+    "bytes": 752,
+    "sha256": "46c23371b27fc7dbfc31b77ae425e6d2c87158209e1ccbffa69315d432937879"
+  },
+  {
+    "path": "pr2-production-six-school-smoke-corrected-contract-result.json",
+    "bytes": 2856,
+    "sha256": "e060a88eef56eca7c0827b804fa9b77c7b1003bd7c1f6c0c9da31c0dd81e03f8"
+  },
+  {
+    "path": "pr2-production-smoke-original-harness.json",
+    "bytes": 6154,
+    "sha256": "e17f3eb80623b14668c0e27cad3b634d7e274c02147086f6e2b744e2f7361d37"
+  },
+  {
+    "path": "pr2-production-tku-count-diagnostic/metadata.json",
+    "bytes": 1837,
+    "sha256": "0ca0cc829b8daeeec25fc8099e5ed85e9565a0daaf61302a452b38cd6a7449e2"
+  },
+  {
+    "path": "pr2-production-tku-count-diagnostic/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "pr2-production-tku-count-diagnostic/stdout.log",
+    "bytes": 152,
+    "sha256": "4072373ba9ceb0b0c890dc98de73e2c108982639e9065c9b886ba32a767359fe"
+  },
+  {
+    "path": "pr2-production-tku-count-diagnostic-result.json",
+    "bytes": 50881,
+    "sha256": "6e2b5923cb432d511252bf0e54b7f3d34bec4e273b92ad35cc054508fa11cba8"
+  },
+  {
+    "path": "pr2-production-tku-current-reference-separation.json",
+    "bytes": 449,
+    "sha256": "39c6841f58e61af848bd576141c8fa994d7fbfb974ef8b74a9fa933f50da1b0f"
+  },
+  {
     "path": "pr2-provisional-atomic-governance.sql",
     "bytes": 37519,
     "sha256": "f385f7296dc04aa797253d5544aabe0e2ebc73f56a81775f976fb9419b83d8e5"
+  },
+  {
+    "path": "pr2-render-memory-502-metrics.json",
+    "bytes": 11969,
+    "sha256": "145b9d799eb3474db9826f27dd04ba8db527505b61b3c8849c143f336cf65acd"
+  },
+  {
+    "path": "pr2-render-oom-events.json",
+    "bytes": 556,
+    "sha256": "9b3b178ec7b6dd9a7a121960bc4041c4630bd79b5aada515e0856248f0a22faa"
   },
   {
     "path": "pr3-after-pr5-merge-probe.log",

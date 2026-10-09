@@ -1,0 +1,813 @@
+{
+  "warning": "Historical runs, failure reproductions and reruns are distinct; never sum them as unique test coverage. Primary final suite is six-final-full-summary.json.",
+  "runs": [
+    {
+      "run": "five-school-browser-2233286",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:01:26.638866+00:00",
+      "finished_at": "2026-10-09T14:10:04.536872+00:00",
+      "start_sha": "2233286b28666afbdbfc6f9ea1c8086f39848f18",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "five-school-browser-db5e454",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T13:51:22.204995+00:00",
+      "finished_at": "2026-10-09T14:00:11.374168+00:00",
+      "start_sha": "db5e454b324577a94900a5950752ae7db3f39477",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "five-school-regression-2233286",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:01:25.080145+00:00",
+      "finished_at": "2026-10-09T14:08:25.767944+00:00",
+      "start_sha": "2233286b28666afbdbfc6f9ea1c8086f39848f18",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "five-school-regression-db5e454",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T13:51:21.972080+00:00",
+      "finished_at": "2026-10-09T13:58:23.666198+00:00",
+      "start_sha": "db5e454b324577a94900a5950752ae7db3f39477",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "forum-postgres-image",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:25:11.221242+00:00",
+      "finished_at": "2026-10-09T13:26:40.560105+00:00",
+      "start_sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "main-collect",
+      "test_result": "failed",
+      "exit_code": 2,
+      "started_at": "2026-10-09T12:56:56.516724+00:00",
+      "finished_at": "2026-10-09T12:57:02.400712+00:00",
+      "start_sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "main-ntpu-failure-replay",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T13:19:58.553850+00:00",
+      "finished_at": "2026-10-09T13:20:02.334471+00:00",
+      "start_sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "new-school-forum-db-confirmed",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:27:10.228662+00:00",
+      "finished_at": "2026-10-09T13:27:16.260077+00:00",
+      "start_sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "new-school-forum-db-probe",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T13:22:51.489034+00:00",
+      "finished_at": "2026-10-09T13:23:52.046791+00:00",
+      "start_sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr2-production-ntu-regression",
+      "test_result": "running",
+      "started_at": "2026-10-09T15:54:25.423975+00:00",
+      "start_sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+      "source_guard_unchanged": false,
+      "clean_source_guard": false
+    },
+    {
+      "run": "pr2-production-six-school-smoke",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T15:46:59.693560+00:00",
+      "finished_at": "2026-10-09T15:48:03.190698+00:00",
+      "start_sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr2-production-six-school-smoke-corrected-contract",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T15:49:07.781178+00:00",
+      "finished_at": "2026-10-09T15:54:08.782377+00:00",
+      "start_sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr2-production-tku-count-diagnostic",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T15:48:29.370439+00:00",
+      "finished_at": "2026-10-09T15:48:32.390304+00:00",
+      "start_sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr3-browser",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:06:01.267252+00:00",
+      "finished_at": "2026-10-09T13:12:51.758483+00:00",
+      "start_sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr3-legacy-xls",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:23:49.557561+00:00",
+      "finished_at": "2026-10-09T13:23:51.033963+00:00",
+      "start_sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr3-main58-browser",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:43:24.981024+00:00",
+      "finished_at": "2026-10-09T13:49:39.742245+00:00",
+      "start_sha": "1c2f81158a71a733da0a8a9a16e9b9161b350209",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr3-main58-regression",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:43:23.416388+00:00",
+      "finished_at": "2026-10-09T13:48:06.101226+00:00",
+      "start_sha": "1c2f81158a71a733da0a8a9a16e9b9161b350209",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr3-production-desktop-diagnostic",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:09:40.042540+00:00",
+      "finished_at": "2026-10-09T14:10:38.268268+00:00",
+      "start_sha": "dc4d054c2746388c40bd256f4203ef066b60be03",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr3-production-school-smoke",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T14:02:11.281557+00:00",
+      "finished_at": "2026-10-09T14:06:10.799486+00:00",
+      "start_sha": "dc4d054c2746388c40bd256f4203ef066b60be03",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr3-regression",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:05:25.721337+00:00",
+      "finished_at": "2026-10-09T13:10:58.578010+00:00",
+      "start_sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr3-release-migration-check",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T13:54:57.702274+00:00",
+      "finished_at": "2026-10-09T13:54:58.389073+00:00",
+      "start_sha": "c10d8a017308c8120dff25e6fb25b5b7ce42596d",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr3-release-migration-check-final",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:55:20.051231+00:00",
+      "finished_at": "2026-10-09T13:55:20.833585+00:00",
+      "start_sha": "dc4d054c2746388c40bd256f4203ef066b60be03",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr4-browser",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:06:01.270942+00:00",
+      "finished_at": "2026-10-09T13:10:01.712436+00:00",
+      "start_sha": "eddd7af6e700e2d7685be95e3c96484a9fa378b1",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr4-production-five-school-smoke",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:24:06.338238+00:00",
+      "finished_at": "2026-10-09T14:29:06.181519+00:00",
+      "start_sha": "4a28daaa682b7aa55e6bb0497a8a6cde315a967f",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr4-regression",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:05:27.286964+00:00",
+      "finished_at": "2026-10-09T13:08:18.132187+00:00",
+      "start_sha": "eddd7af6e700e2d7685be95e3c96484a9fa378b1",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr4-release-contract-check",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T14:11:47.944553+00:00",
+      "finished_at": "2026-10-09T14:12:00.888573+00:00",
+      "start_sha": "ea313534091c8cf6bf7fd1fddb069b1dc2de742a",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr4-release-contract-check-final",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:14:28.944877+00:00",
+      "finished_at": "2026-10-09T14:14:43.093847+00:00",
+      "start_sha": "4a28daaa682b7aa55e6bb0497a8a6cde315a967f",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr4-release-contract-check-v2",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T14:13:33.381531+00:00",
+      "finished_at": "2026-10-09T14:13:48.443188+00:00",
+      "start_sha": "987c1d04c902d254f2cf6863dab0b05a9f759c70",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-browser",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:06:01.258576+00:00",
+      "finished_at": "2026-10-09T13:08:29.131645+00:00",
+      "start_sha": "b8833a6a6ffc8236276fa7870e4c1ff541c34117",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-coverage-reproduction",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T13:20:54.932686+00:00",
+      "finished_at": "2026-10-09T13:20:58.412997+00:00",
+      "start_sha": "1f57df2c225b042c519eda0deb9ce73bbf35bd35",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-dependency-audit-writable-cache",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:29:25.939278+00:00",
+      "finished_at": "2026-10-09T13:30:06.361233+00:00",
+      "start_sha": "106db4389bbd8442cc0ee0e20dca03ba3eaac87b",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-final-browser",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:28:46.450692+00:00",
+      "finished_at": "2026-10-09T13:30:54.042821+00:00",
+      "start_sha": "106db4389bbd8442cc0ee0e20dca03ba3eaac87b",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-final-checks",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T13:28:44.880702+00:00",
+      "finished_at": "2026-10-09T13:28:54.027763+00:00",
+      "start_sha": "106db4389bbd8442cc0ee0e20dca03ba3eaac87b",
+      "source_guard_unchanged": false,
+      "clean_source_guard": false
+    },
+    {
+      "run": "pr5-final-regression",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:28:46.446104+00:00",
+      "finished_at": "2026-10-09T13:29:11.981483+00:00",
+      "start_sha": "106db4389bbd8442cc0ee0e20dca03ba3eaac87b",
+      "source_guard_unchanged": false,
+      "clean_source_guard": false
+    },
+    {
+      "run": "pr5-final2-browser",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:33:48.401526+00:00",
+      "finished_at": "2026-10-09T13:35:55.704691+00:00",
+      "start_sha": "b33ad27ff13912780dfb94f91504dd11b1ef6a21",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-final2-checks",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:34:05.275012+00:00",
+      "finished_at": "2026-10-09T13:34:21.238839+00:00",
+      "start_sha": "b33ad27ff13912780dfb94f91504dd11b1ef6a21",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-final2-regression",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:33:46.833499+00:00",
+      "finished_at": "2026-10-09T13:34:11.928778+00:00",
+      "start_sha": "b33ad27ff13912780dfb94f91504dd11b1ef6a21",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-fixed-browser",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:21:41.937119+00:00",
+      "finished_at": "2026-10-09T13:23:46.994945+00:00",
+      "start_sha": "1d63d77d8b2b1f351255d0beb30968d497d15b7c",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-fixed-regression",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:21:22.992597+00:00",
+      "finished_at": "2026-10-09T13:21:47.092003+00:00",
+      "start_sha": "1d63d77d8b2b1f351255d0beb30968d497d15b7c",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-license-browser",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:25:36.522457+00:00",
+      "finished_at": "2026-10-09T13:27:42.994707+00:00",
+      "start_sha": "b7f1522d6f6d890835d6c48b3a27d610d94bc45c",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-license-regression",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:25:34.953704+00:00",
+      "finished_at": "2026-10-09T13:26:00.237613+00:00",
+      "start_sha": "b7f1522d6f6d890835d6c48b3a27d610d94bc45c",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-production-browser-diagnostic",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T13:50:19.702600+00:00",
+      "finished_at": "2026-10-09T13:51:17.104304+00:00",
+      "start_sha": "b33ad27ff13912780dfb94f91504dd11b1ef6a21",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-production-browser-network-budget",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:52:17.494317+00:00",
+      "finished_at": "2026-10-09T13:54:02.574640+00:00",
+      "start_sha": "b33ad27ff13912780dfb94f91504dd11b1ef6a21",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-production-guest-smoke",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T13:47:45.473144+00:00",
+      "finished_at": "2026-10-09T13:47:50.188560+00:00",
+      "start_sha": "b33ad27ff13912780dfb94f91504dd11b1ef6a21",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-production-guest-smoke-browser-proxy",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T13:48:18.806278+00:00",
+      "finished_at": "2026-10-09T13:49:15.988656+00:00",
+      "start_sha": "b33ad27ff13912780dfb94f91504dd11b1ef6a21",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "pr5-regression",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T13:06:01.277029+00:00",
+      "finished_at": "2026-10-09T13:06:17.883957+00:00",
+      "start_sha": "b8833a6a6ffc8236276fa7870e4c1ff541c34117",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "proposed-board-patch-fresh-actor",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:40:32.026958+00:00",
+      "finished_at": "2026-10-09T13:40:37.674105+00:00",
+      "start_sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "proposed-board-patch-isolated-test",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T13:36:24.509994+00:00",
+      "finished_at": "2026-10-09T13:36:28.408112+00:00",
+      "start_sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "proposed-board-patch-schema-test",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:42:10.528704+00:00",
+      "finished_at": "2026-10-09T13:42:16.016864+00:00",
+      "start_sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "reviewed-board-compatibility-rollback-test",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:53:03.262047+00:00",
+      "finished_at": "2026-10-09T13:53:14.745285+00:00",
+      "start_sha": "1c2f81158a71a733da0a8a9a16e9b9161b350209",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "reviewed-board-compatibility-test",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T13:52:13.941150+00:00",
+      "finished_at": "2026-10-09T13:52:20.875154+00:00",
+      "start_sha": "1c2f81158a71a733da0a8a9a16e9b9161b350209",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "runtime-image-postgres",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T12:57:15.036341+00:00",
+      "finished_at": "2026-10-09T13:02:33.531767+00:00",
+      "start_sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "runtime-image-postgrest",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T12:58:03.779657+00:00",
+      "finished_at": "2026-10-09T12:58:12.466431+00:00",
+      "start_sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "runtime-image-storage",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T12:58:05.344683+00:00",
+      "finished_at": "2026-10-09T12:59:42.232432+00:00",
+      "start_sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-browser-failures-fixed",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:51:51.333365+00:00",
+      "finished_at": "2026-10-09T14:53:52.402839+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-collect-initial",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:13:34.900889+00:00",
+      "finished_at": "2026-10-09T14:13:42.558664+00:00",
+      "start_sha": "f1633b92e6f7fd88c1d05a8ea908293221651133",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-extra-school-api-boundaries",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T15:00:48.194703+00:00",
+      "finished_at": "2026-10-09T15:00:51.944725+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-final-applied-version-runtime",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T15:37:42.555292+00:00",
+      "finished_at": "2026-10-09T15:38:52.426631+00:00",
+      "start_sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-final-deployed-source-runtime",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T15:28:31.675676+00:00",
+      "finished_at": "2026-10-09T15:29:54.070831+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-final-deployed-source-runtime-fixed",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T15:30:14.445032+00:00",
+      "finished_at": "2026-10-09T15:31:38.502807+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-final-fixed-runtime",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T15:24:07.187698+00:00",
+      "finished_at": "2026-10-09T15:25:26.976695+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-final-full-shard-0",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:54:21.084997+00:00",
+      "finished_at": "2026-10-09T15:30:35.191854+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-final-full-shard-1",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:54:21.110560+00:00",
+      "finished_at": "2026-10-09T15:19:41.636872+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-final-full-shard-2",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:54:21.088907+00:00",
+      "finished_at": "2026-10-09T15:16:05.748108+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-final-full-shard-3",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:54:21.115883+00:00",
+      "finished_at": "2026-10-09T15:22:35.319624+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-final-lock-openapi-js",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:56:36.227157+00:00",
+      "finished_at": "2026-10-09T14:56:39.931669+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-final-release-identity",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T15:37:42.561717+00:00",
+      "finished_at": "2026-10-09T15:37:43.226521+00:00",
+      "start_sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-final-strict-dependency-audit",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T15:18:14.405044+00:00",
+      "finished_at": "2026-10-09T15:18:15.957584+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-final-strict-dependency-audit-writable-cache",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T15:19:32.543248+00:00",
+      "finished_at": "2026-10-09T15:20:02.177948+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-full-pinned-runtime-deployed-order",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:18:15.213023+00:00",
+      "finished_at": "2026-10-09T14:22:10.946440+00:00",
+      "start_sha": "d1827d75f801921e49c67e29ecedecc85083ec7b",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-full-pinned-runtime-initial",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:12:39.433529+00:00",
+      "finished_at": "2026-10-09T14:13:54.207497+00:00",
+      "start_sha": "f1633b92e6f7fd88c1d05a8ea908293221651133",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-full-shard-0",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T14:17:40.504246+00:00",
+      "finished_at": "2026-10-09T14:58:22.180124+00:00",
+      "start_sha": "d1827d75f801921e49c67e29ecedecc85083ec7b",
+      "source_guard_unchanged": false,
+      "clean_source_guard": false
+    },
+    {
+      "run": "six-full-shard-1",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T14:17:40.495266+00:00",
+      "finished_at": "2026-10-09T14:45:45.625629+00:00",
+      "start_sha": "d1827d75f801921e49c67e29ecedecc85083ec7b",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-full-shard-2",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T14:17:40.486846+00:00",
+      "finished_at": "2026-10-09T14:40:13.244280+00:00",
+      "start_sha": "d1827d75f801921e49c67e29ecedecc85083ec7b",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-full-shard-3",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T14:17:40.483773+00:00",
+      "finished_at": "2026-10-09T14:48:49.143043+00:00",
+      "start_sha": "d1827d75f801921e49c67e29ecedecc85083ec7b",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-nonbrowser-failures-fixed",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:50:12.751074+00:00",
+      "finished_at": "2026-10-09T14:50:40.182633+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-release-nonbrowser",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T14:26:06.648221+00:00",
+      "finished_at": "2026-10-09T14:46:24.683195+00:00",
+      "start_sha": "fe1cec66ae1ed49ada3ef00098b62e0b65dba045",
+      "source_guard_unchanged": false,
+      "clean_source_guard": false
+    },
+    {
+      "run": "six-release-nonbrowser-checks",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:51:52.828551+00:00",
+      "finished_at": "2026-10-09T14:51:53.997585+00:00",
+      "start_sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "six-runtime-legacy-client",
+      "test_result": "passed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T14:32:55.932696+00:00",
+      "finished_at": "2026-10-09T14:38:30.783490+00:00",
+      "start_sha": "fe1cec66ae1ed49ada3ef00098b62e0b65dba045",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "tku-b67d79a-full-pinned-flat-runtime",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T14:04:40.234499+00:00",
+      "finished_at": "2026-10-09T14:05:35.253955+00:00",
+      "start_sha": "b67d79aa3b6c30a9449801501256b64951f2c291",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    },
+    {
+      "run": "tku-b67d79a-full-runtime-403-diagnostic",
+      "test_result": "failed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T14:07:41.732363+00:00",
+      "finished_at": "2026-10-09T14:08:35.986641+00:00",
+      "start_sha": "b67d79aa3b6c30a9449801501256b64951f2c291",
+      "source_guard_unchanged": true,
+      "clean_source_guard": true
+    }
+  ]
+}

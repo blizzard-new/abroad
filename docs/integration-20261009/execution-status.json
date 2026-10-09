@@ -1,12 +1,24 @@
 {
-  "timestamp": "2026-10-09T15:41:20+00:00",
+  "timestamp": "2026-10-09T15:59:00+00:00",
   "environment": "exec recovered; latest commands succeed",
   "production": {
     "main": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
     "render_deploy": "dep-db4gm549v7es73an3su0",
-    "render_status": "build_in_progress",
-    "render_verified_live": false,
-    "previous_five_school_live": "e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86"
+    "render_status": "live",
+    "render_verified_live": true,
+    "previous_five_school_live": "e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86",
+    "render_finished_at": "2026-10-09T15:46:11.867025Z",
+    "six_school_http_passed": 6,
+    "guest_forum_denials_passed": 6,
+    "mobile_switches_passed": 6,
+    "smoke_status": "Six-school HTTP/guest boundaries/12 browser switches passed; subsequent NTU regression failed with 502 during OOM restart",
+    "runtime_oom": {
+      "event": "evt-db4gsjp7lnhs73db9320",
+      "timestamp": "2026-10-09T15:54:55.500234Z",
+      "memory_limit": "512Mi",
+      "recovered_at": "2026-10-09T15:55:31.40353Z",
+      "stability_accepted": false
+    }
   },
   "original_browser": {
     "sha": "d1827d75f801921e49c67e29ecedecc85083ec7b",
@@ -40,7 +52,7 @@
     "exact_deployed_python_source_and_models": "passed in separate interpreter, stage/dual-review/publish/readback, 12 HTTP200",
     "final_31234305_applied_filename_order": "passed full35, Storage and original five-school code/models; clean start/end"
   },
-  "remaining_gate": "Render exact merge SHA live, six-school production HTTP/browser and NTU regression, final evidence",
+  "remaining_gate": "BLOCKED: confirmed Render 512Mi OOM during final NTU regression; isolate/profile memory and prepare concrete fix",
   "tku_production_migrations_applied": true,
   "pr2_merged": true,
   "original_full": {

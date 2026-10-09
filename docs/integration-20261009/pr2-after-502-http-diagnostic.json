@@ -1,0 +1,42 @@
+[
+  {
+    "path": "/health",
+    "status": 200,
+    "seconds": 0.9105205140003818,
+    "headers": {
+      "server": "envoy",
+      "x-render-origin-server": "uvicorn",
+      "cf-ray": "a47e93a0fd6fcd4e-GRU",
+      "x-envoy-upstream-service-time": "842"
+    },
+    "body": {
+      "status": "ok",
+      "school": "長庚大學",
+      "supported_schools": [
+        "長庚大學",
+        "國立臺北大學",
+        "國立臺灣大學",
+        "國立中正大學",
+        "國立中央大學",
+        "淡江大學"
+      ],
+      "pages": 0,
+      "exchange_info_ready": false
+    }
+  },
+  {
+    "path": "/student-dashboard?school=NTU",
+    "status": 200,
+    "seconds": 3.6030004139993252,
+    "headers": {
+      "server": "envoy",
+      "x-render-origin-server": "uvicorn",
+      "cf-ray": "a47e93a69d42dc3f-GRU",
+      "x-envoy-upstream-service-time": "3288"
+    },
+    "body": {
+      "school_name": "國立臺灣大學",
+      "count": 288
+    }
+  }
+]
