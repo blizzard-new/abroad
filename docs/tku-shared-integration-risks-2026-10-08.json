@@ -54,6 +54,7 @@
     ".github/workflows/quality.yml",
     "docs/api/openapi.json",
     "pyproject.toml",
+    "scripts/run_web_quality_tests.py",
     "src/exchange_info/account_community_cleanup.py",
     "src/exchange_info/advisor.py",
     "src/exchange_info/api.py",
@@ -64,6 +65,8 @@
     "src/exchange_info/static/index.html",
     "src/exchange_info/storage.py",
     "src/exchange_info/university_registry.py",
+    "tests/e2e/test_application_periods.py",
+    "tests/e2e/test_discovery_workspace.py",
     "tests/e2e/test_ntu_school.py",
     "tests/test_college_options.py",
     "tests/test_content_governance_wrapper.py",
@@ -91,7 +94,8 @@
     "OpenAPI待所有欄位合併完成後重產；pyproject學校附件包裝項合併保留。uv.lock只刪除pyproject早已移除的pytesseract遺留項，其他套件未升級。",
     "workflow修正jobs.env無效runner.temp context，由step寫入GITHUB_ENV；permissions、secrets與action pins未變。",
     "合成資料隱私修復包括刪帳去識別化與證件號碼發文防護；Supabase沿用既有原子RPC，未改DB或權限。",
-    "profile增加可空jlpt_level；JLPT序位與英語數值分開；app保存、還原及TKU查核hook合併時逐段保留。"
+    "profile增加可空jlpt_level；JLPT序位與英語數值分開；app保存、還原及TKU查核hook合併時逐段保留。",
+    "10/9 CI逾時續查：固定45分鐘下按已收集browser檔案分四組、fail-fast=false、逐案例結果與耗時即時輸出；其餘unit/integration放第0組，收集union逐項核對，沒有新增skip或排除測試。兩項browser fixture同步修正保留403/401/private purge行為，另心得原文契約仍未解。"
   ],
   "protected_bundle_workflows": {
     "國立臺北大學": 409,
@@ -104,5 +108,6 @@
     "淡江大學": 4,
     "長庚大學": 77,
     "國立臺灣大學": 288
-  }
+  },
+  "ci_followup_checked_at": "2026-10-09"
 }

@@ -107,7 +107,9 @@ def test_quality_workflow_runs_isolated_web_checks_and_contract_guard() -> None:
         "uv run --frozen python scripts/export_openapi.py --check",
         "uv run --frozen python scripts/audit_python_dependencies.py",
         "uv run --frozen python scripts/validate_supabase_runtime.py",
-        "uv run --frozen python -m pytest -q",
+        'uv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4',
+        "fail-fast: false",
+        "shard: [0, 1, 2, 3]",
         "git diff --exit-code -- src/exchange_info/official_data",
     ):
         assert required in workflow
@@ -125,7 +127,7 @@ def test_quality_workflow_runs_isolated_web_checks_and_contract_guard() -> None:
         "uv run --frozen python scripts/audit_python_dependencies.py"
     )
     runtime_position = workflow.index(runtime_step)
-    pytest_position = workflow.index("uv run --frozen python -m pytest -q")
+    pytest_position = workflow.index("uv run --frozen python scripts/run_web_quality_tests.py")
     assert migration_position < dependency_audit_position < runtime_position < pytest_position
 
     runtime_block = workflow[runtime_position:pytest_position]

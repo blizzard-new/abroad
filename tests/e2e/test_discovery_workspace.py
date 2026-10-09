@@ -4,7 +4,9 @@ from urllib.parse import quote
 from uuid import uuid4
 
 import requests
-from playwright.sync_api import expect
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError, expect
+
+from exchange_info.repositories import JsonlAccountRepository
 
 from .conftest import enter_public_site, login_through_web
 from .test_partner_globe import LINCOLN, MEIJI, inject_dashboard, open_partners, ready
@@ -136,11 +138,23 @@ def test_cloud_selection_roundtrip_home_isolation_and_logout(page, browser, live
     cookie = next(c for c in page.context.cookies() if c["name"] == "exchange_guide_session")
     revoked = requests.post(f"{live_server.base_url}/auth/logout", cookies={cookie["name"]: cookie["value"]}, timeout=10)
     assert revoked.status_code == 204
-    page.locator(f'[data-school-note="{LINCOLN}"]').fill("過期後不能上傳")
-    page.locator(f'[data-school-note="{LINCOLN}"]').press("Tab")
+    # A background protected request can already discover the revoked session
+    # and remove this private form. Either route must expose login and clear
+    # private state; attempting to fill a detached form only obscures that check.
+    note = page.locator(f'[data-school-note="{LINCOLN}"]')
+    if not page.locator("#auth-dialog").is_visible():
+        try:
+            note.fill("過期後不能上傳", timeout=5000)
+            note.press("Tab", timeout=5000)
+        except PlaywrightTimeoutError:
+            if not page.locator("#auth-dialog").is_visible():
+                raise
     expect(page.locator("#auth-dialog")).to_be_visible(timeout=15000)
     expect(page.locator(".discovery-candidate")).to_have_count(0)
     assert not page.evaluate("Object.keys(localStorage).some(k => k.startsWith('uniway-discovery-v1:') && !k.startsWith('uniway-discovery-v1:guest:'))")
+    persisted = JsonlAccountRepository(live_server.data_dir).find_account_by_id(session["profile"]["id"])
+    assert persisted is not None
+    assert "過期後不能上傳" not in persisted.model_dump_json()
 
 
 def test_candidates_notes_order_persistence_mobile_and_history(page,live_server):
