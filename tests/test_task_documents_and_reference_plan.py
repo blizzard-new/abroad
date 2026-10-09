@@ -55,11 +55,11 @@ def test_every_bundled_step_is_either_linked_listed_or_documentless():
     ncu = [w for w in workflows if w.home_university == "國立中央大學"]
     assert len(ncu) == 214 and all(w.review_status == "pending_review" for w in ncu)
     ccu = [w for w in workflows if w.home_university == "國立中正大學"]
-    assert len(ccu) == 55 and all(w.review_status == "pending_review" for w in ccu)
+    assert len(ccu) == 55 and all(w.review_status == "legacy" for w in ccu)
     overall = audit_task_document_links(workflows)
     assert overall["steps"] == sum(len(row.steps) for row in workflows)
     # Keep the established schools' reviewed linkage contract separate from the
-    # new CCU/NCU pending host reference steps (including later health/arrival files).
+    # new CCU legacy and NCU pending host reference steps (including later health/arrival files).
     workflows = [w for w in workflows if w.home_university not in {"國立中央大學", "國立中正大學"}]
     assert len(workflows) == 851
     audit = audit_task_document_links(workflows)
