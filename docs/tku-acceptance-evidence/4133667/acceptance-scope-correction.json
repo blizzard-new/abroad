@@ -1,0 +1,25 @@
+{
+  "tested_commit": "4133667cfede9f3be70216795c74051adb6f3a33",
+  "actual_browser_file_count": 9,
+  "actual_browser_files": [
+    "test_tku_acceptance.py",
+    "test_ntu_school.py",
+    "test_application_workspace.py",
+    "test_application_ui_refinements.py",
+    "test_application_periods.py",
+    "test_fit_and_completeness_ui.py",
+    "test_planning_workspace.py",
+    "test_tku_draft_handoff.py",
+    "test_tku_source_rendering.py"
+  ],
+  "additional_cgu_pdf_node": "tests/e2e/test_web_next_phase.py::test_application_form_sync_review_and_pdf_download",
+  "unit_files": 139,
+  "original_reporter_inexact_prose": "E2E files outside the seven selected suites",
+  "correction": "The actual guarded command and logs include nine selected files. Unrun E2E outside those nine, and local Ollama integration, are not claimed passed. The complete remote suite is reported separately.",
+  "scope_note": "Source/data/UI/API unchanged from ce83a50; data-specific source follow-up evidence remains the recorded official capture date, not a new host 2027 audit.",
+  "actual_main_junit_counts": {
+    "passed": 1482,
+    "skipped": 8,
+    "failure": 24
+  }
+}

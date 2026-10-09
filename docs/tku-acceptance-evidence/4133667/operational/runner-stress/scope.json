@@ -1,0 +1,7 @@
+{
+  "acceptance": false,
+  "tested_source_commit": "4133667cfede9f3be70216795c74051adb6f3a33",
+  "negative_probe": "Deliberately forces stdout nonblocking and omits CLI startup setup. Progress prints all 54 cases; pytest terminal summary subsequently raises BlockingIOError. Actual raw log/XML retained, not called a pass.",
+  "positive_probe": "Calls actual CLI startup setup, then real pytest tee capture and candidate Progress: complete 54 cases, 46 passed/8 existing literal failures, normal ACTUAL_PYTEST_EXIT 1. Not added to full-suite counts.",
+  "limitation": "Actual PR/push full-suite original JUnit and result are authoritative for the tested CI environment; auxiliary stress probes do not waive failures or establish behavior under arbitrary later stream mutations."
+}
