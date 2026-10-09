@@ -1,0 +1,12 @@
+CONFTEST LOADED!
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___ test_document_catalog_scopes_four_mothers_even_for_same_japanese_partner ___
+tests/test_tku_support.py:208: in test_document_catalog_scopes_four_mothers_even_for_same_japanese_partner
+    assert actual['context']['school_name']==home and actual['academic_year']==year
+E   AssertionError: assert ('\u9577\u5e9a\u5927\u5b78' == '\u9577\u5e9a\u5927\u5b78'
+E     
+E       長庚大學 and None == '116')
+=========================== short test summary info ============================
+FAILED tests/test_tku_support.py::test_document_catalog_scopes_four_mothers_even_for_same_japanese_partner
+1 failed in 3.09s

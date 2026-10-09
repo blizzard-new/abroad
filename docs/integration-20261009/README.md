@@ -1,3 +1,15 @@
+# 14:53 UTC 進度更新
+
+[execution-status.json](execution-status.json) 是本次精確狀態。環境已恢复、工作正常進行；PR #2 尚未合併或套正式DB。
+
+原完整瀏覽器468案例：456 passed／10 failed／2既有skip；原完整後端2173：2143 passed／18 failed／12既有skip。後者的離線builder也重現TKU35欄metadata被共享規則改寫，原diff保留，不能將該run報成source guard通過。
+
+固定修復候選 `0fdc6cfa6a4902fb83374a77025f45dffb071562`：18個後端原失敗全部passed，65個SQL／前端契約／workflow解析passed，均clean start/end；10個瀏覽器原失敗正在跑。TKU离线重建已無差異，CGU154／NTPU409／NTU288完整模型payload canonical SHA256與原f6ad逐校完全相同。空值欄位、六校文件catalog、TKU階段和metadata inference、cache version、兩個地區映射已修復；資料未提高為當期完整。
+
+新舊DB相容：原e5c6d5c治理用戶端在新完整DB成功stage、雙審、發布，12次實際HTTP200，新舊讀回payload相同；正式DB純SELECT317向量也零差異，沒有權限擴大。#4五校正式站驗收已完成（5 HTTP＋10 browser）；目前正式站是#4，各前PR的live為各自驗收時狀態。
+
+以下保留14:31 checkpoint供對照。
+
 # 六校整合與發布驗收（持續更新，2026-10-09 14:31 UTC）
 
 ## 已完成的正式發布

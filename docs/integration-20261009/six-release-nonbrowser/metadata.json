@@ -1,0 +1,27 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "--ignore=tests/e2e",
+    "--junitxml=/workspace/integration-evidence/six-release-nonbrowser/results.xml"
+  ],
+  "cwd": "/workspace/abroad-six-final",
+  "started_at": "2026-10-09T14:26:06.648221+00:00",
+  "start_guard": {
+    "sha": "fe1cec66ae1ed49ada3ef00098b62e0b65dba045",
+    "tree": "615b96071d30d55e0d44881e8b281d9e20288288",
+    "status": ""
+  },
+  "timeout_seconds": 1800,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-09T14:46:24.683195+00:00",
+  "end_guard": {
+    "sha": "fe1cec66ae1ed49ada3ef00098b62e0b65dba045",
+    "tree": "615b96071d30d55e0d44881e8b281d9e20288288",
+    "status": "M src/exchange_info/official_data/tku/application_workflows.jsonl"
+  }
+}

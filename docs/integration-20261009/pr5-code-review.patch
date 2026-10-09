@@ -1,0 +1,224 @@
+diff --git a/src/exchange_info/api.py b/src/exchange_info/api.py
+index 183e2679..6fb6f54c 100644
+--- a/src/exchange_info/api.py
++++ b/src/exchange_info/api.py
+@@ -426,7 +426,7 @@ CGU_COMMUNITY_BOARD = "長庚大學"
+ HOME_UNIVERSITY_BOARDS = {item.school_name for item in SUPPORTED_UNIVERSITIES}
+ 
+ 
+-def _load_school_image_manifest() -> dict[str, dict[str, object]]:
++def _load_school_image_manifest() -> dict[tuple[str, str], dict[str, object]]:
+     if not SCHOOL_IMAGE_MANIFEST.exists():
+         return {}
+     try:
+@@ -434,7 +434,7 @@ def _load_school_image_manifest() -> dict[str, dict[str, object]]:
+     except (OSError, json.JSONDecodeError):
+         return {}
+     return {
+-        school_identity_key(str(item.get("school_name", ""))): item
++        (school_identity_key(str(item.get("school_name", ""))), str(item.get("country") or "")): item
+         for item in payload.get("schools", [])
+         if isinstance(item, dict) and item.get("school_name")
+     }
+@@ -449,7 +449,7 @@ def _attach_school_images(
+     base = base_url.rstrip("/")
+     partners = []
+     for school in dashboard.partner_universities:
+-        visual = visuals.get(school_identity_key(school.school_name))
++        visual = visuals.get((school_identity_key(school.school_name), school.country or ""))
+         if not visual or visual.get("status") != "verified":
+             partners.append(school)
+             continue
+diff --git a/src/exchange_info/life_context.py b/src/exchange_info/life_context.py
+index 2fa2f505..23d10881 100644
+--- a/src/exchange_info/life_context.py
++++ b/src/exchange_info/life_context.py
+@@ -8,6 +8,7 @@ import re
+ import threading
+ from concurrent.futures import ThreadPoolExecutor
+ from datetime import datetime, timedelta, timezone
++from functools import lru_cache
+ from pathlib import Path
+ from typing import Literal
+ from urllib.parse import urlencode, urlsplit
+@@ -24,6 +25,7 @@ from .university_locations import UniversityLocation
+ from .web_search import search_text
+ 
+ REFERENCE_DATA = Path(__file__).parent / "official_data" / "life_reference_data.json"
++BUNDLED_NTU_LIFE = Path(__file__).parent / "official_data" / "ntu" / "student_life.jsonl"
+ THEMES = ("housing", "cost", "food", "transport", "academics", "climate", "social", "safety", "campus_culture", "travel")
+ THEME_QUERIES = dict(zip(THEMES, (
+     "international student housing", "student living costs", "cafeteria supermarket restaurants",
+@@ -136,18 +138,39 @@ def _cache_path(partner: PartnerUniversity, data_dir: Path) -> Path:
+     return Path(data_dir) / "processed" / "life_research" / f"{key}.json"
+ 
+ 
++@lru_cache(maxsize=1)
++def _bundled_ntu_research() -> dict[tuple[str, str], LifeResearchSnapshot]:
++    records = {}
++    if BUNDLED_NTU_LIFE.exists():
++        for line in BUNDLED_NTU_LIFE.read_text(encoding="utf-8").splitlines():
++            try:
++                row = LifeResearchSnapshot.model_validate_json(line)
++                if row.extraction_version == EXTRACTION_VERSION:
++                    records[(school_search_name(row.school_name).casefold(), row.country or "")] = row
++            except ValueError:
++                continue
++    return records
++
++
+ def read_research(partner: PartnerUniversity, data_dir: Path) -> LifeResearchSnapshot:
+     path = _cache_path(partner, data_dir)
++    empty_cache = None
+     try:
+         raw = json.loads(path.read_text(encoding="utf-8"))
+         if raw.get("extraction_version") != EXTRACTION_VERSION:
+-            return LifeResearchSnapshot(school_name=partner.school_name, country=partner.country)
++            raw = {}
+         snapshot = LifeResearchSnapshot.model_validate(raw)
+         if snapshot.country == partner.country and school_search_name(snapshot.school_name).casefold() == _identity(partner)[0]:
+-            return snapshot
++            if snapshot.evidence:
++                return snapshot
++            empty_cache = snapshot
+     except (OSError, ValueError):
+         pass
+-    return LifeResearchSnapshot(school_name=partner.school_name, country=partner.country)
++    # These are host-school facts, keyed by exact school and country; they do
++    # not grant home-school eligibility, quotas or guaranteed accommodation.
++    if bundled := _bundled_ntu_research().get(_identity(partner)):
++        return bundled
++    return empty_cache or LifeResearchSnapshot(school_name=partner.school_name, country=partner.country)
+ 
+ 
+ def research_is_fresh(snapshot: LifeResearchSnapshot) -> bool:
+@@ -162,6 +185,9 @@ def _location_signature(location: UniversityLocation) -> str:
+ def _for_location(snapshot: LifeResearchSnapshot, location: UniversityLocation) -> LifeResearchSnapshot:
+     if snapshot.location_signature == _location_signature(location):
+         return snapshot
++    if not any(row.kind == "geographic" for row in snapshot.evidence):
++        # Official school-wide excerpts do not depend on a map point.
++        return snapshot.model_copy(update={"location_signature": _location_signature(location)})
+     # A corrected campus must never inherit nearby places from the old point.
+     return snapshot.model_copy(update={"checked_at": None, "status": "not_collected",
+         "evidence": [row for row in snapshot.evidence if row.kind != "geographic"]})
+diff --git a/src/exchange_info/school_image_collector.py b/src/exchange_info/school_image_collector.py
+index 71900010..3ea7b004 100644
+--- a/src/exchange_info/school_image_collector.py
++++ b/src/exchange_info/school_image_collector.py
+@@ -451,6 +451,11 @@ class SchoolImageRecord:
+     checked_at: str
+     status: str
+     note: str | None = None
++    artist: str | None = None
++    license_name: str | None = None
++    license_url: str | None = None
++    identity_source_url: str | None = None
++    description: str | None = None
+ 
+ 
+ def collect_school_images(
+diff --git a/src/exchange_info/static/app.js b/src/exchange_info/static/app.js
+index f4c3bfc4..715df265 100644
+--- a/src/exchange_info/static/app.js
++++ b/src/exchange_info/static/app.js
+@@ -1089,7 +1089,7 @@ async function loadDestinationProfiles({ homeSchool = activeHomeSchool() } = {})
+ 
+ async function loadSchoolImages() {
+   try {
+-    const payload = await fetchJson("/static/assets/school-images.json?v=20260929-complete-1");
++    const payload = await fetchJson("/static/assets/school-images.json?v=20261008-ntu-1");
+     state.schoolImages = Array.isArray(payload?.schools)
+       ? payload.schools.filter((item) => item.status === "verified" && item.local_path)
+       : [];
+@@ -1098,14 +1098,15 @@ async function loadSchoolImages() {
+   }
+ }
+ 
+-function schoolImageFor(schoolName) {
++function schoolImageFor(schoolName, country = null) {
+   return state.schoolImages.find(
+     (item) => normalize(item.school_name) === normalize(schoolName)
++      && (!country || item.country === country)
+   );
+ }
+ 
+ function renderSchoolPhoto(item, variant = "card") {
+-  const visual = schoolImageFor(item.school_name)
++  const visual = schoolImageFor(item.school_name, item.country)
+     || (item.image_status === "verified" && item.image_url ? { local_path: item.image_url } : null);
+   const label = item.country || "交換學校";
+   const fallback = `
+@@ -1114,7 +1115,7 @@ function renderSchoolPhoto(item, variant = "card") {
+     </span>`;
+   const loading = variant === "detail" ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
+   const image = visual?.local_path
+-    ? `<img src="${escapeHtml(visual.local_path)}" alt="${escapeHtml(item.school_name)}官方照片" ${loading} decoding="async" data-remove-on-error="true" />`
++    ? `<img src="${escapeHtml(visual.local_path)}" alt="${escapeHtml(item.school_name)}校園照片" ${loading} decoding="async" data-remove-on-error="true" />`
+     : "";
+   return `<span class="school-photo school-photo-${escapeHtml(variant)}">${fallback}${image}</span>`;
+ }
+@@ -1136,9 +1137,9 @@ function renderCoverageBadges(item) {
+   if (!coverage) return '<span class="coverage-chip pending">資料待查核</span>';
+   let image = '<span class="coverage-chip pending">照片待整理</span>';
+   if (coverage.image_status === "verified") {
+-    image = '<span class="coverage-chip ready">官方照片已確認</span>';
++    image = '<span class="coverage-chip ready">校園照片已核對</span>';
+   } else if (coverage.image_status === "missing") {
+-    image = '<span class="coverage-chip empty">官方照片待補</span>';
++    image = '<span class="coverage-chip empty">校園照片待補</span>';
+   } else if (coverage.image_status === "error") {
+     image = '<span class="coverage-chip error">照片擷取失敗</span>';
+   }
+@@ -7553,7 +7554,7 @@ function renderPartnerLinks(item) {
+   const source = item.source_url
+     ? `<a href="${escapeHtml(item.source_url)}" target="_blank" rel="noreferrer">官方來源</a>`
+     : "";
+-  const visual = schoolImageFor(item.school_name);
++  const visual = schoolImageFor(item.school_name, item.country);
+   const imagePage = visual?.official_page_url || item.image_page_url;
+   const imageSource = imagePage
+     ? `<a href="${escapeHtml(imagePage)}" target="_blank" rel="noreferrer">圖片來源</a>${renderSchoolImageCredit(item)}`
+@@ -7565,7 +7566,13 @@ function renderPartnerLinks(item) {
+ }
+ 
+ function renderSchoolImageCredit(item) {
+-  const note = schoolImageFor(item.school_name)?.note || "";
++  const visual = schoolImageFor(item.school_name, item.country);
++  const note = visual?.note || "";
++  if (visual?.license_name) {
++    const license = String(visual.license_url || "").replace(/^http:\/\//, "https://");
++    const safeLicense = /^https:\/\/(?:creativecommons\.org|commons\.wikimedia\.org)\//.test(license);
++    return `<small class="school-image-credit">${escapeHtml(note)}${safeLicense ? ` · <a href="${escapeHtml(license)}" target="_blank" rel="noreferrer">圖片授權</a>` : ""}</small>`;
++  }
+   if (!note.startsWith("攝影：")) return "";
+   return `<small class="school-image-credit">${escapeHtml(note)}${note.includes("CC BY-SA 3.0") ? ' · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noreferrer">圖片授權</a>' : ""}</small>`;
+ }
+@@ -8311,7 +8318,7 @@ function renderLifeResearchStatus(context, { loading = false, error = "" } = {})
+   if (!container) return;
+   const status = { ready: "已更新", partial: "部分資料已更新", unavailable: "暫無新資料", not_collected: "待更新" };
+   container.innerHTML = `<div class="life-research-heading"><span role="status">${escapeHtml(error || (loading ? "正在更新資料…" : status[context?.research_status] || ""))}${context?.checked_at && !loading ? ` · ${escapeHtml(formatDate(context.checked_at))}` : ""}</span><div class="life-research-actions"><button type="button" class="life-student-search" data-life-student-search>找學生分享</button><button type="button" class="secondary-button" data-refresh-life-context ${loading || context?.can_refresh === false ? "disabled" : ""}><i data-lucide="${loading ? "loader-circle" : "refresh-cw"}" aria-hidden="true"></i>${loading ? "更新中" : "更新資料"}</button></div></div>
+-    <details class="life-research-notes"><summary>資料說明</summary><p>官方資料以中文呈現，原文保留在來源中。AI 推論為規則產生的參考建議，非學生心得；機器翻譯未經人工審核。</p><p>${escapeHtml(context?.location_note || "正在讀取校區資料。")}</p>${(context?.research_notes || []).map(note => `<p>${escapeHtml(note)}</p>`).join("")}<small>資料更新後暫存 6 小時；翻譯未完成時可重試。</small></details>`;
++    <details class="life-research-notes"><summary>資料說明</summary><p>官方資料保留來源與原文；尚未翻譯的內容會標示「原文」。AI 推論為規則產生的參考建議，非學生心得；機器翻譯未經人工審核。查閱日期不代表官網內容更新日。</p><p>${escapeHtml(context?.location_note || "正在讀取校區資料。")}</p>${(context?.research_notes || []).map(note => `<p>${escapeHtml(note)}</p>`).join("")}<small>補查結果暫存 6 小時；可按「更新資料」重新查詢。</small></details>`;
+   initIcons();
+ }
+ 
+@@ -8332,8 +8339,7 @@ async function loadSchoolLifeContext(item, { refresh = false } = {}) {
+     let context = cached || await fetchJson(`/school-life-context?${query}`);
+     state.lifeContextCache.set(key, context);
+     if (lifeContextKey() === key) renderStudentLife(state.experienceCache.get(item.school_name) || { highlights: [] });
+-    const needsTranslation = context.can_refresh && context.categories.some(category => category.evidence.some(row => row.translation_status === "pending"));
+-    if (refresh || context.research_status === "not_collected" || needsTranslation) {
++    if (refresh || context.research_status === "not_collected") {
+       context = await fetchJson(`/school-life-context/refresh?${query}`, { method: "POST", signal: AbortSignal.timeout(60000) });
+       state.lifeContextCache.set(key, context);
+     }
+@@ -8354,7 +8360,7 @@ function renderLifeEvidenceSupplement(category, { limit = 2 } = {}) {
+   const labels = { official: "官方", geographic: "周邊地點", mixed: "官方與學生" };
+   const evidenceRows = (category.evidence || []).map(row => {
+     const pending = row.translation_status === "pending";
+-    return `<div class="life-evidence-item"><span class="life-kind ${escapeHtml(row.kind)}">${labels[row.kind] || "公開資料"}${row.translation_status === "machine" ? " · 機器翻譯" : pending ? " · 原文" : ""}</span><p class="life-evidence-text">${escapeHtml(row.text)}</p><details class="life-evidence-source"><summary>資料來源</summary>${row.original_text && row.original_text !== row.text ? `<p>${escapeHtml(row.original_text)}</p>` : ""}<small>${escapeHtml(row.scope)}${row.checked_at ? ` · ${escapeHtml(formatDate(row.checked_at))}` : ""}</small><div class="life-source-links">${row.sources.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.title)} ↗</a>`).join("")}</div></details></div>`;
++    return `<div class="life-evidence-item"><span class="life-kind ${escapeHtml(row.kind)}">${labels[row.kind] || "公開資料"}${row.translation_status === "machine" ? " · 機器翻譯" : pending ? " · 原文" : ""}</span><p class="life-evidence-text">${escapeHtml(row.text)}</p>${row.original_excerpt ? `<small class="life-applicability-note">官網參考；適用校區與年度請核對來源。${row.checked_at ? ` 查閱 ${escapeHtml(formatDate(row.checked_at))}` : ""}</small>` : ""}<details class="life-evidence-source"><summary>資料來源</summary>${row.original_text && row.original_text !== row.text ? `<p>${escapeHtml(row.original_text)}</p>` : ""}<small>${escapeHtml(row.scope)}${row.checked_at ? ` · 查閱 ${escapeHtml(formatDate(row.checked_at))}` : ""}</small><div class="life-source-links">${row.sources.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.title)} ↗</a>`).join("")}</div></details></div>`;
+   });
+   const evidence = evidenceRows.slice(0, limit).join("") + (evidenceRows.length > limit ? `<details class="life-more-evidence"><summary>再看 ${evidenceRows.length - limit} 則資料</summary>${evidenceRows.slice(limit).join("")}</details>` : "");
+   const inference = category.inference;

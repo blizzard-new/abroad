@@ -2,7 +2,7 @@ import hashlib,json,pathlib,shutil
 src=pathlib.Path('/workspace/integration-evidence');out=pathlib.Path('/workspace/abroad-evidence/docs/integration-20261009');out.mkdir(parents=True,exist_ok=True)
 # Only authored evidence and raw logs/metadata/JUnit; never runtime accounts, vaults, caches or wheel build trees.
 for p in src.iterdir():
- if p.is_file() and p.suffix in {'.json','.md','.log','.sql','.png'}:
+ if p.is_file() and p.suffix in {'.json','.md','.log','.sql','.png','.patch'}:
   shutil.copy2(p,out/p.name)
  elif p.is_dir():
   meta=p/'metadata.json'

@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-10-09T14:53:32.985812+00:00",
+  "environment": "exec recovered; latest commands succeed",
+  "production": {
+    "main": "e5c6d5ceafcb2099d45b67ab47aa464f7f82fa86",
+    "render_deploy": "dep-db4feg0ae00c73a276s0",
+    "render_verified_live": true,
+    "five_school_http": 5,
+    "five_school_browser_passed": 10,
+    "production_smoke_finished_at": "2026-10-09T14:29:06.181519+00:00"
+  },
+  "original_browser": {
+    "sha": "d1827d75f801921e49c67e29ecedecc85083ec7b",
+    "unique": 468,
+    "passed": 456,
+    "failed": 10,
+    "skipped": 2
+  },
+  "diagnostic_nonbrowser": {
+    "sha": "fe1cec66ae1ed49ada3ef00098b62e0b65dba045",
+    "unique": 2173,
+    "passed": 2143,
+    "failed": 18,
+    "skipped": 12,
+    "end_guard": "TKU offline builder exposed 35 metadata changes; raw failure/patch retained, generated file restored"
+  },
+  "fixed_candidate": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+  "fixed_tests": {
+    "original_18_nonbrowser_failures": "18 passed, clean start/end",
+    "contracts_sql_and_structuring": "65 passed, clean start/end",
+    "original_10_browser_failures": "running"
+  },
+  "runtime": {
+    "full35_fresh_order": "passed",
+    "full35_deployed_order": "passed",
+    "full35_and_deployed_client_compatibility": "passed",
+    "production_readonly_317_hash_vectors": "zero mismatches; no mutation; helper service permission false"
+  },
+  "remaining_gate": "Finish affected browser cases; final full fixed-SHA validation, TKU exact DB migrations, PR2 merge and Render six-school acceptance",
+  "tku_production_migrations_applied": false,
+  "pr2_merged": false
+}

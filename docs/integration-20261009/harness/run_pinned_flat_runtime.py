@@ -10,6 +10,15 @@ from scripts import validate_tku_community_runtime as tku
 import requests
 import inspect
 
+if '--legacy-client' in sys.argv:
+    from legacy_client_compatibility import validate as validate_legacy
+    original_validate = runtime.validate_runtime
+    def validate_with_legacy(context):
+        result = original_validate(context)
+        result['deployed_client_compatibility'] = validate_legacy(context)
+        return result
+    runtime.validate_runtime = validate_with_legacy
+
 if '--deployed-order' in sys.argv:
     source=inspect.getsource(runtime._apply_migrations)
     original_sort='migration_files = sorted(MIGRATIONS_DIR.glob("*.sql"))'

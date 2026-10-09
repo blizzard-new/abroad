@@ -1,0 +1,562 @@
+CONFTEST LOADED!
+ssss.................................................................... [  3%]
+........................................................................ [  6%]
+..............s....................................ss................... [  9%]
+........................................................................ [ 13%]
+........................................................................ [ 16%]
+.................................................F................F..... [ 19%]
+............................................F........................... [ 23%]
+................................................................F.F..... [ 26%]
+........................................................................ [ 29%]
+..........................................sss................s.......... [ 33%]
+.................................F...................................... [ 36%]
+...F.................................................................... [ 39%]
+........................................................................ [ 43%]
+........................................................................ [ 46%]
+........................................................................ [ 49%]
+.................................F...................................... [ 53%]
+........................................................................ [ 56%]
+........................................................................ [ 59%]
+........................................................................ [ 62%]
+........................................................................ [ 66%]
+........................................................................ [ 69%]
+........................................................................ [ 72%]
+........................................................................ [ 76%]
+.................................s...................................... [ 79%]
+.............................................FF......................... [ 82%]
+........................................................................ [ 86%]
+........................................................................ [ 89%]
+........................................................................ [ 92%]
+.........FFF............................................................ [ 96%]
+.......F....F.F....F..F................................................. [ 99%]
+.............                                                            [100%]
+=================================== FAILURES ===================================
+__________ test_hcmute_api_uses_explicit_mother_email_for_both_steps ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-33/test_hcmute_api_uses_explicit_0')
+
+    def test_hcmute_api_uses_explicit_mother_email_for_both_steps(tmp_path):
+        client = TestClient(create_app(tmp_path))
+        response = client.get("/application-workflow", params={"home_school": HOME, "school": at(68).school_name})
+        assert response.status_code == 200, response.text
+        nomination, followup = response.json()["steps"][3:5]
+        for step in (nomination, followup):
+            assert step["submission"]["method"] == "email"
+            assert "母校" in step["responsible_party"]
+            assert step["submission"]["email"] == "oia@hcmute.edu.vn"
+            assert step["submission"]["portal_url"] is None
+>       docs = [r for r in nomination["document_requirements"] if r["stage"] == "nomination"]
+                                                                  ^^^^^^^^^^
+E       KeyError: 'stage'
+
+tests/test_ccu_eighteenth_pass.py:85: KeyError
+_ test_library_activation_is_life_information_and_new_student_guide_is_reference _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-33/test_library_activation_is_lif0')
+
+    def test_library_activation_is_life_information_and_new_student_guide_is_reference(
+        tmp_path,
+    ):
+        profiles = reviewed_profiles()
+        library = profiles[23]["fields"]["campus_life"]
+        assert library["status"] == "needs_confirmation"
+        assert "院方簽名／蓋章" in library["value"]
+        assert "不是交換申請附件" in library["value"]
+        welcome = profiles[24]["fields"]["campus_life"]
+        assert welcome["status"] == "reference_only" and "2026年9月" in welcome["value"]
+        client = TestClient(create_app(tmp_path))
+        result = client.get(
+            "/destination-profile",
+            params={"home_school": HOME, "school": at(23).school_name},
+        )
+        assert result.status_code == 200
+        assert "圖書館" in result.json()["campus_life_summary"]
+        flow = client.get(
+            "/application-workflow",
+            params={"home_school": HOME, "school": at(23).school_name},
+        ).json()
+        host_names = [
+            r["name"]
+            for s in flow["steps"]
+            for r in s["document_requirements"]
+>           if r["stage"]
+               ^^^^^^^^^^
+        ]
+E       KeyError: 'stage'
+
+tests/test_ccu_fifteenth_pass.py:44: KeyError
+__ test_api_host_documents_have_individual_forms_conditions_and_later_stages ___
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-33/test_api_host_documents_have_i0')
+
+    def test_api_host_documents_have_individual_forms_conditions_and_later_stages(tmp_path):
+        client = TestClient(create_app(tmp_path))
+        for page in [32, 37, 43, 47, 48, 53, 68, 108, 114]:
+            flow = client.get(
+                "/application-workflow",
+                params={"home_school": HOME, "school": at(page).school_name},
+            ).json()
+            assert flow["review_status"] != "published"
+            host = flow["steps"][4]
+            registry = reviewed_documents()[page]
+>           requirements = [r for s in flow["steps"] for r in s["document_requirements"] if r["stage"]]
+                                                                                            ^^^^^^^^^^
+E           KeyError: 'stage'
+
+tests/test_ccu_ninth_pass.py:161: KeyError
+________________ test_hcmute_mother_compiles_nomination_bundle _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-33/test_hcmute_mother_compiles_no0')
+
+    def test_hcmute_mother_compiles_nomination_bundle(tmp_path):
+        row = reviewed_documents()[68]
+        assert len(row["requirements"]) == 7
+        assert sum(r["conditional"] for r in row["requirements"]) == 2
+        assert all(r["stage"] == "nomination" for r in row["requirements"])
+        client = TestClient(create_app(tmp_path))
+        flow = client.get("/application-workflow", params={
+            "home_school": HOME, "school": at(68).school_name
+        }).json()
+        assert "母校彙整" in flow["steps"][4]["title"]
+>       assert len([r for r in flow["steps"][3]["document_requirements"] if r["stage"] == "nomination"]) == 7
+                                                                            ^^^^^^^^^^
+E       KeyError: 'stage'
+
+tests/test_ccu_seventeenth_pass.py:101: KeyError
+_____ test_metadata_is_hash_bound_and_existing_school_data_remains_default _____
+
+    def test_metadata_is_hash_bound_and_existing_school_data_remains_default():
+        workflows = load_bundled_application_workflows()
+        ccu = next(r for r in workflows if r.home_university == HOME and r.school_name == at(98).school_name)
+        changed = ccu.model_copy(deep=True)
+        changed.steps[4].document_requirements[0].applicability_note += " changed"
+        assert workflow_content_hash(changed) != workflow_content_hash(ccu)
+>       assert all(r.applicability_status is None for w in workflows if w.home_university != HOME
+                   for step in w.steps for r in step.document_requirements)
+E       assert False
+E        +  where False = all(<generator object test_metadata_is_hash_bound_and_existing_school_data_remains_default.<locals>.<genexpr> at 0x7f8c7b0145e0>)
+
+tests/test_ccu_seventeenth_pass.py:131: AssertionError
+_____ test_guest_can_read_every_board_but_unverified_email_cannot_publish ______
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-33/test_guest_can_read_every_boar0')
+
+    def test_guest_can_read_every_board_but_unverified_email_cannot_publish(
+        tmp_path,
+    ) -> None:
+        ensure_data_dirs(tmp_path)
+        client = TestClient(create_app(tmp_path))
+        # Historical node ID retained; explicit 2026-10-09 policy now gates school reads.
+        guest_boards = client.get("/community/boards")
+        assert guest_boards.status_code == 200
+>       assert {row["id"] for row in guest_boards.json()} == {
+            "public-study-abroad",
+            "language-school",
+            "cgu",
+            "ntpu",
+            "ntu",
+            "tku",
+        }
+E       AssertionError: assert {'ccu', 'cgu'...', 'ntu', ...} == {'cgu', 'lang...broad', 'tku'}
+E         
+E         Extra items in the left set:
+E         'ccu'
+E         'ncu'
+E         Use -v to get more diff
+
+tests/test_community_permissions.py:127: AssertionError
+_______ test_every_destination_country_has_a_guide_and_nothing_else_does _______
+
+    def test_every_destination_country_has_a_guide_and_nothing_else_does():
+>       assert set(load_guides()) == destination_countries()
+E       AssertionError: assert {'俄羅斯', '加拿大'...', '哈薩克', ...} == {'丹麥', '以色列',...', '匈牙利', ...}
+E         
+E         Extra items in the right set:
+E         '芬蘭'
+E         '智利'
+E         '墨西哥'
+E         '澳門'
+E         '南非'...
+E         
+E         ...Full output truncated (12 lines hidden), use '-vv' to show
+
+tests/test_destination_tips.py:46: AssertionError
+_________________ test_route_assets_are_cache_busted_together __________________
+
+    def test_route_assets_are_cache_busted_together() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+        versions = assert_versioned_static_assets(html, (
+            "styles.css", "product-v2.css", "app.js", "discovery-core.js",
+            "discovery-ui.js", "uniway.css", "advisor-mascot.css", "community-reader.js",
+        ))
+        # The paired expiry fix must load both cooperating scripts at the same
+        # version; never restore a historical URL merely to satisfy a literal test.
+>       assert versions["app.js"] == versions["community-reader.js"]
+E       AssertionError: assert '20261009-six...integration-1' == '20261009-tku-reader-expiry-1'
+E         
+E         - 20261009-tku-reader-expiry-1
+E         + 20261009-six-schools-integration-1
+
+tests/test_independent_page_routing.py:64: AssertionError
+____ test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused _____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-33/test_rules_advisor_works_while0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f8c98d9c200>
+
+    def test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused(
+        tmp_path,
+        monkeypatch,
+    ) -> None:
+        monkeypatch.setenv("AI_PROVIDER", "openai")
+        monkeypatch.setenv("OPENAI_API_KEY", "must-not-enable-ai")
+        ai_requests: list[str] = []
+    
+        def unexpected_ai_post(url: str, **kwargs):
+            ai_requests.append(url)
+            raise AssertionError("paused runtime must not make an external AI request")
+    
+        monkeypatch.setattr("exchange_info.ai_gateway.requests.post", unexpected_ai_post)
+        page = _page()
+        data_dir = tmp_path / "data"
+        save_processed_pages([page], data_dir)
+        build_rag_index([page], data_dir, use_embeddings=False)
+        build_structured_source_index([page], data_dir, use_ai=False)
+        dashboard = StudentDashboard(
+            school_name="長庚大學",
+            required_documents=[
+                StudentInfoItem(
+                    title="交換申請文件",
+                    details=["申請表、成績單、讀書計畫與語言證明。"],
+                    source=SourceReference(title="交換公告", source_url=SOURCE_URL),
+                )
+            ],
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.build_student_dashboard",
+            lambda pages, info, **kwargs: dashboard,
+        )
+        client = _authenticated_client(data_dir)
+    
+        answer = client.post("/advisor/ask", json={"question": "交換需要哪些申請文件？"})
+        paused_chat = client.post("/ai/chat", json={"question": "交換需要哪些申請文件？"})
+        status = client.get("/ai/status")
+        review = client.post(
+            "/ai/review-document",
+            files={"file": ("讀書計畫.txt", "申請動機與學習計畫。" * 30, "text/plain")},
+            data={"document_type": "study_plan", "consent": "true"},
+        )
+        unconsented_rewrite = client.post(
+            "/ai/rewrite-document",
+            json={"text": "這是我自行撰寫且需要調整語氣的交換申請內容。" * 2, "action": "formalize", "ai_consent_granted": True},
+        )
+        rewrite = client.post(
+            "/ai/rewrite-document",
+            json={
+                "text": "這是我自行撰寫且需要調整語氣的交換申請內容。" * 2,
+                "action": "formalize",
+                "ai_consent_granted": True,
+            },
+        )
+    
+        assert answer.status_code == 200
+        assert answer.json()["sources"][0]["published_at"] == "2026-07-01"
+        assert answer.json()["sources"][0]["last_checked"].startswith("2026-07-19")
+        assert status.json()["rag_index"]["source_count"] == 1
+        assert status.json()["structured_source_count"] == 1
+        assert status.json()["ai_enabled"] is False
+        assert status.json()["runtime_state"] == "paused"
+        assert status.json()["provider"] is None
+        assert status.json()["model"] is None
+        assert "AI API 與本地 AI 目前暫緩" in status.json()["paused_reason"]
+        assert paused_chat.status_code == 503
+        assert review.status_code == 503
+        assert "AI 深度檢查目前暫緩" in review.json()["detail"]
+>       assert unconsented_rewrite.status_code == 422
+E       assert 503 == 422
+E        +  where 503 = <Response [503 Service Unavailable]>.status_code
+
+tests/test_rag.py:249: AssertionError
+__________ test_every_country_in_the_bundled_data_belongs_to_a_region __________
+
+    def test_every_country_in_the_bundled_data_belongs_to_a_region() -> None:
+        countries = sorted(bundled_countries())
+        assert len(countries) > 40
+        unplaced = node(f"{json.dumps(countries, ensure_ascii=False)}.filter(c => R.regionOf(c) === 'other')")
+>       assert unplaced == [], "give these a region in regions.js, or they land under 其他地區"
+E       AssertionError: give these a region in regions.js, or they land under 其他地區
+E       assert ['巴哈馬', '摩納哥'] == []
+E         
+E         Left contains 2 more items, first extra item: '巴哈馬'
+E         Use -v to get more diff
+
+tests/test_regions.py:37: AssertionError
+_ test_advisor_does_not_borrow_latest_jlpt_rule_for_unknown_year_or_round[None-None] _
+
+year = None, round_name = None
+
+    @pytest.mark.parametrize('year,round_name', [(None,None), ('2028-2029','第一梯次'), ('2027-2028','第一梯次')])
+    def test_advisor_does_not_borrow_latest_jlpt_rule_for_unknown_year_or_round(year, round_name):
+        from types import SimpleNamespace
+        from exchange_info.advisor import _qualification_summary
+>       summary = _qualification_summary(AdvisorProfile(school_name='淡江大學',academic_year=year,
+            application_round=round_name,jlpt_level='N1',academic_score=90),SimpleNamespace(school_name='淡江大學'))
+
+tests/test_tku_continuation.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+profile = AdvisorProfile(target_school=None, school_name='淡江大學', college=None, department=None, current_year=None, degree_level=..., monthly_budget=None, needs_scholarship=False, preferred_teaching_language=None, course_interests=None, question=None)
+dashboard = namespace(school_name='淡江大學')
+
+    def _qualification_summary(
+        profile: AdvisorProfile,
+        dashboard: StudentDashboard,
+    ) -> list[str]:
+        rows: list[str] = []
+>       if dashboard.academic_gpa_minimum is not None:
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'types.SimpleNamespace' object has no attribute 'academic_gpa_minimum'
+
+src/exchange_info/advisor.py:483: AttributeError
+_ test_advisor_does_not_borrow_latest_jlpt_rule_for_unknown_year_or_round[2028-2029-\u7b2c\u4e00\u68af\u6b21] _
+
+year = '2028-2029', round_name = '第一梯次'
+
+    @pytest.mark.parametrize('year,round_name', [(None,None), ('2028-2029','第一梯次'), ('2027-2028','第一梯次')])
+    def test_advisor_does_not_borrow_latest_jlpt_rule_for_unknown_year_or_round(year, round_name):
+        from types import SimpleNamespace
+        from exchange_info.advisor import _qualification_summary
+>       summary = _qualification_summary(AdvisorProfile(school_name='淡江大學',academic_year=year,
+            application_round=round_name,jlpt_level='N1',academic_score=90),SimpleNamespace(school_name='淡江大學'))
+
+tests/test_tku_continuation.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+profile = AdvisorProfile(target_school=None, school_name='淡江大學', college=None, department=None, current_year=None, degree_level=..., monthly_budget=None, needs_scholarship=False, preferred_teaching_language=None, course_interests=None, question=None)
+dashboard = namespace(school_name='淡江大學')
+
+    def _qualification_summary(
+        profile: AdvisorProfile,
+        dashboard: StudentDashboard,
+    ) -> list[str]:
+        rows: list[str] = []
+>       if dashboard.academic_gpa_minimum is not None:
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'types.SimpleNamespace' object has no attribute 'academic_gpa_minimum'
+
+src/exchange_info/advisor.py:483: AttributeError
+_ test_advisor_does_not_borrow_latest_jlpt_rule_for_unknown_year_or_round[2027-2028-\u7b2c\u4e00\u68af\u6b21] _
+
+year = '2027-2028', round_name = '第一梯次'
+
+    @pytest.mark.parametrize('year,round_name', [(None,None), ('2028-2029','第一梯次'), ('2027-2028','第一梯次')])
+    def test_advisor_does_not_borrow_latest_jlpt_rule_for_unknown_year_or_round(year, round_name):
+        from types import SimpleNamespace
+        from exchange_info.advisor import _qualification_summary
+>       summary = _qualification_summary(AdvisorProfile(school_name='淡江大學',academic_year=year,
+            application_round=round_name,jlpt_level='N1',academic_score=90),SimpleNamespace(school_name='淡江大學'))
+
+tests/test_tku_continuation.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+profile = AdvisorProfile(target_school=None, school_name='淡江大學', college=None, department=None, current_year=None, degree_level=..., monthly_budget=None, needs_scholarship=False, preferred_teaching_language=None, course_interests=None, question=None)
+dashboard = namespace(school_name='淡江大學')
+
+    def _qualification_summary(
+        profile: AdvisorProfile,
+        dashboard: StudentDashboard,
+    ) -> list[str]:
+        rows: list[str] = []
+>       if dashboard.academic_gpa_minimum is not None:
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'types.SimpleNamespace' object has no attribute 'academic_gpa_minimum'
+
+src/exchange_info/advisor.py:483: AttributeError
+___ test_document_catalog_scopes_four_mothers_even_for_same_japanese_partner ___
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-33/test_document_catalog_scopes_f0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f8c994d68a0>
+
+    def test_document_catalog_scopes_four_mothers_even_for_same_japanese_partner(tmp_path, monkeypatch):
+        from exchange_info.models import PartnerUniversity
+        from exchange_info.ntu_student_view import fetch_ntu_partner_universities
+        from exchange_info.storage import load_bundled_application_workflows
+        from exchange_info.application_documents import build_application_document_catalog
+        cgu=PartnerUniversity(program_type='交換學生',school_name='林肯大學 Lincoln University',country='紐西蘭',
+            source_url='https://www.cgu.edu.tw/oia-ch/Contents?nodeId=17554')
+        monkeypatch.setattr('exchange_info.api.fetch_partner_universities',lambda:[cgu])
+        client=TestClient(create_app(tmp_path))
+        ntu=fetch_ntu_partner_universities()
+        cases=[('CGU','長庚大學',cgu,'116'),
+            ('NTPU','國立臺北大學',fetch_ntpu_partner_universities()[0],'115'),
+            ('NTU','國立臺灣大學',next(p for p in ntu if '立命館' in p.school_name),'116'),
+            ('TKU','淡江大學',fetch_tku_partner_universities()[0],'2027-2028')]
+        workflows=load_bundled_application_workflows()
+        for alias,home,partner,year in cases:
+            context=ApplicationCenterContext(school_name=home,target_school=partner.school_name,academic_year=year)
+            expected=build_application_document_catalog(context,[w for w in workflows if w.home_university==home])
+            response=client.get('/application-center/catalog',params={'school':alias,'target_school':partner.school_name,'academic_year':year})
+            assert response.status_code==200,response.text
+            actual=response.json()
+>           assert actual['context']['school_name']==home and actual['academic_year']==year
+E           AssertionError: assert ('\u9577\u5e9a\u5927\u5b78' == '\u9577\u5e9a\u5927\u5b78'
+E             
+E               長庚大學 and None == '116')
+
+tests/test_tku_support.py:208: AssertionError
+_________ test_offline_api_registry_documents_search_and_life_profile __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-33/test_offline_api_registry_docu0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f8c62095220>
+
+    def test_offline_api_registry_documents_search_and_life_profile(tmp_path,monkeypatch):
+        def reject_network(*args,**kwargs):raise AssertionError("TKU catalogue must work offline")
+        monkeypatch.setattr("requests.get",reject_network)
+        for alias in ["淡江大學","淡江","淡大","TKU","Tamkang University"]:assert resolve_university(alias)==TKU
+        client=TestClient(create_app(tmp_path))
+        supported=client.get("/universities").json()
+        tku=next(u for u in supported if u["id"]=="tku")
+        assert tku["partner_count"]==4 and tku["support_level"]=="basic"
+        response=client.get("/student-dashboard",params={"school":"TKU"})
+        assert response.status_code==200,response.text
+        dashboard=response.json()
+        assert dashboard["school_name"]=="淡江大學" and len(dashboard["partner_universities"])==4
+        assert all(p["availability_status"]=="closed" for p in dashboard["partner_universities"])
+        assert "JST" in dashboard["partner_universities"][0]["application_deadline"]
+        assert "9/30" in dashboard["partner_universities"][0]["availability_note"]
+        for partner in dashboard['partner_universities']:
+            summary=partner['student_summary_zh']
+            assert summary['eligibility_points'] and summary['application_steps'] and summary['tuition_points']
+            assert 'JLPT N2' in ' '.join(summary['eligibility_points']) and '研究所N1' in ' '.join(summary['eligibility_points'])
+            assert '全額學雜費' in ' '.join(summary['tuition_points'])
+            assert '已截止' in ' '.join(summary['application_steps'])
+        assert "系前40%" in dashboard["academic_score_rule"]
+        assert "長庚" not in json.dumps(dashboard,ensure_ascii=False)
+        results=client.get("/search",params={"school":"TKU","q":"日語"}).json()
+        assert results and all("ntpu.edu.tw" not in r.get("source_url","") for r in results)
+        name=load_tku_records()[0].fields["school_name"].value
+        profile=client.get("/destination-profile",params={"school":name,"home_school":"TKU"})
+        assert profile.status_code==200 and "50,000" in profile.json()["cost_summary"]
+        workflow=client.get("/application-workflow",params={"school":name,"home_school":"TKU",
+            "academic_year":"2027-2028","application_round":"日語組第二次甄選"})
+        assert workflow.status_code==200 and len(workflow.json()["steps"])==6
+        catalog=client.get("/application-center/catalog",params={"school":"TKU","target_school":name,
+            "academic_year":"2027-2028","application_round":"日語組第二次甄選"})
+        assert catalog.status_code==200 and catalog.json()["workflow_found"] is True
+>       assert Counter(i['phase'] for i in catalog.json()['items'])=={'校內申請':8,'外校申請':9,'行前':6}
+E       AssertionError: assert Counter({'合作校...: 5, '行前': 1}) == {'校內申請': 8, '...': 9, '行前': 6}
+E         
+E         Differing items:
+E         {'行前': 1} != {'行前': 6}
+E         Left contains 2 more items:
+E         {'合作校申請': 17, '合作校錄取後': 5}
+E         Right contains 2 more items:
+E         {'外校申請': 9, '校內申請': 8}
+E         Use -v to get more diff
+
+tests/test_tku_support.py:306: AssertionError
+____ test_host_documents_preserve_conditions_versions_and_submission_phase _____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-33/test_host_documents_preserve_c0')
+
+    def test_host_documents_preserve_conditions_versions_and_submission_phase(tmp_path):
+        catalog=json.loads((BUNDLE/'host_documents.json').read_text())
+        assert len(catalog)==4
+        expected={'ritsumeikan':(9,6),'nagasaki':(11,0),'seikei':(10,0),'uec':(15,2)}
+        client=TestClient(create_app(tmp_path))
+        workflows={w.school_name:w for w in load_tku_workflows()}
+        for row in catalog:
+            slug=row['partner_id'].rsplit('-',1)[-1];wf=workflows[row['school_name']]
+            assert len(wf.steps[1].document_requirements)==8
+            assert all('Form A' not in d.name and 'COE' not in d.name for d in wf.steps[1].document_requirements)
+            assert (len(wf.steps[3].document_requirements),len(wf.steps[4].document_requirements))==expected[slug]
+            response=client.get('/application-center/catalog',params=dict(school='TKU',target_school=row['school_name'],academic_year='2027-2028',application_round='日語組第二次甄選'))
+            assert response.status_code==200
+            items=response.json()['items']
+>           assert sum(d['phase']=='校內申請' for d in items)==8
+E           assert 0 == 8
+E            +  where 0 = sum(<generator object test_host_documents_preserve_conditions_versions_and_submission_phase.<locals>.<genexpr> at 0x7f8c63b22f60>)
+
+tests/test_tku_support.py:340: AssertionError
+__________________ test_build_is_reproducible_without_network __________________
+
+    def test_build_is_reproducible_without_network():
+        names=["partners_current.jsonl","partners_reference.jsonl","rounds.json","conflicts.json","application_workflows.jsonl","destination_profiles.jsonl","integrity.json","host_documents.json","completeness_matrix.json"]
+        before={name:(BUNDLE/name).read_bytes() for name in names}
+        script=BUNDLE.parents[3]/"scripts"/"build_tku_catalog.py"
+        subprocess.run([sys.executable,str(script)],cwd=script.parents[1],check=True,capture_output=True)
+>       assert {name:(BUNDLE/name).read_bytes() for name in names}==before
+E       assert {'partners_cu... }\n]\n', ...} == {'partners_cu... }\n]\n', ...}
+E         
+E         Omitting 8 identical items, use -vv to show
+E         Differing items:
+E         {'application_workflows.jsonl': b'{"workflow_id":"workflow-01d2992cc218c707219f5b95","governance_key":null,"issue_repo...0\x9a\xe7\x9f\xa5\xe4\xbf\xa1\xe8\x88\x87\xe5\xae\x98\xe6\x96\xb9\xe7\x94\xb3\xe8\xab\x8b\xe9\xa0\x81\xe3\x80\x82"}\n'} != {'application_workflows.jsonl': b'{"workflow_id":"workflow-01d2992cc218c707219f5b95","governance_key":null,"issue_repo...0\x9a\xe7\x9f\xa5\xe4\xbf\xa1\xe8\x88\x87\xe5\xae\x98\xe6\x96\xb9\xe7\x94\xb3\xe8\xab\x8b\xe9\xa0\x81\xe3\x80\x82"}\n'}
+E         Use -v to get more diff
+
+tests/test_tku_support.py:442: AssertionError
+_____ test_evidence_output_preserves_a_long_failure_on_a_full_pipe[False] ______
+
+repair = False
+
+    @pytest.mark.parametrize("repair", [False, True])
+    def test_evidence_output_preserves_a_long_failure_on_a_full_pipe(repair):
+        script = Path(__file__).resolve().parents[1] / "scripts/run_web_quality_tests.py"
+        program = f"""
+    import importlib.util, os, sys
+    from types import SimpleNamespace
+    spec = importlib.util.spec_from_file_location('web_runner', {str(script)!r})
+    module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+    os.set_blocking(sys.stdout.fileno(), False)
+    while True:
+        try: os.write(sys.stdout.fileno(), b'x' * 4096)
+        except BlockingIOError: break
+    print('PIPE_FULL', file=sys.stderr, flush=True)
+    if {repair!r}: module.use_blocking_output()
+    report = SimpleNamespace(
+        when='call', failed=True, skipped=False, nodeid='synthetic::failure',
+        outcome='failed', duration=0.001, longrepr='ORIGINAL:' + 'y' * 262144 + ':END')
+    if {repair!r}:
+        # Reproduce the flag changing after startup, as the original CI did.
+        os.set_blocking(sys.stdout.fileno(), False)
+        module.Progress().pytest_runtest_logreport(report)
+    else:
+        print(f'WEB_CASE {{report.nodeid}} call failed', flush=True)
+        print(str(report.longrepr), flush=True)
+    """
+        process = subprocess.Popen([sys.executable, "-c", program], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        assert process.stderr.readline() == b"PIPE_FULL\n"
+        if not repair:
+            # Keep the reader stopped until the original logger reaches EAGAIN.
+            process.wait(timeout=10)
+        output, error = process.communicate(timeout=30)
+        if repair:
+            assert process.returncode == 0, error.decode()
+            assert output.endswith(b"ORIGINAL:" + b"y" * 262144 + b":END\n")
+            assert b"WEB_CASE synthetic::failure call failed" in output
+        else:
+>           assert process.returncode != 0
+E           AssertionError: assert 0 != 0
+E            +  where 0 = <Popen: returncode: 0 args: ['/workspace/abroad-six-final/.venv/bin/python',...>.returncode
+
+tests/test_tku_web_evidence.py:46: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_eighteenth_pass.py::test_hcmute_api_uses_explicit_mother_email_for_both_steps
+FAILED tests/test_ccu_fifteenth_pass.py::test_library_activation_is_life_information_and_new_student_guide_is_reference
+FAILED tests/test_ccu_ninth_pass.py::test_api_host_documents_have_individual_forms_conditions_and_later_stages
+FAILED tests/test_ccu_seventeenth_pass.py::test_hcmute_mother_compiles_nomination_bundle
+FAILED tests/test_ccu_seventeenth_pass.py::test_metadata_is_hash_bound_and_existing_school_data_remains_default
+FAILED tests/test_community_permissions.py::test_guest_can_read_every_board_but_unverified_email_cannot_publish
+FAILED tests/test_destination_tips.py::test_every_destination_country_has_a_guide_and_nothing_else_does
+FAILED tests/test_independent_page_routing.py::test_route_assets_are_cache_busted_together
+FAILED tests/test_rag.py::test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused
+FAILED tests/test_regions.py::test_every_country_in_the_bundled_data_belongs_to_a_region
+FAILED tests/test_tku_continuation.py::test_advisor_does_not_borrow_latest_jlpt_rule_for_unknown_year_or_round[None-None]
+FAILED tests/test_tku_continuation.py::test_advisor_does_not_borrow_latest_jlpt_rule_for_unknown_year_or_round[2028-2029-\u7b2c\u4e00\u68af\u6b21]
+FAILED tests/test_tku_continuation.py::test_advisor_does_not_borrow_latest_jlpt_rule_for_unknown_year_or_round[2027-2028-\u7b2c\u4e00\u68af\u6b21]
+FAILED tests/test_tku_support.py::test_document_catalog_scopes_four_mothers_even_for_same_japanese_partner
+FAILED tests/test_tku_support.py::test_offline_api_registry_documents_search_and_life_profile
+FAILED tests/test_tku_support.py::test_host_documents_preserve_conditions_versions_and_submission_phase
+FAILED tests/test_tku_support.py::test_build_is_reproducible_without_network
+FAILED tests/test_tku_web_evidence.py::test_evidence_output_preserves_a_long_failure_on_a_full_pipe[False]
+18 failed, 2143 passed, 12 skipped in 1210.21s (0:20:10)
