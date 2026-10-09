@@ -50,6 +50,12 @@ jobs:
           uv sync --frozen --extra dev
           uv run --frozen python -m playwright install --with-deps chromium
 
+      - name: Install PDF rendering tools from Ubuntu packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends poppler-utils
+          pdftoppm -v
+
       - name: Check Python and JavaScript syntax
         run: |
           uv run --frozen python -m compileall -q src
@@ -73,7 +79,26 @@ jobs:
       - name: Run Web test suite
         env:
           WEB_TEST_SHARD: ${{ matrix.shard }}
-        run: uv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4 --junitxml "$RUNNER_TEMP/web-tests-$WEB_TEST_SHARD.xml"
+          TKU_ACCEPTANCE_OUTPUT: ${{ runner.temp }}/web-evidence/browser
+        run: |
+          mkdir -p "$RUNNER_TEMP/web-evidence"
+          set -o pipefail
+          uv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4 --junitxml "$RUNNER_TEMP/web-evidence/suite.xml" --evidence-dir "$RUNNER_TEMP/web-evidence" 2>&1 | tee "$RUNNER_TEMP/web-evidence/pytest.log"
+
+      - name: Run immutable main control for prior shared failures
+        if: ${{ always() }}
+        env:
+          WEB_TEST_SHARD: ${{ matrix.shard }}
+        run: uv run --frozen python scripts/run_main_browser_control.py --shard "$WEB_TEST_SHARD" --evidence-dir "$RUNNER_TEMP/web-evidence/main-control"
+
+      - name: Retain original test evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: web-evidence-${{ github.run_id }}-${{ matrix.shard }}
+          path: ${{ runner.temp }}/web-evidence/
+          if-no-files-found: error
+          retention-days: 30
 
       - name: Confirm bundled official data was not mutated
         if: ${{ always() }}

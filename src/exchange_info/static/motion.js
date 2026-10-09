@@ -76,7 +76,7 @@
       routeFrame = 0;
       const root = hash.startsWith("#school=") ? document.querySelector("#school-detail-view")
         : document.body.classList.contains("global-home-mode") || document.body.classList.contains("cgu-community-mode") ? document.querySelector("#community-hub")
-        : document.querySelector('#dashboard-view > section[data-university-page]:not([hidden])');
+        : document.querySelector('#dashboard-view section[data-university-page]:not([hidden])');
       if (!root || !root.getClientRects().length || root.hidden) return;
       if (hash === lastRoute && root === lastRoot) return;
       const index = history.state?.uniwayNavigation?.index ?? null;

@@ -63,11 +63,19 @@ def main() -> int:
     parser.add_argument("--shards", type=int, default=4)
     parser.add_argument("--junitxml", type=Path)
     parser.add_argument("--list-only", action="store_true")
+    parser.add_argument("--evidence-dir", type=Path)
     args = parser.parse_args()
     if args.shards < 1 or not 0 <= args.shard < args.shards:
         parser.error("shard must be within the requested shard count")
     groups, manifest = partition(args.shards)
     print(json.dumps(dict(shard=args.shard, **manifest), ensure_ascii=False), flush=True)
+    if args.evidence_dir:
+        args.evidence_dir.mkdir(parents=True, exist_ok=True)
+        (args.evidence_dir / "partition.json").write_text(json.dumps(dict(shard=args.shard, **manifest), indent=2) + "\n")
+        collected = subprocess.run([sys.executable, "-m", "pytest", *groups[args.shard], "--collect-only", "-q"], text=True, capture_output=True, check=True)
+        nodes = [line for line in collected.stdout.splitlines() if line.startswith("tests/") and "::" in line]
+        assert len(nodes) == manifest["case_counts_per_shard"][args.shard]
+        (args.evidence_dir / "collect-nodeids.txt").write_text("\n".join(nodes) + "\n")
     if args.list_only:
         return 0
     command = [*groups[args.shard], "-vv", "--tb=short", "--durations=25", "--capture=tee-sys"]
@@ -77,6 +85,8 @@ def main() -> int:
     started = time.monotonic()
     code = pytest.main(command, plugins=[Progress()])
     print(f"WEB_SHARD {args.shard} exit={code} elapsed={time.monotonic()-started:.3f}s", flush=True)
+    if args.evidence_dir:
+        (args.evidence_dir / "result.json").write_text(json.dumps(dict(shard=args.shard, exit_code=int(code), elapsed_seconds=time.monotonic()-started, tested_commit=subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()), indent=2) + "\n")
     return int(code)
 
 

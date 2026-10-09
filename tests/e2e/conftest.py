@@ -479,6 +479,7 @@ def enter_public_site(page: Page, live_server: LiveServer, route: str = "home") 
     # otherwise rapid destination cases can leave requests queued on the shared
     # E2E server and make a later, unrelated login response time out.
     page.wait_for_load_state("networkidle", timeout=60_000)
+    page.locator("#boot-splash").wait_for(state="hidden", timeout=60_000)
 
 
 def open_navigation(page: Page) -> None:
@@ -510,3 +511,5 @@ def login_through_web(page: Page, live_server: LiveServer, email: str) -> None:
         f"{login_response.text()}"
     )
     page.locator("#auth-dialog").wait_for(state="hidden", timeout=10_000)
+    page.wait_for_function("() => !state.homeSchoolLoading && state.accountWorkspaceLoadingCount === 0", timeout=60_000)
+    page.evaluate("() => state.periodOptionsReady")

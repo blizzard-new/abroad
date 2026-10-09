@@ -36,6 +36,8 @@ def test_sourced_rounds_retry_and_keep_unsent_draft(page,live_server,request,wid
     # requests finish so the injected failure belongs to the reload under test.
     page.wait_for_load_state("networkidle", timeout=60_000)
     page.evaluate("location.hash='#eligibility'")
+    page.wait_for_function("() => !state.homeSchoolLoading && !!state.applicationPeriodOptions")
+    page.evaluate("() => state.periodOptionsReady")
     failures[0]=1
     with page.expect_response(lambda response:'/application-period-options?' in response.url and response.status==503):
         page.reload()

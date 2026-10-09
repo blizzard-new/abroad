@@ -8461,7 +8461,8 @@ function renderLifeEvidenceSupplement(category, { limit = 2 } = {}) {
   const labels = { official: "官方", geographic: "周邊地點", mixed: "官方與學生" };
   const evidenceRows = (category.evidence || []).map(row => {
     const pending = row.translation_status === "pending";
-    return `<div class="life-evidence-item"><span class="life-kind ${escapeHtml(row.kind)}">${labels[row.kind] || "公開資料"}${row.translation_status === "machine" ? " · 機器翻譯" : pending ? " · 原文" : ""}</span><p class="life-evidence-text">${escapeHtml(row.text)}</p><details class="life-evidence-source"><summary>資料來源</summary>${row.original_text && row.original_text !== row.text ? `<p>${escapeHtml(row.original_text)}</p>` : ""}<small>${escapeHtml(row.scope)}${row.checked_at ? ` · ${escapeHtml(formatDate(row.checked_at))}` : ""}</small><div class="life-source-links">${row.sources.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.title)} ↗</a>`).join("")}</div></details></div>`;
+    const original = row.original_text || row.text;
+    return `<div class="life-evidence-item"><span class="life-kind ${escapeHtml(row.kind)}">${labels[row.kind] || "公開資料"}${row.translation_status === "machine" ? " · 機器翻譯" : pending ? " · 原文" : ""}</span><p class="life-evidence-text">${escapeHtml(pending ? "中文翻譯尚未完成，可查看原文。" : row.text)}</p><details class="life-evidence-source"><summary>原文與來源</summary>${pending || original !== row.text ? `<p>${escapeHtml(original)}</p>` : ""}<small>${escapeHtml(row.scope)}${row.checked_at ? ` · ${escapeHtml(formatDate(row.checked_at))}` : ""}</small><div class="life-source-links">${row.sources.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.title)} ↗</a>`).join("")}</div></details></div>`;
   });
   const evidence = evidenceRows.slice(0, limit).join("") + (evidenceRows.length > limit ? `<details class="life-more-evidence"><summary>再看 ${evidenceRows.length - limit} 則資料</summary>${evidenceRows.slice(limit).join("")}</details>` : "");
   const inference = category.inference;
@@ -12143,7 +12144,13 @@ function resetRouteScroll() {
 }
 
 function focusRouteHeading(selector) {
+  const route = window.location.hash;
+  const origin = document.activeElement;
   window.requestAnimationFrame(() => {
+    if (window.location.hash !== route) return;
+    // A queued route callback must not steal focus from a control the user
+    // has already reached with the keyboard during the next frame.
+    if (document.activeElement !== origin && document.activeElement?.closest("button, a, input, textarea, select, summary, [role='tab']")) return;
     if (document.querySelector('[aria-modal="true"]:not([hidden])')) return;
     const heading = typeof selector === "string" ? document.querySelector(selector) : selector;
     if (!(heading instanceof HTMLElement) || heading.getClientRects().length === 0) return;
@@ -12471,8 +12478,9 @@ function bindEvents() {
   });
   $("#global-community-search").addEventListener("input", (event) => {
     window.clearTimeout(state.globalCommunityTimer);
+    const query = event.target.value.trim();
     state.globalCommunityTimer = window.setTimeout(() => {
-      state.globalCommunityQuery = event.target.value.trim();
+      state.globalCommunityQuery = query;
       window.UniWayCommunity.updateFilters({ q: state.globalCommunityQuery });
     }, 280);
   });

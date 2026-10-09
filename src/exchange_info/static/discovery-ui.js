@@ -208,7 +208,7 @@ async function openDiscoveryReader(source) {
       <details class="discovery-reader-original" open><summary>這份中文整理怎麼來的</summary><p>${escapeHtml(digest.basis)}${digest.written_at ? ` 整理日期：${escapeHtml(digest.written_at)}。` : ""}${heading !== source.title ? ` 原標題：${escapeHtml(source.title)}。` : ""}</p></details>`
     : `${source.translation_status === "machine" ? '<span class="life-kind">機器翻譯</span>' : ""}<p class="discovery-reader-summary">${escapeHtml(discoveryUsefulSummary(source) || "這篇還沒有中文整理，請先看原文。")}</p>
       <div class="discovery-reader-themes">${Object.entries(source.theme_summaries_zh || {}).filter(([,v]) => v && !DISCOVERY_FILLER.test(v)).map(([t,v]) => `<section><h3>${escapeHtml(UniWayDiscovery.THEMES[t] || t)}</h3><p>${escapeHtml(v)}</p></section>`).join("")}</div>
-      <details class="discovery-reader-original"><summary>資料來源</summary><p>內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。</p></details>`;
+      <details class="discovery-reader-original"><summary>原文與來源</summary><p>${escapeHtml(source.original_summary || source.summary || "尚無原文摘要，請至來源核對。")}</p><p>內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。</p></details>`;
   dialog.innerHTML = `<div class="discovery-reader-heading"><div><small>${escapeHtml(source.school_name)}</small><h2 id="discovery-reader-title">${escapeHtml(heading)}</h2></div><button type="button" data-close-reader aria-label="關閉心得">×</button></div>
     <div class="discovery-reader-meta"><span>${escapeHtml(source.exchange_term || "交換學期未標示")}</span>${source.published_at ? `<span>發表 ${escapeHtml(source.published_at)}</span>` : ""}${byline ? `<span>${escapeHtml(byline)}</span>` : ""}${discoveryBookmarkButton(source)}</div>
     ${body}

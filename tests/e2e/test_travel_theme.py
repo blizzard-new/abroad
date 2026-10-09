@@ -48,7 +48,8 @@ def test_home_search_navigation_school_switcher_and_responsive(page, live_server
     capture_sizes(page, "home")
     page.locator("#theme-toggle").click()
     capture_sizes(page, "home-dark")
-    page.locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True).click()
+    page.locator(".uniway-public-nav").get_by_role("link", name="論壇", exact=True).click()
+    page.locator('#community-feed-tabs a[href="#public-board"]').click()
     expect(page.get_by_role("heading", level=1)).to_have_text("公共留學板")
     assert not errors
 
@@ -63,6 +64,13 @@ def test_ticket_collection_and_destination_stamp_missing_city(page, live_server)
             elif school["school_name"] == MEIJI:
                 school["location"] = None
     inject_dashboard(page, locations)
+    # The official profile is the authoritative city once it arrives.
+    def profile_location(route):
+        response = route.fetch()
+        payload = response.json()
+        payload["city"] = "林肯" if payload["school_name"] == LINCOLN else None
+        route.fulfill(response=response, json=payload)
+    page.route("**/destination-profile?*", profile_location)
     open_partners(page, live_server, {"view": "list"})
     for school in (LINCOLN, MEIJI):
         page.locator(f'.desktop-partner-table .favorite-toggle[data-school-name="{school}"]').click()
