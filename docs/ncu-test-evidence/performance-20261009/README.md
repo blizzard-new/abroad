@@ -13,7 +13,7 @@
 
 JSON大檔以確定性gzip保存原bytes；原始log／JUnit／profiles未修改。`checksum-manifest.json`逐檔記錄原始及儲存SHA，圖像ZIP列每張PNG SHA。Playwright原trace ZIP留/tmp，因可能帶隔離測試session headers；公開事件JSON不含header值／response body。這不改動正式credentials／security。
 
-原始`baseline-9bf90c8/bundled-cold-profile.txt`有1處、`candidate-3b14037/browser_ncu_ntu.xml`有2處原生尾端空白；不清洗原始證據。diff-check僅豁免這兩個精確檔案，其餘已提交檔案照常檢查。
+原始`baseline-9bf90c8/bundled-cold-profile.txt`有1處、`candidate-3b14037/browser_ncu_ntu.xml`與`candidate-3b14037/browser_ncu_ntu.log`各有2處原生尾端空白；不清洗原始證據。diff-check僅豁免這三個精確檔案，其餘已提交檔案照常檢查。倉庫既有忽略規則會排除.log，原始log／空log已按checksum清單逐檔強制加入，沒有改全域ignore規則。
 
 `scripts`是本輪實際外部計時插件與執行命令，並非正式測試的timeout替代。`preview`保留未提交時39項預驗及cache介面補回後22項預驗，不把預驗當固定提交結果。`supplemental-driver-proof`保留兩項補測完成、Japan3尚未完成時的原始driver manifest，具起迄SHA和原工作樹狀態。
 
