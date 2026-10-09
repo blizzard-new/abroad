@@ -51,7 +51,7 @@ def field_index(field, audit_i: int, key: str):
     return result
 
 
-def build(sha: str, out: Path, row_ids: set[str] | None = None):
+def build(sha: str, out: Path, row_ids: set[str] | None = None, baseline_sha: str | None = None):
     raw, manual, audit, workflows, policies, sources = load_candidate(sha)
     records = []
     used_sources = set()
@@ -127,8 +127,8 @@ def build(sha: str, out: Path, row_ids: set[str] | None = None):
             metadata["pages"].append({"page": p.get("page"), "path": page_path})
         write(out / "sources" / f"{source['id']}.json", metadata)
     write(out / "manifest.json", {
-        "candidate_sha": sha, "baseline_data_sha": "224284f1460a792daf0015a6ab4342d83968ab8f",
-        "exception_corrections": ["ncu-122", "ncu-128", "ncu-129"],
+        "candidate_sha": sha, "baseline_data_sha": baseline_sha or "224284f1460a792daf0015a6ab4342d83968ab8f",
+        "exception_corrections": [] if row_ids is not None else ["ncu-122", "ncu-128", "ncu-129"],
         "input_sha256": {p: digest(b) for p, b in raw.items()},
         "catalog_coverage": json.loads(raw[f"{BUNDLE}/catalog-completeness.json"]),
         "school_count": len(records), "fields_per_school": 17,
@@ -201,6 +201,7 @@ def main():
     parser.add_argument("--field")
     parser.add_argument("--original", action="store_true")
     parser.add_argument("--row-ids", nargs="+", help="Build a separate subset index; existing frozen indexes are not rewritten")
+    parser.add_argument("--baseline-sha", help="Explicit integration baseline for a new index")
     args = parser.parse_args()
     if args.check:
         validate(args.output_dir)
@@ -219,7 +220,11 @@ def main():
         if not args.candidate_sha:
             parser.error("--candidate-sha is required to build an immutable index")
         sha = subprocess.check_output(["git", "rev-parse", args.candidate_sha], cwd=ROOT, text=True).strip()
-        build(sha, args.output_dir, set(args.row_ids) if args.row_ids else None)
+        baseline = None
+        if args.baseline_sha:
+            baseline = subprocess.check_output(["git", "rev-parse", args.baseline_sha], cwd=ROOT, text=True).strip()
+            subprocess.check_call(["git", "merge-base", "--is-ancestor", baseline, sha], cwd=ROOT)
+        build(sha, args.output_dir, set(args.row_ids) if args.row_ids else None, baseline)
 
 
 if __name__ == "__main__":

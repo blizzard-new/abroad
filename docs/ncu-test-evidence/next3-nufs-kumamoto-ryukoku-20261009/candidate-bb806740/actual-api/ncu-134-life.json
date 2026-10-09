@@ -1,0 +1,354 @@
+{
+  "route": "/school-life-context",
+  "params": {
+    "home_school": "NCU",
+    "school": "熊本大學 Kumamoto University"
+  },
+  "status": 200,
+  "body": {
+    "school_name": "熊本大學 Kumamoto University",
+    "location_note": "尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。",
+    "research_status": "not_collected",
+    "checked_at": null,
+    "can_refresh": true,
+    "source_count": 24,
+    "categories": [
+      {
+        "theme": "housing",
+        "evidence": [
+          {
+            "theme": "housing",
+            "kind": "official",
+            "text": "現價學生AB9千+8千=17千/月、押27千；CD4千+8千+5千=17千、押1萬；E9千+8千=17千、押27千。AB／E utilities實支，CD固定5千；共同費一般不日割。\n官方另列2027四月預計调整：AB17,700、CD18,100、E18,500，仍標plan非已生效定價。所有住戶必租床具，不退；5／6／11／12月7千／8千／13千／14千，入住一週內繳並出示收據。\nFall2026三頁指南已讀：7/17截止、交換優先但不保證、CD限學部交換；最多5或11月、最多提前兩週搬出、不可提前入住。教授從校內system申請，學生未入學不能登入；尚未錄取也可先申請、不錄取取消。\n平日入寮9–16時、退宿9–15時，須收到acceptance residency通知。退宿至少一月告知可日割，未提加收整月，清潔／damage扣押金；垃圾分類、禁止吸煙／過夜訪客。",
+            "sources": [
+              {
+                "title": "住宿與申請期限",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/charges/"
+              },
+              {
+                "title": "住宿與申請期限",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/application/"
+              },
+              {
+                "title": "住宿與申請期限",
+                "url": "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2026/06/2026_Fall_Semester_Applicaton_Guideline_en.pdf"
+              },
+              {
+                "title": "住宿與申請期限",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/moving/"
+              },
+              {
+                "title": "住宿與申請期限",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/rules-living-international-house-and-apartments/"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "現價學生AB9千+8千=17千/月、押27千；CD4千+8千+5千=17千、押1萬；E9千+8千=17千、押27千。AB／E utilities實支，CD固定5千；共同費一般不日割。\n官方另列2027四月預計调整：AB17,700、CD18,100、E18,500，仍標plan非已生效定價。所有住戶必租床具，不退；5／6／11／12月7千／8千／13千／14千，入住一週內繳並出示收據。\nFall2026三頁指南已讀：7/17截止、交換優先但不保證、CD限學部交換；最多5或11月、最多提前兩週搬出、不可提前入住。教授從校內system申請，學生未入學不能登入；尚未錄取也可先申請、不錄取取消。\n平日入寮9–16時、退宿9–15時，須收到acceptance residency通知。退宿至少一月告知可日割，未提加收整月，清潔／damage扣押金；垃圾分類、禁止吸煙／過夜訪客。",
+            "translation_status": "pending"
+          }
+        ],
+        "inference": {
+          "text": "先確認交換生住宿資格，再把交通與餐食納入預算。",
+          "basis_urls": [
+            "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/charges/",
+            "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/application/",
+            "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2026/06/2026_Fall_Semester_Applicaton_Guideline_en.pdf",
+            "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/moving/",
+            "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/rules-living-international-house-and-apartments/"
+          ],
+          "method": "evidence_rules",
+          "limitation": "AI 推論是依列出資料套用規劃規則的參考建議，不是學生親身經驗；未據此推定價格、步行時間或服務品質。"
+        },
+        "next_step": "先確認錄取校區、宿舍資格與申請期限，再比較租金及實際通勤路線。",
+        "search_url": "https://www.google.com/search?q=Kumamoto+University+%E6%97%A5%E6%9C%AC+international+student+housing"
+      },
+      {
+        "theme": "cost",
+        "evidence": [
+          {
+            "theme": "cost",
+            "kind": "official",
+            "text": "現官方日文STEP頁：校際協議約定名額內免入學料、檢定料與學費；中央學費仍依母校簡章。免繳以名額內協議為前提，不是所有非degree免繳。\n2027一般學費已決定調整：學部／研究所594,600/年、研究生32,900/月、聽講16,400/學分；不是STEP交換生應繳帳單。入學／檢定費此次未改。\n2022brochure表列項目加總106,000日圓（平台加總，非原文總額；交通6千、食3萬、住宿3萬、手機5千、其他3.5萬），僅舊預算；舊押金18千／床具10千／網32千不能取代现會館價格。\n初到校約三週資金自備；若JASSO另建議約1000USD作首次款前生活費，補助不保證。海外保險一般頁為建議，非NUFS／龍谷那種must。",
+            "sources": [
+              {
+                "title": "生活費",
+                "url": "https://www.kumamoto-u.ac.jp/kokusaikouryuu/gaikokujinryuugakusei/kyouikuprogram"
+              },
+              {
+                "title": "生活費",
+                "url": "https://www.kumamoto-u.ac.jp/whatsnew/koho/4r8b66/260630zyugyouryou"
+              },
+              {
+                "title": "生活費",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/fees/"
+              },
+              {
+                "title": "生活費",
+                "url": "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2022/02/ShortTermExchangeProgramBrochure.pdf"
+              },
+              {
+                "title": "生活費",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/money/"
+              },
+              {
+                "title": "生活費",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/procedures/finance/"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "現官方日文STEP頁：校際協議約定名額內免入學料、檢定料與學費；中央學費仍依母校簡章。免繳以名額內協議為前提，不是所有非degree免繳。\n2027一般學費已決定調整：學部／研究所594,600/年、研究生32,900/月、聽講16,400/學分；不是STEP交換生應繳帳單。入學／檢定費此次未改。\n2022brochure表列項目加總106,000日圓（平台加總，非原文總額；交通6千、食3萬、住宿3萬、手機5千、其他3.5萬），僅舊預算；舊押金18千／床具10千／網32千不能取代现會館價格。\n初到校約三週資金自備；若JASSO另建議約1000USD作首次款前生活費，補助不保證。海外保險一般頁為建議，非NUFS／龍谷那種must。",
+            "translation_status": "pending"
+          }
+        ],
+        "inference": null,
+        "next_step": "以住宿、餐費、交通、保險分項查價；目前資料不足以產生可靠的每月總額。",
+        "search_url": "https://www.google.com/search?q=Kumamoto+University+%E6%97%A5%E6%9C%AC+student+living+costs"
+      },
+      {
+        "theme": "food",
+        "evidence": [],
+        "inference": null,
+        "next_step": "先查實際上課校區與宿舍附近的餐廳、超市及飲食限制，再確認菜單與營業時間。",
+        "search_url": "https://www.google.com/search?q=Kumamoto+University+%E6%97%A5%E6%9C%AC+cafeteria+supermarket+restaurants"
+      },
+      {
+        "theme": "transport",
+        "evidence": [
+          {
+            "theme": "transport",
+            "kind": "official",
+            "text": "只STEP且住IHouse者可預約指定日平日9–16時Sakuramachi bus terminal接送，並非機場；不需接送也要提前提供航班變更。\n機場巴士現校網仍列舊估時Fukuoka2時／2500與Kumamoto50分／1000，未核當前交通營運價；一般行李20kg不能當航空公司實際额度。日文現頁另概述熊本机场到市内約40分。",
+            "sources": [
+              {
+                "title": "抵達與日常交通",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/arrival/immigration/"
+              },
+              {
+                "title": "抵達與日常交通",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/arrival/airport/"
+              },
+              {
+                "title": "抵達與日常交通",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/travel/"
+              },
+              {
+                "title": "抵達與日常交通",
+                "url": "https://www.kumamoto-u.ac.jp/kokusaikouryuu/gaikokujinryuugakusei/kyouikuprogram"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "只STEP且住IHouse者可預約指定日平日9–16時Sakuramachi bus terminal接送，並非機場；不需接送也要提前提供航班變更。\n機場巴士現校網仍列舊估時Fukuoka2時／2500與Kumamoto50分／1000，未核當前交通營運價；一般行李20kg不能當航空公司實際额度。日文現頁另概述熊本机场到市内約40分。",
+            "translation_status": "pending"
+          }
+        ],
+        "inference": {
+          "text": "可比較住宿到上述站點的路線，評估通勤選擇。",
+          "basis_urls": [
+            "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/arrival/immigration/",
+            "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/arrival/airport/",
+            "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/travel/",
+            "https://www.kumamoto-u.ac.jp/kokusaikouryuu/gaikokujinryuugakusei/kyouikuprogram"
+          ],
+          "method": "evidence_rules",
+          "limitation": "AI 推論是依列出資料套用規劃規則的參考建議，不是學生親身經驗；未據此推定價格、步行時間或服務品質。"
+        },
+        "next_step": "以錄取校區和住宿地址核對路線、轉乘及末班車，不能用直線距離換算通勤時間。",
+        "search_url": "https://www.google.com/search?q=Kumamoto+University+%E6%97%A5%E6%9C%AC+campus+access+public+transport"
+      },
+      {
+        "theme": "academics",
+        "evidence": [
+          {
+            "theme": "academics",
+            "kind": "official",
+            "text": "E主要英授STEP、也能日語；學院與教養多日授且不計E完成要求。J主要學院專業與日語，可修教養／英授STEP。\n2022brochure參考：全年至少20學分（E至少12英授）、半年10（E至少6英授）、每學期日語最多7學分、每週至少7課且一學期10學分；原文版本／範圍不得當116已核。\n四月／十月起半年或一年，未標年日頁春四月初–八月初考試閉講，秋九月底至二月中下旬閉講。舊brochure時刻8:40起，現日頁8:45起，保留版本差異。",
+            "sources": [
+              {
+                "title": "課程限制與選課",
+                "url": "https://www.kumamoto-u.ac.jp/kokusaikouryuu/gaikokujinryuugakusei/kyouikuprogram"
+              },
+              {
+                "title": "課程限制與選課",
+                "url": "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2022/02/ShortTermExchangeProgramBrochure.pdf"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "E主要英授STEP、也能日語；學院與教養多日授且不計E完成要求。J主要學院專業與日語，可修教養／英授STEP。\n2022brochure參考：全年至少20學分（E至少12英授）、半年10（E至少6英授）、每學期日語最多7學分、每週至少7課且一學期10學分；原文版本／範圍不得當116已核。\n四月／十月起半年或一年，未標年日頁春四月初–八月初考試閉講，秋九月底至二月中下旬閉講。舊brochure時刻8:40起，現日頁8:45起，保留版本差異。",
+            "translation_status": "pending"
+          }
+        ],
+        "inference": null,
+        "next_step": "查當期課綱、授課語言及考核比例；不能由地理位置推定課程難度或出席規定。",
+        "search_url": "https://www.google.com/search?q=Kumamoto+University+%E6%97%A5%E6%9C%AC+exchange+course+syllabus"
+      },
+      {
+        "theme": "climate",
+        "evidence": [],
+        "inference": null,
+        "next_step": "以交換月份和實際城市查官方氣候常值，接近出發時再看天氣預報。",
+        "search_url": "https://www.google.com/search?q=Kumamoto+University+%E6%97%A5%E6%9C%AC+climate+weather+seasons"
+      },
+      {
+        "theme": "social",
+        "evidence": [
+          {
+            "theme": "social",
+            "kind": "official",
+            "text": "機票自行購買並依指定日到達；校頁未明寫「簽證核發前不得購票」。平台建議先確認簽證再購票屬準備順序，與校方明文分開。\n到校有academicorientation、日語placement／orientation、STEP開講與註冊及生活orientation。定址14日內登記後另辦NHI、銀行；20歲以上年金按degree／nondegree不同豁免類別審查，不自动豁免。\n只有原已在日本其他學校者需離校／轉校所屬通知14日；不當所有中央新入境學生文件。",
+            "sources": [
+              {
+                "title": "到校與行前準備",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/tickets/"
+              },
+              {
+                "title": "到校與行前準備",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/arrival/"
+              },
+              {
+                "title": "到校與行前準備",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/procedures/important/"
+              },
+              {
+                "title": "到校與行前準備",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/procedures/"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "機票自行購買並依指定日到達；校頁未明寫「簽證核發前不得購票」。平台建議先確認簽證再購票屬準備順序，與校方明文分開。\n到校有academicorientation、日語placement／orientation、STEP開講與註冊及生活orientation。定址14日內登記後另辦NHI、銀行；20歲以上年金按degree／nondegree不同豁免類別審查，不自动豁免。\n只有原已在日本其他學校者需離校／轉校所屬通知14日；不當所有中央新入境學生文件。",
+            "translation_status": "pending"
+          }
+        ],
+        "inference": null,
+        "next_step": "先看國際處迎新、社團與語言交換活動；活動存在不代表每位學生都有相同體驗。",
+        "search_url": "https://www.google.com/search?q=Kumamoto+University+%E6%97%A5%E6%9C%AC+international+student+clubs"
+      },
+      {
+        "theme": "safety",
+        "evidence": [
+          {
+            "theme": "safety",
+            "kind": "official",
+            "text": "一般行前頁建議旅行保險；抵達後住超三月辦NHI，校方說明通常給付70%。2022brochure私人保險年額只作歷史，不作116必繳保費。",
+            "sources": [
+              {
+                "title": "保險",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/money/"
+              },
+              {
+                "title": "保險",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/procedures/important/"
+              },
+              {
+                "title": "保險",
+                "url": "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2022/02/ShortTermExchangeProgramBrochure.pdf"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "一般行前頁建議旅行保險；抵達後住超三月辦NHI，校方說明通常給付70%。2022brochure私人保險年額只作歷史，不作116必繳保費。",
+            "translation_status": "pending"
+          },
+          {
+            "theme": "safety",
+            "kind": "official",
+            "text": "先有入學許可及COE，再向本國日本使領館辦Student簽證。一般COE頁需一月左右，familydependent另案文件不要求每個交换生。\n日本外務省頁：passport、申請表、照片、COE原件／影本／電子呈示或列印，國籍可追加件；COE不保證visa。到達定址14日內向Wardoffice登記是熊本校方指引；ISA官方指定頁本輪HTTP403，沒有稱法律複核已完成。",
+            "sources": [
+              {
+                "title": "簽證／居留",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/passports/"
+              },
+              {
+                "title": "簽證／居留",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/visas/certificate/"
+              },
+              {
+                "title": "簽證／居留",
+                "url": "https://www.mofa.go.jp/j_info/visit/visa/long/visa6.html"
+              },
+              {
+                "title": "簽證／居留",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/procedures/important/"
+              },
+              {
+                "title": "簽證／居留",
+                "url": "https://www.moj.go.jp/isa/applications/procedures/nyuukokukanri10_00023.html"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "先有入學許可及COE，再向本國日本使領館辦Student簽證。一般COE頁需一月左右，familydependent另案文件不要求每個交换生。\n日本外務省頁：passport、申請表、照片、COE原件／影本／電子呈示或列印，國籍可追加件；COE不保證visa。到達定址14日內向Wardoffice登記是熊本校方指引；ISA官方指定頁本輪HTTP403，沒有稱法律複核已完成。",
+            "translation_status": "pending"
+          }
+        ],
+        "inference": {
+          "text": "可先查詢上述健康服務；接診、語言與保險適用性仍須確認。",
+          "basis_urls": [
+            "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/money/",
+            "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/procedures/important/",
+            "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2022/02/ShortTermExchangeProgramBrochure.pdf",
+            "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/passports/",
+            "https://ewww.kumamoto-u.ac.jp/en/prospective/visas/certificate/",
+            "https://www.mofa.go.jp/j_info/visit/visa/long/visa6.html",
+            "https://www.moj.go.jp/isa/applications/procedures/nyuukokukanri10_00023.html"
+          ],
+          "method": "evidence_rules",
+          "limitation": "AI 推論是依列出資料套用規劃規則的參考建議，不是學生親身經驗；未據此推定價格、步行時間或服務品質。"
+        },
+        "next_step": "確認校內健康服務與所在地就醫窗口；費用、語言、保險與急診服務須向機構核對。",
+        "search_url": "https://www.google.com/search?q=Kumamoto+University+%E6%97%A5%E6%9C%AC+student+health+clinic+insurance"
+      },
+      {
+        "theme": "campus_culture",
+        "evidence": [
+          {
+            "theme": "campus_culture",
+            "kind": "official",
+            "text": "熊本市黑髮南／北為主要校區；本莊醫學、大江藥學另校區，不把所有交換課都當黑髮。國際會館在黑髮5丁目。",
+            "sources": [
+              {
+                "title": "城市與校區位置",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/undergraduate/exchange/"
+              },
+              {
+                "title": "城市與校區位置",
+                "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/getting/"
+              },
+              {
+                "title": "城市與校區位置",
+                "url": "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2022/02/ShortTermExchangeProgramBrochure.pdf"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "現未標年STEP／生活／費表、2027一般學費決定、2027會館調整計畫、2026秋住房與2022路徑brochure分開；非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "",
+            "translation_status": "original"
+          }
+        ],
+        "inference": null,
+        "next_step": "查看國際學生支援與不同背景學生的分享，不能把單一個案當成全校文化。",
+        "search_url": "https://www.google.com/search?q=Kumamoto+University+%E6%97%A5%E6%9C%AC+international+student+support"
+      },
+      {
+        "theme": "travel",
+        "evidence": [],
+        "inference": null,
+        "next_step": "從實際校區確認車站及機場路線，再用營運方時刻表規劃週末行程。",
+        "search_url": "https://www.google.com/search?q=Kumamoto+University+%E6%97%A5%E6%9C%AC+tourism+public+transport"
+      }
+    ],
+    "research_notes": []
+  }
+}
