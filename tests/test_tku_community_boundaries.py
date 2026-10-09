@@ -60,6 +60,41 @@ def test_self_declared_school_never_enables_verified_student_bylines(tmp_path):
     assert client.post("/community/posts", headers=headers, json=_post_payload("長庚大學")).status_code == 201
 
 
+@pytest.mark.parametrize("board,status", [("university:",422),("university:   ",422),("university:cgu",201)])
+def test_empty_legacy_board_rejected_and_valid_alias_preserved(tmp_path, board, status):
+    client = TestClient(create_app(tmp_path))
+    _, headers, _ = _account(tmp_path, client, "合成legacy會員")
+    response = client.post("/community/posts", headers=headers, json=_post_payload(None, board_id=board))
+    assert response.status_code == status
+    if status == 422:
+        assert load_community_posts(tmp_path) == []
+    else:
+        assert response.json()["board_id"] == "cgu" and response.json()["school_name"] == "長庚大學"
+
+
+@pytest.mark.parametrize("alias", ["CGU", "Ｃ．Ｇ．Ｕ"])
+@pytest.mark.parametrize("mode", ["verified_school", "verified_department"])
+def test_verified_alias_byline_preview_matches_publication(tmp_path, alias, mode):
+    client = TestClient(create_app(tmp_path))
+    _, headers, _ = _account(tmp_path, client, "合成alias學生", verified_university=alias, verified_department="資訊工程學系")
+    option = next(row for row in client.get("/auth/community-identity-options", headers=headers).json()["options"] if row["mode"] == mode)
+    expected = "長庚大學學生" if mode == "verified_school" else "長庚大學 資訊工程學系學生"
+    assert option["enabled"] is True and option["label"] == expected
+    response = client.post("/community/posts", headers=headers, json=_post_payload("淡江大學", identity_mode=mode))
+    assert response.status_code == 201 and response.json()["display_name"] == expected
+    assert load_community_posts(tmp_path)[0].display_name == expected
+
+
+@pytest.mark.parametrize("value", ["   ","unsupported-school"])
+def test_empty_or_unknown_verified_school_never_defaults_to_cgu_byline(tmp_path, value):
+    client = TestClient(create_app(tmp_path))
+    _, headers, _ = _account(tmp_path, client, "合成缺母校學生", verified_university=value)
+    options = client.get("/auth/community-identity-options", headers=headers).json()["options"]
+    assert next(row for row in options if row["mode"] == "verified_school")["enabled"] is False
+    response = client.post("/community/posts", headers=headers, json=_post_payload("淡江大學", identity_mode="verified_school"))
+    assert response.status_code == 403 and load_community_posts(tmp_path) == []
+
+
 @pytest.mark.parametrize("mode", ["anonymous", "real_name", "verified_school", "verified_department"])
 def test_byline_preview_matches_stored_post_and_comment(tmp_path, mode):
     client = TestClient(create_app(tmp_path))

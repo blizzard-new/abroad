@@ -3259,6 +3259,7 @@ async function acceptAccountSession(session) {
 
 function clearAuthenticatedClientState() {
   if (state.account?.id) clearDiscoveryAccountData(state.account.id);
+  window.UniWayCommunity?.clearAuthenticatedState(state.account?.id || "");
   state.workflowIssueReportAbortController?.abort();
   state.workflowIssueReportAbortController = null;
   state.workflowIssueReportRequestId += 1;

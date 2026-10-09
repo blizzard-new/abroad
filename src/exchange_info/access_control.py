@@ -56,7 +56,8 @@ def verified_university(account: UserAccount | None) -> str | None:
     """The school a student card or school sign-in proved; nothing else counts."""
     if not account or not account.student_status_verified:
         return None
-    university = resolve_university(account.verified_university) if account.verified_university else None
+    value = (account.verified_university or "").strip()
+    university = resolve_university(value) if value else None
     return university.school_name if university else None
 
 
@@ -81,7 +82,8 @@ def university_community_board(value: str | None) -> UniversityProfile | None:
     """Recognize current IDs, school names, and the prior university:<id> alias."""
     if not value or not value.strip():
         return None
-    return resolve_university(value.removeprefix("university:"))
+    target = value.strip().removeprefix("university:").strip()
+    return resolve_university(target) if target else None
 
 
 def is_university_community_post(post) -> bool:

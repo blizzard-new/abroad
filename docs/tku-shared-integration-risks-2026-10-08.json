@@ -233,5 +233,33 @@
     "permissions_grants_rls_or_credentials_changed": false,
     "missing_governance_integration_plan": "docs/tku-followup-governance-integration-plan-2026-10-09.md",
     "runtime_probe": "scripts/validate_tku_community_runtime.py reuses the existing disposable runtime and mandatory cleanup; adds actual RPC cross-school/Email/byline/replay assertions."
+  },
+  "reader_legacy_board_and_alias_boundaries_2026_10_09": {
+    "previous_candidate": "5e010b80b59d274d8a30332aabcab2c46929a313",
+    "case4_selector_commit": "5aeb8bb22649f610eba831b039a9bb61cd140453",
+    "files": [
+      "src/exchange_info/access_control.py",
+      "src/exchange_info/static/app.js",
+      "src/exchange_info/static/community-reader.js",
+      "src/exchange_info/static/index.html",
+      "scripts/validate_tku_community_runtime.py",
+      "supabase/migrations/20261009060000_community_byline_aliases.sql",
+      "tests/test_supabase_migration_syntax.py",
+      "tests/test_tku_community_boundaries.py",
+      "tests/e2e/test_tku_session_boundaries.py",
+      "tests/e2e/test_web_next_phase.py"
+    ],
+    "changes": [
+      "Original case4 uses five visible partner-table controls; all original 409, remote-add, local-remove and reload assertions retained.",
+      "Reproduced synthetic expired school reader with revoked cookie: account cleared but native reader, body and reply draft retained. Existing authenticated cleanup now invalidates reader/feed/bookmark versions, closes native reader, removes account-owned session drafts and clears bodies/forms/cache.",
+      "Three real-browser variants cover sort/reaction 401 and delayed actual detail/comments 200 responses; login input remains usable and delayed private content cannot return. Existing public reader policy and assertions retained.",
+      "Reproduced university: and whitespace-only legacy suffix creating CGU posts. Reject empty suffixes instead of invoking registry default; university:cgu remains supported.",
+      "Blank verified school no longer invokes the registry default. Append-only SQL formatter canonicalizes the existing registry aliases, including full-width punctuation, only for genuinely verified student bylines. Unknown schools remain null.",
+      "Isolated runtime retains all previous checks and cleanup; adds two actual alias RPC publications, all registry alias vectors, and blank/unknown null checks."
+    ],
+    "data_bundles_changed": false,
+    "production_migration_applied": false,
+    "permissions_grants_rls_credentials_or_ownership_changed": false,
+    "validation_note": "Pre-commit synthetic tests passed; exact-commit acceptance and fresh isolated SQL runtime results belong to the separate candidate evidence, never to immutable 5e010b8."
   }
 }
