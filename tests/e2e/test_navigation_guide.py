@@ -107,6 +107,9 @@ def test_every_tool_has_shared_navigation_and_return(page, live_server):
 def test_school_return_retains_filters_scroll_and_forward(page, live_server):
     page.set_viewport_size({"width": 1280, "height": 600})
     open_partners(page, live_server, {"view": "list", "country": "紐西蘭", "q": "Lincoln"})
+    expect(page.locator("#boot-splash")).to_be_hidden()
+    page.wait_for_function("() => !state.homeSchoolLoading && !state.partnerDataLoading")
+    page.evaluate("() => state.periodOptionsReady")
     trigger = page.locator('.desktop-partner-table .school-detail-trigger').first
     # Start from a real scroll position even when the compact search header fits above the fold.
     page.evaluate("scrollTo({top: 250, behavior: 'instant'})")

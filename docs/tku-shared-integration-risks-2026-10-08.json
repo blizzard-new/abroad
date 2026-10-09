@@ -55,6 +55,7 @@
     "docs/api/openapi.json",
     "pyproject.toml",
     "scripts/run_main_browser_control.py",
+    "scripts/run_tku_acceptance_suite.py",
     "scripts/run_web_quality_tests.py",
     "scripts/tku_ci_prior_failures.json",
     "src/exchange_info/account_community_cleanup.py",
@@ -68,17 +69,21 @@
     "src/exchange_info/static/glass-theme.css",
     "src/exchange_info/static/index.html",
     "src/exchange_info/static/motion.js",
+    "src/exchange_info/static/public-content-zh.js",
     "src/exchange_info/storage.py",
     "src/exchange_info/university_registry.py",
     "tests/e2e/conftest.py",
     "tests/e2e/test_application_periods.py",
     "tests/e2e/test_discovery_workspace.py",
+    "tests/e2e/test_glass_theme.py",
     "tests/e2e/test_icon_motion.py",
     "tests/e2e/test_navigation_guide.py",
     "tests/e2e/test_ntu_school.py",
     "tests/e2e/test_partner_globe.py",
+    "tests/e2e/test_school_chinese_content.py",
     "tests/e2e/test_system_motion.py",
     "tests/e2e/test_travel_theme.py",
+    "tests/e2e/test_web_next_phase.py",
     "tests/test_college_options.py",
     "tests/test_content_governance_wrapper.py",
     "tests/test_dependency_security_baseline.py",
@@ -164,5 +169,43 @@
     "unresolved_prior_failures": "其餘24 API/UI及27 browser失敗須看完整新SHA結果和main-control；不因baseline同失敗宣稱安全。",
     "no_data_bundle_changes": true,
     "no_permissions_or_secret_changes": true
+  },
+  "ci_logging_and_source_followup": {
+    "previous_code": "3ccbf7c3de75b47f2f93f7aa56e96143e2e48a38",
+    "previous_runs": [
+      37870196346,
+      37870191848
+    ],
+    "original_junit_count": 8,
+    "original_main_control_junit_count": 8,
+    "previous_runs_complete": false,
+    "unrun_nodes_each": 725,
+    "main_control_each": {
+      "passed": 3,
+      "failed": 59
+    },
+    "files": [
+      "scripts/run_tku_acceptance_suite.py",
+      "scripts/run_web_quality_tests.py",
+      "src/exchange_info/static/app.js",
+      "src/exchange_info/static/public-content-zh.js",
+      "src/exchange_info/static/index.html",
+      "tests/e2e/test_glass_theme.py",
+      "tests/e2e/test_navigation_guide.py",
+      "tests/e2e/test_school_chinese_content.py",
+      "tests/e2e/test_web_next_phase.py",
+      "scripts/run_main_browser_control.py"
+    ],
+    "changes": [
+      "CI stdout/stderr設為blocking；保留完整longrepr而不讓EAGAIN使pytest中斷。實際滿管線兩案例重現原失敗及修正完整bytes。",
+      "只允許本次anonymous session、同母校、相同draftOwner未保存草稿在明示登入後保留；不採用舊帳號/隔離owner狀態、不自動保存。不同母校亦清除私人question文字。3個實際登入/雲端/登出檢查。",
+      "destination profile在client翻譯前保存original_display_facts；closed來源區保留原始核對摘要。16舊成本/校區/計畫案例開啟真實官方指南後原斷言保留。ICD city名稱按既有API中文化，但兩校區及衝突/成本/期限斷言完整。",
+      "13已實作工具入口逐一核對；遮擋、可鍵盤操作、Escape/焦點geometry斷言完整。原文來源測試按actual summary操作，不以文案選不到當作功能缺失。",
+      "導航scroll測試等真實boot、partner/home/period初始化完成；保留原生history、filters、before/after scroll精確還原要求。",
+      "新增browser檔會重新平衡分片；main-control按此次partition分派原62案例，確保每個對照與candidate案例仍在同一job/runner，沒有沿用失準的歷史分片號。"
+    ],
+    "data_bundles_changed": false,
+    "api_schema_or_permissions_changed": false,
+    "acceptance_waiver": false
   }
 }

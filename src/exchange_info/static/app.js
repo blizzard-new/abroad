@@ -3196,6 +3196,13 @@ function renderAccountState() {
 }
 
 async function acceptAccountSession(session) {
+  const advisorForm = $("#advisor-form");
+  const draftHome = activeHomeSchool();
+  const guestDraft = !state.account && state.authRestoreState === "anonymous"
+    && advisorForm?.dataset.draftOwner === JSON.stringify(["", draftHome])
+    ? [...advisorForm.querySelectorAll("input[id], select[id], textarea[id]")].map(field => ({
+      id: field.id, value: field.value, checked: field.type === "checkbox" ? field.checked : null,
+    })) : null;
   state.authRestoreRequestId += 1;
   state.authSessionEpoch += 1;
   state.account = session.profile;
@@ -3206,6 +3213,22 @@ async function acceptAccountSession(session) {
   readStoredAuthenticatedState(state.account.id);
   alignAccountSchool();
   prepareAccountWorkspaceSyncForAccount(state.account);
+  // Only an unsaved draft typed in this anonymous session can follow the
+  // explicit sign-in. Old-account/quarantined state stays isolated, and a
+  // different mother school never inherits the draft.
+  if (guestDraft && activeHomeSchool() === draftHome) {
+    advisorForm.dataset.draftOwner = JSON.stringify([state.account.id, draftHome]);
+    guestDraft.forEach(({ id, value, checked }) => {
+      const field = document.getElementById(id);
+      if (!field || !advisorForm.contains(field)) return;
+      if (checked !== null) field.checked = checked;
+      else field.value = value;
+    });
+    $("#advisor-profile-status").textContent = "剛才填寫的條件仍未保存，送出後才會同步。";
+  } else if (guestDraft) {
+    // The question is also private draft text, outside the academic profile.
+    $("#advisor-question").value = "";
+  }
   if (state.account.content_updates_seen_at) {
     state.updateSeenAt = state.account.content_updates_seen_at;
   }
@@ -8271,6 +8294,12 @@ function renderDestinationProfile(item, profile) {
     ["交通", profile.transport_summary],
     ["校園生活", profile.campus_life_summary],
   ].filter(([, value]) => value);
+  const originalProfile = profile.original_display_facts || profile;
+  const originalFacts = [
+    ["所在地", originalProfile.city], ["費用參考", originalProfile.cost_summary],
+    ["住宿", originalProfile.housing_summary], ["交通", originalProfile.transport_summary],
+    ["校園生活", originalProfile.campus_life_summary],
+  ].filter(([, value]) => value);
   const isPartial = profile.coverage_status === "official_partial";
   const statusClass = isPartial ? "partial" : "verified";
   const statusIcon = isPartial ? "badge-alert" : "badge-check";
@@ -8285,7 +8314,11 @@ function renderDestinationProfile(item, profile) {
     </div>
     ${renderStudentSurvivalGuide(item, profile)}
     <details class="destination-source-library">
-      <summary><span>來源（${(profile.sources || []).length}）</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+      <summary><span>查看本頁全部查核來源（${(profile.sources || []).length}）</span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+      <section class="destination-original-summary" aria-label="核對摘要原文">
+        <h4>核對摘要原文</h4>
+        <dl>${originalFacts.map(([label, value]) => `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd>`).join("")}</dl>
+      </section>
       <div class="destination-sources">
         ${(profile.sources || []).map((source) => `
           <article class="destination-source-card">

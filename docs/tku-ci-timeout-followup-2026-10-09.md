@@ -27,3 +27,5 @@ motion根因補記：原#dashboard-view > section選擇器漏掉application work
 另保留35項working tree整組探測32通過／3失敗，383.91秒。motion於探測開始後才修正，故該整組結果仍保存失敗，不改原XML；後續motion1/1通過另存。剩兩項定位：社群debounce於280ms後讀可被feed同步重設的DOM value；改捕捉input當下query。route focus於rAF執行但可能搶走已移往FAQ的使用者焦點；加入路由與activeElement檢查。保持原鍵盤、搜尋、反應重試與作者刪除斷言，後續probe單獨保存，不預寫通過。
 
 最後5項working tree探測（三尺寸dialog/FAQ、社群search→reply/reaction/retry/delete、15路由motion）5 passed，59.87秒，JUnit與log另存；不是新固定SHA驗收。準備提交後才執行完整驗收，不套用舊結果。
+
+3ccbf7c 兩次 remote 第0分片在812案例後，Progress長longrepr輸出觸發非阻塞管線BlockingIOError、pytest exit3。各已收集1757，但只有1032實跑、725未跑；原始8份candidate JUnit與8份main-control JUnit都保留，不冒稱full suite。PR checkout merge d738f543與code3cc完全同tree。下一候選設stdout/stderr blocking維持完整byte/back-pressure，滿管線測試重現原錯誤與修正。新source/draft測試增加7nodes、3files，預期1764/182；以實際collect結果為準。所有原案例保留，無新增skip或排除；原始JUnit/collect/log仍always upload，main-control不豁免candidate失敗。

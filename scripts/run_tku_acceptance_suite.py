@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BROWSERS = ["test_tku_acceptance.py", "test_ntu_school.py", "test_application_workspace.py",
     "test_application_ui_refinements.py", "test_application_periods.py", "test_fit_and_completeness_ui.py",
-    "test_planning_workspace.py"]
+    "test_planning_workspace.py", "test_tku_draft_handoff.py", "test_tku_source_rendering.py"]
 
 
 def candidate_state(root, commit):

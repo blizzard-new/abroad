@@ -35,7 +35,11 @@ def main() -> int:
             subprocess.run(["git", "fetch", "--no-tags", "--depth=1", "origin", commit], cwd=ROOT, check=True)
     snapshot = json.loads((ROOT / "scripts/tku_ci_prior_failures.json").read_text())
     assert snapshot["source_commit"] == HISTORICAL
-    cases = [row["id"] for row in snapshot["failures"] if row["shard"] == args.shard
+    partition = json.loads((evidence.parent / "partition.json").read_text())
+    assert partition["shard"] == args.shard
+    assigned_files = set(partition["files_per_shard"][args.shard])
+    cases = [row["id"] for row in snapshot["failures"]
+             if row["id"].split("::", 1)[0] in assigned_files
              and not row["id"].startswith("tests/e2e/test_tku_acceptance.py::")]
     (evidence / "collect-nodeids.txt").write_text("\n".join(cases) + "\n")
     control = Path(os.environ.get("RUNNER_TEMP", str(evidence.parent.parent))) / f"tku-main-control-checkout-{args.shard}"
@@ -60,6 +64,7 @@ def main() -> int:
     record = dict(baseline_commit=MAIN, unchanged_test_source_commit=HISTORICAL,
                   candidate_commit=subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
                   shard=args.shard, cases=cases, actual_api_source=source,
+                  assignment_source="current candidate partition; each historical case stays on the same job as its candidate",
                   pytest_exit_code=result.returncode, elapsed_seconds=time.monotonic()-start,
                   comparison_environment="same job, interpreter, installed packages, browser and system dependencies",
                   acceptance_waiver=False, log_sha256=hashlib.sha256((evidence / "pytest.log").read_bytes()).hexdigest())

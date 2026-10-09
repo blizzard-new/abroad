@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 from collections import Counter
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -57,7 +58,18 @@ class Progress:
                 print(str(report.longrepr), flush=True)
 
 
+def use_blocking_output() -> None:
+    """Long pytest failures must back-pressure the CI pipe instead of EAGAIN.
+
+    Tee output can exceed the nonblocking pipe buffer. Preserve every byte and
+    let the reader drain it; an evidence logger must not interrupt pytest.
+    """
+    for stream in (sys.stdout, sys.stderr):
+        os.set_blocking(stream.fileno(), True)
+
+
 def main() -> int:
+    use_blocking_output()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--shard", type=int, required=True)
     parser.add_argument("--shards", type=int, default=4)
