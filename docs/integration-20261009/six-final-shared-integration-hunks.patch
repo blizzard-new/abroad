@@ -1,0 +1,2751 @@
+diff --git a/src/exchange_info/advisor.py b/src/exchange_info/advisor.py
+index ff763b9c..4de6787f 100644
+--- a/src/exchange_info/advisor.py
++++ b/src/exchange_info/advisor.py
+@@ -8,12 +8,14 @@ from typing import Iterable
+ 
+ from .ai_gateway import structured_response
+ from .fit_signals import course_interest_fit, school_budget_fit, teaching_language_fit
++from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
+ from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
+ from .qualification_scopes import (
+-    college_scope_needs_confirmation as _college_scope_needs_confirmation,
+-    degree_scope_needs_confirmation as _degree_scope_needs_confirmation,
++    coupled_academic_scope_matches,
+     college_scope_matches as _scope_matches,
+-    degree_scope_matches as _degree_matches,
++    partner_degree_scope_matches,
++    partner_scope_needs_confirmation,
++    resolved_degree_level,
+ )
+ 
+ 
+@@ -259,12 +261,15 @@ def _score_partner(
+     confirmation_items: list[str] = []
+ 
+     cycle_unconfirmed = dashboard.selection_rules.partner_requirements_need_confirmation
++    degree = resolved_degree_level(profile.degree_level, profile.current_year)
++    coupled_scope = coupled_academic_scope_matches(partner, profile.college, degree)
++    degree_match = partner_degree_scope_matches(partner, profile.college, degree) if degree else None
+     if partner.availability_status != "open":
+         confirmation_items.append("本期甄選名額尚未公告；可先規劃，能否申請須等官方更新")
+         gaps.append(confirmation_items[-1])
+ 
+     if profile.college:
+-        if cycle_unconfirmed or _college_scope_needs_confirmation(partner.colleges):
++        if cycle_unconfirmed or partner_scope_needs_confirmation(partner, "colleges"):
+             confirmation_items.append("合作校學院範圍尚待確認")
+             gaps.append(confirmation_items[-1])
+         elif _scope_matches(partner.colleges, profile.college):
+@@ -279,22 +284,50 @@ def _score_partner(
+         confirmation_items.append(gaps[-1])
+ 
+     if profile.degree_level:
+-        if cycle_unconfirmed or _degree_scope_needs_confirmation(partner.degree_levels):
++        if cycle_unconfirmed or partner_scope_needs_confirmation(partner, "degree_levels"):
+             confirmation_items.append("合作校學制範圍尚待確認")
+             gaps.append(confirmation_items[-1])
+-        elif _degree_matches(partner.degree_levels, profile.degree_level):
++        elif degree_match is None:
++            confirmation_items.append("研究所尚未區分碩博士；合作校學制範圍待確認")
++            gaps.append(confirmation_items[-1])
++        elif degree_match:
+             score += 15
+             reasons.append("符合目前學制")
+         else:
+             gaps.append("公開學制範圍可能不符")
+-            blocking_reasons.append(f"公開學制範圍：{partner.degree_levels}；你的學制：{profile.degree_level}")
++            if coupled_scope is False:
++                blocking_reasons.append(f"學院／學制配對不符：{profile.college}／{degree}；公開配對：{partner.degree_levels}")
++            else:
++                blocking_reasons.append(f"公開學制範圍：{partner.degree_levels}；你的學制：{profile.degree_level}")
+             blocked = True
+     else:
+         gaps.append("尚未填目前學制")
+         confirmation_items.append(gaps[-1])
+ 
+     academic_minimum = dashboard.academic_score_minimum
+-    if is_ntu(dashboard.school_name):
++    if dashboard.academic_gpa_minimum is not None:
++        if profile.academic_gpa is None:
++            gaps.append("尚未填歷年GPA；中正須GPA至少3.0且平均至少70分")
++            confirmation_items.append(gaps[-1])
++        elif profile.academic_gpa < dashboard.academic_gpa_minimum:
++            gaps.append("歷年GPA未達中正公開門檻3.0")
++            blocking_reasons.append(gaps[-1])
++            blocked = True
++        if partner.application_window_status == "closed":
++            confirmation_items.append("中正2027春季校內收件已截止，需確認已有申請及提名資格")
++    if is_ncu(dashboard.school_name):
++        status, detail = ncu_academic_check(profile.degree_level, profile.academic_score, profile.current_year)
++        if status == "pass":
++            score += 15
++            reasons.append(detail)
++        elif status == "fail":
++            blocked = True
++            gaps.append(detail)
++            blocking_reasons.append(detail)
++        else:
++            gaps.append(detail)
++            confirmation_items.append(detail)
++    elif is_ntu(dashboard.school_name):
+         status, detail = ntu_academic_check(profile.degree_level, profile.academic_gpa, profile.class_rank_percent)
+         if status == "pass":
+             score += 15
+@@ -320,7 +353,7 @@ def _score_partner(
+         blocking_reasons.append(gaps[-1])
+         blocked = True
+ 
+-    threshold = None if cycle_unconfirmed else _partner_language_threshold(partner, profile.language_test)
++    threshold = None if cycle_unconfirmed else _partner_language_threshold(partner, profile.language_test, profile.degree_level)
+     if not profile.language_test or profile.language_test == "other":
+         gaps.append("語言證明需逐校確認")
+         confirmation_items.append(gaps[-1])
+@@ -329,7 +362,7 @@ def _score_partner(
+         confirmation_items.append(gaps[-1])
+     elif threshold is None:
+         score += 7
+-        gaps.append("合作校語言門檻需核對官方來源")
++        gaps.append(partner.language_review_note or "合作校語言門檻需核對官方來源")
+         confirmation_items.append(gaps[-1])
+     elif profile.language_score >= threshold:
+         score += 20
+@@ -340,7 +373,11 @@ def _score_partner(
+         blocked = True
+ 
+     home_language_minimum = dashboard.language_score_minimums.get(profile.language_test or "")
+-    if is_ntu(dashboard.school_name):
++    if is_ncu(dashboard.school_name):
++        home_status, home_detail = ncu_language_check(profile.language_test, profile.language_score)
++        confirmation_items.append(home_detail)
++        gaps.append(home_detail)
++    elif is_ntu(dashboard.school_name):
+         home_status, home_detail = ntu_language_check(profile.language_test, profile.language_score)
+         if home_status == "pass":
+             reasons.append(home_detail)
+@@ -443,6 +480,9 @@ def _qualification_summary(
+     dashboard: StudentDashboard,
+ ) -> list[str]:
+     rows: list[str] = []
++    if dashboard.academic_gpa_minimum is not None:
++        rows.append("歷年GPA尚未填寫；須至少3.0且歷年平均至少70分" if profile.academic_gpa is None else
++                    f"歷年GPA {profile.academic_gpa:g}，{'達' if profile.academic_gpa >= dashboard.academic_gpa_minimum else '未達'}門檻3.0")
+     if dashboard.school_name == '淡江大學':
+         if profile.academic_year != '2027-2028' or profile.application_round != '日語組第二次甄選':
+             return ['此年度／梯次尚未核實新版；不能沿用2027–2028日語二甄資格。',
+@@ -458,7 +498,9 @@ def _qualification_summary(
+             '立命館另需N1；JUSST須另核對英語與80分／GPA3.0，研究所豁免未核實。',
+             '本梯校內申請已截止；語言通過不等於外校錄取或可新申請。', *result['notes']]
+     academic_minimum = dashboard.academic_score_minimum
+-    if is_ntu(dashboard.school_name):
++    if is_ncu(dashboard.school_name):
++        rows.append(ncu_academic_check(profile.degree_level, profile.academic_score, profile.current_year)[1])
++    elif is_ntu(dashboard.school_name):
+         rows.append(ntu_academic_check(profile.degree_level, profile.academic_gpa, profile.class_rank_percent)[1])
+     elif profile.academic_score is None:
+         rows.append("學業平均尚未填寫")
+@@ -470,7 +512,9 @@ def _qualification_summary(
+         rows.append(f"學業平均未達{dashboard.school_name}公開基本門檻 {academic_minimum:g} 分")
+ 
+     test = profile.language_test
+-    if is_ntu(dashboard.school_name):
++    if is_ncu(dashboard.school_name):
++        rows.append(ncu_language_check(test, profile.language_score)[1])
++    elif is_ntu(dashboard.school_name):
+         rows.append(ntu_language_check(test, profile.language_score)[1])
+     elif not test or test == "other" or profile.language_score is None:
+         rows.append("語言成績尚未完成比對")
+@@ -898,7 +942,12 @@ def _question_prompt(question: str, rows: list[Evidence]) -> str:
+ def _partner_language_threshold(
+     partner: PartnerUniversity,
+     language_test: str | None,
++    degree_level: str | None = None,
+ ) -> float | None:
++    from .ccu_language import assess_ccu_language, is_ccu_partner
++
++    if is_ccu_partner(partner):
++        return assess_ccu_language(partner, language_test, degree_level).threshold
+     if not language_test or language_test == "other":
+         return None
+     text = " ".join(
+diff --git a/src/exchange_info/api.py b/src/exchange_info/api.py
+index 8fcea90d..feff1996 100644
+--- a/src/exchange_info/api.py
++++ b/src/exchange_info/api.py
+@@ -5,6 +5,7 @@ from .discovery import localize_experience_digest
+ from .experience_digests import attach_digests, load_digests, with_bundled_sources
+ from .public_translation import PublicTranslationBatch, translate_public_batch
+ from .school_content import complete_destination_profile
++from .ncu_document_conditions import preparation_state_key
+ 
+ import csv
+ from contextvars import ContextVar
+@@ -22,7 +23,7 @@ from .access_control import (
+ )
+ from io import BytesIO, StringIO
+ from pypdf import PdfReader
+-from typing import Any, Mapping, Sequence
++from typing import Any, Literal, Mapping, Sequence
+ from uuid import uuid4
+ 
+ import hashlib
+@@ -185,6 +186,7 @@ from .models import (
+     AccountSessionRecord,
+     AccountCalendarEvent,
+     ApplicationCenterContext,
++    PartnerDocumentPreparationState,
+     ApplicationDocumentCatalog,
+     ApplicationDocumentTemplate,
+     ApplicationFormDraft,
+@@ -272,6 +274,7 @@ from .ntpu_student_view import (
+     ntpu_exchange_info,
+     ntpu_processed_pages,
+ )
++from .ncu_student_view import build_ncu_student_dashboard, fetch_ncu_partner_universities, ncu_exchange_info, ncu_processed_pages
+ from .ntu_student_view import (
+     build_ntu_student_dashboard,
+     fetch_ntu_partner_universities,
+@@ -393,6 +396,12 @@ from .storage import (
+     upsert_partner_research,
+ )
+ from .student_view import build_student_dashboard, fetch_partner_universities
++from .ccu_student_view import (
++    build_ccu_student_dashboard,
++    fetch_ccu_partner_universities,
++    ccu_exchange_info,
++    ccu_processed_pages,
++)
+ from .tku_student_view import (
+     build_tku_student_dashboard, fetch_tku_partner_universities,
+     tku_exchange_info, tku_processed_pages,
+@@ -404,6 +413,7 @@ from .university_registry import (
+     CGU,
+     NTPU,
+     NTU,
++    NCU,
+     SUPPORTED_UNIVERSITIES,
+     UniversityProfile,
+     require_university,
+@@ -440,7 +450,7 @@ CGU_COMMUNITY_BOARD = "長庚大學"
+ HOME_UNIVERSITY_BOARDS = {item.school_name for item in SUPPORTED_UNIVERSITIES}
+ 
+ 
+-def _load_school_image_manifest() -> dict[str, dict[str, object]]:
++def _load_school_image_manifest() -> dict[tuple[str, str], dict[str, object]]:
+     if not SCHOOL_IMAGE_MANIFEST.exists():
+         return {}
+     try:
+@@ -448,7 +458,7 @@ def _load_school_image_manifest() -> dict[str, dict[str, object]]:
+     except (OSError, json.JSONDecodeError):
+         return {}
+     return {
+-        school_identity_key(str(item.get("school_name", ""))): item
++        (school_identity_key(str(item.get("school_name", ""))), str(item.get("country") or "")): item
+         for item in payload.get("schools", [])
+         if isinstance(item, dict) and item.get("school_name")
+     }
+@@ -463,10 +473,18 @@ def _attach_school_images(
+     base = base_url.rstrip("/")
+     partners = []
+     for school in dashboard.partner_universities:
+-        visual = visuals.get(school_identity_key(school.school_name))
+-        if not visual or visual.get("status") != "verified":
++        visual = visuals.get((school_identity_key(school.school_name), school.country or ""))
++        if not visual:
+             partners.append(school)
+             continue
++        if visual.get("status") != "verified":
++            partners.append(school.model_copy(update={
++                "image_url": None,
++                "image_source_url": None,
++                "image_page_url": visual.get("official_page_url") or None,
++                "image_status": str(visual.get("status") or "missing"),
++            }))
++            continue
+         local_path = str(visual.get("local_path") or "")
+         image_url = f"{base}{local_path}" if local_path.startswith("/") else local_path
+         partners.append(
+@@ -1117,7 +1135,11 @@ def create_app(
+             with partner_cache_lock:
+                 if university.id not in partner_cache:
+                     partner_cache[university.id] = (
+-                        fetch_ntu_partner_universities()
++                        fetch_ccu_partner_universities()
++                        if university.id == "ccu"
++                        else fetch_ncu_partner_universities()
++                        if university.id == NCU.id
++                        else fetch_ntu_partner_universities()
+                         if university.id == NTU.id
+                         else fetch_ntpu_partner_universities()
+                         if university.id == NTPU.id
+@@ -1161,6 +1183,10 @@ def create_app(
+         university = university_for(
+             school.school_name if isinstance(school, UniversityProfile) else school
+         )
++        if university.id == "ccu":
++            return ccu_processed_pages()
++        if university.id == NCU.id:
++            return ncu_processed_pages()
+         if university.id == NTU.id:
+             return ntu_processed_pages()
+         return (
+@@ -1175,8 +1201,12 @@ def create_app(
+         university = university_for(
+             school.school_name if isinstance(school, UniversityProfile) else school
+         )
++        if university.id == "ccu":
++            return ccu_exchange_info(partners_for_university(university))
+         if university.id == NTPU.id:
+             return ntpu_exchange_info(partners_for_university(university))
++        if university.id == NCU.id:
++            return ncu_exchange_info(partners_for_university(university))
+         if university.id == "tku":
+             return tku_exchange_info(partners_for_university(university))
+         if university.id == NTU.id:
+@@ -1224,10 +1254,14 @@ def create_app(
+         university = university_for(
+             school.school_name if isinstance(school, UniversityProfile) else school
+         )
++        if university.id == "ccu":
++            return build_ccu_student_dashboard(partner_universities=partners_for_university(university))
+         if university.id == NTPU.id:
+             return build_ntpu_student_dashboard(
+                 partner_universities=partners_for_university(university)
+             )
++        if university.id == NCU.id:
++            return build_ncu_student_dashboard(partner_universities=partners_for_university(university))
+         if university.id == "tku":
+             # Refresh window state on each request; a cached open round must close on time.
+             return build_tku_student_dashboard()
+@@ -2831,10 +2865,10 @@ def create_app(
+         rows: list[PartnerCoverage] = []
+         for partner in partners:
+             normalized = normalize_school(partner.school_name)
+-            visual = school_images.get(school_identity_key(partner.school_name))
++            visual = school_images.get((school_identity_key(partner.school_name), partner.country or ""))
+             partner_experiences = experience_map.get(normalized, [])
+             workflow = workflow_map.get(normalized)
+-            destination = destination_map.get((home_key, normalized)) or destination_map.get((normalize_school(CGU.school_name), normalized))
++            destination = destination_map.get((home_key, normalized))
+             experience_audit = experience_audit_map.get(normalized)
+             destination_audit = destination_audit_map.get(normalized)
+             website_research = research_map.get(normalized)
+@@ -2954,8 +2988,10 @@ def create_app(
+             base_url=public_base_url(request),
+         )
+         locations = load_university_locations(resolved_data_dir)
++        from .ccu_profile import school_location
++        is_ccu = university_for(school).id == "ccu"
+         return dashboard.model_copy(update={"partner_universities": [
+-            partner.model_copy(update={"location": public_location(locations, partner.school_name, partner.country)})
++            partner.model_copy(update={"location": school_location(partner, public_location(locations, partner.school_name, partner.country)) if is_ccu else public_location(locations, partner.school_name, partner.country)})
+             for partner in dashboard.partner_universities
+         ]})
+ 
+@@ -3226,9 +3262,11 @@ def create_app(
+         program_type: str | None = Query(default=None, max_length=80),
+         academic_year: str | None = Query(default=None, max_length=40),
+         application_round: str | None = Query(default=None, max_length=80),
++        host_admission_status: Literal["unknown", "not_accepted", "accepted"] = Query(default="unknown"),
++        housing_choice: Literal["unknown", "on_campus", "off_campus"] = Query(default="unknown"),
++        semester: str | None = Query(default=None, max_length=30),
+     ) -> ApplicationDocumentCatalog:
+-        partner = partner_for_school(target_school, school)
+-        university = university_for(school)
++        university, partner = partner_context_for_school(target_school, school)
+         context = ApplicationCenterContext(
+             school_name=university.school_name,
+             target_school=partner.school_name,
+@@ -3238,6 +3276,10 @@ def create_app(
+             program_type=program_type or "exchange",
+             academic_year=academic_year,
+             application_round=application_round,
++            semester=semester,
++            partner_document_states={preparation_state_key(partner.school_name, academic_year, application_round, semester): PartnerDocumentPreparationState(
++                host_admission_status=host_admission_status, housing_choice=housing_choice,
++            )} if university.id == NCU.id else {},
+         )
+         workflows = workflows_for_university(university)
+         return build_application_document_catalog(context, workflows)
+@@ -3620,7 +3662,8 @@ def create_app(
+     ) -> DestinationProfile:
+         partner = partner_for_school(school, home_school)
+         normalized = normalize_school(partner.school_name)
+-        target_home = normalize_school(home_school) if home_school else None
++        canonical_home = university_for(home_school).school_name if home_school else None
++        target_home = normalize_school(canonical_home) if canonical_home else None
+         profiles = published_destination_profiles()
+         if target_home:
+             for profile in profiles:
+@@ -3631,11 +3674,13 @@ def create_app(
+                     return complete_destination_profile(profile, resolved_data_dir)
+         for profile in profiles:
+             if normalize_school(profile.school_name) == normalized:
+-                if target_home and not profile.home_university:
+-                    return complete_destination_profile(profile.model_copy(update={"home_university": home_school}), resolved_data_dir)
++                if target_home:
++                    if profile.home_university:
++                        continue
++                    return complete_destination_profile(profile.model_copy(update={"home_university": canonical_home}), resolved_data_dir)
+                 return complete_destination_profile(profile, resolved_data_dir)
+         return DestinationProfile(
+-            home_university=home_school,
++            home_university=canonical_home,
+             school_name=partner.school_name,
+             country=partner.country,
+         )
+@@ -3659,27 +3704,53 @@ def create_app(
+                 home_university=university.school_name, partner_university=partner.school_name,
+             ),
+         )
+-        return build_school_completeness(
++        result = build_school_completeness(
+             partner, destination_profile(school, home_school), workflow,
+             home_university=university.school_name,
+         )
++        if university.id == "ccu":
++            from .ccu_profile import align_completeness
++            return align_completeness(result, partner)
++        return result
++
++    @app.get("/partner-source-audit", response_model=dict)
++    def partner_source_audit(school: str = Query(min_length=2), home_school: str | None = Query(default=None)) -> dict:
++        university, partner = partner_context_for_school(school, home_school)
++        if university.id != NCU.id:
++            raise HTTPException(status_code=404, detail="此校尚無逐欄來源查核記錄。")
++        from .ncu_student_view import ncu_source_audit
++        audit = ncu_source_audit(partner.school_name)
++        if audit is None:
++            raise HTTPException(status_code=404, detail="未找到此合作項目查核記錄。")
++        return audit
+ 
+     @app.get("/school-life-context", response_model=SchoolLifeContext)
+     def school_life_context(
+         school: str = Query(min_length=2),
+         home_school: str | None = Query(default=None),
+     ) -> SchoolLifeContext:
+-        partner = partner_for_school(school, home_school)
++        university, partner = partner_context_for_school(school, home_school)
+         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
+-        return build_life_context(partner, destination_profile(school, home_school), location, resolved_data_dir)
++        if university.id == "ccu":
++            from .ccu_profile import school_location
++            location = school_location(partner, location)
++        profile = destination_profile(school, home_school)
++        context = build_life_context(partner, profile, location, resolved_data_dir)
++        if university.id == "ccu":
++            from .ccu_profile import align_life_context
++            return align_life_context(context, partner, profile, location)
++        return context
+ 
+     @app.post("/school-life-context/refresh", response_model=SchoolLifeContext)
+     def refresh_school_life_context(
+         school: str = Query(min_length=2),
+         home_school: str | None = Query(default=None),
+     ) -> SchoolLifeContext:
+-        partner = partner_for_school(school, home_school)
++        university, partner = partner_context_for_school(school, home_school)
+         location = public_location(load_university_locations(resolved_data_dir), partner.school_name, partner.country)
++        if university.id == "ccu":
++            from .ccu_profile import school_location
++            location = school_location(partner, location)
+         result = refresh_life_research(partner, location, resolved_data_dir)
+         context = school_life_context(school, home_school)
+         return context.model_copy(update={"research_notes": result.notes})
+diff --git a/src/exchange_info/application_documents.py b/src/exchange_info/application_documents.py
+index c879f558..59d6f06e 100644
+--- a/src/exchange_info/application_documents.py
++++ b/src/exchange_info/application_documents.py
+@@ -57,8 +57,11 @@ from .models import (
+     UniversityApplicationWorkflow,
+ )
+ from .application_rules import select_application_workflow
+-from .university_registry import NTPU, NTU, require_university
++from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
++from .ncu_document_conditions import document_applicability, preparation_state_key
++from .university_registry import NTPU, NTU, NCU, require_university, resolve_university
+ from .ntu_student_view import NTU_GUIDELINES_URL
++from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
+ 
+ 
+ FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
+@@ -830,6 +833,44 @@ def _ntu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
+     return ApplicationDocumentTemplate.model_validate(payload)
+ 
+ 
++def _ncu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
++    descriptions = {
++        "exchange-application-data": "整理中央116-1個人資料與校內附件；正式報名須完成校方線上申請、列印簽核及系所紙本繳件。大學部平均60分、研究生70分，在職專班可申請但無研修獎學金。",
++        "study-plan": "個人研修與選課規劃工具；中央116-1校內必繳清單沒有列研修計畫。外校若要求，須依該校格式另備。",
++        "course-preapproval": "出發前向中央所屬系所確認學分採認；依外校修課規定，無規定時至少兩門且一門專業課。學則另規定兩門或六學分，須分別核對。",
++        "predeparture-notice": "出國前兩週完成中央行前程序單並繳文件；自行辦理護照、簽證、足額醫療／意外／急難救助保險及役男許可。此工具不代替中央正式表格。",
++        "return-report": "返國後一週內填中央返校程序單；心得須WORD電子檔800–1500字並至少四張照片。此工具協助草擬，正式程序單須依國際處通知取得。",
++        "credit-transfer": "整理外校原始成績證明與課程資料；依中央系所規定於畢業前完成採認，延畢生另核對校際選課兩階段程序及學雜費。",
++    }
++    if template.id not in descriptions:
++        return None
++    def adapt(value):
++        if isinstance(value, str): return value.replace("長庚大學", "國立中央大學").replace("長庚", "中央")
++        if isinstance(value, list): return [adapt(x) for x in value]
++        if isinstance(value, dict): return {k:adapt(v) for k,v in value.items()}
++        return value
++    payload = adapt(template.model_dump(mode="json"))
++    for field in payload["fields"]:
++        if field["id"] == "degree_level" and field["options"]:
++            field["options"] = list(dict.fromkeys([*field["options"], "在職碩士班"]))
++        if field["id"] == "class_rank_percent":
++            field["help_text"] = "中央校內須中文成績名次證明；本欄僅整理資料，不替代正式文件。"
++        if field["id"] == "language_test":
++            field["options"] = ["TOEFL iBT", "TOEFL ITP（第4頁；與第6頁PBT差異須確認）", "IELTS Academic", "GEPT（複試通過）", "TOEIC（聽讀）", "Linguaskill（實用組）", "BESTEP", "志願校接受之第三外語檢定"]
++            field["help_text"] = "校內必繳正式外語檢定成績，不限分數級數；英文檢定须兩年內有效。簡章第4頁列ITP、第6頁列PBT，先向國際處確認。合作校規定之語檢另查，提名前須具備。"
++        if field["id"] == "language_result_date":
++            field["label"] = "實際考試日期"
++            field["field_type"] = "date"
++            field["help_text"] = "填已發生的實際考試日期；正式英檢在校內申請及外校送件時均須有效。預計日期或網路截圖不能代替校內必繳正式成績。"
++    payload.update(description=descriptions[template.id], source_url=NCU_GUIDELINES_URL,
++        source_checked_at=NCU_CHECKED_AT, official_layout=False, official_form_number=None,
++        official_file_name=None, official_download_url=None, default_copies=1, signatures=[], stamps=[],
++        stage={"predeparture-notice":"出國前兩週", "return-report":"返國後一週"}.get(template.id,"申請與文件準備"),
++        version="116-1準備工具-2026-10-08.1", destinations=["學生自存備份"],
++        conditional_note="此為個人準備工具；中央正式申請表由系統列印完成簽核。家長／個資同意書請用中央現行下載檔。校內文件與外校文件分開，份數與其他正式表格依承辦通知。")
++    return ApplicationDocumentTemplate.model_validate(payload)
++
++
+ def application_field_required(field: ApplicationFormField, values: dict[str, Any]) -> bool:
+     return field.required or any(
+         all(str(values.get(key, "")) in allowed for key, allowed in clause.items())
+@@ -837,6 +878,33 @@ def application_field_required(field: ApplicationFormField, values: dict[str, An
+     )
+ 
+ 
++def _ncu_language_validation(template: ApplicationDocumentTemplate, values: dict[str, Any]) -> dict[str, str]:
++    if template.source_url != NCU_GUIDELINES_URL or template.id != "exchange-application-data":
++        return {}
++    errors = {}
++    test = str(values.get("language_test") or "")
++    allowed = next(field.options for field in template.fields if field.id == "language_test")
++    if test and test not in allowed:
++        errors["language_test"] = "請依中央116-1正式語檢種類選擇；外校接受的其他測驗不能直接取代校內必繳證明。"
++    actual = str(values.get("language_result_date") or "")
++    if actual:
++        try:
++            date = datetime.strptime(actual, "%Y-%m-%d").date()
++            today = datetime.now(timezone.utc).date()
++            if date > today:
++                errors["language_result_date"] = "須填已發生的實際考試日期；預計日期不能代替正式語檢成績。"
++            elif test and test != "志願校接受之第三外語檢定":
++                try:
++                    expiry = date.replace(year=date.year + 2)
++                except ValueError:
++                    expiry = date.replace(year=date.year + 2, day=28)
++                if expiry < today:
++                    errors["language_result_date"] = "英文檢定已超過中央兩年效期；實際送件當日亦須有效，請備妥正式成績。"
++        except ValueError:
++            errors["language_result_date"] = "請填有效的實際考試日期。"
++    return errors
++
++
+ def _ntu_language_validation(template: ApplicationDocumentTemplate, values: dict[str, Any]) -> dict[str, str]:
+     if template.source_url != NTU_GUIDELINES_URL or template.id != "exchange-application-data":
+         return {}
+@@ -864,6 +932,12 @@ def _ntu_language_validation(template: ApplicationDocumentTemplate, values: dict
+ 
+ def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]:
+     university = require_university(school_name)
++    if university.id == "ccu":
++        from .ccu_application_documents import ccu_application_templates
++
++        return ccu_application_templates()
++    if university.id == NCU.id:
++        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncu_template(template)) is not None]
+     if university.id == "tku":
+         from .tku_documents import tku_application_templates
+         return tku_application_templates()
+@@ -926,8 +1000,18 @@ def build_application_document_catalog(
+     workflow_is_published = (
+         workflow.review_status == ApplicationWorkflowReviewStatus.PUBLISHED
+     )
++    requirement_sources_only = resolve_university(context.school_name) == NCU
+     items: list[ApplicationDocumentCatalogItem] = []
+     sequence = 0
++    stages = {
++        "nomination": "合作校提名",
++        "student_application": "合作校申請",
++        "after_application": "合作校申請後補件（不等錄取）",
++        "second_submission": "合作校第二次文件送件",
++        "post_offer": "合作校錄取後",
++        "after_dorm_assignment": "合作校宿舍分配後",
++        "conditional_program": "合作校特定計畫文件",
++    }
+     for step in sorted(workflow.steps, key=lambda row: row.order):
+         for requirement in step.document_requirements:
+             sequence += 1
+@@ -946,7 +1030,7 @@ def build_application_document_catalog(
+                     [
+                         *requirement.source_urls,
+                         *([official_form_url] if official_form_url else []),
+-                        *step.source_urls,
++                        *(step.source_urls if not requirement_sources_only or not requirement.source_urls else []),
+                     ]
+                 )
+             )
+@@ -963,7 +1047,11 @@ def build_application_document_catalog(
+                 ApplicationDocumentCatalogItem(
+                     id=hashlib.sha256(identity.encode("utf-8")).hexdigest()[:20],
+                     sequence=sequence,
+-                    phase=step.phase,
++                    phase=(
++                        step.phase if workflow.home_university == "淡江大學"
++                        or requirement.stage in {"after_application", "second_submission"}
++                        else stages.get(requirement.stage, step.phase)
++                    ),
+                     step_title=step.title,
+                     name=requirement.name,
+                     copies=requirement.copies,
+@@ -989,7 +1077,7 @@ def build_application_document_catalog(
+                     download_available=bool(
+                         official_form_url and (
+                             not needs_confirmation or (
+-                                workflow.home_university == "淡江大學"
++                                workflow.home_university in {"國立中正大學", "淡江大學"}
+                                 and requirement.official_form_verified
+                             )
+                         )
+@@ -1001,10 +1089,16 @@ def build_application_document_catalog(
+                         if needs_confirmation
+                         else None
+                     ),
++                    applicability=document_applicability(
++                        context.school_name, workflow.school_name, requirement,
++                        context.partner_document_states.get(preparation_state_key(
++                            workflow.school_name, context.academic_year, context.application_round, context.semester,
++                        )),
++                    ),
+                 )
+             )
+ 
+-    return ApplicationDocumentCatalog(
++    result = ApplicationDocumentCatalog(
+         context=context,
+         workflow_found=True,
+         workflow_coverage_status=workflow.coverage_status,
+@@ -1014,6 +1108,9 @@ def build_application_document_catalog(
+         items=items,
+         contact_unit=contact_unit,
+     )
++    if workflow.home_university == "國立中正大學":
++        result.disclaimer = "官方文件直連只表示來源及保存檔案已核實可讀；部分連結是指引，並非申請表。流程仍未發布、清單不完整，適用年度、計畫、條件及簽章須依逐項來源核對。"
++    return result
+ 
+ 
+ def _has_value(value: Any) -> bool:
+@@ -1256,7 +1353,7 @@ def build_packet_manifest(
+             field.id: answer_for_field(field, request.profile, answers)
+             for field in template.fields
+         }
+-        language_errors = _ntu_language_validation(template, field_values)
++        language_errors = {**_ntu_language_validation(template, field_values), **_ncu_language_validation(template, field_values)}
+         attachment_payloads: list[_AttachmentPayload] = []
+         attachment_errors: dict[str, str] = {}
+         for field in _attachment_fields_in_order(template):
+@@ -1346,7 +1443,11 @@ def build_packet_manifest(
+             for item in items
+         ),
+         source_checked_at=(
+-            datetime(2026, 10, 8, tzinfo=timezone.utc)
++            CCU_SOURCE_CHECKED_AT
++            if require_university(request.context.school_name).id == "ccu"
++            else NCU_CHECKED_AT
++            if require_university(request.context.school_name).id == NCU.id
++            else datetime(2026, 10, 8, tzinfo=timezone.utc)
+             if require_university(request.context.school_name).id == "tku"
+             else NTU_SOURCE_CHECKED_AT
+             if require_university(request.context.school_name).id == NTU.id
+diff --git a/src/exchange_info/application_rules.py b/src/exchange_info/application_rules.py
+index 9e4b433e..b36661e0 100644
+--- a/src/exchange_info/application_rules.py
++++ b/src/exchange_info/application_rules.py
+@@ -8,12 +8,16 @@ from collections.abc import Iterable
+ from .application_task_identity import preparation_identity
+ from .plan_defaults import suggest_effort_hours
+ from .school_identity import same_school
++from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
++from .ncu_document_conditions import document_applicability
+ from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
+ from .task_documents import document_link_for_step
+ from .qualification_scopes import (
+-    college_scope_needs_confirmation, degree_scope_needs_confirmation,
++    coupled_academic_scope_matches,
+     college_scope_matches as _partner_scope_matches,
+-    degree_scope_matches as _partner_degree_matches,
++    partner_degree_scope_matches,
++    partner_scope_needs_confirmation,
++    resolved_degree_level,
+ )
+ 
+ from .models import (
+@@ -156,6 +160,10 @@ def build_personal_application_plan(
+     """Create a deterministic plan from structured rules without AI inference."""
+ 
+     partner_by_name = {_normalize(partner.school_name): partner for partner in partners}
++    from .university_registry import resolve_university
++    home = resolve_university(request.home_school)
++    if home and home.id == "ccu" and len(request.preferences) > 3:
++        raise ValueError("中正大學2027春季校級交換最多3個志願（簡章第1頁及申請表第1頁）。")
+     workflow_rows = list(workflows)
+     contact_unit = f"{request.home_school}國際事務處／所屬系所"
+     choices: list[PersonalApplicationPlanChoice] = []
+@@ -192,7 +200,7 @@ def build_personal_application_plan(
+         if status == ApplicationPlanEligibilityStatus.UNAVAILABLE:
+             checklist = []
+         elif workflow is not None:
+-            checklist = _workflow_checklist(preference.rank, workflow, contact_unit)
++            checklist = _workflow_checklist(preference.rank, workflow, contact_unit, preference.document_preparation_state)
+         elif reference is not None:
+             checklist = _reference_checklist(reference, context, contact_unit)
+         else:
+@@ -359,11 +367,29 @@ def _eligibility_checks(
+ ) -> list[ApplicationPlanEligibilityCheck]:
+     checks: list[ApplicationPlanEligibilityCheck] = []
+     partner_source = partner.source_url
++    from .university_registry import resolve_university
++    home = resolve_university(request.home_school)
++    if home and home.id == "ccu":
++        from .ccu_sources import GUIDELINES_URL
++        gpa = request.academic_gpa
++        checks.append(_check("academic_gpa", "needs_confirmation" if gpa is None else "pass" if gpa >= 3 else "fail",
++            "中正歷年GPA門檻", "尚未提供GPA；歷年GPA至少3.0且平均至少70分，兩項均須符合。" if gpa is None else f"歷年GPA {gpa:g}，門檻3.0（簡章第1頁）。",
++            source_url=GUIDELINES_URL, contact_unit=contact_unit if gpa is None or gpa < 3 else None))
++        checks.append(_check("home_year", "needs_confirmation", "中正在校年級與修業期間",
++            "須在中正就讀滿兩學期，大二至大四上／碩博士二年級以上；大四專案須承辦確認（簡章第1頁、申請表第1頁）。",
++            source_url=GUIDELINES_URL, contact_unit=contact_unit))
++        if partner.application_window_status == "closed":
++            checks.append(_check("home_deadline", "needs_confirmation", "校內申請期限",
++                "2027春季校內收件已截止；僅已有申請／提名者可依通知繼續，不代表仍接受新申請。",
++                source_url=partner.field_evidence["application_deadline"].source_url, contact_unit=contact_unit))
++        if request.academic_year and request.academic_year != partner.academic_year or request.application_round and not request.application_round.startswith(partner.application_round or "2027春季"):
++            checks.append(_check("source_cycle", "needs_confirmation", "資料適用年度與梯次",
++                "已核實資料僅適用115學年度第二學期／2027春季，所選新版尚未核實。",source_url=partner_source,contact_unit=contact_unit))
+     if partner.availability_status != "open":
+         checks.append(
+             _check(
+                 "availability",
+-                "needs_confirmation" if is_ntu(request.home_school) and partner.quota is None else "fail",
++                "needs_confirmation" if partner.availability_status == "needs_confirmation" or ((is_ntu(request.home_school) or is_ncu(request.home_school)) and partner.quota is None) else "fail",
+                 "當期名額",
+                 partner.availability_note
+                 or "這筆資料目前未列入當期公開開放名單。",
+@@ -377,12 +403,12 @@ def _eligibility_checks(
+                 "availability",
+                 "pass",
+                 "當期名額",
+-                "目前列在公開可申請名單中。",
++                "當期名額已列；校內收件已截止。" if partner.application_window_status == "closed" else "目前列在公開可申請名單中。",
+                 source_url=partner_source,
+             )
+         )
+ 
+-    if is_ntu(request.home_school):
++    if is_ntu(request.home_school) or is_ncu(request.home_school):
+         checks.append(_check("college", "needs_confirmation", "學院／學系範圍",
+                              "合作校本期學院與系所範圍尚未全面確認；詳情頁的既有條件僅供參考。",
+                              source_url=partner_source, contact_unit=contact_unit))
+@@ -397,7 +423,7 @@ def _eligibility_checks(
+                 contact_unit=contact_unit,
+             )
+         )
+-    elif college_scope_needs_confirmation(partner.colleges):
++    elif partner_scope_needs_confirmation(partner, "colleges"):
+         checks.append(
+             _check(
+                 "college",
+@@ -428,7 +454,11 @@ def _eligibility_checks(
+             )
+         )
+ 
+-    if is_ntu(request.home_school):
++    if is_ncu(request.home_school):
++        checks.append(_check("degree_level", "needs_confirmation", "學制與學籍",
++                             "中央校內在职專班可申請；大學部需有至少一學年在學成績，碩一可附大學歷年成績。須以甄選身分出國且保有學籍。外校當期學制與track另查。",
++                             source_url=academic_source_url, contact_unit=contact_unit))
++    elif is_ntu(request.home_school):
+         checks.append(_check("degree_level", "needs_confirmation", "學制與學籍",
+                              "校內須為在學學士二年級以上或研究生；合作校本期可提名學制、在學狀態與年級仍須確認。",
+                              source_url=partner_source, contact_unit=contact_unit))
+@@ -443,7 +473,7 @@ def _eligibility_checks(
+                 contact_unit=contact_unit,
+             )
+         )
+-    elif degree_scope_needs_confirmation(partner.degree_levels):
++    elif partner_scope_needs_confirmation(partner, "degree_levels"):
+         checks.append(
+             _check(
+                 "degree_level",
+@@ -455,25 +485,34 @@ def _eligibility_checks(
+             )
+         )
+     else:
+-        degree_matches = _partner_degree_matches(
+-            partner.degree_levels, request.degree_level
+-        )
++        degree = resolved_degree_level(request.degree_level, request.current_year)
++        degree_matches = partner_degree_scope_matches(partner, request.college or request.department, degree)
++        coupled_match = coupled_academic_scope_matches(
++            partner, request.college or request.department, degree
++        )
++        degree_detail = (
++            f"你的學制符合公開範圍：{partner.degree_levels}。"
++            if degree_matches else f"你的學制不在公開範圍：{partner.degree_levels}。"
++        )
++        if coupled_match is not None:
++            degree_detail = f"你的學院／學制配對{'符合' if coupled_match else '不符'}公開範圍：{request.college or request.department}／{degree}；{partner.degree_levels}。"
++        if degree_matches is None:
++            degree_detail = f"研究所尚未區分碩博士，不能判定符合學院／學制範圍：{partner.degree_levels}；請設定碩士班或博士班。"
+         checks.append(
+             _check(
+                 "degree_level",
+-                "pass" if degree_matches else "fail",
++                "needs_confirmation" if degree_matches is None else "pass" if degree_matches else "fail",
+                 "學制",
+-                (
+-                    f"你的學制符合公開範圍：{partner.degree_levels}。"
+-                    if degree_matches
+-                    else f"你的學制不在公開範圍：{partner.degree_levels}。"
+-                ),
++                degree_detail,
+                 source_url=partner_source,
+                 contact_unit=None if degree_matches else contact_unit,
+             )
+         )
+ 
+-    if is_ntu(request.home_school):
++    if is_ncu(request.home_school):
++        status, detail = ncu_academic_check(request.degree_level, request.academic_score, request.current_year)
++        checks.append(_check("academic_score", status, "校內成績門檻", detail, source_url=academic_source_url, contact_unit=None if status == "pass" else contact_unit))
++    elif is_ntu(request.home_school):
+         status, detail = ntu_academic_check(request.degree_level, request.academic_gpa, request.class_rank_percent)
+         checks.append(_check(
+             "academic_score", status, "校內成績門檻", detail,
+@@ -514,12 +553,16 @@ def _eligibility_checks(
+             )
+         )
+ 
+-    language_threshold = _partner_language_threshold(partner, request.language_test)
++    language_threshold = _partner_language_threshold(partner, request.language_test, request.degree_level)
+     if is_ntu(request.home_school):
+         # NTU's partner requirements in this bundle are not cycle-confirmed.
+         language_threshold = None
+         home_status, home_detail = ntu_language_check(request.language_test, request.language_score)
+         checks.append(_check("home_language_score", home_status, "校內語組門檻", home_detail, source_url=academic_source_url, contact_unit=contact_unit))
++    if is_ncu(request.home_school):
++        language_threshold = None
++        home_status, home_detail = ncu_language_check(request.language_test, request.language_score)
++        checks.append(_check("home_language_score", home_status, "校內正式語檢", home_detail, source_url=academic_source_url, contact_unit=contact_unit))
+     language_label = {
+         "toeic": "TOEIC",
+         "ielts": "IELTS",
+@@ -556,7 +599,7 @@ def _eligibility_checks(
+                 "language_score",
+                 "needs_confirmation",
+                 "語言門檻",
+-                f"公開資料無法可靠解析 {language_label} 最低分，請向{contact_unit}確認。",
++                (partner.language_review_note or f"公開資料無法可靠解析 {language_label} 最低分，請向{contact_unit}確認。"),
+                 source_url=partner_source,
+                 contact_unit=contact_unit,
+             )
+@@ -670,6 +713,7 @@ def _workflow_checklist(
+     preference_rank: int,
+     workflow: UniversityApplicationWorkflow | None,
+     contact_unit: str,
++    document_preparation_state=None,
+ ) -> list[ApplicationPlanChecklistItem]:
+     if workflow is None:
+         return []
+@@ -690,6 +734,15 @@ def _workflow_checklist(
+     for index, step in enumerate(workflow.steps, start=1):
+         task_id, task_scope, signature = preparation_identity(workflow, step, index)
+         link = document_link_for_step(step)
++        applicability = [result for requirement in step.document_requirements
++                         if (result := document_applicability(workflow.home_university, workflow.school_name, requirement, document_preparation_state))]
++        inactive = {result.requirement_name for result in applicability
++                    if result.status != "applicable"}
++        if link and inactive:
++            link = link.model_copy(update={
++                "requirement_names": [name for name in link.requirement_names if name not in inactive],
++                "unmapped_requirement_names": [name for name in link.unmapped_requirement_names if name not in inactive],
++            })
+         confirmed = (
+             step.support_status
+             in {ApplicationSupportStatus.VERIFIED, ApplicationSupportStatus.NOT_APPLICABLE}
+@@ -724,6 +777,7 @@ def _workflow_checklist(
+                 ),
+                 support_status=step.support_status,
+                 needs_confirmation=not confirmed,
++                document_applicability=applicability,
+                 confirmation_contact=(None if confirmed else confirmation_contact),
+                 source_urls=source_urls,
+                 task_scope=task_scope,
+@@ -766,6 +820,8 @@ def select_reference_workflow(
+         )
+         and (not home_key or _normalize(workflow.home_university) == home_key)
+         and workflow.steps
++        and (not is_ncu(context.home_university)
++             or workflow.review_status == ApplicationWorkflowReviewStatus.PUBLISHED)
+     ]
+     if not candidates:
+         return None
+@@ -874,7 +930,12 @@ def _check(
+ def _partner_language_threshold(
+     partner: PartnerUniversity,
+     language_test: str | None,
++    degree_level: str | None = None,
+ ) -> float | None:
++    from .ccu_language import assess_ccu_language, is_ccu_partner
++
++    if is_ccu_partner(partner):
++        return assess_ccu_language(partner, language_test, degree_level).threshold
+     if not language_test or language_test == "other":
+         return None
+     text = " ".join(
+diff --git a/src/exchange_info/models.py b/src/exchange_info/models.py
+index 310dd225..35561358 100644
+--- a/src/exchange_info/models.py
++++ b/src/exchange_info/models.py
+@@ -218,6 +218,22 @@ class ApplicationDocumentTemplate(BaseModel):
+     version: str
+ 
+ 
++class PartnerDocumentPreparationState(BaseModel):
++    model_config = ConfigDict(extra="forbid")
++
++    host_admission_status: Literal["unknown", "not_accepted", "accepted"] = "unknown"
++    housing_choice: Literal["unknown", "on_campus", "off_campus"] = "unknown"
++
++
++class DocumentApplicability(BaseModel):
++    requirement_name: str
++    status: Literal["applicable", "not_applicable", "deferred", "needs_confirmation"]
++    note: str
++    source_urls: list[str] = Field(default_factory=list)
++    # Matching a personal condition never approves a source's academic year.
++    current_applicability_verified: bool = False
++
++
+ class ApplicationCenterContext(BaseModel):
+     school_name: str = "長庚大學"
+     target_school: str | None = Field(default=None, max_length=200)
+@@ -230,6 +246,7 @@ class ApplicationCenterContext(BaseModel):
+     application_round: str | None = Field(default=None, max_length=80)
+     semester: str | None = Field(default=None, max_length=30)
+     flags: list[str] = Field(default_factory=list, max_length=20)
++    partner_document_states: dict[str, PartnerDocumentPreparationState] = Field(default_factory=dict, max_length=214)
+ 
+ 
+ ApplicationDraftScalar = str | bool | int | float | None
+@@ -553,16 +570,87 @@ class PartnerProgramOption(BaseModel):
+     student_summary_zh: PartnerStudentSummary = Field(default_factory=PartnerStudentSummary)
+ 
+ 
++class ExchangeFieldEvidence(BaseModel):
++    source_url: str
++    source_pages: list[int] = Field(default_factory=list)
++    academic_year: str | None = None
++    application_round: str | None = None
++    checked_at: datetime
++    status: Literal["verified_current", "reference_only", "missing", "needs_confirmation", "conflict", "explicit_not_announced"]
++    excerpt: str | None = None
++    reference_excerpt: str | None = None
++    note: str | None = None
++
++
++class PartnerLanguageCondition(BaseModel):
++    """A reviewed condition, separate from unparsed source text or CEFR ranges."""
++
++    test: str
++    test_variant: str | None = None
++    minimum_score: float | None = None
++    requirement_level: Literal["required", "recommended", "no_score_minimum", "needs_confirmation", "conflict"]
++    degree_levels: list[str] = Field(default_factory=list)
++    track: str | None = None
++    host_faculties: list[str] = Field(default_factory=list)
++    teaching_language: str | None = None
++    scope_choice_required: bool = False
++    additional_conditions: list[str] = Field(default_factory=list)
++    evidence: ExchangeFieldEvidence
++
++
++class ExchangeSourceCheck(BaseModel):
++    source_id: str
++    source_url: str
++    checked_at: datetime
++    result: str
++    timestamp_precision: Literal["date", "datetime"] = "datetime"
++
++
++class PartnerExchangeDetailField(BaseModel):
++    """Receiving-school facts retain their own year, scope and source evidence."""
++
++    value: str | None = None
++    status: Literal["verified_current", "reference_only", "missing", "needs_confirmation", "conflict", "explicit_not_announced"]
++    reason: str
++    evidence: list[ExchangeFieldEvidence] = Field(default_factory=list)
++    research_category: Literal[
++        "verified_supported", "official_not_announced",
++        "unresolved_source_conflict",
++        "login_or_school_confirmation", "source_technical_failure",
++        "alternative_official_sources_not_fully_checked",
++    ] | None = None
++    research_note: str | None = None
++    source_checks: list[ExchangeSourceCheck] = Field(default_factory=list)
++
++
+ class PartnerUniversity(BaseModel):
+     program_type: str
+     availability_status: Literal[
+-        "open", "agreement_only", "departmental_reference", "closed", "reference_only", "quota_unconfirmed"
++        "open", "agreement_only", "departmental_reference", "not_open", "needs_confirmation", "zero_quota", "fee_paying", "closed", "reference_only", "quota_unconfirmed"
+     ] = "open"
+     availability_note: str | None = None
+     agreement_type: str | None = None
+     agreement_level: str | None = None
+     country: str | None = None
+     school_name: str
++    academic_year: str | None = None
++    application_round: str | None = None
++    checked_at: datetime | None = None
++    source_pages: list[int] = Field(default_factory=list)
++    quota_status: Literal["published", "zero", "not_published", "reference_only", "fee_paying"] | None = None
++    application_window_status: Literal["open", "closed", "needs_confirmation"] | None = None
++    field_evidence: dict[str, ExchangeFieldEvidence] = Field(default_factory=dict)
++    reference_data: dict[str, str] = Field(default_factory=dict)
++    language_requirement: str | None = None
++    language_conditions: list[PartnerLanguageCondition] = Field(default_factory=list)
++    language_review_note: str | None = None
++    partner_application_prerequisite: str | None = None
++    partner_exchange_details: dict[str, PartnerExchangeDetailField] = Field(default_factory=dict)
++    partner_application_deadline: str | None = None
++    nomination_deadline: str | None = None
++    semester_dates: str | None = None
++    housing_info: str | None = None
++    course_restrictions: str | None = None
+     location: UniversityLocation | None = None
+     website: str | None = None
+     colleges: str | None = None
+@@ -583,6 +671,26 @@ class PartnerUniversity(BaseModel):
+     program_options: list[PartnerProgramOption] = Field(default_factory=list)
+     student_summary_zh: PartnerStudentSummary = Field(default_factory=PartnerStudentSummary)
+ 
++    @model_serializer(mode="wrap")
++    def serialize_source_details(self, handler):
++        payload = handler(self)
++        # Older school bundles have no structured source evidence. Keep their
++        # tracked serialization stable while allowing populated optional fields.
++        optional_source_fields = (
++            "academic_year", "application_round", "checked_at", "source_pages",
++            "quota_status", "application_window_status", "field_evidence",
++            "reference_data", "language_requirement", "language_conditions",
++            "language_review_note", "partner_application_prerequisite",
++            "partner_exchange_details", "partner_application_deadline",
++            "nomination_deadline", "semester_dates", "housing_info",
++            "course_restrictions",
++        )
++        if not self.field_evidence and not self.source_pages:
++            for key in optional_source_fields:
++                if payload.get(key) in (None, [], {}):
++                    payload.pop(key, None)
++        return payload
++
+ 
+ class SchoolCompletenessItem(BaseModel):
+     key: str
+@@ -1221,8 +1329,9 @@ class ApplicationDocumentRequirement(BaseModel):
+         fields = ("stage", "conditional", "condition", "official_form_verified",
+             "applicability_status", "applicability_year", "applicability_note")
+         # An additive school adapter must not invalidate old published snapshots.
+-        # Preserve the original payload when none of the new metadata is present.
+-        if not any(getattr(self, name) for name in fields):
++        # Omitted legacy metadata stays omitted; explicitly supplied null/false
++        # metadata remains part of the newer school's API and stored payload.
++        if not any(getattr(self, name) for name in fields) and not self.model_fields_set.intersection(fields):
+             for name in fields:
+                 payload.pop(name, None)
+         return payload
+@@ -1348,6 +1457,7 @@ class ApplicationPlanEligibilityStatus(str, Enum):
+ class ApplicationPlanPreference(BaseModel):
+     rank: int = Field(ge=1, le=5)
+     school_name: str = Field(min_length=2, max_length=200)
++    document_preparation_state: PartnerDocumentPreparationState | None = None
+ 
+ 
+ class ApplicationPlanEligibilityCheck(BaseModel):
+@@ -1356,6 +1466,10 @@ class ApplicationPlanEligibilityCheck(BaseModel):
+         "college",
+         "degree_level",
+         "academic_score",
++        "academic_gpa",
++        "home_year",
++        "home_deadline",
++        "source_cycle",
+         "language_score",
+         "home_language_score",
+         "academic_year",
+@@ -1400,6 +1514,7 @@ class ApplicationPlanChecklistItem(BaseModel):
+     task_origin: Literal["official", "reference_year"] = "official"
+     reference_academic_year: str | None = None
+     suggested_effort_hours: float | None = Field(default=None, gt=0, le=1000)
++    document_applicability: list[DocumentApplicability] = Field(default_factory=list)
+ 
+ 
+ class UnifiedApplicationTask(ApplicationPlanChecklistItem):
+@@ -1413,6 +1528,7 @@ class PersonalApplicationPlanRequest(BaseModel):
+     college: str | None = Field(default=None, max_length=120)
+     department: str | None = Field(default=None, max_length=120)
+     degree_level: str | None = Field(default=None, max_length=80)
++    current_year: str | None = Field(default=None, max_length=40)
+     academic_score: float | None = Field(default=None, ge=0, le=100)
+     academic_gpa: float | None = Field(default=None, ge=0, le=4.3)
+     class_rank_percent: float | None = Field(default=None, gt=0, le=100)
+@@ -1485,6 +1601,7 @@ class ApplicationDocumentCatalogItem(BaseModel):
+     applicability_status: Literal["verified_current", "needs_confirmation", "reference_only"] | None = None
+     applicability_year: str | None = None
+     applicability_note: str | None = None
++    applicability: DocumentApplicability | None = None
+ 
+ 
+ class ApplicationDocumentCatalog(BaseModel):
+@@ -2515,6 +2632,9 @@ class HomeSelectionRules(BaseModel):
+     exclude_in_service: bool = False
+     pending_quota_planning: bool = False
+     partner_requirements_need_confirmation: bool = False
++    degree_score_minimums: dict[str, float] = Field(default_factory=dict)
++    excluded_undergraduate_years: list[str] = Field(default_factory=list)
++    language_certificate_required: bool = False
+ 
+ 
+ class StudentDashboard(BaseModel):
+@@ -2522,6 +2642,8 @@ class StudentDashboard(BaseModel):
+     last_checked: datetime | None = None
+     academic_score_minimum: float | None = None
+     academic_score_rule: str | None = None
++    academic_gpa_minimum: float | None = None
++    maximum_preferences: int = 5
+     selection_rules: HomeSelectionRules = Field(default_factory=HomeSelectionRules)
+     language_score_minimums: dict[str, float] = Field(default_factory=dict)
+     application_periods: list[ApplicationPeriodItem] = Field(default_factory=list)
+@@ -3730,7 +3852,6 @@ class AccountSelectionProfile(BaseModel):
+     preferred_teaching_language: TeachingLanguage | None = None
+     course_interests: str = Field(default="", max_length=120)
+ 
+-
+ class AccountSelectionConditions(BaseModel):
+     model_config = ConfigDict(extra="forbid")
+ 
+diff --git a/src/exchange_info/static/app.js b/src/exchange_info/static/app.js
+index 1d708f31..469f7440 100644
+--- a/src/exchange_info/static/app.js
++++ b/src/exchange_info/static/app.js
+@@ -180,6 +180,8 @@ const state = {
+   onboardingReturnFocus: null,
+   dialogReturnFocus: null,
+   homeSchoolRequestId: 0,
++  schoolContextVersion: 0,
++  schoolDataRequestIds: {},
+ };
+ 
+ const $ = (selector) => document.querySelector(selector);
+@@ -688,6 +690,24 @@ function isCurrentHomeSchool(schoolName) {
+   return normalize(activeHomeSchool()) === normalize(schoolName);
+ }
+ 
++function captureSchoolContext(homeSchool = activeHomeSchool()) {
++  return { homeSchool, version: state.schoolContextVersion };
++}
++
++function schoolContextIsCurrent(context) {
++  return context.version === state.schoolContextVersion && isCurrentHomeSchool(context.homeSchool);
++}
++
++function beginSchoolDataRequest(kind, homeSchool = activeHomeSchool()) {
++  const id = (state.schoolDataRequestIds[kind] || 0) + 1;
++  state.schoolDataRequestIds[kind] = id;
++  return { ...captureSchoolContext(homeSchool), kind, id };
++}
++
++function schoolDataRequestIsCurrent(request) {
++  return schoolContextIsCurrent(request) && state.schoolDataRequestIds[request.kind] === request.id;
++}
++
+ function activeUniversityProfile() {
+   return state.supportedUniversities.find(
+     (item) => normalize(item.school_name) === normalize(activeHomeSchool())
+@@ -717,20 +737,47 @@ function homeAcademicPass(profile) {
+       (profile.classRankPercent > 0 && profile.classRankPercent <= rules.undergraduate_rank_maximum)
+     );
+   }
++  if (Object.keys(rules.degree_score_minimums || {}).length) {
++    const degree = profile.degree || "";
++    const undergraduate = ["大學部","學士","學士班","大一","大二","大三","大四","大五","大六"].includes(degree);
++    if (undergraduate && (rules.excluded_undergraduate_years || []).includes(profile.currentYear || degree)) return false;
++    if (undergraduate && !profile.currentYear) return false;
++    const minimum = rules.degree_score_minimums[degree];
++    return minimum != null && profile.academicScore != null && profile.academicScore >= minimum;
++  }
+   const minimum = academicMinimum();
+-  return minimum != null && profile.academicScore != null && profile.academicScore >= minimum;
++  return minimum != null && profile.academicScore != null && profile.academicScore >= minimum
++    && (state.dashboard?.academic_gpa_minimum == null || (profile.academicGpa != null && profile.academicGpa >= state.dashboard.academic_gpa_minimum));
+ }
+ 
+ function renderAcademicFields() {
+   const ntu = homeSelectionRules().academic_policy === "gpa_or_rank";
++  const ncu = activeHomeSchool() === "國立中央大學";
++  for (const [selector, values] of [["#advisor-degree", ["在職碩士班"]], ["#advisor-current-year", ["大五", "大六"]]]) {
++    const select = $(selector);
++    if (ncu) {
++      for (const value of values) if (!Array.from(select.options).some(option => option.value === value)) {
++        const option = new Option(value, value);
++        option.dataset.ncuOption = "true";
++        select.add(option);
++      }
++    } else select.querySelectorAll("[data-ncu-option]").forEach(option => option.remove());
++  }
+   $("#advisor-percent-field").hidden = ntu;
+   $("#advisor-academic-score").disabled = ntu;
+   document.querySelectorAll("[data-ntu-academic-field]").forEach((label) => {
+     label.hidden = !ntu;
+     label.querySelector("input").disabled = !ntu;
+   });
+-  $("#advisor-academic-rule").hidden = !ntu;
+-  if (ntu) $("#advisor-academic-rule").textContent = state.dashboard.academic_score_rule;
++  const ccu = state.dashboard?.academic_gpa_minimum != null;
++  const gpa = $("#advisor-academic-gpa");
++  $("#advisor-gpa-field").hidden = !(ntu || ccu);
++  gpa.disabled = !(ntu || ccu);
++  gpa.max = "4.3";
++  gpa.placeholder = ccu ? "中正須至少 3.0" : "例如 2.44；與排名擇一";
++  $("#advisor-gpa-label").textContent = ccu ? "歷年 GPA" : "適用學年GPA（4.3制）";
++  $("#advisor-academic-rule").hidden = !state.dashboard?.academic_score_rule;
++  if (state.dashboard?.academic_score_rule) $("#advisor-academic-rule").textContent = state.dashboard.academic_score_rule;
+ }
+ 
+ function homeCollegeOptions() {
+@@ -790,6 +837,16 @@ function languageThreshold(test) {
+   return LANGUAGE_THRESHOLDS[test] || null;
+ }
+ 
++function selectionLanguageLabel(test, score) {
++  const threshold = languageThreshold(test);
++  if (threshold) return `${threshold.label} ${score ?? "待補"}`;
++  if (activeHomeSchool() === "國立中央大學" && test) {
++    const label = LANGUAGE_THRESHOLDS[test]?.label || test.toUpperCase();
++    return `${label} ${score ?? "待補"}`;
++  }
++  return "語言能力待確認";
++}
++
+ function truncate(value, max = 90) {
+   const text = String(value ?? "").replace(/\s+/g, " ").trim();
+   return text.length > max ? `${text.slice(0, max - 1).trim()}…` : text;
+@@ -1045,6 +1102,7 @@ async function loadSupportedUniversities() {
+         official_url: "https://studyabroad.ntu.edu.tw/", supported: true,
+         partner_count: 288, coverage_note: "116-1校級甄選、文件與補助；282項名額待公布，6項零名額。",
+       },
++      {id:"ncu",school_name:"國立中央大學",short_name:"中央",english_name:"National Central University",hero_image:"/static/assets/ncu-campus.svg",official_url:"https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",supported:true,partner_count:214,coverage_note:"116-1簡章已公告，名額預定2026/10/12公告；214項115目錄僅供參考。"},
+     ];
+   }
+   renderSchoolOptions();
+@@ -1054,13 +1112,14 @@ async function loadSupportedUniversities() {
+ async function loadCoverage({ homeSchool = activeHomeSchool() } = {}) {
+   if (!canAccessPartnerCatalog()) return false;
+   const requestedSchool = homeSchool;
++  const request = beginSchoolDataRequest("coverage", requestedSchool);
+   let coverage = null;
+   try {
+     coverage = await fetchJson(`/coverage?school=${encodeURIComponent(requestedSchool)}`);
+   } catch (_) {
+-    if (!isCurrentHomeSchool(requestedSchool)) return false;
++    if (!schoolDataRequestIsCurrent(request)) return false;
+   }
+-  if (!isCurrentHomeSchool(requestedSchool)) return false;
++  if (!schoolDataRequestIsCurrent(request)) return false;
+   state.coverage = coverage;
+   const total = state.coverage?.total_partner_schools || state.dashboard?.partner_universities?.length || 0;
+   const imageCount = state.coverage?.image_count || 0;
+@@ -1080,15 +1139,16 @@ async function loadCoverage({ homeSchool = activeHomeSchool() } = {}) {
+ async function loadDestinationProfiles({ homeSchool = activeHomeSchool() } = {}) {
+   if (!canAccessPartnerCatalog()) return false;
+   const requestedSchool = homeSchool;
++  const request = beginSchoolDataRequest("destinations", requestedSchool);
+   let profiles = [];
+   try {
+     profiles = await fetchJson(
+       `/destination-profiles?home_school=${encodeURIComponent(requestedSchool)}&compact=true`
+     );
+   } catch (_) {
+-    if (!isCurrentHomeSchool(requestedSchool)) return false;
++    if (!schoolDataRequestIsCurrent(request)) return false;
+   }
+-  if (!isCurrentHomeSchool(requestedSchool)) return false;
++  if (!schoolDataRequestIsCurrent(request)) return false;
+   state.destinationProfiles = profiles;
+   if (state.dashboard) {
+     renderPartnerTable();
+@@ -1101,7 +1161,7 @@ async function loadDestinationProfiles({ homeSchool = activeHomeSchool() } = {})
+ 
+ async function loadSchoolImages() {
+   try {
+-    const payload = await fetchJson("/static/assets/school-images.json?v=20260929-complete-1");
++    const payload = await fetchJson("/static/assets/school-images.json?v=20261008-ntu-1");
+     state.schoolImages = Array.isArray(payload?.schools)
+       ? payload.schools.filter((item) => item.status === "verified" && item.local_path)
+       : [];
+@@ -1110,14 +1170,15 @@ async function loadSchoolImages() {
+   }
+ }
+ 
+-function schoolImageFor(schoolName) {
++function schoolImageFor(schoolName, country = null) {
+   return state.schoolImages.find(
+     (item) => normalize(item.school_name) === normalize(schoolName)
++      && (!country || item.country === country)
+   );
+ }
+ 
+ function renderSchoolPhoto(item, variant = "card") {
+-  const visual = schoolImageFor(item.school_name)
++  const visual = schoolImageFor(item.school_name, item.country)
+     || (item.image_status === "verified" && item.image_url ? { local_path: item.image_url } : null);
+   const label = item.country || "交換學校";
+   const fallback = `
+@@ -1126,7 +1187,7 @@ function renderSchoolPhoto(item, variant = "card") {
+     </span>`;
+   const loading = variant === "detail" ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
+   const image = visual?.local_path
+-    ? `<img src="${escapeHtml(visual.local_path)}" alt="${escapeHtml(item.school_name)}官方照片" ${loading} decoding="async" data-remove-on-error="true" />`
++    ? `<img src="${escapeHtml(visual.local_path)}" alt="${escapeHtml(item.school_name)}校園照片" ${loading} decoding="async" data-remove-on-error="true" />`
+     : "";
+   return `<span class="school-photo school-photo-${escapeHtml(variant)}">${fallback}${image}</span>`;
+ }
+@@ -1148,9 +1209,9 @@ function renderCoverageBadges(item) {
+   if (!coverage) return '<span class="coverage-chip pending">資料待查核</span>';
+   let image = '<span class="coverage-chip pending">照片待整理</span>';
+   if (coverage.image_status === "verified") {
+-    image = '<span class="coverage-chip ready">官方照片已確認</span>';
++    image = '<span class="coverage-chip ready">校園照片已核對</span>';
+   } else if (coverage.image_status === "missing") {
+-    image = '<span class="coverage-chip empty">官方照片待補</span>';
++    image = '<span class="coverage-chip empty">校園照片待補</span>';
+   } else if (coverage.image_status === "error") {
+     image = '<span class="coverage-chip error">照片擷取失敗</span>';
+   }
+@@ -1208,7 +1269,7 @@ function renderSchoolOptions(query = "") {
+     .map(
+       (item) => `
+         <button type="button" class="school-option${item.school_name === state.selectedHomeSchool ? " selected" : ""}" data-home-school="${escapeHtml(item.school_name)}" role="option" aria-selected="${item.school_name === state.selectedHomeSchool}">
+-          <img src="${escapeHtml(item.hero_image || "/static/assets/cgu-campus.jpg")}" alt="${escapeHtml(item.school_name)}識別圖" />
++          ${item.hero_image ? `<img src="${escapeHtml(item.hero_image)}" alt="${escapeHtml(item.school_name)}識別圖" />` : `<span class="planning-match-icon" aria-hidden="true"><i data-lucide="school"></i></span>`}
+           <span><strong>${escapeHtml(item.school_name)}</strong><small>${escapeHtml(item.coverage_note)}</small></span>
+           <span class="school-option-status">${item.partner_count ? `${item.partner_count} 間合作校` : "資料建置中"}</span>
+           <i data-lucide="${item.school_name === state.selectedHomeSchool ? "circle-check" : "circle"}" aria-hidden="true"></i>
+@@ -1316,6 +1377,7 @@ function setHomeSchool(schoolName, { reload = true } = {}) {
+     closeUniversityDetail({ updateHistory: false });
+   }
+   if (changed) {
++    state.schoolContextVersion += 1;
+     state.pendingBudgetDraft = null;
+     window.UniWayAnalytics?.track("home_school_change", { from: previousSchool, to: nextSchool });
+   }
+@@ -1330,12 +1392,12 @@ function setHomeSchool(schoolName, { reload = true } = {}) {
+   state.homeSchool = nextSchool;
+   state.selectedHomeSchool = nextSchool;
+   state.applicationContext.school_name = nextSchool;
+-  // An explicit selection must replace the home encoded by an incoming link,
+-  // otherwise the next hash route silently restores the previous university.
+-  const selectedUrl = new URL(window.location.href);
+-  if (selectedUrl.searchParams.has("home") && selectedUrl.searchParams.get("home") !== nextSchool) {
+-    selectedUrl.searchParams.set("home", nextSchool);
+-    window.UniWayNavigation.replaceState({}, "", selectedUrl.href);
++  // A shared catalogue URL must follow an explicit school choice. Otherwise
++  // the next hash navigation re-applies the previous ?home= school.
++  const sharedUrl = new URL(window.location.href);
++  if (sharedUrl.searchParams.has("home") && sharedUrl.searchParams.get("home") !== nextSchool) {
++    sharedUrl.searchParams.set("home", nextSchool);
++    window.UniWayNavigation.replaceState({}, "", sharedUrl.href);
+     partnerUrlSearch = window.location.search;
+   }
+   if (needsRefresh) {
+@@ -1349,6 +1411,12 @@ function setHomeSchool(schoolName, { reload = true } = {}) {
+     state.applicationContext.target_school = "";
+     state.applicationContext.target_country = "";
+     state.coverage = null;
++    state.destinationProfiles = [];
++    state.applicationTemplates = [];
++    state.applicationDocumentCatalog = null;
++    state.applicationDocumentCatalogError = "";
++    state.activeApplicationTemplateId = "";
++    state.activeWorkflow = null;
+     state.advisorPlan = null;
+     state.planningRecommendationKey = "";
+     state.planningPreview = null;
+@@ -1366,6 +1434,10 @@ function setHomeSchool(schoolName, { reload = true } = {}) {
+   if (needsRefresh && window.location.hash.startsWith("#school=")) {
+     window.UniWayNavigation.replaceState({}, "", "#partners");
+   }
++  if (needsRefresh && window.location.hash.startsWith("#application-form=")) {
++    window.UniWayNavigation.replaceState({}, "", "#application-center");
++    applyAppRoute({ loadFeed: false, resetScroll: false });
++  }
+   try {
+     window.localStorage.setItem(STORAGE_KEYS.homeSchool, nextSchool);
+   } catch (_) {
+@@ -2420,14 +2492,13 @@ function selectionConditionsPayload(profile = state.eligibilityProfile) {
+ function selectionProfileFromWorkspace(conditions) {
+   const profile = sanitizeSelectionConditions(conditions)?.profile;
+   if (!profile) return null;
+-  const threshold = languageThreshold(profile.language_test);
+   return {
+     college:profile.college, department:profile.department, currentYear:profile.current_year,
+     degree:profile.degree_level, academicScore:profile.academic_score,
+     academicGpa:profile.academic_gpa, classRankPercent:profile.class_rank_percent,
+     languageTest:profile.language_test || "", languageScore:profile.language_score,
+     jlptLevel:profile.jlpt_level || '',
+-    languageLabel:threshold ? `${threshold.label} ${profile.language_score ?? "待補"}` : "語言能力待確認",
++    languageLabel:selectionLanguageLabel(profile.language_test, profile.language_score),
+     targetTerm:profile.target_term, preferredCountry:profile.preferred_country,
+     monthlyBudget:profile.monthly_budget, scholarshipNeeded:profile.needs_scholarship,
+     academicYear:profile.academic_year, applicationRound:profile.application_round,
+@@ -2483,6 +2554,7 @@ function sanitizeAccountWorkspacePayload(payload, homeSchool = activeHomeSchool(
+       application_round: context.application_round || "",
+       semester: context.semester || "",
+       flags: Array.isArray(context.flags) ? context.flags.map(String) : [],
++      partner_document_states: Object.fromEntries(Object.entries(context.partner_document_states || {}).slice(0,214).filter(([,value])=>value && typeof value === "object" && !Array.isArray(value)).map(([key,value])=>[key,{host_admission_status:["unknown","not_accepted","accepted"].includes(value.host_admission_status) ? value.host_admission_status : "unknown",housing_choice:["unknown","on_campus","off_campus"].includes(value.housing_choice) ? value.housing_choice : "unknown"}])),
+     },
+     application_selections: selections,
+     submission_progress: source.submission_progress && typeof source.submission_progress === "object"
+@@ -2612,6 +2684,11 @@ function mergeAccountWorkspaceConflict(baseWorkspace, remoteWorkspace, localWork
+         local.application_context,
+       ),
+       school_name: remote.home_school,
++      partner_document_states: mergeWorkspaceRecord(
++        base.application_context?.partner_document_states,
++        remote.application_context?.partner_document_states,
++        local.application_context?.partner_document_states,
++      ),
+     },
+     application_selections: mergeWorkspaceRecord(
+       base.application_selections,
+@@ -3581,6 +3658,7 @@ async function deleteAccount() {
+ async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool() } = {}) {
+   if (!canAccessPartnerCatalog()) { clearProtectedCatalog(); setRefreshState(false); return false; }
+   const requestedSchool = homeSchool;
++  const request = beginSchoolDataRequest("dashboard", requestedSchool);
+   state.partnerDataLoading = true;
+   state.partnerDataError = false;
+   syncPartnerView();
+@@ -3589,7 +3667,7 @@ async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool(
+   try {
+     const school = encodeURIComponent(requestedSchool);
+     const dashboard = await fetchJson(`/student-dashboard?school=${school}`);
+-    if (!isCurrentHomeSchool(requestedSchool)) return false;
++    if (!schoolDataRequestIsCurrent(request)) return false;
+     state.dashboard = dashboard;
+     state.partnerDataLoading = false;
+     renderDashboard();
+@@ -3601,14 +3679,14 @@ async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool(
+     }
+     return true;
+   } catch (error) {
+-    if (!isCurrentHomeSchool(requestedSchool)) return false;
++    if (!schoolDataRequestIsCurrent(request)) return false;
+     state.partnerDataLoading = false;
+     state.partnerDataError = true;
+     syncPartnerView();
+     showLoadError(error, { announceError: state.statusRevision === loadingAnnouncementRevision });
+     return false;
+   } finally {
+-    if (isCurrentHomeSchool(requestedSchool)) setRefreshState(false);
++    if (schoolDataRequestIsCurrent(request)) setRefreshState(false);
+   }
+ }
+ 
+@@ -3893,7 +3971,10 @@ function renderPersonalPlanSnapshot() {
+   initIcons();
+ }
+ 
+-function languageThresholdFromPartner(item, languageTest) {
++function languageThresholdFromPartner(item, languageTest, degreeLevel = null) {
++  if (item.source_url?.startsWith("https://oia.ccu.edu.tw/")) {
++    return window.UniWayCcuLanguage?.assess(item, languageTest, degreeLevel).threshold ?? null;
++  }
+   if (homeSelectionRules().partner_requirements_need_confirmation) return null;
+   const text = partnerSummaryPoints(item, "eligibility_points").join(" ");
+   const patterns = {
+@@ -3911,6 +3992,10 @@ function languageThresholdFromPartner(item, languageTest) {
+ 
+ function partnerAvailabilityMeta(item) {
+   const status = item?.availability_status || "open";
++  if (["not_open", "needs_confirmation", "zero_quota", "fee_paying"].includes(status)) {
++    const label = {not_open:"本季未開放（官方灰字）",needs_confirmation:"名額尚未核實",zero_quota:"零名額",fee_paying:"自費計畫"}[status];
++    return {status,shortLabel:label,cardLabel:label,matchLabel:label,reason:item.availability_note || label,blocked:true};
++  }
+   const additional = {
+     closed: { label: "表列交換校／校內申請已截止", reason: "本梯次校內甄選已截止" },
+     reference_only: { label: "舊期參考／不能作當期申請", reason: "尚未核實新版名額及規定" },
+@@ -3950,8 +4035,8 @@ function partnerAvailabilityMeta(item) {
+   }
+   return {
+     status: "open",
+-    shortLabel: "本期開放",
+-    cardLabel: "本期開放",
++    shortLabel: item?.application_window_status === "closed" ? `${item.application_round}名額已列／校內截止` : "本期開放",
++    cardLabel: item?.application_window_status === "closed" ? `${item.application_round}名額已列／校內截止` : "本期開放",
+     matchLabel: "本期開放",
+     reason: "中央當期名單已列",
+     blocked: false,
+@@ -3965,6 +4050,8 @@ function renderPartnerAvailabilityNotice(item) {
+     : homeSelectionRules().pending_quota_planning && /^0\s*名?$/.test(item.quota || "") ? "官方本期名單已更新為零名額，本期未開放申請。"
+     : availability.status === "departmental_reference"
+     ? "中央當期名單未列，請先向所屬學院或國際處確認是否開放。"
++    : ["not_open", "needs_confirmation", "zero_quota", "fee_paying"].includes(availability.status)
++    ? availability.reason
+     : availability.status === "closed"
+     ? "此校列於官方名額表，但校內申請已截止；已獲推薦者請依外校通知續辦。"
+     : availability.status === "reference_only"
+@@ -4004,26 +4091,35 @@ function partnerMatch(item, profile = state.eligibilityProfile) {
+   }
+ 
+   const mismatches = [];
++  if (state.dashboard?.academic_gpa_minimum != null) {
++    if (profile.academicGpa == null) risks.push("尚未填GPA；須GPA至少3.0且歷年平均至少70分");
++    else if (Number(profile.academicGpa) < Number(state.dashboard.academic_gpa_minimum)) mismatches.push("GPA未達3.0");
++    if (Number(profile.academicScore) < academicMinimum()) mismatches.push("歷年平均未達70分");
++    if (item.application_window_status === "closed") risks.push("校內收件已截止，須確認已有申請或提名資格");
++  }
+   const college = homeCollegeValue(profile.college);
+   const cycleConfirmed = !homeSelectionRules().partner_requirements_need_confirmation;
+-  const collegeKnown = Boolean(cycleConfirmed && college && normalize(item.colleges));
+-  const degreeKnown = Boolean(cycleConfirmed && profile.degree && normalize(item.degree_levels));
++  const collegeKnown = Boolean(cycleConfirmed && college && !academicScopeNeedsConfirmation(item, "colleges"));
++  const degree = resolvedDegreeLevel(profile.degree, profile.currentYear);
++  const degreeMatch = partnerDegreeScopeMatches(item, college, degree);
++  const degreeKnown = Boolean(cycleConfirmed && degree && degreeMatch !== null && !academicScopeNeedsConfirmation(item, "degree_levels"));
+   const collegePass = collegeKnown && collegeMatches(item.colleges, college);
+-  const degreePass = degreeKnown && degreeMatches(item.degree_levels, profile.degree);
++  const coupledMatch = coupledAcademicScopeMatches(item, college, degree);
++  const degreePass = degreeKnown && degreeMatch;
+   if (!collegeKnown) risks.push(college ? "合作校學院範圍待確認" : "尚未填寫學院");
+   else if (collegePass) { score += 30; reasons.push("符合學院範圍"); }
+   else { mismatches.push("學院範圍待確認"); risks.push(`你的學院：${college}；學校範圍：${item.colleges}`); }
+-  if (!degreeKnown) risks.push(profile.degree ? "合作校學制範圍待確認" : "尚未填寫學制");
++  if (!degreeKnown) risks.push(profile.degree ? degreeMatch === null && degree === "研究所" ? "研究所尚未區分碩博士；合作校學制範圍待確認" : "合作校學制範圍待確認" : "尚未填寫學制");
+   else if (degreePass) { score += 20; reasons.push("符合目前學制"); }
+-  else { mismatches.push("學制範圍待確認"); risks.push(`你的學制：${profile.degree}；學校範圍：${item.degree_levels}`); }
++  else { mismatches.push("學制範圍待確認"); risks.push(coupledMatch === false ? `學院／學制配對不符：${college}／${degree}；學校配對：${item.degree_levels}` : `你的學制：${degree}；學校範圍：${item.degree_levels}`); }
+   if (profile.preferredCountry && item.country === profile.preferredCountry) { score += 15; reasons.push(`位於優先國家 ${item.country}`); }
+-  const threshold = languageThresholdFromPartner(item, profile.languageTest);
++  const threshold = languageThresholdFromPartner(item, profile.languageTest, profile.degree);
+   const hasLanguageScore = Boolean(profile.languageTest) && Number.isFinite(Number(profile.languageScore)) && Number(profile.languageScore) > 0;
+   if (!hasLanguageScore) {
+     risks.push("尚未填寫語言測驗或分數");
+   } else if (threshold === null) {
+     score += 8;
+-    risks.push("合作校語言門檻需另查");
++    risks.push(item.language_review_note || "合作校語言門檻需另查");
+   } else if (Number(profile.languageScore) >= threshold) {
+     score += 20;
+     reasons.push(`目前語言分數達公開門檻 ${threshold}`);
+@@ -4386,7 +4482,7 @@ function eligibilitySummary() {
+   return {
+     likely,
+     review,
+-    qualificationLabel: activeUniversityProfile().id === "tku" ? "淡江須依語組、學制、梯次及官方矛盾項確認資格" : academicPass && languagePass ? (activeHomeSchool() === "國立臺灣大學" ? "所填成績與英語分數達基本門檻" : `符合${activeUniversityProfile().short_name}基本門檻`) : "仍有基本條件要確認",
++    qualificationLabel: activeUniversityProfile().id === "tku" ? "淡江須依語組、學制、梯次及官方矛盾項確認資格" : homeSelectionRules().language_certificate_required ? "校內正式語檢及外校條件仍須核對" : academicPass && languagePass ? (activeHomeSchool() === "國立臺灣大學" ? "所填成績與英語分數達基本門檻" : `符合${activeUniversityProfile().short_name}基本門檻`) : "仍有基本條件要確認",
+   };
+ }
+ 
+@@ -5587,9 +5683,11 @@ function applyApplicationFormDrafts(drafts, { preserveLocal = true } = {}) {
+ 
+ async function loadApplicationFormDrafts({ homeSchool = activeHomeSchool() } = {}) {
+   if (!state.account) return;
++  const request = beginSchoolDataRequest("drafts", homeSchool);
++  const accountContext = captureAuthenticatedRequestContext();
+   try {
+     const result = await fetchJson(`/account/application-drafts?home_school=${encodeURIComponent(homeSchool)}`);
+-    if (!isCurrentHomeSchool(homeSchool)) return;
++    if (!schoolDataRequestIsCurrent(request) || !authenticatedRequestContextIsCurrent(accountContext)) return;
+     state.applicationFormDraftSyncSuspended = true;
+     applyApplicationFormDrafts(result.items || []);
+     state.applicationFormDraftLoadedSchool = homeSchool;
+@@ -5600,63 +5698,81 @@ async function loadApplicationFormDrafts({ homeSchool = activeHomeSchool() } = {
+     }
+   } catch (error) {
+     if (error.staleSession) return;
+-    if (isCurrentHomeSchool(homeSchool)) announce(`表單草稿同步暫時無法使用：${error.message}`, "error");
++    if (schoolDataRequestIsCurrent(request) && authenticatedRequestContextIsCurrent(accountContext)) announce(`表單草稿同步暫時無法使用：${error.message}`, "error");
+   } finally {
+-    state.applicationFormDraftSyncSuspended = false;
+-    renderApplicationDraftSyncStatus();
++    if (schoolDataRequestIsCurrent(request) && authenticatedRequestContextIsCurrent(accountContext)) {
++      state.applicationFormDraftSyncSuspended = false;
++      renderApplicationDraftSyncStatus();
++    }
+   }
+ }
+ 
+ async function saveApplicationFormDraft(templateId, { payload = null, retryConflict = true } = {}) {
+   const template = applicationTemplateById(templateId);
+-  if (!state.account || !template || state.applicationFormDraftSyncSuspended) return null;
++  if (!state.account || (!payload && (!template || state.applicationFormDraftSyncSuspended))) return null;
++  const accountContext = captureAuthenticatedRequestContext();
+   const outgoing = payload || applicationFormDraftPayload(template);
+-  const key = applicationDraftKey(template.id, outgoing.home_school);
++  const key = applicationDraftKey(templateId, outgoing.home_school);
++  outgoing.revision = Math.max(Number(outgoing.revision || 0), Number(state.applicationFormDrafts[key]?.revision || 0));
+   state.applicationFormDraftPending[key] = outgoing;
+-  renderApplicationDraftSyncStatus(template);
++  const renderCurrent = () => {
++    if (outgoing.home_school === activeHomeSchool() && authenticatedRequestContextIsCurrent(accountContext)) renderApplicationDraftSyncStatus();
++  };
++  renderCurrent();
+   if (navigator.onLine === false) return null;
+   try {
+-    const saved = await fetchJson(`/account/application-drafts/${encodeURIComponent(template.id)}`, {
++    const saved = await fetchJson(`/account/application-drafts/${encodeURIComponent(templateId)}`, {
+       method: "PUT",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify(outgoing),
+     });
+-    state.applicationFormDrafts[key] = saved;
+-    state.applicationFileVaultLinks[template.id] = saved.attachments || {};
+-    delete state.applicationFormDraftPending[key];
+-    renderApplicationDraftSyncStatus(template);
++    if (!authenticatedRequestContextIsCurrent(accountContext)) return null;
++    if (Number(saved.revision || 0) >= Number(state.applicationFormDrafts[key]?.revision || 0)) {
++      state.applicationFormDrafts[key] = saved;
++      if (outgoing.home_school === activeHomeSchool()) state.applicationFileVaultLinks[templateId] = saved.attachments || {};
++    }
++    if (state.applicationFormDraftPending[key] === outgoing) delete state.applicationFormDraftPending[key];
++    renderCurrent();
+     return saved;
+   } catch (error) {
++    if (error.staleSession || !authenticatedRequestContextIsCurrent(accountContext)) return null;
+     const current = error.payload?.detail?.current_draft;
+-    if (error.status === 409 && retryConflict && current) {
++    if (error.status === 409 && retryConflict && current && state.applicationFormDraftPending[key] === outgoing) {
+       const merged = mergeApplicationFormDraft(current, outgoing);
+       state.applicationFormDrafts[key] = current;
+-      return saveApplicationFormDraft(template.id, {
++      return saveApplicationFormDraft(templateId, {
+         payload: merged,
+         retryConflict: false,
+       });
+     }
+-    renderApplicationDraftSyncStatus(template);
++    renderCurrent();
+     return null;
+   }
+ }
+ 
+ function scheduleApplicationFormDraftSync(templateId = state.activeApplicationTemplateId) {
+   if (!state.account || !templateId || state.applicationFormDraftSyncSuspended) return;
++  const template = applicationTemplateById(templateId);
++  if (!template) return;
++  const outgoing = applicationFormDraftPayload(template);
++  const accountContext = captureAuthenticatedRequestContext();
++  state.applicationFormDraftPending[applicationDraftKey(templateId, outgoing.home_school)] = outgoing;
+   window.clearTimeout(state.applicationFormDraftSyncTimer);
+   state.applicationFormDraftSyncTimer = window.setTimeout(
+-    () => saveApplicationFormDraft(templateId),
++    () => {
++      if (authenticatedRequestContextIsCurrent(accountContext)) retryPendingApplicationFormDrafts();
++    },
+     650,
+   );
+ }
+ 
+ async function retryPendingApplicationFormDrafts() {
+   if (!state.account || navigator.onLine === false) return;
++  const accountContext = captureAuthenticatedRequestContext();
+   for (const [key, payload] of Object.entries(state.applicationFormDraftPending || {})) {
+-    const template = state.applicationTemplates.find(
+-      (item) => applicationDraftKey(item.id, payload.home_school) === key,
+-    );
+-    if (template) await saveApplicationFormDraft(template.id, { payload });
++    if (!authenticatedRequestContextIsCurrent(accountContext)) return;
++    const prefix = `${payload.home_school}::`;
++    if (key.startsWith(prefix)) await saveApplicationFormDraft(key.slice(prefix.length), { payload });
+   }
+ }
+ 
+@@ -5854,6 +5970,10 @@ function refreshApplicationFieldConditions(template) {
+     if (english) { date.min = "2025-05-01"; date.max = new Date().toISOString().slice(0, 10); }
+     else { date.removeAttribute("min"); date.removeAttribute("max"); }
+   }
++  if (date && activeHomeSchool() === "國立中央大學") {
++    date.removeAttribute("min");
++    date.max = new Date().toISOString().slice(0, 10);
++  }
+ }
+ 
+ function applicationProfileCompletion() {
+@@ -5909,6 +6029,49 @@ function applicationFlagsFromForm(form) {
+   return ["subsidy", "military_service", "full_year"].filter((name) => form.elements[name]?.checked);
+ }
+ 
++function ncuDocumentStateKey(schoolName = state.applicationContext.target_school, year = state.applicationContext.academic_year, round = state.applicationContext.application_round, semester = state.applicationContext.semester) {
++  return JSON.stringify([schoolName || "", year || "", round || "", semester || ""]);
++}
++
++function ncuDocumentState(schoolName, year, round, semester = state.applicationContext.semester) {
++  return state.applicationContext.partner_document_states?.[ncuDocumentStateKey(schoolName, year, round, semester)] || {host_admission_status:"unknown",housing_choice:"unknown"};
++}
++
++function ncuCatalogContextKey(context) {
++  const key = ncuDocumentStateKey(context.target_school,context.academic_year,context.application_round,context.semester);
++  const selection = context.partner_document_states?.[key] || {};
++  return JSON.stringify([context.target_school || "",context.college || "",context.department || "",context.degree_level || "",context.academic_year || "",context.application_round || "",context.semester || "",selection.host_admission_status || "unknown",selection.housing_choice || "unknown"]);
++}
++
++function restoreNcuDocumentState() {
++  const panel = $("#ncu-document-state");
++  if (!panel) return;
++  panel.hidden = activeHomeSchool() !== "國立中央大學" || !state.applicationContext.target_school || state.applicationContext.program_type !== "exchange";
++  const selection = ncuDocumentState(state.applicationContext.target_school, state.applicationContext.academic_year, state.applicationContext.application_round);
++  $("#ncu-host-admission").value = selection.host_admission_status;
++  $("#ncu-housing-choice").value = selection.housing_choice;
++  $("#ncu-document-state-note").textContent = `此學校、年度／梯次與學期的條件文件會依選擇顯示準備時點；當期要求仍須查核。${state.account ? "選擇會保存於本次申請設定。" : "登入後可保存選擇。"}`;
++}
++
++function documentApplicabilityMarkup(results) {
++  const labels = {applicable:"符合參考條件",not_applicable:"不適用",deferred:"錄取後再準備",needs_confirmation:"條件需確認"};
++  return (results || []).map(result=>`<p class="document-applicability" data-document-applicability="${escapeHtml(result.status)}"><strong>${escapeHtml(labels[result.status] || "需確認")} · ${escapeHtml(result.requirement_name)}</strong><span>${escapeHtml(result.note)}</span></p>`).join("");
++}
++
++async function handleNcuDocumentStateChange() {
++  if (activeHomeSchool() !== "國立中央大學" || !state.applicationContext.target_school) return;
++  const key = ncuDocumentStateKey();
++  state.applicationContext.partner_document_states = {...(state.applicationContext.partner_document_states || {}), [key]:{host_admission_status:$("#ncu-host-admission").value,housing_choice:$("#ncu-housing-choice").value}};
++  persistApplicationContext();
++  if (state.personalApplicationPlan?.choices?.some(choice=>choice.school_name === state.applicationContext.target_school)) {
++    state.personalApplicationPlan = null;
++    $("#eligibility-result").innerHTML = '<p>錄取或住宿條件已修改，請重新核對志願以更新個人準備任務。</p>';
++    renderPersonalPlanSnapshot();
++  }
++  await loadApplicationTemplates();
++  window.UniWayMultiPlan?.render();
++}
++
+ function readApplicationContextForm({ targetSchool = $("#application-target-school")?.value || "" } = {}) {
+   const form = $("#application-context-form");
+   if (!form) return state.applicationContext;
+@@ -5937,6 +6100,7 @@ function restoreApplicationContextForm() {
+     form.elements[name].checked = (state.applicationContext.flags || []).includes(name);
+   });
+   renderApplicationTargetSchools();
++  restoreNcuDocumentState();
+ }
+ 
+ function renderApplicationTargetSchools() {
+@@ -5987,17 +6151,18 @@ function initializeApplicationSelections() {
+ }
+ 
+ function applicationCatalogContextKey(homeSchool = activeHomeSchool(), context = state.applicationContext) {
+-  return JSON.stringify([homeSchool, ...["target_school", "program_type", "college", "department", "degree_level", "academic_year", "application_round", "semester"].map(key => context[key] || ""), [...(context.flags || [])].sort()]);
++  return JSON.stringify([homeSchool, ...["target_school", "program_type", "college", "department", "degree_level", "academic_year", "application_round", "semester"].map(key => context[key] || ""), [...(context.flags || [])].sort(), context.partner_document_states || {}]);
+ }
+ 
+ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}) {
+   if (!canAccessPartnerCatalog()) return false;
+   const requestedSchool = homeSchool;
++  const request = beginSchoolDataRequest("templates", requestedSchool);
+   const context = { ...state.applicationContext, flags: [...(state.applicationContext.flags || [])] };
+   const contextKey = applicationCatalogContextKey(requestedSchool, context);
+   const requestId = ++state.applicationTemplateRequestId;
+   const requestOwner = captureAuthenticatedRequestContext();
+-  const isCurrent = () => requestId === state.applicationTemplateRequestId
++  const isCurrent = () => schoolDataRequestIsCurrent(request) && requestId === state.applicationTemplateRequestId
+     && authenticatedRequestContextIsCurrent(requestOwner)
+     && isCurrentHomeSchool(requestedSchool) && contextKey === applicationCatalogContextKey();
+   const container = $("#application-template-list");
+@@ -6027,9 +6192,14 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}
+         school: requestedSchool,
+         target_school: context.target_school,
+       });
+-      ["college", "department", "degree_level", "academic_year", "application_round"].forEach((key) => {
++      ["college", "department", "degree_level", "academic_year", "application_round", "semester"].forEach((key) => {
+         if (context[key]) catalogParams.set(key, context[key]);
+       });
++      if (requestedSchool === "國立中央大學") {
++        const selection = ncuDocumentState(context.target_school, context.academic_year, context.application_round);
++        catalogParams.set("host_admission_status", selection.host_admission_status);
++        catalogParams.set("housing_choice", selection.housing_choice);
++      }
+       try {
+         catalog = await fetchJson(`/application-center/catalog?${catalogParams}`);
+       } catch (error) {
+@@ -6175,10 +6345,11 @@ function applicationRequirementMeta(item) {
+   if (item.stamps?.length) parts.push(`核章：${item.stamps.join("、")}`);
+   if (item.stage) parts.push(`階段：${({nomination:"提名",student_application:"學生申請",after_application:"外校申請後",second_submission:"第二次送件",post_offer:"錄取後",after_dorm_assignment:"住宿分配後",conditional_program:"特定計畫條件"})[item.stage]}`);
+   if (item.conditional) parts.push(`適用條件：${item.condition || item.name}`);
+-  if (item.applicability_status) parts.push(`適用性：${({verified_current:"當期依據已核",needs_confirmation:"當期適用待確認",reference_only:"一般／歷史參考"})[item.applicability_status]}`);
++  if (item.applicability_status) parts.push(`適用性：${({verified_current:"當期依據已核",needs_confirmation:"當期適用待確認",reference_only:"歷史參考"})[item.applicability_status]}`);
+   if (item.applicability_year) parts.push(item.applicability_year);
+   if (item.applicability_note) parts.push(item.applicability_note);
+-  if (item.official_form_verified && item.needs_confirmation) parts.push("官方原檔／表單入口已核實可開啟；適用性與完整送件清單仍須確認");
++  if (item.official_form_verified && item.needs_confirmation) parts.push("官方文件已核實可開啟；適用性、完整清單及送件細節仍待確認");
++  else if (item.applicability_status && item.official_form_url) parts.push("原檔下載未核實；版本適用性待確認");
+   return parts.join(" · ");
+ }
+ 
+@@ -6234,18 +6405,18 @@ function renderApplicationDocumentCatalog() {
+       <summary><span><strong>${escapeHtml(group.phase)}</strong><small>${group.items.length} 項</small></span><i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+       <div>${group.items.map((item) => {
+         const sourceUrl = item.source_urls?.[0] || "";
+-        const sourceLabel = item.download_available
+-          ? activeHomeSchool() === "淡江大學"
+-            ? (item.applicability_status === "reference_only" ? "開啟官方一般參考表格" : "開啟校方原表／表單入口")
+-            : "下載校方正式表格"
+-          : "查看官方規定";
+-        const sourceHref = item.download_available ? item.official_form_url : sourceUrl;
++        const pendingForm = item.applicability_status && safeSourceUrl(item.official_form_url);
++        const sourceLabel = activeHomeSchool() === "淡江大學" && item.download_available ? (item.applicability_status === "reference_only" ? "開啟官方一般參考表格" : "開啟校方原表／表單入口") : item.official_form_verified ? "開啟已核實官方表格／文件" : item.download_available ? "下載校方正式表格" : pendingForm ? "查看官方表格來源（待核實）" : "查看官方規定";
++        const sourceHref = item.download_available || pendingForm ? item.official_form_url : sourceUrl;
++        const referenceSources = activeHomeSchool() === "國立中央大學" && item.needs_confirmation
++          ? [...new Set(item.source_urls || [])].filter((url) => url !== sourceHref && safeSourceUrl(url))
++          : [];
+         const checkedAt = item.source_checked_at ? formatDate(item.source_checked_at) : "查核日待補";
+         return `
+           <article class="application-requirement-item ${item.needs_confirmation ? "needs-confirmation" : "is-confirmed"}">
+             <span class="application-requirement-order">${item.sequence}</span>
+-            <div><span class="application-requirement-badges"><em>${item.needs_confirmation ? "待確認" : "已確認"}</em>${item.conditional ? "<b>符合條件才需要</b>" : ""}${item.download_available ? "<b>官方表格</b>" : ""}</span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.step_title)}</small><p>${escapeHtml(applicationRequirementMeta(item))}</p>${item.needs_confirmation ? `<p class="application-requirement-contact">請聯絡 ${escapeHtml(item.contact_unit || catalog.contact_unit)}</p>` : ""}</div>
+-            <div class="application-requirement-source">${sourceHref ? `<a href="${escapeHtml(sourceHref)}" target="_blank" rel="noreferrer"><i data-lucide="external-link" aria-hidden="true"></i><span>${sourceLabel}</span></a>` : "<span>來源待校方提供</span>"}<small>${escapeHtml(checkedAt)}</small></div>
++            <div><span class="application-requirement-badges"><em>${item.needs_confirmation ? "待確認" : "已確認"}</em>${item.conditional ? "<b>符合條件才需要</b>" : ""}${item.download_available ? "<b>官方表格</b>" : ""}</span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.step_title)}</small><p>${escapeHtml(applicationRequirementMeta(item))}</p>${documentApplicabilityMarkup(item.applicability ? [item.applicability] : [])}${item.needs_confirmation ? `<p class="application-requirement-contact">請聯絡 ${escapeHtml(item.contact_unit || catalog.contact_unit)}</p>` : ""}</div>
++            <div class="application-requirement-source">${sourceHref ? `<a href="${escapeHtml(sourceHref)}" target="_blank" rel="noreferrer"><i data-lucide="external-link" aria-hidden="true"></i><span>${sourceLabel}</span></a>` : "<span>來源待校方提供</span>"}${referenceSources.length ? `<details><summary>其他參考來源（當期待確認）</summary>${referenceSources.map((url, index) => `<a href="${escapeHtml(safeSourceUrl(url))}" target="_blank" rel="noreferrer">參考來源 ${index + 1}</a>`).join("")}</details>` : ""}<small>${escapeHtml(checkedAt)}</small></div>
+           </article>`;
+       }).join("")}</div>
+     </details>`).join("");
+@@ -7447,7 +7618,8 @@ function renderPartnerFilters() {
+   const countries = state.region ? allCountries.filter((country) => regions.inRegion(country, state.region)) : allCountries;
+   const colleges = homeCollegeOptions();
+   state.college = homeCollegeValue(state.college);
+-  const degrees = unique(partners.flatMap((item) => splitOptions(item.degree_levels)));
++  const degrees = window.UniWayAcademicUnits?.[activeHomeSchool()]?.degreeFilterOptions
++    || unique(partners.flatMap((item) => splitOptions(item.degree_levels)));
+   fillRegionSelect("#region-filter", allCountries, state.region);
+   fillCountrySelect("#country-filter", countries, state.country);
+   fillSelect("#college-filter", colleges, "全部學院", state.college);
+@@ -7471,8 +7643,9 @@ function filteredPartners() {
+       (!state.availability || (item.availability_status || "open") === state.availability) &&
+       window.UniWayRegions.inRegion(item.country, state.region) &&
+       (!state.country || item.country === state.country) &&
+-      (!state.college || collegeMatches(item.colleges, state.college)) &&
+-      (!state.degree || degreeMatches(item.degree_levels, state.degree)) && discoveryCriteriaMatch(item)
++      (!state.college || academicScopeNeedsConfirmation(item, "colleges") || collegeMatches(item.colleges, state.college)) &&
++      (!state.degree || academicScopeNeedsConfirmation(item, "degree_levels") || degreeMatches(item.degree_levels, state.degree) !== false) &&
++      coupledAcademicScopeMatches(item, state.college, state.degree) !== false && discoveryCriteriaMatch(item)
+     );
+   });
+   if (state.eligibilityProfile) {
+@@ -7481,16 +7654,64 @@ function filteredPartners() {
+   return partners;
+ }
+ 
++function academicScopeNeedsConfirmation(item, key) {
++  const status = item.field_evidence?.[key]?.status;
++  if (status && status !== "verified_current") return true;
++  const text = normalize(item[key]);
++  if (!text || ["無", "none", "n/a", "na", "--", "—", "待補"].includes(text)
++      || ["待確認", "依當期", "依協議", "依合作", "另洽", "未提供", "不含", "除外", "excluding", "except"].some(term => text.includes(term))) return true;
++  const terms = key === "colleges"
++    ? ["學院", "全校", "不限", "四院皆可", "工程", "工學", "管理", "商", "人文", "法律", "法學", "理學", "社科", "社會", "醫", "生命", "資訊", "藝術", "engineering", "business", "management", "law", "science", "humanities", "arts", "medicine", "faculty", "college"]
++    : ["大學部", "學士", "本科", "研究所", "碩士", "博士", "不限", "全校", "undergraduate", "bachelor", "graduate", "master", "doctoral", "phd"];
++  return !terms.some(term => text.includes(term)) && !(key === "colleges" && /\ball\b/i.test(text));
++}
++
++function coupledAcademicScopeOptions(item) {
++  const options = item.program_options || [];
++  if (!options.length) return null;
++  if (["colleges", "degree_levels"].some(key => item.field_evidence?.[key]?.status !== "verified_current")) return null;
++  const urls = new Set([item.field_evidence.colleges.source_url, item.field_evidence.degree_levels.source_url]);
++  if (options.some(option => !urls.has(option.source_url) || academicScopeNeedsConfirmation(option, "colleges") || academicScopeNeedsConfirmation(option, "degree_levels"))) return null;
++  return options;
++}
++
++function coupledAcademicScopeMatches(item, college, degree) {
++  const options = coupledAcademicScopeOptions(item);
++  if (!college || !degree || options === null) return null;
++  const matches = options.filter(option => collegeMatches(option.colleges, college)).map(option => degreeMatches(option.degree_levels, degree));
++  return matches.includes(true) ? true : matches.includes(null) ? null : false;
++}
++
++function resolvedDegreeLevel(degree, currentYear) {
++  if (degree !== "研究所") return degree;
++  const year = normalize(currentYear).normalize("NFKC");
++  const master = year.includes("碩士") || /\bmaster(?:'s)?\b/i.test(year);
++  const doctoral = year.includes("博士") || /\b(?:ph\.?d\.?|doctoral)\b/i.test(year);
++  return master !== doctoral ? master ? "碩士班" : "博士班" : degree;
++}
++
++function partnerDegreeScopeMatches(item, college, degree) {
++  if (college && coupledAcademicScopeOptions(item) !== null) return coupledAcademicScopeMatches(item, college, degree);
++  return degreeMatches(item.degree_levels, degree);
++}
++
+ function collegeMatches(value, selected) {
+-  const text = normalize(value);
+-  return text.includes(normalize(selected)) || text.includes("全校") || text.includes("四院皆可");
++  const text = normalize(value).normalize("NFKC");
++  if (["不限", "全校", "各學院", "四院皆可"].some(term => text.includes(term)) || /\ball\b/i.test(text)) return true;
++  const aliases = {"醫學院":["醫學","medicine","medical"],"工學院":["工學","工程","engineering"],"法律學院":["法律","法學","law"],"智慧運算學院":["智慧運算","資訊","computer","informatics"],"管理學院":["管理","商學","business","management"],"資訊工程學系":["資訊","電腦","computer","informatics"]};
++  return [selected, ...(aliases[selected] || [])].some(term => term && text.includes(normalize(term).normalize("NFKC")));
+ }
+ 
+ function degreeMatches(value, selected) {
+   const text = normalize(value);
+-  const target = normalize(selected);
+-  if (target === "研究所") return /研究所|碩士|博士/.test(text);
+-  return text.includes(target);
++  if (selected === "研究所") {
++    const master = degreeMatches(value, "碩士班"), doctoral = degreeMatches(value, "博士班");
++    return master && doctoral ? true : master || doctoral ? null : false;
++  }
++  const aliases = {"大學部":["大學部","學士","undergraduate","bachelor"],"碩士班":["碩士","研究所","master","graduate"],"博士班":["博士","研究所","doctoral","phd","graduate"],"研究所":["研究所","碩士","博士","graduate","master","doctoral","phd"]};
++  return (aliases[selected] || [selected]).some(term => /^[a-z]+$/i.test(term)
++    ? new RegExp(`(?<![a-z])${term}(?![a-z])`, "i").test(text)
++    : text.normalize("NFKC").includes(normalize(term).normalize("NFKC")));
+ }
+ 
+ // How many schools one page of the list shows, and how many each "show more" adds.
+@@ -7623,6 +7844,12 @@ function localizedPartnerValue(item, summaryKey, rawKey, fallback = "依公告")
+ }
+ 
+ function partnerDeadlineReference(item) {
++  const receiving = item?.partner_exchange_details?.application_deadline;
++  if (receiving) {
++    const statuses = {verified_current: "當期已核實", conflict: "來源矛盾，待確認", reference_only: "其他年度／梯次參考", needs_confirmation: "適用年度或條件待確認", missing: "本期未核實", explicit_not_announced: "官方明示尚未公告"};
++    const value = `${statuses[receiving.status] || "待確認"}：${receiving.value || receiving.reason}`;
++    return {label: "合作校申請截止", value, compact: `合作校申請：${value}`};
++  }
+   const rawValue = partnerStudentSummary(item).application_deadline || item?.application_deadline;
+   const value = String(rawValue || "").trim();
+   if (activeUniversityProfile().id === "tku") {
+@@ -7657,12 +7884,16 @@ function partnerSummaryPoints(item, key) {
+   return [];
+ }
+ 
+-function renderStudentPointList(points, { limit = 4, compact = false, fallback = "尚無資料" } = {}) {
+-  const visible = (points || []).filter(Boolean).slice(0, limit);
++function renderStudentPointList(points, { limit = 4, compact = false, fallback = "尚無資料", expandRemaining = false } = {}) {
++  const all = (points || []).filter(Boolean);
++  const visible = all.slice(0, limit);
+   const values = visible.length ? visible : [fallback];
+-  return `<ul class="student-point-list${compact ? " compact" : ""}">${values
++  const list = `<ul class="student-point-list${compact ? " compact" : ""}">${values
+     .map((point) => `<li>${renderSummaryText(point)}</li>`)
+     .join("")}</ul>`;
++  return list + (expandRemaining && all.length > limit
++    ? `<details class="partner-summary-more"><summary>查看其餘 ${all.length - limit} 項說明</summary>${renderStudentPointList(all.slice(limit), { limit: all.length, compact, fallback })}</details>`
++    : "");
+ }
+ 
+ function renderSummaryText(value) {
+@@ -7688,7 +7919,7 @@ function renderPartnerLinks(item) {
+   const source = item.source_url
+     ? `<a href="${escapeHtml(item.source_url)}" target="_blank" rel="noreferrer">官方來源</a>`
+     : "";
+-  const visual = schoolImageFor(item.school_name);
++  const visual = schoolImageFor(item.school_name, item.country);
+   const imagePage = visual?.official_page_url || item.image_page_url;
+   const imageSource = imagePage
+     ? `<a href="${escapeHtml(imagePage)}" target="_blank" rel="noreferrer">圖片來源</a>${renderSchoolImageCredit(item)}`
+@@ -7700,7 +7931,13 @@ function renderPartnerLinks(item) {
+ }
+ 
+ function renderSchoolImageCredit(item) {
+-  const note = schoolImageFor(item.school_name)?.note || "";
++  const visual = schoolImageFor(item.school_name, item.country);
++  const note = visual?.note || "";
++  if (visual?.license_name) {
++    const license = String(visual.license_url || "").replace(/^http:\/\//, "https://");
++    const safeLicense = /^https:\/\/(?:creativecommons\.org|commons\.wikimedia\.org)\//.test(license);
++    return `<small class="school-image-credit">${escapeHtml(note)}${safeLicense ? ` · <a href="${escapeHtml(license)}" target="_blank" rel="noreferrer">圖片授權</a>` : ""}</small>`;
++  }
+   if (!note.startsWith("攝影：")) return "";
+   return `<small class="school-image-credit">${escapeHtml(note)}${note.includes("CC BY-SA 3.0") ? ' · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noreferrer">圖片授權</a>' : ""}</small>`;
+ }
+@@ -7795,6 +8032,12 @@ function renderComparison(items) {
+       .join("")}</tbody></table></div>`;
+ }
+ 
++function ncuSourceReadingScope(source) {
++  const scopes = [source.source_read_scope_note_zh, source.reading_review?.scope]
++    .filter(value => typeof value === "string" && value && value !== source.privacy_note);
++  return [...new Set(scopes)].join("；");
++}
++
+ function openUniversityDetail(item, { updateHistory = true } = {}) {
+   if (!canAccessPartnerCatalog()) { window.location.hash = "#partners"; return; }
+   if (!item) return;
+@@ -7855,6 +8098,21 @@ function openUniversityDetail(item, { updateHistory = true } = {}) {
+   const cachedCompleteness = state.completenessCache.get(item.school_name);
+   if (cachedCompleteness) renderSchoolCompleteness(cachedCompleteness);
+   else loadSchoolCompleteness(item);
++  document.querySelector("#ncu-source-audit")?.addEventListener("toggle", async (event) => {
++    if (!event.currentTarget.open || event.currentTarget.dataset.loaded) return;
++    const element = event.currentTarget;
++    const body = element.querySelector("#ncu-source-audit-body");
++    try {
++      const report = await fetchJson(`/partner-source-audit?school=${encodeURIComponent(item.school_name)}&home_school=${encodeURIComponent(activeHomeSchool())}`);
++      if (state.activeSchool !== item.school_name) return;
++      body.innerHTML = `<p>查核日：${escapeHtml(report.checked_at)}。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。</p>
++        <ul>${Object.values(report.fields).map(row=>`<li><strong>${escapeHtml(row.label)}</strong>：${escapeHtml(row.note)}${row.unresolved ? `<small>${escapeHtml(row.unresolved)}</small>`:""}${row.key.startsWith("home_") || row.key === "quota" ? (row.original_evidence || []).map(p=>`<details><summary>${escapeHtml(p.source_title)} · 原文第${escapeHtml(p.page)}頁</summary><p>${escapeHtml(p.applicability)} · 查核${escapeHtml(p.checked_at)} · <a href="${escapeHtml(safeSourceUrl(p.source_url))}" target="_blank" rel="noopener noreferrer">官方來源</a></p><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text)}</pre></details>`).join("") : ""}</li>`).join("")}</ul>
++        ${report.source_evidence.map(src=>`<details><summary>${escapeHtml(src.label)} · ${src.source_excerpt_only ? "必要欄位摘錄" : `${src.pages.length}個來源頁／段`}；${src.content_status?.text_page_count ?? 0}頁有文字；${src.content_status?.visual_reviewed_page_count ?? 0}頁已視覺查核${src.content_status?.visual_reviewed_image_count ? `；${src.content_status.visual_reviewed_image_count}張原文圖片已視覺查核` : ""}</summary><p>${escapeHtml(report.read_sources.find(row=>row.id === src.id)?.applicability || "適用性待核對")}</p><p><a href="${escapeHtml(safeSourceUrl(src.url))}" target="_blank" rel="noopener noreferrer">官方公開來源</a> · 查核${escapeHtml(src.checked_at)}${src.excerpt_note_zh ? `<small>${escapeHtml(src.excerpt_note_zh)}</small>` : ""}${src.conversion_review?.note_zh ? `<small>${escapeHtml(src.conversion_review.note_zh)}</small>` : ""}${src.visual_review?.instructions_zh ? `<small>${escapeHtml(src.visual_review.instructions_zh)}</small>` : ""}${(src.text_quality_issues || []).length ? `<small>${escapeHtml(src.text_quality_issues.map(x=>`${x.reason}（頁${x.pages.join("、")}）`).join("；"))}</small>` : ""}${(src.non_text_pages || []).length ? `<small>${src.non_text_pages.every(page => page == null) ? "無固定PDF頁碼的來源含空白段／工作表" : `第${escapeHtml(src.non_text_pages.join("、"))}頁無可抽取文字`}；${src.content_status?.all_pages_read ? "已有原件SHA相符的閱讀紀錄；文字／視覺查核範圍分列，原始空頁仍保留。" : "須看官方原頁，未視為全文核對完成。"}</small>` : ""}</p>${src.privacy_note ? `<p class="ncu-source-scope">${escapeHtml(src.privacy_note)}</p>` : ""}${ncuSourceReadingScope(src) && ncuSourceReadingScope(src) !== src.privacy_note ? `<p class="ncu-source-reading-scope">閱讀範圍：${escapeHtml(ncuSourceReadingScope(src))}</p>` : ""}${src.pages.map(p=>`<details><summary>${p.archive_member ? `原文表格 ${escapeHtml(p.archive_member)}（ZIP內檔案，無PDF頁碼）` : p.image ? `原文圖片 ${escapeHtml(p.image)}（無PDF頁碼）` : p.slide ? `原文投影片 ${escapeHtml(p.slide)}（無PDF頁碼）` : p.sheet ? `原文工作表 ${escapeHtml(p.sheet)}（無PDF頁碼）` : p.page == null ? (src.source_excerpt_only ? "必要欄位摘錄（無固定PDF頁碼）" : "原文（無固定PDF頁碼）") : `原文第${escapeHtml(p.page)}頁`}</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text || (p.sheet ? "此工作表沒有非空儲存格；原始空白工作表另保留，閱讀狀態依同SHA逐工作表紀錄。" : "此頁無可抽取文字；請看原件及另外標示的視覺核對摘錄。"))}</pre></details>`).join("")}${(src.page_transcriptions || []).map(p=>`<details class="ncu-visual-passage"><summary>視覺核對摘錄（原PDF第${escapeHtml(p.page)}頁）</summary><p>人工核對的選定原文段落；原始抽取另外保留，並非全文轉錄或本期適用性核准。</p><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text)}</pre></details>`).join("")}</details>`).join("")}
++        ${report.unretrieved_sources.length ? `<section><p>未取得來源：以下是本次讀取失敗的網址，不推定登入限定、官方未公告或停止交換。</p><ul>${report.unretrieved_sources.map(src=>`<li class="ncu-unretrieved-source" data-source-id="${escapeHtml(src.id)}"><strong>${escapeHtml(src.id)}</strong>：${escapeHtml(src.reason)}${src.url ? ` · <a href="${escapeHtml(safeSourceUrl(src.url))}" target="_blank" rel="noopener noreferrer">已查網址（本次未取得）</a>` : ""}</li>`).join("")}</ul></section>`:""}`;
++      element.dataset.loaded = "true";
++    } catch (error) { body.textContent = `查核記錄讀取失敗：${error.message}`; }
++  });
++
+ 
+   const cachedCommunity = state.communityCache.get(item.school_name);
+   if (cachedCommunity) renderCommunityThreads(cachedCommunity);
+@@ -8007,7 +8265,7 @@ function renderPrimaryFacts(item, destinationProfile = state.destinationCache.ge
+     [deadline.label, deadline.value, "calendar-clock", "deadline"],
+     ["語言門檻", partnerLanguageRequirement(item), "languages", "language"],
+     ["生活費參考", truncate(destinationProfile?.cost_summary || "官方費用待查核", 130), "wallet-cards", "cost"],
+-    ["交換名額", item.quota || "依公告", "users", "quota"],
++    ["交換名額", item.quota || (item.quota_status === "reference_only" ? "本季未開放" : item.quota_status === "not_published" ? "名額空白，待確認" : "依公告"), "users", "quota"],
+     ["研修期間", localizedPartnerValue(item, "study_period", "study_period"), "calendar-range", "period"],
+   ]
+     .map(([label, value, icon, tone]) => `<div class="${tone || ""}"><i data-lucide="${icon}" aria-hidden="true"></i><span>${escapeHtml(label)}</span><strong>${highlightHtml(value)}</strong></div>`)
+@@ -8024,6 +8282,7 @@ function partnerEligibilityStatus(item) {
+ }
+ 
+ function partnerLanguageRequirement(item) {
++  if (item.language_requirement) return truncate(item.language_requirement, 110);
+   const parts = partnerSummaryPoints(item, "eligibility_points");
+   const language = parts.filter((part) => /TOEIC|IELTS|TOEFL|Duolingo|英文|英語|語文|語言|CEFR|JLPT|TOPIK/i.test(part));
+   const compact = language.slice(0, 2).map((point) =>
+@@ -8045,7 +8304,7 @@ function renderProgramOptions(item) {
+   if (options.length <= 1) return "";
+   return `
+     <div class="program-options" aria-label="可申請方案">
+-      <div class="program-options-heading"><strong>這間學校有 ${options.length} 種申請方案</strong><span>請依學院、學制與名額選擇正確方案</span></div>
++      <div class="program-options-heading"><strong>這間學校列有 ${options.length} 種計畫資料</strong><span>請依學院、學制、適用學期與名額核對</span></div>
+       <div class="program-option-list">
+         ${options.map((option) => {
+           const deadline = partnerDeadlineReference(option);
+@@ -8053,7 +8312,7 @@ function renderProgramOptions(item) {
+           <article class="program-option">
+             <div><span class="program-option-type">${escapeHtml(option.program_type)}</span><h3>${escapeHtml([option.colleges, option.degree_levels].filter(Boolean).join(" · ") || "適用身分依公告")}</h3></div>
+             <dl>
+-              <div><dt>名額</dt><dd>${escapeHtml(option.quota || "依公告")}</dd></div>
++              <div><dt>名額</dt><dd>${escapeHtml(option.quota || (item.field_evidence ? "全校共用名額；本方案未另列" : "依公告"))}</dd></div>
+               <div><dt>研修期間</dt><dd>${escapeHtml(localizedPartnerValue(option, "study_period", "study_period"))}</dd></div>
+               <div><dt>${escapeHtml(deadline.label)}</dt><dd>${highlightHtml(deadline.value)}</dd></div>
+             </dl>
+@@ -8095,20 +8354,40 @@ function renderPartnerStudentSummary(item) {
+         ${groups.map((group) => `
+           <section class="partner-summary-group">
+             <h4><i data-lucide="${group.icon}" aria-hidden="true"></i>${escapeHtml(group.label)}</h4>
+-            ${renderStudentPointList(group.points, { limit: 10 })}
++            ${renderStudentPointList(group.points, { limit: 10, expandRemaining: activeHomeSchool() === "國立中央大學" })}
+           </section>`).join("")}
+       </div>
+ 
+     </section>`;
+ }
+ 
++function renderPartnerFieldEvidence(item) {
++  if (!item.field_evidence || !Object.keys(item.field_evidence).length) return "";
++  const labels = {study_period:"交換期間", quota:"名額", eligibility:"合作校接收資格", language_requirement:"合作校語言", partner_application_prerequisite:"母校甄選／提名前提（非文件清單）", partner_documents:"合作校申請文件要求（未聲稱完整）", partner_application_deadline:"合作校申請截止", application_deadline:"中正校內截止", semester_dates:"學期日期", housing_info:"住宿資訊", tuition_info:"費用原文", course_restrictions:"課程限制", fact_sheet:"合作校簡章連結"};
++  const statuses = {verified_current:"當期已核實",reference_only:"歷史參考",missing:"未載／未核實",needs_confirmation:"待確認",conflict:"來源矛盾，待確認",explicit_not_announced:"官方明示尚未公告"};
++  return `<details class="overview-more"><summary>當期資料與官方依據（${escapeHtml(item.application_round || "")}）</summary>
++    <p>合作校接收條件須與中正校內資格分別核對；灰字歷史資料不作當期申請依據。</p>
++    ${Object.entries(labels).map(([key,label]) => {
++      const evidence = item.field_evidence[key];
++      if (!evidence) return "";
++      const pages = evidence.source_pages?.length ? `，第${evidence.source_pages.join("、")}頁` : "";
++      return `<article class="university-fact"><strong>${escapeHtml(label)} · ${escapeHtml(statuses[evidence.status] || evidence.status)}</strong>
++        <p>${escapeHtml(evidence.excerpt || "當期值未核實")}</p>
++        ${evidence.reference_excerpt ? `<details><summary>歷史參考（不能作當期申請依據）</summary><p>${escapeHtml(evidence.reference_excerpt)}</p></details>` : ""}
++        ${evidence.note ? `<p>${escapeHtml(evidence.note)}</p>` : ""}
++        <a href="${escapeHtml(evidence.source_url)}" target="_blank" rel="noreferrer">官方來源${escapeHtml(pages)}</a>
++        <small> · 查核 ${escapeHtml((evidence.checked_at || "").slice(0,10))} · ${escapeHtml(evidence.application_round || "參考年度未明")}</small>
++      </article>`;
++    }).join("")}</details>`;
++}
++
+ function renderUniversityOverview(item) {
+   const tuitionPoints = partnerSummaryPoints(item, "tuition_points");
+   const deadline = partnerDeadlineReference(item);
+   const facts = [
+     ["計畫類型", item.program_type || "依校方公告"],
+     ["適用學院／學制", [item.colleges, item.degree_levels].filter(Boolean).join("／") || "依校方公告"],
+-    ["名額", item.quota || "依校方公告"],
++    ["名額", item.quota || (item.quota_status === "reference_only" ? "本季未開放" : item.quota_status === "not_published" ? "名額空白，待確認" : "依校方公告")],
+     ["研修期間", localizedPartnerValue(item, "study_period", "study_period", "依校方公告")],
+     [deadline.label, deadline.value],
+     ["學費", tuitionPoints.slice(0, 2).join("；") || "依校方公告"],
+@@ -8125,7 +8404,10 @@ function renderUniversityOverview(item) {
+           </div>
+         </div>
+         ${renderPartnerAvailabilityNotice(item)}
++        ${renderPartnerFieldEvidence(item)}
++        ${window.UniWayCcuDetails?.render(item, escapeHtml) || ""}
+         <details class="overview-more school-data-completeness"><summary>這所學校的資料完整度</summary><div id="school-data-completeness-body" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-card"></div></div></details>
++        ${activeHomeSchool() === "國立中央大學" ? '<details id="ncu-source-audit" class="overview-more"><summary>已查來源、適用年度與未解問題</summary><div id="ncu-source-audit-body">展開讀取逐欄查核與原文頁碼。</div></details>' : ""}
+         <details class="overview-more"><summary>選校參考</summary><div id="quick-decision-fit">${renderQuickDecisionFit(item)}</div></details>
+         ${renderProgramOptions(item)}
+         <details class="overview-more"><summary>方案資料</summary><div class="university-facts">${facts.map(([label, value]) => `<div class="university-fact"><span>${escapeHtml(label)}</span><strong>${highlightHtml(value)}</strong></div>`).join("")}</div></details>
+@@ -8234,9 +8516,10 @@ function renderSchoolCompleteness(report) {
+   if (!body) return;
+   body.setAttribute("aria-busy", "false");
+   body.innerHTML = `
+-    <p class="school-completeness-summary"><strong>${report.available_count} / ${report.total_count} ${report.home_university === "淡江大學" ? "欄已有當期依據；請逐欄看適用範圍" : "項資料完整"}</strong>${report.priority_gaps.length ? `<span>，優先向學校確認：${report.priority_gaps.map(escapeHtml).join("、")}</span>` : ""}</p>
++    <p class="school-completeness-summary"><strong>${report.available_count} / ${report.total_count} ${report.home_university === "淡江大學" ? "欄已有當期依據；請逐欄看適用範圍" : report.home_university === "國立中央大學" ? "項本期已核實" : "項已提供資料"}</strong>${report.priority_gaps.length ? `<span>，優先向學校確認：${report.priority_gaps.map(escapeHtml).join("、")}</span>` : ""}</p>
+     <ul class="school-completeness-list">${report.items.map((row) => {
+-      const [label, icon] = COMPLETENESS_STATUS[row.status] || ["待確認", "circle-alert"];
++      const [statusLabel, icon] = COMPLETENESS_STATUS[row.status] || ["待確認", "circle-alert"];
++      const label = report.home_university === "國立中央大學" && row.status === "available" ? "本期已核實" : statusLabel;
+       const link = (row.source_urls || [])[0];
+       return `<li data-completeness-status="${escapeHtml(row.status)}"><i data-lucide="${icon}" aria-hidden="true"></i><span><strong>${escapeHtml(row.label)}</strong><em>${label}</em><small>${escapeHtml(row.note)}${link ? ` <a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">來源</a>` : ""}</small></span></li>`;
+     }).join("")}</ul>
+@@ -8246,13 +8529,14 @@ function renderSchoolCompleteness(report) {
+ 
+ async function loadSchoolCompleteness(item) {
+   const requestId = ++state.completenessRequestId;
++  const context = captureSchoolContext();
+   try {
+     const report = await fetchJson(`/school-data-completeness?school=${encodeURIComponent(item.school_name)}&home_school=${encodeURIComponent(activeHomeSchool())}`);
+-    if (requestId !== state.completenessRequestId || state.activeSchool !== item.school_name) return;
++    if (requestId !== state.completenessRequestId || !schoolContextIsCurrent(context) || state.activeSchool !== item.school_name) return;
+     state.completenessCache.set(item.school_name, report);
+     renderSchoolCompleteness(report);
+   } catch (error) {
+-    if (requestId !== state.completenessRequestId) return;
++    if (requestId !== state.completenessRequestId || !schoolContextIsCurrent(context) || state.activeSchool !== item.school_name) return;
+     const body = $("#school-data-completeness-body");
+     if (body) { body.setAttribute("aria-busy", "false"); body.textContent = `資料完整度暫時無法載入：${error.message}`; }
+   }
+@@ -8260,13 +8544,14 @@ async function loadSchoolCompleteness(item) {
+ 
+ async function loadDestinationProfile(item) {
+   const requestId = ++state.destinationRequestId;
++  const context = captureSchoolContext();
+   try {
+     const profile = await fetchJson(`/destination-profile?school=${encodeURIComponent(item.school_name)}&home_school=${encodeURIComponent(activeHomeSchool())}`);
+-    if (requestId !== state.destinationRequestId || state.activeSchool !== item.school_name) return;
++    if (requestId !== state.destinationRequestId || !schoolContextIsCurrent(context) || state.activeSchool !== item.school_name) return;
+     state.destinationCache.set(item.school_name, profile);
+     renderDestinationProfile(item, profile);
+   } catch (error) {
+-    if (requestId !== state.destinationRequestId) return;
++    if (requestId !== state.destinationRequestId || !schoolContextIsCurrent(context) || state.activeSchool !== item.school_name) return;
+     const container = $("#destination-official-content");
+     if (container) {
+       container.setAttribute("aria-busy", "false");
+@@ -8283,6 +8568,14 @@ function renderDestinationProfile(item, profile) {
+   const cityStamp = $("#school-detail-view .travel-stamp-city");
+   if (cityStamp && profile.city) cityStamp.textContent = profile.city;
+   $("#school-detail-primary-facts").innerHTML = renderPrimaryFacts(item, profile);
++  if (item.partner_exchange_details && Object.keys(item.partner_exchange_details).length && window.UniWayCcuDetails) {
++    const status = profile.coverage_status === "official_partial" ? "合作校生活資料部分核實" : "合作校生活資料仍待確認";
++    container.innerHTML = `<div class="destination-profile-status partial"><div><strong>${escapeHtml(status)}</strong><p>${escapeHtml(profile.coverage_note || "")}</p><small>最後查核：${escapeHtml(formatDate(profile.last_checked))}</small></div></div>`
++      + window.UniWayCcuDetails.render(item, escapeHtml, ["housing", "housing_deadline", "costs", "insurance", "visa", "arrival", "course_restrictions", "academic_calendar"]);
++    container.innerHTML += window.UniWayCcuDetails.renderProfileLife(profile, escapeHtml);
++    initIcons();
++    return;
++  }
+   if (!["official_verified", "official_partial"].includes(profile.coverage_status)) {
+     container.innerHTML = `
+       <div class="destination-profile-status pending">
+@@ -8456,41 +8749,44 @@ function renderLifeResearchStatus(context, { loading = false, error = "" } = {})
+   if (!container) return;
+   const status = { ready: "已更新", partial: "部分資料已更新", unavailable: "暫無新資料", not_collected: "待更新" };
+   container.innerHTML = `<div class="life-research-heading"><span role="status">${escapeHtml(error || (loading ? "正在更新資料…" : status[context?.research_status] || ""))}${context?.checked_at && !loading ? ` · ${escapeHtml(formatDate(context.checked_at))}` : ""}</span><div class="life-research-actions"><button type="button" class="life-student-search" data-life-student-search>找學生分享</button><button type="button" class="secondary-button" data-refresh-life-context ${loading || context?.can_refresh === false ? "disabled" : ""}><i data-lucide="${loading ? "loader-circle" : "refresh-cw"}" aria-hidden="true"></i>${loading ? "更新中" : "更新資料"}</button></div></div>
+-    <details class="life-research-notes"><summary>資料說明</summary><p>官方資料以中文呈現，原文保留在來源中。AI 推論為規則產生的參考建議，非學生心得；機器翻譯未經人工審核。</p><p>${escapeHtml(context?.location_note || "正在讀取校區資料。")}</p>${(context?.research_notes || []).map(note => `<p>${escapeHtml(note)}</p>`).join("")}<small>資料更新後暫存 6 小時；翻譯未完成時可重試。</small></details>`;
++    <details class="life-research-notes"><summary>資料說明</summary><p>官方資料保留來源與原文；尚未翻譯的內容會標示「原文」。AI 推論為規則產生的參考建議，非學生心得；機器翻譯未經人工審核。查閱日期不代表官網內容更新日。</p><p>${escapeHtml(context?.location_note || "正在讀取校區資料。")}</p>${(context?.research_notes || []).map(note => `<p>${escapeHtml(note)}</p>`).join("")}<small>補查結果暫存 6 小時；可按「更新資料」重新查詢。</small></details>`;
+   initIcons();
+ }
+ 
+ async function loadSchoolLifeContext(item, { refresh = false } = {}) {
+   if (!item) return;
++  const requestContext = captureSchoolContext();
+   const key = lifeContextKey();
+-  if (state.lifeContextLoading.has(key)) return;
++  const loadingKey = `${requestContext.version}::${key}`;
++  if (state.lifeContextLoading.has(loadingKey)) return;
+   const cached = state.lifeContextCache.get(key);
+   if (cached && !refresh) {
+     renderLifeResearchStatus(cached);
+     renderStudentLife(state.experienceCache.get(item.school_name) || { highlights: [] });
+     return;
+   }
+-  state.lifeContextLoading.add(key);
++  state.lifeContextLoading.add(loadingKey);
+   renderLifeResearchStatus(cached, { loading: true });
+   const query = `school=${encodeURIComponent(item.school_name)}&home_school=${encodeURIComponent(activeHomeSchool())}`;
+   try {
+     let context = cached || await fetchJson(`/school-life-context?${query}`);
++    if (!schoolContextIsCurrent(requestContext) || lifeContextKey() !== key) return;
+     state.lifeContextCache.set(key, context);
+     if (lifeContextKey() === key) renderStudentLife(state.experienceCache.get(item.school_name) || { highlights: [] });
+-    const needsTranslation = context.can_refresh && context.categories.some(category => category.evidence.some(row => row.translation_status === "pending"));
+-    if (refresh || context.research_status === "not_collected" || needsTranslation) {
++    if (refresh || context.research_status === "not_collected") {
+       context = await fetchJson(`/school-life-context/refresh?${query}`, { method: "POST", signal: AbortSignal.timeout(60000) });
++      if (!schoolContextIsCurrent(requestContext) || lifeContextKey() !== key) return;
+       state.lifeContextCache.set(key, context);
+     }
+-    if (lifeContextKey() !== key) return;
++    if (!schoolContextIsCurrent(requestContext) || lifeContextKey() !== key) return;
+     renderLifeResearchStatus(context);
+     renderStudentLife(state.experienceCache.get(item.school_name) || { highlights: [] });
+   } catch (error) {
+-    if (lifeContextKey() !== key) return;
++    if (!schoolContextIsCurrent(requestContext) || lifeContextKey() !== key) return;
+     renderLifeResearchStatus(state.lifeContextCache.get(key), { error: "補查暫時未完成，已保留可用資料；可稍後重試。" });
+     renderStudentLife(state.experienceCache.get(item.school_name) || { highlights: [] });
+   } finally {
+-    state.lifeContextLoading.delete(key);
++    state.lifeContextLoading.delete(loadingKey);
+   }
+ }
+ 
+@@ -8500,7 +8796,7 @@ function renderLifeEvidenceSupplement(category, { limit = 2 } = {}) {
+   const evidenceRows = (category.evidence || []).map(row => {
+     const pending = row.translation_status === "pending";
+     const original = row.original_text || row.text;
+-    return `<div class="life-evidence-item"><span class="life-kind ${escapeHtml(row.kind)}">${labels[row.kind] || "公開資料"}${row.translation_status === "machine" ? " · 機器翻譯" : pending ? " · 原文" : ""}</span><p class="life-evidence-text">${escapeHtml(pending ? "中文翻譯尚未完成，可查看原文。" : row.text)}</p><details class="life-evidence-source"><summary>原文與來源</summary>${pending || original !== row.text ? `<p>${escapeHtml(original)}</p>` : ""}<small>${escapeHtml(row.scope)}${row.checked_at ? ` · ${escapeHtml(formatDate(row.checked_at))}` : ""}</small><div class="life-source-links">${row.sources.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.title)} ↗</a>`).join("")}</div></details></div>`;
++    return `<div class="life-evidence-item"><span class="life-kind ${escapeHtml(row.kind)}">${labels[row.kind] || "公開資料"}${row.translation_status === "machine" ? " · 機器翻譯" : pending ? " · 原文" : ""}</span><p class="life-evidence-text">${escapeHtml(pending ? "中文翻譯尚未完成，可查看原文。" : row.text)}</p>${row.original_excerpt ? `<small class="life-applicability-note">官網參考；適用校區與年度請核對來源。${row.checked_at ? ` 查閱 ${escapeHtml(formatDate(row.checked_at))}` : ""}</small>` : ""}<details class="life-evidence-source"><summary>原文與來源</summary>${pending || original !== row.text ? `<p>${escapeHtml(original)}</p>` : ""}<small>${escapeHtml(row.scope)}${row.checked_at ? ` · ${escapeHtml(formatDate(row.checked_at))}` : ""}</small><div class="life-source-links">${row.sources.map(source => `<a href="${escapeHtml(source.url)}" target="_blank" rel="noreferrer">${escapeHtml(source.title)} ↗</a>`).join("")}</div></details></div>`;
+   });
+   const evidence = evidenceRows.slice(0, limit).join("") + (evidenceRows.length > limit ? `<details class="life-more-evidence"><summary>再看 ${evidenceRows.length - limit} 則資料</summary>${evidenceRows.slice(limit).join("")}</details>` : "");
+   const inference = category.inference;
+@@ -8680,6 +8976,11 @@ function workflowRequestParams(item) {
+ 
+ async function loadApplicationWorkflow(item, { forceRefresh = false } = {}) {
+   const requestId = ++state.workflowRequestId;
++  const context = captureSchoolContext();
++  const cacheKey = workflowContextKey(item.school_name);
++  const requestIsCurrent = () => requestId === state.workflowRequestId
++    && schoolContextIsCurrent(context) && state.activeSchool === item.school_name
++    && cacheKey === workflowContextKey(item.school_name);
+   const content = $("#workflow-content");
+   if (!content) return;
+   content.setAttribute("aria-busy", "true");
+@@ -8691,14 +8992,14 @@ async function loadApplicationWorkflow(item, { forceRefresh = false } = {}) {
+       `/application-workflow?${params.toString()}`,
+       forceRefresh ? { cache: "no-store" } : {},
+     );
+-    if (requestId !== state.workflowRequestId || state.activeSchool !== item.school_name) return;
+-    state.workflowCache.set(workflowContextKey(item.school_name), workflow);
++    if (!requestIsCurrent()) return;
++    state.workflowCache.set(cacheKey, workflow);
+     renderApplicationWorkflow(workflow);
+     renderApplicationCalendar();
+     scheduleCalendarConflictAnalysis();
+     if (calendarSyncFeatureEnabled() && state.calendarSync?.enabled) syncCalendarEvents({ quiet: true });
+   } catch (error) {
+-    if (requestId !== state.workflowRequestId) return;
++    if (!requestIsCurrent()) return;
+     content.setAttribute("aria-busy", "false");
+     content.innerHTML = `
+       <div class="experience-error">
+@@ -9311,13 +9612,13 @@ function renderWorkflowStep(step, index, workflow) {
+       </summary>
+       <div class="workflow-step-body">
+         <p>${highlightHtml(step.summary)}</p>
+-        ${renderWorkflowScope(step)}
++        ${renderWorkflowScope(step, workflow)}
+         ${needsConfirmation ? `<div class="workflow-warning"><i data-lucide="triangle-alert" aria-hidden="true"></i><div><strong>此步驟仍有送件或文件細節待確認。</strong>${step.confirmation_contact ? `<span>請聯絡：${escapeHtml(step.confirmation_contact)}</span>` : ""}</div></div>` : ""}
+         ${renderWorkflowDeadlineStatus(step, workflow)}
+         ${renderWorkflowSubmission(step)}
+         ${renderWorkflowSubmissionProgress(workflow, step)}
+         ${step.details?.length ? `<div><h4>具體要做</h4><ul>${step.details.map((detail) => `<li>${highlightHtml(detail)}</li>`).join("")}</ul></div>` : ""}
+-        ${requirements.length ? `<div><h4>這一步要準備</h4><ul class="workflow-documents">${requirements.map(renderWorkflowDocumentRequirement).join("")}</ul></div>` : ""}
++        ${requirements.length ? `<div><h4>這一步要準備</h4><ul class="workflow-documents">${requirements.map((requirement) => renderWorkflowDocumentRequirement(requirement, { showReferenceForm: workflow.home_university === "國立中央大學" })).join("")}</ul></div>` : ""}
+         ${step.action_url ? `<a class="official-link workflow-action" href="${escapeHtml(step.action_url)}" target="_blank" rel="noreferrer"><span>開啟這一步的官方頁面</span><i data-lucide="external-link" aria-hidden="true"></i></a>` : ""}
+         ${workflow.workflow_id && workflow.issue_report_snapshot && step.rule_id ? `<div class="workflow-step-report"><span>發現資格、期限、文件或送件資訊不一致？</span><button type="button" class="text-button" data-workflow-issue-report data-step-rule-id="${escapeHtml(step.rule_id)}"><i data-lucide="message-square-warning" aria-hidden="true"></i>回報此步驟</button></div>` : ""}
+       </div>
+@@ -9372,7 +9673,7 @@ function workflowArrivalDeadlinePending(step) {
+     && !step.submission?.arrival_deadline_at;
+ }
+ 
+-function renderWorkflowScope(step) {
++function renderWorkflowScope(step, workflow) {
+   const scope = step.scope || {};
+   const labels = [
+     ...(scope.colleges || []),
+@@ -9381,7 +9682,11 @@ function renderWorkflowScope(step) {
+     ...(scope.application_rounds || []),
+   ];
+   if (!labels.length) return "";
+-  return `<div class="workflow-rule-meta"><strong>適用範圍</strong>${labels.map((label) => `<span>${escapeHtml(label)}</span>`).join("")}</div>`;
++  const pendingHostScope = workflow?.home_university === "國立中央大學"
++    && Boolean(scope.partner_universities?.length)
++    && workflowStepNeedsConfirmation(step);
++  const caption = pendingHostScope ? "規劃範圍（當期適用待確認）" : "適用範圍";
++  return `<div class="workflow-rule-meta"><strong>${caption}</strong>${labels.map((label) => `<span>${escapeHtml(label)}</span>`).join("")}</div>`;
+ }
+ 
+ function renderWorkflowSubmission(step) {
+@@ -9407,16 +9712,25 @@ function renderWorkflowSubmission(step) {
+     </div>`;
+ }
+ 
+-function renderWorkflowDocumentRequirement(requirement) {
++function renderWorkflowDocumentRequirement(requirement, { showReferenceForm = false } = {}) {
+   const metadata = [];
++  const stages = {nomination:"提名",student_application:"申請",after_application:"申請後補件（不等錄取）",second_submission:"第二次文件送件（時點待確認）",post_offer:"錄取後",after_dorm_assignment:"宿舍分配後",conditional_program:"特定計畫文件"};
++  if (requirement.stage) metadata.push(`階段：${stages[requirement.stage] || requirement.stage}`);
++  if (requirement.applicability_status) metadata.push(`適用性：${({verified_current:"當期依據已核",needs_confirmation:"當期適用待確認",reference_only:"歷史參考"})[requirement.applicability_status]}`);
++  if (requirement.applicability_year) metadata.push(requirement.applicability_year);
++  if (requirement.applicability_note) metadata.push(requirement.applicability_note);
++  if (requirement.conditional) metadata.push(`適用條件：${requirement.condition || requirement.name}`);
+   if (requirement.copies) metadata.push(`${requirement.copies} 份`);
+   metadata.push(WORKFLOW_COPY_LABELS[requirement.copy_type] || "文件形式待確認");
+   if (requirement.signatures?.length) metadata.push(`簽署：${requirement.signatures.join("、")}`);
+   if (requirement.stamps?.length) metadata.push(`核章：${requirement.stamps.join("、")}`);
++  const referenceUrl = showReferenceForm && requirement.official_form_url
++    ? safeSourceUrl(requirement.official_form_url)
++    : null;
+   return `
+     <li class="${requirement.needs_confirmation ? "needs-confirmation" : ""}">
+       <i data-lucide="${requirement.needs_confirmation ? "circle-help" : "file-check-2"}" aria-hidden="true"></i>
+-      <span><b>${highlightHtml(requirement.name)}</b><small>${metadata.map(escapeHtml).join(" · ")}${requirement.needs_confirmation ? " · 待官方確認" : ""}</small></span>
++      <span><b>${highlightHtml(requirement.name)}</b><small>${metadata.map(escapeHtml).join(" · ")}${requirement.needs_confirmation ? " · 適用性及送件細節待確認" : ""}</small>${!showReferenceForm && safeSourceUrl(requirement.official_form_url) ? (requirement.official_form_verified ? `<a href="${escapeHtml(requirement.official_form_url)}" target="_blank" rel="noreferrer">開啟已核實官方表格／文件</a><small>官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。</small>` : `<a href="${escapeHtml(requirement.official_form_url)}" target="_blank" rel="noreferrer">查看官方表格來源（待核實）</a><small>原檔下載未核實，適用年度仍待確認。</small>`) : ""}${referenceUrl && referenceUrl !== "#" ? `<small><a href="${escapeHtml(referenceUrl)}" target="_blank" rel="noopener noreferrer">官方參考表格（當期適用待確認）</a></small>` : ""}</span>
+     </li>`;
+ }
+ 
+@@ -11067,12 +11381,16 @@ function renderEligibilityOptions({ preserveDraft = false } = {}) {
+   if (!state.dashboard) return;
+   const form = $("#advisor-form");
+   const owner = JSON.stringify([state.account?.id || "", activeHomeSchool()]);
++  const maximum = state.dashboard.maximum_preferences || 5;
++  const gpaField = $("#advisor-academic-gpa");
++  renderAcademicFields();
+   const selects = [1,2,3,4,5].map(rank=>$(`#eligibility-preference-${rank}`));
++  selects.forEach((field,index)=>{field.closest?.("label") && (field.closest("label").hidden=index>=maximum);if(index>=maximum)field.value="";});
+   const draft = form.dataset.draftOwner === owner ? selects.map(field=>field.value) : null;
+   const openSchools = state.dashboard.partner_universities
+     .filter(item=>!partnerAvailabilityMeta(item).blocked).map(item=>item.school_name);
+   const preferences = draft || [...state.applications];
+-  selects.forEach((field,index)=>fillSelect(`#${field.id}`,openSchools,index ? `不設定第 ${index+1} 志願` : "請選擇第一志願",preferences[index] || ""));
++  selects.slice(0,maximum).forEach((field,index)=>fillSelect(`#${field.id}`,openSchools,index ? `不設定第 ${index+1} 志願` : "請選擇第一志願",preferences[index] || ""));
+ }
+ 
+ function restoreEligibilityForm({ preserveDraft = false } = {}) {
+@@ -11127,7 +11445,7 @@ function renderPersonalApplicationPlan(plan) {
+           <header><span class="application-plan-rank">第 ${choice.rank} 志願</span><div><strong>${escapeHtml(choice.school_name)}</strong><small>${escapeHtml(choice.country || "未標示國家")}</small></div><em class="application-plan-status ${meta.tone}">${escapeHtml(meta.label)}</em></header>
+           <p>${escapeHtml(choice.summary)}</p>
+           <div class="eligibility-checks">${choice.checks.map((check) => renderCheckRow(check.status === "needs_confirmation" ? "review" : check.status, `${check.title}：${check.detail}${check.contact_unit ? `（聯絡 ${check.contact_unit}）` : ""}`)).join("")}</div>
+-          ${choice.checklist.length ? `<details class="application-plan-checklist" open><summary><span>個人下一步</span><strong>${choice.checklist.length} 項</strong></summary><ol>${choice.checklist.map((item) => `<li class="${item.needs_confirmation ? "needs-confirmation" : "verified"}"><span><i data-lucide="${item.needs_confirmation ? "circle-help" : "circle-check"}" aria-hidden="true"></i></span><div><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.detail)}</p><small>${escapeHtml(item.phase)} · ${escapeHtml(item.responsible_unit)}${item.confirmation_contact ? ` · 請聯絡 ${escapeHtml(item.confirmation_contact)}` : ""}</small>${item.source_urls?.[0] ? `<a href="${escapeHtml(item.source_urls[0])}" target="_blank" rel="noopener noreferrer">查看官方來源</a>` : ""}</div></li>`).join("")}</ol></details>` : `<div class="application-plan-empty"><strong>暫不建立執行清單</strong><span>這個志願尚未開放或缺少結構化流程，請先聯絡 ${escapeHtml(plan.contact_unit)}。</span></div>`}
++          ${choice.checklist.length ? `<details class="application-plan-checklist" open><summary><span>個人下一步</span><strong>${choice.checklist.length} 項</strong></summary><ol>${choice.checklist.map((item) => `<li class="${item.needs_confirmation ? "needs-confirmation" : "verified"}"><span><i data-lucide="${item.needs_confirmation ? "circle-help" : "circle-check"}" aria-hidden="true"></i></span><div><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.detail)}</p>${documentApplicabilityMarkup(item.document_applicability)}<small>${escapeHtml(item.phase)} · ${escapeHtml(item.responsible_unit)}${item.confirmation_contact ? ` · 請聯絡 ${escapeHtml(item.confirmation_contact)}` : ""}</small>${item.source_urls?.[0] ? `<a href="${escapeHtml(item.source_urls[0])}" target="_blank" rel="noopener noreferrer">查看官方來源</a>` : ""}</div></li>`).join("")}</ol></details>` : `<div class="application-plan-empty"><strong>暫不建立執行清單</strong><span>這個志願尚未開放或缺少結構化流程，請先聯絡 ${escapeHtml(plan.contact_unit)}。</span></div>`}
+         </article>`;
+     }).join("")}</div>
+     <div class="eligibility-actions"><button id="view-matched-schools" type="button" class="secondary-button">回到合作校比較</button></div>`;
+@@ -11150,7 +11468,7 @@ async function checkEligibility(event) {
+   const applicationRound = $("#eligibility-application-round").value;
+   const academicScore = optionalNumber($("#advisor-academic-score").value);
+   const ntu = activeHomeSchool() === "國立臺灣大學";
+-  const academicGpa = ntu ? optionalNumber($("#advisor-academic-gpa").value) : null;
++  const academicGpa = (ntu || state.dashboard?.academic_gpa_minimum != null) ? optionalNumber($("#advisor-academic-gpa").value) : null;
+   const classRankPercent = ntu ? optionalNumber($("#advisor-class-rank").value) : null;
+   const languageTest = $("#advisor-language-test").value;
+   const languageScore = Number($("#advisor-language-score").value);
+@@ -11162,10 +11480,10 @@ async function checkEligibility(event) {
+   const teachingLanguage = $("#advisor-teaching-language").value;
+   const courseInterests = $("#advisor-course-interests").value.trim();
+   const result = $("#eligibility-result");
+-  const preferences = [1, 2, 3, 4, 5]
++  const preferences = [1, 2, 3, 4, 5].slice(0,state.dashboard?.maximum_preferences || 5)
+     .map((rank) => ({ rank, school_name: $(`#eligibility-preference-${rank}`).value }))
+     .filter((item) => item.school_name)
+-    .map((item, index) => ({ ...item, rank: index + 1 }));
++    .map((item, index) => ({ ...item, rank: index + 1, ...(activeHomeSchool() === "國立中央大學" ? {document_preparation_state:ncuDocumentState(item.school_name, academicYear, applicationRound)} : {}) }));
+ 
+   if (!college || !department || !degree || !academicYear || !applicationRound || (!ntu && (academicScore === null || !Number.isFinite(academicScore))) || (!languageTest && !jlptLevel) || !preferences.length) {
+     announce("請完成所有必填欄位", "error");
+@@ -11217,6 +11535,7 @@ async function checkEligibility(event) {
+     college,
+     department,
+     degree_level: degree,
++    current_year: profile.currentYear,
+     academic_score: ntu ? null : academicScore,
+     academic_gpa: academicGpa,
+     class_rank_percent: classRankPercent,
+@@ -11668,7 +11987,7 @@ async function submitAdvisorPlan(event) {
+         languageTest: payload.language_test,
+         languageScore: payload.language_score,
+         jlptLevel: payload.jlpt_level || '',
+-        languageLabel: threshold ? `${threshold.label} ${payload.language_score || "待補"}` : "語言能力待確認",
++        languageLabel: selectionLanguageLabel(payload.language_test, payload.language_score),
+         targetTerm: payload.target_term || "",
+         preferredCountry: payload.preferred_country || "",
+         monthlyBudget: payload.monthly_budget || 0,
+@@ -12786,7 +13105,12 @@ function bindEvents() {
+   });
+ 
+   $("#application-context-form").addEventListener("submit", (event) => event.preventDefault());
+-  $("#application-context-form").addEventListener("change", handleApplicationContextChange);
++  $("#application-context-form").addEventListener("change", (event) => {
++    if (["ncu-host-admission", "ncu-housing-choice"].includes(event.target.id)) return;
++    handleApplicationContextChange(event);
++  });
++  $("#ncu-host-admission").addEventListener("change", handleNcuDocumentStateChange);
++  $("#ncu-housing-choice").addEventListener("change", handleNcuDocumentStateChange);
+   $("#application-profile-form").addEventListener("submit", saveApplicationProfile);
+   $("#application-remember-profile").addEventListener("change", (event) => setApplicationProfileMemory(event.target.checked));
+   $("#clear-application-profile-memory").addEventListener("click", clearApplicationProfileMemory);
+diff --git a/src/exchange_info/static/index.html b/src/exchange_info/static/index.html
+index e9934c26..25d3519c 100644
+--- a/src/exchange_info/static/index.html
++++ b/src/exchange_info/static/index.html
+@@ -31,7 +31,7 @@
+     <link rel="stylesheet" href="/static/glass-theme.css?v=20261001-ui-refinements-1" />
+     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
+     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
+-    <link rel="stylesheet" href="/static/application-workspace.css?v=20261002-flow-1" />
++    <link rel="stylesheet" href="/static/application-workspace.css?v=20261008-ncu-conditions-1" />
+     <link rel="stylesheet" href="/static/document-workbench.css?v=20261002-flow-1" />
+     <link rel="stylesheet" href="/static/destination-tips.css?v=20261004-tips-2" />
+     <link rel="stylesheet" href="/static/brand.css?v=20261004-logo-2" />
+@@ -150,7 +150,7 @@
+           <span>搜尋台灣的大學</span>
+           <span class="control-with-icon">
+             <i data-lucide="search" aria-hidden="true"></i>
+-            <input id="school-search" autocomplete="off" placeholder="輸入學校名稱，例如：長庚、臺北大學、臺大" />
++            <input id="school-search" autocomplete="off" placeholder="輸入學校名稱，例如：長庚、臺北大學、臺大、中央" />
+           </span>
+         </label>
+ 
+@@ -170,6 +170,7 @@
+             <span><strong>國立臺灣大學</strong><small>288項合作資料 · 282項名額待公布 · 6項零名額</small></span>
+             <i data-lucide="circle" aria-hidden="true"></i>
+           </button>
++          <button type="button" class="school-option" data-home-school="國立中央大學" role="option" aria-selected="false"><img src="/static/assets/ncu-campus.svg" alt="國立中央大學文字識別圖" /><span><strong>國立中央大學</strong><small>116-1簡章已公告 · 名額预定10/12公告</small></span><i data-lucide="circle" aria-hidden="true"></i></button>
+         </div>
+         <p id="school-search-empty" class="school-search-empty" hidden>未找到這所學校；目前支援的學校請查看選單，其他台灣大學會依資料查核進度加入。</p>
+ 
+@@ -607,9 +608,9 @@
+                 <div class="advisor-fields">
+                   <label><span>學院</span><select id="advisor-college" name="college"></select></label>
+                   <label><span>所屬系所</span><select id="advisor-department" name="department" aria-describedby="advisor-department-note" disabled><option value="">請先選擇學院</option></select><input id="advisor-department-text" name="department" type="text" maxlength="120" placeholder="請填學籍上的系所或學位學程" aria-describedby="advisor-department-note" hidden disabled /></label>
+-                  <label><span>學制</span><select id="advisor-degree" name="degree_level"><option value="">尚未設定</option><option value="大學部">大學部</option><option value="研究所">研究所</option></select></label>
++                  <label><span>學制</span><select id="advisor-degree" name="degree_level"><option value="">尚未設定</option><option value="大學部">大學部</option><option value="碩士班">碩士班</option><option value="博士班">博士班</option><option value="研究所">研究所（尚未區分碩博士）</option></select></label>
+                   <label id="advisor-percent-field"><span>學業平均</span><input id="advisor-academic-score" name="academic_score" type="number" min="0" max="100" step="0.1" inputmode="decimal" placeholder="例如 82" /></label>
+-                  <label data-ntu-academic-field hidden><span>適用學年GPA（4.3制）</span><input id="advisor-academic-gpa" name="academic_gpa" type="number" min="0" max="4.3" step="0.01" inputmode="decimal" placeholder="例如 2.44；與排名擇一" disabled /></label>
++                  <label id="advisor-gpa-field" data-ntu-academic-field hidden><span id="advisor-gpa-label">適用學年GPA（4.3制）</span><input id="advisor-academic-gpa" name="academic_gpa" type="number" min="0" max="4.3" step="0.01" inputmode="decimal" placeholder="例如 2.44；與排名擇一" disabled /></label>
+                   <label data-ntu-academic-field hidden><span>適用學年班排名（前幾%）</span><input id="advisor-class-rank" name="class_rank_percent" type="number" min="0.01" max="100" step="0.01" inputmode="decimal" placeholder="例如前30%填30" disabled /></label>
+                   <label><span>語言測驗</span><select id="advisor-language-test" name="language_test"><option value="">尚未考／尚未決定</option><option value="toeic">TOEIC</option><option value="ielts">IELTS Academic</option><option value="toefl">TOEFL iBT（舊制120分）</option><option value="toefl_new">TOEFL iBT（新制6分）</option><option value="duolingo">Duolingo</option><option value="other">其他</option></select></label>
+                   <label><span>語言分數</span><input placeholder="尚未考可留空" id="advisor-language-score" name="language_score" type="number" min="0" step="0.5" inputmode="decimal" /></label>
+@@ -743,7 +744,7 @@
+             <details class="journey-filter-drawer" open>
+               <summary><i data-lucide="sliders-horizontal" aria-hidden="true"></i>篩選<i data-lucide="chevron-down" aria-hidden="true"></i></summary>
+             <div class="filter-panel" aria-label="合作學校篩選條件">
+-              <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">本期開放</option><option value="closed">表列交換校／校內申請已截止</option><option value="reference_only">舊期參考／不能作當期申請</option><option value="quota_unconfirmed">當期名額或期間待確認</option><option value="agreement_only">合作備查／本期未公告</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
++              <label for="availability-filter"><span>名額狀態</span><select id="availability-filter"><option value="">全部合作狀態</option><option value="open">當期名額已列</option><option value="not_open">本季未開放（官方灰字）</option><option value="needs_confirmation">名額尚未核實</option><option value="zero_quota">零名額</option><option value="fee_paying">自費計畫</option><option value="closed">表列交換校／校內申請已截止</option><option value="reference_only">舊期參考／不能作當期申請</option><option value="quota_unconfirmed">當期名額或期間待確認</option><option value="agreement_only">合作備查／本期未公告</option><option value="departmental_reference">院級參考／當期需確認</option></select></label>
+               <label for="region-filter"><span>地區</span><select id="region-filter"></select></label>
+               <label for="country-filter"><span>國家</span><select id="country-filter"></select></label>
+               <label for="college-filter"><span>學院</span><select id="college-filter"></select></label>
+@@ -906,6 +907,12 @@
+                   <label><span>學年度</span><input name="academic_year" maxlength="10" placeholder="例如 116" /></label>
+                   <label><span>預計出國學期</span><select name="semester"><option value="">尚未決定</option><option value="第一學期">第一學期</option><option value="第二學期">第二學期</option><option value="一學年">一學年</option><option value="寒假／暑假">寒假／暑假</option></select></label>
+                 </div>
++                <fieldset id="ncu-document-state" class="application-context-fields" hidden>
++                  <legend>外校錄取與住宿</legend>
++                  <label><span>外校錄取狀態</span><select id="ncu-host-admission"><option value="unknown">尚未確認</option><option value="not_accepted">尚未取得錄取</option><option value="accepted">已取得外校錄取</option></select></label>
++                  <label><span>住宿選擇</span><select id="ncu-housing-choice"><option value="unknown">尚未決定</option><option value="on_campus">校內宿舍</option><option value="off_campus">校外住宿</option></select></label>
++                  <small id="ncu-document-state-note">條件文件會依此顯示準備時點；當期要求仍須查核。</small>
++                </fieldset>
+                 <div class="application-condition-toggles" aria-label="條件式文件">
+                   <label><input type="checkbox" name="subsidy" /><span><i data-lucide="badge-dollar-sign" aria-hidden="true"></i><strong>申請補助</strong></span></label>
+                   <label><input type="checkbox" name="military_service" /><span><i data-lucide="shield-check" aria-hidden="true"></i><strong>在學役男</strong></span></label>
+@@ -1202,21 +1209,24 @@
+     <script src="/static/discovery-ui.js?v=20261004-digest-2" defer></script>
+     <script src="/static/navigation.js?v=20261001-planning-workspace-1" defer></script>
+     <script src="/static/motion.js?v=20261007-forum-1" defer></script>
+-    <script src="/static/community-reader.js?v=20261009-tku-reader-expiry-1" defer></script>
++    <script src="/static/community-reader.js?v=20261009-six-schools-integration-1" defer></script>
+     <script src="/static/community-moderation.js?v=20260930-discussion-2b" defer></script>
+     <script src="/static/academic-units.js?v=20261001-departments-1" defer></script>
++    <script src="/static/ccu-academic-units.js?v=20261008-ccu-filter-23" defer></script>
++    <script src="/static/ccu-language-conditions.js?v=20261008" defer></script>
++    <script src="/static/ccu-partner-details.js?v=20261008-life-1" defer></script>
+     <script src="/static/tku-academic-units.js?v=20261008-tku-acceptance-1" defer></script>
+     <dialog id="planning-target-change-dialog" class="planning-change-dialog" aria-labelledby="planning-target-change-title">
+       <form method="dialog"><span class="section-kicker">更換目標前，先確認影響</span><h2 id="planning-target-change-title">改用這所學校規劃？</h2><p id="planning-target-change-summary"></p><ul id="planning-target-change-impact"></ul><footer><button id="planning-target-change-cancel" class="secondary-button" value="cancel">保留原目標</button><button class="primary-button" value="confirm">確認更換目標</button></footer></form>
+     </dialog>
+-    <script src="/static/multi-plan.js?v=20261002-flow-2" defer></script>
++    <script src="/static/multi-plan.js?v=20261008-ncu-conditions-1" defer></script>
+     <script src="/static/application-workspace.js?v=20261002-flow-2" defer></script>
+-    <script src="/static/application-journey.js?v=20261008-ntu-audit-3" defer></script>
+-    <script src="/static/document-workbench.js?v=20261008-ntu-audit-3" defer></script>
++    <script src="/static/application-journey.js?v=20261008-ncu-1" defer></script>
++    <script src="/static/document-workbench.js?v=20261008-ncu-1" defer></script>
+     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
+     <script src="/static/analytics.js?v=20261003-analytics-1" defer></script>
+     <script src="/static/feedback.js?v=20261008-2" defer></script>
+     <script src="/static/tku-eligibility.js?v=20261008-1" defer></script>
+-    <script src="/static/app.js?v=20261009-tku-reader-expiry-1" defer></script>
++    <script src="/static/app.js?v=20261009-six-schools-integration-1" defer></script>
+   </body>
+ </html>
+diff --git a/src/exchange_info/storage.py b/src/exchange_info/storage.py
+index 80b6d80f..cfae0806 100644
+--- a/src/exchange_info/storage.py
++++ b/src/exchange_info/storage.py
+@@ -4,6 +4,7 @@ import json
+ import os
+ import tempfile
+ import threading
++from concurrent.futures import Future
+ from functools import wraps
+ from inspect import signature
+ from contextlib import contextmanager
+@@ -50,7 +51,7 @@ from .models import (
+ )
+ from .settings import DEFAULT_DATA_DIR
+ from .school_identity import school_identity_key
+-from .university_registry import CGU, NTPU, NTU, TKU
++from .university_registry import CCU, CGU, NTPU, NTU, NCU, TKU
+ from .workflow_structuring import structure_application_workflow
+ from .workflow_identity import workflow_storage_key
+ 
+@@ -60,7 +61,9 @@ PACKAGE_DIR = Path(__file__).resolve().parent
+ BUNDLED_NTPU_DIR = PACKAGE_DIR / "official_data" / "ntpu"
+ BUNDLED_TKU_DIR = PACKAGE_DIR / "official_data" / "tku"
+ BUNDLED_CGU_DIR = PACKAGE_DIR / "official_data" / "cgu"
++BUNDLED_CCU_DIR = PACKAGE_DIR / "official_data" / "ccu"
+ BUNDLED_NTU_DIR = PACKAGE_DIR / "official_data" / "ntu"
++BUNDLED_NCU_DIR = PACKAGE_DIR / "official_data" / "ncu"
+ 
+ _STORAGE_LOCKS_GUARD = threading.Lock()
+ _STORAGE_LOCKS: dict[str, threading.RLock] = {}
+@@ -202,6 +205,10 @@ def merge_application_workflows(
+ def _with_explicit_destination_gaps(profile: DestinationProfile) -> DestinationProfile:
+     """Keep an honest, visible answer for official details that are not public."""
+ 
++    if profile.home_university == CCU.school_name:
++        # CCU keeps reviewed field statuses and true nulls. Unverified public
++        # research cannot be rewritten as an official non-publication claim.
++        return profile
+     defaults = {
+         "housing_summary": (
+             "官方網站未公開可可靠核對的交換生住宿資訊；請以合作校最新 fact sheet、"
+@@ -512,6 +519,7 @@ def replace_school_experiences(
+ _WORKFLOW_CACHE_LIMIT = 8
+ _workflow_cache_lock = threading.Lock()
+ _workflow_cache: dict[tuple, list[UniversityApplicationWorkflow]] = {}
++_workflow_cache_builds: dict[tuple, Future] = {}
+ 
+ 
+ def _file_signature(path: Path) -> tuple[int, int] | None:
+@@ -531,13 +539,32 @@ def file_signature(path: Path) -> tuple[int, int] | None:
+ def _cached_workflows(key: tuple, build) -> list[UniversityApplicationWorkflow]:
+     with _workflow_cache_lock:
+         cached = _workflow_cache.get(key)
+-    if cached is None:
++        if cached is not None:
++            return list(cached)
++        pending = _workflow_cache_builds.get(key)
++        owns_build = pending is None
++        if owns_build:
++            pending = Future()
++            _workflow_cache_builds[key] = pending
++    if not owns_build:
++        return list(pending.result())
++    # A cold page requests the same catalogue concurrently. Parse it once;
++    # other signatures can still build independently, and nested local/bundled
++    # catalogue reads do not hold the cache lock while they build or wait.
++    try:
+         cached = build()
+         with _workflow_cache_lock:
+             while len(_workflow_cache) >= _WORKFLOW_CACHE_LIMIT:
+                 _workflow_cache.pop(next(iter(_workflow_cache)))
+             _workflow_cache[key] = cached
+-    return list(cached)
++        pending.set_result(cached)
++        return list(cached)
++    except BaseException as error:
++        pending.set_exception(error)
++        raise
++    finally:
++        with _workflow_cache_lock:
++            _workflow_cache_builds.pop(key, None)
+ 
+ 
+ def workflow_catalog_token(data_dir: Path = DEFAULT_DATA_DIR) -> tuple:
+@@ -554,7 +581,7 @@ def cached_workflow_catalog(key: tuple, build) -> list[UniversityApplicationWork
+ 
+ 
+ def _bundled_workflow_paths() -> tuple[Path, ...]:
+-    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_TKU_DIR))
++    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR, BUNDLED_NCU_DIR, BUNDLED_TKU_DIR))
+ 
+ 
+ def _bundled_workflow_signature() -> tuple:
+@@ -733,6 +760,8 @@ def load_destination_profiles(
+             (BUNDLED_TKU_DIR, TKU.school_name),
+             (BUNDLED_CGU_DIR, CGU.school_name),
+             (BUNDLED_NTU_DIR, NTU.school_name),
++            (BUNDLED_CCU_DIR, CCU.school_name),
++            (BUNDLED_NCU_DIR, NCU.school_name),
+         )
+         for row in read_jsonl(
+             directory / "destination_profiles.jsonl",
+@@ -766,7 +795,7 @@ def load_partner_research(
+         return local
+     bundled = [
+         row
+-        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR)
++        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR)
+         for row in read_jsonl(directory / "partner_research.jsonl", PartnerResearchRecord)
+     ]
+     return _merge_rows(
+diff --git a/src/exchange_info/university_registry.py b/src/exchange_info/university_registry.py
+index 519c7963..566f13eb 100644
+--- a/src/exchange_info/university_registry.py
++++ b/src/exchange_info/university_registry.py
+@@ -79,6 +79,18 @@ NTPU = UniversityProfile(
+ )
+ 
+ 
++CCU = UniversityProfile(
++    id="ccu", school_name="國立中正大學", short_name="中正大學",
++    english_name="National Chung Cheng University",
++    aliases=("國立中正大學", "中正大學", "中正", "CCU", "National Chung Cheng University"),
++    hero_image="", official_url="https://oia.ccu.edu.tw/",
++    coverage_note="已核對2027春季校級薦外交換；灰字參考與空白名額分開，三梯次校內收件已截止。",
++    support_level="basic", partner_count_hint=52, academic_score_minimum=70,
++    student_card_signals=("國立中正大學", "NATIONALCHUNGCHENGUNIVERSITY", "CCU"),
++    # Official directory, checked 2026-10-08:
++    # https://s2.exam.ccu.edu.tw/ccuee_intro/stu/intro_index.php
++    colleges=("文學院", "理學院", "社會科學院", "工學院", "管理學院", "法學院", "教育學院"),
++)
+ TKU = UniversityProfile(**TKU_PROFILE)
+ 
+ NTU = UniversityProfile(
+@@ -99,7 +111,25 @@ NTU = UniversityProfile(
+ )
+ 
+ 
+-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, TKU)
++NCU = UniversityProfile(
++    id="ncu",
++    school_name="國立中央大學",
++    short_name="中央",
++    english_name="National Central University",
++    aliases=("國立中央大學", "中央大學", "中央", "中大", "NCU", "National Central University"),
++    hero_image="/static/assets/ncu-campus.svg",
++    official_url="https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",
++    coverage_note="116學年度第一梯次簡章已公告；名額預定2026/10/12公告。115年度合作項目僅供規劃，外校當期條件逐項待核對。",
++    support_level="basic",
++    partner_count_hint=214,
++    academic_score_minimum=None,
++    student_card_signals=("國立中央大學", "NATIONALCENTRALUNIVERSITY", "NCU"),
++    # https://www.ncu.edu.tw/p/412-1000-87.php?Lang=zh-tw — checked 2026-10-08.
++    colleges=("文學院", "理學院", "工學院", "管理學院", "資訊電機學院", "地球科學學院", "客家學院", "生醫理工學院", "永續與綠能科技研究學院", "松濤全人學院"),
++)
++
++
++SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU, TKU)
+ DEFAULT_UNIVERSITY = CGU
+ 
+ 
+diff --git a/src/exchange_info/workflow_structuring.py b/src/exchange_info/workflow_structuring.py
+index 4247f0b0..a3f1227c 100644
+--- a/src/exchange_info/workflow_structuring.py
++++ b/src/exchange_info/workflow_structuring.py
+@@ -9,7 +9,6 @@ from .models import (
+     ApplicationCopyType,
+     ApplicationDeadlineStatus,
+     ApplicationDocumentRequirement,
+-    ApplicationRuleScope,
+     ApplicationSourceAuthority,
+     ApplicationSourceRole,
+     ApplicationStep,
+@@ -21,7 +20,6 @@ from .models import (
+     UniversityApplicationWorkflow,
+ )
+ 
+-
+ ACADEMIC_YEAR_PATTERN = re.compile(r"(?<!\d)(\d{3})\s*學年度")
+ COPY_COUNT_PATTERN = re.compile(r"(?<!\d)(\d{1,2})\s*份")
+ 
+@@ -275,8 +273,20 @@ def _structure_step(
+     academic_year: str | None,
+     publication_eligible: bool,
+ ) -> ApplicationStep:
++    # NCU's bundle is explicitly reviewed, including unknowns and alternatives.
++    # Legacy text inference must not turn a coordinator's signature-or-seal into
++    # an applicant signature, or classify reference spring text as this round.
++    infer_from_text = workflow.home_university != "國立中央大學"
+     method = step.submission.method
+-    if method == ApplicationSubmissionMethod.UNKNOWN:
++    # This CCU step combines housing, visa and arrival notices from several
++    # host offices. A notice sent by email does not establish how a later form
++    # must be submitted. Keep the collector's unknown method until explicit
++    # delivery instructions are available; preserve any verified method.
++    ccu_host_life = (
++        workflow.home_university == "國立中正大學"
++        and step.phase == "合作校行前與生活"
++    )
++    if infer_from_text and method == ApplicationSubmissionMethod.UNKNOWN and not ccu_host_life:
+         method = _infer_submission_method(step)
+     submission = step.submission.model_copy(
+         update={
+@@ -309,7 +319,8 @@ def _structure_step(
+                 or ([academic_year] if academic_year else [])
+             ),
+             "application_rounds": (
+-                step.scope.application_rounds or _infer_application_rounds(step)
++                step.scope.application_rounds
++                or (_infer_application_rounds(step) if infer_from_text else [])
+             ),
+         }
+     )
+@@ -318,6 +329,10 @@ def _structure_step(
+             requirement,
+             step=step,
+             submission=submission,
++            infer_from_text=infer_from_text,
++            # TKU's frozen bundle uses the original structuring pass after its
++            # staged inputs. Keep its confirmation/copy inference reproducible.
++            preserve_reviewed_metadata=workflow.home_university != "淡江大學",
+         )
+         for requirement in step.document_requirements
+     ]
+@@ -498,14 +513,29 @@ def _structure_document_requirement(
+     *,
+     step: ApplicationStep,
+     submission: ApplicationSubmissionDetails,
++    infer_from_text: bool = True,
++    preserve_reviewed_metadata: bool = True,
+ ) -> ApplicationDocumentRequirement:
++    # Individually reviewed receiving documents already supply their metadata.
++    # A name such as "non-OECD: original" must not impose originals on everyone.
++    if requirement.stage is not None and preserve_reviewed_metadata:
++        return requirement.model_copy(
++            update={
++                "source_urls": requirement.source_urls or list(step.source_urls),
++                "needs_confirmation": (
++                    requirement.needs_confirmation or step.needs_confirmation
++                ),
++            }
++        )
+     copies = requirement.copies
+-    if copies is None and (match := COPY_COUNT_PATTERN.search(requirement.name)):
++    if infer_from_text and copies is None and (match := COPY_COUNT_PATTERN.search(requirement.name)):
+         copies = int(match.group(1))
+     copy_type = requirement.copy_type
+-    if copy_type == ApplicationCopyType.UNSPECIFIED:
++    if infer_from_text and copy_type == ApplicationCopyType.UNSPECIFIED:
+         copy_type = _infer_copy_type(requirement.name, submission.method)
+-    signatures = requirement.signatures or _explicit_signatures(requirement.name)
++    signatures = requirement.signatures or (
++        _explicit_signatures(requirement.name) if infer_from_text else []
++    )
+     needs_confirmation = requirement.needs_confirmation or step.needs_confirmation
+     if submission.method in {
+         ApplicationSubmissionMethod.UNKNOWN,

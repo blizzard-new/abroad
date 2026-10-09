@@ -1,0 +1,31 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "scripts/run_web_quality_tests.py",
+    "--shard",
+    "0",
+    "--shards",
+    "4",
+    "--junitxml",
+    "/workspace/integration-evidence/six-full-shard-0/results.xml",
+    "--evidence-dir",
+    "/workspace/integration-evidence/six-full-shard-0"
+  ],
+  "cwd": "/workspace/abroad-six",
+  "started_at": "2026-10-09T14:17:40.504246+00:00",
+  "start_guard": {
+    "sha": "d1827d75f801921e49c67e29ecedecc85083ec7b",
+    "tree": "219f8f88539e2fbcadaa724ed8f4d0068ea1e2ed",
+    "status": ""
+  },
+  "timeout_seconds": 3600,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-09T14:58:22.180124+00:00",
+  "end_guard": {
+    "sha": "d1827d75f801921e49c67e29ecedecc85083ec7b",
+    "tree": "219f8f88539e2fbcadaa724ed8f4d0068ea1e2ed",
+    "status": "M src/exchange_info/official_data/tku/application_workflows.jsonl"
+  }
+}

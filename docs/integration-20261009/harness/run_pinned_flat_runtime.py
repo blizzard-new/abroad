@@ -24,8 +24,8 @@ if '--deployed-order' in sys.argv:
     original_sort='migration_files = sorted(MIGRATIONS_DIR.glob("*.sql"))'
     assert source.count(original_sort)==1
     reordered='''migration_files = sorted(MIGRATIONS_DIR.glob("*.sql"), key=lambda path: (
-        1 if path.name.startswith("20261009135343_") else
-        2 if path.name.startswith(("20261009040000_", "20261009060000_", "20261009080000_")) else 0,
+        1 if path.name.endswith("_ccu_ncu_school_board_compatibility.sql") else
+        2 if path.name.endswith(("_verified_email_school_community.sql", "_community_byline_aliases.sql", "_atomic_governance_commands.sql")) else 0,
         path.name))'''
     exec(source.replace(original_sort,reordered),runtime.__dict__)
     print('MIGRATION ORDER: existing baseline, already-released CCU/NCU compatibility, then TKU 040000/060000/080000',flush=True)

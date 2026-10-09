@@ -1,0 +1,86 @@
+[
+  {
+    "class": "tests.e2e.test_web_next_phase",
+    "name": "test_content_admins_independently_attest_every_source_before_publish",
+    "reason": "Phase C",
+    "detail": "/workspace/abroad-six/tests/e2e/test_web_next_phase.py:3562: Phase C"
+  },
+  {
+    "class": "tests.e2e.test_web_next_phase",
+    "name": "test_content_admin_downloads_snapshot_bound_destination_profile_review_queue",
+    "reason": "Phase C",
+    "detail": "/workspace/abroad-six/tests/e2e/test_web_next_phase.py:4538: Phase C"
+  },
+  {
+    "class": "tests.integration.test_local_ai_runtime.TestLocalAIRuntime",
+    "name": "test_fixed_10_questions_no_oom",
+    "reason": "Ollama not running or gemma4:12b not loaded",
+    "detail": "/workspace/abroad-six/tests/integration/test_local_ai_runtime.py:64: Ollama not running or gemma4:12b not loaded"
+  },
+  {
+    "class": "tests.integration.test_local_ai_runtime.TestLocalAIRuntime",
+    "name": "test_cold_start_under_90s",
+    "reason": "Ollama not running or gemma4:12b not loaded",
+    "detail": "/workspace/abroad-six/tests/integration/test_local_ai_runtime.py:71: Ollama not running or gemma4:12b not loaded"
+  },
+  {
+    "class": "tests.integration.test_local_ai_runtime.TestLocalAIRuntime",
+    "name": "test_overlong_prompt_handled",
+    "reason": "Ollama not running or gemma4:12b not loaded",
+    "detail": "/workspace/abroad-six/tests/integration/test_local_ai_runtime.py:79: Ollama not running or gemma4:12b not loaded"
+  },
+  {
+    "class": "tests.integration.test_local_ai_runtime.TestLocalAIRuntime",
+    "name": "test_service_recovers_after_timeout",
+    "reason": "Ollama not running or gemma4:12b not loaded",
+    "detail": "/workspace/abroad-six/tests/integration/test_local_ai_runtime.py:91: Ollama not running or gemma4:12b not loaded"
+  },
+  {
+    "class": "tests.test_application_plan_api",
+    "name": "test_application_plan_api_uses_bundled_workflow_with_isolated_runtime_data",
+    "reason": "Phase C data reviewed",
+    "detail": "/workspace/abroad-six/tests/test_application_plan_api.py:238: Phase C data reviewed"
+  },
+  {
+    "class": "tests.test_application_workflow",
+    "name": "test_workflow_api_reads_cache_and_rejects_public_refresh",
+    "reason": "Phase C data reviewed",
+    "detail": "/workspace/abroad-six/tests/test_application_workflow.py:478: Phase C data reviewed"
+  },
+  {
+    "class": "tests.test_application_workflow",
+    "name": "test_workflow_api_applies_department_override",
+    "reason": "Phase C data reviewed",
+    "detail": "/workspace/abroad-six/tests/test_application_workflow.py:496: Phase C data reviewed"
+  },
+  {
+    "class": "tests.test_cgu_bundled_data",
+    "name": "test_bundled_cgu_workflows_are_available_without_local_cache",
+    "reason": "Phase C data reviewed",
+    "detail": "/workspace/abroad-six/tests/test_cgu_bundled_data.py:10: Phase C data reviewed"
+  },
+  {
+    "class": "tests.test_cgu_bundled_data",
+    "name": "test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+    "reason": "Phase C data reviewed",
+    "detail": "/workspace/abroad-six/tests/test_cgu_bundled_data.py:40: Phase C data reviewed"
+  },
+  {
+    "class": "tests.test_cgu_bundled_data",
+    "name": "test_bundled_cgu_completeness_report_matches_export",
+    "reason": "Phase C data reviewed",
+    "detail": "/workspace/abroad-six/tests/test_cgu_bundled_data.py:91: Phase C data reviewed"
+  },
+  {
+    "class": "tests.test_cgu_bundled_data",
+    "name": "test_backfilled_cgu_workflows_keep_current_details_reference_only",
+    "reason": "Phase C data reviewed",
+    "detail": "/workspace/abroad-six/tests/test_cgu_bundled_data.py:1275: Phase C data reviewed"
+  },
+  {
+    "class": "tests.test_ntu_school_board_migration",
+    "name": "test_ntu_forum_rpc_migration_preserves_authorization_and_replays",
+    "reason": "opt in to isolated Docker PostgreSQL",
+    "detail": "/workspace/abroad-six/tests/test_ntu_school_board_migration.py:25: opt in to isolated Docker PostgreSQL"
+  }
+]

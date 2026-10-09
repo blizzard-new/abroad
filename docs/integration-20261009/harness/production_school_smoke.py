@@ -25,6 +25,20 @@ for school, count in schools:
     assert payload['school_name']==school and len(payload['partner_universities'])==count
     proof['http'].append({'school':school,'count':count,'status':r.status_code})
     print('HTTP PASS', school, count, flush=True)
+if '--tku' in sys.argv:
+    response = requests.get(base + '/community/boards', timeout=90)
+    response.raise_for_status()
+    boards = response.json()
+    expected = {'cgu','ntpu','ntu','ccu','ncu','tku'}
+    assert {row['id'] for row in boards if row['kind']=='university_exchange'} == expected
+    assert all(row['can_read'] is False and row['can_post'] is False
+               for row in boards if row['kind']=='university_exchange')
+    proof['guest_forum'] = []
+    for board in sorted(expected):
+        response = requests.get(base + '/community/posts', params={'board_id':board}, timeout=90)
+        assert response.status_code == 401, (board, response.status_code)
+        proof['guest_forum'].append({'board':board,'status':401})
+    print('GUEST FORUM PASS all six school reads require authentication', flush=True)
 os.environ['PLAYWRIGHT_BROWSERS_PATH']='/workspace/integration-tools/browsers'
 expect.set_options(timeout=60000)
 with sync_playwright() as p:

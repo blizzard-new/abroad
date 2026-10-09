@@ -1,0 +1,24 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-c",
+    "import subprocess,sys; commands=[[\"/workspace/.abroad-cloud-tools/python/bin/uv\",\"lock\",\"--check\"],[sys.executable,\"scripts/export_openapi.py\",\"--check\"],[\"node\",\"--check\",\"src/exchange_info/static/app.js\"],[\"node\",\"--check\",\"src/exchange_info/static/regions.js\"],[sys.executable,\"scripts/validate_supabase_migrations.py\"]]; [(print(c,flush=True),subprocess.run(c,check=True)) for c in commands]"
+  ],
+  "cwd": "/workspace/abroad-six-final",
+  "started_at": "2026-10-09T14:56:36.227157+00:00",
+  "start_guard": {
+    "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+    "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+    "status": ""
+  },
+  "timeout_seconds": 600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T14:56:39.931669+00:00",
+  "end_guard": {
+    "sha": "0fdc6cfa6a4902fb83374a77025f45dffb071562",
+    "tree": "43ae181727d70cc7803bbd069866ec0207297a40",
+    "status": ""
+  }
+}
