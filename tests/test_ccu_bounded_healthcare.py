@@ -1,6 +1,7 @@
 """Requested general healthcare and handbook details retain year and stage limits."""
 
 import json
+import subprocess
 from pathlib import Path
 
 from fastapi.testclient import TestClient
@@ -19,6 +20,27 @@ def read(name):
 
 def partner(page):
     return next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == page)
+
+
+def assert_life_render(profile, key, expected):
+    """Render the real API profile through the CCU production life renderer."""
+    script = r"""
+    const assert=require('node:assert/strict'),fs=require('node:fs'),window={};
+    eval(fs.readFileSync(process.argv[1],'utf8'));
+    const profile=JSON.parse(fs.readFileSync(0,'utf8'));
+    const section=profile.student_guide_sections.find(s=>s.key===process.argv[2]);
+    section.summary+=' <script>unsafe()</script>';
+    const escapeHtml=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+    const html=window.UniWayCcuDetails.renderProfileLife(profile,escapeHtml);
+    assert.ok(html.includes('data-ccu-life-field="'+process.argv[2]+'"'));
+    assert.ok(html.includes(process.argv[3]));assert.ok(html.includes('待確認'));
+    assert.ok(html.includes('&lt;script&gt;unsafe'));assert.ok(!html.includes('<script>unsafe'));
+    for(const url of section.source_urls) assert.ok(html.includes(escapeHtml(url)));
+    """
+    result = subprocess.run([
+        "node", "-e", script, str(B.parents[1] / "static/ccu-partner-details.js"), key, expected,
+    ], input=profile.model_dump_json(), capture_output=True, text=True, check=False)
+    assert result.returncode == 0, result.stderr
 
 
 def test_general_amu_insurance_is_pending_with_private_options_and_no_phd_substitution(tmp_path):
@@ -40,6 +62,7 @@ def test_general_amu_insurance_is_pending_with_private_options_and_no_phd_substi
     health = next(s for s in profile.student_guide_sections if s.key == "healthcare_reference")
     assert "待確認" in health.caution and "2020" in health.summary
     assert any(url.endswith("/medical-services") for url in health.source_urls)
+    assert_life_render(profile, "healthcare_reference", "NFZ")
     client = TestClient(create_app(tmp_path))
     flow = client.get("/application-workflow", params={"home_school": HOME, "school": amu.school_name})
     assert flow.status_code == 200
@@ -68,3 +91,4 @@ def test_mapua_passport_anchor_and_tor_are_pending_and_in_the_correct_stage(tmp_
     profile = destination_profile(mapua)
     section = next(s for s in profile.student_guide_sections if s.key == "return_preparation")
     assert "待確認" in section.caution and "非初次申請文件" in section.summary
+    assert_life_render(profile, "return_preparation", "clearance")

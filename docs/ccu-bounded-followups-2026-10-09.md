@@ -12,4 +12,6 @@ Mapúa 一般©2026手冊實體p18與p21明載護照在預定停留結束後仍�
 
 本次檢查確認原Mapúa欄位／概要／文件没有TOR／clearance／離境前流程映射。一般手冊實體p33的離境前申請TOR、clearance、Treasury付款評估與Customer Service領件日、通常1–2週及ILRAD feedback補為獨立return_preparation pending guidance。平台放在返國準備與目的地生活來源，沒有列進初次申請附件，也沒有保證1–2週出件。
 
+兩項補充指南由CCU獨立生活renderer顯示待確認文字及各自官方連結。實際API profile經production renderer的測試同時驗證指南可見、來源可見與原文HTML跳脫；完整合作校資料以stdin送Node，避免作業系統單一命令列參數長度限制，未縮減測試資料。
+
 海外17欄矩陣仍935欄：307當期確認、334待確認、202缺值、71矛盾、20參考、1明示未公告；新增一般生活guidance不增加17欄的當期完整數。來源總數980，合作條目104、流程／概要55維持。9份不安全歷史來源仍禁止用作現行映射，原始歷史payload与證據保持不變。新版未知與官方明示未公告繼續分開，未merge或部署。

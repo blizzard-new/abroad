@@ -149,11 +149,17 @@ def test_per_school_gap_inventory_distinguishes_mapping_from_exhaustion():
               for field in row["fields"].values() for e in field["evidence"]}
     mapped |= {e["source_id"] for row in json.loads((BUNDLE / "partner-document-requirements.json").read_text())
                for item in row["requirements"] for e in item["evidence"]}
+    mapped |= {e["source_id"] for row in json.loads((BUNDLE / "profile-reviewed-fields.json").read_text())
+               for guide in row.get("supplementary_life_guidance", []) for e in guide["evidence"]}
     for row in report["schools"]:
         for source in row["checked_sources"]:
             actual = json.loads((BUNDLE / "overseas_sources" / (source["source_id"] + ".json")).read_text())
             limited = actual.get("access_result") in {"empty_response", "challenge_page", "captcha_required", "unrelated_content_anomaly", "password_protected"}
-            assert (source["review_state"] == "mapped_field_evidence_not_whole_document_completion") is (source["source_id"] in mapped and not limited)
+            allowed = source.get("current_use_allowed") is not False
+            assert (source["review_state"] == "mapped_field_evidence_not_whole_document_completion") is (source["source_id"] in mapped and not limited and allowed)
+            if not allowed:
+                assert source["review_state"] == "historical_insecure_acquisition_not_current_evidence"
+                assert source["source_id"] not in mapped
             if source["review_state"] == "content_not_obtained":
                 assert not any(actual.get("text_pages", []))
             if limited:

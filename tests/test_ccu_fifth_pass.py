@@ -123,7 +123,13 @@ def test_amu_erasmus_deadlines_do_not_replace_bilateral_and_phd_policy():
     assert "Erasmus" in f["nomination_deadline"].value
     assert f["application_deadline"].status == "needs_confirmation"
     assert f["documents"].status == "reference_only"
-    assert f["insurance"].status == "missing" and f["insurance"].value is None
+    assert f["insurance"].status == "needs_confirmation"
+    assert "NFZ不是唯一強制方案" in f["insurance"].value
+    assert {e.source_url for e in f["insurance"].evidence} == {
+        "https://amu.edu.pl/en/education/healthcare/general-insurance",
+        "https://amu.edu.pl/en/education/healthcare/voluntary-insurance",
+    }
+    assert all("phd" not in e.source_url for e in f["insurance"].evidence)
 
 
 def test_fhnw_2027_entry_keeps_actual_2026_basel_and_olten_scope():

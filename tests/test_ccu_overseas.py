@@ -235,10 +235,11 @@ def test_production_renderer_shows_years_conflicts_gaps_and_escapes_source_text(
     const assert=require('node:assert/strict'), fs=require('node:fs');
     const window={};eval(fs.readFileSync(process.argv[1],'utf8'));
     const escapeHtml=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
-    const html=window.UniWayCcuDetails.render(JSON.parse(process.argv[2]),escapeHtml);
+    const html=window.UniWayCcuDetails.render(JSON.parse(fs.readFileSync(0,'utf8')),escapeHtml);
     assert.ok(html.includes('來源矛盾，待確認'));
     assert.ok(html.includes('2026–2027'));
     assert.ok(html.includes('2026-10-08'));
+    assert.ok(html.includes('2026-10-09'));
     assert.ok(html.includes('PDF第5頁'));
     assert.ok(html.includes('本期未核實／來源未載'));
     assert.ok(!html.includes('<script>unsafe'));
@@ -251,8 +252,8 @@ def test_production_renderer_shows_years_conflicts_gaps_and_escapes_source_text(
             "-e",
             script,
             str(Path("src/exchange_info/static/ccu-partner-details.js").resolve()),
-            json.dumps(data, ensure_ascii=False),
         ],
+        input=json.dumps(data, ensure_ascii=False),
         capture_output=True,
         check=False,
         text=True,

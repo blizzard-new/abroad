@@ -47,11 +47,14 @@
   }
   function renderProfileLife(profile, escapeHtml) {
     const sections = profile.student_guide_sections || [];
-    return `<section class="ccu-profile-life" aria-label="交通與校園生活">${[
+    const visible = [
       ["transport", "交通與通勤"], ["campus_life", "校園生活與支援"],
-    ].map(([key, title]) => {
+      ...sections.filter(section => ["healthcare_reference", "return_preparation"].includes(section.key))
+        .map(section => [section.key, section.title]),
+    ];
+    return `<section class="ccu-profile-life" aria-label="交通與校園生活">${visible.map(([key, title]) => {
       const section = sections.find(item => item.key === key);
-      return `<article class="overview-more" data-ccu-life-field="${key}"><h4>${title}</h4>${section
+      return `<article class="overview-more" data-ccu-life-field="${escapeHtml(key)}"><h4>${escapeHtml(title)}</h4>${section
         ? `${section.points.some(point => point.startsWith(section.summary)) ? "" : `<p>${escapeHtml(section.summary)}</p>`}${section.points.map(point => `<p>${escapeHtml(point)}</p>`).join("")}<p>${escapeHtml(section.caution || "")}</p>${section.source_urls.map(url => `<a href="${escapeHtml(url)}" target="_blank" rel="noreferrer">官方資料來源 ↗</a>`).join(" ")}`
         : `<p>本平台尚未核實此項內容，官方公開來源仍在續查。</p>`}</article>`;
     }).join("")}</section>`;
