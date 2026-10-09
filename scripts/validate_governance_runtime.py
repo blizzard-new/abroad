@@ -167,6 +167,10 @@ def validate_atomic_governance(context, *, psql):
     require(snapshot()==before,"wrong-actor approval denial committed evidence")
     checks.append("approval_is_one_independently_persisted_actor_bound_attestation")
     approve(second, baseline, "synthetic-b")
+    from validate_governance_rollback import validate_publication_shape_denials
+    publication_shape_denials=validate_publication_shape_denials(first=first,revision_id=baseline.id,
+        snapshot=snapshot)
+    checks.append('standard_publication_rejects_missing_null_and_non_array_commands_without_mutation')
     publish_workflow_revision(first, baseline.id, reviewer_id="synthetic-a")
     checks.append("two_instances_cas_and_independent_double_review")
 
@@ -310,5 +314,6 @@ def validate_atomic_governance(context, *, psql):
         "rpc_evidence":[row for row in calls if row["method"]=="POST"],
         "invalidated_approvals_DB_readback":retained,"followup":followup,
         "operation_relabel_denials":operation_relabels,"rollback_transition_denials":rollback_denials,
+        "standard_publication_shape_denials":publication_shape_denials,
         "legitimate_chained_rollback":rollback_chain,
         "fixtures": "synthetic identities and content only; existing RPC signatures and service permissions"}

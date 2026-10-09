@@ -19,3 +19,12 @@
 CI有界方案僅提案、未改YAML：現有PR＋feature push各4shards、github.ref不同無去重，各shard重做同一fullRuntime。完整M1實際8 artifacts19,279,122 bytes，仍按原30天保存。現在Quality保持停用；日後若另獲授權恢復，可只對PR／main push／manual跑同一完整suite，feature push不另重複，約減半每PR更新重複工作；同一run的syntax／OpenAPI／parse／dependency/fullRuntime可只做一次，4shards仍完整執行全部IDs、全部原斷言／閘門不變。維持30天留存及所有唯一XML／log／官方原附件／HTTP錯誤／screenshots；只對hash證明的generated source/cache副本提出未来排除，不改既有remote證據。[GitHub concurrency](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency)、[artifact retention](https://docs.github.com/en/actions/tutorials/store-and-share-data)。
 
 本輪共用merge surfaces只有atomic governance migration與既有runtime script，另新增`validate_governance_rollback.py`的隔離test情境；不更動各校official_data、一般學生API、Render或部署設定。
+
+
+## 缺失發布陣列的後續覆核
+
+固定 `b8f5e075fe920860492c0eb3e18e06c5da71903b` 的自有隔離 DB 上，從合法 rollback envelope 只刪除 `published` 鍵，實際回200並改變六表快照；未主張一般API可達。原 `case-result.json`、完整before/after、envelope及原log保存在 `/tmp/tku-governance-runtime-recovery/missing-published-pre-fix/`。原driver以刻意拋出例外停止並清理，exit1是重現結果，不是補修後通過。
+
+補修先用 `jsonb_typeof(...) IS DISTINCT FROM 'array'` 明確拒絕缺失、JSON null、object與string，再執行array長度限制，防止SQL NULL跳過拒絕。標準發布與rollback各自驗證8種非法型別回400、空public payload回409且六表不變；rollback另驗重複revision ID回409。合法發布／rollback／精確重試、獨立雙人review、真正並行CAS與late-failure atomicity仍保留。歷史standard及rollback收據須同時綁定實際actor、review count、完整review快照與公開workflow payload，不能只存在operation／revision標籤。[PostgreSQL JSON extraction與NULL](https://www.postgresql.org/docs/17/functions-json.html)、[NULL-safe比較](https://www.postgresql.org/docs/17/functions-comparison.html)。
+
+既有b8四分片測試在原固定工作目錄繼續保留結果；新SQL／驗證程式須另在新固定source完整執行，不能將b8結果換標。原學校data、src、tests、工作流程YAML及原timeout／skip／斷言沒有修改。本輪新候選推送只存程式碼，Quality保持disabled，不啟動GitHub付費或自動測試。

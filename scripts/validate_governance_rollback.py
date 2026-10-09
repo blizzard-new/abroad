@@ -31,23 +31,56 @@ def envelope(store,request):
         'operation':'rollback_published_workflow','actor':'synthetic-a'})
 
 
+def validate_publication_shape_denials(*,first,revision_id,snapshot):
+    buffer=commands.WorkflowCommandBuffer(first)
+    publish_workflow_revision(buffer,revision_id,reviewer_id='synthetic-a')
+    original={row.id:row for row in buffer.original_revisions}
+    changed=[row for row in buffer.revisions.values() if row.id not in original or
+        commands.canonical(row)!=commands.canonical(original[row.id])]
+    valid=commands.rpc_command_parameters({'kind':'workflow','expected':buffer.expected,
+        'revisions':[{**first._revision_row(row),'required_source_urls':workflow_review_source_urls(row.workflow),
+            'required_rule_keys':workflow_review_rule_keys(row.workflow)} for row in changed],
+        'published':[commands.canonical(row) for row in buffer.changed_workflows.values()],
+        'operation':'publish_workflow_revision','actor':'synthetic-a'})
+    before=snapshot();results=[]
+    for key,shape,value,status in [
+        (key,shape,value,400) for key in ('published','revisions') for shape,value in
+        [('missing',None),('null',None),('object',{}),('string','synthetic-invalid-array')]
+    ]+[('published','empty',[],409)]:
+        body=copy.deepcopy(valid);command=body['p_change_summary']['governance_command']
+        if shape=='missing':del command[key]
+        else:command[key]=value
+        try:first._request('POST','/rest/v1/rpc/exchange_commit_application_workflow_revision',json=body)
+        except requests.HTTPError as error:
+            require(error.response.status_code==status,'standard publication '+key+'_'+shape+' returned '+str(error.response.status_code))
+            response=error.response.json()
+        else:raise RuntimeError('Malformed standard publication accepted: '+key+'_'+shape)
+        after=snapshot();require(before==after,'standard publication '+key+'_'+shape+' changed one of six tables')
+        results.append({'case':key+'_'+shape,'HTTP_status':status,'response':response,
+            'all_six_snapshots_unchanged':True,'before_snapshot_SHA256':hashlib.sha256(before.encode()).hexdigest(),
+            'after_snapshot_SHA256':hashlib.sha256(after.encode()).hexdigest()})
+    return {'cases':results,'valid_original_publication_envelope':valid,
+        'original_six_table_snapshot':json.loads(before),'production_access':False}
+
+
 def validate_rollback_denials(context,*,psql,first,rollback,snapshot):
     valid=envelope(first,rollback);expected=snapshot();results=[]
-    def denied(body,label):
+    def denied(body,label,expected_status=409):
         before=snapshot()
         try:first._request('POST','/rest/v1/rpc/exchange_commit_application_workflow_revision',json=body)
         except requests.HTTPError as error:
-            require(error.response.status_code==409,label+' did not return409')
+            require(error.response.status_code==expected_status,label+' returned '+str(error.response.status_code)+' instead of '+str(expected_status))
             response=error.response.json()
         else:raise RuntimeError('Invalid rollback accepted: '+label)
         after=snapshot();require(before==after,label+' changed one of six tables')
-        results.append({'case':label,'HTTP_status':409,'response':response,'all_six_snapshots_unchanged':True,
+        results.append({'case':label,'HTTP_status':expected_status,'response':response,'all_six_snapshots_unchanged':True,
             'before_snapshot_SHA256':hashlib.sha256(before.encode()).hexdigest(),
             'after_snapshot_SHA256':hashlib.sha256(after.encode()).hexdigest(),
             'snapshot_table_counts':{key:len(rows or []) for key,rows in json.loads(before).items()}})
     for label in ['publish_label_on_rollback','standard_action_with_chain','null_rollback_IDs',
                   'missing_restore','current_as_restore','superseded_as_current','wrong_version_chain',
-                  'changed_restored_approvals','changed_superseded_companion','reject_label_with_published_row']:
+                  'changed_restored_approvals','changed_superseded_companion','reject_label_with_published_row',
+                  'duplicate_revision_identity']:
         body=copy.deepcopy(valid);command=body['p_change_summary']['governance_command'];row=next(r for r in command['revisions'] if r['status']=='published');companion=next(r for r in command['revisions'] if r['status']=='superseded')
         if label=='publish_label_on_rollback':command['operation']='publish_workflow_revision'
         elif label=='standard_action_with_chain':row['publication_action']='standard'
@@ -59,7 +92,18 @@ def validate_rollback_denials(context,*,psql,first,rollback,snapshot):
         elif label=='changed_restored_approvals':row['review_approvals'][1]['reviewer_id']='synthetic-unattested'
         elif label=='changed_superseded_companion':companion['review_approvals'][1]['reviewer_id']='synthetic-unattested'
         elif label=='reject_label_with_published_row':command['operation']='reject_workflow_revision';command['published']=[]
+        elif label=='duplicate_revision_identity':command['revisions'].append(copy.deepcopy(companion))
         denied(body,label)
+    # Each case starts with the complete legitimate envelope; mutate one key.
+    # Invalid shape is 400, while an array with an invalid publication is 409.
+    for key in ('published','revisions'):
+        for shape,value in [('missing',None),('null',None),('object',{}),('string','synthetic-invalid-array')]:
+            body=copy.deepcopy(valid);command=body['p_change_summary']['governance_command']
+            if shape=='missing':del command[key]
+            else:command[key]=value
+            denied(body,key+'_'+shape,400)
+    body=copy.deepcopy(valid);body['p_change_summary']['governance_command']['published']=[]
+    denied(body,'empty_publication_array')
     # Corrupt only the isolated historical row: a valid-looking copied reviewer
     # still lacks an independent recorded approval/publication. Restore every
     # original byte before exercising the legitimate rollback.

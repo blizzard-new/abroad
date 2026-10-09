@@ -132,9 +132,13 @@ begin
                v_command->'expected'->'workflows' is distinct from v_current_workflows then
                 raise exception using errcode='PT409', message='Governance snapshot changed';
             end if;
-            if jsonb_typeof(v_command->'revisions') <> 'array' or
-               jsonb_array_length(v_command->'revisions') not between 1 and 100 or
-               jsonb_typeof(v_command->'published') <> 'array' or
+            -- Missing keys produce SQL NULL: <> alone would skip rejection.
+            -- Check types before invoking array functions on untrusted values.
+            if jsonb_typeof(v_command->'revisions') is distinct from 'array' or
+               jsonb_typeof(v_command->'published') is distinct from 'array' then
+                raise exception using errcode='22023', message='Governance revisions and published payloads must be arrays';
+            end if;
+            if jsonb_array_length(v_command->'revisions') not between 1 and 100 or
                jsonb_array_length(v_command->'published') > 1 then
                 raise exception using errcode='22023', message='Invalid bounded governance command';
             end if;
@@ -296,12 +300,16 @@ begin
                            not exists(select 1 from public.application_workflow_audit_log e,
                                lateral jsonb_array_elements(e.metadata->'revisions') r where
                                e.metadata->>'operation'='rollback_published_workflow' and
+                               e.actor_id=e.metadata->>'actor' and e.actor_id=r->>'reviewed_by' and
                                r->>'id'=v_provenance_revision->>'id' and r->>'status'='published' and
                                r->>'publication_action'='rollback' and
                                r->>'restored_revision_id'=v_lineage_restore->>'id' and
                                r->>'rolled_back_from_revision_id'=v_lineage_from->>'id' and
                                r->>'content_hash'=v_provenance_revision->>'content_hash' and
-                               r->'review_approvals'=v_provenance_revision->'review_approvals') then
+                               r->>'required_review_count'=v_provenance_revision->>'required_review_count' and
+                               r->'review_approvals'=v_provenance_revision->'review_approvals' and
+                               r->'workflow_payload'=v_provenance_revision->'workflow_payload' and
+                               e.metadata->'published' @> jsonb_build_array(r->'workflow_payload')) then
                             raise exception using errcode='PT409', message='Historical rollback lineage must preserve its audited restoration snapshot';
                         end if;
                         v_provenance_revision := v_lineage_restore;
@@ -320,10 +328,14 @@ begin
                            select 1 from public.application_workflow_audit_log e,
                                lateral jsonb_array_elements(e.metadata->'revisions') r where
                            e.metadata->>'operation'='publish_workflow_revision' and
+                           e.actor_id=e.metadata->>'actor' and e.actor_id=r->>'reviewed_by' and
                            r->>'id'=v_provenance_revision->>'id' and r->>'status'='published' and
                            r->>'publication_action'='standard' and
                            r->>'content_hash'=v_provenance_revision->>'content_hash' and
-                           r->'review_approvals'=v_provenance_revision->'review_approvals')) then
+                           r->>'required_review_count'=v_provenance_revision->>'required_review_count' and
+                           r->'review_approvals'=v_provenance_revision->'review_approvals' and
+                           r->'workflow_payload'=v_provenance_revision->'workflow_payload' and
+                           e.metadata->'published' @> jsonb_build_array(r->'workflow_payload'))) then
                         raise exception using errcode='PT409', message='Every published snapshot requires independently stored review and publication provenance';
                     end if;
                 end if;
