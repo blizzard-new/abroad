@@ -1,0 +1,47 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku-governance-array-fixed
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 9 items
+
+tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser PASSED [ 11%]
+tests/e2e/test_loading_screen.py::test_in_dark_mode_it_is_dark_from_the_start PASSED [ 22%]
+tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion PASSED [ 33%]
+tests/e2e/test_partner_globe.py::test_dynamic_home_school_real_japan_filter_and_shared_url PASSED [ 44%]
+tests/e2e/test_partner_globe.py::test_empty_catalog PASSED               [ 55%]
+tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390] PASSED [ 66%]
+tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390] PASSED [ 77%]
+tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it PASSED [ 88%]
+tests/e2e/test_web_next_phase.py::test_content_admin_explicitly_stages_one_review_batch_without_publication PASSED [100%]
+
+- generated xml file: /tmp/tku-governance-b67d79a/isolated-original-failures/suite.xml -
+============================= slowest 25 durations =============================
+82.02s call     tests/e2e/test_web_next_phase.py::test_content_admin_explicitly_stages_one_review_batch_without_publication
+33.06s call     tests/e2e/test_partner_globe.py::test_dynamic_home_school_real_japan_filter_and_shared_url
+24.94s call     tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion
+24.80s call     tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it
+16.04s call     tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser
+9.17s call     tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390]
+9.03s call     tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390]
+6.89s call     tests/e2e/test_partner_globe.py::test_empty_catalog
+2.10s setup    tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser
+1.77s call     tests/e2e/test_loading_screen.py::test_in_dark_mode_it_is_dark_from_the_start
+1.42s setup    tests/e2e/test_web_next_phase.py::test_content_admin_explicitly_stages_one_review_batch_without_publication
+0.58s teardown tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion
+0.43s teardown tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it
+0.27s teardown tests/e2e/test_web_next_phase.py::test_content_admin_explicitly_stages_one_review_batch_without_publication
+0.27s setup    tests/e2e/test_partner_globe.py::test_dynamic_home_school_real_japan_filter_and_shared_url
+0.25s setup    tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion
+0.24s setup    tests/e2e/test_loading_screen.py::test_in_dark_mode_it_is_dark_from_the_start
+0.24s setup    tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390]
+0.21s teardown tests/e2e/test_partner_globe.py::test_empty_catalog
+0.21s setup    tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it
+0.19s teardown tests/e2e/test_loading_screen.py::test_in_dark_mode_it_is_dark_from_the_start
+0.14s teardown tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390]
+0.12s teardown tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser
+0.07s setup    tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390]
+0.05s setup    tests/e2e/test_partner_globe.py::test_empty_catalog
+======================== 9 passed in 214.72s (0:03:34) =========================

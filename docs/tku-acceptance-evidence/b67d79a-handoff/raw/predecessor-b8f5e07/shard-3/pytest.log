@@ -1,0 +1,905 @@
+{"shard": 3, "total_cases": 1827, "total_files": 187, "browser_cases_per_shard": [76, 76, 75, 75], "case_counts_per_shard": [1601, 76, 75, 75], "files_per_shard": [["tests/e2e/test_application_ui_refinements.py", "tests/e2e/test_discovery_workspace.py", "tests/e2e/test_discussion_reader.py", "tests/e2e/test_document_workbench.py", "tests/e2e/test_multi_plan_workspace.py", "tests/e2e/test_open_catalog.py", "tests/e2e/test_unified_preparation.py", "tests/e2e/test_web_next_phase.py", "tests/e2e/test_workload_journey.py", "tests/integration/test_local_ai_runtime.py", "tests/test_account_read_cache.py", "tests/test_account_workspace_api.py", "tests/test_advisor.py", "tests/test_advisor_mascot_contract.py", "tests/test_ai_gateway.py", "tests/test_ai_privacy.py", "tests/test_analytics_api.py", "tests/test_analytics_core.py", "tests/test_analytics_frontend_contract.py", "tests/test_analytics_report.py", "tests/test_api.py", "tests/test_application_document_catalog.py", "tests/test_application_documents_api.py", "tests/test_application_periods.py", "tests/test_application_plan_api.py", "tests/test_application_plan_schedule_api.py", "tests/test_application_plan_scheduling.py", "tests/test_application_rules.py", "tests/test_application_workflow.py", "tests/test_application_workflow_issue_report_migration.py", "tests/test_application_workflow_issue_reports.py", "tests/test_atomic_account_deletion_migration.py", "tests/test_atomic_auth_mutations.py", "tests/test_atomic_private_community_migration.py", "tests/test_atomic_public_community_api.py", "tests/test_atomic_public_community_migration.py", "tests/test_atomic_workspace_moderation.py", "tests/test_auth_api.py", "tests/test_b4_04_ai_limits.py", "tests/test_brand_assets.py", "tests/test_calendar_conflicts.py", "tests/test_calendar_sync_api.py", "tests/test_calendar_task_scheduling.py", "tests/test_catalog_access.py", "tests/test_catalogue_speed.py", "tests/test_cgu_bundled_data.py", "tests/test_change_impact.py", "tests/test_chinese_public_content.py", "tests/test_classifier.py", "tests/test_cli.py", "tests/test_college_options.py", "tests/test_community_api.py", "tests/test_community_browsing.py", "tests/test_community_permissions.py", "tests/test_community_repositories.py", "tests/test_content_governance_wrapper.py", "tests/test_content_summary.py", "tests/test_dependency_security_baseline.py", "tests/test_destination_tips.py", "tests/test_discovery.py", "tests/test_discussion_round2.py", "tests/test_document_check_entitlements.py", "tests/test_document_vault.py", "tests/test_email_verification.py", "tests/test_entitlements.py", "tests/test_experience_collector.py", "tests/test_experience_digests.py", "tests/test_feedback.py", "tests/test_feedback_migration.py", "tests/test_fit_signals.py", "tests/test_flutter_independent_pages.py", "tests/test_flutter_navigation_hierarchy.py", "tests/test_flutter_production_copy.py", "tests/test_form_drafts.py", "tests/test_frontend_contract.py", "tests/test_health_head.py", "tests/test_home_and_forum_routes.py", "tests/test_hong_kong_country.py", "tests/test_http_client.py", "tests/test_icon_motion_contract.py", "tests/test_independent_page_routing.py", "tests/test_jsonl_storage_integrity.py", "tests/test_lai_10_security_audit.py", "tests/test_legal_pages.py", "tests/test_life_context.py", "tests/test_loading_screen.py", "tests/test_local_ai.py", "tests/test_match_document_chunks_migration.py", "tests/test_multi_application_plan.py", "tests/test_my_application_entry.py", "tests/test_native_app_contract.py", "tests/test_next_phase_contract.py", "tests/test_notification_changes.py", "tests/test_notifications.py", "tests/test_ntpu_bundled_data.py", "tests/test_ntpu_support.py", "tests/test_ntu_audit.py", "tests/test_ntu_integration.py", "tests/test_ntu_school_board_migration.py", "tests/test_open_catalog_signup.py", "tests/test_partner_localization.py", "tests/test_partner_map_geometry.py", "tests/test_partner_research.py", "tests/test_pipeline.py", "tests/test_public_translation.py", "tests/test_qualification_scope_consistency.py", "tests/test_rag.py", "tests/test_regions.py", "tests/test_request_origin.py", "tests/test_requirements_traceability.py", "tests/test_responsive_css.py", "tests/test_review_source_candidates.py", "tests/test_review_source_metadata_candidates.py", "tests/test_rls_auto_enable_migration.py", "tests/test_school_choice.py", "tests/test_school_choice_migration.py", "tests/test_school_completeness.py", "tests/test_school_content.py", "tests/test_school_image_collector.py", "tests/test_school_photo_and_match.py", "tests/test_selection_conditions_sync.py", "tests/test_social_community_api.py", "tests/test_source_applicability_cleanup.py", "tests/test_source_metadata_research_audit.py", "tests/test_source_replacement_transport_audit.py", "tests/test_static_caching.py", "tests/test_student_view.py", "tests/test_submission_progress.py", "tests/test_supabase_migration_syntax.py", "tests/test_supabase_repositories.py", "tests/test_supabase_runtime_validation.py", "tests/test_supabase_setup_check.py", "tests/test_task_documents_and_reference_plan.py", "tests/test_terms_consent.py", "tests/test_tku_acceptance_runner.py", "tests/test_tku_community_boundaries.py", "tests/test_tku_continuation.py", "tests/test_tku_governance_commands.py", "tests/test_tku_governance_routes.py", "tests/test_tku_privacy_regressions.py", "tests/test_tku_support.py", "tests/test_tku_web_evidence.py", "tests/test_transient_auth.py", "tests/test_translation_requests.py", "tests/test_university_locations.py", "tests/test_uniway_ui_contract.py", "tests/test_web_review_findings_contract.py", "tests/test_workflow_catalog_cache.py", "tests/test_workflow_context_api.py", "tests/test_workflow_structuring.py", "tests/test_workload_planning.py", "tests/test_workload_planning_api.py"], ["tests/e2e/test_application_periods.py", "tests/e2e/test_departure_tips_and_experience_digests.py", "tests/e2e/test_document_flow.py", "tests/e2e/test_mascot_solid.py", "tests/e2e/test_ntu_school.py", "tests/e2e/test_partner_globe.py", "tests/e2e/test_planning_workspace.py", "tests/e2e/test_system_motion.py", "tests/e2e/test_task_documents_ui.py", "tests/e2e/test_terms_consent.py", "tests/e2e/test_tku_governance_transactions.py", "tests/e2e/test_travel_theme.py"], ["tests/e2e/test_analytics_tracking.py", "tests/e2e/test_feedback_page.py", "tests/e2e/test_glass_theme.py", "tests/e2e/test_icon_motion.py", "tests/e2e/test_notification_changes.py", "tests/e2e/test_region_search.py", "tests/e2e/test_school_lists.py", "tests/e2e/test_shared_conditions.py", "tests/e2e/test_student_journey_ux.py", "tests/e2e/test_tku_session_boundaries.py", "tests/e2e/test_tku_source_rendering.py"], ["tests/e2e/test_application_workspace.py", "tests/e2e/test_conditions_account_sync.py", "tests/e2e/test_discussion_round2.py", "tests/e2e/test_fit_and_completeness_ui.py", "tests/e2e/test_life_context.py", "tests/e2e/test_loading_screen.py", "tests/e2e/test_my_application_entry.py", "tests/e2e/test_navigation_guide.py", "tests/e2e/test_responsive_layout.py", "tests/e2e/test_school_chinese_content.py", "tests/e2e/test_tku_acceptance.py", "tests/e2e/test_tku_draft_handoff.py"]], "coverage": "all collected files; no new exclusions"}
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku-governance-rollback
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 75 items
+
+tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[390] PASSED [  1%]WEB_CASE tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[390] call passed 49.378s
+
+tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[1754] PASSED [  2%]WEB_CASE tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[1754] call passed 41.793s
+
+tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[390] PASSED [  4%]WEB_CASE tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[390] call passed 42.558s
+
+tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[1754] PASSED [  5%]WEB_CASE tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[1754] call passed 48.429s
+
+tests/e2e/test_conditions_account_sync.py::test_complete_conditions_reach_new_device_and_clear_stays_cleared PASSED [  6%]WEB_CASE tests/e2e/test_conditions_account_sync.py::test_complete_conditions_reach_new_device_and_clear_stays_cleared call passed 64.107s
+
+tests/e2e/test_conditions_account_sync.py::test_conflicting_submissions_keep_one_snapshot_and_tell_student PASSED [  8%]WEB_CASE tests/e2e/test_conditions_account_sync.py::test_conflicting_submissions_keep_one_snapshot_and_tell_student call passed 62.799s
+
+tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete PASSED [  9%]WEB_CASE tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete call passed 52.613s
+
+tests/e2e/test_discussion_round2.py::test_moderator_approve_hide_report_review_and_suspend PASSED [ 10%]WEB_CASE tests/e2e/test_discussion_round2.py::test_moderator_approve_hide_report_review_and_suspend call passed 23.788s
+
+tests/e2e/test_discussion_round2.py::test_account_bookmarks_sync_between_two_browser_contexts_and_import_legacy PASSED [ 12%]WEB_CASE tests/e2e/test_discussion_round2.py::test_account_bookmarks_sync_between_two_browser_contexts_and_import_legacy call passed 23.636s
+
+tests/e2e/test_discussion_round2.py::test_login_from_reader_preserves_valid_fields_while_requests_settle PASSED [ 13%]WEB_CASE tests/e2e/test_discussion_round2.py::test_login_from_reader_preserves_valid_fields_while_requests_settle call passed 72.182s
+
+tests/e2e/test_discussion_round2.py::test_opening_login_does_not_steal_focus_from_user_selected_field PASSED [ 14%]WEB_CASE tests/e2e/test_discussion_round2.py::test_opening_login_does_not_steal_focus_from_user_selected_field call passed 8.481s
+
+tests/e2e/test_discussion_round2.py::test_slow_bookmark_response_does_not_erase_new_search_text PASSED [ 16%]WEB_CASE tests/e2e/test_discussion_round2.py::test_slow_bookmark_response_does_not_erase_new_search_text call passed 13.496s
+
+tests/e2e/test_fit_and_completeness_ui.py::test_new_condition_fields_round_trip_through_the_saved_conditions_payload PASSED [ 17%]WEB_CASE tests/e2e/test_fit_and_completeness_ui.py::test_new_condition_fields_round_trip_through_the_saved_conditions_payload call passed 18.252s
+
+tests/e2e/test_fit_and_completeness_ui.py::test_fit_details_state_reasons_and_never_say_affordable PASSED [ 18%]WEB_CASE tests/e2e/test_fit_and_completeness_ui.py::test_fit_details_state_reasons_and_never_say_affordable call passed 14.878s
+
+tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[390] PASSED [ 20%]WEB_CASE tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[390] call passed 14.376s
+
+tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[1754] PASSED [ 21%]WEB_CASE tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[1754] call passed 16.834s
+
+tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure PASSED [ 22%]WEB_CASE tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure call passed 24.600s
+
+tests/e2e/test_loading_screen.py::test_it_shows_the_mascot_while_the_page_waits_and_goes_when_the_page_is_ready PASSED [ 24%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_shows_the_mascot_while_the_page_waits_and_goes_when_the_page_is_ready call passed 8.538s
+
+tests/e2e/test_loading_screen.py::test_it_also_goes_when_the_data_cannot_be_loaded PASSED [ 25%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_also_goes_when_the_data_cannot_be_loaded call passed 7.502s
+
+tests/e2e/test_loading_screen.py::test_a_page_that_never_finishes_still_gets_rid_of_it PASSED [ 26%]WEB_CASE tests/e2e/test_loading_screen.py::test_a_page_that_never_finishes_still_gets_rid_of_it call passed 4.141s
+
+tests/e2e/test_loading_screen.py::test_with_every_script_blocked_the_screen_never_covers_the_page PASSED [ 28%]WEB_CASE tests/e2e/test_loading_screen.py::test_with_every_script_blocked_the_screen_never_covers_the_page call passed 5.137s
+
+tests/e2e/test_loading_screen.py::test_the_stylesheet_alone_takes_it_away_when_no_timer_can_run PASSED [ 29%]WEB_CASE tests/e2e/test_loading_screen.py::test_the_stylesheet_alone_takes_it_away_when_no_timer_can_run call passed 2.124s
+
+tests/e2e/test_loading_screen.py::test_the_slow_wake_up_note_only_appears_after_a_wait PASSED [ 30%]WEB_CASE tests/e2e/test_loading_screen.py::test_the_slow_wake_up_note_only_appears_after_a_wait call passed 5.182s
+
+tests/e2e/test_loading_screen.py::test_without_motion_it_stands_still_but_still_appears_and_goes PASSED [ 32%]WEB_CASE tests/e2e/test_loading_screen.py::test_without_motion_it_stands_still_but_still_appears_and_goes call passed 9.856s
+
+tests/e2e/test_loading_screen.py::test_in_dark_mode_it_is_dark_from_the_start FAILED [ 33%]WEB_CASE tests/e2e/test_loading_screen.py::test_in_dark_mode_it_is_dark_from_the_start call failed 15.170s
+tests/e2e/test_loading_screen.py:130: in test_in_dark_mode_it_is_dark_from_the_start
+    wait_until_shown(page)
+tests/e2e/test_loading_screen.py:27: in wait_until_shown
+    page.wait_for_function(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:12761: in wait_for_function
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:1151: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:940: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 15000ms exceeded.
+
+tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[320-568] PASSED [ 34%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[320-568] call passed 7.013s
+
+tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[390-844] PASSED [ 36%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[390-844] call passed 3.467s
+
+tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[844-390] PASSED [ 37%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[844-390] call passed 4.427s
+
+tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[1280-900] PASSED [ 38%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[1280-900] call passed 4.625s
+
+tests/e2e/test_loading_screen.py::test_the_mascot_blinks_hops_and_turns_when_tapped_in_the_advisor_card PASSED [ 40%]WEB_CASE tests/e2e/test_loading_screen.py::test_the_mascot_blinks_hops_and_turns_when_tapped_in_the_advisor_card call passed 14.478s
+
+tests/e2e/test_loading_screen.py::test_the_mascot_acts_out_each_state_of_the_assistant PASSED [ 41%]WEB_CASE tests/e2e/test_loading_screen.py::test_the_mascot_acts_out_each_state_of_the_assistant call passed 8.431s
+
+tests/e2e/test_loading_screen.py::test_the_old_puppy_is_not_anywhere_on_the_page PASSED [ 42%]WEB_CASE tests/e2e/test_loading_screen.py::test_the_old_puppy_is_not_anywhere_on_the_page call passed 8.742s
+
+tests/e2e/test_loading_screen.py::test_it_stays_until_the_whole_page_is_ready_not_just_the_first_data PASSED [ 44%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_stays_until_the_whole_page_is_ready_not_just_the_first_data call passed 8.412s
+
+tests/e2e/test_my_application_entry.py::test_new_student_picks_a_school_and_lands_on_selection_and_confirmation PASSED [ 45%]WEB_CASE tests/e2e/test_my_application_entry.py::test_new_student_picks_a_school_and_lands_on_selection_and_confirmation call passed 13.114s
+
+tests/e2e/test_my_application_entry.py::test_returning_student_with_a_school_goes_straight_there_from_any_page PASSED [ 46%]WEB_CASE tests/e2e/test_my_application_entry.py::test_returning_student_with_a_school_goes_straight_there_from_any_page call passed 20.887s
+
+tests/e2e/test_my_application_entry.py::test_the_rail_entry_is_highlighted_on_the_selection_page_and_the_dropdown_still_offers_every_stage PASSED [ 48%]WEB_CASE tests/e2e/test_my_application_entry.py::test_the_rail_entry_is_highlighted_on_the_selection_page_and_the_dropdown_still_offers_every_stage call passed 12.938s
+
+tests/e2e/test_navigation_guide.py::test_home_is_the_guide_and_the_forum_is_one_click_away PASSED [ 49%]WEB_CASE tests/e2e/test_navigation_guide.py::test_home_is_the_guide_and_the_forum_is_one_click_away call passed 14.408s
+
+tests/e2e/test_navigation_guide.py::test_an_old_guide_link_opens_the_home_page PASSED [ 50%]WEB_CASE tests/e2e/test_navigation_guide.py::test_an_old_guide_link_opens_the_home_page call passed 8.271s
+
+tests/e2e/test_navigation_guide.py::test_an_old_community_link_opens_the_forum PASSED [ 52%]WEB_CASE tests/e2e/test_navigation_guide.py::test_an_old_community_link_opens_the_forum call passed 6.722s
+
+tests/e2e/test_navigation_guide.py::test_guide_shared_shell_and_back_forward_without_loops PASSED [ 53%]WEB_CASE tests/e2e/test_navigation_guide.py::test_guide_shared_shell_and_back_forward_without_loops call passed 19.478s
+
+tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[budget] PASSED [ 54%]WEB_CASE tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[budget] call passed 10.197s
+
+tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[application-center] PASSED [ 56%]WEB_CASE tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[application-center] call passed 10.902s
+
+tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[school=\u6797\u80af\u5927\u5b78 Lincoln University] PASSED [ 57%]WEB_CASE tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[school=\u6797\u80af\u5927\u5b78 Lincoln University] call passed 11.194s
+
+tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return PASSED [ 58%]WEB_CASE tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return call passed 28.779s
+
+tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward PASSED [ 60%]WEB_CASE tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward call passed 9.995s
+
+tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[393] PASSED [ 61%]WEB_CASE tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[393] call passed 11.447s
+
+tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[834] PASSED [ 62%]WEB_CASE tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[834] call passed 11.192s
+
+tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[1440] PASSED [ 64%]WEB_CASE tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[1440] call passed 9.843s
+
+tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[320-640] PASSED [ 65%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[320-640] call passed 20.955s
+
+tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[375-812] PASSED [ 66%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[375-812] call passed 23.815s
+
+tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[414-896] PASSED [ 68%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[414-896] call passed 19.712s
+
+tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[768-1024] PASSED [ 69%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[768-1024] call passed 16.151s
+
+tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[812-375] PASSED [ 70%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[812-375] call passed 18.810s
+
+tests/e2e/test_responsive_layout.py::test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[375-812] PASSED [ 72%]WEB_CASE tests/e2e/test_responsive_layout.py::test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[375-812] call passed 8.986s
+
+tests/e2e/test_responsive_layout.py::test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[768-1024] PASSED [ 73%]WEB_CASE tests/e2e/test_responsive_layout.py::test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[768-1024] call passed 7.677s
+
+tests/e2e/test_responsive_layout.py::test_the_compose_button_shows_its_words_on_a_tablet PASSED [ 74%]WEB_CASE tests/e2e/test_responsive_layout.py::test_the_compose_button_shows_its_words_on_a_tablet call passed 9.789s
+
+tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[390] PASSED [ 76%]WEB_CASE tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[390] call passed 44.793s
+
+tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[1754] PASSED [ 77%]WEB_CASE tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[1754] call passed 41.338s
+
+tests/e2e/test_tku_acceptance.py::test_tku_jlpt_comparison_persistence_and_closed_cycle[390] PASSED [ 78%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_jlpt_comparison_persistence_and_closed_cycle[390] call passed 23.006s
+
+tests/e2e/test_tku_acceptance.py::test_tku_jlpt_comparison_persistence_and_closed_cycle[1280] PASSED [ 80%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_jlpt_comparison_persistence_and_closed_cycle[1280] call passed 19.837s
+
+tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[390] PASSED [ 81%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[390] call passed 40.847s
+
+tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[1280] PASSED [ 82%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[1280] call passed 51.316s
+
+tests/e2e/test_tku_acceptance.py::test_tku_list_filters_favorites_comparison_and_reload[390] PASSED [ 84%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_list_filters_favorites_comparison_and_reload[390] call passed 21.811s
+
+tests/e2e/test_tku_acceptance.py::test_tku_list_filters_favorites_comparison_and_reload[1280] PASSED [ 85%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_list_filters_favorites_comparison_and_reload[1280] call passed 19.708s
+
+tests/e2e/test_tku_acceptance.py::test_tku_conditions_directory_native_years_and_no_false_open_plan[390] PASSED [ 86%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_conditions_directory_native_years_and_no_false_open_plan[390] call passed 22.749s
+
+tests/e2e/test_tku_acceptance.py::test_tku_conditions_directory_native_years_and_no_false_open_plan[1280] PASSED [ 88%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_conditions_directory_native_years_and_no_false_open_plan[1280] call passed 30.591s
+
+tests/e2e/test_tku_acceptance.py::test_tku_documents_stages_conditions_official_sources_and_target_persistence[390] PASSED [ 89%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_documents_stages_conditions_official_sources_and_target_persistence[390] call passed 33.976s
+
+tests/e2e/test_tku_acceptance.py::test_tku_documents_stages_conditions_official_sources_and_target_persistence[1280] PASSED [ 90%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_documents_stages_conditions_official_sources_and_target_persistence[1280] call passed 31.448s
+
+tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390] FAILED [ 92%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390] call failed 22.027s
+tests/e2e/test_tku_acceptance.py:318: in test_tku_preparation_pdf_is_not_an_official_application_form
+    expect(page.locator("#application-document-form")).to_be_visible()
+E   AssertionError: Locator expected to be visible
+E   Actual value: hidden 
+E   Call log:
+E     - Expect "to_be_visible" with timeout 5000ms
+E     - waiting for locator("#application-document-form")
+E       6 × locator resolved to <form novalidate="" id="application-document-form" class="application-document-form">…</form>
+E         - unexpected value "hidden"
+E   
+E   Aria snapshot:
+E   - status:
+E     - paragraph: 正在載入中
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - main:
+E     - button "開啟功能選單"
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - status: 正在取得最新整理資料…
+E     - region "我的申請工作區":
+E       - text: 我的申請
+E       - strong: 從選校到送件，接著完成下一步
+E       - paragraph: 淡江大學 · 2027-2028 學年度
+E       - navigation "申請工作區階段":
+E         - link "選校與確認":
+E           - /url: "#advisor"
+E         - link "準備與時程":
+E           - /url: "#overview"
+E         - link "文件與送件":
+E           - /url: "#application-center"
+E       - navigation "本階段操作":
+E         - link "填寫與列印":
+E           - /url: "#application-center"
+E         - link "檢查文件":
+E           - /url: "#document-check"
+E         - link "官方說明與私人文件":
+E           - /url: "#documents"
+E       - region "申請文件":
+E         - heading "申請文件" [level=2]
+E         - link:
+E           - /url: "#document-check"
+E         - list "申請文件處理流程":
+E           - listitem: "1"
+E           - listitem: "2"
+E           - listitem: "3"
+E           - listitem: "4"
+E         - strong: 申請設定
+E         - text: 申請類型
+E         - combobox "申請類型":
+E           - option "學期／學年交換" [selected]
+E           - option "雙聯學位"
+E           - option "海外實習"
+E           - option "境外短期學分課程"
+E         - text: 目標學校
+E         - combobox "目標學校":
+E           - option "尚未決定" [selected]
+E         - text: 學年度
+E         - textbox "學年度":
+E           - /placeholder: 例如 116
+E           - text: 2027-2028
+E         - text: 預計出國學期
+E         - combobox "預計出國學期":
+E           - option "尚未決定" [selected]
+E           - option "第一學期"
+E           - option "第二學期"
+E           - option "一學年"
+E           - option "寒假／暑假"
+E         - checkbox "申請補助"
+E         - strong: 申請補助
+E         - checkbox "在學役男"
+E         - strong: 在學役男
+E         - checkbox "研修一學年以上"
+E         - strong: 研修一學年以上
+E         - group:
+E           - strong: 共用資料
+E           - text: 0 / 9 欄已填
+E         - region "當期文件與官方表格":
+E           - heading "當期文件與官方表格" [level=3]
+E           - text: 請選擇學校
+E           - paragraph: 選擇目標學校後，會依學系、年度與梯次列出文件；沒有確認的份數或表格不會被當成正式版本。
+E           - paragraph: 尚未選擇目標學校。
+E         - region "可填寫的準備工具":
+E           - heading "可填寫的準備工具" [level=3]
+E           - text: 0 份 先看這個階段
+E           - combobox "先看這個階段"
+E           - paragraph: 可切換查看其他階段；這個選項不會變更你的錄取或送件狀態。
+E           - paragraph: 以下工具用來整理草稿與列印，不代表當期校方必備文件；請以上方已確認的官方規定為準。
+E           - paragraph: 目前條件下沒有需要產生的文件。
+E         - complementary "我的列印包":
+E           - text: 整理與匯出
+E           - heading "我的列印包" [level=3]
+E           - text: 0 份
+E           - paragraph: 選擇要匯出的文件，填完並核對目前版本後，即可整理成一份 PDF。
+E           - status:
+E             - strong: 選擇這次要匯出的文件
+E             - text: 0 項可匯出
+E             - progressbar "已選文件的匯出準備進度": 0%
+E           - strong: 只放這次要印的文件
+E           - paragraph: 在準備工具勾選「列印包」，文件就會出現在這裡。填完並核對後才可匯出。
+E           - status: 尚未選取文件
+E           - button "匯出列印包 PDF" [disabled]
+E           - group: 列印提醒
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms
+
+tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-1280] PASSED [ 93%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-1280] call passed 26.513s
+
+tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390] FAILED [ 94%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390] call failed 30.629s
+tests/e2e/test_tku_acceptance.py:318: in test_tku_preparation_pdf_is_not_an_official_application_form
+    expect(page.locator("#application-document-form")).to_be_visible()
+E   AssertionError: Locator expected to be visible
+E   Actual value: hidden 
+E   Call log:
+E     - Expect "to_be_visible" with timeout 5000ms
+E     - waiting for locator("#application-document-form")
+E       7 × locator resolved to <form novalidate="" id="application-document-form" class="application-document-form">…</form>
+E         - unexpected value "hidden"
+E   
+E   Aria snapshot:
+E   - status:
+E     - paragraph: 正在載入中
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - main:
+E     - button "開啟功能選單"
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - status
+E     - region "我的申請工作區":
+E       - text: 我的申請
+E       - strong: 從選校到送件，接著完成下一步
+E       - paragraph: 淡江大學 · 2027-2028 學年度
+E       - navigation "申請工作區階段":
+E         - link "選校與確認":
+E           - /url: "#advisor"
+E         - link "準備與時程":
+E           - /url: "#overview"
+E         - link "文件與送件":
+E           - /url: "#application-center"
+E       - navigation "本階段操作":
+E         - link "填寫與列印":
+E           - /url: "#application-center"
+E         - link "檢查文件":
+E           - /url: "#document-check"
+E         - link "官方說明與私人文件":
+E           - /url: "#documents"
+E       - region "申請文件":
+E         - heading "申請文件" [level=2]
+E         - link:
+E           - /url: "#document-check"
+E         - list "申請文件處理流程":
+E           - listitem: "1"
+E           - listitem: "2"
+E           - listitem: "3"
+E           - listitem: "4"
+E         - strong: 申請設定
+E         - text: 申請類型
+E         - combobox "申請類型":
+E           - option "學期／學年交換" [selected]
+E           - option "雙聯學位"
+E           - option "海外實習"
+E           - option "境外短期學分課程"
+E         - text: 目標學校
+E         - combobox "目標學校":
+E           - option "尚未決定" [selected]
+E           - option "日本 · 立命館大學 Ritsumeikan University"
+E           - option "日本 · 成蹊大學 Seikei University"
+E           - option "日本 · 長崎外國語大學 Nagasaki University of Foreign Studies"
+E           - option "日本 · 電氣通信大學 University of Electro-Communications"
+E         - text: 學年度
+E         - textbox "學年度":
+E           - /placeholder: 例如 116
+E           - text: 2027-2028
+E         - text: 預計出國學期
+E         - combobox "預計出國學期":
+E           - option "尚未決定" [selected]
+E           - option "第一學期"
+E           - option "第二學期"
+E           - option "一學年"
+E           - option "寒假／暑假"
+E         - checkbox "申請補助"
+E         - strong: 申請補助
+E         - checkbox "在學役男"
+E         - strong: 在學役男
+E         - checkbox "研修一學年以上"
+E         - strong: 研修一學年以上
+E         - group:
+E           - strong: 共用資料
+E           - text: 0 / 9 欄已填
+E         - region "當期文件與官方表格":
+E           - heading "當期文件與官方表格" [level=3]
+E           - text: 請選擇學校
+E           - paragraph: 選擇目標學校後，會依學系、年度與梯次列出文件；沒有確認的份數或表格不會被當成正式版本。
+E           - paragraph: 尚未選擇目標學校。
+E         - region "可填寫的準備工具":
+E           - heading "可填寫的準備工具" [level=3]
+E           - text: 0 份 先看這個階段
+E           - combobox "先看這個階段"
+E           - paragraph: 可切換查看其他階段；這個選項不會變更你的錄取或送件狀態。
+E           - paragraph: 以下工具用來整理草稿與列印，不代表當期校方必備文件；請以上方已確認的官方規定為準。
+E         - complementary "我的列印包":
+E           - text: 整理與匯出
+E           - heading "我的列印包" [level=3]
+E           - text: 0 份
+E           - paragraph: 選擇要匯出的文件，填完並核對目前版本後，即可整理成一份 PDF。
+E           - status:
+E             - strong: 選擇這次要匯出的文件
+E             - text: 0 項可匯出
+E             - progressbar "已選文件的匯出準備進度": 0%
+E           - strong: 只放這次要印的文件
+E           - paragraph: 在準備工具勾選「列印包」，文件就會出現在這裡。填完並核對後才可匯出。
+E           - status: 尚未選取文件
+E           - button "匯出列印包 PDF" [disabled]
+E           - group: 列印提醒
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms
+
+tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-1280] PASSED [ 96%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-1280] call passed 23.507s
+
+tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u9577\u5e9a\u5927\u5b78] PASSED [ 97%]WEB_CASE tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u9577\u5e9a\u5927\u5b78] call passed 37.907s
+
+tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u6de1\u6c5f\u5927\u5b78] PASSED [ 98%]WEB_CASE tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u6de1\u6c5f\u5927\u5b78] call passed 21.226s
+
+tests/e2e/test_tku_draft_handoff.py::test_guest_draft_is_discarded_when_sign_in_changes_mother_school PASSED [100%]WEB_CASE tests/e2e/test_tku_draft_handoff.py::test_guest_draft_is_discarded_when_sign_in_changes_mother_school call passed 25.457s
+
+
+=================================== FAILURES ===================================
+_________________ test_in_dark_mode_it_is_dark_from_the_start __________________
+tests/e2e/test_loading_screen.py:130: in test_in_dark_mode_it_is_dark_from_the_start
+    wait_until_shown(page)
+tests/e2e/test_loading_screen.py:27: in wait_until_shown
+    page.wait_for_function(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:12761: in wait_for_function
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:1151: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:940: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 15000ms exceeded.
+_ test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390] _
+tests/e2e/test_tku_acceptance.py:318: in test_tku_preparation_pdf_is_not_an_official_application_form
+    expect(page.locator("#application-document-form")).to_be_visible()
+E   AssertionError: Locator expected to be visible
+E   Actual value: hidden 
+E   Call log:
+E     - Expect "to_be_visible" with timeout 5000ms
+E     - waiting for locator("#application-document-form")
+E       6 × locator resolved to <form novalidate="" id="application-document-form" class="application-document-form">…</form>
+E         - unexpected value "hidden"
+E   
+E   Aria snapshot:
+E   - status:
+E     - paragraph: 正在載入中
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - main:
+E     - button "開啟功能選單"
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - status: 正在取得最新整理資料…
+E     - region "我的申請工作區":
+E       - text: 我的申請
+E       - strong: 從選校到送件，接著完成下一步
+E       - paragraph: 淡江大學 · 2027-2028 學年度
+E       - navigation "申請工作區階段":
+E         - link "選校與確認":
+E           - /url: "#advisor"
+E         - link "準備與時程":
+E           - /url: "#overview"
+E         - link "文件與送件":
+E           - /url: "#application-center"
+E       - navigation "本階段操作":
+E         - link "填寫與列印":
+E           - /url: "#application-center"
+E         - link "檢查文件":
+E           - /url: "#document-check"
+E         - link "官方說明與私人文件":
+E           - /url: "#documents"
+E       - region "申請文件":
+E         - heading "申請文件" [level=2]
+E         - link:
+E           - /url: "#document-check"
+E         - list "申請文件處理流程":
+E           - listitem: "1"
+E           - listitem: "2"
+E           - listitem: "3"
+E           - listitem: "4"
+E         - strong: 申請設定
+E         - text: 申請類型
+E         - combobox "申請類型":
+E           - option "學期／學年交換" [selected]
+E           - option "雙聯學位"
+E           - option "海外實習"
+E           - option "境外短期學分課程"
+E         - text: 目標學校
+E         - combobox "目標學校":
+E           - option "尚未決定" [selected]
+E         - text: 學年度
+E         - textbox "學年度":
+E           - /placeholder: 例如 116
+E           - text: 2027-2028
+E         - text: 預計出國學期
+E         - combobox "預計出國學期":
+E           - option "尚未決定" [selected]
+E           - option "第一學期"
+E           - option "第二學期"
+E           - option "一學年"
+E           - option "寒假／暑假"
+E         - checkbox "申請補助"
+E         - strong: 申請補助
+E         - checkbox "在學役男"
+E         - strong: 在學役男
+E         - checkbox "研修一學年以上"
+E         - strong: 研修一學年以上
+E         - group:
+E           - strong: 共用資料
+E           - text: 0 / 9 欄已填
+E         - region "當期文件與官方表格":
+E           - heading "當期文件與官方表格" [level=3]
+E           - text: 請選擇學校
+E           - paragraph: 選擇目標學校後，會依學系、年度與梯次列出文件；沒有確認的份數或表格不會被當成正式版本。
+E           - paragraph: 尚未選擇目標學校。
+E         - region "可填寫的準備工具":
+E           - heading "可填寫的準備工具" [level=3]
+E           - text: 0 份 先看這個階段
+E           - combobox "先看這個階段"
+E           - paragraph: 可切換查看其他階段；這個選項不會變更你的錄取或送件狀態。
+E           - paragraph: 以下工具用來整理草稿與列印，不代表當期校方必備文件；請以上方已確認的官方規定為準。
+E           - paragraph: 目前條件下沒有需要產生的文件。
+E         - complementary "我的列印包":
+E           - text: 整理與匯出
+E           - heading "我的列印包" [level=3]
+E           - text: 0 份
+E           - paragraph: 選擇要匯出的文件，填完並核對目前版本後，即可整理成一份 PDF。
+E           - status:
+E             - strong: 選擇這次要匯出的文件
+E             - text: 0 項可匯出
+E             - progressbar "已選文件的匯出準備進度": 0%
+E           - strong: 只放這次要印的文件
+E           - paragraph: 在準備工具勾選「列印包」，文件就會出現在這裡。填完並核對後才可匯出。
+E           - status: 尚未選取文件
+E           - button "匯出列印包 PDF" [disabled]
+E           - group: 列印提醒
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms
+_ test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390] _
+tests/e2e/test_tku_acceptance.py:318: in test_tku_preparation_pdf_is_not_an_official_application_form
+    expect(page.locator("#application-document-form")).to_be_visible()
+E   AssertionError: Locator expected to be visible
+E   Actual value: hidden 
+E   Call log:
+E     - Expect "to_be_visible" with timeout 5000ms
+E     - waiting for locator("#application-document-form")
+E       7 × locator resolved to <form novalidate="" id="application-document-form" class="application-document-form">…</form>
+E         - unexpected value "hidden"
+E   
+E   Aria snapshot:
+E   - status:
+E     - paragraph: 正在載入中
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - main:
+E     - button "開啟功能選單"
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - status
+E     - region "我的申請工作區":
+E       - text: 我的申請
+E       - strong: 從選校到送件，接著完成下一步
+E       - paragraph: 淡江大學 · 2027-2028 學年度
+E       - navigation "申請工作區階段":
+E         - link "選校與確認":
+E           - /url: "#advisor"
+E         - link "準備與時程":
+E           - /url: "#overview"
+E         - link "文件與送件":
+E           - /url: "#application-center"
+E       - navigation "本階段操作":
+E         - link "填寫與列印":
+E           - /url: "#application-center"
+E         - link "檢查文件":
+E           - /url: "#document-check"
+E         - link "官方說明與私人文件":
+E           - /url: "#documents"
+E       - region "申請文件":
+E         - heading "申請文件" [level=2]
+E         - link:
+E           - /url: "#document-check"
+E         - list "申請文件處理流程":
+E           - listitem: "1"
+E           - listitem: "2"
+E           - listitem: "3"
+E           - listitem: "4"
+E         - strong: 申請設定
+E         - text: 申請類型
+E         - combobox "申請類型":
+E           - option "學期／學年交換" [selected]
+E           - option "雙聯學位"
+E           - option "海外實習"
+E           - option "境外短期學分課程"
+E         - text: 目標學校
+E         - combobox "目標學校":
+E           - option "尚未決定" [selected]
+E           - option "日本 · 立命館大學 Ritsumeikan University"
+E           - option "日本 · 成蹊大學 Seikei University"
+E           - option "日本 · 長崎外國語大學 Nagasaki University of Foreign Studies"
+E           - option "日本 · 電氣通信大學 University of Electro-Communications"
+E         - text: 學年度
+E         - textbox "學年度":
+E           - /placeholder: 例如 116
+E           - text: 2027-2028
+E         - text: 預計出國學期
+E         - combobox "預計出國學期":
+E           - option "尚未決定" [selected]
+E           - option "第一學期"
+E           - option "第二學期"
+E           - option "一學年"
+E           - option "寒假／暑假"
+E         - checkbox "申請補助"
+E         - strong: 申請補助
+E         - checkbox "在學役男"
+E         - strong: 在學役男
+E         - checkbox "研修一學年以上"
+E         - strong: 研修一學年以上
+E         - group:
+E           - strong: 共用資料
+E           - text: 0 / 9 欄已填
+E         - region "當期文件與官方表格":
+E           - heading "當期文件與官方表格" [level=3]
+E           - text: 請選擇學校
+E           - paragraph: 選擇目標學校後，會依學系、年度與梯次列出文件；沒有確認的份數或表格不會被當成正式版本。
+E           - paragraph: 尚未選擇目標學校。
+E         - region "可填寫的準備工具":
+E           - heading "可填寫的準備工具" [level=3]
+E           - text: 0 份 先看這個階段
+E           - combobox "先看這個階段"
+E           - paragraph: 可切換查看其他階段；這個選項不會變更你的錄取或送件狀態。
+E           - paragraph: 以下工具用來整理草稿與列印，不代表當期校方必備文件；請以上方已確認的官方規定為準。
+E         - complementary "我的列印包":
+E           - text: 整理與匯出
+E           - heading "我的列印包" [level=3]
+E           - text: 0 份
+E           - paragraph: 選擇要匯出的文件，填完並核對目前版本後，即可整理成一份 PDF。
+E           - status:
+E             - strong: 選擇這次要匯出的文件
+E             - text: 0 項可匯出
+E             - progressbar "已選文件的匯出準備進度": 0%
+E           - strong: 只放這次要印的文件
+E           - paragraph: 在準備工具勾選「列印包」，文件就會出現在這裡。填完並核對後才可匯出。
+E           - status: 尚未選取文件
+E           - button "匯出列印包 PDF" [disabled]
+E           - group: 列印提醒
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms
+------ generated xml file: /tmp/tku-governance-b8f5e07/shard-3/suite.xml -------
+============================= slowest 25 durations =============================
+72.18s call     tests/e2e/test_discussion_round2.py::test_login_from_reader_preserves_valid_fields_while_requests_settle
+64.11s call     tests/e2e/test_conditions_account_sync.py::test_complete_conditions_reach_new_device_and_clear_stays_cleared
+62.80s call     tests/e2e/test_conditions_account_sync.py::test_conflicting_submissions_keep_one_snapshot_and_tell_student
+52.61s call     tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete
+51.32s call     tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[1280]
+49.38s call     tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[390]
+48.43s call     tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[1754]
+44.79s call     tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[390]
+42.56s call     tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[390]
+41.79s call     tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[1754]
+41.34s call     tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[1754]
+40.85s call     tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[390]
+37.91s call     tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u9577\u5e9a\u5927\u5b78]
+33.98s call     tests/e2e/test_tku_acceptance.py::test_tku_documents_stages_conditions_official_sources_and_target_persistence[390]
+31.45s call     tests/e2e/test_tku_acceptance.py::test_tku_documents_stages_conditions_official_sources_and_target_persistence[1280]
+30.63s call     tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390]
+30.59s call     tests/e2e/test_tku_acceptance.py::test_tku_conditions_directory_native_years_and_no_false_open_plan[1280]
+28.78s call     tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return
+26.51s call     tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-1280]
+25.46s call     tests/e2e/test_tku_draft_handoff.py::test_guest_draft_is_discarded_when_sign_in_changes_mother_school
+24.60s call     tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure
+23.82s call     tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[375-812]
+23.79s call     tests/e2e/test_discussion_round2.py::test_moderator_approve_hide_report_review_and_suspend
+23.64s call     tests/e2e/test_discussion_round2.py::test_account_bookmarks_sync_between_two_browser_contexts_and_import_legacy
+23.51s call     tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-1280]
+=========================== short test summary info ============================
+FAILED tests/e2e/test_loading_screen.py::test_in_dark_mode_it_is_dark_from_the_start - playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 15000ms exceeded.
+FAILED tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390] - AssertionError: Locator expected to be visible
+Actual value: hidden 
+Call log:
+  - Expect "to_be_visible" with timeout 5000ms
+  - waiting for locator("#application-document-form")
+    6 × locator resolved to <form novalidate="" id="application-document-form" class="application-document-form">…</form>
+      - unexpected value "hidden"
+
+Aria snapshot:
+- status:
+  - paragraph: 正在載入中
+- link "跳到主要內容":
+  - /url: "#main-content"
+- main:
+  - button "開啟功能選單"
+  - link "UniWay 首頁":
+    - /url: "#home"
+    - strong: UniWay
+  - status: 正在取得最新整理資料…
+  - region "我的申請工作區":
+    - text: 我的申請
+    - strong: 從選校到送件，接著完成下一步
+    - paragraph: 淡江大學 · 2027-2028 學年度
+    - navigation "申請工作區階段":
+      - link "選校與確認":
+        - /url: "#advisor"
+      - link "準備與時程":
+        - /url: "#overview"
+      - link "文件與送件":
+        - /url: "#application-center"
+    - navigation "本階段操作":
+      - link "填寫與列印":
+        - /url: "#application-center"
+      - link "檢查文件":
+        - /url: "#document-check"
+      - link "官方說明與私人文件":
+        - /url: "#documents"
+    - region "申請文件":
+      - heading "申請文件" [level=2]
+      - link:
+        - /url: "#document-check"
+      - list "申請文件處理流程":
+        - listitem: "1"
+        - listitem: "2"
+        - listitem: "3"
+        - listitem: "4"
+      - strong: 申請設定
+      - text: 申請類型
+      - combobox "申請類型":
+        - option "學期／學年交換" [selected]
+        - option "雙聯學位"
+        - option "海外實習"
+        - option "境外短期學分課程"
+      - text: 目標學校
+      - combobox "目標學校":
+        - option "尚未決定" [selected]
+      - text: 學年度
+      - textbox "學年度":
+        - /placeholder: 例如 116
+        - text: 2027-2028
+      - text: 預計出國學期
+      - combobox "預計出國學期":
+        - option "尚未決定" [selected]
+        - option "第一學期"
+        - option "第二學期"
+        - option "一學年"
+        - option "寒假／暑假"
+      - checkbox "申請補助"
+      - strong: 申請補助
+      - checkbox "在學役男"
+      - strong: 在學役男
+      - checkbox "研修一學年以上"
+      - strong: 研修一學年以上
+      - group:
+        - strong: 共用資料
+        - text: 0 / 9 欄已填
+      - region "當期文件與官方表格":
+        - heading "當期文件與官方表格" [level=3]
+        - text: 請選擇學校
+        - paragraph: 選擇目標學校後，會依學系、年度與梯次列出文件；沒有確認的份數或表格不會被當成正式版本。
+        - paragraph: 尚未選擇目標學校。
+      - region "可填寫的準備工具":
+        - heading "可填寫的準備工具" [level=3]
+        - text: 0 份 先看這個階段
+        - combobox "先看這個階段"
+        - paragraph: 可切換查看其他階段；這個選項不會變更你的錄取或送件狀態。
+        - paragraph: 以下工具用來整理草稿與列印，不代表當期校方必備文件；請以上方已確認的官方規定為準。
+        - paragraph: 目前條件下沒有需要產生的文件。
+      - complementary "我的列印包":
+        - text: 整理與匯出
+        - heading "我的列印包" [level=3]
+        - text: 0 份
+        - paragraph: 選擇要匯出的文件，填完並核對目前版本後，即可整理成一份 PDF。
+        - status:
+          - strong: 選擇這次要匯出的文件
+          - text: 0 項可匯出
+          - progressbar "已選文件的匯出準備進度": 0%
+        - strong: 只放這次要印的文件
+        - paragraph: 在準備工具勾選「列印包」，文件就會出現在這裡。填完並核對後才可匯出。
+        - status: 尚未選取文件
+        - button "匯出列印包 PDF" [disabled]
+        - group: 列印提醒
+- paragraph:
+  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+  - button "停用匿名使用統計"
+  - text: 。
+  - link "隱私權政策":
+    - /url: /privacy
+  - link "使用條款":
+    - /url: /terms
+FAILED tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390] - AssertionError: Locator expected to be visible
+Actual value: hidden 
+Call log:
+  - Expect "to_be_visible" with timeout 5000ms
+  - waiting for locator("#application-document-form")
+    7 × locator resolved to <form novalidate="" id="application-document-form" class="application-document-form">…</form>
+      - unexpected value "hidden"
+
+Aria snapshot:
+- status:
+  - paragraph: 正在載入中
+- link "跳到主要內容":
+  - /url: "#main-content"
+- main:
+  - button "開啟功能選單"
+  - link "UniWay 首頁":
+    - /url: "#home"
+    - strong: UniWay
+  - status
+  - region "我的申請工作區":
+    - text: 我的申請
+    - strong: 從選校到送件，接著完成下一步
+    - paragraph: 淡江大學 · 2027-2028 學年度
+    - navigation "申請工作區階段":
+      - link "選校與確認":
+        - /url: "#advisor"
+      - link "準備與時程":
+        - /url: "#overview"
+      - link "文件與送件":
+        - /url: "#application-center"
+    - navigation "本階段操作":
+      - link "填寫與列印":
+        - /url: "#application-center"
+      - link "檢查文件":
+        - /url: "#document-check"
+      - link "官方說明與私人文件":
+        - /url: "#documents"
+    - region "申請文件":
+      - heading "申請文件" [level=2]
+      - link:
+        - /url: "#document-check"
+      - list "申請文件處理流程":
+        - listitem: "1"
+        - listitem: "2"
+        - listitem: "3"
+        - listitem: "4"
+      - strong: 申請設定
+      - text: 申請類型
+      - combobox "申請類型":
+        - option "學期／學年交換" [selected]
+        - option "雙聯學位"
+        - option "海外實習"
+        - option "境外短期學分課程"
+      - text: 目標學校
+      - combobox "目標學校":
+        - option "尚未決定" [selected]
+        - option "日本 · 立命館大學 Ritsumeikan University"
+        - option "日本 · 成蹊大學 Seikei University"
+        - option "日本 · 長崎外國語大學 Nagasaki University of Foreign Studies"
+        - option "日本 · 電氣通信大學 University of Electro-Communications"
+      - text: 學年度
+      - textbox "學年度":
+        - /placeholder: 例如 116
+        - text: 2027-2028
+      - text: 預計出國學期
+      - combobox "預計出國學期":
+        - option "尚未決定" [selected]
+        - option "第一學期"
+        - option "第二學期"
+        - option "一學年"
+        - option "寒假／暑假"
+      - checkbox "申請補助"
+      - strong: 申請補助
+      - checkbox "在學役男"
+      - strong: 在學役男
+      - checkbox "研修一學年以上"
+      - strong: 研修一學年以上
+      - group:
+        - strong: 共用資料
+        - text: 0 / 9 欄已填
+      - region "當期文件與官方表格":
+        - heading "當期文件與官方表格" [level=3]
+        - text: 請選擇學校
+        - paragraph: 選擇目標學校後，會依學系、年度與梯次列出文件；沒有確認的份數或表格不會被當成正式版本。
+        - paragraph: 尚未選擇目標學校。
+      - region "可填寫的準備工具":
+        - heading "可填寫的準備工具" [level=3]
+        - text: 0 份 先看這個階段
+        - combobox "先看這個階段"
+        - paragraph: 可切換查看其他階段；這個選項不會變更你的錄取或送件狀態。
+        - paragraph: 以下工具用來整理草稿與列印，不代表當期校方必備文件；請以上方已確認的官方規定為準。
+      - complementary "我的列印包":
+        - text: 整理與匯出
+        - heading "我的列印包" [level=3]
+        - text: 0 份
+        - paragraph: 選擇要匯出的文件，填完並核對目前版本後，即可整理成一份 PDF。
+        - status:
+          - strong: 選擇這次要匯出的文件
+          - text: 0 項可匯出
+          - progressbar "已選文件的匯出準備進度": 0%
+        - strong: 只放這次要印的文件
+        - paragraph: 在準備工具勾選「列印包」，文件就會出現在這裡。填完並核對後才可匯出。
+        - status: 尚未選取文件
+        - button "匯出列印包 PDF" [disabled]
+        - group: 列印提醒
+- paragraph:
+  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+  - button "停用匿名使用統計"
+  - text: 。
+  - link "隱私權政策":
+    - /url: /privacy
+  - link "使用條款":
+    - /url: /terms
+================== 3 failed, 72 passed in 1630.61s (0:27:10) ===================
+WEB_SHARD 3 exit=1 elapsed=1644.959s
