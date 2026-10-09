@@ -1,0 +1,50 @@
+{
+  "key": "eligibility",
+  "label": "學制／校區／track範圍",
+  "status": "needs_confirmation",
+  "note": "PMB一般degree頁有與中央網路學習科技研究所dual-degree說明，但雙聯不是本目錄semester exchange；degree年齡23／40歲與高中畢業條件不能套中央交換生。 現行Programs分degree、BIPA、短期及DISS／KNB／Darmasiswa；尚未讀到交換名額／學制／GPA／院系限制，不因一般外國生頁自動允許全學制。",
+  "source_urls": [
+    "https://pmb.uny.ac.id/international-students/program",
+    "https://io.uny.ac.id/programs"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://pmb.uny.ac.id/international-students/program",
+      "source_id": "host-uny-old-degree",
+      "page": null,
+      "source_title": "UNY PMB國際Degree申請頁；仍列2021時程非交換",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "eligibility",
+        "evidence_array_index": 0,
+        "text_sha256": "dfff6352f024a2ca1b39206866cbea2b8d3c9d85a97c8151a4f69c368ae804bf",
+        "char_count": 8400
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://io.uny.ac.id/programs",
+      "source_id": "host-uny-programs",
+      "page": null,
+      "source_title": "UNY現行國際學生programs；degree／短期分開",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "eligibility",
+        "evidence_array_index": 1,
+        "text_sha256": "ec3d07db283106c5205a4a81be65a4242a2504a25f078c0ca048e1d704bebd7d",
+        "char_count": 1491
+      }
+    }
+  ],
+  "unresolved": "中央116semester exchange有效協議、申請學制、院系、GPA與名額需接收包。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。"
+}

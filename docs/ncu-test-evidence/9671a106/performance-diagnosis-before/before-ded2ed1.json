@@ -1,0 +1,71 @@
+{
+  "tested_sha": "ded2ed1a79a5f3cb009655790eb560816a7af61a",
+  "label": "before-ded2ed1",
+  "timestamp": "2026-10-08T22:11:09.040052+00:00",
+  "cold_process": true,
+  "three_concurrent_reads": [
+    {
+      "elapsed_s": 10.582063463996747,
+      "count": 1065,
+      "home_counts": {
+        "國立臺北大學": 409,
+        "長庚大學": 154,
+        "國立臺灣大學": 288,
+        "國立中央大學": 214
+      }
+    },
+    {
+      "elapsed_s": 10.377126795006916,
+      "count": 1065,
+      "home_counts": {
+        "國立臺北大學": 409,
+        "長庚大學": 154,
+        "國立臺灣大學": 288,
+        "國立中央大學": 214
+      }
+    },
+    {
+      "elapsed_s": 11.093297491999692,
+      "count": 1065,
+      "home_counts": {
+        "國立臺北大學": 409,
+        "長庚大學": 154,
+        "國立臺灣大學": 288,
+        "國立中央大學": 214
+      }
+    }
+  ],
+  "builds": [
+    {
+      "kind": "local",
+      "elapsed_s": 4.292800440452993e-05
+    },
+    {
+      "kind": "bundled",
+      "elapsed_s": 10.327129254001193
+    },
+    {
+      "kind": "published",
+      "elapsed_s": 10.37613510900701
+    },
+    {
+      "kind": "bundled",
+      "elapsed_s": 10.492557400997612
+    },
+    {
+      "kind": "published",
+      "elapsed_s": 10.52287431199511
+    },
+    {
+      "kind": "bundled",
+      "elapsed_s": 11.009760174987605
+    },
+    {
+      "kind": "published",
+      "elapsed_s": 11.028311871996266
+    }
+  ],
+  "total_elapsed_s": 11.096754680998856,
+  "end_sha": "ded2ed1a79a5f3cb009655790eb560816a7af61a",
+  "worktree": ""
+}

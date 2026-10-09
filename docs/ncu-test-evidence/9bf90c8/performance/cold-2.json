@@ -1,0 +1,5303 @@
+{
+  "tested_sha": "9bf90c8748fd33747c625e1f5154f6838540d64a",
+  "run": "2",
+  "started_at": "2026-10-09T00:32:14.868609+00:00",
+  "cold_python_process": true,
+  "worktree_clean_at_start": true,
+  "original_default_5s_test_unchanged": true,
+  "instrumentation": "v2: ASGI timings, per-key catalog builds, browser ResourceTiming buffer5000, LongTask/render/DOM observers; native network and assertions unchanged",
+  "original_test_result": "passed",
+  "test_elapsed_s": 43.40282972701243,
+  "page_errors": [],
+  "browser_trace": [
+    {
+      "event": "fetch_start",
+      "url": "/universities",
+      "t": 1499.6000000089407
+    },
+    {
+      "event": "fetch_start",
+      "url": "/auth/providers",
+      "t": 1520.4000000059605
+    },
+    {
+      "event": "fetch_start",
+      "url": "/auth/session",
+      "t": 1653.5
+    },
+    {
+      "event": "fetch_start",
+      "url": "/static/assets/school-images.json?v=20260929-complete-1",
+      "t": 1654.300000011921
+    },
+    {
+      "event": "fetch_start",
+      "url": "/ai/status",
+      "t": 1654.6000000089407
+    },
+    {
+      "event": "instrumented_render",
+      "method": "renderApplicationWorkflow",
+      "t": 1672.800000011921
+    },
+    {
+      "event": "instrumented_render",
+      "method": "renderApplicationCalendar",
+      "t": 1672.800000011921
+    },
+    {
+      "event": "instrumented_render",
+      "method": "scheduleCalendarConflictAnalysis",
+      "t": 1672.800000011921
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/auth/providers",
+      "t": 1855.1000000089407,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/universities",
+      "t": 1855.5,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/static/assets/school-images.json?v=20260929-complete-1",
+      "t": 1855.800000011921,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/auth/session",
+      "t": 1856.6000000089407,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/ai/status",
+      "t": 1872.5,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/product/entitlements",
+      "t": 2078.4000000059605
+    },
+    {
+      "event": "fetch_start",
+      "url": "/community/boards",
+      "t": 2079.300000011921
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/community/boards",
+      "t": 2155.800000011921,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/product/entitlements",
+      "t": 2156,
+      "status": 200
+    },
+    {
+      "event": "render",
+      "method": "scheduleCalendarConflictAnalysis",
+      "t": 2358,
+      "end": 2358
+    },
+    {
+      "event": "fetch_start",
+      "url": "/ai/status",
+      "t": 2377.5
+    },
+    {
+      "event": "fetch_start",
+      "url": "/student-dashboard?school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8",
+      "t": 2388.800000011921
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/ai/status",
+      "t": 2429.300000011921,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/student-dashboard?school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8",
+      "t": 2429.6000000089407,
+      "status": 200
+    },
+    {
+      "event": "render",
+      "method": "renderApplicationCalendar",
+      "t": 2494,
+      "end": 2511.300000011921
+    },
+    {
+      "event": "fetch_start",
+      "url": "/application-period-options?home_school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8",
+      "t": 2730
+    },
+    {
+      "event": "fetch_start",
+      "url": "/application-center/templates?school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&program_type=exchange",
+      "t": 2747.7000000029802
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/application-center/templates?school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&program_type=exchange",
+      "t": 3147.7000000029802,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/coverage?school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8",
+      "t": 3297.5
+    },
+    {
+      "event": "fetch_start",
+      "url": "/destination-profiles?home_school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&compact=true",
+      "t": 3298.2000000029802
+    },
+    {
+      "event": "fetch_start",
+      "url": "/community/feed?limit=20&sort=latest",
+      "t": 3299.800000011921
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/community/feed?limit=20&sort=latest",
+      "t": 6143.4000000059605,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/destination-profiles?home_school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&compact=true",
+      "t": 7040.5,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 7066.20000000298
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 7072.100000008941
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 7075.600000008941
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 7080.100000008941
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/application-period-options?home_school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8",
+      "t": 9938.5,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/coverage?school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8",
+      "t": 11011.40000000596,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 14548.20000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 14582.300000011921,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 14585,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 14587.800000011921,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/student-dashboard?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 16133.60000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/application-center/templates?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&program_type=exchange",
+      "t": 16135.10000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/coverage?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 16135.5
+    },
+    {
+      "event": "fetch_start",
+      "url": "/destination-profiles?home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&compact=true",
+      "t": 16135.60000000894
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/application-center/templates?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&program_type=exchange",
+      "t": 16235.70000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/student-dashboard?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 16411.70000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 16755.5
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 16757.40000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 16758.80000001192
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 16759.80000001192
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/destination-profiles?home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&compact=true",
+      "t": 16830,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 16895.90000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 16897.40000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 16898.5
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 16899.60000000894
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 17480.90000000596,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 18065,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 18113.10000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 18113.60000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 18115,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 18118.40000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 18121.20000000298
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 18123.30000001192
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 18125
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 18475.20000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 18673.80000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 18746.70000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/coverage?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 18748.5,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 18996,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 18996.70000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 18997,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 18997.70000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 19010.40000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 19012.30000001192
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 19013.5
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 19014.80000001192
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 19059.70000000298
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 19061.40000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 19062.5
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 19063.60000000894
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 19240.80000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 19375.70000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 19838.70000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 20024.60000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 20091.60000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 20153.30000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 20156,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 20159.20000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 20159.70000000298
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 20161
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 20164.30000001192
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 20170.10000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 20182.40000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 20184
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 20185.70000000298
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 20190.70000000298
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 20817.40000000596,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 20817.80000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 20818,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 20818.20000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 20830.20000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 20834,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 20836
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 20838.40000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 20840.30000001192
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 20841.90000000596
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 21473.5,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 21475.90000000596,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 21478.30000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 21597.5,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 21627.40000000596,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 21874.70000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 21881.90000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 21884.5
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 21886.60000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 21887.60000000894
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 23256.30000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 23258.60000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 23350.30000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 23352.60000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 23356.90000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 23367.80000001192
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 23371.60000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 23374.30000001192
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 24146,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 24155.80000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 24156,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 24204.40000000596,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 24207.10000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 24216.90000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 24219.90000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 24222.30000001192
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 24628.30000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 24644.10000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 24829.60000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 24909.20000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 24910.90000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 24912.5
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 24913.90000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 24915.60000000894
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 25816.40000000596,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 25831.10000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 25832,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 25838.5,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 25840.40000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 25842.5
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 25844.10000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 25845.60000000894
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 26424.30000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 26460.10000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 26572.90000000596,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 26590.30000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 26594.20000000298
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 26599
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 26603.60000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 26607.70000000298
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 27076.90000000596,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 27248.10000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 27260.40000000596,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 27288.80000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 27290.10000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 27292.90000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 27294.40000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 27295.90000000596
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 28056.10000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 28240.10000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 28279,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 28379.10000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 28382.10000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 28388.60000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 28392.30000001192
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 28501,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 28768.40000000596,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 28831.90000000596,
+      "status": 200
+    },
+    {
+      "event": "render",
+      "method": "renderApplicationCalendar",
+      "t": 29151.10000000894,
+      "end": 29194.20000000298
+    },
+    {
+      "event": "fetch_start",
+      "url": "/application-period-options?home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 30060.80000001192
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/application-period-options?home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 31010.20000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/ai/status",
+      "t": 32378.5
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/ai/status",
+      "t": 32392.80000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/application-workflow?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8+Niigata+University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 32828.90000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/student-experiences?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 32829.60000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/destination-profile?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 32830.20000000298
+    },
+    {
+      "event": "fetch_start",
+      "url": "/destination-tips?country=%E6%97%A5%E6%9C%AC",
+      "t": 32830.60000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/school-data-completeness?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 32831.90000000596
+    },
+    {
+      "event": "fetch_start",
+      "url": "/community/questions?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 32832.60000000894
+    },
+    {
+      "event": "fetch_start",
+      "url": "/community/chat?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 32833.10000000894
+    },
+    {
+      "event": "workflow_busy",
+      "value": "true",
+      "t": 32840.60000000894
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/destination-tips?country=%E6%97%A5%E6%9C%AC",
+      "t": 33240.80000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/community/questions?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 33241.20000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/student-experiences?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 33244.40000000596,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/community/chat?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 33244.60000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/application-workflow?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8+Niigata+University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 34103.90000000596,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/destination-profile?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 34146.30000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 34473.5
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 34474.70000000298
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 34494.20000000298
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 34495.40000000596
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/school-data-completeness?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 35190.70000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 35485.20000000298,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 35486.5,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 35487,
+      "status": 200
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 35487.30000001192,
+      "status": 200
+    },
+    {
+      "event": "render",
+      "method": "renderApplicationWorkflow",
+      "t": 35745.5,
+      "end": 35847.80000001192
+    },
+    {
+      "event": "render",
+      "method": "renderApplicationCalendar",
+      "t": 35847.80000001192,
+      "end": 35892.60000000894
+    },
+    {
+      "event": "render",
+      "method": "scheduleCalendarConflictAnalysis",
+      "t": 35892.60000000894,
+      "end": 35892.70000000298
+    },
+    {
+      "event": "workflow_busy",
+      "value": "false",
+      "t": 35925.30000001192
+    },
+    {
+      "event": "fetch_start",
+      "url": "/partner-source-audit?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 36375.30000001192
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/partner-source-audit?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 38491.60000000894,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/school-life-context?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 41482.20000000298
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/school-life-context?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 42246.30000001192,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/public-translations",
+      "t": 42273.5
+    },
+    {
+      "event": "fetch_headers",
+      "url": "/public-translations",
+      "t": 42290.5,
+      "status": 200
+    },
+    {
+      "event": "fetch_start",
+      "url": "/school-life-context/refresh?school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "t": 42344.70000000298
+    }
+  ],
+  "browser_long_tasks": [
+    {
+      "startTime": 351.1000000089407,
+      "duration": 163
+    },
+    {
+      "startTime": 881.6000000089407,
+      "duration": 147
+    },
+    {
+      "startTime": 1316,
+      "duration": 403
+    },
+    {
+      "startTime": 1743.5,
+      "duration": 98
+    },
+    {
+      "startTime": 1941.4000000059605,
+      "duration": 148
+    },
+    {
+      "startTime": 2182.7000000029802,
+      "duration": 98
+    },
+    {
+      "startTime": 2291.6000000089407,
+      "duration": 98
+    },
+    {
+      "startTime": 2432.300000011921,
+      "duration": 335
+    },
+    {
+      "startTime": 2768.1000000089407,
+      "duration": 370
+    },
+    {
+      "startTime": 3174,
+      "duration": 127
+    },
+    {
+      "startTime": 6145,
+      "duration": 67
+    },
+    {
+      "startTime": 6215.4000000059605,
+      "duration": 104
+    },
+    {
+      "startTime": 11016.300000011921,
+      "duration": 165
+    },
+    {
+      "startTime": 11181.5,
+      "duration": 196
+    },
+    {
+      "startTime": 14589.20000000298,
+      "duration": 164
+    },
+    {
+      "startTime": 14753.90000000596,
+      "duration": 81
+    },
+    {
+      "startTime": 15314.70000000298,
+      "duration": 81
+    },
+    {
+      "startTime": 15945.40000000596,
+      "duration": 52
+    },
+    {
+      "startTime": 16068.20000000298,
+      "duration": 82
+    },
+    {
+      "startTime": 16150.5,
+      "duration": 83
+    },
+    {
+      "startTime": 16238.20000000298,
+      "duration": 136
+    },
+    {
+      "startTime": 16412.40000000596,
+      "duration": 57
+    },
+    {
+      "startTime": 16503.80000001192,
+      "duration": 257
+    },
+    {
+      "startTime": 16847.30000001192,
+      "duration": 52
+    },
+    {
+      "startTime": 18750.30000001192,
+      "duration": 122
+    },
+    {
+      "startTime": 18873,
+      "duration": 122
+    },
+    {
+      "startTime": 21630,
+      "duration": 148
+    },
+    {
+      "startTime": 21779,
+      "duration": 95
+    },
+    {
+      "startTime": 22399.30000001192,
+      "duration": 245
+    },
+    {
+      "startTime": 28836,
+      "duration": 1411
+    },
+    {
+      "startTime": 30247.30000001192,
+      "duration": 756
+    },
+    {
+      "startTime": 31858.60000000894,
+      "duration": 218
+    },
+    {
+      "startTime": 32077,
+      "duration": 106
+    },
+    {
+      "startTime": 32402.70000000298,
+      "duration": 151
+    },
+    {
+      "startTime": 32601.70000000298,
+      "duration": 256
+    },
+    {
+      "startTime": 32859.10000000894,
+      "duration": 373
+    },
+    {
+      "startTime": 33284.70000000298,
+      "duration": 62
+    },
+    {
+      "startTime": 33346.90000000596,
+      "duration": 268
+    },
+    {
+      "startTime": 33628.90000000596,
+      "duration": 148
+    },
+    {
+      "startTime": 33779.40000000596,
+      "duration": 83
+    },
+    {
+      "startTime": 33885.40000000596,
+      "duration": 209
+    },
+    {
+      "startTime": 35238.20000000298,
+      "duration": 238
+    },
+    {
+      "startTime": 35634.20000000298,
+      "duration": 83
+    },
+    {
+      "startTime": 35743.5,
+      "duration": 182
+    },
+    {
+      "startTime": 35925.5,
+      "duration": 120
+    },
+    {
+      "startTime": 36045.80000001192,
+      "duration": 52
+    },
+    {
+      "startTime": 36098.60000000894,
+      "duration": 66
+    },
+    {
+      "startTime": 38509.70000000298,
+      "duration": 105
+    },
+    {
+      "startTime": 38618.40000000596,
+      "duration": 55
+    },
+    {
+      "startTime": 38676.90000000596,
+      "duration": 94
+    },
+    {
+      "startTime": 39317.30000001192,
+      "duration": 107
+    },
+    {
+      "startTime": 39850.70000000298,
+      "duration": 79
+    },
+    {
+      "startTime": 39929.90000000596,
+      "duration": 198
+    },
+    {
+      "startTime": 41449.10000000894,
+      "duration": 61
+    },
+    {
+      "startTime": 41510.70000000298,
+      "duration": 218
+    },
+    {
+      "startTime": 42291.70000000298,
+      "duration": 55
+    },
+    {
+      "startTime": 42352.70000000298,
+      "duration": 212
+    },
+    {
+      "startTime": 42565.10000000894,
+      "duration": 85
+    }
+  ],
+  "browser_resources": [
+    {
+      "path": "/universities",
+      "startTime": 1520,
+      "duration": 117.20000000298023,
+      "requestStart": 1609.9000000059605,
+      "responseStart": 1633.7000000029802,
+      "responseEnd": 1637.2000000029802,
+      "transferSize": 4686,
+      "encodedBodySize": 4386,
+      "decodedBodySize": 4386
+    },
+    {
+      "path": "/auth/providers",
+      "startTime": 1522.4000000059605,
+      "duration": 109.29999999701977,
+      "requestStart": 1609.9000000059605,
+      "responseStart": 1624.1000000089407,
+      "responseEnd": 1631.7000000029802,
+      "transferSize": 570,
+      "encodedBodySize": 270,
+      "decodedBodySize": 270
+    },
+    {
+      "path": "/auth/session",
+      "startTime": 1654.1000000089407,
+      "duration": 9.799999997019768,
+      "requestStart": 1654.7000000029802,
+      "responseStart": 1661.9000000059605,
+      "responseEnd": 1663.9000000059605,
+      "transferSize": 304,
+      "encodedBodySize": 4,
+      "decodedBodySize": 4
+    },
+    {
+      "path": "/ai/status",
+      "startTime": 1654.9000000059605,
+      "duration": 9.799999997019768,
+      "requestStart": 1656.4000000059605,
+      "responseStart": 1662.7000000029802,
+      "responseEnd": 1664.7000000029802,
+      "transferSize": 819,
+      "encodedBodySize": 519,
+      "decodedBodySize": 519
+    },
+    {
+      "path": "/product/entitlements",
+      "startTime": 2079.1000000089407,
+      "duration": 11.299999997019768,
+      "requestStart": 2079.9000000059605,
+      "responseStart": 2089.9000000059605,
+      "responseEnd": 2090.4000000059605,
+      "transferSize": 2893,
+      "encodedBodySize": 2593,
+      "decodedBodySize": 2593
+    },
+    {
+      "path": "/community/boards",
+      "startTime": 2079.5,
+      "duration": 10.200000002980232,
+      "requestStart": 2080.7000000029802,
+      "responseStart": 2086.4000000059605,
+      "responseEnd": 2089.7000000029802,
+      "transferSize": 1653,
+      "encodedBodySize": 1353,
+      "decodedBodySize": 1353
+    },
+    {
+      "path": "/ai/status",
+      "startTime": 2378.2000000029802,
+      "duration": 11.5,
+      "requestStart": 2379.5,
+      "responseStart": 2387.1000000089407,
+      "responseEnd": 2389.7000000029802,
+      "transferSize": 819,
+      "encodedBodySize": 519,
+      "decodedBodySize": 519
+    },
+    {
+      "path": "/student-dashboard",
+      "startTime": 2389.1000000089407,
+      "duration": 25.899999991059303,
+      "requestStart": 2392.5,
+      "responseStart": 2414.2000000029802,
+      "responseEnd": 2415,
+      "transferSize": 35982,
+      "encodedBodySize": 35682,
+      "decodedBodySize": 35682
+    },
+    {
+      "path": "/application-period-options",
+      "startTime": 2730.4000000059605,
+      "duration": 7206.70000000298,
+      "requestStart": 2731.4000000059605,
+      "responseStart": 9934.800000011921,
+      "responseEnd": 9937.10000000894,
+      "transferSize": 57545,
+      "encodedBodySize": 57245,
+      "decodedBodySize": 57245
+    },
+    {
+      "path": "/application-center/templates",
+      "startTime": 2748,
+      "duration": 57.20000000298023,
+      "requestStart": 2748.7000000029802,
+      "responseStart": 2803.300000011921,
+      "responseEnd": 2805.2000000029802,
+      "transferSize": 40941,
+      "encodedBodySize": 40641,
+      "decodedBodySize": 40641
+    },
+    {
+      "path": "/coverage",
+      "startTime": 3298,
+      "duration": 7710.5,
+      "requestStart": 5977.100000008941,
+      "responseStart": 11002.5,
+      "responseEnd": 11008.5,
+      "transferSize": 10767,
+      "encodedBodySize": 10467,
+      "decodedBodySize": 10467
+    },
+    {
+      "path": "/destination-profiles",
+      "startTime": 3298.300000011921,
+      "duration": 3738.8999999910593,
+      "requestStart": 5988.300000011921,
+      "responseStart": 7035.800000011921,
+      "responseEnd": 7037.20000000298,
+      "transferSize": 52212,
+      "encodedBodySize": 51912,
+      "decodedBodySize": 51912
+    },
+    {
+      "path": "/community/feed",
+      "startTime": 3300.6000000089407,
+      "duration": 2841.2000000029802,
+      "requestStart": 6117.5,
+      "responseStart": 6138,
+      "responseEnd": 6141.800000011921,
+      "transferSize": 331,
+      "encodedBodySize": 31,
+      "decodedBodySize": 31
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 7070.300000011921,
+      "duration": 7511.5,
+      "requestStart": 7095.300000011921,
+      "responseStart": 14580.800000011921,
+      "responseEnd": 14581.800000011921,
+      "transferSize": 13559,
+      "encodedBodySize": 13259,
+      "decodedBodySize": 13259
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 7074.5,
+      "duration": 7511.800000011921,
+      "requestStart": 7107.9000000059605,
+      "responseStart": 14585.40000000596,
+      "responseEnd": 14586.300000011921,
+      "transferSize": 17901,
+      "encodedBodySize": 17601,
+      "decodedBodySize": 17601
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 7079.800000011921,
+      "duration": 7505,
+      "requestStart": 7808.4000000059605,
+      "responseStart": 14582.5,
+      "responseEnd": 14584.800000011921,
+      "transferSize": 22142,
+      "encodedBodySize": 21842,
+      "decodedBodySize": 21842
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 7082.5,
+      "duration": 7463.70000000298,
+      "requestStart": 7822.800000011921,
+      "responseStart": 14537.10000000894,
+      "responseEnd": 14546.20000000298,
+      "transferSize": 1613,
+      "encodedBodySize": 1313,
+      "decodedBodySize": 1313
+    },
+    {
+      "path": "/student-dashboard",
+      "startTime": 16134.40000000596,
+      "duration": 300.90000000596046,
+      "requestStart": 16136.800000011921,
+      "responseStart": 16386.90000000596,
+      "responseEnd": 16435.30000001192,
+      "transferSize": 2454561,
+      "encodedBodySize": 2454261,
+      "decodedBodySize": 2454261
+    },
+    {
+      "path": "/application-center/templates",
+      "startTime": 16135.5,
+      "duration": 97.30000001192093,
+      "requestStart": 16136.90000000596,
+      "responseStart": 16219.40000000596,
+      "responseEnd": 16232.800000011921,
+      "transferSize": 28031,
+      "encodedBodySize": 27731,
+      "decodedBodySize": 27731
+    },
+    {
+      "path": "/coverage",
+      "startTime": 16135.60000000894,
+      "duration": 2610.5999999940395,
+      "requestStart": 16137,
+      "responseStart": 18744,
+      "responseEnd": 18746.20000000298,
+      "transferSize": 118363,
+      "encodedBodySize": 118063,
+      "decodedBodySize": 118063
+    },
+    {
+      "path": "/destination-profiles",
+      "startTime": 16135.70000000298,
+      "duration": 684.9000000059605,
+      "requestStart": 16137,
+      "responseStart": 16810.5,
+      "responseEnd": 16820.60000000894,
+      "transferSize": 606252,
+      "encodedBodySize": 605952,
+      "decodedBodySize": 605952
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 16757,
+      "duration": 721.1000000089407,
+      "requestStart": 16759.70000000298,
+      "responseStart": 17475.70000000298,
+      "responseEnd": 17478.10000000894,
+      "transferSize": 10478,
+      "encodedBodySize": 10178,
+      "decodedBodySize": 10178
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 16758.60000000894,
+      "duration": 1352.7999999970198,
+      "requestStart": 16768.60000000894,
+      "responseStart": 18108.70000000298,
+      "responseEnd": 18111.40000000596,
+      "transferSize": 13250,
+      "encodedBodySize": 12950,
+      "decodedBodySize": 12950
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 16759.60000000894,
+      "duration": 1350.7999999970198,
+      "requestStart": 16768.90000000596,
+      "responseStart": 18107.20000000298,
+      "responseEnd": 18110.40000000596,
+      "transferSize": 11747,
+      "encodedBodySize": 11447,
+      "decodedBodySize": 11447
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 16760.90000000596,
+      "duration": 1304.9000000059605,
+      "requestStart": 16774.60000000894,
+      "responseStart": 18061.10000000894,
+      "responseEnd": 18065.80000001192,
+      "transferSize": 12974,
+      "encodedBodySize": 12674,
+      "decodedBodySize": 12674
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 16897.20000000298,
+      "duration": 1215,
+      "requestStart": 16898.10000000894,
+      "responseStart": 18110.5,
+      "responseEnd": 18112.20000000298,
+      "transferSize": 12688,
+      "encodedBodySize": 12388,
+      "decodedBodySize": 12388
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 16898.40000000596,
+      "duration": 1946.2000000029802,
+      "requestStart": 17478.40000000596,
+      "responseStart": 18841.30000001192,
+      "responseEnd": 18844.60000000894,
+      "transferSize": 16270,
+      "encodedBodySize": 15970,
+      "decodedBodySize": 15970
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 16899.40000000596,
+      "duration": 1862.9000000059605,
+      "requestStart": 18066.30000001192,
+      "responseStart": 18761.5,
+      "responseEnd": 18762.30000001192,
+      "transferSize": 13720,
+      "encodedBodySize": 13420,
+      "decodedBodySize": 13420
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 16900,
+      "duration": 1572.800000011921,
+      "requestStart": 18112,
+      "responseStart": 18471.60000000894,
+      "responseEnd": 18472.80000001192,
+      "transferSize": 7549,
+      "encodedBodySize": 7249,
+      "decodedBodySize": 7249
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 18120.90000000596,
+      "duration": 551.5999999940395,
+      "requestStart": 18122.20000000298,
+      "responseStart": 18671,
+      "responseEnd": 18672.5,
+      "transferSize": 10164,
+      "encodedBodySize": 9864,
+      "decodedBodySize": 9864
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 18122.5,
+      "duration": 624,
+      "requestStart": 18123.70000000298,
+      "responseStart": 18745.20000000298,
+      "responseEnd": 18746.5,
+      "transferSize": 14803,
+      "encodedBodySize": 14503,
+      "decodedBodySize": 14503
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 18124.60000000894,
+      "duration": 721.2000000029802,
+      "requestStart": 18473.10000000894,
+      "responseStart": 18843.70000000298,
+      "responseEnd": 18845.80000001192,
+      "transferSize": 9973,
+      "encodedBodySize": 9673,
+      "decodedBodySize": 9673
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 18126.10000000894,
+      "duration": 748.7999999970198,
+      "requestStart": 18672.90000000596,
+      "responseStart": 18874.20000000298,
+      "responseEnd": 18874.90000000596,
+      "transferSize": 10289,
+      "encodedBodySize": 9989,
+      "decodedBodySize": 9989
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 19011.90000000596,
+      "duration": 1144.7999999970198,
+      "requestStart": 19022.70000000298,
+      "responseStart": 20154.60000000894,
+      "responseEnd": 20156.70000000298,
+      "transferSize": 23750,
+      "encodedBodySize": 23450,
+      "decodedBodySize": 23450
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 19013,
+      "duration": 225.70000000298023,
+      "requestStart": 19025,
+      "responseStart": 19237.5,
+      "responseEnd": 19238.70000000298,
+      "transferSize": 4071,
+      "encodedBodySize": 3771,
+      "decodedBodySize": 3771
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 19014.5,
+      "duration": 1009.1000000089407,
+      "requestStart": 19026,
+      "responseStart": 20022.30000001192,
+      "responseEnd": 20023.60000000894,
+      "transferSize": 18064,
+      "encodedBodySize": 17764,
+      "decodedBodySize": 17764
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 19015.80000001192,
+      "duration": 360,
+      "requestStart": 19026.70000000298,
+      "responseStart": 19372.70000000298,
+      "responseEnd": 19375.80000001192,
+      "transferSize": 9413,
+      "encodedBodySize": 9113,
+      "decodedBodySize": 9113
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 19061,
+      "duration": 774.9000000059605,
+      "requestStart": 19061.60000000894,
+      "responseStart": 19834.70000000298,
+      "responseEnd": 19835.90000000596,
+      "transferSize": 10239,
+      "encodedBodySize": 9939,
+      "decodedBodySize": 9939
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 19062.30000001192,
+      "duration": 1095.2999999970198,
+      "requestStart": 19062.70000000298,
+      "responseStart": 20157.10000000894,
+      "responseEnd": 20157.60000000894,
+      "transferSize": 14991,
+      "encodedBodySize": 14691,
+      "decodedBodySize": 14691
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 19063.40000000596,
+      "duration": 1088.9000000059605,
+      "requestStart": 19238.90000000596,
+      "responseStart": 20151,
+      "responseEnd": 20152.30000001192,
+      "transferSize": 16121,
+      "encodedBodySize": 15821,
+      "decodedBodySize": 15821
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 19065.10000000894,
+      "duration": 1043.8999999910593,
+      "requestStart": 19376.60000000894,
+      "responseStart": 20090.40000000596,
+      "responseEnd": 20109,
+      "transferSize": 11656,
+      "encodedBodySize": 11356,
+      "decodedBodySize": 11356
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 20160.70000000298,
+      "duration": 656.6000000089407,
+      "requestStart": 20161.30000001192,
+      "responseStart": 20813.80000001192,
+      "responseEnd": 20817.30000001192,
+      "transferSize": 13611,
+      "encodedBodySize": 13311,
+      "decodedBodySize": 13311
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 20163.80000001192,
+      "duration": 652.5,
+      "requestStart": 20164.5,
+      "responseStart": 20812.40000000596,
+      "responseEnd": 20816.30000001192,
+      "transferSize": 14566,
+      "encodedBodySize": 14266,
+      "decodedBodySize": 14266
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 20169.60000000894,
+      "duration": 647.8999999910593,
+      "requestStart": 20171.90000000596,
+      "responseStart": 20815.60000000894,
+      "responseEnd": 20817.5,
+      "transferSize": 16867,
+      "encodedBodySize": 16567,
+      "decodedBodySize": 16567
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 20171.20000000298,
+      "duration": 662.6000000089407,
+      "requestStart": 20172.20000000298,
+      "responseStart": 20832.90000000596,
+      "responseEnd": 20833.80000001192,
+      "transferSize": 23765,
+      "encodedBodySize": 23465,
+      "decodedBodySize": 23465
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 20183.80000001192,
+      "duration": 645.3999999910593,
+      "requestStart": 20184.60000000894,
+      "responseStart": 20827.60000000894,
+      "responseEnd": 20829.20000000298,
+      "transferSize": 18646,
+      "encodedBodySize": 18346,
+      "decodedBodySize": 18346
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 20185.30000001192,
+      "duration": 632.3999999910593,
+      "requestStart": 20186.10000000894,
+      "responseStart": 20816.40000000596,
+      "responseEnd": 20817.70000000298,
+      "transferSize": 16321,
+      "encodedBodySize": 16021,
+      "decodedBodySize": 16021
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 20190.20000000298,
+      "duration": 1280.1000000089407,
+      "requestStart": 20817.70000000298,
+      "responseStart": 21463,
+      "responseEnd": 21470.30000001192,
+      "transferSize": 11023,
+      "encodedBodySize": 10723,
+      "decodedBodySize": 10723
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 20191.80000001192,
+      "duration": 1462.3999999910593,
+      "requestStart": 20818.5,
+      "responseStart": 21652.80000001192,
+      "responseEnd": 21654.20000000298,
+      "transferSize": 21492,
+      "encodedBodySize": 21192,
+      "decodedBodySize": 21192
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 20837.30000001192,
+      "duration": 791.3999999910593,
+      "requestStart": 20838.20000000298,
+      "responseStart": 21622.5,
+      "responseEnd": 21628.70000000298,
+      "transferSize": 19223,
+      "encodedBodySize": 18923,
+      "decodedBodySize": 18923
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 20839.5,
+      "duration": 638.9000000059605,
+      "requestStart": 20840.60000000894,
+      "responseStart": 21477.30000001192,
+      "responseEnd": 21478.40000000596,
+      "transferSize": 12944,
+      "encodedBodySize": 12644,
+      "decodedBodySize": 12644
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 20841.40000000596,
+      "duration": 751.7999999970198,
+      "requestStart": 20842.20000000298,
+      "responseStart": 21591.90000000596,
+      "responseEnd": 21593.20000000298,
+      "transferSize": 13619,
+      "encodedBodySize": 13319,
+      "decodedBodySize": 13319
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 20842.30000001192,
+      "duration": 631.0999999940395,
+      "requestStart": 20844.40000000596,
+      "responseStart": 21471.90000000596,
+      "responseEnd": 21473.40000000596,
+      "transferSize": 8682,
+      "encodedBodySize": 8382,
+      "decodedBodySize": 8382
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 21883.30000001192,
+      "duration": 1466.0999999940395,
+      "requestStart": 21893,
+      "responseStart": 23348,
+      "responseEnd": 23349.40000000596,
+      "transferSize": 20872,
+      "encodedBodySize": 20572,
+      "decodedBodySize": 20572
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 21886.20000000298,
+      "duration": 1369.4000000059605,
+      "requestStart": 21893.5,
+      "responseStart": 23245.5,
+      "responseEnd": 23255.60000000894,
+      "transferSize": 20589,
+      "encodedBodySize": 20289,
+      "decodedBodySize": 20289
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 21887.30000001192,
+      "duration": 1463.5999999940395,
+      "requestStart": 21894,
+      "responseStart": 23350.20000000298,
+      "responseEnd": 23350.90000000596,
+      "transferSize": 16130,
+      "encodedBodySize": 15830,
+      "decodedBodySize": 15830
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 21889.10000000894,
+      "duration": 1355.3999999910593,
+      "requestStart": 21895.20000000298,
+      "responseStart": 23234.10000000894,
+      "responseEnd": 23244.5,
+      "transferSize": 16062,
+      "encodedBodySize": 15762,
+      "decodedBodySize": 15762
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 23364.30000001192,
+      "duration": 791.3999999910593,
+      "requestStart": 23372.90000000596,
+      "responseStart": 24154.40000000596,
+      "responseEnd": 24155.70000000298,
+      "transferSize": 22094,
+      "encodedBodySize": 21794,
+      "decodedBodySize": 21794
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 23370.70000000298,
+      "duration": 833,
+      "requestStart": 23375.20000000298,
+      "responseStart": 24202.40000000596,
+      "responseEnd": 24203.70000000298,
+      "transferSize": 23471,
+      "encodedBodySize": 23171,
+      "decodedBodySize": 23171
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 23373.60000000894,
+      "duration": 770.2000000029802,
+      "requestStart": 23375.90000000596,
+      "responseStart": 24138,
+      "responseEnd": 24143.80000001192,
+      "transferSize": 29276,
+      "encodedBodySize": 28976,
+      "decodedBodySize": 28976
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 23376.60000000894,
+      "duration": 778.7999999970198,
+      "requestStart": 23377.20000000298,
+      "responseStart": 24152.10000000894,
+      "responseEnd": 24155.40000000596,
+      "transferSize": 22962,
+      "encodedBodySize": 22662,
+      "decodedBodySize": 22662
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 24213.5,
+      "duration": 615.6000000089407,
+      "requestStart": 24216,
+      "responseStart": 24828,
+      "responseEnd": 24829.10000000894,
+      "transferSize": 27372,
+      "encodedBodySize": 27072,
+      "decodedBodySize": 27072
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 24219,
+      "duration": 689.3000000119209,
+      "requestStart": 24221.10000000894,
+      "responseStart": 24907.30000001192,
+      "responseEnd": 24908.30000001192,
+      "transferSize": 26507,
+      "encodedBodySize": 26207,
+      "decodedBodySize": 26207
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 24222,
+      "duration": 405.20000000298023,
+      "requestStart": 24222.80000001192,
+      "responseStart": 24625.5,
+      "responseEnd": 24627.20000000298,
+      "transferSize": 11218,
+      "encodedBodySize": 10918,
+      "decodedBodySize": 10918
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 24223.40000000596,
+      "duration": 411.5,
+      "requestStart": 24224.20000000298,
+      "responseStart": 24634,
+      "responseEnd": 24634.90000000596,
+      "transferSize": 18299,
+      "encodedBodySize": 17999,
+      "decodedBodySize": 17999
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 24911.90000000596,
+      "duration": 920.2000000029802,
+      "requestStart": 24912.80000001192,
+      "responseStart": 25830.60000000894,
+      "responseEnd": 25832.10000000894,
+      "transferSize": 22845,
+      "encodedBodySize": 22545,
+      "decodedBodySize": 22545
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 24913.60000000894,
+      "duration": 898.7000000029802,
+      "requestStart": 24914.10000000894,
+      "responseStart": 25807.90000000596,
+      "responseEnd": 25812.30000001192,
+      "transferSize": 15139,
+      "encodedBodySize": 14839,
+      "decodedBodySize": 14839
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 24915.40000000596,
+      "duration": 916.2000000029802,
+      "requestStart": 24916.5,
+      "responseStart": 25829.80000001192,
+      "responseEnd": 25831.60000000894,
+      "transferSize": 15984,
+      "encodedBodySize": 15684,
+      "decodedBodySize": 15684
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 24917.30000001192,
+      "duration": 921.0999999940395,
+      "requestStart": 24917.90000000596,
+      "responseStart": 25837.70000000298,
+      "responseEnd": 25838.40000000596,
+      "transferSize": 23300,
+      "encodedBodySize": 23000,
+      "decodedBodySize": 23000
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 25841.80000001192,
+      "duration": 581.2999999970198,
+      "requestStart": 25842.90000000596,
+      "responseStart": 26421.60000000894,
+      "responseEnd": 26423.10000000894,
+      "transferSize": 29123,
+      "encodedBodySize": 28823,
+      "decodedBodySize": 28823
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 25843.60000000894,
+      "duration": 722.2999999970198,
+      "requestStart": 25844,
+      "responseStart": 26549.5,
+      "responseEnd": 26565.90000000596,
+      "transferSize": 30983,
+      "encodedBodySize": 30683,
+      "decodedBodySize": 30683
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 25845.30000001192,
+      "duration": 613.6999999880791,
+      "requestStart": 25845.70000000298,
+      "responseStart": 26458.20000000298,
+      "responseEnd": 26459,
+      "transferSize": 26072,
+      "encodedBodySize": 25772,
+      "decodedBodySize": 25772
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 25846.5,
+      "duration": 743.3000000119209,
+      "requestStart": 25847.40000000596,
+      "responseStart": 26588.90000000596,
+      "responseEnd": 26589.80000001192,
+      "transferSize": 18425,
+      "encodedBodySize": 18125,
+      "decodedBodySize": 18125
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 26597,
+      "duration": 472.1000000089407,
+      "requestStart": 26601.90000000596,
+      "responseStart": 27065.40000000596,
+      "responseEnd": 27069.10000000894,
+      "transferSize": 19045,
+      "encodedBodySize": 18745,
+      "decodedBodySize": 18745
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 26603,
+      "duration": 656.4000000059605,
+      "requestStart": 26604.80000001192,
+      "responseStart": 27258.5,
+      "responseEnd": 27259.40000000596,
+      "transferSize": 30526,
+      "encodedBodySize": 30226,
+      "decodedBodySize": 30226
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 26606.20000000298,
+      "duration": 641.6000000089407,
+      "requestStart": 26607.80000001192,
+      "responseStart": 27243,
+      "responseEnd": 27247.80000001192,
+      "transferSize": 26117,
+      "encodedBodySize": 25817,
+      "decodedBodySize": 25817
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 26609.40000000596,
+      "duration": 678.5,
+      "requestStart": 26610.20000000298,
+      "responseStart": 27286.60000000894,
+      "responseEnd": 27287.90000000596,
+      "transferSize": 22041,
+      "encodedBodySize": 21741,
+      "decodedBodySize": 21741
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 27291.70000000298,
+      "duration": 947.6000000089407,
+      "requestStart": 27293.5,
+      "responseStart": 28237.80000001192,
+      "responseEnd": 28239.30000001192,
+      "transferSize": 22903,
+      "encodedBodySize": 22603,
+      "decodedBodySize": 22603
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 27293.90000000596,
+      "duration": 984,
+      "requestStart": 27296.80000001192,
+      "responseStart": 28276.30000001192,
+      "responseEnd": 28277.90000000596,
+      "transferSize": 16264,
+      "encodedBodySize": 15964,
+      "decodedBodySize": 15964
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 27295.60000000894,
+      "duration": 785,
+      "requestStart": 27297.90000000596,
+      "responseStart": 28042.40000000596,
+      "responseEnd": 28080.60000000894,
+      "transferSize": 11344,
+      "encodedBodySize": 11044,
+      "decodedBodySize": 11044
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 27297.10000000894,
+      "duration": 1079.0999999940395,
+      "requestStart": 27298.30000001192,
+      "responseStart": 28374.80000001192,
+      "responseEnd": 28376.20000000298,
+      "transferSize": 19755,
+      "encodedBodySize": 19455,
+      "decodedBodySize": 19455
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 28387.70000000298,
+      "duration": 443.5,
+      "requestStart": 28389.10000000894,
+      "responseStart": 28829.5,
+      "responseEnd": 28831.20000000298,
+      "transferSize": 18876,
+      "encodedBodySize": 18576,
+      "decodedBodySize": 18576
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 28392.10000000894,
+      "duration": 375.09999999403954,
+      "requestStart": 28392.70000000298,
+      "responseStart": 28766.10000000894,
+      "responseEnd": 28767.20000000298,
+      "transferSize": 16898,
+      "encodedBodySize": 16598,
+      "decodedBodySize": 16598
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 28393.70000000298,
+      "duration": 107.29999999701977,
+      "requestStart": 28394.30000001192,
+      "responseStart": 28499.30000001192,
+      "responseEnd": 28501,
+      "transferSize": 6136,
+      "encodedBodySize": 5836,
+      "decodedBodySize": 5836
+    },
+    {
+      "path": "/application-period-options",
+      "startTime": 30062.5,
+      "duration": 316.80000001192093,
+      "requestStart": 30065.10000000894,
+      "responseStart": 30378.10000000894,
+      "responseEnd": 30379.30000001192,
+      "transferSize": 48738,
+      "encodedBodySize": 48438,
+      "decodedBodySize": 48438
+    },
+    {
+      "path": "/ai/status",
+      "startTime": 32379,
+      "duration": 14,
+      "requestStart": 32380.90000000596,
+      "responseStart": 32390.40000000596,
+      "responseEnd": 32393,
+      "transferSize": 819,
+      "encodedBodySize": 519,
+      "decodedBodySize": 519
+    },
+    {
+      "path": "/application-workflow",
+      "startTime": 32829.30000001192,
+      "duration": 1022.5,
+      "requestStart": 32831,
+      "responseStart": 33813.30000001192,
+      "responseEnd": 33851.80000001192,
+      "transferSize": 79744,
+      "encodedBodySize": 79444,
+      "decodedBodySize": 79444
+    },
+    {
+      "path": "/student-experiences",
+      "startTime": 32830,
+      "duration": 324.1000000089407,
+      "requestStart": 32831.30000001192,
+      "responseStart": 33153.10000000894,
+      "responseEnd": 33154.10000000894,
+      "transferSize": 832,
+      "encodedBodySize": 532,
+      "decodedBodySize": 532
+    },
+    {
+      "path": "/destination-profile",
+      "startTime": 32830.40000000596,
+      "duration": 1201.7999999970198,
+      "requestStart": 32831.80000001192,
+      "responseStart": 34031.10000000894,
+      "responseEnd": 34032.20000000298,
+      "transferSize": 51114,
+      "encodedBodySize": 50814,
+      "decodedBodySize": 50814
+    },
+    {
+      "path": "/destination-tips",
+      "startTime": 32830.80000001192,
+      "duration": 244.79999999701977,
+      "requestStart": 32835.60000000894,
+      "responseStart": 33074.70000000298,
+      "responseEnd": 33075.60000000894,
+      "transferSize": 13002,
+      "encodedBodySize": 12702,
+      "decodedBodySize": 12702
+    },
+    {
+      "path": "/school-data-completeness",
+      "startTime": 32832.30000001192,
+      "duration": 2355.5999999940395,
+      "requestStart": 32837.90000000596,
+      "responseStart": 35186.20000000298,
+      "responseEnd": 35187.90000000596,
+      "transferSize": 23445,
+      "encodedBodySize": 23145,
+      "decodedBodySize": 23145
+    },
+    {
+      "path": "/community/questions",
+      "startTime": 32833,
+      "duration": 278.6000000089407,
+      "requestStart": 32838.20000000298,
+      "responseStart": 33109.90000000596,
+      "responseEnd": 33111.60000000894,
+      "transferSize": 302,
+      "encodedBodySize": 2,
+      "decodedBodySize": 2
+    },
+    {
+      "path": "/community/chat",
+      "startTime": 32833.30000001192,
+      "duration": 357.5,
+      "requestStart": 33075.80000001192,
+      "responseStart": 33184.5,
+      "responseEnd": 33190.80000001192,
+      "transferSize": 302,
+      "encodedBodySize": 2,
+      "decodedBodySize": 2
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 34474.5,
+      "duration": 900.6000000089407,
+      "requestStart": 34476.30000001192,
+      "responseStart": 35369.10000000894,
+      "responseEnd": 35375.10000000894,
+      "transferSize": 14903,
+      "encodedBodySize": 14603,
+      "decodedBodySize": 14603
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 34475.10000000894,
+      "duration": 839,
+      "requestStart": 35192.20000000298,
+      "responseStart": 35312.5,
+      "responseEnd": 35314.10000000894,
+      "transferSize": 642,
+      "encodedBodySize": 342,
+      "decodedBodySize": 342
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 34495,
+      "duration": 909.6000000089407,
+      "requestStart": 35192.30000001192,
+      "responseStart": 35399.80000001192,
+      "responseEnd": 35404.60000000894,
+      "transferSize": 13277,
+      "encodedBodySize": 12977,
+      "decodedBodySize": 12977
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 34496.5,
+      "duration": 868.7000000029802,
+      "requestStart": 35202.70000000298,
+      "responseStart": 35358.80000001192,
+      "responseEnd": 35365.20000000298,
+      "transferSize": 11084,
+      "encodedBodySize": 10784,
+      "decodedBodySize": 10784
+    },
+    {
+      "path": "/partner-source-audit",
+      "startTime": 36375.80000001192,
+      "duration": 2118,
+      "requestStart": 36381.80000001192,
+      "responseStart": 38481.20000000298,
+      "responseEnd": 38493.80000001192,
+      "transferSize": 1485566,
+      "encodedBodySize": 1485266,
+      "decodedBodySize": 1485266
+    },
+    {
+      "path": "/school-life-context",
+      "startTime": 41482.70000000298,
+      "duration": 756.9000000059605,
+      "requestStart": 41483.80000001192,
+      "responseStart": 42237.5,
+      "responseEnd": 42239.60000000894,
+      "transferSize": 20384,
+      "encodedBodySize": 20084,
+      "decodedBodySize": 20084
+    },
+    {
+      "path": "/public-translations",
+      "startTime": 42273.90000000596,
+      "duration": 15.200000002980232,
+      "requestStart": 42280.70000000298,
+      "responseStart": 42287.10000000894,
+      "responseEnd": 42289.10000000894,
+      "transferSize": 640,
+      "encodedBodySize": 340,
+      "decodedBodySize": 340
+    }
+  ],
+  "catalog_builds": [
+    {
+      "kind": "local",
+      "key": "('local', '/tmp/ncu-candidate-9bf90c8748fd33747c625e1f5154f6838540d64a/performance/2-web-e2e-data/processed/application_workflows.jsonl', None, False, None)",
+      "elapsed_ms": 0.03884000761900097
+    },
+    {
+      "kind": "bundled",
+      "key": "('bundled', (('/tmp/abroad-ncu-hokkaido-correction/src/exchange_info/official_data/ntpu/application_workflows.jsonl', (1791504072303384233, 8505259)), ('/tmp/abroad-ncu-hokkaido-correction/src/exchange_info/official_data/cgu/application_workflows.jsonl', (1791504071707391876, 3511273)), ('/tmp/abroad-ncu-hokkaido-correction/src/exchange_info/official_data/ntu/application_workflows.jsonl', (1791504072447382388, 4042830)), ('/tmp/abroad-ncu-hokkaido-correction/src/exchange_info/official_data/ncu/application_workflows.jsonl', (1791504259228991449, 3089294))))",
+      "elapsed_ms": 6176.668751999387
+    },
+    {
+      "kind": "published",
+      "key": "('published', ('/tmp/ncu-candidate-9bf90c8748fd33747c625e1f5154f6838540d64a/performance/2-web-e2e-data/processed/application_workflows.jsonl', None, False, (('/tmp/abroad-ncu-hokkaido-correction/src/exchange_info/official_data/ntpu/application_workflows.jsonl', (1791504072303384233, 8505259)), ('/tmp/abroad-ncu-hokkaido-correction/src/exchange_info/official_data/cgu/application_workflows.jsonl', (1791504071707391876, 3511273)), ('/tmp/abroad-ncu-hokkaido-correction/src/exchange_info/official_data/ntu/application_workflows.jsonl', (1791504072447382388, 4042830)), ('/tmp/abroad-ncu-hokkaido-correction/src/exchange_info/official_data/ncu/application_workflows.jsonl', (1791504259228991449, 3089294)))), True)",
+      "elapsed_ms": 6326.073753007222
+    }
+  ],
+  "server_requests": [
+    {
+      "path": "/health",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.905755999265239
+    },
+    {
+      "path": "/",
+      "query": "",
+      "status": 200,
+      "server_ms": 110.96494601224549
+    },
+    {
+      "path": "/static/styles.css",
+      "query": "v=20261003-open-1",
+      "status": 200,
+      "server_ms": 6.1047199997119606
+    },
+    {
+      "path": "/static/design-system.css",
+      "query": "v=20260716-platform-12",
+      "status": 200,
+      "server_ms": 2.6613759982865304
+    },
+    {
+      "path": "/static/platform.css",
+      "query": "v=20260721-student-survival-4",
+      "status": 200,
+      "server_ms": 9.202265995554626
+    },
+    {
+      "path": "/static/product-v2.css",
+      "query": "v=20261006-terms-1",
+      "status": 200,
+      "server_ms": 9.613806003471836
+    },
+    {
+      "path": "/static/mascot.css",
+      "query": "v=20261007-solid-1",
+      "status": 200,
+      "server_ms": 7.157590996939689
+    },
+    {
+      "path": "/static/uniway.css",
+      "query": "v=20260820-uniway-1",
+      "status": 200,
+      "server_ms": 3.8901429943507537
+    },
+    {
+      "path": "/static/icon-motion.css",
+      "query": "v=20260820-icon-motion-1",
+      "status": 200,
+      "server_ms": 9.622095996746793
+    },
+    {
+      "path": "/static/advisor-mascot.css",
+      "query": "v=20261007-solid-1",
+      "status": 200,
+      "server_ms": 14.64083899918478
+    },
+    {
+      "path": "/static/partner-map.css",
+      "query": "v=20260923-no-lines-3",
+      "status": 200,
+      "server_ms": 4.908155999146402
+    },
+    {
+      "path": "/static/school-detail.css",
+      "query": "v=20260924-concise-zh-1",
+      "status": 200,
+      "server_ms": 15.271686992491595
+    },
+    {
+      "path": "/static/discovery.css",
+      "query": "v=20261004-digest-1",
+      "status": 200,
+      "server_ms": 8.902525994926691
+    },
+    {
+      "path": "/static/journey.css",
+      "query": "v=20260929-photos-1",
+      "status": 200,
+      "server_ms": 5.737005005357787
+    },
+    {
+      "path": "/static/travel.css",
+      "query": "v=20260927-home-1",
+      "status": 200,
+      "server_ms": 11.2531759950798
+    },
+    {
+      "path": "/static/navigation.css",
+      "query": "v=20260929-tools-headings-1",
+      "status": 200,
+      "server_ms": 11.39826800499577
+    },
+    {
+      "path": "/static/motion.css",
+      "query": "v=20260926-motion-1",
+      "status": 200,
+      "server_ms": 11.209176998818293
+    },
+    {
+      "path": "/static/journey-canvas.css",
+      "query": "v=20261008-regions-1",
+      "status": 200,
+      "server_ms": 7.414503998006694
+    },
+    {
+      "path": "/static/community-feed.css",
+      "query": "v=20260930-forum-1",
+      "status": 200,
+      "server_ms": 2.5230150058632717
+    },
+    {
+      "path": "/static/community-reader.css",
+      "query": "v=20260930-discussion-2b",
+      "status": 200,
+      "server_ms": 4.30050199793186
+    },
+    {
+      "path": "/static/planning-ux.css",
+      "query": "v=20261008-regions-1",
+      "status": 200,
+      "server_ms": 4.318887004046701
+    },
+    {
+      "path": "/static/typography.css",
+      "query": "v=20260929-fonts-2",
+      "status": 200,
+      "server_ms": 5.542957005673088
+    },
+    {
+      "path": "/static/glass-theme.css",
+      "query": "v=20261001-ui-refinements-1",
+      "status": 200,
+      "server_ms": 7.2437599883414805
+    },
+    {
+      "path": "/static/application-journey.css",
+      "query": "v=20261002-flow-1",
+      "status": 200,
+      "server_ms": 4.254982006386854
+    },
+    {
+      "path": "/static/document-workbench.css",
+      "query": "v=20261002-flow-1",
+      "status": 200,
+      "server_ms": 4.046775997267105
+    },
+    {
+      "path": "/static/brand.css",
+      "query": "v=20261004-logo-2",
+      "status": 200,
+      "server_ms": 5.11250999988988
+    },
+    {
+      "path": "/static/application-workspace.css",
+      "query": "v=20261008-ncu-conditions-1",
+      "status": 200,
+      "server_ms": 7.746515009785071
+    },
+    {
+      "path": "/static/feedback.css",
+      "query": "v=20261008-4",
+      "status": 200,
+      "server_ms": 7.304882994503714
+    },
+    {
+      "path": "/static/destination-tips.css",
+      "query": "v=20261004-tips-2",
+      "status": 200,
+      "server_ms": 9.971917010261677
+    },
+    {
+      "path": "/static/responsive.css",
+      "query": "v=20261007-responsive-1",
+      "status": 200,
+      "server_ms": 2.9067680006846786
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular.css",
+      "query": "",
+      "status": 200,
+      "server_ms": 2.9153220093576238
+    },
+    {
+      "path": "/static/assets/mascot/suitcase.webp",
+      "query": "v=20261007-solid-1",
+      "status": 200,
+      "server_ms": 7.273377996170893
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold.css",
+      "query": "",
+      "status": 200,
+      "server_ms": 11.829988987301476
+    },
+    {
+      "path": "/static/mascot.js",
+      "query": "v=20261007-solid-1",
+      "status": 200,
+      "server_ms": 8.39985600032378
+    },
+    {
+      "path": "/static/assets/cgu-campus.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.289835008326918
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium.css",
+      "query": "",
+      "status": 200,
+      "server_ms": 20.720207001431845
+    },
+    {
+      "path": "/static/assets/ntpu-campus.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.0779980045044795
+    },
+    {
+      "path": "/static/assets/ncu-campus.svg",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.652001007343642
+    },
+    {
+      "path": "/static/assets/ntu-campus.svg",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.801294999197125
+    },
+    {
+      "path": "/static/assets/brand/uniway-mark.webp",
+      "query": "v=20261004-logo-2",
+      "status": 200,
+      "server_ms": 2.972827001940459
+    },
+    {
+      "path": "/static/vendor/lucide/0.468.0/lucide.min.js",
+      "query": "",
+      "status": 200,
+      "server_ms": 3.4142600052291527
+    },
+    {
+      "path": "/static/discovery-core.js",
+      "query": "v=20260924-selection-1",
+      "status": 200,
+      "server_ms": 3.6125040060142055
+    },
+    {
+      "path": "/static/discovery-ui.js",
+      "query": "v=20261004-digest-2",
+      "status": 200,
+      "server_ms": 3.7849609943805262
+    },
+    {
+      "path": "/static/icon-motion.js",
+      "query": "v=20260820-icon-motion-1",
+      "status": 200,
+      "server_ms": 12.445560001651756
+    },
+    {
+      "path": "/static/public-content-zh.js",
+      "query": "v=20261007-requests-1",
+      "status": 200,
+      "server_ms": 12.305786003707908
+    },
+    {
+      "path": "/static/regions.js",
+      "query": "v=20261008-ntu-review-2",
+      "status": 200,
+      "server_ms": 17.82491798803676
+    },
+    {
+      "path": "/static/multi-plan.js",
+      "query": "v=20261008-ncu-conditions-1",
+      "status": 200,
+      "server_ms": 3.2763540075393394
+    },
+    {
+      "path": "/static/academic-units.js",
+      "query": "v=20261001-departments-1",
+      "status": 200,
+      "server_ms": 161.98656399501488
+    },
+    {
+      "path": "/static/community-moderation.js",
+      "query": "v=20260930-discussion-2b",
+      "status": 200,
+      "server_ms": 162.91042300872505
+    },
+    {
+      "path": "/static/motion.js",
+      "query": "v=20261007-forum-1",
+      "status": 200,
+      "server_ms": 163.0588859989075
+    },
+    {
+      "path": "/static/community-reader.js",
+      "query": "v=20260930-forum-1",
+      "status": 200,
+      "server_ms": 163.15303099690937
+    },
+    {
+      "path": "/static/navigation.js",
+      "query": "v=20261001-planning-workspace-1",
+      "status": 200,
+      "server_ms": 168.68683201028034
+    },
+    {
+      "path": "/static/destination-tips.js",
+      "query": "v=20261004-tips-2",
+      "status": 200,
+      "server_ms": 2.1323639957699925
+    },
+    {
+      "path": "/static/application-workspace.js",
+      "query": "v=20261002-flow-2",
+      "status": 200,
+      "server_ms": 5.187422997551039
+    },
+    {
+      "path": "/static/document-workbench.js",
+      "query": "v=20261008-ncu-1",
+      "status": 200,
+      "server_ms": 9.735279003507458
+    },
+    {
+      "path": "/static/feedback.js",
+      "query": "v=20261008-2",
+      "status": 200,
+      "server_ms": 8.355584999662824
+    },
+    {
+      "path": "/static/application-journey.js",
+      "query": "v=20261008-ncu-1",
+      "status": 200,
+      "server_ms": 10.360305997892283
+    },
+    {
+      "path": "/static/analytics.js",
+      "query": "v=20261003-analytics-1",
+      "status": 200,
+      "server_ms": 12.169909998192452
+    },
+    {
+      "path": "/static/assets/fonts/poppins/Poppins-Regular.ttf",
+      "query": "",
+      "status": 200,
+      "server_ms": 2.866437003831379
+    },
+    {
+      "path": "/static/app.js",
+      "query": "v=20261008-ncu-sources-3",
+      "status": 200,
+      "server_ms": 3.9666500088060275
+    },
+    {
+      "path": "/static/assets/mascot/suitcase-side.webp",
+      "query": "v=20261007-solid-1",
+      "status": 200,
+      "server_ms": 5.415143008576706
+    },
+    {
+      "path": "/static/assets/fonts/poppins/Poppins-Bold.ttf",
+      "query": "",
+      "status": 200,
+      "server_ms": 14.301880000857636
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-64.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.025816005305387
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-100.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 27.53282099729404
+    },
+    {
+      "path": "/static/assets/fonts/poppins/Poppins-Medium.ttf",
+      "query": "",
+      "status": 200,
+      "server_ms": 42.36355998727959
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-99.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 26.46473899949342
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-117.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 42.39382500236388
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-96.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 26.4704349974636
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-75.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.6680140007520095
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-116.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.105236989445984
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-97.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.270615999004804
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-14.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 10.540073999436572
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-60.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 12.88786600343883
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-113.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 15.806093011633493
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-110.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.112318002735265
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-107.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.986403001472354
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-109.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.901654000510462
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-115.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 10.183642996707931
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-41.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.947773007093929
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-94.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.558864006772637
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-119.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.346938007278368
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-116.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.544333995203488
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-114.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.277591000776738
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-117.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.714681000332348
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-112.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 11.278150006546639
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-110.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 11.030337002011947
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-62.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.044008994242176
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-109.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.183459001476876
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-24.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.384404998039827
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-103.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.222046002629213
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-105.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.377378006116487
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-61.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 11.464601004263386
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-94.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 3.903378004906699
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-15.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.5436009938130155
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-106.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.790097002522089
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-100.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 3.9435490034520626
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-108.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.626149009913206
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-115.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 16.162642001290806
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-66.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.46494199463632
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-111.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.397256001946516
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-112.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.4778100058902055
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-96.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.708354005240835
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-41.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.696250010165386
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-64.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 13.527849994716235
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-33.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.061625993927009
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-22.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.213232008623891
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-13.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.86715100123547
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-107.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.837165994103998
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-88.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 15.926717998809181
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-106.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 20.475783006986603
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-97.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 11.444466988905333
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-83.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 3.344557000673376
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-102.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 2.9535779904108495
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-79.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.802256000810303
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-70.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.646831996273249
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-37.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.646076999255456
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-31.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 10.699845006456599
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-19.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 3.9264929946511984
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-90.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 32.99337899079546
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-119.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 2.149019011994824
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-16.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 2.473151995218359
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-66.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.526656994130462
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-63.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.764654993778095
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-105.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.11898600962013
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-23.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.900463012745604
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-8.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.915372002869844
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-5.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.1142309966962785
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-98.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.198332998086698
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-101.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.298607990378514
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-63.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.209863993921317
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-113.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.66745199507568
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-78.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.2933839983306825
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-46.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.739093998679891
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-23.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.96979700983502
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-17.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.035092003410682
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-67.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.981748989550397
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-42.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.945725006517023
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-50.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.551437000278383
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-111.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.038311003474519
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-8.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.606864998000674
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-36.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.52267700934317
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-103.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.723915008478798
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-114.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 12.235794012667611
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-60.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.706929991603829
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-18.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 1.9908599933842197
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-99.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.392989991581999
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-104.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.02976698812563
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-25.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 11.121442992589436
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-91.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.949358991230838
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-10.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 13.29375799105037
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-34.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.8640650095185265
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-101.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.540822989540175
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-81.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 15.252883997163735
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-21.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 14.011840001330711
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-76.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 36.19341699231882
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-48.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 35.22274900751654
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-69.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 10.416314005851746
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-82.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 15.373246002127416
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-62.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 15.64451000012923
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-84.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 24.786905996734276
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-48.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 15.341222009737976
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-39.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 14.916272994014435
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-98.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 15.912433009361848
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-115.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.719835990224965
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-119.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.840964997536503
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-15.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.9400369975483045
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-38.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.045748003292829
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-32.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.970843009185046
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-117.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 20.50530099950265
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-64.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 14.971443990361877
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-109.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 16.835568007081747
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-80.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 21.005588001571596
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-67.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 21.73557400237769
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-112.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 30.098219998762943
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-84.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 32.33642899431288
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-97.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.6889449877198786
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-101.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.775451001478359
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-19.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.734332003863528
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-37.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.793738000444137
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-116.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.129840007517487
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-62.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.37069499923382
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-84.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.477892002905719
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-80.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.1281280037947
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-65.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.913361001759768
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-71.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.045361002790742
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-75.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.358314003795385
+    },
+    {
+      "path": "/static/vendor/morphicons/1.7.0/dist/dom.js",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.54878600127995
+    },
+    {
+      "path": "/auth/providers",
+      "query": "",
+      "status": 200,
+      "server_ms": 13.407801990979351
+    },
+    {
+      "path": "/universities",
+      "query": "",
+      "status": 200,
+      "server_ms": 22.890086998813786
+    },
+    {
+      "path": "/static/assets/school-images.json",
+      "query": "v=20260929-complete-1",
+      "status": 200,
+      "server_ms": 3.8681160076521337
+    },
+    {
+      "path": "/auth/session",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.838258992298506
+    },
+    {
+      "path": "/ai/status",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.641465988242999
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-45.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.6594979939982295
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-24.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.472272987593897
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-47.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.451645004446618
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-30.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.653691013227217
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-28.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 10.672703996533528
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-30.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 11.832492993562482
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-80.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 0.986840997938998
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-104.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 1.7001840024022385
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-47.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 10.967592999804765
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-61.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 0.9870799985947087
+    },
+    {
+      "path": "/static/vendor/morphicons/1.7.0/dist/normalize-CYnN3Npw.js",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.989597987034358
+    },
+    {
+      "path": "/static/vendor/morphicons/1.7.0/dist/spring-CFHloqPP.js",
+      "query": "",
+      "status": 200,
+      "server_ms": 13.291879004100338
+    },
+    {
+      "path": "/community/boards",
+      "query": "",
+      "status": 200,
+      "server_ms": 3.807087996392511
+    },
+    {
+      "path": "/product/entitlements",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.389172009425238
+    },
+    {
+      "path": "/ai/status",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.956874010735191
+    },
+    {
+      "path": "/student-dashboard",
+      "query": "school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 20.020821000798605
+    },
+    {
+      "path": "/application-center/templates",
+      "query": "school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&program_type=exchange",
+      "status": 200,
+      "server_ms": 47.916586001520045
+    },
+    {
+      "path": "/static/assets/schools/3d846f744cbd7b.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.622629993013106
+    },
+    {
+      "path": "/static/assets/schools/f3940610659ece.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.069899995462038
+    },
+    {
+      "path": "/static/assets/schools/0fd06cafb28d73.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 14.26127199374605
+    },
+    {
+      "path": "/static/assets/schools/f5c175d2d9e3b5.jpg",
+      "query": "v=4186d476bb58",
+      "status": 200,
+      "server_ms": 15.104201011126861
+    },
+    {
+      "path": "/static/assets/schools/72c02a12d62327.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 16.766120010288432
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-81.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 38.43055199831724
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-65.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 47.167079988867044
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-78.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 70.33577599213459
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-102.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 56.26944699906744
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-108.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 36.160206989734434
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-114.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 36.71551699517295
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-110.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 36.74109099665657
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-107.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 35.718218990950845
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-106.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 50.00058200675994
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-118.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 34.689144988078624
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-105.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 44.45599399332423
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-113.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 10.334163991501555
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-111.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.73818200873211
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-102.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 25.42502300639171
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-50.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 26.620414995704778
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-103.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 56.19910800305661
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-100.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 17.18289499694947
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-61.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 18.740618994343095
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-93.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 2.3038630024529994
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-28.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.326733008492738
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-47.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.26578299549874
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-108.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 3.6916270037181675
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-40.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 150.42419701057952
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-11.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 151.02853199641686
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-95.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 168.38467698835302
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-20.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 173.74673200538382
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-96.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 82.25790699361823
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-79.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 87.15559499978554
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-34.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 76.26324199372903
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-31.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 412.3154909902951
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-13.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 430.50991201016586
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-41.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 54.29896799614653
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-71.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 129.1063579992624
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-21.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 11.87817299796734
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-91.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 23.65757100051269
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-98.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 14.324696006951854
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-104.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 29.342473004362546
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-88.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 25.07571000023745
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-46.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 833.8229380024131
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-26.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 834.0156049962388
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-38.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 807.4459139897954
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-69.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 42.978450990631245
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-40.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 145.89700600481592
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-12.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 43.14706599689089
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-118.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 44.82754699711222
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-26.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 30.630041001131758
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-88.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 14.195089999702759
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-11.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 29.221424003480934
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-86.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 38.39371200592723
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-28.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 77.15444199857302
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-33.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 57.41379800019786
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-93.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 89.70441200654022
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-26.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 66.81100900459569
+    },
+    {
+      "path": "/community/feed",
+      "query": "limit=20&sort=latest",
+      "status": 200,
+      "server_ms": 19.276380000519566
+    },
+    {
+      "path": "/static/assets/schools/212bd37f5fdd6d.jpg",
+      "query": "v=39523b15bd33",
+      "status": 200,
+      "server_ms": 56.97460401279386
+    },
+    {
+      "path": "/static/assets/schools/fe7f1bb9958abe.jpg",
+      "query": "v=96f9fe5022d9",
+      "status": 200,
+      "server_ms": 40.330723000806756
+    },
+    {
+      "path": "/static/assets/schools/6eeaf2c3db43c2.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 10.602262002066709
+    },
+    {
+      "path": "/static/assets/schools/6af5b788b866ee.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 408.1204819958657
+    },
+    {
+      "path": "/static/assets/schools/c6bf243d7dfb72.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 69.42569999955595
+    },
+    {
+      "path": "/static/assets/schools/57cd05d5c4fec8.jpg",
+      "query": "v=77cd3cf3e245",
+      "status": 200,
+      "server_ms": 37.974227001541294
+    },
+    {
+      "path": "/destination-profiles",
+      "query": "home_school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&compact=true",
+      "status": 200,
+      "server_ms": 1029.2147770087468
+    },
+    {
+      "path": "/static/assets/schools/7a2ee0fee4b318.jpg",
+      "query": "v=f1eb2ec31dad",
+      "status": 200,
+      "server_ms": 15.428181999595836
+    },
+    {
+      "path": "/static/assets/schools/160de2e3ddb388.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 16.335431995685212
+    },
+    {
+      "path": "/static/assets/schools/1bb71ab47bff2b.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 16.474762989673764
+    },
+    {
+      "path": "/static/assets/schools/d573b84c80b6ff.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 33.6935499944957
+    },
+    {
+      "path": "/application-period-options",
+      "query": "home_school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 7202.4199629959185
+    },
+    {
+      "path": "/static/assets/schools/82c299a57789fe.jpg",
+      "query": "v=71bca4cb7849",
+      "status": 200,
+      "server_ms": 222.39022399298847
+    },
+    {
+      "path": "/static/assets/schools/5e681463b8c269.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 159.64455799257848
+    },
+    {
+      "path": "/coverage",
+      "query": "school=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 5014.335751009639
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 6691.294989999733
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 7476.256719004596
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 6762.597813998582
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 7470.180907999747
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-46.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.303909987560473
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-92.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.354041000828147
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-68.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 11.667379993014038
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-9.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 7.5323899945942685
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-49.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 11.560586004634388
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-5.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 16.059851011959836
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-44.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 2.5438570010010153
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-42.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.365179997985251
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-75.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.520920997601934
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-29.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.25194400770124
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-86.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.000813006423414
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-81.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.996679989853874
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-71.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 13.584625005023554
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-65.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 13.554784003645182
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-86.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 13.416675006737933
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-48.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 16.000342002371326
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-35.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 16.034825006499887
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-95.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 16.086055999039672
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-25.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 1.450202995329164
+    },
+    {
+      "path": "/application-center/templates",
+      "query": "school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&program_type=exchange",
+      "status": 200,
+      "server_ms": 80.01775300363079
+    },
+    {
+      "path": "/student-dashboard",
+      "query": "school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 246.2345920066582
+    },
+    {
+      "path": "/destination-profiles",
+      "query": "home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&compact=true",
+      "status": 200,
+      "server_ms": 671.5136280108709
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 695.4198690073099
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 1281.5464479936054
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 1327.3771590029355
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 1327.367032004986
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 1116.8626370053971
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 227.79407400230411
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 426.34794900368433
+    },
+    {
+      "path": "/coverage",
+      "query": "school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 2605.225060993689
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 500.45682399650104
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 656.0500900086481
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 1350.5084110074677
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 363.15206698782276
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 173.88833899167366
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 210.1206240040483
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 334.923185990192
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 737.8038369934075
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 994.6558119991096
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 710.781653993763
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 844.2928409931483
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 1129.9231040029554
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 1060.0899720011512
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 636.2627829948906
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 630.350345003535
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 649.8736679932335
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 622.0757370028878
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 637.1743449999485
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 650.4761810065247
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 634.8396110115573
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 599.3428410001798
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 615.9116549970349
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 729.6953119948739
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 780.3032030060422
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 826.5458090027096
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 1335.0333510024939
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 1337.5878660008311
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 1452.2716350038536
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 1452.365239005303
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 750.9349799947813
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 776.5944010025123
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 766.4140470005805
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 817.9567309998674
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 401.1811480013421
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 407.72048199141864
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 608.0238549911883
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 685.0478069973178
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 892.0685409975704
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 915.6280820025131
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 911.1763879918726
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 918.9233929937473
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 577.1334650053177
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 611.5393850050168
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 703.5354060062673
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 740.7372799934819
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 460.1766529958695
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 632.8743210033281
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 650.3507529996568
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 675.1677680003922
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 740.224612003658
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 942.8995710040908
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 975.7828770088963
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 1073.9733240043279
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 98.01090799737722
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 365.07853600778617
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 439.30738999915775
+    },
+    {
+      "path": "/application-period-options",
+      "query": "home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 311.51183899783064
+    },
+    {
+      "path": "/static/assets/schools/b8e0d0eb84aa66.jpg",
+      "query": "",
+      "status": 200,
+      "server_ms": 17.498373999842443
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-27.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.616230003302917
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-82.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.6694769989699125
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-9.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.909232011414133
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-36.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 20.12190700042993
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-49.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 19.808266995823942
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-20.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 15.082002995768562
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-5.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 15.823531008209102
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-44.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 16.032325991545804
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-73.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 15.916410004138015
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-87.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 28.78949099977035
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-74.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 28.7290279957233
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-90.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 10.117227997398004
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-42.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 10.357584993471391
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-68.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 17.00994100247044
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-45.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 19.51463300792966
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-70.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 19.116872994345613
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-77.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.820450998726301
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-89.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 27.383545006159693
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-67.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 1.4942269917810336
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-37.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.16374698781874
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-35.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 20.683298993390054
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-10.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 27.784964011516422
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-29.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 20.823368002311327
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-83.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 33.22967700660229
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-85.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 19.98713800276164
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-74.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 29.215781003586017
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-16.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 22.66521599085536
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-11.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 24.985604992252775
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-39.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 26.131552003789693
+    },
+    {
+      "path": "/ai/status",
+      "query": "",
+      "status": 200,
+      "server_ms": 8.716327996808104
+    },
+    {
+      "path": "/destination-tips",
+      "query": "country=%E6%97%A5%E6%9C%AC",
+      "status": 200,
+      "server_ms": 237.50254898914136
+    },
+    {
+      "path": "/community/questions",
+      "query": "school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 260.3787830012152
+    },
+    {
+      "path": "/student-experiences",
+      "query": "school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 316.2463869957719
+    },
+    {
+      "path": "/community/chat",
+      "query": "school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 107.5981150061125
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-22.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 60.129307996248826
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-77.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 60.08174100134056
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-29.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 123.69414400018286
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-72.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 58.244481013389304
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-45.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 130.83238400577102
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-93.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 137.37171899992973
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-36.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 119.84510799811687
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-34.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 25.836519998847507
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-15.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 74.65301699994598
+    },
+    {
+      "path": "/application-workflow",
+      "query": "school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8+Niigata+University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 978.7688270007493
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-99.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 40.71767699497286
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-95.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 34.35687400633469
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-69.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 23.310162010602653
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-60.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 42.23979600646999
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-83.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 3.9358039939543232
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-78.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 3.9638029993511736
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-91.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 30.61831899685785
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-50.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 30.449361001956277
+    },
+    {
+      "path": "/destination-profile",
+      "query": "school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 1192.7533660054905
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-118.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 47.49320700648241
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-10.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 43.631968001136556
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-94.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 43.76985899580177
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-23.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 16.701411994290538
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-70.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 59.604309004498646
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-21.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 1.275846007047221
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-68.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 4.379955993499607
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Medium-db7f7c4ed4231de85e4c72cad92bedecce95fb6097b525849090a5e09054e304-16.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 6.694177995086648
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-35.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 14.55180099583231
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-43.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 14.583330994355492
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-32.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 14.750424001249485
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-14.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 15.568410002742894
+    },
+    {
+      "path": "/school-data-completeness",
+      "query": "school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 2337.465467993752
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 109.04135399323422
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 153.24239099572878
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 206.0188850009581
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 200.0966339983279
+    },
+    {
+      "path": "/partner-source-audit",
+      "query": "school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 2095.549244011636
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-18.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 28.402898999047466
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-44.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 19.803262999630533
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-92.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 22.42470700002741
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-85.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 28.430760008632205
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-12.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 28.29344099154696
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-87.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 28.39320999919437
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-27.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 9.828066002228297
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-73.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 24.59275299042929
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-19.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 34.18651700485498
+    },
+    {
+      "path": "/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-72.woff2",
+      "query": "",
+      "status": 200,
+      "server_ms": 62.802991989883594
+    },
+    {
+      "path": "/school-life-context",
+      "query": "school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 751.7611539951758
+    },
+    {
+      "path": "/public-translations",
+      "query": "",
+      "status": 200,
+      "server_ms": 5.937834997894242
+    },
+    {
+      "path": "/school-life-context/refresh",
+      "query": "school=%E6%96%B0%E6%BD%9F%E5%A4%A7%E5%AD%B8%20Niigata%20University&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8",
+      "status": 200,
+      "server_ms": 2922.5708540034248
+    }
+  ],
+  "finished_at": "2026-10-09T00:33:01.303308+00:00",
+  "end_sha": "9bf90c8748fd33747c625e1f5154f6838540d64a",
+  "worktree_clean_at_end": true
+}

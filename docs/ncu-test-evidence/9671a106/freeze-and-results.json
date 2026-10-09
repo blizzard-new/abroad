@@ -1,0 +1,76 @@
+{
+  "tested_sha": "9671a106822a3d11754ea42b3b89a079c881e1ad",
+  "original_run_started_at": "2026-10-08T22:23:30.250752+00:00",
+  "original_run_finished_at": "2026-10-08T22:46:25.208333+00:00",
+  "start_head_sha": "9671a106822a3d11754ea42b3b89a079c881e1ad",
+  "start_worktree_porcelain": "",
+  "end_head_sha": "9671a106822a3d11754ea42b3b89a079c881e1ad",
+  "end_worktree_porcelain": "",
+  "per_phase_freeze_checks": "runner rejects SHA or worktree changes before each phase",
+  "independent_after_run_healthcheck": {
+    "checked_at": "2026-10-08T22:54:56.309630+00:00",
+    "observed_head_sha": "9671a106822a3d11754ea42b3b89a079c881e1ad",
+    "observed_worktree_porcelain": ""
+  },
+  "later_evidence_commit_is_not_tested_sha": true,
+  "data_acceptance_passed": false,
+  "full_ci_equivalence": false,
+  "known_failure_comparison": {
+    "baseline_sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "failure_names_identical": true,
+    "candidate_failed": 10,
+    "baseline_failed": 10,
+    "failed_cases": [
+      {
+        "class": "tests.test_frontend_contract",
+        "name": "test_application_center_separates_official_requirements_from_preparation_tools"
+      },
+      {
+        "class": "tests.test_frontend_contract",
+        "name": "test_community_identity_preview_matches_public_name_and_resets_per_submission"
+      },
+      {
+        "class": "tests.test_frontend_contract",
+        "name": "test_departmental_partner_references_are_visible_but_blocked_from_formal_plans"
+      },
+      {
+        "class": "tests.test_frontend_contract",
+        "name": "test_global_home_board_routing_and_following_are_present"
+      },
+      {
+        "class": "tests.test_frontend_contract",
+        "name": "test_personal_application_plan_uses_structured_api_and_progressive_login"
+      },
+      {
+        "class": "tests.test_frontend_contract",
+        "name": "test_successful_login_closes_before_noncritical_account_hydration"
+      },
+      {
+        "class": "tests.test_frontend_contract",
+        "name": "test_web_notification_center_and_explicit_email_opt_in_are_present"
+      },
+      {
+        "class": "tests.test_frontend_contract",
+        "name": "test_web_routes_states_and_touch_targets_are_consistent"
+      },
+      {
+        "class": "tests.test_ntpu_bundled_data",
+        "name": "test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+      },
+      {
+        "class": "tests.test_rag",
+        "name": "test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused"
+      }
+    ],
+    "baseline_is_not_launch_waiver": true
+  },
+  "ci": {
+    "quality_run": 37853183998,
+    "quality_conclusion": "failure",
+    "quality_jobs_total_count": 0,
+    "supabase_preview_check": 113571006734,
+    "supabase_preview_conclusion": "skipped",
+    "quality_root_cause": "not obtained; no jobs to inspect"
+  },
+  "production_actions": false
+}

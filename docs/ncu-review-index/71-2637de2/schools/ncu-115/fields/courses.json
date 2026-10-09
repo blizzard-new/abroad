@@ -1,0 +1,86 @@
+{
+  "key": "courses",
+  "label": "課程限制與選課",
+  "status": "needs_confirmation",
+  "note": "本科八school排除法、醫、牙、藥；三graduate school各有排除program與全日授心理／教育／日語教學，不表示中央可申請全部研究所。頁稱7courses/semester／10h/week，申請表7classes/week／10h，檢核表7classes/week／10.5h、每學期至少4門所屬系、intensive不算；研究生研究補時需教師申立。不能混算成7學分或用中央兩門代替。選列課不保證開課、採認由中央系所。",
+  "source_urls": [
+    "https://www.hiroshima-u.ac.jp/en/husa/abouthusaprogram_top/academicprogram/student_status",
+    "https://www.hiroshima-u.ac.jp/en/husa/abouthusaprogram_top/applprocedure",
+    "https://www.hiroshima-u.ac.jp/system/files/182207/PDF%20application%20form%E7%89%B9%E5%88%A5%E8%81%B4%E8%AC%9B%E5%AD%A6%E7%94%9F%E8%A8%B1%E5%8F%AF%E9%A1%98_202203.pdf",
+    "https://www.hiroshima-u.ac.jp/system/files/248334/Checklist%20for%20the%20Application%20for%20Special%20Auditing%20Students%20Form.pdf"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.hiroshima-u.ac.jp/en/husa/abouthusaprogram_top/academicprogram/student_status",
+      "source_id": "host-hiro-student-status",
+      "page": null,
+      "source_title": "廣島HUSA官網：student-status",
+      "applicability": "查核日HUSA現行頁含2026秋／2027春已過申請期，另取得2027校曆與現連空白表；不推2027秋提名截止或中央116開放。中央115只大學部與host通用研究生範圍分開，春季限部分伙伴、中央適用未核；2024附件與2023宿舍手冊另標參考。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 114,
+        "field": "courses",
+        "evidence_array_index": 0,
+        "text_sha256": "68194368996de642b61f25003e244e6f572e426f05cdecaa5a42961278bb1dfa",
+        "char_count": 3676
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.hiroshima-u.ac.jp/en/husa/abouthusaprogram_top/applprocedure",
+      "source_id": "host-hiro-application",
+      "page": null,
+      "source_title": "廣島HUSA官網：application",
+      "applicability": "查核日HUSA現行頁含2026秋／2027春已過申請期，另取得2027校曆與現連空白表；不推2027秋提名截止或中央116開放。中央115只大學部與host通用研究生範圍分開，春季限部分伙伴、中央適用未核；2024附件與2023宿舍手冊另標參考。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 114,
+        "field": "courses",
+        "evidence_array_index": 1,
+        "text_sha256": "707f9ee5b0907038f2b947bd414e0fa5176ca781ab669ac40928d5647ca9c86b",
+        "char_count": 4666
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.hiroshima-u.ac.jp/system/files/182207/PDF%20application%20form%E7%89%B9%E5%88%A5%E8%81%B4%E8%AC%9B%E5%AD%A6%E7%94%9F%E8%A8%B1%E5%8F%AF%E9%A1%98_202203.pdf",
+      "source_id": "host-hiro-application-pdf",
+      "page": 1,
+      "source_title": "廣島HUSA現連空白表：application-pdf",
+      "applicability": "查核日HUSA現行頁含2026秋／2027春已過申請期，另取得2027校曆與現連空白表；不推2027秋提名截止或中央116開放。中央115只大學部與host通用研究生範圍分開，春季限部分伙伴、中央適用未核；2024附件與2023宿舍手冊另標參考。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 114,
+        "field": "courses",
+        "evidence_array_index": 2,
+        "text_sha256": "f9842597c666d444a41e9d8c3de613246abc2753bebe918c2b4c54abdfa09e8e",
+        "char_count": 2399
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.hiroshima-u.ac.jp/system/files/248334/Checklist%20for%20the%20Application%20for%20Special%20Auditing%20Students%20Form.pdf",
+      "source_id": "host-hiro-checklist-pdf",
+      "page": 1,
+      "source_title": "廣島HUSA現連空白表：checklist-pdf",
+      "applicability": "查核日HUSA現行頁含2026秋／2027春已過申請期，另取得2027校曆與現連空白表；不推2027秋提名截止或中央116開放。中央115只大學部與host通用研究生範圍分開，春季限部分伙伴、中央適用未核；2024附件與2023宿舍手冊另標參考。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 114,
+        "field": "courses",
+        "evidence_array_index": 3,
+        "text_sha256": "2bb6b9a166125ac73606c886df52b1171893e803b284d284019576149d68c24e",
+        "char_count": 1712
+      }
+    }
+  ],
+  "unresolved": "116當期syllabus、可選課／先修／英日門檻與研究補時核准未完整查；HUSA與Special Research無學分track分開。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "查核日HUSA現行頁含2026秋／2027春已過申請期，另取得2027校曆與現連空白表；不推2027秋提名截止或中央116開放。中央115只大學部與host通用研究生範圍分開，春季限部分伙伴、中央適用未核；2024附件與2023宿舍手冊另標參考。"
+}

@@ -1,0 +1,68 @@
+{
+  "key": "visa",
+  "label": "簽證／居留",
+  "status": "needs_confirmation",
+  "note": "印尼政府E30F頁為Visa Pertukaran Pelajar，但正文Data Belum Tersedia；E30B高等教育與eVisa FAQ的1／2／4年、USD2000與費率不是已核實交換E30F清單。",
+  "source_urls": [
+    "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E30F",
+    "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E30B",
+    "https://evisa.imigrasi.go.id/front/faq/08cdfd2e-873e-4de7-9eeb-8f485828c155"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E30F",
+      "source_id": "gov-id-e30f",
+      "page": null,
+      "source_title": "印尼政府E30F交換生頁正文Data Belum Tersedia",
+      "applicability": "Warmadewa官方國際教育概述與校曆索引browser選定段落；local403原回執另留。現行索引最新2025–26，未取得中央116交換接收包，不套第三方自費WIP方案。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 203,
+        "field": "visa",
+        "evidence_array_index": 0,
+        "text_sha256": "1baf7e8c04de7b64f5d4e8f3a9b46a6438a1e7ea4abbba4f9b899050b74d2e3e",
+        "char_count": 995
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E30B",
+      "source_id": "gov-id-e30b",
+      "page": null,
+      "source_title": "印尼政府E30B高等教育；不自動套交換",
+      "applicability": "Warmadewa官方國際教育概述與校曆索引browser選定段落；local403原回執另留。現行索引最新2025–26，未取得中央116交換接收包，不套第三方自費WIP方案。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 203,
+        "field": "visa",
+        "evidence_array_index": 1,
+        "text_sha256": "b7aa70a3f39f6a88749de125c5fc117060e66b8ecf36ac31b4cdbddae2bf08e4",
+        "char_count": 5347
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://evisa.imigrasi.go.id/front/faq/08cdfd2e-873e-4de7-9eeb-8f485828c155",
+      "source_id": "gov-id-education-evisa",
+      "page": null,
+      "source_title": "印尼政府eVisa教育類別FAQ；需核對實際代碼",
+      "applicability": "Warmadewa官方國際教育概述與校曆索引browser選定段落；local403原回執另留。現行索引最新2025–26，未取得中央116交換接收包，不套第三方自費WIP方案。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 203,
+        "field": "visa",
+        "evidence_array_index": 2,
+        "text_sha256": "a59a8d8326b1b3111295ee2f191c6ffacb5f5ddf3ac0761a7115ac133b98994b",
+        "char_count": 2501
+      }
+    }
+  ],
+  "unresolved": "Warmadewa當期交換sponsor、E30F文件／費率／期限及ITAS未核實。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Warmadewa官方國際教育概述與校曆索引browser選定段落；local403原回執另留。現行索引最新2025–26，未取得中央116交換接收包，不套第三方自費WIP方案。"
+}

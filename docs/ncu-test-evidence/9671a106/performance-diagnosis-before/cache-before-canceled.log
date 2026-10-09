@@ -1,0 +1,47 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_simultaneous_cold_catalogue_requests_read_each_bundle_once ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f37955cdfd0>
+
+    def test_simultaneous_cold_catalogue_requests_read_each_bundle_once(monkeypatch) -> None:
+        storage._workflow_cache.clear()
+        calls = []
+        first_read = threading.Event()
+        release_read = threading.Event()
+        barrier = threading.Barrier(3)
+        real = storage.read_jsonl
+    
+        def read(path, model):
+            calls.append(path)
+            first_read.set()
+            assert release_read.wait(10), "the test must release the cold file read"
+            return real(path, model)
+    
+        monkeypatch.setattr(storage, "read_jsonl", read)
+    
+        def load():
+            barrier.wait(timeout=10)
+            return load_bundled_application_workflows()
+    
+        with ThreadPoolExecutor(max_workers=3) as pool:
+            pending = [pool.submit(load) for _ in range(3)]
+            try:
+                assert first_read.wait(10)
+                # Keep the real file read in flight while the other HTTP workers
+                # enter the public loader. This reproduces a cold page's requests.
+                threading.Event().wait(0.05)
+            finally:
+                release_read.set()
+            rows = [future.result(timeout=30) for future in pending]
+>       assert len(calls) == len(storage._bundled_workflow_paths())
+E       AssertionError: assert 12 == 4
+E        +  where 12 = len([PosixPath('/tmp/abroad-ncu-ded2ed1/src/exchange_info/official_data/ntpu/application_workflows.jsonl'), PosixPath('/tm...ows.jsonl'), PosixPath('/tmp/abroad-ncu-ded2ed1/src/exchange_info/official_data/cgu/application_workflows.jsonl'), ...])
+E        +  and   4 = len((PosixPath('/tmp/abroad-ncu-ded2ed1/src/exchange_info/official_data/ntpu/application_workflows.jsonl'), PosixPath('/tm...orkflows.jsonl'), PosixPath('/tmp/abroad-ncu-ded2ed1/src/exchange_info/official_data/ncu/application_workflows.jsonl')))
+E        +    where (PosixPath('/tmp/abroad-ncu-ded2ed1/src/exchange_info/official_data/ntpu/application_workflows.jsonl'), PosixPath('/tm...orkflows.jsonl'), PosixPath('/tmp/abroad-ncu-ded2ed1/src/exchange_info/official_data/ncu/application_workflows.jsonl')) = <function _bundled_workflow_paths at 0x7f37955ca340>()
+E        +      where <function _bundled_workflow_paths at 0x7f37955ca340> = storage._bundled_workflow_paths
+
+../ncu-catalog-regression-before.py:152: AssertionError
+=========================== short test summary info ============================
+FAILED ../ncu-catalog-regression-before.py::test_simultaneous_cold_catalogue_requests_read_each_bundle_once
+1 failed, 5 deselected in 18.75s

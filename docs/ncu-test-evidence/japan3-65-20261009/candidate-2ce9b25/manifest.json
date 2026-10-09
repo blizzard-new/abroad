@@ -1,0 +1,1203 @@
+{
+  "candidate_sha": "2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0",
+  "started_at": "2026-10-09T02:17:16.702319+00:00",
+  "start_sha": "2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0",
+  "start_worktree_porcelain": "",
+  "results": [
+    {
+      "name": "ncu_unit",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ncu_integration.py",
+        "tests/test_ncu_document_conditions.py",
+        "tests/test_ncu_source_collector.py",
+        "tests/test_school_completeness.py",
+        "tests/test_ncu_snapshot_cache.py",
+        "tests/test_ncu_japan3.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/ncu_unit.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-japan3-65",
+      "exit_code": 0,
+      "started_at": "2026-10-09T02:17:16.762089+00:00",
+      "finished_at": "2026-10-09T02:20:10.562963+00:00",
+      "log": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/ncu_unit.log",
+      "junit": {
+        "tests": 295,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": []
+    },
+    {
+      "name": "shared_regression",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_school_content.py",
+        "tests/test_ntpu_support.py",
+        "tests/test_ntu_audit.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_application_rules.py",
+        "tests/test_application_document_catalog.py",
+        "tests/test_application_documents_api.py",
+        "tests/test_fit_signals.py",
+        "tests/test_task_documents_and_reference_plan.py",
+        "tests/test_workflow_structuring.py",
+        "tests/test_account_workspace_api.py",
+        "tests/test_application_workflow.py",
+        "tests/test_workflow_context_api.py",
+        "tests/test_workflow_catalog_cache.py",
+        "tests/test_life_context.py",
+        "tests/test_public_translation.py",
+        "tests/test_public_translation_cold_cache.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/shared_regression.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-japan3-65",
+      "exit_code": 0,
+      "started_at": "2026-10-09T02:20:10.632948+00:00",
+      "finished_at": "2026-10-09T02:21:22.118214+00:00",
+      "log": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/shared_regression.log",
+      "junit": {
+        "tests": 195,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2
+      },
+      "failed_test_cases": []
+    },
+    {
+      "name": "existing_gate_failures",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ntpu_bundled_data.py",
+        "tests/test_frontend_contract.py",
+        "tests/test_rag.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/existing_gate_failures.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-japan3-65",
+      "exit_code": 0,
+      "started_at": "2026-10-09T02:21:22.154948+00:00",
+      "finished_at": "2026-10-09T02:21:32.543511+00:00",
+      "log": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/existing_gate_failures.log",
+      "junit": {
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": []
+    },
+    {
+      "name": "openapi",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "cwd": "/tmp/abroad-ncu-japan3-65",
+      "exit_code": 0,
+      "started_at": "2026-10-09T02:21:32.587918+00:00",
+      "finished_at": "2026-10-09T02:21:37.178296+00:00",
+      "log": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/openapi.log"
+    },
+    {
+      "name": "main_workflow_export",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "/tmp/ncu-omu-parity-export.py"
+      ],
+      "cwd": "/tmp/abroad-ncu-baseline",
+      "exit_code": 0,
+      "started_at": "2026-10-09T02:21:37.195626+00:00",
+      "finished_at": "2026-10-09T02:21:41.722484+00:00",
+      "log": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/main_workflow_export.log"
+    },
+    {
+      "name": "workflow_parity",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "/tmp/ncu-omu-parity-compare.py"
+      ],
+      "cwd": "/tmp/abroad-ncu-japan3-65",
+      "exit_code": 0,
+      "started_at": "2026-10-09T02:21:41.744140+00:00",
+      "finished_at": "2026-10-09T02:21:49.547545+00:00",
+      "log": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/workflow_parity.log"
+    },
+    {
+      "name": "js_app",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/app.js"
+      ],
+      "cwd": "/tmp/abroad-ncu-japan3-65",
+      "exit_code": 0,
+      "started_at": "2026-10-09T02:21:49.580754+00:00",
+      "finished_at": "2026-10-09T02:21:49.655552+00:00",
+      "log": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/js_app.log"
+    },
+    {
+      "name": "js_discovery-ui",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/discovery-ui.js"
+      ],
+      "cwd": "/tmp/abroad-ncu-japan3-65",
+      "exit_code": 0,
+      "started_at": "2026-10-09T02:21:49.672931+00:00",
+      "finished_at": "2026-10-09T02:21:49.736551+00:00",
+      "log": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/js_discovery-ui.log"
+    },
+    {
+      "name": "js_multi-plan",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/multi-plan.js"
+      ],
+      "cwd": "/tmp/abroad-ncu-japan3-65",
+      "exit_code": 0,
+      "started_at": "2026-10-09T02:21:49.752359+00:00",
+      "finished_at": "2026-10-09T02:21:49.816278+00:00",
+      "log": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/js_multi-plan.log"
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "HEAD^",
+        "HEAD"
+      ],
+      "cwd": "/tmp/abroad-ncu-japan3-65",
+      "exit_code": 0,
+      "started_at": "2026-10-09T02:21:49.838257+00:00",
+      "finished_at": "2026-10-09T02:21:50.928675+00:00",
+      "log": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/diff.log"
+    },
+    {
+      "name": "lock",
+      "command": [
+        "uv",
+        "lock",
+        "--check"
+      ],
+      "cwd": "/tmp/abroad-ncu-japan3-65",
+      "exit_code": 0,
+      "started_at": "2026-10-09T02:21:50.948690+00:00",
+      "finished_at": "2026-10-09T02:21:51.076175+00:00",
+      "log": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/lock.log"
+    },
+    {
+      "name": "audit_endpoint_timings",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "/tmp/ncu-bounded-audit-endpoints.py",
+        "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0"
+      ],
+      "cwd": "/tmp/abroad-ncu-japan3-65",
+      "exit_code": 0,
+      "started_at": "2026-10-09T02:21:51.100282+00:00",
+      "finished_at": "2026-10-09T02:21:55.815460+00:00",
+      "log": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/audit_endpoint_timings.log"
+    },
+    {
+      "name": "browser_ncu_ntu",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "ncu_verify_failure_events",
+        "tests/e2e/test_ncu_japan3.py",
+        "tests/e2e/test_ncu_acceptance.py",
+        "tests/e2e/test_ncu_niigata.py",
+        "tests/e2e/test_ncu_kyutech.py",
+        "tests/e2e/test_ncu_hokkaido.py",
+        "tests/e2e/test_ncu_school.py",
+        "tests/e2e/test_ntu_school.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser_ncu_ntu.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-japan3-65",
+      "exit_code": 0,
+      "started_at": "2026-10-09T02:21:55.836880+00:00",
+      "finished_at": "2026-10-09T02:41:45.395312+00:00",
+      "log": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser_ncu_ntu.log",
+      "junit": {
+        "tests": 62,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": []
+    }
+  ],
+  "production_actions": false,
+  "full_ci_equivalence": false,
+  "data_coverage": {
+    "checked_at": "2026-10-08T00:00:00+00:00",
+    "academic_year": "116",
+    "home_notice_confirmed": true,
+    "current_list_status": "scheduled_not_yet_announced",
+    "current_list_expected_date": "2026-10-12",
+    "historical_rows": 216,
+    "catalog_entries": 214,
+    "source_documents_attempted": 459,
+    "source_documents_downloaded": 459,
+    "source_documents_any_text": 454,
+    "source_documents_all_pages_have_text": 423,
+    "source_documents_all_pages_read": 25,
+    "source_documents_visual_reviewed": 6,
+    "source_documents_ocr_reviewed": 1,
+    "source_documents_with_errors": 0,
+    "source_documents_with_text_quality_gaps": 2,
+    "source_documents_with_non_text_pages": 36,
+    "source_non_text_page_count": 100,
+    "host_web_checks": 818,
+    "host_web_checks_with_errors": 101,
+    "source_mapped_entries": 214,
+    "host_source_mapped_entries": 211,
+    "entries_with_any_host_text": 210,
+    "reviewed_host_records": 65,
+    "host_full_116_verification_count": 0,
+    "pending_workflows": 214,
+    "provenance_note": "提取不是當期資格核准；逐欄缺口與原文分列於field-audit.json。"
+  },
+  "data_acceptance_passed": false,
+  "ci_status": "not_checked_yet",
+  "workflow_parity": {
+    "main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "compared_count": 851,
+    "semantic_differences": 0,
+    "method": "untouched main runtime export revalidated with identical current schema; serialized values compared as a multiset including duplicate workflows",
+    "counts": {
+      "國立臺北大學": 409,
+      "長庚大學": 154,
+      "國立臺灣大學": 288
+    }
+  },
+  "original_browser_evidence": [
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-acceptance-comparison-1440.png",
+      "sha256": "0dc8f997790cc2dbb86ad4762051168d1fb3a0d7566600fbb8be210155dcb84a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-acceptance-comparison-390.png",
+      "sha256": "4dd46248d79f47a5855dd4ea2ad46a1cef6c8f4c069b30832e2f6f1777735065"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-acceptance-document-tool-1440.png",
+      "sha256": "d62c22cae3bddd16e2b24b68668c217cbd38f04e8f823c4db69870b46957e880"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-acceptance-document-tool-390.png",
+      "sha256": "5fbb6d083bd41efe01d32c01192e69d4c4a1231c27df8985c36139ec93e444f3"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-acceptance-matching-plan-1440.png",
+      "sha256": "0dfc9a132dffc4de827f1a3c4847603353d21d1b3541b5687f63b7ec339c8d56"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-acceptance-matching-plan-390.png",
+      "sha256": "aade664a0f6241576acc36a4da0f93b1dc136a53b66de7b79aa33ce9b1604624"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-bnu-slides-workflow-390.png",
+      "sha256": "1dff450d6fbf788ff50a06fd7f158e28d50d3671cf94ece06d4c0ec06cfc5b67"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-bupt-photo-conflict-390.png",
+      "sha256": "8adf7764de98e46a2d95cea7e3862735460fe28e843f7618fe3c54e99a7b7d35"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-ccnu-arrival-insurance-390.png",
+      "sha256": "ca627600e80e2e02cb5850d06e40f45dd1e4e6ab24af2cf6d09ed4826cbbee36"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-chd-workbook-390.png",
+      "sha256": "29e9f17016140b240acc2a823b9929fc313ec47691cb5a0316a9d7e34c5010da"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-chiba-initial-health-390.png",
+      "sha256": "797d62a0ddb0dd24b86b6fbd0b5bfe7903d4a3f01822550fc4c8e183d8bfb715"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-chiba-insurance-plan-390.png",
+      "sha256": "27384fa8c6e629f1f88e6b89f1273b945f66a98be49062d107705dd44ee85ed5"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-chiba-insurance-visual-390.png",
+      "sha256": "586ed3e89aab64e85cccc50c5f834d66f3d15a60dc3abb7dd5051e140eaefd5f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-cqu-latest-registration-390.png",
+      "sha256": "9f9363574bd54cb41d638e8ba2499a07bfa9e92ffa9f3f26416cbc60665e331c"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-fudan-initial-insurance-390.png",
+      "sha256": "b900b376152bffde6f3ee8ae701c3adde198fe65cdd438b690c58f5f29ca1ec0"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-gxu-local-accident-insurance-390.png",
+      "sha256": "b8b052262dabfd12e7b99d270eb98e593bb92d3f04cd8eab3f7acae30c56a931"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hiroshima-coe-stage-390.png",
+      "sha256": "476b47e236b5926b196224a9c38f989bd73d99288703017b98e6ffdf0d1b8faa"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hiroshima-departure-stage-390.png",
+      "sha256": "3d4dd96a994185b418f826229c6aceff2cc870e10daa69af7a0c1c08dc14264f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hiroshima-fee-image-390.png",
+      "sha256": "7fcb481d205218501a16a48ad518e10dc89e8f2fa83d8a6a31da67ec944a1182"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hokkaido-校級-housing-cost-1440.png",
+      "sha256": "41adabfb66992ba514d9767a8efb31df36848b4ed2e4991f53978fe5c2ae060b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hokkaido-校級-housing-cost-390.png",
+      "sha256": "0871d3c41af5d4276b2226e692ebf7c3f1642737c8c161b77faa24ba7bb56455"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hokkaido-校級-programme-documents-1440.png",
+      "sha256": "eedeb4e77bc6b62c05b206284c9a1f945fee54559216ca404dbabcb334b0d208"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hokkaido-校級-programme-documents-390.png",
+      "sha256": "23f52e7c91e67480b018113166eadec23b1eefdf2aabe305e2c0105788d3f760"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hokkaido-校級-reading-scope-1440.png",
+      "sha256": "d841277b1b06757401b9e2b479de3d9e26901316e16554b4771e66766474d123"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hokkaido-校級-reading-scope-390.png",
+      "sha256": "b8215d38adb6fa10aab68964309441afb43fc3d712dee62d64045ce8db11f5c6"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hokkaido-院級-housing-cost-1440.png",
+      "sha256": "0f08c30613653e8cd1e8897d843f06384bc2e2f24ff3d21780b003ada9a74171"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hokkaido-院級-housing-cost-390.png",
+      "sha256": "5eb4438a2995df5675c9ccc0e0210cea4403a28be94e022f3be55b23a3bb67e2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hokkaido-院級-programme-documents-1440.png",
+      "sha256": "28f4a4ba09c0a7daa362b58112b1820eb3945dff5ad61e5ec48356a660f27f87"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hokkaido-院級-programme-documents-390.png",
+      "sha256": "1fa5034029dbecdb7242d6dc8caf706c7114c4626da1aab5aee7dd10756cde7b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hokkaido-院級-reading-scope-1440.png",
+      "sha256": "26eeeaec8c7e9401e407e49e78e21375e576277a9bad27fe00f32752cd5902a0"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hokkaido-院級-reading-scope-390.png",
+      "sha256": "347b8bdd03ed530951bb3bfb66d7b1ce7208ec8da0b4d643927db2914b16cbbb"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hust-deferred-health-1440.png",
+      "sha256": "440d046677498ee80b658fe59be80e4c5c125143ce5e25dd3ba8c2f262652295"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hust-deferred-health-390.png",
+      "sha256": "2790c49311c4c95a3f456074a9b092967280fc17656a8ff905d126a477b226f9"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hust-deferred-task-1440.png",
+      "sha256": "811d03c79279d6332d1a5818fad6252e9cec8e7f21f26b4798ba56b25ccb77ce"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hust-deferred-task-390.png",
+      "sha256": "5fe244411b9a9e95bba36e30708183e7759a0785bc65dc3495fa9c09b57ca7df"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-hust-insurance-alternatives-390.png",
+      "sha256": "1c44147b975080de9ff828e4842c9427a794d98fd4f4db860eed4515f2b35005"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-komazawa-life-content-1440.png",
+      "sha256": "81ebe1eff4035913d4f8e0427a3959ce6ea217eab8a0c7f857e788edc79319fd"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-komazawa-life-content-390.png",
+      "sha256": "9e42840c94f3b15274f0604c337a604e591a2e87619c32e5488a9aefbc2b5383"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-komazawa-programme-documents-1440.png",
+      "sha256": "3f617d4937f59ead6a8d26c9c0dd778c3dc7aff0c3d2440d2d59582db120eeef"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-komazawa-programme-documents-390.png",
+      "sha256": "530c5f4058531959f9c94d9ef0fb3a9bb9143b09f2296fdb23a4bfbd606fad33"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-komazawa-source-scope-1440.png",
+      "sha256": "83e02d3065880c8940a76adfc8bca0a684e824699bc6ca6289057a5b5502d037"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-komazawa-source-scope-390.png",
+      "sha256": "25e71017197af5ef1627bdf0c8446dd241c010c0116eea3af5605ef096292467"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-kuins-life-content-1440.png",
+      "sha256": "1b6402e2e95ed51d19b76ba7c611432756f9184222512494bb9e5af21d33bc35"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-kuins-life-content-390.png",
+      "sha256": "45168b4cd25dbd3f188ec27633189a2cee4243dfd5fe1b520dc0e813db845107"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-kuins-programme-documents-1440.png",
+      "sha256": "06fca4b5e1ef3e60a5b100bf1f6f6b79e92e020c1d4caeaba86e5900336fb28e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-kuins-programme-documents-390.png",
+      "sha256": "c7cd3641385ea42762d9781d11b8d2c217256a61871af4d37054b62ef344455f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-kuins-source-scope-1440.png",
+      "sha256": "2f9c5b36d28a9c0862130fccc0d987425c5c824a12cda6ed57759b964fc84ed7"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-kuins-source-scope-390.png",
+      "sha256": "60e0f37f40f7c4ce064a7a65dbc80b53c001cd879aaf790ef3a9055b71f910b0"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-tohoku-life-content-1440.png",
+      "sha256": "1cd9d0713828fa5494f125f9787cb50fc98aab35baa0fed74c4ed2bd6c7e574a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-tohoku-life-content-390.png",
+      "sha256": "5304fa2414383785df3cd64779d63ef880ddb93826ce915f2b1416e85303c12e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-tohoku-programme-documents-1440.png",
+      "sha256": "c5f8634c1564f4f8a42433f6241cd907b951935d1a4ee943537ea0cd64697946"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-tohoku-programme-documents-390.png",
+      "sha256": "acdf05b2a18a2d7e2ffc8eed14e88d545b96e2273e837fde6560548bd58d7c41"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-tohoku-source-scope-1440.png",
+      "sha256": "69fb0c1cd924b7309a180bdaaef8a6b06db66f2b2da2e136563e87a7ecf6b869"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-japan3-tohoku-source-scope-390.png",
+      "sha256": "570a8bfff53ec5f874550be5249f9243699d2ad0f152ca2dff12a43dd1785be6"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-kyutech-arrival-five-plus-auditing-1440.png",
+      "sha256": "16d15997753e8f03505b9eea2bde82c668eb7c45ec01521d37fe3d215fe8130a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-kyutech-arrival-five-plus-auditing-390.png",
+      "sha256": "48335a2c4fcbd18e3992d39ef09e3985f06e835d30b685049561e8986f8dcd6f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-kyutech-housing-conflict-1440.png",
+      "sha256": "2b07d07cf7dd742d31c406a6a94471dc7b335dba06bcf285ef69785126711b1d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-kyutech-housing-conflict-390.png",
+      "sha256": "d4f5e581b922e57662bd535118f26d26ca2f68a08dbc78b386433fa3d1117ce3"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-kyutech-original-reading-scope-1440.png",
+      "sha256": "cd2b0f283f0c1a9ffaccacde24280572cf9243957fcf6fdde2ec17f87529ce6c"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-kyutech-original-reading-scope-390.png",
+      "sha256": "cee5e5051497c7689bc9a66dd354d763cf07a8633384ec96ce231320d6b6f196"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-life-1440.png",
+      "sha256": "e811fe51970b1b7930ce169059a4096bc44c1effd6802e05f043328085b4df47"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-life-390.png",
+      "sha256": "6c07b65a3ac6bf10c56b9b9991a1ac095bdba809b223aef19e2324748a8b93ee"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-niigata-blank-sheet-scope-1440.png",
+      "sha256": "4a32a4e01f5294ceb1f66914743abaf2a3571f1038895f90c45e08e81bdae0cc"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-niigata-blank-sheet-scope-390.png",
+      "sha256": "71435ca880d9d300f50e9d05a9f6d2dbe980ccee9a8938f41ef026eaf18ee298"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-niigata-graduate-basic-only-1440.png",
+      "sha256": "7223986ac7c34f006562bc3803f8483f8499e4f42c6b6c42add1f2ff9cbada26"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-niigata-graduate-basic-only-390.png",
+      "sha256": "7786dec94812005e06a3468dc2a4bb68db963da01ba41c4e50f06a49e1bb26d0"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-niigata-housing-cost-scope-1440.png",
+      "sha256": "fa59965765ce0b2d042f45f40d18a59541e97be270a783c57adb9b09584850ca"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-niigata-housing-cost-scope-390.png",
+      "sha256": "bd5a6b8d614c1c746069523398ff13df5efbab160ea57bffe41d5518c3885839"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-nju-second-batch-390.png",
+      "sha256": "9eddf8dcd629de551955c1ff8631aecbceb91e2277af8f23657ab2b9641b708d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-nuist-2027-documents-390.png",
+      "sha256": "20c55ecc05e4aebedc597088189d6c68acdfeeff792b72a5efafbd184ca6883e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-nuist-2027-life-390.png",
+      "sha256": "9850706292979e501980991d1cd7ff5ed874e8d42ff09b285071af25bd3d5019"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-nuist-2027-source-390.png",
+      "sha256": "d6f554c86114059672ec75196a28a3d90ec7933716e8dc47da1aeed9cbd1deb1"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-nuist-versions-390.png",
+      "sha256": "113677d066c1852f4e9a3782a57a079290a07502ddef5a343ea14d7e6731856c"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-omu-iwing-cost-scope-390.png",
+      "sha256": "a1ff0cf28ed92e9ce3288515b1f169e5430353b463460d883b622b1c221082bc"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-omu-iwing-health-later-390.png",
+      "sha256": "7aad364e40726660d2470b41f64ed2086efea8370fed52eda36c31db608c517b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-omu-optional-english-source-390.png",
+      "sha256": "d0b2bfd4fc41938507709b37721cf4f713149589b4e5ca9fda86f7b5ee7f70e1"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-science-health-scope-390.png",
+      "sha256": "ebacb38bf6abc9d8d54e401083f443f1d4cfea5542272a80e43f697a89b03c39"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-science-initial-coe-390.png",
+      "sha256": "31777be81fce8f13adee67f7d6beb6018acb54003eeeb2ee44ee382bce0b2631"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-science-tiec2027-fee-390.png",
+      "sha256": "0aff1c996f00f961926db677e38f77fa20c4d53f95003a2844b7a02bbec4fce6"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-scut-missing-blank-form-390.png",
+      "sha256": "788d1ab9c00e3612beb6488a9eb9dbcc961e3e059034d235cbc1c4245d928865"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-seu-health-condition-catalog-390.png",
+      "sha256": "a77792a0e79ad4855931012cd776cdaa7b001c3bbd48ef203bd97453412c4131"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-seu-reciprocal-health-390.png",
+      "sha256": "5fd751c963c69310cf62341d7eb04979c533aa2aaf9bafc1d00e68f3d74fca4d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-shu-life-390.png",
+      "sha256": "a49ce327d9f94a254c16a69770c081bbe5b12ed55e20caee510a1d5be9b95cfe"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-shu-visual-390.png",
+      "sha256": "4b9c6255af15d5a54ba15e30a52df3f0c735db8d82254707df017659b521dda7"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-source-1440.png",
+      "sha256": "04dc7ee04d86f6d97ecbcb40d0fd0e3ff4fc8271b76149a91c978b8a28cff7a6"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-source-390.png",
+      "sha256": "de5df82937d236347d7ac9bb64549413f9100b3aac28821b5a99cee82028e13e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-sufe-life-390.png",
+      "sha256": "2d96b3a633b8b51dc7424f34713e4bfb98f51c4780aa67517e7f75667177b679"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-sufe-visual-390.png",
+      "sha256": "2c9bda784486093cf761d0f607bd37e9819282c47a2d7637e7c83d8f4a8d9b57"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-swu-major-portfolio-390.png",
+      "sha256": "49472126efe5be3d37a3c111025fa6e6fad8059ad01bc40b6b393f160f39aaa7"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-swu-portfolio-condition-catalog-390.png",
+      "sha256": "f4d2046784110d4503c9c3c77c974136c82a172edf791acfabf03768f22e70a2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-tju-arrival-390.png",
+      "sha256": "552001d3e6a563ac7d04ffbeedd2d92b9d60915ea7715681a81d38c4605e3350"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-tju-catalog-390.png",
+      "sha256": "e715b4f76861aa7b44f1b9a3e99076cae6bb0cbcd8040e16ae4f67cd30f91017"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-tju-source-390.png",
+      "sha256": "18218a43a09a3e4322f822da7fa2092a78bfc697c474da3fa3e8a772b33d5c44"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-tongji-new-list-390.png",
+      "sha256": "d44882443a168a0d83eb23618da404832a2d3131752cc233000d195178347b8b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-tuaf-390.png",
+      "sha256": "e4cba2fab7f764b47daff4718787130f98b5d6b18391d9ece644916bec2b83ec"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-turku-390.png",
+      "sha256": "ca5fe9fcb3375964db1733d6c46374343465989ec8dc6c47b87500faca091e97"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-ujn-hk-scope-390.png",
+      "sha256": "4da7877b66ef4faf96faa0f98462329547927db2d500b529656f332306e97604"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-undip-life-390.png",
+      "sha256": "637af5949559174edb74437f7db5cd9c2766681a0edabdcc3c7fed8bb1952ce9"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-undip-source-390.png",
+      "sha256": "32f98b99f8933e04aaf69464123967493a5e7b6a58fccb2cef8f791f5c5b3aec"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-uny-life-390.png",
+      "sha256": "7e003fad89a08529ad5000746e3cced067b4293efab7ae2d9b30c956b19e432a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-uos-off-campus-1440.png",
+      "sha256": "c8a8b47a6ff46cfa2e9cf4e34aece6711dc8e40f6be8376b29eeb942914981e2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-uos-off-campus-390.png",
+      "sha256": "6eabd35757a291885f074ccdc0076eceda1c51e0e9913064b8400379c28a0682"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-uos-transport-390.png",
+      "sha256": "d4532666bd9c1beb62a7c8808814eb2d8d2c623e40ede37337308a825af9b460"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-uos-visa-form-390.png",
+      "sha256": "e7823f06e7708df864c0c886272fa1d762fcd583415987db06d930f7475819d5"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-uos-visual-390.png",
+      "sha256": "068e443c9ea0859bfb1f5e182ffe9f9a83fb3e03a2168555fd66cd19f558d9cb"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-workflow-1440.png",
+      "sha256": "d4e0fcd89733bfb0c54186b445b2f8fb93680adcedbb8ae7bb78f99f32a636f8"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-workflow-390.png",
+      "sha256": "ea3b7ba3f40a64af63dd8f1db589ee12b0cb10cff90065ab2443a0c7c7767101"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-xjtu-mother-nomination-390.png",
+      "sha256": "288c6ec3a09c732c896e7d3e5a0f91aab4bea00df18656b44088f68233d04254"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-xmu-2027-image-390.png",
+      "sha256": "a8bb85d17c00506b885c34a6314a00248919b6cbd51945c7ebb594d104f59f8d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-xmu-health-docx-390.png",
+      "sha256": "830e0ea77c01857f036a700d9443acfa78fc040bee4ba1581b83546ffd3ee461"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-zju-form-alternatives-catalog-390.png",
+      "sha256": "7691d07c5ca2dda3198d563cdf909c301696610811227c8abe61fc2029ea5408"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/original-browser/ncu-zju-insurance-later-390.png",
+      "sha256": "71f3f375c806c552b4844127be0c1c267e63c535c60d0870c55a1e70d957729e"
+    }
+  ],
+  "performance": [],
+  "browser_evidence": [
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-acceptance-comparison-1440.png",
+      "sha256": "0dc8f997790cc2dbb86ad4762051168d1fb3a0d7566600fbb8be210155dcb84a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-acceptance-comparison-390.png",
+      "sha256": "4dd46248d79f47a5855dd4ea2ad46a1cef6c8f4c069b30832e2f6f1777735065"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-acceptance-document-tool-1440.png",
+      "sha256": "d62c22cae3bddd16e2b24b68668c217cbd38f04e8f823c4db69870b46957e880"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-acceptance-document-tool-390.png",
+      "sha256": "5fbb6d083bd41efe01d32c01192e69d4c4a1231c27df8985c36139ec93e444f3"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-acceptance-matching-plan-1440.png",
+      "sha256": "0dfc9a132dffc4de827f1a3c4847603353d21d1b3541b5687f63b7ec339c8d56"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-acceptance-matching-plan-390.png",
+      "sha256": "aade664a0f6241576acc36a4da0f93b1dc136a53b66de7b79aa33ce9b1604624"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-bnu-slides-workflow-390.png",
+      "sha256": "1dff450d6fbf788ff50a06fd7f158e28d50d3671cf94ece06d4c0ec06cfc5b67"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-bupt-photo-conflict-390.png",
+      "sha256": "8adf7764de98e46a2d95cea7e3862735460fe28e843f7618fe3c54e99a7b7d35"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-ccnu-arrival-insurance-390.png",
+      "sha256": "ca627600e80e2e02cb5850d06e40f45dd1e4e6ab24af2cf6d09ed4826cbbee36"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-chd-workbook-390.png",
+      "sha256": "29e9f17016140b240acc2a823b9929fc313ec47691cb5a0316a9d7e34c5010da"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-chiba-initial-health-390.png",
+      "sha256": "797d62a0ddb0dd24b86b6fbd0b5bfe7903d4a3f01822550fc4c8e183d8bfb715"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-chiba-insurance-plan-390.png",
+      "sha256": "27384fa8c6e629f1f88e6b89f1273b945f66a98be49062d107705dd44ee85ed5"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-chiba-insurance-visual-390.png",
+      "sha256": "586ed3e89aab64e85cccc50c5f834d66f3d15a60dc3abb7dd5051e140eaefd5f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-cqu-latest-registration-390.png",
+      "sha256": "9f9363574bd54cb41d638e8ba2499a07bfa9e92ffa9f3f26416cbc60665e331c"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-fudan-initial-insurance-390.png",
+      "sha256": "b900b376152bffde6f3ee8ae701c3adde198fe65cdd438b690c58f5f29ca1ec0"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-gxu-local-accident-insurance-390.png",
+      "sha256": "b8b052262dabfd12e7b99d270eb98e593bb92d3f04cd8eab3f7acae30c56a931"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hiroshima-coe-stage-390.png",
+      "sha256": "476b47e236b5926b196224a9c38f989bd73d99288703017b98e6ffdf0d1b8faa"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hiroshima-departure-stage-390.png",
+      "sha256": "3d4dd96a994185b418f826229c6aceff2cc870e10daa69af7a0c1c08dc14264f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hiroshima-fee-image-390.png",
+      "sha256": "7fcb481d205218501a16a48ad518e10dc89e8f2fa83d8a6a31da67ec944a1182"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hokkaido-校級-housing-cost-1440.png",
+      "sha256": "41adabfb66992ba514d9767a8efb31df36848b4ed2e4991f53978fe5c2ae060b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hokkaido-校級-housing-cost-390.png",
+      "sha256": "0871d3c41af5d4276b2226e692ebf7c3f1642737c8c161b77faa24ba7bb56455"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hokkaido-校級-programme-documents-1440.png",
+      "sha256": "eedeb4e77bc6b62c05b206284c9a1f945fee54559216ca404dbabcb334b0d208"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hokkaido-校級-programme-documents-390.png",
+      "sha256": "23f52e7c91e67480b018113166eadec23b1eefdf2aabe305e2c0105788d3f760"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hokkaido-校級-reading-scope-1440.png",
+      "sha256": "d841277b1b06757401b9e2b479de3d9e26901316e16554b4771e66766474d123"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hokkaido-校級-reading-scope-390.png",
+      "sha256": "b8215d38adb6fa10aab68964309441afb43fc3d712dee62d64045ce8db11f5c6"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hokkaido-院級-housing-cost-1440.png",
+      "sha256": "0f08c30613653e8cd1e8897d843f06384bc2e2f24ff3d21780b003ada9a74171"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hokkaido-院級-housing-cost-390.png",
+      "sha256": "5eb4438a2995df5675c9ccc0e0210cea4403a28be94e022f3be55b23a3bb67e2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hokkaido-院級-programme-documents-1440.png",
+      "sha256": "28f4a4ba09c0a7daa362b58112b1820eb3945dff5ad61e5ec48356a660f27f87"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hokkaido-院級-programme-documents-390.png",
+      "sha256": "1fa5034029dbecdb7242d6dc8caf706c7114c4626da1aab5aee7dd10756cde7b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hokkaido-院級-reading-scope-1440.png",
+      "sha256": "26eeeaec8c7e9401e407e49e78e21375e576277a9bad27fe00f32752cd5902a0"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hokkaido-院級-reading-scope-390.png",
+      "sha256": "347b8bdd03ed530951bb3bfb66d7b1ce7208ec8da0b4d643927db2914b16cbbb"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hust-deferred-health-1440.png",
+      "sha256": "440d046677498ee80b658fe59be80e4c5c125143ce5e25dd3ba8c2f262652295"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hust-deferred-health-390.png",
+      "sha256": "2790c49311c4c95a3f456074a9b092967280fc17656a8ff905d126a477b226f9"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hust-deferred-task-1440.png",
+      "sha256": "811d03c79279d6332d1a5818fad6252e9cec8e7f21f26b4798ba56b25ccb77ce"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hust-deferred-task-390.png",
+      "sha256": "5fe244411b9a9e95bba36e30708183e7759a0785bc65dc3495fa9c09b57ca7df"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-hust-insurance-alternatives-390.png",
+      "sha256": "1c44147b975080de9ff828e4842c9427a794d98fd4f4db860eed4515f2b35005"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-komazawa-life-content-1440.png",
+      "sha256": "81ebe1eff4035913d4f8e0427a3959ce6ea217eab8a0c7f857e788edc79319fd"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-komazawa-life-content-390.png",
+      "sha256": "9e42840c94f3b15274f0604c337a604e591a2e87619c32e5488a9aefbc2b5383"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-komazawa-programme-documents-1440.png",
+      "sha256": "3f617d4937f59ead6a8d26c9c0dd778c3dc7aff0c3d2440d2d59582db120eeef"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-komazawa-programme-documents-390.png",
+      "sha256": "530c5f4058531959f9c94d9ef0fb3a9bb9143b09f2296fdb23a4bfbd606fad33"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-komazawa-source-scope-1440.png",
+      "sha256": "83e02d3065880c8940a76adfc8bca0a684e824699bc6ca6289057a5b5502d037"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-komazawa-source-scope-390.png",
+      "sha256": "25e71017197af5ef1627bdf0c8446dd241c010c0116eea3af5605ef096292467"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-kuins-life-content-1440.png",
+      "sha256": "1b6402e2e95ed51d19b76ba7c611432756f9184222512494bb9e5af21d33bc35"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-kuins-life-content-390.png",
+      "sha256": "45168b4cd25dbd3f188ec27633189a2cee4243dfd5fe1b520dc0e813db845107"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-kuins-programme-documents-1440.png",
+      "sha256": "06fca4b5e1ef3e60a5b100bf1f6f6b79e92e020c1d4caeaba86e5900336fb28e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-kuins-programme-documents-390.png",
+      "sha256": "c7cd3641385ea42762d9781d11b8d2c217256a61871af4d37054b62ef344455f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-kuins-source-scope-1440.png",
+      "sha256": "2f9c5b36d28a9c0862130fccc0d987425c5c824a12cda6ed57759b964fc84ed7"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-kuins-source-scope-390.png",
+      "sha256": "60e0f37f40f7c4ce064a7a65dbc80b53c001cd879aaf790ef3a9055b71f910b0"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-tohoku-life-content-1440.png",
+      "sha256": "1cd9d0713828fa5494f125f9787cb50fc98aab35baa0fed74c4ed2bd6c7e574a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-tohoku-life-content-390.png",
+      "sha256": "5304fa2414383785df3cd64779d63ef880ddb93826ce915f2b1416e85303c12e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-tohoku-programme-documents-1440.png",
+      "sha256": "c5f8634c1564f4f8a42433f6241cd907b951935d1a4ee943537ea0cd64697946"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-tohoku-programme-documents-390.png",
+      "sha256": "acdf05b2a18a2d7e2ffc8eed14e88d545b96e2273e837fde6560548bd58d7c41"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-tohoku-source-scope-1440.png",
+      "sha256": "69fb0c1cd924b7309a180bdaaef8a6b06db66f2b2da2e136563e87a7ecf6b869"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-japan3-tohoku-source-scope-390.png",
+      "sha256": "570a8bfff53ec5f874550be5249f9243699d2ad0f152ca2dff12a43dd1785be6"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-kyutech-arrival-five-plus-auditing-1440.png",
+      "sha256": "16d15997753e8f03505b9eea2bde82c668eb7c45ec01521d37fe3d215fe8130a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-kyutech-arrival-five-plus-auditing-390.png",
+      "sha256": "48335a2c4fcbd18e3992d39ef09e3985f06e835d30b685049561e8986f8dcd6f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-kyutech-housing-conflict-1440.png",
+      "sha256": "2b07d07cf7dd742d31c406a6a94471dc7b335dba06bcf285ef69785126711b1d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-kyutech-housing-conflict-390.png",
+      "sha256": "d4f5e581b922e57662bd535118f26d26ca2f68a08dbc78b386433fa3d1117ce3"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-kyutech-original-reading-scope-1440.png",
+      "sha256": "cd2b0f283f0c1a9ffaccacde24280572cf9243957fcf6fdde2ec17f87529ce6c"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-kyutech-original-reading-scope-390.png",
+      "sha256": "cee5e5051497c7689bc9a66dd354d763cf07a8633384ec96ce231320d6b6f196"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-life-1440.png",
+      "sha256": "e811fe51970b1b7930ce169059a4096bc44c1effd6802e05f043328085b4df47"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-life-390.png",
+      "sha256": "6c07b65a3ac6bf10c56b9b9991a1ac095bdba809b223aef19e2324748a8b93ee"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-niigata-blank-sheet-scope-1440.png",
+      "sha256": "4a32a4e01f5294ceb1f66914743abaf2a3571f1038895f90c45e08e81bdae0cc"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-niigata-blank-sheet-scope-390.png",
+      "sha256": "71435ca880d9d300f50e9d05a9f6d2dbe980ccee9a8938f41ef026eaf18ee298"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-niigata-graduate-basic-only-1440.png",
+      "sha256": "7223986ac7c34f006562bc3803f8483f8499e4f42c6b6c42add1f2ff9cbada26"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-niigata-graduate-basic-only-390.png",
+      "sha256": "7786dec94812005e06a3468dc2a4bb68db963da01ba41c4e50f06a49e1bb26d0"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-niigata-housing-cost-scope-1440.png",
+      "sha256": "fa59965765ce0b2d042f45f40d18a59541e97be270a783c57adb9b09584850ca"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-niigata-housing-cost-scope-390.png",
+      "sha256": "bd5a6b8d614c1c746069523398ff13df5efbab160ea57bffe41d5518c3885839"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-nju-second-batch-390.png",
+      "sha256": "9eddf8dcd629de551955c1ff8631aecbceb91e2277af8f23657ab2b9641b708d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-nuist-2027-documents-390.png",
+      "sha256": "20c55ecc05e4aebedc597088189d6c68acdfeeff792b72a5efafbd184ca6883e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-nuist-2027-life-390.png",
+      "sha256": "9850706292979e501980991d1cd7ff5ed874e8d42ff09b285071af25bd3d5019"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-nuist-2027-source-390.png",
+      "sha256": "d6f554c86114059672ec75196a28a3d90ec7933716e8dc47da1aeed9cbd1deb1"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-nuist-versions-390.png",
+      "sha256": "113677d066c1852f4e9a3782a57a079290a07502ddef5a343ea14d7e6731856c"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-omu-iwing-cost-scope-390.png",
+      "sha256": "a1ff0cf28ed92e9ce3288515b1f169e5430353b463460d883b622b1c221082bc"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-omu-iwing-health-later-390.png",
+      "sha256": "7aad364e40726660d2470b41f64ed2086efea8370fed52eda36c31db608c517b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-omu-optional-english-source-390.png",
+      "sha256": "d0b2bfd4fc41938507709b37721cf4f713149589b4e5ca9fda86f7b5ee7f70e1"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-science-health-scope-390.png",
+      "sha256": "ebacb38bf6abc9d8d54e401083f443f1d4cfea5542272a80e43f697a89b03c39"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-science-initial-coe-390.png",
+      "sha256": "31777be81fce8f13adee67f7d6beb6018acb54003eeeb2ee44ee382bce0b2631"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-science-tiec2027-fee-390.png",
+      "sha256": "0aff1c996f00f961926db677e38f77fa20c4d53f95003a2844b7a02bbec4fce6"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-scut-missing-blank-form-390.png",
+      "sha256": "788d1ab9c00e3612beb6488a9eb9dbcc961e3e059034d235cbc1c4245d928865"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-seu-health-condition-catalog-390.png",
+      "sha256": "a77792a0e79ad4855931012cd776cdaa7b001c3bbd48ef203bd97453412c4131"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-seu-reciprocal-health-390.png",
+      "sha256": "5fd751c963c69310cf62341d7eb04979c533aa2aaf9bafc1d00e68f3d74fca4d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-shu-life-390.png",
+      "sha256": "a49ce327d9f94a254c16a69770c081bbe5b12ed55e20caee510a1d5be9b95cfe"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-shu-visual-390.png",
+      "sha256": "4b9c6255af15d5a54ba15e30a52df3f0c735db8d82254707df017659b521dda7"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-source-1440.png",
+      "sha256": "04dc7ee04d86f6d97ecbcb40d0fd0e3ff4fc8271b76149a91c978b8a28cff7a6"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-source-390.png",
+      "sha256": "de5df82937d236347d7ac9bb64549413f9100b3aac28821b5a99cee82028e13e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-sufe-life-390.png",
+      "sha256": "2d96b3a633b8b51dc7424f34713e4bfb98f51c4780aa67517e7f75667177b679"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-sufe-visual-390.png",
+      "sha256": "2c9bda784486093cf761d0f607bd37e9819282c47a2d7637e7c83d8f4a8d9b57"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-swu-major-portfolio-390.png",
+      "sha256": "49472126efe5be3d37a3c111025fa6e6fad8059ad01bc40b6b393f160f39aaa7"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-swu-portfolio-condition-catalog-390.png",
+      "sha256": "f4d2046784110d4503c9c3c77c974136c82a172edf791acfabf03768f22e70a2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-tju-arrival-390.png",
+      "sha256": "552001d3e6a563ac7d04ffbeedd2d92b9d60915ea7715681a81d38c4605e3350"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-tju-catalog-390.png",
+      "sha256": "e715b4f76861aa7b44f1b9a3e99076cae6bb0cbcd8040e16ae4f67cd30f91017"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-tju-source-390.png",
+      "sha256": "18218a43a09a3e4322f822da7fa2092a78bfc697c474da3fa3e8a772b33d5c44"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-tongji-new-list-390.png",
+      "sha256": "d44882443a168a0d83eb23618da404832a2d3131752cc233000d195178347b8b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-tuaf-390.png",
+      "sha256": "e4cba2fab7f764b47daff4718787130f98b5d6b18391d9ece644916bec2b83ec"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-turku-390.png",
+      "sha256": "ca5fe9fcb3375964db1733d6c46374343465989ec8dc6c47b87500faca091e97"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-ujn-hk-scope-390.png",
+      "sha256": "4da7877b66ef4faf96faa0f98462329547927db2d500b529656f332306e97604"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-undip-life-390.png",
+      "sha256": "637af5949559174edb74437f7db5cd9c2766681a0edabdcc3c7fed8bb1952ce9"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-undip-source-390.png",
+      "sha256": "32f98b99f8933e04aaf69464123967493a5e7b6a58fccb2cef8f791f5c5b3aec"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-uny-life-390.png",
+      "sha256": "7e003fad89a08529ad5000746e3cced067b4293efab7ae2d9b30c956b19e432a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-uos-off-campus-1440.png",
+      "sha256": "c8a8b47a6ff46cfa2e9cf4e34aece6711dc8e40f6be8376b29eeb942914981e2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-uos-off-campus-390.png",
+      "sha256": "6eabd35757a291885f074ccdc0076eceda1c51e0e9913064b8400379c28a0682"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-uos-transport-390.png",
+      "sha256": "d4532666bd9c1beb62a7c8808814eb2d8d2c623e40ede37337308a825af9b460"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-uos-visa-form-390.png",
+      "sha256": "e7823f06e7708df864c0c886272fa1d762fcd583415987db06d930f7475819d5"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-uos-visual-390.png",
+      "sha256": "068e443c9ea0859bfb1f5e182ffe9f9a83fb3e03a2168555fd66cd19f558d9cb"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-workflow-1440.png",
+      "sha256": "d4e0fcd89733bfb0c54186b445b2f8fb93680adcedbb8ae7bb78f99f32a636f8"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-workflow-390.png",
+      "sha256": "ea3b7ba3f40a64af63dd8f1db589ee12b0cb10cff90065ab2443a0c7c7767101"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-xjtu-mother-nomination-390.png",
+      "sha256": "288c6ec3a09c732c896e7d3e5a0f91aab4bea00df18656b44088f68233d04254"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-xmu-2027-image-390.png",
+      "sha256": "a8bb85d17c00506b885c34a6314a00248919b6cbd51945c7ebb594d104f59f8d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-xmu-health-docx-390.png",
+      "sha256": "830e0ea77c01857f036a700d9443acfa78fc040bee4ba1581b83546ffd3ee461"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-zju-form-alternatives-catalog-390.png",
+      "sha256": "7691d07c5ca2dda3198d563cdf909c301696610811227c8abe61fc2029ea5408"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0/browser/ncu-zju-insurance-later-390.png",
+      "sha256": "71f3f375c806c552b4844127be0c1c267e63c535c60d0870c55a1e70d957729e"
+    }
+  ],
+  "end_sha": "2ce9b25f8314dd4be457b3ae1be3fc3dadad12e0",
+  "end_worktree_porcelain": "",
+  "same_sha_at_end": true,
+  "necessary_local_tests_passed": true,
+  "acceptance_status": "blocked",
+  "finished_at": "2026-10-09T02:41:45.807004+00:00"
+}

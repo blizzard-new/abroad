@@ -1,0 +1,27 @@
+START ncu_unit 2026-10-09T03:02:33.289128+00:00
+END ncu_unit exit 0 {'tests': 305, 'failures': 0, 'errors': 0, 'skipped': 0}
+START shared_regression 2026-10-09T03:06:17.760652+00:00
+END shared_regression exit 0 {'tests': 195, 'failures': 0, 'errors': 0, 'skipped': 2}
+START existing_gate_failures 2026-10-09T03:07:26.022616+00:00
+END existing_gate_failures exit 0 {'tests': 65, 'failures': 0, 'errors': 0, 'skipped': 0}
+START openapi 2026-10-09T03:07:36.841069+00:00
+END openapi exit 0 {}
+START main_workflow_export 2026-10-09T03:07:41.361645+00:00
+END main_workflow_export exit 0 {}
+START workflow_parity 2026-10-09T03:07:46.060790+00:00
+END workflow_parity exit 0 {}
+START js_app 2026-10-09T03:07:53.566997+00:00
+END js_app exit 0 {}
+START js_discovery-ui 2026-10-09T03:07:53.829169+00:00
+END js_discovery-ui exit 0 {}
+START js_multi-plan 2026-10-09T03:07:53.934942+00:00
+END js_multi-plan exit 0 {}
+START diff 2026-10-09T03:07:54.007057+00:00
+END diff exit 0 {}
+START lock 2026-10-09T03:07:54.598276+00:00
+END lock exit 0 {}
+START audit_endpoint_timings 2026-10-09T03:07:54.699763+00:00
+END audit_endpoint_timings exit 0 {}
+START browser_source_scope 2026-10-09T03:07:58.627483+00:00
+END browser_source_scope exit 1 {'tests': 20, 'failures': 6, 'errors': 0, 'skipped': 0}
+MANIFEST /tmp/ncu-candidate-95b30acbdfbfadb02ce8d97a4cd7ac4d686f279b/manifest.json blocked

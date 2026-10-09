@@ -1,0 +1,57 @@
+{
+  "checked_at": "2026-10-09T03:03:55.556513+00:00",
+  "main_sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "ncu_sha": "95b30acbdfbfadb02ce8d97a4cd7ac4d686f279b",
+  "branches": [
+    {
+      "branch": "data/ccu-exchange-20261008",
+      "sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+      "shared_changed_paths": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/advisor.py",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/application_rules.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "src/exchange_info/workflow_structuring.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_ntu_integration.py",
+        "uv.lock"
+      ],
+      "count": 15
+    },
+    {
+      "branch": "data/tku-exchange-20261008",
+      "sha": "4133667cfede9f3be70216795c74051adb6f3a33",
+      "shared_changed_paths": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/advisor.py",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/openapi_contract.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/discovery-ui.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "tests/e2e/conftest.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_fit_signals.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_rag.py",
+        "tests/test_school_completeness.py",
+        "tests/test_task_documents_and_reference_plan.py",
+        "uv.lock"
+      ],
+      "count": 20
+    }
+  ],
+  "note": "Path intersections only; no merges or shared-file overwrites."
+}

@@ -1,0 +1,68 @@
+{
+  "key": "cost",
+  "label": "生活費",
+  "status": "needs_confirmation",
+  "note": "2026–27手冊：dorm $10／月、guesthouse $150／月是不同房型，food/living $90–110／月、bills7–15／月、health insurance60／年，Total vary不直接產生單一預算。舊手冊起119／月、新web宿舍15–65不同；年保費不是每月60，幣別仍待確認。",
+  "source_urls": [
+    "https://drive.google.com/uc?export=download&id=1z0T7EuqQYue8XulFdX6DuIgzNY5xm6Ri",
+    "https://drive.google.com/uc?export=download&id=1gOD6lRFxpTNGknfQgh6eNsLBng8pZrx-",
+    "https://aep.tuaf.edu.vn/public/en/admission/27-tuaf-accommodation"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://drive.google.com/uc?export=download&id=1z0T7EuqQYue8XulFdX6DuIgzNY5xm6Ri",
+      "source_id": "host-tuaf-newhandbook",
+      "page": 28,
+      "source_title": "TUAF現連updated handbook（197.5MB下載檢查）",
+      "applicability": "TUAF現連S.Y.2026–27手冊40頁、2026檔名年例factsheet、較舊2024–25表與未標年入口並列；不是116之2027–28核定。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 210,
+        "field": "cost",
+        "evidence_array_index": 0,
+        "text_sha256": "1b57ca5a804fb5bb432a1ff8eaae4441917cfd7be8803ee6f2d4b70f990e64e8",
+        "char_count": 629
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://drive.google.com/uc?export=download&id=1gOD6lRFxpTNGknfQgh6eNsLBng8pZrx-",
+      "source_id": "host-tuaf-handbook",
+      "page": 16,
+      "source_title": "TUAF現連Exchange Handbook（年度須讀內文）",
+      "applicability": "TUAF現連S.Y.2026–27手冊40頁、2026檔名年例factsheet、較舊2024–25表與未標年入口並列；不是116之2027–28核定。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 210,
+        "field": "cost",
+        "evidence_array_index": 1,
+        "text_sha256": "66961dffea21bddd9d90e2af0f21143a1d1dcd1d768cb7d486628c0a7ee17cb9",
+        "char_count": 757
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://aep.tuaf.edu.vn/public/en/admission/27-tuaf-accommodation",
+      "source_id": "host-tuaf-housing",
+      "page": null,
+      "source_title": "TUAF accommodation",
+      "applicability": "TUAF現連S.Y.2026–27手冊40頁、2026檔名年例factsheet、較舊2024–25表與未標年入口並列；不是116之2027–28核定。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 210,
+        "field": "cost",
+        "evidence_array_index": 2,
+        "text_sha256": "a89e68fb1fca2e103c99a2c93ab0e6a08dac9c08c7f9dab670e4f13e98f6a46e",
+        "char_count": 1093
+      }
+    }
+  ],
+  "unresolved": "2027生活費、幣別／含項及房型未核對；不做預算合格判斷。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "TUAF現連S.Y.2026–27手冊40頁、2026檔名年例factsheet、較舊2024–25表與未標年入口並列；不是116之2027–28核定。"
+}

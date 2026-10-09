@@ -1,0 +1,555 @@
+{
+  "scope": "Exact files only. Original log/JUnit and native extracted source bytes preserved; no git attribute or global whitespace configuration change. All other staged paths pass git diff --cached --check.",
+  "proof_file_count": 4,
+  "source_text_file_count": 66,
+  "excluded_paths": [
+    {
+      "path": "docs/ncu-test-evidence/71-freeze-corrections-20261009/candidate-2637de2/browser_corrected_content.log",
+      "sha256": "8e23d438ce835535db51b15e05c981d0164c526e5cf517d0cb6f2ac82a5d4e69",
+      "kind": "unchanged_original_failure_log_or_junit"
+    },
+    {
+      "path": "docs/ncu-test-evidence/71-freeze-corrections-20261009/candidate-2637de2/browser_corrected_content.xml",
+      "sha256": "42825fb314f25083f7c2972cef1d7286eadbc97120f47043749ef000ae51f635",
+      "kind": "unchanged_original_failure_log_or_junit"
+    },
+    {
+      "path": "docs/ncu-test-evidence/71-freeze-corrections-20261009/candidate-8234505-tmp-crash/browser_corrected_content.log",
+      "sha256": "c34a3cc5c6ce467356ec1e6079e57fcead9773dfd2531c60ee91341476011cbe",
+      "kind": "unchanged_original_failure_log_or_junit"
+    },
+    {
+      "path": "docs/ncu-test-evidence/71-freeze-corrections-20261009/candidate-8234505-tmp-crash/browser_corrected_content.xml",
+      "sha256": "ca4b87b9e5096d970ea23d188859f3e5fc52a171775686829eaeecb56a37cf11",
+      "kind": "unchanged_original_failure_log_or_junit"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/checklist/page-001.txt",
+      "sha256": "b5c4dbab9e416b41f27e67094346f91029b1b6951380c291b3c93986b8095668",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123101-750.pdf",
+      "source_original_sha256": "c925314d136384fc1f5efef74c5b2609ec8894fe0c37cd43835719d39facf717",
+      "text_sha256": "b5c4dbab9e416b41f27e67094346f91029b1b6951380c291b3c93986b8095668"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/checklist/page-002.txt",
+      "sha256": "8cd21a70d7420a4797669697ea91b7d2171e45ddfe735cf60ad31146b3b83f04",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123101-750.pdf",
+      "source_original_sha256": "c925314d136384fc1f5efef74c5b2609ec8894fe0c37cd43835719d39facf717",
+      "text_sha256": "8cd21a70d7420a4797669697ea91b7d2171e45ddfe735cf60ad31146b3b83f04"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/checklist/page-003.txt",
+      "sha256": "e15be970c564988e5f5b2af6c43b1407fffeae1958521f55132a857f293f07d2",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123101-750.pdf",
+      "source_original_sha256": "c925314d136384fc1f5efef74c5b2609ec8894fe0c37cd43835719d39facf717",
+      "text_sha256": "e15be970c564988e5f5b2af6c43b1407fffeae1958521f55132a857f293f07d2"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/gjp-courses/page-web.txt",
+      "sha256": "6ac7626c4600b892e0ff176bc6eb96eda36c5297a4a3fd9a8ef73ecfc3564ab8",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/interchange/incoming/exchange/courses/index.html",
+      "source_original_sha256": "1185a0ef71db1099ea8fa82988093a75d3f3109894fcbb366b1c5a2626c78f11",
+      "text_sha256": "6ac7626c4600b892e0ff176bc6eb96eda36c5297a4a3fd9a8ef73ecfc3564ab8"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/instructions-en/page-001.txt",
+      "sha256": "315d1ff3c718ab6f0a7da841476660292d25ba3910bbcee0f5b8e7be1f48e825",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf",
+      "source_original_sha256": "1c9b5cd2042e5c60360bcdfea9af5a3019fb1e3d1b1f6907578bbc6e85f6442a",
+      "text_sha256": "315d1ff3c718ab6f0a7da841476660292d25ba3910bbcee0f5b8e7be1f48e825"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/instructions-en/page-002.txt",
+      "sha256": "5247d7d4e2d75084bb42d8fc998808acd4ac39486fb8f22da4962bb3538ada7e",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf",
+      "source_original_sha256": "1c9b5cd2042e5c60360bcdfea9af5a3019fb1e3d1b1f6907578bbc6e85f6442a",
+      "text_sha256": "5247d7d4e2d75084bb42d8fc998808acd4ac39486fb8f22da4962bb3538ada7e"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/instructions-en/page-003.txt",
+      "sha256": "11d9008be6efadb831fcdd6c56627cb9b8a9b4a5ba844468c33d9b8a2437d16c",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf",
+      "source_original_sha256": "1c9b5cd2042e5c60360bcdfea9af5a3019fb1e3d1b1f6907578bbc6e85f6442a",
+      "text_sha256": "11d9008be6efadb831fcdd6c56627cb9b8a9b4a5ba844468c33d9b8a2437d16c"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/instructions-en/page-004.txt",
+      "sha256": "610d1a5894a9a6ae9b3a7df21cb54eab769e5c4b64a3cfdc034a08f1dfb58d0c",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf",
+      "source_original_sha256": "1c9b5cd2042e5c60360bcdfea9af5a3019fb1e3d1b1f6907578bbc6e85f6442a",
+      "text_sha256": "610d1a5894a9a6ae9b3a7df21cb54eab769e5c4b64a3cfdc034a08f1dfb58d0c"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/instructions-en/page-005.txt",
+      "sha256": "3182f961eff76b33dab4577a82fb72735a9489eea610a917463cd0a040fe2124",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf",
+      "source_original_sha256": "1c9b5cd2042e5c60360bcdfea9af5a3019fb1e3d1b1f6907578bbc6e85f6442a",
+      "text_sha256": "3182f961eff76b33dab4577a82fb72735a9489eea610a917463cd0a040fe2124"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/instructions-en/page-006.txt",
+      "sha256": "636f6f76b8e47ced8111c3d8513377dccbd26e9d3d5afde8dc3879a0adb78dd2",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf",
+      "source_original_sha256": "1c9b5cd2042e5c60360bcdfea9af5a3019fb1e3d1b1f6907578bbc6e85f6442a",
+      "text_sha256": "636f6f76b8e47ced8111c3d8513377dccbd26e9d3d5afde8dc3879a0adb78dd2"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/instructions-en/page-007.txt",
+      "sha256": "38b5f333390b5f63aa63c98048e3cc2354334fdf37f801d692ffa5163107e581",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf",
+      "source_original_sha256": "1c9b5cd2042e5c60360bcdfea9af5a3019fb1e3d1b1f6907578bbc6e85f6442a",
+      "text_sha256": "38b5f333390b5f63aa63c98048e3cc2354334fdf37f801d692ffa5163107e581"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/instructions-en/page-008.txt",
+      "sha256": "c72375a3728f81669c030c68fa65c41d7fea6efd4519f65117810f1fc105a767",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf",
+      "source_original_sha256": "1c9b5cd2042e5c60360bcdfea9af5a3019fb1e3d1b1f6907578bbc6e85f6442a",
+      "text_sha256": "c72375a3728f81669c030c68fa65c41d7fea6efd4519f65117810f1fc105a767"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/instructions-en/page-009.txt",
+      "sha256": "8545dff270f482ac80d35ae8fb7f5dd76081b11e1da3c48200a944bd71a27ec9",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf",
+      "source_original_sha256": "1c9b5cd2042e5c60360bcdfea9af5a3019fb1e3d1b1f6907578bbc6e85f6442a",
+      "text_sha256": "8545dff270f482ac80d35ae8fb7f5dd76081b11e1da3c48200a944bd71a27ec9"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/instructions-en/page-010.txt",
+      "sha256": "5df9c888dbd7550b149da18464298860d85e3b93f4f7f4f69c928e4075a204c4",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf",
+      "source_original_sha256": "1c9b5cd2042e5c60360bcdfea9af5a3019fb1e3d1b1f6907578bbc6e85f6442a",
+      "text_sha256": "5df9c888dbd7550b149da18464298860d85e3b93f4f7f4f69c928e4075a204c4"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/instructions-en/page-011.txt",
+      "sha256": "e5599b1067dcb203165f4dc2d26be68c3c56ffb3ef0898b27c7e773593e90c5e",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf",
+      "source_original_sha256": "1c9b5cd2042e5c60360bcdfea9af5a3019fb1e3d1b1f6907578bbc6e85f6442a",
+      "text_sha256": "e5599b1067dcb203165f4dc2d26be68c3c56ffb3ef0898b27c7e773593e90c5e"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/instructions-en/page-012.txt",
+      "sha256": "bd1bf6fa5709b0a14693b92a30113df3047471a7a9a54c9a29f4414d39ecc4de",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf",
+      "source_original_sha256": "1c9b5cd2042e5c60360bcdfea9af5a3019fb1e3d1b1f6907578bbc6e85f6442a",
+      "text_sha256": "bd1bf6fa5709b0a14693b92a30113df3047471a7a9a54c9a29f4414d39ecc4de"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/package/member-01-page-001.txt",
+      "sha256": "aa43dcb652c941ddb06496fb5bddd9bd224bd899008d5764f622bd3fded1e41a",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123043-598.zip",
+      "source_original_sha256": "ae413da08c9569f5774b246143216e6a26aa378e9d4bd8ecc53e095b89a24bfe",
+      "text_sha256": "aa43dcb652c941ddb06496fb5bddd9bd224bd899008d5764f622bd3fded1e41a"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/package/member-01-page-002.txt",
+      "sha256": "28e1b064ec378e34dff2f0a6eeb2e08d1d12bb625093a7c9d503f613e6657974",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123043-598.zip",
+      "source_original_sha256": "ae413da08c9569f5774b246143216e6a26aa378e9d4bd8ecc53e095b89a24bfe",
+      "text_sha256": "28e1b064ec378e34dff2f0a6eeb2e08d1d12bb625093a7c9d503f613e6657974"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/package/member-02-page-001.txt",
+      "sha256": "1fc34e7f8ee1aa6ba08556940d86dd025a41945ef86126d2839785a093e4a825",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123043-598.zip",
+      "source_original_sha256": "ae413da08c9569f5774b246143216e6a26aa378e9d4bd8ecc53e095b89a24bfe",
+      "text_sha256": "1fc34e7f8ee1aa6ba08556940d86dd025a41945ef86126d2839785a093e4a825"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/package/member-03-page-001.txt",
+      "sha256": "c44b2b257fbd90d330f01502657b11d922c550eb8ad446673b7f951c717acc14",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/2026078-123043-598.zip",
+      "source_original_sha256": "ae413da08c9569f5774b246143216e6a26aa378e9d4bd8ecc53e095b89a24bfe",
+      "text_sha256": "c44b2b257fbd90d330f01502657b11d922c550eb8ad446673b7f951c717acc14"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/scholarship-regulations/page-001.txt",
+      "sha256": "cfbb5f0a8e5d514a61b2393ee0d7cca609fcfafdfde259dc9eb06d2a572fed49",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/20210215-164401-188.pdf",
+      "source_original_sha256": "9ce5fbdf76117b7171a713b40ea23948b7aec12d7b28750464d2bb68cc293586",
+      "text_sha256": "cfbb5f0a8e5d514a61b2393ee0d7cca609fcfafdfde259dc9eb06d2a572fed49"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/scholarship-regulations/page-002.txt",
+      "sha256": "9403d25028aee6e37d53b874310d4a373f2d9f6060df4f5b43eb9424e71c4029",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/20210215-164401-188.pdf",
+      "source_original_sha256": "9ce5fbdf76117b7171a713b40ea23948b7aec12d7b28750464d2bb68cc293586",
+      "text_sha256": "9403d25028aee6e37d53b874310d4a373f2d9f6060df4f5b43eb9424e71c4029"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/scholarship-regulations/page-003.txt",
+      "sha256": "d63de327d4b6effe02f6195f5db4706e88251724e147f3bd253046c5e1ad24da",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/20210215-164401-188.pdf",
+      "source_original_sha256": "9ce5fbdf76117b7171a713b40ea23948b7aec12d7b28750464d2bb68cc293586",
+      "text_sha256": "d63de327d4b6effe02f6195f5db4706e88251724e147f3bd253046c5e1ad24da"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-130/sources/scholarship-regulations/page-004.txt",
+      "sha256": "2e3374bbf52ec2bddd92c8a632b5c9d75d38b8c0e5d17d319d8447c0378cfedd",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://www-e.nufs.ac.jp/media/20210215-164401-188.pdf",
+      "source_original_sha256": "9ce5fbdf76117b7171a713b40ea23948b7aec12d7b28750464d2bb68cc293586",
+      "text_sha256": "2e3374bbf52ec2bddd92c8a632b5c9d75d38b8c0e5d17d319d8447c0378cfedd"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-134/sources/housing-guidelines-fall2026/page-001.txt",
+      "sha256": "ae50a24c6b5fcbfd963a2b0036307edfc6d0580ddf9e35ecf987a6225ce2ab21",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2026/06/2026_Fall_Semester_Applicaton_Guideline_en.pdf",
+      "source_original_sha256": "46753a404105c1dc5fd48c95628d0795ae3c01db2f8cecd8b6c3abe5a829a4fe",
+      "text_sha256": "ae50a24c6b5fcbfd963a2b0036307edfc6d0580ddf9e35ecf987a6225ce2ab21"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-134/sources/housing-guidelines-fall2026/page-002.txt",
+      "sha256": "4b811899520dd5144dfdf4a1d72f8f5825f6b6fbd3c99b80f25ad06a335a2137",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2026/06/2026_Fall_Semester_Applicaton_Guideline_en.pdf",
+      "source_original_sha256": "46753a404105c1dc5fd48c95628d0795ae3c01db2f8cecd8b6c3abe5a829a4fe",
+      "text_sha256": "4b811899520dd5144dfdf4a1d72f8f5825f6b6fbd3c99b80f25ad06a335a2137"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-134/sources/housing-guidelines-fall2026/page-003.txt",
+      "sha256": "5488d5f8b5ec4b5c7bb4c1d60b6c6fdc7628698b9f9b8746c84773a1b3dadd92",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2026/06/2026_Fall_Semester_Applicaton_Guideline_en.pdf",
+      "source_original_sha256": "46753a404105c1dc5fd48c95628d0795ae3c01db2f8cecd8b6c3abe5a829a4fe",
+      "text_sha256": "5488d5f8b5ec4b5c7bb4c1d60b6c6fdc7628698b9f9b8746c84773a1b3dadd92"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/application/page-web.txt",
+      "sha256": "80b9b98d040c39cc7bd9bcc2e3ac5086b8bb31185aa287c756611158a9fa8c23",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/english/html/s_exchange_02.html",
+      "source_original_sha256": "72bddea4cfa294f84cc1f420ceabd805cb59defb5935aad74bf2edd27a06b067",
+      "text_sha256": "80b9b98d040c39cc7bd9bcc2e3ac5086b8bb31185aa287c756611158a9fa8c23"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/cefr-reference/page-001.txt",
+      "sha256": "a7b9c6d4a12bde65411d9ec6042b8c2c83f8171ae9e4f5de773c56fce717170f",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/08_1_jpl_skill_eng.pdf",
+      "source_original_sha256": "2642222c8a346ffb11cbff09791ea75935dd457bc24085df2e37cf3c17e108e3",
+      "text_sha256": "a7b9c6d4a12bde65411d9ec6042b8c2c83f8171ae9e4f5de773c56fce717170f"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/cefr-reference/page-002.txt",
+      "sha256": "d9c2047f453626d30adff106b13a37397cde8d5b41b4f82b6e224b30ba8dbdda",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/08_1_jpl_skill_eng.pdf",
+      "source_original_sha256": "2642222c8a346ffb11cbff09791ea75935dd457bc24085df2e37cf3c17e108e3",
+      "text_sha256": "d9c2047f453626d30adff106b13a37397cde8d5b41b4f82b6e224b30ba8dbdda"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/cefr-reference/page-003.txt",
+      "sha256": "0c7ccd03d01c0ed35c243ef2c8de493637270c1064954af545758f01a138a699",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/08_1_jpl_skill_eng.pdf",
+      "source_original_sha256": "2642222c8a346ffb11cbff09791ea75935dd457bc24085df2e37cf3c17e108e3",
+      "text_sha256": "0c7ccd03d01c0ed35c243ef2c8de493637270c1064954af545758f01a138a699"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/dorm-guide/page-web.txt",
+      "sha256": "9c3ac5183d2c89ec7336c07d5a48aa91452696db545890ad2b0d4ad8a2e4eac6",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/english/dormitory/pass_dorm.html",
+      "source_original_sha256": "b39b311323dd9c821ffbf7361ec34aa44a23ecbf5f4a1e5640b5660e4f96d4b6",
+      "text_sha256": "9c3ac5183d2c89ec7336c07d5a48aa91452696db545890ad2b0d4ad8a2e4eac6"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/exchange/page-web.txt",
+      "sha256": "e01b2af06c95aca99cb50f2365e78241ad351339ea6212046afff078c8725c52",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/english/examination/exp/",
+      "source_original_sha256": "546b7e7ae886b33d6013fd7419832b7b22b19cf61b29030fe2c5b212f24672c9",
+      "text_sha256": "e01b2af06c95aca99cb50f2365e78241ad351339ea6212046afff078c8725c52"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-001.txt",
+      "sha256": "9393077cf850a09c2fb8bdcf6bdad97cb865628deb5a6e4c8b71259b9beddbf3",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "9393077cf850a09c2fb8bdcf6bdad97cb865628deb5a6e4c8b71259b9beddbf3"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-002.txt",
+      "sha256": "6bccf291d3cbd457d38e87ecfda8c54c11caa0094c9a3af176b1a0660789a6ad",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "6bccf291d3cbd457d38e87ecfda8c54c11caa0094c9a3af176b1a0660789a6ad"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-003.txt",
+      "sha256": "113902e75f75c122d4ba7b618068ecc58df460eb3e5b00f3bdd92a2a5ae2bdc5",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "113902e75f75c122d4ba7b618068ecc58df460eb3e5b00f3bdd92a2a5ae2bdc5"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-004.txt",
+      "sha256": "d3ba51a0ac5005478bf157fd48ad3769b15545d93e8e95cc3520200bfdc1a276",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "d3ba51a0ac5005478bf157fd48ad3769b15545d93e8e95cc3520200bfdc1a276"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-005.txt",
+      "sha256": "2650117f831f284bd58dcd6c15e507fd0ec7dffcc586c4d3e376a44cfe18c9d2",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "2650117f831f284bd58dcd6c15e507fd0ec7dffcc586c4d3e376a44cfe18c9d2"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-006.txt",
+      "sha256": "f1d0110ce015fd172ee24fa061cec6e4462b1a4f4c80458bd10bf61af913ae30",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "f1d0110ce015fd172ee24fa061cec6e4462b1a4f4c80458bd10bf61af913ae30"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-007.txt",
+      "sha256": "27baf5d4de3774e731856521f1316b41081d992e6bfc27f4e6195524790d86b0",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "27baf5d4de3774e731856521f1316b41081d992e6bfc27f4e6195524790d86b0"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-008.txt",
+      "sha256": "d1193014e70eecfc4d4e617a90463772b10b13a661b968c3f2497a51df1675bf",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "d1193014e70eecfc4d4e617a90463772b10b13a661b968c3f2497a51df1675bf"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-009.txt",
+      "sha256": "687d0bdbe936b305ccc3964340e8549860cdc210c03d991bee1c20cd98cf3000",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "687d0bdbe936b305ccc3964340e8549860cdc210c03d991bee1c20cd98cf3000"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-010.txt",
+      "sha256": "550df572ad0f26ed3362cef881050f0453706caa2dd6ab269e77d7349d80d85e",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "550df572ad0f26ed3362cef881050f0453706caa2dd6ab269e77d7349d80d85e"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-011.txt",
+      "sha256": "f07cdd389bc7ab4ec292d456bdc7a5356b05ae8db1eb0bf5407378d7d160079e",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "f07cdd389bc7ab4ec292d456bdc7a5356b05ae8db1eb0bf5407378d7d160079e"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-012.txt",
+      "sha256": "341bb3aa88355b5c77e5dd3345c50721d759266f52c13d139b406afbac561770",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "341bb3aa88355b5c77e5dd3345c50721d759266f52c13d139b406afbac561770"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-013.txt",
+      "sha256": "a68978e901e80a9197c78917cb30ec4c5ffbeed5b57d128cedb961fca433f8aa",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "a68978e901e80a9197c78917cb30ec4c5ffbeed5b57d128cedb961fca433f8aa"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-014.txt",
+      "sha256": "e4ab559a74cd788b2d179fdcabd0a7682980992e4c2bdce9cb9d1bafd9445587",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "e4ab559a74cd788b2d179fdcabd0a7682980992e4c2bdce9cb9d1bafd9445587"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-015.txt",
+      "sha256": "fc94037b261d550d454c99cf730f4e649f552e206b9d8c311cb357e159d37e11",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "fc94037b261d550d454c99cf730f4e649f552e206b9d8c311cb357e159d37e11"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/guide-en/page-016.txt",
+      "sha256": "7e167213c0af5e7d34fc8612e4c06f935df674cd97559d5ef0c75da3f73ec2c0",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+      "source_original_sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "text_sha256": "7e167213c0af5e7d34fc8612e4c06f935df674cd97559d5ef0c75da3f73ec2c0"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/health/page-001.txt",
+      "sha256": "ddc175a72050ce3fe8e3c1c7312eecc63f27937d158c4facb2e594575a585065",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/04_certificate_of_health.pdf",
+      "source_original_sha256": "7119d07b8eabc25867043d3e97bf0cf030923d37b85dcc38c5ecb29ab3276b0d",
+      "text_sha256": "ddc175a72050ce3fe8e3c1c7312eecc63f27937d158c4facb2e594575a585065"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/housing/page-web.txt",
+      "sha256": "548a12b1939e528567c4c2f15acc61c2b3a7e1c628e462c94ce969b30fab8faa",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/english/dormitory/",
+      "source_original_sha256": "b9108c5b0686bf23a2c3b9c1c21221bd6a1cd260e50c19157abe6c7d16e6a7ce",
+      "text_sha256": "548a12b1939e528567c4c2f15acc61c2b3a7e1c628e462c94ce969b30fab8faa"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/international-house/page-web.txt",
+      "sha256": "28f5390f3515b4b7ea6192c752788c2e9d05f9fdb353ec6125b62b1c97941b76",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/english/dormitory/kokusai_h.html",
+      "source_original_sha256": "1fd9f870bbe2269a062b21372ae7e1a5445b15dd9d62591b741996d0b5b70767",
+      "text_sha256": "28f5390f3515b4b7ea6192c752788c2e9d05f9fdb353ec6125b62b1c97941b76"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/jsp/page-web.txt",
+      "sha256": "e54f3f94e2cfc8a918874177a4668db5a4f812c5b871da5785ed79614c8aab4f",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/english/examination/exp/rjsp/index.html",
+      "source_original_sha256": "baa4de26cd5f10bedc9bb71977f4201742b4aee3a9cc856c2f7c48afba163947",
+      "text_sha256": "e54f3f94e2cfc8a918874177a4668db5a4f812c5b871da5785ed79614c8aab4f"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/language-evaluation/page-docx.txt",
+      "sha256": "7553708874a1ec272e6a5707be19adeca87616f8a70ec2ff15d0a24487674dff",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/02_evaluation_w.docx",
+      "source_original_sha256": "5c07939a0e9f3f67044b1dfe11216dad9b2130a240803fb14484c116d018cf2d",
+      "text_sha256": "7553708874a1ec272e6a5707be19adeca87616f8a70ec2ff15d0a24487674dff"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/mitra/page-web.txt",
+      "sha256": "b31d93b0b9cf735d6a64fd8cd887d6a5303187212e4cc1ae04f4b58717ee3c3d",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/english/dormitory/mitrakan.html",
+      "source_original_sha256": "bd0620f39cd5d6094089e42df810925b336990c17c8f05b4a2b0b777efdab652",
+      "text_sha256": "b31d93b0b9cf735d6a64fd8cd887d6a5303187212e4cc1ae04f4b58717ee3c3d"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/plan/page-docx.txt",
+      "sha256": "3809d14a93ecc9cb4887cd37f3addae1642e8434b5c253dd2dace43eee622649",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/01_plan_of_Study_w.docx",
+      "source_original_sha256": "fc5eb3502502c0651becc4244e94b1b5d6e712b1031dba2093e16e3e068d7d00",
+      "text_sha256": "3809d14a93ecc9cb4887cd37f3addae1642e8434b5c253dd2dace43eee622649"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/recommendation/page-001.txt",
+      "sha256": "d26f1ddc2be5ead7b5812a2725ec1c69b2dff9731a55f16f4a1340b4c1dbee1c",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/03_letter.pdf",
+      "source_original_sha256": "eb7efbb79b22c4f7e6ca8d096776856b60e7e75864d7f7c2d3dadadf0e43ce40",
+      "text_sha256": "d26f1ddc2be5ead7b5812a2725ec1c69b2dff9731a55f16f4a1340b4c1dbee1c"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/recommendation/page-002.txt",
+      "sha256": "1691fd54c179f14a8bc31812b15af88ba5abab7bf28a322dc17b50c9f994044d",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/03_letter.pdf",
+      "source_original_sha256": "eb7efbb79b22c4f7e6ca8d096776856b60e7e75864d7f7c2d3dadadf0e43ce40",
+      "text_sha256": "1691fd54c179f14a8bc31812b15af88ba5abab7bf28a322dc17b50c9f994044d"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/spot-instructions/page-002.txt",
+      "sha256": "c5ef2aa7a85347a8bb85e2aa532132e170cb3fa93efc66c399aaffd64925e698",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/spot_test_ex.pdf",
+      "source_original_sha256": "17fdc8d4064bb5fbb0cb19a9e4772869e1530f2c160b07a6e4cd2d19ad367ed6",
+      "text_sha256": "c5ef2aa7a85347a8bb85e2aa532132e170cb3fa93efc66c399aaffd64925e698"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/spot-instructions/page-003.txt",
+      "sha256": "6c7bac18d7c67c217a5466b25090c33489b60340301d22c12fa1f63698c390cc",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/spot_test_ex.pdf",
+      "source_original_sha256": "17fdc8d4064bb5fbb0cb19a9e4772869e1530f2c160b07a6e4cd2d19ad367ed6",
+      "text_sha256": "6c7bac18d7c67c217a5466b25090c33489b60340301d22c12fa1f63698c390cc"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/spot-instructions/page-005.txt",
+      "sha256": "a788534f194fe3c987605c169ea91c238e95a2638fcc1ebcdba2e0372535519c",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/spot_test_ex.pdf",
+      "source_original_sha256": "17fdc8d4064bb5fbb0cb19a9e4772869e1530f2c160b07a6e4cd2d19ad367ed6",
+      "text_sha256": "a788534f194fe3c987605c169ea91c238e95a2638fcc1ebcdba2e0372535519c"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/spot-instructions/page-006.txt",
+      "sha256": "a11515458f48bbd6c3d9843c6ec8ba29ee9ec236f7470a407671b39b1801ba6b",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/spot_test_ex.pdf",
+      "source_original_sha256": "17fdc8d4064bb5fbb0cb19a9e4772869e1530f2c160b07a6e4cd2d19ad367ed6",
+      "text_sha256": "a11515458f48bbd6c3d9843c6ec8ba29ee9ec236f7470a407671b39b1801ba6b"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/spot-instructions/page-014.txt",
+      "sha256": "22520fbe29905b7b102636b6a5ec7f0d72aa27ce97be387674639867fe019cf2",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/spot_test_ex.pdf",
+      "source_original_sha256": "17fdc8d4064bb5fbb0cb19a9e4772869e1530f2c160b07a6e4cd2d19ad367ed6",
+      "text_sha256": "22520fbe29905b7b102636b6a5ec7f0d72aa27ce97be387674639867fe019cf2"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/spot-instructions/page-018.txt",
+      "sha256": "e17973fae014594b074ec6bdf72c63a280e3f9b168c3d89b8739885c16b0661a",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/spot_test_ex.pdf",
+      "source_original_sha256": "17fdc8d4064bb5fbb0cb19a9e4772869e1530f2c160b07a6e4cd2d19ad367ed6",
+      "text_sha256": "e17973fae014594b074ec6bdf72c63a280e3f9b168c3d89b8739885c16b0661a"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/spot-instructions/page-019.txt",
+      "sha256": "13a5b8d4b75ecfed450ee56134d5f042e428fa1e58b4a11644cb45622f0abd46",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/spot_test_ex.pdf",
+      "source_original_sha256": "17fdc8d4064bb5fbb0cb19a9e4772869e1530f2c160b07a6e4cd2d19ad367ed6",
+      "text_sha256": "13a5b8d4b75ecfed450ee56134d5f042e428fa1e58b4a11644cb45622f0abd46"
+    },
+    {
+      "path": "sources/ncu/candidates/2026-10-09/ncu-135/sources/spot-instructions/page-020.txt",
+      "sha256": "c1ee78d34e5897314a7290840f1ad28ecdabf9ef75f07ddafde853cb0ed09204",
+      "kind": "unchanged_native_source_extract",
+      "source_url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/spot_test_ex.pdf",
+      "source_original_sha256": "17fdc8d4064bb5fbb0cb19a9e4772869e1530f2c160b07a6e4cd2d19ad367ed6",
+      "text_sha256": "c1ee78d34e5897314a7290840f1ad28ecdabf9ef75f07ddafde853cb0ed09204"
+    }
+  ]
+}

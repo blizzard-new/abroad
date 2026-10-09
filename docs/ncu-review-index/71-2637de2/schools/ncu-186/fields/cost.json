@@ -1,0 +1,68 @@
+{
+  "key": "cost",
+  "label": "生活費",
+  "status": "needs_confirmation",
+  "note": "2027春房費750/學期，「膳食費」約1500 RMB/月、書本依課程，1500不是含住房交通保單的完整總生活費；舊國際生600保險／400外國居留／526體檢不直接套此track。 未標年單人4000/年；中文雙人2500–3000與英文2000–2500/年不同。押金200、水免費、電0.55/度、暖氣另付；600/年保險、400居留與526/次體檢是國際生費用，不能自動套臺灣當期。",
+  "source_urls": [
+    "https://drive.google.com/uc?export=download&id=1e_VcEcPCpWyhVdPzdNhBnhh6MNJdKCrd",
+    "https://gjy.nuist.edu.cn/2832/list.htm",
+    "https://gjy.nuist.edu.cn/english/FeeswPayment/listm.htm"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "human_visual_selected_passages",
+      "source_url": "https://drive.google.com/uc?export=download&id=1e_VcEcPCpWyhVdPzdNhBnhh6MNJdKCrd",
+      "source_id": "host-nuist-mcu2027-1e_VcEcPCpWyhVdPzdNhBnhh6MNJdKCrd",
+      "page": 7,
+      "source_title": "銘傳2027春季公開文件：南京信息工程大学2027春季学期交换学生招生.pdf PDF",
+      "applicability": "銘傳官方轉載NUIST2027春港澳臺影像PDF8頁已逐頁視覺讀完，原空字層保留、只另存選定原文；兩DOCX空白表全文正文已讀。一般國際生費率與港澳臺track分開，2027春仍早於中央116，新包／協議未核定。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 183,
+        "field": "cost",
+        "evidence_array_index": 0,
+        "text_sha256": "3f52877aaa4dd98516fa58a7a6e410bb5ce13be50c916c0c52139607aec59160",
+        "char_count": 419
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://gjy.nuist.edu.cn/2832/list.htm",
+      "source_id": "host-nuist-fees-cn-browser",
+      "page": null,
+      "source_title": "南京信息工程留學費用中文（未標年／國際生參考）（browser選定原文）",
+      "applicability": "銘傳官方轉載NUIST2027春港澳臺影像PDF8頁已逐頁視覺讀完，原空字層保留、只另存選定原文；兩DOCX空白表全文正文已讀。一般國際生費率與港澳臺track分開，2027春仍早於中央116，新包／協議未核定。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 183,
+        "field": "cost",
+        "evidence_array_index": 1,
+        "text_sha256": "330b2eb00aa1f944da030ec3dda44b5ba0c87c6fbac4197043ce9a041da49f10",
+        "char_count": 169
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://gjy.nuist.edu.cn/english/FeeswPayment/listm.htm",
+      "source_id": "host-nuist-fees-en-browser",
+      "page": null,
+      "source_title": "南京信息工程留學費用英文（未標年／中文差異待查）（browser選定原文）",
+      "applicability": "銘傳官方轉載NUIST2027春港澳臺影像PDF8頁已逐頁視覺讀完，原空字層保留、只另存選定原文；兩DOCX空白表全文正文已讀。一般國際生費率與港澳臺track分開，2027春仍早於中央116，新包／協議未核定。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 183,
+        "field": "cost",
+        "evidence_array_index": 2,
+        "text_sha256": "eae6f7bbddb885715993f9b1cf33ab2394b4662d10def00e5edd79006ff4304c",
+        "char_count": 311
+      }
+    }
+  ],
+  "unresolved": "中英文房價差異、臺灣適用費用、餐飲／交通與一次性支出未核實，不計為當期可用總預算。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "銘傳官方轉載NUIST2027春港澳臺影像PDF8頁已逐頁視覺讀完，原空字層保留、只另存選定原文；兩DOCX空白表全文正文已讀。一般國際生費率與港澳臺track分開，2027春仍早於中央116，新包／協議未核定。"
+}

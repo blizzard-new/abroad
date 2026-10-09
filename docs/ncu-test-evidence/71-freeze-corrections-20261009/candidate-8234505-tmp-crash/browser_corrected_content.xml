@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="6" time="40.320" timestamp="2026-10-09T05:59:08.314463+00:00" hostname="e412858c778f"><testcase classname="tests.e2e.test_ncu_japan3" name="test_ncu_japan3_actual_language_packet_read_scope_and_life[tohoku-\u6771\u5317\u5927\u5b78-\u4e09\u985e\u521d\u6b21\u652f\u63f4\u4ef6-3-https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf-\u539f\u4ef657\u9801-390]" time="15.105"><failure message="playwright._impl._errors.Error: Locator.wait_for: Target crashed &#10;Call log:&#10;  - waiting for locator(&quot;#boot-splash&quot;) to be hidden&#10;    - locator resolved to visible &lt;div role=&quot;status&quot; id=&quot;boot-splash&quot; aria-live=&quot;polite&quot; class=&quot;boot-splash&quot;&gt;…&lt;/div&gt;">page = &lt;Page url='http://127.0.0.1:58885/?view=list#partners'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:58885', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-246/web-e2e-data0'))
+width = 390, slug = 'tohoku', name = '東北大學', initial = '三類初次支援件', count = 3
+source_url = 'https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf'
+scope_text = '原件57頁'
+
+    @pytest.mark.parametrize('width', [390, 1440])
+    @pytest.mark.parametrize('slug,name,initial,count,source_url,scope_text', CASES)
+    def test_ncu_japan3_actual_language_packet_read_scope_and_life(
+        page, live_server, width, slug, name, initial, count, source_url, scope_text,
+    ):
+        page.set_viewport_size({'width': width, 'height': 956})
+        page.emulate_media(reduced_motion='reduce')
+        errors = []
+        page.on('pageerror', lambda e: errors.append(str(e)))
+&gt;       enter_public_site(page, live_server, 'partners')
+
+tests/e2e/test_ncu_japan3.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:484: in enter_public_site
+    page.locator("#boot-splash").wait_for(state="hidden", timeout=60_000)
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:20539: in wait_for
+    self._sync(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:748: in wait_for
+    await self._frame.wait_for_selector(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:394: in wait_for_selector
+    await self._channel.send(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7fbc437493d0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7fbc4283eac0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Locator.wait_for: Target crashed 
+E           Call log:
+E             - waiting for locator("#boot-splash") to be hidden
+E               - locator resolved to visible &lt;div role="status" id="boot-splash" aria-live="polite" class="boot-splash"&gt;…&lt;/div&gt;
+
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error</failure></testcase><testcase classname="tests.e2e.test_ncu_japan3" name="test_ncu_japan3_actual_language_packet_read_scope_and_life[tohoku-\u6771\u5317\u5927\u5b78-\u4e09\u985e\u521d\u6b21\u652f\u63f4\u4ef6-3-https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf-\u539f\u4ef657\u9801-1440]" time="1.277"><failure message="playwright._impl._errors.TargetClosedError: Page.goto: Page crashed&#10;Call log:&#10;  - navigating to &quot;http://127.0.0.1:58885/#partners&quot;, waiting until &quot;load&quot;">page = &lt;Page url='http://127.0.0.1:58885/#partners'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:58885', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-246/web-e2e-data0'))
+width = 1440, slug = 'tohoku', name = '東北大學', initial = '三類初次支援件', count = 3
+source_url = 'https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf'
+scope_text = '原件57頁'
+
+    @pytest.mark.parametrize('width', [390, 1440])
+    @pytest.mark.parametrize('slug,name,initial,count,source_url,scope_text', CASES)
+    def test_ncu_japan3_actual_language_packet_read_scope_and_life(
+        page, live_server, width, slug, name, initial, count, source_url, scope_text,
+    ):
+        page.set_viewport_size({'width': width, 'height': 956})
+        page.emulate_media(reduced_motion='reduce')
+        errors = []
+        page.on('pageerror', lambda e: errors.append(str(e)))
+&gt;       enter_public_site(page, live_server, 'partners')
+
+tests/e2e/test_ncu_japan3.py:30: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:475: in enter_public_site
+    page.goto(f"{live_server.base_url}/#{route}")
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:9875: in goto
+    self._sync(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:560: in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:156: in goto
+    await self._channel.send(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7fbc437493d0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7fbc06d02de0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TargetClosedError: Page.goto: Page crashed
+E           Call log:
+E             - navigating to "http://127.0.0.1:58885/#partners", waiting until "load"
+
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: TargetClosedError</failure></testcase><testcase classname="tests.e2e.test_ncu_shizuoka_chuo_kansai" name="test_ncu_reference_scope_and_student_content[chuo-\u65e5\u672c\u4e2d\u592e\u5927\u5b78-Part1\u4e03\u985e\u5171\u901a\uff0cC1\uff0fC2\u6309\u5b78\u5236\u64c7\u4e00-7-390]" time="6.329"><failure message="playwright._impl._errors.Error: Locator.click: Target crashed &#10;Call log:&#10;  - waiting for locator(&quot;[data-home-school=\&quot;國立中央大學\&quot;]&quot;)">page = &lt;Page url='http://127.0.0.1:50171/?view=list#partners'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:50171', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-246/web-e2e-data1'))
+width = 390, slug = 'chuo', name = '日本中央大學', title = 'Part1七類共通，C1／C2按學制擇一'
+count = 7
+
+    @pytest.mark.parametrize('width',[390,1440])
+    @pytest.mark.parametrize('slug,name,title,count',CASES)
+    def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,name,title,count):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[]
+        page.on('pageerror',lambda e:errors.append(str(e)))
+        enter_public_site(page,live_server,'partners')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+        open_navigation(page)
+        page.locator('#school-switcher').click()
+&gt;       page.locator('[data-home-school="國立中央大學"]').click()
+
+tests/e2e/test_ncu_shizuoka_chuo_kansai.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7fbc437493d0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7fbc15153880&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Locator.click: Target crashed 
+E           Call log:
+E             - waiting for locator("[data-home-school=\"國立中央大學\"]")
+
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error</failure></testcase><testcase classname="tests.e2e.test_ncu_shizuoka_chuo_kansai" name="test_ncu_reference_scope_and_student_content[chuo-\u65e5\u672c\u4e2d\u592e\u5927\u5b78-Part1\u4e03\u985e\u5171\u901a\uff0cC1\uff0fC2\u6309\u5b78\u5236\u64c7\u4e00-7-1440]" time="1.180"><failure message="playwright._impl._errors.TargetClosedError: Page.goto: Page crashed&#10;Call log:&#10;  - navigating to &quot;http://127.0.0.1:50171/#partners&quot;, waiting until &quot;load&quot;">page = &lt;Page url='http://127.0.0.1:50171/#partners'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:50171', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-246/web-e2e-data1'))
+width = 1440, slug = 'chuo', name = '日本中央大學', title = 'Part1七類共通，C1／C2按學制擇一'
+count = 7
+
+    @pytest.mark.parametrize('width',[390,1440])
+    @pytest.mark.parametrize('slug,name,title,count',CASES)
+    def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,name,title,count):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[]
+        page.on('pageerror',lambda e:errors.append(str(e)))
+&gt;       enter_public_site(page,live_server,'partners')
+
+tests/e2e/test_ncu_shizuoka_chuo_kansai.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:475: in enter_public_site
+    page.goto(f"{live_server.base_url}/#{route}")
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:9875: in goto
+    self._sync(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:560: in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:156: in goto
+    await self._channel.send(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7fbc437493d0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7fbc146396c0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TargetClosedError: Page.goto: Page crashed
+E           Call log:
+E             - navigating to "http://127.0.0.1:50171/#partners", waiting until "load"
+
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: TargetClosedError</failure></testcase><testcase classname="tests.e2e.test_ncu_shizuoka_chuo_kansai" name="test_ncu_reference_scope_and_student_content[kansai-\u95dc\u897f\u5927\u5b78-\u521d\u6b21\u516d\u985e\u5171\u901a\uff0c\u4e26\u975e\u6bcd\u6821\u4e03\u4ef6-6-390]" time="9.470"><failure message="playwright._impl._errors.Error: Locator.click: Target crashed &#10;Call log:&#10;  - waiting for locator(&quot;[data-home-school=\&quot;國立中央大學\&quot;]&quot;)">page = &lt;Page url='http://127.0.0.1:50171/?view=list#partners'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:50171', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-246/web-e2e-data1'))
+width = 390, slug = 'kansai', name = '關西大學', title = '初次六類共通，並非母校七件', count = 6
+
+    @pytest.mark.parametrize('width',[390,1440])
+    @pytest.mark.parametrize('slug,name,title,count',CASES)
+    def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,name,title,count):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[]
+        page.on('pageerror',lambda e:errors.append(str(e)))
+        enter_public_site(page,live_server,'partners')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+        open_navigation(page)
+        page.locator('#school-switcher').click()
+&gt;       page.locator('[data-home-school="國立中央大學"]').click()
+
+tests/e2e/test_ncu_shizuoka_chuo_kansai.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7fbc437493d0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7fbc1456ae80&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: Locator.click: Target crashed 
+E           Call log:
+E             - waiting for locator("[data-home-school=\"國立中央大學\"]")
+
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error</failure></testcase><testcase classname="tests.e2e.test_ncu_shizuoka_chuo_kansai" name="test_ncu_reference_scope_and_student_content[kansai-\u95dc\u897f\u5927\u5b78-\u521d\u6b21\u516d\u985e\u5171\u901a\uff0c\u4e26\u975e\u6bcd\u6821\u4e03\u4ef6-6-1440]" time="1.770"><failure message="playwright._impl._errors.TargetClosedError: Page.goto: Page crashed&#10;Call log:&#10;  - navigating to &quot;http://127.0.0.1:50171/#partners&quot;, waiting until &quot;load&quot;">page = &lt;Page url='http://127.0.0.1:50171/#partners'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:50171', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-246/web-e2e-data1'))
+width = 1440, slug = 'kansai', name = '關西大學', title = '初次六類共通，並非母校七件', count = 6
+
+    @pytest.mark.parametrize('width',[390,1440])
+    @pytest.mark.parametrize('slug,name,title,count',CASES)
+    def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,name,title,count):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[]
+        page.on('pageerror',lambda e:errors.append(str(e)))
+&gt;       enter_public_site(page,live_server,'partners')
+
+tests/e2e/test_ncu_shizuoka_chuo_kansai.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:475: in enter_public_site
+    page.goto(f"{live_server.base_url}/#{route}")
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:9875: in goto
+    self._sync(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:560: in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:156: in goto
+    await self._channel.send(
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7fbc437493d0&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7fbc405b14e0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TargetClosedError: Page.goto: Page crashed
+E           Call log:
+E             - navigating to "http://127.0.0.1:50171/#partners", waiting until "load"
+
+/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: TargetClosedError</failure></testcase></testsuite></testsuites>

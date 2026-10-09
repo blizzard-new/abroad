@@ -1,0 +1,290 @@
+{
+  "route": "/school-life-context",
+  "params": {
+    "home_school": "NCU",
+    "school": "龍谷大學 Ryukoku University"
+  },
+  "status": 200,
+  "body": {
+    "school_name": "龍谷大學 Ryukoku University",
+    "location_note": "尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。",
+    "research_status": "not_collected",
+    "checked_at": null,
+    "can_refresh": true,
+    "source_count": 7,
+    "categories": [
+      {
+        "theme": "housing",
+        "evidence": [
+          {
+            "theme": "housing",
+            "kind": "official",
+            "text": "IHouse／Mitra由校方安排、原則不可換，RS支持。Guide8頁床具必租1,960/月不可取消，13頁又寫ifusingrentalbedding，現網1,980，必選與費額矛盾保留。\n2026degreehousing招募11/26/25–3/6/26不是2027springexchange住房截止；guide說howtoapply另送，目前未取得。\n退宿notice前月5日與7日、另至少一月要求同guide矛盾；少於15日才可能日割、晚告知全月、utilities假期照收，平日退宿，前一週／當日查房，damage欠款扣押；不過夜訪客、不進他人房、禁煙、長期外出提前一週告知。",
+            "sources": [
+              {
+                "title": "住宿與申請期限",
+                "url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf"
+              },
+              {
+                "title": "住宿與申請期限",
+                "url": "https://intl.ryukoku.ac.jp/english/dormitory/kokusai_h.html"
+              },
+              {
+                "title": "住宿與申請期限",
+                "url": "https://intl.ryukoku.ac.jp/english/dormitory/mitrakan.html"
+              },
+              {
+                "title": "住宿與申請期限",
+                "url": "https://intl.ryukoku.ac.jp/english/dormitory/pass_dorm.html"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "IHouse／Mitra由校方安排、原則不可換，RS支持。Guide8頁床具必租1,960/月不可取消，13頁又寫ifusingrentalbedding，現網1,980，必選與費額矛盾保留。\n2026degreehousing招募11/26/25–3/6/26不是2027springexchange住房截止；guide說howtoapply另送，目前未取得。\n退宿notice前月5日與7日、另至少一月要求同guide矛盾；少於15日才可能日割、晚告知全月、utilities假期照收，平日退宿，前一週／當日查房，damage欠款扣押；不過夜訪客、不進他人房、禁煙、長期外出提前一週告知。",
+            "translation_status": "pending"
+          }
+        ],
+        "inference": {
+          "text": "先確認交換生住宿資格，再把交通與餐食納入預算。",
+          "basis_urls": [
+            "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+            "https://intl.ryukoku.ac.jp/english/dormitory/kokusai_h.html",
+            "https://intl.ryukoku.ac.jp/english/dormitory/mitrakan.html",
+            "https://intl.ryukoku.ac.jp/english/dormitory/pass_dorm.html"
+          ],
+          "method": "evidence_rules",
+          "limitation": "AI 推論是依列出資料套用規劃規則的參考建議，不是學生親身經驗；未據此推定價格、步行時間或服務品質。"
+        },
+        "next_step": "先確認錄取校區、宿舍資格與申請期限，再比較租金及實際通勤路線。",
+        "search_url": "https://www.google.com/search?q=Ryukoku+University+%E6%97%A5%E6%9C%AC+international+student+housing"
+      },
+      {
+        "theme": "cost",
+        "evidence": [
+          {
+            "theme": "cost",
+            "kind": "official",
+            "text": "Guide明示exchangeconditions依兩校StudentExchangeAgreement；未取得中央協議費用細項，不能把tuitionwaiver或房租減免當保證。\n國際會館單人35,000租+10,000utilities、押80,000；雙人23,000+6,000、现網押50,000。Mitra45,000+10,000、押100,000；租金已含交換生單人1萬／雙人5千補貼，不再重複扣。\n約兩月才完成銀行自動扣款，之前便利店现金、不能信用／debit；初到準備押金＋租／utilities現金。每月6日扣款、假日順延。獎學金依協議非保证，guide銀行online舊說法未向銀行核實。",
+            "sources": [
+              {
+                "title": "生活費",
+                "url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf"
+              },
+              {
+                "title": "生活費",
+                "url": "https://intl.ryukoku.ac.jp/english/dormitory/kokusai_h.html"
+              },
+              {
+                "title": "生活費",
+                "url": "https://intl.ryukoku.ac.jp/english/dormitory/mitrakan.html"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "Guide明示exchangeconditions依兩校StudentExchangeAgreement；未取得中央協議費用細項，不能把tuitionwaiver或房租減免當保證。\n國際會館單人35,000租+10,000utilities、押80,000；雙人23,000+6,000、现網押50,000。Mitra45,000+10,000、押100,000；租金已含交換生單人1萬／雙人5千補貼，不再重複扣。\n約兩月才完成銀行自動扣款，之前便利店现金、不能信用／debit；初到準備押金＋租／utilities現金。每月6日扣款、假日順延。獎學金依協議非保证，guide銀行online舊說法未向銀行核實。",
+            "translation_status": "pending"
+          }
+        ],
+        "inference": null,
+        "next_step": "以住宿、餐費、交通、保險分項查價；目前資料不足以產生可靠的每月總額。",
+        "search_url": "https://www.google.com/search?q=Ryukoku+University+%E6%97%A5%E6%9C%AC+student+living+costs"
+      },
+      {
+        "theme": "food",
+        "evidence": [],
+        "inference": null,
+        "next_step": "先查實際上課校區與宿舍附近的餐廳、超市及飲食限制，再確認菜單與營業時間。",
+        "search_url": "https://www.google.com/search?q=Ryukoku+University+%E6%97%A5%E6%9C%AC+cafeteria+supermarket+restaurants"
+      },
+      {
+        "theme": "transport",
+        "evidence": [
+          {
+            "theme": "transport",
+            "kind": "official",
+            "text": "IHouse現網距深草步行5分、Mitra現網2分／guide5分；車站步程現網與guide各異，保存來源差異，不當實際通勤保证。深草到大宮／琵琶湖接駁概要非最新班次。",
+            "sources": [
+              {
+                "title": "抵達與日常交通",
+                "url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf"
+              },
+              {
+                "title": "抵達與日常交通",
+                "url": "https://intl.ryukoku.ac.jp/english/dormitory/kokusai_h.html"
+              },
+              {
+                "title": "抵達與日常交通",
+                "url": "https://intl.ryukoku.ac.jp/english/dormitory/mitrakan.html"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "IHouse現網距深草步行5分、Mitra現網2分／guide5分；車站步程現網與guide各異，保存來源差異，不當實際通勤保证。深草到大宮／琵琶湖接駁概要非最新班次。",
+            "translation_status": "pending"
+          }
+        ],
+        "inference": {
+          "text": "可比較住宿到上述站點的路線，評估通勤選擇。",
+          "basis_urls": [
+            "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf",
+            "https://intl.ryukoku.ac.jp/english/dormitory/kokusai_h.html",
+            "https://intl.ryukoku.ac.jp/english/dormitory/mitrakan.html"
+          ],
+          "method": "evidence_rules",
+          "limitation": "AI 推論是依列出資料套用規劃規則的參考建議，不是學生親身經驗；未據此推定價格、步行時間或服務品質。"
+        },
+        "next_step": "以錄取校區和住宿地址核對路線、轉乘及末班車，不能用直線距離換算通勤時間。",
+        "search_url": "https://www.google.com/search?q=Ryukoku+University+%E6%97%A5%E6%9C%AC+campus+access+public+transport"
+      },
+      {
+        "theme": "academics",
+        "evidence": [
+          {
+            "theme": "academics",
+            "kind": "official",
+            "text": "每學期註冊至少15學分；JSP完成一學期取得15／兩期30，註冊與取得不同。A日語mandatoryregistration與B/Cmandatorycredit分開，不把所有課程一律算完成學分。\nEnglishTrackJSP-I以英語教學，可修IntroductoryJapanese英授，不能修日語授課；JSP-I–III通常只准regular英授，IV/V可日授但先修／seminar仍限制，不能保證任意研究所課。\n另讀一頁curriculum表：春／秋同內容只能採認一門、JSP-V額外日語1學分、JLPTN1/N2/N3與不同clusters/level限制；日語目標CEFR由SPOT＋自評綜合分班。\nSpring2027四月–九月，orientation4/1–5暫定、入學式4/2、入寮3/25暫定、退宿最遲8/10暫定。Fall2027九月–2028三月、最遲退宿3/17暫定，暑／春假可留到退宿日。",
+            "sources": [
+              {
+                "title": "課程限制與選課",
+                "url": "https://intl.ryukoku.ac.jp/english/examination/exp/rjsp/index.html"
+              },
+              {
+                "title": "課程限制與選課",
+                "url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf"
+              },
+              {
+                "title": "課程限制與選課",
+                "url": "https://intl.ryukoku.ac.jp/zx_documents/rjsp/curriculum_eng.pdf"
+              },
+              {
+                "title": "課程限制與選課",
+                "url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/08_1_jpl_skill_eng.pdf"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "每學期註冊至少15學分；JSP完成一學期取得15／兩期30，註冊與取得不同。A日語mandatoryregistration與B/Cmandatorycredit分開，不把所有課程一律算完成學分。\nEnglishTrackJSP-I以英語教學，可修IntroductoryJapanese英授，不能修日語授課；JSP-I–III通常只准regular英授，IV/V可日授但先修／seminar仍限制，不能保證任意研究所課。\n另讀一頁curriculum表：春／秋同內容只能採認一門、JSP-V額外日語1學分、JLPTN1/N2/N3與不同clusters/level限制；日語目標CEFR由SPOT＋自評綜合分班。\nSpring2027四月–九月，orientation4/1–5暫定、入學式4/2、入寮3/25暫定、退宿最遲8/10暫定。Fall2027九月–2028三月、最遲退宿3/17暫定，暑／春假可留到退宿日。",
+            "translation_status": "pending"
+          }
+        ],
+        "inference": null,
+        "next_step": "查當期課綱、授課語言及考核比例；不能由地理位置推定課程難度或出席規定。",
+        "search_url": "https://www.google.com/search?q=Ryukoku+University+%E6%97%A5%E6%9C%AC+exchange+course+syllabus"
+      },
+      {
+        "theme": "climate",
+        "evidence": [],
+        "inference": null,
+        "next_step": "以交換月份和實際城市查官方氣候常值，接近出發時再看天氣預報。",
+        "search_url": "https://www.google.com/search?q=Ryukoku+University+%E6%97%A5%E6%9C%AC+climate+weather+seasons"
+      },
+      {
+        "theme": "social",
+        "evidence": [
+          {
+            "theme": "social",
+            "kind": "official",
+            "text": "二月另有pre-arrivalorientation，不能混作四月到校orientation。初款現金與國際提款限額要準備；到校提供residencecard影本與銀行表辦扣款，銀行表到達後另發。\n2027春3/25入寮、4/1–5orientation與8/10搬出均暫定；海外保險出境前另辦，NHI到校wardoffice。未取得官方visa-before-ticket明文，平台準備順序先確認visa与入寮再购票，不聲稱校方禁止條文。",
+            "sources": [
+              {
+                "title": "到校與行前準備",
+                "url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "二月另有pre-arrivalorientation，不能混作四月到校orientation。初款現金與國際提款限額要準備；到校提供residencecard影本與銀行表辦扣款，銀行表到達後另發。\n2027春3/25入寮、4/1–5orientation與8/10搬出均暫定；海外保險出境前另辦，NHI到校wardoffice。未取得官方visa-before-ticket明文，平台準備順序先確認visa与入寮再购票，不聲稱校方禁止條文。",
+            "translation_status": "pending"
+          }
+        ],
+        "inference": null,
+        "next_step": "先看國際處迎新、社團與語言交換活動；活動存在不代表每位學生都有相同體驗。",
+        "search_url": "https://www.google.com/search?q=Ryukoku+University+%E6%97%A5%E6%9C%AC+international+student+clubs"
+      },
+      {
+        "theme": "safety",
+        "evidence": [
+          {
+            "theme": "safety",
+            "kind": "official",
+            "text": "Guide11頁：出發前必須海外旅行或意外險涵蓋整段交換，個人責任險建議；到校後>三月另辦NHI，月費約1,500–2,000，wardoffice入學後辦。",
+            "sources": [
+              {
+                "title": "保險",
+                "url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "Guide11頁：出發前必須海外旅行或意外險涵蓋整段交換，個人責任險建議；到校後>三月另辦NHI，月費約1,500–2,000，wardoffice入學後辦。",
+            "translation_status": "pending"
+          },
+          {
+            "theme": "safety",
+            "kind": "official",
+            "text": "收到全部申請件後RGlobe代辦COE，通常6–8週，COE與入學許可WelcomePackage送母校約二月初；學生收到後到本國日本使領館辦學生簽證，不能直接把COE視作visa。",
+            "sources": [
+              {
+                "title": "簽證／居留",
+                "url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "收到全部申請件後RGlobe代辦COE，通常6–8週，COE與入學許可WelcomePackage送母校約二月初；學生收到後到本國日本使領館辦學生簽證，不能直接把COE視作visa。",
+            "translation_status": "pending"
+          }
+        ],
+        "inference": {
+          "text": "可先查詢上述健康服務；接診、語言與保險適用性仍須確認。",
+          "basis_urls": [
+            "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf"
+          ],
+          "method": "evidence_rules",
+          "limitation": "AI 推論是依列出資料套用規劃規則的參考建議，不是學生親身經驗；未據此推定價格、步行時間或服務品質。"
+        },
+        "next_step": "確認校內健康服務與所在地就醫窗口；費用、語言、保險與急診服務須向機構核對。",
+        "search_url": "https://www.google.com/search?q=Ryukoku+University+%E6%97%A5%E6%9C%AC+student+health+clinic+insurance"
+      },
+      {
+        "theme": "campus_culture",
+        "evidence": [
+          {
+            "theme": "campus_culture",
+            "kind": "official",
+            "text": "京都深草為JSP課程及RGlobe主校區；大宮為文學／心理高年級與研究所；大津琵琶湖為理工／農／環境／情報。接駁指南概述深草到大宮20分／Seta40分，不是現時刻保證。",
+            "sources": [
+              {
+                "title": "城市與校區位置",
+                "url": "https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf"
+              }
+            ],
+            "checked_at": "2026-10-09T07:29:39.765864Z",
+            "scope": "现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。；中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。",
+            "original_excerpt": false,
+            "original_text": "",
+            "translation_status": "original"
+          }
+        ],
+        "inference": null,
+        "next_step": "查看國際學生支援與不同背景學生的分享，不能把單一個案當成全校文化。",
+        "search_url": "https://www.google.com/search?q=Ryukoku+University+%E6%97%A5%E6%9C%AC+international+student+support"
+      },
+      {
+        "theme": "travel",
+        "evidence": [],
+        "inference": null,
+        "next_step": "從實際校區確認車站及機場路線，再用營運方時刻表規劃週末行程。",
+        "search_url": "https://www.google.com/search?q=Ryukoku+University+%E6%97%A5%E6%9C%AC+tourism+public+transport"
+      }
+    ],
+    "research_notes": []
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "document_owner": "host",
+  "step": {
+    "rule_id": "ncu-116-host-housing-accepted",
+    "order": 11,
+    "phase": "錄取後住房",
+    "title": "接收後住宿：指定宿舍申請與寢具選擇",
+    "responsible_party": "學生與中央承辦／北海道接收單位",
+    "timing": "中央116對應時點未取得；舊2027春僅參考",
+    "summary": "按接收通知取得宿舍申請表；HUSTEP／JLCSP住大學宿舍、SA／SRS另核。2026/7寢具規則只北8／北23，不適用所有房。",
+    "details": [
+      "按接收通知取得宿舍申請表；HUSTEP／JLCSP住大學宿舍、SA／SRS另核。2026/7寢具規則只北8／北23，不適用所有房。",
+      "表格與條件按當期／program／協議／身分重新確認，不由錄取或住校選項自動核准；原文頁码與未解問題見來源稽核。"
+    ],
+    "document_requirements": [
+      {
+        "name": "當期宿舍申請／寢具選擇資料（空白包及deadline未取得）",
+        "source_urls": [
+          "https://www.oia.hokudai.ac.jp/cier/housing/?wovn=en"
+        ],
+        "needs_confirmation": true
+      }
+    ],
+    "scope": {
+      "home_universities": [
+        "國立中央大學"
+      ],
+      "partner_universities": [
+        "北海道大學(院級) Hokkaido University（院級）"
+      ],
+      "academic_years": [
+        "116"
+      ]
+    },
+    "source_urls": [
+      "https://www.oia.hokudai.ac.jp/cier/housing/?wovn=en",
+      "https://www.oia.hokudai.ac.jp/cier/wp/wp-content/uploads/2026/07/64fe6a42b59a58ea5d6ff27e3e495caa.pdf"
+    ],
+    "checked_at": "2026-10-08T00:00:00Z",
+    "support_status": "needs_confirmation",
+    "needs_confirmation": true
+  },
+  "policies": [
+    {
+      "school_name": "北海道大學(院級) Hokkaido University（院級）",
+      "rule_id": "ncu-116-host-housing-accepted",
+      "requirement_name": "當期宿舍申請／寢具選擇資料（空白包及deadline未取得）",
+      "requires_host_admission": true,
+      "requires_on_campus_housing": true,
+      "requires_institutional_confirmation": true,
+      "confirmation_note": "按接收通知取得宿舍申請表；HUSTEP／JLCSP住大學宿舍、SA／SRS另核。2026/7寢具規則只北8／北23，不適用所有房。 116當期／program／學制／部局及個人適用仍需兩校確認；已錄取或住校不會自動通過。",
+      "scope_note": "北海道院級協議獨立查核；最新program參考2026–2027／2027春，非中央116名額或2027秋／2028春核准。未核當期、track與個人條件；所有host流程pending。",
+      "source_urls": [
+        "https://www.oia.hokudai.ac.jp/cier/housing/?wovn=en"
+      ],
+      "checked_at": "2026-10-08",
+      "current_applicability_verified": false,
+      "source_versions": [
+        {
+          "source_id": "host-hokkaido-life-housing",
+          "url": "https://www.oia.hokudai.ac.jp/cier/housing/?wovn=en",
+          "sha256": "f1f3bd817c9f0fbe8afa6c90e5ba30ecfc8e2398ff6890963b8cc2384dd694ee"
+        }
+      ]
+    }
+  ]
+}

@@ -110,6 +110,9 @@ def test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_dat
     assert coverage["destination_profile_count"] == 1
     assert destination["home_university"] == "國立臺北大學"
     assert destination["coverage_status"] != "not_collected"
+    assert coverage["partners"][0]["destination_status"] == destination["coverage_status"]
+    assert coverage["partners"][0]["destination_last_checked"] == destination["last_checked"]
+    assert coverage["partners"][0]["destination_last_checked"] is not None
 
 
 def test_bundled_ntpu_completeness_report_has_all_required_fields() -> None:

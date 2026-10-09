@@ -393,3 +393,23 @@ def test_submission_progress_syncs_between_sessions_and_cannot_be_overwritten_by
     ).json()["workspace"]
     assert restored_a["revision"] == 4
     assert restored_a["submission_progress"][payload["progress_key"]]["status"] == "submitted"
+
+
+def test_ncu_document_state_round_trip_keeps_each_period_separate(tmp_path):
+    from exchange_info.ncu_document_conditions import preparation_state_key
+    client, headers = _client(tmp_path)
+    payload = _workspace("國立中央大學")
+    school = "首爾市立大學 University of Seoul"
+    key = preparation_state_key(school,"116","第一梯次","第一學期")
+    next_key = preparation_state_key(school,"116","第一梯次","第二學期")
+    payload["application_context"]["partner_document_states"] = {
+        key:{"host_admission_status":"accepted","housing_choice":"off_campus"},
+        next_key:{"host_admission_status":"unknown","housing_choice":"unknown"},
+    }
+    saved = client.put("/account/workspace",headers=headers,json=payload)
+    assert saved.status_code == 200
+    restored = client.get("/account/workspace",headers=headers,params={"home_school":"國立中央大學"})
+    assert restored.status_code == 200
+    assert restored.json()["workspace"]["application_context"]["partner_document_states"] == payload["application_context"]["partner_document_states"]
+    payload["application_context"]["partner_document_states"][key]["host_admission_status"] = "assumed"
+    assert client.put("/account/workspace",headers=headers,json=payload).status_code == 422

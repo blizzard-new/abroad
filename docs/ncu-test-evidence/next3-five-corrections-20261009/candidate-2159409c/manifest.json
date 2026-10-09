@@ -1,0 +1,498 @@
+{
+  "candidate_sha": "2159409cacb6d8ac36bbafcc3ca6f2925f860fc9",
+  "start_sha": "2159409cacb6d8ac36bbafcc3ca6f2925f860fc9",
+  "start_porcelain": "",
+  "started_at": "2026-10-09T08:48:10.859137+00:00",
+  "baseline_sha": "bb4cecd8030946e59bed494509d206c356e5c210",
+  "scope_rows": [
+    "ncu-130",
+    "ncu-134",
+    "ncu-135"
+  ],
+  "correction_groups": 5,
+  "data_coverage": {
+    "checked_at": "2026-10-08T00:00:00+00:00",
+    "academic_year": "116",
+    "home_notice_confirmed": true,
+    "current_list_status": "scheduled_not_yet_announced",
+    "current_list_expected_date": "2026-10-12",
+    "historical_rows": 216,
+    "catalog_entries": 214,
+    "source_documents_attempted": 459,
+    "source_documents_downloaded": 459,
+    "source_documents_any_text": 454,
+    "source_documents_all_pages_have_text": 423,
+    "source_documents_all_pages_read": 29,
+    "source_documents_visual_reviewed": 7,
+    "source_documents_ocr_reviewed": 1,
+    "source_documents_with_errors": 0,
+    "source_documents_with_text_quality_gaps": 2,
+    "source_documents_with_non_text_pages": 36,
+    "source_non_text_page_count": 100,
+    "host_web_checks": 996,
+    "host_web_checks_with_errors": 117,
+    "source_mapped_entries": 214,
+    "host_source_mapped_entries": 211,
+    "entries_with_any_host_text": 210,
+    "reviewed_host_records": 74,
+    "host_full_116_verification_count": 0,
+    "pending_workflows": 214,
+    "provenance_note": "提取不是當期資格核准；逐欄缺口與原文分列於field-audit.json。"
+  },
+  "results": [
+    {
+      "name": "ncu_api_sources_life",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ncu_integration.py",
+        "tests/test_ncu_document_conditions.py",
+        "tests/test_ncu_source_collector.py",
+        "tests/test_school_completeness.py",
+        "tests/test_ncu_snapshot_cache.py",
+        "tests/test_ncu_japan3.py",
+        "tests/test_ncu_tcu_toyama_fukui.py",
+        "tests/test_ncu_shizuoka_chuo_kansai.py",
+        "tests/test_ncu_nufs_kumamoto_ryukoku.py",
+        "tests/test_ncu_next3_review_corrections.py",
+        "--junitxml",
+        "/workspace/ncu-verification-tmp/p1-five-2159409cacb6d8ac36bbafcc3ca6f2925f860fc9/ncu_api_sources_life.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu-p1-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T08:48:10.944717+00:00",
+      "finished_at": "2026-10-09T08:53:23.717744+00:00",
+      "log": "ncu_api_sources_life.log",
+      "junit": {
+        "tests": 342,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_cases": [],
+      "skipped_cases": []
+    },
+    {
+      "name": "cgu_ntpu_ntu_shared_regression",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_school_content.py",
+        "tests/test_cgu_bundled_data.py",
+        "tests/test_ntpu_support.py",
+        "tests/test_ntu_audit.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_application_rules.py",
+        "tests/test_application_document_catalog.py",
+        "tests/test_application_documents_api.py",
+        "tests/test_fit_signals.py",
+        "tests/test_task_documents_and_reference_plan.py",
+        "tests/test_workflow_structuring.py",
+        "tests/test_account_workspace_api.py",
+        "tests/test_application_workflow.py",
+        "tests/test_workflow_context_api.py",
+        "tests/test_workflow_catalog_cache.py",
+        "tests/test_life_context.py",
+        "tests/test_public_translation.py",
+        "tests/test_public_translation_cold_cache.py",
+        "--junitxml",
+        "/workspace/ncu-verification-tmp/p1-five-2159409cacb6d8ac36bbafcc3ca6f2925f860fc9/cgu_ntpu_ntu_shared_regression.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu-p1-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T08:53:24.006470+00:00",
+      "finished_at": "2026-10-09T08:54:52.821463+00:00",
+      "log": "cgu_ntpu_ntu_shared_regression.log",
+      "junit": {
+        "tests": 215,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 6
+      },
+      "failed_cases": [],
+      "skipped_cases": [
+        {
+          "name": "test_bundled_cgu_workflows_are_available_without_local_cache",
+          "reason": "Phase C data reviewed"
+        },
+        {
+          "name": "test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+          "reason": "Phase C data reviewed"
+        },
+        {
+          "name": "test_bundled_cgu_completeness_report_matches_export",
+          "reason": "Phase C data reviewed"
+        },
+        {
+          "name": "test_backfilled_cgu_workflows_keep_current_details_reference_only",
+          "reason": "Phase C data reviewed"
+        },
+        {
+          "name": "test_workflow_api_reads_cache_and_rejects_public_refresh",
+          "reason": "Phase C data reviewed"
+        },
+        {
+          "name": "test_workflow_api_applies_department_override",
+          "reason": "Phase C data reviewed"
+        }
+      ]
+    },
+    {
+      "name": "existing_contract_gate",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ntpu_bundled_data.py",
+        "tests/test_frontend_contract.py",
+        "tests/test_rag.py",
+        "--junitxml",
+        "/workspace/ncu-verification-tmp/p1-five-2159409cacb6d8ac36bbafcc3ca6f2925f860fc9/existing_contract_gate.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu-p1-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T08:54:53.118415+00:00",
+      "finished_at": "2026-10-09T08:55:07.890141+00:00",
+      "log": "existing_contract_gate.log",
+      "junit": {
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_cases": [],
+      "skipped_cases": []
+    },
+    {
+      "name": "openapi_snapshot",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "cwd": "/workspace/abroad-ncu-p1-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T08:55:08.007745+00:00",
+      "finished_at": "2026-10-09T08:55:12.833580+00:00",
+      "log": "openapi_snapshot.log"
+    },
+    {
+      "name": "frozen_71_index",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "scripts/build_ncu_review_index.py",
+        "--check",
+        "--output-dir",
+        "docs/ncu-review-index/71-2637de2"
+      ],
+      "cwd": "/workspace/abroad-ncu-p1-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T08:55:12.903321+00:00",
+      "finished_at": "2026-10-09T08:55:15.820432+00:00",
+      "log": "frozen_71_index.log"
+    },
+    {
+      "name": "prior_three_school_index",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "scripts/build_ncu_review_index.py",
+        "--check",
+        "--output-dir",
+        "docs/ncu-review-index/next3-bb806740"
+      ],
+      "cwd": "/workspace/abroad-ncu-p1-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T08:55:15.885190+00:00",
+      "finished_at": "2026-10-09T08:55:17.838100+00:00",
+      "log": "prior_three_school_index.log"
+    },
+    {
+      "name": "browser_corrected_three_school_content_and_save",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py",
+        "--junitxml",
+        "/workspace/ncu-verification-tmp/p1-five-2159409cacb6d8ac36bbafcc3ca6f2925f860fc9/browser_corrected_three_school_content_and_save.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu-p1-fixed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T08:55:17.905636+00:00",
+      "finished_at": "2026-10-09T08:59:27.086595+00:00",
+      "log": "browser_corrected_three_school_content_and_save.log",
+      "junit": {
+        "tests": 8,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_cases": [
+        {
+          "name": "test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account[390]",
+          "message": "playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\".multi-plan-branch\").filter(has=locator(\":scope > summary\").filter(has_text=\"Ryukoku University\")).locator(\".multi-plan-task\").filter(has=locator(\":scope > label strong\").filter(has_text=\"龍谷初次申請與十項參考文件\")).locator(\".multi-plan-documents > summary\")"
+        },
+        {
+          "name": "test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account[1440]",
+          "message": "playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\".multi-plan-branch\").filter(has=locator(\":scope > summary\").filter(has_text=\"Ryukoku University\")).locator(\".multi-plan-task\").filter(has=locator(\":scope > label strong\").filter(has_text=\"龍谷初次申請與十項參考文件\")).locator(\".multi-plan-documents > summary\")"
+        }
+      ],
+      "skipped_cases": []
+    },
+    {
+      "name": "lock_writable_cache",
+      "argv": [
+        "uv",
+        "lock",
+        "--check"
+      ],
+      "cwd": "/workspace/abroad-ncu-p1-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T08:59:27.394391+00:00",
+      "finished_at": "2026-10-09T08:59:27.492021+00:00",
+      "log": "lock_writable_cache.log"
+    },
+    {
+      "name": "scoped_whitespace",
+      "argv": [
+        "git",
+        "diff",
+        "--check",
+        "bb4cecd8030946e59bed494509d206c356e5c210",
+        "2159409cacb6d8ac36bbafcc3ca6f2925f860fc9"
+      ],
+      "cwd": "/workspace/abroad-ncu-p1-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T08:59:27.599381+00:00",
+      "finished_at": "2026-10-09T08:59:28.562953+00:00",
+      "log": "scoped_whitespace.log"
+    }
+  ],
+  "full_ci_equivalence": false,
+  "current_116_data_acceptance": false,
+  "prior_kyutech_root_closed": false,
+  "production_actions": false,
+  "browser_screenshots": [
+    {
+      "path": "browser/kumamoto-1440-arrival.png",
+      "sha256": "de31c60f0331f888d2e7c7b021a323c319055bb3a16b9238cf0fd5c360e75f8e",
+      "bytes": 373194
+    },
+    {
+      "path": "browser/kumamoto-1440-card-or-row.png",
+      "sha256": "64740c2e754372338ab31e2a57d7a82a6ddb06a6f07b1f9257a96ff752091625",
+      "bytes": 390303
+    },
+    {
+      "path": "browser/kumamoto-1440-coe-visa.png",
+      "sha256": "0ed3a471ab4df2340595959c8afd1fcfe5f1b8141da37212119d0e101e0d3ca7",
+      "bytes": 356215
+    },
+    {
+      "path": "browser/kumamoto-1440-life.png",
+      "sha256": "b1c0e8c92447517939bd169cb9c96bdedd1b2874d214f0e676e6e6c9f723f2d1",
+      "bytes": 475471
+    },
+    {
+      "path": "browser/kumamoto-1440-overview.png",
+      "sha256": "feb01ce2aac195c3f992d24ffc87ae36ebbc9d455f5eb902d4eb5acbe83cdf62",
+      "bytes": 1730329
+    },
+    {
+      "path": "browser/kumamoto-1440-packet.png",
+      "sha256": "d468b5b0d911bfdf1674f4ebe1683066ee683013f54731a4c187416116b97167",
+      "bytes": 379422
+    },
+    {
+      "path": "browser/kumamoto-1440-source-gap.png",
+      "sha256": "bf33dacc82c33b4fa22f84d650aa4a956990c5f0ea1fdd006c18b34bc0f0d808",
+      "bytes": 416438
+    },
+    {
+      "path": "browser/kumamoto-390-arrival.png",
+      "sha256": "79c5ad04284daca8213be6b20e6ff9214d4b8d58caa523cde54dc6e577661845",
+      "bytes": 133598
+    },
+    {
+      "path": "browser/kumamoto-390-card-or-row.png",
+      "sha256": "2850db0c5893499cf949c10300e5d60a4e44cb794b586a7e76de14990e5ecd69",
+      "bytes": 143090
+    },
+    {
+      "path": "browser/kumamoto-390-coe-visa.png",
+      "sha256": "f8d1547987f05a9df4992f734dfa381d36487fafcad403dda05e997e40f756bb",
+      "bytes": 130497
+    },
+    {
+      "path": "browser/kumamoto-390-life.png",
+      "sha256": "c85aa5ef6adcf67f77be87d4418489016e93c4e52534ca70f897a553bdf16c8c",
+      "bytes": 156295
+    },
+    {
+      "path": "browser/kumamoto-390-overview.png",
+      "sha256": "b6c0ccdc081f6d53736b8e3f48ab5f420ffb37d7c46f17ea458e6ec29e3ff7c9",
+      "bytes": 1354360
+    },
+    {
+      "path": "browser/kumamoto-390-packet.png",
+      "sha256": "691d123af00dba79e0eec4c2fb2b350bdba7645bc8bb76eedb43f90aa6132539",
+      "bytes": 143897
+    },
+    {
+      "path": "browser/kumamoto-390-source-gap.png",
+      "sha256": "5fe1bd7f91dfd424e3e9c59d62cc7ae12ea0bdbec436f7d73ff9b8269fd45ed1",
+      "bytes": 120111
+    },
+    {
+      "path": "browser/nufs-1440-arrival.png",
+      "sha256": "681498b70a62c459fdeaf2a0c711a33ee519f0f90f81fbc08bfd49743ba5ad83",
+      "bytes": 329864
+    },
+    {
+      "path": "browser/nufs-1440-card-or-row.png",
+      "sha256": "2429d5122429422e6ae776b51ef4cb13a39e4985b73d65ee5f13ee04b2f955c0",
+      "bytes": 374099
+    },
+    {
+      "path": "browser/nufs-1440-coe-visa.png",
+      "sha256": "edb8596b84d83e181ae5d1a8342f15834ade01ea8e2dc275472876599b45b7ea",
+      "bytes": 342792
+    },
+    {
+      "path": "browser/nufs-1440-life.png",
+      "sha256": "fee553b748f9c40e146626a09cb14fc1917066e89e4ac99060359ea5e6fa8807",
+      "bytes": 462071
+    },
+    {
+      "path": "browser/nufs-1440-overview.png",
+      "sha256": "75b681ca15739194f10a634907d009ae75e8b63f2b80981202b634ffb462e35f",
+      "bytes": 1789167
+    },
+    {
+      "path": "browser/nufs-1440-packet.png",
+      "sha256": "27dcc30f69f6993cdeadef79b70cc127462d32718be46e43ff09ce5440922e36",
+      "bytes": 390856
+    },
+    {
+      "path": "browser/nufs-390-arrival.png",
+      "sha256": "ba47183d095580797f6b87fb8392f47142aa2508a3e7220907317f3aa0a310c1",
+      "bytes": 136527
+    },
+    {
+      "path": "browser/nufs-390-card-or-row.png",
+      "sha256": "4ab1da94379facd3d220c50324c8b624bdf5a112334d19fbd24f0f4f87d2c27c",
+      "bytes": 138082
+    },
+    {
+      "path": "browser/nufs-390-coe-visa.png",
+      "sha256": "8f6ce8514f8f7942e8c4ca523adc33f8f4387ae6c52d4384030ff28c6c65272b",
+      "bytes": 132032
+    },
+    {
+      "path": "browser/nufs-390-life.png",
+      "sha256": "18e77fbdef368000c8fe95f93156a7a50f1d38cfac41a732ecc851c23c0483f8",
+      "bytes": 169434
+    },
+    {
+      "path": "browser/nufs-390-overview.png",
+      "sha256": "bae837c7f64e91306f6fae6bb4d23c5649d09e40e03c0813da51d1dc231f8fe5",
+      "bytes": 1436555
+    },
+    {
+      "path": "browser/nufs-390-packet.png",
+      "sha256": "6081a782fc64470c9750a79af051db3c7ccfe87d343d42b7066ef06d365fa755",
+      "bytes": 139292
+    },
+    {
+      "path": "browser/ryukoku-1440-arrival.png",
+      "sha256": "88af47eb96f2c06b9ba5927e666e05219ab7c9289fe2e2ce930b2db8859c7b42",
+      "bytes": 413988
+    },
+    {
+      "path": "browser/ryukoku-1440-card-or-row.png",
+      "sha256": "570049ba0dab99b3f305b0714b9157c21db42c10e999b39459108368db3e8263",
+      "bytes": 369488
+    },
+    {
+      "path": "browser/ryukoku-1440-coe-visa.png",
+      "sha256": "8fd01e10abcd8822eac295fda6722d6551e9d03947c41610140dae5291c38cbc",
+      "bytes": 371151
+    },
+    {
+      "path": "browser/ryukoku-1440-corrected-catalog.png",
+      "sha256": "288f8798778d37750aac9841d448ec8c6c952ed9edb01485415dc7a027e3951b",
+      "bytes": 906156
+    },
+    {
+      "path": "browser/ryukoku-1440-life.png",
+      "sha256": "2cc8e11acb8f0a0eb08f986e4bad2fe15b432e1cdd25a2c69c42dfd3bfff5e5e",
+      "bytes": 456981
+    },
+    {
+      "path": "browser/ryukoku-1440-overview.png",
+      "sha256": "9c8f63664dc7b4ac8c34672c63cd1fb1bdfeabff3198e54078bbd8a2e97590f0",
+      "bytes": 1786161
+    },
+    {
+      "path": "browser/ryukoku-1440-packet.png",
+      "sha256": "70c5284570703f418713885171d257e380ae0e1e4e3a3106fbf9e75a23fd4f17",
+      "bytes": 393111
+    },
+    {
+      "path": "browser/ryukoku-1440-source-gap.png",
+      "sha256": "7e12de8e2951c51630f8faaff07b1c8bad7b09388d4adc880b2cc62477de5975",
+      "bytes": 423901
+    },
+    {
+      "path": "browser/ryukoku-390-arrival.png",
+      "sha256": "30693286f78f5b813aaf937513311123150da3dce223c3a8efd6326754e09b16",
+      "bytes": 135733
+    },
+    {
+      "path": "browser/ryukoku-390-card-or-row.png",
+      "sha256": "15bdd69c086ca7b14651df3ba62ef04066758324045611586d2c4b1521b8d0d8",
+      "bytes": 138565
+    },
+    {
+      "path": "browser/ryukoku-390-coe-visa.png",
+      "sha256": "0d063e38968b4613a552544a20acbd31291d6c1a25e5694d7bd624564f13ea8a",
+      "bytes": 140709
+    },
+    {
+      "path": "browser/ryukoku-390-corrected-catalog.png",
+      "sha256": "77ddba57979cdb8e030cf7807d7d5093a3588b6e3357dd7ff188e37a8e269a6a",
+      "bytes": 625476
+    },
+    {
+      "path": "browser/ryukoku-390-life.png",
+      "sha256": "e21a282259f03fc258d3c949aa20fd9a3b83b07d8ef8f49d13a95258fe456169",
+      "bytes": 151284
+    },
+    {
+      "path": "browser/ryukoku-390-overview.png",
+      "sha256": "e090b5c7f326efd18de1a2d219fd01f25726c2406a97759f790fa0fc7bab34c1",
+      "bytes": 1424360
+    },
+    {
+      "path": "browser/ryukoku-390-packet.png",
+      "sha256": "722d18aa504ee075cefad61a2e61c31bf3a309f9a2e3d2c92f776f47166036ee",
+      "bytes": 139196
+    },
+    {
+      "path": "browser/ryukoku-390-source-gap.png",
+      "sha256": "622260c785e2bee5a48df54d82a6c6f18527f757d1b62ca6b4930a550e9573da",
+      "bytes": 123291
+    }
+  ],
+  "end_sha": "2159409cacb6d8ac36bbafcc3ca6f2925f860fc9",
+  "end_porcelain": "",
+  "same_sha_and_clean": true,
+  "necessary_local_tests_passed": false,
+  "finished_at": "2026-10-09T08:59:28.915832+00:00"
+}

@@ -1,0 +1,50 @@
+{
+  "key": "arrival",
+  "label": "到校與行前準備",
+  "status": "needs_confirmation",
+  "note": "表第2頁明載兩個手寫簽名及日期，現行校區兩址需依接收通知確認；沒有取得完整行前／報到清單。",
+  "source_urls": [
+    "https://oga.site.nthu.edu.tw/var/file/524/1524/img/Applicationform.pdf",
+    "https://en.hcmus.edu.vn/organizational-structure/"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://oga.site.nthu.edu.tw/var/file/524/1524/img/Applicationform.pdf",
+      "source_id": "host-hcmus-nthu-application",
+      "page": 2,
+      "source_title": "HCMUS交換申請表兩頁（清華官方公開轉載；未標年度）",
+      "applicability": "清華官方公開轉載未標年HCMUS兩頁交換空白表全讀；現行HCMUS校區頁browser可讀、local403。無116當期完整接收包或原件更新證據。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 213,
+        "field": "arrival",
+        "evidence_array_index": 0,
+        "text_sha256": "8df6f285ccc9e1224aa8758411024ae97da622e566a0268728fb5c2c9d35fbbe",
+        "char_count": 1706
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://en.hcmus.edu.vn/organizational-structure/",
+      "source_id": "host-hcmus-organization-browser",
+      "page": null,
+      "source_title": "HCMUS校區／學院（browser選定原文，local403）",
+      "applicability": "清華官方公開轉載未標年HCMUS兩頁交換空白表全讀；現行HCMUS校區頁browser可讀、local403。無116當期完整接收包或原件更新證據。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 213,
+        "field": "arrival",
+        "evidence_array_index": 1,
+        "text_sha256": "0bf21dcd7b0e3ca76e53404269418ad424d317fba19132ff65347b4c9f5b59e4",
+        "char_count": 107
+      }
+    }
+  ],
+  "unresolved": "簽證sponsor、到校原件、迎新／宿舍與機場預約時點仍待查。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "清華官方公開轉載未標年HCMUS兩頁交換空白表全讀；現行HCMUS校區頁browser可讀、local403。無116當期完整接收包或原件更新證據。"
+}

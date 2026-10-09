@@ -56,6 +56,17 @@ def build_school_completeness(
     home_university: str | None = None,
     include_eligibility: bool = True,
 ) -> SchoolDataCompleteness:
+    from .ncu_eligibility import is_ncu
+    if is_ncu(home_university or (destination.home_university if destination else "") or (workflow.home_university if workflow else "")):
+        from .ncu_student_view import ncu_field_audit
+        audit = ncu_field_audit(partner.school_name)
+        if audit:
+            rows = [SchoolCompletenessItem.model_validate({k:v for k,v in item.items() if k in {"key","label","status","note","source_urls"}}) for item in audit["fields"].values()]
+            return SchoolDataCompleteness(school_name=partner.school_name, country=partner.country, home_university=home_university,
+                items=rows, available_count=sum(r.status == "available" for r in rows), total_count=len(rows),
+                score=round(sum(r.status == "available" for r in rows)/len(rows),3),
+                priority_gaps=[r.label for r in rows if r.status != "available"],
+                disclaimer="計數只含116本期已核實欄位；已讀參考不計入。home與host分開，取得原文不代表年度／校區／track適用性已確認，未取得不表示官方未公告。")
     destination = destination or DestinationProfile(school_name=partner.school_name)
     urls = [source.source_url for source in destination.sources]
     items: list[SchoolCompletenessItem] = []

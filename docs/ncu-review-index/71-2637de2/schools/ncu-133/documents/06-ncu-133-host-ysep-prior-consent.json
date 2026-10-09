@@ -1,0 +1,67 @@
+{
+  "document_owner": "host",
+  "step": {
+    "rule_id": "ncu-133-host-ysep-prior-consent",
+    "order": 6,
+    "phase": "合作校申請",
+    "title": "僅YSEP非建築：受邀申請前確認研究指導同意",
+    "responsible_party": "學生與已核准接收單位",
+    "timing": "線上申請前（限定track／系所待核）",
+    "summary": "YSEP非建築先取得合適教授同意email；建築及ACAP由校方安排，不自行聯絡。此處只整理程序、没有對外聯絡，116依接收核准。",
+    "details": [
+      "【中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。】中央115表明載限115-2，3名不是116名額或當期未開放。host校級互免協議的ACAP：到校UG至少完成1年、MA／DR；YSEP：UG至少完成2.5年、MA／DR。院級、付費其他交換、非伙伴visiting、CAMPUS Asia／夏冬專案各自範圍，不能混成此兩track。",
+      "【中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。】ACAP依課程計畫由校方指定教師，申請前不要求直接找教授；申請截止後才向已指定教師問候確認。YSEP非建築要申請前取得希望教授同意，建築反而不得自行聯絡、由校方安排。Innovation Sciences目前ACAP不收，YSEP需先向承辦確認，不能因名稱相近一律拒收。兩track均不接醫／牙／健康照護學院，不以課名含Medical或Medicine作regex封鎖。",
+      "【中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。】2026/10官方伙伴原始JSON已核對唯一中央列：type01校級、exchange02學生交流／exchange03免學費皆t，另讀官方JS與搜尋控制對應。僅中央1列公開摘錄、不是262伙伴全文已讀；協議2007.10締結不代表116名額、當期接收或個人免學費核准。"
+    ],
+    "document_requirements": [
+      {
+        "name": "僅YSEP非建築：申請前指定教授同意email之PDF（建築由校方安排）",
+        "source_urls": [
+          "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep"
+        ],
+        "needs_confirmation": true
+      }
+    ],
+    "scope": {
+      "home_universities": [
+        "國立中央大學"
+      ],
+      "partner_universities": [
+        "東京科學大學 Institute of Science Tokyo"
+      ],
+      "academic_years": [
+        "116"
+      ]
+    },
+    "source_urls": [
+      "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep"
+    ],
+    "checked_at": "2026-10-08T00:00:00Z",
+    "support_status": "needs_confirmation",
+    "needs_confirmation": true
+  },
+  "policies": [
+    {
+      "school_name": "東京科學大學 Institute of Science Tokyo",
+      "rule_id": "ncu-133-host-ysep-prior-consent",
+      "requirement_name": "僅YSEP非建築：申請前指定教授同意email之PDF（建築由校方安排）",
+      "requires_host_admission": false,
+      "requires_on_campus_housing": false,
+      "requires_institutional_confirmation": true,
+      "confirmation_note": "只限YSEP非建築已核接收範圍；ACAP／建築由校方安排，不由錄取或學制自動要求教授同意。",
+      "scope_note": "查核日ACAP／YSEP／TIEC參考，中央115-2與116開放不同，當期尚未核准。",
+      "source_urls": [
+        "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep"
+      ],
+      "checked_at": "2026-10-08",
+      "current_applicability_verified": false,
+      "source_versions": [
+        {
+          "source_id": "host-science-ysep",
+          "url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep",
+          "sha256": "0fc63e78c435a76bd0bcb90236d4e425e48313c4c90858668d1be29e550f35cf"
+        }
+      ]
+    }
+  ]
+}

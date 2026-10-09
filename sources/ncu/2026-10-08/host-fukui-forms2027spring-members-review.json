@@ -1,0 +1,63 @@
+{
+  "url": "https://www.u-fukui.ac.jp/wp/wp-content/uploads/Application_form-3.zip",
+  "checked_at": "2026-10-09T01:19:59.480928+00:00",
+  "status": 200,
+  "sha256": "44994e664469cbdcb0a4b01c7084ced1b670e17fb7769d9e0232f7ef0834860c",
+  "container_members": [
+    {
+      "name": "Application_form/5_Form2_Recommendation_202704.docx",
+      "size": 30082
+    },
+    {
+      "name": "Application_form/6_Form3_Health_202704.doc",
+      "size": 175616
+    },
+    {
+      "name": "Application_form/7_Form4_Certificate of Enrollment_202704.docx",
+      "size": 39924
+    },
+    {
+      "name": "Application_form/9_CoE.xlsx",
+      "size": 88866
+    }
+  ],
+  "human_read": false,
+  "extraction_first_attempt": {
+    "status": "failed",
+    "reason": "openpyxl unavailable; original ZIP and member bytes unchanged. Retried XML parsing without package installation."
+  },
+  "reviewed_members": [
+    {
+      "name": "Application_form/5_Form2_Recommendation_202704.docx",
+      "member_sha256": "36382eaf8115d797a166422a2994288203e66981f9888da2556d343880a5ecb4",
+      "native_extraction_sha256": "987918dd16f6962d42740c351b8a1b9efc16648fffc6fe6ec6e7750c15acf5e8",
+      "native_text_read": true,
+      "visual_read": false,
+      "reading_scope": "Recommendation and enrollment DOCX native text; health DOC decoded with antiword temporary Debian package; COE Excel all3 cell sheets read, drawing/layout fields not fully checked. No116 applicability verified."
+    },
+    {
+      "name": "Application_form/6_Form3_Health_202704.doc",
+      "member_sha256": "7a68c9d76f1ab7e4b874b0393ccf38e342487541cb42c3ef9ce7207079ae5303",
+      "native_extraction_sha256": "38bd71754c42ddd21092d5afda80420fd8d81f7cf2183ad536ab0dff654a8fc2",
+      "native_text_read": true,
+      "visual_read": false,
+      "reading_scope": "Recommendation and enrollment DOCX native text; health DOC decoded with antiword temporary Debian package; COE Excel all3 cell sheets read, drawing/layout fields not fully checked. No116 applicability verified."
+    },
+    {
+      "name": "Application_form/7_Form4_Certificate of Enrollment_202704.docx",
+      "member_sha256": "5dc30753342214a1b6360aeeb5a091c20dadbcb392718a9c02542de6eb944e2a",
+      "native_extraction_sha256": "914d15265537cd6cb3ffbec58be2db2cc12fd109b9d554849655a1d507942912",
+      "native_text_read": true,
+      "visual_read": false,
+      "reading_scope": "Recommendation and enrollment DOCX native text; health DOC decoded with antiword temporary Debian package; COE Excel all3 cell sheets read, drawing/layout fields not fully checked. No116 applicability verified."
+    },
+    {
+      "name": "Application_form/9_CoE.xlsx",
+      "member_sha256": "289b0bbcaab712592c920edea3788f318f1af6c463c37900ae8d679c5fffdd50",
+      "native_extraction_sha256": "a53f7a05c938c0de91e241062e397301571d7fbf0f816dd192e8136c3fba190c",
+      "native_text_read": true,
+      "visual_read": false,
+      "reading_scope": "Recommendation and enrollment DOCX native text; health DOC decoded with antiword temporary Debian package; COE Excel all3 cell sheets read, drawing/layout fields not fully checked. No116 applicability verified."
+    }
+  ]
+}

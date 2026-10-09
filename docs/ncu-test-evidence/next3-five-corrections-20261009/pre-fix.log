@@ -1,0 +1,70 @@
+CONFTEST LOADED!
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+______ test_ryukoku_initial_four_items_are_separate_and_jlpt_is_optional _______
+
+tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-15/test_ryukoku_initial_four_item0')
+
+    def test_ryukoku_initial_four_items_are_separate_and_jlpt_is_optional(tmp_path):
+        steps = {s['rule_id']: s for s in workflow(tmp_path)['steps']}
+        docs = steps['ncu-135-host-initial-reference']['document_requirements']
+>       assert len(docs) == 10
+E       AssertionError: assert 6 == 10
+E        +  where 6 = len([{'name': '龍谷讀書計畫詳填（過短重寫、可另紙）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}, {'name': '母校日語能力評估... [], ...}, {'name': '全部交换生SPOT結果PDF（測驗三項、非語檢證書替代）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}])
+
+tests/test_ncu_next3_review_corrections.py:30: AssertionError
+______ test_ryukoku_later_conditional_items_keep_stage_and_missing_forms _______
+
+tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-15/test_ryukoku_later_conditional0')
+
+    def test_ryukoku_later_conditional_items_keep_stage_and_missing_forms(tmp_path):
+        steps = {s['rule_id']: s for s in workflow(tmp_path)['steps']}
+        for stage, names in [('housing', RYU_HOUSING), ('arrival', RYU_ARRIVAL)]:
+            docs = steps['ncu-135-host-' + stage]['document_requirements']
+>           assert [d['name'] for d in docs] == names
+E           AssertionError: assert [] == ['NASIC入寮日期回覆...；本人簽名，原件未取得）']
+E             
+E             Right contains 2 more items, first extra item: 'NASIC入寮日期回覆件（申請校方宿舍者；NASIC另送，原件未取得）'
+E             Use -v to get more diff
+
+tests/test_ncu_next3_review_corrections.py:45: AssertionError
+__ test_kumamoto_nationality_and_language_submission_conditions_are_distinct ___
+
+tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-15/test_kumamoto_nationality_and_0')
+
+    def test_kumamoto_nationality_and_language_submission_conditions_are_distinct(tmp_path):
+        p = partner('熊本'); a = ncu_field_audit(p.school_name)
+>       assert '非日本國籍學生' in ' '.join(a['fields']['eligibility']['points'])
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'points'
+
+tests/test_ncu_next3_review_corrections.py:55: KeyError
+______ test_kumamoto_private_insurance_is_historical_one_time_not_annual _______
+
+tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-15/test_kumamoto_private_insuranc0')
+
+    def test_kumamoto_private_insurance_is_historical_one_time_not_annual(tmp_path):
+        p = partner('熊本'); a = ncu_field_audit(p.school_name)['fields']['insurance']
+>       text = ' '.join(a['points'])
+                        ^^^^^^^^^^^
+E       KeyError: 'points'
+
+tests/test_ncu_next3_review_corrections.py:70: KeyError
+___ test_nufs_study_abroad_cannot_take_gjp_and_no_program_change_is_separate ___
+
+tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-15/test_nufs_study_abroad_cannot_0')
+
+    def test_nufs_study_abroad_cannot_take_gjp_and_no_program_change_is_separate(tmp_path):
+        p = partner('名古屋外國語'); a = ncu_field_audit(p.school_name)
+>       assert '不能修GJP課程' in ' '.join(a['fields']['courses']['points'])
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'points'
+
+tests/test_ncu_next3_review_corrections.py:82: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_next3_review_corrections.py::test_ryukoku_initial_four_items_are_separate_and_jlpt_is_optional
+FAILED tests/test_ncu_next3_review_corrections.py::test_ryukoku_later_conditional_items_keep_stage_and_missing_forms
+FAILED tests/test_ncu_next3_review_corrections.py::test_kumamoto_nationality_and_language_submission_conditions_are_distinct
+FAILED tests/test_ncu_next3_review_corrections.py::test_kumamoto_private_insurance_is_historical_one_time_not_annual
+FAILED tests/test_ncu_next3_review_corrections.py::test_nufs_study_abroad_cannot_take_gjp_and_no_program_change_is_separate
+5 failed, 4 deselected in 13.97s

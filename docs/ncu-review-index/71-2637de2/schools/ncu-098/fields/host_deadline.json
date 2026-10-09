@@ -1,0 +1,50 @@
+{
+  "key": "host_deadline",
+  "label": "提名與外校申請期限",
+  "status": "needs_confirmation",
+  "note": "未標年官網列Fall申請6/30、Spring12/30，沒有提名截止、年分、時刻；2017資訊表也列相同月日，但不能當2027已驗證精確期限。 2012申請表另列Spring2012/11/30，與未標年官網／2017表12/30不同；兩者年份不同，保留版本與原文，不用舊表覆蓋或推定2027截止。",
+  "source_urls": [
+    "https://erasmus.sdu.edu.tr/en/deadlines/deadlines-5673s.html",
+    "https://erasmus.sdu.edu.tr/assets/uploads/sites/280/files/student-application-form-10042012.doc"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://erasmus.sdu.edu.tr/en/deadlines/deadlines-5673s.html",
+      "source_id": "host-sdu-deadlines",
+      "page": null,
+      "source_title": "SDU Erasmus申請期限",
+      "applicability": "Süleyman Demirel University官方未標年Erasmus申請頁；2026/10/8重讀HTTP200，先前HTTP500是讀取失敗紀錄。中央116與KA171適用待核對。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 97,
+        "field": "host_deadline",
+        "evidence_array_index": 0,
+        "text_sha256": "c19d67f774d2e26b34daefe590228e5cf12d566735d4b17ac417d2536e2c432d",
+        "char_count": 292
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://erasmus.sdu.edu.tr/assets/uploads/sites/280/files/student-application-form-10042012.doc",
+      "source_id": "host-sdu-appform",
+      "page": null,
+      "source_title": "SDU申請表（入口仍列2012）",
+      "applicability": "Süleyman Demirel University官方未標年Erasmus申請頁；2026/10/8重讀HTTP200，先前HTTP500是讀取失敗紀錄。中央116與KA171適用待核對。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 97,
+        "field": "host_deadline",
+        "evidence_array_index": 1,
+        "text_sha256": "88aff083d4774a5b5165496d94ebd6b9da45911192733fddab2c5e18e36253ff",
+        "char_count": 5909
+      }
+    }
+  ],
+  "unresolved": "中央116梯次對應年份、時區、提名截止與是否改期未确认。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Süleyman Demirel University官方未標年Erasmus申請頁；2026/10/8重讀HTTP200，先前HTTP500是讀取失敗紀錄。中央116與KA171適用待核對。"
+}

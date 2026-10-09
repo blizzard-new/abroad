@@ -1,0 +1,67 @@
+{
+  "key": "host_deadline",
+  "label": "提名與外校申請期限",
+  "status": "needs_confirmation",
+  "note": "AY2027官網：Fall2027提名2027/3/1–4/15，申請3/1–4/30；Spring2027提名2026/9/1–10/15、申請9/1–10/31，後者早於中央116春季出發，不移作Spring2028。 新版未標年PDF原圖第3頁為年例提名9/1–10/15／3/1–4/15，申請9/1–10/31／3/1–4/30；文字抽取含不可見舊日期，另留視覺摘錄。自費Visiting第9頁5/31／11/30不是交換截止。",
+  "source_urls": [
+    "https://eng.uos.ac.kr/oia/web/contents/OIA_Studyat_01_01",
+    "https://eng.uos.ac.kr/oia/web/file/download/uu/328b55bd2562426e9fc9284bed1a49fc"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://eng.uos.ac.kr/oia/web/contents/OIA_Studyat_01_01",
+      "source_id": "host-uos-calendar",
+      "page": null,
+      "source_title": "UOS 精確校曆與學期",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "host_deadline",
+        "evidence_array_index": 0,
+        "text_sha256": "00ab2f550381b206223b65b23d20b642078632d4d482b61e0683b1741a5727c1",
+        "char_count": 839
+      }
+    },
+    {
+      "text_method": "human_visual_selected_passages",
+      "source_url": "https://eng.uos.ac.kr/oia/web/file/download/uu/328b55bd2562426e9fc9284bed1a49fc",
+      "source_id": "host-uos-partner-current",
+      "page": 3,
+      "source_title": "UOS 現連Partner Information；未標年，有舊圖層須視覺核對",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "host_deadline",
+        "evidence_array_index": 1,
+        "text_sha256": "3497eac4698a0a172336a39d5a0291fd878cabd9fe3bd68b71d00b792d30822e",
+        "char_count": 692
+      }
+    },
+    {
+      "text_method": "human_visual_selected_passages",
+      "source_url": "https://eng.uos.ac.kr/oia/web/file/download/uu/328b55bd2562426e9fc9284bed1a49fc",
+      "source_id": "host-uos-partner-current",
+      "page": 9,
+      "source_title": "UOS 現連Partner Information；未標年，有舊圖層須視覺核對",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "host_deadline",
+        "evidence_array_index": 2,
+        "text_sha256": "4bb59311bff9dffdecbd3d06e1cc1386f1f7fd5176fcf8e2b0854cbb6f207321",
+        "char_count": 309
+      }
+    }
+  ],
+  "unresolved": "時刻／時區、中央可提名方案及Spring2028確切期限未核實；不啟用精確提醒。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。"
+}

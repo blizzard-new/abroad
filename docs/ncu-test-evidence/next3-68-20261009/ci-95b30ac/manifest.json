@@ -1,0 +1,50 @@
+{
+  "checked_at": "2026-10-09T03:06:30.977434+00:00",
+  "sha": "95b30acbdfbfadb02ce8d97a4cd7ac4d686f279b",
+  "queries": [
+    {
+      "name": "workflow_runs",
+      "http_status": 200,
+      "url": "https://api.github.com/repos/blizzard-new/abroad/actions/runs?head_sha=95b30acbdfbfadb02ce8d97a4cd7ac4d686f279b",
+      "runs": [
+        {
+          "id": 37877659259,
+          "name": ".github/workflows/quality.yml",
+          "status": "completed",
+          "conclusion": "failure",
+          "head_sha": "95b30acbdfbfadb02ce8d97a4cd7ac4d686f279b",
+          "html_url": "https://github.com/blizzard-new/abroad/actions/runs/37877659259"
+        }
+      ],
+      "job_queries": [
+        {
+          "run_id": 37877659259,
+          "http_status": 200,
+          "url": "https://api.github.com/repos/blizzard-new/abroad/actions/runs/37877659259/jobs",
+          "total_count": 0
+        }
+      ]
+    },
+    {
+      "name": "check_runs",
+      "http_status": 200,
+      "url": "https://api.github.com/repos/blizzard-new/abroad/commits/95b30acbdfbfadb02ce8d97a4cd7ac4d686f279b/check-runs",
+      "runs": [
+        {
+          "id": 113649831142,
+          "name": "Supabase Preview",
+          "status": "completed",
+          "conclusion": "skipped",
+          "head_sha": "95b30acbdfbfadb02ce8d97a4cd7ac4d686f279b",
+          "html_url": "https://github.com/blizzard-new/abroad/runs/113649831142"
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "http_status": 200,
+      "url": "https://api.github.com/repos/blizzard-new/abroad/commits/95b30acbdfbfadb02ce8d97a4cd7ac4d686f279b/status",
+      "state": "pending"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "fields": [
+    {
+      "field": "city",
+      "status": "needs_confirmation",
+      "unresolved": "116所屬／實際課程校區與宿舍通勤待核，不把校名京都套所有學院。"
+    },
+    {
+      "field": "transport",
+      "status": "needs_confirmation",
+      "unresolved": "116分配宿舍／課程校區交通、機場接送與實際班次費用未取得。"
+    },
+    {
+      "field": "quota",
+      "status": "needs_confirmation",
+      "unresolved": null
+    },
+    {
+      "field": "eligibility",
+      "status": "needs_confirmation",
+      "unresolved": "中央116協議／學制／指定學院與是否regular-only、實際接收方案待兩校確認。"
+    },
+    {
+      "field": "language",
+      "status": "needs_confirmation",
+      "unresolved": "116英語檢定形式／效期、影像要求、JapaneseTrack建議邏輯與placement當期通知待核；不自動換算。"
+    },
+    {
+      "field": "home_documents",
+      "status": "available",
+      "unresolved": null
+    },
+    {
+      "field": "host_documents",
+      "status": "needs_confirmation",
+      "unresolved": "116當期入口／財力件／表格名稱、推薦保密提交與日語評估章戳位置待兩校確認；已公開的照片、護照、成績單與有則附JLPT已逐件列清，不列為未取得要求。"
+    },
+    {
+      "field": "home_deadline",
+      "status": "available",
+      "unresolved": null
+    },
+    {
+      "field": "host_deadline",
+      "status": "needs_confirmation",
+      "unresolved": "116的2027秋／2028春提名與申請精確deadline未取得；Fall2027校曆不能當Fall申請公告。"
+    },
+    {
+      "field": "study_period",
+      "status": "needs_confirmation",
+      "unresolved": "116指定學期校曆／接送／考試與入寮最終日待核；不得把tentative寫已確定。"
+    },
+    {
+      "field": "courses",
+      "status": "needs_confirmation",
+      "unresolved": "116實際開課／syllabus動態結果未取得（HTTP200只JS入口）、中央協議可選學院與個別先修容量待核。"
+    },
+    {
+      "field": "tuition",
+      "status": "needs_confirmation",
+      "unresolved": "中央116免學費、行政費與其他校方收費待兩校確認。"
+    },
+    {
+      "field": "cost",
+      "status": "needs_confirmation",
+      "unresolved": "116月生活費總預算、最終房租／押金／補貼與銀行條件待核；不把住房單項當完整生活費。"
+    },
+    {
+      "field": "housing",
+      "status": "needs_confirmation",
+      "unresolved": "116交換宿舍申請表／deadline、床具強制性與費額、5／7日衝突及外宿QR表待宿舍確認，不硬填一個數字。 NASIC入寮日期回覆件、Pledge本體及指定回覆日尚未取得。"
+    },
+    {
+      "field": "insurance",
+      "status": "needs_confirmation",
+      "unresolved": "116海外保額／proof繳交格式與日期未取得；NHI與行前海外保險分開。"
+    },
+    {
+      "field": "visa",
+      "status": "needs_confirmation",
+      "unresolved": "116個人COE財力與移民追加件／送件期限及國籍JPETS需另核，guide不是所有國籍簽證完整清單。"
+    },
+    {
+      "field": "arrival",
+      "status": "needs_confirmation",
+      "unresolved": "116指定arrival／orientation連結、機票前置明文、resident登記材料及入寮後開戶表本體／指定提交日待核；不把COE附件統一作到校件。"
+    }
+  ],
+  "unretrieved_sources": [
+    {
+      "id": "host-ryukoku-next3-syllabus-index",
+      "url": "https://syllabus.ws.ryukoku.ac.jp/acrsw/CSylNoSSO/CNoSSO.do",
+      "reason": "HTTP200僅acslb-client入口，未取得動態課程結果；入口下載不等於課綱已讀。"
+    }
+  ]
+}

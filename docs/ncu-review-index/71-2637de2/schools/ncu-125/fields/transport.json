@@ -1,0 +1,68 @@
+{
+  "key": "transport",
+  "label": "抵達與日常交通",
+  "status": "needs_confirmation",
+  "note": "官方access列東京／名古屋／大阪至福井與小松機場路线，時長為頁面參考非購票保證；需要依實际住处／校區查當期時刻表。 Spring27沒有接機，Bunkyo、Matsuoka、Tsuruga交通分別核；旧示例機場9000不是116交通报价。",
+  "source_urls": [
+    "https://www.u-fukui.ac.jp/eng/about/access/",
+    "https://www.u-fukui.ac.jp/wp/wp-content/uploads/2_Guidebook_202704_EN.pdf",
+    "https://www.u-fukui.ac.jp/wp/wp-content/uploads/FACT-SHEET-2026-2027_ver6.pdf"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.u-fukui.ac.jp/eng/about/access/",
+      "source_id": "host-fukui-access",
+      "page": null,
+      "source_title": "fukui-access",
+      "applicability": "2026–2027v5／v6、Spring2027guide／四原件與一般生活資料分開；全部仍非中央116對應2027秋／2028春完整核准。",
+      "checked_at": "2026-10-09",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 124,
+        "field": "transport",
+        "evidence_array_index": 0,
+        "text_sha256": "fa86921c1a7ea91038369a4ba123e45efb1e707a4852f88b5a29b158299a53ba",
+        "char_count": 1044
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.u-fukui.ac.jp/wp/wp-content/uploads/2_Guidebook_202704_EN.pdf",
+      "source_id": "host-fukui-guide2027spring",
+      "page": 7,
+      "source_title": "fukui-guide2027spring",
+      "applicability": "2026–2027v5／v6、Spring2027guide／四原件與一般生活資料分開；全部仍非中央116對應2027秋／2028春完整核准。",
+      "checked_at": "2026-10-09",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 124,
+        "field": "transport",
+        "evidence_array_index": 1,
+        "text_sha256": "ac8ce3615fdc06273c8757076adaf423ec96db45e1a2d2ebbb11a1d750195086",
+        "char_count": 3680
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.u-fukui.ac.jp/wp/wp-content/uploads/FACT-SHEET-2026-2027_ver6.pdf",
+      "source_id": "host-fukui-factsheet-v6",
+      "page": 8,
+      "source_title": "fukui-factsheet-v6",
+      "applicability": "2026–2027v5／v6、Spring2027guide／四原件與一般生活資料分開；全部仍非中央116對應2027秋／2028春完整核准。",
+      "checked_at": "2026-10-09",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 124,
+        "field": "transport",
+        "evidence_array_index": 2,
+        "text_sha256": "8db3057fb81c7431933786af7784950c18e421683305792987071978090f3b69",
+        "char_count": 3326
+      }
+    }
+  ],
+  "unresolved": "116到校／宿舍通知、火車／公車實際班次與價格未核。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "2026–2027v5／v6、Spring2027guide／四原件與一般生活資料分開；全部仍非中央116對應2027秋／2028春完整核准。"
+}

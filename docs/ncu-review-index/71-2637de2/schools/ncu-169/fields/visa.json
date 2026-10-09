@@ -1,0 +1,32 @@
+{
+  "key": "visa",
+  "label": "簽證／居留",
+  "status": "needs_confirmation",
+  "note": "國際生網站列X1／X2，現連visa規定仍2013版；它是foreigners適用內容，不能當臺灣籍台胞證／居留要求。",
+  "source_urls": [
+    "https://english.dhu.edu.cn/visa/list.htm"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://english.dhu.edu.cn/visa/list.htm",
+      "source_id": "host-dhu-visa",
+      "page": null,
+      "source_title": "DHU international visa（非台胞證核定）",
+      "applicability": "DHU2026秋international C.E.P（明列non-Chinese citizen）；中央116臺灣籍交換方案未核定，不將國際生規則直接套給台生。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 166,
+        "field": "visa",
+        "evidence_array_index": 0,
+        "text_sha256": "227a9a2bf48098584ff91a029d2a507b6a1d8abec1498c898e4fac7aa08ca028",
+        "char_count": 2911
+      }
+    }
+  ],
+  "unresolved": "臺灣籍出入境證件與當期實務需另讀適用官方來源。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "DHU2026秋international C.E.P（明列non-Chinese citizen）；中央116臺灣籍交換方案未核定，不將國際生規則直接套給台生。"
+}

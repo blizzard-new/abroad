@@ -116,7 +116,7 @@ def test_options_on_the_partner_count_for_course_and_language():
 
 def test_bundled_destination_profiles_yield_honest_budget_results():
     profiles = storage.load_destination_profiles()
-    assert len(profiles) == 571
+    assert len(profiles) == 840
     statuses = {}
     for row in profiles:
         fit = school_budget_fit(row, 40000)

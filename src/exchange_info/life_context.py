@@ -213,6 +213,39 @@ def _for_location(snapshot: LifeResearchSnapshot, location: UniversityLocation) 
 def _profile_evidence(profile: DestinationProfile) -> list[LifeEvidence]:
     if not profile.coverage_status.startswith("official_"):
         return []
+    if profile.home_university == "國立中央大學":
+        from .ncu_student_view import ncu_field_audit
+        audit = ncu_field_audit(profile.school_name)
+        if not audit or not any(
+            source["status"] == "reviewed_partial_scope" for source in audit["read_sources"]
+        ):
+            return []
+        # These sections were assembled field by field with explicit source
+        # scopes. A caveat in one point must not erase the other reference
+        # points, and their source year must remain visible to students.
+        themes = {
+            "housing": "housing", "cost": "cost", "transport": "transport",
+            "courses": "academics", "arrival": "social", "city": "campus_culture",
+            "insurance": "safety", "visa": "safety",
+        }
+        rows = []
+        for section in profile.student_guide_sections:
+            theme = themes.get(section.key)
+            keys = ("tuition", "cost") if section.key == "cost" else (
+                ("courses", "study_period") if section.key == "courses" else (section.key,)
+            )
+            if not any(audit["fields"].get(key, {}).get("original_evidence")
+                       and audit["fields"][key]["status"] != "missing" for key in keys):
+                continue
+            sources = [LifeSource(title=section.title, url=url)
+                       for url in section.source_urls if public_https_url(url)]
+            if theme and section.points and sources:
+                scope = "；".join(filter(None, (section.summary, section.caution)))
+                rows.append(LifeEvidence(
+                    theme=theme, kind="official", text="\n".join(section.points),
+                    sources=sources, checked_at=profile.last_checked, scope=scope,
+                ))
+        return rows
     sources = [LifeSource(title=s.title, url=s.source_url) for s in profile.sources if public_https_url(s.source_url)]
     if not sources:
         return []

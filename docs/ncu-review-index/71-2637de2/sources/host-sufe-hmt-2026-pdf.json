@@ -1,0 +1,121 @@
+{
+  "id": "host-sufe-hmt-2026-pdf",
+  "row_ids": [
+    "ncu-170"
+  ],
+  "url": "https://ieco.sufe.edu.cn/_upload/article/files/5f/f8/c9d33dcd4cb8a0e5ef19e47d03fc/9d03fc3d-a4c9-4ee4-863b-a22259225a7d.pdf",
+  "title": "SUFE官網現連2026–27港澳臺手冊PDF",
+  "expected_document_format": "pdf",
+  "label": "SUFE官網現連2026–27港澳臺手冊PDF",
+  "checked_at": "2026-10-08",
+  "status": 200,
+  "final_url": "https://ieco.sufe.edu.cn/_upload/article/files/5f/f8/c9d33dcd4cb8a0e5ef19e47d03fc/9d03fc3d-a4c9-4ee4-863b-a22259225a7d.pdf",
+  "sha256": "fe1a4fcc3ce52883446b5715c3b559ae9ca4e7957678b50c2f5d11cad540e024",
+  "content_type": "application/pdf",
+  "text_quality_issues": [
+    {
+      "pages": [
+        1,
+        8
+      ],
+      "reason": "原文字型映射含NUL，未修造缺字；仍須視覺核對。"
+    }
+  ],
+  "status_note": "public_source_extracted_scope_pending",
+  "visual_review": {
+    "source_sha256": "fe1a4fcc3ce52883446b5715c3b559ae9ca4e7957678b50c2f5d11cad540e024",
+    "checked_at": "2026-10-08",
+    "pdf_pages_reviewed": [
+      1,
+      8
+    ],
+    "method": "官網現連高清PDF原第1、8頁轉PNG，人工視覺核對封面與封底；其餘頁沒有以Drive版SHA替代查核。",
+    "instructions_zh": "此官網高清原件SHA與中央Drive壓縮版不同，只核對第1、8頁版本。封面2026–27、封底2025–26仍衝突；並非八頁全部閱讀或中央116核准。",
+    "ocr_status": "not_performed",
+    "rendered_page_sha256": {
+      "1": "5e60a96b75f6d7a4bd73e9b33c1371d91325cc8dc4fce0c1efbcb561a3ca7bda",
+      "8": "2ae9e295fca5be2c03b710cbc6917fbd235c3868255900144349713ee6161f01"
+    },
+    "page_transcriptions": [
+      {
+        "page": 1,
+        "text": "2026--2027 上海财经大学来校交换生信息手册。适用于持港澳台身份证件或中国护照申请人。",
+        "scope": "selected_original_passages",
+        "method": "human_visual"
+      },
+      {
+        "page": 8,
+        "text": "2025--2026 上海财经大学来校交换生信息手册——适用于持港澳台身份证件、中国护照申请人。",
+        "scope": "selected_original_passages",
+        "method": "human_visual"
+      }
+    ]
+  },
+  "page_transcriptions": [
+    {
+      "page": 1,
+      "text": "2026--2027 上海财经大学来校交换生信息手册。适用于持港澳台身份证件或中国护照申请人。",
+      "scope": "selected_original_passages",
+      "method": "human_visual"
+    },
+    {
+      "page": 8,
+      "text": "2025--2026 上海财经大学来校交换生信息手册——适用于持港澳台身份证件、中国护照申请人。",
+      "scope": "selected_original_passages",
+      "method": "human_visual"
+    }
+  ],
+  "ocr_status": "not_performed",
+  "content_status": {
+    "response_bytes_received": true,
+    "downloaded": true,
+    "page_count": 8,
+    "text_page_count": 8,
+    "any_text": true,
+    "all_pages_have_text": true,
+    "all_pages_read": false,
+    "visual_reviewed_page_count": 2,
+    "visual_reviewed_image_count": 0,
+    "visual_reviewed": true,
+    "ocr_status": "not_performed"
+  },
+  "original_source_locator": {
+    "path": "src/exchange_info/official_data/ncu/source-evidence.json.gz",
+    "source_array_index": 527,
+    "source_id": "host-sufe-hmt-2026-pdf"
+  },
+  "pages": [
+    {
+      "page": 1,
+      "path": "host-sufe-hmt-2026-pdf/pages/000.json"
+    },
+    {
+      "page": 2,
+      "path": "host-sufe-hmt-2026-pdf/pages/001.json"
+    },
+    {
+      "page": 3,
+      "path": "host-sufe-hmt-2026-pdf/pages/002.json"
+    },
+    {
+      "page": 4,
+      "path": "host-sufe-hmt-2026-pdf/pages/003.json"
+    },
+    {
+      "page": 5,
+      "path": "host-sufe-hmt-2026-pdf/pages/004.json"
+    },
+    {
+      "page": 6,
+      "path": "host-sufe-hmt-2026-pdf/pages/005.json"
+    },
+    {
+      "page": 7,
+      "path": "host-sufe-hmt-2026-pdf/pages/006.json"
+    },
+    {
+      "page": 8,
+      "path": "host-sufe-hmt-2026-pdf/pages/007.json"
+    }
+  ]
+}

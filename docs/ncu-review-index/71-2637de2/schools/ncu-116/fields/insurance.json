@@ -1,0 +1,122 @@
+{
+  "key": "insurance",
+  "label": "保險",
+  "status": "needs_confirmation",
+  "note": "北海道最新生活頁使用國保資格確認書／資格情報のお知らせ，MyNumber保險登錄與未登錄分別處理；舊2019政府中文手冊與2021郵局指南保險卡／保費不當現行規則。國保依收入、住所／年度計算，host約2000円/月或約20000円/年只是不同頁參考，不能當個人當期固定費。 HUSTEP官方明示國保＋學研災＋附帶學總三類mandatory；一般HU生活頁對學研災strongly recommended及Inbound可選，不拿一般頁覆寫program要求，也不將九工大Type D費表套北海道。SA／SRS與JLCSP實際保險包／費率需接收單位核。 私人租屋火災含tenant liability與個人賠償通常另購，保證公司不是保險。中央另要求足額醫療／意外／急難救助保障；保額／除外責任及海外保險可否替代不得自動判已足額。",
+  "source_urls": [
+    "https://intl-student-handbook.oia.hokudai.ac.jp/en/procedure-en/city_office/health_insurance",
+    "https://www.oia.hokudai.ac.jp/cier/insurance/?wovn=en",
+    "https://www.global.hokudai.ac.jp/admissions/short-term-exchange/",
+    "https://www.oia.hokudai.ac.jp/cier/apartment/?wovn=en",
+    "https://www.pref.hokkaido.lg.jp/fs/2/4/9/6/3/7/0/_/tebiki-TraditionalChinese.pdf",
+    "https://www.oia.hokudai.ac.jp/cier/wp/wp-content/uploads/2021/04/at-post-office.pdf"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://intl-student-handbook.oia.hokudai.ac.jp/en/procedure-en/city_office/health_insurance",
+      "source_id": "host-hokkaido-life-nhi",
+      "page": null,
+      "source_title": "北海道生活指南：國保資格確認書／MyNumber",
+      "applicability": "北海道院級協議獨立查核；最新program參考2026–2027／2027春，非中央116名額或2027秋／2028春核准。未核當期、track與個人條件；所有host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 115,
+        "field": "insurance",
+        "evidence_array_index": 0,
+        "text_sha256": "aa69fd1e954910b3b23081bef2887d2532c703b750b2faf9bee26d4dcf324a31",
+        "char_count": 3363
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.oia.hokudai.ac.jp/cier/insurance/?wovn=en",
+      "source_id": "host-hokkaido-life-insurance",
+      "page": null,
+      "source_title": "北海道生活指南：學研災／附帶保險",
+      "applicability": "北海道院級協議獨立查核；最新program參考2026–2027／2027春，非中央116名額或2027秋／2028春核准。未核當期、track與個人條件；所有host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 115,
+        "field": "insurance",
+        "evidence_array_index": 1,
+        "text_sha256": "f88ce146546931a5f760325873ef9f8f5f8ac4a8c39a97f4778aa2cf71692621",
+        "char_count": 5768
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.global.hokudai.ac.jp/admissions/short-term-exchange/",
+      "source_id": "host-hokkaido-hustep-current",
+      "page": null,
+      "source_title": "HUSTEP現行官方申請／資格／生活問答",
+      "applicability": "北海道院級協議獨立查核；最新program參考2026–2027／2027春，非中央116名額或2027秋／2028春核准。未核當期、track與個人條件；所有host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 115,
+        "field": "insurance",
+        "evidence_array_index": 2,
+        "text_sha256": "b535af4b89880ab817a0dfb7b72940b9be552ee3b5582f3a8be16c60f3c03341",
+        "char_count": 15706
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.oia.hokudai.ac.jp/cier/apartment/?wovn=en",
+      "source_id": "host-hokkaido-life-private-apartment",
+      "page": null,
+      "source_title": "北海道生活指南：私人租屋／保證與保險",
+      "applicability": "北海道院級協議獨立查核；最新program參考2026–2027／2027春，非中央116名額或2027秋／2028春核准。未核當期、track與個人條件；所有host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 115,
+        "field": "insurance",
+        "evidence_array_index": 3,
+        "text_sha256": "7eca995e1f57c7d7bfa80f3d30c621ef347c834fd7c46df33326f32d1cdde9a4",
+        "char_count": 4991
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.pref.hokkaido.lg.jp/fs/2/4/9/6/3/7/0/_/tebiki-TraditionalChinese.pdf",
+      "source_id": "host-hokkaido-government-nhi-hokkaido-zh",
+      "page": 1,
+      "source_title": "北海道政府國保中文手冊（2019舊卡制參考）",
+      "applicability": "北海道院級協議獨立查核；最新program參考2026–2027／2027春，非中央116名額或2027秋／2028春核准。未核當期、track與個人條件；所有host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 115,
+        "field": "insurance",
+        "evidence_array_index": 4,
+        "text_sha256": "de4cbe5a017f819305b276e7c8ac53fe266a28946a5af2635f3bd1cc881ec69d",
+        "char_count": 245
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.oia.hokudai.ac.jp/cier/wp/wp-content/uploads/2021/04/at-post-office.pdf",
+      "source_id": "host-hokkaido-postoffice-arrival2021",
+      "page": 1,
+      "source_title": "北海道到校郵局及舊保費指南（2021/4）",
+      "applicability": "北海道院級協議獨立查核；最新program參考2026–2027／2027春，非中央116名額或2027秋／2028春核准。未核當期、track與個人條件；所有host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 115,
+        "field": "insurance",
+        "evidence_array_index": 5,
+        "text_sha256": "30e87f4b4c366dff5a52af1793c23c49423b98a60f19b28b6fa37b1f8a5cd100",
+        "char_count": 305
+      }
+    }
+  ],
+  "unresolved": "116非學位接收身分的保險方案／當期保費、條款與入居保险未取得。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "北海道院級協議獨立查核；最新program參考2026–2027／2027春，非中央116名額或2027秋／2028春核准。未核當期、track與個人條件；所有host流程pending。"
+}

@@ -725,6 +725,14 @@ function homeAcademicPass(profile) {
       (profile.classRankPercent > 0 && profile.classRankPercent <= rules.undergraduate_rank_maximum)
     );
   }
+  if (Object.keys(rules.degree_score_minimums || {}).length) {
+    const degree = profile.degree || "";
+    const undergraduate = ["大學部","學士","學士班","大一","大二","大三","大四","大五","大六"].includes(degree);
+    if (undergraduate && (rules.excluded_undergraduate_years || []).includes(profile.currentYear || degree)) return false;
+    if (undergraduate && !profile.currentYear) return false;
+    const minimum = rules.degree_score_minimums[degree];
+    return minimum != null && profile.academicScore != null && profile.academicScore >= minimum;
+  }
   const minimum = academicMinimum();
   return minimum != null && profile.academicScore != null && profile.academicScore >= minimum
     && (state.dashboard?.academic_gpa_minimum == null || (profile.academicGpa != null && profile.academicGpa >= state.dashboard.academic_gpa_minimum));
@@ -732,6 +740,17 @@ function homeAcademicPass(profile) {
 
 function renderAcademicFields() {
   const ntu = homeSelectionRules().academic_policy === "gpa_or_rank";
+  const ncu = activeHomeSchool() === "國立中央大學";
+  for (const [selector, values] of [["#advisor-degree", ["在職碩士班"]], ["#advisor-current-year", ["大五", "大六"]]]) {
+    const select = $(selector);
+    if (ncu) {
+      for (const value of values) if (!Array.from(select.options).some(option => option.value === value)) {
+        const option = new Option(value, value);
+        option.dataset.ncuOption = "true";
+        select.add(option);
+      }
+    } else select.querySelectorAll("[data-ncu-option]").forEach(option => option.remove());
+  }
   $("#advisor-percent-field").hidden = ntu;
   $("#advisor-academic-score").disabled = ntu;
   document.querySelectorAll("[data-ntu-academic-field]").forEach((label) => {
@@ -745,8 +764,8 @@ function renderAcademicFields() {
   gpa.max = "4.3";
   gpa.placeholder = ccu ? "中正須至少 3.0" : "例如 2.44；與排名擇一";
   $("#advisor-gpa-label").textContent = ccu ? "歷年 GPA" : "適用學年GPA（4.3制）";
-  $("#advisor-academic-rule").hidden = !(ntu || ccu);
-  if (ntu || ccu) $("#advisor-academic-rule").textContent = state.dashboard.academic_score_rule;
+  $("#advisor-academic-rule").hidden = !state.dashboard?.academic_score_rule;
+  if (state.dashboard?.academic_score_rule) $("#advisor-academic-rule").textContent = state.dashboard.academic_score_rule;
 }
 
 function homeCollegeOptions() {
@@ -804,6 +823,16 @@ function languageThreshold(test) {
   }
   if (state.dashboard) return null;
   return LANGUAGE_THRESHOLDS[test] || null;
+}
+
+function selectionLanguageLabel(test, score) {
+  const threshold = languageThreshold(test);
+  if (threshold) return `${threshold.label} ${score ?? "待補"}`;
+  if (activeHomeSchool() === "國立中央大學" && test) {
+    const label = LANGUAGE_THRESHOLDS[test]?.label || test.toUpperCase();
+    return `${label} ${score ?? "待補"}`;
+  }
+  return "語言能力待確認";
 }
 
 function truncate(value, max = 90) {
@@ -1061,6 +1090,7 @@ async function loadSupportedUniversities() {
         official_url: "https://studyabroad.ntu.edu.tw/", supported: true,
         partner_count: 288, coverage_note: "116-1校級甄選、文件與補助；282項名額待公布，6項零名額。",
       },
+      {id:"ncu",school_name:"國立中央大學",short_name:"中央",english_name:"National Central University",hero_image:"/static/assets/ncu-campus.svg",official_url:"https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",supported:true,partner_count:214,coverage_note:"116-1簡章已公告，名額預定2026/10/12公告；214項115目錄僅供參考。"},
     ];
   }
   renderSchoolOptions();
@@ -2435,13 +2465,12 @@ function selectionConditionsPayload(profile = state.eligibilityProfile) {
 function selectionProfileFromWorkspace(conditions) {
   const profile = sanitizeSelectionConditions(conditions)?.profile;
   if (!profile) return null;
-  const threshold = languageThreshold(profile.language_test);
   return {
     college:profile.college, department:profile.department, currentYear:profile.current_year,
     degree:profile.degree_level, academicScore:profile.academic_score,
     academicGpa:profile.academic_gpa, classRankPercent:profile.class_rank_percent,
     languageTest:profile.language_test || "", languageScore:profile.language_score,
-    languageLabel:threshold ? `${threshold.label} ${profile.language_score ?? "待補"}` : "語言能力待確認",
+    languageLabel:selectionLanguageLabel(profile.language_test, profile.language_score),
     targetTerm:profile.target_term, preferredCountry:profile.preferred_country,
     monthlyBudget:profile.monthly_budget, scholarshipNeeded:profile.needs_scholarship,
     academicYear:profile.academic_year, applicationRound:profile.application_round,
@@ -2497,6 +2526,7 @@ function sanitizeAccountWorkspacePayload(payload, homeSchool = activeHomeSchool(
       application_round: context.application_round || "",
       semester: context.semester || "",
       flags: Array.isArray(context.flags) ? context.flags.map(String) : [],
+      partner_document_states: Object.fromEntries(Object.entries(context.partner_document_states || {}).slice(0,214).filter(([,value])=>value && typeof value === "object" && !Array.isArray(value)).map(([key,value])=>[key,{host_admission_status:["unknown","not_accepted","accepted"].includes(value.host_admission_status) ? value.host_admission_status : "unknown",housing_choice:["unknown","on_campus","off_campus"].includes(value.housing_choice) ? value.housing_choice : "unknown"}])),
     },
     application_selections: selections,
     submission_progress: source.submission_progress && typeof source.submission_progress === "object"
@@ -2626,6 +2656,11 @@ function mergeAccountWorkspaceConflict(baseWorkspace, remoteWorkspace, localWork
         local.application_context,
       ),
       school_name: remote.home_school,
+      partner_document_states: mergeWorkspaceRecord(
+        base.application_context?.partner_document_states,
+        remote.application_context?.partner_document_states,
+        local.application_context?.partner_document_states,
+      ),
     },
     application_selections: mergeWorkspaceRecord(
       base.application_selections,
@@ -4376,7 +4411,7 @@ function eligibilitySummary() {
   return {
     likely,
     review,
-    qualificationLabel: academicPass && languagePass ? (activeHomeSchool() === "國立臺灣大學" ? "所填成績與英語分數達基本門檻" : `符合${activeUniversityProfile().short_name}基本門檻`) : "仍有基本條件要確認",
+    qualificationLabel: homeSelectionRules().language_certificate_required ? "校內正式語檢及外校條件仍須核對" : academicPass && languagePass ? (activeHomeSchool() === "國立臺灣大學" ? "所填成績與英語分數達基本門檻" : `符合${activeUniversityProfile().short_name}基本門檻`) : "仍有基本條件要確認",
   };
 }
 
@@ -5864,6 +5899,10 @@ function refreshApplicationFieldConditions(template) {
     if (english) { date.min = "2025-05-01"; date.max = new Date().toISOString().slice(0, 10); }
     else { date.removeAttribute("min"); date.removeAttribute("max"); }
   }
+  if (date && activeHomeSchool() === "國立中央大學") {
+    date.removeAttribute("min");
+    date.max = new Date().toISOString().slice(0, 10);
+  }
 }
 
 function applicationProfileCompletion() {
@@ -5919,6 +5958,49 @@ function applicationFlagsFromForm(form) {
   return ["subsidy", "military_service", "full_year"].filter((name) => form.elements[name]?.checked);
 }
 
+function ncuDocumentStateKey(schoolName = state.applicationContext.target_school, year = state.applicationContext.academic_year, round = state.applicationContext.application_round, semester = state.applicationContext.semester) {
+  return JSON.stringify([schoolName || "", year || "", round || "", semester || ""]);
+}
+
+function ncuDocumentState(schoolName, year, round, semester = state.applicationContext.semester) {
+  return state.applicationContext.partner_document_states?.[ncuDocumentStateKey(schoolName, year, round, semester)] || {host_admission_status:"unknown",housing_choice:"unknown"};
+}
+
+function ncuCatalogContextKey(context) {
+  const key = ncuDocumentStateKey(context.target_school,context.academic_year,context.application_round,context.semester);
+  const selection = context.partner_document_states?.[key] || {};
+  return JSON.stringify([context.target_school || "",context.college || "",context.department || "",context.degree_level || "",context.academic_year || "",context.application_round || "",context.semester || "",selection.host_admission_status || "unknown",selection.housing_choice || "unknown"]);
+}
+
+function restoreNcuDocumentState() {
+  const panel = $("#ncu-document-state");
+  if (!panel) return;
+  panel.hidden = activeHomeSchool() !== "國立中央大學" || !state.applicationContext.target_school || state.applicationContext.program_type !== "exchange";
+  const selection = ncuDocumentState(state.applicationContext.target_school, state.applicationContext.academic_year, state.applicationContext.application_round);
+  $("#ncu-host-admission").value = selection.host_admission_status;
+  $("#ncu-housing-choice").value = selection.housing_choice;
+  $("#ncu-document-state-note").textContent = `此學校、年度／梯次與學期的條件文件會依選擇顯示準備時點；當期要求仍須查核。${state.account ? "選擇會保存於本次申請設定。" : "登入後可保存選擇。"}`;
+}
+
+function documentApplicabilityMarkup(results) {
+  const labels = {applicable:"符合參考條件",not_applicable:"不適用",deferred:"錄取後再準備",needs_confirmation:"條件需確認"};
+  return (results || []).map(result=>`<p class="document-applicability" data-document-applicability="${escapeHtml(result.status)}"><strong>${escapeHtml(labels[result.status] || "需確認")} · ${escapeHtml(result.requirement_name)}</strong><span>${escapeHtml(result.note)}</span></p>`).join("");
+}
+
+async function handleNcuDocumentStateChange() {
+  if (activeHomeSchool() !== "國立中央大學" || !state.applicationContext.target_school) return;
+  const key = ncuDocumentStateKey();
+  state.applicationContext.partner_document_states = {...(state.applicationContext.partner_document_states || {}), [key]:{host_admission_status:$("#ncu-host-admission").value,housing_choice:$("#ncu-housing-choice").value}};
+  persistApplicationContext();
+  if (state.personalApplicationPlan?.choices?.some(choice=>choice.school_name === state.applicationContext.target_school)) {
+    state.personalApplicationPlan = null;
+    $("#eligibility-result").innerHTML = '<p>錄取或住宿條件已修改，請重新核對志願以更新個人準備任務。</p>';
+    renderPersonalPlanSnapshot();
+  }
+  await loadApplicationTemplates();
+  window.UniWayMultiPlan?.render();
+}
+
 function readApplicationContextForm() {
   const form = $("#application-context-form");
   if (!form) return state.applicationContext;
@@ -5948,6 +6030,7 @@ function restoreApplicationContextForm() {
     form.elements[name].checked = (state.applicationContext.flags || []).includes(name);
   });
   renderApplicationTargetSchools();
+  restoreNcuDocumentState();
 }
 
 function renderApplicationTargetSchools() {
@@ -6022,9 +6105,14 @@ async function loadApplicationTemplates({ homeSchool = activeHomeSchool() } = {}
         school: requestedSchool,
         target_school: context.target_school,
       });
-      ["college", "department", "degree_level", "academic_year", "application_round"].forEach((key) => {
+      ["college", "department", "degree_level", "academic_year", "application_round", "semester"].forEach((key) => {
         if (context[key]) catalogParams.set(key, context[key]);
       });
+      if (requestedSchool === "國立中央大學") {
+        const selection = ncuDocumentState(context.target_school, context.academic_year, context.application_round);
+        catalogParams.set("host_admission_status", selection.host_admission_status);
+        catalogParams.set("housing_choice", selection.housing_choice);
+      }
       try {
         catalog = await fetchJson(`/application-center/catalog?${catalogParams}`);
       } catch (error) {
@@ -6219,12 +6307,15 @@ function renderApplicationDocumentCatalog() {
         const pendingForm = item.applicability_status && safeSourceUrl(item.official_form_url);
         const sourceLabel = item.official_form_verified ? "開啟已核實官方表格／文件" : item.download_available ? "下載校方正式表格" : pendingForm ? "查看官方表格來源（待核實）" : "查看官方規定";
         const sourceHref = item.download_available || pendingForm ? item.official_form_url : sourceUrl;
+        const referenceSources = activeHomeSchool() === "國立中央大學" && item.needs_confirmation
+          ? [...new Set(item.source_urls || [])].filter((url) => url !== sourceHref && safeSourceUrl(url))
+          : [];
         const checkedAt = item.source_checked_at ? formatDate(item.source_checked_at) : "查核日待補";
         return `
           <article class="application-requirement-item ${item.needs_confirmation ? "needs-confirmation" : "is-confirmed"}">
             <span class="application-requirement-order">${item.sequence}</span>
-            <div><span class="application-requirement-badges"><em>${item.needs_confirmation ? "待確認" : "已確認"}</em>${item.download_available ? "<b>官方表格</b>" : ""}</span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.step_title)}</small><p>${escapeHtml(applicationRequirementMeta(item))}</p>${item.needs_confirmation ? `<p class="application-requirement-contact">請聯絡 ${escapeHtml(item.contact_unit || catalog.contact_unit)}</p>` : ""}</div>
-            <div class="application-requirement-source">${sourceHref ? `<a href="${escapeHtml(sourceHref)}" target="_blank" rel="noreferrer"><i data-lucide="external-link" aria-hidden="true"></i><span>${sourceLabel}</span></a>` : "<span>來源待校方提供</span>"}<small>${escapeHtml(checkedAt)}</small></div>
+            <div><span class="application-requirement-badges"><em>${item.needs_confirmation ? "待確認" : "已確認"}</em>${item.download_available ? "<b>官方表格</b>" : ""}</span><strong>${escapeHtml(item.name)}</strong><small>${escapeHtml(item.step_title)}</small><p>${escapeHtml(applicationRequirementMeta(item))}</p>${documentApplicabilityMarkup(item.applicability ? [item.applicability] : [])}${item.needs_confirmation ? `<p class="application-requirement-contact">請聯絡 ${escapeHtml(item.contact_unit || catalog.contact_unit)}</p>` : ""}</div>
+            <div class="application-requirement-source">${sourceHref ? `<a href="${escapeHtml(sourceHref)}" target="_blank" rel="noreferrer"><i data-lucide="external-link" aria-hidden="true"></i><span>${sourceLabel}</span></a>` : "<span>來源待校方提供</span>"}${referenceSources.length ? `<details><summary>其他參考來源（當期待確認）</summary>${referenceSources.map((url, index) => `<a href="${escapeHtml(safeSourceUrl(url))}" target="_blank" rel="noreferrer">參考來源 ${index + 1}</a>`).join("")}</details>` : ""}<small>${escapeHtml(checkedAt)}</small></div>
           </article>`;
       }).join("")}</div>
     </details>`).join("");
@@ -7679,12 +7770,16 @@ function partnerSummaryPoints(item, key) {
   return [];
 }
 
-function renderStudentPointList(points, { limit = 4, compact = false, fallback = "尚無資料" } = {}) {
-  const visible = (points || []).filter(Boolean).slice(0, limit);
+function renderStudentPointList(points, { limit = 4, compact = false, fallback = "尚無資料", expandRemaining = false } = {}) {
+  const all = (points || []).filter(Boolean);
+  const visible = all.slice(0, limit);
   const values = visible.length ? visible : [fallback];
-  return `<ul class="student-point-list${compact ? " compact" : ""}">${values
+  const list = `<ul class="student-point-list${compact ? " compact" : ""}">${values
     .map((point) => `<li>${renderSummaryText(point)}</li>`)
     .join("")}</ul>`;
+  return list + (expandRemaining && all.length > limit
+    ? `<details class="partner-summary-more"><summary>查看其餘 ${all.length - limit} 項說明</summary>${renderStudentPointList(all.slice(limit), { limit: all.length, compact, fallback })}</details>`
+    : "");
 }
 
 function renderSummaryText(value) {
@@ -7823,6 +7918,12 @@ function renderComparison(items) {
       .join("")}</tbody></table></div>`;
 }
 
+function ncuSourceReadingScope(source) {
+  const scopes = [source.source_read_scope_note_zh, source.reading_review?.scope]
+    .filter(value => typeof value === "string" && value && value !== source.privacy_note);
+  return [...new Set(scopes)].join("；");
+}
+
 function openUniversityDetail(item, { updateHistory = true } = {}) {
   if (!canAccessPartnerCatalog()) { window.location.hash = "#partners"; return; }
   if (!item) return;
@@ -7883,6 +7984,21 @@ function openUniversityDetail(item, { updateHistory = true } = {}) {
   const cachedCompleteness = state.completenessCache.get(item.school_name);
   if (cachedCompleteness) renderSchoolCompleteness(cachedCompleteness);
   else loadSchoolCompleteness(item);
+  document.querySelector("#ncu-source-audit")?.addEventListener("toggle", async (event) => {
+    if (!event.currentTarget.open || event.currentTarget.dataset.loaded) return;
+    const element = event.currentTarget;
+    const body = element.querySelector("#ncu-source-audit-body");
+    try {
+      const report = await fetchJson(`/partner-source-audit?school=${encodeURIComponent(item.school_name)}&home_school=${encodeURIComponent(activeHomeSchool())}`);
+      if (state.activeSchool !== item.school_name) return;
+      body.innerHTML = `<p>查核日：${escapeHtml(report.checked_at)}。已取得來源與缺口列於下方；下載成功不代表文字可讀或全文已查。各來源年度、校區與track適用性仍須核對。</p>
+        <ul>${Object.values(report.fields).map(row=>`<li><strong>${escapeHtml(row.label)}</strong>：${escapeHtml(row.note)}${row.unresolved ? `<small>${escapeHtml(row.unresolved)}</small>`:""}${row.key.startsWith("home_") || row.key === "quota" ? (row.original_evidence || []).map(p=>`<details><summary>${escapeHtml(p.source_title)} · 原文第${escapeHtml(p.page)}頁</summary><p>${escapeHtml(p.applicability)} · 查核${escapeHtml(p.checked_at)} · <a href="${escapeHtml(safeSourceUrl(p.source_url))}" target="_blank" rel="noopener noreferrer">官方來源</a></p><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text)}</pre></details>`).join("") : ""}</li>`).join("")}</ul>
+        ${report.source_evidence.map(src=>`<details><summary>${escapeHtml(src.label)} · ${src.source_excerpt_only ? "必要欄位摘錄" : `${src.pages.length}個來源頁／段`}；${src.content_status?.text_page_count ?? 0}頁有文字；${src.content_status?.visual_reviewed_page_count ?? 0}頁已視覺查核${src.content_status?.visual_reviewed_image_count ? `；${src.content_status.visual_reviewed_image_count}張原文圖片已視覺查核` : ""}</summary><p>${escapeHtml(report.read_sources.find(row=>row.id === src.id)?.applicability || "適用性待核對")}</p><p><a href="${escapeHtml(safeSourceUrl(src.url))}" target="_blank" rel="noopener noreferrer">官方公開來源</a> · 查核${escapeHtml(src.checked_at)}${src.excerpt_note_zh ? `<small>${escapeHtml(src.excerpt_note_zh)}</small>` : ""}${src.conversion_review?.note_zh ? `<small>${escapeHtml(src.conversion_review.note_zh)}</small>` : ""}${src.visual_review?.instructions_zh ? `<small>${escapeHtml(src.visual_review.instructions_zh)}</small>` : ""}${(src.text_quality_issues || []).length ? `<small>${escapeHtml(src.text_quality_issues.map(x=>`${x.reason}（頁${x.pages.join("、")}）`).join("；"))}</small>` : ""}${(src.non_text_pages || []).length ? `<small>${src.non_text_pages.every(page => page == null) ? "無固定PDF頁碼的來源含空白段／工作表" : `第${escapeHtml(src.non_text_pages.join("、"))}頁無可抽取文字`}；${src.content_status?.all_pages_read ? "已有原件SHA相符的閱讀紀錄；文字／視覺查核範圍分列，原始空頁仍保留。" : "須看官方原頁，未視為全文核對完成。"}</small>` : ""}</p>${src.privacy_note ? `<p class="ncu-source-scope">${escapeHtml(src.privacy_note)}</p>` : ""}${ncuSourceReadingScope(src) && ncuSourceReadingScope(src) !== src.privacy_note ? `<p class="ncu-source-reading-scope">閱讀範圍：${escapeHtml(ncuSourceReadingScope(src))}</p>` : ""}${src.pages.map(p=>`<details><summary>${p.archive_member ? `原文表格 ${escapeHtml(p.archive_member)}（ZIP內檔案，無PDF頁碼）` : p.image ? `原文圖片 ${escapeHtml(p.image)}（無PDF頁碼）` : p.slide ? `原文投影片 ${escapeHtml(p.slide)}（無PDF頁碼）` : p.sheet ? `原文工作表 ${escapeHtml(p.sheet)}（無PDF頁碼）` : p.page == null ? (src.source_excerpt_only ? "必要欄位摘錄（無固定PDF頁碼）" : "原文（無固定PDF頁碼）") : `原文第${escapeHtml(p.page)}頁`}</summary><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text || (p.sheet ? "此工作表沒有非空儲存格；原始空白工作表另保留，閱讀狀態依同SHA逐工作表紀錄。" : "此頁無可抽取文字；請看原件及另外標示的視覺核對摘錄。"))}</pre></details>`).join("")}${(src.page_transcriptions || []).map(p=>`<details class="ncu-visual-passage"><summary>視覺核對摘錄（原PDF第${escapeHtml(p.page)}頁）</summary><p>人工核對的選定原文段落；原始抽取另外保留，並非全文轉錄或本期適用性核准。</p><pre style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHtml(p.text)}</pre></details>`).join("")}</details>`).join("")}
+        ${report.unretrieved_sources.length ? `<section><p>未取得來源：以下是本次讀取失敗的網址，不推定登入限定、官方未公告或停止交換。</p><ul>${report.unretrieved_sources.map(src=>`<li class="ncu-unretrieved-source" data-source-id="${escapeHtml(src.id)}"><strong>${escapeHtml(src.id)}</strong>：${escapeHtml(src.reason)}${src.url ? ` · <a href="${escapeHtml(safeSourceUrl(src.url))}" target="_blank" rel="noopener noreferrer">已查網址（本次未取得）</a>` : ""}</li>`).join("")}</ul></section>`:""}`;
+      element.dataset.loaded = "true";
+    } catch (error) { body.textContent = `查核記錄讀取失敗：${error.message}`; }
+  });
+
 
   const cachedCommunity = state.communityCache.get(item.school_name);
   if (cachedCommunity) renderCommunityThreads(cachedCommunity);
@@ -8124,7 +8240,7 @@ function renderPartnerStudentSummary(item) {
         ${groups.map((group) => `
           <section class="partner-summary-group">
             <h4><i data-lucide="${group.icon}" aria-hidden="true"></i>${escapeHtml(group.label)}</h4>
-            ${renderStudentPointList(group.points, { limit: 10 })}
+            ${renderStudentPointList(group.points, { limit: 10, expandRemaining: activeHomeSchool() === "國立中央大學" })}
           </section>`).join("")}
       </div>
 
@@ -8177,6 +8293,7 @@ function renderUniversityOverview(item) {
         ${renderPartnerFieldEvidence(item)}
         ${window.UniWayCcuDetails?.render(item, escapeHtml) || ""}
         <details class="overview-more school-data-completeness"><summary>這所學校的資料完整度</summary><div id="school-data-completeness-body" aria-live="polite" aria-busy="true"><div class="skeleton skeleton-card"></div></div></details>
+        ${activeHomeSchool() === "國立中央大學" ? '<details id="ncu-source-audit" class="overview-more"><summary>已查來源、適用年度與未解問題</summary><div id="ncu-source-audit-body">展開讀取逐欄查核與原文頁碼。</div></details>' : ""}
         <details class="overview-more"><summary>選校參考</summary><div id="quick-decision-fit">${renderQuickDecisionFit(item)}</div></details>
         ${renderProgramOptions(item)}
         <details class="overview-more"><summary>方案資料</summary><div class="university-facts">${facts.map(([label, value]) => `<div class="university-fact"><span>${escapeHtml(label)}</span><strong>${highlightHtml(value)}</strong></div>`).join("")}</div></details>
@@ -8285,9 +8402,10 @@ function renderSchoolCompleteness(report) {
   if (!body) return;
   body.setAttribute("aria-busy", "false");
   body.innerHTML = `
-    <p class="school-completeness-summary"><strong>${report.available_count} / ${report.total_count} 項資料完整</strong>${report.priority_gaps.length ? `<span>，優先向學校確認：${report.priority_gaps.map(escapeHtml).join("、")}</span>` : ""}</p>
+    <p class="school-completeness-summary"><strong>${report.available_count} / ${report.total_count} ${report.home_university === "國立中央大學" ? "項本期已核實" : "項已提供資料"}</strong>${report.priority_gaps.length ? `<span>，優先向學校確認：${report.priority_gaps.map(escapeHtml).join("、")}</span>` : ""}</p>
     <ul class="school-completeness-list">${report.items.map((row) => {
-      const [label, icon] = COMPLETENESS_STATUS[row.status] || ["待確認", "circle-alert"];
+      const [statusLabel, icon] = COMPLETENESS_STATUS[row.status] || ["待確認", "circle-alert"];
+      const label = report.home_university === "國立中央大學" && row.status === "available" ? "本期已核實" : statusLabel;
       const link = (row.source_urls || [])[0];
       return `<li data-completeness-status="${escapeHtml(row.status)}"><i data-lucide="${icon}" aria-hidden="true"></i><span><strong>${escapeHtml(row.label)}</strong><em>${label}</em><small>${escapeHtml(row.note)}${link ? ` <a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">來源</a>` : ""}</small></span></li>`;
     }).join("")}</ul>
@@ -9369,13 +9487,13 @@ function renderWorkflowStep(step, index, workflow) {
       </summary>
       <div class="workflow-step-body">
         <p>${highlightHtml(step.summary)}</p>
-        ${renderWorkflowScope(step)}
+        ${renderWorkflowScope(step, workflow)}
         ${needsConfirmation ? `<div class="workflow-warning"><i data-lucide="triangle-alert" aria-hidden="true"></i><div><strong>此步驟仍有送件或文件細節待確認。</strong>${step.confirmation_contact ? `<span>請聯絡：${escapeHtml(step.confirmation_contact)}</span>` : ""}</div></div>` : ""}
         ${renderWorkflowDeadlineStatus(step, workflow)}
         ${renderWorkflowSubmission(step)}
         ${renderWorkflowSubmissionProgress(workflow, step)}
         ${step.details?.length ? `<div><h4>具體要做</h4><ul>${step.details.map((detail) => `<li>${highlightHtml(detail)}</li>`).join("")}</ul></div>` : ""}
-        ${requirements.length ? `<div><h4>這一步要準備</h4><ul class="workflow-documents">${requirements.map(renderWorkflowDocumentRequirement).join("")}</ul></div>` : ""}
+        ${requirements.length ? `<div><h4>這一步要準備</h4><ul class="workflow-documents">${requirements.map((requirement) => renderWorkflowDocumentRequirement(requirement, { showReferenceForm: workflow.home_university === "國立中央大學" })).join("")}</ul></div>` : ""}
         ${step.action_url ? `<a class="official-link workflow-action" href="${escapeHtml(step.action_url)}" target="_blank" rel="noreferrer"><span>開啟這一步的官方頁面</span><i data-lucide="external-link" aria-hidden="true"></i></a>` : ""}
         ${workflow.workflow_id && workflow.issue_report_snapshot && step.rule_id ? `<div class="workflow-step-report"><span>發現資格、期限、文件或送件資訊不一致？</span><button type="button" class="text-button" data-workflow-issue-report data-step-rule-id="${escapeHtml(step.rule_id)}"><i data-lucide="message-square-warning" aria-hidden="true"></i>回報此步驟</button></div>` : ""}
       </div>
@@ -9430,7 +9548,7 @@ function workflowArrivalDeadlinePending(step) {
     && !step.submission?.arrival_deadline_at;
 }
 
-function renderWorkflowScope(step) {
+function renderWorkflowScope(step, workflow) {
   const scope = step.scope || {};
   const labels = [
     ...(scope.colleges || []),
@@ -9439,7 +9557,11 @@ function renderWorkflowScope(step) {
     ...(scope.application_rounds || []),
   ];
   if (!labels.length) return "";
-  return `<div class="workflow-rule-meta"><strong>適用範圍</strong>${labels.map((label) => `<span>${escapeHtml(label)}</span>`).join("")}</div>`;
+  const pendingHostScope = workflow?.home_university === "國立中央大學"
+    && Boolean(scope.partner_universities?.length)
+    && workflowStepNeedsConfirmation(step);
+  const caption = pendingHostScope ? "規劃範圍（當期適用待確認）" : "適用範圍";
+  return `<div class="workflow-rule-meta"><strong>${caption}</strong>${labels.map((label) => `<span>${escapeHtml(label)}</span>`).join("")}</div>`;
 }
 
 function renderWorkflowSubmission(step) {
@@ -9465,7 +9587,7 @@ function renderWorkflowSubmission(step) {
     </div>`;
 }
 
-function renderWorkflowDocumentRequirement(requirement) {
+function renderWorkflowDocumentRequirement(requirement, { showReferenceForm = false } = {}) {
   const metadata = [];
   const stages = {nomination:"提名",student_application:"申請",after_application:"申請後補件（不等錄取）",second_submission:"第二次文件送件（時點待確認）",post_offer:"錄取後",after_dorm_assignment:"宿舍分配後",conditional_program:"特定計畫文件"};
   if (requirement.stage) metadata.push(`階段：${stages[requirement.stage] || requirement.stage}`);
@@ -9477,10 +9599,13 @@ function renderWorkflowDocumentRequirement(requirement) {
   metadata.push(WORKFLOW_COPY_LABELS[requirement.copy_type] || "文件形式待確認");
   if (requirement.signatures?.length) metadata.push(`簽署：${requirement.signatures.join("、")}`);
   if (requirement.stamps?.length) metadata.push(`核章：${requirement.stamps.join("、")}`);
+  const referenceUrl = showReferenceForm && requirement.official_form_url
+    ? safeSourceUrl(requirement.official_form_url)
+    : null;
   return `
     <li class="${requirement.needs_confirmation ? "needs-confirmation" : ""}">
       <i data-lucide="${requirement.needs_confirmation ? "circle-help" : "file-check-2"}" aria-hidden="true"></i>
-      <span><b>${highlightHtml(requirement.name)}</b><small>${metadata.map(escapeHtml).join(" · ")}${requirement.needs_confirmation ? " · 適用性及送件細節待確認" : ""}</small>${safeSourceUrl(requirement.official_form_url) ? (requirement.official_form_verified ? `<a href="${escapeHtml(requirement.official_form_url)}" target="_blank" rel="noreferrer">開啟已核實官方表格／文件</a><small>官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。</small>` : `<a href="${escapeHtml(requirement.official_form_url)}" target="_blank" rel="noreferrer">查看官方表格來源（待核實）</a><small>原檔下載未核實，適用年度仍待確認。</small>`) : ""}</span>
+      <span><b>${highlightHtml(requirement.name)}</b><small>${metadata.map(escapeHtml).join(" · ")}${requirement.needs_confirmation ? " · 適用性及送件細節待確認" : ""}</small>${!showReferenceForm && safeSourceUrl(requirement.official_form_url) ? (requirement.official_form_verified ? `<a href="${escapeHtml(requirement.official_form_url)}" target="_blank" rel="noreferrer">開啟已核實官方表格／文件</a><small>官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。</small>` : `<a href="${escapeHtml(requirement.official_form_url)}" target="_blank" rel="noreferrer">查看官方表格來源（待核實）</a><small>原檔下載未核實，適用年度仍待確認。</small>`) : ""}${referenceUrl && referenceUrl !== "#" ? `<small><a href="${escapeHtml(referenceUrl)}" target="_blank" rel="noopener noreferrer">官方參考表格（當期適用待確認）</a></small>` : ""}</span>
     </li>`;
 }
 
@@ -11189,7 +11314,7 @@ function renderPersonalApplicationPlan(plan) {
           <header><span class="application-plan-rank">第 ${choice.rank} 志願</span><div><strong>${escapeHtml(choice.school_name)}</strong><small>${escapeHtml(choice.country || "未標示國家")}</small></div><em class="application-plan-status ${meta.tone}">${escapeHtml(meta.label)}</em></header>
           <p>${escapeHtml(choice.summary)}</p>
           <div class="eligibility-checks">${choice.checks.map((check) => renderCheckRow(check.status === "needs_confirmation" ? "review" : check.status, `${check.title}：${check.detail}${check.contact_unit ? `（聯絡 ${check.contact_unit}）` : ""}`)).join("")}</div>
-          ${choice.checklist.length ? `<details class="application-plan-checklist" open><summary><span>個人下一步</span><strong>${choice.checklist.length} 項</strong></summary><ol>${choice.checklist.map((item) => `<li class="${item.needs_confirmation ? "needs-confirmation" : "verified"}"><span><i data-lucide="${item.needs_confirmation ? "circle-help" : "circle-check"}" aria-hidden="true"></i></span><div><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.detail)}</p><small>${escapeHtml(item.phase)} · ${escapeHtml(item.responsible_unit)}${item.confirmation_contact ? ` · 請聯絡 ${escapeHtml(item.confirmation_contact)}` : ""}</small>${item.source_urls?.[0] ? `<a href="${escapeHtml(item.source_urls[0])}" target="_blank" rel="noopener noreferrer">查看官方來源</a>` : ""}</div></li>`).join("")}</ol></details>` : `<div class="application-plan-empty"><strong>暫不建立執行清單</strong><span>這個志願尚未開放或缺少結構化流程，請先聯絡 ${escapeHtml(plan.contact_unit)}。</span></div>`}
+          ${choice.checklist.length ? `<details class="application-plan-checklist" open><summary><span>個人下一步</span><strong>${choice.checklist.length} 項</strong></summary><ol>${choice.checklist.map((item) => `<li class="${item.needs_confirmation ? "needs-confirmation" : "verified"}"><span><i data-lucide="${item.needs_confirmation ? "circle-help" : "circle-check"}" aria-hidden="true"></i></span><div><strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.detail)}</p>${documentApplicabilityMarkup(item.document_applicability)}<small>${escapeHtml(item.phase)} · ${escapeHtml(item.responsible_unit)}${item.confirmation_contact ? ` · 請聯絡 ${escapeHtml(item.confirmation_contact)}` : ""}</small>${item.source_urls?.[0] ? `<a href="${escapeHtml(item.source_urls[0])}" target="_blank" rel="noopener noreferrer">查看官方來源</a>` : ""}</div></li>`).join("")}</ol></details>` : `<div class="application-plan-empty"><strong>暫不建立執行清單</strong><span>這個志願尚未開放或缺少結構化流程，請先聯絡 ${escapeHtml(plan.contact_unit)}。</span></div>`}
         </article>`;
     }).join("")}</div>
     <div class="eligibility-actions"><button id="view-matched-schools" type="button" class="secondary-button">回到合作校比較</button></div>`;
@@ -11226,7 +11351,7 @@ async function checkEligibility(event) {
   const preferences = [1, 2, 3, 4, 5].slice(0,state.dashboard?.maximum_preferences || 5)
     .map((rank) => ({ rank, school_name: $(`#eligibility-preference-${rank}`).value }))
     .filter((item) => item.school_name)
-    .map((item, index) => ({ ...item, rank: index + 1 }));
+    .map((item, index) => ({ ...item, rank: index + 1, ...(activeHomeSchool() === "國立中央大學" ? {document_preparation_state:ncuDocumentState(item.school_name, academicYear, applicationRound)} : {}) }));
 
   if (!college || !department || !degree || !academicYear || !applicationRound || (!ntu && (academicScore === null || !Number.isFinite(academicScore))) || !languageTest || !preferences.length) {
     announce("請完成所有必填欄位", "error");
@@ -11277,6 +11402,7 @@ async function checkEligibility(event) {
     college,
     department,
     degree_level: degree,
+    current_year: profile.currentYear || null,
     academic_score: ntu ? null : academicScore,
     academic_gpa: academicGpa,
     class_rank_percent: classRankPercent,
@@ -11710,7 +11836,6 @@ async function submitAdvisorPlan(event) {
     state.advisorPlan = plan;
     delete form.dataset.draftOwner;
     if (payload.college || payload.degree_level || payload.academic_score !== null || payload.language_test) {
-      const threshold = languageThreshold(payload.language_test);
       state.eligibilityProfile = {
         academicYear,
         applicationRound,
@@ -11723,7 +11848,7 @@ async function submitAdvisorPlan(event) {
         classRankPercent: payload.class_rank_percent,
         languageTest: payload.language_test,
         languageScore: payload.language_score,
-        languageLabel: threshold ? `${threshold.label} ${payload.language_score || "待補"}` : "語言能力待確認",
+        languageLabel: selectionLanguageLabel(payload.language_test, payload.language_score),
         targetTerm: payload.target_term || "",
         preferredCountry: payload.preferred_country || "",
         monthlyBudget: payload.monthly_budget || 0,
@@ -12832,7 +12957,12 @@ function bindEvents() {
   });
 
   $("#application-context-form").addEventListener("submit", (event) => event.preventDefault());
-  $("#application-context-form").addEventListener("change", handleApplicationContextChange);
+  $("#application-context-form").addEventListener("change", (event) => {
+    if (["ncu-host-admission", "ncu-housing-choice"].includes(event.target.id)) return;
+    handleApplicationContextChange(event);
+  });
+  $("#ncu-host-admission").addEventListener("change", handleNcuDocumentStateChange);
+  $("#ncu-housing-choice").addEventListener("change", handleNcuDocumentStateChange);
   $("#application-profile-form").addEventListener("submit", saveApplicationProfile);
   $("#application-remember-profile").addEventListener("change", (event) => setApplicationProfileMemory(event.target.checked));
   $("#clear-application-profile-memory").addEventListener("click", clearApplicationProfileMemory);

@@ -308,7 +308,7 @@ def test_ccu_frontend_preferences_gpa_and_legacy_restoration():
     const state = {homeSchool:'國立中正大學',account:null,applications:[],dashboard:{maximum_preferences:3,academic_gpa_minimum:3,partner_universities:[]}};
     const elements = new Map(), calls = new Map();
     const $ = selector => {
-      if (!elements.has(selector)) { const label={hidden:false};elements.set(selector,{id:selector.slice(1),value:'old',dataset:{},closest:()=>label}); }
+      if (!elements.has(selector)) { const label={hidden:false};elements.set(selector,{id:selector.slice(1),value:'old',dataset:{},closest:()=>label,querySelectorAll:()=>[]}); }
       return elements.get(selector);
     };
     const activeHomeSchool = () => state.homeSchool;

@@ -1,0 +1,32 @@
+{
+  "key": "housing",
+  "label": "住宿與申請期限",
+  "status": "needs_confirmation",
+  "note": "首頁Current學生入口宣稱有住宿資源，實際正文只有標題導航，未提供房型／金額／申請表或期限；不把有住宿標籤當已讀宿舍規則。",
+  "source_urls": [
+    "https://io.uny.ac.id/content/current-intl-students"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://io.uny.ac.id/content/current-intl-students",
+      "source_id": "host-uny-current",
+      "page": null,
+      "source_title": "UNY現行學生資源入口；正文不足",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "housing",
+        "evidence_array_index": 0,
+        "text_sha256": "95fc826fb4bc193a6a824734fe519c49551ff4d0a5f79d4ad809871477c31260",
+        "char_count": 21
+      }
+    }
+  ],
+  "unresolved": "116宿舍申請方式、房型／校區、保證、費用／押金、申請／入住／付款截止均未取得。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。"
+}

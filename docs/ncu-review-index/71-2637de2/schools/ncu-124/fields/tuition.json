@@ -1,0 +1,50 @@
+{
+  "key": "tuition",
+  "label": "兩校學費／其他校方收費",
+  "status": "needs_confirmation",
+  "note": "一般為協議交換且須母校提名；目前所讀接收與舊中央摘要沒有逐項確認中央116學費條款，不能自動宣稱所有host費用免收。",
+  "source_urls": [
+    "https://www.u-toyama.ac.jp/wp/wp-content/uploads/study-abroad_exchange_students_inbound_en.pdf",
+    "https://drive.google.com/file/d/1OArbu2MdlYVuBbzi2RGCp7opEGwJNstH/view"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.u-toyama.ac.jp/wp/wp-content/uploads/study-abroad_exchange_students_inbound_en.pdf",
+      "source_id": "host-toyama-inbound-en-pdf",
+      "page": 1,
+      "source_title": "toyama-inbound-en-pdf",
+      "applicability": "現網一般全校級／faculty-level接收、2023住宿、2026秋生活及AY2024中央舊包分開；非116核准。",
+      "checked_at": "2026-10-09",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 123,
+        "field": "tuition",
+        "evidence_array_index": 0,
+        "text_sha256": "15d82c688c7c86d2512a3fe3d73b07acc39a5c203b9f7bb8c1aa5b9afed67b38",
+        "char_count": 1959
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://drive.google.com/file/d/1OArbu2MdlYVuBbzi2RGCp7opEGwJNstH/view",
+      "source_id": "1OArbu2MdlYVuBbzi2RGCp7opEGwJNstH",
+      "page": 1,
+      "source_title": "富山大學.pdf PDF",
+      "applicability": "現網一般全校級／faculty-level接收、2023住宿、2026秋生活及AY2024中央舊包分開；非116核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 123,
+        "field": "tuition",
+        "evidence_array_index": 1,
+        "text_sha256": "345f82a09d7ed50e73c9e6f1dbe4b729e68e1de664714f6739b3fd0ac0b6356d",
+        "char_count": 1308
+      }
+    }
+  ],
+  "unresolved": "116兩校學費、註冊／研究／設施費與協議付費額外項目未核。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "現網一般全校級／faculty-level接收、2023住宿、2026秋生活及AY2024中央舊包分開；非116核准。"
+}

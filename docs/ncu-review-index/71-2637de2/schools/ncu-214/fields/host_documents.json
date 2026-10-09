@@ -1,0 +1,50 @@
+{
+  "key": "host_documents",
+  "label": "外校申請文件／最新表格",
+  "status": "needs_confirmation",
+  "note": "已讀inbound／outbound雙欄，incoming由host評CV及面談、faculty確認接受與內容、presidential approval後發acceptance。這是作業流程，未列完整附件／最新版表格；不能把outbound nomination letters或頁內其他國家獎學金當中央host清單。",
+  "source_urls": [
+    "https://en.hcmute.edu.vn/Default.aspx?ArticleId=9ba0eca6-905c-40f8-a62f-fbbcf268caa7",
+    "https://oia.hcmute.edu.vn/Default.aspx?TopicId=eab90393-060c-41a2-b4fc-96e1c1e0607e"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://en.hcmute.edu.vn/Default.aspx?ArticleId=9ba0eca6-905c-40f8-a62f-fbbcf268caa7",
+      "source_id": "host-hcmute-inbound",
+      "page": null,
+      "source_title": "HCMUTE官方inbound／outbound交換流程表",
+      "applicability": "HCMUTE未標年官方inbound／outbound程序表及2026/10/8國際處索引；歷史合作名稱與當今更名並列，非中央116接收包。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 211,
+        "field": "host_documents",
+        "evidence_array_index": 0,
+        "text_sha256": "48e8ba2cb2914447e5f05b0540105aab74ab7e8fb9f390f2abb7b5df04c37836",
+        "char_count": 8387
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://oia.hcmute.edu.vn/Default.aspx?TopicId=eab90393-060c-41a2-b4fc-96e1c1e0607e",
+      "source_id": "host-hcmute-exchange",
+      "page": null,
+      "source_title": "HCMUTE國際處Student Exchange索引（多為outgoing）",
+      "applicability": "HCMUTE未標年官方inbound／outbound程序表及2026/10/8國際處索引；歷史合作名稱與當今更名並列，非中央116接收包。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 211,
+        "field": "host_documents",
+        "evidence_array_index": 1,
+        "text_sha256": "a1a461a89b513c1bd095362052c18c812125c9e7fe7771be7cc1e23b36decaea",
+        "char_count": 5309
+      }
+    }
+  ],
+  "unresolved": "完整incoming表／checklist／簽章與116適用未取得，host document_requirements不因流程已有CV字樣就標完成。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "HCMUTE未標年官方inbound／outbound程序表及2026/10/8國際處索引；歷史合作名稱與當今更名並列，非中央116接收包。"
+}

@@ -1,0 +1,86 @@
+{
+  "key": "housing",
+  "label": "住宿與申請期限",
+  "status": "needs_confirmation",
+  "note": "2027表明列dormitory由學生自付、未給保證或房價；Booklet第6頁僅列宿舍設施。 現連UndipLife公開JSON實際是五個生活入口；住宿轉往Mamikos外部搜尋，local頁要求啟用JavaScript，未讀到房价／房型／押金。不能把外部搜尋當校方宿舍保證、完整housing規則或確定可訂房。",
+  "source_urls": [
+    "https://drive.google.com/uc?export=download&id=1jtCUMzyVoqYHlyR0MmPgjAy3ZOmU5Kbo",
+    "https://drive.google.com/uc?export=download&id=1N4yL357nR1evBzPzAXqyYtTuc1PefwsY",
+    "https://bit.ly/m/UndipLife",
+    "https://bit.ly/3K1IsU7"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://drive.google.com/uc?export=download&id=1jtCUMzyVoqYHlyR0MmPgjAy3ZOmU5Kbo",
+      "source_id": "host-undip-factsheet-2027",
+      "page": 2,
+      "source_title": "UNDIP FACTSHEET for DEEP 2027",
+      "applicability": "UNDIP官網標2026 guideline的公開資料夾實際含2027 factsheet三頁與Spring2027海報；未標年38頁booklet原文全讀（四個空白／相片頁另視覺核對）。秋春詳細課冊明列2026，僅第1–4頁人工核對，其餘下載抽取不稱已逐課讀完；提名Excel仍Fall2026。中央116協議／2027秋及Spring2028適用性未核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 206,
+        "field": "housing",
+        "evidence_array_index": 0,
+        "text_sha256": "048dd44d5bb448b774fe88f0aa0b9fc2e698b535ce7da70796b98730b2515242",
+        "char_count": 2404
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://drive.google.com/uc?export=download&id=1N4yL357nR1evBzPzAXqyYtTuc1PefwsY",
+      "source_id": "host-undip-booklet",
+      "page": 6,
+      "source_title": "UNDIP BOOKLET DEEP官網現連",
+      "applicability": "UNDIP官網標2026 guideline的公開資料夾實際含2027 factsheet三頁與Spring2027海報；未標年38頁booklet原文全讀（四個空白／相片頁另視覺核對）。秋春詳細課冊明列2026，僅第1–4頁人工核對，其餘下載抽取不稱已逐課讀完；提名Excel仍Fall2026。中央116協議／2027秋及Spring2028適用性未核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 206,
+        "field": "housing",
+        "evidence_array_index": 1,
+        "text_sha256": "04134bc9cae703b8b410874c2a8c3e92e3b5b991dde0a9c478d49964f93f6f64",
+        "char_count": 1021
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://bit.ly/m/UndipLife",
+      "source_id": "host-undip-life-links",
+      "page": null,
+      "source_title": "UNDIP booklet現連生活指引入口",
+      "applicability": "UNDIP官網標2026 guideline的公開資料夾實際含2027 factsheet三頁與Spring2027海報；未標年38頁booklet原文全讀（四個空白／相片頁另視覺核對）。秋春詳細課冊明列2026，僅第1–4頁人工核對，其餘下載抽取不稱已逐課讀完；提名Excel仍Fall2026。中央116協議／2027秋及Spring2028適用性未核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 206,
+        "field": "housing",
+        "evidence_array_index": 2,
+        "text_sha256": "527b16c86d186da4419af136a209a1ff607a3feeb93d253bc234e7a3ae3d6aac",
+        "char_count": 38
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://bit.ly/3K1IsU7",
+      "source_id": "host-undip-boarding-referral",
+      "page": null,
+      "source_title": "UNDIP生活入口現連Mamikos住宿搜尋；需JS",
+      "applicability": "UNDIP官網標2026 guideline的公開資料夾實際含2027 factsheet三頁與Spring2027海報；未標年38頁booklet原文全讀（四個空白／相片頁另視覺核對）。秋春詳細課冊明列2026，僅第1–4頁人工核對，其餘下載抽取不稱已逐課讀完；提名Excel仍Fall2026。中央116協議／2027秋及Spring2028適用性未核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 206,
+        "field": "housing",
+        "evidence_array_index": 3,
+        "text_sha256": "2af5f80163546d1f8f15b86d2bb5e75b339b5508dd3b44af084ade61b9bf6bdf",
+        "char_count": 273
+      }
+    }
+  ],
+  "unresolved": "116住房房型／校區、名額保障、價格／押金／水電、申請／入住／付款／退租截止仍待核對，設施介紹不當住宿規則已讀。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "UNDIP官網標2026 guideline的公開資料夾實際含2027 factsheet三頁與Spring2027海報；未標年38頁booklet原文全讀（四個空白／相片頁另視覺核對）。秋春詳細課冊明列2026，僅第1–4頁人工核對，其餘下載抽取不稱已逐課讀完；提名Excel仍Fall2026。中央116協議／2027秋及Spring2028適用性未核准。"
+}

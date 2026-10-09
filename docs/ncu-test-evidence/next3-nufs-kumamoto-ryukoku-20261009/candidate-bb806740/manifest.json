@@ -1,0 +1,447 @@
+{
+  "candidate_sha": "bb806740e702892e78d358973cb2c54b739d3dbd",
+  "start_sha": "bb806740e702892e78d358973cb2c54b739d3dbd",
+  "start_porcelain": "",
+  "started_at": "2026-10-09T07:45:32.250552+00:00",
+  "baseline_sha": "012b580b9c38b20da0e52394eef1428c2ea90261",
+  "scope_rows": [
+    "ncu-130",
+    "ncu-134",
+    "ncu-135"
+  ],
+  "data_coverage": {
+    "checked_at": "2026-10-08T00:00:00+00:00",
+    "academic_year": "116",
+    "home_notice_confirmed": true,
+    "current_list_status": "scheduled_not_yet_announced",
+    "current_list_expected_date": "2026-10-12",
+    "historical_rows": 216,
+    "catalog_entries": 214,
+    "source_documents_attempted": 459,
+    "source_documents_downloaded": 459,
+    "source_documents_any_text": 454,
+    "source_documents_all_pages_have_text": 423,
+    "source_documents_all_pages_read": 29,
+    "source_documents_visual_reviewed": 7,
+    "source_documents_ocr_reviewed": 1,
+    "source_documents_with_errors": 0,
+    "source_documents_with_text_quality_gaps": 2,
+    "source_documents_with_non_text_pages": 36,
+    "source_non_text_page_count": 100,
+    "host_web_checks": 996,
+    "host_web_checks_with_errors": 117,
+    "source_mapped_entries": 214,
+    "host_source_mapped_entries": 211,
+    "entries_with_any_host_text": 210,
+    "reviewed_host_records": 74,
+    "host_full_116_verification_count": 0,
+    "pending_workflows": 214,
+    "provenance_note": "提取不是當期資格核准；逐欄缺口與原文分列於field-audit.json。"
+  },
+  "results": [
+    {
+      "name": "ncu_api_sources_life",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ncu_integration.py",
+        "tests/test_ncu_document_conditions.py",
+        "tests/test_ncu_source_collector.py",
+        "tests/test_school_completeness.py",
+        "tests/test_ncu_snapshot_cache.py",
+        "tests/test_ncu_japan3.py",
+        "tests/test_ncu_tcu_toyama_fukui.py",
+        "tests/test_ncu_shizuoka_chuo_kansai.py",
+        "tests/test_ncu_nufs_kumamoto_ryukoku.py",
+        "--junitxml",
+        "/workspace/ncu-verification-tmp/next3-bb806740e702892e78d358973cb2c54b739d3dbd/ncu_api_sources_life.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T07:45:32.350137+00:00",
+      "finished_at": "2026-10-09T07:50:54.959853+00:00",
+      "log": "ncu_api_sources_life.log",
+      "junit": {
+        "tests": 332,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_cases": [],
+      "skipped_cases": []
+    },
+    {
+      "name": "cgu_ntpu_ntu_shared_regression",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_school_content.py",
+        "tests/test_cgu_bundled_data.py",
+        "tests/test_ntpu_support.py",
+        "tests/test_ntu_audit.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_application_rules.py",
+        "tests/test_application_document_catalog.py",
+        "tests/test_application_documents_api.py",
+        "tests/test_fit_signals.py",
+        "tests/test_task_documents_and_reference_plan.py",
+        "tests/test_workflow_structuring.py",
+        "tests/test_account_workspace_api.py",
+        "tests/test_application_workflow.py",
+        "tests/test_workflow_context_api.py",
+        "tests/test_workflow_catalog_cache.py",
+        "tests/test_life_context.py",
+        "tests/test_public_translation.py",
+        "tests/test_public_translation_cold_cache.py",
+        "--junitxml",
+        "/workspace/ncu-verification-tmp/next3-bb806740e702892e78d358973cb2c54b739d3dbd/cgu_ntpu_ntu_shared_regression.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T07:50:55.261015+00:00",
+      "finished_at": "2026-10-09T07:52:05.161555+00:00",
+      "log": "cgu_ntpu_ntu_shared_regression.log",
+      "junit": {
+        "tests": 215,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 6
+      },
+      "failed_cases": [],
+      "skipped_cases": [
+        {
+          "name": "test_bundled_cgu_workflows_are_available_without_local_cache",
+          "reason": "Phase C data reviewed"
+        },
+        {
+          "name": "test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+          "reason": "Phase C data reviewed"
+        },
+        {
+          "name": "test_bundled_cgu_completeness_report_matches_export",
+          "reason": "Phase C data reviewed"
+        },
+        {
+          "name": "test_backfilled_cgu_workflows_keep_current_details_reference_only",
+          "reason": "Phase C data reviewed"
+        },
+        {
+          "name": "test_workflow_api_reads_cache_and_rejects_public_refresh",
+          "reason": "Phase C data reviewed"
+        },
+        {
+          "name": "test_workflow_api_applies_department_override",
+          "reason": "Phase C data reviewed"
+        }
+      ]
+    },
+    {
+      "name": "existing_contract_gate",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ntpu_bundled_data.py",
+        "tests/test_frontend_contract.py",
+        "tests/test_rag.py",
+        "--junitxml",
+        "/workspace/ncu-verification-tmp/next3-bb806740e702892e78d358973cb2c54b739d3dbd/existing_contract_gate.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T07:52:05.372237+00:00",
+      "finished_at": "2026-10-09T07:52:18.410307+00:00",
+      "log": "existing_contract_gate.log",
+      "junit": {
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_cases": [],
+      "skipped_cases": []
+    },
+    {
+      "name": "openapi_snapshot",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T07:52:18.489340+00:00",
+      "finished_at": "2026-10-09T07:52:23.831352+00:00",
+      "log": "openapi_snapshot.log"
+    },
+    {
+      "name": "frozen_71_index",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "scripts/build_ncu_review_index.py",
+        "--check",
+        "--output-dir",
+        "docs/ncu-review-index/71-2637de2"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T07:52:23.934071+00:00",
+      "finished_at": "2026-10-09T07:52:27.551776+00:00",
+      "log": "frozen_71_index.log"
+    },
+    {
+      "name": "browser_three_school_content",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py",
+        "--junitxml",
+        "/workspace/ncu-verification-tmp/next3-bb806740e702892e78d358973cb2c54b739d3dbd/browser_three_school_content.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 1,
+      "started_at": "2026-10-09T07:52:27.618496+00:00",
+      "finished_at": "2026-10-09T07:55:08.873028+00:00",
+      "log": "browser_three_school_content.log",
+      "junit": {
+        "tests": 6,
+        "failures": 4,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_cases": [
+        {
+          "name": "test_next3_reference_packets_and_living_content[nufs-\\u540d\\u53e4\\u5c4b\\u5916\\u570b\\u8a9e\\u5927\\u5b78-\\u540d\\u53e4\\u5c4b\\u5916\\u570b\\u8a9e\\u5927\\u5b78 Nagoya University of Foreign Studies-NUFS\\u521d\\u6b21\\u7533\\u8acb\\u8207\\u689d\\u4ef6\\u9644\\u4ef6-13-390]",
+          "message": "AssertionError: Locator expected to contain text '到校準備'\nActual value: None\nError: element(s) not found \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for locator(\"#detail-application\").locator(\".workflow-step\").filter(has=locator(\":scope > summary\").filter(has_text=\"NUFS入寮、orientation、登記與NHI\")).first.locator(\":scope > summary\")\n\nAria snapshot:\n- link \"跳到主要內容\":\n  - /url: \"#main-content\"\n- main:\n  - button \"開啟功能選單\"\n  - link \"UniWay 首頁\":\n    - /url: \"#home\"\n    - strong: UniWay\n  - status\n  - region \"名古屋外國語大學 Nagoya University of Foreign Studies\":\n    - button \"加入比較名古屋外國語大學 Nagoya University of Foreign Studies\"\n    - button \"登入建立計畫\"\n    - link \"官方來源\":\n      - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf#page=5\n    - text: 日本 · 交換學生 下一站\n    - strong: 日本\n    - heading \"名古屋外國語大學 Nagoya University of Foreign Studies\" [level=1]\n    - text: 我的資格\n    - strong: 尚未進行資格初判\n    - text: 合作校參考時程\n    - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。】Spring2027學生申請2026/10/31；一般春提名10/15、秋提名3/15、申請3/31。只有2027春現頁不能當116的2027秋／2028春截止。 【2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。】錄取一般midMay／midDecember，Step2又列midMay–midJune／midDecember–midJanuary；是區間差異，不指定為單日。（適用年度待確認）\n    - text: 語言門檻\n    - strong: 【2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。】GJP不強制JLPT；曾通過者附證書。特別聽講學部要求N2以上、研究所N1；其他官方考試須事先獲NUFS同意。…\n    - text: 生活費參考\n    - strong: 未標年費用頁：交換生tuition零、admission N/A；仍繳中央學費，116當期交換協議需確認。書本約1.5–3萬日圓。 校方未標年估算每月9.7–13.7萬日圓；宿舍3.5萬含utilities、食費3–5萬、其他3–5萬、NHI約2千。一次31…\n    - text: 交換名額\n    - strong: 依公告\n    - text: 研修期間\n    - strong:\n      - text: 116母校方案：2027/9–2028/2\n      - strong: 一學期\n      - text: 、2027/9–2028/6\n      - strong: 一學年\n      - text: 、2028/2–6\n      - strong: 一學期\n      - text: ；實際依外校校曆與可提名學期確認。 【2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。】Spring2027 GJP課程4/12–7/20，特別聽講4/12–7/27；抵達日官方明列To be determined。Fall2026到達8/27–28與不同方案期末屬舊學期參考。\n    - tablist \"交換學校詳細資訊\":\n      - tab \"快速了解\"\n      - tab \"申請方式\" [selected]\n      - tab \"生活情報\"\n      - tab \"出發前提醒\"\n      - tab \"學生心得\"\n      - tab \"學生社群\"\n    - tabpanel \"申請方式\":\n      - heading \"詳細申請流程\" [level=2]\n      - strong: 官方來源已整理，12 個步驟仍需確認\n      - paragraph: 已核對母校116-1；相關公開附件33份，個別外校原文與當期適用性另核對。\n      - text: 適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/09 上午07:29\n      - strong: 適用年度或梯次仍待確認\n      - text: 來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。\n      - strong: 這是尚未完成正式發布的參考流程\n      - text: 可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。\n      - strong: 共 17 個步驟\n      - button \"回報規定錯誤\"\n      - button \"重新載入流程資料\"\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 核對中央116-1資格與當期名額\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 完成中央線上申請並列印簽核\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 繳交中央校內紙本甄選文件至系所\n      - group:\n        - text: 甄選與提名 · 中央國際事務處／所屬系所\n        - strong: 核對校內錄取並準備提名\n      - group:\n        - text: 提名後外校申請 · 中央承辦\n        - strong: NUFS母校提名；一般春10/15／秋3/15參考\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 合作校申請 · 學生與兩校國際處\n        - strong: 核對外校當期文件並依通知申請\n      - group:\n        - text: 提名後外校申請 · 學生與中央／外校承辦\n        - strong: NUFS初次申請與條件附件\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: Spring2027截止2026/10/31；十一類、調整支持條件件及線上宿舍規則勾選分開，不把全部列人人必交。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 線上申請／上傳\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 尚未開始\n        - text: 線上申請／上傳 · 學生手動\n        - term: 下一步\n        - definition: 先備齊文件並再次核對官方送件方式。\n        - term: 承辦\n        - definition: 學生與中央／外校承辦\n        - term: 期限\n        - definition: 參考時程：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。（精確日期待確認，不會自動提醒）\n        - term: 收件證明\n        - definition: 尚未記錄\n        - button \"登入後記錄進度\"\n        - paragraph: 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: Spring2027截止2026/10/31；十一類、調整支持條件件及線上宿舍規則勾選分開，不把全部列人人必交。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - heading \"這一步要準備\" [level=4]\n        - list:\n          - listitem: 護照照頁（辦理中先ID，取得後補護照） 文件形式待確認 · 待官方確認\n          - listitem: 三月內數位JPG證件照4:3（不可掃描紙照） 文件形式待確認 · 待官方確認\n          - listitem: 全學期成績與grading scale（英／日或翻譯） 文件形式待確認 · 待官方確認\n          - listitem: 財力三類擇一；獎學金分支額度／父母帳戶附親子證明 文件形式待確認 · 待官方確認\n          - listitem:\n            - text: NUFS健康表（本人、醫師簽名與診所章） 文件形式待確認 · 簽署：本人保密豁免簽名、醫師簽名 · 核章：診所章 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://www-e.nufs.ac.jp/media/2026078-123043-598.zip\n          - listitem:\n            - text: 有病況／治療／用藥／病史者才交醫療免責書；無則免 文件形式待確認 · 簽署：本人 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://www-e.nufs.ac.jp/media/2026078-123043-598.zip\n          - listitem:\n            - text: 母校推薦（學生上傳或推薦人直送擇一） 文件形式待確認 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://www-e.nufs.ac.jp/media/2026078-123043-598.zip\n          - listitem:\n            - text: 選申NUFS獎學金表；不申請不必交 文件形式待確認 · 簽署：本人手寫 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://www-e.nufs.ac.jp/media/2026078-123043-598.zip\n          - listitem: 曾赴日才附所有入出境章；缺出境章用旅程證明擇一 文件形式待確認 · 待官方確認\n          - listitem: GJP曾通過才附JLPT；特別聽講學部N2／研究所N1 文件形式待確認 · 待官方確認\n          - listitem: JPETS僅符合國籍／居住條件者；校表與印尼政府新增時程待核 文件形式待確認 · 待官方確認\n          - listitem: 需調整支持者於申請時附母校支持說明 文件形式待確認 · 待官方確認\n          - listitem: 線上宿舍規則同意勾選（非另交紙本附件） 文件形式待確認 · 待官方確認\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 行前準備 · 中央國際事務處／所屬系所\n        - strong: 確認課程、學分與中央註冊繳費\n      - group:\n        - text: 行前準備 · 中央國際事務處／所屬系所\n        - strong: 出國前兩週完成中央行前程序\n        - text: 出國前兩週\n      - group:\n        - text: 錄取與COE · 學生與中央／外校承辦\n        - strong: NUFS審查與COE代辦\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: 錄取、COE代辦與寄送分開；概述一月–二月／六月–七月。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 送件方式待確認\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 送件方式待確認\n        - text: 官方方式確認前不能標記完成。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: 錄取、COE代辦與寄送分開；概述一月–二月／六月–七月。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 簽證準備 · 學生與中央／外校承辦\n        - strong: NUFS取得COE後申請學生簽證\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: 在居住國日本使領館辦學生簽證；核准前不能以COE視為簽證。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 送件方式待確認\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 送件方式待確認\n        - text: 官方方式確認前不能標記完成。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: 在居住國日本使領館辦學生簽證；核准前不能以COE視為簽證。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 機票與行程 · 學生與中央／外校承辦\n        - strong: NUFS依指定到達安排航班及接送\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: 依AcceptancePackage指定日、visa與航班資料安排；Spring2027到達日官方未定。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 送件方式待確認\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 送件方式待確認\n        - text: 官方方式確認前不能標記完成。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: 依AcceptancePackage指定日、visa與航班資料安排；Spring2027到達日官方未定。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 行前保險 · 學生與中央／外校承辦\n        - strong: NUFS出境前備妥整段海外保險\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 到校準備 · 學生與中央／外校承辦\n        - strong: NUFS入寮、新生說明會、登記與NHI\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 抵達後 · 中央國際事務處／所屬系所\n        - strong: 到校註冊並回報當地聯絡方式\n      - group:\n        - text: 離校返國 · 學生與中央／外校承辦\n        - strong: NUFS退宿與返國行程\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 返國後 · 中央國際事務處／所屬系所\n        - strong: 返國後一週完成中央返校程序\n        - text: 返國後一週內\n      - strong: 本流程使用的官方來源\n      - link \"中央116-1甄選簡章 母校當期正式公告 · 優先級 1\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf\n      - link \"中央115名額表（歷史參考） 母校當期正式公告 · 優先級 1\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf\n      - link \"Application Procedure | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/application/\n      - link \"Buddy Program | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/buddyprogram/index.html\n      - link \"checklist 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/2026078-123101-750.pdf\n      - link \"Estimated Costs | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/costs/index.html\n      - link \"Important Dates | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/dates/\n      - link \"Frequently Asked Questions | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/faq/index.html\n      - link \"Global Japan Program at the International Institute for Japanese Language Education (IJLE) | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/exchange/index.html\n      - link \"Course Offerings | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/exchange/courses/index.html\n      - link \"Housing Information -Dormitories- | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/housing/index.html\n      - link \"Housing Handbook | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/housing/housinghandbook/index.html\n      - link \"Incoming Students | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/\n      - link \"instructions-en 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf\n      - link \"Insurance | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/insurance/index.html\n      - link \"package 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/2026078-123043-598.zip\n      - link \"Pick-up Service on arrival | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/pickupservice/index.html\n      - link \"scholarship-regulations 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/20210215-164401-188.pdf\n      - link \"Financial Support | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/scholarships/index.html\n      - link \"特別聴講プログラム Study Abroad Program at NUFS Undergraduate and Graduate Schools | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/tokubetsu/index.html\n      - link \"Calendar | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/calendar/index.html\n      - link \"Credit Transfers | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/exchange/credits/index.html\n      - link \"Physical, Medical, and Sensory Disability Accommodations | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/disability/index.html\n      - link \"NUFS Grading System 成績評価 | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/gradingsystem/index.html\n      - link \"instructions-ja 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/2026078-123135-282.pdf\n      - link \"講義科目・講義概要（シラバス） | 学部・大学院 | 名古屋外国語大学 The World with Us！ 世界はわたしたちとともに 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.nufs.ac.jp/faculties/graduate-school/master/syllabus/\n      - link \"Privacy Policy | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/application/privacy/index.html\n      - link \"syllabi-fall2026 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/20260429-113423-664.pdf\n      - link \"syllabi-spring2026 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/20260429-113404-737.pdf\n      - link \"外国語学部 | 学部・大学院 | 名古屋外国語大学 The World with Us！ 世界はわたしたちとともに 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.nufs.ac.jp/faculties/foreign/\n      - paragraph: 截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。\n    - complementary \"申請準備進度與官方來源\":\n      - heading \"我的申請進度\" [level=2]\n      - progressbar \"申請準備進度\":\n        - strong: 0 / 5 已完成\n        - text: 準備中\n      - paragraph:\n        - text: 登入以保存進度\n        - button \"登入\"\n      - checkbox \"確認資格與語言門檻\" [disabled]\n      - text: 確認資格與語言門檻\n      - checkbox \"比較課程、費用與生活\" [disabled]\n      - text: 比較課程、費用與生活\n      - checkbox \"備妥校內申請文件\" [disabled]\n      - text: 備妥校內申請文件\n      - checkbox \"完成校內甄選送件\" [disabled]\n      - text: 完成校內甄選送件\n      - checkbox \"完成合作校線上申請\" [disabled]\n      - text: 完成合作校線上申請\n      - strong: 送件前確認\n      - paragraph: 截止日與資格以當期官方公告為準。\n- paragraph:\n  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），\n  - button \"停用匿名使用統計\"\n  - text: 。\n  - link \"隱私權政策\":\n    - /url: /privacy\n  - link \"使用條款\":\n    - /url: /terms"
+        },
+        {
+          "name": "test_next3_reference_packets_and_living_content[nufs-\\u540d\\u53e4\\u5c4b\\u5916\\u570b\\u8a9e\\u5927\\u5b78-\\u540d\\u53e4\\u5c4b\\u5916\\u570b\\u8a9e\\u5927\\u5b78 Nagoya University of Foreign Studies-NUFS\\u521d\\u6b21\\u7533\\u8acb\\u8207\\u689d\\u4ef6\\u9644\\u4ef6-13-1440]",
+          "message": "AssertionError: Locator expected to contain text '到校準備'\nActual value: None\nError: element(s) not found \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for locator(\"#detail-application\").locator(\".workflow-step\").filter(has=locator(\":scope > summary\").filter(has_text=\"NUFS入寮、orientation、登記與NHI\")).first.locator(\":scope > summary\")\n\nAria snapshot:\n- link \"跳到主要內容\":\n  - /url: \"#main-content\"\n- complementary \"系統功能\":\n  - link \"UniWay 首頁\":\n    - /url: \"#home\"\n    - strong: UniWay\n  - navigation \"公開探索導覽\":\n    - link \"首頁\":\n      - /url: \"#home\"\n    - link \"學校搜尋\":\n      - /url: \"#partners\"\n    - link \"論壇\":\n      - /url: \"#forum\"\n    - link \"用戶評價\":\n      - /url: \"#feedback\"\n    - group:\n      - link \"我的申請\":\n        - /url: \"#advisor\"\n  - button \"返回上一頁\": 返回\n  - button \"國立中央大學\":\n    - strong: 國立中央大學\n  - button \"切換為深色模式\"\n  - button \"重新整理最新資料\"\n  - button \"登入或建立帳號\": 登入\n- main:\n  - status\n  - region \"名古屋外國語大學 Nagoya University of Foreign Studies\":\n    - button \"加入比較名古屋外國語大學 Nagoya University of Foreign Studies\": 加入比較\n    - button \"登入建立計畫\"\n    - link \"官方來源\":\n      - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf#page=5\n    - text: 日本 · 交換學生 下一站\n    - strong: 日本\n    - heading \"名古屋外國語大學 Nagoya University of Foreign Studies\" [level=1]\n    - text: 我的資格\n    - strong: 尚未進行資格初判\n    - text: 合作校參考時程\n    - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。】Spring2027學生申請2026/10/31；一般春提名10/15、秋提名3/15、申請3/31。只有2027春現頁不能當116的2027秋／2028春截止。 【2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。】錄取一般midMay／midDecember，Step2又列midMay–midJune／midDecember–midJanuary；是區間差異，不指定為單日。（適用年度待確認）\n    - text: 語言門檻\n    - strong: 【2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。】GJP不強制JLPT；曾通過者附證書。特別聽講學部要求N2以上、研究所N1；其他官方考試須事先獲NUFS同意。…\n    - text: 生活費參考\n    - strong: 未標年費用頁：交換生tuition零、admission N/A；仍繳中央學費，116當期交換協議需確認。書本約1.5–3萬日圓。 校方未標年估算每月9.7–13.7萬日圓；宿舍3.5萬含utilities、食費3–5萬、其他3–5萬、NHI約2千。一次31…\n    - text: 交換名額\n    - strong: 依公告\n    - text: 研修期間\n    - strong:\n      - text: 116母校方案：2027/9–2028/2\n      - strong: 一學期\n      - text: 、2027/9–2028/6\n      - strong: 一學年\n      - text: 、2028/2–6\n      - strong: 一學期\n      - text: ；實際依外校校曆與可提名學期確認。 【2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。】Spring2027 GJP課程4/12–7/20，特別聽講4/12–7/27；抵達日官方明列To be determined。Fall2026到達8/27–28與不同方案期末屬舊學期參考。\n    - tablist \"交換學校詳細資訊\":\n      - tab \"快速了解\"\n      - tab \"申請方式\" [selected]\n      - tab \"生活情報\"\n      - tab \"出發前提醒\"\n      - tab \"學生心得\"\n      - tab \"學生社群\"\n    - tabpanel \"申請方式\":\n      - heading \"詳細申請流程\" [level=2]\n      - strong: 官方來源已整理，12 個步驟仍需確認\n      - paragraph: 已核對母校116-1；相關公開附件33份，個別外校原文與當期適用性另核對。\n      - text: 適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/09 上午07:29\n      - strong: 適用年度或梯次仍待確認\n      - text: 來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。\n      - strong: 這是尚未完成正式發布的參考流程\n      - text: 可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。\n      - strong: 共 17 個步驟\n      - button \"回報規定錯誤\"\n      - button \"重新載入流程資料\"\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 核對中央116-1資格與當期名額\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 完成中央線上申請並列印簽核\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 繳交中央校內紙本甄選文件至系所\n      - group:\n        - text: 甄選與提名 · 中央國際事務處／所屬系所\n        - strong: 核對校內錄取並準備提名\n      - group:\n        - text: 提名後外校申請 · 中央承辦\n        - strong: NUFS母校提名；一般春10/15／秋3/15參考\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 合作校申請 · 學生與兩校國際處\n        - strong: 核對外校當期文件並依通知申請\n      - group:\n        - text: 提名後外校申請 · 學生與中央／外校承辦\n        - strong: NUFS初次申請與條件附件\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: Spring2027截止2026/10/31；十一類、調整支持條件件及線上宿舍規則勾選分開，不把全部列人人必交。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 線上申請／上傳\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 尚未開始\n        - text: 線上申請／上傳 · 學生手動\n        - term: 下一步\n        - definition: 先備齊文件並再次核對官方送件方式。\n        - term: 承辦\n        - definition: 學生與中央／外校承辦\n        - term: 期限\n        - definition: 參考時程：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。（精確日期待確認，不會自動提醒）\n        - term: 收件證明\n        - definition: 尚未記錄\n        - button \"登入後記錄進度\"\n        - paragraph: 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: Spring2027截止2026/10/31；十一類、調整支持條件件及線上宿舍規則勾選分開，不把全部列人人必交。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - heading \"這一步要準備\" [level=4]\n        - list:\n          - listitem: 護照照頁（辦理中先ID，取得後補護照） 文件形式待確認 · 待官方確認\n          - listitem: 三月內數位JPG證件照4:3（不可掃描紙照） 文件形式待確認 · 待官方確認\n          - listitem: 全學期成績與grading scale（英／日或翻譯） 文件形式待確認 · 待官方確認\n          - listitem: 財力三類擇一；獎學金分支額度／父母帳戶附親子證明 文件形式待確認 · 待官方確認\n          - listitem:\n            - text: NUFS健康表（本人、醫師簽名與診所章） 文件形式待確認 · 簽署：本人保密豁免簽名、醫師簽名 · 核章：診所章 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://www-e.nufs.ac.jp/media/2026078-123043-598.zip\n          - listitem:\n            - text: 有病況／治療／用藥／病史者才交醫療免責書；無則免 文件形式待確認 · 簽署：本人 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://www-e.nufs.ac.jp/media/2026078-123043-598.zip\n          - listitem:\n            - text: 母校推薦（學生上傳或推薦人直送擇一） 文件形式待確認 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://www-e.nufs.ac.jp/media/2026078-123043-598.zip\n          - listitem:\n            - text: 選申NUFS獎學金表；不申請不必交 文件形式待確認 · 簽署：本人手寫 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://www-e.nufs.ac.jp/media/2026078-123043-598.zip\n          - listitem: 曾赴日才附所有入出境章；缺出境章用旅程證明擇一 文件形式待確認 · 待官方確認\n          - listitem: GJP曾通過才附JLPT；特別聽講學部N2／研究所N1 文件形式待確認 · 待官方確認\n          - listitem: JPETS僅符合國籍／居住條件者；校表與印尼政府新增時程待核 文件形式待確認 · 待官方確認\n          - listitem: 需調整支持者於申請時附母校支持說明 文件形式待確認 · 待官方確認\n          - listitem: 線上宿舍規則同意勾選（非另交紙本附件） 文件形式待確認 · 待官方確認\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 行前準備 · 中央國際事務處／所屬系所\n        - strong: 確認課程、學分與中央註冊繳費\n      - group:\n        - text: 行前準備 · 中央國際事務處／所屬系所\n        - strong: 出國前兩週完成中央行前程序\n        - text: 出國前兩週\n      - group:\n        - text: 錄取與COE · 學生與中央／外校承辦\n        - strong: NUFS審查與COE代辦\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: 錄取、COE代辦與寄送分開；概述一月–二月／六月–七月。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 送件方式待確認\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 送件方式待確認\n        - text: 官方方式確認前不能標記完成。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: 錄取、COE代辦與寄送分開；概述一月–二月／六月–七月。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 簽證準備 · 學生與中央／外校承辦\n        - strong: NUFS取得COE後申請學生簽證\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: 在居住國日本使領館辦學生簽證；核准前不能以COE視為簽證。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 送件方式待確認\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 送件方式待確認\n        - text: 官方方式確認前不能標記完成。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: 在居住國日本使領館辦學生簽證；核准前不能以COE視為簽證。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 機票與行程 · 學生與中央／外校承辦\n        - strong: NUFS依指定到達安排航班及接送\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: 依AcceptancePackage指定日、visa與航班資料安排；Spring2027到達日官方未定。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 送件方式待確認\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 送件方式待確認\n        - text: 官方方式確認前不能標記完成。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: 依AcceptancePackage指定日、visa與航班資料安排；Spring2027到達日官方未定。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 行前保險 · 學生與中央／外校承辦\n        - strong: NUFS出境前備妥整段海外保險\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 到校準備 · 學生與中央／外校承辦\n        - strong: NUFS入寮、新生說明會、登記與NHI\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 抵達後 · 中央國際事務處／所屬系所\n        - strong: 到校註冊並回報當地聯絡方式\n      - group:\n        - text: 離校返國 · 學生與中央／外校承辦\n        - strong: NUFS退宿與返國行程\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 返國後 · 中央國際事務處／所屬系所\n        - strong: 返國後一週完成中央返校程序\n        - text: 返國後一週內\n      - strong: 本流程使用的官方來源\n      - link \"中央116-1甄選簡章 母校當期正式公告 · 優先級 1\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf\n      - link \"中央115名額表（歷史參考） 母校當期正式公告 · 優先級 1\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf\n      - link \"Application Procedure | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/application/\n      - link \"Buddy Program | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/buddyprogram/index.html\n      - link \"checklist 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/2026078-123101-750.pdf\n      - link \"Estimated Costs | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/costs/index.html\n      - link \"Important Dates | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/dates/\n      - link \"Frequently Asked Questions | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/faq/index.html\n      - link \"Global Japan Program at the International Institute for Japanese Language Education (IJLE) | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/exchange/index.html\n      - link \"Course Offerings | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/exchange/courses/index.html\n      - link \"Housing Information -Dormitories- | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/housing/index.html\n      - link \"Housing Handbook | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/housing/housinghandbook/index.html\n      - link \"Incoming Students | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/\n      - link \"instructions-en 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/2026078-123122-928.pdf\n      - link \"Insurance | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/insurance/index.html\n      - link \"package 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/2026078-123043-598.zip\n      - link \"Pick-up Service on arrival | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/pickupservice/index.html\n      - link \"scholarship-regulations 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/20210215-164401-188.pdf\n      - link \"Financial Support | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/scholarships/index.html\n      - link \"特別聴講プログラム Study Abroad Program at NUFS Undergraduate and Graduate Schools | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/tokubetsu/index.html\n      - link \"Calendar | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/calendar/index.html\n      - link \"Credit Transfers | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/exchange/credits/index.html\n      - link \"Physical, Medical, and Sensory Disability Accommodations | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/disability/index.html\n      - link \"NUFS Grading System 成績評価 | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/gradingsystem/index.html\n      - link \"instructions-ja 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/2026078-123135-282.pdf\n      - link \"講義科目・講義概要（シラバス） | 学部・大学院 | 名古屋外国語大学 The World with Us！ 世界はわたしたちとともに 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.nufs.ac.jp/faculties/graduate-school/master/syllabus/\n      - link \"Privacy Policy | International | Nagoya University of Foreign Studies 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/interchange/incoming/application/privacy/index.html\n      - link \"syllabi-fall2026 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/20260429-113423-664.pdf\n      - link \"syllabi-spring2026 合作校官方資訊 · 優先級 4\":\n        - /url: https://www-e.nufs.ac.jp/media/20260429-113404-737.pdf\n      - link \"外国語学部 | 学部・大学院 | 名古屋外国語大学 The World with Us！ 世界はわたしたちとともに 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.nufs.ac.jp/faculties/foreign/\n      - paragraph: 截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。\n    - complementary \"申請準備進度與官方來源\":\n      - heading \"我的申請進度\" [level=2]\n      - progressbar \"申請準備進度\":\n        - strong: 0 / 5 已完成\n        - text: 準備中\n      - paragraph:\n        - text: 登入以保存進度\n        - button \"登入\"\n      - checkbox \"確認資格與語言門檻\" [disabled]\n      - text: 確認資格與語言門檻\n      - checkbox \"比較課程、費用與生活\" [disabled]\n      - text: 比較課程、費用與生活\n      - checkbox \"備妥校內申請文件\" [disabled]\n      - text: 備妥校內申請文件\n      - checkbox \"完成校內甄選送件\" [disabled]\n      - text: 完成校內甄選送件\n      - checkbox \"完成合作校線上申請\" [disabled]\n      - text: 完成合作校線上申請\n      - strong: 送件前確認\n      - paragraph: 截止日與資格以當期官方公告為準。\n- paragraph:\n  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），\n  - button \"停用匿名使用統計\"\n  - text: 。\n  - link \"隱私權政策\":\n    - /url: /privacy\n  - link \"使用條款\":\n    - /url: /terms"
+        },
+        {
+          "name": "test_next3_reference_packets_and_living_content[ryukoku-\\u9f8d\\u8c37\\u5927\\u5b78-\\u9f8d\\u8c37\\u5927\\u5b78 Ryukoku University-\\u9f8d\\u8c37\\u521d\\u6b21\\u7533\\u8acb\\u8207\\u516d\\u4efd\\u6307\\u5b9a\\u9644\\u4ef6-6-390]",
+          "message": "AssertionError: Locator expected to contain text '到校準備'\nActual value: None\nError: element(s) not found \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for locator(\"#detail-application\").locator(\".workflow-step\").filter(has=locator(\":scope > summary\").filter(has_text=\"龍谷到校orientation、NHI與銀行扣款\")).first.locator(\":scope > summary\")\n\nAria snapshot:\n- link \"跳到主要內容\":\n  - /url: \"#main-content\"\n- main:\n  - button \"開啟功能選單\"\n  - link \"UniWay 首頁\":\n    - /url: \"#home\"\n    - strong: UniWay\n  - status\n  - region \"龍谷大學 Ryukoku University\":\n    - button \"加入比較龍谷大學 Ryukoku University\"\n    - button \"登入建立計畫\"\n    - link \"官方來源\":\n      - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf#page=5\n    - text: 日本 · 交換學生 下一站\n    - strong: 日本\n    - heading \"龍谷大學 Ryukoku University\" [level=1]\n    - text: 我的資格\n    - strong: 尚未進行資格初判\n    - text: 合作校參考時程\n    - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。】Spring2027母校提名與學生online均2026/10/6–11/9 23:59日本時間；學生從中央coordinator收連結，非自己提名。約十二月中錄取、二月初入學許可與COE。（適用年度待確認）\n    - text: 語言門檻\n    - strong: 【现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。】EnglishTrack非英語母語建議TOEFLPBT500並有…\n    - text: 生活費參考\n    - strong: Guide明示exchangeconditions依兩校StudentExchangeAgreement；未取得中央協議費用細項，不能把tuitionwaiver或房租減免當保證。 國際會館單人35,000租+10,000utilities、押80,000；…\n    - text: 交換名額\n    - strong: 依公告\n    - text: 研修期間\n    - strong:\n      - text: 116母校方案：2027/9–2028/2\n      - strong: 一學期\n      - text: 、2027/9–2028/6\n      - strong: 一學年\n      - text: 、2028/2–6\n      - strong: 一學期\n      - text: ；實際依外校校曆與可提名學期確認。 【现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。】Spring2027四月–九月，新生說明會4/1–5暫定、入學式4/2、入寮3/25暫定、退宿最遲8/10暫定。Fall2027九月–2028三月、最遲退宿3/17暫定，暑／春假可留到退宿日。\n    - tablist \"交換學校詳細資訊\":\n      - tab \"快速了解\"\n      - tab \"申請方式\" [selected]\n      - tab \"生活情報\"\n      - tab \"出發前提醒\"\n      - tab \"學生心得\"\n      - tab \"學生社群\"\n    - tabpanel \"申請方式\":\n      - heading \"詳細申請流程\" [level=2]\n      - strong: 官方來源已整理，13 個步驟仍需確認\n      - paragraph: 已核對母校116-1；相關公開附件18份，個別外校原文與當期適用性另核對。\n      - text: 適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/09 上午07:29\n      - strong: 適用年度或梯次仍待確認\n      - text: 來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。\n      - strong: 這是尚未完成正式發布的參考流程\n      - text: 可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。\n      - strong: 共 18 個步驟\n      - button \"回報規定錯誤\"\n      - button \"重新載入流程資料\"\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 核對中央116-1資格與當期名額\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 完成中央線上申請並列印簽核\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 繳交中央校內紙本甄選文件至系所\n      - group:\n        - text: 甄選與提名 · 中央國際事務處／所屬系所\n        - strong: 核對校內錄取並準備提名\n      - group:\n        - text: 提名後外校申請 · 中央承辦\n        - strong: 龍谷中央承辦提名Spring2027參考\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 合作校申請 · 學生與兩校國際處\n        - strong: 核對外校當期文件並依通知申請\n      - group:\n        - text: 提名後外校申請 · 學生與中央／外校承辦\n        - strong: 龍谷初次申請與六份指定附件\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: Spring2027截止11/9 23:59JST，六份指定附件均依各條件／版本核對，online其他欄位仍待實際入口。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 線上申請／上傳\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 尚未開始\n        - text: 線上申請／上傳 · 學生手動\n        - term: 下一步\n        - definition: 先備齊文件並再次核對官方送件方式。\n        - term: 承辦\n        - definition: 學生與中央／外校承辦\n        - term: 期限\n        - definition: 參考時程：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。（精確日期待確認，不會自動提醒）\n        - term: 收件證明\n        - definition: 尚未記錄\n        - button \"登入後記錄進度\"\n        - paragraph: 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: Spring2027截止11/9 23:59JST，六份指定附件均依各條件／版本核對，online其他欄位仍待實際入口。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - heading \"這一步要準備\" [level=4]\n        - list:\n          - listitem:\n            - text: 龍谷讀書計畫詳填（過短重寫、可另紙） 文件形式待確認 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/01_plan_of_Study_w.docx\n          - listitem:\n            - text: 母校日語能力評估（零學習也交；校章位置待核） 文件形式待確認 · 核章：申請頁要求母校章，DOCX位置待確認 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/02_evaluation_w.docx\n          - listitem:\n            - text: 龍谷推薦表（另有推薦信仍要；密封與online保密方式待核） 文件形式待確認 · 簽署：本人、推薦人 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/03_letter.pdf\n          - listitem:\n            - text: 龍谷健康表（醫師簽；不能Xray可其他結核檢查附正式結果） 文件形式待確認 · 簽署：醫師 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/04_certificate_of_health.pdf\n          - listitem:\n            - text: 全部交換生日語自評（下載表仍JEP舊標題） 文件形式待確認 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/07_1_sag_eng_jp_w.docx\n          - listitem: 全部交换生SPOT結果PDF（測驗三項、非語檢證書替代） 文件形式待確認 · 待官方確認\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 行前準備 · 中央國際事務處／所屬系所\n        - strong: 確認課程、學分與中央註冊繳費\n      - group:\n        - text: 行前準備 · 中央國際事務處／所屬系所\n        - strong: 出國前兩週完成中央行前程序\n        - text: 出國前兩週\n      - group:\n        - text: 錄取與COE · 學生與中央／外校承辦\n        - strong: 龍谷審查錄取與COE代辦\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: 约十二月中錄取、二月初COE及入學許可送母校；6–8週是一般處理估計。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 送件方式待確認\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 送件方式待確認\n        - text: 官方方式確認前不能標記完成。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: 约十二月中錄取、二月初COE及入學許可送母校；6–8週是一般處理估計。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 簽證準備 · 學生與中央／外校承辦\n        - strong: 龍谷收到COE後申請學生簽證\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: 取得COE及入學許可後到使領館，個人追加件另核。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 送件方式待確認\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 送件方式待確認\n        - text: 官方方式確認前不能標記完成。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: 取得COE及入學許可後到使領館，個人追加件另核。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 住宿準備 · 學生與中央／外校承辦\n        - strong: 龍谷等候交換宿舍另送申請資訊\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 機票與行程 · 學生與中央／外校承辦\n        - strong: 龍谷核對簽證與暫定入寮後安排航班\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: 平台建議先确认visa；guide3/25暫定，不自動轉成指定到達航班截止。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 送件方式待確認\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 送件方式待確認\n        - text: 官方方式確認前不能標記完成。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: 平台建議先确认visa；guide3/25暫定，不自動轉成指定到達航班截止。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 行前保險 · 學生與中央／外校承辦\n        - strong: 龍谷出境前必備整段海外保險\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 到校準備 · 學生與中央／外校承辦\n        - strong: 龍谷到校新生說明會、NHI與銀行扣款\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 抵達後 · 中央國際事務處／所屬系所\n        - strong: 到校註冊並回報當地聯絡方式\n      - group:\n        - text: 離校返國 · 學生與中央／外校承辦\n        - strong: 龍谷退宿期限衝突與查房\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 返國後 · 中央國際事務處／所屬系所\n        - strong: 返國後一週完成中央返校程序\n        - text: 返國後一週內\n      - strong: 本流程使用的官方來源\n      - link \"中央116-1甄選簡章 母校當期正式公告 · 優先級 1\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf\n      - link \"中央115名額表（歷史參考） 母校當期正式公告 · 優先級 1\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf\n      - link \"Application Form ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/html/s_exchange_02.html\n      - link \"CEFR-reference 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/08_1_jpl_skill_eng.pdf\n      - link \"Dormitory Information for Successful Applicants to the International Student Entrance Examination (April 2026 Enrollment) ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/dormitory/pass_dorm.html\n      - link \"Exchange Program ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/examination/exp/\n      - link \"guide-en 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf\n      - link \"health 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/04_certificate_of_health.pdf\n      - link \"Accommodation index ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/dormitory/\n      - link \"Ryukoku International House ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/dormitory/kokusai_h.html\n      - link \"Ryukoku Japan Studies Program ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/examination/exp/rjsp/index.html\n      - link \"language-evaluation 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/02_evaluation_w.docx\n      - link \"Mitra-kan ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/dormitory/mitrakan.html\n      - link \"plan 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/01_plan_of_Study_w.docx\n      - link \"recommendation 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/03_letter.pdf\n      - link \"self-assessment 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/07_1_sag_eng_jp_w.docx\n      - link \"spot-instructions 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/spot_test_ex.pdf\n      - link \"curriculum 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/rjsp/curriculum_eng.pdf\n      - link \"acslb-client 合作校官方資訊 · 優先級 4\":\n        - /url: https://syllabus.ws.ryukoku.ac.jp/acrsw/CSylNoSSO/CNoSSO.do\n      - paragraph: 截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。\n    - complementary \"申請準備進度與官方來源\":\n      - heading \"我的申請進度\" [level=2]\n      - progressbar \"申請準備進度\":\n        - strong: 0 / 5 已完成\n        - text: 準備中\n      - paragraph:\n        - text: 登入以保存進度\n        - button \"登入\"\n      - checkbox \"確認資格與語言門檻\" [disabled]\n      - text: 確認資格與語言門檻\n      - checkbox \"比較課程、費用與生活\" [disabled]\n      - text: 比較課程、費用與生活\n      - checkbox \"備妥校內申請文件\" [disabled]\n      - text: 備妥校內申請文件\n      - checkbox \"完成校內甄選送件\" [disabled]\n      - text: 完成校內甄選送件\n      - checkbox \"完成合作校線上申請\" [disabled]\n      - text: 完成合作校線上申請\n      - strong: 送件前確認\n      - paragraph: 截止日與資格以當期官方公告為準。\n- paragraph:\n  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），\n  - button \"停用匿名使用統計\"\n  - text: 。\n  - link \"隱私權政策\":\n    - /url: /privacy\n  - link \"使用條款\":\n    - /url: /terms"
+        },
+        {
+          "name": "test_next3_reference_packets_and_living_content[ryukoku-\\u9f8d\\u8c37\\u5927\\u5b78-\\u9f8d\\u8c37\\u5927\\u5b78 Ryukoku University-\\u9f8d\\u8c37\\u521d\\u6b21\\u7533\\u8acb\\u8207\\u516d\\u4efd\\u6307\\u5b9a\\u9644\\u4ef6-6-1440]",
+          "message": "AssertionError: Locator expected to contain text '到校準備'\nActual value: None\nError: element(s) not found \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for locator(\"#detail-application\").locator(\".workflow-step\").filter(has=locator(\":scope > summary\").filter(has_text=\"龍谷到校orientation、NHI與銀行扣款\")).first.locator(\":scope > summary\")\n\nAria snapshot:\n- link \"跳到主要內容\":\n  - /url: \"#main-content\"\n- complementary \"系統功能\":\n  - link \"UniWay 首頁\":\n    - /url: \"#home\"\n    - strong: UniWay\n  - navigation \"公開探索導覽\":\n    - link \"首頁\":\n      - /url: \"#home\"\n    - link \"學校搜尋\":\n      - /url: \"#partners\"\n    - link \"論壇\":\n      - /url: \"#forum\"\n    - link \"用戶評價\":\n      - /url: \"#feedback\"\n    - group:\n      - link \"我的申請\":\n        - /url: \"#advisor\"\n  - button \"返回上一頁\": 返回\n  - button \"國立中央大學\":\n    - strong: 國立中央大學\n  - button \"切換為深色模式\"\n  - button \"重新整理最新資料\"\n  - button \"登入或建立帳號\": 登入\n- main:\n  - status\n  - region \"龍谷大學 Ryukoku University\":\n    - button \"加入比較龍谷大學 Ryukoku University\": 加入比較\n    - button \"登入建立計畫\"\n    - link \"官方來源\":\n      - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf#page=5\n    - text: 日本 · 交換學生 下一站\n    - strong: 日本\n    - heading \"龍谷大學 Ryukoku University\" [level=1]\n    - text: 我的資格\n    - strong: 尚未進行資格初判\n    - text: 合作校參考時程\n    - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。】Spring2027母校提名與學生online均2026/10/6–11/9 23:59日本時間；學生從中央coordinator收連結，非自己提名。約十二月中錄取、二月初入學許可與COE。（適用年度待確認）\n    - text: 語言門檻\n    - strong: 【现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。】EnglishTrack非英語母語建議TOEFLPBT500並有…\n    - text: 生活費參考\n    - strong: Guide明示exchangeconditions依兩校StudentExchangeAgreement；未取得中央協議費用細項，不能把tuitionwaiver或房租減免當保證。 國際會館單人35,000租+10,000utilities、押80,000；…\n    - text: 交換名額\n    - strong: 依公告\n    - text: 研修期間\n    - strong:\n      - text: 116母校方案：2027/9–2028/2\n      - strong: 一學期\n      - text: 、2027/9–2028/6\n      - strong: 一學年\n      - text: 、2028/2–6\n      - strong: 一學期\n      - text: ；實際依外校校曆與可提名學期確認。 【现連Spring2027指南、2026開始JSP、未標年宿舍費與仍帶JEP名稱附件分開；Fall2027校曆非Fall申請公告，非中央116完整核准。】Spring2027四月–九月，新生說明會4/1–5暫定、入學式4/2、入寮3/25暫定、退宿最遲8/10暫定。Fall2027九月–2028三月、最遲退宿3/17暫定，暑／春假可留到退宿日。\n    - tablist \"交換學校詳細資訊\":\n      - tab \"快速了解\"\n      - tab \"申請方式\" [selected]\n      - tab \"生活情報\"\n      - tab \"出發前提醒\"\n      - tab \"學生心得\"\n      - tab \"學生社群\"\n    - tabpanel \"申請方式\":\n      - heading \"詳細申請流程\" [level=2]\n      - strong: 官方來源已整理，13 個步驟仍需確認\n      - paragraph: 已核對母校116-1；相關公開附件18份，個別外校原文與當期適用性另核對。\n      - text: 適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/09 上午07:29\n      - strong: 適用年度或梯次仍待確認\n      - text: 來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。\n      - strong: 這是尚未完成正式發布的參考流程\n      - text: 可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。\n      - strong: 共 18 個步驟\n      - button \"回報規定錯誤\"\n      - button \"重新載入流程資料\"\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 核對中央116-1資格與當期名額\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 完成中央線上申請並列印簽核\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 繳交中央校內紙本甄選文件至系所\n      - group:\n        - text: 甄選與提名 · 中央國際事務處／所屬系所\n        - strong: 核對校內錄取並準備提名\n      - group:\n        - text: 提名後外校申請 · 中央承辦\n        - strong: 龍谷中央承辦提名Spring2027參考\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 合作校申請 · 學生與兩校國際處\n        - strong: 核對外校當期文件並依通知申請\n      - group:\n        - text: 提名後外校申請 · 學生與中央／外校承辦\n        - strong: 龍谷初次申請與六份指定附件\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: Spring2027截止11/9 23:59JST，六份指定附件均依各條件／版本核對，online其他欄位仍待實際入口。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 線上申請／上傳\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 尚未開始\n        - text: 線上申請／上傳 · 學生手動\n        - term: 下一步\n        - definition: 先備齊文件並再次核對官方送件方式。\n        - term: 承辦\n        - definition: 學生與中央／外校承辦\n        - term: 期限\n        - definition: 參考時程：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。（精確日期待確認，不會自動提醒）\n        - term: 收件證明\n        - definition: 尚未記錄\n        - button \"登入後記錄進度\"\n        - paragraph: 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: Spring2027截止11/9 23:59JST，六份指定附件均依各條件／版本核對，online其他欄位仍待實際入口。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - heading \"這一步要準備\" [level=4]\n        - list:\n          - listitem:\n            - text: 龍谷讀書計畫詳填（過短重寫、可另紙） 文件形式待確認 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/01_plan_of_Study_w.docx\n          - listitem:\n            - text: 母校日語能力評估（零學習也交；校章位置待核） 文件形式待確認 · 核章：申請頁要求母校章，DOCX位置待確認 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/02_evaluation_w.docx\n          - listitem:\n            - text: 龍谷推薦表（另有推薦信仍要；密封與online保密方式待核） 文件形式待確認 · 簽署：本人、推薦人 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/03_letter.pdf\n          - listitem:\n            - text: 龍谷健康表（醫師簽；不能Xray可其他結核檢查附正式結果） 文件形式待確認 · 簽署：醫師 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/04_certificate_of_health.pdf\n          - listitem:\n            - text: 全部交換生日語自評（下載表仍JEP舊標題） 文件形式待確認 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/07_1_sag_eng_jp_w.docx\n          - listitem: 全部交换生SPOT結果PDF（測驗三項、非語檢證書替代） 文件形式待確認 · 待官方確認\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 行前準備 · 中央國際事務處／所屬系所\n        - strong: 確認課程、學分與中央註冊繳費\n      - group:\n        - text: 行前準備 · 中央國際事務處／所屬系所\n        - strong: 出國前兩週完成中央行前程序\n        - text: 出國前兩週\n      - group:\n        - text: 錄取與COE · 學生與中央／外校承辦\n        - strong: 龍谷審查錄取與COE代辦\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: 约十二月中錄取、二月初COE及入學許可送母校；6–8週是一般處理估計。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 送件方式待確認\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 送件方式待確認\n        - text: 官方方式確認前不能標記完成。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: 约十二月中錄取、二月初COE及入學許可送母校；6–8週是一般處理估計。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 簽證準備 · 學生與中央／外校承辦\n        - strong: 龍谷收到COE後申請學生簽證\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: 取得COE及入學許可後到使領館，個人追加件另核。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 送件方式待確認\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 送件方式待確認\n        - text: 官方方式確認前不能標記完成。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: 取得COE及入學許可後到使領館，個人追加件另核。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 住宿準備 · 學生與中央／外校承辦\n        - strong: 龍谷等候交換宿舍另送申請資訊\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 機票與行程 · 學生與中央／外校承辦\n        - strong: 龍谷核對簽證與暫定入寮後安排航班\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n        - paragraph: 平台建議先确认visa；guide3/25暫定，不自動轉成指定到達航班截止。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 送件方式待確認\n        - list:\n          - listitem: 期限說明：來源年度／track限定；未核准中央116當期收件與期限，不將參考日期自動提醒。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 送件方式待確認\n        - text: 官方方式確認前不能標記完成。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: 平台建議先确认visa；guide3/25暫定，不自動轉成指定到達航班截止。\n          - listitem: 中央116名額與指定梯次未核實；不得以參考表格、母校推薦或錄取自行解除當期文件封鎖。\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 行前保險 · 學生與中央／外校承辦\n        - strong: 龍谷出境前必備整段海外保險\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 到校準備 · 學生與中央／外校承辦\n        - strong: 龍谷到校新生說明會、NHI與銀行扣款\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 抵達後 · 中央國際事務處／所屬系所\n        - strong: 到校註冊並回報當地聯絡方式\n      - group:\n        - text: 離校返國 · 學生與中央／外校承辦\n        - strong: 龍谷退宿期限衝突與查房\n        - text: 來源所列2027春或未標年程序供參考；中央116指定梯次仍須兩校確認。\n      - group:\n        - text: 返國後 · 中央國際事務處／所屬系所\n        - strong: 返國後一週完成中央返校程序\n        - text: 返國後一週內\n      - strong: 本流程使用的官方來源\n      - link \"中央116-1甄選簡章 母校當期正式公告 · 優先級 1\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf\n      - link \"中央115名額表（歷史參考） 母校當期正式公告 · 優先級 1\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf\n      - link \"Application Form ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/html/s_exchange_02.html\n      - link \"CEFR-reference 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/08_1_jpl_skill_eng.pdf\n      - link \"Dormitory Information for Successful Applicants to the International Student Entrance Examination (April 2026 Enrollment) ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/dormitory/pass_dorm.html\n      - link \"Exchange Program ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/examination/exp/\n      - link \"guide-en 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/00_1_sagguide_eng.pdf\n      - link \"health 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/04_certificate_of_health.pdf\n      - link \"Accommodation index ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/dormitory/\n      - link \"Ryukoku International House ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/dormitory/kokusai_h.html\n      - link \"Ryukoku Japan Studies Program ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/examination/exp/rjsp/index.html\n      - link \"language-evaluation 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/02_evaluation_w.docx\n      - link \"Mitra-kan ｜International｜Ryukoku University You, Unlimited 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/english/dormitory/mitrakan.html\n      - link \"plan 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/01_plan_of_Study_w.docx\n      - link \"recommendation 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/03_letter.pdf\n      - link \"self-assessment 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/07_1_sag_eng_jp_w.docx\n      - link \"spot-instructions 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/application_Form/spot_test_ex.pdf\n      - link \"curriculum 合作校官方資訊 · 優先級 4\":\n        - /url: https://intl.ryukoku.ac.jp/zx_documents/rjsp/curriculum_eng.pdf\n      - link \"acslb-client 合作校官方資訊 · 優先級 4\":\n        - /url: https://syllabus.ws.ryukoku.ac.jp/acrsw/CSylNoSSO/CNoSSO.do\n      - paragraph: 截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。\n    - complementary \"申請準備進度與官方來源\":\n      - heading \"我的申請進度\" [level=2]\n      - progressbar \"申請準備進度\":\n        - strong: 0 / 5 已完成\n        - text: 準備中\n      - paragraph:\n        - text: 登入以保存進度\n        - button \"登入\"\n      - checkbox \"確認資格與語言門檻\" [disabled]\n      - text: 確認資格與語言門檻\n      - checkbox \"比較課程、費用與生活\" [disabled]\n      - text: 比較課程、費用與生活\n      - checkbox \"備妥校內申請文件\" [disabled]\n      - text: 備妥校內申請文件\n      - checkbox \"完成校內甄選送件\" [disabled]\n      - text: 完成校內甄選送件\n      - checkbox \"完成合作校線上申請\" [disabled]\n      - text: 完成合作校線上申請\n      - strong: 送件前確認\n      - paragraph: 截止日與資格以當期官方公告為準。\n- paragraph:\n  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），\n  - button \"停用匿名使用統計\"\n  - text: 。\n  - link \"隱私權政策\":\n    - /url: /privacy\n  - link \"使用條款\":\n    - /url: /terms"
+        }
+      ],
+      "skipped_cases": []
+    },
+    {
+      "name": "js-app",
+      "argv": [
+        "node",
+        "--check",
+        "src/exchange_info/static/app.js"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T07:55:09.002425+00:00",
+      "finished_at": "2026-10-09T07:55:09.170298+00:00",
+      "log": "js-app.log"
+    },
+    {
+      "name": "js-discovery-ui",
+      "argv": [
+        "node",
+        "--check",
+        "src/exchange_info/static/discovery-ui.js"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T07:55:09.259404+00:00",
+      "finished_at": "2026-10-09T07:55:09.338244+00:00",
+      "log": "js-discovery-ui.log"
+    },
+    {
+      "name": "js-multi-plan",
+      "argv": [
+        "node",
+        "--check",
+        "src/exchange_info/static/multi-plan.js"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T07:55:09.423065+00:00",
+      "finished_at": "2026-10-09T07:55:09.596854+00:00",
+      "log": "js-multi-plan.log"
+    },
+    {
+      "name": "lock",
+      "argv": [
+        "uv",
+        "lock",
+        "--check"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 2,
+      "started_at": "2026-10-09T07:55:09.681280+00:00",
+      "finished_at": "2026-10-09T07:55:09.742077+00:00",
+      "log": "lock.log"
+    },
+    {
+      "name": "scoped_whitespace",
+      "argv": [
+        "git",
+        "diff",
+        "--check",
+        "012b580",
+        "bb806740e702892e78d358973cb2c54b739d3dbd",
+        "--",
+        ".",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/instructions-ja/page-001.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/instructions-ja/page-002.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/instructions-ja/page-003.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/instructions-ja/page-004.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/instructions-ja/page-005.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/instructions-ja/page-006.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/instructions-ja/page-007.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/instructions-ja/page-008.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/instructions-ja/page-009.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/instructions-ja/page-010.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/instructions-ja/page-011.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/instructions-ja/page-012.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/jpets-current/page-web.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/syllabi-fall2026/page-004.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/syllabi-fall2026/page-015.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/syllabi-spring2026/page-004.txt",
+        ":(exclude)sources/ncu/next3-review-20261009/additional/ncu-130/sources/syllabi-spring2026/page-017.txt"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T07:55:09.838207+00:00",
+      "finished_at": "2026-10-09T07:55:10.911791+00:00",
+      "log": "scoped_whitespace.log"
+    }
+  ],
+  "full_ci_equivalence": false,
+  "current_116_data_acceptance": false,
+  "prior_kyutech_root_closed": false,
+  "production_actions": false,
+  "browser_screenshots": [
+    {
+      "path": "browser/kumamoto-1440-arrival.png",
+      "sha256": "0d78af9715393b50aac6ba5966ffeb865210dc02b12f23f9c966cba876b8fb6c",
+      "bytes": 339269
+    },
+    {
+      "path": "browser/kumamoto-1440-coe-visa.png",
+      "sha256": "4bd19f8dffdce9809bdfa82b7631e26613808083539b7b07621f563349a97710",
+      "bytes": 391195
+    },
+    {
+      "path": "browser/kumamoto-1440-life.png",
+      "sha256": "3539be64c22859c7c5577715524618d6daaaf25d5b76c6423f29a2fcae6478d7",
+      "bytes": 475266
+    },
+    {
+      "path": "browser/kumamoto-1440-overview.png",
+      "sha256": "86d11b874bc2e8034f3e87ff4216e58b5d5f7e5cafdf1cd704f3eb41c109a3a1",
+      "bytes": 572999
+    },
+    {
+      "path": "browser/kumamoto-1440-packet.png",
+      "sha256": "40ef86991dfb00280fb98cd30de64d5e83b8ec89dc7080f59dd953bb2f0d2d14",
+      "bytes": 379435
+    },
+    {
+      "path": "browser/kumamoto-1440-source-gap.png",
+      "sha256": "76d764d69df87c08b687bfc7a04dee7de1053c3cff59c48832139bdf0f09157c",
+      "bytes": 416135
+    },
+    {
+      "path": "browser/kumamoto-390-arrival.png",
+      "sha256": "79c5ad04284daca8213be6b20e6ff9214d4b8d58caa523cde54dc6e577661845",
+      "bytes": 133598
+    },
+    {
+      "path": "browser/kumamoto-390-coe-visa.png",
+      "sha256": "f8d1547987f05a9df4992f734dfa381d36487fafcad403dda05e997e40f756bb",
+      "bytes": 130497
+    },
+    {
+      "path": "browser/kumamoto-390-life.png",
+      "sha256": "5ed866ed846e0826b7a05b1ea8cdc6dd91c8c1e05cc2b0ec80d079beabe26a3a",
+      "bytes": 156080
+    },
+    {
+      "path": "browser/kumamoto-390-overview.png",
+      "sha256": "4a5b56d103ed588d102b35894fcd96ab2d848a32bc7b0c1ecdd3bdbe645e050b",
+      "bytes": 185763
+    },
+    {
+      "path": "browser/kumamoto-390-packet.png",
+      "sha256": "691d123af00dba79e0eec4c2fb2b350bdba7645bc8bb76eedb43f90aa6132539",
+      "bytes": 143897
+    },
+    {
+      "path": "browser/kumamoto-390-source-gap.png",
+      "sha256": "73038ba29c04aec3b90ca55c64a61fc3ba21772e42706229e8119165dfc036a6",
+      "bytes": 119890
+    },
+    {
+      "path": "browser/nufs-1440-overview.png",
+      "sha256": "1d30b5ff55309086493a4a9a70a56b3606ce47137b5a698f5c2d9166cc7c671f",
+      "bytes": 612984
+    },
+    {
+      "path": "browser/nufs-1440-packet.png",
+      "sha256": "b4b33cd5ffc91ef5fc5f8d604cd17476808dd531ebba1bc37d90b5ce8fc5cc9b",
+      "bytes": 390441
+    },
+    {
+      "path": "browser/nufs-390-overview.png",
+      "sha256": "4b4e18c1344c114295067d6885df495cb77ea780fc9b8f88c05dc581a0bd2d3c",
+      "bytes": 193442
+    },
+    {
+      "path": "browser/nufs-390-packet.png",
+      "sha256": "c03950fec964c28c91bae12a8d24e476fce7ee592def4476f133a720a758415c",
+      "bytes": 139302
+    },
+    {
+      "path": "browser/ryukoku-1440-overview.png",
+      "sha256": "f0527716e47b7926cf00aead1ac1870dd13bc7c83d564a993fbacb8d96df3693",
+      "bytes": 616213
+    },
+    {
+      "path": "browser/ryukoku-1440-packet.png",
+      "sha256": "11f75dfa0ee4a4c1afa3152d143e1f279c8fc1efdadad4504ab1a90151f7d0d9",
+      "bytes": 392876
+    },
+    {
+      "path": "browser/ryukoku-1440-source-gap.png",
+      "sha256": "69b845366e854f6e60effcfe5a77ca3ba8837e995067d89c089b8a2dd310a197",
+      "bytes": 423936
+    },
+    {
+      "path": "browser/ryukoku-390-overview.png",
+      "sha256": "92c90ab4bb0f4bfc79d0914f394aeb4dd506f01ae7d4f96d8d77745fe4c6fff8",
+      "bytes": 193954
+    },
+    {
+      "path": "browser/ryukoku-390-packet.png",
+      "sha256": "12022505270d1251b63d0cbe13c9625e06ce919b1b809fb5b08b02ce9249389e",
+      "bytes": 139218
+    },
+    {
+      "path": "browser/ryukoku-390-source-gap.png",
+      "sha256": "ba817ec245ef1cc8d186901d8c55f05d47efd9e61c7647d85d6cd69cdd304966",
+      "bytes": 123301
+    }
+  ],
+  "end_sha": "bb806740e702892e78d358973cb2c54b739d3dbd",
+  "end_porcelain": "",
+  "same_sha_and_clean": true,
+  "necessary_local_tests_passed": false,
+  "finished_at": "2026-10-09T07:55:11.008151+00:00"
+}

@@ -1,0 +1,50 @@
+{
+  "key": "city",
+  "label": "城市與校區位置",
+  "status": "needs_confirmation",
+  "note": "愛知縣日進市岩崎町竹之山57；校名含Nagoya，但不能把名古屋市中心當日進校區。",
+  "source_urls": [
+    "https://www-e.nufs.ac.jp/interchange/incoming/",
+    "https://www-e.nufs.ac.jp/interchange/incoming/housing/index.html"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www-e.nufs.ac.jp/interchange/incoming/",
+      "source_id": "host-nufs-next3-incoming",
+      "page": null,
+      "source_title": "Incoming Students | International | Nagoya University of Foreign Studies",
+      "applicability": "2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。",
+      "checked_at": "2026-10-09T07:29:39.765864+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 129,
+        "field": "city",
+        "evidence_array_index": 0,
+        "text_sha256": "7a1f6f5d011946e48cef5738fd55fcc60189060673dcd4215edbc26274811d24",
+        "char_count": 2511
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www-e.nufs.ac.jp/interchange/incoming/housing/index.html",
+      "source_id": "host-nufs-next3-housing",
+      "page": null,
+      "source_title": "Housing Information -Dormitories- | International | Nagoya University of Foreign Studies",
+      "applicability": "2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。",
+      "checked_at": "2026-10-09T07:29:39.765864+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 129,
+        "field": "city",
+        "evidence_array_index": 1,
+        "text_sha256": "4d4b174ef877bdc37ff634b437dd5245a358b56577d97d643f8a4f3998480e6a",
+        "char_count": 4560
+      }
+    }
+  ],
+  "unresolved": "116實際課程與房型分配仍須接收通知確認。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。"
+}

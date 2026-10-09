@@ -26,6 +26,7 @@ TERMS = re.compile(r"(?<![A-Za-z])(?:TOEIC|TOEFL(?:\s+(?:iBT|ITP|PBT))?|IELTS|Du
 LINKS = re.compile(r"https?://[^\s）)<>；，。！？「」『』【】]+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}")
 HOSTS = re.compile(r"\b(?:[A-Za-z0-9-]+\.)+(?:edu|ac|com|org|net|cz|jp|se|pl|uk|kr|vn|ro|tr|lt|cn|fr|it|es|de|ca|sk|ru|lv|ee|fi|bg|hu|au|nz|sg|my|ph|th|id|in|mn|tw|nl|be|at|ch|eu)(?:\.[A-Za-z]{2,})*\b")
 _translation_lock = threading.Lock()
+_bundled_translation_load_lock = threading.Lock()
 
 
 # A page load sends a thousand or so source texts through these, again on every load, and each used to run dozens to
@@ -114,13 +115,33 @@ def _reference_translations() -> dict:
 
 
 @lru_cache(maxsize=1)
-def _bundled_machine_translations() -> dict:
+def _load_bundled_machine_translations() -> dict:
     """Offline translations remain machine-labelled and bound to exact sources."""
     if not BUNDLED_MACHINE_TRANSLATIONS.exists():
         return {}
     rows = json.loads(BUNDLED_MACHINE_TRANSLATIONS.read_text(encoding="utf-8"))
     return {_key(row["original"], row["url"]): row["zh"] for row in rows
             if row.get("status") == "machine" and _valid_translation(row["original"], row.get("zh"))}
+
+
+def _bundled_machine_translations() -> dict:
+    # lru_cache permits concurrent misses to execute the loader more than once.
+    # Boot sends several translation batches together, so serialize the cache
+    # lookup as well as its first load. Translation validation stays unchanged.
+    with _bundled_translation_load_lock:
+        return _load_bundled_machine_translations()
+
+
+def _clear_bundled_machine_translations() -> None:
+    with _bundled_translation_load_lock:
+        _load_bundled_machine_translations.cache_clear()
+
+
+# Preserve the original cached reader's interface for callers that replace a
+# source bundle and invalidate it. Clearing uses the same lock as loading.
+_bundled_machine_translations.cache_clear = _clear_bundled_machine_translations
+_bundled_machine_translations.cache_info = _load_bundled_machine_translations.cache_info
+_bundled_machine_translations.cache_parameters = _load_bundled_machine_translations.cache_parameters
 
 
 def cached_translation(text: str, url: str, data_dir: Path) -> tuple[str, str] | None:

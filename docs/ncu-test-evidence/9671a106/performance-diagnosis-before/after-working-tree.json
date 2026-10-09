@@ -1,0 +1,55 @@
+{
+  "tested_sha": "eb0b610604499da9ca29884830fa0c85522aab33",
+  "label": "after-working-tree",
+  "timestamp": "2026-10-08T22:12:06.843052+00:00",
+  "cold_process": true,
+  "three_concurrent_reads": [
+    {
+      "elapsed_s": 2.8301238590065623,
+      "count": 1065,
+      "home_counts": {
+        "國立臺北大學": 409,
+        "長庚大學": 154,
+        "國立臺灣大學": 288,
+        "國立中央大學": 214
+      }
+    },
+    {
+      "elapsed_s": 2.8332332620047964,
+      "count": 1065,
+      "home_counts": {
+        "國立臺北大學": 409,
+        "長庚大學": 154,
+        "國立臺灣大學": 288,
+        "國立中央大學": 214
+      }
+    },
+    {
+      "elapsed_s": 2.833047975989757,
+      "count": 1065,
+      "home_counts": {
+        "國立臺北大學": 409,
+        "長庚大學": 154,
+        "國立臺灣大學": 288,
+        "國立中央大學": 214
+      }
+    }
+  ],
+  "builds": [
+    {
+      "kind": "local",
+      "elapsed_s": 3.8914993638172746e-05
+    },
+    {
+      "kind": "bundled",
+      "elapsed_s": 2.809515791013837
+    },
+    {
+      "kind": "published",
+      "elapsed_s": 2.829183969006408
+    }
+  ],
+  "total_elapsed_s": 2.836580609000521,
+  "end_sha": "eb0b610604499da9ca29884830fa0c85522aab33",
+  "worktree": " M sources/ncu/2026-10-08/drive-evidence.json.gz\n M sources/ncu/2026-10-08/host-web-checks.json\n M sources/ncu/2026-10-08/host-web-evidence.json.gz\n M sources/ncu/2026-10-08/reviewed-host-records.json\n M src/exchange_info/official_data/ncu/application_workflows.jsonl\n M src/exchange_info/official_data/ncu/catalog-completeness.json\n M src/exchange_info/official_data/ncu/destination_profiles.jsonl\n M src/exchange_info/official_data/ncu/field-audit.json\n M src/exchange_info/official_data/ncu/field-coverage.csv\n M src/exchange_info/official_data/ncu/import-provenance.json\n M src/exchange_info/official_data/ncu/pages.jsonl\n M src/exchange_info/official_data/ncu/partners.jsonl\n M src/exchange_info/official_data/ncu/source-evidence.json.gz\n M src/exchange_info/storage.py\n M tests/test_workflow_catalog_cache.py\n?? docs/ncu-source-evidence/host-kyutech-gcc-2026-october-p1.png\n?? docs/ncu-source-evidence/host-kyutech-gcc-2026-october-p2.png\n?? docs/ncu-source-evidence/host-kyutech-handbook2026-p12.png\n?? docs/ncu-source-evidence/host-kyutech-handbook2026-p13.png\n?? docs/ncu-source-evidence/host-kyutech-handbook2026-p34.png\n?? docs/ncu-source-evidence/host-kyutech-handbook2026-p35.png\n?? docs/ncu-source-evidence/host-kyutech-handbook2026-p52.png\n?? docs/ncu-source-evidence/host-kyutech-handbook2026-p54.png\n?? docs/ncu-source-evidence/host-kyutech-handbook2026-p56.png\n?? docs/ncu-source-evidence/host-kyutech-handbook2026-p58.png\n?? docs/ncu-source-evidence/host-kyutech-handbook2026-p63.png\n?? docs/ncu-source-evidence/host-kyutech-insurance2026-p1.png\n?? docs/ncu-source-evidence/host-kyutech-insurance2026-p2.png\n?? docs/ncu-source-evidence/host-kyutech-insurance2026-p3.png\n?? docs/ncu-source-evidence/host-kyutech-insurance2026-p4.png\n?? docs/ncu-source-evidence/host-kyutech-insurance2026-p5.png\n?? docs/ncu-source-evidence/host-kyutech-insurance2026-p6.png\n?? docs/ncu-source-evidence/host-kyutech-insurance2026-p7.png\n?? docs/ncu-source-evidence/host-kyutech-syllabus-guide2026-retry-p1.png\n?? docs/ncu-source-evidence/host-kyutech-syllabus-guide2026-retry-p2.png\n?? docs/ncu-source-evidence/host-kyutech-syllabus-guide2026-retry-p3.png\n?? docs/ncu-source-evidence/host-kyutech-syllabus-guide2026-retry-p4.png\n?? docs/ncu-source-evidence/host-kyutech-syllabus-guide2026-retry-p5.png\n?? docs/ncu-source-evidence/host-kyutech-syllabus-guide2026-retry-p6.png\n?? docs/ncu-source-evidence/host-kyutech-tobata-grad-course2026fall-p1.png\n?? docs/ncu-source-evidence/host-kyutech-tobata-seic-course2026fall-p1.png\n?? docs/ncu-source-evidence/host-kyutech-tobata-ug-calendar2026sep-p1.png\n?? sources/ncu/2026-10-08/1w7gtlmyYk0VnXXWhFusMRzL4EunmfGqe-index-review.json\n?? sources/ncu/2026-10-08/government-iizuka-residence-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-gcc-2026-october-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-gcc-2026-october-visual-review.json\n?? sources/ncu/2026-10-08/host-kyutech-gcc2026apr-en-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-gcc2026apr-female-blank-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-gcc2026apr-female-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-gcc2026apr-ja-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-gcc2026oct-blank-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-gcc2026oct-ja-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-handbook2023-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-handbook2026-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-handbook2026-visual-review.json\n?? sources/ncu/2026-10-08/host-kyutech-iizuka-grad-book2026-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-iizuka-ug-book2026jun-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-insurance2026-visual-review.json\n?? sources/ncu/2026-10-08/host-kyutech-international-house-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-jp-grad-iizuka2026spring-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-jp-grad-tobata2026spring-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-jp-ug-tobata2026spring-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-manual-read-scope.json\n?? sources/ncu/2026-10-08/host-kyutech-syllabus-guide2026-retry-visual-review.json\n?? sources/ncu/2026-10-08/host-kyutech-tobata-grad-book2026-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-tobata-grad-course2026fall-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-tobata-grad-course2026fall-visual-review.json\n?? sources/ncu/2026-10-08/host-kyutech-tobata-grad-curriculum2026-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-tobata-seic-course2026fall-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-tobata-seic-course2026fall-visual-review.json\n?? sources/ncu/2026-10-08/host-kyutech-tobata-ug-calendar2026sep-index-review.json\n?? sources/ncu/2026-10-08/host-kyutech-tobata-ug-calendar2026sep-visual-review.json\n?? sources/ncu/2026-10-08/host-kyutech-tobata-ug-outline2027-index-review.json\n"
+}

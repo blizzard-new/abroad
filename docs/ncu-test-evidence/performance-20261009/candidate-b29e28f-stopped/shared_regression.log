@@ -1,0 +1,26 @@
+CONFTEST LOADED!
+..F..................................................................... [ 37%]
+........................................................................ [ 74%]
+............ss....................................                       [100%]
+=================================== FAILURES ===================================
+__ test_bundled_translations_are_source_bound_machine_labelled_and_validated ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fb047136f00>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-202/test_bundled_translations_are_0')
+
+    def test_bundled_translations_are_source_bound_machine_labelled_and_validated(monkeypatch, tmp_path):
+        path = tmp_path / "translations.json"
+        original = "Monthly rent is 500 EUR."
+        path.write_text(json.dumps([
+            {"original": original, "url": "https://example.edu/housing", "zh": "每月租金為 500 EUR。", "status": "machine"},
+            {"original": "Rent is 50 EUR.", "url": "https://example.edu/housing", "zh": "租金為 500 EUR。", "status": "machine"}
+        ]), encoding="utf-8")
+        monkeypatch.setattr(translation, "BUNDLED_MACHINE_TRANSLATIONS", path)
+>       translation._bundled_machine_translations.cache_clear()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'function' object has no attribute 'cache_clear'
+
+tests/test_school_content.py:48: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_school_content.py::test_bundled_translations_are_source_bound_machine_labelled_and_validated
+1 failed, 191 passed, 2 skipped in 68.77s (0:01:08)

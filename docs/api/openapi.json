@@ -2332,6 +2332,14 @@
             "title": "Flags",
             "type": "array"
           },
+          "partner_document_states": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/PartnerDocumentPreparationState"
+            },
+            "maxProperties": 214,
+            "title": "Partner Document States",
+            "type": "object"
+          },
           "program_type": {
             "default": "exchange",
             "enum": [
@@ -2482,6 +2490,16 @@
       },
       "ApplicationDocumentCatalogItem": {
         "properties": {
+          "applicability": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocumentApplicability"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "applicability_note": {
             "anyOf": [
               {
@@ -4077,6 +4095,13 @@
             "title": "Detail",
             "type": "string"
           },
+          "document_applicability": {
+            "items": {
+              "$ref": "#/components/schemas/DocumentApplicability"
+            },
+            "title": "Document Applicability",
+            "type": "array"
+          },
           "document_link": {
             "anyOf": [
               {
@@ -4277,6 +4302,16 @@
       },
       "ApplicationPlanPreference": {
         "properties": {
+          "document_preparation_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PartnerDocumentPreparationState"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "rank": {
             "maximum": 5.0,
             "minimum": 1.0,
@@ -8336,6 +8371,47 @@
         "title": "DiscoveryWorkspace",
         "type": "object"
       },
+      "DocumentApplicability": {
+        "properties": {
+          "current_applicability_verified": {
+            "default": false,
+            "title": "Current Applicability Verified",
+            "type": "boolean"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "requirement_name": {
+            "title": "Requirement Name",
+            "type": "string"
+          },
+          "source_urls": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Urls",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "applicable",
+              "not_applicable",
+              "deferred",
+              "needs_confirmation"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "requirement_name",
+          "status",
+          "note"
+        ],
+        "title": "DocumentApplicability",
+        "type": "object"
+      },
       "DocumentCheckIssue": {
         "properties": {
           "code": {
@@ -9425,14 +9501,33 @@
             ],
             "title": "Academic Reference Year"
           },
+          "degree_score_minimums": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "title": "Degree Score Minimums",
+            "type": "object"
+          },
           "exclude_in_service": {
             "default": false,
             "title": "Exclude In Service",
             "type": "boolean"
           },
+          "excluded_undergraduate_years": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Excluded Undergraduate Years",
+            "type": "array"
+          },
           "graduate_academic_exempt": {
             "default": false,
             "title": "Graduate Academic Exempt",
+            "type": "boolean"
+          },
+          "language_certificate_required": {
+            "default": false,
+            "title": "Language Certificate Required",
             "type": "boolean"
           },
           "partner_requirements_need_confirmation": {
@@ -9833,6 +9928,33 @@
           "school_name"
         ],
         "title": "PartnerCoverage",
+        "type": "object"
+      },
+      "PartnerDocumentPreparationState": {
+        "additionalProperties": false,
+        "properties": {
+          "host_admission_status": {
+            "default": "unknown",
+            "enum": [
+              "unknown",
+              "not_accepted",
+              "accepted"
+            ],
+            "title": "Host Admission Status",
+            "type": "string"
+          },
+          "housing_choice": {
+            "default": "unknown",
+            "enum": [
+              "unknown",
+              "on_campus",
+              "off_campus"
+            ],
+            "title": "Housing Choice",
+            "type": "string"
+          }
+        },
+        "title": "PartnerDocumentPreparationState",
         "type": "object"
       },
       "PartnerExchangeDetailField": {
@@ -13077,6 +13199,13 @@
             "title": "Detail",
             "type": "string"
           },
+          "document_applicability": {
+            "items": {
+              "$ref": "#/components/schemas/DocumentApplicability"
+            },
+            "title": "Document Applicability",
+            "type": "array"
+          },
           "document_link": {
             "anyOf": [
               {
@@ -15426,6 +15555,53 @@
                 }
               ],
               "title": "Application Round"
+            }
+          },
+          {
+            "in": "query",
+            "name": "host_admission_status",
+            "required": false,
+            "schema": {
+              "default": "unknown",
+              "enum": [
+                "unknown",
+                "not_accepted",
+                "accepted"
+              ],
+              "title": "Host Admission Status",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "housing_choice",
+            "required": false,
+            "schema": {
+              "default": "unknown",
+              "enum": [
+                "unknown",
+                "on_campus",
+                "off_campus"
+              ],
+              "title": "Housing Choice",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "semester",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 30,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Semester"
             }
           }
         ],
@@ -18742,6 +18918,64 @@
         "summary": "Health"
       }
     },
+    "/partner-source-audit": {
+      "get": {
+        "operationId": "partner_source_audit_partner_source_audit_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "school",
+            "required": true,
+            "schema": {
+              "minLength": 2,
+              "title": "School",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home_school",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Home School"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Partner Source Audit Partner Source Audit Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Partner Source Audit"
+      }
+    },
     "/product/entitlements": {
       "get": {
         "operationId": "product_entitlements_product_entitlements_get",
@@ -19302,7 +19536,7 @@
     "resource_not_found": 404,
     "validation_failed": 422
   },
-  "x-contract-version": "2026-10-08.3",
+  "x-contract-version": "2026-10-08.5",
   "x-product-boundaries": {
     "account_routes_require_bearer_session": true,
     "ai_features": "paused",

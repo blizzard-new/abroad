@@ -1,0 +1,75 @@
+{
+  "id": "host-tju-application-2025",
+  "row_ids": [
+    "ncu-174"
+  ],
+  "url": "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2051_8577fd1c045919572c1b6a1a58d154a7",
+  "title": "天津港澳臺申請空白表（雲科Spring2025資料包）",
+  "authority_kind": "home_university",
+  "expected_document_format": "doc",
+  "label": "天津港澳臺申請空白表（雲科Spring2025資料包）",
+  "checked_at": "2026-10-08",
+  "status": 200,
+  "final_url": "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2051_8577fd1c045919572c1b6a1a58d154a7",
+  "sha256": "b07254ec82a0e22a3237ef477e3b0f969639c7705a7eecabb5fab8f632238186",
+  "content_type": "application/octet-stream",
+  "conversion_review": {
+    "source_sha256": "b07254ec82a0e22a3237ef477e3b0f969639c7705a7eecabb5fab8f632238186",
+    "converted_sha256": "c8e74d76762f20b6f2283cd6f9cd74b3d3e3b9245fed54cccbe4051d14b0ab77",
+    "checked_at": "2026-10-08",
+    "method": "LibreOffice headless DOC to DOCX; word/document.xml native text extraction",
+    "note_zh": "原件為OLE舊Word，antiword拒絕；離線轉為DOCX後原生XML全文抽取並人工讀完。無固定PDF頁碼，不稱已視覺閱讀或116當期表。原件URL／SHA與原解析失敗另保留。"
+  },
+  "document_format": "doc_converted_docx_no_fixed_pdf_pages",
+  "extraction_attempts": [
+    {
+      "method": "antiword",
+      "status": "failed",
+      "returncode": 1
+    }
+  ],
+  "status_note": "public_source_extracted_scope_pending",
+  "previous_attempts": [
+    {
+      "checked_at": "2026-10-08",
+      "status": 200,
+      "error": "Command '['/tmp/ncu-antiword/usr/bin/antiword', '-m', 'UTF-8.txt', '/tmp/tmpjyzfhw9w.doc']' returned non-zero exit status 1.",
+      "sha256": "b07254ec82a0e22a3237ef477e3b0f969639c7705a7eecabb5fab8f632238186",
+      "content_type": "application/octet-stream",
+      "final_url": "https://tdx.yuntech.edu.tw/index.php/newsclass/2020-03-05-07-13-34/item/download/2051_8577fd1c045919572c1b6a1a58d154a7"
+    }
+  ],
+  "reading_review": {
+    "source_sha256": "b07254ec82a0e22a3237ef477e3b0f969639c7705a7eecabb5fab8f632238186",
+    "pages_reviewed": [
+      null
+    ],
+    "method": "human_read_native_text",
+    "checked_at": "2026-10-08",
+    "note_zh": "已人工讀原生抽取全文；Word轉檔另保存原件與轉檔SHA。不是視覺全頁查核或116適用核准。"
+  },
+  "content_status": {
+    "response_bytes_received": true,
+    "downloaded": true,
+    "page_count": 1,
+    "text_page_count": 1,
+    "any_text": true,
+    "all_pages_have_text": true,
+    "all_pages_read": true,
+    "visual_reviewed_page_count": 0,
+    "visual_reviewed_image_count": 0,
+    "visual_reviewed": false,
+    "ocr_status": "not_performed"
+  },
+  "original_source_locator": {
+    "path": "src/exchange_info/official_data/ncu/source-evidence.json.gz",
+    "source_array_index": 459,
+    "source_id": "host-tju-application-2025"
+  },
+  "pages": [
+    {
+      "page": null,
+      "path": "host-tju-application-2025/pages/000.json"
+    }
+  ]
+}

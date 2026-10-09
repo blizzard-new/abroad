@@ -1,0 +1,2049 @@
+CONFTEST LOADED!
+....FF                                                                   [100%]
+=================================== FAILURES ===================================
+_ test_ncu_reference_scope_and_student_content[kansai-\u95dc\u897f\u5927\u5b78-\u521d\u6b21\u516d\u985e\u5171\u901a\uff0c\u4e26\u975e\u6bcd\u6821\u4e03\u4ef6-6-390] _
+
+page = <Page url='http://127.0.0.1:58669/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E9%97%9C%E8%A5%BF%E5%A4%A7%E5%AD%B8#school=%E9%97%9C%E8%A5%BF%E5%A4%A7%E5%AD%B8%20Kansai%20University'>
+live_server = LiveServer(base_url='http://127.0.0.1:58669', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-239/web-e2e-data0'))
+width = 390, slug = 'kansai', name = '關西大學', title = '初次六類共通，並非母校七件', count = 6
+
+    @pytest.mark.parametrize('width',[390,1440])
+    @pytest.mark.parametrize('slug,name,title,count',CASES)
+    def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,name,title,count):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[]
+        page.on('pageerror',lambda e:errors.append(str(e)))
+        enter_public_site(page,live_server,'partners')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+        open_navigation(page)
+        page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立中央大學"]').click()
+        page.locator('#confirm-school').click()
+        wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60)
+        if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
+            page.locator('#glass-menu-toggle').click()
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(name)
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        full_name={'shizuoka':'靜岡大學 Shizuoka University',
+                   'chuo':'日本中央大學 Chuo University',
+                   'kansai':'關西大學 Kansai University'}[slug]
+        exact_trigger=f'.school-detail-trigger[data-school-name="{full_name}"]'
+        if width<700:
+            page.locator('#partner-table .partner-card').filter(has=page.locator(exact_trigger)).locator(':scope > summary').click()
+        page.locator(f'#partner-table {exact_trigger}:visible').first.click()
+        assert page.evaluate('new URLSearchParams(location.hash.slice(1)).get("school")') == full_name
+        summary=page.locator('#detail-overview .partner-student-summary')
+        terms={'shizuoka':['不是正式申請門檻','10/1','10/14','closed'],
+               'chuo':['Tentative','N3','Kenkyusei','五門','六列'],
+               'kansai':['500000','11/10','MCL','三月']}
+        for term in terms[slug]:expect(summary).to_contain_text(term)
+        page.locator('#ncu-source-audit > summary').click()
+        expect(page.locator('#ncu-source-audit-body > p').first).to_contain_text('2026-10-09',timeout=60_000)
+        if slug=='shizuoka':
+            failed=page.locator('.ncu-unretrieved-source[data-source-id="host-shizuoka-housing-current"]')
+            expect(failed).to_be_visible(timeout=60_000)
+            expect(failed).to_contain_text('English Top')
+            assert failed.get_by_role('link',name='已查網址（本次未取得）').get_attribute('href')=='https://www.suoic.shizuoka.ac.jp/english/international/campuslife/housing/'
+        else:
+            url=('https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_05_20260924.xlsx' if slug=='chuo' else
+                 'https://www.kansai-u.ac.jp/Kokusai/KUGFCourseGuide/2026/#target/page_no=19')
+            source=page.locator('#ncu-source-audit-body > details').filter(has=page.locator(f'a[href="{url}"]')).first
+            expect(source.locator(':scope > summary')).to_be_visible(timeout=60_000)
+            source.locator(':scope > summary').click()
+            expect(source).to_contain_text('未逐門' if slug=='chuo' else '未取得PDF第19頁')
+            assert source.get_by_role('link',name='官方公開來源').get_attribute('href')==url
+        out=Path('/tmp/ncu-audit/browser');out.mkdir(parents=True,exist_ok=True)
+        page.screenshot(path=str(out/f'ncu-shizuoka-chuo-kansai-{slug}-source-{width}.png'))
+        page.locator('#detail-tab-application').click()
+        group=page.locator('#detail-application .workflow-step').filter(has=page.locator(':scope > summary').filter(has_text=title)).first
+        group.locator(':scope > summary').click()
+        expect(group.locator('.workflow-documents > li')).to_have_count(count)
+        expect(group.locator('.workflow-rule-meta > strong')).to_have_text('規劃範圍（當期適用待確認）')
+        application=page.locator('#detail-application')
+        if slug=='shizuoka':
+            expect(group).to_contain_text('健康、Confirmation、經費新格式未取得')
+            expect(application).to_contain_text('修士專業／研究')
+            expect(application).to_contain_text('錄取後才通知宿舍')
+        elif slug=='chuo':
+            for term in ['C1本科或C2研究所','Part2 J＋K','Kenkyusei原件明免']:
+                expect(application).to_contain_text(term)
+            plan=group.locator('.workflow-documents > li').filter(has_text='C1本科或C2')
+            expect(plan).to_contain_text('按學制擇一')
+            for suffix in ['C1_20260904.docx','C2_20260904.docx']:
+                expect(application.locator(f'.workflow-sources a[href$="{suffix}"]').first).to_be_visible()
+        else:
+            expect(group).to_contain_text('胸片≤6月')
+            expect(group).to_contain_text('medical information')
+            expect(group).to_contain_text('不能硬判發照三月')
+            for term in ['親屬Dormitory Guarantee','不是要存入的deposit','11/10–19']:
+                expect(application).to_contain_text(term)
+            assert not group.locator('.workflow-documents > li').filter(has_text='成績').count()
+        group.scroll_into_view_if_needed()
+        page.screenshot(path=str(out/f'ncu-shizuoka-chuo-kansai-{slug}-packet-{width}.png'))
+        page.locator('#detail-tab-life').click()
+        page.locator('#detail-life .life-official-guide > summary').click()
+        life=page.locator('#destination-official-content')
+        life_terms={'shizuoka':['27400','23300','13200','2013/1','20日前'],
+                    'chuo':['350000','1150000','50000','1500','Spring2027'],
+                    'kansai':['41000','63000','末月','1650','全exchange','500000']}
+>       for term in life_terms[slug]:expect(life).to_contain_text(term)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Locator expected to contain text '500000'
+E       Actual value: 
+E           
+E             
+E             官方生活資訊部分查核現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。 各欄缺口見逐欄查核，不表示完整核准。最後查核：2026/10/09 上午05:01
+E           
+E           
+E             所在地大阪吹田Senriyama／Suita Mirai等校區費用參考交換互免Kansai學費，仍繳中央學雜；依校際協議核對額外課程／實驗費。
+E       JASSO採用／對象尚未定，採用後通知；特定partner獎學金依個別協議，不能視中央必有或已核財力來源。
+E       一般每月100000–150000含住房；不同住處／交通／保險另依本人，不以奖學金預期抵現金。
+E       2026學年起GTN Assistants全exchange强制，自付與在學期等長；現掛企業flyer月1650含tax但未證實等於Kansai116合約價，付款詳情到校前後通知。早歸仍在學不退，只退出／整學期縮短可扣已用、手续费按退款日匯率處理。住宿初次KU Gate選住校才交保證書，房源容量與偏好無保证、學校分配；現可申Shurei、Tsukigaoka（female）、KU G-House；Minami-Senri Plaza及KU I-House不開放交換。
+E       Shurei入寮15000，A／B月41000／43000另等一月deposit抵末月；Tsukigaoka入寮22000、月42000及同額deposit；G-House入寮20000、月63000及同額deposit。月價含水電網路寢具，餐按實際次另收。
+E       G-House HTMLtitle仍寫Minami-Senri，但正文是Global House／Suita Mirai，兩者名稱不能混為已關閉的宿舍；入住請按接收通知核對。入口費不退，deposit用末月租不當全部退還現金。
+E       Homestay一般placement20000、每stay4000另tax、至少28天含早晚餐；單位文字stay未明，不能直接造全年精確價。Apartment約40000以上，co-op保證與JEES僅符合foreign resident者，含日本雙籍不適用。交通Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。
+E       依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。校園生活大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Takatsuki／Muse／Sakai／Suita Mirai等校區，不能用單一吹田地址當全部通勤。
+E       Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。
+E       依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。
+E       指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。
+E       學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。
+E       國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E       KUGF英授、日語班、本科專業日授及MCL不同；placement决定日語課及專業適合，不保证所列課或先修／容量。
+E       每學期MCL一般段明指本科至少一門，後段又寫all exchange，研究生是否強制的範圍矛盾須確認。
+E       本科一般頁more than7 classes與FAQ7 or more每週有邊界差異；研究生不套本科最低課堂。最高學分本科24／研究所14。成績春9月底、秋3月底不能為母校校曆改早；一般頁由校方送母校承辦，FAQ說email學生，實際收件者與補寄程序另核。
+E       2026KUGF兩個page fragment只取得同一viewer介面；設定指向的全本PDF本輪HTTP404，各門課尚未讀，不代表未公告或不開課。
+E       一學期六個月或兩學期一年；一般春4/1–9/20、秋9/21–3/31，開課／考試月日原頁注明會依年度微調，不當116精確校曆。
+E       2027春程序到校mid–lateMarch，指定到達日尚未fixed（官方明示）；課程4/5起、期末後可離開但最遲學期終須離境，宿舍可能更早搬出。
+E           
+E           
+E           
+E             
+E               交換生生存指南
+E       
+E             
+E             
+E             
+E               
+E                 
+E                     指南生活費
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     交換互免Kansai學費，仍繳中央學雜；依校際協議核對額外課程／實驗費。JASSO採用／對象尚未定，採用後通知；特定partner獎學金依個別協議，不能視中央必有或已核財力來源。一般每月100000–150000含住房；不同住處／交通／保險另依本人，不以奖學金預期抵現金。2026學年起GTN Assistants全exchange强制，自付與在學期等長；現掛企業flyer月1650含tax但未證實等於Kansai116合約價，付款詳情到校前後通知。早歸仍在學不退，只退出／整學期縮短可扣已用、手续费按退款日匯率處理。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E                   
+E                     指南住宿與申請期限
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     初次KU Gate選住校才交保證書，房源容量與偏好無保证、學校分配；現可申Shurei、Tsukigaoka（female）、KU G-House；Minami-Senri Plaza及KU I-House不開放交換。Shurei入寮15000，A／B月41000／43000另等一月deposit抵末月；Tsukigaoka入寮22000、月42000及同額deposit；G-House入寮20000、月63000及同額deposit。月價含水電網路寢具，餐按實際次另收。G-House HTMLtitle仍寫Minami-Senri，但正文是Global House／Suita Mirai，兩者名稱不能混為已關閉的宿舍；入住請按接收通知核對。入口費不退，deposit用末月租不當全部退還現金。Homestay一般placement20000、每stay4000另tax、至少28天含早晚餐；單位文字stay未明，不能直接造全年精確價。Apartment約40000以上，co-op保證與JEES僅符合foreign resident者，含日本雙籍不適用。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E           
+E             查看依據 5
+E           
+E           
+E             查看依據 6
+E           
+E           
+E             查看依據 7
+E           
+E                   
+E                     指南保險
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     交換全期須自付國保，通常本人醫療自付30%；PAS／Gakkensai由Kansai付、僅事故／學研通學等不含疾病，海外疾病意外保障仍須另備。2027春Covenants明同意國保與GTN服務及所需資料傳給外包；GTN是24h支援／口譯服務，不當國保或旅行保險。健康表醫師英文完成全部項目含胸片≤六月，現程序文件發出≤三月；本人病史／藥物如實向醫師说明，不由平台評判健康。 原件另列如交換期間持續服藥／治療，須附medical information文件；由本人與醫師確認，不由平台判斷病情。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E           
+E             查看依據 5
+E           
+E                   
+E                     指南簽證／居留
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     COE KU Gate資訊2027春11/10–19，校方外包代辦；問題才寄信，沒有外包邮件不等於未申請。日本國籍含雙籍不得申COE，需以日本人入境，程序另外確認。初次頁列Philippines／Nepal／Vietnam但具體檢查句只寫Philippines與Nepal；JPETS專頁三國皆列、須指定Panel Clinic TB Clearance與通常健康表一并upload。國籍／住所除外與政府當前規則待查，不能硬判臺灣學生全員加件。收到e-COE與錄取、申好Student visa才買機票；e-COE無保證出件日，個人使領館追加件須確認。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E                     指南課程限制與選課
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     KUGF英授、日語班、本科專業日授及MCL不同；placement决定日語課及專業適合，不保证所列課或先修／容量。每學期MCL一般段明指本科至少一門，後段又寫all exchange，研究生是否強制的範圍矛盾須確認。本科一般頁more than7 classes與FAQ7 or more每週有邊界差異；研究生不套本科最低課堂。最高學分本科24／研究所14。成績春9月底、秋3月底不能為母校校曆改早；一般頁由校方送母校承辦，FAQ說email學生，實際收件者與補寄程序另核。2026KUGF兩個page fragment只取得同一viewer介面；設定指向的全本PDF本輪HTTP404，各門課尚未讀，不代表未公告或不開課。一學期六個月或兩學期一年；一般春4/1–9/20、秋9/21–3/31，開課／考試月日原頁注明會依年度微調，不當116精確校曆。2027春程序到校mid–lateMarch，指定到達日尚未fixed（官方明示）；課程4/5起、期末後可離開但最遲學期終須離境，宿舍可能更早搬出。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E                     指南城市與校區位置
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Takatsuki／Muse／Sakai／Suita Mirai等校區，不能用單一吹田地址當全部通勤。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E                     指南抵達與日常交通
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E                   
+E                     指南到校與行前準備
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E               
+E             
+E               
+E                 抵達後 72 小時照順序完成，先讓自己能通訊、付款、進校與選課
+E                 
+E           
+E             1
+E             
+E               
+E               依外校建議抵達日期與報到程序
+E               中央簡章第8頁規定依外校開學建議抵達日期前往；本校錄取不代表外校已核發入學許可。外校新生說明會／宿舍入住日期另核對。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E             
+E           
+E           
+E             2
+E             
+E               
+E               備妥足額保險並回報當地聯絡方式
+E               中央簡章第7頁須足額醫療、意外、海外急難救助保險；外校另有保險時可依規定到當地購買。國際處調查當地地址及聯絡方式。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E             
+E           
+E           
+E             3
+E             
+E               
+E               外校到校程序
+E               指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E             
+E           
+E           
+E             4
+E             
+E               
+E               外校到校程序
+E               學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E             
+E           
+E           
+E             5
+E             
+E               
+E               外校到校程序
+E               國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E             
+E           
+E               
+E             
+E           
+E           
+E             來源（20）
+E             
+E               
+E                 
+E                   中央116-1行前與返校規定此連結已收錄；若沒有足夠正文，不會把搜尋片段當成摘要。
+E                   查看原始來源
+E                 
+E                 
+E                   關西大學.pdf PDF官方公開介紹附件，年份／116適用性未確認
+E                   查看原始來源
+E                 
+E                 
+E                   關西交換方案現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Student House Shurei-ryo現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Kansai University Global House (KU G-House)現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   關西交換申請／KU Gate／COE現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   關西FAQ現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Certificate of Health現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Recommendation現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Covenants application現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   學生宿舍 GUARANTEE現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Research Plan現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Dormitory Tsukigaoka (female dormitory)現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   “flyer”現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   refund policy現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   this link現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Details about homestays現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   KUGF Course Guide現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   KUGF Course Guide現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   KUGF Course Guide2026：公開viewer config指向原件（all_pdf_name）現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E             
+E            
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#destination-official-content")
+E           13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+E              - unexpected value "
+E           
+E             
+E             官方生活資訊部分查核現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。 各欄缺口見逐欄查核，不表示完整核准。最後查核：2026/10/09 上午05:01
+E           
+E           
+E             所在地大阪吹田Senriyama／Suita Mirai等校區費用參考交換互免Kansai學費，仍繳中央學雜；依校際協議核對額外課程／實驗費。
+E       JASSO採用／對象尚未定，採用後通知；特定partner獎學金依個別協議，不能視中央必有或已核財力來源。
+E       一般每月100000–150000含住房；不同住處／交通／保險另依本人，不以奖學金預期抵現金。
+E       2026學年起GTN Assistants全exchange强制，自付與在學期等長；現掛企業flyer月1650含tax但未證實等於Kansai116合約價，付款詳情到校前後通知。早歸仍在學不退，只退出／整學期縮短可扣已用、手续费按退款日匯率處理。住宿初次KU Gate選住校才交保證書，房源容量與偏好無保证、學校分配；現可申Shurei、Tsukigaoka（female）、KU G-House；Minami-Senri Plaza及KU I-House不開放交換。
+E       Shurei入寮15000，A／B月41000／43000另等一月deposit抵末月；Tsukigaoka入寮22000、月42000及同額deposit；G-House入寮20000、月63000及同額deposit。月價含水電網路寢具，餐按實際次另收。
+E       G-House HTMLtitle仍寫Minami-Senri，但正文是Global House／Suita Mirai，兩者名稱不能混為已關閉的宿舍；入住請按接收通知核對。入口費不退，deposit用末月租不當全部退還現金。
+E       Homestay一般placement20000、每stay4000另tax、至少28天含早晚餐；單位文字stay未明，不能直接造全年精確價。Apartment約40000以上，co-op保證與JEES僅符合foreign resident者，含日本雙籍不適用。交通Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。
+E       依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。校園生活大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Takatsuki／Muse／Sakai／Suita Mirai等校區，不能用單一吹田地址當全部通勤。
+E       Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。
+E       依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。
+E       指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。
+E       學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。
+E       國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E       KUGF英授、日語班、本科專業日授及MCL不同；placement决定日語課及專業適合，不保证所列課或先修／容量。
+E       每學期MCL一般段明指本科至少一門，後段又寫all exchange，研究生是否強制的範圍矛盾須確認。
+E       本科一般頁more than7 classes與FAQ7 or more每週有邊界差異；研究生不套本科最低課堂。最高學分本科24／研究所14。成績春9月底、秋3月底不能為母校校曆改早；一般頁由校方送母校承辦，FAQ說email學生，實際收件者與補寄程序另核。
+E       2026KUGF兩個page fragment只取得同一viewer介面；設定指向的全本PDF本輪HTTP404，各門課尚未讀，不代表未公告或不開課。
+E       一學期六個月或兩學期一年；一般春4/1–9/20、秋9/21–3/31，開課／考試月日原頁注明會依年度微調，不當116精確校曆。
+E       2027春程序到校mid–lateMarch，指定到達日尚未fixed（官方明示）；課程4/5起、期末後可離開但最遲學期終須離境，宿舍可能更早搬出。
+E           
+E           
+E           
+E             
+E               交換生生存指南
+E       
+E             
+E             
+E             
+E               
+E                 
+E                     指南生活費
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     交換互免Kansai學費，仍繳中央學雜；依校際協議核對額外課程／實驗費。JASSO採用／對象尚未定，採用後通知；特定partner獎學金依個別協議，不能視中央必有或已核財力來源。一般每月100000–150000含住房；不同住處／交通／保險另依本人，不以奖學金預期抵現金。2026學年起GTN Assistants全exchange强制，自付與在學期等長；現掛企業flyer月1650含tax但未證實等於Kansai116合約價，付款詳情到校前後通知。早歸仍在學不退，只退出／整學期縮短可扣已用、手续费按退款日匯率處理。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E                   
+E                     指南住宿與申請期限
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     初次KU Gate選住校才交保證書，房源容量與偏好無保证、學校分配；現可申Shurei、Tsukigaoka（female）、KU G-House；Minami-Senri Plaza及KU I-House不開放交換。Shurei入寮15000，A／B月41000／43000另等一月deposit抵末月；Tsukigaoka入寮22000、月42000及同額deposit；G-House入寮20000、月63000及同額deposit。月價含水電網路寢具，餐按實際次另收。G-House HTMLtitle仍寫Minami-Senri，但正文是Global House／Suita Mirai，兩者名稱不能混為已關閉的宿舍；入住請按接收通知核對。入口費不退，deposit用末月租不當全部退還現金。Homestay一般placement20000、每stay4000另tax、至少28天含早晚餐；單位文字stay未明，不能直接造全年精確價。Apartment約40000以上，co-op保證與JEES僅符合foreign resident者，含日本雙籍不適用。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E           
+E             查看依據 5
+E           
+E           
+E             查看依據 6
+E           
+E           
+E             查看依據 7
+E           
+E                   
+E                     指南保險
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     交換全期須自付國保，通常本人醫療自付30%；PAS／Gakkensai由Kansai付、僅事故／學研通學等不含疾病，海外疾病意外保障仍須另備。2027春Covenants明同意國保與GTN服務及所需資料傳給外包；GTN是24h支援／口譯服務，不當國保或旅行保險。健康表醫師英文完成全部項目含胸片≤六月，現程序文件發出≤三月；本人病史／藥物如實向醫師说明，不由平台評判健康。 原件另列如交換期間持續服藥／治療，須附medical information文件；由本人與醫師確認，不由平台判斷病情。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E           
+E             查看依據 5
+E           
+E                   
+E                     指南簽證／居留
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     COE KU Gate資訊2027春11/10–19，校方外包代辦；問題才寄信，沒有外包邮件不等於未申請。日本國籍含雙籍不得申COE，需以日本人入境，程序另外確認。初次頁列Philippines／Nepal／Vietnam但具體檢查句只寫Philippines與Nepal；JPETS專頁三國皆列、須指定Panel Clinic TB Clearance與通常健康表一并upload。國籍／住所除外與政府當前規則待查，不能硬判臺灣學生全員加件。收到e-COE與錄取、申好Student visa才買機票；e-COE無保證出件日，個人使領館追加件須確認。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E                     指南課程限制與選課
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     KUGF英授、日語班、本科專業日授及MCL不同；placement决定日語課及專業適合，不保证所列課或先修／容量。每學期MCL一般段明指本科至少一門，後段又寫all exchange，研究生是否強制的範圍矛盾須確認。本科一般頁more than7 classes與FAQ7 or more每週有邊界差異；研究生不套本科最低課堂。最高學分本科24／研究所14。成績春9月底、秋3月底不能為母校校曆改早；一般頁由校方送母校承辦，FAQ說email學生，實際收件者與補寄程序另核。2026KUGF兩個page fragment只取得同一viewer介面；設定指向的全本PDF本輪HTTP404，各門課尚未讀，不代表未公告或不開課。一學期六個月或兩學期一年；一般春4/1–9/20、秋9/21–3/31，開課／考試月日原頁注明會依年度微調，不當116精確校曆。2027春程序到校mid–lateMarch，指定到達日尚未fixed（官方明示）；課程4/5起、期末後可離開但最遲學期終須離境，宿舍可能更早搬出。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E                     指南城市與校區位置
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Takatsuki／Muse／Sakai／Suita Mirai等校區，不能用單一吹田地址當全部通勤。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E                     指南抵達與日常交通
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E                   
+E                     指南到校與行前準備
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E               
+E             
+E               
+E                 抵達後 72 小時照順序完成，先讓自己能通訊、付款、進校與選課
+E                 
+E           
+E             1
+E             
+E               
+E               依外校建議抵達日期與報到程序
+E               中央簡章第8頁規定依外校開學建議抵達日期前往；本校錄取不代表外校已核發入學許可。外校新生說明會／宿舍入住日期另核對。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E             
+E           
+E           
+E             2
+E             
+E               
+E               備妥足額保險並回報當地聯絡方式
+E               中央簡章第7頁須足額醫療、意外、海外急難救助保險；外校另有保險時可依規定到當地購買。國際處調查當地地址及聯絡方式。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E             
+E           
+E           
+E             3
+E             
+E               
+E               外校到校程序
+E               指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E             
+E           
+E           
+E             4
+E             
+E               
+E               外校到校程序
+E               學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E             
+E           
+E           
+E             5
+E             
+E               
+E               外校到校程序
+E               國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E             
+E           
+E               
+E             
+E           
+E           
+E             來源（20）
+E             
+E               
+E                 
+E                   中央116-1行前與返校規定此連結已收錄；若沒有足夠正文，不會把搜尋片段當成摘要。
+E                   查看原始來源
+E                 
+E                 
+E                   關西大學.pdf PDF官方公開介紹附件，年份／116適用性未確認
+E                   查看原始來源
+E                 
+E                 
+E                   關西交換方案現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Student House Shurei-ryo現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Kansai University Global House (KU G-House)現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   關西交換申請／KU Gate／COE現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   關西FAQ現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Certificate of Health現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Recommendation現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Covenants application現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   學生宿舍 GUARANTEE現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Research Plan現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Dormitory Tsukigaoka (female dormitory)現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   “flyer”現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   refund policy現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   this link現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Details about homestays現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   KUGF Course Guide現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   KUGF Course Guide現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   KUGF Course Guide2026：公開viewer config指向原件（all_pdf_name）現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E             
+E           "
+E       
+E       Aria snapshot:
+E       - strong: 官方生活資訊部分查核
+E       - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。 各欄缺口見逐欄查核，不表示完整核准。
+E       - text: 最後查核：2026/10/09 上午05:01 所在地
+E       - strong: 大阪吹田Senriyama／Suita Mirai等校區
+E       - text: 費用參考
+E       - strong: 交換互免Kansai學費，仍繳中央學雜；依校際協議核對額外課程／實驗費。 JASSO採用／對象尚未定，採用後通知；特定partner獎學金依個別協議，不能視中央必有或已核財力來源。 一般每月100000–150000含住房；不同住處／交通／保險另依本人，不以奖學金預期抵現金。 2026學年起GTN Assistants全exchange强制，自付與在學期等長；現掛企業flyer月1650含tax但未證實等於Kansai116合約價，付款詳情到校前後通知。早歸仍在學不退，只退出／整學期縮短可扣已用、手续费按退款日匯率處理。
+E       - text: 住宿
+E       - strong: 初次KU Gate選住校才交保證書，房源容量與偏好無保证、學校分配；現可申Shurei、Tsukigaoka（female）、KU G-House；Minami-Senri Plaza及KU I-House不開放交換。 Shurei入寮15000，A／B月41000／43000另等一月deposit抵末月；Tsukigaoka入寮22000、月42000及同額deposit；G-House入寮20000、月63000及同額deposit。月價含水電網路寢具，餐按實際次另收。 G-House HTMLtitle仍寫Minami-Senri，但正文是Global House／Suita Mirai，兩者名稱不能混為已關閉的宿舍；入住請按接收通知核對。入口費不退，deposit用末月租不當全部退還現金。 Homestay一般placement20000、每stay4000另tax、至少28天含早晚餐；單位文字stay未明，不能直接造全年精確價。Apartment約40000以上，co-op保證與JEES僅符合foreign resident者，含日本雙籍不適用。
+E       - text: 交通
+E       - strong: Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。 依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。
+E       - text: 校園生活
+E       - strong:
+E         - text: 大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Takatsuki／Muse／Sakai／Suita Mirai等校區，不能用單一吹田地址當全部通勤。 Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。 依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。 指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。 學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。 國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。 KUGF英授、日語班、本科專業日授及MCL不同；placement决定日語課及專業適合，不保证所列課或先修／容量。 每學期MCL一般段明指本科至少一門，後段又寫all exchange，研究生是否強制的範圍矛盾須確認。 本科一般頁more than7 classes與FAQ7 or more每週有邊界差異；研究生不套本科最低課堂。最高學分本科24／研究所14。成績春9月底、秋3月底不能為母校校曆改早；一般頁由校方送母校承辦，FAQ說email學生，實際收件者與補寄程序另核。 2026KUGF兩個page fragment只取得同一viewer介面；設定指向的全本PDF本輪HTTP404，各門課尚未讀，不代表未公告或不開課。
+E         - strong: 一學期
+E         - text: 六個月或兩學期一年；一般春4/1–9/20、秋9/21–3/31，開課／考試月日原頁注明會依年度微調，不當116精確校曆。 2027春程序到校mid–lateMarch，指定到達日尚未fixed（官方明示）；課程4/5起、期末後可離開但最遲學期終須離境，宿舍可能更早搬出。
+E       - region "交換生生存指南":
+E         - heading "交換生生存指南" [level=3]
+E         - article:
+E           - text: 指南
+E           - heading "生活費" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: 交換互免Kansai學費，仍繳中央學雜；依校際協議核對額外課程／實驗費。
+E             - listitem: JASSO採用／對象尚未定，採用後通知；特定partner獎學金依個別協議，不能視中央必有或已核財力來源。
+E             - listitem: 一般每月100000–150000含住房；不同住處／交通／保險另依本人，不以奖學金預期抵現金。
+E             - listitem: 2026學年起GTN Assistants全exchange强制，自付與在學期等長；現掛企業flyer月1650含tax但未證實等於Kansai116合約價，付款詳情到校前後通知。早歸仍在學不退，只退出／整學期縮短可扣已用、手续费按退款日匯率處理。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/current/guide/pdf/GTN_refund.pdf
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/ES/GTNen.pdf
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/about_en/
+E           - link "查看依據 4":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E         - article:
+E           - text: 指南
+E           - heading "住宿與申請期限" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: 初次KU Gate選住校才交保證書，房源容量與偏好無保证、學校分配；現可申Shurei、Tsukigaoka（female）、KU G-House；Minami-Senri Plaza及KU I-House不開放交換。
+E             - listitem: Shurei入寮15000，A／B月41000／43000另等一月deposit抵末月；Tsukigaoka入寮22000、月42000及同額deposit；G-House入寮20000、月63000及同額deposit。月價含水電網路寢具，餐按實際次另收。
+E             - listitem: G-House HTMLtitle仍寫Minami-Senri，但正文是Global House／Suita Mirai，兩者名稱不能混為已關閉的宿舍；入住請按接收通知核對。入口費不退，deposit用末月租不當全部退還現金。
+E             - listitem: Homestay一般placement20000、每stay4000另tax、至少28天含早晚餐；單位文字stay未明，不能直接造全年精確價。Apartment約40000以上，co-op保證與JEES僅符合foreign resident者，含日本雙籍不適用。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory01.php
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory02.php
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory05.php
+E           - link "查看依據 4":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/ES/hoshousho.pdf
+E           - link "查看依據 5":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/about_en/
+E           - link "查看依據 6":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E           - link "查看依據 7":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E         - article:
+E           - text: 指南
+E           - heading "保險" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: 交換全期須自付國保，通常本人醫療自付30%；PAS／Gakkensai由Kansai付、僅事故／學研通學等不含疾病，海外疾病意外保障仍須另備。
+E             - listitem: 2027春Covenants明同意國保與GTN服務及所需資料傳給外包；GTN是24h支援／口譯服務，不當國保或旅行保險。
+E             - listitem: 健康表醫師英文完成全部項目含胸片≤六月，現程序文件發出≤三月；本人病史／藥物如實向醫師说明，不由平台評判健康。 原件另列如交換期間持續服藥／治療，須附medical information文件；由本人與醫師確認，不由平台判斷病情。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/ES/covenants.pdf
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/ES/healthform.pdf
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/about_en/
+E           - link "查看依據 4":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E           - link "查看依據 5":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E         - article:
+E           - text: 指南
+E           - heading "簽證／居留" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: COE KU Gate資訊2027春11/10–19，校方外包代辦；問題才寄信，沒有外包邮件不等於未申請。日本國籍含雙籍不得申COE，需以日本人入境，程序另外確認。
+E             - listitem: 初次頁列Philippines／Nepal／Vietnam但具體檢查句只寫Philippines與Nepal；JPETS專頁三國皆列、須指定Panel Clinic TB Clearance與通常健康表一并upload。國籍／住所除外與政府當前規則待查，不能硬判臺灣學生全員加件。
+E             - listitem: 收到e-COE與錄取、申好Student visa才買機票；e-COE無保證出件日，個人使領館追加件須確認。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/important.html
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E         - article:
+E           - text: 指南
+E           - heading "課程限制與選課" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: KUGF英授、日語班、本科專業日授及MCL不同；placement决定日語課及專業適合，不保证所列課或先修／容量。
+E             - listitem: 每學期MCL一般段明指本科至少一門，後段又寫all exchange，研究生是否強制的範圍矛盾須確認。
+E             - listitem: 本科一般頁more than7 classes與FAQ7 or more每週有邊界差異；研究生不套本科最低課堂。最高學分本科24／研究所14。成績春9月底、秋3月底不能為母校校曆改早；一般頁由校方送母校承辦，FAQ說email學生，實際收件者與補寄程序另核。
+E             - listitem: 2026KUGF兩個page fragment只取得同一viewer介面；設定指向的全本PDF本輪HTTP404，各門課尚未讀，不代表未公告或不開課。
+E             - listitem:
+E               - strong: 一學期
+E               - text: 六個月或兩學期一年；一般春4/1–9/20、秋9/21–3/31，開課／考試月日原頁注明會依年度微調，不當116精確校曆。
+E             - listitem: 2027春程序到校mid–lateMarch，指定到達日尚未fixed（官方明示）；課程4/5起、期末後可離開但最遲學期終須離境，宿舍可能更早搬出。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/about_en/
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E         - article:
+E           - text: 指南
+E           - heading "城市與校區位置" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: 大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Takatsuki／Muse／Sakai／Suita Mirai等校區，不能用單一吹田地址當全部通勤。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory01.php
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory05.php
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/about_en/
+E         - article:
+E           - text: 指南
+E           - heading "抵達與日常交通" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。
+E             - listitem: 依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory01.php
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory02.php
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory05.php
+E           - link "查看依據 4":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E         - article:
+E           - text: 指南
+E           - heading "到校與行前準備" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: 指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。
+E             - listitem: 學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。
+E             - listitem: 國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/ES/covenants.pdf
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E         - region "抵達後 72 小時":
+E           - heading "抵達後 72 小時" [level=4]
+E           - text: 照順序完成，先讓自己能通訊、付款、進校與選課
+E           - list:
+E             - listitem:
+E               - text: "1"
+E               - strong: 依外校建議抵達日期與報到程序
+E               - paragraph: 中央簡章第8頁規定依外校開學建議抵達日期前往；本校錄取不代表外校已核發入學許可。外校新生說明會／宿舍入住日期另核對。
+E               - text: 官方資料
+E               - link "查看依據 1":
+E                 - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf
+E             - listitem:
+E               - text: "2"
+E               - strong: 備妥足額保險並回報當地聯絡方式
+E               - paragraph: 中央簡章第7頁須足額醫療、意外、海外急難救助保險；外校另有保險時可依規定到當地購買。國際處調查當地地址及聯絡方式。
+E               - text: 官方資料
+E               - link "查看依據 1":
+E                 - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf
+E             - listitem:
+E               - text: "3"
+E               - strong: 外校到校程序
+E               - paragraph: 指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。
+E               - text: 官方資料
+E               - link "查看依據 1":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/ES/covenants.pdf
+E               - link "查看依據 2":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E               - link "查看依據 3":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E             - listitem:
+E               - text: "4"
+E               - strong: 外校到校程序
+E               - paragraph: 學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。
+E               - text: 官方資料
+E               - link "查看依據 1":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/ES/covenants.pdf
+E               - link "查看依據 2":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E               - link "查看依據 3":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E             - listitem:
+E               - text: "5"
+E               - strong: 外校到校程序
+E               - paragraph: 國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E               - text: 官方資料
+E               - link "查看依據 1":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/ES/covenants.pdf
+E               - link "查看依據 2":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E               - link "查看依據 3":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E       - group: 來源（20）
+
+tests/e2e/test_ncu_shizuoka_chuo_kansai.py:96: AssertionError
+_ test_ncu_reference_scope_and_student_content[kansai-\u95dc\u897f\u5927\u5b78-\u521d\u6b21\u516d\u985e\u5171\u901a\uff0c\u4e26\u975e\u6bcd\u6821\u4e03\u4ef6-6-1440] _
+
+page = <Page url='http://127.0.0.1:58669/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E9%97%9C%E8%A5%BF%E5%A4%A7%E5%AD%B8#school=%E9%97%9C%E8%A5%BF%E5%A4%A7%E5%AD%B8%20Kansai%20University'>
+live_server = LiveServer(base_url='http://127.0.0.1:58669', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-239/web-e2e-data0'))
+width = 1440, slug = 'kansai', name = '關西大學', title = '初次六類共通，並非母校七件', count = 6
+
+    @pytest.mark.parametrize('width',[390,1440])
+    @pytest.mark.parametrize('slug,name,title,count',CASES)
+    def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,name,title,count):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[]
+        page.on('pageerror',lambda e:errors.append(str(e)))
+        enter_public_site(page,live_server,'partners')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+        open_navigation(page)
+        page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立中央大學"]').click()
+        page.locator('#confirm-school').click()
+        wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60)
+        if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
+            page.locator('#glass-menu-toggle').click()
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(name)
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        full_name={'shizuoka':'靜岡大學 Shizuoka University',
+                   'chuo':'日本中央大學 Chuo University',
+                   'kansai':'關西大學 Kansai University'}[slug]
+        exact_trigger=f'.school-detail-trigger[data-school-name="{full_name}"]'
+        if width<700:
+            page.locator('#partner-table .partner-card').filter(has=page.locator(exact_trigger)).locator(':scope > summary').click()
+        page.locator(f'#partner-table {exact_trigger}:visible').first.click()
+        assert page.evaluate('new URLSearchParams(location.hash.slice(1)).get("school")') == full_name
+        summary=page.locator('#detail-overview .partner-student-summary')
+        terms={'shizuoka':['不是正式申請門檻','10/1','10/14','closed'],
+               'chuo':['Tentative','N3','Kenkyusei','五門','六列'],
+               'kansai':['500000','11/10','MCL','三月']}
+        for term in terms[slug]:expect(summary).to_contain_text(term)
+        page.locator('#ncu-source-audit > summary').click()
+        expect(page.locator('#ncu-source-audit-body > p').first).to_contain_text('2026-10-09',timeout=60_000)
+        if slug=='shizuoka':
+            failed=page.locator('.ncu-unretrieved-source[data-source-id="host-shizuoka-housing-current"]')
+            expect(failed).to_be_visible(timeout=60_000)
+            expect(failed).to_contain_text('English Top')
+            assert failed.get_by_role('link',name='已查網址（本次未取得）').get_attribute('href')=='https://www.suoic.shizuoka.ac.jp/english/international/campuslife/housing/'
+        else:
+            url=('https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_05_20260924.xlsx' if slug=='chuo' else
+                 'https://www.kansai-u.ac.jp/Kokusai/KUGFCourseGuide/2026/#target/page_no=19')
+            source=page.locator('#ncu-source-audit-body > details').filter(has=page.locator(f'a[href="{url}"]')).first
+            expect(source.locator(':scope > summary')).to_be_visible(timeout=60_000)
+            source.locator(':scope > summary').click()
+            expect(source).to_contain_text('未逐門' if slug=='chuo' else '未取得PDF第19頁')
+            assert source.get_by_role('link',name='官方公開來源').get_attribute('href')==url
+        out=Path('/tmp/ncu-audit/browser');out.mkdir(parents=True,exist_ok=True)
+        page.screenshot(path=str(out/f'ncu-shizuoka-chuo-kansai-{slug}-source-{width}.png'))
+        page.locator('#detail-tab-application').click()
+        group=page.locator('#detail-application .workflow-step').filter(has=page.locator(':scope > summary').filter(has_text=title)).first
+        group.locator(':scope > summary').click()
+        expect(group.locator('.workflow-documents > li')).to_have_count(count)
+        expect(group.locator('.workflow-rule-meta > strong')).to_have_text('規劃範圍（當期適用待確認）')
+        application=page.locator('#detail-application')
+        if slug=='shizuoka':
+            expect(group).to_contain_text('健康、Confirmation、經費新格式未取得')
+            expect(application).to_contain_text('修士專業／研究')
+            expect(application).to_contain_text('錄取後才通知宿舍')
+        elif slug=='chuo':
+            for term in ['C1本科或C2研究所','Part2 J＋K','Kenkyusei原件明免']:
+                expect(application).to_contain_text(term)
+            plan=group.locator('.workflow-documents > li').filter(has_text='C1本科或C2')
+            expect(plan).to_contain_text('按學制擇一')
+            for suffix in ['C1_20260904.docx','C2_20260904.docx']:
+                expect(application.locator(f'.workflow-sources a[href$="{suffix}"]').first).to_be_visible()
+        else:
+            expect(group).to_contain_text('胸片≤6月')
+            expect(group).to_contain_text('medical information')
+            expect(group).to_contain_text('不能硬判發照三月')
+            for term in ['親屬Dormitory Guarantee','不是要存入的deposit','11/10–19']:
+                expect(application).to_contain_text(term)
+            assert not group.locator('.workflow-documents > li').filter(has_text='成績').count()
+        group.scroll_into_view_if_needed()
+        page.screenshot(path=str(out/f'ncu-shizuoka-chuo-kansai-{slug}-packet-{width}.png'))
+        page.locator('#detail-tab-life').click()
+        page.locator('#detail-life .life-official-guide > summary').click()
+        life=page.locator('#destination-official-content')
+        life_terms={'shizuoka':['27400','23300','13200','2013/1','20日前'],
+                    'chuo':['350000','1150000','50000','1500','Spring2027'],
+                    'kansai':['41000','63000','末月','1650','全exchange','500000']}
+>       for term in life_terms[slug]:expect(life).to_contain_text(term)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Locator expected to contain text '500000'
+E       Actual value: 
+E           
+E             
+E             官方生活資訊部分查核現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。 各欄缺口見逐欄查核，不表示完整核准。最後查核：2026/10/09 上午05:01
+E           
+E           
+E             所在地大阪吹田Senriyama／Suita Mirai等校區費用參考交換互免Kansai學費，仍繳中央學雜；依校際協議核對額外課程／實驗費。
+E       JASSO採用／對象尚未定，採用後通知；特定partner獎學金依個別協議，不能視中央必有或已核財力來源。
+E       一般每月100000–150000含住房；不同住處／交通／保險另依本人，不以奖學金預期抵現金。
+E       2026學年起GTN Assistants全exchange强制，自付與在學期等長；現掛企業flyer月1650含tax但未證實等於Kansai116合約價，付款詳情到校前後通知。早歸仍在學不退，只退出／整學期縮短可扣已用、手续费按退款日匯率處理。住宿初次KU Gate選住校才交保證書，房源容量與偏好無保证、學校分配；現可申Shurei、Tsukigaoka（female）、KU G-House；Minami-Senri Plaza及KU I-House不開放交換。
+E       Shurei入寮15000，A／B月41000／43000另等一月deposit抵末月；Tsukigaoka入寮22000、月42000及同額deposit；G-House入寮20000、月63000及同額deposit。月價含水電網路寢具，餐按實際次另收。
+E       G-House HTMLtitle仍寫Minami-Senri，但正文是Global House／Suita Mirai，兩者名稱不能混為已關閉的宿舍；入住請按接收通知核對。入口費不退，deposit用末月租不當全部退還現金。
+E       Homestay一般placement20000、每stay4000另tax、至少28天含早晚餐；單位文字stay未明，不能直接造全年精確價。Apartment約40000以上，co-op保證與JEES僅符合foreign resident者，含日本雙籍不適用。交通Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。
+E       依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。校園生活大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Takatsuki／Muse／Sakai／Suita Mirai等校區，不能用單一吹田地址當全部通勤。
+E       Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。
+E       依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。
+E       指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。
+E       學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。
+E       國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E       KUGF英授、日語班、本科專業日授及MCL不同；placement决定日語課及專業適合，不保证所列課或先修／容量。
+E       每學期MCL一般段明指本科至少一門，後段又寫all exchange，研究生是否強制的範圍矛盾須確認。
+E       本科一般頁more than7 classes與FAQ7 or more每週有邊界差異；研究生不套本科最低課堂。最高學分本科24／研究所14。成績春9月底、秋3月底不能為母校校曆改早；一般頁由校方送母校承辦，FAQ說email學生，實際收件者與補寄程序另核。
+E       2026KUGF兩個page fragment只取得同一viewer介面；設定指向的全本PDF本輪HTTP404，各門課尚未讀，不代表未公告或不開課。
+E       一學期六個月或兩學期一年；一般春4/1–9/20、秋9/21–3/31，開課／考試月日原頁注明會依年度微調，不當116精確校曆。
+E       2027春程序到校mid–lateMarch，指定到達日尚未fixed（官方明示）；課程4/5起、期末後可離開但最遲學期終須離境，宿舍可能更早搬出。
+E           
+E           
+E           
+E             
+E               交換生生存指南
+E       
+E             
+E             
+E             
+E               
+E                 
+E                     指南生活費
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     交換互免Kansai學費，仍繳中央學雜；依校際協議核對額外課程／實驗費。JASSO採用／對象尚未定，採用後通知；特定partner獎學金依個別協議，不能視中央必有或已核財力來源。一般每月100000–150000含住房；不同住處／交通／保險另依本人，不以奖學金預期抵現金。2026學年起GTN Assistants全exchange强制，自付與在學期等長；現掛企業flyer月1650含tax但未證實等於Kansai116合約價，付款詳情到校前後通知。早歸仍在學不退，只退出／整學期縮短可扣已用、手续费按退款日匯率處理。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E                   
+E                     指南住宿與申請期限
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     初次KU Gate選住校才交保證書，房源容量與偏好無保证、學校分配；現可申Shurei、Tsukigaoka（female）、KU G-House；Minami-Senri Plaza及KU I-House不開放交換。Shurei入寮15000，A／B月41000／43000另等一月deposit抵末月；Tsukigaoka入寮22000、月42000及同額deposit；G-House入寮20000、月63000及同額deposit。月價含水電網路寢具，餐按實際次另收。G-House HTMLtitle仍寫Minami-Senri，但正文是Global House／Suita Mirai，兩者名稱不能混為已關閉的宿舍；入住請按接收通知核對。入口費不退，deposit用末月租不當全部退還現金。Homestay一般placement20000、每stay4000另tax、至少28天含早晚餐；單位文字stay未明，不能直接造全年精確價。Apartment約40000以上，co-op保證與JEES僅符合foreign resident者，含日本雙籍不適用。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E           
+E             查看依據 5
+E           
+E           
+E             查看依據 6
+E           
+E           
+E             查看依據 7
+E           
+E                   
+E                     指南保險
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     交換全期須自付國保，通常本人醫療自付30%；PAS／Gakkensai由Kansai付、僅事故／學研通學等不含疾病，海外疾病意外保障仍須另備。2027春Covenants明同意國保與GTN服務及所需資料傳給外包；GTN是24h支援／口譯服務，不當國保或旅行保險。健康表醫師英文完成全部項目含胸片≤六月，現程序文件發出≤三月；本人病史／藥物如實向醫師说明，不由平台評判健康。 原件另列如交換期間持續服藥／治療，須附medical information文件；由本人與醫師確認，不由平台判斷病情。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E           
+E             查看依據 5
+E           
+E                   
+E                     指南簽證／居留
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     COE KU Gate資訊2027春11/10–19，校方外包代辦；問題才寄信，沒有外包邮件不等於未申請。日本國籍含雙籍不得申COE，需以日本人入境，程序另外確認。初次頁列Philippines／Nepal／Vietnam但具體檢查句只寫Philippines與Nepal；JPETS專頁三國皆列、須指定Panel Clinic TB Clearance與通常健康表一并upload。國籍／住所除外與政府當前規則待查，不能硬判臺灣學生全員加件。收到e-COE與錄取、申好Student visa才買機票；e-COE無保證出件日，個人使領館追加件須確認。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E                     指南課程限制與選課
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     KUGF英授、日語班、本科專業日授及MCL不同；placement决定日語課及專業適合，不保证所列課或先修／容量。每學期MCL一般段明指本科至少一門，後段又寫all exchange，研究生是否強制的範圍矛盾須確認。本科一般頁more than7 classes與FAQ7 or more每週有邊界差異；研究生不套本科最低課堂。最高學分本科24／研究所14。成績春9月底、秋3月底不能為母校校曆改早；一般頁由校方送母校承辦，FAQ說email學生，實際收件者與補寄程序另核。2026KUGF兩個page fragment只取得同一viewer介面；設定指向的全本PDF本輪HTTP404，各門課尚未讀，不代表未公告或不開課。一學期六個月或兩學期一年；一般春4/1–9/20、秋9/21–3/31，開課／考試月日原頁注明會依年度微調，不當116精確校曆。2027春程序到校mid–lateMarch，指定到達日尚未fixed（官方明示）；課程4/5起、期末後可離開但最遲學期終須離境，宿舍可能更早搬出。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E                     指南城市與校區位置
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Takatsuki／Muse／Sakai／Suita Mirai等校區，不能用單一吹田地址當全部通勤。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E                     指南抵達與日常交通
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E                   
+E                     指南到校與行前準備
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E               
+E             
+E               
+E                 抵達後 72 小時照順序完成，先讓自己能通訊、付款、進校與選課
+E                 
+E           
+E             1
+E             
+E               
+E               依外校建議抵達日期與報到程序
+E               中央簡章第8頁規定依外校開學建議抵達日期前往；本校錄取不代表外校已核發入學許可。外校新生說明會／宿舍入住日期另核對。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E             
+E           
+E           
+E             2
+E             
+E               
+E               備妥足額保險並回報當地聯絡方式
+E               中央簡章第7頁須足額醫療、意外、海外急難救助保險；外校另有保險時可依規定到當地購買。國際處調查當地地址及聯絡方式。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E             
+E           
+E           
+E             3
+E             
+E               
+E               外校到校程序
+E               指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E             
+E           
+E           
+E             4
+E             
+E               
+E               外校到校程序
+E               學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E             
+E           
+E           
+E             5
+E             
+E               
+E               外校到校程序
+E               國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E             
+E           
+E               
+E             
+E           
+E           
+E             來源（20）
+E             
+E               
+E                 
+E                   中央116-1行前與返校規定此連結已收錄；若沒有足夠正文，不會把搜尋片段當成摘要。
+E                   查看原始來源
+E                 
+E                 
+E                   關西大學.pdf PDF官方公開介紹附件，年份／116適用性未確認
+E                   查看原始來源
+E                 
+E                 
+E                   關西交換方案現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Student House Shurei-ryo現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Kansai University Global House (KU G-House)現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   關西交換申請／KU Gate／COE現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   關西FAQ現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Certificate of Health現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Recommendation現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Covenants application現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   學生宿舍 GUARANTEE現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Research Plan現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Dormitory Tsukigaoka (female dormitory)現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   “flyer”現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   refund policy現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   this link現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Details about homestays現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   KUGF Course Guide現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   KUGF Course Guide現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   KUGF Course Guide2026：公開viewer config指向原件（all_pdf_name）現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E             
+E            
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#destination-official-content")
+E           13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+E              - unexpected value "
+E           
+E             
+E             官方生活資訊部分查核現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。 各欄缺口見逐欄查核，不表示完整核准。最後查核：2026/10/09 上午05:01
+E           
+E           
+E             所在地大阪吹田Senriyama／Suita Mirai等校區費用參考交換互免Kansai學費，仍繳中央學雜；依校際協議核對額外課程／實驗費。
+E       JASSO採用／對象尚未定，採用後通知；特定partner獎學金依個別協議，不能視中央必有或已核財力來源。
+E       一般每月100000–150000含住房；不同住處／交通／保險另依本人，不以奖學金預期抵現金。
+E       2026學年起GTN Assistants全exchange强制，自付與在學期等長；現掛企業flyer月1650含tax但未證實等於Kansai116合約價，付款詳情到校前後通知。早歸仍在學不退，只退出／整學期縮短可扣已用、手续费按退款日匯率處理。住宿初次KU Gate選住校才交保證書，房源容量與偏好無保证、學校分配；現可申Shurei、Tsukigaoka（female）、KU G-House；Minami-Senri Plaza及KU I-House不開放交換。
+E       Shurei入寮15000，A／B月41000／43000另等一月deposit抵末月；Tsukigaoka入寮22000、月42000及同額deposit；G-House入寮20000、月63000及同額deposit。月價含水電網路寢具，餐按實際次另收。
+E       G-House HTMLtitle仍寫Minami-Senri，但正文是Global House／Suita Mirai，兩者名稱不能混為已關閉的宿舍；入住請按接收通知核對。入口費不退，deposit用末月租不當全部退還現金。
+E       Homestay一般placement20000、每stay4000另tax、至少28天含早晚餐；單位文字stay未明，不能直接造全年精確價。Apartment約40000以上，co-op保證與JEES僅符合foreign resident者，含日本雙籍不適用。交通Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。
+E       依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。校園生活大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Takatsuki／Muse／Sakai／Suita Mirai等校區，不能用單一吹田地址當全部通勤。
+E       Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。
+E       依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。
+E       指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。
+E       學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。
+E       國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E       KUGF英授、日語班、本科專業日授及MCL不同；placement决定日語課及專業適合，不保证所列課或先修／容量。
+E       每學期MCL一般段明指本科至少一門，後段又寫all exchange，研究生是否強制的範圍矛盾須確認。
+E       本科一般頁more than7 classes與FAQ7 or more每週有邊界差異；研究生不套本科最低課堂。最高學分本科24／研究所14。成績春9月底、秋3月底不能為母校校曆改早；一般頁由校方送母校承辦，FAQ說email學生，實際收件者與補寄程序另核。
+E       2026KUGF兩個page fragment只取得同一viewer介面；設定指向的全本PDF本輪HTTP404，各門課尚未讀，不代表未公告或不開課。
+E       一學期六個月或兩學期一年；一般春4/1–9/20、秋9/21–3/31，開課／考試月日原頁注明會依年度微調，不當116精確校曆。
+E       2027春程序到校mid–lateMarch，指定到達日尚未fixed（官方明示）；課程4/5起、期末後可離開但最遲學期終須離境，宿舍可能更早搬出。
+E           
+E           
+E           
+E             
+E               交換生生存指南
+E       
+E             
+E             
+E             
+E               
+E                 
+E                     指南生活費
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     交換互免Kansai學費，仍繳中央學雜；依校際協議核對額外課程／實驗費。JASSO採用／對象尚未定，採用後通知；特定partner獎學金依個別協議，不能視中央必有或已核財力來源。一般每月100000–150000含住房；不同住處／交通／保險另依本人，不以奖學金預期抵現金。2026學年起GTN Assistants全exchange强制，自付與在學期等長；現掛企業flyer月1650含tax但未證實等於Kansai116合約價，付款詳情到校前後通知。早歸仍在學不退，只退出／整學期縮短可扣已用、手续费按退款日匯率處理。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E                   
+E                     指南住宿與申請期限
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     初次KU Gate選住校才交保證書，房源容量與偏好無保证、學校分配；現可申Shurei、Tsukigaoka（female）、KU G-House；Minami-Senri Plaza及KU I-House不開放交換。Shurei入寮15000，A／B月41000／43000另等一月deposit抵末月；Tsukigaoka入寮22000、月42000及同額deposit；G-House入寮20000、月63000及同額deposit。月價含水電網路寢具，餐按實際次另收。G-House HTMLtitle仍寫Minami-Senri，但正文是Global House／Suita Mirai，兩者名稱不能混為已關閉的宿舍；入住請按接收通知核對。入口費不退，deposit用末月租不當全部退還現金。Homestay一般placement20000、每stay4000另tax、至少28天含早晚餐；單位文字stay未明，不能直接造全年精確價。Apartment約40000以上，co-op保證與JEES僅符合foreign resident者，含日本雙籍不適用。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E           
+E             查看依據 5
+E           
+E           
+E             查看依據 6
+E           
+E           
+E             查看依據 7
+E           
+E                   
+E                     指南保險
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     交換全期須自付國保，通常本人醫療自付30%；PAS／Gakkensai由Kansai付、僅事故／學研通學等不含疾病，海外疾病意外保障仍須另備。2027春Covenants明同意國保與GTN服務及所需資料傳給外包；GTN是24h支援／口譯服務，不當國保或旅行保險。健康表醫師英文完成全部項目含胸片≤六月，現程序文件發出≤三月；本人病史／藥物如實向醫師说明，不由平台評判健康。 原件另列如交換期間持續服藥／治療，須附medical information文件；由本人與醫師確認，不由平台判斷病情。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E           
+E             查看依據 5
+E           
+E                   
+E                     指南簽證／居留
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     COE KU Gate資訊2027春11/10–19，校方外包代辦；問題才寄信，沒有外包邮件不等於未申請。日本國籍含雙籍不得申COE，需以日本人入境，程序另外確認。初次頁列Philippines／Nepal／Vietnam但具體檢查句只寫Philippines與Nepal；JPETS專頁三國皆列、須指定Panel Clinic TB Clearance與通常健康表一并upload。國籍／住所除外與政府當前規則待查，不能硬判臺灣學生全員加件。收到e-COE與錄取、申好Student visa才買機票；e-COE無保證出件日，個人使領館追加件須確認。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E                     指南課程限制與選課
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     KUGF英授、日語班、本科專業日授及MCL不同；placement决定日語課及專業適合，不保证所列課或先修／容量。每學期MCL一般段明指本科至少一門，後段又寫all exchange，研究生是否強制的範圍矛盾須確認。本科一般頁more than7 classes與FAQ7 or more每週有邊界差異；研究生不套本科最低課堂。最高學分本科24／研究所14。成績春9月底、秋3月底不能為母校校曆改早；一般頁由校方送母校承辦，FAQ說email學生，實際收件者與補寄程序另核。2026KUGF兩個page fragment只取得同一viewer介面；設定指向的全本PDF本輪HTTP404，各門課尚未讀，不代表未公告或不開課。一學期六個月或兩學期一年；一般春4/1–9/20、秋9/21–3/31，開課／考試月日原頁注明會依年度微調，不當116精確校曆。2027春程序到校mid–lateMarch，指定到達日尚未fixed（官方明示）；課程4/5起、期末後可離開但最遲學期終須離境，宿舍可能更早搬出。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E                     指南城市與校區位置
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Takatsuki／Muse／Sakai／Suita Mirai等校區，不能用單一吹田地址當全部通勤。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E                     指南抵達與日常交通
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E           
+E             查看依據 4
+E           
+E                   
+E                     指南到校與行前準備
+E                     現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                     指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E                     官方資料中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E                     
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E                   
+E               
+E             
+E               
+E                 抵達後 72 小時照順序完成，先讓自己能通訊、付款、進校與選課
+E                 
+E           
+E             1
+E             
+E               
+E               依外校建議抵達日期與報到程序
+E               中央簡章第8頁規定依外校開學建議抵達日期前往；本校錄取不代表外校已核發入學許可。外校新生說明會／宿舍入住日期另核對。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E             
+E           
+E           
+E             2
+E             
+E               
+E               備妥足額保險並回報當地聯絡方式
+E               中央簡章第7頁須足額醫療、意外、海外急難救助保險；外校另有保險時可依規定到當地購買。國際處調查當地地址及聯絡方式。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E             
+E           
+E           
+E             3
+E             
+E               
+E               外校到校程序
+E               指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E             
+E           
+E           
+E             4
+E             
+E               
+E               外校到校程序
+E               學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E             
+E           
+E           
+E             5
+E             
+E               
+E               外校到校程序
+E               國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E               官方資料
+E               
+E           
+E             查看依據 1
+E           
+E           
+E             查看依據 2
+E           
+E           
+E             查看依據 3
+E           
+E             
+E           
+E               
+E             
+E           
+E           
+E             來源（20）
+E             
+E               
+E                 
+E                   中央116-1行前與返校規定此連結已收錄；若沒有足夠正文，不會把搜尋片段當成摘要。
+E                   查看原始來源
+E                 
+E                 
+E                   關西大學.pdf PDF官方公開介紹附件，年份／116適用性未確認
+E                   查看原始來源
+E                 
+E                 
+E                   關西交換方案現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Student House Shurei-ryo現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Kansai University Global House (KU G-House)現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   關西交換申請／KU Gate／COE現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   關西FAQ現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Certificate of Health現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Recommendation現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Covenants application現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   學生宿舍 GUARANTEE現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Research Plan現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Dormitory Tsukigaoka (female dormitory)現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   “flyer”現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   refund policy現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   this link現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   Details about homestays現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   KUGF Course Guide現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   KUGF Course Guide現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E                 
+E                   KUGF Course Guide2026：公開viewer config指向原件（all_pdf_name）現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E                   查看原始來源
+E                 
+E             
+E           "
+E       
+E       Aria snapshot:
+E       - strong: 官方生活資訊部分查核
+E       - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。 各欄缺口見逐欄查核，不表示完整核准。
+E       - text: 最後查核：2026/10/09 上午05:01 所在地
+E       - strong: 大阪吹田Senriyama／Suita Mirai等校區
+E       - text: 費用參考
+E       - strong: 交換互免Kansai學費，仍繳中央學雜；依校際協議核對額外課程／實驗費。 JASSO採用／對象尚未定，採用後通知；特定partner獎學金依個別協議，不能視中央必有或已核財力來源。 一般每月100000–150000含住房；不同住處／交通／保險另依本人，不以奖學金預期抵現金。 2026學年起GTN Assistants全exchange强制，自付與在學期等長；現掛企業flyer月1650含tax但未證實等於Kansai116合約價，付款詳情到校前後通知。早歸仍在學不退，只退出／整學期縮短可扣已用、手续费按退款日匯率處理。
+E       - text: 住宿
+E       - strong: 初次KU Gate選住校才交保證書，房源容量與偏好無保证、學校分配；現可申Shurei、Tsukigaoka（female）、KU G-House；Minami-Senri Plaza及KU I-House不開放交換。 Shurei入寮15000，A／B月41000／43000另等一月deposit抵末月；Tsukigaoka入寮22000、月42000及同額deposit；G-House入寮20000、月63000及同額deposit。月價含水電網路寢具，餐按實際次另收。 G-House HTMLtitle仍寫Minami-Senri，但正文是Global House／Suita Mirai，兩者名稱不能混為已關閉的宿舍；入住請按接收通知核對。入口費不退，deposit用末月租不當全部退還現金。 Homestay一般placement20000、每stay4000另tax、至少28天含早晚餐；單位文字stay未明，不能直接造全年精確價。Apartment約40000以上，co-op保證與JEES僅符合foreign resident者，含日本雙籍不適用。
+E       - text: 交通
+E       - strong: Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。 依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。
+E       - text: 校園生活
+E       - strong:
+E         - text: 大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Takatsuki／Muse／Sakai／Suita Mirai等校區，不能用單一吹田地址當全部通勤。 Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。 依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。 指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。 學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。 國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。 KUGF英授、日語班、本科專業日授及MCL不同；placement决定日語課及專業適合，不保证所列課或先修／容量。 每學期MCL一般段明指本科至少一門，後段又寫all exchange，研究生是否強制的範圍矛盾須確認。 本科一般頁more than7 classes與FAQ7 or more每週有邊界差異；研究生不套本科最低課堂。最高學分本科24／研究所14。成績春9月底、秋3月底不能為母校校曆改早；一般頁由校方送母校承辦，FAQ說email學生，實際收件者與補寄程序另核。 2026KUGF兩個page fragment只取得同一viewer介面；設定指向的全本PDF本輪HTTP404，各門課尚未讀，不代表未公告或不開課。
+E         - strong: 一學期
+E         - text: 六個月或兩學期一年；一般春4/1–9/20、秋9/21–3/31，開課／考試月日原頁注明會依年度微調，不當116精確校曆。 2027春程序到校mid–lateMarch，指定到達日尚未fixed（官方明示）；課程4/5起、期末後可離開但最遲學期終須離境，宿舍可能更早搬出。
+E       - region "交換生生存指南":
+E         - heading "交換生生存指南" [level=3]
+E         - article:
+E           - text: 指南
+E           - heading "生活費" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: 交換互免Kansai學費，仍繳中央學雜；依校際協議核對額外課程／實驗費。
+E             - listitem: JASSO採用／對象尚未定，採用後通知；特定partner獎學金依個別協議，不能視中央必有或已核財力來源。
+E             - listitem: 一般每月100000–150000含住房；不同住處／交通／保險另依本人，不以奖學金預期抵現金。
+E             - listitem: 2026學年起GTN Assistants全exchange强制，自付與在學期等長；現掛企業flyer月1650含tax但未證實等於Kansai116合約價，付款詳情到校前後通知。早歸仍在學不退，只退出／整學期縮短可扣已用、手续费按退款日匯率處理。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/current/guide/pdf/GTN_refund.pdf
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/ES/GTNen.pdf
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/about_en/
+E           - link "查看依據 4":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E         - article:
+E           - text: 指南
+E           - heading "住宿與申請期限" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: 初次KU Gate選住校才交保證書，房源容量與偏好無保证、學校分配；現可申Shurei、Tsukigaoka（female）、KU G-House；Minami-Senri Plaza及KU I-House不開放交換。
+E             - listitem: Shurei入寮15000，A／B月41000／43000另等一月deposit抵末月；Tsukigaoka入寮22000、月42000及同額deposit；G-House入寮20000、月63000及同額deposit。月價含水電網路寢具，餐按實際次另收。
+E             - listitem: G-House HTMLtitle仍寫Minami-Senri，但正文是Global House／Suita Mirai，兩者名稱不能混為已關閉的宿舍；入住請按接收通知核對。入口費不退，deposit用末月租不當全部退還現金。
+E             - listitem: Homestay一般placement20000、每stay4000另tax、至少28天含早晚餐；單位文字stay未明，不能直接造全年精確價。Apartment約40000以上，co-op保證與JEES僅符合foreign resident者，含日本雙籍不適用。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory01.php
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory02.php
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory05.php
+E           - link "查看依據 4":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/ES/hoshousho.pdf
+E           - link "查看依據 5":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/about_en/
+E           - link "查看依據 6":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E           - link "查看依據 7":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E         - article:
+E           - text: 指南
+E           - heading "保險" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: 交換全期須自付國保，通常本人醫療自付30%；PAS／Gakkensai由Kansai付、僅事故／學研通學等不含疾病，海外疾病意外保障仍須另備。
+E             - listitem: 2027春Covenants明同意國保與GTN服務及所需資料傳給外包；GTN是24h支援／口譯服務，不當國保或旅行保險。
+E             - listitem: 健康表醫師英文完成全部項目含胸片≤六月，現程序文件發出≤三月；本人病史／藥物如實向醫師说明，不由平台評判健康。 原件另列如交換期間持續服藥／治療，須附medical information文件；由本人與醫師確認，不由平台判斷病情。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/ES/covenants.pdf
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/ES/healthform.pdf
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/about_en/
+E           - link "查看依據 4":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E           - link "查看依據 5":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E         - article:
+E           - text: 指南
+E           - heading "簽證／居留" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: COE KU Gate資訊2027春11/10–19，校方外包代辦；問題才寄信，沒有外包邮件不等於未申請。日本國籍含雙籍不得申COE，需以日本人入境，程序另外確認。
+E             - listitem: 初次頁列Philippines／Nepal／Vietnam但具體檢查句只寫Philippines與Nepal；JPETS專頁三國皆列、須指定Panel Clinic TB Clearance與通常健康表一并upload。國籍／住所除外與政府當前規則待查，不能硬判臺灣學生全員加件。
+E             - listitem: 收到e-COE與錄取、申好Student visa才買機票；e-COE無保證出件日，個人使領館追加件須確認。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/important.html
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E         - article:
+E           - text: 指南
+E           - heading "課程限制與選課" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: KUGF英授、日語班、本科專業日授及MCL不同；placement决定日語課及專業適合，不保证所列課或先修／容量。
+E             - listitem: 每學期MCL一般段明指本科至少一門，後段又寫all exchange，研究生是否強制的範圍矛盾須確認。
+E             - listitem: 本科一般頁more than7 classes與FAQ7 or more每週有邊界差異；研究生不套本科最低課堂。最高學分本科24／研究所14。成績春9月底、秋3月底不能為母校校曆改早；一般頁由校方送母校承辦，FAQ說email學生，實際收件者與補寄程序另核。
+E             - listitem: 2026KUGF兩個page fragment只取得同一viewer介面；設定指向的全本PDF本輪HTTP404，各門課尚未讀，不代表未公告或不開課。
+E             - listitem:
+E               - strong: 一學期
+E               - text: 六個月或兩學期一年；一般春4/1–9/20、秋9/21–3/31，開課／考試月日原頁注明會依年度微調，不當116精確校曆。
+E             - listitem: 2027春程序到校mid–lateMarch，指定到達日尚未fixed（官方明示）；課程4/5起、期末後可離開但最遲學期終須離境，宿舍可能更早搬出。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/about_en/
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E         - article:
+E           - text: 指南
+E           - heading "城市與校區位置" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: 大阪府吹田：國際部在Senriyama；選課與居住亦可能涉及Takatsuki／Muse／Sakai／Suita Mirai等校區，不能用單一吹田地址當全部通勤。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory01.php
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory05.php
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/about_en/
+E         - article:
+E           - text: 指南
+E           - heading "抵達與日常交通" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: Shurei到Senriyama步行約5分、Tsukigaoka約15分；G-House在Suita Mirai，至Senriyama公車鐵路約30分或接駁約30分、班次座位有限，不保證固定無料接送。
+E             - listitem: 依実際上課校區交通可70–80分；到校航班须先获visa与指定入寮日，没有機場pickup保證。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory01.php
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory02.php
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/Dormitory/en/facility/dormitory05.php
+E           - link "查看依據 4":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E         - article:
+E           - text: 指南
+E           - heading "到校與行前準備" [level=4]
+E           - paragraph: 現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。
+E           - list:
+E             - listitem: 指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。
+E             - listitem: 學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。
+E             - listitem: 國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E           - text: 官方資料 中央當期提名及各項未解問題仍須確認；新版文件內的舊金額及版本矛盾已分列。
+E           - link "查看依據 1":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/ES/covenants.pdf
+E           - link "查看依據 2":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E           - link "查看依據 3":
+E             - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E         - region "抵達後 72 小時":
+E           - heading "抵達後 72 小時" [level=4]
+E           - text: 照順序完成，先讓自己能通訊、付款、進校與選課
+E           - list:
+E             - listitem:
+E               - text: "1"
+E               - strong: 依外校建議抵達日期與報到程序
+E               - paragraph: 中央簡章第8頁規定依外校開學建議抵達日期前往；本校錄取不代表外校已核發入學許可。外校新生說明會／宿舍入住日期另核對。
+E               - text: 官方資料
+E               - link "查看依據 1":
+E                 - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf
+E             - listitem:
+E               - text: "2"
+E               - strong: 備妥足額保險並回報當地聯絡方式
+E               - paragraph: 中央簡章第7頁須足額醫療、意外、海外急難救助保險；外校另有保險時可依規定到當地購買。國際處調查當地地址及聯絡方式。
+E               - text: 官方資料
+E               - link "查看依據 1":
+E                 - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf
+E             - listitem:
+E               - text: "3"
+E               - strong: 外校到校程序
+E               - paragraph: 指定到達日官方尚未fixed；入境後取Arrival Packet、orientation及住民程序，至指定宿舍入住；先獲visa才訂機票、不得先寄行李到宿舍。
+E               - text: 官方資料
+E               - link "查看依據 1":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/ES/covenants.pdf
+E               - link "查看依據 2":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E               - link "查看依據 3":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E             - listitem:
+E               - text: "4"
+E               - strong: 外校到校程序
+E               - paragraph: 學期末離境期限與宿舍搬出日不同：宿舍letter可能要求期末前離房；離校住所／水電瓦斯／手機／銀行結清，Covenants另列指定report、失效居留卡及questionnaire歸國前後繳。
+E               - text: 官方資料
+E               - link "查看依據 1":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/ES/covenants.pdf
+E               - link "查看依據 2":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E               - link "查看依據 3":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E             - listitem:
+E               - text: "5"
+E               - strong: 外校到校程序
+E               - paragraph: 國保與海外保障另辦，打工須事先取得許可；暫離日本先詢校方re-entry程序，不把一般FAQ當全部個人居留核准。
+E               - text: 官方資料
+E               - link "查看依據 1":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/ES/covenants.pdf
+E               - link "查看依據 2":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/future/application_en/
+E               - link "查看依據 3":
+E                 - /url: https://www.kansai-u.ac.jp/Kokusai/future/faq_en/
+E       - group: 來源（20）
+
+tests/e2e/test_ncu_shizuoka_chuo_kansai.py:96: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ncu_shizuoka_chuo_kansai.py::test_ncu_reference_scope_and_student_content[kansai-\u95dc\u897f\u5927\u5b78-\u521d\u6b21\u516d\u985e\u5171\u901a\uff0c\u4e26\u975e\u6bcd\u6821\u4e03\u4ef6-6-390]
+FAILED tests/e2e/test_ncu_shizuoka_chuo_kansai.py::test_ncu_reference_scope_and_student_content[kansai-\u95dc\u897f\u5927\u5b78-\u521d\u6b21\u516d\u985e\u5171\u901a\uff0c\u4e26\u975e\u6bcd\u6821\u4e03\u4ef6-6-1440]
+2 failed, 4 passed in 132.82s (0:02:12)

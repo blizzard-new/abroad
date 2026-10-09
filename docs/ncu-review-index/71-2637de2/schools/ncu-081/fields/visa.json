@@ -1,0 +1,86 @@
+{
+  "key": "visa",
+  "label": "簽證／居留",
+  "status": "needs_confirmation",
+  "note": "【芬蘭政府2026/10/8】交換超90天通常須學習居留B permit；EU／Nordic等國籍或其他EU學生居留加合資格mobility notification有例外，不把台灣免短期簽證當交換長期居留豁免。首次在境外申請Enter Finland，預約使館親到驗身分／指紋並出示正本。 成人首次online EUR600／paper750，未成年400／430是當日價非2027保證。附件含有效護照、6月內相片、護照彩色個資頁、適用時所在國合法停留證明、host錄取、財力及過去6月bank statement、保險、適用時學費／獎學金；exchange不用一般學位／工作證明，未18另出生證明及家長同意。 財力原則EUR800／月、≥1年9600；第一件不能靠打工預期收入。獎學金可扣抵，有校方免費住宿則400／月、住宿餐皆免費270。一般頁不接受私人sponsorship函；income專頁明訂未成年或exchange可與guardian joint account且載明本人取用權，交換指南卻稱不接受shared account，兩頁差異保留需Migri確認。 原則等permit card再旅行；D visa可另申請並在permit核發後兩週內赴芬蘭領卡，與一般交換頁「不能在芬蘭領卡」須按D visa例外理解。不要用一般規則直接排除D visa。",
+  "source_urls": [
+    "https://migri.fi/en/instructions-for-exchange-students",
+    "https://migri.fi/en/residence-permit-application-for-studies",
+    "https://migri.fi/en/income-requirement-for-students",
+    "https://migri.fi/en/studying-in-finland"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://migri.fi/en/instructions-for-exchange-students",
+      "source_id": "host-fi-exchange",
+      "page": null,
+      "source_title": "芬蘭Migri交換生居留說明",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "visa",
+        "evidence_array_index": 0,
+        "text_sha256": "3ab81ae742dbf9e42c468bd331a21bbe01469bdf1f22af9f0a06d536ead857ec",
+        "char_count": 7025
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://migri.fi/en/residence-permit-application-for-studies",
+      "source_id": "host-fi-permit",
+      "page": null,
+      "source_title": "Migri學生居留申請表／費用／附件",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "visa",
+        "evidence_array_index": 1,
+        "text_sha256": "ee3509b6cd022134f91e0974bffe541094da8bdb202e4cac84792cf615151635",
+        "char_count": 13000
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://migri.fi/en/income-requirement-for-students",
+      "source_id": "host-fi-income",
+      "page": null,
+      "source_title": "Migri學生財力",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "visa",
+        "evidence_array_index": 2,
+        "text_sha256": "341dc17c63e1b08198608ee99285a5bac643278b54cf41561a8cd65d7b39864c",
+        "char_count": 6042
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://migri.fi/en/studying-in-finland",
+      "source_id": "host-fi-studies",
+      "page": null,
+      "source_title": "芬蘭Migri學生居留（政府規則，非Turku校方）",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "visa",
+        "evidence_array_index": 3,
+        "text_sha256": "b6eaa806e336fa2faa559a8dbfc55a46945aa3a206957316559c65ab96b0bb93",
+        "char_count": 15455
+      }
+    }
+  ],
+  "unresolved": "申請地使館／2027費用及joint account差異、個人國籍和D visa條件待確認；未替使用者送件。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。"
+}

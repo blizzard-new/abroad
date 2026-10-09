@@ -1,0 +1,32 @@
+{
+  "key": "host_deadline",
+  "label": "提名與外校申請期限",
+  "status": "needs_confirmation",
+  "note": "官方頁每年Spring申請及文件10/15，Fall在5月第一週；不把一週範圍解析為5/1單日。",
+  "source_urls": [
+    "https://www.murraystate.edu/admissions/international/Admissions/ExchangeStudent/index.aspx"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.murraystate.edu/admissions/international/Admissions/ExchangeStudent/index.aspx",
+      "source_id": "host-murray-apply",
+      "page": null,
+      "source_title": "Murray交換及訪問學生申請",
+      "applicability": "Murray官方交換／訪問頁，未標年；中央115列為自費，不能套一般exchange免申請費／免學費。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 111,
+        "field": "host_deadline",
+        "evidence_array_index": 0,
+        "text_sha256": "a953f3fcdcabf1edfdeddb7b00c25a8c2aa9ff8436a137eeb10e7fa752d8bcaa",
+        "char_count": 7968
+      }
+    }
+  ],
+  "unresolved": "年號與時刻未列，中央自費track是否同期限须當期核對。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Murray官方交換／訪問頁，未標年；中央115列為自費，不能套一般exchange免申請費／免學費。"
+}

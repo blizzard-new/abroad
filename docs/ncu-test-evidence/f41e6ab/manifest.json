@@ -1,0 +1,30 @@
+{
+  "tested_sha": "f41e6abb7f77283aa942cd6c9b80cd4d2991c735",
+  "start_sha": "f41e6abb7f77283aa942cd6c9b80cd4d2991c735",
+  "start_porcelain": "",
+  "end_sha": "f41e6abb7f77283aa942cd6c9b80cd4d2991c735",
+  "end_porcelain": "",
+  "started_at": "2026-10-08T23:53:47.520479+00:00",
+  "finished_at": "2026-10-08T23:53:59.875038+00:00",
+  "command": [
+    "/workspace/abroad/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_ntpu_bundled_data.py",
+    "tests/test_frontend_contract.py",
+    "tests/test_rag.py",
+    "--junitxml",
+    "/tmp/ncu-gates-f41e6abb7f77283aa942cd6c9b80cd4d2991c735/gates.xml"
+  ],
+  "exit_code": 0,
+  "junit": {
+    "tests": 65,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "full_ci_equivalence": false,
+  "data_acceptance_passed": false,
+  "production_actions": false
+}

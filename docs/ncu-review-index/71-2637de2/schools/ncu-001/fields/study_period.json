@@ -1,0 +1,32 @@
+{
+  "key": "study_period",
+  "label": "交換期間／校曆",
+  "status": "needs_confirmation",
+  "note": "官網目前列2024校曆及2025 draft，不用其開學／考試日期作116年出發；研究所商管Quarter是兩quarter合一學期，與一般Session分開。",
+  "source_urls": [
+    "https://www.westernsydney.edu.au/globalmobility/studyabroad/how-to-apply"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.westernsydney.edu.au/globalmobility/studyabroad/how-to-apply",
+      "source_id": "host-wsu-browser-excerpt",
+      "page": null,
+      "source_title": "Western Sydney公開申請頁（browser已讀；local HTTP406）",
+      "applicability": "Western Sydney官網browser查讀；local HTTP406。頁內仍列2024及2025 draft校曆，非2027–28日程。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 0,
+        "field": "study_period",
+        "evidence_array_index": 0,
+        "text_sha256": "700ea0ac2574953a2a09f4ed6dfb1ffeb24fdf51e64db2df220ed3d9f7267e9e",
+        "char_count": 203
+      }
+    }
+  ],
+  "unresolved": "最新2027–28官方校曆需Important Dates；此頁沒有當期校曆。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Western Sydney官網browser查讀；local HTTP406。頁內仍列2024及2025 draft校曆，非2027–28日程。"
+}

@@ -1,0 +1,174 @@
+CONFTEST LOADED!
+...................................................F....                 [100%]
+=================================== FAILURES ===================================
+____ test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion ____
+
+page = <Page url='http://127.0.0.1:50649/?home=%E5%9C%8B%E7%AB%8B%E8%87%BA%E7%81%A3%E5%A4%A7%E5%AD%B8#advisor'>
+live_server = LiveServer(base_url='http://127.0.0.1:50649', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-209/web-e2e-data5'))
+
+    def test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion(page, live_server):
+        session = sign_in_cookie(live_server, school="國立臺灣大學")
+        attach_session(page, live_server, session)
+        enter_public_site(page, live_server, "advisor")
+        expect(page.locator("#advisor-academic-gpa")).to_be_visible()
+        page.locator("#advisor-college").select_option("工學院")
+        page.locator("#advisor-department-text").fill("機械工程學系")
+        page.locator("#advisor-degree").select_option("大學部")
+        page.locator("#advisor-academic-gpa").fill("2.3")
+        page.locator("#advisor-class-rank").fill("30")
+        page.locator("#advisor-language-test").select_option("toefl_new")
+        page.locator("#advisor-language-score").fill("4")
+        with page.expect_response(lambda response: response.url.endswith("/advisor/plan") and response.request.method == "POST") as response:
+            page.locator("#advisor-submit").click()
+        assert response.value.ok
+        payload = response.value.request.post_data_json
+        assert payload["academic_score"] is None
+        assert payload["academic_gpa"] == 2.3 and payload["class_rank_percent"] == 30
+        assert "符合校內成績擇一門檻" in str(response.value.json())
+        recommendations = response.value.json()["recommendations"]
+        assert recommendations and all(item["eligibility_status"] == "needs_confirmation" for item in recommendations)
+        assert page.locator("#eligibility-preference-1 option").count() == 283
+        saved = _wait_for_workspace(live_server, session, lambda item:
+            ((item.get("workspace", {}).get("selection_conditions") or {}).get("profile") or {}).get("class_rank_percent") == 30,
+            home_school="國立臺灣大學"
+        )["workspace"]["selection_conditions"]["profile"]
+        assert saved["academic_gpa"] == 2.3 and saved["academic_score"] is None
+        page.locator("#advisor-result-content [data-planning-target]").first.click()
+        expect(page.locator("#planning-target-summary")).to_contain_text(recommendations[0]["school_name"])
+        page.locator("#planning-deadline-settings > summary").click()
+        page.locator("#planning-academic-year").fill("116")
+        page.locator("#planning-application-round").fill("")
+        with page.expect_response(lambda result: "/application-workflow?" in result.url and result.request.method == "GET") as preview:
+            page.locator("#planning-preview-button").click()
+        assert preview.value.ok
+        expect(page.locator("#planning-schedule-status")).to_contain_text("已顯示參考流程")
+        expect(page.locator("#planning-schedule-status")).to_contain_text("不會加入日曆或啟用截止提醒")
+        expect(page.locator("#planning-schedule-preview .planning-timeline-item")).to_have_count(11)
+        expect(page.locator("#planning-confirm")).to_be_hidden()
+        assert page.evaluate("partnerAvailabilityMeta(state.dashboard.partner_universities.find(p=>p.quota === '0 名')).blocked")
+        assert not page.evaluate("homeAcademicPass({degree:'在職碩士班',academicGpa:4,classRankPercent:1})")
+        page.evaluate("location.hash='#advisor'")
+        page.reload()
+>       expect(page.locator("#advisor-academic-gpa")).to_have_value("2.3")
+E       AssertionError: Locator expected to have Value '2.3'
+E       Actual value:  
+E       Call log:
+E         - Expect "to_have_value" with timeout 5000ms
+E         - waiting for locator("#advisor-academic-gpa")
+E           6 × locator resolved to <input min="0" disabled max="4.3" step="0.01" type="number" name="academic_gpa" inputmode="decimal" id="advisor-academic-gpa" placeholder="例如 2.44；與排名擇一"/>
+E             - unexpected value ""
+E       
+E       Aria snapshot:
+E       - status:
+E         - paragraph: 正在載入中
+E       - link "跳到主要內容":
+E         - /url: "#main-content"
+E       - complementary "系統功能":
+E         - link "UniWay 首頁":
+E           - /url: "#home"
+E           - strong: UniWay
+E         - navigation "公開探索導覽":
+E           - link "首頁":
+E             - /url: "#home"
+E           - link "學校搜尋":
+E             - /url: "#partners"
+E           - link "論壇":
+E             - /url: "#forum"
+E           - link "用戶評價":
+E             - /url: "#feedback"
+E           - group:
+E             - link "我的申請":
+E               - /url: "#advisor"
+E         - button "返回上一頁": 返回
+E         - button "國立臺灣大學":
+E           - strong: 國立臺灣大學
+E         - button "切換為深色模式"
+E         - button "重新整理最新資料" [disabled]
+E         - button "開啟通知中心"
+E         - status "已同步": 已同步 條件、收藏與申請進度已同步。
+E         - button "開啟E2E 測試學生帳號設定": E2E 測試學生
+E       - main:
+E         - status: 正在取得最新整理資料…
+E         - region "我的申請工作區":
+E           - text: 我的申請
+E           - strong: 從選校到送件，接著完成下一步
+E           - paragraph: 國立臺灣大學 · 116 學年度 · 文件與時程目標：一橋大學
+E           - navigation "申請工作區階段":
+E             - link "選校與確認":
+E               - /url: "#advisor"
+E             - link "準備與時程":
+E               - /url: "#overview"
+E             - link "文件與送件":
+E               - /url: "#application-center"
+E           - navigation "本階段操作":
+E             - link "條件與推薦":
+E               - /url: "#advisor"
+E             - link "候選與比較":
+E               - /url: "#favorites"
+E             - link "當期資格與志願":
+E               - /url: "#eligibility"
+E           - region "選校規劃":
+E             - heading "選校規劃" [level=2]
+E             - paragraph: 填一次條件，查看推薦與缺口，再選擇目標學校安排時程。
+E             - strong: 我的條件
+E             - text: 已保存條件 學院
+E             - combobox "學院"
+E             - text: 所屬系所
+E             - combobox "所屬系所" [disabled]:
+E               - option "請先選擇學院" [selected]
+E             - text: 學制
+E             - combobox "學制":
+E               - option "尚未設定" [selected]
+E               - option "大學部"
+E               - option "研究所"
+E             - text: 學業平均
+E             - spinbutton "學業平均"
+E             - text: 語言測驗
+E             - combobox "語言測驗":
+E               - option "尚未考／尚未決定" [selected]
+E               - option "TOEIC"
+E               - option "IELTS Academic"
+E               - option "TOEFL iBT（舊制120分）"
+E               - option "TOEFL iBT（新制6分）"
+E               - option "Duolingo"
+E               - option "其他"
+E             - text: 語言分數
+E             - spinbutton "語言分數"
+E             - text: 想去的國家／地區
+E             - combobox "想去的國家／地區"
+E             - text: 預計出國學期
+E             - combobox "預計出國學期":
+E               - option "尚未決定" [selected]
+E               - option "2027 春季"
+E               - option "2027 秋季"
+E               - option "2028 春季"
+E               - option "2028 秋季"
+E             - paragraph: 選擇學院後顯示所屬系所。
+E             - group:
+E               - strong: 更多條件
+E             - text: 想問什麼？
+E             - textbox "想問什麼？":
+E               - /placeholder: 例如：申請日本交換需要哪些文件？
+E             - button "必要文件"
+E             - button "語言門檻"
+E             - button "補助"
+E             - button "產生我的申請方案"
+E             - text: 僅依已查核來源作答；符合度不是錄取機率。未登入可先填寫，登入後才會送出並保存個人方案。
+E             - region "建立第一份申請方案":
+E               - status:
+E                 - text: 留學小助手
+E                 - heading "建立第一份申請方案" [level=3]
+E                 - paragraph: 填寫條件後，我會整理候選學校、條件缺口與下一步。
+E       - paragraph:
+E         - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E         - button "停用匿名使用統計"
+E         - text: 。
+E         - link "隱私權政策":
+E           - /url: /privacy
+E         - link "使用條款":
+E           - /url: /terms
+
+tests/e2e/test_ntu_school.py:118: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion
+1 failed, 55 passed in 1060.65s (0:17:40)
