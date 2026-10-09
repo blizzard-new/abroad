@@ -1,0 +1,151 @@
+{
+  "branch": "data/ccu-exchange-20261008",
+  "baseline_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "previous_commit": "37a36ec1d84706b37904e8f8dd34748b73d705c3",
+  "four_school_final": {
+    "tests": 383,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 7,
+    "passed": 375,
+    "seconds": 252.97,
+    "failure_cases": [
+      "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+    ]
+  },
+  "browser_regression": {
+    "tests": 31,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 31,
+    "seconds": 321.649,
+    "failure_cases": []
+  },
+  "initial_four_school": {
+    "tests": 383,
+    "failures": 2,
+    "errors": 0,
+    "skipped": 7,
+    "passed": 374,
+    "seconds": 275.172,
+    "failure_cases": [
+      "tests.test_ccu_ninth_pass::test_profile_review_covers_source_backed_geography_and_distinct_life",
+      "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+    ]
+  },
+  "initial_browser": {
+    "tests": 4,
+    "failures": 4,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 0,
+    "seconds": 97.846,
+    "failure_cases": [
+      "tests.e2e.test_ccu_eighteenth_pass::test_actual_degree_select_and_current_year_in_both_modes[390]",
+      "tests.e2e.test_ccu_eighteenth_pass::test_actual_degree_select_and_current_year_in_both_modes[1440]",
+      "tests.e2e.test_ccu_eighteenth_pass::test_hcmute_email_sender_and_pilsen_transfers_render[390]",
+      "tests.e2e.test_ccu_eighteenth_pass::test_hcmute_email_sender_and_pilsen_transfers_render[1440]"
+    ]
+  },
+  "second_browser": {
+    "tests": 4,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 3,
+    "seconds": 69.929,
+    "failure_cases": [
+      "tests.e2e.test_ccu_eighteenth_pass::test_actual_degree_select_and_current_year_in_both_modes[1440]"
+    ]
+  },
+  "real_form_clean": {
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 4,
+    "seconds": 78.437,
+    "failure_cases": []
+  },
+  "main_ntpu_reproduction": {
+    "tests": 1,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 0,
+    "seconds": 3.131,
+    "failure_cases": [
+      "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data"
+    ]
+  },
+  "real_conditions_form_cases_per_width": 7,
+  "real_form_widths": [
+    390,
+    1440
+  ],
+  "actual_shared_form_requests_to_two_apis": 28,
+  "fake_degree_options_injected": false,
+  "source_count": 704,
+  "new_sources": 7,
+  "same_url_rechecks_not_counted_as_new": 5,
+  "host_attachments": 93,
+  "host_document_schools": 27,
+  "host_requirements": 203,
+  "conditional_host_requirements": 33,
+  "document_center_verified_official_links": 21,
+  "workflow_requirements_including_home": 1138,
+  "home_catalogue_rows": 104,
+  "current_or_unknown_quota_identities": 55,
+  "quota_states": {
+    "published": 52,
+    "grey_reference_not_open": 49,
+    "blank_not_zero": 3,
+    "explicit_zero": 0
+  },
+  "host_fields": {
+    "verified_current": 311,
+    "missing": 224,
+    "needs_confirmation": 318,
+    "reference_only": 20,
+    "conflict": 61,
+    "explicit_not_announced": 1
+  },
+  "functional_parity_complete": false,
+  "complete_host_sets": 0,
+  "all_55_public_sources_exhausted": false,
+  "initial_href_count": 593,
+  "initial_unique_urls": 582,
+  "current_href_count": 588,
+  "current_unique_urls": 577,
+  "current_link_dispositions": {
+    "public_candidate_requires_content_review": 355,
+    "deferred_general_library": 7,
+    "excluded_degree_program": 28,
+    "reference_candidate": 22,
+    "excluded_navigation": 20,
+    "excluded_other_program": 20,
+    "excluded_events_stories": 44,
+    "excluded_other_recipient": 7,
+    "already_requested": 1,
+    "deferred_media": 12,
+    "excluded_research": 38,
+    "excluded_auth_navigation": 23
+  },
+  "pending_public_content_candidates": 355,
+  "original_source_json_files_unchanged": 697,
+  "main_original_school_files_unchanged": 49,
+  "deterministic_files": 22,
+  "api_paths": 110,
+  "openapi_snapshot_identical": true,
+  "original_published_content_hashes_identical": 77,
+  "shared_changes_this_round": [
+    "advisor.py",
+    "application_rules.py",
+    "qualification_scopes.py",
+    "static/app.js",
+    "static/index.html"
+  ],
+  "school_adapter_change": "ccu_documents.py",
+  "merge_deploy_contact_or_external_login": false
+}

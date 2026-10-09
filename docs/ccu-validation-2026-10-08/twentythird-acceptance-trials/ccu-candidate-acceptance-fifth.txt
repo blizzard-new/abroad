@@ -1,0 +1,298 @@
+CONFTEST LOADED!
+F
+=================================== FAILURES ===================================
+_ test_real_school_search_matching_comparison_plan_reload_and_home_isolation[390] _
+
+page = <Page url='http://127.0.0.1:58177/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&view=list&q=Kyung+Hee+University+%E6%85%B6%E7%86%99%E5%A4%A7%E5%AD%B8#application-center'>
+acceptance_server = LiveServer(base_url='http://127.0.0.1:58177', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-128/ccu-acceptance-real-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_real_school_search_matching_comparison_plan_reload_and_home_isolation(page, acceptance_server, width):
+        server = acceptance_server
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        session = login(page, server, width)
+        assert set(page.locator("#degree-filter option").evaluate_all("rows => rows.map(row => row.value)")) == {"", "大學部", "碩士班", "博士班", "研究所"}
+        names = [school(34), school(45)]
+        for name in names:
+            page.locator("#partner-search").fill(name)
+            if width == 390:
+                card = page.locator("#partner-table .partner-card").filter(has_text=name)
+                expect(card).to_be_visible()
+                card.locator("> summary").click()
+            button = page.locator(f'#partner-table .favorite-toggle[data-school-name="{name}"]:visible').first
+            expect(button).to_be_visible(timeout=30_000)
+            button.click()
+            expect(button).to_have_attribute("aria-pressed", "true")
+        navigate(page, "favorites")
+        expect(page.locator(".discovery-candidate")).to_have_count(2)
+        for name in names:
+            page.locator(f'[data-compare-school="{name}"]').check()
+        comparison = page.locator("#discovery-comparison")
+        for name in names:
+            expect(comparison).to_contain_text(name)
+        capture(page, "real-favorites-comparison", width)
+        navigate(page, "application-center")
+        select_target(page, names[0])
+        navigate(page, "advisor")
+        wait_until(page, "homeCollegeOptions().includes('法學院')")
+        page.locator("#advisor-college").select_option("法學院")
+        department = page.locator("#advisor-department")
+        if department.evaluate("node => node.tagName") == "SELECT":
+            wait_until(page, "document.querySelector('#advisor-department').options.length > 1")
+            department.select_option(department.locator("option").evaluate_all("rows => rows.find(row => row.value).value"))
+        else:
+            department.fill("法律學系")
+        page.locator("#advisor-degree").select_option("碩士班")
+        page.locator("#advisor-academic-score").fill("85")
+        page.locator("#advisor-academic-gpa").fill("3.5")
+        page.locator("#advisor-language-test").select_option("ielts")
+        page.locator("#advisor-language-score").fill("7")
+        with page.expect_response(lambda r: r.url.endswith("/advisor/plan") and r.request.method == "POST") as result:
+            page.locator("#advisor-submit").click()
+        assert result.value.ok
+        assert result.value.request.post_data_json["school_name"] == HOME
+        assert "符合目前學制" in result.value.json()["target_match"]["reasons"]
+        expect(page.locator("#advisor-profile-status")).to_have_text("已保存條件")
+        capture(page, "real-advisor", width)
+        navigate(page, "overview")
+        expect(page.locator("#multi-plan-workspace")).to_be_visible()
+        page.locator("#multi-plan-settings > summary").click()
+        selects = page.locator("#multi-plan-preferences select")
+        for index, name in enumerate(names):
+            selects.nth(index).select_option(name)
+        with page.expect_response(lambda r: r.url.endswith("/application-plan/evaluate") and r.request.method == "POST" and len(r.request.post_data_json["preferences"]) == 2) as planned:
+            page.locator("#multi-plan-preferences button").click()
+        assert planned.value.ok
+        real_plan = planned.value.json()
+        assert [c["school_name"] for c in real_plan["choices"]] == names
+        assert real_plan["tasks"]  # actual partial workflows, never fabricated dates
+        expect(page.locator("#multi-plan-status")).to_contain_text("2 個志願")
+        task = real_plan["tasks"][0]
+        task_id = task["id"]
+        bucket = HOME if task["task_scope"] == "home" else task["school_names"][0]
+        if task["task_scope"] != "home":
+            branch = page.locator(f'.multi-plan-branch[data-multi-school="{bucket}"]')
+            branch.locator("> summary").click()
+        progress = page.locator(f'[data-multi-task="{task_id}"]')
+        expect(progress).to_be_visible()
+        progress.check()
+        wait_until(page, "document.querySelector('#account-workspace-sync-label').textContent === '已同步'")
+        headers = {"Authorization": f"Bearer {session['access_token']}"}
+        saved = requests.get(server.base_url + "/account/workspace", params={"home_school": HOME}, headers=headers, timeout=30)
+        saved.raise_for_status()
+        workspace = saved.json()["workspace"]
+        assert workspace["application_schools"] == names
+        assert workspace["application_progress"][bucket][task_id] is True
+        page.reload()
+        expect(page.locator("#multi-plan-status")).to_contain_text("2 個志願", timeout=30_000)
+        expect(page.locator(f'[data-multi-task="{task_id}"]')).to_be_checked()
+        capture(page, "real-plan-reloaded", width)
+        for home, score, gpa, rank in [("長庚大學", True, False, False), ("國立臺北大學", True, False, False), ("國立臺灣大學", False, True, True), (HOME, True, True, False)]:
+>           choose_home(page, home)
+
+tests/e2e/test_ccu_candidate_acceptance.py:196: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+page = <Page url='http://127.0.0.1:58177/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&view=list&q=Kyung+Hee+University+%E6%85%B6%E7%86%99%E5%A4%A7%E5%AD%B8#application-center'>
+home = '國立中正大學'
+
+    def choose_home(page, home):
+        open_navigation(page)
+        page.locator("#school-switcher").click()
+        page.locator(f'[data-home-school="{home}"]').click()
+        page.locator("#confirm-school").click()
+>       expect(page.locator("#school-switcher-label")).to_have_text(home)
+E       AssertionError: Locator expected to have text '國立中正大學'
+E       Actual value: 國立臺灣大學 
+E       Call log:
+E         - Expect "to_have_text" with timeout 5000ms
+E         - waiting for locator("#school-switcher-label")
+E           14 × locator resolved to <strong id="school-switcher-label">國立臺灣大學</strong>
+E              - unexpected value "國立臺灣大學"
+E       
+E       Aria snapshot:
+E       - link "跳到主要內容":
+E         - /url: "#main-content"
+E       - dialog "你目前就讀哪一所台灣大學？":
+E         - text: UniWay
+E         - heading "你目前就讀哪一所台灣大學？" [level=1]
+E         - paragraph: 選擇後，我們會顯示你真正能申請的學校、資格與申請時程；也可以先略過直接瀏覽。
+E         - text: 搜尋台灣的大學
+E         - textbox "搜尋台灣的大學":
+E           - /placeholder: 輸入學校名稱，例如：長庚、臺北大學、臺大
+E         - listbox "可選擇的大學":
+E           - option "長庚大學識別圖 長庚大學 完整支援試點：已整理長庚大學交換、補助、文件與合作校申請流程。":
+E             - img "長庚大學識別圖"
+E             - strong: 長庚大學
+E             - text: 完整支援試點：已整理長庚大學交換、補助、文件與合作校申請流程。
+E           - option "國立臺北大學識別圖 國立臺北大學 完整支援試點：已套用交換申請流程與 116 學年度三語組官方名額表。":
+E             - img "國立臺北大學識別圖"
+E             - strong: 國立臺北大學
+E             - text: 完整支援試點：已套用交換申請流程與 116 學年度三語組官方名額表。
+E           - option "國立臺灣大學識別圖 國立臺灣大學 已整理116-1校級甄選、文件、補助與288個合作項目；合作校本期名額與未核實條件標示待確認。":
+E             - img "國立臺灣大學識別圖"
+E             - strong: 國立臺灣大學
+E             - text: 已整理116-1校級甄選、文件、補助與288個合作項目；合作校本期名額與未核實條件標示待確認。
+E           - option "國立中正大學 已核對2027春季校級薦外交換；灰字參考與空白名額分開，三梯次校內收件已截止。" [selected]:
+E             - strong: 國立中正大學
+E             - text: 已核對2027春季校級薦外交換；灰字參考與空白名額分開，三梯次校內收件已截止。
+E         - button "先看看全部交換學校"
+E         - button "選擇我的學校"
+E         - text: 瀏覽公開資料不需要登入；收藏、進度與社群功能才需要帳號。
+E       - main:
+E         - button "開啟功能選單"
+E         - link "UniWay 首頁":
+E           - /url: "#home"
+E           - strong: UniWay
+E         - status
+E         - region "我的申請工作區":
+E           - text: 我的申請
+E           - strong: 從選校到送件，接著完成下一步
+E           - paragraph: 國立臺灣大學 · 文件與時程目標：Nagoya University 名古屋大學
+E           - navigation "申請工作區階段":
+E             - link "選校與確認":
+E               - /url: "#advisor"
+E             - link "準備與時程":
+E               - /url: "#overview"
+E             - link "文件與送件":
+E               - /url: "#application-center"
+E           - navigation "本階段操作":
+E             - link "條件與推薦":
+E               - /url: "#advisor"
+E             - link "候選與比較":
+E               - /url: "#favorites"
+E             - link "當期資格與志願":
+E               - /url: "#eligibility"
+E           - region "選校規劃":
+E             - heading "選校規劃" [level=2]
+E             - paragraph: 填一次條件，查看推薦與缺口，再選擇目標學校安排時程。
+E             - strong: 我的條件
+E             - text: 已保存條件 學院
+E             - combobox "學院":
+E               - option "尚未設定" [selected]
+E               - option "文學院"
+E               - option "理學院"
+E               - option "社會科學院"
+E               - option "醫學院"
+E               - option "工學院"
+E               - option "生物資源暨農學院"
+E               - option "管理學院"
+E               - option "公共衛生學院"
+E               - option "電機資訊學院"
+E               - option "法律學院"
+E               - option "生命科學院"
+E               - option "國際政經學院"
+E             - text: 所屬系所
+E             - textbox "請填學籍上的系所或學位學程" [disabled]
+E             - text: 學制
+E             - combobox "學制":
+E               - option "尚未設定" [selected]
+E               - option "大學部"
+E               - option "碩士班"
+E               - option "博士班"
+E               - option "研究所（尚未區分碩博士）"
+E             - text: 適用學年GPA（4.3制）
+E             - spinbutton "適用學年GPA（4.3制）"
+E             - text: 適用學年班排名（前幾%）
+E             - spinbutton "適用學年班排名（前幾%）"
+E             - text: 語言測驗
+E             - combobox "語言測驗":
+E               - option "尚未考／尚未決定" [selected]
+E               - option "TOEIC"
+E               - option "IELTS Academic"
+E               - option "TOEFL iBT（舊制120分）"
+E               - option "TOEFL iBT（新制6分）"
+E               - option "Duolingo"
+E               - option "其他"
+E             - text: 語言分數
+E             - spinbutton "語言分數"
+E             - text: 想去的國家／地區
+E             - combobox "想去的國家／地區":
+E               - option "不限國家" [selected]
+E               - option "土耳其"
+E               - option "大陸地區"
+E               - option "丹麥"
+E               - option "巴西"
+E               - option "日本"
+E               - option "比利時"
+E               - option "以色列"
+E               - option "加拿大"
+E               - option "立陶宛"
+E               - option "冰島"
+E               - option "匈牙利"
+E               - option "印度"
+E               - option "西班牙"
+E               - option "希臘"
+E               - option "拉脫維亞"
+E               - option "法國"
+E               - option "波蘭"
+E               - option "芬蘭"
+E               - option "俄羅斯"
+E               - option "南非"
+E               - option "南韓"
+E               - option "科索沃"
+E               - option "美國"
+E               - option "英國"
+E               - option "香港"
+E               - option "哥倫比亞"
+E               - option "挪威"
+E               - option "泰國"
+E               - option "紐西蘭"
+E               - option "馬來西亞"
+E               - option "捷克"
+E               - option "荷蘭"
+E               - option "斯洛維尼亞"
+E               - option "智利"
+E               - option "奧地利"
+E               - option "新加坡"
+E               - option "瑞士"
+E               - option "瑞典"
+E               - option "義大利"
+E               - option "葡萄牙"
+E               - option "蒙古"
+E               - option "德國"
+E               - option "墨西哥"
+E               - option "澳大利亞"
+E               - option "澳門"
+E               - option "盧森堡"
+E             - text: 預計出國學期
+E             - combobox "預計出國學期":
+E               - option "尚未決定" [selected]
+E               - option "2027 春季"
+E               - option "2027 秋季"
+E               - option "2028 春季"
+E               - option "2028 秋季"
+E             - paragraph: 學士生114學年度學年GPA達2.44或全班排名前50%，研究生校內無成績門檻；合作校另訂條件不可忽略。
+E             - paragraph: 請依學籍填寫系所或學位學程；可申請範圍仍須核對合作校規定。
+E             - group:
+E               - strong: 更多條件
+E             - text: 想問什麼？
+E             - textbox "想問什麼？":
+E               - /placeholder: 例如：申請日本交換需要哪些文件？
+E             - button "必要文件"
+E             - button "語言門檻"
+E             - button "補助"
+E             - button "產生我的申請方案"
+E             - text: 僅依已查核來源作答；符合度不是錄取機率。未登入可先填寫，登入後才會送出並保存個人方案。
+E             - region "建立第一份申請方案":
+E               - status:
+E                 - text: 留學小助手
+E                 - heading "建立第一份申請方案" [level=3]
+E                 - paragraph: 填寫條件後，我會整理候選學校、條件缺口與下一步。
+E             - paragraph: 已載入帳號條件。更新推薦以查看符合這份條件的候選學校。
+E       - paragraph:
+E         - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E         - button "停用匿名使用統計"
+E         - text: 。
+E         - link "隱私權政策":
+E           - /url: /privacy
+E         - link "使用條款":
+E           - /url: /terms
+
+tests/e2e/test_ccu_candidate_acceptance.py:89: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ccu_candidate_acceptance.py::test_real_school_search_matching_comparison_plan_reload_and_home_isolation[390]
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 68.27s (0:01:08)

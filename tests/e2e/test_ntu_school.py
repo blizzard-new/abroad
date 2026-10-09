@@ -17,7 +17,7 @@ def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server
     enter_public_site(page, live_server, "partners")
     open_navigation(page)
     page.locator("#school-switcher").click()
-    expect(page.locator("#school-options [data-home-school]")).to_have_count(3)
+    expect(page.locator("#school-options [data-home-school]")).to_have_count(4)
     page.locator('[data-home-school="國立臺灣大學"]').click()
     page.locator("#confirm-school").click()
     if width < 700 and page.locator("#glass-menu-toggle").get_attribute("aria-expanded") == "true":

@@ -77,6 +77,19 @@ NTPU = UniversityProfile(
 )
 
 
+CCU = UniversityProfile(
+    id="ccu", school_name="國立中正大學", short_name="中正大學",
+    english_name="National Chung Cheng University",
+    aliases=("國立中正大學", "中正大學", "中正", "CCU", "National Chung Cheng University"),
+    hero_image="", official_url="https://oia.ccu.edu.tw/",
+    coverage_note="已核對2027春季校級薦外交換；灰字參考與空白名額分開，三梯次校內收件已截止。",
+    support_level="basic", partner_count_hint=52, academic_score_minimum=70,
+    student_card_signals=("國立中正大學", "NATIONALCHUNGCHENGUNIVERSITY", "CCU"),
+    # Official directory, checked 2026-10-08:
+    # https://s2.exam.ccu.edu.tw/ccuee_intro/stu/intro_index.php
+    colleges=("文學院", "理學院", "社會科學院", "工學院", "管理學院", "法學院", "教育學院"),
+)
+
 NTU = UniversityProfile(
     id="ntu",
     school_name="國立臺灣大學",
@@ -95,7 +108,7 @@ NTU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU)
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU)
 DEFAULT_UNIVERSITY = CGU
 
 

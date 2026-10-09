@@ -10,10 +10,11 @@ from .ai_gateway import structured_response
 from .fit_signals import course_interest_fit, school_budget_fit, teaching_language_fit
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
 from .qualification_scopes import (
-    college_scope_needs_confirmation as _college_scope_needs_confirmation,
-    degree_scope_needs_confirmation as _degree_scope_needs_confirmation,
+    coupled_academic_scope_matches,
     college_scope_matches as _scope_matches,
-    degree_scope_matches as _degree_matches,
+    partner_degree_scope_matches,
+    partner_scope_needs_confirmation,
+    resolved_degree_level,
 )
 
 
@@ -259,12 +260,15 @@ def _score_partner(
     confirmation_items: list[str] = []
 
     cycle_unconfirmed = dashboard.selection_rules.partner_requirements_need_confirmation
+    degree = resolved_degree_level(profile.degree_level, profile.current_year)
+    coupled_scope = coupled_academic_scope_matches(partner, profile.college, degree)
+    degree_match = partner_degree_scope_matches(partner, profile.college, degree) if degree else None
     if partner.availability_status != "open":
         confirmation_items.append("本期甄選名額尚未公告；可先規劃，能否申請須等官方更新")
         gaps.append(confirmation_items[-1])
 
     if profile.college:
-        if cycle_unconfirmed or _college_scope_needs_confirmation(partner.colleges):
+        if cycle_unconfirmed or partner_scope_needs_confirmation(partner, "colleges"):
             confirmation_items.append("合作校學院範圍尚待確認")
             gaps.append(confirmation_items[-1])
         elif _scope_matches(partner.colleges, profile.college):
@@ -279,21 +283,37 @@ def _score_partner(
         confirmation_items.append(gaps[-1])
 
     if profile.degree_level:
-        if cycle_unconfirmed or _degree_scope_needs_confirmation(partner.degree_levels):
+        if cycle_unconfirmed or partner_scope_needs_confirmation(partner, "degree_levels"):
             confirmation_items.append("合作校學制範圍尚待確認")
             gaps.append(confirmation_items[-1])
-        elif _degree_matches(partner.degree_levels, profile.degree_level):
+        elif degree_match is None:
+            confirmation_items.append("研究所尚未區分碩博士；合作校學制範圍待確認")
+            gaps.append(confirmation_items[-1])
+        elif degree_match:
             score += 15
             reasons.append("符合目前學制")
         else:
             gaps.append("公開學制範圍可能不符")
-            blocking_reasons.append(f"公開學制範圍：{partner.degree_levels}；你的學制：{profile.degree_level}")
+            if coupled_scope is False:
+                blocking_reasons.append(f"學院／學制配對不符：{profile.college}／{degree}；公開配對：{partner.degree_levels}")
+            else:
+                blocking_reasons.append(f"公開學制範圍：{partner.degree_levels}；你的學制：{profile.degree_level}")
             blocked = True
     else:
         gaps.append("尚未填目前學制")
         confirmation_items.append(gaps[-1])
 
     academic_minimum = dashboard.academic_score_minimum
+    if dashboard.academic_gpa_minimum is not None:
+        if profile.academic_gpa is None:
+            gaps.append("尚未填歷年GPA；中正須GPA至少3.0且平均至少70分")
+            confirmation_items.append(gaps[-1])
+        elif profile.academic_gpa < dashboard.academic_gpa_minimum:
+            gaps.append("歷年GPA未達中正公開門檻3.0")
+            blocking_reasons.append(gaps[-1])
+            blocked = True
+        if partner.application_window_status == "closed":
+            confirmation_items.append("中正2027春季校內收件已截止，需確認已有申請及提名資格")
     if is_ntu(dashboard.school_name):
         status, detail = ntu_academic_check(profile.degree_level, profile.academic_gpa, profile.class_rank_percent)
         if status == "pass":
@@ -320,7 +340,7 @@ def _score_partner(
         blocking_reasons.append(gaps[-1])
         blocked = True
 
-    threshold = None if cycle_unconfirmed else _partner_language_threshold(partner, profile.language_test)
+    threshold = None if cycle_unconfirmed else _partner_language_threshold(partner, profile.language_test, profile.degree_level)
     if not profile.language_test or profile.language_test == "other":
         gaps.append("語言證明需逐校確認")
         confirmation_items.append(gaps[-1])
@@ -329,7 +349,7 @@ def _score_partner(
         confirmation_items.append(gaps[-1])
     elif threshold is None:
         score += 7
-        gaps.append("合作校語言門檻需核對官方來源")
+        gaps.append(partner.language_review_note or "合作校語言門檻需核對官方來源")
         confirmation_items.append(gaps[-1])
     elif profile.language_score >= threshold:
         score += 20
@@ -443,6 +463,9 @@ def _qualification_summary(
     dashboard: StudentDashboard,
 ) -> list[str]:
     rows: list[str] = []
+    if dashboard.academic_gpa_minimum is not None:
+        rows.append("歷年GPA尚未填寫；須至少3.0且歷年平均至少70分" if profile.academic_gpa is None else
+                    f"歷年GPA {profile.academic_gpa:g}，{'達' if profile.academic_gpa >= dashboard.academic_gpa_minimum else '未達'}門檻3.0")
     academic_minimum = dashboard.academic_score_minimum
     if is_ntu(dashboard.school_name):
         rows.append(ntu_academic_check(profile.degree_level, profile.academic_gpa, profile.class_rank_percent)[1])
@@ -884,7 +907,12 @@ def _question_prompt(question: str, rows: list[Evidence]) -> str:
 def _partner_language_threshold(
     partner: PartnerUniversity,
     language_test: str | None,
+    degree_level: str | None = None,
 ) -> float | None:
+    from .ccu_language import assess_ccu_language, is_ccu_partner
+
+    if is_ccu_partner(partner):
+        return assess_ccu_language(partner, language_test, degree_level).threshold
     if not language_test or language_test == "other":
         return None
     text = " ".join(

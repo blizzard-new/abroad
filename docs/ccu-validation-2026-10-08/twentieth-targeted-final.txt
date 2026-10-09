@@ -1,0 +1,50 @@
+CONFTEST LOADED!
+...F.....F...........F............                                       [100%]
+=================================== FAILURES ===================================
+___ test_colabs_actual_spring_2027_calendar_is_not_an_all_programme_calendar ___
+
+    def test_colabs_actual_spring_2027_calendar_is_not_an_all_programme_calendar():
+        field = reviewed_rows()[35]["fields"]["academic_calendar"]
+        assert field["status"] == "verified_current"
+        assert "4/8" in field["value"] and "8/4–6" in field["value"]
+        assert "Early April 2027" in field["value"]
+        evidence = next(e for e in field["evidence"] if e["source_id"] == read("twentieth-source-review.json")["aliases"]["p35-r20-c79604cd51"])
+>       assert "Spring Semester 2027" in evidence["excerpt"]
+E       AssertionError: assert 'Spring Semester 2027' in ', 2026 Class begins April 8, 2026 Class ends August 5, 2026 ★ Presentation August 5 - 7, 2026 Fall Semester 2026 (Oct...nds February 3, 2027 ★ Presentation February 4-5, 2027 Self-Education Period* February 6 - April 7, 2027 *applicable t'
+
+tests/test_ccu_twentieth_pass.py:79: AssertionError
+_______ test_document_center_has_actual_downloads_and_uncertainty_notes ________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-110/test_document_center_has_actua0')
+
+    def test_document_center_has_actual_downloads_and_uncertainty_notes(tmp_path):
+        client = TestClient(create_app(tmp_path))
+        response = client.get("/application-center/catalog", params={"school": HOME, "target_school": at(47).school_name})
+        assert response.status_code == 200
+        items = response.json()["items"]
+        for needle, source_id in [("宿舍申請表", "1xThdiWsgT4IZ5Tco7UZnpUGFDA16Hknf"), ("健康／TB", "1NwoAHiWT7p3yJO1s-YqyhZCSRN0YQiBy")]:
+            item = next(r for r in items if needle in r["name"])
+            assert item["download_available"] and item["official_form_verified"]
+            assert source_id in item["official_form_url"]
+>           assert "未" in item["applicability_note"]
+E           AssertionError: assert '未' in '當期文件要求已核；兩份公開空白表實開各1頁但年度空白／header有差，不宣稱當期新版已核。學生簽日期原文已核。'
+
+tests/test_ccu_twentieth_pass.py:147: AssertionError
+_____ test_per_school_gap_inventory_distinguishes_mapping_from_exhaustion ______
+
+    def test_per_school_gap_inventory_distinguishes_mapping_from_exhaustion():
+        report = json.loads((BUNDLE / "remaining-gaps.json").read_text())
+        assert report["school_count"] == 55 and report["source_count"] >= 876
+        for name, expected in report["input_sha256"].items():
+>           assert hashlib.sha256((BUNDLE / name).read_bytes()).hexdigest() == expected
+E           AssertionError: assert '16d25df5b5cc...dc69db01a693f' == '81bb3d80e843...d9a834b056513'
+E             
+E             - 81bb3d80e843fe693b00467f8efac730b9e7714973c392dcb79d9a834b056513
+E             + 16d25df5b5cc58845ed76d70c1d0b65f4b02a0b0e047ac228b4dc69db01a693f
+
+tests/test_ccu_seventeenth_pass.py:139: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_twentieth_pass.py::test_colabs_actual_spring_2027_calendar_is_not_an_all_programme_calendar
+FAILED tests/test_ccu_twentieth_pass.py::test_document_center_has_actual_downloads_and_uncertainty_notes
+FAILED tests/test_ccu_seventeenth_pass.py::test_per_school_gap_inventory_distinguishes_mapping_from_exhaustion
+3 failed, 31 passed in 37.20s

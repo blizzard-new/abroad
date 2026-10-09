@@ -1,0 +1,159 @@
+{
+  "tested_program_sha": "9b18b409a370fd8a4fecc7cff1d18d399f4f9ab3",
+  "evidence_commit_tests_not_run": true,
+  "selected_local_gate_passed": true,
+  "regression": {
+    "tests": 480,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 7,
+    "time": 406.146
+  },
+  "browser": {
+    "tests": 106,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": 1244.55
+  },
+  "skipped_tests": [
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_workflow_api_reads_cache_and_rejects_public_refresh",
+      "seconds": "0.000",
+      "skip_reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_workflow_api_applies_department_override",
+      "seconds": "0.000",
+      "skip_reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_bundled_cgu_workflows_are_available_without_local_cache",
+      "seconds": "0.000",
+      "skip_reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+      "seconds": "0.000",
+      "skip_reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_bundled_cgu_completeness_report_matches_export",
+      "seconds": "0.000",
+      "skip_reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_backfilled_cgu_workflows_keep_current_details_reference_only",
+      "seconds": "0.000",
+      "skip_reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_school_board_migration::test_ntu_forum_rpc_migration_preserves_authorization_and_replays",
+      "seconds": "0.000",
+      "skip_reason": "opt in to isolated Docker PostgreSQL"
+    }
+  ],
+  "data_complete": false,
+  "release_ready": false,
+  "official_field_status_counts": {
+    "verified_current": 307,
+    "missing": 202,
+    "needs_confirmation": 334,
+    "reference_only": 20,
+    "conflict": 71,
+    "explicit_not_announced": 1
+  },
+  "source_triage_state_counts": {
+    "mapped_sections_remaining_body_unclaimed": 628,
+    "reviewed_scoped_exclusion": 124,
+    "reviewed_index_linked_bodies_separate": 74,
+    "body_not_obtained": 88,
+    "identical_body_to_mapped_sections": 22,
+    "access_limited_no_policy_body": 34,
+    "historical_insecure_acquisition_not_current_evidence": 9,
+    "mapped_shared_home_source": 1
+  },
+  "frozen_backlog": {
+    "backlog_processed": 323,
+    "backlog_remaining_without_disposition": 0,
+    "additional_review_sources": 1,
+    "disposition_counts": {
+      "out_of_scope": 60,
+      "reference_only": 64,
+      "public_index_no_policy": 69,
+      "duplicate_mapped_body": 21,
+      "access_limited_no_policy_body": 7,
+      "mapped_scoped_evidence": 102
+    },
+    "processable_followups": [
+      {
+        "ccu_page": 83,
+        "scope": "最新當期交換nomination/application日期與factsheet錯年；FM-IL-06-03表仍要求向Inbound取得，不聯絡或登入。",
+        "external_unannounced": false
+      },
+      {
+        "ccu_page": 119,
+        "scope": "LearningAgreement/Imageusage實際模板及orientation錯年仍未核，不因讀到學生表而推全附件完整。",
+        "external_unannounced": false
+      }
+    ]
+  },
+  "all_17_current_schools": 0,
+  "host_complete_document_sets": 0,
+  "catalogue_rows": 104,
+  "host_workflows_and_profiles": 55,
+  "source_records": 980,
+  "host_document_schools": 33,
+  "host_document_requirements": 250,
+  "host_document_current": 184,
+  "host_document_pending": 66,
+  "normal_tls_independent_read_receipts": 14,
+  "restricted_historical_sources": 9,
+  "uninter_question_metadata_count": 48,
+  "uninter_current_rendered_count_verified": false,
+  "delayed_switching_browser_cases": 8,
+  "independent_real_four_school_cases": 4,
+  "composite_provenance_ui_cases": 4,
+  "delayed_response_scope": "application workflow, qualification/detail and completeness; life page not separately delayed",
+  "normal_tls_browser_policy_acquisition_passed": false,
+  "normal_tls_browser_failed_closed": true,
+  "remote_ci": {
+    "checked_at": "2026-10-09T01:21:01.932948+00:00",
+    "candidate_sha": "9b18b409a370fd8a4fecc7cff1d18d399f4f9ab3",
+    "runs": [
+      {
+        "id": 37869339947,
+        "html_url": "https://github.com/blizzard-new/abroad/actions/runs/37869339947",
+        "head_sha": "9b18b409a370fd8a4fecc7cff1d18d399f4f9ab3",
+        "status": "completed",
+        "conclusion": "failure",
+        "created_at": "2026-10-09T01:20:57Z",
+        "updated_at": "2026-10-09T01:20:57Z",
+        "job_count": 0
+      }
+    ],
+    "check_run_count": 1,
+    "passed": false,
+    "observed": true,
+    "state": "observed",
+    "notes": "Read-only GitHub API, separate from local gate. No workflow changes, rerun requests or deployments."
+  },
+  "remote_ci_passed": false,
+  "not_run": [
+    "other-school combined branch integration",
+    "delayed-response race across unmerged TKU/NCU/NTU heads",
+    "Supabase isolated runtime",
+    "dependency vulnerability audit",
+    "deployment",
+    "other whole-repository pytest suites outside recorded selection",
+    "Supabase migration/function parsing",
+    "other unchanged static JavaScript checks"
+  ]
+}

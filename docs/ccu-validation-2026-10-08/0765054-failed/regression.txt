@@ -1,0 +1,34 @@
+CONFTEST LOADED!
+.............................................................ss......... [ 15%]
+........................................................................ [ 30%]
+........................................................................ [ 46%]
+........................................F............................... [ 61%]
+............................................................sss......... [ 76%]
+.......s................................................................ [ 92%]
+............s........................                                    [100%]
+=================================== FAILURES ===================================
+_ test_hcmute_optional_certificates_do_not_remove_home_or_host_language_rules __
+
+    def test_hcmute_optional_certificates_do_not_remove_home_or_host_language_rules():
+        p = at(68)
+        f = p.partner_exchange_details
+        assert f["eligibility"].status == "verified_current"
+        assert "No limitation" in f["eligibility"].value
+        assert "GPA3.0且平均70" in f["eligibility"].value
+        assert "B2" in f["language"].value and "optional" in f["language"].value
+        assert f["documents"].status == "verified_current"
+        assert "mandatory五项" in f["documents"].value
+        assert "optional兩项" in f["documents"].value
+        assert source("p68-r6-factsheet2027")["text_pages"][0].count("Optional") == 1
+        assert f["nomination_deadline"].status == "missing"
+        assert f["academic_calendar"].status == "missing"
+>       assert f["arrival"].status == "missing"
+E       AssertionError: assert 'needs_confirmation' == 'missing'
+E         
+E         - missing
+E         + needs_confirmation
+
+tests/test_ccu_sixth_pass.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_sixth_pass.py::test_hcmute_optional_certificates_do_not_remove_home_or_host_language_rules
+1 failed, 461 passed, 7 skipped in 393.08s (0:06:33)

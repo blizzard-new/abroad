@@ -48,7 +48,7 @@ from .models import (
 )
 from .settings import DEFAULT_DATA_DIR
 from .school_identity import school_identity_key
-from .university_registry import CGU, NTPU, NTU
+from .university_registry import CCU, CGU, NTPU, NTU
 from .workflow_structuring import structure_application_workflow
 from .workflow_identity import workflow_storage_key
 
@@ -57,6 +57,7 @@ T = TypeVar("T", bound=BaseModel)
 PACKAGE_DIR = Path(__file__).resolve().parent
 BUNDLED_NTPU_DIR = PACKAGE_DIR / "official_data" / "ntpu"
 BUNDLED_CGU_DIR = PACKAGE_DIR / "official_data" / "cgu"
+BUNDLED_CCU_DIR = PACKAGE_DIR / "official_data" / "ccu"
 BUNDLED_NTU_DIR = PACKAGE_DIR / "official_data" / "ntu"
 
 _STORAGE_LOCKS_GUARD = threading.Lock()
@@ -199,6 +200,10 @@ def merge_application_workflows(
 def _with_explicit_destination_gaps(profile: DestinationProfile) -> DestinationProfile:
     """Keep an honest, visible answer for official details that are not public."""
 
+    if profile.home_university == CCU.school_name:
+        # CCU keeps reviewed field statuses and true nulls. Unverified public
+        # research cannot be rewritten as an official non-publication claim.
+        return profile
     defaults = {
         "housing_summary": (
             "官方網站未公開可可靠核對的交換生住宿資訊；請以合作校最新 fact sheet、"
@@ -551,7 +556,7 @@ def cached_workflow_catalog(key: tuple, build) -> list[UniversityApplicationWork
 
 
 def _bundled_workflow_paths() -> tuple[Path, ...]:
-    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR))
+    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR))
 
 
 def _bundled_workflow_signature() -> tuple:
@@ -712,6 +717,7 @@ def load_destination_profiles(
             (BUNDLED_NTPU_DIR, NTPU.school_name),
             (BUNDLED_CGU_DIR, CGU.school_name),
             (BUNDLED_NTU_DIR, NTU.school_name),
+            (BUNDLED_CCU_DIR, CCU.school_name),
         )
         for row in read_jsonl(
             directory / "destination_profiles.jsonl",

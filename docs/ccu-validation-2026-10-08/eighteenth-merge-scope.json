@@ -1,0 +1,38 @@
+{
+  "repository": "blizzard-new/abroad",
+  "branch": "data/ccu-exchange-20261008",
+  "integrated_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "previous_pushed_commit": "37a36ec1d84706b37904e8f8dd34748b73d705c3",
+  "shared_code_paths_since_main": [
+    "src/exchange_info/advisor.py",
+    "src/exchange_info/api.py",
+    "src/exchange_info/application_documents.py",
+    "src/exchange_info/application_rules.py",
+    "src/exchange_info/application_workflow_collector.py",
+    "src/exchange_info/cli.py",
+    "src/exchange_info/content_governance.py",
+    "src/exchange_info/models.py",
+    "src/exchange_info/qualification_scopes.py",
+    "src/exchange_info/static/app.js",
+    "src/exchange_info/static/index.html",
+    "src/exchange_info/storage.py",
+    "src/exchange_info/university_registry.py",
+    "src/exchange_info/workflow_structuring.py"
+  ],
+  "shared_generated_api_contract": "docs/api/openapi.json",
+  "this_round_shared_changes": [
+    "src/exchange_info/advisor.py",
+    "src/exchange_info/application_rules.py",
+    "src/exchange_info/qualification_scopes.py",
+    "src/exchange_info/static/app.js",
+    "src/exchange_info/static/index.html"
+  ],
+  "coordination_note": "全部只在獨立CCU clone修改；共用core必要變更列出供統一整合，不修改臺大session／其他共用checkout。",
+  "latest_main_school_files_changed": [],
+  "this_round_school_adapter_changes": [
+    "src/exchange_info/ccu_documents.py"
+  ],
+  "new_school_only_collector": "scripts/build_ccu_public_link_queue.py",
+  "new_api_routes": false,
+  "new_required_fields": false
+}

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="40.321" timestamp="2026-10-08T20:37:10.239748+00:00" hostname="e5e438874453"><testcase classname="tests.e2e.test_ccu_candidate_acceptance" name="test_real_school_search_matching_comparison_plan_reload_and_home_isolation[390]" time="40.250"><failure message="AssertionError: assert {'ccu-cv', 'c...on-data', ...} == {'arrival-che...fidavit', ...}&#10;  &#10;  Extra items in the left set:&#10;  'ccu-language-proof'&#10;  'ccu-transcripts'&#10;  'ccu-recommendation'&#10;  'ccu-graduation-audit'&#10;  'ccu-cv'...&#10;  &#10;  ...Full output truncated (9 lines hidden), use '-vv' to show">page = &lt;Page url='http://127.0.0.1:56883/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8&amp;view=list&amp;q=Kyung+Hee+University+%E6%85%B6%E7%86%99%E5%A4%A7%E5%AD%B8#application-center'&gt;
+acceptance_server = LiveServer(base_url='http://127.0.0.1:56883', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-130/ccu-acceptance-real-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_real_school_search_matching_comparison_plan_reload_and_home_isolation(page, acceptance_server, width):
+        server = acceptance_server
+        errors = record_errors(page)
+        session = login(page, server, width)
+        assert set(page.locator("#degree-filter option").evaluate_all("rows =&gt; rows.map(row =&gt; row.value)")) == {"", "大學部", "碩士班", "博士班", "研究所"}
+        names = [school(34), school(45)]
+        for name in names:
+            page.locator("#partner-search").fill(name)
+            if width == 390:
+                card = page.locator("#partner-table .partner-card").filter(has_text=name)
+                expect(card).to_be_visible()
+                card.locator("&gt; summary").click()
+            button = page.locator(f'#partner-table .favorite-toggle[data-school-name="{name}"]:visible').first
+            expect(button).to_be_visible(timeout=30_000)
+            button.click()
+            expect(button).to_have_attribute("aria-pressed", "true")
+        navigate(page, "favorites")
+        expect(page.locator(".discovery-candidate")).to_have_count(2)
+        for name in names:
+            page.locator(f'[data-compare-school="{name}"]').check()
+        comparison = page.locator("#discovery-comparison")
+        for name in names:
+            expect(comparison).to_contain_text(name)
+        capture(page, "real-favorites-comparison", width)
+        navigate(page, "application-center")
+        select_target(page, names[0])
+        navigate(page, "advisor")
+        wait_until(page, "homeCollegeOptions().includes('法學院')")
+        page.locator("#advisor-college").select_option("法學院")
+        department = page.locator("#advisor-department")
+        if department.evaluate("node =&gt; node.tagName") == "SELECT":
+            wait_until(page, "document.querySelector('#advisor-department').options.length &gt; 1")
+            department.select_option(department.locator("option").evaluate_all("rows =&gt; rows.find(row =&gt; row.value).value"))
+        else:
+            department.fill("法律學系")
+        page.locator("#advisor-degree").select_option("碩士班")
+        page.locator("#advisor-academic-score").fill("85")
+        page.locator("#advisor-academic-gpa").fill("3.5")
+        page.locator("#advisor-language-test").select_option("ielts")
+        page.locator("#advisor-language-score").fill("7")
+        with page.expect_response(lambda r: r.url.endswith("/advisor/plan") and r.request.method == "POST") as result:
+            page.locator("#advisor-submit").click()
+        assert result.value.ok
+        assert result.value.request.post_data_json["school_name"] == HOME
+        assert "符合目前學制" in result.value.json()["target_match"]["reasons"]
+        expect(page.locator("#advisor-profile-status")).to_have_text("已保存條件")
+        capture(page, "real-advisor", width)
+        navigate(page, "overview")
+        expect(page.locator("#multi-plan-workspace")).to_be_visible()
+        page.locator("#multi-plan-settings &gt; summary").click()
+        selects = page.locator("#multi-plan-preferences select")
+        for index, name in enumerate(names):
+            selects.nth(index).select_option(name)
+        with page.expect_response(lambda r: r.url.endswith("/application-plan/evaluate") and r.request.method == "POST" and len(r.request.post_data_json["preferences"]) == 2) as planned:
+            page.locator("#multi-plan-preferences button").click()
+        assert planned.value.ok
+        real_plan = planned.value.json()
+        assert [c["school_name"] for c in real_plan["choices"]] == names
+        assert real_plan["tasks"]  # actual partial workflows, never fabricated dates
+        expect(page.locator("#multi-plan-status")).to_contain_text("2 個志願")
+        task = real_plan["tasks"][0]
+        task_id = task["id"]
+        bucket = HOME if task["task_scope"] == "home" else task["school_names"][0]
+        if task["task_scope"] != "home":
+            branch = page.locator(f'.multi-plan-branch[data-multi-school="{bucket}"]')
+            branch.locator("&gt; summary").click()
+        progress = page.locator(f'[data-multi-task="{task_id}"]')
+        expect(progress).to_be_visible()
+        progress.check()
+        wait_until(page, "document.querySelector('#account-workspace-sync-label').textContent === '已同步'")
+        headers = {"Authorization": f"Bearer {session['access_token']}"}
+        saved = requests.get(server.base_url + "/account/workspace", params={"home_school": HOME}, headers=headers, timeout=30)
+        saved.raise_for_status()
+        workspace = saved.json()["workspace"]
+        assert workspace["application_schools"] == names
+        assert workspace["application_progress"][bucket][task_id] is True
+        page.reload()
+        expect(page.locator("#multi-plan-status")).to_contain_text("2 個志願", timeout=30_000)
+        expect(page.locator(f'[data-multi-task="{task_id}"]')).to_be_checked()
+        capture(page, "real-plan-reloaded", width)
+        for home, score, gpa, rank in [("長庚大學", True, False, False), ("國立臺北大學", True, False, False), ("國立臺灣大學", False, True, True), (HOME, True, True, False)]:
+            choose_home(page, home)
+            navigate(page, "advisor")
+            for selector, visible in [("#advisor-academic-score", score), ("#advisor-academic-gpa", gpa), ("#advisor-class-rank", rank)]:
+                if visible:
+                    expect(page.locator(selector)).to_be_visible()
+                else:
+                    expect(page.locator(selector)).to_be_hidden()
+            navigate(page, "application-center")
+            wait_until(page, "!state.applicationLoading &amp;&amp; state.applicationTemplates.length &gt; 0")
+            templates = page.request.get(server.base_url + "/application-center/templates", params={"school": home})
+            assert templates.ok
+&gt;           assert set(page.evaluate("state.applicationTemplates.map(t =&gt; t.id)")) == {t["id"] for t in templates.json()}
+E           AssertionError: assert {'ccu-cv', 'c...on-data', ...} == {'arrival-che...fidavit', ...}
+E             
+E             Extra items in the left set:
+E             'ccu-language-proof'
+E             'ccu-transcripts'
+E             'ccu-recommendation'
+E             'ccu-graduation-audit'
+E             'ccu-cv'...
+E             
+E             ...Full output truncated (9 lines hidden), use '-vv' to show
+
+tests/e2e/test_ccu_candidate_acceptance.py:222: AssertionError</failure></testcase></testsuite></testsuites>

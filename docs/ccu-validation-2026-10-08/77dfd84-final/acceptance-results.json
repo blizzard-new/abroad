@@ -1,0 +1,111 @@
+{
+  "tested_program_sha": "77dfd84008d438d3602da61991733ecfdf8d65a8",
+  "evidence_commit_tests_not_run": true,
+  "selected_local_gate_passed": true,
+  "regression": {
+    "tests": 459,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 7,
+    "time": 398.648
+  },
+  "browser": {
+    "tests": 102,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "time": 1166.208
+  },
+  "skipped_tests": [
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_workflow_api_reads_cache_and_rejects_public_refresh",
+      "seconds": "0.000",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_application_workflow::test_workflow_api_applies_department_override",
+      "seconds": "0.000",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_bundled_cgu_workflows_are_available_without_local_cache",
+      "seconds": "0.000",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+      "seconds": "0.000",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_bundled_cgu_completeness_report_matches_export",
+      "seconds": "0.000",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_cgu_bundled_data::test_backfilled_cgu_workflows_keep_current_details_reference_only",
+      "seconds": "0.000",
+      "reason": "Phase C data reviewed"
+    },
+    {
+      "suite": "regression",
+      "case_id": "tests.test_ntu_school_board_migration::test_ntu_forum_rpc_migration_preserves_authorization_and_replays",
+      "seconds": "0.000",
+      "reason": "opt in to isolated Docker PostgreSQL"
+    }
+  ],
+  "release_ready": false,
+  "data_complete": false,
+  "all_17_current_schools": 0,
+  "host_complete_document_sets": 0,
+  "official_field_status_counts": {
+    "verified_current": 306,
+    "missing": 206,
+    "needs_confirmation": 331,
+    "reference_only": 20,
+    "conflict": 71,
+    "explicit_not_announced": 1
+  },
+  "source_triage_state_counts": {
+    "mapped_sections_remaining_body_unclaimed": 517,
+    "readable_body_not_semantically_reviewed": 149,
+    "read_body_not_mapped": 174,
+    "body_not_obtained": 88,
+    "access_limited_no_policy_body": 27,
+    "mapped_shared_home_source": 1
+  },
+  "ntpu_baseline_failure_resolved": true,
+  "delayed_switching_and_queued_save_browser_cases": 8,
+  "independent_no_response_or_state_mock_four_school_cases": 4,
+  "remote_ci_passed": false,
+  "ci_runs": [
+    {
+      "id": 37851564299,
+      "html_url": "https://github.com/blizzard-new/abroad/actions/runs/37851564299",
+      "head_sha": "77dfd84008d438d3602da61991733ecfdf8d65a8",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-08T22:08:34Z",
+      "updated_at": "2026-10-08T22:08:34Z",
+      "total_jobs": 0
+    }
+  ],
+  "external_live_browser_passed": false,
+  "other_school_combined_integration": "not_run",
+  "not_run": [
+    "other-school combined branch integration",
+    "delayed-response race across unmerged TKU/NCU/NTU heads",
+    "Supabase isolated runtime",
+    "dependency vulnerability audit",
+    "deployment",
+    "other entire-repository pytest suites outside recorded selection",
+    "Supabase migration/function parsing",
+    "other unchanged static JavaScript syntax checks"
+  ]
+}

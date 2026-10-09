@@ -37,8 +37,9 @@ def test_match_missing_profile_fields_and_real_mismatches():
     const coverageForSchool = () => null;
     const destinationProfileForSchool = () => null;
     const homeCollegeValue = value => ['工學院', '管理學院', '醫學院'].includes(value) ? value : '';
+    const homeSelectionRules = () => ({partner_requirements_need_confirmation:false,pending_quota_planning:true});
     const partnerSummaryPoints = item => item.eligibility_points || [];
-    for (const name of ['normalize', 'escapeHtml', 'homeSelectionRules', 'collegeMatches', 'degreeMatches',
+    for (const name of ['normalize', 'escapeHtml', 'academicScopeNeedsConfirmation', 'collegeMatches', 'degreeMatches', 'coupledAcademicScopeOptions', 'coupledAcademicScopeMatches', 'resolvedDegreeLevel', 'partnerDegreeScopeMatches',
       'languageThresholdFromPartner', 'partnerAvailabilityMeta', 'partnerMatch',
       'renderPartnerMatchExplanation', 'schoolImageFor', 'renderSchoolPhoto']) {
       const match = source.match(new RegExp('^function ' + name + '\\([^]*?^}', 'm'));

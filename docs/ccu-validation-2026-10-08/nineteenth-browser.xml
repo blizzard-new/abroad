@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="6" time="60.605" timestamp="2026-10-08T16:39:29.834207+00:00" hostname="e5e438874453"><testcase classname="tests.e2e.test_ccu_nineteenth_pass" name="test_pending_host_forms_render_correct_role_and_stage[80-Inbound Exchange-6818985ddb4fe1746442333.pdf-390]" time="14.839" /><testcase classname="tests.e2e.test_ccu_nineteenth_pass" name="test_pending_host_forms_render_correct_role_and_stage[80-Inbound Exchange-6818985ddb4fe1746442333.pdf-1440]" time="6.978" /><testcase classname="tests.e2e.test_ccu_nineteenth_pass" name="test_pending_host_forms_render_correct_role_and_stage[107-Accommodation Letter of Intent-proof_of_accommodation_140338.pdf-390]" time="11.915"><failure message="AssertionError: Locator expected to contain text '有條件'&#10;Actual value: &#10;      &#10;      （宿舍／簽證條件）Accommodation Letter of Intent（學生及宿舍方簽／日期）階段：錄取後 · 適用性：當期適用待確認 · 一般官方incoming／生活／課程頁未明示2027適用年度 · 一般來源未明示2027適用；原文身分/階段/條件及當期母校資格分開。 · 適用條件：僅需宿舍住宿文件者；空白期間/房址、年度未填，非所有學生交換申請附件。 · 2 份 · 文件形式待確認 · 簽署：學生（含地點／日期）、Accommodation Provider · 適用性及送件細節待確認開啟已核實官方表格／文件官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。&#10;     &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;details.workflow-step&quot;).filter(has=locator(&quot;.workflow-documents li b&quot;).filter(has_text=&quot;Accommodation Letter of Intent&quot;)).locator(&quot;.workflow-documents li&quot;).filter(has_text=&quot;Accommodation Letter of Intent&quot;)&#10;    14 × locator resolved to &lt;li class=&quot;needs-confirmation&quot;&gt;…&lt;/li&gt;&#10;       - unexpected value &quot;&#10;      &#10;      （宿舍／簽證條件）Accommodation Letter of Intent（學生及宿舍方簽／日期）階段：錄取後 · 適用性：當期適用待確認 · 一般官方incoming／生活／課程頁未明示2027適用年度 · 一般來源未明示2027適用；原文身分/階段/條件及當期母校資格分開。 · 適用條件：僅需宿舍住宿文件者；空白期間/房址、年度未填，非所有學生交換申請附件。 · 2 份 · 文件形式待確認 · 簽署：學生（含地點／日期）、Accommodation Provider · 適用性及送件細節待確認開啟已核實官方表格／文件官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。&#10;    &quot;&#10;&#10;Aria snapshot:&#10;- listitem:&#10;  - text: （宿舍／簽證條件）Accommodation Letter of Intent（學生及宿舍方簽／日期） 階段：錄取後 · 適用性：當期適用待確認 · 一般官方incoming／生活／課程頁未明示2027適用年度 · 一般來源未明示2027適用；原文身分/階段/條件及當期母校資格分開。 · 適用條件：僅需宿舍住宿文件者；空白期間/房址、年度未填，非所有學生交換申請附件。 · 2 份 · 文件形式待確認 · 簽署：學生（含地點／日期）、Accommodation Provider · 適用性及送件細節待確認&#10;  - link &quot;開啟已核實官方表格／文件&quot;:&#10;    - /url: https://www.upce.cz/sites/default/files/public/anpi3189/proof_of_accommodation_140338.pdf&#10;  - text: 官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。">page = &lt;Page url='http://127.0.0.1:35175/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=University%20of%20Pardubice%20%E6%8D%B7%E5%85%8B%E5%B7%B4%E7%88%BE%E6%9D%9C%E6%AF%94%E5%BD%A9%E5%A4%A7%E5%AD%B8'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:35175', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-106/web-e2e-data0'))
+width = 390, source_page = 107, needle = 'Accommodation Letter of Intent'
+url_part = 'proof_of_accommodation_140338.pdf'
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page,needle,url_part", [
+        (80, "Inbound Exchange", "6818985ddb4fe1746442333.pdf"),
+        (107, "Accommodation Letter of Intent", "proof_of_accommodation_140338.pdf"),
+    ])
+    def test_pending_host_forms_render_correct_role_and_stage(page, live_server, width, source_page, needle, url_part):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(at(source_page).school_name))
+        expect(page.locator("#detail-tab-application")).to_be_visible(timeout=30_000)
+        page.locator("#detail-tab-application").click()
+        step = page.locator("details.workflow-step").filter(
+            has=page.locator(".workflow-documents li b").filter(has_text=needle)
+        )
+        step.locator("&gt; summary").click()
+        item = step.locator(".workflow-documents li").filter(has_text=needle)
+        expect(item).to_contain_text("當期適用待確認")
+        assert url_part in item.locator("a").get_attribute("href")
+        if source_page == 107:
+&gt;           expect(item).to_contain_text("有條件")
+E           AssertionError: Locator expected to contain text '有條件'
+E           Actual value: 
+E                 
+E                 （宿舍／簽證條件）Accommodation Letter of Intent（學生及宿舍方簽／日期）階段：錄取後 · 適用性：當期適用待確認 · 一般官方incoming／生活／課程頁未明示2027適用年度 · 一般來源未明示2027適用；原文身分/階段/條件及當期母校資格分開。 · 適用條件：僅需宿舍住宿文件者；空白期間/房址、年度未填，非所有學生交換申請附件。 · 2 份 · 文件形式待確認 · 簽署：學生（含地點／日期）、Accommodation Provider · 適用性及送件細節待確認開啟已核實官方表格／文件官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。
+E                
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("details.workflow-step").filter(has=locator(".workflow-documents li b").filter(has_text="Accommodation Letter of Intent")).locator(".workflow-documents li").filter(has_text="Accommodation Letter of Intent")
+E               14 × locator resolved to &lt;li class="needs-confirmation"&gt;…&lt;/li&gt;
+E                  - unexpected value "
+E                 
+E                 （宿舍／簽證條件）Accommodation Letter of Intent（學生及宿舍方簽／日期）階段：錄取後 · 適用性：當期適用待確認 · 一般官方incoming／生活／課程頁未明示2027適用年度 · 一般來源未明示2027適用；原文身分/階段/條件及當期母校資格分開。 · 適用條件：僅需宿舍住宿文件者；空白期間/房址、年度未填，非所有學生交換申請附件。 · 2 份 · 文件形式待確認 · 簽署：學生（含地點／日期）、Accommodation Provider · 適用性及送件細節待確認開啟已核實官方表格／文件官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。
+E               "
+E           
+E           Aria snapshot:
+E           - listitem:
+E             - text: （宿舍／簽證條件）Accommodation Letter of Intent（學生及宿舍方簽／日期） 階段：錄取後 · 適用性：當期適用待確認 · 一般官方incoming／生活／課程頁未明示2027適用年度 · 一般來源未明示2027適用；原文身分/階段/條件及當期母校資格分開。 · 適用條件：僅需宿舍住宿文件者；空白期間/房址、年度未填，非所有學生交換申請附件。 · 2 份 · 文件形式待確認 · 簽署：學生（含地點／日期）、Accommodation Provider · 適用性及送件細節待確認
+E             - link "開啟已核實官方表格／文件":
+E               - /url: https://www.upce.cz/sites/default/files/public/anpi3189/proof_of_accommodation_140338.pdf
+E             - text: 官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。
+
+tests/e2e/test_ccu_nineteenth_pass.py:37: AssertionError</failure></testcase><testcase classname="tests.e2e.test_ccu_nineteenth_pass" name="test_pending_host_forms_render_correct_role_and_stage[107-Accommodation Letter of Intent-proof_of_accommodation_140338.pdf-1440]" time="12.626"><failure message="AssertionError: Locator expected to contain text '有條件'&#10;Actual value: &#10;      &#10;      （宿舍／簽證條件）Accommodation Letter of Intent（學生及宿舍方簽／日期）階段：錄取後 · 適用性：當期適用待確認 · 一般官方incoming／生活／課程頁未明示2027適用年度 · 一般來源未明示2027適用；原文身分/階段/條件及當期母校資格分開。 · 適用條件：僅需宿舍住宿文件者；空白期間/房址、年度未填，非所有學生交換申請附件。 · 2 份 · 文件形式待確認 · 簽署：學生（含地點／日期）、Accommodation Provider · 適用性及送件細節待確認開啟已核實官方表格／文件官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。&#10;     &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;details.workflow-step&quot;).filter(has=locator(&quot;.workflow-documents li b&quot;).filter(has_text=&quot;Accommodation Letter of Intent&quot;)).locator(&quot;.workflow-documents li&quot;).filter(has_text=&quot;Accommodation Letter of Intent&quot;)&#10;    14 × locator resolved to &lt;li class=&quot;needs-confirmation&quot;&gt;…&lt;/li&gt;&#10;       - unexpected value &quot;&#10;      &#10;      （宿舍／簽證條件）Accommodation Letter of Intent（學生及宿舍方簽／日期）階段：錄取後 · 適用性：當期適用待確認 · 一般官方incoming／生活／課程頁未明示2027適用年度 · 一般來源未明示2027適用；原文身分/階段/條件及當期母校資格分開。 · 適用條件：僅需宿舍住宿文件者；空白期間/房址、年度未填，非所有學生交換申請附件。 · 2 份 · 文件形式待確認 · 簽署：學生（含地點／日期）、Accommodation Provider · 適用性及送件細節待確認開啟已核實官方表格／文件官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。&#10;    &quot;&#10;&#10;Aria snapshot:&#10;- listitem:&#10;  - text: （宿舍／簽證條件）Accommodation Letter of Intent（學生及宿舍方簽／日期） 階段：錄取後 · 適用性：當期適用待確認 · 一般官方incoming／生活／課程頁未明示2027適用年度 · 一般來源未明示2027適用；原文身分/階段/條件及當期母校資格分開。 · 適用條件：僅需宿舍住宿文件者；空白期間/房址、年度未填，非所有學生交換申請附件。 · 2 份 · 文件形式待確認 · 簽署：學生（含地點／日期）、Accommodation Provider · 適用性及送件細節待確認&#10;  - link &quot;開啟已核實官方表格／文件&quot;:&#10;    - /url: https://www.upce.cz/sites/default/files/public/anpi3189/proof_of_accommodation_140338.pdf&#10;  - text: 官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。">page = &lt;Page url='http://127.0.0.1:35175/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=University%20of%20Pardubice%20%E6%8D%B7%E5%85%8B%E5%B7%B4%E7%88%BE%E6%9D%9C%E6%AF%94%E5%BD%A9%E5%A4%A7%E5%AD%B8'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:35175', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-106/web-e2e-data0'))
+width = 1440, source_page = 107, needle = 'Accommodation Letter of Intent'
+url_part = 'proof_of_accommodation_140338.pdf'
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page,needle,url_part", [
+        (80, "Inbound Exchange", "6818985ddb4fe1746442333.pdf"),
+        (107, "Accommodation Letter of Intent", "proof_of_accommodation_140338.pdf"),
+    ])
+    def test_pending_host_forms_render_correct_role_and_stage(page, live_server, width, source_page, needle, url_part):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(at(source_page).school_name))
+        expect(page.locator("#detail-tab-application")).to_be_visible(timeout=30_000)
+        page.locator("#detail-tab-application").click()
+        step = page.locator("details.workflow-step").filter(
+            has=page.locator(".workflow-documents li b").filter(has_text=needle)
+        )
+        step.locator("&gt; summary").click()
+        item = step.locator(".workflow-documents li").filter(has_text=needle)
+        expect(item).to_contain_text("當期適用待確認")
+        assert url_part in item.locator("a").get_attribute("href")
+        if source_page == 107:
+&gt;           expect(item).to_contain_text("有條件")
+E           AssertionError: Locator expected to contain text '有條件'
+E           Actual value: 
+E                 
+E                 （宿舍／簽證條件）Accommodation Letter of Intent（學生及宿舍方簽／日期）階段：錄取後 · 適用性：當期適用待確認 · 一般官方incoming／生活／課程頁未明示2027適用年度 · 一般來源未明示2027適用；原文身分/階段/條件及當期母校資格分開。 · 適用條件：僅需宿舍住宿文件者；空白期間/房址、年度未填，非所有學生交換申請附件。 · 2 份 · 文件形式待確認 · 簽署：學生（含地點／日期）、Accommodation Provider · 適用性及送件細節待確認開啟已核實官方表格／文件官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。
+E                
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("details.workflow-step").filter(has=locator(".workflow-documents li b").filter(has_text="Accommodation Letter of Intent")).locator(".workflow-documents li").filter(has_text="Accommodation Letter of Intent")
+E               14 × locator resolved to &lt;li class="needs-confirmation"&gt;…&lt;/li&gt;
+E                  - unexpected value "
+E                 
+E                 （宿舍／簽證條件）Accommodation Letter of Intent（學生及宿舍方簽／日期）階段：錄取後 · 適用性：當期適用待確認 · 一般官方incoming／生活／課程頁未明示2027適用年度 · 一般來源未明示2027適用；原文身分/階段/條件及當期母校資格分開。 · 適用條件：僅需宿舍住宿文件者；空白期間/房址、年度未填，非所有學生交換申請附件。 · 2 份 · 文件形式待確認 · 簽署：學生（含地點／日期）、Accommodation Provider · 適用性及送件細節待確認開啟已核實官方表格／文件官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。
+E               "
+E           
+E           Aria snapshot:
+E           - listitem:
+E             - text: （宿舍／簽證條件）Accommodation Letter of Intent（學生及宿舍方簽／日期） 階段：錄取後 · 適用性：當期適用待確認 · 一般官方incoming／生活／課程頁未明示2027適用年度 · 一般來源未明示2027適用；原文身分/階段/條件及當期母校資格分開。 · 適用條件：僅需宿舍住宿文件者；空白期間/房址、年度未填，非所有學生交換申請附件。 · 2 份 · 文件形式待確認 · 簽署：學生（含地點／日期）、Accommodation Provider · 適用性及送件細節待確認
+E             - link "開啟已核實官方表格／文件":
+E               - /url: https://www.upce.cz/sites/default/files/public/anpi3189/proof_of_accommodation_140338.pdf
+E             - text: 官方文件可查閱；流程尚未發布，仍須核對適用計畫、年度及簽章。
+
+tests/e2e/test_ccu_nineteenth_pass.py:37: AssertionError</failure></testcase><testcase classname="tests.e2e.test_ccu_nineteenth_pass" name="test_tbu_current_course_restrictions_are_visible[390]" time="6.848" /><testcase classname="tests.e2e.test_ccu_nineteenth_pass" name="test_tbu_current_course_restrictions_are_visible[1440]" time="7.306" /></testsuite></testsuites>

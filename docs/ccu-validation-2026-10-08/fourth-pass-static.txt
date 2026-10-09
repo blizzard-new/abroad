@@ -1,0 +1,344 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/build_ccu_overseas.py:7:1
+   |
+ 5 |   """
+ 6 |
+ 7 | / from __future__ import annotations
+ 8 | |
+ 9 | | from collections import Counter
+10 | | import json
+11 | | from pathlib import Path
+12 | | import sys
+   | |__________^
+13 |
+14 |   ROOT = Path(__file__).resolve().parents[1]
+   |
+help: Organize imports
+   |
+8  |
+9  + import json
+10 + import sys
+11 | from collections import Counter
+   - import json
+12 | from pathlib import Path
+   - import sys
+13 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/build_ccu_research_audit.py:7:1
+   |
+ 5 |   """
+ 6 |
+ 7 | / from __future__ import annotations
+ 8 | | from collections import Counter
+ 9 | | import json
+10 | | from pathlib import Path
+11 | | import re
+12 | | import sys
+   | |__________^
+13 |
+14 |   ROOT = Path(__file__).resolve().parents[1]
+   |
+help: Organize imports
+   |
+7  | from __future__ import annotations
+   - from collections import Counter
+8  +
+9  | import json
+   - from pathlib import Path
+10 | import re
+11 | import sys
+12 + from collections import Counter
+13 + from pathlib import Path
+14 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/build_ccu_research_audit.py:16:1
+   |
+14 |   ROOT = Path(__file__).resolve().parents[1]
+15 |   sys.path.insert(0, str(ROOT / "src"))
+16 | / from exchange_info.ccu_sources import BUNDLE
+17 | | from exchange_info.ccu_overseas import LABELS
+   | |_____________________________________________^
+18 |
+19 |   PATTERNS = {
+   |
+help: Organize imports
+   |
+15 | sys.path.insert(0, str(ROOT / "src"))
+16 + from exchange_info.ccu_overseas import LABELS
+17 | from exchange_info.ccu_sources import BUNDLE
+   - from exchange_info.ccu_overseas import LABELS
+18 |
+   |
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+  --> scripts/build_ccu_research_audit.py:65:12
+   |
+63 |       else:
+64 |           result = f"已取得{source['status']}；尚非本欄已核實依據，語意／年度／身分仍在補查佇列。"
+65 |       return dict(
+   |  ____________^
+66 | |         source_id=sid,
+67 | |         source_url=source["source_url"],
+68 | |         checked_at=timestamp,
+69 | |         timestamp_precision="date" if "T00:00:00" in timestamp else "datetime",
+70 | |         result=result,
+71 | |     )
+   | |_____^
+help: Rewrite as a literal
+
+FURB167 [*] Use of regular expression alias `re.I`
+   --> scripts/build_ccu_research_audit.py:164:66
+    |
+162 |             for source in acquired:
+163 |                 for page, text in enumerate(source.get("text_pages", []), 1):
+164 |                     hits = list(re.finditer(PATTERNS[key], text, re.I))
+    |                                                                  ^^^^
+165 |                     if hits:
+166 |                         candidates.append(
+    |
+help: Replace with `re.IGNORECASE`
+    |
+163 |                 for page, text in enumerate(source.get("text_pages", []), 1):
+    -                     hits = list(re.finditer(PATTERNS[key], text, re.I))
+164 +                     hits = list(re.finditer(PATTERNS[key], text, re.IGNORECASE))
+165 |                     if hits:
+    |
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_research_audit.py:167:29
+    |
+165 |                       if hits:
+166 |                           candidates.append(
+167 | /                             dict(
+168 | |                                 source_id=source["source_id"],
+169 | |                                 field=key,
+170 | |                                 source_page=page,
+171 | |                                 source_status=source.get("content_applicability"),
+172 | |                                 excerpts=[
+173 | |                                     re.sub(
+174 | |                                         r"\s+",
+175 | |                                         " ",
+176 | |                                         text[max(0, h.start() - 90) : h.end() + 320],
+177 | |                                     )
+178 | |                                     for h in hits[:2]
+179 | |                                 ],
+180 | |                             )
+    | |_____________________________^
+181 |                           )
+182 |           row_fields = {}
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_research_audit.py:203:31
+    |
+201 |               )
+202 |               counts[category] += 1
+203 |               row_fields[key] = dict(
+    |  _______________________________^
+204 | |                 status=field["status"],
+205 | |                 category=category,
+206 | |                 note=note,
+207 | |                 acquired_unmapped_candidates=len(relevant),
+208 | |                 source_checks=field["source_checks"],
+209 | |             )
+    | |_____________^
+210 |           inventory.append(
+211 |               dict(
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_research_audit.py:211:13
+    |
+209 |               )
+210 |           inventory.append(
+211 | /             dict(
+212 | |                 ccu_page=row["ccu_page"],
+213 | |                 school_name=row["school_name"],
+214 | |                 candidates=candidates,
+215 | |                 fields_reread_this_pass=[
+216 | |                     changed[(row["ccu_page"], k)]
+217 | |                     for k in LABELS
+218 | |                     if (row["ccu_page"], k) in changed
+219 | |                 ],
+220 | |                 remaining_review_status=(
+221 | |                     "listed_sources_semantically_reviewed_more_sources_pending"
+222 | |                     if row["ccu_page"] in ledger
+223 | |                     else "pending_semantic_reread"
+224 | |                     if candidates
+225 | |                     else "alternative_sources_pending"
+226 | |                 ),
+227 | |                 warning="關鍵字只是候選索引；沒有逐欄確認的段落不能當證據。此佇列持續補查，不視為不可完成。",
+228 | |             )
+    | |_____________^
+229 |           )
+230 |           matrix.append(
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_research_audit.py:231:13
+    |
+229 |           )
+230 |           matrix.append(
+231 | /             dict(
+232 | |                 ccu_page=row["ccu_page"],
+233 | |                 school_name=row["school_name"],
+234 | |                 fields=row_fields,
+235 | |             )
+    | |_____________^
+236 |           )
+237 |       failures = []
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_research_audit.py:249:13
+    |
+247 |           ]
+248 |           failures.append(
+249 | /             dict(
+250 | |                 original=source_check(source, None, set()),
+251 | |                 retry=source_check(retry, None, set()) if retry else None,
+252 | |                 safe_alternatives=[source_check(s, None, set()) for s in alternatives],
+253 | |                 conclusion="原入口重試可讀；內容適用性仍另核對。"
+254 | |                 if retry and retry["status"] != "fetch_failed"
+255 | |                 else "原入口重試仍失敗；可讀替代資料已另逐欄核對，未查完的替代入口繼續補查。",
+256 | |             )
+    | |_____________^
+257 |           )
+258 |       write("overseas-reviewed-fields.json", rows)
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_research_audit.py:262:9
+    |
+260 |       write(
+261 |           "research-gap-audit.json",
+262 | /         dict(
+263 | |             reviewed_at=changes["reviewed_at"],
+264 | |             school_count=len(rows),
+265 | |             field_count=sum(counts.values()),
+266 | |             category_counts=dict(counts),
+267 | |             complete_research_claimed=False,
+268 | |             definition="每欄區分事實狀態與查核工作進度；查核失敗或缺值不等於官方未公告或研究不可能。",
+269 | |             schools=matrix,
+270 | |         ),
+    | |_________^
+271 |       )
+272 |       write(
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_research_audit.py:274:9
+    |
+272 |     write(
+273 |         "source-failure-followup.json",
+274 |         dict(original_failed_source_count=len(failures), sources=failures),
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+275 |     )
+276 |     print(
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_research_audit.py:278:13
+    |
+276 |     print(
+277 |         json.dumps(
+278 |             dict(category_counts=dict(counts), retry_count=len(failures)),
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+279 |             ensure_ascii=False,
+280 |         )
+    |
+help: Rewrite as a literal
+
+F401 [*] `.ccu_sources.ROUND` imported but unused
+  --> src/exchange_info/ccu_overseas.py:10:52
+   |
+ 8 | from functools import lru_cache
+ 9 |
+10 | from .ccu_sources import BUNDLE, CHECKED_AT, HOME, ROUND
+   |                                                    ^^^^^
+11 | from .models import (
+12 |     ApplicationDocumentRequirement,
+   |
+help: Remove unused import: `.ccu_sources.ROUND`
+   |
+9  |
+   - from .ccu_sources import BUNDLE, CHECKED_AT, HOME, ROUND
+10 + from .ccu_sources import BUNDLE, CHECKED_AT, HOME
+11 | from .models import (
+   |
+
+F401 [*] `.models.ExchangeFieldEvidence` imported but unused
+  --> src/exchange_info/ccu_overseas.py:16:5
+   |
+14 |     ApplicationWorkflowSource,
+15 |     DestinationProfile,
+16 |     ExchangeFieldEvidence,
+   |     ^^^^^^^^^^^^^^^^^^^^^
+17 |     PageCategory,
+18 |     PartnerExchangeDetailField,
+   |
+help: Remove unused import: `.models.ExchangeFieldEvidence`
+   |
+15 |     DestinationProfile,
+   -     ExchangeFieldEvidence,
+16 |     PageCategory,
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+   --> tests/test_ccu_fourth_pass.py:129:5
+    |
+128 |   def test_current_fact_rejects_captcha_as_policy_evidence(tmp_path, monkeypatch):
+129 | /     import exchange_info.ccu_overseas as module
+130 | |     import pytest
+    | |_________________^
+131 |
+132 |       rows = json.loads((BUNDLE / "overseas-reviewed-fields.json").read_text())
+    |
+help: Organize imports
+    |
+128 | def test_current_fact_rejects_captcha_as_policy_evidence(tmp_path, monkeypatch):
+    -     import exchange_info.ccu_overseas as module
+129 |     import pytest
+130 |
+131 +     import exchange_info.ccu_overseas as module
+132 +
+133 |     rows = json.loads((BUNDLE / "overseas-reviewed-fields.json").read_text())
+    |
+
+PLW1510 `subprocess.run` without explicit `check` argument
+   --> tests/test_ccu_overseas.py:227:14
+    |
+225 |     assert.equal(window.UniWayCcuDetails.render({school_name:'legacy'},escapeHtml),'');
+226 |     """
+227 |     result = subprocess.run(
+    |              ^^^^^^^^^^^^^^
+228 |         [
+229 |             "node",
+    |
+help: Add explicit `check=False`
+
+PLW1510 `subprocess.run` without explicit `check` argument
+   --> tests/test_ccu_overseas.py:290:14
+    |
+288 |     assert.equal((container.innerHTML.match(/data-ccu-field=/g)||[]).length,8);
+289 |     """
+290 |     result = subprocess.run(
+    |              ^^^^^^^^^^^^^^
+291 |         [
+292 |             "node",
+    |
+help: Add explicit `check=False`
+
+Found 18 errors.
+[*] 7 fixable with the `--fix` option (9 hidden fixes can be enabled with the `--unsafe-fixes` option).

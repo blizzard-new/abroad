@@ -1,0 +1,221 @@
+{
+  "baseline_commit": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "baseline_module_path": "/tmp/ccu-eighteenth-main-dx6ere57/src/exchange_info/__init__.py",
+  "api_paths": 110,
+  "api_paths_identical": true,
+  "full_openapi_snapshot_identical": false,
+  "schema_differences": {
+    "ApplicationDocumentCatalogItem": {
+      "new_component": false,
+      "added_properties": [
+        "applicability_note",
+        "applicability_status",
+        "applicability_year",
+        "condition",
+        "conditional",
+        "official_form_verified",
+        "stage"
+      ],
+      "changed_properties": [],
+      "required_before": [
+        "id",
+        "sequence",
+        "phase",
+        "step_title",
+        "name",
+        "support_status"
+      ],
+      "required_after": [
+        "id",
+        "sequence",
+        "phase",
+        "step_title",
+        "name",
+        "support_status"
+      ]
+    },
+    "ApplicationDocumentRequirement": {
+      "new_component": false,
+      "added_properties": [
+        "applicability_note",
+        "applicability_status",
+        "applicability_year",
+        "condition",
+        "conditional",
+        "official_form_verified",
+        "stage"
+      ],
+      "changed_properties": [],
+      "required_before": [
+        "name"
+      ],
+      "required_after": [
+        "name"
+      ]
+    },
+    "ApplicationPlanEligibilityCheck": {
+      "new_component": false,
+      "added_properties": [],
+      "changed_properties": [
+        "code"
+      ],
+      "required_before": [
+        "code",
+        "status",
+        "title",
+        "detail"
+      ],
+      "required_after": [
+        "code",
+        "status",
+        "title",
+        "detail"
+      ]
+    },
+    "ExchangeFieldEvidence": {
+      "new_component": true,
+      "added_properties": [
+        "academic_year",
+        "application_round",
+        "checked_at",
+        "excerpt",
+        "note",
+        "reference_excerpt",
+        "source_pages",
+        "source_url",
+        "status"
+      ],
+      "changed_properties": [],
+      "required_before": [],
+      "required_after": [
+        "source_url",
+        "checked_at",
+        "status"
+      ]
+    },
+    "ExchangeSourceCheck": {
+      "new_component": true,
+      "added_properties": [
+        "checked_at",
+        "result",
+        "source_id",
+        "source_url",
+        "timestamp_precision"
+      ],
+      "changed_properties": [],
+      "required_before": [],
+      "required_after": [
+        "source_id",
+        "source_url",
+        "checked_at",
+        "result"
+      ]
+    },
+    "PartnerExchangeDetailField": {
+      "new_component": true,
+      "added_properties": [
+        "evidence",
+        "reason",
+        "research_category",
+        "research_note",
+        "source_checks",
+        "status",
+        "value"
+      ],
+      "changed_properties": [],
+      "required_before": [],
+      "required_after": [
+        "status",
+        "reason"
+      ]
+    },
+    "PartnerLanguageCondition": {
+      "new_component": true,
+      "added_properties": [
+        "additional_conditions",
+        "degree_levels",
+        "evidence",
+        "host_faculties",
+        "minimum_score",
+        "requirement_level",
+        "scope_choice_required",
+        "teaching_language",
+        "test",
+        "test_variant",
+        "track"
+      ],
+      "changed_properties": [],
+      "required_before": [],
+      "required_after": [
+        "test",
+        "requirement_level",
+        "evidence"
+      ]
+    },
+    "PartnerUniversity": {
+      "new_component": false,
+      "added_properties": [
+        "academic_year",
+        "application_round",
+        "application_window_status",
+        "checked_at",
+        "course_restrictions",
+        "field_evidence",
+        "housing_info",
+        "language_conditions",
+        "language_requirement",
+        "language_review_note",
+        "nomination_deadline",
+        "partner_application_deadline",
+        "partner_application_prerequisite",
+        "partner_exchange_details",
+        "quota_status",
+        "reference_data",
+        "semester_dates",
+        "source_pages"
+      ],
+      "changed_properties": [
+        "availability_status"
+      ],
+      "required_before": [
+        "program_type",
+        "school_name",
+        "source_url"
+      ],
+      "required_after": [
+        "program_type",
+        "school_name",
+        "source_url"
+      ]
+    },
+    "PersonalApplicationPlanRequest": {
+      "new_component": false,
+      "added_properties": [
+        "current_year"
+      ],
+      "changed_properties": [],
+      "required_before": [
+        "home_school",
+        "preferences"
+      ],
+      "required_after": [
+        "home_school",
+        "preferences"
+      ]
+    },
+    "StudentDashboard": {
+      "new_component": false,
+      "added_properties": [
+        "academic_gpa_minimum",
+        "maximum_preferences"
+      ],
+      "changed_properties": [],
+      "required_before": [],
+      "required_after": []
+    }
+  },
+  "added_components": 4,
+  "existing_schema_required_fields_identical": true,
+  "published_original_school_hashes_identical_to_latest_main": 77,
+  "supersedes_prior_snapshot_claim": "Fresh isolated main import shows six existing schema changes and four new CCU components attached through optional properties. Prior full-snapshot-identical claims must not be reused."
+}

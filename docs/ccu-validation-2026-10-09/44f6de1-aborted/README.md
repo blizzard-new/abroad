@@ -1,0 +1,3 @@
+# 44f6de1 完整回歸失敗／中止browser gate
+
+候選44f6de14c7b92f4f725ee106e423cda9485309ca：468passed、7skipped、3failed；完整原始regression XML/log保留。三項分別是AMU仍預期missing、Node單一命令列參數過長、逐校清單未計補充生活映射。停止僅該候選gate及其descendants，browser沒有完成，不宣稱通過。後續另固定新SHA重跑完整gate；原partial browser證據與停止收據未修改。

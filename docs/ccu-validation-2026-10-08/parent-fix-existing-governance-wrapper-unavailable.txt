@@ -1,0 +1,17 @@
+CONFTEST LOADED!
+
+==================================== ERRORS ====================================
+__________ ERROR collecting tests/test_content_governance_wrapper.py ___________
+tests/test_content_governance_wrapper.py:11: in <module>
+    spec.loader.exec_module(module)
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1253: in get_code
+    ???
+<frozen importlib._bootstrap_external>:1190: in get_data
+    ???
+E   FileNotFoundError: [Errno 2] No such file or directory: '/workspace/abroad-ccu-20261008/tests/__pycache__/test_content_governance.cpython-312-pytest-9.1.1.pyc'
+=========================== short test summary info ============================
+ERROR tests/test_content_governance_wrapper.py - FileNotFoundError: [Errno 2]...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 1.13s

@@ -1,0 +1,835 @@
+{
+  "baseline_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "starting_head": "4a299f5be91f6b2e781ae3054066bd691e3df396",
+  "preserved_existing_source_json": 781,
+  "preserved_original_school_files": 46,
+  "original_paths": [
+    "src/exchange_info/official_data/cgu/application_workflows.jsonl",
+    "src/exchange_info/official_data/cgu/catalog-completeness.json",
+    "src/exchange_info/official_data/cgu/destination_profiles.jsonl",
+    "src/exchange_info/official_data/city_names_zh.json",
+    "src/exchange_info/official_data/destination_tips_zh.json",
+    "src/exchange_info/official_data/experience_digests_zh.json",
+    "src/exchange_info/official_data/fx_reference.json",
+    "src/exchange_info/official_data/life_reference_data.json",
+    "src/exchange_info/official_data/life_translations_zh.json",
+    "src/exchange_info/official_data/ntpu/115-chinese-partners.pdf",
+    "src/exchange_info/official_data/ntpu/115-english-partners.pdf",
+    "src/exchange_info/official_data/ntpu/115-japanese-partners.pdf",
+    "src/exchange_info/official_data/ntpu/116-chinese-partners.pdf",
+    "src/exchange_info/official_data/ntpu/116-english-partners.pdf",
+    "src/exchange_info/official_data/ntpu/116-guidelines-en.pdf",
+    "src/exchange_info/official_data/ntpu/116-guidelines-zh.pdf",
+    "src/exchange_info/official_data/ntpu/116-japanese-partners.pdf",
+    "src/exchange_info/official_data/ntpu/application_workflows.jsonl",
+    "src/exchange_info/official_data/ntpu/catalog-completeness.json",
+    "src/exchange_info/official_data/ntpu/destination_profiles.jsonl",
+    "src/exchange_info/official_data/ntpu/partner_research.jsonl",
+    "src/exchange_info/official_data/ntu/application_workflows.jsonl",
+    "src/exchange_info/official_data/ntu/catalog-completeness.json",
+    "src/exchange_info/official_data/ntu/college_programmes.json",
+    "src/exchange_info/official_data/ntu/destination_profiles.jsonl",
+    "src/exchange_info/official_data/ntu/documents.json",
+    "src/exchange_info/official_data/ntu/exchange_info.json",
+    "src/exchange_info/official_data/ntu/home_rules.json",
+    "src/exchange_info/official_data/ntu/import_provenance.json",
+    "src/exchange_info/official_data/ntu/list_verification.json",
+    "src/exchange_info/official_data/ntu/pages.jsonl",
+    "src/exchange_info/official_data/ntu/partner_research.jsonl",
+    "src/exchange_info/official_data/ntu/partners.jsonl",
+    "src/exchange_info/official_data/ntu/scholarships.json",
+    "src/exchange_info/official_data/ntu/student_dashboard.json",
+    "src/exchange_info/official_data/ntu/student_experience_directory.json",
+    "src/exchange_info/official_data/ntu/verification_status.json",
+    "src/exchange_info/official_data/planning_evidence.json",
+    "src/exchange_info/official_data/public_content_identifiers.json",
+    "src/exchange_info/official_data/public_content_translations_zh.json",
+    "src/exchange_info/official_data/public_phrases_zh.json",
+    "src/exchange_info/official_data/public_school_names.json",
+    "src/exchange_info/official_data/review/source_metadata_research_candidates.json",
+    "src/exchange_info/official_data/review/source_replacement_candidates.json",
+    "src/exchange_info/official_data/school_content_supplements.json",
+    "src/exchange_info/official_data/university_locations.jsonl"
+  ],
+  "source_count": 876,
+  "attachment_count": 112,
+  "attachments": [
+    {
+      "source_id": "p67-hostw1",
+      "file": "partner_forms/p67-student-academic-form.docx",
+      "sha256": "094a959fd378cd15b50371f512034bd1ee632f5925751e23914edc66125fc2bf",
+      "bytes": 150934
+    },
+    {
+      "source_id": "p114-r2-form",
+      "file": "partner_forms/p114-bilateral-application-common-template.doc",
+      "sha256": "961c3146e7569eefeacf15b219cdb9f7f69021d7c16d046bbfd12aa3fedc89bf",
+      "bytes": 44544
+    },
+    {
+      "source_id": "p43-r2-factsheet",
+      "file": "partner_forms/p43-factsheet-with-forms-2026-2027.pdf",
+      "sha256": "7e64de3d496952f23579ca70684ce8d407087e9ba15d014997b6492ca9347bc8",
+      "bytes": 1633722
+    },
+    {
+      "source_id": "p107-r3-learning-agreement",
+      "file": "partner_forms/p107-r3-learning-agreement.docx",
+      "sha256": "9fe2f174618009f181fac4a05cd3579fd23cb2b401737407278c17bdb50b9e43",
+      "bytes": 88673
+    },
+    {
+      "source_id": "p98-r3-accommodation-form",
+      "file": "partner_forms/p98-r3-accommodation-form.pdf",
+      "sha256": "055ad25897d4e79404c3eeb38cb208e26834b3625877ecb4a733217791c1fb6c",
+      "bytes": 118593
+    },
+    {
+      "source_id": "p98-r3-learning-agreement",
+      "file": "partner_forms/p98-r3-learning-agreement.docx",
+      "sha256": "df3d53fb5a8398c12fcd0c2e98e006572c76702f5abb2436098ca5914f4da74d",
+      "bytes": 98847
+    },
+    {
+      "source_id": "p27-r4-full-pdf",
+      "file": "partner_forms/p27-r4-full-pdf.pdf",
+      "sha256": "33eaf841b21f11d757dfbf0974dd3e6940950c664bdf868fd159e671cd8c1f85",
+      "bytes": 2123507
+    },
+    {
+      "source_id": "p104-r5-offer-1",
+      "file": "partner_forms/p104-r5-offer-1.pdf",
+      "sha256": "6568968015d6e9bde89093105fd52277c239479ff83a3715d1741ea54c236390",
+      "bytes": 134907
+    },
+    {
+      "source_id": "p104-r5-offer-2",
+      "file": "partner_forms/p104-r5-offer-2.pdf",
+      "sha256": "112b33d6c50ef5a7c02fbc7053a596a9d0bb634d18d6db8975beb451bf04b993",
+      "bytes": 144158
+    },
+    {
+      "source_id": "p104-r5-offer-3",
+      "file": "partner_forms/p104-r5-offer-3.pdf",
+      "sha256": "7326733e20dcceb25b734a23404541105e5bd0d1a2bdf761e73f27039ed22425",
+      "bytes": 138610
+    },
+    {
+      "source_id": "p104-r5-offer-4",
+      "file": "partner_forms/p104-r5-offer-4.pdf",
+      "sha256": "b2ad7fe097213a336d8199968b4cc3d5b47678351347824d0fc05d35e2775255",
+      "bytes": 128419
+    },
+    {
+      "source_id": "p104-r5-offer-5",
+      "file": "partner_forms/p104-r5-offer-5.pdf",
+      "sha256": "632ecb6f4ad3bf1438cb137a88fe6fcc375be6ec1110a2db87d926b77973b6a7",
+      "bytes": 191615
+    },
+    {
+      "source_id": "p104-r5-offer-6",
+      "file": "partner_forms/p104-r5-offer-6.pdf",
+      "sha256": "66cbf632d0b6b54b2ed6beb3b5b865aa18c87028c5d8e69b273208d8bf2df4b0",
+      "bytes": 142951
+    },
+    {
+      "source_id": "p34-r5-clerkship-form",
+      "file": "partner_forms/p34-r5-clerkship-form.pdf",
+      "sha256": "ffbd7a478e78cf1cb1a7537b48946d85f335173993907fd79fd0d7cdfefd9b2d",
+      "bytes": 475546
+    },
+    {
+      "source_id": "p34-r5-health-form",
+      "file": "partner_forms/p34-r5-health-form.pdf",
+      "sha256": "e90ccfe57052041d226ff9fe5ddd5d90139ae3d8bd95744010a10daaa8a6d08c",
+      "bytes": 236146
+    },
+    {
+      "source_id": "p34-r5-medical-study-plan",
+      "file": "partner_forms/p34-r5-medical-study-plan.docx",
+      "sha256": "5b2e028025de360bc7d2cc86c0163042188f3382ee4a7d110c63c2e19cff645f",
+      "bytes": 21908
+    },
+    {
+      "source_id": "p34-r5-prospectus",
+      "file": "partner_forms/p34-r5-prospectus.pdf",
+      "sha256": "7bf6c7b95fcf1b85344760c0fd58f37f987a2409c9e706e66002b1d0099ace0f",
+      "bytes": 5803895
+    },
+    {
+      "source_id": "p34-r5-reference-form",
+      "file": "partner_forms/p34-r5-reference-form.pdf",
+      "sha256": "70db7ed1c5df529c5fe558f2e4ebfd9cc22b4d469d4de95430610f6fa85a9751",
+      "bytes": 89732
+    },
+    {
+      "source_id": "p34-r5-research-plan",
+      "file": "partner_forms/p34-r5-research-plan.docx",
+      "sha256": "e2557da8f753688dc9be63d62d3db769b9803530de386da3a00ee81dc9b51d24",
+      "bytes": 19333
+    },
+    {
+      "source_id": "p34-r5-specific-categories",
+      "file": "partner_forms/p34-r5-specific-categories.docx",
+      "sha256": "37b012c15ea9ab7ee129b46b681c655e4c277dde73a4746640c8005489a34295",
+      "bytes": 19356
+    },
+    {
+      "source_id": "p34-r5-study-plan",
+      "file": "partner_forms/p34-r5-study-plan.docx",
+      "sha256": "2c455116c13d3621d19345386195aabdbf55d0a7527096562fd50a2c67a86075",
+      "bytes": 27617
+    },
+    {
+      "source_id": "p50-r5-2026-brochure",
+      "file": "partner_forms/p50-r5-2026-brochure.pdf",
+      "sha256": "781d2508203876b40963d8a384ff19a3a2bb8ee6d9a2830f889a9e0e0f69c348",
+      "bytes": 7289656
+    },
+    {
+      "source_id": "p50-r5-fall26-factsheet",
+      "file": "partner_forms/p50-r5-fall26-factsheet.pdf",
+      "sha256": "94c4b170cca8fa6956d2d123bd70296c7d84929cee576c56767e02c76fe72657",
+      "bytes": 216794
+    },
+    {
+      "source_id": "p52-r5-form-docx",
+      "file": "partner_forms/p52-r5-form-docx.docx",
+      "sha256": "e33e3e899a877f1c801e1577895cff41fbb0ab0886e2cd4da62a32be4c73025b",
+      "bytes": 77058
+    },
+    {
+      "source_id": "p52-r5-form-pdf",
+      "file": "partner_forms/p52-r5-form-pdf.pdf",
+      "sha256": "6492119b5ae8e97a6889a990d9f7473eaab0fd745d277f5470f0311670f86f8b",
+      "bytes": 162445
+    },
+    {
+      "source_id": "p85-r5-english-friendly",
+      "file": "partner_forms/p85-r5-english-friendly.pdf",
+      "sha256": "2d2694ec73e5d3de014675cfdb09e3f55e77af6b98d7a431863a47a651823627",
+      "bytes": 258030
+    },
+    {
+      "source_id": "p85-r5-factsheet",
+      "file": "partner_forms/p85-r5-factsheet.pdf",
+      "sha256": "36d39f2bded8e4429d6b45d3ae117f6d120754787cf0cf1495641dd45afc5f07",
+      "bytes": 317301
+    },
+    {
+      "source_id": "p85-r5-humanities-master",
+      "file": "partner_forms/p85-r5-humanities-master.pdf",
+      "sha256": "bf9cd1d4a0e69e20702a3e15b1a8f1bccb19b049ca6ca17dfad9a9156365b463",
+      "bytes": 432861
+    },
+    {
+      "source_id": "p95-r5-erasmus-factsheet",
+      "file": "partner_forms/p95-r5-erasmus-factsheet.pdf",
+      "sha256": "ad29944afca894bce5344d18832b22c4a8934c2b297bef3fb13830406777fee0",
+      "bytes": 156127
+    },
+    {
+      "source_id": "p109-r6-calendar2026-27",
+      "file": "partner_forms/p109-r6-calendar2026-27.pdf",
+      "sha256": "37fb3818d89cff2b1abe28d0070ff9714b52cb842a9e7054d310635f808c61ee",
+      "bytes": 186882
+    },
+    {
+      "source_id": "p109-r6-dorm-contract",
+      "file": "partner_forms/p109-r6-dorm-contract.pdf",
+      "sha256": "637c184c76de9a79ca9cc1692b86cb8f06fc4edfff17a7035cfba87cac822bf1",
+      "bytes": 109231
+    },
+    {
+      "source_id": "p109-r6-dorm-rates",
+      "file": "partner_forms/p109-r6-dorm-rates.pdf",
+      "sha256": "f4046317597e3add9cdb4e6cd014868793f3337bd3f23f1b8f1dc3b2e5bb9698",
+      "bytes": 167871
+    },
+    {
+      "source_id": "p68-r6-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p68-r6-factsheet2027",
+      "file": "partner_forms/p68-r6-factsheet2027.pdf",
+      "sha256": "d63320bdde36018c78774eafdba5e50e682310a299da8eaa4c1939886dcfb355",
+      "bytes": 242969
+    },
+    {
+      "source_id": "p80-r6-calendar-cs-pdf",
+      "file": "partner_forms/p80-r6-calendar-cs-pdf.pdf",
+      "sha256": "cedc3063f550d92da4a12dbe5973d04798d19b4270646ae5cf5137013d3af1d9",
+      "bytes": 836938
+    },
+    {
+      "source_id": "p80-r6-calendar-main-pdf",
+      "file": "partner_forms/p80-r6-calendar-main-pdf.pdf",
+      "sha256": "6bd0a9f0d1244e0bdb1f95bac67035162d4d8d192d034baf9197f0e738df1c08",
+      "bytes": 752639
+    },
+    {
+      "source_id": "p80-r6-calendar-management-pdf",
+      "file": "partner_forms/p80-r6-calendar-management-pdf.pdf",
+      "sha256": "0c9428877f1bf4b889691e88b2617523a79c9166807308e5b1908ed521cdd133",
+      "bytes": 460201
+    },
+    {
+      "source_id": "p80-r6-factsheet",
+      "file": "partner_forms/p80-r6-factsheet.pdf",
+      "sha256": "9f03b5b6857bd0a34f4fbca54b632c187d1de77234611ac27a7911661ac51e3e",
+      "bytes": 825487
+    },
+    {
+      "source_id": "p80-r6-incoming-form",
+      "file": "partner_forms/p80-r6-incoming-form.pdf",
+      "sha256": "aba45c96c04a76c125a6e1370c558898414bad8bcac60f1ba86c472cf66746b2",
+      "bytes": 583466
+    },
+    {
+      "source_id": "p80-r6-predeparture",
+      "file": "partner_forms/p80-r6-predeparture.pdf",
+      "sha256": "94b35054d066dbd1dfffb9102403d672f3b598797a0a1706e3d1c469711f2e3e",
+      "bytes": 491019
+    },
+    {
+      "source_id": "p80-r6-visa",
+      "file": "partner_forms/p80-r6-visa.pdf",
+      "sha256": "6aefb1277c41ee027a682e6ce22844f356afbd92d0a70a9d8fd92bff653c3d6c",
+      "bytes": 122643
+    },
+    {
+      "source_id": "p99-r6-application-compass",
+      "file": "partner_forms/p99-r6-application-compass.pdf",
+      "sha256": "eda9339cf138e4ee5333fe9c4b87b6bdfaa3ae91f4afded1ec244804cfb4f81c",
+      "bytes": 6613351
+    },
+    {
+      "source_id": "p99-r6-english-subject",
+      "file": "partner_forms/p99-r6-english-subject.pdf",
+      "sha256": "fffbc441cf0e3757d63db25e03e36d986195e253a2a08ffe7fd25b7e5ffa4b60",
+      "bytes": 495026
+    },
+    {
+      "source_id": "p99-r6-factsheet",
+      "file": "partner_forms/p99-r6-factsheet.pdf",
+      "sha256": "29103e1ada171c2bee42aa056737e1602594e2b5730d356fafff4989073a8140",
+      "bytes": 161338
+    },
+    {
+      "source_id": "p99-r6-medicine-subject",
+      "file": "partner_forms/p99-r6-medicine-subject.pdf",
+      "sha256": "7f1b41b1d9d591bda9b2b946f30424505762e6e30463853f031c432f60649666",
+      "bytes": 146728
+    },
+    {
+      "source_id": "p99-r6-nomination-list",
+      "file": "partner_forms/p99-r6-nomination-list.xlsx",
+      "sha256": "4c937b6a0cca5bb32ad190bbadecb772bea0eca4b415bb5eb994fee241bf56d1",
+      "bytes": 38970
+    },
+    {
+      "source_id": "p99-r6-senate-calendar",
+      "file": "partner_forms/p99-r6-senate-calendar.pdf",
+      "sha256": "9ee5d1cb886aaa3b0d00f109759e838ebd0cb861d082ee58db79d40f8064bc75",
+      "bytes": 97542
+    },
+    {
+      "source_id": "p99-r6-supervision",
+      "file": "partner_forms/p99-r6-supervision.pdf",
+      "sha256": "1e795ba90cfe0a3e7134d3eb054a3f8670cb43dff23174b7dbb6bebcdd65daf1",
+      "bytes": 367535
+    },
+    {
+      "source_id": "p34-r6-ccu-calendar",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p95-r6-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p95-r6-ccu-guidelines",
+      "file": "2027-spring-guidelines.pdf",
+      "sha256": "46c44b42d4be1a984a5f2140c2214792965ff36a6559253794f2d90839c58c6e",
+      "bytes": 490752
+    },
+    {
+      "source_id": "p32-r7-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p32-r7-cefr-reference",
+      "file": "partner_forms/p32-r7-cefr-reference.pdf",
+      "sha256": "2642222c8a346ffb11cbff09791ea75935dd457bc24085df2e37cf3c17e108e3",
+      "bytes": 205455
+    },
+    {
+      "source_id": "p32-r7-guide",
+      "file": "partner_forms/p32-r7-guide.pdf",
+      "sha256": "67644af35560cfc637a4bb084f62e7eddfd5667830c8b290f872c05d874f03b8",
+      "bytes": 1112543
+    },
+    {
+      "source_id": "p32-r7-health-form",
+      "file": "partner_forms/p32-r7-health-form.pdf",
+      "sha256": "7119d07b8eabc25867043d3e97bf0cf030923d37b85dcc38c5ecb29ab3276b0d",
+      "bytes": 127507
+    },
+    {
+      "source_id": "p32-r7-jp-evaluation-form",
+      "file": "partner_forms/p32-r7-jp-evaluation-form.docx",
+      "sha256": "5c07939a0e9f3f67044b1dfe11216dad9b2130a240803fb14484c116d018cf2d",
+      "bytes": 83006
+    },
+    {
+      "source_id": "p32-r7-plan-form",
+      "file": "partner_forms/p32-r7-plan-form.docx",
+      "sha256": "fc5eb3502502c0651becc4244e94b1b5d6e712b1031dba2093e16e3e068d7d00",
+      "bytes": 16635
+    },
+    {
+      "source_id": "p32-r7-recommendation-form",
+      "file": "partner_forms/p32-r7-recommendation-form.pdf",
+      "sha256": "eb7efbb79b22c4f7e6ca8d096776856b60e7e75864d7f7c2d3dadadf0e43ce40",
+      "bytes": 1907879
+    },
+    {
+      "source_id": "p32-r7-selfassessment-form",
+      "file": "partner_forms/p32-r7-selfassessment-form.docx",
+      "sha256": "4df761fc6d17e63530fd2ff1341af93e95d3998d6cc317d3c9853553a42edb32",
+      "bytes": 25092
+    },
+    {
+      "source_id": "p32-r7-spot-instructions",
+      "file": "partner_forms/p32-r7-spot-instructions.pdf",
+      "sha256": "17fdc8d4064bb5fbb0cb19a9e4772869e1530f2c160b07a6e4cd2d19ad367ed6",
+      "bytes": 2122102
+    },
+    {
+      "source_id": "p35-r7-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p37-r7-bedding-selection",
+      "file": "partner_forms/p37-r7-bedding-selection.pdf",
+      "sha256": "9737b8db426538b69dd37c0ec0dc52431ecd6ed5d6b7c8f4f62a9f80351a2f03",
+      "bytes": 317344
+    },
+    {
+      "source_id": "p37-r7-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p37-r7-consent-form",
+      "file": "partner_forms/p37-r7-consent-form.docx",
+      "sha256": "579b76adc7592be8c789c7d6ea6ba628ca791ecfcdf7242f50d8d0156835e284",
+      "bytes": 22790
+    },
+    {
+      "source_id": "p37-r7-dorm-fees-xlsx",
+      "file": "partner_forms/p37-r7-dorm-fees-xlsx.xlsx",
+      "sha256": "cec0f9575f7f3829b8e2231f7abaa6faacf5018d50b3e3e30d7e85292dc2ccc2",
+      "bytes": 31577
+    },
+    {
+      "source_id": "p37-r7-enrollment-form",
+      "file": "partner_forms/p37-r7-enrollment-form.docx",
+      "sha256": "4f6b47d32c778aac43ae4a6c6df026cd46c70b60104ee8db7f83f28c6b1eeb8e",
+      "bytes": 15022
+    },
+    {
+      "source_id": "p37-r7-factsheet",
+      "file": "partner_forms/p37-r7-factsheet.pdf",
+      "sha256": "f0110a0bad2f8c73d3e8cc7eff4c822df7d4f4491dd165113b9194f8ca93032b",
+      "bytes": 193495
+    },
+    {
+      "source_id": "p37-r7-guidelines",
+      "file": "partner_forms/p37-r7-guidelines.pdf",
+      "sha256": "5280ea9f9c21dcba6387576e54bb7271a206562539a4b42a2bc6a00b66be698b",
+      "bytes": 355640
+    },
+    {
+      "source_id": "p37-r7-recommendation-form",
+      "file": "partner_forms/p37-r7-recommendation-form.docx",
+      "sha256": "e32787f86f785492cfcd70aa8e8d9506493e6a25e897aeb224c309ed0e199593",
+      "bytes": 16599
+    },
+    {
+      "source_id": "p37-r7-sasrs-factsheet",
+      "file": "partner_forms/p37-r7-sasrs-factsheet.pdf",
+      "sha256": "8d40fa0189a9f3ab207c3ce8da66e3e630c130b8063de61f9f120cc4ddca8c5e",
+      "bytes": 210810
+    },
+    {
+      "source_id": "p37-r7-sasrs-faq",
+      "file": "partner_forms/p37-r7-sasrs-faq.pdf",
+      "sha256": "8a55d1e485255f8f00516e67e1286d89540d76fc7afa02fc3975bda27503ccb1",
+      "bytes": 523812
+    },
+    {
+      "source_id": "p37-r7-studyplan-form",
+      "file": "partner_forms/p37-r7-studyplan-form.xls",
+      "sha256": "40e263edadd2c0a882d9943912b37f59646a6b8ec0bedd8cc8452eb6e4a3881b",
+      "bytes": 33792
+    },
+    {
+      "source_id": "p39-r7-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p39-r7-guidelines",
+      "file": "partner_forms/p39-r7-guidelines.pdf",
+      "sha256": "7a8a335259f7ee12920267915c1a5ff9d20053a76ac4cc2b23c52131339db439",
+      "bytes": 1423469
+    },
+    {
+      "source_id": "p39-r7-parttime-enpdf",
+      "file": "partner_forms/p39-r7-parttime-enpdf.pdf",
+      "sha256": "d9e7c2ae21e18d0b80e1f0a97fb56d926103fcff327f8e8e60515ea4e27cb8db",
+      "bytes": 349675
+    },
+    {
+      "source_id": "p42-r7-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p54-r7-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p105-r8-calendar-cyprus",
+      "file": "partner_forms/p105-r8-calendar-cyprus.pdf",
+      "sha256": "327dfcaa32cd5650aa6214464fd9a45bb03e55d85b5bce6fb8f0cff109739904",
+      "bytes": 171531
+    },
+    {
+      "source_id": "p105-r8-calendar-graduate",
+      "file": "partner_forms/p105-r8-calendar-graduate.pdf",
+      "sha256": "4ce2233164ba8c3b342a5d5dd2b43f45d936c5d3c6a3f3b5f3b2dd647cb31d7d",
+      "bytes": 302324
+    },
+    {
+      "source_id": "p105-r8-calendar-undergraduate",
+      "file": "partner_forms/p105-r8-calendar-undergraduate.pdf",
+      "sha256": "9ec3402ed4ba91c077d1468c103e107df8037f1b29284d49d3869a0e1ba677b1",
+      "bytes": 171404
+    },
+    {
+      "source_id": "p105-r8-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p105-r8-flyer",
+      "file": "partner_forms/p105-r8-flyer.pdf",
+      "sha256": "8e4e0362c4c55381e3f35be203414f49dd14a92a44852b86f7db58f375938990",
+      "bytes": 26784552
+    },
+    {
+      "source_id": "p16-r8-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p23-r8-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p23-r8-health-form",
+      "file": "partner_forms/p23-r8-health-form.docx",
+      "sha256": "353243221040dfddbc753cfc353a39648244a8a96351f9c76a4c93d9fcec356e",
+      "bytes": 308645
+    },
+    {
+      "source_id": "p61-r8-calendar2026",
+      "file": "partner_forms/p61-r8-calendar2026.pdf",
+      "sha256": "99380a551948f05b10fb7830b5cfc346f71256dab1b3d2ae82c468f4a1daeee6",
+      "bytes": 223554
+    },
+    {
+      "source_id": "p61-r8-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p77-r8-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p77-r8-form-docx",
+      "file": "partner_forms/p77-r8-form-docx.docx",
+      "sha256": "c243faa25470970ccc4216769d0e9db4b4407fd6d5c869113f4e1d63d4d05faa",
+      "bytes": 127576
+    },
+    {
+      "source_id": "p87-r8-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p87-r8-coordinators",
+      "file": "partner_forms/p87-r8-coordinators.xlsx",
+      "sha256": "decf2a4fa84a7a713a89269b0946ecbb91b4536b5312b18188d07d3a9345690f",
+      "bytes": 111532
+    },
+    {
+      "source_id": "p87-r8-housing-guide",
+      "file": "partner_forms/p87-r8-housing-guide.pdf",
+      "sha256": "73ad77343849c2693af51cf60aa3b3ed438042e9b0bf4d154648f446c8840417",
+      "bytes": 1901919
+    },
+    {
+      "source_id": "p87-r8-learning-contract-pdf",
+      "file": "partner_forms/p87-r8-learning-contract-pdf.pdf",
+      "sha256": "054fbd5c6e55c700576a418d5dab631048dbd6a1f83af4b626532d25124d171b",
+      "bytes": 245304
+    },
+    {
+      "source_id": "p0-profile-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p47-r9-english-form",
+      "file": "partner_forms/p47-r9-english-form.pdf",
+      "sha256": "fc0a6763b245f141e26ba335be6c2a430b2f9b1fe62a56993e42020159c14a12",
+      "bytes": 104355
+    },
+    {
+      "source_id": "p47-r9-factsheet2027",
+      "file": "partner_forms/p47-r9-factsheet2027.pdf",
+      "sha256": "e9a182a98cdb644afe239c13245ad58fde4238b4d18616dfca5b27fe40dda11a",
+      "bytes": 168737
+    },
+    {
+      "source_id": "p47-r9-korean-form",
+      "file": "partner_forms/p47-r9-korean-form.pdf",
+      "sha256": "97fb64afe9836e955d8da3fb9fcee96d4f0ef8758adc4119149dee5c4d372c5d",
+      "bytes": 103949
+    },
+    {
+      "source_id": "p48-r9-factsheet2026",
+      "file": "partner_forms/p48-r9-factsheet2026.pdf",
+      "sha256": "7720163df8ecb301804057da8bf2581feb697ba633ebc86261775e172c7d7b5f",
+      "bytes": 394719
+    },
+    {
+      "source_id": "p48-r14-factsheet2027",
+      "file": "partner_forms/p48-r14-factsheet2027.pdf",
+      "sha256": "3f449cac09bbbc094f2c4970320b5a41489bec8c281100813025361d350f1aac",
+      "bytes": 136410
+    },
+    {
+      "source_id": "p27-r14-guide2025",
+      "file": "partner_forms/p27-r14-guide2025.pdf",
+      "sha256": "77f03e817d0a72a2cb21d1ee08190ae3b88ee028574629d6d9b11ec02065fb97",
+      "bytes": 18115344
+    },
+    {
+      "source_id": "p67-r16-old-news-public-api",
+      "file": "public_responses/p67-r16-old-news-public-api.json",
+      "sha256": "fe2267782dc9737cfd10bbf773090c1a3e969202f06ab1d178660edfa92d8859",
+      "bytes": 4079
+    },
+    {
+      "source_id": "p67-r16-current-news-public-api",
+      "file": "public_responses/p67-r16-current-news-public-api.json",
+      "sha256": "c91ee845891beceb538c33bc2ed746aafd17531e72ea61c94935daa4d270c257",
+      "bytes": 4649
+    },
+    {
+      "source_id": "p67-r16-student-form2026",
+      "file": "partner_forms/p67-r16-student-form2026.docx",
+      "sha256": "b33ed6617b4e92ac7b0fed37ccf47a3432a6ed5088b97be198473717d4338f15",
+      "bytes": 584025
+    },
+    {
+      "source_id": "p67-r16-factsheet-updated2027",
+      "file": "partner_forms/p67-r16-factsheet-updated2027.pdf",
+      "sha256": "db2ecc8f5b4375f04af492797d0dcce3ca084df9a5586bcf9cdc4733559d6dc4",
+      "bytes": 389977
+    },
+    {
+      "source_id": "p67-r16-nomination-template",
+      "file": "partner_forms/p67-r16-nomination-template.docx",
+      "sha256": "7dbe14dd7de9cfac977bc729f3e004cac0919b1a0fe86eaaee46d0ddf8657e86",
+      "bytes": 329321
+    },
+    {
+      "source_id": "p67-r16-march-factsheet-reference",
+      "file": "partner_forms/p67-r16-march-factsheet-reference.pdf",
+      "sha256": "23a8bc4d35e06f7e182134ba149612f375f046d6d27a614c1851f32c07738dc7",
+      "bytes": 406960
+    },
+    {
+      "source_id": "p98-r17-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p102-r17-ccu-list",
+      "file": "2027-spring-partners.pdf",
+      "sha256": "f785fc9695885676e6ab7bde3be1d00f07524e8c64532dd5bff29e698a2c4c52",
+      "bytes": 6230434
+    },
+    {
+      "source_id": "p109-r17-discovery-3",
+      "file": "partner_forms/p109-r17-discovery-3.pdf",
+      "sha256": "64fb4f534529655146140b4b507c28a9859086d8f5922dcf278a24051aee9aae",
+      "bytes": 131918
+    },
+    {
+      "source_id": "p109-r17-discovery-4",
+      "file": "partner_forms/p109-r17-discovery-4.pdf",
+      "sha256": "1b54aede9a9fd68eca198147a7791aa77997f52d71b1a2c7a8ad8c72e7b6470c",
+      "bytes": 11613
+    },
+    {
+      "source_id": "p35-r18-application-guide",
+      "file": "partner_forms/p35-r18-application-guide.pdf",
+      "sha256": "fd15f910061ea9a56750342ac561c1ccda13000873ed8354b25b90aa2820309a",
+      "bytes": 296273
+    },
+    {
+      "source_id": "p101-r18-exchange-checklist",
+      "file": "partner_forms/p101-r18-exchange-checklist.pdf",
+      "sha256": "312b13ad896bdfb9de35c4fdbd91f8f03337f692556fdddec44dbc4077c3a076",
+      "bytes": 131060
+    },
+    {
+      "source_id": "p103-r18-timeline",
+      "file": "partner_forms/p103-r18-timeline.pdf",
+      "sha256": "4246bedde52d97c56308caf1ba33b7245d0a99d1d99bf4d52d041927232bc3f4",
+      "bytes": 135491
+    },
+    {
+      "source_id": "p114-r18-study-la",
+      "file": "partner_forms/p114-r18-study-la.docx",
+      "sha256": "00e5bb3ad71809d02db9b1686dccb35c59df7bf747bf58b54da0b3ac3359bfec",
+      "bytes": 65118
+    },
+    {
+      "source_id": "p85-r19-cd9ffae29e",
+      "file": "partner_forms/p85-r19-cd9ffae29e.pdf",
+      "sha256": "52d31cf0f2e2f276d1884cc43c4204a98502d323ffea08bd6bddd038ab155be1",
+      "bytes": 2366508
+    },
+    {
+      "source_id": "p107-r19-b6d932a287",
+      "file": "partner_forms/p107-r19-b6d932a287.pdf",
+      "sha256": "d3d5f8de207e1315d5fe19d71b56af1708c89ed90408765f7bacdb34fe8ddc71",
+      "bytes": 197720
+    },
+    {
+      "source_id": "p109-r19-f72a13e688",
+      "file": "partner_forms/p109-r19-f72a13e688.pdf",
+      "sha256": "be90381b34ababcb77029944bf0ffc408760db14de9c313a0f9ac84dd47fd86a",
+      "bytes": 555729
+    },
+    {
+      "source_id": "p107-r19-factsheet2027",
+      "file": "partner_forms/p107-r19-factsheet2027.pdf",
+      "sha256": "8cab594f505d2a802c26161bea2bd82fa66f2dcec3b8ac1890d6043d71487be1",
+      "bytes": 194623
+    },
+    {
+      "source_id": "p108-r19-manual-preview",
+      "file": "partner_forms/p108-r19-manual-preview.pdf",
+      "sha256": "b5e339ea6da61b6d7b54ae64cc4050cbf720e225928e6ca79a3c5fab715aa188",
+      "bytes": 1375437
+    },
+    {
+      "source_id": "p101-r20-1e8ffcbb39",
+      "file": "partner_forms/p101-r20-1e8ffcbb39.pdf",
+      "sha256": "0efcb89a073e2a570ed2d9469ac33a54429ba7d9f7725deafb9b176abe5a339e",
+      "bytes": 10812667
+    },
+    {
+      "source_id": "p34-r20-61c3975b51",
+      "file": "partner_forms/p34-r20-61c3975b51.pdf",
+      "sha256": "74a6f1f8c0b288bd689a63b12d77930eccdb8fb5941a886de7726ae31034f027",
+      "bytes": 1944311
+    },
+    {
+      "source_id": "p103-r20-d88f6bc025",
+      "file": "partner_forms/p103-r20-d88f6bc025.pdf",
+      "sha256": "f5c4aea749c9108f9d8c2409c508a3ac2792714b29b80326209e0e02dcf02ac9",
+      "bytes": 6467549
+    },
+    {
+      "source_id": "p109-r20-74e505f129",
+      "file": "partner_forms/p109-r20-74e505f129.pdf",
+      "sha256": "5ea3ec1c2791c927aad04c0059bdf618fdf2d318cb0a9c0ae8dddc49208d63eb",
+      "bytes": 65646
+    },
+    {
+      "source_id": "p47-r20-af16c19647",
+      "file": "partner_forms/p47-r20-af16c19647.pdf",
+      "sha256": "d124815551e6e12a2a1748c1d11e22769aabe824c570475d6504f60b86ea7440",
+      "bytes": 110849
+    },
+    {
+      "source_id": "p47-r20-7a942ad4ae",
+      "file": "partner_forms/p47-r20-7a942ad4ae.pdf",
+      "sha256": "fdaf31442b06ae8c61ed009c6667786547a1fa5ac949a41fdb1c4d9247a361d4",
+      "bytes": 1570365
+    },
+    {
+      "source_id": "p47-r20-f69aefa9fc",
+      "file": "partner_forms/p47-r20-f69aefa9fc.pdf",
+      "sha256": "16dacdd93e600026e1b135eceb15cf63e3f943f945d0533265e8e8e46bfc06b9",
+      "bytes": 110534
+    },
+    {
+      "source_id": "p103-r20-9c1db278ea",
+      "file": "partner_forms/p103-r20-9c1db278ea.pdf",
+      "sha256": "cc76c9c4c787e5ca4251b94ee5dbd61128e277aa37e8abaada5b5353b8530d8d",
+      "bytes": 182996
+    },
+    {
+      "source_id": "p107-r20-9345a87518",
+      "file": "partner_forms/p107-r20-9345a87518.pdf",
+      "sha256": "ee3b6f32d4afc0f8d4051d072a17827b603b62ba8de90994576a8d326f08fae0",
+      "bytes": 3842977
+    },
+    {
+      "source_id": "p86-r20-3cc6979c0a",
+      "file": "partner_forms/p86-r20-3cc6979c0a.pdf",
+      "sha256": "760f9d064fc7ce9e85cd4ea1cd26d97fd7b0b7d82a576af56511211bc1390166",
+      "bytes": 1794411
+    }
+  ],
+  "source_text_sha256_valid": 861,
+  "source_text_hash_unavailable": 15,
+  "host_attachment_count": 108
+}

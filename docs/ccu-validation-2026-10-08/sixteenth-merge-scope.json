@@ -1,0 +1,37 @@
+{
+  "repository": "blizzard-new/abroad",
+  "branch": "data/ccu-exchange-20261008",
+  "integrated_main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "previous_pushed_commit": "b97c167ec5a33d75a9788f995574b6e9f8c0e07f",
+  "shared_code_paths_since_main": [
+    "src/exchange_info/advisor.py",
+    "src/exchange_info/api.py",
+    "src/exchange_info/application_documents.py",
+    "src/exchange_info/application_rules.py",
+    "src/exchange_info/application_workflow_collector.py",
+    "src/exchange_info/cli.py",
+    "src/exchange_info/content_governance.py",
+    "src/exchange_info/models.py",
+    "src/exchange_info/qualification_scopes.py",
+    "src/exchange_info/static/app.js",
+    "src/exchange_info/static/index.html",
+    "src/exchange_info/storage.py",
+    "src/exchange_info/university_registry.py",
+    "src/exchange_info/workflow_structuring.py"
+  ],
+  "shared_generated_api_contract": "docs/api/openapi.json",
+  "this_round_shared_changes": [
+    "src/exchange_info/models.py",
+    "src/exchange_info/application_documents.py",
+    "src/exchange_info/static/app.js",
+    "src/exchange_info/static/index.html",
+    "docs/api/openapi.json"
+  ],
+  "this_round_purpose": "neutral second_submission enum and per-item label; retain CNU/HUFS after_application; school-specific data regenerated with scoped bank authentication and latest HCMUT versions",
+  "changed_existing_school_bundle_files": [],
+  "api_routes_changed": false,
+  "api_required_fields_changed": false,
+  "merge_to_main": false,
+  "deployed": false,
+  "complete_host_policy_or_parity_claim": false
+}

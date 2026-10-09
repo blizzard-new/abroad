@@ -1,0 +1,269 @@
+CONFTEST LOADED!
+........................................................................ [ 28%]
+................F.F............F..........................sss........... [ 56%]
+.....s........F......................................................... [ 84%]
+..........s..............................                                [100%]
+=================================== FAILURES ===================================
+____ test_api_plan_and_advisor_return_language_confirmation[95-other-None] _____
+
+page = 95, test = 'other', score = None
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-46/test_api_plan_and_advisor_retu8')
+
+    @pytest.mark.parametrize(
+        "page,test,score",
+        [
+            (45, "ielts", 6.0),
+            (45, "ielts", 7.0),
+            (58, "ielts", 5.0),
+            (58, "ielts", 7.0),
+            (74, "toefl", 85),
+            (74, "toefl", 100),
+            (95, "ielts", 5.0),
+            (95, "ielts", 7.0),
+            (95, "other", None),
+        ],
+    )
+    def test_api_plan_and_advisor_return_language_confirmation(page, test, score, tmp_path):
+        client = client_for(tmp_path)
+        partner = at(page)
+        common = {
+            "college": "工學院",
+            "department": "資訊工程學系",
+            "degree_level": "大學部",
+            "academic_score": 85,
+            "academic_gpa": 3.5,
+            "language_test": test,
+            "language_score": score,
+        }
+        response = client.post(
+            "/application-plan/evaluate",
+            json=dict(
+                home_school=HOME,
+                **common,
+                preferences=[{"rank": 1, "school_name": partner.school_name}],
+            ),
+        )
+        assert response.status_code == 200, response.text
+        checks = {check["code"]: check for check in response.json()["choices"][0]["checks"]}
+        assert checks["language_score"]["status"] == "needs_confirmation"
+>       assert checks["language_score"]["detail"] == partner.language_review_note
+E       AssertionError: assert '尚未選擇可自動比對的語言...所屬系所確認可接受的證明。' == 'AMU2026/27交換...符合；未判定個人簽證資格。'
+E
+E         - AMU2026/27交換附件第2、10頁確認接收端英語B2證書或母校Rector／Dean／Coordinator確認函為替代路徑，獨立證照僅recommended以備使領館可能要求；不是雙邊short-term必交IELTS。中正2027春季逐校表第95頁列IELTS5.5／TOEIC785／iBT72等B2對照，母校簡章第1頁依合作校語言規定、第3頁仍要求兩年內有效檢定證明。母校是否接受確認函替代檢定未核，數字比較及適用路徑均needs_confirmation，低分但有函也不能直接判不符或自動判符合；未判定個人簽證資格。
+E         + 尚未選擇可自動比對的語言測驗，請向國立中正大學國際事務處／所屬系所確認可接受的證明。
+
+tests/test_ccu_semantics.py:199: AssertionError
+_______ test_frontend_matches_structured_language_and_document_statuses ________
+
+    def test_frontend_matches_structured_language_and_document_statuses():
+        cases = [
+            {"partner": at(p).model_dump(mode="json"), "test": t, "score": s}
+            for p, t, s in [
+                (45, "ielts", 6),
+                (58, "ielts", 5),
+                (74, "toefl", 85),
+                (50, "ielts", 5),
+                (103, "ielts", 6),
+                (65, "toefl", 70),
+                (86, "ielts", 6.5),
+                (89, "ielts", 7),
+                (95, "ielts", 5),
+                (95, "ielts", 7),
+                (95, "other", None),
+            ]
+        ]
+        script = r"""
+        const assert=require('node:assert/strict'),fs=require('node:fs');
+        const window={};
+        eval(fs.readFileSync(process.argv[2],'utf8'));
+        const source=fs.readFileSync(process.argv[1],'utf8');
+        const payload=JSON.parse(fs.readFileSync(0,'utf8'));
+        const cases=payload.cases;
+        const state={dashboard:{academic_gpa_minimum:3,academic_score_minimum:70}};
+        const homeSelectionRules=()=>state.dashboard.selection_rules || {};
+        const homeAcademicPass=profile=>profile.academicScore>=70 && profile.academicGpa>=3;
+        const partnerSummaryPoints=(item)=>item.student_summary_zh.eligibility_points;
+        const homeCollegeValue=value=>value,normalize=value=>String(value||''),academicMinimum=()=>70;
+        const collegeMatches=()=>true,degreeMatches=()=>true,coverageForSchool=()=>null,destinationProfileForSchool=()=>null;
+        const escapeHtml=value=>String(value),highlightHtml=value=>String(value);
+        for(const name of ['languageThresholdFromPartner','partnerAvailabilityMeta','partnerMatch','renderPartnerFieldEvidence']) {
+          eval(source.match(new RegExp('^function '+name+'\\([^]*?^}','m'))[0]);
+        }
+        for(const test of cases) {
+          assert.equal(languageThresholdFromPartner(test.partner,test.test,'大學部'),null);
+          const profile={college:'工學院',degree:'大學部',academicGpa:3.5,academicScore:85,languageTest:test.test,languageScore:test.score};
+          const match=partnerMatch(test.partner,profile);
+          assert.equal(match.tone,'review');
+          assert.ok(!match.risks.some(text=>text.includes('語言分數未達')));
+          assert.ok(match.risks.includes(test.partner.language_review_note));
+        }
+        const direct=payload.direct;
+        assert.equal(languageThresholdFromPartner(direct,'ielts','大學部'),6.0);
+        const legacy={source_url:'https://example.edu',student_summary_zh:{eligibility_points:['IELTS 6.0']},program_options:[{},{}]};
+        assert.equal(languageThresholdFromPartner(legacy,'ielts'),6);
+        for(const item of payload.document_cases) {
+          const html=renderPartnerFieldEvidence(item);
+          assert.ok(html.includes('母校甄選／提名前提（非文件清單）'));
+          assert.ok(!html.includes('合作校申請文件要求（未聲稱完整） · 當期已核實'));
+        }
+        """
+        result = subprocess.run(
+            [
+                "node",
+                "-e",
+                script,
+                str(Path("src/exchange_info/static/app.js").resolve()),
+                str(Path("src/exchange_info/static/ccu-language-conditions.js").resolve()),
+            ],
+            input=json.dumps(
+                {
+                    "cases": cases,
+                    "direct": at(67).model_dump(mode="json"),
+                    "document_cases": [
+                        at(p).model_dump(mode="json")
+                        for p in (26, 32, 33, 39, 71, 103, 104, 74)
+                    ],
+                },
+                ensure_ascii=False,
+            ),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: node:internal/assert/utils:77
+E             throw err;
+E             ^
+E
+E         AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+E
+E           assert.ok(match.risks.includes(test.partner.language_review_note))
+E
+E             at [eval]:24:14
+E             at runScriptInThisContext (node:internal/vm:219:10)
+E             at node:internal/process/execution:451:12
+E             at [eval]-wrapper:6:24
+E             at runScriptInContext (node:internal/process/execution:449:60)
+E             at evalFunction (node:internal/process/execution:283:30)
+E             at evalTypeScript (node:internal/process/execution:295:3)
+E             at node:internal/main/eval_string:71:3 {
+E           generatedMessage: true,
+E           code: 'ERR_ASSERTION',
+E           actual: false,
+E           expected: true,
+E           operator: '==',
+E           diff: 'simple'
+E         }
+E
+E         Node.js v24.19.0
+E
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['node', '-e', "\n    const assert=require('node:assert/strict'),fs=require('node:fs');\n    con...: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n").returncode
+
+tests/test_ccu_semantics.py:308: AssertionError
+____ test_parent_corrections_reach_language_calendar_and_destination_guides ____
+
+    def test_parent_corrections_reach_language_calendar_and_destination_guides():
+        amu = at(95)
+        assert amu.field_evidence["language_requirement"].status == "needs_confirmation"
+        assert {c.test for c in amu.language_conditions} == {"ielts", "toeic", "toefl", "other"}
+        assert all(c.requirement_level == "needs_confirmation" for c in amu.language_conditions)
+        assert all(c.scope_choice_required and c.additional_conditions for c in amu.language_conditions)
+        letter = next(c for c in amu.language_conditions if c.test == "other")
+        assert letter.minimum_score is None
+        assert letter.evidence.source_pages == [10]
+        assert "Rector／Dean／Coordinator" in amu.language_review_note
+        assert "兩年內有效檢定" in amu.language_review_note
+        assert "recommended" in amu.language_review_note
+        assert amu.language_review_note in amu.student_summary_zh.eligibility_points
+        language = amu.partner_exchange_details["language"]
+>       assert {e.source_id for e in language.evidence}.issuperset({"p95-mirror", "p95-r6-ccu-list", "p95-r6-ccu-guidelines"})
+                ^^^^^^^^^^^
+
+tests/test_ccu_sixth_pass.py:215:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = ExchangeFieldEvidence(source_url='https://drive.google.com/file/d/1yNKAkhw_H-ODdoeqhAWIKtRjHbfE6KaO/view?usp=drive_lin...good to have the independent', reference_excerpt=None, note='鏡像標Winter2026；官方雙邊入口區分免學費交換及付費freemover，未核實Spring2027簡章。')
+item = 'source_id'
+
+    def __getattr__(self, item: str) -> Any:
+        private_attributes = object.__getattribute__(self, '__private_attributes__')
+        if item in private_attributes:
+            attribute = private_attributes[item]
+            if hasattr(attribute, '__get__'):
+                return attribute.__get__(self, type(self))  # type: ignore
+
+            try:
+                # Note: self.__pydantic_private__ cannot be None if self.__private_attributes__ has items
+                return self.__pydantic_private__[item]  # type: ignore
+            except KeyError as exc:
+                raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}') from exc
+        else:
+            # `__pydantic_extra__` can fail to be set if the model is not yet fully initialized.
+            # See `BaseModel.__repr_args__` for more details
+            try:
+                pydantic_extra = object.__getattribute__(self, '__pydantic_extra__')
+            except AttributeError:
+                pydantic_extra = None
+
+            if pydantic_extra and item in pydantic_extra:
+                return pydantic_extra[item]
+            else:
+                if hasattr(self.__class__, item):
+                    return super().__getattribute__(item)  # Raises AttributeError if appropriate
+                else:
+                    # this is the current error
+>                   raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+E                   AttributeError: 'ExchangeFieldEvidence' object has no attribute 'source_id'. Did you mean: 'source_url'?
+
+.venv/lib/python3.12/site-packages/pydantic/main.py:1042: AttributeError
+_ test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f098cf3bf20>
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-46/test_runtime_includes_tracked_0')
+
+    def test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data(
+        monkeypatch,
+        tmp_path,
+    ) -> None:
+        research = storage.read_jsonl(
+            storage.BUNDLED_NTPU_DIR / "partner_research.jsonl",
+            PartnerResearchRecord,
+        )[0]
+        partner = PartnerUniversity(
+            program_type="交換學生（英語組）",
+            country=research.country,
+            school_name=research.school_name,
+            source_url="https://new.ntpu.edu.tw/oia/sister-schools",
+        )
+        monkeypatch.setattr(
+            "exchange_info.api.fetch_ntpu_partner_universities",
+            lambda: [partner],
+        )
+
+        client = TestClient(create_app(tmp_path))
+        coverage = client.get(
+            "/coverage",
+            params={"school": "國立臺北大學"},
+        ).json()
+        destination = client.get(
+            "/destination-profile",
+            params={
+                "school": partner.school_name,
+                "home_school": "國立臺北大學",
+            },
+        ).json()
+
+        assert coverage["total_partner_schools"] == 1
+        assert coverage["official_website_count"] == 1
+        assert coverage["partners"][0]["official_website_url"] == research.official_website
+>       assert coverage["destination_profile_count"] == 1
+E       assert 0 == 1
+
+tests/test_ntpu_bundled_data.py:110: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_semantics.py::test_api_plan_and_advisor_return_language_confirmation[95-other-None]
+FAILED tests/test_ccu_semantics.py::test_frontend_matches_structured_language_and_document_statuses
+FAILED tests/test_ccu_sixth_pass.py::test_parent_corrections_reach_language_calendar_and_destination_guides
+FAILED tests/test_ntpu_bundled_data.py::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data
+4 failed, 248 passed, 5 skipped in 62.11s (0:01:02)

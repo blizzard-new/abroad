@@ -11,9 +11,11 @@ from .school_identity import same_school
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
 from .task_documents import document_link_for_step
 from .qualification_scopes import (
-    college_scope_needs_confirmation, degree_scope_needs_confirmation,
+    coupled_academic_scope_matches,
     college_scope_matches as _partner_scope_matches,
-    degree_scope_matches as _partner_degree_matches,
+    partner_degree_scope_matches,
+    partner_scope_needs_confirmation,
+    resolved_degree_level,
 )
 
 from .models import (
@@ -156,6 +158,10 @@ def build_personal_application_plan(
     """Create a deterministic plan from structured rules without AI inference."""
 
     partner_by_name = {_normalize(partner.school_name): partner for partner in partners}
+    from .university_registry import resolve_university
+    home = resolve_university(request.home_school)
+    if home and home.id == "ccu" and len(request.preferences) > 3:
+        raise ValueError("中正大學2027春季校級交換最多3個志願（簡章第1頁及申請表第1頁）。")
     workflow_rows = list(workflows)
     contact_unit = f"{request.home_school}國際事務處／所屬系所"
     choices: list[PersonalApplicationPlanChoice] = []
@@ -359,11 +365,29 @@ def _eligibility_checks(
 ) -> list[ApplicationPlanEligibilityCheck]:
     checks: list[ApplicationPlanEligibilityCheck] = []
     partner_source = partner.source_url
+    from .university_registry import resolve_university
+    home = resolve_university(request.home_school)
+    if home and home.id == "ccu":
+        from .ccu_sources import GUIDELINES_URL
+        gpa = request.academic_gpa
+        checks.append(_check("academic_gpa", "needs_confirmation" if gpa is None else "pass" if gpa >= 3 else "fail",
+            "中正歷年GPA門檻", "尚未提供GPA；歷年GPA至少3.0且平均至少70分，兩項均須符合。" if gpa is None else f"歷年GPA {gpa:g}，門檻3.0（簡章第1頁）。",
+            source_url=GUIDELINES_URL, contact_unit=contact_unit if gpa is None or gpa < 3 else None))
+        checks.append(_check("home_year", "needs_confirmation", "中正在校年級與修業期間",
+            "須在中正就讀滿兩學期，大二至大四上／碩博士二年級以上；大四專案須承辦確認（簡章第1頁、申請表第1頁）。",
+            source_url=GUIDELINES_URL, contact_unit=contact_unit))
+        if partner.application_window_status == "closed":
+            checks.append(_check("home_deadline", "needs_confirmation", "校內申請期限",
+                "2027春季校內收件已截止；僅已有申請／提名者可依通知繼續，不代表仍接受新申請。",
+                source_url=partner.field_evidence["application_deadline"].source_url, contact_unit=contact_unit))
+        if request.academic_year and request.academic_year != partner.academic_year or request.application_round and not request.application_round.startswith(partner.application_round or "2027春季"):
+            checks.append(_check("source_cycle", "needs_confirmation", "資料適用年度與梯次",
+                "已核實資料僅適用115學年度第二學期／2027春季，所選新版尚未核實。",source_url=partner_source,contact_unit=contact_unit))
     if partner.availability_status != "open":
         checks.append(
             _check(
                 "availability",
-                "needs_confirmation" if is_ntu(request.home_school) and partner.quota is None else "fail",
+                "needs_confirmation" if partner.availability_status == "needs_confirmation" or (is_ntu(request.home_school) and partner.quota is None) else "fail",
                 "當期名額",
                 partner.availability_note
                 or "這筆資料目前未列入當期公開開放名單。",
@@ -377,7 +401,7 @@ def _eligibility_checks(
                 "availability",
                 "pass",
                 "當期名額",
-                "目前列在公開可申請名單中。",
+                "當期名額已列；校內收件已截止。" if partner.application_window_status == "closed" else "目前列在公開可申請名單中。",
                 source_url=partner_source,
             )
         )
@@ -397,7 +421,7 @@ def _eligibility_checks(
                 contact_unit=contact_unit,
             )
         )
-    elif college_scope_needs_confirmation(partner.colleges):
+    elif partner_scope_needs_confirmation(partner, "colleges"):
         checks.append(
             _check(
                 "college",
@@ -443,7 +467,7 @@ def _eligibility_checks(
                 contact_unit=contact_unit,
             )
         )
-    elif degree_scope_needs_confirmation(partner.degree_levels):
+    elif partner_scope_needs_confirmation(partner, "degree_levels"):
         checks.append(
             _check(
                 "degree_level",
@@ -455,19 +479,25 @@ def _eligibility_checks(
             )
         )
     else:
-        degree_matches = _partner_degree_matches(
-            partner.degree_levels, request.degree_level
+        degree = resolved_degree_level(request.degree_level, request.current_year)
+        degree_matches = partner_degree_scope_matches(partner, request.college or request.department, degree)
+        coupled_match = coupled_academic_scope_matches(
+            partner, request.college or request.department, degree
         )
+        degree_detail = (
+            f"你的學制符合公開範圍：{partner.degree_levels}。"
+            if degree_matches else f"你的學制不在公開範圍：{partner.degree_levels}。"
+        )
+        if coupled_match is not None:
+            degree_detail = f"你的學院／學制配對{'符合' if coupled_match else '不符'}公開範圍：{request.college or request.department}／{degree}；{partner.degree_levels}。"
+        if degree_matches is None:
+            degree_detail = f"研究所尚未區分碩博士，不能判定符合學院／學制範圍：{partner.degree_levels}；請設定碩士班或博士班。"
         checks.append(
             _check(
                 "degree_level",
-                "pass" if degree_matches else "fail",
+                "needs_confirmation" if degree_matches is None else "pass" if degree_matches else "fail",
                 "學制",
-                (
-                    f"你的學制符合公開範圍：{partner.degree_levels}。"
-                    if degree_matches
-                    else f"你的學制不在公開範圍：{partner.degree_levels}。"
-                ),
+                degree_detail,
                 source_url=partner_source,
                 contact_unit=None if degree_matches else contact_unit,
             )
@@ -514,7 +544,7 @@ def _eligibility_checks(
             )
         )
 
-    language_threshold = _partner_language_threshold(partner, request.language_test)
+    language_threshold = _partner_language_threshold(partner, request.language_test, request.degree_level)
     if is_ntu(request.home_school):
         # NTU's partner requirements in this bundle are not cycle-confirmed.
         language_threshold = None
@@ -556,7 +586,7 @@ def _eligibility_checks(
                 "language_score",
                 "needs_confirmation",
                 "語言門檻",
-                f"公開資料無法可靠解析 {language_label} 最低分，請向{contact_unit}確認。",
+                (partner.language_review_note or f"公開資料無法可靠解析 {language_label} 最低分，請向{contact_unit}確認。"),
                 source_url=partner_source,
                 contact_unit=contact_unit,
             )
@@ -874,7 +904,12 @@ def _check(
 def _partner_language_threshold(
     partner: PartnerUniversity,
     language_test: str | None,
+    degree_level: str | None = None,
 ) -> float | None:
+    from .ccu_language import assess_ccu_language, is_ccu_partner
+
+    if is_ccu_partner(partner):
+        return assess_ccu_language(partner, language_test, degree_level).threshold
     if not language_test or language_test == "other":
         return None
     text = " ".join(

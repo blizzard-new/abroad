@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="10" time="102.555" timestamp="2026-10-08T13:15:32.040877+00:00" hostname="e5e438874453"><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_real_browser_and_both_apis_keep_pending_scope_neutral[104-390]" time="14.519" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_real_browser_and_both_apis_keep_pending_scope_neutral[104-1440]" time="9.784" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_real_browser_and_both_apis_keep_pending_scope_neutral[37-390]" time="9.523" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_real_browser_and_both_apis_keep_pending_scope_neutral[37-1440]" time="10.597" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_actual_template_clicks_and_document_center_stages[390]" time="8.508" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_actual_template_clicks_and_document_center_stages[1440]" time="9.486" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_seoultech_new_housing_costs_and_second_submission_are_visible[390]" time="9.292" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_seoultech_new_housing_costs_and_second_submission_are_visible[1440]" time="10.194" /><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_hcmut_current_deadlines_and_nomination_template_click[390]" time="9.725"><failure message="AssertionError: Locator expected to have count '1'&#10;Actual value: 2 &#10;Call log:&#10;  - Expect &quot;to_have_count&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;details.workflow-step&quot;).filter(has_text=&quot;母校提名&quot;)&#10;    5 × locator resolved to 0 elements&#10;      - unexpected value &quot;0&quot;&#10;    8 × locator resolved to 2 elements&#10;      - unexpected value &quot;2&quot;">page = &lt;Page url='http://127.0.0.1:51533/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Ho%20Chi%20Min...%E5%BF%97%E6%98%8E%E5%B8%82%E5%9C%8B%E5%AE%B6%E5%A4%A7%E5%AD%B8%E6%89%80%E5%B1%AC%E7%99%BE%E7%A7%91%E5%A4%A7%E5%AD%B8'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:51533', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-85/web-e2e-data0'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_hcmut_current_deadlines_and_nomination_template_click(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        partner = at(67)
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+        section = page.locator("#detail-overview .ccu-receiving-school-details")
+        expect(section).to_be_visible(timeout=30_000)
+        for key, value in [("nomination_deadline", "2026-09-30"), ("application_deadline", "2026-10-15")]:
+            field = section.locator(f'[data-ccu-field="{key}"]')
+            field.locator("&gt; summary").click()
+            expect(field).to_contain_text(value)
+        page.locator("#detail-tab-application").click()
+        step = page.locator("details.workflow-step").filter(has_text="母校提名")
+&gt;       expect(step).to_have_count(1)
+E       AssertionError: Locator expected to have count '1'
+E       Actual value: 2 
+E       Call log:
+E         - Expect "to_have_count" with timeout 5000ms
+E         - waiting for locator("details.workflow-step").filter(has_text="母校提名")
+E           5 × locator resolved to 0 elements
+E             - unexpected value "0"
+E           8 × locator resolved to 2 elements
+E             - unexpected value "2"
+
+tests/e2e/test_ccu_scope_documents.py:277: AssertionError</failure></testcase><testcase classname="tests.e2e.test_ccu_scope_documents" name="test_hcmut_current_deadlines_and_nomination_template_click[1440]" time="10.822"><failure message="AssertionError: Locator expected to have count '1'&#10;Actual value: 2 &#10;Call log:&#10;  - Expect &quot;to_have_count&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;details.workflow-step&quot;).filter(has_text=&quot;母校提名&quot;)&#10;    3 × locator resolved to 0 elements&#10;      - unexpected value &quot;0&quot;&#10;    10 × locator resolved to 2 elements&#10;       - unexpected value &quot;2&quot;">page = &lt;Page url='http://127.0.0.1:51533/?school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Ho%20Chi%20Min...%E5%BF%97%E6%98%8E%E5%B8%82%E5%9C%8B%E5%AE%B6%E5%A4%A7%E5%AD%B8%E6%89%80%E5%B1%AC%E7%99%BE%E7%A7%91%E5%A4%A7%E5%AD%B8'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:51533', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-85/web-e2e-data0'))
+width = 1440
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_hcmut_current_deadlines_and_nomination_template_click(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.add_init_script("localStorage.setItem('exchange-guide-home-school','國立中正大學')")
+        partner = at(67)
+        page.goto(live_server.base_url + "/?school=" + quote(HOME) + "#school=" + quote(partner.school_name))
+        section = page.locator("#detail-overview .ccu-receiving-school-details")
+        expect(section).to_be_visible(timeout=30_000)
+        for key, value in [("nomination_deadline", "2026-09-30"), ("application_deadline", "2026-10-15")]:
+            field = section.locator(f'[data-ccu-field="{key}"]')
+            field.locator("&gt; summary").click()
+            expect(field).to_contain_text(value)
+        page.locator("#detail-tab-application").click()
+        step = page.locator("details.workflow-step").filter(has_text="母校提名")
+&gt;       expect(step).to_have_count(1)
+E       AssertionError: Locator expected to have count '1'
+E       Actual value: 2 
+E       Call log:
+E         - Expect "to_have_count" with timeout 5000ms
+E         - waiting for locator("details.workflow-step").filter(has_text="母校提名")
+E           3 × locator resolved to 0 elements
+E             - unexpected value "0"
+E           10 × locator resolved to 2 elements
+E              - unexpected value "2"
+
+tests/e2e/test_ccu_scope_documents.py:277: AssertionError</failure></testcase></testsuite></testsuites>

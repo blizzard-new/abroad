@@ -1,0 +1,3140 @@
+{
+  "baseline_commit": "b97c167ec5a33d75a9788f995574b6e9f8c0e07f",
+  "identical_existing_diagnostics": true,
+  "counts": {
+    "current": 51,
+    "baseline": 51
+  },
+  "diagnostics": {
+    "current": [
+      {
+        "cell": null,
+        "code": "I001",
+        "end_location": {
+          "column": 49,
+          "row": 62
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from __future__ import annotations\n\nimport base64\nimport hashlib\nimport hmac\nimport html\nimport io\nimport json\nimport os\nimport re\nimport shutil\nimport tempfile\nfrom dataclasses import dataclass\nfrom datetime import datetime, timezone\nfrom pathlib import Path\nfrom typing import Any, Iterable, Literal\n\nfrom docx import Document\nfrom docx.shared import Inches\nfrom pypdf import PdfReader, PdfWriter\nfrom reportlab.lib import colors\nfrom reportlab.lib.enums import TA_CENTER, TA_LEFT\nfrom reportlab.lib.pagesizes import A4\nfrom reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet\nfrom reportlab.lib.units import mm\nfrom reportlab.lib.utils import ImageReader\nfrom reportlab.pdfbase import pdfmetrics\nfrom reportlab.pdfbase.cidfonts import UnicodeCIDFont\nfrom reportlab.platypus import (\n    Image,\n    KeepTogether,\n    PageBreak,\n    Paragraph,\n    SimpleDocTemplate,\n    Spacer,\n    Table,\n    TableStyle,\n)\n\nfrom .application_rules import select_application_workflow\nfrom .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT\nfrom .models import (\n    ApplicationCenterContext,\n    ApplicationCopyType,\n    ApplicationDocumentCatalog,\n    ApplicationDocumentCatalogItem,\n    ApplicationDocumentSelection,\n    ApplicationDocumentTemplate,\n    ApplicationFieldPreviewItem,\n    ApplicationFieldType,\n    ApplicationFormField,\n    ApplicationPacketAttachmentItem,\n    ApplicationPacketManifest,\n    ApplicationPacketManifestItem,\n    ApplicationPacketRequest,\n    ApplicationRuleContext,\n    ApplicationSupportStatus,\n    ApplicationWorkflowReviewStatus,\n    UniversityApplicationWorkflow,\n)\nfrom .ntu_student_view import NTU_GUIDELINES_URL\nfrom .university_registry import NTPU, NTU, require_university\n\n",
+              "end_location": {
+                "column": 1,
+                "row": 65
+              },
+              "location": {
+                "column": 1,
+                "row": 1
+              }
+            }
+          ],
+          "message": "Organize imports"
+        },
+        "location": {
+          "column": 1,
+          "row": 1
+        },
+        "message": "Import block is un-sorted or un-formatted",
+        "name": "unsorted-imports",
+        "noqa_row": 1,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unsorted-imports"
+      },
+      {
+        "cell": null,
+        "code": "UP035",
+        "end_location": {
+          "column": 42,
+          "row": 16
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from typing import Any, Literal\nfrom collections.abc import Iterable",
+              "end_location": {
+                "column": 42,
+                "row": 16
+              },
+              "location": {
+                "column": 1,
+                "row": 16
+              }
+            }
+          ],
+          "message": "Import from `collections.abc`"
+        },
+        "location": {
+          "column": 1,
+          "row": 16
+        },
+        "message": "Import from `collections.abc` instead: `Iterable`",
+        "name": "deprecated-import",
+        "noqa_row": 16,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/deprecated-import"
+      },
+      {
+        "cell": null,
+        "code": "F401",
+        "end_location": {
+          "column": 24,
+          "row": 42
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from .models import (\n    ApplicationCenterContext,\n    ApplicationDocumentCatalog,\n    ApplicationDocumentCatalogItem,\n    ApplicationDocumentSelection,\n    ApplicationDocumentTemplate,\n    ApplicationFieldPreviewItem,\n    ApplicationFieldType,\n    ApplicationFormField,\n    ApplicationPacketManifest,\n    ApplicationPacketAttachmentItem,\n    ApplicationPacketManifestItem,\n    ApplicationPacketRequest,\n    ApplicationRuleContext,\n    ApplicationSupportStatus,\n    ApplicationWorkflowReviewStatus,\n    UniversityApplicationWorkflow,\n)",
+              "end_location": {
+                "column": 2,
+                "row": 58
+              },
+              "location": {
+                "column": 1,
+                "row": 40
+              }
+            }
+          ],
+          "message": "Remove unused import: `.models.ApplicationCopyType`"
+        },
+        "location": {
+          "column": 5,
+          "row": 42
+        },
+        "message": "`.models.ApplicationCopyType` imported but unused",
+        "name": "unused-import",
+        "noqa_row": 42,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unused-import"
+      },
+      {
+        "cell": null,
+        "code": "UP017",
+        "end_location": {
+          "column": 62,
+          "row": 72
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from datetime import datetime, timezone, UTC",
+              "end_location": {
+                "column": 40,
+                "row": 14
+              },
+              "location": {
+                "column": 1,
+                "row": 14
+              }
+            },
+            {
+              "content": "UTC",
+              "end_location": {
+                "column": 62,
+                "row": 72
+              },
+              "location": {
+                "column": 50,
+                "row": 72
+              }
+            }
+          ],
+          "message": "Convert to `datetime.UTC` alias"
+        },
+        "location": {
+          "column": 50,
+          "row": 72
+        },
+        "message": "Use `datetime.UTC` alias",
+        "name": "datetime-timezone-utc",
+        "noqa_row": 72,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/datetime-timezone-utc"
+      },
+      {
+        "cell": null,
+        "code": "UP017",
+        "end_location": {
+          "column": 67,
+          "row": 73
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from datetime import datetime, timezone, UTC",
+              "end_location": {
+                "column": 40,
+                "row": 14
+              },
+              "location": {
+                "column": 1,
+                "row": 14
+              }
+            },
+            {
+              "content": "UTC",
+              "end_location": {
+                "column": 67,
+                "row": 73
+              },
+              "location": {
+                "column": 55,
+                "row": 73
+              }
+            }
+          ],
+          "message": "Convert to `datetime.UTC` alias"
+        },
+        "location": {
+          "column": 55,
+          "row": 73
+        },
+        "message": "Use `datetime.UTC` alias",
+        "name": "datetime-timezone-utc",
+        "noqa_row": 73,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/datetime-timezone-utc"
+      },
+      {
+        "cell": null,
+        "code": "UP017",
+        "end_location": {
+          "column": 66,
+          "row": 74
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from datetime import datetime, timezone, UTC",
+              "end_location": {
+                "column": 40,
+                "row": 14
+              },
+              "location": {
+                "column": 1,
+                "row": 14
+              }
+            },
+            {
+              "content": "UTC",
+              "end_location": {
+                "column": 66,
+                "row": 74
+              },
+              "location": {
+                "column": 54,
+                "row": 74
+              }
+            }
+          ],
+          "message": "Convert to `datetime.UTC` alias"
+        },
+        "location": {
+          "column": 54,
+          "row": 74
+        },
+        "message": "Use `datetime.UTC` alias",
+        "name": "datetime-timezone-utc",
+        "noqa_row": 74,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/datetime-timezone-utc"
+      },
+      {
+        "cell": null,
+        "code": "UP017",
+        "end_location": {
+          "column": 73,
+          "row": 90
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from datetime import datetime, timezone, UTC",
+              "end_location": {
+                "column": 40,
+                "row": 14
+              },
+              "location": {
+                "column": 1,
+                "row": 14
+              }
+            },
+            {
+              "content": "UTC",
+              "end_location": {
+                "column": 73,
+                "row": 90
+              },
+              "location": {
+                "column": 61,
+                "row": 90
+              }
+            }
+          ],
+          "message": "Convert to `datetime.UTC` alias"
+        },
+        "location": {
+          "column": 61,
+          "row": 90
+        },
+        "message": "Use `datetime.UTC` alias",
+        "name": "datetime-timezone-utc",
+        "noqa_row": 90,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/datetime-timezone-utc"
+      },
+      {
+        "cell": null,
+        "code": "DTZ007",
+        "end_location": {
+          "column": 66,
+          "row": 858
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 29,
+          "row": 858
+        },
+        "message": "Naive datetime constructed using `datetime.datetime.strptime()` without %z",
+        "name": "call-datetime-strptime-without-zone",
+        "noqa_row": 858,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/call-datetime-strptime-without-zone"
+      },
+      {
+        "cell": null,
+        "code": "DTZ001",
+        "end_location": {
+          "column": 44,
+          "row": 859
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 24,
+          "row": 859
+        },
+        "message": "`datetime.datetime()` called without a `tzinfo` argument",
+        "name": "call-datetime-without-tzinfo",
+        "noqa_row": 859,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/call-datetime-without-tzinfo"
+      },
+      {
+        "cell": null,
+        "code": "UP017",
+        "end_location": {
+          "column": 93,
+          "row": 859
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from datetime import datetime, timezone, UTC",
+              "end_location": {
+                "column": 40,
+                "row": 14
+              },
+              "location": {
+                "column": 1,
+                "row": 14
+              }
+            },
+            {
+              "content": "UTC",
+              "end_location": {
+                "column": 93,
+                "row": 859
+              },
+              "location": {
+                "column": 81,
+                "row": 859
+              }
+            }
+          ],
+          "message": "Convert to `datetime.UTC` alias"
+        },
+        "location": {
+          "column": 81,
+          "row": 859
+        },
+        "message": "Use `datetime.UTC` alias",
+        "name": "datetime-timezone-utc",
+        "noqa_row": 859,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/datetime-timezone-utc"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 21,
+          "row": 1060
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 12,
+          "row": 1060
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1060,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 21,
+          "row": 1111
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 12,
+          "row": 1111
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1111,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "S112",
+        "end_location": {
+          "column": 21,
+          "row": 1388
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 9,
+          "row": 1387
+        },
+        "message": "`try`-`except`-`continue` detected, consider logging the exception",
+        "name": "try-except-continue",
+        "noqa_row": 1387,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/try-except-continue"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 25,
+          "row": 1387
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 16,
+          "row": 1387
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1387,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 21,
+          "row": 1609
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 12,
+          "row": 1609
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1609,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "DTZ007",
+        "end_location": {
+          "column": 52,
+          "row": 1718
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 16,
+          "row": 1718
+        },
+        "message": "Naive datetime constructed using `datetime.datetime.strptime()` without %z",
+        "name": "call-datetime-strptime-without-zone",
+        "noqa_row": 1718,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/call-datetime-strptime-without-zone"
+      },
+      {
+        "cell": null,
+        "code": "DTZ007",
+        "end_location": {
+          "column": 51,
+          "row": 1719
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 17,
+          "row": 1719
+        },
+        "message": "Naive datetime constructed using `datetime.datetime.strptime()` without %z",
+        "name": "call-datetime-strptime-without-zone",
+        "noqa_row": 1719,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/call-datetime-strptime-without-zone"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 21,
+          "row": 1721
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 12,
+          "row": 1721
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1721,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "S112",
+        "end_location": {
+          "column": 25,
+          "row": 1812
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 13,
+          "row": 1811
+        },
+        "message": "`try`-`except`-`continue` detected, consider logging the exception",
+        "name": "try-except-continue",
+        "noqa_row": 1811,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/try-except-continue"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 29,
+          "row": 1811
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 20,
+          "row": 1811
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1811,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 21,
+          "row": 1835
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 12,
+          "row": 1835
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1835,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "S110",
+        "end_location": {
+          "column": 17,
+          "row": 1839
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 9,
+          "row": 1838
+        },
+        "message": "`try`-`except`-`pass` detected, consider logging the exception",
+        "name": "try-except-pass",
+        "noqa_row": 1838,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/try-except-pass"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 25,
+          "row": 1838
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 16,
+          "row": 1838
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1838,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "S110",
+        "end_location": {
+          "column": 17,
+          "row": 1843
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 9,
+          "row": 1842
+        },
+        "message": "`try`-`except`-`pass` detected, consider logging the exception",
+        "name": "try-except-pass",
+        "noqa_row": 1842,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/try-except-pass"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 25,
+          "row": 1842
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 16,
+          "row": 1842
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1842,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "I001",
+        "end_location": {
+          "column": 42,
+          "row": 16
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from __future__ import annotations\n\nimport ipaddress\nfrom datetime import date, datetime, timezone\nfrom datetime import date as PlanningDate\nfrom enum import Enum\nfrom typing import Any, Literal\nfrom urllib.parse import urlsplit\nfrom uuid import uuid4\n\nfrom pydantic import (\n    BaseModel,\n    ConfigDict,\n    Field,\n    field_validator,\n    model_serializer,\n    model_validator,\n)\n\nfrom .discovery import DiscoveryWorkspace\nfrom .source_url_policy import canonical_source_url_identity\nfrom .university_locations import UniversityLocation\n\n\n",
+              "end_location": {
+                "column": 1,
+                "row": 19
+              },
+              "location": {
+                "column": 1,
+                "row": 1
+              }
+            }
+          ],
+          "message": "Organize imports"
+        },
+        "location": {
+          "column": 1,
+          "row": 1
+        },
+        "message": "Import block is un-sorted or un-formatted",
+        "name": "unsorted-imports",
+        "noqa_row": 1,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unsorted-imports"
+      },
+      {
+        "cell": null,
+        "code": "UP017",
+        "end_location": {
+          "column": 37,
+          "row": 20
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from datetime import date, datetime, timezone, UTC",
+              "end_location": {
+                "column": 46,
+                "row": 6
+              },
+              "location": {
+                "column": 1,
+                "row": 6
+              }
+            },
+            {
+              "content": "UTC",
+              "end_location": {
+                "column": 37,
+                "row": 20
+              },
+              "location": {
+                "column": 25,
+                "row": 20
+              }
+            }
+          ],
+          "message": "Convert to `datetime.UTC` alias"
+        },
+        "location": {
+          "column": 25,
+          "row": 20
+        },
+        "message": "Use `datetime.UTC` alias",
+        "name": "datetime-timezone-utc",
+        "noqa_row": 20,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/datetime-timezone-utc"
+      },
+      {
+        "cell": null,
+        "code": "SIM102",
+        "end_location": {
+          "column": 91,
+          "row": 500
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": null,
+        "location": {
+          "column": 9,
+          "row": 499
+        },
+        "message": "Use a single `if` statement instead of nested `if` statements",
+        "name": "collapsible-if",
+        "noqa_row": 499,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/collapsible-if"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 74,
+          "row": 775
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "DestinationProfileReviewEvent",
+              "end_location": {
+                "column": 74,
+                "row": 775
+              },
+              "location": {
+                "column": 43,
+                "row": 775
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 43,
+          "row": 775
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 775,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 80,
+          "row": 841
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "DestinationProfilePromotionEvent",
+              "end_location": {
+                "column": 80,
+                "row": 841
+              },
+              "location": {
+                "column": 46,
+                "row": 841
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 46,
+          "row": 841
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 841,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 78,
+          "row": 895
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "DestinationProfileRollbackEvent",
+              "end_location": {
+                "column": 78,
+                "row": 895
+              },
+              "location": {
+                "column": 45,
+                "row": 895
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 45,
+          "row": 895
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 895,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 71,
+          "row": 1591
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowReviewApproval",
+              "end_location": {
+                "column": 71,
+                "row": 1591
+              },
+              "location": {
+                "column": 36,
+                "row": 1591
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 36,
+          "row": 1591
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1591,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 65,
+          "row": 1628
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowRevisionEdit",
+              "end_location": {
+                "column": 65,
+                "row": 1628
+              },
+              "location": {
+                "column": 32,
+                "row": 1628
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 32,
+          "row": 1628
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1628,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 87,
+          "row": 1658
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowSourceApplicabilityUpdate",
+              "end_location": {
+                "column": 87,
+                "row": 1658
+              },
+              "location": {
+                "column": 41,
+                "row": 1658
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 41,
+          "row": 1658
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1658,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 81,
+          "row": 1688
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowApplicabilityUpdateRequest",
+              "end_location": {
+                "column": 81,
+                "row": 1688
+              },
+              "location": {
+                "column": 34,
+                "row": 1688
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 34,
+          "row": 1688
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1688,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 78,
+          "row": 1731
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowRevision",
+              "end_location": {
+                "column": 78,
+                "row": 1731
+              },
+              "location": {
+                "column": 49,
+                "row": 1731
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 49,
+          "row": 1731
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1731,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 81,
+          "row": 1756
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowRollbackRequest",
+              "end_location": {
+                "column": 81,
+                "row": 1756
+              },
+              "location": {
+                "column": 45,
+                "row": 1756
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 45,
+          "row": 1756
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1756,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 68,
+          "row": 1834
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowApprovalRequest",
+              "end_location": {
+                "column": 68,
+                "row": 1834
+              },
+              "location": {
+                "column": 32,
+                "row": 1834
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 32,
+          "row": 1834
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1834,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 84,
+          "row": 1987
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowSourceMetadataResearchCandidate | None",
+              "end_location": {
+                "column": 84,
+                "row": 1987
+              },
+              "location": {
+                "column": 25,
+                "row": 1987
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 25,
+          "row": 1987
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1987,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 84,
+          "row": 2010
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowSourceMetadataResearchCandidate | None",
+              "end_location": {
+                "column": 84,
+                "row": 2010
+              },
+              "location": {
+                "column": 25,
+                "row": 2010
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 25,
+          "row": 2010
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 2010,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 80,
+          "row": 2033
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowSourceResearchLead",
+              "end_location": {
+                "column": 80,
+                "row": 2033
+              },
+              "location": {
+                "column": 41,
+                "row": 2033
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 41,
+          "row": 2033
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 2033,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 62,
+          "row": 2082
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowSourceMetadataResearchCandidate",
+              "end_location": {
+                "column": 62,
+                "row": 2082
+              },
+              "location": {
+                "column": 10,
+                "row": 2082
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 10,
+          "row": 2082
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 2082,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 67,
+          "row": 2183
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowSourceReplacementCandidateDefinition",
+              "end_location": {
+                "column": 67,
+                "row": 2183
+              },
+              "location": {
+                "column": 10,
+                "row": 2183
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 10,
+          "row": 2183
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 2183,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 63,
+          "row": 2979
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "CommunityPostCreate",
+              "end_location": {
+                "column": 63,
+                "row": 2979
+              },
+              "location": {
+                "column": 42,
+                "row": 2979
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 42,
+          "row": 2979
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 2979,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 74,
+          "row": 3251
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "AccountNotificationPreferences",
+              "end_location": {
+                "column": 74,
+                "row": 3251
+              },
+              "location": {
+                "column": 42,
+                "row": 3251
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 42,
+          "row": 3251
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 3251,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 58,
+          "row": 3533
+        },
+        "filename": "/workspace/abroad-ccu-20261008/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "PlanningAvailability",
+              "end_location": {
+                "column": 58,
+                "row": 3533
+              },
+              "location": {
+                "column": 36,
+                "row": 3533
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 36,
+          "row": 3533
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 3533,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "I001",
+        "end_location": {
+          "column": 45,
+          "row": 16
+        },
+        "filename": "/workspace/abroad-ccu-20261008/tests/test_ccu_second_pass.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "import hashlib\nimport importlib.util\nimport json\nimport subprocess\nfrom pathlib import Path\n\nimport pytest\nimport requests\nfrom pypdf import PdfReader\n\nfrom exchange_info.ccu_sources import BUNDLE\nfrom exchange_info.ccu_student_view import fetch_ccu_partner_universities\nfrom exchange_info.models import UniversityApplicationWorkflow\nfrom exchange_info.storage import read_jsonl\n\n\n",
+              "end_location": {
+                "column": 1,
+                "row": 19
+              },
+              "location": {
+                "column": 1,
+                "row": 3
+              }
+            }
+          ],
+          "message": "Organize imports"
+        },
+        "location": {
+          "column": 1,
+          "row": 3
+        },
+        "message": "Import block is un-sorted or un-formatted",
+        "name": "unsorted-imports",
+        "noqa_row": 3,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unsorted-imports"
+      },
+      {
+        "cell": null,
+        "code": "F401",
+        "end_location": {
+          "column": 25,
+          "row": 6
+        },
+        "filename": "/workspace/abroad-ccu-20261008/tests/test_ccu_second_pass.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "",
+              "end_location": {
+                "column": 1,
+                "row": 7
+              },
+              "location": {
+                "column": 1,
+                "row": 6
+              }
+            }
+          ],
+          "message": "Remove unused import: `pathlib.Path`"
+        },
+        "location": {
+          "column": 21,
+          "row": 6
+        },
+        "message": "`pathlib.Path` imported but unused",
+        "name": "unused-import",
+        "noqa_row": 6,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unused-import"
+      },
+      {
+        "cell": null,
+        "code": "PLW1510",
+        "end_location": {
+          "column": 28,
+          "row": 54
+        },
+        "filename": "/workspace/abroad-ccu-20261008/tests/test_ccu_second_pass.py",
+        "fix": {
+          "applicability": "displayonly",
+          "edits": [
+            {
+              "content": "check=False, ",
+              "end_location": {
+                "column": 9,
+                "row": 56
+              },
+              "location": {
+                "column": 9,
+                "row": 56
+              }
+            }
+          ],
+          "message": "Add explicit `check=False`"
+        },
+        "location": {
+          "column": 14,
+          "row": 54
+        },
+        "message": "`subprocess.run` without explicit `check` argument",
+        "name": "subprocess-run-without-check",
+        "noqa_row": 54,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/subprocess-run-without-check"
+      },
+      {
+        "cell": null,
+        "code": "C408",
+        "end_location": {
+          "column": 6,
+          "row": 158
+        },
+        "filename": "/workspace/abroad-ccu-20261008/tests/test_ccu_second_pass.py",
+        "fix": {
+          "applicability": "unsafe",
+          "edits": [
+            {
+              "content": "{\n        \"url\": \"https://official.example.edu/Admission/index.htm\",\n        \"source_id\": \"test\",\n        \"authority\": \"partner_official_public_page\",\n    }",
+              "end_location": {
+                "column": 6,
+                "row": 158
+              },
+              "location": {
+                "column": 12,
+                "row": 154
+              }
+            }
+          ],
+          "message": "Rewrite as a literal"
+        },
+        "location": {
+          "column": 12,
+          "row": 154
+        },
+        "message": "Unnecessary `dict()` call (rewrite as a literal)",
+        "name": "unnecessary-collection-call",
+        "noqa_row": 154,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unnecessary-collection-call"
+      },
+      {
+        "cell": null,
+        "code": "C408",
+        "end_location": {
+          "column": 72,
+          "row": 171
+        },
+        "filename": "/workspace/abroad-ccu-20261008/tests/test_ccu_second_pass.py",
+        "fix": {
+          "applicability": "unsafe",
+          "edits": [
+            {
+              "content": "{\"label\": \"Form\", \"url\": \"https://official.example.edu/form.doc\"}",
+              "end_location": {
+                "column": 72,
+                "row": 171
+              },
+              "location": {
+                "column": 9,
+                "row": 171
+              }
+            }
+          ],
+          "message": "Rewrite as a literal"
+        },
+        "location": {
+          "column": 9,
+          "row": 171
+        },
+        "message": "Unnecessary `dict()` call (rewrite as a literal)",
+        "name": "unnecessary-collection-call",
+        "noqa_row": 171,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unnecessary-collection-call"
+      }
+    ],
+    "baseline": [
+      {
+        "cell": null,
+        "code": "I001",
+        "end_location": {
+          "column": 49,
+          "row": 62
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from __future__ import annotations\n\nimport base64\nimport hashlib\nimport hmac\nimport html\nimport io\nimport json\nimport os\nimport re\nimport shutil\nimport tempfile\nfrom dataclasses import dataclass\nfrom datetime import datetime, timezone\nfrom pathlib import Path\nfrom typing import Any, Iterable, Literal\n\nfrom docx import Document\nfrom docx.shared import Inches\nfrom pypdf import PdfReader, PdfWriter\nfrom reportlab.lib import colors\nfrom reportlab.lib.enums import TA_CENTER, TA_LEFT\nfrom reportlab.lib.pagesizes import A4\nfrom reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet\nfrom reportlab.lib.units import mm\nfrom reportlab.lib.utils import ImageReader\nfrom reportlab.pdfbase import pdfmetrics\nfrom reportlab.pdfbase.cidfonts import UnicodeCIDFont\nfrom reportlab.platypus import (\n    Image,\n    KeepTogether,\n    PageBreak,\n    Paragraph,\n    SimpleDocTemplate,\n    Spacer,\n    Table,\n    TableStyle,\n)\n\nfrom .application_rules import select_application_workflow\nfrom .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT\nfrom .models import (\n    ApplicationCenterContext,\n    ApplicationCopyType,\n    ApplicationDocumentCatalog,\n    ApplicationDocumentCatalogItem,\n    ApplicationDocumentSelection,\n    ApplicationDocumentTemplate,\n    ApplicationFieldPreviewItem,\n    ApplicationFieldType,\n    ApplicationFormField,\n    ApplicationPacketAttachmentItem,\n    ApplicationPacketManifest,\n    ApplicationPacketManifestItem,\n    ApplicationPacketRequest,\n    ApplicationRuleContext,\n    ApplicationSupportStatus,\n    ApplicationWorkflowReviewStatus,\n    UniversityApplicationWorkflow,\n)\nfrom .ntu_student_view import NTU_GUIDELINES_URL\nfrom .university_registry import NTPU, NTU, require_university\n\n",
+              "end_location": {
+                "column": 1,
+                "row": 65
+              },
+              "location": {
+                "column": 1,
+                "row": 1
+              }
+            }
+          ],
+          "message": "Organize imports"
+        },
+        "location": {
+          "column": 1,
+          "row": 1
+        },
+        "message": "Import block is un-sorted or un-formatted",
+        "name": "unsorted-imports",
+        "noqa_row": 1,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unsorted-imports"
+      },
+      {
+        "cell": null,
+        "code": "UP035",
+        "end_location": {
+          "column": 42,
+          "row": 16
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from typing import Any, Literal\nfrom collections.abc import Iterable",
+              "end_location": {
+                "column": 42,
+                "row": 16
+              },
+              "location": {
+                "column": 1,
+                "row": 16
+              }
+            }
+          ],
+          "message": "Import from `collections.abc`"
+        },
+        "location": {
+          "column": 1,
+          "row": 16
+        },
+        "message": "Import from `collections.abc` instead: `Iterable`",
+        "name": "deprecated-import",
+        "noqa_row": 16,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/deprecated-import"
+      },
+      {
+        "cell": null,
+        "code": "F401",
+        "end_location": {
+          "column": 24,
+          "row": 42
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from .models import (\n    ApplicationCenterContext,\n    ApplicationDocumentCatalog,\n    ApplicationDocumentCatalogItem,\n    ApplicationDocumentSelection,\n    ApplicationDocumentTemplate,\n    ApplicationFieldPreviewItem,\n    ApplicationFieldType,\n    ApplicationFormField,\n    ApplicationPacketManifest,\n    ApplicationPacketAttachmentItem,\n    ApplicationPacketManifestItem,\n    ApplicationPacketRequest,\n    ApplicationRuleContext,\n    ApplicationSupportStatus,\n    ApplicationWorkflowReviewStatus,\n    UniversityApplicationWorkflow,\n)",
+              "end_location": {
+                "column": 2,
+                "row": 58
+              },
+              "location": {
+                "column": 1,
+                "row": 40
+              }
+            }
+          ],
+          "message": "Remove unused import: `.models.ApplicationCopyType`"
+        },
+        "location": {
+          "column": 5,
+          "row": 42
+        },
+        "message": "`.models.ApplicationCopyType` imported but unused",
+        "name": "unused-import",
+        "noqa_row": 42,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unused-import"
+      },
+      {
+        "cell": null,
+        "code": "UP017",
+        "end_location": {
+          "column": 62,
+          "row": 72
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from datetime import datetime, timezone, UTC",
+              "end_location": {
+                "column": 40,
+                "row": 14
+              },
+              "location": {
+                "column": 1,
+                "row": 14
+              }
+            },
+            {
+              "content": "UTC",
+              "end_location": {
+                "column": 62,
+                "row": 72
+              },
+              "location": {
+                "column": 50,
+                "row": 72
+              }
+            }
+          ],
+          "message": "Convert to `datetime.UTC` alias"
+        },
+        "location": {
+          "column": 50,
+          "row": 72
+        },
+        "message": "Use `datetime.UTC` alias",
+        "name": "datetime-timezone-utc",
+        "noqa_row": 72,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/datetime-timezone-utc"
+      },
+      {
+        "cell": null,
+        "code": "UP017",
+        "end_location": {
+          "column": 67,
+          "row": 73
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from datetime import datetime, timezone, UTC",
+              "end_location": {
+                "column": 40,
+                "row": 14
+              },
+              "location": {
+                "column": 1,
+                "row": 14
+              }
+            },
+            {
+              "content": "UTC",
+              "end_location": {
+                "column": 67,
+                "row": 73
+              },
+              "location": {
+                "column": 55,
+                "row": 73
+              }
+            }
+          ],
+          "message": "Convert to `datetime.UTC` alias"
+        },
+        "location": {
+          "column": 55,
+          "row": 73
+        },
+        "message": "Use `datetime.UTC` alias",
+        "name": "datetime-timezone-utc",
+        "noqa_row": 73,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/datetime-timezone-utc"
+      },
+      {
+        "cell": null,
+        "code": "UP017",
+        "end_location": {
+          "column": 66,
+          "row": 74
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from datetime import datetime, timezone, UTC",
+              "end_location": {
+                "column": 40,
+                "row": 14
+              },
+              "location": {
+                "column": 1,
+                "row": 14
+              }
+            },
+            {
+              "content": "UTC",
+              "end_location": {
+                "column": 66,
+                "row": 74
+              },
+              "location": {
+                "column": 54,
+                "row": 74
+              }
+            }
+          ],
+          "message": "Convert to `datetime.UTC` alias"
+        },
+        "location": {
+          "column": 54,
+          "row": 74
+        },
+        "message": "Use `datetime.UTC` alias",
+        "name": "datetime-timezone-utc",
+        "noqa_row": 74,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/datetime-timezone-utc"
+      },
+      {
+        "cell": null,
+        "code": "UP017",
+        "end_location": {
+          "column": 73,
+          "row": 90
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from datetime import datetime, timezone, UTC",
+              "end_location": {
+                "column": 40,
+                "row": 14
+              },
+              "location": {
+                "column": 1,
+                "row": 14
+              }
+            },
+            {
+              "content": "UTC",
+              "end_location": {
+                "column": 73,
+                "row": 90
+              },
+              "location": {
+                "column": 61,
+                "row": 90
+              }
+            }
+          ],
+          "message": "Convert to `datetime.UTC` alias"
+        },
+        "location": {
+          "column": 61,
+          "row": 90
+        },
+        "message": "Use `datetime.UTC` alias",
+        "name": "datetime-timezone-utc",
+        "noqa_row": 90,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/datetime-timezone-utc"
+      },
+      {
+        "cell": null,
+        "code": "DTZ007",
+        "end_location": {
+          "column": 66,
+          "row": 858
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 29,
+          "row": 858
+        },
+        "message": "Naive datetime constructed using `datetime.datetime.strptime()` without %z",
+        "name": "call-datetime-strptime-without-zone",
+        "noqa_row": 858,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/call-datetime-strptime-without-zone"
+      },
+      {
+        "cell": null,
+        "code": "DTZ001",
+        "end_location": {
+          "column": 44,
+          "row": 859
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 24,
+          "row": 859
+        },
+        "message": "`datetime.datetime()` called without a `tzinfo` argument",
+        "name": "call-datetime-without-tzinfo",
+        "noqa_row": 859,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/call-datetime-without-tzinfo"
+      },
+      {
+        "cell": null,
+        "code": "UP017",
+        "end_location": {
+          "column": 93,
+          "row": 859
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from datetime import datetime, timezone, UTC",
+              "end_location": {
+                "column": 40,
+                "row": 14
+              },
+              "location": {
+                "column": 1,
+                "row": 14
+              }
+            },
+            {
+              "content": "UTC",
+              "end_location": {
+                "column": 93,
+                "row": 859
+              },
+              "location": {
+                "column": 81,
+                "row": 859
+              }
+            }
+          ],
+          "message": "Convert to `datetime.UTC` alias"
+        },
+        "location": {
+          "column": 81,
+          "row": 859
+        },
+        "message": "Use `datetime.UTC` alias",
+        "name": "datetime-timezone-utc",
+        "noqa_row": 859,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/datetime-timezone-utc"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 21,
+          "row": 1059
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 12,
+          "row": 1059
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1059,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 21,
+          "row": 1110
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 12,
+          "row": 1110
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1110,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "S112",
+        "end_location": {
+          "column": 21,
+          "row": 1387
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 9,
+          "row": 1386
+        },
+        "message": "`try`-`except`-`continue` detected, consider logging the exception",
+        "name": "try-except-continue",
+        "noqa_row": 1386,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/try-except-continue"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 25,
+          "row": 1386
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 16,
+          "row": 1386
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1386,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 21,
+          "row": 1608
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 12,
+          "row": 1608
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1608,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "DTZ007",
+        "end_location": {
+          "column": 52,
+          "row": 1717
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 16,
+          "row": 1717
+        },
+        "message": "Naive datetime constructed using `datetime.datetime.strptime()` without %z",
+        "name": "call-datetime-strptime-without-zone",
+        "noqa_row": 1717,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/call-datetime-strptime-without-zone"
+      },
+      {
+        "cell": null,
+        "code": "DTZ007",
+        "end_location": {
+          "column": 51,
+          "row": 1718
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 17,
+          "row": 1718
+        },
+        "message": "Naive datetime constructed using `datetime.datetime.strptime()` without %z",
+        "name": "call-datetime-strptime-without-zone",
+        "noqa_row": 1718,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/call-datetime-strptime-without-zone"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 21,
+          "row": 1720
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 12,
+          "row": 1720
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1720,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "S112",
+        "end_location": {
+          "column": 25,
+          "row": 1811
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 13,
+          "row": 1810
+        },
+        "message": "`try`-`except`-`continue` detected, consider logging the exception",
+        "name": "try-except-continue",
+        "noqa_row": 1810,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/try-except-continue"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 29,
+          "row": 1810
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 20,
+          "row": 1810
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1810,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 21,
+          "row": 1834
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 12,
+          "row": 1834
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1834,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "S110",
+        "end_location": {
+          "column": 17,
+          "row": 1838
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 9,
+          "row": 1837
+        },
+        "message": "`try`-`except`-`pass` detected, consider logging the exception",
+        "name": "try-except-pass",
+        "noqa_row": 1837,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/try-except-pass"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 25,
+          "row": 1837
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 16,
+          "row": 1837
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1837,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "S110",
+        "end_location": {
+          "column": 17,
+          "row": 1842
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 9,
+          "row": 1841
+        },
+        "message": "`try`-`except`-`pass` detected, consider logging the exception",
+        "name": "try-except-pass",
+        "noqa_row": 1841,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/try-except-pass"
+      },
+      {
+        "cell": null,
+        "code": "BLE001",
+        "end_location": {
+          "column": 25,
+          "row": 1841
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/application_documents.py",
+        "fix": null,
+        "location": {
+          "column": 16,
+          "row": 1841
+        },
+        "message": "Do not catch blind exception: `Exception`",
+        "name": "blind-except",
+        "noqa_row": 1841,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/blind-except"
+      },
+      {
+        "cell": null,
+        "code": "I001",
+        "end_location": {
+          "column": 42,
+          "row": 16
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from __future__ import annotations\n\nimport ipaddress\nfrom datetime import date, datetime, timezone\nfrom datetime import date as PlanningDate\nfrom enum import Enum\nfrom typing import Any, Literal\nfrom urllib.parse import urlsplit\nfrom uuid import uuid4\n\nfrom pydantic import (\n    BaseModel,\n    ConfigDict,\n    Field,\n    field_validator,\n    model_serializer,\n    model_validator,\n)\n\nfrom .discovery import DiscoveryWorkspace\nfrom .source_url_policy import canonical_source_url_identity\nfrom .university_locations import UniversityLocation\n\n\n",
+              "end_location": {
+                "column": 1,
+                "row": 19
+              },
+              "location": {
+                "column": 1,
+                "row": 1
+              }
+            }
+          ],
+          "message": "Organize imports"
+        },
+        "location": {
+          "column": 1,
+          "row": 1
+        },
+        "message": "Import block is un-sorted or un-formatted",
+        "name": "unsorted-imports",
+        "noqa_row": 1,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unsorted-imports"
+      },
+      {
+        "cell": null,
+        "code": "UP017",
+        "end_location": {
+          "column": 37,
+          "row": 20
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "from datetime import date, datetime, timezone, UTC",
+              "end_location": {
+                "column": 46,
+                "row": 6
+              },
+              "location": {
+                "column": 1,
+                "row": 6
+              }
+            },
+            {
+              "content": "UTC",
+              "end_location": {
+                "column": 37,
+                "row": 20
+              },
+              "location": {
+                "column": 25,
+                "row": 20
+              }
+            }
+          ],
+          "message": "Convert to `datetime.UTC` alias"
+        },
+        "location": {
+          "column": 25,
+          "row": 20
+        },
+        "message": "Use `datetime.UTC` alias",
+        "name": "datetime-timezone-utc",
+        "noqa_row": 20,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/datetime-timezone-utc"
+      },
+      {
+        "cell": null,
+        "code": "SIM102",
+        "end_location": {
+          "column": 91,
+          "row": 500
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": null,
+        "location": {
+          "column": 9,
+          "row": 499
+        },
+        "message": "Use a single `if` statement instead of nested `if` statements",
+        "name": "collapsible-if",
+        "noqa_row": 499,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/collapsible-if"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 74,
+          "row": 775
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "DestinationProfileReviewEvent",
+              "end_location": {
+                "column": 74,
+                "row": 775
+              },
+              "location": {
+                "column": 43,
+                "row": 775
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 43,
+          "row": 775
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 775,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 80,
+          "row": 841
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "DestinationProfilePromotionEvent",
+              "end_location": {
+                "column": 80,
+                "row": 841
+              },
+              "location": {
+                "column": 46,
+                "row": 841
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 46,
+          "row": 841
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 841,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 78,
+          "row": 895
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "DestinationProfileRollbackEvent",
+              "end_location": {
+                "column": 78,
+                "row": 895
+              },
+              "location": {
+                "column": 45,
+                "row": 895
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 45,
+          "row": 895
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 895,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 71,
+          "row": 1591
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowReviewApproval",
+              "end_location": {
+                "column": 71,
+                "row": 1591
+              },
+              "location": {
+                "column": 36,
+                "row": 1591
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 36,
+          "row": 1591
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1591,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 65,
+          "row": 1628
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowRevisionEdit",
+              "end_location": {
+                "column": 65,
+                "row": 1628
+              },
+              "location": {
+                "column": 32,
+                "row": 1628
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 32,
+          "row": 1628
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1628,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 87,
+          "row": 1658
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowSourceApplicabilityUpdate",
+              "end_location": {
+                "column": 87,
+                "row": 1658
+              },
+              "location": {
+                "column": 41,
+                "row": 1658
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 41,
+          "row": 1658
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1658,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 81,
+          "row": 1688
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowApplicabilityUpdateRequest",
+              "end_location": {
+                "column": 81,
+                "row": 1688
+              },
+              "location": {
+                "column": 34,
+                "row": 1688
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 34,
+          "row": 1688
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1688,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 78,
+          "row": 1731
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowRevision",
+              "end_location": {
+                "column": 78,
+                "row": 1731
+              },
+              "location": {
+                "column": 49,
+                "row": 1731
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 49,
+          "row": 1731
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1731,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 81,
+          "row": 1756
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowRollbackRequest",
+              "end_location": {
+                "column": 81,
+                "row": 1756
+              },
+              "location": {
+                "column": 45,
+                "row": 1756
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 45,
+          "row": 1756
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1756,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 68,
+          "row": 1834
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowApprovalRequest",
+              "end_location": {
+                "column": 68,
+                "row": 1834
+              },
+              "location": {
+                "column": 32,
+                "row": 1834
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 32,
+          "row": 1834
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1834,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 84,
+          "row": 1987
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowSourceMetadataResearchCandidate | None",
+              "end_location": {
+                "column": 84,
+                "row": 1987
+              },
+              "location": {
+                "column": 25,
+                "row": 1987
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 25,
+          "row": 1987
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 1987,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 84,
+          "row": 2010
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowSourceMetadataResearchCandidate | None",
+              "end_location": {
+                "column": 84,
+                "row": 2010
+              },
+              "location": {
+                "column": 25,
+                "row": 2010
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 25,
+          "row": 2010
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 2010,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 80,
+          "row": 2033
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowSourceResearchLead",
+              "end_location": {
+                "column": 80,
+                "row": 2033
+              },
+              "location": {
+                "column": 41,
+                "row": 2033
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 41,
+          "row": 2033
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 2033,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 62,
+          "row": 2082
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowSourceMetadataResearchCandidate",
+              "end_location": {
+                "column": 62,
+                "row": 2082
+              },
+              "location": {
+                "column": 10,
+                "row": 2082
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 10,
+          "row": 2082
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 2082,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 67,
+          "row": 2183
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "ApplicationWorkflowSourceReplacementCandidateDefinition",
+              "end_location": {
+                "column": 67,
+                "row": 2183
+              },
+              "location": {
+                "column": 10,
+                "row": 2183
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 10,
+          "row": 2183
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 2183,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 63,
+          "row": 2979
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "CommunityPostCreate",
+              "end_location": {
+                "column": 63,
+                "row": 2979
+              },
+              "location": {
+                "column": 42,
+                "row": 2979
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 42,
+          "row": 2979
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 2979,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 74,
+          "row": 3251
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "AccountNotificationPreferences",
+              "end_location": {
+                "column": 74,
+                "row": 3251
+              },
+              "location": {
+                "column": 42,
+                "row": 3251
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 42,
+          "row": 3251
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 3251,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "UP037",
+        "end_location": {
+          "column": 58,
+          "row": 3533
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/src/exchange_info/models.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "PlanningAvailability",
+              "end_location": {
+                "column": 58,
+                "row": 3533
+              },
+              "location": {
+                "column": 36,
+                "row": 3533
+              }
+            }
+          ],
+          "message": "Remove quotes"
+        },
+        "location": {
+          "column": 36,
+          "row": 3533
+        },
+        "message": "Remove quotes from type annotation",
+        "name": "quoted-annotation",
+        "noqa_row": 3533,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/quoted-annotation"
+      },
+      {
+        "cell": null,
+        "code": "I001",
+        "end_location": {
+          "column": 45,
+          "row": 16
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/tests/test_ccu_second_pass.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "import hashlib\nimport importlib.util\nimport json\nimport subprocess\nfrom pathlib import Path\n\nimport pytest\nimport requests\nfrom pypdf import PdfReader\n\nfrom exchange_info.ccu_sources import BUNDLE\nfrom exchange_info.ccu_student_view import fetch_ccu_partner_universities\nfrom exchange_info.models import UniversityApplicationWorkflow\nfrom exchange_info.storage import read_jsonl\n\n\n",
+              "end_location": {
+                "column": 1,
+                "row": 19
+              },
+              "location": {
+                "column": 1,
+                "row": 3
+              }
+            }
+          ],
+          "message": "Organize imports"
+        },
+        "location": {
+          "column": 1,
+          "row": 3
+        },
+        "message": "Import block is un-sorted or un-formatted",
+        "name": "unsorted-imports",
+        "noqa_row": 3,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unsorted-imports"
+      },
+      {
+        "cell": null,
+        "code": "F401",
+        "end_location": {
+          "column": 25,
+          "row": 6
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/tests/test_ccu_second_pass.py",
+        "fix": {
+          "applicability": "safe",
+          "edits": [
+            {
+              "content": "",
+              "end_location": {
+                "column": 1,
+                "row": 7
+              },
+              "location": {
+                "column": 1,
+                "row": 6
+              }
+            }
+          ],
+          "message": "Remove unused import: `pathlib.Path`"
+        },
+        "location": {
+          "column": 21,
+          "row": 6
+        },
+        "message": "`pathlib.Path` imported but unused",
+        "name": "unused-import",
+        "noqa_row": 6,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unused-import"
+      },
+      {
+        "cell": null,
+        "code": "PLW1510",
+        "end_location": {
+          "column": 28,
+          "row": 54
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/tests/test_ccu_second_pass.py",
+        "fix": {
+          "applicability": "displayonly",
+          "edits": [
+            {
+              "content": "check=False, ",
+              "end_location": {
+                "column": 9,
+                "row": 56
+              },
+              "location": {
+                "column": 9,
+                "row": 56
+              }
+            }
+          ],
+          "message": "Add explicit `check=False`"
+        },
+        "location": {
+          "column": 14,
+          "row": 54
+        },
+        "message": "`subprocess.run` without explicit `check` argument",
+        "name": "subprocess-run-without-check",
+        "noqa_row": 54,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/subprocess-run-without-check"
+      },
+      {
+        "cell": null,
+        "code": "C408",
+        "end_location": {
+          "column": 6,
+          "row": 163
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/tests/test_ccu_second_pass.py",
+        "fix": {
+          "applicability": "unsafe",
+          "edits": [
+            {
+              "content": "{\n        \"url\": \"https://official.example.edu/Admission/index.htm\",\n        \"source_id\": \"test\",\n        \"authority\": \"partner_official_public_page\",\n    }",
+              "end_location": {
+                "column": 6,
+                "row": 163
+              },
+              "location": {
+                "column": 12,
+                "row": 159
+              }
+            }
+          ],
+          "message": "Rewrite as a literal"
+        },
+        "location": {
+          "column": 12,
+          "row": 159
+        },
+        "message": "Unnecessary `dict()` call (rewrite as a literal)",
+        "name": "unnecessary-collection-call",
+        "noqa_row": 159,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unnecessary-collection-call"
+      },
+      {
+        "cell": null,
+        "code": "C408",
+        "end_location": {
+          "column": 72,
+          "row": 176
+        },
+        "filename": "/tmp/ccu-sixteenth-lint-baseline/tests/test_ccu_second_pass.py",
+        "fix": {
+          "applicability": "unsafe",
+          "edits": [
+            {
+              "content": "{\"label\": \"Form\", \"url\": \"https://official.example.edu/form.doc\"}",
+              "end_location": {
+                "column": 72,
+                "row": 176
+              },
+              "location": {
+                "column": 9,
+                "row": 176
+              }
+            }
+          ],
+          "message": "Rewrite as a literal"
+        },
+        "location": {
+          "column": 9,
+          "row": 176
+        },
+        "message": "Unnecessary `dict()` call (rewrite as a literal)",
+        "name": "unnecessary-collection-call",
+        "noqa_row": 176,
+        "severity": "error",
+        "url": "https://docs.astral.sh/ruff/rules/unnecessary-collection-call"
+      }
+    ]
+  }
+}

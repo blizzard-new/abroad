@@ -1,0 +1,904 @@
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/build_ccu_catalog.py:9:1
+   |
+ 7 |   """
+ 8 |
+ 9 | / from __future__ import annotations
+10 | | import argparse
+11 | | import hashlib
+12 | | import io
+13 | | import json
+14 | | import re
+15 | | import sys
+16 | | from collections import Counter
+17 | | from datetime import datetime
+18 | | from pathlib import Path
+19 | | from urllib.parse import urlsplit
+20 | | from zipfile import ZipFile
+21 | | from xml.etree import ElementTree as ET
+   | |_______________________________________^
+22 |
+23 |   ROOT = Path(__file__).resolve().parents[1]
+   |
+help: Organize imports
+   |
+9  | from __future__ import annotations
+10 +
+11 | import argparse
+--------------------------------------------------------------------------------
+20 | from urllib.parse import urlsplit
+   - from zipfile import ZipFile
+21 | from xml.etree import ElementTree as ET
+22 + from zipfile import ZipFile
+23 |
+   |
+
+F401 [*] `hashlib` imported but unused
+  --> scripts/build_ccu_catalog.py:11:8
+   |
+ 9 | from __future__ import annotations
+10 | import argparse
+11 | import hashlib
+   |        ^^^^^^^
+12 | import io
+13 | import json
+   |
+help: Remove unused import: `hashlib`
+   |
+10 | import argparse
+   - import hashlib
+11 | import io
+   |
+
+F401 [*] `urllib.parse.urlsplit` imported but unused
+  --> scripts/build_ccu_catalog.py:19:26
+   |
+17 | from datetime import datetime
+18 | from pathlib import Path
+19 | from urllib.parse import urlsplit
+   |                          ^^^^^^^^
+20 | from zipfile import ZipFile
+21 | from xml.etree import ElementTree as ET
+   |
+help: Remove unused import: `urllib.parse.urlsplit`
+   |
+18 | from pathlib import Path
+   - from urllib.parse import urlsplit
+19 | from zipfile import ZipFile
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/build_ccu_catalog.py:25:1
+   |
+23 |   ROOT = Path(__file__).resolve().parents[1]
+24 |   sys.path.insert(0, str(ROOT / "src"))
+25 | / from pypdf import PdfReader
+26 | | from exchange_info.ccu_sources import *
+27 | | from exchange_info.models import (
+28 | |     ExchangeFieldEvidence,
+29 | |     PartnerStudentSummary,
+30 | |     PartnerUniversity,
+31 | | )
+   | |_^
+32 |
+33 |   # Reviewed table starts: continuations, blank p90/p110, and p121 are excluded.
+   |
+help: Organize imports
+   |
+25 | from pypdf import PdfReader
+26 +
+27 | from exchange_info.ccu_sources import *
+   |
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_catalog.py:200:26
+    |
+198 |             last_x, last_y = x, y
+199 |         if 70 < y < 785:
+200 |             spans.append(dict(text=t, x=x, y=y, grey=is_grey(color[0]), color=color[0]))
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+201 |
+202 |     page.extract_text(visitor_operand_before=before, visitor_text=visit)
+    |
+help: Rewrite as a literal
+
+C401 Unnecessary generator (rewrite as a set comprehension)
+   --> scripts/build_ccu_catalog.py:253:9
+    |
+251 |       width = Counter(round(r[2], 1) for r in rects).most_common(1)[0][0]
+252 |       return boundary, list(
+253 | /         set(
+254 | |             (r[1], r[1] + r[3])
+255 | |             for r in rects
+256 | |             if abs(r[0] - boundary) < 0.5 and abs(r[2] - width) < 1
+257 | |         )
+    | |_________^
+258 |       )
+    |
+help: Rewrite as a set comprehension
+
+SIM102 Use a single `if` statement instead of nested `if` statements
+   --> scripts/build_ccu_catalog.py:270:13
+    |
+268 |           )
+269 |           for key, label in LABELS.items():
+270 | /             if candidate.startswith(label) or (
+271 | |                 key == "eligibility" and candidate.startswith("申請條件及")
+272 | |             ):
+273 | |                 if not any(k == key and abs(y - s["y"]) < 35 for k, y in markers):
+    | |__________________________________________________________________________________^
+274 |                       markers.append((key, s["y"]))
+275 |       markers.sort(key=lambda t: -t[1])
+    |
+help: Combine `if` statements using `and`
+
+SIM114 [*] Combine `if` branches using logical `or` operator
+   --> scripts/build_ccu_catalog.py:329:5
+    |
+327 |       header = full.split("交換期程")[0].replace("2026.09.17", "").strip().splitlines()
+328 |       header = [s.strip() for s in header if s.strip() and not s.strip().isdigit()]
+329 | /     if start == 7:
+330 | |         header = header[-2:]
+331 | |     elif start == 95:
+332 | |         header = header[-2:]
+    | |____________________________^
+333 |       else:
+334 |           header = [
+    |
+help: Combine `if` branches
+    |
+328 |     header = [s.strip() for s in header if s.strip() and not s.strip().isdigit()]
+    -     if start == 7:
+    -         header = header[-2:]
+    -     elif start == 95:
+329 +     if start == 7 or start == 95:
+330 |         header = header[-2:]
+    |
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_catalog.py:367:21
+    |
+365 |             if u and u.startswith(("https://", "http://")):
+366 |                 links.append(
+367 |                     dict(url=u, page=n, rect=list(map(float, a.get("/Rect", []))))
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+368 |                 )
+369 |     for key in LABELS:
+    |
+help: Rewrite as a literal
+
+FLY002 Consider `f"{reference} {current}"` instead of string join
+   --> scripts/build_ccu_catalog.py:377:31
+    |
+375 |         # Dark text can still explicitly label an attachment as an old version.
+376 |         if key == "fact_sheet" and re.search(r"舊簡章|供參考|做參考", current):
+377 |             reference = clean(" ".join([reference, current]))
+    |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+378 |             current = ""
+379 |         if not meaningful(current):
+    |
+help: Replace with `f"{reference} {current}"`
+
+F841 Local variable `extra` is assigned to but never used
+   --> scripts/build_ccu_catalog.py:410:5
+    |
+408 |     )
+409 |     notes = values["notes"] or ""
+410 |     extra = values["additional_info"] or ""
+    |     ^^^^^
+411 |     # Any explicit old-year dates remain reference, even when printed in dark text.
+412 |     lines = []
+    |
+help: Remove assignment to unused variable `extra`
+
+FURB167 [*] Use of regular expression alias `re.I`
+   --> scripts/build_ccu_catalog.py:427:9
+    |
+425 |         r"(?:Application\s*Deadline|申請截止日?期?)[^:：]{0,18}[:：]\s*([0-9]{4}[/.-][0-9]{1,2}[/.-][0-9]{1,2})",
+426 |         combined,
+427 |         re.I,
+    |         ^^^^
+428 |     )
+429 |     deadline = list(dict.fromkeys(deadline))
+    |
+help: Replace with `re.IGNORECASE`
+    |
+426 |         combined,
+    -         re.I,
+427 +         re.IGNORECASE,
+428 |     )
+    |
+
+FURB167 [*] Use of regular expression alias `re.I`
+   --> scripts/build_ccu_catalog.py:442:79
+    |
+440 |             for _, text in lines
+441 |             if re.search(
+442 |                 r"application\s*deadline|申請截止|HUSTEP:.*2026|SA/.*2026", text, re.I
+    |                                                                                   ^^^^
+443 |             )
+444 |         )
+    |
+help: Replace with `re.IGNORECASE`
+    |
+441 |             if re.search(
+    -                 r"application\s*deadline|申請截止|HUSTEP:.*2026|SA/.*2026", text, re.I
+442 +                 r"application\s*deadline|申請截止|HUSTEP:.*2026|SA/.*2026", text, re.IGNORECASE
+443 |             )
+    |
+
+FURB167 [*] Use of regular expression alias `re.I`
+   --> scripts/build_ccu_catalog.py:473:75
+    |
+471 |                 text
+472 |                 for _, text in lines
+473 |                 if re.search(r"住宿|housing|accommodation|dorm|rent", text, re.I)
+    |                                                                             ^^^^
+474 |             )
+475 |         )
+    |
+help: Replace with `re.IGNORECASE`
+    |
+472 |                 for _, text in lines
+    -                 if re.search(r"住宿|housing|accommodation|dorm|rent", text, re.I)
+473 +                 if re.search(r"住宿|housing|accommodation|dorm|rent", text, re.IGNORECASE)
+474 |             )
+    |
+
+FURB167 [*] Use of regular expression alias `re.I`
+   --> scripts/build_ccu_catalog.py:484:75
+    |
+482 |                 for _, text in lines
+483 |                 if re.search(
+484 |                     r"學費|費用|生活費|tuition|fees?|cost|per.month|€|\$", text, re.I
+    |                                                                                  ^^^^
+485 |                 )
+486 |             )
+    |
+help: Replace with `re.IGNORECASE`
+    |
+483 |                 if re.search(
+    -                     r"學費|費用|生活費|tuition|fees?|cost|per.month|€|\$", text, re.I
+484 +                     r"學費|費用|生活費|tuition|fees?|cost|per.month|€|\$", text, re.IGNORECASE
+485 |                 )
+    |
+
+FURB167 [*] Use of regular expression alias `re.I`
+   --> scripts/build_ccu_catalog.py:496:71
+    |
+494 |                 for _, text in lines
+495 |                 if re.search(
+496 |                     r"選課|跨系|學分|課程|courses|credits|ECTS|facult", text, re.I
+    |                                                                               ^^^^
+497 |                 )
+498 |             )
+    |
+help: Replace with `re.IGNORECASE`
+    |
+495 |                 if re.search(
+    -                     r"選課|跨系|學分|課程|courses|credits|ECTS|facult", text, re.I
+496 +                     r"選課|跨系|學分|課程|courses|credits|ECTS|facult", text, re.IGNORECASE
+497 |                 )
+    |
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_catalog.py:727:17
+    |
+726 |       apply_ccu_semantic_review(row)
+727 |       return row, dict(
+    |  _________________^
+728 | |         school_name=name,
+729 | |         source_pages=pages,
+730 | |         fields={k: v.model_dump(mode="json") for k, v in row.field_evidence.items()},
+731 | |         related_links=links,
+732 | |         links_status="extracted_from_official_pdf_not_individually_opened",
+733 | |         reference_data=row.reference_data,
+734 | |     )
+    | |_____^
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_catalog.py:851:13
+    |
+849 |           json.dumps(details, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+850 |       )
+851 |       stats = dict(
+    |  _____________^
+852 | |         total=len(rows),
+853 | |         workflow_count=len(workflows),
+854 | |         availability=dict(Counter(r.availability_status for r in rows)),
+855 | |         quota_status=dict(Counter(r.quota_status for r in rows)),
+856 | |         current_field_counts={
+857 | |             k: sum(
+858 | |                 k in r.field_evidence
+859 | |                 and r.field_evidence[k].status == "verified_current"
+860 | |                 for r in rows
+861 | |             )
+862 | |             for k in sorted({k for r in rows for k in r.field_evidence})
+863 | |         },
+864 | |         partner_document_states=dict(
+865 | |             Counter(
+866 | |                 r.field_evidence["partner_documents"].status
+867 | |                 for r in rows
+868 | |                 if r.availability_status != "not_open"
+869 | |             )
+870 | |         ),
+871 | |         document_coverage_definition="僅計算當期PDF含實際文件要求；不代表完整清單、海外附件獨立核實或僅有母校提名前提。",
+872 | |         checked_at=CHECKED_AT.isoformat(),
+873 | |         academic_year=YEAR,
+874 | |         application_round=ROUND,
+875 | |     )
+    | |_____^
+876 |       (BUNDLE / "completeness.json").write_text(
+877 |           json.dumps(stats, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    |
+help: Rewrite as a literal
+
+invalid-syntax: Unexpected indentation
+   --> scripts/build_ccu_functional_parity.py:186:1
+    |
+184 |                 response.raise_for_status()
+185 |                 life_context = response.json()
+186 |                     home_fields = {
+    | ^^^^^^^^^^^^^^^^^^^^
+187 |                         k: partner["field_evidence"][k]
+188 |                         for k in [
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/build_ccu_source_audit.py:3:1
+   |
+ 1 |   """Validate bundled CCU attachments and rebuild home-rule provenance offline."""
+ 2 |
+ 3 | / from __future__ import annotations
+ 4 | |
+ 5 | | import hashlib
+ 6 | | import json
+ 7 | | import re
+ 8 | | import sys
+ 9 | | from pathlib import Path
+10 | | from zipfile import ZipFile
+11 | | from xml.etree import ElementTree as ET
+   | |_______________________________________^
+12 |
+13 |   sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+   |
+help: Organize imports
+   |
+9  | from pathlib import Path
+10 + from xml.etree import ElementTree as ET
+11 | from zipfile import ZipFile
+   - from xml.etree import ElementTree as ET
+12 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> scripts/build_ccu_source_audit.py:14:1
+   |
+13 |   sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+14 | / from pypdf import PdfReader
+15 | | from exchange_info.ccu_sources import *
+   | |_______________________________________^
+help: Organize imports
+   |
+14 | from pypdf import PdfReader
+15 +
+16 | from exchange_info.ccu_sources import *
+   |
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+  --> scripts/build_ccu_source_audit.py:60:13
+   |
+58 |           texts[filename] = text
+59 |           sources.append(
+60 | /             dict(
+61 | |                 filename=filename,
+62 | |                 official_url=url,
+63 | |                 sha256=hashlib.sha256(raw).hexdigest(),
+64 | |                 bytes=len(raw),
+65 | |                 page_count=count,
+66 | |                 content_title_verified=title,
+67 | |                 status=status,
+68 | |                 academic_year=YEAR if status == "current" else None,
+69 | |                 application_round=ROUND if status == "current" else None,
+70 | |                 checked_at=CHECKED_AT.isoformat(),
+71 | |                 open_validation="PDF parser / ODT XML / DOC signature and embedded title",
+72 | |             )
+   | |_____________^
+73 |           )
+74 |       guide = PdfReader(BUNDLE / "2027-spring-guidelines.pdf")
+   |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:94:16
+    |
+ 92 |           if at < 0:
+ 93 |               raise ValueError(f"Evidence phrase absent: {phrase}")
+ 94 |           return dict(
+    |  ________________^
+ 95 | |             value=value,
+ 96 | |             official_url=url,
+ 97 | |             source_pages=pages,
+ 98 | |             original_excerpt=corpus[max(0, at - 15) : at + 180],
+ 99 | |             academic_year=YEAR,
+100 | |             application_round=ROUND,
+101 | |             checked_at=CHECKED_AT.isoformat(),
+102 | |             status=status,
+103 | |             note=note,
+104 | |         )
+    | |_________^
+105 |
+106 |       home = {
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:180:23
+    |
+178 |               ),
+179 |           },
+180 |           "next_round": dict(
+    |  _______________________^
+181 | |             application_round="2027秋季",
+182 | |             status="needs_confirmation",
+183 | |             official_url=NEWS_URL,
+184 | |             checked_at=CHECKED_AT.isoformat(),
+185 | |             note="尚未核實新版；未查得官方明示尚未公告。",
+186 | |         ),
+    | |_________^
+187 |       }
+188 |       conflicts = [
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:189:9
+    |
+187 |       }
+188 |       conflicts = [
+189 | /         dict(
+190 | |             id="saintgits-toefl",
+191 | |             official_url=PARTNERS_URL,
+192 | |             pages=[74],
+193 | |             excerpt="iBT 92 / IELTS 6.5 / TOEIC 860 / TOEFL 80",
+194 | |             status="conflict",
+195 | |             resolution="TOEFL種類及門檻矛盾，未採80或92為強制最低分。",
+196 | |         ),
+    | |_________^
+197 |           dict(
+198 |               id="sungshin-language-mandatory",
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:197:9
+    |
+195 |               resolution="TOEFL種類及門檻矛盾，未採80或92為強制最低分。",
+196 |           ),
+197 | /         dict(
+198 | |             id="sungshin-language-mandatory",
+199 | |             official_url=PARTNERS_URL,
+200 | |             pages=[49],
+201 | |             excerpt="語言欄列TOEFL iBT71／IELTS5.5；文件欄Language proficiency score Not mandatory",
+202 | |             status="conflict",
+203 | |             resolution="語言證明強制性待確認，不硬判符合或不符。",
+204 | |         ),
+    | |_________^
+205 |           dict(
+206 |               id="guideline-heading",
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:205:9
+    |
+203 |               resolution="語言證明強制性待確認，不硬判符合或不符。",
+204 |           ),
+205 | /         dict(
+206 | |             id="guideline-heading",
+207 | |             official_url=GUIDELINES_URL,
+208 | |             pages=[2],
+209 | |             excerpt="四、2026 秋季校級薦外交換學生計畫時程",
+210 | |             status="needs_confirmation",
+211 | |             resolution="保留誤植，不把標題當成2026當期；使用公告和實際2026申請日、2027春季內容。",
+212 | |         ),
+    | |_________^
+213 |           dict(
+214 |               id="fourth-year-exception",
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:213:9
+    |
+211 |               resolution="保留誤植，不把標題當成2026當期；使用公告和實際2026申請日、2027春季內容。",
+212 |           ),
+213 | /         dict(
+214 | |             id="fourth-year-exception",
+215 | |             official_url=FORM_ODT_URL,
+216 | |             pages=[1],
+217 | |             excerpt="申請四下出國一學年 至五上",
+218 | |             status="needs_confirmation",
+219 | |             resolution="與簡章一般大四限制不同，不自動核准例外。",
+220 | |         ),
+    | |_________^
+221 |           dict(
+222 |               id="chungnam-semester-year",
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:221:9
+    |
+219 |               resolution="與簡章一般大四限制不同，不自動核准例外。",
+220 |           ),
+221 | /         dict(
+222 | |             id="chungnam-semester-year",
+223 | |             official_url=PARTNERS_URL,
+224 | |             pages=[53],
+225 | |             excerpt="學期時間: 2027/03/02 – 2026/06/18",
+226 | |             status="conflict",
+227 | |             resolution="未自行更正2026為2027；semester_dates留空，原文保留於reference_data。",
+228 | |         ),
+    | |_________^
+229 |           dict(
+230 |               id="uninter-language",
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:229:9
+    |
+227 |               resolution="未自行更正2026為2027；semester_dates留空，原文保留於reference_data。",
+228 |           ),
+229 | /         dict(
+230 | |             id="uninter-language",
+231 | |             official_url=PARTNERS_URL,
+232 | |             pages=[119],
+233 | |             excerpt="English B2 vs proof of language B1 minimum in English or/and Spanish",
+234 | |             status="conflict",
+235 | |             resolution="兩段均保留，不猜英文最低門檻。",
+236 | |         ),
+    | |_________^
+237 |           dict(
+238 |               id="pardubice-general-admission",
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:237:9
+    |
+235 |               resolution="兩段均保留，不猜英文最低門檻。",
+236 |           ),
+237 | /         dict(
+238 | |             id="pardubice-general-admission",
+239 | |             official_url=PARTNERS_URL,
+240 | |             pages=[107],
+241 | |             excerpt="Admission Process Overview: Pass the entrance exam / Pay tuition",
+242 | |             status="needs_confirmation",
+243 | |             resolution="可能誤列一般入學流程，未視為交換申請文件；與中正免合作校學費原則不同，須承辦确认。",
+244 | |         ),
+    | |_________^
+245 |           dict(
+246 |               id="tohoku-jype-spring",
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:245:9
+    |
+243 |               resolution="可能誤列一般入學流程，未視為交換申請文件；與中正免合作校學費原則不同，須承辦确认。",
+244 |           ),
+245 | /         dict(
+246 | |             id="tohoku-jype-spring",
+247 | |             official_url=PARTNERS_URL,
+248 | |             pages=[35, 36],
+249 | |             excerpt="JYPE Duration: F+S / F",
+250 | |             status="needs_confirmation",
+251 | |             resolution="表列秋季起始；2027春季是否可申請待承辦確認，不能由全校名額推得計畫開放。",
+252 | |         ),
+    | |_________^
+253 |       ]
+254 |       for conflict in conflicts:
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:262:9
+    |
+260 |       write(
+261 |           "source-manifest.json",
+262 | /         dict(
+263 | |             checked_at=CHECKED_AT.isoformat(),
+264 | |             sources=sources,
+265 | |             additional_sources=[
+266 | |                 dict(
+267 | |                     official_url=ANNOUNCEMENT_URL,
+268 | |                     role="current_round_announcement",
+269 | |                     published_at="2026-08-18",
+270 | |                     academic_year=YEAR,
+271 | |                     application_round=ROUND,
+272 | |                     checked_at=CHECKED_AT.isoformat(),
+273 | |                     snapshot_file="announcement.json",
+274 | |                 ),
+275 | |                 dict(
+276 | |                     official_url=NEWS_URL,
+277 | |                     role="latest_round_lookup",
+278 | |                     checked_at=CHECKED_AT.isoformat(),
+279 | |                     status="next_round_not_verified",
+280 | |                 ),
+281 | |                 dict(
+282 | |                     official_url="https://s2.exam.ccu.edu.tw/ccuee_intro/stu/intro_index.php",
+283 | |                     role="academic_units",
+284 | |                     checked_at=CHECKED_AT.isoformat(),
+285 | |                     status="verified_current_directory_not_exchange_rule",
+286 | |                 ),
+287 | |             ],
+288 | |             related_attachments_note="104筆PDF相關連結保留於field-audit.json；未逐份開啟核對，不列為已核實當期申請文件。",
+289 | |         ),
+    | |_________^
+290 |       )
+291 |       write("home-rules.json", home)
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:266:17
+    |
+264 |               sources=sources,
+265 |               additional_sources=[
+266 | /                 dict(
+267 | |                     official_url=ANNOUNCEMENT_URL,
+268 | |                     role="current_round_announcement",
+269 | |                     published_at="2026-08-18",
+270 | |                     academic_year=YEAR,
+271 | |                     application_round=ROUND,
+272 | |                     checked_at=CHECKED_AT.isoformat(),
+273 | |                     snapshot_file="announcement.json",
+274 | |                 ),
+    | |_________________^
+275 |                   dict(
+276 |                       official_url=NEWS_URL,
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:275:17
+    |
+273 |                       snapshot_file="announcement.json",
+274 |                   ),
+275 | /                 dict(
+276 | |                     official_url=NEWS_URL,
+277 | |                     role="latest_round_lookup",
+278 | |                     checked_at=CHECKED_AT.isoformat(),
+279 | |                     status="next_round_not_verified",
+280 | |                 ),
+    | |_________________^
+281 |                   dict(
+282 |                       official_url="https://s2.exam.ccu.edu.tw/ccuee_intro/stu/intro_index.php",
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:281:17
+    |
+279 |                       status="next_round_not_verified",
+280 |                   ),
+281 | /                 dict(
+282 | |                     official_url="https://s2.exam.ccu.edu.tw/ccuee_intro/stu/intro_index.php",
+283 | |                     role="academic_units",
+284 | |                     checked_at=CHECKED_AT.isoformat(),
+285 | |                     status="verified_current_directory_not_exchange_rule",
+286 | |                 ),
+    | |_________________^
+287 |               ],
+288 |               related_attachments_note="104筆PDF相關連結保留於field-audit.json；未逐份開啟核對，不列為已核實當期申請文件。",
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> scripts/build_ccu_source_audit.py:295:13
+    |
+293 |       print(
+294 |           json.dumps(
+295 | /             dict(
+296 | |                 validated_files=len(sources),
+297 | |                 home_fields=len(home["fields"]),
+298 | |                 conflicts=len(conflicts),
+299 | |             )
+    | |_____________^
+300 |           )
+301 |       )
+    |
+help: Rewrite as a literal
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests/test_ccu_second_pass.py:3:1
+   |
+ 1 |   """Use real bundled rows to protect cross-source deadlines and research status."""
+ 2 |
+ 3 | / import hashlib
+ 4 | | import importlib.util
+ 5 | | import json
+ 6 | | from pathlib import Path
+ 7 | | import subprocess
+ 8 | |
+ 9 | | import pytest
+10 | | import requests
+11 | | from pypdf import PdfReader
+12 | |
+13 | | from exchange_info.ccu_sources import BUNDLE
+14 | | from exchange_info.ccu_student_view import fetch_ccu_partner_universities
+15 | | from exchange_info.models import UniversityApplicationWorkflow
+16 | | from exchange_info.storage import read_jsonl
+   | |____________________________________________^
+help: Organize imports
+  |
+5 | import json
+6 + import subprocess
+7 | from pathlib import Path
+  - import subprocess
+8 |
+  |
+
+F401 [*] `pathlib.Path` imported but unused
+ --> tests/test_ccu_second_pass.py:6:21
+  |
+4 | import importlib.util
+5 | import json
+6 | from pathlib import Path
+  |                     ^^^^
+7 | import subprocess
+  |
+help: Remove unused import: `pathlib.Path`
+  |
+5 | import json
+  - from pathlib import Path
+6 | import subprocess
+  |
+
+PLW1510 `subprocess.run` without explicit `check` argument
+  --> tests/test_ccu_second_pass.py:54:14
+   |
+52 |     assert.ok(partnerDeadlineReference(item).value.includes(item.partner_exchange_details.application_deadline.value));
+53 |     """
+54 |     result = subprocess.run(
+   |              ^^^^^^^^^^^^^^
+55 |         ["node", "-e", script],
+56 |         input=partner.model_dump_json(),
+   |
+help: Add explicit `check=False`
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_second_pass.py:159:12
+    |
+157 |               return response
+158 |
+159 |       item = dict(
+    |  ____________^
+160 | |         url="https://official.example.edu/Admission/index.htm",
+161 | |         source_id="test",
+162 | |         authority="partner_official_public_page",
+163 | |     )
+    | |_____^
+164 |       raw = b"\xd0\xcf\x11\xe0\xa1\xb1\x1a\xe1" + b"not html"
+165 |       doc = module.fetch_public_source(item, tmp_path, Session(raw))
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_second_pass.py:176:9
+    |
+174 |     )
+175 |     assert page["links"] == [
+176 |         dict(label="Form", url="https://official.example.edu/form.doc")
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+177 |     ]
+    |
+help: Rewrite as a literal
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> tests/test_ccu_support.py:1:1
+   |
+ 1 | / import hashlib
+ 2 | | import json
+ 3 | | import subprocess
+ 4 | | from collections import Counter
+ 5 | | from pathlib import Path
+ 6 | |
+ 7 | | import pytest
+ 8 | | from fastapi.testclient import TestClient
+ 9 | | from pypdf import PdfReader
+10 | |
+11 | | from exchange_info.api import create_app
+12 | | from exchange_info.advisor import build_advisor_plan
+13 | | from exchange_info.application_documents import all_application_templates
+14 | | from exchange_info.application_rules import (
+15 | |     build_personal_application_plan,
+16 | |     _partner_language_threshold,
+17 | | )
+18 | | from exchange_info.ccu_sources import BUNDLE, CHECKED_AT, HOME, ROUND, YEAR, home_round
+19 | | from exchange_info.ccu_student_view import (
+20 | |     fetch_ccu_partner_universities,
+21 | |     build_ccu_student_dashboard,
+22 | | )
+23 | | from exchange_info.models import (
+24 | |     AdvisorProfile,
+25 | |     PersonalApplicationPlanRequest,
+26 | |     UniversityApplicationWorkflow,
+27 | | )
+28 | | from exchange_info.storage import read_jsonl
+29 | | from exchange_info.university_registry import CCU, resolve_university
+30 | | from exchange_info.workflow_structuring import workflow_structure_issues
+   | |________________________________________________________________________^
+help: Organize imports
+   |
+10 |
+11 + from exchange_info.advisor import build_advisor_plan
+12 | from exchange_info.api import create_app
+   - from exchange_info.advisor import build_advisor_plan
+13 | from exchange_info.application_documents import all_application_templates
+14 | from exchange_info.application_rules import (
+15 +     _partner_language_threshold,
+16 |     build_personal_application_plan,
+   -     _partner_language_threshold,
+17 | )
+18 | from exchange_info.ccu_sources import BUNDLE, CHECKED_AT, HOME, ROUND, YEAR, home_round
+19 | from exchange_info.ccu_student_view import (
+   -     fetch_ccu_partner_universities,
+20 |     build_ccu_student_dashboard,
+21 +     fetch_ccu_partner_universities,
+22 | )
+   |
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_support.py:178:22
+    |
+176 |         college="工學院",
+177 |         degree_level="大學部",
+178 |         preferences=[dict(rank=1, school_name=partner.school_name)],
+    |                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+179 |     )
+180 |     result = build_personal_application_plan(
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_support.py:197:13
+    |
+195 |         home_school=HOME,
+196 |         preferences=[
+197 |             dict(rank=i + 1, school_name=p.school_name) for i, p in enumerate(partners)
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+198 |         ],
+199 |     )
+    |
+help: Rewrite as a literal
+
+C408 Unnecessary `dict()` call (rewrite as a literal)
+   --> tests/test_ccu_support.py:206:40
+    |
+204 |     unknown = at(71)
+205 |     request = PersonalApplicationPlanRequest(
+206 |         home_school=HOME, preferences=[dict(rank=1, school_name=unknown.school_name)]
+    |                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+207 |     )
+208 |     result = build_personal_application_plan(
+    |
+help: Rewrite as a literal
+
+PLW1510 `subprocess.run` without explicit `check` argument
+   --> tests/test_ccu_support.py:326:14
+    |
+324 |     assert.equal(calls.size,5);
+325 |     """
+326 |     result = subprocess.run(
+    |              ^^^^^^^^^^^^^^
+327 |         ["node", "-e", script, str(Path("src/exchange_info/static/app.js").resolve())],
+328 |         capture_output=True,
+    |
+help: Add explicit `check=False`
+
+Found 47 errors.
+[*] 15 fixable with the `--fix` option (29 hidden fixes can be enabled with the `--unsafe-fixes` option).

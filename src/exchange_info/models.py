@@ -553,16 +553,87 @@ class PartnerProgramOption(BaseModel):
     student_summary_zh: PartnerStudentSummary = Field(default_factory=PartnerStudentSummary)
 
 
+class ExchangeFieldEvidence(BaseModel):
+    source_url: str
+    source_pages: list[int] = Field(default_factory=list)
+    academic_year: str | None = None
+    application_round: str | None = None
+    checked_at: datetime
+    status: Literal["verified_current", "reference_only", "missing", "needs_confirmation", "conflict", "explicit_not_announced"]
+    excerpt: str | None = None
+    reference_excerpt: str | None = None
+    note: str | None = None
+
+
+class PartnerLanguageCondition(BaseModel):
+    """A reviewed condition, separate from unparsed source text or CEFR ranges."""
+
+    test: str
+    test_variant: str | None = None
+    minimum_score: float | None = None
+    requirement_level: Literal["required", "recommended", "no_score_minimum", "needs_confirmation", "conflict"]
+    degree_levels: list[str] = Field(default_factory=list)
+    track: str | None = None
+    host_faculties: list[str] = Field(default_factory=list)
+    teaching_language: str | None = None
+    scope_choice_required: bool = False
+    additional_conditions: list[str] = Field(default_factory=list)
+    evidence: ExchangeFieldEvidence
+
+
+class ExchangeSourceCheck(BaseModel):
+    source_id: str
+    source_url: str
+    checked_at: datetime
+    result: str
+    timestamp_precision: Literal["date", "datetime"] = "datetime"
+
+
+class PartnerExchangeDetailField(BaseModel):
+    """Receiving-school facts retain their own year, scope and source evidence."""
+
+    value: str | None = None
+    status: Literal["verified_current", "reference_only", "missing", "needs_confirmation", "conflict", "explicit_not_announced"]
+    reason: str
+    evidence: list[ExchangeFieldEvidence] = Field(default_factory=list)
+    research_category: Literal[
+        "verified_supported", "official_not_announced",
+        "unresolved_source_conflict",
+        "login_or_school_confirmation", "source_technical_failure",
+        "alternative_official_sources_not_fully_checked",
+    ] | None = None
+    research_note: str | None = None
+    source_checks: list[ExchangeSourceCheck] = Field(default_factory=list)
+
+
 class PartnerUniversity(BaseModel):
     program_type: str
     availability_status: Literal[
-        "open", "agreement_only", "departmental_reference"
+        "open", "agreement_only", "departmental_reference", "not_open", "needs_confirmation", "zero_quota", "fee_paying"
     ] = "open"
     availability_note: str | None = None
     agreement_type: str | None = None
     agreement_level: str | None = None
     country: str | None = None
     school_name: str
+    academic_year: str | None = None
+    application_round: str | None = None
+    checked_at: datetime | None = None
+    source_pages: list[int] = Field(default_factory=list)
+    quota_status: Literal["published", "zero", "not_published", "reference_only", "fee_paying"] | None = None
+    application_window_status: Literal["open", "closed", "needs_confirmation"] | None = None
+    field_evidence: dict[str, ExchangeFieldEvidence] = Field(default_factory=dict)
+    reference_data: dict[str, str] = Field(default_factory=dict)
+    language_requirement: str | None = None
+    language_conditions: list[PartnerLanguageCondition] = Field(default_factory=list)
+    language_review_note: str | None = None
+    partner_application_prerequisite: str | None = None
+    partner_exchange_details: dict[str, PartnerExchangeDetailField] = Field(default_factory=dict)
+    partner_application_deadline: str | None = None
+    nomination_deadline: str | None = None
+    semester_dates: str | None = None
+    housing_info: str | None = None
+    course_restrictions: str | None = None
     location: UniversityLocation | None = None
     website: str | None = None
     colleges: str | None = None
@@ -582,6 +653,26 @@ class PartnerUniversity(BaseModel):
     image_status: str = "missing"
     program_options: list[PartnerProgramOption] = Field(default_factory=list)
     student_summary_zh: PartnerStudentSummary = Field(default_factory=PartnerStudentSummary)
+
+    @model_serializer(mode="wrap")
+    def serialize_source_details(self, handler):
+        payload = handler(self)
+        # Older school bundles have no structured source evidence. Keep their
+        # tracked serialization stable while allowing populated optional fields.
+        optional_source_fields = (
+            "academic_year", "application_round", "checked_at", "source_pages",
+            "quota_status", "application_window_status", "field_evidence",
+            "reference_data", "language_requirement", "language_conditions",
+            "language_review_note", "partner_application_prerequisite",
+            "partner_exchange_details", "partner_application_deadline",
+            "nomination_deadline", "semester_dates", "housing_info",
+            "course_restrictions",
+        )
+        if not self.field_evidence and not self.source_pages:
+            for key in optional_source_fields:
+                if payload.get(key) in (None, [], {}):
+                    payload.pop(key, None)
+        return payload
 
 
 class SchoolCompletenessItem(BaseModel):
@@ -1207,6 +1298,13 @@ class ApplicationDocumentRequirement(BaseModel):
     official_form_url: str | None = None
     source_urls: list[str] = Field(default_factory=list)
     needs_confirmation: bool = False
+    stage: Literal["nomination", "student_application", "after_application", "second_submission", "post_offer", "after_dorm_assignment", "conditional_program"] | None = None
+    conditional: bool = False
+    condition: str | None = None
+    official_form_verified: bool = False
+    applicability_status: Literal["verified_current", "needs_confirmation", "reference_only"] | None = None
+    applicability_year: str | None = None
+    applicability_note: str | None = None
 
 
 class ApplicationWorkflowSource(BaseModel):
@@ -1337,6 +1435,10 @@ class ApplicationPlanEligibilityCheck(BaseModel):
         "college",
         "degree_level",
         "academic_score",
+        "academic_gpa",
+        "home_year",
+        "home_deadline",
+        "source_cycle",
         "language_score",
         "home_language_score",
         "academic_year",
@@ -1396,6 +1498,7 @@ class PersonalApplicationPlanRequest(BaseModel):
     degree_level: str | None = Field(default=None, max_length=80)
     academic_score: float | None = Field(default=None, ge=0, le=100)
     academic_gpa: float | None = Field(default=None, ge=0, le=4.3)
+    current_year: str | None = Field(default=None, max_length=40)
     class_rank_percent: float | None = Field(default=None, gt=0, le=100)
     language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
@@ -1458,6 +1561,13 @@ class ApplicationDocumentCatalogItem(BaseModel):
     needs_confirmation: bool = False
     download_available: bool = False
     contact_unit: str | None = None
+    stage: Literal["nomination", "student_application", "after_application", "second_submission", "post_offer", "after_dorm_assignment", "conditional_program"] | None = None
+    conditional: bool = False
+    condition: str | None = None
+    official_form_verified: bool = False
+    applicability_status: Literal["verified_current", "needs_confirmation", "reference_only"] | None = None
+    applicability_year: str | None = None
+    applicability_note: str | None = None
 
 
 class ApplicationDocumentCatalog(BaseModel):
@@ -2494,6 +2604,8 @@ class StudentDashboard(BaseModel):
     last_checked: datetime | None = None
     academic_score_minimum: float | None = None
     academic_score_rule: str | None = None
+    academic_gpa_minimum: float | None = None
+    maximum_preferences: int = 5
     selection_rules: HomeSelectionRules = Field(default_factory=HomeSelectionRules)
     language_score_minimums: dict[str, float] = Field(default_factory=dict)
     application_periods: list[ApplicationPeriodItem] = Field(default_factory=list)
@@ -3697,7 +3809,6 @@ class AccountSelectionProfile(BaseModel):
     application_round: str = Field(default="", max_length=80)
     preferred_teaching_language: TeachingLanguage | None = None
     course_interests: str = Field(default="", max_length=120)
-
 
 class AccountSelectionConditions(BaseModel):
     model_config = ConfigDict(extra="forbid")

@@ -1,0 +1,50 @@
+CONFTEST LOADED!
+F..F.....F                                                               [100%]
+=================================== FAILURES ===================================
+_ test_public_dorm_templates_have_real_signers_without_a_current_template_claim _
+
+    def test_public_dorm_templates_have_real_signers_without_a_current_template_claim():
+        requirements = reviewed_documents()[47]["requirements"]
+        for index, signers in [(7, ["學生"]), (8, ["學生", "Clinician"])]:
+            item = requirements[index]
+            assert item["conditional"]
+            assert all(any(s in value for value in item["requirement"]["signatures"]) for s in signers)
+            assert item["requirement"]["official_form_url"] in verified_form_urls()
+>           assert "未" in item["applicability_note"]
+E           AssertionError: assert '未' in '當期文件要求已核；兩份公開空白表實開各1頁但年度空白／header有差，不宣稱當期新版已核。學生簽日期原文已核。'
+
+tests/test_ccu_twentieth_pass.py:31: AssertionError
+___ test_colabs_actual_spring_2027_calendar_is_not_an_all_programme_calendar ___
+
+    def test_colabs_actual_spring_2027_calendar_is_not_an_all_programme_calendar():
+        field = reviewed_rows()[35]["fields"]["academic_calendar"]
+        assert field["status"] == "verified_current"
+        assert "4/8" in field["value"] and "8/4–6" in field["value"]
+        assert "Early April 2027" in field["value"]
+>       evidence = next(e for e in field["evidence"] if e["source_id"] == "p35-r20-c79604cd51")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       StopIteration
+
+tests/test_ccu_twentieth_pass.py:78: StopIteration
+_______ test_document_center_has_actual_downloads_and_uncertainty_notes ________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-109/test_document_center_has_actua0')
+
+    def test_document_center_has_actual_downloads_and_uncertainty_notes(tmp_path):
+        client = TestClient(create_app(tmp_path))
+        response = client.get("/application-center/catalog", params={"school": HOME, "target_school": at(47).school_name})
+        assert response.status_code == 200
+        items = response.json()["items"]
+        for needle, source_id in [("宿舍申請表", "1xThdiWsgT4IZ5Tco7UZnpUGFDA16Hknf"), ("健康／TB", "1NwoAHiWT7p3yJO1s-YqyhZCSRN0YQiBy")]:
+            item = next(r for r in items if needle in r["name"])
+            assert item["download_available"] and item["official_form_verified"]
+            assert source_id in item["official_form_url"]
+>           assert "未" in item["applicability_note"]
+E           AssertionError: assert '未' in '當期文件要求已核；兩份公開空白表實開各1頁但年度空白／header有差，不宣稱當期新版已核。學生簽日期原文已核。'
+
+tests/test_ccu_twentieth_pass.py:147: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_twentieth_pass.py::test_public_dorm_templates_have_real_signers_without_a_current_template_claim
+FAILED tests/test_ccu_twentieth_pass.py::test_colabs_actual_spring_2027_calendar_is_not_an_all_programme_calendar
+FAILED tests/test_ccu_twentieth_pass.py::test_document_center_has_actual_downloads_and_uncertainty_notes
+3 failed, 7 passed in 5.56s

@@ -1,0 +1,24 @@
+CONFTEST LOADED!
+.....F.....                                                              [100%]
+=================================== FAILURES ===================================
+___ test_seoultech_bank_authentication_does_not_inherit_other_document_rules ___
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-84/test_seoultech_bank_authentica0')
+
+    def test_seoultech_bank_authentication_does_not_inherit_other_document_rules(tmp_path):
+        partner = at(48)
+        fields = reviewed_rows()[48]["fields"]
+        assert "未列銀行認證" in fields["documents"]["value"]
+        assert "銀行只列USD6000一期／12000一年資金證明，未列認證" in fields["visa"]["value"]
+>       assert {3, 7} <= {
+            page for ev in fields["documents"]["evidence"] for page in ev["source_pages"]
+        }
+E       assert {3, 7} <= {3}
+E         
+E         Extra items in the left set:
+E         7
+
+tests/test_ccu_sixteenth_pass.py:144: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_sixteenth_pass.py::test_seoultech_bank_authentication_does_not_inherit_other_document_rules
+1 failed, 10 passed in 9.50s

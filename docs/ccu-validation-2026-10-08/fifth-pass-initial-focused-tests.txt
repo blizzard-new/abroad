@@ -1,0 +1,33 @@
+CONFTEST LOADED!
+...F..F..                                                                [100%]
+=================================== FAILURES ===================================
+____ test_cau_fall_2026_and_short_programs_do_not_become_spring_2027_policy ____
+
+    def test_cau_fall_2026_and_short_programs_do_not_become_spring_2027_policy():
+        s = source("p50-r5-factsheet-article")
+        assert "2026 Fall Fact Sheet" in s["text_pages"][0]
+        assert source("p50-r5-fall26-factsheet")["content_applicability"] == "reference_only"
+        f = fields(50)
+        for key in ["application_forms", "academic_calendar", "housing_deadline", "visa"]:
+            assert f[key].status == "needs_confirmation"
+        assert "visiting" in f["host_tuition"].value
+>       assert "未" in f["arrival"].value
+E       AssertionError: assert '未' in '一般春季lateFebruary抵達、最后一周mandatoryorientation、入住日之前自己找房；Fall2026附件建议开课前2–3天。不知道2027Spring確切arrival/迎新/入住日；GLAMbuddy協助適應，不保證接機。'
+E        +  where '一般春季lateFebruary抵達、最后一周mandatoryorientation、入住日之前自己找房；Fall2026附件建议开课前2–3天。不知道2027Spring確切arrival/迎新/入住日；GLAMbuddy協助適應，不保證接機。' = PartnerExchangeDetailField(value='一般春季lateFebruary抵達、最后一周mandatoryorientation、入住日之前自己找房；Fall2026附件建议开课前2–3天。不知道2027Spr...10, 777504, tzinfo=TzInfo(0)), result='已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。', timestamp_precision='datetime')]).value
+
+tests/test_ccu_fifth_pass.py:83: AssertionError
+_________ test_fhnw_2027_entry_keeps_actual_2026_basel_and_olten_scope _________
+
+    def test_fhnw_2027_entry_keeps_actual_2026_basel_and_olten_scope():
+        f = fields(104)
+        assert f["course_restrictions"].status == "conflict"
+        assert "Basel" in f["course_restrictions"].value
+>       assert "全年" in f["course_restrictions"].value
+E       AssertionError: assert '全年' in '來源年矛盾：Spring2027英語入口的BaselIBM/BIT兩PDF正文均Spring2026，不作當期開课。Brugg-WindischIM/BIT正文Spring2027、OltenIM provisional2027已讀：先修/成班/滿班與PT夜間周六、最多一focus/專門化、不得混專門化。Olten2/8–12密集及internationalprojects仅全學年學生，與新生迎新重疊；不能给新入春季當可修清單。'
+E        +  where '來源年矛盾：Spring2027英語入口的BaselIBM/BIT兩PDF正文均Spring2026，不作當期開课。Brugg-WindischIM/BIT正文Spring2027、OltenIM provisional2027已讀：先修/成班/滿班與PT夜間周六、最多一focus/專門化、不得混專門化。Olten2/8–12密集及internationalprojects仅全學年學生，與新生迎新重疊；不能给新入春季當可修清單。' = PartnerExchangeDetailField(value='來源年矛盾：Spring2027英語入口的BaselIBM/BIT兩PDF正文均Spring2026，不作當期開课。Brugg-WindischIM/BIT正文Spri... 1, 285070, tzinfo=TzInfo(0)), result='已全文讀取並核對本欄；此來源未提供可直接映射的本欄當期依據，舊年及計畫範圍另見來源紀錄。', timestamp_precision='datetime')]).value
+
+tests/test_ccu_fifth_pass.py:118: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_fifth_pass.py::test_cau_fall_2026_and_short_programs_do_not_become_spring_2027_policy
+FAILED tests/test_ccu_fifth_pass.py::test_fhnw_2027_entry_keeps_actual_2026_basel_and_olten_scope
+2 failed, 7 passed in 1.33s
