@@ -145,6 +145,42 @@ def test_batch_staging_has_zero_approval_publication_and_is_idempotent(tmp_path)
     assert persisted_bytes(store) == before
 
 
+def test_legacy_public_refresh_keeps_a_reference_baseline_without_publishing(tmp_path):
+    store = LocalContentGovernanceStore(tmp_path)
+    original = _content_workflow("Synthetic legacy public")
+    store.publish_workflow(original, "synthetic-legacy")
+    assert store.list_revisions() == []
+    public_before = persisted_bytes(store)["public"]
+    candidate = stage_workflow_refresh(store, _content_workflow("Synthetic legacy changed")).revision
+    revisions = store.list_revisions()
+    assert len(revisions) == 2
+    assert {row.status.value for row in revisions} == {"superseded", "pending_review"}
+    assert all(row.review_approvals == [] for row in revisions)
+    assert next(row for row in revisions if row.status.value == "superseded").detected_by == "legacy_import"
+    assert candidate.version == original.version + 1
+    assert persisted_bytes(store)["public"] == public_before
+
+
+@pytest.mark.parametrize("order_key", ["id", "workflow_key"])
+def test_capped_snapshot_reads_all_rows_and_rejects_unverifiable_truncation(order_key):
+    from types import SimpleNamespace
+    from unittest.mock import Mock
+    rows = [{order_key: str(index), "event_payload": {"index": index}} for index in range(3)]
+    offsets = []
+    def fetch(method, table, *, headers, params):
+        assert headers["Prefer"] == "count=exact"
+        offset = params["offset"];offsets.append(offset)
+        page = rows[offset:offset + 2]
+        return SimpleNamespace(headers={"Content-Range": f"{offset}-{offset + len(page) - 1}/3"}, json=lambda: page)
+    store = SimpleNamespace(_request=fetch)
+    assert commands.read_governance_snapshot_rows(store, "synthetic", select="*", order_key=order_key) == rows
+    assert offsets == [0, 2]
+    store._request = Mock(return_value=SimpleNamespace(headers={"Content-Range": "0-1/*"}, json=lambda: rows[:2]))
+    with pytest.raises(RuntimeError, match="完整筆數"):
+        commands.read_governance_snapshot_rows(store, "synthetic", select="*", order_key=order_key)
+    assert store._request.call_count == 1
+
+
 def test_source_edit_clears_approvals_and_retains_complete_old_attestations(tmp_path):
     store, _, candidate = ready_store(tmp_path)
     before = persisted_bytes(store)

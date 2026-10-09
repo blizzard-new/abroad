@@ -988,7 +988,7 @@ def stage_workflow_refresh(
             workflow_key=key,
             version=current.version,
             base_version=None,
-            status=ApplicationWorkflowReviewStatus.PUBLISHED,
+            status=ApplicationWorkflowReviewStatus.SUPERSEDED,
             content_hash=workflow_content_hash(current),
             change_summary=["匯入既有已發布流程作為版本基線。"],
             workflow=current,

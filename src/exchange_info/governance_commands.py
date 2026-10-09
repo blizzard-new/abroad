@@ -12,6 +12,7 @@ from functools import wraps
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import tempfile
 import threading
@@ -271,13 +272,51 @@ REVISION_TOKEN_FIELDS = ('id', 'workflow_key', 'version', 'base_version', 'statu
 WORKFLOW_TOKEN_FIELDS = ('workflow_key', 'published_version', 'published_payload', 'current_revision_id', 'home_university', 'partner_university', 'program_type', 'academic_year', 'application_round', 'published_at')
 
 
+def read_governance_snapshot_rows(store, table, *, select, order_key):
+    """Read every capped PostgREST page, or fail without treating it as complete.
+
+    Each page requests an exact count and the same unique stable ordering.
+    A changed count, repeated identity or inconsistent Content-Range stops the
+    command. Changes during otherwise consistent reads still fail the SQL CAS.
+    """
+    rows, identities, total = [], set(), None
+    while total is None or len(rows) < total:
+        response = store._request("GET", table, headers={"Prefer": "count=exact"},
+            params={"select": select, "order": order_key + ".asc", "offset": len(rows), "limit": 1000})
+        page = response.json()
+        content_range = response.headers.get("Content-Range", "")
+        match = re.fullmatch(r"(?:(\d+)-(\d+)|\*)/(\d+)", content_range)
+        if match is None or not isinstance(page, list):
+            raise RuntimeError("治理快照缺少可核實的完整筆數，已停止寫入。")
+        count = int(match[3])
+        if total is None:
+            total = count
+        elif total != count:
+            raise ValueError("治理快照在分頁期間變更，請重新載入。")
+        if not page:
+            if len(rows) != total:
+                raise RuntimeError("治理快照分頁遭截斷，已停止寫入。")
+            break
+        if match[1] is None or int(match[1]) != len(rows) or int(match[2]) != len(rows) + len(page) - 1:
+            raise RuntimeError("治理快照分頁範圍不一致，已停止寫入。")
+        for row in page:
+            identity = row.get(order_key)
+            if identity is None or identity in identities:
+                raise RuntimeError("治理快照分頁重複或缺少識別，已停止寫入。")
+            identities.add(identity)
+        rows.extend(page)
+        if len(rows) > total:
+            raise RuntimeError("治理快照筆數不一致，已停止寫入。")
+    return rows
+
+
 def supabase_workflow_snapshot(store):
     capability = store._request("GET", "/rest/v1/application_workflow_audit_log", params={
         "select": "id", "metadata->>governance_command_schema": "eq.1", "limit": 1}).json()
     if not capability:
         raise RuntimeError("原子治理命令 migration 尚未可核實，已停止寫入。")
-    revision_rows = store._request("GET", "/rest/v1/application_workflow_revisions", params={"select": "*", "order": "id.asc"}).json()
-    public_rows = store._request("GET", "/rest/v1/application_workflows", params={"select": "*", "order": "workflow_key.asc"}).json()
+    revision_rows = read_governance_snapshot_rows(store, "/rest/v1/application_workflow_revisions", select="*", order_key="id")
+    public_rows = read_governance_snapshot_rows(store, "/rest/v1/application_workflows", select="*", order_key="workflow_key")
     revisions = [store._revision_from_row(row) for row in revision_rows]
     published = [m.UniversityApplicationWorkflow.model_validate(row["published_payload"]) for row in public_rows if row.get("published_payload")]
     fallback = store.fallback.load_published_workflows() if store.fallback is not None else []
@@ -401,7 +440,7 @@ def supabase_destination_snapshot(store):
         "select": "id", "metadata->>governance_command_schema": "eq.1", "limit": 1}).json()
     if not capability:
         raise RuntimeError("原子治理命令 migration 尚未可核實，已停止寫入。")
-    raw = {key: store._request("GET", table, params={"select": "event_payload", "order": "id.asc"}).json()
+    raw = {key: read_governance_snapshot_rows(store, table, select="id,event_payload", order_key="id")
            for key, table in DESTINATION_TABLES.items()}
     expected = {key: [row["event_payload"] for row in values] for key, values in raw.items()}
     return {key: [DESTINATION_TYPES[key].model_validate(row) for row in values] for key, values in expected.items()}, expected

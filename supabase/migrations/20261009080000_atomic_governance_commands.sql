@@ -52,6 +52,9 @@ declare
     v_cutoff timestamptz;
     v_latest_reviews jsonb;
     v_prior_publication jsonb;
+    v_prior_revision jsonb;
+    v_previous_approval_count integer;
+    v_command_hash text;
 
 begin
 
@@ -60,8 +63,17 @@ begin
     perform pg_advisory_xact_lock(hashtextextended('exchange-content-governance-command', 0));
     if jsonb_typeof(p_change_summary) = 'object' and p_change_summary ? 'governance_command' then
         v_command := p_change_summary->'governance_command';
+        v_command_hash := public.exchange_community_request_fingerprint(v_command);
+        -- An exact previously committed envelope is a completed retry even
+        -- though its original expected snapshot is now stale. The durable
+        -- append-only audit is the receipt; never replay its mutations.
+        if exists(select 1 from public.application_workflow_audit_log where
+            metadata->>'governance_command_hash'=v_command_hash and
+            metadata - 'governance_command_hash' = v_command) then
+            return jsonb_build_object('committed',true,'operation',v_command->>'operation');
+        end if;
         if coalesce(btrim(v_command->>'actor'), '') = '' or
-           v_command->>'operation' not in (
+           coalesce(v_command->>'operation','') not in (
              'stage_existing_workflow_for_review', 'stage_workflow_refresh',
              'stage_application_workflow_review_batch', 'update_pending_workflow_applicability',
              'approve_workflow_revision', 'publish_workflow_revision',
@@ -70,6 +82,11 @@ begin
             raise exception using errcode='22023', message='Invalid governance command actor or operation';
         end if;
         if v_command->>'kind' = 'workflow' then
+            if v_command->>'operation' not in ('stage_existing_workflow_for_review','stage_workflow_refresh',
+                'stage_application_workflow_review_batch','update_pending_workflow_applicability',
+                'approve_workflow_revision','publish_workflow_revision','rollback_published_workflow','reject_workflow_revision') then
+                raise exception using errcode='22023', message='Invalid workflow command operation';
+            end if;
             select coalesce(jsonb_agg(jsonb_build_object(
                 'id', id,
                 'workflow_key', workflow_key,
@@ -123,7 +140,56 @@ begin
                jsonb_array_length(v_command->'published') <> 1 then
                 raise exception using errcode='PT409', message='Publication must atomically include exactly one public payload';
             end if;
+            if v_command->>'operation' not in ('publish_workflow_revision','rollback_published_workflow') and
+               jsonb_array_length(v_command->'published')<>0 then
+                raise exception using errcode='PT409', message='Only publication and rollback commands may change public payloads';
+            end if;
             for v_row in select value from jsonb_array_elements(v_command->'revisions') loop
+                select value into v_prior_revision from jsonb_array_elements(v_current_revisions)
+                    where value->>'id'=v_row->>'id';
+                if v_command->>'operation'='approve_workflow_revision' then
+                    v_previous_approval_count := jsonb_array_length(v_prior_revision->'review_approvals');
+                    if v_prior_revision is null or v_prior_revision->>'status'<>'pending_review' or
+                       v_row->>'status'<>'pending_review' or
+                       v_prior_revision->>'content_hash' is distinct from v_row->>'content_hash' or
+                       v_prior_revision->>'required_review_count' is distinct from v_row->>'required_review_count' or
+                       jsonb_array_length(v_command->'revisions')<>1 or jsonb_array_length(v_command->'published')<>0 or
+                       jsonb_array_length(v_row->'review_approvals')<>v_previous_approval_count+1 or
+                       (v_row->'review_approvals') - v_previous_approval_count is distinct from v_prior_revision->'review_approvals' or
+                       v_row->'review_approvals'->v_previous_approval_count->>'reviewer_id' is distinct from v_command->>'actor' or
+                       exists(select 1 from jsonb_array_elements(v_prior_revision->'review_approvals') a where
+                           lower(btrim(a->>'reviewer_id'))=lower(btrim(v_command->>'actor'))) then
+                        raise exception using errcode='PT409', message='Approval must independently append one actor-bound attestation to the stored revision';
+                    end if;
+                elsif v_command->>'operation'='publish_workflow_revision' then
+                    if v_prior_revision is null or v_row->'review_approvals' is distinct from v_prior_revision->'review_approvals' then
+                        raise exception using errcode='PT409', message='Publication cannot introduce or change stored approvals';
+                    end if;
+                    if v_row->>'status'='published' and (
+                        v_prior_revision->>'status'<>'pending_review' or
+                        v_prior_revision->>'content_hash' is distinct from v_row->>'content_hash' or
+                        v_prior_revision->>'required_review_count' is distinct from v_row->>'required_review_count' or
+                        v_row->>'reviewed_by' is distinct from v_command->>'actor' or
+                        not exists(select 1 from jsonb_array_elements(v_prior_revision->'review_approvals') a where a->>'reviewer_id'=v_command->>'actor') or
+                        exists(select 1 from jsonb_array_elements(v_prior_revision->'review_approvals') a where
+                            not exists(select 1 from public.application_workflow_audit_log e,
+                                lateral jsonb_array_elements(e.metadata->'revisions') r where
+                                e.metadata->>'operation'='approve_workflow_revision' and
+                                e.actor_id=a->>'reviewer_id' and e.metadata->>'actor'=a->>'reviewer_id' and
+                                r->>'id'=v_row->>'id' and r->>'content_hash'=v_row->>'content_hash' and
+                                r->'review_approvals' @> jsonb_build_array(a)))) then
+                        raise exception using errcode='PT409', message='Publication requires independently persisted actor-bound approval provenance';
+                    end if;
+                elsif v_command->>'operation'='update_pending_workflow_applicability' then
+                    if v_prior_revision is null or v_prior_revision->>'status'<>'pending_review' or
+                       v_row->>'status'<>'pending_review' or v_row->'review_approvals'<>'[]'::jsonb or
+                       jsonb_array_length(v_row->'edit_history')<>jsonb_array_length(v_prior_revision->'edit_history')+1 or
+                       (v_row->'edit_history') - (jsonb_array_length(v_row->'edit_history')-1) is distinct from v_prior_revision->'edit_history' or
+                       v_row->'edit_history'->-1->'invalidated_review_approvals' is distinct from v_prior_revision->'review_approvals' or
+                       v_row->'edit_history'->-1->>'edited_by' is distinct from v_command->>'actor' then
+                        raise exception using errcode='PT409', message='Source edits must retain the complete stored invalidated attestations';
+                    end if;
+                end if;
                 v_hash_payload := (v_row->'workflow_payload') - array[
                     'workflow_id','governance_key','issue_report_snapshot','version','review_status',
                     'published_at','supersedes_version','applied_context','last_checked'];
@@ -318,7 +384,8 @@ begin
         end if;
         insert into public.application_workflow_audit_log(workflow_key,action,actor_id,note,metadata,created_at)
             values(case when v_command->>'kind'='workflow' then v_command->'revisions'->0->>'workflow_key' else '__governance_command_schema__' end,
-                'submitted',v_command->>'actor',v_command->>'operation',v_command,p_updated_at);
+                'submitted',v_command->>'actor',v_command->>'operation',
+                v_command || jsonb_build_object('governance_command_hash',v_command_hash),p_updated_at);
         return jsonb_build_object('committed',true,'operation',v_command->>'operation');
     end if;
 

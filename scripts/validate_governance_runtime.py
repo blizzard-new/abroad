@@ -65,8 +65,20 @@ def validate_atomic_governance(context, *, psql):
         def request(method, url, **kwargs):
             parsed = urlsplit(url)
             require(parsed.hostname == "runtime-supabase.invalid" and parsed.path.startswith("/rest/v1/"), "unexpected gateway URL")
-            calls.append({"method": method, "path": parsed.path, "instance": base})
-            return requests.request(method, base + parsed.path.removeprefix("/rest/v1"), **kwargs)
+            entry = {"method": method, "path": parsed.path, "instance": base}
+            calls.append(entry)
+            is_rpc = method == "POST" and "/rpc/" in parsed.path
+            before = json.loads(snapshot()) if is_rpc else None
+            if is_rpc:
+                entry["envelope"] = kwargs["json"]
+            response = requests.request(method, base + parsed.path.removeprefix("/rest/v1"), **kwargs)
+            if is_rpc:
+                after = json.loads(snapshot())
+                entry.update(http_status=response.status_code, response=response.json(), snapshot_unchanged=before==after,
+                    full_delta={key:{"before":[row for row in before[key] or [] if row not in (after[key] or [])],
+                        "after":[row for row in after[key] or [] if row not in (before[key] or [])]}
+                        for key in before if before[key]!=after[key]})
+            return response
         return request
     first = SupabaseContentGovernanceStore("https://runtime-supabase.invalid", context.service_token,
         request_func=transport(context.postgrest_url))
@@ -114,7 +126,9 @@ def validate_atomic_governance(context, *, psql):
         "review_status":ApplicationWorkflowReviewStatus.PUBLISHED,"published_at":datetime.now(timezone.utc)})
     forced = one.model_copy(update={"status":ApplicationWorkflowReviewStatus.PUBLISHED,"workflow":public,
         "reviewed_by":"synthetic-a","reviewed_at":datetime.now(timezone.utc)})
-    for approvals in [one.review_approvals, [one.review_approvals[0],one.review_approvals[0]]]:
+    forged_second = one.review_approvals[0].model_copy(update={"reviewer_id":"synthetic-b"})
+    for approvals in [one.review_approvals, [one.review_approvals[0],one.review_approvals[0]],
+                      [one.review_approvals[0],forged_second]]:
         try:
             first.commit_command(db_buffer.expected,[forced.model_copy(update={"review_approvals":approvals})],[public],
                 operation="publish_workflow_revision",actor="synthetic-a")
@@ -123,7 +137,17 @@ def validate_atomic_governance(context, *, psql):
         else:
             raise RuntimeError("SQL accepted publication without independent double review")
         require(snapshot() == before,"SQL denial committed revision, public payload or audit")
-    checks.append("sql_independent_double_review_denies_single_and_duplicate_humans")
+    checks.append("sql_independent_double_review_denies_single_duplicate_and_unpersisted_reviewer")
+    wrong_actor = commands.WorkflowCommandBuffer(first)
+    approve(wrong_actor, baseline, "synthetic-b")
+    try:
+        wrong_actor.commit("approve_workflow_revision","synthetic-a")
+    except ValueError:
+        pass
+    else:
+        raise RuntimeError("SQL accepted an approval appended for another actor")
+    require(snapshot()==before,"wrong-actor approval denial committed evidence")
+    checks.append("approval_is_one_independently_persisted_actor_bound_attestation")
     approve(second, baseline, "synthetic-b")
     publish_workflow_revision(first, baseline.id, reviewer_id="synthetic-a")
     checks.append("two_instances_cas_and_independent_double_review")
@@ -148,6 +172,11 @@ def validate_atomic_governance(context, *, psql):
     edited = update_pending_workflow_applicability(first, candidate.id, request, edited_by="synthetic-a")
     require(not edited.review_approvals and len(edited.edit_history[-1].invalidated_review_approvals) == 2, "source edit discarded or retained active old attestations")
     require(next(row for row in second.list_revisions() if row.id == edited.id).content_hash == edited.content_hash, "SQL persisted stale hash")
+    retained = json.loads(psql(context,"select jsonb_build_object('active',review_approvals,'history',edit_history) "
+        "from public.application_workflow_revisions where id='"+edited.id+"';"))
+    require(retained["active"]==[] and retained["history"][-1]["invalidated_review_approvals"]==
+        [row.model_dump(mode="json") for row in edited.edit_history[-1].invalidated_review_approvals],
+        "DB readback failed to retain complete invalidated approvals")
     approve(first, edited, "synthetic-a")
     approve(second, edited, "synthetic-b")
     checks.append("source_edit_hash_conflict_invalidates_retains_attestations")
@@ -243,10 +272,16 @@ def validate_atomic_governance(context, *, psql):
     require(rollback_destination_profile(dest_b,[profile],rollback,rolled_back_by_id="synthetic-a",rolled_back_by_display_name="Synthetic A").id == restored.id and snapshot() == after, "destination rollback replay changed data")
     require(apply_destination_profile_promotions([profile],dest_b.list_promotion_events(),dest_b.list_rollback_events())[0] == profile, "destination rollback public content differs")
     checks.append("destination_two_instances_cas_atomic_failure_replay_history_rollback")
+    from validate_governance_followup import validate_followup
+    followup = validate_followup(context,psql=psql,first=first,second=second,
+        destination_store=dest_a,snapshot=snapshot,calls=calls,transport=transport)
+    checks.extend(followup["checks"])
     audit = json.loads(psql(context,"select jsonb_agg(metadata order by id) from public.application_workflow_audit_log where metadata ? 'operation';"))
     require(len(audit) >= 15 and all(row.get("actor") and row.get("expected") for row in audit), "full command audit missing")
     require({row["instance"] for row in calls} == {context.postgrest_url,context.postgrest_secondary_url}, "second instance not exercised")
     checks.append("append_only_full_command_audit")
     return {"passed_checks": checks, "check_count": len(checks), "actual_rpc_post_count": sum(row["method"]=="POST" for row in calls),
         "actual_command_audit_count": len(audit), "independent_postgrest_instances": 2, "production_access": False,
+        "rpc_evidence":[row for row in calls if row["method"]=="POST"],
+        "invalidated_approvals_DB_readback":retained,"followup":followup,
         "fixtures": "synthetic identities and content only; existing RPC signatures and service permissions"}
