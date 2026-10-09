@@ -723,7 +723,9 @@ def test_home_school_switch_rejects_stale_dashboard_responses() -> None:
 
     assert "function isCurrentHomeSchool" in script
     assert "const requestedSchool = homeSchool;" in script
-    assert "if (!isCurrentHomeSchool(requestedSchool)) return false;" in script
+    assert "if (!schoolDataRequestIsCurrent(request)) return false;" in script
+    assert "request.kind] === request.id" in script
+    assert "context.version === state.schoolContextVersion && isCurrentHomeSchool(context.homeSchool)" in script
     assert 'window.UniWayNavigation.replaceState({}, "", "#partners")' in script
     assert "const dashboardMismatch = Boolean(state.dashboard?.school_name)" in script
     assert "if (needsRefresh && reload) refreshHomeUniversityData();" in script
