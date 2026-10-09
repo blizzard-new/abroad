@@ -40,4 +40,6 @@ Spring2027福井提名2026/9/11 24:00JST已過，學生app10/16 24:00JST是別�
 
 固定95b30ac於2026-10-09 03:15:21 UTC完成：305 NCU、193 shared＋2skip、65 gate及OpenAPI／851流程0差異／JS／lock通過；20來源browser為14 passed／6 failed，necessary_local_tests_passed=false。新六個三校內容案例通過，但東北57頁與北海道83頁的既有閱讀範圍提示被新版metadata優先序遮掉，六個失敗均保留。改為合併兩種明示閱讀範圍，沒有改timeout或把未讀附件標成已讀。原始證據見[next3固定結果](ncu-test-evidence/next3-68-20261009/README.md)。
 
-後續核對另修逐欄來源查核日沿用10/8常數、福井ZIP欄位引文只取首個member的問題：現在引用原来源各自日期、member名與SHA，四個原件皆分列；新三校人工metadata複核時間另列，母校10/8原查核保留。UI顯示ZIP內檔名且明示無固定PDF頁碼。固定新SHA會另驗證這些修正及來源範圍回歸。
+後續核對另修逐欄來源查核日沿用10/8常數、福井ZIP欄位引文只取首個member的問題：現在引用原來源各自日期、member名與SHA，四個原件皆分列；新三校人工metadata複核時間另列，母校10/8原查核保留。UI顯示ZIP內檔名且明示無固定PDF頁碼。
+
+固定修正SHA e79e0ba已完成307 NCU、193共享＋2skip、65gate、OpenAPI／851流程0差異／JS／lock；20browser為19 passed／1 failed。新三校及閱讀範圍修正全部通過，九州工業桌面原5秒流程斷言因API約7.663秒回應而失敗；一次同SHA補測通過不能當根因關閉。完整原始結果與東北COE修正畫面在[最終固定證據](ncu-test-evidence/coe-scope-final-20261009/README.md)，資料與本機整組驗收仍blocked。

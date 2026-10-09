@@ -1,0 +1,230 @@
+CONFTEST LOADED!
+...............F....                                                     [100%]
+=================================== FAILURES ===================================
+____ test_ncu_kyutech_support_levels_arrival_split_and_reading_scope[1440] _____
+
+page = <Page url='http://127.0.0.1:46495/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E4%B9%9D%E...5%B7%A5%E6%A5%AD#school=%E4%B9%9D%E5%B7%9E%E5%B7%A5%E6%A5%AD%E5%A4%A7%E5%AD%B8%20Kyushu%20Institute%20of%20Technology'>
+live_server = LiveServer(base_url='http://127.0.0.1:46495', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-226/web-e2e-data3'))
+width = 1440
+
+    @pytest.mark.parametrize('width', [390, 1440])
+    def test_ncu_kyutech_support_levels_arrival_split_and_reading_scope(page, live_server, width):
+        page.set_viewport_size({'width': width, 'height': 956})
+        page.emulate_media(reduced_motion='reduce')
+        errors = []; page.on('pageerror', lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, 'partners')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+        open_navigation(page); page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立中央大學"]').click(); page.locator('#confirm-school').click()
+        wait_until(page, "state.dashboard?.school_name === '國立中央大學'", timeout=60)
+        if width < 700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded') == 'true':
+            page.locator('#glass-menu-toggle').click()
+        page.locator('[data-partner-view="list"]').click(); page.locator('#partner-search').fill('九州工業')
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        if width < 700:
+            page.locator('#partner-table .partner-card > summary').first.click()
+        page.locator('#partner-table .school-detail-trigger:visible').first.click()
+        expect(page.locator('#detail-overview .partner-student-summary')).to_contain_text('非SEIC')
+>       expect(page.locator('#detail-application')).to_contain_text('校規初次三類')
+E       AssertionError: Locator expected to contain text '校規初次三類'
+E       Actual value: 
+E               詳細申請流程
+E               
+E           
+E             正在查核中央與合作校官方申請流程…
+E             
+E             
+E           
+E              
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#detail-application")
+E           7 × locator resolved to <section hidden="" tabindex="0" role="tabpanel" id="detail-application" class="detail-section workflow-section" aria-labelledby="detail-tab-application">…</section>
+E             - unexpected value "
+E               詳細申請流程
+E               
+E           
+E             正在查核中央與合作校官方申請流程…
+E             
+E             
+E           
+E             "
+E       
+E       Aria snapshot:
+E       - link "跳到主要內容":
+E         - /url: "#main-content"
+E       - complementary "系統功能":
+E         - link "UniWay 首頁":
+E           - /url: "#home"
+E           - strong: UniWay
+E         - navigation "公開探索導覽":
+E           - link "首頁":
+E             - /url: "#home"
+E           - link "學校搜尋":
+E             - /url: "#partners"
+E           - link "論壇":
+E             - /url: "#forum"
+E           - link "用戶評價":
+E             - /url: "#feedback"
+E           - group:
+E             - link "我的申請":
+E               - /url: "#advisor"
+E         - button "返回上一頁": 返回
+E         - button "國立中央大學":
+E           - strong: 國立中央大學
+E         - button "切換為深色模式"
+E         - button "重新整理最新資料"
+E         - button "登入或建立帳號": 登入
+E       - main:
+E         - status
+E         - region "九州工業大學 Kyushu Institute of Technology":
+E           - button "加入比較九州工業大學 Kyushu Institute of Technology": 加入比較
+E           - button "登入建立計畫"
+E           - link "官方來源":
+E             - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf#page=5
+E           - text: 日本 · 交換學生 下一站
+E           - strong: 日本
+E           - heading "九州工業大學 Kyushu Institute of Technology" [level=1]
+E           - text: 我的資格
+E           - strong: 尚未進行資格初判
+E           - text: 合作校參考時程
+E           - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】官方英語exchange程序頁現為Under Constraction；合作校表、國際交流與incoming入口沒有取得中央116可用的提名／申請確切期限。2026校規只說別に定める期間内／所定の期日；新版未取得，並非已確認官方尚未公告。 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】已讀GCC2026秋一般住房截止2026/7/31 16:00日本時間，已過；2026春一般住房1/9 16:00及1/21面試亦過期。女性一年級degree住房有不同入試別日期，不能當NCU提名／初次申請或所有女生住房期限。 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026／2027 degree研究科入試日期、九工大學生向外派出的partner factsheet、UiTM短期十四天資料均不適用中央incoming交換，不建當期提醒。
+E           - text: 語言門檻
+E           - strong: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認…
+E           - text: 生活費參考
+E           - strong: 官方費用待查核
+E           - text: 交換名額
+E           - strong: 依公告
+E           - text: 研修期間
+E           - strong:
+E             - text: 116母校方案：2027/9–2028/2
+E             - strong: 一學期
+E             - text: 、2027/9–2028/6
+E             - strong: 一學年
+E             - text: 、2028/2–6
+E             - strong: 一學期
+E             - text: ；實際依外校校曆與可提名學期確認。 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】中央116可出發期別仍依母校2027秋／2028春／
+E             - strong: 一學年
+E             - text: 方案及外校實際接收。2026校規一般特別聽講／研究以一年內為原則，可協議延長；短期一週至三月不是
+E             - strong: 一學期
+E             - text: ，不能混作可选semester。 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026手冊與9/17新版工學部校曆：4/9、6/12、10/1、12/9分別開始四quarter；semester與quarter分開。2026秋semester考試延至2027/1/28及2月初、第四quarter另至2/16，不能以中央舊late September–early February當完成所有考試的個人離校日。 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】已取得2026各校區資料，但2027正式校曆／接收及抵達日未取得。工學部一般新生4/3、4/6迎新與4/7入學式不是收到交換生報到通知。若松web可讀2026校曆／課表但local406及表格對齊待核分列，不把所有校區考试日合一。
+E           - tablist "交換學校詳細資訊":
+E             - tab "快速了解" [selected]
+E             - tab "申請方式"
+E             - tab "生活情報"
+E             - tab "出發前提醒"
+E             - tab "學生心得"
+E             - tab "學生社群"
+E           - tabpanel "快速了解":
+E             - heading "申請重點" [level=2]
+E             - article:
+E               - text: 01 國立中央大學規定
+E               - heading "校內甄選" [level=3]
+E               - paragraph: 通過中央甄選後，由校方提名。
+E             - article:
+E               - text: 02 合作校規定
+E               - heading "提名後申請" [level=3]
+E               - paragraph: 依合作校要求送件，等待審查結果。
+E             - note:
+E               - strong: 本期名額待公告
+E               - paragraph: 可先加入志願規劃；能否申請須等本期名額與條件公告
+E               - group: 完整說明
+E             - group: 這所學校的資料完整度
+E             - group: 已查來源、適用年度與未解問題
+E             - group: 選校參考
+E             - group: 方案資料
+E             - region "合作校條件":
+E               - heading "合作校條件" [level=3]
+E               - heading "資格與語言重點" [level=4]
+E               - list:
+E                 - listitem: 116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】福岡縣三校區分開：戶畑Tobata（北九州市、工學部／工學府）；飯塚Iizuka（飯塚市、資訊工學部／資訊工學府）；若松Wakamatsu（北九州市、生命體工學研究科）。中央舊介紹只列戶畑地址，不代表全部交換生配戶畑。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026/10/1官方合作校表列National Central University、University-level、2024/3/8；這是協議層级紀錄，未列中央116逐校名額／接收學制／校區／英文track，不把伙伴數128或住宿空位當交換名額。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】舊中央介紹的JLPT N1／N2 level只作未標年參考，尚未取得116 incoming統一強制語檢最低分及替代證明規則；不把日語課分班N3／N5或課表英文支援Level 0–6當入學考試門檻。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026工學府後期課單原图核對：Level 1只有日語；Level 2日語授課、資料日或英、英文報告／考試可；Level 3請求後日英併用；Level 4請求後全英；Level 5常態全英；Level 6僅留學生可修。Level 0原則日本學生，留學生修該英文課另需教師面談／能力確認。這些是授課支援與對象，不是CEFR級數。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026後期非SEIC的Advanced Ceramics等科目也列Level 5。SEIC部分課可供非SEIC學生，但Space Environment Testing Workshop與Space Systems PBL I／II有專屬限制；課單註腳II and II與實際I／II列不同，按實際專屬列保守確認，不藉文字誤植解鎖。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026春日語課：戶畑UG學分課由中級起，初級另有非學分；研究生初級／基礎及飯塚各級課依分班／教師。初心者課存在不代表零日語能完成專業交換；中央home正式語檢依母校簡章另必繳。
+E                 - listitem:
+E                   - text: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026學生交流規則區分特別聽講學生（修課）、特別研究學生（研究指導）、短期訪問學生（一週至三月）與雙學位；不能將一般研究生入學簡章或短期實習當中央
+E                   - strong: 一學期
+E                   - text: 交換。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】可修課／研究題目、期間、人數、學分採認與費用由兩校協議審定；2026公開學則中的degree年級／畢業30學分不是中央incoming學分門檻。實際是否先獲教授接收及學科限制未取得，不以工學／醫療字樣硬判資格。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】中央舊未標年介紹說日語N1／N2程度、只有Space Systems碩士英授；目前官方有SEIC、iART、GAAR、GE4與DAMD等英文degree課程介紹，不能把舊一項英授當全校最新限制，也不能反向保證中央可加入這些degree track。
+E               - group: 查看其餘 9 項說明
+E               - heading "合作校申請步驟" [level=4]
+E               - list:
+E                 - listitem:
+E                   - text: 校內線上申請2026/11/16 09:00至12/4 12:00（臺灣時間）。紙本資料另須12/11 17:00前交系所；系所12/18 17:00前送國際處，不能把系所送件日當學生
+E                   - strong: 截止日
+E                   - text: 。
+E                 - listitem: 校內初審只取得推薦資格；須由外校另行審查並核發入學許可，且取得簽證。
+E                 - listitem: 校內必繳正式外語檢定，不限級數；英檢須兩年內有效，線上關閉前須備妥並上傳，不接受網路截圖或補繳。外校要求之語檢分開查核。
+E                 - listitem:
+E                   - text: 校內必繳：簽核
+E                   - strong: 申請表
+E                   - text: 、家長
+E                   - strong: 同意書
+E                   - text: 、個資
+E                   - strong: 同意書
+E                   - text: 、正式語檢影本、中文歷年成績、中文名次證明、加蓋國際處章戳之國際移動力證明。
+E                 - listitem: 簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。
+E                 - listitem: 外校文件／表格尚未取得並完成116適用性核對；中央通用提名流程不是外校文件清單。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】已讀2026工學府PDF146–147與飯塚UG244–245／Grad118–119的學生交流規則第11–12條：特別聽講／研究／短期訪問初次為對應指定願書、學業成績（影本可）及母校校長或學部長推薦書，由母校校長／學部長途徑送；短期訪問可省成績。沒有在校規找到统一份數、學生簽章、完整譯件或語檢附件。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】錄取後依指定期日前另交誓約書，與初次三類及到校六類不同。實際空白特別聽講／研究願書、誓約書與中央116接收包尚未取得，校內甄選通過／一般提名不能取代host完整文件查核。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】到校手冊PDF12–13另要求護照、在留卡、健康保險資格確認書、存摺及連絡票／Personal Information Sheet；履修登錄票僅Special Auditing Students。1–4由承辦留影本，未明示學生各自行繳一份。郵局存摺專指MEXT／JASSO Honors學生，不改為全體唯一合法銀行。
+E                 - listitem:
+E                   - text: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】住房GCC2026/10 blank DOCX一檔含入館願及申請兩表，已讀欄位／
+E                   - strong: GPA
+E                   - text: ／三理由，但沒有分數門檻／統一份數或章戳；印2026/10/1–2027/9/30，不是2027秋可直接送的最新空白表。
+E               - group: 查看其餘 7 項說明
+E               - heading "費用提醒" [level=4]
+E               - list:
+E                 - listitem: 中央交換期間仍須註冊及繳本校學雜費；外校是否免學費與其他校方收費須逐方案核對，不保證一律免繳。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026學生交流規則第17條：特別聽講／研究／短期訪問的検定／入學費不收；外國大學學生學費按聽講／研究費規程，符合交流協議互不徵收條件才免。國立大學不收条款與外國大學条款分列，不因中央名字含國立自動判日本國立豁免。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】實際中央—九工大116互免適用未取得；中央本校學雜費仍另繳。2026手冊UG／Grad半年267900、研究生月29700及入學282000等是其他學位／一般研究生身分參考，不能直接向全部交換生收同一套。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】一般degree學費免除／私費merit與獎學金另需申請核准，部分排除Research Student；JASSO Honors2025參考48000不是保證得到交換JASSO或可從生活預算先扣。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】不能把租金當總生活費：2026手冊私租約30000–35000JPY／月，水電等約5000–20000另加，餐費／手機／教材／交通及初期用品另列未核金額；私人租屋初期敷金、禮金、仲介約3–5個月租參考，不保證每戶相同。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】GCC2026秋／春房租15000＋公用費6000JPY／月（可調整），不含伙食，床有但床墊／被枕自备。飯塚Student Residence與Meisen手冊15000＋8000，網頁水電區間5000–10000不同，不合併成所有宿舍每月21000。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】手冊国际交流會館單／雙／家庭5900／9500／14200，網頁同時出现舊價與不同校區價：戶畑4600／14429／23595、飯塚3770／13021／23396，生效範圍未明，保留矛盾，不挑最低報預算。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】7000JPY是非交流會館且符合學業／經濟條件學生的住房減免費額，不是房租7000或全體免費。年金2026/4–2027/3每月17920（政府當年度）與手冊17510 FY2025分開；非學位生通常申請一般免除而非自動學生特例，2027費額未公告／未核。
+E                 - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】交流會館戶畑50房（學生45／研究者5）、飯塚18房（學生15／研究者3），單／雙／家庭房且新抵達優先，原則6個月內；房間總數不是中央名額，沒有保证接收即分到會館或夫妻／家庭房。
+E                 - listitem:
+E                   - text: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】GCC42房分14個3人單元、男女樓層分開，2026秋適用工學部2–4年／工學府及一年級女性degree；需一年住宿及年度6次共同學習。協議短期交換可能事前安排客廳臨時床，不可承諾個人房／
+E                   - strong: 一學期
+E                   - text: 入館。2026秋男約9名含留生3、女約6名含留生4是當年住房空位，不是中央交換quota。
+E               - group: 查看其餘 12 項說明
+E             - link "官方來源":
+E               - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf#page=5
+E           - complementary "申請準備進度與官方來源":
+E             - heading "我的申請進度" [level=2]
+E             - progressbar "申請準備進度":
+E               - strong: 0 / 5 已完成
+E               - text: 準備中
+E             - paragraph:
+E               - text: 登入以保存進度
+E               - button "登入"
+E             - checkbox "確認資格與語言門檻" [disabled]
+E             - text: 確認資格與語言門檻
+E             - checkbox "比較課程、費用與生活" [disabled]
+E             - text: 比較課程、費用與生活
+E             - checkbox "備妥校內申請文件" [disabled]
+E             - text: 備妥校內申請文件
+E             - checkbox "完成校內甄選送件" [disabled]
+E             - text: 完成校內甄選送件
+E             - checkbox "完成合作校線上申請" [disabled]
+E             - text: 完成合作校線上申請
+E             - strong: 送件前確認
+E             - paragraph: 截止日與資格以當期官方公告為準。
+E       - paragraph:
+E         - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E         - button "停用匿名使用統計"
+E         - text: 。
+E         - link "隱私權政策":
+E           - /url: /privacy
+E         - link "使用條款":
+E           - /url: /terms
+
+tests/e2e/test_ncu_kyutech.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ncu_kyutech.py::test_ncu_kyutech_support_levels_arrival_split_and_reading_scope[1440]
+1 failed, 19 passed in 452.53s (0:07:32)

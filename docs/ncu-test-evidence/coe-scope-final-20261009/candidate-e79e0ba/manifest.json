@@ -1,0 +1,768 @@
+{
+  "candidate_sha": "e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409",
+  "started_at": "2026-10-09T03:34:32.925344+00:00",
+  "start_sha": "e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409",
+  "start_worktree_porcelain": "",
+  "results": [
+    {
+      "name": "ncu_unit",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ncu_integration.py",
+        "tests/test_ncu_document_conditions.py",
+        "tests/test_ncu_source_collector.py",
+        "tests/test_school_completeness.py",
+        "tests/test_ncu_snapshot_cache.py",
+        "tests/test_ncu_japan3.py",
+        "tests/test_ncu_tcu_toyama_fukui.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/ncu_unit.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-coe-scope-final",
+      "exit_code": 0,
+      "started_at": "2026-10-09T03:34:32.949361+00:00",
+      "finished_at": "2026-10-09T03:38:06.379872+00:00",
+      "log": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/ncu_unit.log",
+      "junit": {
+        "tests": 307,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": []
+    },
+    {
+      "name": "shared_regression",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_school_content.py",
+        "tests/test_ntpu_support.py",
+        "tests/test_ntu_audit.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_application_rules.py",
+        "tests/test_application_document_catalog.py",
+        "tests/test_application_documents_api.py",
+        "tests/test_fit_signals.py",
+        "tests/test_task_documents_and_reference_plan.py",
+        "tests/test_workflow_structuring.py",
+        "tests/test_account_workspace_api.py",
+        "tests/test_application_workflow.py",
+        "tests/test_workflow_context_api.py",
+        "tests/test_workflow_catalog_cache.py",
+        "tests/test_life_context.py",
+        "tests/test_public_translation.py",
+        "tests/test_public_translation_cold_cache.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/shared_regression.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-coe-scope-final",
+      "exit_code": 0,
+      "started_at": "2026-10-09T03:38:06.449481+00:00",
+      "finished_at": "2026-10-09T03:39:13.254182+00:00",
+      "log": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/shared_regression.log",
+      "junit": {
+        "tests": 195,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2
+      },
+      "failed_test_cases": []
+    },
+    {
+      "name": "existing_gate_failures",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ntpu_bundled_data.py",
+        "tests/test_frontend_contract.py",
+        "tests/test_rag.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/existing_gate_failures.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-coe-scope-final",
+      "exit_code": 0,
+      "started_at": "2026-10-09T03:39:13.285389+00:00",
+      "finished_at": "2026-10-09T03:39:25.458934+00:00",
+      "log": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/existing_gate_failures.log",
+      "junit": {
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": []
+    },
+    {
+      "name": "openapi",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "cwd": "/tmp/abroad-ncu-coe-scope-final",
+      "exit_code": 0,
+      "started_at": "2026-10-09T03:39:25.488882+00:00",
+      "finished_at": "2026-10-09T03:39:30.168056+00:00",
+      "log": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/openapi.log"
+    },
+    {
+      "name": "main_workflow_export",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "/tmp/ncu-omu-parity-export.py"
+      ],
+      "cwd": "/tmp/abroad-ncu-baseline",
+      "exit_code": 0,
+      "started_at": "2026-10-09T03:39:30.189876+00:00",
+      "finished_at": "2026-10-09T03:39:34.714990+00:00",
+      "log": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/main_workflow_export.log"
+    },
+    {
+      "name": "workflow_parity",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "/tmp/ncu-omu-parity-compare.py"
+      ],
+      "cwd": "/tmp/abroad-ncu-coe-scope-final",
+      "exit_code": 0,
+      "started_at": "2026-10-09T03:39:34.747939+00:00",
+      "finished_at": "2026-10-09T03:39:50.164789+00:00",
+      "log": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/workflow_parity.log"
+    },
+    {
+      "name": "js_app",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/app.js"
+      ],
+      "cwd": "/tmp/abroad-ncu-coe-scope-final",
+      "exit_code": 0,
+      "started_at": "2026-10-09T03:39:50.209932+00:00",
+      "finished_at": "2026-10-09T03:39:50.614850+00:00",
+      "log": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/js_app.log"
+    },
+    {
+      "name": "js_discovery-ui",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/discovery-ui.js"
+      ],
+      "cwd": "/tmp/abroad-ncu-coe-scope-final",
+      "exit_code": 0,
+      "started_at": "2026-10-09T03:39:50.652769+00:00",
+      "finished_at": "2026-10-09T03:39:50.801459+00:00",
+      "log": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/js_discovery-ui.log"
+    },
+    {
+      "name": "js_multi-plan",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/multi-plan.js"
+      ],
+      "cwd": "/tmp/abroad-ncu-coe-scope-final",
+      "exit_code": 0,
+      "started_at": "2026-10-09T03:39:50.836934+00:00",
+      "finished_at": "2026-10-09T03:39:51.050549+00:00",
+      "log": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/js_multi-plan.log"
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "HEAD^",
+        "HEAD"
+      ],
+      "cwd": "/tmp/abroad-ncu-coe-scope-final",
+      "exit_code": 0,
+      "started_at": "2026-10-09T03:39:51.115957+00:00",
+      "finished_at": "2026-10-09T03:39:51.684235+00:00",
+      "log": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/diff.log"
+    },
+    {
+      "name": "lock",
+      "command": [
+        "uv",
+        "lock",
+        "--check"
+      ],
+      "cwd": "/tmp/abroad-ncu-coe-scope-final",
+      "exit_code": 0,
+      "started_at": "2026-10-09T03:39:51.703071+00:00",
+      "finished_at": "2026-10-09T03:39:51.784116+00:00",
+      "log": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/lock.log"
+    },
+    {
+      "name": "audit_endpoint_timings",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "/tmp/ncu-bounded-audit-endpoints.py",
+        "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409"
+      ],
+      "cwd": "/tmp/abroad-ncu-coe-scope-final",
+      "exit_code": 0,
+      "started_at": "2026-10-09T03:39:51.800753+00:00",
+      "finished_at": "2026-10-09T03:39:58.028714+00:00",
+      "log": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/audit_endpoint_timings.log"
+    },
+    {
+      "name": "browser_source_scope",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "ncu_verify_failure_events",
+        "tests/e2e/test_ncu_tcu_toyama_fukui.py",
+        "tests/e2e/test_ncu_japan3.py",
+        "tests/e2e/test_ncu_niigata.py",
+        "tests/e2e/test_ncu_kyutech.py",
+        "tests/e2e/test_ncu_hokkaido.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser_source_scope.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-coe-scope-final",
+      "exit_code": 1,
+      "started_at": "2026-10-09T03:39:58.050788+00:00",
+      "finished_at": "2026-10-09T03:47:40.310525+00:00",
+      "log": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser_source_scope.log",
+      "junit": {
+        "tests": 20,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": [
+        {
+          "name": "test_ncu_kyutech_support_levels_arrival_split_and_reading_scope[1440]",
+          "class": "tests.e2e.test_ncu_kyutech",
+          "message": "AssertionError: Locator expected to contain text '校規初次三類'\nActual value: \n        詳細申請流程\n        \n    \n      正在查核中央與合作校官方申請流程…\n      \n      \n    \n       \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for locator(\"#detail-application\")\n    7 × locator resolved to <section hidden=\"\" tabindex=\"0\" role=\"tabpanel\" id=\"detail-application\" class=\"detail-section workflow-section\" aria-labelledby=\"detail-tab-application\">…</section>\n      - unexpected value \"\n        詳細申請流程\n        \n    \n      正在查核中央與合作校官方申請流程…\n      \n      \n    \n      \"\n\nAria snapshot:\n- link \"跳到主要內容\":\n  - /url: \"#main-content\"\n- complementary \"系統功能\":\n  - link \"UniWay 首頁\":\n    - /url: \"#home\"\n    - strong: UniWay\n  - navigation \"公開探索導覽\":\n    - link \"首頁\":\n      - /url: \"#home\"\n    - link \"學校搜尋\":\n      - /url: \"#partners\"\n    - link \"論壇\":\n      - /url: \"#forum\"\n    - link \"用戶評價\":\n      - /url: \"#feedback\"\n    - group:\n      - link \"我的申請\":\n        - /url: \"#advisor\"\n  - button \"返回上一頁\": 返回\n  - button \"國立中央大學\":\n    - strong: 國立中央大學\n  - button \"切換為深色模式\"\n  - button \"重新整理最新資料\"\n  - button \"登入或建立帳號\": 登入\n- main:\n  - status\n  - region \"九州工業大學 Kyushu Institute of Technology\":\n    - button \"加入比較九州工業大學 Kyushu Institute of Technology\": 加入比較\n    - button \"登入建立計畫\"\n    - link \"官方來源\":\n      - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf#page=5\n    - text: 日本 · 交換學生 下一站\n    - strong: 日本\n    - heading \"九州工業大學 Kyushu Institute of Technology\" [level=1]\n    - text: 我的資格\n    - strong: 尚未進行資格初判\n    - text: 合作校參考時程\n    - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】官方英語exchange程序頁現為Under Constraction；合作校表、國際交流與incoming入口沒有取得中央116可用的提名／申請確切期限。2026校規只說別に定める期間内／所定の期日；新版未取得，並非已確認官方尚未公告。 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】已讀GCC2026秋一般住房截止2026/7/31 16:00日本時間，已過；2026春一般住房1/9 16:00及1/21面試亦過期。女性一年級degree住房有不同入試別日期，不能當NCU提名／初次申請或所有女生住房期限。 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026／2027 degree研究科入試日期、九工大學生向外派出的partner factsheet、UiTM短期十四天資料均不適用中央incoming交換，不建當期提醒。\n    - text: 語言門檻\n    - strong: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認…\n    - text: 生活費參考\n    - strong: 官方費用待查核\n    - text: 交換名額\n    - strong: 依公告\n    - text: 研修期間\n    - strong:\n      - text: 116母校方案：2027/9–2028/2\n      - strong: 一學期\n      - text: 、2027/9–2028/6\n      - strong: 一學年\n      - text: 、2028/2–6\n      - strong: 一學期\n      - text: ；實際依外校校曆與可提名學期確認。 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】中央116可出發期別仍依母校2027秋／2028春／\n      - strong: 一學年\n      - text: 方案及外校實際接收。2026校規一般特別聽講／研究以一年內為原則，可協議延長；短期一週至三月不是\n      - strong: 一學期\n      - text: ，不能混作可选semester。 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026手冊與9/17新版工學部校曆：4/9、6/12、10/1、12/9分別開始四quarter；semester與quarter分開。2026秋semester考試延至2027/1/28及2月初、第四quarter另至2/16，不能以中央舊late September–early February當完成所有考試的個人離校日。 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】已取得2026各校區資料，但2027正式校曆／接收及抵達日未取得。工學部一般新生4/3、4/6迎新與4/7入學式不是收到交換生報到通知。若松web可讀2026校曆／課表但local406及表格對齊待核分列，不把所有校區考试日合一。\n    - tablist \"交換學校詳細資訊\":\n      - tab \"快速了解\" [selected]\n      - tab \"申請方式\"\n      - tab \"生活情報\"\n      - tab \"出發前提醒\"\n      - tab \"學生心得\"\n      - tab \"學生社群\"\n    - tabpanel \"快速了解\":\n      - heading \"申請重點\" [level=2]\n      - article:\n        - text: 01 國立中央大學規定\n        - heading \"校內甄選\" [level=3]\n        - paragraph: 通過中央甄選後，由校方提名。\n      - article:\n        - text: 02 合作校規定\n        - heading \"提名後申請\" [level=3]\n        - paragraph: 依合作校要求送件，等待審查結果。\n      - note:\n        - strong: 本期名額待公告\n        - paragraph: 可先加入志願規劃；能否申請須等本期名額與條件公告\n        - group: 完整說明\n      - group: 這所學校的資料完整度\n      - group: 已查來源、適用年度與未解問題\n      - group: 選校參考\n      - group: 方案資料\n      - region \"合作校條件\":\n        - heading \"合作校條件\" [level=3]\n        - heading \"資格與語言重點\" [level=4]\n        - list:\n          - listitem: 116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】福岡縣三校區分開：戶畑Tobata（北九州市、工學部／工學府）；飯塚Iizuka（飯塚市、資訊工學部／資訊工學府）；若松Wakamatsu（北九州市、生命體工學研究科）。中央舊介紹只列戶畑地址，不代表全部交換生配戶畑。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026/10/1官方合作校表列National Central University、University-level、2024/3/8；這是協議層级紀錄，未列中央116逐校名額／接收學制／校區／英文track，不把伙伴數128或住宿空位當交換名額。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】舊中央介紹的JLPT N1／N2 level只作未標年參考，尚未取得116 incoming統一強制語檢最低分及替代證明規則；不把日語課分班N3／N5或課表英文支援Level 0–6當入學考試門檻。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026工學府後期課單原图核對：Level 1只有日語；Level 2日語授課、資料日或英、英文報告／考試可；Level 3請求後日英併用；Level 4請求後全英；Level 5常態全英；Level 6僅留學生可修。Level 0原則日本學生，留學生修該英文課另需教師面談／能力確認。這些是授課支援與對象，不是CEFR級數。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026後期非SEIC的Advanced Ceramics等科目也列Level 5。SEIC部分課可供非SEIC學生，但Space Environment Testing Workshop與Space Systems PBL I／II有專屬限制；課單註腳II and II與實際I／II列不同，按實際專屬列保守確認，不藉文字誤植解鎖。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026春日語課：戶畑UG學分課由中級起，初級另有非學分；研究生初級／基礎及飯塚各級課依分班／教師。初心者課存在不代表零日語能完成專業交換；中央home正式語檢依母校簡章另必繳。\n          - listitem:\n            - text: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026學生交流規則區分特別聽講學生（修課）、特別研究學生（研究指導）、短期訪問學生（一週至三月）與雙學位；不能將一般研究生入學簡章或短期實習當中央\n            - strong: 一學期\n            - text: 交換。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】可修課／研究題目、期間、人數、學分採認與費用由兩校協議審定；2026公開學則中的degree年級／畢業30學分不是中央incoming學分門檻。實際是否先獲教授接收及學科限制未取得，不以工學／醫療字樣硬判資格。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】中央舊未標年介紹說日語N1／N2程度、只有Space Systems碩士英授；目前官方有SEIC、iART、GAAR、GE4與DAMD等英文degree課程介紹，不能把舊一項英授當全校最新限制，也不能反向保證中央可加入這些degree track。\n        - group: 查看其餘 9 項說明\n        - heading \"合作校申請步驟\" [level=4]\n        - list:\n          - listitem:\n            - text: 校內線上申請2026/11/16 09:00至12/4 12:00（臺灣時間）。紙本資料另須12/11 17:00前交系所；系所12/18 17:00前送國際處，不能把系所送件日當學生\n            - strong: 截止日\n            - text: 。\n          - listitem: 校內初審只取得推薦資格；須由外校另行審查並核發入學許可，且取得簽證。\n          - listitem: 校內必繳正式外語檢定，不限級數；英檢須兩年內有效，線上關閉前須備妥並上傳，不接受網路截圖或補繳。外校要求之語檢分開查核。\n          - listitem:\n            - text: 校內必繳：簽核\n            - strong: 申請表\n            - text: 、家長\n            - strong: 同意書\n            - text: 、個資\n            - strong: 同意書\n            - text: 、正式語檢影本、中文歷年成績、中文名次證明、加蓋國際處章戳之國際移動力證明。\n          - listitem: 簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。\n          - listitem: 外校文件／表格尚未取得並完成116適用性核對；中央通用提名流程不是外校文件清單。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】已讀2026工學府PDF146–147與飯塚UG244–245／Grad118–119的學生交流規則第11–12條：特別聽講／研究／短期訪問初次為對應指定願書、學業成績（影本可）及母校校長或學部長推薦書，由母校校長／學部長途徑送；短期訪問可省成績。沒有在校規找到统一份數、學生簽章、完整譯件或語檢附件。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】錄取後依指定期日前另交誓約書，與初次三類及到校六類不同。實際空白特別聽講／研究願書、誓約書與中央116接收包尚未取得，校內甄選通過／一般提名不能取代host完整文件查核。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】到校手冊PDF12–13另要求護照、在留卡、健康保險資格確認書、存摺及連絡票／Personal Information Sheet；履修登錄票僅Special Auditing Students。1–4由承辦留影本，未明示學生各自行繳一份。郵局存摺專指MEXT／JASSO Honors學生，不改為全體唯一合法銀行。\n          - listitem:\n            - text: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】住房GCC2026/10 blank DOCX一檔含入館願及申請兩表，已讀欄位／\n            - strong: GPA\n            - text: ／三理由，但沒有分數門檻／統一份數或章戳；印2026/10/1–2027/9/30，不是2027秋可直接送的最新空白表。\n        - group: 查看其餘 7 項說明\n        - heading \"費用提醒\" [level=4]\n        - list:\n          - listitem: 中央交換期間仍須註冊及繳本校學雜費；外校是否免學費與其他校方收費須逐方案核對，不保證一律免繳。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】2026學生交流規則第17條：特別聽講／研究／短期訪問的検定／入學費不收；外國大學學生學費按聽講／研究費規程，符合交流協議互不徵收條件才免。國立大學不收条款與外國大學条款分列，不因中央名字含國立自動判日本國立豁免。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】實際中央—九工大116互免適用未取得；中央本校學雜費仍另繳。2026手冊UG／Grad半年267900、研究生月29700及入學282000等是其他學位／一般研究生身分參考，不能直接向全部交換生收同一套。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】一般degree學費免除／私費merit與獎學金另需申請核准，部分排除Research Student；JASSO Honors2025參考48000不是保證得到交換JASSO或可從生活預算先扣。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】不能把租金當總生活費：2026手冊私租約30000–35000JPY／月，水電等約5000–20000另加，餐費／手機／教材／交通及初期用品另列未核金額；私人租屋初期敷金、禮金、仲介約3–5個月租參考，不保證每戶相同。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】GCC2026秋／春房租15000＋公用費6000JPY／月（可調整），不含伙食，床有但床墊／被枕自备。飯塚Student Residence與Meisen手冊15000＋8000，網頁水電區間5000–10000不同，不合併成所有宿舍每月21000。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】手冊国际交流會館單／雙／家庭5900／9500／14200，網頁同時出现舊價與不同校區價：戶畑4600／14429／23595、飯塚3770／13021／23396，生效範圍未明，保留矛盾，不挑最低報預算。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】7000JPY是非交流會館且符合學業／經濟條件學生的住房減免費額，不是房租7000或全體免費。年金2026/4–2027/3每月17920（政府當年度）與手冊17510 FY2025分開；非學位生通常申請一般免除而非自動學生特例，2027費額未公告／未核。\n          - listitem: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 來校交換生接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】交流會館戶畑50房（學生45／研究者5）、飯塚18房（學生15／研究者3），單／雙／家庭房且新抵達優先，原則6個月內；房間總數不是中央名額，沒有保证接收即分到會館或夫妻／家庭房。\n          - listitem:\n            - text: 【中央115歷史名單非116名額；已讀九工大2026留學生手冊66頁及2026校區交流規則選定章、後期課表／住房空白表。2027／2028 incoming接收包未取得，未核中央當期身分／學費互免／名額，全部流程待確認。】GCC42房分14個3人單元、男女樓層分開，2026秋適用工學部2–4年／工學府及一年級女性degree；需一年住宿及年度6次共同學習。協議短期交換可能事前安排客廳臨時床，不可承諾個人房／\n            - strong: 一學期\n            - text: 入館。2026秋男約9名含留生3、女約6名含留生4是當年住房空位，不是中央交換quota。\n        - group: 查看其餘 12 項說明\n      - link \"官方來源\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf#page=5\n    - complementary \"申請準備進度與官方來源\":\n      - heading \"我的申請進度\" [level=2]\n      - progressbar \"申請準備進度\":\n        - strong: 0 / 5 已完成\n        - text: 準備中\n      - paragraph:\n        - text: 登入以保存進度\n        - button \"登入\"\n      - checkbox \"確認資格與語言門檻\" [disabled]\n      - text: 確認資格與語言門檻\n      - checkbox \"比較課程、費用與生活\" [disabled]\n      - text: 比較課程、費用與生活\n      - checkbox \"備妥校內申請文件\" [disabled]\n      - text: 備妥校內申請文件\n      - checkbox \"完成校內甄選送件\" [disabled]\n      - text: 完成校內甄選送件\n      - checkbox \"完成合作校線上申請\" [disabled]\n      - text: 完成合作校線上申請\n      - strong: 送件前確認\n      - paragraph: 截止日與資格以當期官方公告為準。\n- paragraph:\n  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），\n  - button \"停用匿名使用統計\"\n  - text: 。\n  - link \"隱私權政策\":\n    - /url: /privacy\n  - link \"使用條款\":\n    - /url: /terms"
+        }
+      ]
+    }
+  ],
+  "production_actions": false,
+  "full_ci_equivalence": false,
+  "data_coverage": {
+    "checked_at": "2026-10-08T00:00:00+00:00",
+    "academic_year": "116",
+    "home_notice_confirmed": true,
+    "current_list_status": "scheduled_not_yet_announced",
+    "current_list_expected_date": "2026-10-12",
+    "historical_rows": 216,
+    "catalog_entries": 214,
+    "source_documents_attempted": 459,
+    "source_documents_downloaded": 459,
+    "source_documents_any_text": 454,
+    "source_documents_all_pages_have_text": 423,
+    "source_documents_all_pages_read": 29,
+    "source_documents_visual_reviewed": 7,
+    "source_documents_ocr_reviewed": 1,
+    "source_documents_with_errors": 0,
+    "source_documents_with_text_quality_gaps": 2,
+    "source_documents_with_non_text_pages": 36,
+    "source_non_text_page_count": 100,
+    "host_web_checks": 870,
+    "host_web_checks_with_errors": 112,
+    "source_mapped_entries": 214,
+    "host_source_mapped_entries": 211,
+    "entries_with_any_host_text": 210,
+    "reviewed_host_records": 68,
+    "host_full_116_verification_count": 0,
+    "pending_workflows": 214,
+    "provenance_note": "提取不是當期資格核准；逐欄缺口與原文分列於field-audit.json。"
+  },
+  "data_acceptance_passed": false,
+  "ci_status": "not_checked_yet",
+  "workflow_parity": {
+    "main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "compared_count": 851,
+    "semantic_differences": 0,
+    "method": "untouched main runtime export revalidated with identical current schema; serialized values compared as a multiset including duplicate workflows",
+    "counts": {
+      "國立臺北大學": 409,
+      "長庚大學": 154,
+      "國立臺灣大學": 288
+    }
+  },
+  "original_browser_evidence": [
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-hokkaido-校級-housing-cost-1440.png",
+      "sha256": "5575f09bb3e28f60e84c9f4fc3c6bb7f4e39ca553d80cae64387876a54b5fa11"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-hokkaido-校級-housing-cost-390.png",
+      "sha256": "0871d3c41af5d4276b2226e692ebf7c3f1642737c8c161b77faa24ba7bb56455"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-hokkaido-校級-programme-documents-1440.png",
+      "sha256": "eedeb4e77bc6b62c05b206284c9a1f945fee54559216ca404dbabcb334b0d208"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-hokkaido-校級-programme-documents-390.png",
+      "sha256": "23f52e7c91e67480b018113166eadec23b1eefdf2aabe305e2c0105788d3f760"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-hokkaido-校級-reading-scope-1440.png",
+      "sha256": "0c8342f8988c7ce77a88b0d2374c1d34b4d500f79d28cfeff68ab12d8a3e700c"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-hokkaido-校級-reading-scope-390.png",
+      "sha256": "8d04ce7281587d0bb0de9142d187096345b7e50ee94d00ebf46ee15d7bbf6e6b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-hokkaido-院級-housing-cost-1440.png",
+      "sha256": "0f08c30613653e8cd1e8897d843f06384bc2e2f24ff3d21780b003ada9a74171"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-hokkaido-院級-housing-cost-390.png",
+      "sha256": "5eb4438a2995df5675c9ccc0e0210cea4403a28be94e022f3be55b23a3bb67e2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-hokkaido-院級-programme-documents-1440.png",
+      "sha256": "28f4a4ba09c0a7daa362b58112b1820eb3945dff5ad61e5ec48356a660f27f87"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-hokkaido-院級-programme-documents-390.png",
+      "sha256": "1fa5034029dbecdb7242d6dc8caf706c7114c4626da1aab5aee7dd10756cde7b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-hokkaido-院級-reading-scope-1440.png",
+      "sha256": "d8edb4edee0b2d146f4a515cf96085481a6cb28afe2875f6b4f2d1a50cf71e56"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-hokkaido-院級-reading-scope-390.png",
+      "sha256": "574e7f49a65d814f2142e106d26942a6e98ea8f316a73de294074a731411f1b9"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-komazawa-life-content-1440.png",
+      "sha256": "81ebe1eff4035913d4f8e0427a3959ce6ea217eab8a0c7f857e788edc79319fd"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-komazawa-life-content-390.png",
+      "sha256": "9e42840c94f3b15274f0604c337a604e591a2e87619c32e5488a9aefbc2b5383"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-komazawa-programme-documents-1440.png",
+      "sha256": "4665f40437a3c52eb1d9d879cd153eef02e1c65fdb29388a5a44104ecd8116e7"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-komazawa-programme-documents-390.png",
+      "sha256": "530c5f4058531959f9c94d9ef0fb3a9bb9143b09f2296fdb23a4bfbd606fad33"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-komazawa-source-scope-1440.png",
+      "sha256": "83e02d3065880c8940a76adfc8bca0a684e824699bc6ca6289057a5b5502d037"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-komazawa-source-scope-390.png",
+      "sha256": "25e71017197af5ef1627bdf0c8446dd241c010c0116eea3af5605ef096292467"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-kuins-life-content-1440.png",
+      "sha256": "1b6402e2e95ed51d19b76ba7c611432756f9184222512494bb9e5af21d33bc35"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-kuins-life-content-390.png",
+      "sha256": "45168b4cd25dbd3f188ec27633189a2cee4243dfd5fe1b520dc0e813db845107"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-kuins-programme-documents-1440.png",
+      "sha256": "9f48624fd3aa41899d160dc3457aa9efd7909faa203b0ca37e48a00f2967b0bd"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-kuins-programme-documents-390.png",
+      "sha256": "14295fb673ec457c8b6983809fb3f599b22676a60bcfe8daf51645b7587536b5"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-kuins-source-scope-1440.png",
+      "sha256": "2f9c5b36d28a9c0862130fccc0d987425c5c824a12cda6ed57759b964fc84ed7"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-kuins-source-scope-390.png",
+      "sha256": "60e0f37f40f7c4ce064a7a65dbc80b53c001cd879aaf790ef3a9055b71f910b0"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-tohoku-life-content-1440.png",
+      "sha256": "e8cfdb40b515972b0218cf7b06168a2f80f537d9a41fca0263f1e4b680a5dd61"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-tohoku-life-content-390.png",
+      "sha256": "64a5a0f4a65a94880ec774da1cff291e385305f1bba63cab79a8a7daf4e5872e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-tohoku-programme-documents-1440.png",
+      "sha256": "e8f62203bc64b8b58ac0076fd55462acdb7d508ad7e1a9a6f3d4d93dcd6a2e3c"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-tohoku-programme-documents-390.png",
+      "sha256": "acdf05b2a18a2d7e2ffc8eed14e88d545b96e2273e837fde6560548bd58d7c41"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-tohoku-source-scope-1440.png",
+      "sha256": "f1aeb584db88a398a1dde25f581cb1f08054555d143b3fc5ffd4261281c505b8"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-japan3-tohoku-source-scope-390.png",
+      "sha256": "3bd032e3b5fd17461c3b5de06ce1de28e05508ef0fe090528788c7a157119dee"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-kyutech-arrival-five-plus-auditing-390.png",
+      "sha256": "48335a2c4fcbd18e3992d39ef09e3985f06e835d30b685049561e8986f8dcd6f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-kyutech-housing-conflict-390.png",
+      "sha256": "d4f5e581b922e57662bd535118f26d26ca2f68a08dbc78b386433fa3d1117ce3"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-kyutech-original-reading-scope-390.png",
+      "sha256": "cee5e5051497c7689bc9a66dd354d763cf07a8633384ec96ce231320d6b6f196"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-fukui-life-1440.png",
+      "sha256": "852a5213bad91541b92225f119ed1ed2e562a7a06b272e9a5aeb8150eb05d2e2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-fukui-life-390.png",
+      "sha256": "3f3709b1dd5eae184de91247ab91ee440d6ee1dd6be53a40cca12a4ea0867c64"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-fukui-packet-1440.png",
+      "sha256": "2905a8d644fe3b668cfc433422e94c1b5f87bada148c39ca06fee0887106411a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-fukui-packet-390.png",
+      "sha256": "7fc4881c59dfe9b130737d214759061eda1526298e5c4bb9c10146a87f8f4e27"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-fukui-source-1440.png",
+      "sha256": "45daea4201a75f2379334f4e5cd95afe807cc4041366536b64d6f9e698547213"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-fukui-source-390.png",
+      "sha256": "c91acf45cac300c87852338ee75108694fa94ebfe52226751d6a778c93e99dd6"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-tcu-life-1440.png",
+      "sha256": "122a0da5ece2ad5ecf630079349241e2c7485cf75465d24e04d28750cc66a306"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-tcu-life-390.png",
+      "sha256": "98cb49bedbc2593f2ae4be4e7f75e93d268e6cf437c717ab637599a5e559cb77"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-tcu-packet-1440.png",
+      "sha256": "a158583c6654f84e62057ba02a47e2ac8f309c6322ce09a5026b164472e3826b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-tcu-packet-390.png",
+      "sha256": "1d27556069a56b0d9316d05333dd95ab3a16cfa5951f162fd025af1223191bbe"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-tcu-source-1440.png",
+      "sha256": "def35606eefc38a958b0346a96c07dadeac963ec823b8783ff0a2706dbff6f1d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-tcu-source-390.png",
+      "sha256": "7b58475acce70b4021a0c7559a381e4474739f96e9ef22965b8f11f760c0c1af"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-toyama-life-1440.png",
+      "sha256": "aa951a278175a8fc1480f666300738317a6ca258b7f9f32cd1ab1558b756c7db"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-toyama-life-390.png",
+      "sha256": "8244baa3bc9e73d49dbc7dacbae6a37266fb101709cd96e3116ea0aa750aa551"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-toyama-packet-1440.png",
+      "sha256": "c6983d5ba1ef2b37da322b9c684549ae1093c7a957c77b3da1a655aad0dc8076"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-toyama-packet-390.png",
+      "sha256": "7997995c5676dc9fe40b32393c1c42455ce7ba2bbf888976122f6f8509e02a04"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-toyama-source-1440.png",
+      "sha256": "f0c80105dc8c6c1a6210ef2729625c4942fd1d0c8302d57e3eda257f93ca8250"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-next3-toyama-source-390.png",
+      "sha256": "f07f4ea2b594c40d8c3e88e5510170a9c51d3d1bbf61de4e3eb4b705518b297a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-niigata-blank-sheet-scope-1440.png",
+      "sha256": "4a32a4e01f5294ceb1f66914743abaf2a3571f1038895f90c45e08e81bdae0cc"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-niigata-blank-sheet-scope-390.png",
+      "sha256": "71435ca880d9d300f50e9d05a9f6d2dbe980ccee9a8938f41ef026eaf18ee298"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-niigata-graduate-basic-only-1440.png",
+      "sha256": "7223986ac7c34f006562bc3803f8483f8499e4f42c6b6c42add1f2ff9cbada26"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-niigata-graduate-basic-only-390.png",
+      "sha256": "7786dec94812005e06a3468dc2a4bb68db963da01ba41c4e50f06a49e1bb26d0"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-niigata-housing-cost-scope-1440.png",
+      "sha256": "fa59965765ce0b2d042f45f40d18a59541e97be270a783c57adb9b09584850ca"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser/ncu-niigata-housing-cost-scope-390.png",
+      "sha256": "bd5a6b8d614c1c746069523398ff13df5efbab160ea57bffe41d5518c3885839"
+    }
+  ],
+  "performance": [],
+  "browser_evidence": [
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-hokkaido-校級-housing-cost-1440.png",
+      "sha256": "5575f09bb3e28f60e84c9f4fc3c6bb7f4e39ca553d80cae64387876a54b5fa11"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-hokkaido-校級-housing-cost-390.png",
+      "sha256": "0871d3c41af5d4276b2226e692ebf7c3f1642737c8c161b77faa24ba7bb56455"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-hokkaido-校級-programme-documents-1440.png",
+      "sha256": "eedeb4e77bc6b62c05b206284c9a1f945fee54559216ca404dbabcb334b0d208"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-hokkaido-校級-programme-documents-390.png",
+      "sha256": "23f52e7c91e67480b018113166eadec23b1eefdf2aabe305e2c0105788d3f760"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-hokkaido-校級-reading-scope-1440.png",
+      "sha256": "0c8342f8988c7ce77a88b0d2374c1d34b4d500f79d28cfeff68ab12d8a3e700c"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-hokkaido-校級-reading-scope-390.png",
+      "sha256": "8d04ce7281587d0bb0de9142d187096345b7e50ee94d00ebf46ee15d7bbf6e6b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-hokkaido-院級-housing-cost-1440.png",
+      "sha256": "0f08c30613653e8cd1e8897d843f06384bc2e2f24ff3d21780b003ada9a74171"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-hokkaido-院級-housing-cost-390.png",
+      "sha256": "5eb4438a2995df5675c9ccc0e0210cea4403a28be94e022f3be55b23a3bb67e2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-hokkaido-院級-programme-documents-1440.png",
+      "sha256": "28f4a4ba09c0a7daa362b58112b1820eb3945dff5ad61e5ec48356a660f27f87"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-hokkaido-院級-programme-documents-390.png",
+      "sha256": "1fa5034029dbecdb7242d6dc8caf706c7114c4626da1aab5aee7dd10756cde7b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-hokkaido-院級-reading-scope-1440.png",
+      "sha256": "d8edb4edee0b2d146f4a515cf96085481a6cb28afe2875f6b4f2d1a50cf71e56"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-hokkaido-院級-reading-scope-390.png",
+      "sha256": "574e7f49a65d814f2142e106d26942a6e98ea8f316a73de294074a731411f1b9"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-komazawa-life-content-1440.png",
+      "sha256": "81ebe1eff4035913d4f8e0427a3959ce6ea217eab8a0c7f857e788edc79319fd"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-komazawa-life-content-390.png",
+      "sha256": "9e42840c94f3b15274f0604c337a604e591a2e87619c32e5488a9aefbc2b5383"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-komazawa-programme-documents-1440.png",
+      "sha256": "4665f40437a3c52eb1d9d879cd153eef02e1c65fdb29388a5a44104ecd8116e7"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-komazawa-programme-documents-390.png",
+      "sha256": "530c5f4058531959f9c94d9ef0fb3a9bb9143b09f2296fdb23a4bfbd606fad33"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-komazawa-source-scope-1440.png",
+      "sha256": "83e02d3065880c8940a76adfc8bca0a684e824699bc6ca6289057a5b5502d037"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-komazawa-source-scope-390.png",
+      "sha256": "25e71017197af5ef1627bdf0c8446dd241c010c0116eea3af5605ef096292467"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-kuins-life-content-1440.png",
+      "sha256": "1b6402e2e95ed51d19b76ba7c611432756f9184222512494bb9e5af21d33bc35"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-kuins-life-content-390.png",
+      "sha256": "45168b4cd25dbd3f188ec27633189a2cee4243dfd5fe1b520dc0e813db845107"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-kuins-programme-documents-1440.png",
+      "sha256": "9f48624fd3aa41899d160dc3457aa9efd7909faa203b0ca37e48a00f2967b0bd"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-kuins-programme-documents-390.png",
+      "sha256": "14295fb673ec457c8b6983809fb3f599b22676a60bcfe8daf51645b7587536b5"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-kuins-source-scope-1440.png",
+      "sha256": "2f9c5b36d28a9c0862130fccc0d987425c5c824a12cda6ed57759b964fc84ed7"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-kuins-source-scope-390.png",
+      "sha256": "60e0f37f40f7c4ce064a7a65dbc80b53c001cd879aaf790ef3a9055b71f910b0"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-tohoku-life-content-1440.png",
+      "sha256": "e8cfdb40b515972b0218cf7b06168a2f80f537d9a41fca0263f1e4b680a5dd61"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-tohoku-life-content-390.png",
+      "sha256": "64a5a0f4a65a94880ec774da1cff291e385305f1bba63cab79a8a7daf4e5872e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-tohoku-programme-documents-1440.png",
+      "sha256": "e8f62203bc64b8b58ac0076fd55462acdb7d508ad7e1a9a6f3d4d93dcd6a2e3c"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-tohoku-programme-documents-390.png",
+      "sha256": "acdf05b2a18a2d7e2ffc8eed14e88d545b96e2273e837fde6560548bd58d7c41"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-tohoku-source-scope-1440.png",
+      "sha256": "f1aeb584db88a398a1dde25f581cb1f08054555d143b3fc5ffd4261281c505b8"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-japan3-tohoku-source-scope-390.png",
+      "sha256": "3bd032e3b5fd17461c3b5de06ce1de28e05508ef0fe090528788c7a157119dee"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-kyutech-arrival-five-plus-auditing-390.png",
+      "sha256": "48335a2c4fcbd18e3992d39ef09e3985f06e835d30b685049561e8986f8dcd6f"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-kyutech-housing-conflict-390.png",
+      "sha256": "d4f5e581b922e57662bd535118f26d26ca2f68a08dbc78b386433fa3d1117ce3"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-kyutech-original-reading-scope-390.png",
+      "sha256": "cee5e5051497c7689bc9a66dd354d763cf07a8633384ec96ce231320d6b6f196"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-fukui-life-1440.png",
+      "sha256": "852a5213bad91541b92225f119ed1ed2e562a7a06b272e9a5aeb8150eb05d2e2"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-fukui-life-390.png",
+      "sha256": "3f3709b1dd5eae184de91247ab91ee440d6ee1dd6be53a40cca12a4ea0867c64"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-fukui-packet-1440.png",
+      "sha256": "2905a8d644fe3b668cfc433422e94c1b5f87bada148c39ca06fee0887106411a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-fukui-packet-390.png",
+      "sha256": "7fc4881c59dfe9b130737d214759061eda1526298e5c4bb9c10146a87f8f4e27"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-fukui-source-1440.png",
+      "sha256": "45daea4201a75f2379334f4e5cd95afe807cc4041366536b64d6f9e698547213"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-fukui-source-390.png",
+      "sha256": "c91acf45cac300c87852338ee75108694fa94ebfe52226751d6a778c93e99dd6"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-tcu-life-1440.png",
+      "sha256": "122a0da5ece2ad5ecf630079349241e2c7485cf75465d24e04d28750cc66a306"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-tcu-life-390.png",
+      "sha256": "98cb49bedbc2593f2ae4be4e7f75e93d268e6cf437c717ab637599a5e559cb77"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-tcu-packet-1440.png",
+      "sha256": "a158583c6654f84e62057ba02a47e2ac8f309c6322ce09a5026b164472e3826b"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-tcu-packet-390.png",
+      "sha256": "1d27556069a56b0d9316d05333dd95ab3a16cfa5951f162fd025af1223191bbe"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-tcu-source-1440.png",
+      "sha256": "def35606eefc38a958b0346a96c07dadeac963ec823b8783ff0a2706dbff6f1d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-tcu-source-390.png",
+      "sha256": "7b58475acce70b4021a0c7559a381e4474739f96e9ef22965b8f11f760c0c1af"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-toyama-life-1440.png",
+      "sha256": "aa951a278175a8fc1480f666300738317a6ca258b7f9f32cd1ab1558b756c7db"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-toyama-life-390.png",
+      "sha256": "8244baa3bc9e73d49dbc7dacbae6a37266fb101709cd96e3116ea0aa750aa551"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-toyama-packet-1440.png",
+      "sha256": "c6983d5ba1ef2b37da322b9c684549ae1093c7a957c77b3da1a655aad0dc8076"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-toyama-packet-390.png",
+      "sha256": "7997995c5676dc9fe40b32393c1c42455ce7ba2bbf888976122f6f8509e02a04"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-toyama-source-1440.png",
+      "sha256": "f0c80105dc8c6c1a6210ef2729625c4942fd1d0c8302d57e3eda257f93ca8250"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-next3-toyama-source-390.png",
+      "sha256": "f07f4ea2b594c40d8c3e88e5510170a9c51d3d1bbf61de4e3eb4b705518b297a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-niigata-blank-sheet-scope-1440.png",
+      "sha256": "4a32a4e01f5294ceb1f66914743abaf2a3571f1038895f90c45e08e81bdae0cc"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-niigata-blank-sheet-scope-390.png",
+      "sha256": "71435ca880d9d300f50e9d05a9f6d2dbe980ccee9a8938f41ef026eaf18ee298"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-niigata-graduate-basic-only-1440.png",
+      "sha256": "7223986ac7c34f006562bc3803f8483f8499e4f42c6b6c42add1f2ff9cbada26"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-niigata-graduate-basic-only-390.png",
+      "sha256": "7786dec94812005e06a3468dc2a4bb68db963da01ba41c4e50f06a49e1bb26d0"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-niigata-housing-cost-scope-1440.png",
+      "sha256": "fa59965765ce0b2d042f45f40d18a59541e97be270a783c57adb9b09584850ca"
+    },
+    {
+      "path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser/ncu-niigata-housing-cost-scope-390.png",
+      "sha256": "bd5a6b8d614c1c746069523398ff13df5efbab160ea57bffe41d5518c3885839"
+    }
+  ],
+  "end_sha": "e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409",
+  "end_worktree_porcelain": "",
+  "same_sha_at_end": true,
+  "necessary_local_tests_passed": false,
+  "acceptance_status": "blocked",
+  "finished_at": "2026-10-09T03:47:40.627125+00:00"
+}

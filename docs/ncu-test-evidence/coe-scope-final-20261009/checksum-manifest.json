@@ -1,0 +1,786 @@
+{
+  "recorded_at": "2026-10-09T03:57:11.670234+00:00",
+  "raw_manifest_unchanged": true,
+  "candidate_final_screenshots_identical_to_original": true,
+  "traces_excluded": "Raw Playwright traces remain in /tmp; public events omit headers and response bodies.",
+  "files": [
+    {
+      "path": "candidate-e79e0ba/audit-endpoints.json",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/audit-endpoints.json",
+      "original_sha256": "cf59772397c8d08d6692113c2c0c6eb04b3f0e9e28b6eb9f611e5d86b0ef7d14",
+      "stored_sha256": "cf59772397c8d08d6692113c2c0c6eb04b3f0e9e28b6eb9f611e5d86b0ef7d14",
+      "original_bytes": 2938,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/audit_endpoint_timings.log",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/audit_endpoint_timings.log",
+      "original_sha256": "8129fa3ed04a17cc06a6396f52de47c84cd84750e50e38a22951bfb0ea2b7a5c",
+      "stored_sha256": "8129fa3ed04a17cc06a6396f52de47c84cd84750e50e38a22951bfb0ea2b7a5c",
+      "original_bytes": 750,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/browser_source_scope.log",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser_source_scope.log",
+      "original_sha256": "52a35c87a51b857571deb3d2557cc789bf070de8b7f4c7f3928f4ab9ac11f11a",
+      "stored_sha256": "52a35c87a51b857571deb3d2557cc789bf070de8b7f4c7f3928f4ab9ac11f11a",
+      "original_bytes": 26909,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/browser_source_scope.xml",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser_source_scope.xml",
+      "original_sha256": "54e137bbf1f911fce09e921d8aa26128b45483ddfca6a12d68aa2fc676de81c9",
+      "stored_sha256": "54e137bbf1f911fce09e921d8aa26128b45483ddfca6a12d68aa2fc676de81c9",
+      "original_bytes": 55448,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/diff.log",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/diff.log",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_bytes": 0,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/existing_gate_failures.log",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/existing_gate_failures.log",
+      "original_sha256": "b6833dddb64489032cd70a1ca3177b9cf6b40321709ebf44e721147b93e996c4",
+      "stored_sha256": "b6833dddb64489032cd70a1ca3177b9cf6b40321709ebf44e721147b93e996c4",
+      "original_bytes": 116,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/existing_gate_failures.xml",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/existing_gate_failures.xml",
+      "original_sha256": "748986cbbd64cb2091d989b413fd8720cf565e90d7833951b1ff30b1f6ad2d3b",
+      "stored_sha256": "748986cbbd64cb2091d989b413fd8720cf565e90d7833951b1ff30b1f6ad2d3b",
+      "original_bytes": 9273,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/js_app.log",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/js_app.log",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_bytes": 0,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/js_discovery-ui.log",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/js_discovery-ui.log",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_bytes": 0,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/js_multi-plan.log",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/js_multi-plan.log",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_bytes": 0,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/lock.log",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/lock.log",
+      "original_sha256": "29e267bd98dd6be6f5d9771c8cc6517016bce5b9160e2eb57396d979a7d3d81c",
+      "stored_sha256": "29e267bd98dd6be6f5d9771c8cc6517016bce5b9160e2eb57396d979a7d3d81c",
+      "original_bytes": 143,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/main_workflow_export.log",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/main_workflow_export.log",
+      "original_sha256": "6630f5c6dc4da3d83c2ef73051dd8fe9ff2d1f504c0f81bca2fc724a42761fc3",
+      "stored_sha256": "6630f5c6dc4da3d83c2ef73051dd8fe9ff2d1f504c0f81bca2fc724a42761fc3",
+      "original_bytes": 28,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/manifest.json",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/manifest.json",
+      "original_sha256": "9ea38dec75a48017db1e8f3971035ae77ef57ffd899cdbf9c9202614fcf2cb86",
+      "stored_sha256": "9ea38dec75a48017db1e8f3971035ae77ef57ffd899cdbf9c9202614fcf2cb86",
+      "original_bytes": 59428,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/ncu_unit.log",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/ncu_unit.log",
+      "original_sha256": "fae4f036acc35be2957b5dd386a4ab781091c3b58cf31fdc4bec2fe041c91a11",
+      "stored_sha256": "fae4f036acc35be2957b5dd386a4ab781091c3b58cf31fdc4bec2fe041c91a11",
+      "original_bytes": 449,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/ncu_unit.xml",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/ncu_unit.xml",
+      "original_sha256": "38001270548cbdd52582ca8713de30688fc8b786b4be6a030a1d60da95dbf512",
+      "stored_sha256": "38001270548cbdd52582ca8713de30688fc8b786b4be6a030a1d60da95dbf512",
+      "original_bytes": 51634,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/openapi.log",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/openapi.log",
+      "original_sha256": "2855f120df474bda1f506b3cc10be31d24daf192f2067ff5314151e2cc600c7f",
+      "stored_sha256": "2855f120df474bda1f506b3cc10be31d24daf192f2067ff5314151e2cc600c7f",
+      "original_bytes": 83,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/shared_regression.log",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/shared_regression.log",
+      "original_sha256": "7befe4d32d8713d16247e05df3e5bd6a38eaecb07d45f1b0994af907371c5cb9",
+      "stored_sha256": "7befe4d32d8713d16247e05df3e5bd6a38eaecb07d45f1b0994af907371c5cb9",
+      "original_bytes": 289,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/shared_regression.xml",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/shared_regression.xml",
+      "original_sha256": "6d25004341eb2e40eb5d04543cee81ef16ce32f5c27d049c7456732881ed5ae6",
+      "stored_sha256": "6d25004341eb2e40eb5d04543cee81ef16ce32f5c27d049c7456732881ed5ae6",
+      "original_bytes": 28107,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/workflow_parity.log",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/workflow_parity.log",
+      "original_sha256": "6e508703dfa9317bae267d3f1aca92695ce92c7479bd50906a473fd87110aee8",
+      "stored_sha256": "6e508703dfa9317bae267d3f1aca92695ce92c7479bd50906a473fd87110aee8",
+      "original_bytes": 347,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/1496d9386c76fd.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/1496d9386c76fd.json",
+      "original_sha256": "dd042e7fc80661aec95cd2dc4ca9c0a8488e32cdc3fc3957edd8da3839f23ec2",
+      "stored_sha256": "2e8ac6d0ae0c0741a23a96ce97781f80b9529d8811a93abc9a0a41e911bde361",
+      "original_bytes": 423338,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/157850720f39c5.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/157850720f39c5.json",
+      "original_sha256": "8c0d9f12ff2c7f19cd702785f3efeb1ab6568c398ebef9372c9b68c4ab87e9e6",
+      "stored_sha256": "e3c6c4142f288c7b8154de355c7c700d3f93e496c29468ea537b8cca093a155a",
+      "original_bytes": 432077,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/166252c4af4825.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/166252c4af4825.json",
+      "original_sha256": "4eeb13be510311ecd80c7b6d338a5c0bf8aa59d8cf01158cadcdd10ced035fb4",
+      "stored_sha256": "d2542f0f01ce3dea54953830ad44c7458481a46493356249c4be0f10cf66aa11",
+      "original_bytes": 446552,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/2d6088b353e970.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/2d6088b353e970.json",
+      "original_sha256": "2fa6017848772ea7f301c5302844ebf458c9f95c1bd22a90766c0752ee0fc508",
+      "stored_sha256": "3fa1a3180ef7e5d7c442f6b27301ebd37b70df6dba4bb11e3b67ec21c192f26c",
+      "original_bytes": 434149,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/52a8916a095c85.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/52a8916a095c85.json",
+      "original_sha256": "cb26159fe539605ffcad888ad7822979517b068d8a5ea9120cbcfd6bcece160f",
+      "stored_sha256": "8015c92405f37dc64af9846cbadac3ff9a3583e989f09242bc481bf89ac78ef2",
+      "original_bytes": 444513,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/6ccb74cbdf5fd9.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/6ccb74cbdf5fd9.json",
+      "original_sha256": "8f890fae9e0bde24768ab82d0abaeaeb2d982f20b80174c8426dce519da89785",
+      "stored_sha256": "ba237ab10cf2b99c7ee2dc3db041020bbffc47ca048884ec071a09ac0f6d0a8a",
+      "original_bytes": 436030,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/6e9a50586c0c80.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/6e9a50586c0c80.json",
+      "original_sha256": "89a6e5a6675aba80a638816401eac7588d5e1a3e4b70be83a82dadcfe790a095",
+      "stored_sha256": "f965b7c3b6270dcc8c3e508ed810ac2b7b7b6579f74c8bb21b889b362f36aecb",
+      "original_bytes": 439688,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/7a6ebb999b6d9e.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/7a6ebb999b6d9e.json",
+      "original_sha256": "8af671af5c2c317512ebce9ad2701433064ed8bafd737bb159e91842956ac14c",
+      "stored_sha256": "75398e5081cb013e8527a5916745f8ca8f1bb7df70f4aeda515518185763e643",
+      "original_bytes": 443368,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/8d97192c565750.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/8d97192c565750.json",
+      "original_sha256": "93a9976e0a83168cda7f8e386292aea82a5c97e0f0f5ac79ef5fd9a6ef9cf747",
+      "stored_sha256": "82b508189a810a48c35aef7fe604f5cf125a2d227d893d05170f1e0cd789b5cf",
+      "original_bytes": 450594,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/95da9b4e73b6d2.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/95da9b4e73b6d2.json",
+      "original_sha256": "c1b911178d2b64cdef0b1604c653ec81db1281f4e02544da1e5f2af16f504b17",
+      "stored_sha256": "2e74270692d58b1fc26d448730120d6ab176cdab2e3acb5bf671bddbb3d8607b",
+      "original_bytes": 424322,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/aa6451f5ac6a5e.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/aa6451f5ac6a5e.json",
+      "original_sha256": "808dc3c2b28f504411c805beeddc29fbdcc43a3ee58ac0ff1ea5c7823bd096fd",
+      "stored_sha256": "24ce591f2507c58bc68049f69687df022239607e16f2fb4b7a0ee9d3600a3e13",
+      "original_bytes": 449873,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/b143593a6bb0c8.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/b143593a6bb0c8.json",
+      "original_sha256": "99204ea47c3eb0543f4d4ddd5f8193e4baa75cbaf0af41048ef4ae80bd82522b",
+      "stored_sha256": "0358faa70322851b1a72c55bca48c6449649f2f09e0c7daaf53758ae304c3838",
+      "original_bytes": 444727,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/c1e38fac23fde5.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/c1e38fac23fde5.json",
+      "original_sha256": "be9e87692336d80a4faec98cbaadd71c61381e0ae4cab8b01ea2719d3fcbd9eb",
+      "stored_sha256": "c0a7f98832c576a6067c48a2ce06491d114359f01cd3aa7e968e2447badc0e99",
+      "original_bytes": 443785,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/c947bd8b19f3f6.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/c947bd8b19f3f6.json",
+      "original_sha256": "34907cc09f49a736538ad4425093d8ecfa22bf15f1204430d8fa52408ee7536d",
+      "stored_sha256": "c54e525e3fd769a4f341585b424b8b753988d32d9227a996dfbf6804d6ed2ffc",
+      "original_bytes": 449903,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/d8c5d11c2fb5e1.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/d8c5d11c2fb5e1.json",
+      "original_sha256": "743b257555db0405dd9d5c39a48a1354026180a9f12e1e1ddfb1b27e0c2bb349",
+      "stored_sha256": "72bf8350c67ce63410039e2c6cdde3f87f7f7a431ca54cc5aa89d5b4f496bfe7",
+      "original_bytes": 444470,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/e0379ac93bbcb3.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/e0379ac93bbcb3.json",
+      "original_sha256": "37c6f663558b498ea7c0a9d91dcdf0f6b3291c096c2bb82ad2aae4f292f70b5a",
+      "stored_sha256": "31da94de3eeef2e0f6d57734e3e3d5130682146470f8db38b60529e32d1b3d76",
+      "original_bytes": 452048,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/ef59f321ad3485.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/ef59f321ad3485.json",
+      "original_sha256": "6d39e5aab7fd9c6be2b0813326e0efe849426441d9215f2330cc9e6e651d69db",
+      "stored_sha256": "7d6a1b077f47ab4195966ba0b76a990c0951061861291d669c21fb26a772a00d",
+      "original_bytes": 441447,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/f185909101f27b.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/f185909101f27b.json",
+      "original_sha256": "96fd5944a0d7bc6cd5afe09092ce6950161a636dafb6ce79861a9c8966ebbb68",
+      "stored_sha256": "5d7da795fcd454c5ea8200b8ff17009e84fe996ca685cf1a720bbc3dd9a3fccb",
+      "original_bytes": 453710,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/f3eb853614aedd.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/f3eb853614aedd.json",
+      "original_sha256": "a2313b076241d20552d7b955628be91f76c535221c405a7b5e24265aab029769",
+      "stored_sha256": "30e7e681d5a8643263e660f3178a07d2c3b8a99bd5ffc84738b75be67025881e",
+      "original_bytes": 440614,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/browser-events/f682f69ed7b307.json.gz",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events/f682f69ed7b307.json",
+      "original_sha256": "b5362c821cf6e8c8959a7c285b4439b5a6366baeaf54e8ef8a7b0fc2683951c1",
+      "stored_sha256": "8520db160c3ba0f78e20b8c4f4d29a7a07ce09892a5f98dadd08cd781d74c26f",
+      "original_bytes": 432967,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "candidate-e79e0ba/failure-screenshots.zip",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/browser-events",
+      "stored_sha256": "61868d0e54246844813de624d5eb90e81b74bba6265d50898427ac9569b8bda7",
+      "contents": [
+        {
+          "name": "2d6088b353e970-failure.png",
+          "sha256": "16d0e47bbe299bab2351b07c9a1982e868f03100f99e9a1a4c50b4013e471142"
+        }
+      ]
+    },
+    {
+      "path": "candidate-e79e0ba/original-browser.zip",
+      "original_path": "/tmp/ncu-candidate-e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409/original-browser",
+      "stored_sha256": "9b598600e145964ff2d0606567dae2d84b596faa17d5758382a30b8202b7291e",
+      "contents": [
+        {
+          "name": "ncu-hokkaido-校級-housing-cost-1440.png",
+          "sha256": "5575f09bb3e28f60e84c9f4fc3c6bb7f4e39ca553d80cae64387876a54b5fa11"
+        },
+        {
+          "name": "ncu-hokkaido-校級-housing-cost-390.png",
+          "sha256": "0871d3c41af5d4276b2226e692ebf7c3f1642737c8c161b77faa24ba7bb56455"
+        },
+        {
+          "name": "ncu-hokkaido-校級-programme-documents-1440.png",
+          "sha256": "eedeb4e77bc6b62c05b206284c9a1f945fee54559216ca404dbabcb334b0d208"
+        },
+        {
+          "name": "ncu-hokkaido-校級-programme-documents-390.png",
+          "sha256": "23f52e7c91e67480b018113166eadec23b1eefdf2aabe305e2c0105788d3f760"
+        },
+        {
+          "name": "ncu-hokkaido-校級-reading-scope-1440.png",
+          "sha256": "0c8342f8988c7ce77a88b0d2374c1d34b4d500f79d28cfeff68ab12d8a3e700c"
+        },
+        {
+          "name": "ncu-hokkaido-校級-reading-scope-390.png",
+          "sha256": "8d04ce7281587d0bb0de9142d187096345b7e50ee94d00ebf46ee15d7bbf6e6b"
+        },
+        {
+          "name": "ncu-hokkaido-院級-housing-cost-1440.png",
+          "sha256": "0f08c30613653e8cd1e8897d843f06384bc2e2f24ff3d21780b003ada9a74171"
+        },
+        {
+          "name": "ncu-hokkaido-院級-housing-cost-390.png",
+          "sha256": "5eb4438a2995df5675c9ccc0e0210cea4403a28be94e022f3be55b23a3bb67e2"
+        },
+        {
+          "name": "ncu-hokkaido-院級-programme-documents-1440.png",
+          "sha256": "28f4a4ba09c0a7daa362b58112b1820eb3945dff5ad61e5ec48356a660f27f87"
+        },
+        {
+          "name": "ncu-hokkaido-院級-programme-documents-390.png",
+          "sha256": "1fa5034029dbecdb7242d6dc8caf706c7114c4626da1aab5aee7dd10756cde7b"
+        },
+        {
+          "name": "ncu-hokkaido-院級-reading-scope-1440.png",
+          "sha256": "d8edb4edee0b2d146f4a515cf96085481a6cb28afe2875f6b4f2d1a50cf71e56"
+        },
+        {
+          "name": "ncu-hokkaido-院級-reading-scope-390.png",
+          "sha256": "574e7f49a65d814f2142e106d26942a6e98ea8f316a73de294074a731411f1b9"
+        },
+        {
+          "name": "ncu-japan3-komazawa-life-content-1440.png",
+          "sha256": "81ebe1eff4035913d4f8e0427a3959ce6ea217eab8a0c7f857e788edc79319fd"
+        },
+        {
+          "name": "ncu-japan3-komazawa-life-content-390.png",
+          "sha256": "9e42840c94f3b15274f0604c337a604e591a2e87619c32e5488a9aefbc2b5383"
+        },
+        {
+          "name": "ncu-japan3-komazawa-programme-documents-1440.png",
+          "sha256": "4665f40437a3c52eb1d9d879cd153eef02e1c65fdb29388a5a44104ecd8116e7"
+        },
+        {
+          "name": "ncu-japan3-komazawa-programme-documents-390.png",
+          "sha256": "530c5f4058531959f9c94d9ef0fb3a9bb9143b09f2296fdb23a4bfbd606fad33"
+        },
+        {
+          "name": "ncu-japan3-komazawa-source-scope-1440.png",
+          "sha256": "83e02d3065880c8940a76adfc8bca0a684e824699bc6ca6289057a5b5502d037"
+        },
+        {
+          "name": "ncu-japan3-komazawa-source-scope-390.png",
+          "sha256": "25e71017197af5ef1627bdf0c8446dd241c010c0116eea3af5605ef096292467"
+        },
+        {
+          "name": "ncu-japan3-kuins-life-content-1440.png",
+          "sha256": "1b6402e2e95ed51d19b76ba7c611432756f9184222512494bb9e5af21d33bc35"
+        },
+        {
+          "name": "ncu-japan3-kuins-life-content-390.png",
+          "sha256": "45168b4cd25dbd3f188ec27633189a2cee4243dfd5fe1b520dc0e813db845107"
+        },
+        {
+          "name": "ncu-japan3-kuins-programme-documents-1440.png",
+          "sha256": "9f48624fd3aa41899d160dc3457aa9efd7909faa203b0ca37e48a00f2967b0bd"
+        },
+        {
+          "name": "ncu-japan3-kuins-programme-documents-390.png",
+          "sha256": "14295fb673ec457c8b6983809fb3f599b22676a60bcfe8daf51645b7587536b5"
+        },
+        {
+          "name": "ncu-japan3-kuins-source-scope-1440.png",
+          "sha256": "2f9c5b36d28a9c0862130fccc0d987425c5c824a12cda6ed57759b964fc84ed7"
+        },
+        {
+          "name": "ncu-japan3-kuins-source-scope-390.png",
+          "sha256": "60e0f37f40f7c4ce064a7a65dbc80b53c001cd879aaf790ef3a9055b71f910b0"
+        },
+        {
+          "name": "ncu-japan3-tohoku-life-content-1440.png",
+          "sha256": "e8cfdb40b515972b0218cf7b06168a2f80f537d9a41fca0263f1e4b680a5dd61"
+        },
+        {
+          "name": "ncu-japan3-tohoku-life-content-390.png",
+          "sha256": "64a5a0f4a65a94880ec774da1cff291e385305f1bba63cab79a8a7daf4e5872e"
+        },
+        {
+          "name": "ncu-japan3-tohoku-programme-documents-1440.png",
+          "sha256": "e8f62203bc64b8b58ac0076fd55462acdb7d508ad7e1a9a6f3d4d93dcd6a2e3c"
+        },
+        {
+          "name": "ncu-japan3-tohoku-programme-documents-390.png",
+          "sha256": "acdf05b2a18a2d7e2ffc8eed14e88d545b96e2273e837fde6560548bd58d7c41"
+        },
+        {
+          "name": "ncu-japan3-tohoku-source-scope-1440.png",
+          "sha256": "f1aeb584db88a398a1dde25f581cb1f08054555d143b3fc5ffd4261281c505b8"
+        },
+        {
+          "name": "ncu-japan3-tohoku-source-scope-390.png",
+          "sha256": "3bd032e3b5fd17461c3b5de06ce1de28e05508ef0fe090528788c7a157119dee"
+        },
+        {
+          "name": "ncu-kyutech-arrival-five-plus-auditing-390.png",
+          "sha256": "48335a2c4fcbd18e3992d39ef09e3985f06e835d30b685049561e8986f8dcd6f"
+        },
+        {
+          "name": "ncu-kyutech-housing-conflict-390.png",
+          "sha256": "d4f5e581b922e57662bd535118f26d26ca2f68a08dbc78b386433fa3d1117ce3"
+        },
+        {
+          "name": "ncu-kyutech-original-reading-scope-390.png",
+          "sha256": "cee5e5051497c7689bc9a66dd354d763cf07a8633384ec96ce231320d6b6f196"
+        },
+        {
+          "name": "ncu-next3-fukui-life-1440.png",
+          "sha256": "852a5213bad91541b92225f119ed1ed2e562a7a06b272e9a5aeb8150eb05d2e2"
+        },
+        {
+          "name": "ncu-next3-fukui-life-390.png",
+          "sha256": "3f3709b1dd5eae184de91247ab91ee440d6ee1dd6be53a40cca12a4ea0867c64"
+        },
+        {
+          "name": "ncu-next3-fukui-packet-1440.png",
+          "sha256": "2905a8d644fe3b668cfc433422e94c1b5f87bada148c39ca06fee0887106411a"
+        },
+        {
+          "name": "ncu-next3-fukui-packet-390.png",
+          "sha256": "7fc4881c59dfe9b130737d214759061eda1526298e5c4bb9c10146a87f8f4e27"
+        },
+        {
+          "name": "ncu-next3-fukui-source-1440.png",
+          "sha256": "45daea4201a75f2379334f4e5cd95afe807cc4041366536b64d6f9e698547213"
+        },
+        {
+          "name": "ncu-next3-fukui-source-390.png",
+          "sha256": "c91acf45cac300c87852338ee75108694fa94ebfe52226751d6a778c93e99dd6"
+        },
+        {
+          "name": "ncu-next3-tcu-life-1440.png",
+          "sha256": "122a0da5ece2ad5ecf630079349241e2c7485cf75465d24e04d28750cc66a306"
+        },
+        {
+          "name": "ncu-next3-tcu-life-390.png",
+          "sha256": "98cb49bedbc2593f2ae4be4e7f75e93d268e6cf437c717ab637599a5e559cb77"
+        },
+        {
+          "name": "ncu-next3-tcu-packet-1440.png",
+          "sha256": "a158583c6654f84e62057ba02a47e2ac8f309c6322ce09a5026b164472e3826b"
+        },
+        {
+          "name": "ncu-next3-tcu-packet-390.png",
+          "sha256": "1d27556069a56b0d9316d05333dd95ab3a16cfa5951f162fd025af1223191bbe"
+        },
+        {
+          "name": "ncu-next3-tcu-source-1440.png",
+          "sha256": "def35606eefc38a958b0346a96c07dadeac963ec823b8783ff0a2706dbff6f1d"
+        },
+        {
+          "name": "ncu-next3-tcu-source-390.png",
+          "sha256": "7b58475acce70b4021a0c7559a381e4474739f96e9ef22965b8f11f760c0c1af"
+        },
+        {
+          "name": "ncu-next3-toyama-life-1440.png",
+          "sha256": "aa951a278175a8fc1480f666300738317a6ca258b7f9f32cd1ab1558b756c7db"
+        },
+        {
+          "name": "ncu-next3-toyama-life-390.png",
+          "sha256": "8244baa3bc9e73d49dbc7dacbae6a37266fb101709cd96e3116ea0aa750aa551"
+        },
+        {
+          "name": "ncu-next3-toyama-packet-1440.png",
+          "sha256": "c6983d5ba1ef2b37da322b9c684549ae1093c7a957c77b3da1a655aad0dc8076"
+        },
+        {
+          "name": "ncu-next3-toyama-packet-390.png",
+          "sha256": "7997995c5676dc9fe40b32393c1c42455ce7ba2bbf888976122f6f8509e02a04"
+        },
+        {
+          "name": "ncu-next3-toyama-source-1440.png",
+          "sha256": "f0c80105dc8c6c1a6210ef2729625c4942fd1d0c8302d57e3eda257f93ca8250"
+        },
+        {
+          "name": "ncu-next3-toyama-source-390.png",
+          "sha256": "f07f4ea2b594c40d8c3e88e5510170a9c51d3d1bbf61de4e3eb4b705518b297a"
+        },
+        {
+          "name": "ncu-niigata-blank-sheet-scope-1440.png",
+          "sha256": "4a32a4e01f5294ceb1f66914743abaf2a3571f1038895f90c45e08e81bdae0cc"
+        },
+        {
+          "name": "ncu-niigata-blank-sheet-scope-390.png",
+          "sha256": "71435ca880d9d300f50e9d05a9f6d2dbe980ccee9a8938f41ef026eaf18ee298"
+        },
+        {
+          "name": "ncu-niigata-graduate-basic-only-1440.png",
+          "sha256": "7223986ac7c34f006562bc3803f8483f8499e4f42c6b6c42add1f2ff9cbada26"
+        },
+        {
+          "name": "ncu-niigata-graduate-basic-only-390.png",
+          "sha256": "7786dec94812005e06a3468dc2a4bb68db963da01ba41c4e50f06a49e1bb26d0"
+        },
+        {
+          "name": "ncu-niigata-housing-cost-scope-1440.png",
+          "sha256": "fa59965765ce0b2d042f45f40d18a59541e97be270a783c57adb9b09584850ca"
+        },
+        {
+          "name": "ncu-niigata-housing-cost-scope-390.png",
+          "sha256": "bd5a6b8d614c1c746069523398ff13df5efbab160ea57bffe41d5518c3885839"
+        }
+      ]
+    },
+    {
+      "path": "ci-e79e0ba/check_runs.json",
+      "original_path": "/tmp/ncu-ci-e79e0ba/check_runs.json",
+      "original_sha256": "25c6332f1e45022c44d736bea1b7923dbcca2a7e462c4458924fcb5fc26b1dbf",
+      "stored_sha256": "25c6332f1e45022c44d736bea1b7923dbcca2a7e462c4458924fcb5fc26b1dbf",
+      "original_bytes": 3048,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "ci-e79e0ba/jobs-37880006012.json",
+      "original_path": "/tmp/ncu-ci-e79e0ba/jobs-37880006012.json",
+      "original_sha256": "b3dab5870ff3a8209160335de7c1077b89e461d875d9041ac9d8b8ed7c1666f6",
+      "stored_sha256": "b3dab5870ff3a8209160335de7c1077b89e461d875d9041ac9d8b8ed7c1666f6",
+      "original_bytes": 27,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "ci-e79e0ba/manifest.json",
+      "original_path": "/tmp/ncu-ci-e79e0ba/manifest.json",
+      "original_sha256": "0b6dac2c8a8a95942d55ccd4908c490e73c6925c66ba4ce911814353206130cf",
+      "stored_sha256": "0b6dac2c8a8a95942d55ccd4908c490e73c6925c66ba4ce911814353206130cf",
+      "original_bytes": 1640,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "ci-e79e0ba/status.json",
+      "original_path": "/tmp/ncu-ci-e79e0ba/status.json",
+      "original_sha256": "bbb92c8ea9f066bf5057414d56306ff4cfd5042066b76f75896b504e87b5a438",
+      "stored_sha256": "bbb92c8ea9f066bf5057414d56306ff4cfd5042066b76f75896b504e87b5a438",
+      "original_bytes": 4534,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "ci-e79e0ba/workflow_runs.json",
+      "original_path": "/tmp/ncu-ci-e79e0ba/workflow_runs.json",
+      "original_sha256": "04bc503b52f26d7b4e1bc2d0c16df3b232b3eba2e3dcce740a662323605f0fb2",
+      "stored_sha256": "04bc503b52f26d7b4e1bc2d0c16df3b232b3eba2e3dcce740a662323605f0fb2",
+      "original_bytes": 12783,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "bounded-coe-kyutech-e79e0ba/browser.log",
+      "original_path": "/tmp/ncu-bounded-coe-kyutech-e79e0ba/browser.log",
+      "original_sha256": "af2a6378787b23828ad71a248e289bfcc52fc2adeff57a090a600f9b7dbfab97",
+      "stored_sha256": "af2a6378787b23828ad71a248e289bfcc52fc2adeff57a090a600f9b7dbfab97",
+      "original_bytes": 140,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "bounded-coe-kyutech-e79e0ba/browser.xml",
+      "original_path": "/tmp/ncu-bounded-coe-kyutech-e79e0ba/browser.xml",
+      "original_sha256": "f58ea64f9b4bae54867593e9a5de52c68e6b06168dede4e72b72ed3a5a9ea692",
+      "stored_sha256": "f58ea64f9b4bae54867593e9a5de52c68e6b06168dede4e72b72ed3a5a9ea692",
+      "original_bytes": 1088,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "bounded-coe-kyutech-e79e0ba/manifest.json",
+      "original_path": "/tmp/ncu-bounded-coe-kyutech-e79e0ba/manifest.json",
+      "original_sha256": "d21a37a8711ab9cb7593d195dfa6192d407c546c9690e6fde9e51cef0754eeab",
+      "stored_sha256": "d21a37a8711ab9cb7593d195dfa6192d407c546c9690e6fde9e51cef0754eeab",
+      "original_bytes": 20826,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "bounded-coe-kyutech-e79e0ba/browser-events/2d6088b353e970.json.gz",
+      "original_path": "/tmp/ncu-bounded-coe-kyutech-e79e0ba/browser-events/2d6088b353e970.json",
+      "original_sha256": "3bcbb63ab4e213920b0f433331b4f63e176059e91fa1d936b9df9b9fdfe54ab1",
+      "stored_sha256": "9a7b3a7ae5c96c20173e27b61a7ccd4f1433d2d64ac6f5a618dfd6900fca27a5",
+      "original_bytes": 451111,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "bounded-coe-kyutech-e79e0ba/browser-events/aa6451f5ac6a5e.json.gz",
+      "original_path": "/tmp/ncu-bounded-coe-kyutech-e79e0ba/browser-events/aa6451f5ac6a5e.json",
+      "original_sha256": "b201cdac6bbe6bb2fed64579a7fd43e6e0bfd1282f4d592a69f5d467a8ca47f8",
+      "stored_sha256": "4bfcf2f7293faeaa873da640ec87f99f4522bcf0f57333f46fcd3edf7e0061b9",
+      "original_bytes": 450364,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "bounded-coe-kyutech-e79e0ba/browser-events/b143593a6bb0c8.json.gz",
+      "original_path": "/tmp/ncu-bounded-coe-kyutech-e79e0ba/browser-events/b143593a6bb0c8.json",
+      "original_sha256": "fd02bd41eec50c427a6f5349a973a58442a653448a73bece5b04e1d843acb3cc",
+      "stored_sha256": "8e20767a4728c3e1ca99407e1fe2d627af6e0733cf5aad3122861b1e98c0383c",
+      "original_bytes": 448169,
+      "gzip_preserves_original_bytes": true
+    },
+    {
+      "path": "bounded-coe-kyutech-e79e0ba/visual/visual-1440.json",
+      "original_path": "/tmp/ncu-bounded-coe-kyutech-e79e0ba/visual/visual-1440.json",
+      "original_sha256": "c4ceefe1f7ba1153abc050fb076381787257f442c2ef3b2d149983a8f9aaff45",
+      "stored_sha256": "c4ceefe1f7ba1153abc050fb076381787257f442c2ef3b2d149983a8f9aaff45",
+      "original_bytes": 9884,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "bounded-coe-kyutech-e79e0ba/visual/visual-390.json",
+      "original_path": "/tmp/ncu-bounded-coe-kyutech-e79e0ba/visual/visual-390.json",
+      "original_sha256": "e7e98753e687ff18f340fab8674252727f21e6cb70fef54f7355d56025bb704b",
+      "stored_sha256": "e7e98753e687ff18f340fab8674252727f21e6cb70fef54f7355d56025bb704b",
+      "original_bytes": 9881,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "bounded-coe-kyutech-e79e0ba/visual-evidence.zip",
+      "original_path": "/tmp/ncu-bounded-coe-kyutech-e79e0ba/visual",
+      "stored_sha256": "33e574759054b5dcf1fca2f8cbebb5b833b8d7060d8fe948fb5736a0d67a19bf",
+      "contents": [
+        {
+          "name": "tohoku-coe-four-documents-1440.png",
+          "sha256": "e243ede9c4a6c10531e1d5ec217e500afe408e99b7e69103c2bdb7ddda33287a"
+        },
+        {
+          "name": "tohoku-coe-four-documents-390.png",
+          "sha256": "0e482389c7f6256062f7e1c678b44c3a0199ff4f7194037888652891c6e918c7"
+        },
+        {
+          "name": "tohoku-expanded-student-summary-1440.png",
+          "sha256": "08a102dcf1b097221a6669a213cc5c41d4589c6af1dce8cd03ba92a1fbed531f"
+        },
+        {
+          "name": "tohoku-expanded-student-summary-390.png",
+          "sha256": "cca7454676a7a8c41ac707b0705b717f72b9521cc364c5da5dc2a6a6d9ff6582"
+        }
+      ]
+    },
+    {
+      "path": "scripts/ncu-candidate-verify-coe-scope-final.py",
+      "original_path": "/tmp/ncu-candidate-verify-coe-scope-final.py",
+      "original_sha256": "05fdd391f68840f9f8fc96330a3138c9b3a7503ad106b4f5515d83d9e1a8f6b2",
+      "stored_sha256": "05fdd391f68840f9f8fc96330a3138c9b3a7503ad106b4f5515d83d9e1a8f6b2",
+      "original_bytes": 7113,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "scripts/ncu_verify_failure_events.py",
+      "original_path": "/tmp/ncu_verify_failure_events.py",
+      "original_sha256": "73e53fb110536fc41802f61e0b832bd8a774f0663f981f7667e1a7f7f424d1bb",
+      "stored_sha256": "73e53fb110536fc41802f61e0b832bd8a774f0663f981f7667e1a7f7f424d1bb",
+      "original_bytes": 3028,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "scripts/ncu-read-ci-e79e0ba.py",
+      "original_path": "/tmp/ncu-read-ci-e79e0ba.py",
+      "original_sha256": "4bc149a21de6ee0ecdc5f97d226bceb9e88f86ce34953470553a7f7c57c03f07",
+      "stored_sha256": "4bc149a21de6ee0ecdc5f97d226bceb9e88f86ce34953470553a7f7c57c03f07",
+      "original_bytes": 1663,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "scripts/ncu_coe_visual_capture.py",
+      "original_path": "/tmp/ncu_coe_visual_capture.py",
+      "original_sha256": "cfd77d006ef04a0a55311c370b4366e40d3878e7989c65fafff91c85d39137b2",
+      "stored_sha256": "cfd77d006ef04a0a55311c370b4366e40d3878e7989c65fafff91c85d39137b2",
+      "original_bytes": 2593,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "scripts/ncu-run-bounded-coe-kyutech-e79e0ba.py",
+      "original_path": "/tmp/ncu-run-bounded-coe-kyutech-e79e0ba.py",
+      "original_sha256": "228fa5192dd6fa1042ddcc149b5b6029c13885411450cb175b75b2b2336318d0",
+      "stored_sha256": "228fa5192dd6fa1042ddcc149b5b6029c13885411450cb175b75b2b2336318d0",
+      "original_bytes": 1984,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "driver.log",
+      "original_path": "/tmp/ncu-coe-scope-final-driver.log",
+      "original_sha256": "decba97c85da6379059c678ed9edc59aa25caa4faa15e4cd361c81458f40255b",
+      "stored_sha256": "decba97c85da6379059c678ed9edc59aa25caa4faa15e4cd361c81458f40255b",
+      "original_bytes": 1366,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "merge-points.json",
+      "original_path": "/tmp/ncu-coe-scope-final-merge-points.json",
+      "original_sha256": "2f4418e54cc0abf35c0cc66a39a7a63708ffffb32df0e33a59ef3b50a5faec04",
+      "stored_sha256": "2f4418e54cc0abf35c0cc66a39a7a63708ffffb32df0e33a59ef3b50a5faec04",
+      "original_bytes": 2040,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "preview/ncu-next3-provenance-preview-v1.xml",
+      "original_path": "/tmp/ncu-next3-provenance-preview-v1.xml",
+      "original_sha256": "cfabd645e29bd7e7d6c11da14715140539d72552037e814f7225c5a94128588c",
+      "stored_sha256": "cfabd645e29bd7e7d6c11da14715140539d72552037e814f7225c5a94128588c",
+      "original_bytes": 392,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "preview/ncu-next3-provenance-preview-v1.log",
+      "original_path": "/tmp/ncu-next3-provenance-preview-v1.log",
+      "original_sha256": "d2235476c44d9676dc6713544f75f7a4b8acb264e833f69e964a505301d064d4",
+      "stored_sha256": "d2235476c44d9676dc6713544f75f7a4b8acb264e833f69e964a505301d064d4",
+      "original_bytes": 115,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "preview/ncu-next3-coe-preview-v1.xml",
+      "original_path": "/tmp/ncu-next3-coe-preview-v1.xml",
+      "original_sha256": "a7dd466ee2558d412ab5b8a69164a80c56aa584022ded7a59611c3ca5ef2d420",
+      "stored_sha256": "a7dd466ee2558d412ab5b8a69164a80c56aa584022ded7a59611c3ca5ef2d420",
+      "original_bytes": 532,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "preview/ncu-next3-coe-preview-v1.log",
+      "original_path": "/tmp/ncu-next3-coe-preview-v1.log",
+      "original_sha256": "3c2fe20574356d25fc5389e1b546c3ca83038f9b0912e8035dec97f1dc5dadca",
+      "stored_sha256": "3c2fe20574356d25fc5389e1b546c3ca83038f9b0912e8035dec97f1dc5dadca",
+      "original_bytes": 116,
+      "gzip_preserves_original_bytes": false
+    },
+    {
+      "path": "visual-inspection.json",
+      "stored_sha256": "d56e0d2289a5e520b224186a31d740f6d01a51f5cd8d1d1521515ecc767e1207",
+      "generated_visual_review_record": true
+    }
+  ]
+}
