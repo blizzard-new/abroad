@@ -43,6 +43,8 @@ home 七件與 host 分開。NUFS 初次 13 項、熊本 COE 4 項、龍谷 14 �
 
 具體當期缺口仍包括中央 116 名額／學制／track、NUFS nomination 表及 arrival package、熊本承辦 STEP packet／住宿 system／當期指南、龍谷 116 入口與財力／表格版本、NASIC 回覆／Pledge／開戶表本體與指定期限、床具及退宿矛盾。未取得不冒稱官方未公告。851 跨校 workflow parity 專項及既有 Kyutech 根因未於本輪結案，未聲稱 full CI equivalence。
 
-main f6ad1b8（含 NTU daad399）維持；CCU 5eadeb56 與 TKU 工作期間更新到 e1c551a8 的合併點清單已刷新，本輪修正交集均為 0，整支 NCU 分支仍有 15／21 個共用路徑須後續整合。沒有 merge、部署、正式 DB、權限／credential 修改或對學校聯絡。
+main f6ad1b8（含 NTU daad399）維持；CCU 5eadeb56 與 TKU 工作期間先更新到 e1c551a8、推送後又更新到 3cbe9760。[最後合併點清單](integration-points-latest.json)刷新至此次遠端觀測：本輪修正交集均為 0，整支 NCU 分支仍有 15／21 個共用路徑須後續整合；舊提交時的 scope snapshot 另保留。沒有 merge、部署、正式 DB、權限／credential 修改或對學校聯絡。
+
+[b08afce3 遠端核對](remote-verification-b08afce3.json)顯示 branch 已推送、工作樹乾淨；Quality run 37911910786 completed/failure、jobs 0，combined status pending、statuses 0。這項遠端 CI 缺口未修、不冒稱完整 CI 通過。
 
 [09:16 UTC 環境 healthcheck](environment-healthcheck.json)確認原環境、分支与保存內容，先前測試都正常結束，未觀測到測試中斷；沒有新開 execution environment。
