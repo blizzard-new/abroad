@@ -1,0 +1,110 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku-main-baseline
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 10 items
+
+tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens PASSED [ 10%]
+tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked PASSED [ 20%]
+tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything PASSED [ 30%]
+tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in PASSED [ 40%]
+tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser PASSED [ 50%]
+tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390] PASSED [ 60%]
+tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754] PASSED [ 70%]
+tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader FAILED [ 80%]
+tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout FAILED [ 90%]
+tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history PASSED [100%]
+
+=================================== FAILURES ===================================
+_____________ test_combined_search_map_preview_and_chinese_reader ______________
+tests/e2e/test_discovery_workspace.py:54: in test_combined_search_map_preview_and_chinese_reader
+    expect(page.locator(".discovery-reader-original")).to_contain_text("I cooked")
+E   AssertionError: Locator expected to contain text 'I cooked'
+E   Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator(".discovery-reader-original")
+E       13 × locator resolved to <details open="" class="discovery-reader-original">…</details>
+E          - unexpected value "資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。"
+E   
+E   Aria snapshot:
+E   - group:
+E     - text: 資料來源
+E     - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。
+___________ test_cloud_selection_roundtrip_home_isolation_and_logout ___________
+tests/e2e/test_discovery_workspace.py:139: in test_cloud_selection_roundtrip_home_isolation_and_logout
+    page.locator(f'[data-school-note="{LINCOLN}"]').fill("過期後不能上傳")
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:18242: in fill
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:219: in fill
+    return await self._frame.fill(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:636: in fill
+    await self._fill(**locals_to_params(locals()))
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:648: in _fill
+    await self._channel.send("fill", self._timeout, locals_to_params(locals()))
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.fill: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("[data-school-note=\"林肯大學 Lincoln University\"]")
+E       - locator resolved to <textarea rows="2" maxlength="1000" placeholder="留下選校理由…" data-school-note="林肯大學 Lincoln University">只給這個帳號看的選校理由</textarea>
+E       - fill("過期後不能上傳")
+E     - attempting fill action
+E       - waiting for element to be visible, enabled and editable
+E     - element was detached from the DOM, retrying
+=============================== warnings summary ===============================
+../abroad-tku/.venv/lib/python3.12/site-packages/_pytest/config/__init__.py:1345
+  /workspace/abroad-tku/.venv/lib/python3.12/site-packages/_pytest/config/__init__.py:1345: PytestAssertRewriteWarning: Module already imported so cannot be rewritten; anyio
+    self._mark_plugins_for_rewrite(hook, disable_autoload)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+------ generated xml file: /tmp/tku-ci-timeout-main-f6ad/early-suite.xml -------
+============================= slowest 20 durations =============================
+60.50s call     tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout
+20.94s call     tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history
+20.34s call     tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader
+10.46s call     tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens
+8.04s call     tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in
+7.38s call     tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754]
+6.69s call     tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390]
+5.22s call     tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything
+5.19s call     tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser
+4.57s call     tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked
+1.33s setup    tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens
+0.36s teardown tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history
+0.22s setup    tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout
+0.18s teardown tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser
+0.18s setup    tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390]
+0.17s setup    tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader
+0.14s teardown tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754]
+0.07s setup    tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history
+0.06s teardown tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens
+0.04s setup    tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754]
+=========================== short test summary info ============================
+FAILED tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader - AssertionError: Locator expected to contain text 'I cooked'
+Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 
+Call log:
+  - Expect "to_contain_text" with timeout 5000ms
+  - waiting for locator(".discovery-reader-original")
+    13 × locator resolved to <details open="" class="discovery-reader-original">…</details>
+       - unexpected value "資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。"
+
+Aria snapshot:
+- group:
+  - text: 資料來源
+  - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。
+FAILED tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout - playwright._impl._errors.TimeoutError: Locator.fill: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("[data-school-note=\"林肯大學 Lincoln University\"]")
+    - locator resolved to <textarea rows="2" maxlength="1000" placeholder="留下選校理由…" data-school-note="林肯大學 Lincoln University">只給這個帳號看的選校理由</textarea>
+    - fill("過期後不能上傳")
+  - attempting fill action
+    - waiting for element to be visible, enabled and editable
+  - element was detached from the DOM, retrying
+============== 2 failed, 8 passed, 1 warning in 153.16s (0:02:33) ==============

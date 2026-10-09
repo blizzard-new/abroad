@@ -1,0 +1,351 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 10 items
+
+tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens ERROR [ 10%]
+tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked ERROR [ 20%]
+tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything ERROR [ 30%]
+tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in ERROR [ 40%]
+tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser ERROR [ 50%]
+tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390] ERROR [ 60%]
+tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754] ERROR [ 70%]
+tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader ERROR [ 80%]
+tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout ERROR [ 90%]
+tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history ERROR [100%]
+
+==================================== ERRORS ====================================
+_ ERROR at setup of test_a_visit_is_recorded_with_pages_searches_and_school_opens _
+tests/e2e/conftest.py:454: in browser
+    instance = playwright_runtime.chromium.launch(headless=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E   ╔════════════════════════════════════════════════════════════╗
+E   ║ Looks like Playwright was just installed or updated.       ║
+E   ║ Please run the following command to download new browsers: ║
+E   ║                                                            ║
+E   ║     playwright install                                     ║
+E   ║                                                            ║
+E   ║ <3 Playwright Team                                         ║
+E   ╚════════════════════════════════════════════════════════════╝
+____ ERROR at setup of test_automated_browsers_are_not_tracked_unless_asked ____
+tests/e2e/conftest.py:454: in browser
+    instance = playwright_runtime.chromium.launch(headless=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E   ╔════════════════════════════════════════════════════════════╗
+E   ║ Looks like Playwright was just installed or updated.       ║
+E   ║ Please run the following command to download new browsers: ║
+E   ║                                                            ║
+E   ║     playwright install                                     ║
+E   ║                                                            ║
+E   ║ <3 Playwright Team                                         ║
+E   ╚════════════════════════════════════════════════════════════╝
+_______ ERROR at setup of test_do_not_track_and_opt_out_stop_everything ________
+tests/e2e/conftest.py:454: in browser
+    instance = playwright_runtime.chromium.launch(headless=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E   ╔════════════════════════════════════════════════════════════╗
+E   ║ Looks like Playwright was just installed or updated.       ║
+E   ║ Please run the following command to download new browsers: ║
+E   ║                                                            ║
+E   ║     playwright install                                     ║
+E   ║                                                            ║
+E   ║ <3 Playwright Team                                         ║
+E   ╚════════════════════════════════════════════════════════════╝
+________ ERROR at setup of test_the_footer_button_opts_out_and_back_in _________
+tests/e2e/conftest.py:454: in browser
+    instance = playwright_runtime.chromium.launch(headless=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E   ╔════════════════════════════════════════════════════════════╗
+E   ║ Looks like Playwright was just installed or updated.       ║
+E   ║ Please run the following command to download new browsers: ║
+E   ║                                                            ║
+E   ║     playwright install                                     ║
+E   ║                                                            ║
+E   ║ <3 Playwright Team                                         ║
+E   ╚════════════════════════════════════════════════════════════╝
+___ ERROR at setup of test_the_address_bar_switch_excludes_your_own_browser ____
+tests/e2e/conftest.py:454: in browser
+    instance = playwright_runtime.chromium.launch(headless=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E   ╔════════════════════════════════════════════════════════════╗
+E   ║ Looks like Playwright was just installed or updated.       ║
+E   ║ Please run the following command to download new browsers: ║
+E   ║                                                            ║
+E   ║     playwright install                                     ║
+E   ║                                                            ║
+E   ║ <3 Playwright Team                                         ║
+E   ╚════════════════════════════════════════════════════════════╝
+____ ERROR at setup of test_sourced_rounds_retry_and_keep_unsent_draft[390] ____
+tests/e2e/conftest.py:454: in browser
+    instance = playwright_runtime.chromium.launch(headless=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E   ╔════════════════════════════════════════════════════════════╗
+E   ║ Looks like Playwright was just installed or updated.       ║
+E   ║ Please run the following command to download new browsers: ║
+E   ║                                                            ║
+E   ║     playwright install                                     ║
+E   ║                                                            ║
+E   ║ <3 Playwright Team                                         ║
+E   ╚════════════════════════════════════════════════════════════╝
+___ ERROR at setup of test_sourced_rounds_retry_and_keep_unsent_draft[1754] ____
+tests/e2e/conftest.py:454: in browser
+    instance = playwright_runtime.chromium.launch(headless=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E   ╔════════════════════════════════════════════════════════════╗
+E   ║ Looks like Playwright was just installed or updated.       ║
+E   ║ Please run the following command to download new browsers: ║
+E   ║                                                            ║
+E   ║     playwright install                                     ║
+E   ║                                                            ║
+E   ║ <3 Playwright Team                                         ║
+E   ╚════════════════════════════════════════════════════════════╝
+____ ERROR at setup of test_combined_search_map_preview_and_chinese_reader _____
+tests/e2e/conftest.py:454: in browser
+    instance = playwright_runtime.chromium.launch(headless=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E   ╔════════════════════════════════════════════════════════════╗
+E   ║ Looks like Playwright was just installed or updated.       ║
+E   ║ Please run the following command to download new browsers: ║
+E   ║                                                            ║
+E   ║     playwright install                                     ║
+E   ║                                                            ║
+E   ║ <3 Playwright Team                                         ║
+E   ╚════════════════════════════════════════════════════════════╝
+__ ERROR at setup of test_cloud_selection_roundtrip_home_isolation_and_logout __
+tests/e2e/conftest.py:454: in browser
+    instance = playwright_runtime.chromium.launch(headless=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E   ╔════════════════════════════════════════════════════════════╗
+E   ║ Looks like Playwright was just installed or updated.       ║
+E   ║ Please run the following command to download new browsers: ║
+E   ║                                                            ║
+E   ║     playwright install                                     ║
+E   ║                                                            ║
+E   ║ <3 Playwright Team                                         ║
+E   ╚════════════════════════════════════════════════════════════╝
+_ ERROR at setup of test_candidates_notes_order_persistence_mobile_and_history _
+tests/e2e/conftest.py:454: in browser
+    instance = playwright_runtime.chromium.launch(headless=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E   ╔════════════════════════════════════════════════════════════╗
+E   ║ Looks like Playwright was just installed or updated.       ║
+E   ║ Please run the following command to download new browsers: ║
+E   ║                                                            ║
+E   ║     playwright install                                     ║
+E   ║                                                            ║
+E   ║ <3 Playwright Team                                         ║
+E   ╚════════════════════════════════════════════════════════════╝
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/_pytest/config/__init__.py:1345
+  /workspace/abroad-tku/.venv/lib/python3.12/site-packages/_pytest/config/__init__.py:1345: PytestAssertRewriteWarning: Module already imported so cannot be rewritten; anyio
+    self._mark_plugins_for_rewrite(hook, disable_autoload)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+------- generated xml file: /tmp/tku-ci-timeout-b455a18/early-suite.xml --------
+============================= slowest 20 durations =============================
+0.56s setup    tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens
+0.01s teardown tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history
+0.00s setup    tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390]
+0.00s teardown tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390]
+0.00s teardown tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout
+0.00s teardown tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754]
+0.00s setup    tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked
+0.00s setup    tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history
+0.00s teardown tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader
+0.00s setup    tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in
+0.00s teardown tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens
+0.00s teardown tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser
+0.00s teardown tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked
+0.00s teardown tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in
+0.00s teardown tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything
+0.00s setup    tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader
+0.00s setup    tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754]
+0.00s setup    tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser
+0.00s setup    tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout
+0.00s setup    tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything
+=========================== short test summary info ============================
+ERROR tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens - playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+ERROR tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked - playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+ERROR tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything - playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+ERROR tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in - playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+ERROR tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser - playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+ERROR tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390] - playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+ERROR tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754] - playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+ERROR tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader - playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+ERROR tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout - playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+ERROR tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history - playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝
+======================== 1 warning, 10 errors in 2.29s =========================

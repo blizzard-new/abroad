@@ -1,0 +1,567 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 10 items
+
+tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens PASSED [ 10%]
+tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked PASSED [ 20%]
+tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything PASSED [ 30%]
+tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in PASSED [ 40%]
+tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser PASSED [ 50%]
+tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390] FAILED [ 60%]
+tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754] PASSED [ 70%]
+tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader FAILED [ 80%]
+tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout FAILED [ 90%]
+tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history PASSED [100%]
+
+=================================== FAILURES ===================================
+_____________ test_sourced_rounds_retry_and_keep_unsent_draft[390] _____________
+tests/e2e/test_application_periods.py:40: in test_sourced_rounds_retry_and_keep_unsent_draft
+    expect(page.locator('#application-period-retry')).to_be_visible()
+E   AssertionError: Locator expected to be visible
+E   Actual value: hidden 
+E   Call log:
+E     - Expect "to_be_visible" with timeout 5000ms
+E     - waiting for locator("#application-period-retry")
+E       12 × locator resolved to <button hidden="" type="button" class="text-action" id="application-period-retry">重新讀取年度與梯次</button>
+E          - unexpected value "hidden"
+E   
+E   Aria snapshot:
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - main:
+E     - button "開啟功能選單"
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - status
+E     - region "我的申請工作區":
+E       - text: 我的申請
+E       - strong: 從選校到送件，接著完成下一步
+E       - paragraph: 長庚大學
+E       - navigation "申請工作區階段":
+E         - link "選校與確認":
+E           - /url: "#advisor"
+E         - link "準備與時程":
+E           - /url: "#overview"
+E         - link "文件與送件":
+E           - /url: "#application-center"
+E       - navigation "本階段操作":
+E         - link "條件與推薦":
+E           - /url: "#advisor"
+E         - link "候選與比較":
+E           - /url: "#favorites"
+E         - link "當期資格與志願":
+E           - /url: "#eligibility"
+E       - region "資格與志願清單":
+E         - heading "資格與志願清單" [level=2]
+E         - paragraph: 資格初判供參考，正式結果以校方認定為準。
+E         - strong: 我的條件 · 推薦與核對共用
+E         - text: 尚未設定 學院
+E         - combobox "學院":
+E           - option "尚未設定" [selected]
+E           - option "醫學院"
+E           - option "工學院"
+E           - option "管理學院"
+E           - option "智慧運算學院"
+E         - text: 所屬系所
+E         - combobox "所屬系所" [disabled]:
+E           - option "請先選擇學院" [selected]
+E         - text: 學制
+E         - combobox "學制":
+E           - option "尚未設定" [selected]
+E           - option "大學部"
+E           - option "研究所"
+E         - text: 學業平均
+E         - spinbutton "學業平均"
+E         - text: 語言測驗
+E         - combobox "語言測驗":
+E           - option "尚未考／尚未決定" [selected]
+E           - option "TOEIC"
+E           - option "IELTS Academic"
+E           - option "TOEFL iBT（舊制120分）"
+E           - option "TOEFL iBT（新制6分）"
+E           - option "Duolingo"
+E           - option "其他"
+E         - text: 語言分數
+E         - spinbutton "語言分數"
+E         - text: 想去的國家／地區
+E         - combobox "想去的國家／地區":
+E           - option "不限國家" [selected]
+E           - option "中國"
+E           - option "日本"
+E           - option "比利時"
+E           - option "印度"
+E           - option "法國"
+E           - option "美國"
+E           - option "紐西蘭"
+E           - option "馬來西亞"
+E           - option "捷克"
+E           - option "荷蘭"
+E           - option "德國"
+E           - option "韓國"
+E         - text: 預計出國學期
+E         - combobox "預計出國學期":
+E           - option "尚未決定" [selected]
+E           - option "2027 春季"
+E           - option "2027 秋季"
+E           - option "2028 春季"
+E           - option "2028 秋季"
+E         - paragraph:
+E           - text: 選擇學院後顯示所屬系所。
+E           - link "官方名單":
+E             - /url: https://www.cgu.edu.tw/ch/Contents?nodeId=269
+E         - group:
+E           - strong: 更多條件
+E         - group "本次申請與志願":
+E           - text: 本次申請與志願 申請學年度
+E           - combobox "申請學年度":
+E             - option "請選擇" [selected]
+E             - option "117 學年度（流程資料待確認）"
+E             - option "116 學年度"
+E             - option "115 學年度"
+E             - option "113 學年度"
+E           - text: 申請梯次
+E           - combobox "申請梯次":
+E             - option "請選擇" [selected]
+E             - option "秋季／全學年梯次（此年度流程待確認）"
+E             - option "春季梯次（此年度流程待確認）"
+E             - option "秋季梯次（此年度流程待確認）"
+E             - option "第一梯次（此年度流程待確認）"
+E             - option "第二梯次（此年度流程待確認）"
+E             - option "其他／尚未公告（此年度流程待確認）"
+E           - paragraph: 先選學年度；系統會列出該年度已有資料的梯次。其他選項均標示待確認。
+E           - group "準備志願序（最多五所；正式規定依本校公告）":
+E             - text: 準備志願序（最多五所；正式規定依本校公告） 第一志願
+E             - combobox "第一志願":
+E               - option "請選擇第一志願" [selected]
+E               - option "林肯大學 Lincoln University"
+E               - option "明治大學 Meiji University"
+E               - option "馬來西亞馬來亞大學 Universiti Malaya"
+E               - option "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee"
+E               - option "法國薩克雷大學 University of Paris-Saclay"
+E               - option "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences"
+E               - option "德國呂貝克應用科技大學 Technische Hochschule Lübeck"
+E               - option "韓國江原國立大學 Kangwon National University"
+E               - option "歐洲知識經濟與管理學院 Skema Business School"
+E               - option "印度昌迪加爾大學 Chandigarh University"
+E               - option "捷克布拉格紐約大學 University of New York in Prague (UNYP)"
+E               - option "法國EPF工程師學校 EPF École d'ingénieurs"
+E               - option "雷恩商學院 Rennes School of Business"
+E               - option "馬來西亞管理與科技大學 Management and Science University"
+E               - option "荷蘭恩荷芬理工大學 Eindhoven University of Technology"
+E               - option "武漢大學 Wuhan University"
+E               - option "法國ICD商學院 ICD Business School"
+E             - text: 第二志願
+E             - combobox "第二志願":
+E               - option "不設定第 2 志願" [selected]
+E               - option "林肯大學 Lincoln University"
+E               - option "明治大學 Meiji University"
+E               - option "馬來西亞馬來亞大學 Universiti Malaya"
+E               - option "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee"
+E               - option "法國薩克雷大學 University of Paris-Saclay"
+E               - option "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences"
+E               - option "德國呂貝克應用科技大學 Technische Hochschule Lübeck"
+E               - option "韓國江原國立大學 Kangwon National University"
+E               - option "歐洲知識經濟與管理學院 Skema Business School"
+E               - option "印度昌迪加爾大學 Chandigarh University"
+E               - option "捷克布拉格紐約大學 University of New York in Prague (UNYP)"
+E               - option "法國EPF工程師學校 EPF École d'ingénieurs"
+E               - option "雷恩商學院 Rennes School of Business"
+E               - option "馬來西亞管理與科技大學 Management and Science University"
+E               - option "荷蘭恩荷芬理工大學 Eindhoven University of Technology"
+E               - option "武漢大學 Wuhan University"
+E               - option "法國ICD商學院 ICD Business School"
+E             - text: 第三志願
+E             - combobox "第三志願":
+E               - option "不設定第 3 志願" [selected]
+E               - option "林肯大學 Lincoln University"
+E               - option "明治大學 Meiji University"
+E               - option "馬來西亞馬來亞大學 Universiti Malaya"
+E               - option "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee"
+E               - option "法國薩克雷大學 University of Paris-Saclay"
+E               - option "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences"
+E               - option "德國呂貝克應用科技大學 Technische Hochschule Lübeck"
+E               - option "韓國江原國立大學 Kangwon National University"
+E               - option "歐洲知識經濟與管理學院 Skema Business School"
+E               - option "印度昌迪加爾大學 Chandigarh University"
+E               - option "捷克布拉格紐約大學 University of New York in Prague (UNYP)"
+E               - option "法國EPF工程師學校 EPF École d'ingénieurs"
+E               - option "雷恩商學院 Rennes School of Business"
+E               - option "馬來西亞管理與科技大學 Management and Science University"
+E               - option "荷蘭恩荷芬理工大學 Eindhoven University of Technology"
+E               - option "武漢大學 Wuhan University"
+E               - option "法國ICD商學院 ICD Business School"
+E             - text: 第四志願
+E             - combobox "第四志願":
+E               - option "不設定第 4 志願" [selected]
+E               - option "林肯大學 Lincoln University"
+E               - option "明治大學 Meiji University"
+E               - option "馬來西亞馬來亞大學 Universiti Malaya"
+E               - option "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee"
+E               - option "法國薩克雷大學 University of Paris-Saclay"
+E               - option "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences"
+E               - option "德國呂貝克應用科技大學 Technische Hochschule Lübeck"
+E               - option "韓國江原國立大學 Kangwon National University"
+E               - option "歐洲知識經濟與管理學院 Skema Business School"
+E               - option "印度昌迪加爾大學 Chandigarh University"
+E               - option "捷克布拉格紐約大學 University of New York in Prague (UNYP)"
+E               - option "法國EPF工程師學校 EPF École d'ingénieurs"
+E               - option "雷恩商學院 Rennes School of Business"
+E               - option "馬來西亞管理與科技大學 Management and Science University"
+E               - option "荷蘭恩荷芬理工大學 Eindhoven University of Technology"
+E               - option "武漢大學 Wuhan University"
+E               - option "法國ICD商學院 ICD Business School"
+E             - text: 第五志願
+E             - combobox "第五志願":
+E               - option "不設定第 5 志願" [selected]
+E               - option "林肯大學 Lincoln University"
+E               - option "明治大學 Meiji University"
+E               - option "馬來西亞馬來亞大學 Universiti Malaya"
+E               - option "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee"
+E               - option "法國薩克雷大學 University of Paris-Saclay"
+E               - option "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences"
+E               - option "德國呂貝克應用科技大學 Technische Hochschule Lübeck"
+E               - option "韓國江原國立大學 Kangwon National University"
+E               - option "歐洲知識經濟與管理學院 Skema Business School"
+E               - option "印度昌迪加爾大學 Chandigarh University"
+E               - option "捷克布拉格紐約大學 University of New York in Prague (UNYP)"
+E               - option "法國EPF工程師學校 EPF École d'ingénieurs"
+E               - option "雷恩商學院 Rennes School of Business"
+E               - option "馬來西亞管理與科技大學 Management and Science University"
+E               - option "荷蘭恩荷芬理工大學 Eindhoven University of Technology"
+E               - option "武漢大學 Wuhan University"
+E               - option "法國ICD商學院 ICD Business School"
+E           - paragraph: 建立個人清單時才需要登入，之後可在不同裝置同步志願與完成狀態。
+E         - button "核對志願並建立計畫"
+E         - status:
+E           - strong: 還沒開始檢查
+E           - text: 填入資料後，系統會比對校內基本門檻與合作校公開條件。
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms
+_____________ test_combined_search_map_preview_and_chinese_reader ______________
+tests/e2e/test_discovery_workspace.py:54: in test_combined_search_map_preview_and_chinese_reader
+    expect(page.locator(".discovery-reader-original")).to_contain_text("I cooked")
+E   AssertionError: Locator expected to contain text 'I cooked'
+E   Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator(".discovery-reader-original")
+E       13 × locator resolved to <details open="" class="discovery-reader-original">…</details>
+E          - unexpected value "資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。"
+E   
+E   Aria snapshot:
+E   - group:
+E     - text: 資料來源
+E     - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。
+___________ test_cloud_selection_roundtrip_home_isolation_and_logout ___________
+tests/e2e/test_discovery_workspace.py:139: in test_cloud_selection_roundtrip_home_isolation_and_logout
+    page.locator(f'[data-school-note="{LINCOLN}"]').fill("過期後不能上傳")
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:18242: in fill
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:219: in fill
+    return await self._frame.fill(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:636: in fill
+    await self._fill(**locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:648: in _fill
+    await self._channel.send("fill", self._timeout, locals_to_params(locals()))
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.fill: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("[data-school-note=\"林肯大學 Lincoln University\"]")
+E       - locator resolved to <textarea rows="2" maxlength="1000" placeholder="留下選校理由…" data-school-note="林肯大學 Lincoln University">只給這個帳號看的選校理由</textarea>
+E       - fill("過期後不能上傳")
+E     - attempting fill action
+E       - waiting for element to be visible, enabled and editable
+E     - element was detached from the DOM, retrying
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/_pytest/config/__init__.py:1345
+  /workspace/abroad-tku/.venv/lib/python3.12/site-packages/_pytest/config/__init__.py:1345: PytestAssertRewriteWarning: Module already imported so cannot be rewritten; anyio
+    self._mark_plugins_for_rewrite(hook, disable_autoload)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+------- generated xml file: /tmp/tku-ci-timeout-b455a18/early-suite.xml --------
+============================= slowest 20 durations =============================
+53.71s call     tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout
+18.94s call     tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader
+13.62s call     tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history
+10.77s call     tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens
+9.93s call     tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390]
+8.71s call     tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in
+7.35s call     tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754]
+5.57s call     tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser
+4.92s call     tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked
+4.76s call     tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything
+1.14s setup    tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens
+0.27s teardown tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history
+0.19s setup    tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader
+0.17s setup    tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390]
+0.16s teardown tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754]
+0.14s teardown tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser
+0.06s setup    tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout
+0.04s setup    tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history
+0.04s setup    tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked
+0.04s setup    tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser
+=========================== short test summary info ============================
+FAILED tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390] - AssertionError: Locator expected to be visible
+Actual value: hidden 
+Call log:
+  - Expect "to_be_visible" with timeout 5000ms
+  - waiting for locator("#application-period-retry")
+    12 × locator resolved to <button hidden="" type="button" class="text-action" id="application-period-retry">重新讀取年度與梯次</button>
+       - unexpected value "hidden"
+
+Aria snapshot:
+- link "跳到主要內容":
+  - /url: "#main-content"
+- main:
+  - button "開啟功能選單"
+  - link "UniWay 首頁":
+    - /url: "#home"
+    - strong: UniWay
+  - status
+  - region "我的申請工作區":
+    - text: 我的申請
+    - strong: 從選校到送件，接著完成下一步
+    - paragraph: 長庚大學
+    - navigation "申請工作區階段":
+      - link "選校與確認":
+        - /url: "#advisor"
+      - link "準備與時程":
+        - /url: "#overview"
+      - link "文件與送件":
+        - /url: "#application-center"
+    - navigation "本階段操作":
+      - link "條件與推薦":
+        - /url: "#advisor"
+      - link "候選與比較":
+        - /url: "#favorites"
+      - link "當期資格與志願":
+        - /url: "#eligibility"
+    - region "資格與志願清單":
+      - heading "資格與志願清單" [level=2]
+      - paragraph: 資格初判供參考，正式結果以校方認定為準。
+      - strong: 我的條件 · 推薦與核對共用
+      - text: 尚未設定 學院
+      - combobox "學院":
+        - option "尚未設定" [selected]
+        - option "醫學院"
+        - option "工學院"
+        - option "管理學院"
+        - option "智慧運算學院"
+      - text: 所屬系所
+      - combobox "所屬系所" [disabled]:
+        - option "請先選擇學院" [selected]
+      - text: 學制
+      - combobox "學制":
+        - option "尚未設定" [selected]
+        - option "大學部"
+        - option "研究所"
+      - text: 學業平均
+      - spinbutton "學業平均"
+      - text: 語言測驗
+      - combobox "語言測驗":
+        - option "尚未考／尚未決定" [selected]
+        - option "TOEIC"
+        - option "IELTS Academic"
+        - option "TOEFL iBT（舊制120分）"
+        - option "TOEFL iBT（新制6分）"
+        - option "Duolingo"
+        - option "其他"
+      - text: 語言分數
+      - spinbutton "語言分數"
+      - text: 想去的國家／地區
+      - combobox "想去的國家／地區":
+        - option "不限國家" [selected]
+        - option "中國"
+        - option "日本"
+        - option "比利時"
+        - option "印度"
+        - option "法國"
+        - option "美國"
+        - option "紐西蘭"
+        - option "馬來西亞"
+        - option "捷克"
+        - option "荷蘭"
+        - option "德國"
+        - option "韓國"
+      - text: 預計出國學期
+      - combobox "預計出國學期":
+        - option "尚未決定" [selected]
+        - option "2027 春季"
+        - option "2027 秋季"
+        - option "2028 春季"
+        - option "2028 秋季"
+      - paragraph:
+        - text: 選擇學院後顯示所屬系所。
+        - link "官方名單":
+          - /url: https://www.cgu.edu.tw/ch/Contents?nodeId=269
+      - group:
+        - strong: 更多條件
+      - group "本次申請與志願":
+        - text: 本次申請與志願 申請學年度
+        - combobox "申請學年度":
+          - option "請選擇" [selected]
+          - option "117 學年度（流程資料待確認）"
+          - option "116 學年度"
+          - option "115 學年度"
+          - option "113 學年度"
+        - text: 申請梯次
+        - combobox "申請梯次":
+          - option "請選擇" [selected]
+          - option "秋季／全學年梯次（此年度流程待確認）"
+          - option "春季梯次（此年度流程待確認）"
+          - option "秋季梯次（此年度流程待確認）"
+          - option "第一梯次（此年度流程待確認）"
+          - option "第二梯次（此年度流程待確認）"
+          - option "其他／尚未公告（此年度流程待確認）"
+        - paragraph: 先選學年度；系統會列出該年度已有資料的梯次。其他選項均標示待確認。
+        - group "準備志願序（最多五所；正式規定依本校公告）":
+          - text: 準備志願序（最多五所；正式規定依本校公告） 第一志願
+          - combobox "第一志願":
+            - option "請選擇第一志願" [selected]
+            - option "林肯大學 Lincoln University"
+            - option "明治大學 Meiji University"
+            - option "馬來西亞馬來亞大學 Universiti Malaya"
+            - option "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee"
+            - option "法國薩克雷大學 University of Paris-Saclay"
+            - option "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences"
+            - option "德國呂貝克應用科技大學 Technische Hochschule Lübeck"
+            - option "韓國江原國立大學 Kangwon National University"
+            - option "歐洲知識經濟與管理學院 Skema Business School"
+            - option "印度昌迪加爾大學 Chandigarh University"
+            - option "捷克布拉格紐約大學 University of New York in Prague (UNYP)"
+            - option "法國EPF工程師學校 EPF École d'ingénieurs"
+            - option "雷恩商學院 Rennes School of Business"
+            - option "馬來西亞管理與科技大學 Management and Science University"
+            - option "荷蘭恩荷芬理工大學 Eindhoven University of Technology"
+            - option "武漢大學 Wuhan University"
+            - option "法國ICD商學院 ICD Business School"
+          - text: 第二志願
+          - combobox "第二志願":
+            - option "不設定第 2 志願" [selected]
+            - option "林肯大學 Lincoln University"
+            - option "明治大學 Meiji University"
+            - option "馬來西亞馬來亞大學 Universiti Malaya"
+            - option "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee"
+            - option "法國薩克雷大學 University of Paris-Saclay"
+            - option "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences"
+            - option "德國呂貝克應用科技大學 Technische Hochschule Lübeck"
+            - option "韓國江原國立大學 Kangwon National University"
+            - option "歐洲知識經濟與管理學院 Skema Business School"
+            - option "印度昌迪加爾大學 Chandigarh University"
+            - option "捷克布拉格紐約大學 University of New York in Prague (UNYP)"
+            - option "法國EPF工程師學校 EPF École d'ingénieurs"
+            - option "雷恩商學院 Rennes School of Business"
+            - option "馬來西亞管理與科技大學 Management and Science University"
+            - option "荷蘭恩荷芬理工大學 Eindhoven University of Technology"
+            - option "武漢大學 Wuhan University"
+            - option "法國ICD商學院 ICD Business School"
+          - text: 第三志願
+          - combobox "第三志願":
+            - option "不設定第 3 志願" [selected]
+            - option "林肯大學 Lincoln University"
+            - option "明治大學 Meiji University"
+            - option "馬來西亞馬來亞大學 Universiti Malaya"
+            - option "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee"
+            - option "法國薩克雷大學 University of Paris-Saclay"
+            - option "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences"
+            - option "德國呂貝克應用科技大學 Technische Hochschule Lübeck"
+            - option "韓國江原國立大學 Kangwon National University"
+            - option "歐洲知識經濟與管理學院 Skema Business School"
+            - option "印度昌迪加爾大學 Chandigarh University"
+            - option "捷克布拉格紐約大學 University of New York in Prague (UNYP)"
+            - option "法國EPF工程師學校 EPF École d'ingénieurs"
+            - option "雷恩商學院 Rennes School of Business"
+            - option "馬來西亞管理與科技大學 Management and Science University"
+            - option "荷蘭恩荷芬理工大學 Eindhoven University of Technology"
+            - option "武漢大學 Wuhan University"
+            - option "法國ICD商學院 ICD Business School"
+          - text: 第四志願
+          - combobox "第四志願":
+            - option "不設定第 4 志願" [selected]
+            - option "林肯大學 Lincoln University"
+            - option "明治大學 Meiji University"
+            - option "馬來西亞馬來亞大學 Universiti Malaya"
+            - option "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee"
+            - option "法國薩克雷大學 University of Paris-Saclay"
+            - option "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences"
+            - option "德國呂貝克應用科技大學 Technische Hochschule Lübeck"
+            - option "韓國江原國立大學 Kangwon National University"
+            - option "歐洲知識經濟與管理學院 Skema Business School"
+            - option "印度昌迪加爾大學 Chandigarh University"
+            - option "捷克布拉格紐約大學 University of New York in Prague (UNYP)"
+            - option "法國EPF工程師學校 EPF École d'ingénieurs"
+            - option "雷恩商學院 Rennes School of Business"
+            - option "馬來西亞管理與科技大學 Management and Science University"
+            - option "荷蘭恩荷芬理工大學 Eindhoven University of Technology"
+            - option "武漢大學 Wuhan University"
+            - option "法國ICD商學院 ICD Business School"
+          - text: 第五志願
+          - combobox "第五志願":
+            - option "不設定第 5 志願" [selected]
+            - option "林肯大學 Lincoln University"
+            - option "明治大學 Meiji University"
+            - option "馬來西亞馬來亞大學 Universiti Malaya"
+            - option "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee"
+            - option "法國薩克雷大學 University of Paris-Saclay"
+            - option "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences"
+            - option "德國呂貝克應用科技大學 Technische Hochschule Lübeck"
+            - option "韓國江原國立大學 Kangwon National University"
+            - option "歐洲知識經濟與管理學院 Skema Business School"
+            - option "印度昌迪加爾大學 Chandigarh University"
+            - option "捷克布拉格紐約大學 University of New York in Prague (UNYP)"
+            - option "法國EPF工程師學校 EPF École d'ingénieurs"
+            - option "雷恩商學院 Rennes School of Business"
+            - option "馬來西亞管理與科技大學 Management and Science University"
+            - option "荷蘭恩荷芬理工大學 Eindhoven University of Technology"
+            - option "武漢大學 Wuhan University"
+            - option "法國ICD商學院 ICD Business School"
+        - paragraph: 建立個人清單時才需要登入，之後可在不同裝置同步志願與完成狀態。
+      - button "核對志願並建立計畫"
+      - status:
+        - strong: 還沒開始檢查
+        - text: 填入資料後，系統會比對校內基本門檻與合作校公開條件。
+- paragraph:
+  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+  - button "停用匿名使用統計"
+  - text: 。
+  - link "隱私權政策":
+    - /url: /privacy
+  - link "使用條款":
+    - /url: /terms
+FAILED tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader - AssertionError: Locator expected to contain text 'I cooked'
+Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 
+Call log:
+  - Expect "to_contain_text" with timeout 5000ms
+  - waiting for locator(".discovery-reader-original")
+    13 × locator resolved to <details open="" class="discovery-reader-original">…</details>
+       - unexpected value "資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。"
+
+Aria snapshot:
+- group:
+  - text: 資料來源
+  - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。
+FAILED tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout - playwright._impl._errors.TimeoutError: Locator.fill: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("[data-school-note=\"林肯大學 Lincoln University\"]")
+    - locator resolved to <textarea rows="2" maxlength="1000" placeholder="留下選校理由…" data-school-note="林肯大學 Lincoln University">只給這個帳號看的選校理由</textarea>
+    - fill("過期後不能上傳")
+  - attempting fill action
+    - waiting for element to be visible, enabled and editable
+  - element was detached from the DOM, retrying
+============== 3 failed, 7 passed, 1 warning in 141.18s (0:02:21) ==============

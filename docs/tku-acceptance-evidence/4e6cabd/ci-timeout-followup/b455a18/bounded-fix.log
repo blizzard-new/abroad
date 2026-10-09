@@ -1,0 +1,67 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 10 items
+
+tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens PASSED [ 10%]
+tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked PASSED [ 20%]
+tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything PASSED [ 30%]
+tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in PASSED [ 40%]
+tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser PASSED [ 50%]
+tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390] PASSED [ 60%]
+tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754] PASSED [ 70%]
+tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader FAILED [ 80%]
+tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout PASSED [ 90%]
+tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history PASSED [100%]
+
+=================================== FAILURES ===================================
+_____________ test_combined_search_map_preview_and_chinese_reader ______________
+tests/e2e/test_discovery_workspace.py:56: in test_combined_search_map_preview_and_chinese_reader
+    expect(page.locator(".discovery-reader-original")).to_contain_text("I cooked")
+E   AssertionError: Locator expected to contain text 'I cooked'
+E   Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator(".discovery-reader-original")
+E       11 × locator resolved to <details open="" class="discovery-reader-original">…</details>
+E          - unexpected value "資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。"
+E   
+E   Aria snapshot:
+E   - group:
+E     - text: 資料來源
+E     - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。
+------- generated xml file: /tmp/tku-ci-timeout-b455a18/bounded-fix.xml --------
+============================= slowest 15 durations =============================
+33.59s call     tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout
+25.16s call     tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader
+15.48s call     tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history
+14.27s call     tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens
+9.60s call     tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in
+7.79s call     tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754]
+6.98s call     tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390]
+6.47s call     tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything
+6.45s call     tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked
+5.29s call     tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser
+1.59s setup    tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens
+0.23s teardown tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history
+0.15s teardown tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754]
+0.14s setup    tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390]
+0.14s setup    tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader
+=========================== short test summary info ============================
+FAILED tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader - AssertionError: Locator expected to contain text 'I cooked'
+Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 
+Call log:
+  - Expect "to_contain_text" with timeout 5000ms
+  - waiting for locator(".discovery-reader-original")
+    11 × locator resolved to <details open="" class="discovery-reader-original">…</details>
+       - unexpected value "資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。"
+
+Aria snapshot:
+- group:
+  - text: 資料來源
+  - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。
+=================== 1 failed, 9 passed in 134.21s (0:02:14) ====================
