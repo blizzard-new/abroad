@@ -106,7 +106,7 @@ def test_quality_workflow_runs_isolated_web_checks_and_contract_guard() -> None:
         "node --check src/exchange_info/static/content-review.js",
         "uv run --frozen python scripts/export_openapi.py --check",
         "uv run --frozen python scripts/audit_python_dependencies.py",
-        "uv run --frozen python scripts/validate_supabase_runtime.py",
+        "uv run --frozen python scripts/validate_tku_community_runtime.py",
         'uv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4',
         "fail-fast: false",
         "shard: [0, 1, 2, 3]",
@@ -115,7 +115,7 @@ def test_quality_workflow_runs_isolated_web_checks_and_contract_guard() -> None:
         assert required in workflow
     assert 'EXCHANGE_INFO_DATA_DIR: ${{ runner.temp }}' not in workflow
     runtime_step = "- name: Validate isolated Supabase runtime"
-    runtime_command = "uv run --frozen python scripts/validate_supabase_runtime.py"
+    runtime_command = "uv run --frozen python scripts/validate_tku_community_runtime.py"
     assert workflow.count(runtime_step) == 1
     assert workflow.count(runtime_command) == 1
     assert "\n    timeout-minutes: 45\n" in workflow

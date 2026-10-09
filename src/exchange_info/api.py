@@ -11,6 +11,10 @@ from contextvars import ContextVar
 from .access_control import (
     HOME_UNIVERSITY_UNSET,
     catalog_home_university,
+    can_read_university_community,
+    community_author_display_name,
+    is_university_community_post,
+    university_community_board,
     is_platform_admin,
     school_basis,
     school_change_locked_until,
@@ -45,7 +49,14 @@ from starlette.concurrency import run_in_threadpool
 
 from .advisor import answer_question, build_advisor_plan
 from .account_community_cleanup import cleanup_local_account_community
-from .community_repositories import CommunityRepositoryError
+from .community_repositories import (
+    CommunityRepositoryError,
+    CommunityBlockMutationRequest,
+    PrivateCommunityMutationStatus,
+    PrivateConversationMutationRequest,
+    PrivateConversationStatusMutationRequest,
+    PrivateMessageMutationRequest,
+)
 from .analytics import AnalyticsService, ApiMetricsMiddleware
 from .analytics_repository import create_analytics_repository
 from .analytics_routes import register_analytics_routes
@@ -344,14 +355,11 @@ from .school_identity import school_identity_key
 from .storage import (
     append_anonymous_identity,
     append_community_answer,
-    append_community_block,
     append_community_post,
     append_community_post_comment,
     append_community_question,
     append_community_report,
     append_experience_submission,
-    append_private_conversation,
-    append_private_message,
     append_public_chat_message,
     data_paths,
     file_signature,
@@ -361,7 +369,6 @@ from .storage import (
     merge_application_workflows,
     load_account_sessions,
     load_community_answers,
-    load_community_blocks,
     load_community_post_comments,
     load_community_posts,
     load_community_questions,
@@ -371,14 +378,11 @@ from .storage import (
     load_anonymous_identities,
     load_processed_pages,
     load_structured_sources,
-    load_private_conversations,
-    load_private_messages,
     load_public_chat_messages,
     load_student_experiences,
     load_user_accounts,
     replace_application_workflow,
     replace_school_experiences,
-    save_private_conversations,
     save_account_sessions,
     save_anonymous_identities,
     save_user_accounts,
@@ -1302,14 +1306,14 @@ def create_app(
     def is_blocked(left_id: str, right_id: str) -> bool:
         return any(
             {block.owner_id, block.target_id} == {left_id, right_id}
-            for block in load_community_blocks(resolved_data_dir)
+            for block in comm_repo.list_blocks()
         )
 
     def private_conversation_for(identity_id: str, conversation_id: str) -> PrivateConversation:
         conversation = next(
             (
                 row
-                for row in load_private_conversations(resolved_data_dir)
+                for row in comm_repo.list_private_conversations()
                 if row.id == conversation_id
             ),
             None,
@@ -3907,11 +3911,10 @@ def create_app(
                 reason = "帳號暫停發言中"
             elif not account.email_verified:
                 reason = "請先驗證電子郵件"
-            # Every board, school boards included, only needs a verified Google/e-mail account;
-            # a school name on a post still requires a verified student identity.
             result.append(CommunityBoardAccess(
                 id=board_id, label=label, kind=kind, school_name=school_name,
                 posting_requirement="verified_email",
+                can_read=kind != "university_exchange" or can_read_university_community(account),
                 can_post=reason is None, can_comment=reason is None, unavailable_reason=reason,
             ))
         return result
@@ -3933,18 +3936,10 @@ def create_app(
         return account, board
 
     def community_author_name(account: UserAccount, mode: CommunityIdentityMode) -> str:
-        if mode == CommunityIdentityMode.REAL_NAME:
-            return account.display_name
-        if mode in {CommunityIdentityMode.VERIFIED_SCHOOL, CommunityIdentityMode.VERIFIED_DEPARTMENT}:
-            school = catalog_home_university(account)
-            if not school:
-                raise HTTPException(status_code=403, detail="請先選擇學校。")
-            if mode == CommunityIdentityMode.VERIFIED_DEPARTMENT:
-                if not account.verified_department:
-                    raise HTTPException(status_code=403, detail="尚無已驗證系所。")
-                return f"{school} {account.verified_department}學生"
-            return f"{school}學生"
-        return "匿名學生"
+        name = community_author_display_name(account, mode)
+        if name is None:
+            raise HTTPException(403, "尚無已驗證學籍或系所；自填母校不代表學籍認證。")
+        return name
 
     @app.get("/community/posts", response_model=list[CommunityPostThread])
     def community_posts(
@@ -3961,6 +3956,8 @@ def create_app(
         account = authenticated_account(request)[0] if request_token(request) else None
         own_ids = {row.id for row in comm_repo.list_identities() if account and row.account_id == account.id} if account else set()
         target_board = board_id or school
+        if university_community_board(target_board) and not can_read_university_community(account):
+            raise HTTPException(403 if account else 401, "校級看板限已驗證 Email 的會員查看，不限同校。")
         normalized_boards: set[str] = set()
         if target_board:
             if target_board in {
@@ -3974,7 +3971,7 @@ def create_app(
                 }
             elif target_board in {"language-school", "語言學校板"}:
                 normalized_boards = {normalize_school("語言學校板")}
-            elif (home_university := resolve_university(target_board)) is not None:
+            elif (home_university := university_community_board(target_board)) is not None:
                 normalized_boards = {normalize_school(home_university.school_name)}
             elif target_board == "cgu":
                 normalized_boards = {normalize_school("長庚大學")}
@@ -4018,6 +4015,7 @@ def create_app(
                 )
             )
             and row.status == ModerationStatus.APPROVED
+            and (not is_university_community_post(row) or can_read_university_community(account))
         ]
         return [
             CommunityPostThread(
@@ -4043,6 +4041,15 @@ def create_app(
     ) -> CommunityPost:
         identity = anonymous_identity(identity_id, access_token)
         target = (payload.board_id or payload.school_name or "").strip()
+        def canonical_board(value):
+            if value in {PUBLIC_COMMUNITY_BOARD, LEGACY_PUBLIC_COMMUNITY_BOARD, "public-study-abroad"}:
+                return "public-study-abroad"
+            if value in {"language-school", "語言學校板"}:
+                return "language-school"
+            university = university_community_board(value)
+            return university.id if university else None
+        if payload.board_id and payload.school_name and canonical_board(payload.board_id) != canonical_board(payload.school_name):
+            raise HTTPException(422, "看板識別碼與學校名稱不一致，或看板不存在。")
         if target in {
             PUBLIC_COMMUNITY_BOARD,
             LEGACY_PUBLIC_COMMUNITY_BOARD,
@@ -4053,14 +4060,14 @@ def create_app(
         elif target in {"language-school", "語言學校板"}:
             board_id = "language-school"
             school_name = "語言學校板"
-        elif (home_university := resolve_university(target)) is not None:
+        elif (home_university := university_community_board(target)) is not None:
             board_id = "cgu" if home_university.id == "cgu" else home_university.id
             school_name = home_university.school_name
         elif target == "cgu":
             board_id = "cgu"
             school_name = "長庚大學"
         else:
-            raise HTTPException(status_code=422, detail="不支援建立此討論板貼文。")
+            raise HTTPException(status_code=422, detail="此討論板不存在或不支援建立貼文。")
         account, board = require_community_writer(request, identity, board_id)
         _reject_contact_details(payload.title, payload.body)
         post = CommunityPost(
@@ -4173,13 +4180,53 @@ def create_app(
         return sorted(
             [
                 row
-                for row in load_private_conversations(resolved_data_dir)
+                for row in comm_repo.list_private_conversations()
                 if identity.id in {row.sender_id, row.recipient_id}
                 and not is_blocked(row.sender_id, row.recipient_id)
             ],
             key=lambda row: row.updated_at,
             reverse=True,
         )
+
+    def private_mutation_actor(request: Request, identity_id: str | None, access_token: str | None):
+        account, _ = authenticated_account(request)
+        identity = anonymous_identity(identity_id, access_token)
+        if identity.account_id != account.id:
+            raise HTTPException(403, "私訊身分與登入帳號不符。")
+        if account.community_suspended_until and account.community_suspended_until > utc_now():
+            raise HTTPException(403, "帳號暫停發言中。")
+        return {"account_id": account.id, "identity_id": identity.id,
+                "access_token_hash": identity.access_token_hash}, identity
+
+    def commit_private_mutation(method, mutation, response: Response, resource: str):
+        response.headers["Cache-Control"] = "private, no-store"
+        response.headers["X-Community-Mutation-ID"] = mutation.mutation_id
+        try:
+            result = method(mutation)
+        except CommunityRepositoryError as error:
+            raise HTTPException(503, "私訊操作暫時失敗，請保留操作識別碼後重試。") from error
+        if result.status == PrivateCommunityMutationStatus.COMMITTED:
+            value = getattr(result, resource)
+            if value is not None:
+                return value
+            raise HTTPException(503, "私訊操作結果不完整，請稍後重試。")
+        if result.status == PrivateCommunityMutationStatus.IDEMPOTENCY_CONFLICT:
+            raise HTTPException(409, "操作識別碼已用於不同內容，請重新送出。")
+        if result.status in {PrivateCommunityMutationStatus.ACCOUNT_MISSING,
+                             PrivateCommunityMutationStatus.IDENTITY_MISSING}:
+            raise HTTPException(401, "私訊身分已失效，請重新登入。")
+        if result.status == PrivateCommunityMutationStatus.CONVERSATION_MISSING:
+            raise HTTPException(404, "找不到這段私訊。")
+        if resource == "block" and result.status == PrivateCommunityMutationStatus.RECIPIENT_MISSING:
+            raise HTTPException(404, "找不到要封鎖的匿名身分。")
+        if result.status in {PrivateCommunityMutationStatus.SELF_TARGET,
+                             PrivateCommunityMutationStatus.RECIPIENT_MISSING,
+                             PrivateCommunityMutationStatus.INVALID_REQUEST}:
+            raise HTTPException(422, "無法向這個匿名身分發送邀請或封鎖。")
+        if result.status in {PrivateCommunityMutationStatus.STATUS_CONFLICT,
+                             PrivateCommunityMutationStatus.INTEGRITY_CONFLICT}:
+            raise HTTPException(409, "邀請狀態已變更；對方接受邀請後才能繼續私訊。")
+        raise HTTPException(403, "無法執行這段私訊操作。")
 
     @app.post(
         "/community/conversations",
@@ -4188,30 +4235,22 @@ def create_app(
     )
     def create_private_conversation(
         payload: PrivateConversationCreate,
+        request: Request,
+        response: Response,
         identity_id: str | None = Header(default=None, alias="X-Anonymous-ID"),
         access_token: str | None = Header(default=None, alias="X-Anonymous-Token"),
+        mutation_id: str | None = Header(default=None, alias="X-Community-Mutation-ID", min_length=16, max_length=128),
     ) -> PrivateConversation:
-        sender = anonymous_identity(identity_id, access_token)
+        actor, sender = private_mutation_actor(request, identity_id, access_token)
         partner = partner_for_school(payload.school_name)
-        recipient = next(
-            (
-                row
-                for row in load_anonymous_identities(resolved_data_dir)
-                if row.id == payload.recipient_id
-            ),
-            None,
-        )
-        if recipient is None or recipient.id == sender.id:
-            raise HTTPException(status_code=422, detail="無法向這個匿名身分發送邀請。")
-        if is_blocked(sender.id, recipient.id):
-            raise HTTPException(status_code=403, detail="無法建立這段私訊。")
         _reject_contact_details(payload.initial_message)
         conversation = PrivateConversation(
             school_name=partner.school_name,
             sender_id=sender.id,
             sender_name=sender.display_name,
-            recipient_id=recipient.id,
-            recipient_name=recipient.display_name,
+            recipient_id=payload.recipient_id,
+            # The repository derives the recipient name after checking for a replay.
+            recipient_name="匿名學生",
         )
         message = PrivateMessage(
             conversation_id=conversation.id,
@@ -4219,10 +4258,10 @@ def create_app(
             display_name=sender.display_name,
             body=payload.initial_message.strip(),
         )
-        with community_lock:
-            append_private_conversation(conversation, resolved_data_dir)
-            append_private_message(message, resolved_data_dir)
-        return conversation
+        return commit_private_mutation(comm_repo.commit_private_conversation,
+            PrivateConversationMutationRequest(mutation_id=mutation_id or uuid4().hex,
+                **actor, recipient_identity_id=payload.recipient_id,
+                conversation=conversation, initial_message=message), response, "conversation")
 
     @app.post(
         "/community/conversations/{conversation_id}/accept",
@@ -4230,23 +4269,17 @@ def create_app(
     )
     def accept_private_conversation(
         conversation_id: str,
+        request: Request,
+        response: Response,
         identity_id: str | None = Header(default=None, alias="X-Anonymous-ID"),
         access_token: str | None = Header(default=None, alias="X-Anonymous-Token"),
+        mutation_id: str | None = Header(default=None, alias="X-Community-Mutation-ID", min_length=16, max_length=128),
     ) -> PrivateConversation:
-        identity = anonymous_identity(identity_id, access_token)
-        conversation = private_conversation_for(identity.id, conversation_id)
-        if conversation.recipient_id != identity.id:
-            raise HTTPException(status_code=403, detail="只有收件者可以接受邀請。")
-        updated = conversation.model_copy(
-            update={"status": ConversationStatus.ACCEPTED, "updated_at": utc_now()}
-        )
-        with community_lock:
-            rows = [
-                updated if row.id == conversation.id else row
-                for row in load_private_conversations(resolved_data_dir)
-            ]
-            save_private_conversations(rows, resolved_data_dir)
-        return updated
+        actor, _ = private_mutation_actor(request, identity_id, access_token)
+        return commit_private_mutation(comm_repo.commit_private_conversation_status,
+            PrivateConversationStatusMutationRequest(mutation_id=mutation_id or uuid4().hex,
+                **actor, conversation_id=conversation_id, expected_status=ConversationStatus.PENDING,
+                status=ConversationStatus.ACCEPTED), response, "conversation")
 
     @app.get(
         "/community/conversations/{conversation_id}/messages",
@@ -4264,7 +4297,7 @@ def create_app(
         return sorted(
             [
                 row
-                for row in load_private_messages(resolved_data_dir)
+                for row in comm_repo.list_private_messages()
                 if row.conversation_id == conversation.id
             ],
             key=lambda row: row.created_at,
@@ -4278,47 +4311,38 @@ def create_app(
     def create_private_message(
         conversation_id: str,
         payload: PrivateMessageCreate,
+        request: Request,
+        response: Response,
         identity_id: str | None = Header(default=None, alias="X-Anonymous-ID"),
         access_token: str | None = Header(default=None, alias="X-Anonymous-Token"),
+        mutation_id: str | None = Header(default=None, alias="X-Community-Mutation-ID", min_length=16, max_length=128),
     ) -> PrivateMessage:
-        identity = anonymous_identity(identity_id, access_token)
-        conversation = private_conversation_for(identity.id, conversation_id)
-        if conversation.status != ConversationStatus.ACCEPTED:
-            raise HTTPException(status_code=409, detail="對方接受邀請後才能繼續私訊。")
-        if is_blocked(conversation.sender_id, conversation.recipient_id):
-            raise HTTPException(status_code=403, detail="無法傳送訊息。")
+        actor, identity = private_mutation_actor(request, identity_id, access_token)
         _reject_contact_details(payload.body)
         message = PrivateMessage(
-            conversation_id=conversation.id,
+            conversation_id=conversation_id,
             author_id=identity.id,
             display_name=identity.display_name,
             body=payload.body.strip(),
         )
-        with community_lock:
-            return append_private_message(message, resolved_data_dir)
+        return commit_private_mutation(comm_repo.commit_private_message,
+            PrivateMessageMutationRequest(mutation_id=mutation_id or uuid4().hex,
+                **actor, message=message), response, "message")
 
     @app.post("/community/blocks", response_model=CommunityBlock, status_code=201)
     def block_community_identity(
         payload: CommunityBlockCreate,
+        request: Request,
+        response: Response,
         identity_id: str | None = Header(default=None, alias="X-Anonymous-ID"),
         access_token: str | None = Header(default=None, alias="X-Anonymous-Token"),
+        mutation_id: str | None = Header(default=None, alias="X-Community-Mutation-ID", min_length=16, max_length=128),
     ) -> CommunityBlock:
-        identity = anonymous_identity(identity_id, access_token)
-        if payload.target_id == identity.id:
-            raise HTTPException(status_code=422, detail="無法封鎖自己。")
-        existing = next(
-            (
-                row
-                for row in load_community_blocks(resolved_data_dir)
-                if row.owner_id == identity.id and row.target_id == payload.target_id
-            ),
-            None,
-        )
-        if existing:
-            return existing
+        actor, identity = private_mutation_actor(request, identity_id, access_token)
         block = CommunityBlock(owner_id=identity.id, target_id=payload.target_id)
-        with community_lock:
-            return append_community_block(block, resolved_data_dir)
+        return commit_private_mutation(comm_repo.commit_block,
+            CommunityBlockMutationRequest(mutation_id=mutation_id or uuid4().hex,
+                **actor, block=block), response, "block")
 
     @app.post("/community/reports", response_model=CommunityReport, status_code=202)
     def report_community_content(
@@ -4326,6 +4350,7 @@ def create_app(
         request: Request,
         identity_id: str | None = Header(default=None, alias="X-Anonymous-ID"),
         access_token: str | None = Header(default=None, alias="X-Anonymous-Token"),
+        mutation_id: str | None = Header(default=None, alias="X-Community-Mutation-ID", min_length=16, max_length=128),
     ) -> CommunityReport:
         identity = anonymous_identity(identity_id, access_token)
         report = CommunityReport(
@@ -4334,7 +4359,7 @@ def create_app(
             resource_id=payload.resource_id,
             reason=payload.reason.strip(),
         )
-        return submit_discussion_report(request, identity, report)
+        return submit_discussion_report(request, identity, report, mutation_id=mutation_id)
 
     @app.post(
         "/experience-submissions",

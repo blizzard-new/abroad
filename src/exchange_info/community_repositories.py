@@ -1128,18 +1128,11 @@ class JsonlCommunityRepository:
         account: UserAccount,
         mode: CommunityIdentityMode,
     ) -> tuple[PublicCommunityPublicationStatus | None, str | None]:
-        if mode == CommunityIdentityMode.ANONYMOUS:
-            return None, "匿名學生"
-        if mode == CommunityIdentityMode.REAL_NAME:
-            return None, account.display_name
-        school = catalog_home_university(account)
-        if not school:
+        from .access_control import community_author_display_name
+        name = community_author_display_name(account, mode)
+        if name is None:
             return PublicCommunityPublicationStatus.STUDENT_VERIFICATION_REQUIRED, None
-        if mode == CommunityIdentityMode.VERIFIED_SCHOOL:
-            return None, f"{school}學生"
-        if not account.verified_department:
-            return PublicCommunityPublicationStatus.STUDENT_VERIFICATION_REQUIRED, None
-        return None, f"{school} {account.verified_department}"
+        return None, name
 
     @staticmethod
     def _verified_for_school(account: UserAccount, school_name: str) -> bool:

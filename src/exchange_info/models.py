@@ -2734,7 +2734,7 @@ class CommunityBoardAccess(BaseModel):
     kind: CommunityBoardKind
     school_name: str | None = None
     posting_requirement: CommunityBoardPostingRequirement
-    can_read: Literal[True] = True
+    can_read: bool = True
     can_post: bool = False
     can_comment: bool = False
     unavailable_reason: str | None = None

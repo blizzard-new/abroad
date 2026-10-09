@@ -13,6 +13,7 @@ const state = {
   partnerLimit: window.matchMedia("(max-width: 820px)").matches ? 20 : 30,
   documentType: "全部",
   statusTimer: null,
+  statusRevision: 0,
   hasLoaded: false,
   activeSchool: null,
   experienceRequestId: 0,
@@ -3583,6 +3584,7 @@ async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool(
   state.partnerDataError = false;
   syncPartnerView();
   setLoadingState();
+  const loadingAnnouncementRevision = state.statusRevision;
   try {
     const school = encodeURIComponent(requestedSchool);
     const dashboard = await fetchJson(`/student-dashboard?school=${school}`);
@@ -3592,15 +3594,17 @@ async function loadDashboard({ refreshed = false, homeSchool = activeHomeSchool(
     renderDashboard();
     state.periodOptionsReady = loadApplicationPeriodOptions(); // never rejects; the first load waits for it
     state.hasLoaded = true;
-    if (refreshed) announce("資料已重新整理", "success");
-    else clearAnnouncement();
+    if (state.statusRevision === loadingAnnouncementRevision) {
+      if (refreshed) announce("資料已重新整理", "success");
+      else clearAnnouncement();
+    }
     return true;
   } catch (error) {
     if (!isCurrentHomeSchool(requestedSchool)) return false;
     state.partnerDataLoading = false;
     state.partnerDataError = true;
     syncPartnerView();
-    showLoadError(error);
+    showLoadError(error, { announceError: state.statusRevision === loadingAnnouncementRevision });
     return false;
   } finally {
     if (isCurrentHomeSchool(requestedSchool)) setRefreshState(false);
@@ -9920,7 +9924,7 @@ function renderCommunityPageContext(isUniversityBoard = false) {
   }
   if (description) {
     description.textContent = isUniversityBoard
-      ? `只顯示發布到${school}板的交換申請與校內討論。`
+      ? `校級看板限已驗證 Email 的會員查看、發文與留言，不限同校。這裡顯示${school}板的交換申請與校內討論。`
       : languageBoard
         ? "交流課程選擇、簽證、住宿與城市生活；目前不提供完整語言學校申請流程。"
         : publicBoard
@@ -10016,8 +10020,8 @@ function initDiscussionReader() {
         : route === "cgu" ? [CGU_COMMUNITY_BOARD]
         : route === "university" ? [activeHomeSchool()]
         : route === "following" ? [...followedBoardSet()] : [];
-      return { key: `${state.account?.id || "guest"}:${route}:${boards.join(",")}`,
-        permissionKey: `${state.account?.id || "guest"}:${state.communityBoards.map((board) => `${board.id}:${board.can_comment}`).join(",")}`,
+      return { key: `${state.account?.id || "guest"}:${Boolean(state.account?.email_verified)}:${route}:${boards.join(",")}`,
+        permissionKey: `${state.account?.id || "guest"}:${state.communityBoards.map((board) => `${board.id}:${board.can_read}:${board.can_comment}`).join(",")}`,
         accountId: state.account?.id || "", boards,
         active: Boolean(globalFeedForHash() || ["#cgu-posts", "#university-posts"].includes(location.hash)),
         emptyFollowing: route === "following" && (!state.account || !boards.length),
@@ -12131,6 +12135,7 @@ function renderEmpty(selector, title, message, kind = "empty") {
 }
 
 function announce(message, type = "loading", persist = false) {
+  state.statusRevision += 1;
   window.clearTimeout(state.statusTimer);
   const icon = type === "error" ? "circle-alert" : type === "success" ? "circle-check" : "loader-circle";
   $("#page-status").innerHTML = `<div class="status-message ${escapeHtml(type)}"><i data-lucide="${icon}" aria-hidden="true"></i><span>${escapeHtml(message)}</span>${type === "error" ? '<button id="retry-load" type="button" class="secondary-button">重試</button>' : ""}</div>`;
@@ -12141,12 +12146,13 @@ function announce(message, type = "loading", persist = false) {
 }
 
 function clearAnnouncement() {
+  state.statusRevision += 1;
   window.clearTimeout(state.statusTimer);
   $("#page-status").replaceChildren();
 }
 
-function showLoadError(error) {
-  announce(`資料載入失敗：${error.message}`, "error", true);
+function showLoadError(error, { announceError = true } = {}) {
+  if (announceError) announce(`資料載入失敗：${error.message}`, "error", true);
   renderEmpty("#partner-table", "暫時無法取得學校資料", "請確認網路或服務狀態後重新嘗試。", "error");
   renderEmpty("#period-list", "暫時無法取得截止日期", "重新整理後再試一次。", "error");
   renderEmpty("#scholarship-list", "暫時無法取得補助資料", "重新整理後再試一次。", "error");

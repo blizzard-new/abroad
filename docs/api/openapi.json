@@ -7065,7 +7065,6 @@
             "type": "boolean"
           },
           "can_read": {
-            "const": true,
             "default": true,
             "title": "Can Read",
             "type": "boolean"
@@ -14502,6 +14501,23 @@
     "/admin/community/reports": {
       "get": {
         "operationId": "reports_admin_community_reports_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "default": "pending",
+              "enum": [
+                "pending",
+                "resolved",
+                "dismissed"
+              ],
+              "title": "Status",
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
@@ -14510,6 +14526,16 @@
               }
             },
             "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
           }
         },
         "summary": "Reports"
@@ -14526,6 +14552,24 @@
             "schema": {
               "title": "Report Id",
               "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-Community-Mutation-ID",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 128,
+                  "minLength": 16,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Community-Mutation-Id"
             }
           }
         ],
@@ -16400,6 +16444,24 @@
               ],
               "title": "X-Anonymous-Token"
             }
+          },
+          {
+            "in": "header",
+            "name": "X-Community-Mutation-ID",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 128,
+                  "minLength": 16,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Community-Mutation-Id"
+            }
           }
         ],
         "requestBody": {
@@ -16423,6 +16485,18 @@
             },
             "description": "Successful Response"
           },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "404": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "409": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
           "422": {
             "content": {
               "application/json": {
@@ -16432,6 +16506,9 @@
               }
             },
             "description": "Validation Error"
+          },
+          "503": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           }
         },
         "summary": "Block Community Identity"
@@ -16716,6 +16793,24 @@
               ],
               "title": "X-Anonymous-Token"
             }
+          },
+          {
+            "in": "header",
+            "name": "X-Community-Mutation-ID",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 128,
+                  "minLength": 16,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Community-Mutation-Id"
+            }
           }
         ],
         "requestBody": {
@@ -16739,6 +16834,15 @@
             },
             "description": "Successful Response"
           },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "409": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
           "422": {
             "content": {
               "application/json": {
@@ -16748,6 +16852,9 @@
               }
             },
             "description": "Validation Error"
+          },
+          "503": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           }
         },
         "summary": "Create Private Conversation"
@@ -16797,6 +16904,24 @@
               ],
               "title": "X-Anonymous-Token"
             }
+          },
+          {
+            "in": "header",
+            "name": "X-Community-Mutation-ID",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 128,
+                  "minLength": 16,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Community-Mutation-Id"
+            }
           }
         ],
         "responses": {
@@ -16810,6 +16935,18 @@
             },
             "description": "Successful Response"
           },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "404": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "409": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
           "422": {
             "content": {
               "application/json": {
@@ -16819,6 +16956,9 @@
               }
             },
             "description": "Validation Error"
+          },
+          "503": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           }
         },
         "summary": "Accept Private Conversation"
@@ -16941,6 +17081,24 @@
               ],
               "title": "X-Anonymous-Token"
             }
+          },
+          {
+            "in": "header",
+            "name": "X-Community-Mutation-ID",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 128,
+                  "minLength": 16,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Community-Mutation-Id"
+            }
           }
         ],
         "requestBody": {
@@ -16964,6 +17122,18 @@
             },
             "description": "Successful Response"
           },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "404": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "409": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
           "422": {
             "content": {
               "application/json": {
@@ -16973,6 +17143,9 @@
               }
             },
             "description": "Validation Error"
+          },
+          "503": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           }
         },
         "summary": "Create Private Message"
@@ -17079,6 +17252,12 @@
               }
             },
             "description": "Successful Response"
+          },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           },
           "422": {
             "content": {
@@ -17230,6 +17409,12 @@
             },
             "description": "Successful Response"
           },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
           "422": {
             "content": {
               "application/json": {
@@ -17299,6 +17484,15 @@
               }
             },
             "description": "Successful Response"
+          },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "409": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           },
           "422": {
             "content": {
@@ -17371,6 +17565,12 @@
               }
             },
             "description": "Successful Response"
+          },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           },
           "422": {
             "content": {
@@ -17516,6 +17716,12 @@
             },
             "description": "Successful Response"
           },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
           "422": {
             "content": {
               "application/json": {
@@ -17594,6 +17800,15 @@
               }
             },
             "description": "Successful Response"
+          },
+          "401": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "403": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
+          },
+          "409": {
+            "description": "Existing runtime error; access also depends on release mode and request validation."
           },
           "422": {
             "content": {
@@ -17834,6 +18049,24 @@
                 }
               ],
               "title": "X-Anonymous-Token"
+            }
+          },
+          {
+            "in": "header",
+            "name": "X-Community-Mutation-ID",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 128,
+                  "minLength": 16,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Community-Mutation-Id"
             }
           }
         ],
@@ -19103,14 +19336,16 @@
     "resource_not_found": 404,
     "validation_failed": 422
   },
-  "x-contract-version": "2026-10-08.4",
+  "x-contract-version": "2026-10-09.1",
   "x-product-boundaries": {
     "account_routes_require_bearer_session": true,
     "ai_features": "paused",
     "personal_document_storage_requires_separate_consent": true,
     "platform_submits_applications": false,
     "public_read_without_login": true,
-    "university_board_writes_require_matching_verified_school": true,
+    "university_board_access_requires_matching_school": false,
+    "university_board_reads_require_verified_email": true,
+    "university_board_writes_require_verified_email": true,
     "workflow_issue_report_review_cannot_publish": true,
     "workflow_issue_reports_require_verified_student": true
   }

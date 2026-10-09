@@ -121,15 +121,18 @@ def test_guest_can_read_every_board_but_unverified_email_cannot_publish(
 ) -> None:
     ensure_data_dirs(tmp_path)
     client = TestClient(create_app(tmp_path))
+    # Historical node ID retained; explicit 2026-10-09 policy now gates school reads.
     guest_boards = client.get("/community/boards")
     assert guest_boards.status_code == 200
     assert {row["id"] for row in guest_boards.json()} == {
         "public-study-abroad",
         "language-school",
-        "university:cgu",
-        "university:ntpu",
+        "cgu",
+        "ntpu",
+        "ntu",
+        "tku",
     }
-    assert all(row["can_read"] is True for row in guest_boards.json())
+    assert all(row["can_read"] == (row["kind"] != "university_exchange") for row in guest_boards.json())
     assert all(row["can_post"] is False for row in guest_boards.json())
     assert client.get("/community/posts").status_code == 200
 
@@ -146,7 +149,7 @@ def test_guest_can_read_every_board_but_unverified_email_cannot_publish(
         json=_post_payload("公共留學板"),
     )
     assert denied.status_code == 403
-    assert "Email" in denied.json()["detail"]
+    assert "電子郵件" in denied.json()["detail"]
 
 
 def test_post_rejects_unknown_or_conflicting_board_identifiers(tmp_path) -> None:
@@ -318,16 +321,17 @@ def test_ntpu_student_can_use_only_ntpu_board_for_posts_and_comments(tmp_path) -
         verified_university="長庚大學",
     )
 
+    # Historical node ID retained; verified-email members now participate across schools.
     access = {
         row["id"]: row
         for row in client.get("/community/boards", headers=ntpu_headers).json()
     }
     assert access["public-study-abroad"]["can_post"] is True
     assert access["language-school"]["can_post"] is True
-    assert access["university:ntpu"]["can_post"] is True
-    assert access["university:ntpu"]["can_comment"] is True
-    assert access["university:cgu"]["can_post"] is False
-    assert access["university:cgu"]["can_comment"] is False
+    assert access["ntpu"]["can_post"] is True
+    assert access["ntpu"]["can_comment"] is True
+    assert access["cgu"]["can_post"] is True
+    assert access["cgu"]["can_comment"] is True
 
     ntpu_post = client.post(
         "/community/posts",
@@ -350,9 +354,9 @@ def test_ntpu_student_can_use_only_ntpu_board_for_posts_and_comments(tmp_path) -
     cross_school_comment = client.post(
         f"/community/posts/{ntpu_post.json()['id']}/comments",
         headers=cgu_headers,
-        json={"body": "跨校帳號不應能在臺北大學板留言。"},
+        json={"body": "已驗證 Email 的跨校會員可在臺北大學板留言。"},
     )
-    assert cross_school_comment.status_code == 403
+    assert cross_school_comment.status_code == 201
 
     guest_comment = client.post(
         f"/community/posts/{ntpu_post.json()['id']}/comments",
@@ -379,7 +383,7 @@ def test_verified_department_identity_is_derived_by_server(tmp_path) -> None:
     )
 
     assert response.status_code == 201
-    assert response.json()["display_name"] == "長庚大學 資訊工程學系"
+    assert response.json()["display_name"] == "長庚大學 資訊工程學系學生"
     assert response.json()["identity_mode"] == "verified_department"
 
 
@@ -405,7 +409,7 @@ def test_identity_is_selected_per_submission_and_public_name_is_server_derived(
         "匿名學生",
         "陳小華",
         "長庚大學學生",
-        "長庚大學 資訊工程學系",
+        "長庚大學 資訊工程學系學生",
     ]
 
     real_name_post = client.post(
@@ -445,7 +449,7 @@ def test_identity_is_selected_per_submission_and_public_name_is_server_derived(
         },
     )
     assert department_comment.status_code == 201
-    assert department_comment.json()["display_name"] == "長庚大學 資訊工程學系"
+    assert department_comment.json()["display_name"] == "長庚大學 資訊工程學系學生"
     assert department_comment.json()["identity_mode"] == "verified_department"
 
     stored_posts = load_community_posts(tmp_path)
@@ -798,9 +802,9 @@ def test_author_can_delete_own_post_but_not_another_users_post(tmp_path) -> None
     assert client.delete(
         f"/community/posts/{post['id']}", headers=second_headers
     ).status_code == 403
-    assert client.delete(
-        f"/community/posts/{post['id']}", headers=first_headers
-    ).status_code == 204
+    deleted = client.delete(f"/community/posts/{post['id']}", headers=first_headers)
+    assert deleted.status_code == 200
+    assert deleted.json()["status"] == "committed"
     assert client.get(
         "/community/posts", params={"school": "公共留學板"}
     ).json() == []

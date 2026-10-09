@@ -74,7 +74,7 @@ jobs:
 
       - name: Validate isolated Supabase runtime
         timeout-minutes: 20
-        run: uv run --frozen python scripts/validate_supabase_runtime.py
+        run: uv run --frozen python scripts/validate_tku_community_runtime.py
 
       - name: Run Web test suite
         env:

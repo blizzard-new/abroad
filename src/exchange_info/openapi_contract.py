@@ -7,12 +7,14 @@ from typing import Any
 from fastapi import FastAPI
 
 
-OPENAPI_CONTRACT_VERSION = "2026-10-08.4"
+OPENAPI_CONTRACT_VERSION = "2026-10-09.1"
 
 _CONTRACT_BOUNDARIES = {
     "public_read_without_login": True,
     "account_routes_require_bearer_session": True,
-    "university_board_writes_require_matching_verified_school": True,
+    "university_board_reads_require_verified_email": True,
+    "university_board_writes_require_verified_email": True,
+    "university_board_access_requires_matching_school": False,
     "personal_document_storage_requires_separate_consent": True,
     "workflow_issue_reports_require_verified_student": True,
     "workflow_issue_report_review_cannot_publish": True,
@@ -47,6 +49,16 @@ def apply_openapi_contract_metadata(schema: dict[str, Any]) -> dict[str, Any]:
         ('/ai/review-document', 'post'): (401, 403, 422, 503),
         ('/ai/chat', 'post'): (503,),
         ('/ai/rewrite-document', 'post'): (503,),
+        ('/community/feed', 'get'): (401, 403),
+        ('/community/posts', 'get'): (401, 403),
+        ('/community/posts/{post_id}', 'get'): (401, 403),
+        ('/community/posts/{post_id}/comments', 'get'): (401, 403),
+        ('/community/posts', 'post'): (401, 403, 409),
+        ('/community/posts/{post_id}/comments', 'post'): (401, 403, 409),
+        ('/community/conversations', 'post'): (401, 403, 409, 503),
+        ('/community/conversations/{conversation_id}/accept', 'post'): (401, 403, 404, 409, 503),
+        ('/community/conversations/{conversation_id}/messages', 'post'): (401, 403, 404, 409, 503),
+        ('/community/blocks', 'post'): (401, 403, 404, 409, 503),
     }
     for (path, method), statuses in errors.items():
         operation = schema.get('paths', {}).get(path, {}).get(method)
