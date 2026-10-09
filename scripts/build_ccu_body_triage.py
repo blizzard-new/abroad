@@ -27,7 +27,8 @@ def main():
     mapped = defaultdict(list)
     for kind, rows in [("host", hosts), ("profile", profiles.values())]:
         for row in rows:
-            for key, field in row["fields"].items():
+            scoped_fields = [*row["fields"].items(), *[(g["key"], g) for g in row.get("supplementary_life_guidance", [])]]
+            for key, field in scoped_fields:
                 for evidence in field["evidence"]:
                     if evidence.get("source_id"):
                         mapped[evidence["source_id"]].append({"kind": kind, "field": key, "status": field["status"], "evidence_status": evidence.get("status"), "source_pages": evidence.get("source_pages", [])})

@@ -49,6 +49,7 @@ def main():
     ])) | set(source_ids([
         field["evidence"] for row in overseas.values() for field in row["fields"].values()
     ]))
+    mapped |= set(source_ids([guide["evidence"] for row in profiles for guide in row.get("supplementary_life_guidance", [])]))
     mapped |= set(source_ids(list(documents.values())))
     ledger = read("semantic-review-ledger.json")
     read_ids = {

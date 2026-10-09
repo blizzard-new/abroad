@@ -7188,6 +7188,47 @@
         "sha256": "9ff8ef4af2ae1147cc8f43460fef6eb942c449dd2a7a1b24416be80e939579eb",
         "note": "實際讀34頁保存抽取文字；p14–16母校outbound/SGE、p18inbound、p19四季未年一般提名區間、p22–23April2026不同幣別估計、p24無校內宿舍、p28泛稱9F、p32全體外籍生保險分開。p27圖片流程尚未逐圖核，不聲稱全部圖像政策完成。"
       }
+    ],
+    "supplementary_life_guidance": [
+      {
+        "key": "return_preparation",
+        "title": "離境與成績單準備（一般手冊，本期待核）",
+        "status": "needs_confirmation",
+        "value": "一般©2026手冊實體p33：離境前向Customer Service申請TOR、完成clearance，至Treasury評估付款後返回Customer Service確認領件日；通常處理1–2週，並交ILRAD feedback。2027春適用與實際處理時間待核，非初次申請文件。",
+        "reason": "新增離境／返國準備參考，不增列為初次申請必備或保證1–2週出件。",
+        "evidence": [
+          {
+            "source_id": "p83-r27-international-handbook-normal-tls",
+            "source_url": "https://fs2.mapua.edu.ph/MapuaWebsite7/ILRAD/Handbook/International%20Hand%20Book.pdf",
+            "source_pages": [
+              33
+            ],
+            "academic_year": "版權©2026；费用原注明April2026估計；未明2027春當期適用",
+            "application_round": null,
+            "checked_at": "2026-10-09T00:19:58.792089+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "The processing of TOR usually takes 1-2 weeks.",
+            "content_hash": "9ff8ef4af2ae1147cc8f43460fef6eb942c449dd2a7a1b24416be80e939579eb",
+            "text_sha256": "7a0c3435dbaa285db45b827b4ad37e10628683c4bec45f646071743f11f91f6d",
+            "note": "一般©2026離境前TOR及clearance流程；適用年待核。"
+          },
+          {
+            "source_id": "p83-r27-international-handbook-normal-tls",
+            "source_url": "https://fs2.mapua.edu.ph/MapuaWebsite7/ILRAD/Handbook/International%20Hand%20Book.pdf",
+            "source_pages": [
+              33
+            ],
+            "academic_year": "版權©2026；费用原注明April2026估計；未明2027春當期適用",
+            "application_round": null,
+            "checked_at": "2026-10-09T00:19:58.792089+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "International students must do this before exiting the Philippines.",
+            "content_hash": "9ff8ef4af2ae1147cc8f43460fef6eb942c449dd2a7a1b24416be80e939579eb",
+            "text_sha256": "7a0c3435dbaa285db45b827b4ad37e10628683c4bec45f646071743f11f91f6d",
+            "note": "與初次交換申請成績單不同；返國準備參考。"
+          }
+        ]
+      }
     ]
   },
   {
@@ -8535,7 +8576,7 @@
   {
     "ccu_page": 95,
     "school_name": "Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學",
-    "checked_at": "2026-10-08T09:36:20.774194+00:00",
+    "checked_at": "2026-10-09T00:33:16.930987+00:00",
     "fields": {
       "city": {
         "value": "Poznań（代表聯絡地址）",
@@ -8664,6 +8705,74 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T09:10:30.177212+00:00"
+      },
+      {
+        "source_id": "p95-r28-general-insurance",
+        "source_url": "https://amu.edu.pl/en/education/healthcare/general-insurance",
+        "result": "normal_tls_main_body_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:31:53.329768+00:00",
+        "sha256": "8edffdd9a79684da55655f2a4d46b5aed908a018c2423c90d8c140e8173dc47a",
+        "note": "一般Students/Healthcare，不是博士生專屬資格；保留身分、NFZ/私人選項與舊年費率，未提升2027春適用。"
+      },
+      {
+        "source_id": "p95-r28-voluntary-insurance",
+        "source_url": "https://amu.edu.pl/en/education/healthcare/voluntary-insurance",
+        "result": "normal_tls_main_body_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:33:16.930987+00:00",
+        "sha256": "0fb9bf6c0a88af981d2b0a7a9bc2615f63a8ef9398cc808e3fb37c641d7bcdd0",
+        "note": "一般Students/Healthcare，不是博士生專屬資格；保留身分、NFZ/私人選項與舊年費率，未提升2027春適用。"
+      },
+      {
+        "source_id": "p95-r28-medical-services",
+        "source_url": "https://amu.edu.pl/en/education/healthcare/medical-services",
+        "result": "normal_tls_main_body_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:33:14.222052+00:00",
+        "sha256": "ad8c9ff98facb04f2c6315a27fedd88c5d997781838b9a2da38f806dcf58acb8",
+        "note": "一般Students/Healthcare，不是博士生專屬資格；保留身分、NFZ/私人選項與舊年費率，未提升2027春適用。"
+      }
+    ],
+    "supplementary_life_guidance": [
+      {
+        "key": "healthcare_reference",
+        "title": "一般投保與醫療服務參考（當期適用待核）",
+        "status": "needs_confirmation",
+        "value": "一般Students/Healthcare頁說明：未有強制保險者可用NFZ或私人方案；一般家庭醫師門診先登記並出示證件及保險證明，轉介／急診例外與牙科涵蓋另按服務及身分核對。頁面2020費率與未年學生優惠額僅歷史參考，2027現行費率待核。",
+        "reason": "只作一般生活／投保参考，不把RMUA博士學校例子當所有交換生必交文件，不把NFZ定為唯一方案。",
+        "evidence": [
+          {
+            "source_id": "p95-r28-medical-services",
+            "source_url": "https://amu.edu.pl/en/education/healthcare/medical-services",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "一般醫療服務未明2027春學期／交換身分",
+            "application_round": null,
+            "checked_at": "2026-10-09T00:33:14.222052+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "You should present your identity card or passport and proof of insurance",
+            "content_hash": "ad8c9ff98facb04f2c6315a27fedd88c5d997781838b9a2da38f806dcf58acb8",
+            "text_sha256": "e8bb0cbbf55ae8d5470532f9b96be2369dce5cbd6492a33d495b97eaabeb2be8",
+            "note": "一般診所註冊所需；RMUA為例，未推全部學生必有此文件。"
+          },
+          {
+            "source_id": "p95-r28-voluntary-insurance",
+            "source_url": "https://amu.edu.pl/en/education/healthcare/voluntary-insurance",
+            "source_pages": [
+              1
+            ],
+            "academic_year": "一般補充保險含2020Q4示例價；2027春方案與費率未核",
+            "application_round": null,
+            "checked_at": "2026-10-09T00:33:16.930987+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "The rate may change each quarter as it is related to the average salary in Poland.",
+            "content_hash": "0fb9bf6c0a88af981d2b0a7a9bc2615f63a8ef9398cc808e3fb37c641d7bcdd0",
+            "text_sha256": "06093e65add33bbbcf275cc76d21d2a3b9d66d51118815b2b28003cdd596f86a",
+            "note": "2020Q4 PLN483及旁列PLN55.80未有2027更新，僅歷史參考；不填當期costs。"
+          }
+        ]
       }
     ]
   },

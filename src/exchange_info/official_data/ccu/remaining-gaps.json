@@ -4,10 +4,10 @@
   "round": "2027春季",
   "definition": "逐校實際取得與欄位映射清冊；未映射不自稱未讀，既有逐欄review也不推整份／全部政策已核。候選href不是政策事實或已驗證可開啟。",
   "input_sha256": {
-    "profile-reviewed-fields.json": "9d540dcd80aade4a1e0a785a70bca3629643a281c56cd6209537c08c4b19401f",
-    "overseas-reviewed-fields.json": "a24b3a0f8b8b849f8fd3763857ec3738f670cb9697729e42e3a1806ce9d03dc9",
-    "partner-document-requirements.json": "3ccc57a231d3a9e147fb13ca47e669fa482c15819c4a48ac93e1e9615b59fd14",
-    "overseas-source-registry.json": "11855fc769127552ceb60f69c2f71e317f1b590fd4654b29238253274c8e9707",
+    "profile-reviewed-fields.json": "fbd2cfecb66215c4f81958a3200622e0e698a00b417f112d4a09e2ef37406099",
+    "overseas-reviewed-fields.json": "0b30753c40884f34e1fb761e14195b8de1c30f9d0a7d5f046ce20e0342d593df",
+    "partner-document-requirements.json": "f7bce6d08f00a54454853657f746e46a8d6953773d64f04f3bbb3465d9310933",
+    "overseas-source-registry.json": "59bae00265a93cba1ffb68d2dc379f9dd25736bac24c6560452436a866874f11",
     "overseas-source-requests.json": "8be61be3ea9982af1ab4655ec1418a8aebaa960d6cfca4fbd88f717047f69121",
     "semantic-review-ledger.json": "9bb4b811c577b8b9200b6570d6ab29540e233c6ea75c77c35d1224f0530f44a5"
   },
@@ -988,10 +988,13 @@
     "p83-r27-handbook-normal-tls": "fc9d45d569b4884e4a9726491e2ed3acf21749f9c729068fac612129b4bda64b",
     "p83-r27-international-handbook-normal-tls": "57fb6a88b549260a7314a75594f9c3e44a9724ff8b9e0178c1325a2d2a4a2656",
     "p119-r27-form-metadata-normal-tls": "5983b9cf9a41bde1886252402e8aa4a0f575a69547fc26cd79c35446c7e31fbb",
-    "p119-r27-form-page-normal-tls": "cce35c7b2686170a9d04f93912112c1a22caa5ecb1fc309bfa71842394665140"
+    "p119-r27-form-page-normal-tls": "cce35c7b2686170a9d04f93912112c1a22caa5ecb1fc309bfa71842394665140",
+    "p95-r28-general-insurance": "68247e15fbfd913bfd230d4bf53da1f48b95444721c58495c39b1498e2e98637",
+    "p95-r28-voluntary-insurance": "3bd0f730d6bfb9a662d086d1b5ab5a449954aed2e3f60d061796aa4e44194fef",
+    "p95-r28-medical-services": "a81d36273b095ad8aa161d496c1673cf6046ef7462f661a3cf4f8baa6b4bc924"
   },
   "school_count": 55,
-  "source_count": 977,
+  "source_count": 980,
   "gap_status_counts": {
     "missing": 71,
     "reference_only": 17,
@@ -19755,6 +19758,54 @@
           "current_use_allowed": null,
           "security_revalidation": null,
           "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p95-r28-general-insurance",
+          "source_url": "https://amu.edu.pl/en/education/healthcare/general-insurance",
+          "checked_at": "2026-10-09T00:31:53.329768+00:00",
+          "status": "html",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "一般國際學生保險，未明2027春；UK/EHIC/S1有2020舊註",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "一般Students/Healthcare，不是博士生專屬資格；保留身分、NFZ/私人選項與舊年費率，未提升2027春適用。",
+          "sha256": "8edffdd9a79684da55655f2a4d46b5aed908a018c2423c90d8c140e8173dc47a",
+          "bundled_file": "public_responses/p95-r28-general-insurance.html",
+          "current_use_allowed": null,
+          "security_revalidation": null,
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p95-r28-voluntary-insurance",
+          "source_url": "https://amu.edu.pl/en/education/healthcare/voluntary-insurance",
+          "checked_at": "2026-10-09T00:33:16.930987+00:00",
+          "status": "html",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "一般補充保險含2020Q4示例價；2027春方案與費率未核",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "一般Students/Healthcare，不是博士生專屬資格；保留身分、NFZ/私人選項與舊年費率，未提升2027春適用。",
+          "sha256": "0fb9bf6c0a88af981d2b0a7a9bc2615f63a8ef9398cc808e3fb37c641d7bcdd0",
+          "bundled_file": "public_responses/p95-r28-voluntary-insurance.html",
+          "current_use_allowed": null,
+          "security_revalidation": null,
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
+        },
+        {
+          "source_id": "p95-r28-medical-services",
+          "source_url": "https://amu.edu.pl/en/education/healthcare/medical-services",
+          "checked_at": "2026-10-09T00:33:14.222052+00:00",
+          "status": "html",
+          "http_status": 200,
+          "access_result": null,
+          "content_academic_year": "一般醫療服務未明2027春學期／交換身分",
+          "content_applicability": "needs_confirmation",
+          "content_review_note": "一般Students/Healthcare，不是博士生專屬資格；保留身分、NFZ/私人選項與舊年費率，未提升2027春適用。",
+          "sha256": "ad8c9ff98facb04f2c6315a27fedd88c5d997781838b9a2da38f806dcf58acb8",
+          "bundled_file": "public_responses/p95-r28-medical-services.html",
+          "current_use_allowed": null,
+          "security_revalidation": null,
+          "review_state": "mapped_field_evidence_not_whole_document_completion"
         }
       ],
       "host_document_count": 0,
@@ -28633,8 +28684,8 @@
         },
         "application_forms": {
           "status": "needs_confirmation",
-          "known_value": "Autumn2026 / Spring2027官方公開題目API含48筆題目metadata；可核表題及問項，實際渲染/分支/必填範圍待核。LearningAgreement與Imageusage等另行附件仍未核齊。舊44題DOM是略過憑證的歷史取得，不作現行正文依據。",
-          "reason": "本輪正常TLS前端頁與question-only API逐項核實；HTTP200 shell不代替正文，48筆metadata不等全部顯示或必填。",
+          "known_value": "Autumn2026 / Spring2027官方公開題目清單列48項；實際顯示/分支/必填範圍待核。LearningAgreement與Imageusage等另行附件仍未核齊。",
+          "reason": "當期表題與公開題目資料已分別核對；清單不等所有問項都顯示或必填，也不代表全部附件齊備。",
           "evidence": [
             {
               "source_id": "p119-mirror",

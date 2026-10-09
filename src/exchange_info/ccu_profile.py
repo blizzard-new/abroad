@@ -35,7 +35,7 @@ def reviewed_profiles() -> dict[int, dict]:
     for row in rows:
         if set(row["fields"]) != set(LABELS):
             raise ValueError("Incomplete CCU profile field matrix")
-        for field in row["fields"].values():
+        for field in [*row["fields"].values(), *row.get("supplementary_life_guidance", [])]:
             if (field["value"] is None) != (field["status"] == "missing"):
                 raise ValueError("CCU missing profile facts must remain null")
             if field["value"] and not field["evidence"]:
@@ -190,6 +190,16 @@ def profile_life(
                 caution=field["reason"],
             )
         )
+        evidence.extend(field["evidence"])
+    for field in row.get("supplementary_life_guidance", []):
+        ev = field["evidence"][0]
+        text = (f"{field['value']}（{STATUS_LABELS[field['status']]}；{ev['academic_year']}；"
+                f"查核{ev['checked_at'].split('T')[0]}）")
+        sections.append(StudentGuideSection(
+            key=field["key"], title=field["title"], summary=field["value"],
+            points=[text], source_urls=list(dict.fromkeys(e["source_url"] for e in field["evidence"])),
+            evidence_type="official", caution=STATUS_LABELS[field["status"]] + "；" + field["reason"],
+        ))
         evidence.extend(field["evidence"])
     return summaries, sections, evidence
 

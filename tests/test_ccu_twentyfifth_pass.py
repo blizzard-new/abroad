@@ -122,8 +122,10 @@ def test_old_years_and_public_indexes_do_not_become_unannounced_or_exhausted():
     assert entries["p105-r8-calendar-cyprus"]["disposition"] == "out_of_scope"
     assert entries["p95-r5-healthcare"]["disposition"] == "out_of_scope"
     amu = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == 95)
-    assert amu.partner_exchange_details["insurance"].status == "missing"
-    assert amu.partner_exchange_details["insurance"].value is None
+    insurance = amu.partner_exchange_details["insurance"]
+    assert insurance.status == "needs_confirmation"
+    assert "NFZ不是唯一強制方案" in insurance.value
+    assert all(e.source_url != read("overseas_sources/p95-r5-healthcare.json")["source_url"] for e in insurance.evidence)
     assert review["processable_followups"] and all(not r["external_unannounced"] for r in review["processable_followups"])
     triage = read("body-review-triage.json")
     assert all(s["public_sources_exhausted"] is False for s in triage["schools"])

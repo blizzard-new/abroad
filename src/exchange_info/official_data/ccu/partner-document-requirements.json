@@ -6177,14 +6177,15 @@
       },
       {
         "requirement": {
-          "name": "護照資料頁（≥6月有效）",
+          "name": "護照資料頁（停留結束後6月：一般手冊要求、本期起算待核）",
           "copies": null,
           "copy_type": "unspecified",
           "signatures": [],
           "stamps": [],
           "official_form_url": null,
           "source_urls": [
-            "https://drive.google.com/file/d/1QCZfBvaHyR3ds9at9Ql6fBUNKGZXNnNq/view?usp=drive_link"
+            "https://drive.google.com/file/d/1QCZfBvaHyR3ds9at9Ql6fBUNKGZXNnNq/view?usp=drive_link",
+            "https://fs2.mapua.edu.ph/MapuaWebsite7/ILRAD/Handbook/International%20Hand%20Book.pdf"
           ],
           "needs_confirmation": true
         },
@@ -6203,10 +6204,43 @@
             "content_hash": "f1ff7a5b8746c9ed89e5283cd57e72f9f11e50875c360371147023dd3c5918da",
             "text_sha256": "4c381c346255a873f4135139e7fa15124dbe2d54e72ff723a8c38dbb27f19794",
             "note": "只核此項列明要求及階段，其他院系追加／個人表未取得不聲稱完整。"
+          },
+          {
+            "source_id": "p83-r27-international-handbook-normal-tls",
+            "source_url": "https://fs2.mapua.edu.ph/MapuaWebsite7/ILRAD/Handbook/International%20Hand%20Book.pdf",
+            "source_pages": [
+              18
+            ],
+            "academic_year": "版權©2026；费用原注明April2026估計；未明2027春當期適用",
+            "application_round": null,
+            "checked_at": "2026-10-09T00:19:58.792089+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Copy of Passport (at least 6 months validity after the stay)",
+            "content_hash": "9ff8ef4af2ae1147cc8f43460fef6eb942c449dd2a7a1b24416be80e939579eb",
+            "text_sha256": "7a0c3435dbaa285db45b827b4ad37e10628683c4bec45f646071743f11f91f6d",
+            "note": "一般©2026 inbound申請清單起算在停留結束後；當期factsheet未寫起算點。"
+          },
+          {
+            "source_id": "p83-r27-international-handbook-normal-tls",
+            "source_url": "https://fs2.mapua.edu.ph/MapuaWebsite7/ILRAD/Handbook/International%20Hand%20Book.pdf",
+            "source_pages": [
+              21
+            ],
+            "academic_year": "版權©2026；费用原注明April2026估計；未明2027春當期適用",
+            "application_round": null,
+            "checked_at": "2026-10-09T00:19:58.792089+00:00",
+            "status": "needs_confirmation",
+            "excerpt": "Must have at least six (6) months validity beyond your intended stay in the Philippines.",
+            "content_hash": "9ff8ef4af2ae1147cc8f43460fef6eb942c449dd2a7a1b24416be80e939579eb",
+            "text_sha256": "7a0c3435dbaa285db45b827b4ad37e10628683c4bec45f646071743f11f91f6d",
+            "note": "一般©2026攜帶文件要求；本期起算規則未核。"
           }
         ],
         "conditional": false,
-        "stage": "student_application"
+        "stage": "student_application",
+        "applicability_status": "needs_confirmation",
+        "applicability_year": "本期2026/27 factsheet起算點未明；一般©2026手冊要求停留結束後6月",
+        "applicability_note": "當期factsheet p6只寫valid for at least 6 months；一般©2026手冊實體p18/21明定預定停留結束後仍有效6個月，本期起算點待核，未把一般手冊提升為本期新規。"
       },
       {
         "requirement": {
@@ -8664,7 +8698,7 @@
         ],
         "conditional": false,
         "stage": "student_application",
-        "applicability_note": "Spring2027表題以正常TLS公開題目API核實，48筆題目metadata；渲染/分支/實際必填與另行附件仍待核。舊44題DOM僅為歷史。"
+        "applicability_note": "Spring2027表題已核實，公開題目清單列48項；實際顯示/分支/必填與另行附件仍待核。"
       },
       {
         "requirement": {

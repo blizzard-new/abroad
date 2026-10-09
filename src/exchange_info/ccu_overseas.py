@@ -257,6 +257,7 @@ def describe_field(key: str, field: PartnerExchangeDetailField) -> str:
 
 def enrich_workflow(workflow, partner: PartnerUniversity):
     from .ccu_documents import enrich_documents
+    from .ccu_profile import reviewed_profiles
 
     fields = partner.partner_exchange_details
     if not fields:
@@ -359,6 +360,13 @@ def enrich_workflow(workflow, partner: PartnerUniversity):
     workflow.steps.insert(5, life_step)
     enrich_documents(workflow, partner)
     refs = {ev.source_url: ev for field in fields.values() for ev in field.evidence}
+    for guide in reviewed_profiles().get(partner.source_pages[0], {}).get("supplementary_life_guidance", []):
+        ev = guide["evidence"][0]
+        target = home_return if guide["key"] == "return_preparation" else life_step
+        target.details.append(f"{guide['title']} · {STATUS_LABELS[guide['status']]}：{guide['value']}"
+                              f"（{ev['academic_year']}；查核{ev['checked_at'].split('T')[0]}）")
+        target.source_urls = list(dict.fromkeys([*target.source_urls, *[e["source_url"] for e in guide["evidence"]]]))
+        refs.update({e["source_url"]: ExchangeFieldEvidence.model_validate(e) for e in guide["evidence"]})
     workflow.sources.extend(
         ApplicationWorkflowSource(
             title="合作校接收資料（逐欄年度另見詳情）",
