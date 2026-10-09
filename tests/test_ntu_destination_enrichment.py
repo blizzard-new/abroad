@@ -51,6 +51,12 @@ def test_same_named_schools_use_their_own_country_photo(tmp_path, monkeypatch):
                                   source_url="https://example.edu/partners") for c in ("美國", "英國", "法國")]
     result = api._attach_school_images(StudentDashboard(partner_universities=partners), base_url="https://example.org")
     assert [p.image_url for p in result.partner_universities] == ["https://example.org/static/us.jpg", "https://example.org/static/gb.jpg", None]
+    monkeypatch.setattr(api, "fetch_ntu_partner_universities", lambda: partners)
+    with TestClient(create_app(tmp_path / "runtime")) as client:
+        coverage = client.get("/coverage", params={"school": "NTU"})
+    assert coverage.status_code == 200
+    assert coverage.json()["image_count"] == 2
+    assert [p["image_status"] for p in coverage.json()["partners"]] == ["verified", "verified", "not_collected"]
 
 
 def test_failed_retrieval_keeps_original_source_date_and_records_failed_attempt(tmp_path):
