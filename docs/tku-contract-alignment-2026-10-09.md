@@ -27,3 +27,5 @@
 `c6e6155` PR run 37895974293 第1分片的原 XML 記錄 `test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion` 最終 opacity 為 `0.65`；同源 push 分片75案例全通過，本地固定 c6e6155 原單案亦通過（實際18.2秒含起迄檢查）。這些結果分開保存，不宣稱本地重現、不豁免原 PR 失敗。
 
 現行 `motion.js` 的 route 在 requestAnimationFrame 排程動畫；原 fixture 只問目前是否無動畫，可能在排隊動畫開始前越過等待。只補真實兩個排程影格 barrier，並同時等原 UniWay 動畫皆結束且 computed opacity=1；原最後 opacity=1、快速導航四步及 delay<=90 斷言保留。沒有固定 sleep、關閉動畫、mock response 或 production source 修改。此原 test ID 保留，提交後另以固定 SHA 驗證。
+
+前輪 c6e6155 push 第0分片原 XML 另記錄多志願1754寬度原案例等不到重排 PUT（30秒）。此 fixture 的第一個進度 checkbox 仍只等可能殘留的「已同步」標籤，登入也會先於初始化 hydration 關閉；首輪固定SHA相關browser沒有涵蓋此file。只補真實初始化 load／network idle，並要求第一筆包含兩志願及該 task=true 的實際 PUT200 後才開始重排。原重排PUT、server直接讀回、progress、reload、移除再加入與兩個原寬度的全部斷言保留，不替代API或放寬條件。
