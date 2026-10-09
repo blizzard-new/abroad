@@ -51,7 +51,14 @@ def test_shared_progress_survives_reorder_removal_and_reload(page,live_server,wi
     shared.check()
     page.wait_for_function("() => document.querySelector('#account-workspace-sync-label').textContent === '已同步'")
     selects.nth(0).select_option(names[1]); selects.nth(1).select_option(names[0])
-    page.locator('#multi-plan-preferences button').click()
+    # The previous save can still show 已同步 before this click's debounce runs.
+    # Wait for this exact reordered payload to be acknowledged, then retain the
+    # original direct server/readback/progress/reload assertions below.
+    with page.expect_response(lambda r: r.request.method == 'PUT'
+            and '/account/workspace' in r.url
+            and (r.request.post_data_json or {}).get('workspace', {}).get('application_schools') == [names[1], names[0]]) as reordered:
+        page.locator('#multi-plan-preferences button').click()
+    assert reordered.value.status == 200
     expect(page.locator('.multi-plan-branch').first).to_contain_text(names[1])
     expect(page.locator(f'[data-multi-task="{task_id}"]')).to_be_checked()
     page.wait_for_function("() => document.querySelector('#account-workspace-sync-label').textContent === '已同步'")

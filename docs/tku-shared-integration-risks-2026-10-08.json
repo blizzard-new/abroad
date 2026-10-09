@@ -261,5 +261,21 @@
     "production_migration_applied": false,
     "permissions_grants_rls_credentials_or_ownership_changed": false,
     "validation_note": "Pre-commit synthetic tests passed; exact-commit acceptance and fresh isolated SQL runtime results belong to the separate candidate evidence, never to immutable 5e010b8."
+  },
+  "terminal_writer_followup_2026_10_09": {
+    "previous_candidate": "12b30cd78a812f829d1ba32d33d72d8df2595e6e",
+    "observed_failure": "Original PR JUnit pytest::internal: terminalwriter.flush() BlockingIOError interrupted case execution; collection completeness does not prove all cases ran.",
+    "files": [
+      "scripts/run_web_quality_tests.py",
+      "tests/test_tku_web_evidence.py",
+      "tests/e2e/test_multi_plan_workspace.py"
+    ],
+    "changes": [
+      "Run actual pytest in a worker with regular-file stdout/stderr and forward every byte through the existing retry-safe pipe writer; keep live case progress, exact original logs/JUnit and actual exit codes.",
+      "Real nested-pytest regression changes stdout flags after startup with a full nonblocking outer pipe, checks all three original cases, full 262144-byte failure payload, two failures/one pass and exit1, no internal error.",
+      "Multi-plan reorder fixture waits for the actual matching reordered workspace PUT200 before its unchanged server order/progress/reload assertions. Original 12b failure and isolated old-case two-pass repro are retained separately."
+    ],
+    "tests_removed_or_skips_added": false,
+    "workflow_permissions_actions_secrets_or_production_changed": false
   }
 }

@@ -14,6 +14,7 @@ from pathlib import Path
 import select
 import subprocess
 import sys
+import tempfile
 import time
 
 import pytest
@@ -69,19 +70,61 @@ class Progress:
         or discard part of a long traceback. Pytest's captured TextIO wrapper
         can raise EAGAIN despite the initial blocking configuration.
         """
-        pending = memoryview(value.encode(self.output.encoding or "utf-8", errors="backslashreplace"))
-        descriptor = self.output.fileno()
-        while pending:
+        write_all(self.output.fileno(), value.encode(self.output.encoding or "utf-8", errors="backslashreplace"))
+
+
+def write_all(descriptor: int, data: bytes) -> None:
+    """Forward bytes exactly, including when a full inherited pipe is nonblocking."""
+    pending = memoryview(data)
+    while pending:
+        try:
+            written = os.write(descriptor, pending)
+        except BlockingIOError:
+            select.select([], [descriptor], [])
+            continue
+        except InterruptedError:
+            continue
+        if written == 0:
+            raise OSError("CI evidence pipe accepted no bytes")
+        pending = pending[written:]
+
+
+def stream_pytest(command: list[str], *, output_descriptor: int | None = None) -> int:
+    """Keep pytest's terminal/capture writers on a regular file, then stream bytes.
+
+    A dependency may change stdout flags after startup. Regular-file output
+    protects every pytest writer, including terminal.flush(), while the parent
+    safely back-pressures the CI pipe. Separate reader/writer file descriptions
+    preserve offsets; drain after child exit so the last summary is never lost.
+    """
+    descriptor = sys.__stdout__.fileno() if output_descriptor is None else output_descriptor
+    worker = [sys.executable, "-u", "-c",
+        "import json,sys,pytest; from scripts.run_web_quality_tests import Progress; "
+        "sys.exit(pytest.main(json.loads(sys.argv[1]), plugins=[Progress()]))",
+        json.dumps(command)]
+    with tempfile.TemporaryDirectory(prefix="exchange-pytest-output-") as directory:
+        path = Path(directory) / "pytest.log"
+        with path.open("wb") as writer, path.open("rb") as reader:
+            process = subprocess.Popen(worker, stdout=writer, stderr=subprocess.STDOUT)
             try:
-                written = os.write(descriptor, pending)
-            except BlockingIOError:
-                select.select([], [descriptor], [])
-                continue
-            except InterruptedError:
-                continue
-            if written == 0:
-                raise OSError("CI evidence pipe accepted no bytes")
-            pending = pending[written:]
+                while True:
+                    chunk = reader.read(65536)
+                    if chunk:
+                        write_all(descriptor, chunk)
+                    elif process.poll() is not None:
+                        while tail := reader.read(65536):
+                            write_all(descriptor, tail)
+                        return process.wait()
+                    else:
+                        time.sleep(0.05)
+            finally:
+                if process.poll() is None:
+                    process.terminate()
+                    try:
+                        process.wait(timeout=5)
+                    except subprocess.TimeoutExpired:
+                        process.kill()
+                        process.wait()
 
 
 def use_blocking_output() -> None:
@@ -121,7 +164,7 @@ def main() -> int:
         args.junitxml.parent.mkdir(parents=True, exist_ok=True)
         command.append(f"--junitxml={args.junitxml}")
     started = time.monotonic()
-    code = pytest.main(command, plugins=[Progress()])
+    code = stream_pytest(command)
     print(f"WEB_SHARD {args.shard} exit={code} elapsed={time.monotonic()-started:.3f}s", flush=True)
     if args.evidence_dir:
         (args.evidence_dir / "result.json").write_text(json.dumps(dict(shard=args.shard, exit_code=int(code), elapsed_seconds=time.monotonic()-started, tested_commit=subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()), indent=2) + "\n")
