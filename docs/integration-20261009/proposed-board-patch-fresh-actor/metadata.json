@@ -1,0 +1,24 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-c",
+    "import os,pytest; os.environ[\"EXCHANGE_TEST_POSTGRES\"]=\"1\"; raise SystemExit(pytest.main([\"-q\",\"-s\",\"/workspace/integration-tools/test_forum_proposed_patch_fresh_actor.py\",\"--junitxml=/workspace/integration-evidence/proposed-board-patch-fresh-actor/results.xml\"]))"
+  ],
+  "cwd": "/workspace/abroad-pr3",
+  "started_at": "2026-10-09T13:40:32.026958+00:00",
+  "start_guard": {
+    "sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+    "tree": "b4877fcbacaf50d92ea24d46c81ebe55f7835f0e",
+    "status": ""
+  },
+  "timeout_seconds": 180,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T13:40:37.674105+00:00",
+  "end_guard": {
+    "sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+    "tree": "b4877fcbacaf50d92ea24d46c81ebe55f7835f0e",
+    "status": ""
+  }
+}

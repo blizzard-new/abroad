@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "/workspace/integration-tools/production_guest_smoke.py"
+  ],
+  "cwd": "/workspace/abroad-pr5",
+  "started_at": "2026-10-09T13:50:19.702600+00:00",
+  "start_guard": {
+    "sha": "b33ad27ff13912780dfb94f91504dd11b1ef6a21",
+    "tree": "510235883bcd6b98b7eeb6e3cb66b1d318feeae8",
+    "status": ""
+  },
+  "timeout_seconds": 600,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-09T13:51:17.104304+00:00",
+  "end_guard": {
+    "sha": "b33ad27ff13912780dfb94f91504dd11b1ef6a21",
+    "tree": "510235883bcd6b98b7eeb6e3cb66b1d318feeae8",
+    "status": ""
+  }
+}

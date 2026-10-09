@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/integration-tools/production_guest_smoke.py", line 36, in <module>
+    test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh(page, SimpleNamespace(base_url=base), width)
+  File "/workspace/abroad-pr5/tests/e2e/test_ntu_destination_enrichment.py", line 24, in test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh
+    wait_until(page, "state.dashboard?.school_name === '國立臺灣大學' && state.dashboard.partner_universities.length === 288")
+  File "/workspace/abroad-pr5/tests/e2e/test_open_catalog.py", line 38, in wait_until
+    raise AssertionError(f"Timed out waiting for: {expression}")
+AssertionError: Timed out waiting for: state.dashboard?.school_name === '國立臺灣大學' && state.dashboard.partner_universities.length === 288

@@ -1,0 +1,33 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/e2e/test_ccu_candidate_acceptance.py",
+    "tests/e2e/test_ccu_delayed_switching.py",
+    "tests/e2e/test_ccu_scope_documents.py",
+    "tests/e2e/test_ccu_composite_provenance.py",
+    "tests/e2e/test_ntu_school.py",
+    "tests/e2e/test_ntu_destination_enrichment.py",
+    "tests/e2e/test_life_context.py",
+    "--junitxml=/workspace/integration-evidence/pr3-main58-browser/results.xml"
+  ],
+  "cwd": "/workspace/abroad-pr3",
+  "started_at": "2026-10-09T13:43:24.981024+00:00",
+  "start_guard": {
+    "sha": "1c2f81158a71a733da0a8a9a16e9b9161b350209",
+    "tree": "74320d525e4aa924775ec8a1dd7eea8d34bc901d",
+    "status": ""
+  },
+  "timeout_seconds": 1500,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T13:49:39.742245+00:00",
+  "end_guard": {
+    "sha": "1c2f81158a71a733da0a8a9a16e9b9161b350209",
+    "tree": "74320d525e4aa924775ec8a1dd7eea8d34bc901d",
+    "status": ""
+  }
+}

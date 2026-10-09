@@ -1,3 +1,16 @@
+# Release status update — 2026-10-09 13:57 UTC
+
+Later parent instructions explicitly authorized end-to-end PR3/4/5 publication and necessary compatible DB/code sequencing, keeping PR2 gated on fixed-source and real DB evidence. Original isolation plan is retained below as historical context.
+
+- PR5 head b33ad27ff13912780dfb94f91504dd11b1ef6a21 merged to 58a6b7cf09a36d1892a1ac14a71332f1e8747a33. Render dep-db4ethpbgiqc738r2iag live on that exact commit. Public GET health and CGU77/NTPU206/NTU288 passed; mobile390/desktop1440 NTU globe/photo/life passed. Initial proxy certificate and latency failures are retained; requests validates HTTPS and browser uses executor-proxy compatibility plus 60-second remote assertion budget. No application TLS policy changed.
+- PR3 code/data integration 1c2f81158a71a733da0a8a9a16e9b9161b350209: 512 passed/7 original skips, 36 browser passed. Final head dc4d054c2746388c40bd256f4203ef066b60be03 adds only SQL compatibility migration/inventory; 3 passed/1 opt-in skip. Merged main b22220f811f91cd4b86e16da25da8e0684123d87, Render verification pending.
+- Production single migration 20261009135343_ccu_ncu_school_board_compatibility applied before PR3; before MD5 b81840819d91b81f3557964da088ea3f, after b032beac1990513b576f388328720999. Owner/ACL/security/search_path preserved. Local exact before/after and rollback/reapply passed (2 tests). Never ran bulk db push; existing production migration timestamps differ from repo history. Source migration file mirrors actual tool-recorded version; CLI-generated candidate was named 20261009135139 before connector application allocated actual version.
+- PR4 isolated joint candidate db5e454b324577a94900a5950752ae7db3f39477 has 13 conflict files reconciled individually; regression/browser still running, at least one regression failure. Not approved for merge yet.
+- PR2 fixed upstream b67d79aa3b6c30a9449801501256b64951f2c291 fetched. Parent reports 1813 passed/14 original skips and 17 SQL groups/74 RPC/31 audits, but remote raw evidence not yet supplied and full34 migration/Storage blocked by VFS ENOSPC. These reported results are not relabeled as this executor's validation. No PR2 production migration or code applied.
+- Quality remains disabled; no Render setting/branch protection/credential/payment changes. Full baseline pytest collection failure and all historical failures remain available. Data coverage remains bounded; no pending/missing/reference upgraded to current.
+
+---
+
 # PR #2–#5 整合與發布證據（2026-10-09）
 
 ## 當前發布狀態

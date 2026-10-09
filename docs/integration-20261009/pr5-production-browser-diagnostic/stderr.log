@@ -1,0 +1,105 @@
+Traceback (most recent call last):
+  File "/workspace/integration-tools/production_guest_smoke.py", line 41, in <module>
+    test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh(page, SimpleNamespace(base_url=base), width)
+  File "/workspace/abroad-pr5/tests/e2e/test_ntu_destination_enrichment.py", line 49, in test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh
+    expect(page.locator('[data-life-theme="housing"]')).to_contain_text("USP iFriends")
+  File "/workspace/abroad-pr5/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 22016, in to_contain_text
+    self._sync(
+  File "/workspace/abroad-pr5/.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/workspace/abroad-pr5/.venv/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 303, in to_contain_text
+    await self._expect_impl(
+  File "/workspace/abroad-pr5/.venv/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 128, in _expect_impl
+    _record_soft_or_raise(
+  File "/workspace/abroad-pr5/.venv/lib/python3.12/site-packages/playwright/_impl/_assertions.py", line 60, in _record_soft_or_raise
+    raise error
+AssertionError: Locator expected to contain text 'USP iFriends'
+Actual value: None
+Error: element(s) not found 
+Call log:
+  - Expect "to_contain_text" with timeout 5000ms
+  - waiting for locator("[data-life-theme=\"housing\"]")
+
+Aria snapshot:
+- link "跳到主要內容":
+  - /url: "#main-content"
+- main:
+  - button "開啟功能選單"
+  - link "UniWay 首頁":
+    - /url: "#home"
+    - strong: UniWay
+  - status
+  - region "聖保羅大學":
+    - button "加入比較聖保羅大學"
+    - button "登入建立計畫"
+    - img "聖保羅大學校園照片"
+    - text: 攝影：Hector.carvalho · CC BY-SA 3.0 · 已裁切為 16:9；校級照片，交換校區須核對。 ·
+    - link "圖片授權":
+      - /url: https://creativecommons.org/licenses/by-sa/3.0
+    - text: 巴西 · 校級國際交換學生 下一站
+    - strong: 巴西
+    - text: 聖保羅
+    - heading "聖保羅大學" [level=1]
+    - text: 我的資格
+    - strong: 尚未進行資格初判
+    - text: 合作校參考時程
+    - strong: 臺大116-1校內報名：2026-11-09 16:00（臺灣時間）；合作校收件期限另依提名通知及當期規定（適用年度待確認）
+    - text: 語言門檻
+    - strong: 一般組 本校大二以上/碩一以上/博一以上學生。（以報名交換學生甄選時，本校教務處學籍系統上之年級為準），前述「以上」包含該年級。研究生申請資訊請另詳見注意事項 (The term ‘at least’ includes…
+    - text: 生活費參考
+    - strong: 尚未取得並核對116-1適用資料；請向合作校確認。
+    - text: 交換名額
+    - strong: 依公告
+    - text: 研修期間
+    - strong:
+      - text: 官方參考期程：
+      - strong: 一學期
+      - text: 或
+      - strong: 一學年
+      - text: ，限於本校第
+      - strong: 一學期
+      - text: 出國交換（本期待確認）
+    - tablist "交換學校詳細資訊":
+      - tab "快速了解"
+      - tab "申請方式"
+      - tab "生活情報" [selected]
+      - tab "出發前提醒"
+      - tab "學生心得"
+      - tab "學生社群"
+    - tabpanel "生活情報":
+      - heading "生活情報" [level=2]
+      - status: 正在更新資料…
+      - button "找學生分享"
+      - button "更新中" [disabled]
+      - group: 資料說明
+      - group: 官方生活指南
+      - group: 待補資料（10 項）
+    - complementary "申請準備進度與官方來源":
+      - heading "我的申請進度" [level=2]
+      - progressbar "申請準備進度":
+        - strong: 0 / 5 已完成
+        - text: 準備中
+      - paragraph:
+        - text: 登入以保存進度
+        - button "登入"
+      - checkbox "確認資格與語言門檻" [disabled]
+      - text: 確認資格與語言門檻
+      - checkbox "比較課程、費用與生活" [disabled]
+      - text: 比較課程、費用與生活
+      - checkbox "備妥校內申請文件" [disabled]
+      - text: 備妥校內申請文件
+      - checkbox "完成校內甄選送件" [disabled]
+      - text: 完成校內甄選送件
+      - checkbox "完成合作校線上申請" [disabled]
+      - text: 完成合作校線上申請
+      - strong: 送件前確認
+      - paragraph: 截止日與資格以當期官方公告為準。
+- paragraph:
+  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+  - button "停用匿名使用統計"
+  - text: 。
+  - link "隱私權政策":
+    - /url: /privacy
+  - link "使用條款":
+    - /url: /terms

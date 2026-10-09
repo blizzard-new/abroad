@@ -1,0 +1,28 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_supabase_migration_syntax.py",
+    "tests/test_ntu_school_board_migration.py",
+    "--junitxml=/workspace/integration-evidence/pr3-release-migration-check/results.xml"
+  ],
+  "cwd": "/workspace/abroad-pr3",
+  "started_at": "2026-10-09T13:54:57.702274+00:00",
+  "start_guard": {
+    "sha": "c10d8a017308c8120dff25e6fb25b5b7ce42596d",
+    "tree": "22893c0bbabbdb62af3fbcd0d7646b4e0b380768",
+    "status": ""
+  },
+  "timeout_seconds": 180,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-09T13:54:58.389073+00:00",
+  "end_guard": {
+    "sha": "c10d8a017308c8120dff25e6fb25b5b7ce42596d",
+    "tree": "22893c0bbabbdb62af3fbcd0d7646b4e0b380768",
+    "status": ""
+  }
+}
