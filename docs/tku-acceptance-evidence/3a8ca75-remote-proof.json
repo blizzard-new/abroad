@@ -1,0 +1,40 @@
+{
+  "payload_commit": "8542e7912564402dc6ae6195e8c2ed2a15136743",
+  "head_sha": "3a8ca75680e941da478e06ec1162cebeb8152619",
+  "checked_at": "2026-10-09T09:28:39.668913+00:00",
+  "remote_all_blobs": 56,
+  "checks": [
+    {
+      "folder": "3a8ca75",
+      "remote_blobs": 43,
+      "tree_sha": "181c0d4d61635020cb8043e2997c6c80c95a135d",
+      "all_paths_sizes_git_blob_hashes_matched": true,
+      "recursive_truncated": false
+    },
+    {
+      "folder": "3a8ca75-readable",
+      "remote_blobs": 13,
+      "tree_sha": "c04ec63fc50264771fbeb927c4e58e669e3ab011",
+      "all_paths_sizes_git_blob_hashes_matched": true,
+      "recursive_truncated": false
+    }
+  ],
+  "actual_cli_reassembly": [
+    {
+      "source": "browser.xml",
+      "actual_cli_exit": 0,
+      "original_bytes": 23959,
+      "original_sha256": "42b6f7e57900e43ef80b390b607c56a9a29d02d91ef5d1d77a78eaac39fcf418",
+      "byte_identical": true
+    },
+    {
+      "source": "unit.xml",
+      "actual_cli_exit": 0,
+      "original_bytes": 47871,
+      "original_sha256": "2e5c57601da25dd6827bc61224e5050aeb486861265af4b89986bb15b2be9d61",
+      "byte_identical": true
+    }
+  ],
+  "scope": "Original failures retained; remoteCI neverstarted; nofullCI/full34runtimeclaim.",
+  "signed_download_urls_included": false
+}
