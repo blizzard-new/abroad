@@ -11535,7 +11535,7 @@ async function checkEligibility(event) {
     college,
     department,
     degree_level: degree,
-    current_year: profile.currentYear || null,
+    current_year: profile.currentYear,
     academic_score: ntu ? null : academicScore,
     academic_gpa: academicGpa,
     class_rank_percent: classRankPercent,

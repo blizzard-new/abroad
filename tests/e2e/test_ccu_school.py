@@ -268,7 +268,7 @@ def test_ccu_sixth_batch_conflicts_and_amu_alternative_proof(
     assert not errors
 
 
-def test_all_four_school_grade_fields_remain_isolated(page, live_server):
+def test_all_six_school_grade_fields_remain_isolated(page, live_server):
     page.set_viewport_size({"width": 1440, "height": 956})
     page.add_init_script(
         "localStorage.setItem('exchange-guide-home-school','國立中正大學')"
@@ -279,11 +279,16 @@ def test_all_four_school_grade_fields_remain_isolated(page, live_server):
         ("國立臺灣大學", False, True, True),
         ("國立臺北大學", True, False, False),
         ("長庚大學", True, False, False),
+        ("國立中央大學", True, False, False),
+        ("淡江大學", True, False, False),
     ]
     for school, percent, gpa, rank in cases:
         open_navigation(page)
         page.locator("#school-switcher").click()
-        expect(page.locator("#school-options [data-home-school]")).to_have_count(4)
+        expect(page.locator("#school-options [data-home-school]")).to_have_count(6)
+        assert page.locator("#school-options [data-home-school]").evaluate_all(
+            "nodes => nodes.map(node => node.dataset.homeSchool)"
+        ) == ["長庚大學", "國立臺北大學", "國立臺灣大學", "國立中正大學", "國立中央大學", "淡江大學"]
         page.locator(f'[data-home-school="{school}"]').click()
         page.locator("#confirm-school").click()
         wait_until(page, "state.dashboard?.school_name === " + json.dumps(school))
