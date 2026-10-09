@@ -3553,10 +3553,12 @@ def create_app(
     def list_admin_workflow_issue_reports(
         request: Request,
         response: Response,
+        status: ApplicationWorkflowIssueReportStatus | None = Query(default=None),
     ) -> list[ApplicationWorkflowIssueReport]:
         authenticated_content_admin(request)
         response.headers["Cache-Control"] = "no-store"
-        return app.state.workflow_issue_report_repository.list_reports()
+        rows = app.state.workflow_issue_report_repository.list_reports()
+        return [row for row in rows if status is None or row.status == status]
 
     @app.patch(
         "/admin/application-workflow-issue-reports/{report_id}",

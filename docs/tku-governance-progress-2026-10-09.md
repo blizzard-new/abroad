@@ -7,3 +7,5 @@
 治理第一階段將管理 HTML、admin session、來源候選／缺口／快照 CSV、deterministic staging、目的地審核／promote／history／rollback、流程 history／readiness／rollback 接到原有服務。既有 approve/reject/publish 與新增接線共用程序內鎖，所有入口仍用原有管理員驗證，private/no-store。CSV 是唯讀清單，沒有匯入 approvals；工作台沿用現有 UI，沒有自動批准或填補官方缺值。
 
 尚不能由 API 接線宣稱交易驗收完成：現有 workflow publication 先分次儲存 revision 再改公開資料，目的地 Supabase event 寫入亦缺少跨程序 CAS。下一階段需補既有 stores 的原子命令提交／精確 snapshot 校驗、故障回復與冪等測試；不擴出平行審核機制，不降低雙審與來源／rule hash 門檻。readiness 僅呈現資料阻擋原因，並非部署許可。TKU 63 項官方缺口、未發布的 4 個 workflow 與所有既有學校資料保持原狀。
+
+固定 SHA `e300479` 複核：32 項 API／權限／快照單元通過，但原有管理台錯誤回報 browser case 實際失敗（已結案卡片仍在待處理清單）。API 原本忽略 status query；第一次未固定 SHA 的短暫通過及本次真實失敗分別保留。後續追加 API enum 篩選與隔離回歸，不移除原卡片消失／完整 audit 等斷言。

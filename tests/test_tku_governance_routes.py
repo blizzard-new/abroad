@@ -58,3 +58,27 @@ def test_stale_workflow_exports_fail_closed_without_mutation(governance_client):
         response = client.get(path, headers=admin, params={"expected_snapshot": "0" * 64})
         assert response.status_code == 409
     assert store.list_revisions() == [] and store.load_published_workflows() == []
+
+
+def test_issue_report_status_filter_excludes_terminal_reports(tmp_path, monkeypatch):
+    from test_application_workflow_issue_reports import _session, _workflow, _payload
+
+    app = create_app(tmp_path)
+    client = TestClient(app)
+    _, student = _session(app, email="filter-student@example.com", has_school=True)
+    account, admin = _session(app, email="filter-admin@example.com", has_school=False)
+    monkeypatch.setenv("EXCHANGE_CONTENT_ADMIN_EMAILS", account.email)
+    created = client.post("/application-workflow-issue-reports", json=_payload(_workflow(client)),
+        headers={**student, "X-Content-Report-Mutation-ID": "synthetic-filter-report-create"})
+    assert created.status_code == 202
+    report_id = created.json()["id"]
+    endpoint = "/admin/application-workflow-issue-reports"
+    assert [row["id"] for row in client.get(endpoint, headers=admin, params={"status": "pending"}).json()] == [report_id]
+    reviewed = client.patch(f"{endpoint}/{report_id}", json={"status": "resolved", "note": "隔離測試核對，實際公開規定保持原狀。"},
+        headers={**admin, "X-Content-Report-Mutation-ID": "synthetic-filter-report-review"})
+    assert reviewed.status_code == 200
+    assert client.get(endpoint, headers=admin, params={"status": "pending"}).json() == []
+    assert client.get(endpoint, headers=admin, params={"status": "dismissed"}).json() == []
+    assert client.get(endpoint, headers=admin, params={"status": "resolved"}).json()[0]["id"] == report_id
+    assert len(client.get(endpoint, headers=admin).json()) == 1
+    assert client.get(endpoint, headers=admin, params={"status": "invalid"}).status_code == 422
