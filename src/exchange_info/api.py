@@ -3580,7 +3580,7 @@ def create_app(
     ) -> DestinationProfile:
         partner = partner_for_school(school, home_school)
         normalized = normalize_school(partner.school_name)
-        target_home = normalize_school(home_school) if home_school else None
+        target_home = normalize_school(require_university(home_school).school_name) if home_school else None
         profiles = load_destination_profiles(resolved_data_dir, include_bundled_baseline=True)
         if target_home:
             for profile in profiles:

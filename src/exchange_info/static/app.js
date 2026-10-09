@@ -9278,7 +9278,7 @@ function renderWorkflowStep(step, index, workflow) {
       </summary>
       <div class="workflow-step-body">
         <p>${highlightHtml(step.summary)}</p>
-        ${renderWorkflowScope(step)}
+        ${renderWorkflowScope(step, workflow)}
         ${needsConfirmation ? `<div class="workflow-warning"><i data-lucide="triangle-alert" aria-hidden="true"></i><div><strong>此步驟仍有送件或文件細節待確認。</strong>${step.confirmation_contact ? `<span>請聯絡：${escapeHtml(step.confirmation_contact)}</span>` : ""}</div></div>` : ""}
         ${renderWorkflowDeadlineStatus(step, workflow)}
         ${renderWorkflowSubmission(step)}
@@ -9339,7 +9339,7 @@ function workflowArrivalDeadlinePending(step) {
     && !step.submission?.arrival_deadline_at;
 }
 
-function renderWorkflowScope(step) {
+function renderWorkflowScope(step, workflow) {
   const scope = step.scope || {};
   const labels = [
     ...(scope.colleges || []),
@@ -9348,7 +9348,11 @@ function renderWorkflowScope(step) {
     ...(scope.application_rounds || []),
   ];
   if (!labels.length) return "";
-  return `<div class="workflow-rule-meta"><strong>適用範圍</strong>${labels.map((label) => `<span>${escapeHtml(label)}</span>`).join("")}</div>`;
+  const pendingHostScope = workflow?.home_university === "國立中央大學"
+    && Boolean(scope.partner_universities?.length)
+    && workflowStepNeedsConfirmation(step);
+  const caption = pendingHostScope ? "規劃範圍（當期適用待確認）" : "適用範圍";
+  return `<div class="workflow-rule-meta"><strong>${caption}</strong>${labels.map((label) => `<span>${escapeHtml(label)}</span>`).join("")}</div>`;
 }
 
 function renderWorkflowSubmission(step) {

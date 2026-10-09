@@ -44,6 +44,8 @@
 
 ## 逐校、逐欄未解與已查來源
 
+2026/10/9最新人工整理65／214（全部partial），149項仍可續查，116全欄核准0。818筆host／home讀取紀錄含101筆錯誤；459份Drive取得中25份明確全文人工閱讀、6份視覺、1份OCR，不以抽取或下載量當人工完整度。[關西國際、駒澤、東北查核](ncu-japan3-20261009.md)列三校版本、文件階段、生活接口、原件閱讀範圍與預驗界線。
+
 [field-coverage.csv](../src/exchange_info/official_data/ncu/field-coverage.csv) 是214項×17欄的状态表；[field-audit.json](../src/exchange_info/official_data/ncu/field-audit.json) 是各欄原文、已查來源、適用範圍与具体未解問題；[host-web-checks.json](../sources/ncu/2026-10-08/host-web-checks.json) 與 gzip snapshot保存嘗試URL、HTTP／proxy結果及成功取得的原文。以下分類須保留，不能互換：
 
 | 狀態 | 具體證據／已查來源 | 缺少什麼及下一步 |
