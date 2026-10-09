@@ -1,0 +1,571 @@
+{
+  "tested_commit": "ce83a502e33a42906fdf716bfaa606e777970d61",
+  "official_check_date": "2026-10-08",
+  "created_at": "2026-10-08T23:47:58.788644+00:00",
+  "fields": [
+    {
+      "partner_id": "jp-2027-2028-round-2-nagasaki",
+      "school_name": "長崎外國語大學 Nagasaki University of Foreign Studies",
+      "key": "living_costs",
+      "initial_category": 4,
+      "category_after_review": 4,
+      "resolved": true,
+      "original_field": {
+        "key": "living_costs",
+        "label": "生活費用",
+        "status": "reference_only",
+        "value": "Form C估學費以外住宿、食物、交通、水電每月需60,000日圓以上；並非2027完整實支預算，需依房型及其他支出準備。",
+        "reason": "無年度財務表的支弁基準，不是保證足夠的生活費總額。",
+        "evidence": [
+          {
+            "source_id": "nagasaki-form-c",
+            "source_url": "https://www.nagasaki-gaigo.ac.jp/cms/wp-content/uploads/2024/09/5_FormC_Financial_Statement.pdf",
+            "locator": "PDF p.2 Financial Support Details",
+            "applicable_year": "undated form currently linked by 2027 Spring NICS notice",
+            "application_round": "2027春季外校申請／淡江日語二甄後續",
+            "role": "host_incoming",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "quote": ""
+          }
+        ],
+        "checked_entries": [
+          {
+            "source_id": "nagasaki-form-c",
+            "url": "https://www.nagasaki-gaigo.ac.jp/cms/wp-content/uploads/2024/09/5_FormC_Financial_Statement.pdf",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "result": "verified_open",
+            "scope": "field evidence"
+          }
+        ]
+      },
+      "current_field": {
+        "key": "living_costs",
+        "label": "生活費用",
+        "status": "verified",
+        "value": "2027春NICS公告直接引用的Form C要求支弁學費以外住宿、食物、交通、水電每月60,000日圓以上。這是本期財務證明下限，不是完整實支預算或保證足夠金額；依房型及其他支出另準備。",
+        "reason": "表單本身無學年度；適用本期的依據是2027春NICS公告直接連結。僅核實支弁基準，非實際總費用。",
+        "evidence": [
+          {
+            "source_id": "nagasaki-form-c",
+            "source_url": "https://www.nagasaki-gaigo.ac.jp/cms/wp-content/uploads/2024/09/5_FormC_Financial_Statement.pdf",
+            "locator": "PDF p.2 Financial Support Details; 2027 NICS notice 提出書類5",
+            "applicable_year": "undated form currently linked by 2027 Spring NICS notice",
+            "application_round": "2027春季外校申請／淡江日語二甄後續",
+            "role": "host_incoming",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "quote": "more than 60,000 JPY will be needed per month"
+          },
+          {
+            "source_id": "nagasaki-nics-2027",
+            "source_url": "https://www.nagasaki-gaigo.ac.jp/studying-abroad/receiving_program/nics_program/",
+            "locator": "提出書類5 経費支弁書 Form C",
+            "applicable_year": "2027 Spring",
+            "application_round": "2027春季外校申請／淡江日語二甄後續",
+            "role": "host_incoming",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "quote": ""
+          }
+        ],
+        "checked_entries": [
+          {
+            "source_id": "nagasaki-form-c",
+            "url": "https://www.nagasaki-gaigo.ac.jp/cms/wp-content/uploads/2024/09/5_FormC_Financial_Statement.pdf",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "result": "verified_open",
+            "scope": "field evidence"
+          },
+          {
+            "source_id": "nagasaki-nics-2027",
+            "url": "https://www.nagasaki-gaigo.ac.jp/studying-abroad/receiving_program/nics_program/",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "result": "verified_open",
+            "scope": "field evidence"
+          }
+        ]
+      },
+      "public_entries_checked": [
+        {
+          "id": "nagasaki-nics-2027",
+          "source_url": "https://www.nagasaki-gaigo.ac.jp/studying-abroad/receiving_program/nics_program/",
+          "applicable_year": "2027 Spring",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "0430ffcc3515cc37343bce5850f9b24e0736289dde5b0ce3eee52fc534648b25",
+          "local_file": null,
+          "review_note": "Notice heading, qualifications, 11 documents, fees, insurance and curriculum read."
+        },
+        {
+          "id": "nagasaki-form-a-online",
+          "source_url": "https://www.nagasaki-gaigo.ac.jp/form/intl_application/",
+          "applicable_year": "2027 Spring",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "aaff06220eda07d8f76eaf711717d9469357dfb708606a77c650f8db00aedce1",
+          "local_file": null,
+          "review_note": "Form heading and periods read; public form inspected without entering information or submitting."
+        },
+        {
+          "id": "nagasaki-pledge",
+          "source_url": "https://www.nagasaki-gaigo.ac.jp/cms/wp-content/uploads/2026/09/written_pledge.pdf",
+          "applicable_year": "2027 Spring",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "bc0470cf49d4bf41789f91576166ee823b69e0db5fd2215260531078b2121fdc",
+          "local_file": "nagasaki-pledge.pdf",
+          "review_note": "Body explicitly says March-August 2027 / March 2027-February 2028; signature and first-term housing provisions read."
+        },
+        {
+          "id": "nagasaki-form-c",
+          "source_url": "https://www.nagasaki-gaigo.ac.jp/cms/wp-content/uploads/2024/09/5_FormC_Financial_Statement.pdf",
+          "applicable_year": "undated form currently linked by 2027 Spring NICS notice",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "86e73d159f83c502d881add5ab625c5f633bef98734364a70d84671b05e7b4ac",
+          "local_file": "nagasaki-form-c.pdf",
+          "review_note": "Full form content reviewed; current applicability is based on the 2027 notice link, not filename year. Photo-count/essay translation conflicts retained."
+        },
+        {
+          "id": "nagasaki-programmes-followup",
+          "source_url": "https://www.nagasaki-gaigo.ac.jp/studying-abroad/receiving_program/",
+          "applicable_year": "general programme directory",
+          "role": "directory_reference",
+          "checked_at": "2026-10-08T22:54:22.525665+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "d3ed49d6dd9f93f29c608bc396248d577e41ed4eaad9845800ed7c3ce6e40139",
+          "local_file": null,
+          "review_note": "NICS/JASIN short exchange and regular degree routes distinguished; does not prove TKU graduate nomination to NICS."
+        },
+        {
+          "id": "nagasaki-dual-degree-excluded",
+          "source_url": "https://www.nagasaki-gaigo.ac.jp/studying-abroad/receiving_program/dual_degree_program/",
+          "applicable_year": "general dual-degree programme, not NICS exchange",
+          "role": "directory_reference",
+          "checked_at": "2026-10-08T22:54:22.525665+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "a81afb5d131344396dcde15e758ce14b9ed5247d37c29204a4fc601862881bf0",
+          "local_file": null,
+          "review_note": "Third-year regular-degree admission and scholarships belong to dual degree; excluded from NICS scholarship claims."
+        },
+        {
+          "id": "nagasaki-calendar",
+          "source_url": "https://www.nagasaki-gaigo.ac.jp/campus-life/calendar/",
+          "applicable_year": "2026 academic calendar; 2027 not verified",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "9b93a40754f44b496fec9a08197e557f9143fa22b2689077a79cdd6efbc40b22",
+          "local_file": null,
+          "review_note": "Page heading says 2026年度. Do not transplant dates into 2027."
+        },
+        {
+          "id": "nagasaki-courses",
+          "source_url": "https://www.nagasaki-gaigo.ac.jp/studying-abroad/receiving_program/nics_program/nics_curriculum/",
+          "applicable_year": "general course list linked from 2027 Spring notice",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "6a02f4e025841246f391d29c74559ddd540772a920c1098048b2a11144b509b9",
+          "local_file": null,
+          "review_note": "Course list read; individual 2027 offerings are not guaranteed."
+        }
+      ],
+      "checked_at": "2026-10-08",
+      "next_action": "已補映射；核實範圍及仍未知的子項見current_field.reason/value，不代表全部申請準備完成。",
+      "non_announcement_claim": false,
+      "human_contact_performed": false
+    },
+    {
+      "partner_id": "jp-2027-2028-round-2-seikei",
+      "school_name": "成蹊大學 Seikei University",
+      "key": "host_study_period",
+      "initial_category": 4,
+      "category_after_review": 4,
+      "resolved": true,
+      "original_field": {
+        "key": "host_study_period",
+        "label": "外校計畫期間",
+        "status": "needs_confirmation",
+        "value": "一學期或一學年；2027春住宿約3月中旬至8月初、秋季9月初至次年2月初；確切期間依外校通知。",
+        "reason": "2027 sheet只列近似時段，精確calendar链接仍是AY2026；與淡江全年期間須確認。",
+        "evidence": [
+          {
+            "source_id": "seikei-2027-sheet",
+            "source_url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
+            "locator": "PDF p.1 Semester Schedule",
+            "applicable_year": "2027 Spring",
+            "application_round": "2027春季外校申請／淡江日語二甄後續",
+            "role": "host_incoming",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "quote": ""
+          }
+        ],
+        "checked_entries": [
+          {
+            "source_id": "seikei-2027-sheet",
+            "url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "result": "verified_open",
+            "scope": "field evidence"
+          }
+        ]
+      },
+      "current_field": {
+        "key": "host_study_period",
+        "label": "外校計畫期間",
+        "status": "verified",
+        "value": "2027交換計畫接受一學期或一學年；淡江本輪仍列一學年，不能自行縮短。外校春季住宿約3月中旬至8月初、秋季9月初至次年2月初；精確calendar及指定抵達日仍未核實，分列待確認。",
+        "reason": "此欄僅核實外校接受的學期數；不以近似schedule推定精確日期。",
+        "evidence": [
+          {
+            "source_id": "seikei-2027-sheet",
+            "source_url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
+            "locator": "PDF p.1 Duration of Study / Semester Schedule",
+            "applicable_year": "2027 Spring",
+            "application_round": "2027春季外校申請／淡江日語二甄後續",
+            "role": "host_incoming",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "quote": "One semester / One academic year"
+          }
+        ],
+        "checked_entries": [
+          {
+            "source_id": "seikei-2027-sheet",
+            "url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "result": "verified_open",
+            "scope": "field evidence"
+          }
+        ]
+      },
+      "public_entries_checked": [
+        {
+          "id": "seikei-2027-sheet",
+          "source_url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
+          "applicable_year": "2027 Spring",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": null,
+          "sha256": "b80b020a13ca457fb13612db04023dd1d998b32b775ac6ae4d1ad7fbb61f22cc",
+          "local_file": "seikei-2027-sheet.pdf",
+          "review_note": null
+        },
+        {
+          "id": "seikei-host-followup",
+          "source_url": "https://www.seikei.ac.jp/gakuen/siis/intl/incoming.html",
+          "applicable_year": "general incoming page linking 2027 information sheet",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T22:41:35.124320+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "2fd44d57a60336f3abb1e8a7e1460083459e5e09141431f3e4feeb72a35710ac",
+          "local_file": null,
+          "review_note": "Current incoming page and home-coordinator materials route read; no current blank general application forms obtained. COE-specific nominee restriction is kept separate."
+        },
+        {
+          "id": "seikei-calendar-followup",
+          "source_url": "https://www.seikei.ac.jp/university/pdf/koyomi.pdf",
+          "applicable_year": "2026 academic calendar; not 2027",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T22:41:35.126268+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "9bd4f7211086717dfb529c0b1034b897da10443faa0c34870e67163f1d1895ec",
+          "local_file": "seikei-calendar-followup.pdf",
+          "review_note": "Actual PDF calendar body read; April 10 Friday matches 2026, not 2027. Linked AY2026 calendar is excluded from exact 2027 dates."
+        }
+      ],
+      "checked_at": "2026-10-08",
+      "next_action": "已補映射；核實範圍及仍未知的子項見current_field.reason/value，不代表全部申請準備完成。",
+      "non_announcement_claim": false,
+      "human_contact_performed": false
+    },
+    {
+      "partner_id": "jp-2027-2028-round-2-seikei",
+      "school_name": "成蹊大學 Seikei University",
+      "key": "transport",
+      "initial_category": 4,
+      "category_after_review": 4,
+      "resolved": true,
+      "original_field": {
+        "key": "transport",
+        "label": "接送／通勤",
+        "status": "missing_in_source",
+        "value": null,
+        "reason": "sheet未載接機或2027交通票價；不能借用其他學校方案。",
+        "evidence": [
+          {
+            "source_id": "seikei-2027-sheet",
+            "source_url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
+            "locator": "PDF p.1–6; no arrival transfer policy",
+            "applicable_year": "2027 Spring",
+            "application_round": "2027春季外校申請／淡江日語二甄後續",
+            "role": "host_incoming",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "quote": ""
+          }
+        ],
+        "checked_entries": [
+          {
+            "source_id": "seikei-2027-sheet",
+            "url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "result": "verified_open",
+            "scope": "field evidence"
+          }
+        ]
+      },
+      "current_field": {
+        "key": "transport",
+        "label": "接送／通勤",
+        "status": "verified",
+        "value": "2027/8前Dormy：井之頭公園站步行12分、吉祥寺站15分、校園單車12分（2.9km）；國際交流會館：吉祥寺站步行20分、校園1分。2027/9起MICHI至校園步行5分。sheet未載接機服務或交通票價；床位與實際路線依外校安排。",
+        "reason": "已核實本期住宿通勤；接機及票價仍未知，不能把通勤資料解讀為有機場接送。",
+        "evidence": [
+          {
+            "source_id": "seikei-2027-sheet",
+            "source_url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
+            "locator": "PDF p.3–4 Accommodation <Access>",
+            "applicable_year": "2027 Spring",
+            "application_round": "2027春季外校申請／淡江日語二甄後續",
+            "role": "host_incoming",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "quote": "12-minute bicycle ride from Seikei University (2.9km)"
+          }
+        ],
+        "checked_entries": [
+          {
+            "source_id": "seikei-2027-sheet",
+            "url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "result": "verified_open",
+            "scope": "field evidence"
+          }
+        ]
+      },
+      "public_entries_checked": [
+        {
+          "id": "seikei-2027-sheet",
+          "source_url": "https://www.seikei.ac.jp/gakuen/siis/intl/%E2%97%8FInformation%20sheet%20Spring2027%28Seikei%20University%29_updated0827.pdf",
+          "applicable_year": "2027 Spring",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": null,
+          "sha256": "b80b020a13ca457fb13612db04023dd1d998b32b775ac6ae4d1ad7fbb61f22cc",
+          "local_file": "seikei-2027-sheet.pdf",
+          "review_note": null
+        },
+        {
+          "id": "seikei-host-followup",
+          "source_url": "https://www.seikei.ac.jp/gakuen/siis/intl/incoming.html",
+          "applicable_year": "general incoming page linking 2027 information sheet",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T22:41:35.124320+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "2fd44d57a60336f3abb1e8a7e1460083459e5e09141431f3e4feeb72a35710ac",
+          "local_file": null,
+          "review_note": "Current incoming page and home-coordinator materials route read; no current blank general application forms obtained. COE-specific nominee restriction is kept separate."
+        },
+        {
+          "id": "seikei-calendar-followup",
+          "source_url": "https://www.seikei.ac.jp/university/pdf/koyomi.pdf",
+          "applicable_year": "2026 academic calendar; not 2027",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T22:41:35.126268+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "9bd4f7211086717dfb529c0b1034b897da10443faa0c34870e67163f1d1895ec",
+          "local_file": "seikei-calendar-followup.pdf",
+          "review_note": "Actual PDF calendar body read; April 10 Friday matches 2026, not 2027. Linked AY2026 calendar is excluded from exact 2027 dates."
+        }
+      ],
+      "checked_at": "2026-10-08",
+      "next_action": "已補映射；核實範圍及仍未知的子項見current_field.reason/value，不代表全部申請準備完成。",
+      "non_announcement_claim": false,
+      "human_contact_performed": false
+    },
+    {
+      "partner_id": "jp-2027-2028-round-2-uec",
+      "school_name": "電氣通信大學 University of Electro-Communications",
+      "key": "host_programme_mapping",
+      "initial_category": 4,
+      "category_after_review": 4,
+      "resolved": true,
+      "original_field": {
+        "key": "host_programme_mapping",
+        "label": "本梯外校計畫對應",
+        "status": "reference_only",
+        "value": "淡江本期名額表明載JUSST；外校目前公開為一般JUSST規則，2027專屬簡章／表單尚未核實。",
+        "reason": "計畫對應已核實，公開外校規則更新2025/10/28，尚未確認2027個別變更。",
+        "evidence": [
+          {
+            "source_id": "uec-application-recheck",
+            "source_url": "https://www.fedu.uec.ac.jp/en/future_students/jusst/application/",
+            "locator": "JUSST application heading",
+            "applicable_year": "general JUSST application, updated 2025-10-28; 2027 not verified",
+            "application_round": "2027春季外校申請／淡江日語二甄後續",
+            "role": "host_incoming",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "quote": ""
+          }
+        ],
+        "checked_entries": [
+          {
+            "source_id": "uec-application-recheck",
+            "url": "https://www.fedu.uec.ac.jp/en/future_students/jusst/application/",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "result": "verified_open",
+            "scope": "field evidence"
+          }
+        ]
+      },
+      "current_field": {
+        "key": "host_programme_mapping",
+        "label": "本梯外校計畫對應",
+        "status": "verified",
+        "value": "淡江2027–2028日語二甄名額表row4明載參加JUSST program。僅核實本梯計畫名稱；外校2027專屬規則、學制及表單仍各自待核實，不能由名稱推定。",
+        "reason": "當期母校直接明示JUSST；外校一般規則適用年度與本欄分開。",
+        "evidence": [
+          {
+            "source_id": "jp-revision-attachment-2",
+            "source_url": "https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/09/更新2027-2028日語組第二次甄選姊妹校一覽表.pdf",
+            "locator": "PDF p.1 row4 注意事項1",
+            "applicable_year": "2027-2028",
+            "application_round": "日語組第二次甄選",
+            "role": "home_outbound",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "quote": "JUSST program"
+          }
+        ],
+        "checked_entries": [
+          {
+            "source_id": "jp-revision-attachment-2",
+            "url": "https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/09/更新2027-2028日語組第二次甄選姊妹校一覽表.pdf",
+            "checked_at": "2026-10-08T00:00:00Z",
+            "result": "verified_open",
+            "scope": "field evidence"
+          }
+        ]
+      },
+      "public_entries_checked": [
+        {
+          "id": "jp-revision-attachment-2",
+          "source_url": "https://oieie.tku.edu.tw/oieie/wp-content/uploads/2026/09/更新2027-2028日語組第二次甄選姊妹校一覽表.pdf",
+          "applicable_year": "2027-2028",
+          "role": "home_outbound",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "16931e4290fcbcddf846b9b5c68a6efbd5ebb51ff9e051e1098b3b9c1bfa1128",
+          "local_file": "jp-revision-attachment-2.pdf",
+          "review_note": null
+        },
+        {
+          "id": "uec-application-followup",
+          "source_url": "https://www.fedu.uec.ac.jp/en/future_students/jusst/application/",
+          "applicable_year": "general JUSST application updated 2025-10-28; 2027 not verified",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T22:41:36.679274+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "454adb45dc284781d8c553105de842717058048321f1a428ed5f1420ad5f3a19",
+          "local_file": null,
+          "review_note": "Application body and forms rechecked; generic ver22/ver23 and copyright2023 forms do not establish a 2027 version. Other 2027 MEXT degree admissions are excluded."
+        },
+        {
+          "id": "uec-courses-followup",
+          "source_url": "https://www.fedu.uec.ac.jp/en/future_students/jusst/course-description/",
+          "applicable_year": "2026 course schedules; 2027 not verified",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T22:54:22.525665+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "0264b6307ff853e6f474cb5c3de99904090d50ddef411788cde3e98f06769b46",
+          "local_file": null,
+          "review_note": "Latest linked course schedules still 2026; neither current 2027 timetable nor an official non-announcement statement obtained."
+        },
+        {
+          "id": "uec-program",
+          "source_url": "https://www.fedu.uec.ac.jp/en/future_students/jusst/program-description/",
+          "applicable_year": "general JUSST description, updated 2025-09-25",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "e488850a0aad66cb46d5a7d37db6658c1910ca2e87028018f8a888182db1d255",
+          "local_file": null,
+          "review_note": "Undergraduate and graduate course obligations distinguished; no 2027-specific timetable."
+        },
+        {
+          "id": "uec-costs",
+          "source_url": "https://www.fedu.uec.ac.jp/en/future_students/jusst/costs/",
+          "applicable_year": "general / no cycle stated",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": null,
+          "sha256": "2ff82906cbd4bb6961f19035380739102209f0e885a3cb4219ce2e1f5686a1e0",
+          "local_file": null,
+          "review_note": null
+        },
+        {
+          "id": "uec-residence",
+          "source_url": "https://www.fedu.uec.ac.jp/en/current/everyday-life/various-procedures-related-to-international-student-id/foreign-resident-registration.html",
+          "applicable_year": "general residence guidance, updated 2025-09-24",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "eb755697e8de99d8c94c70f4a9ddcbfea26fd9fbcd34ca92872ab8b091b25762",
+          "local_file": null,
+          "review_note": "Residence card and municipal address procedures read; no 2027 school arrival date."
+        },
+        {
+          "id": "uec-national-insurance",
+          "source_url": "https://www.fedu.uec.ac.jp/en/current/everyday-life/health-insurance-and-other-individual-insurance/national-health-insurance.html",
+          "applicable_year": "general insurance guidance, created 2010, updated 2025-09-24",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "d52b6698b16c8c15abb11270059d88c8046e2c1e8dbc336d2b144194261e6d61",
+          "local_file": null,
+          "review_note": "Enrollment procedures read; amounts are general estimates, not 2027 premiums."
+        },
+        {
+          "id": "uec-private-insurance",
+          "source_url": "https://www.fedu.uec.ac.jp/en/current/everyday-life/health-insurance-and-other-individual-insurance/enrollment-in-private-insurance.html",
+          "applicable_year": "general guidance containing a fee table valid October 2009",
+          "role": "host_incoming",
+          "checked_at": "2026-10-08T00:00:00+00:00",
+          "http_status": 200,
+          "open_status": "verified_open",
+          "sha256": "c675b733c314eae4f3474ede1e7fe6a5765a8421622d3f25d4417ddf7599c3c2",
+          "local_file": null,
+          "review_note": "2009 table explicitly dated in body; do not use its premiums as current."
+        }
+      ],
+      "checked_at": "2026-10-08",
+      "next_action": "已補映射；核實範圍及仍未知的子項見current_field.reason/value，不代表全部申請準備完成。",
+      "non_announcement_claim": false,
+      "human_contact_performed": false
+    }
+  ],
+  "source_equivalence_evidence": "runtime-source-change-scope.json",
+  "execution_scope": "Read-only source recheck; real browser cases have separate fresh candidate JUnit.",
+  "continuation_scope": "Official/API/model/SQL source is unchanged; fresh ce83a50 real-browser save/reload has separate primary/followup evidence. This data-mapping audit is retained from the prior immutable source audit, not relabeled as newly checked host 2027 material."
+}

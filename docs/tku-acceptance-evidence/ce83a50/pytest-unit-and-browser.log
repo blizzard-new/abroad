@@ -1,0 +1,626 @@
+CONFTEST LOADED!
+........................................................................ [  4%]
+........................................................................ [  9%]
+.......s....................................ss.......................... [ 14%]
+........................................................................ [ 19%]
+........................................................................ [ 23%]
+............................sss................s........................ [ 28%]
+...................FF...F.F...F.F....................................... [ 33%]
+........................................................................ [ 38%]
+........................................................................ [ 42%]
+.F.F.................................................................... [ 47%]
+............F............................F.F......F.......F.FFF......... [ 52%]
+..................FF.................................................... [ 57%]
+........................................................F..........FFFF. [ 61%]
+........................................................................ [ 66%]
+................................s....................................... [ 71%]
+........................................................................ [ 76%]
+................................................................F....... [ 80%]
+........................................................................ [ 85%]
+........................................................................ [ 90%]
+........................................................................ [ 95%]
+........................................................................ [ 99%]
+..                                                                       [100%]
+=================================== FAILURES ===================================
+_____ test_guest_can_read_every_board_but_unverified_email_cannot_publish ______
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_guest_can_read_every_boar0')
+
+    def test_guest_can_read_every_board_but_unverified_email_cannot_publish(
+        tmp_path,
+    ) -> None:
+        ensure_data_dirs(tmp_path)
+        client = TestClient(create_app(tmp_path))
+        guest_boards = client.get("/community/boards")
+        assert guest_boards.status_code == 200
+>       assert {row["id"] for row in guest_boards.json()} == {
+            "public-study-abroad",
+            "language-school",
+            "university:cgu",
+            "university:ntpu",
+        }
+E       AssertionError: assert {'cgu', 'lang...broad', 'tku'} == {'language-sc...versity:ntpu'}
+E         
+E         Extra items in the left set:
+E         'ntpu'
+E         'ntu'
+E         'tku'
+E         'cgu'
+E         Extra items in the right set:...
+E         
+E         ...Full output truncated (3 lines hidden), use '-vv' to show
+
+tests/test_community_permissions.py:126: AssertionError
+__________ test_post_rejects_unknown_or_conflicting_board_identifiers __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_post_rejects_unknown_or_c0')
+
+    def test_post_rejects_unknown_or_conflicting_board_identifiers(tmp_path) -> None:
+        ensure_data_dirs(tmp_path)
+        client = TestClient(create_app(tmp_path))
+        _, headers, _ = _account(tmp_path, client, "一般會員")
+    
+        unknown = client.post(
+            "/community/posts",
+            headers=headers,
+            json=_post_payload("公共留學板", board_id="partner:anywhere"),
+        )
+        assert unknown.status_code == 422
+>       assert "不存在" in unknown.json()["detail"]
+E       AssertionError: assert '不存在' in '不支援建立此討論板貼文。'
+
+tests/test_community_permissions.py:163: AssertionError
+_______ test_ntpu_student_can_use_only_ntpu_board_for_posts_and_comments _______
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_ntpu_student_can_use_only0')
+
+    def test_ntpu_student_can_use_only_ntpu_board_for_posts_and_comments(tmp_path) -> None:
+        ensure_data_dirs(tmp_path)
+        client = TestClient(create_app(tmp_path))
+        _, ntpu_headers, _ = _account(
+            tmp_path,
+            client,
+            "臺北大學學生",
+            verified_university="國立臺北大學",
+        )
+        _, cgu_headers, _ = _account(
+            tmp_path,
+            client,
+            "長庚大學學生",
+            verified_university="長庚大學",
+        )
+    
+        access = {
+            row["id"]: row
+            for row in client.get("/community/boards", headers=ntpu_headers).json()
+        }
+        assert access["public-study-abroad"]["can_post"] is True
+        assert access["language-school"]["can_post"] is True
+>       assert access["university:ntpu"]["can_post"] is True
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'university:ntpu'
+
+tests/test_community_permissions.py:327: KeyError
+__ test_identity_is_selected_per_submission_and_public_name_is_server_derived __
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_identity_is_selected_per_0')
+
+    def test_identity_is_selected_per_submission_and_public_name_is_server_derived(
+        tmp_path,
+    ) -> None:
+        ensure_data_dirs(tmp_path)
+        client = TestClient(create_app(tmp_path))
+        _, headers, identity = _account(
+            tmp_path,
+            client,
+            "陳小華",
+            verified_university="長庚大學",
+            verified_department="資訊工程學系",
+        )
+    
+        options = client.get(
+            "/auth/community-identity-options",
+            headers=headers,
+        ).json()
+        assert options["default_mode"] == "anonymous"
+>       assert [row["label"] for row in options["options"]] == [
+            "匿名學生",
+            "陳小華",
+            "長庚大學學生",
+            "長庚大學 資訊工程學系",
+        ]
+E       AssertionError: assert ['匿名學生', '陳小華...庚大學 資訊工程學系學生'] == ['匿名學生', '陳小華...'長庚大學 資訊工程學系']
+E         
+E         At index 3 diff: '長庚大學 資訊工程學系學生' != '長庚大學 資訊工程學系'
+E         Use -v to get more diff
+
+tests/test_community_permissions.py:404: AssertionError
+____ test_reports_and_blocks_validate_targets_and_report_review_is_audited _____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_reports_and_blocks_valida0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f42a55c7410>
+
+    def test_reports_and_blocks_validate_targets_and_report_review_is_audited(
+        tmp_path, monkeypatch
+    ) -> None:
+        ensure_data_dirs(tmp_path)
+        monkeypatch.setenv("EXCHANGE_CONTENT_ADMIN_EMAILS", "admin@example.com")
+        client = TestClient(create_app(tmp_path))
+        _, admin_headers, _ = _account(
+            tmp_path,
+            client,
+            "內容管理員",
+            email="admin@example.com",
+        )
+        _, author_headers, _ = _account(tmp_path, client, "原文作者")
+        _, reporter_headers, reporter_identity = _account(tmp_path, client, "檢舉者")
+        _, stranger_headers, stranger_identity = _account(tmp_path, client, "陌生使用者")
+    
+        post = client.post(
+            "/community/posts",
+            headers=author_headers,
+            json=_post_payload("公共留學板"),
+        ).json()
+    
+        invalid_report = client.post(
+            "/community/reports",
+            headers=reporter_headers,
+            json={
+                "resource_type": "post",
+                "resource_id": "missing-resource",
+                "reason": "找不到的內容不能建立檢舉。",
+            },
+        )
+        assert invalid_report.status_code == 404
+    
+        own_report = client.post(
+            "/community/reports",
+            headers=author_headers,
+            json={
+                "resource_type": "post",
+                "resource_id": post["id"],
+                "reason": "不能用自己的帳號檢舉自己的文章。",
+            },
+        )
+>       assert own_report.status_code == 422
+E       assert 403 == 422
+E        +  where 403 = <Response [403 Forbidden]>.status_code
+
+tests/test_community_permissions.py:636: AssertionError
+__________ test_author_can_delete_own_post_but_not_another_users_post __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_author_can_delete_own_pos0')
+
+    def test_author_can_delete_own_post_but_not_another_users_post(tmp_path) -> None:
+        ensure_data_dirs(tmp_path)
+        client = TestClient(create_app(tmp_path))
+        _, first_headers, _ = _account(tmp_path, client, "第一位學生")
+        _, second_headers, _ = _account(tmp_path, client, "第二位學生")
+        post = client.post(
+            "/community/posts",
+            headers=first_headers,
+            json=_post_payload("公共留學板"),
+        ).json()
+    
+        assert client.delete(
+            f"/community/posts/{post['id']}", headers=second_headers
+        ).status_code == 403
+>       assert client.delete(
+            f"/community/posts/{post['id']}", headers=first_headers
+        ).status_code == 204
+E       AssertionError: assert 200 == 204
+E        +  where 200 = <Response [200 OK]>.status_code
+E        +    where <Response [200 OK]> = delete('/community/posts/64a59fe72ff549829265b625ff083b7c', headers={'Authorization': 'Bearer account-token-ae8aeaded6ad41c2a3bb02a80cee06e8', 'X-Anonymous-ID': '451289a8a7a0416e874ea34dbef19629', 'X-Anonymous-Token': 'A32F2r7r3_0PmMlwBiurgu6x9hM8xftxLpbUgQk1ONk'})
+E        +      where delete = <starlette.testclient.TestClient object at 0x7f429256ab70>.delete
+
+tests/test_community_permissions.py:801: AssertionError
+________ test_experience_api_reads_cache_and_refreshes_selected_school _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_experience_api_reads_cach0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f4293d14fb0>
+
+    def test_experience_api_reads_cache_and_refreshes_selected_school(tmp_path, monkeypatch) -> None:
+        ensure_data_dirs(tmp_path)
+        partner = _partner()
+        cached = _source()
+        replace_school_experiences(partner.school_name, [cached], tmp_path)
+        monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+        refreshed = _source(source_url="https://example.com/refreshed")
+        monkeypatch.setattr(
+            "exchange_info.api.collect_student_experiences",
+            lambda partner, max_sources=12: [refreshed],
+        )
+        client = TestClient(create_app(tmp_path))
+    
+        cached_response = client.get(
+            "/student-experiences", params={"school": partner.school_name}
+        )
+        assert cached_response.status_code == 200
+>       assert cached_response.json()["total_sources"] == 1
+E       assert 3 == 1
+
+tests/test_experience_collector.py:1399: AssertionError
+________ test_destination_profile_api_returns_verified_official_summary ________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_destination_profile_api_r0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f429c841a30>
+
+    def test_destination_profile_api_returns_verified_official_summary(tmp_path, monkeypatch) -> None:
+        ensure_data_dirs(tmp_path)
+        partner = _partner()
+        save_destination_profiles(
+            [
+                DestinationProfile(
+                    school_name=partner.school_name,
+                    country=partner.country,
+                    city="Lincoln, Canterbury",
+                    cost_summary="自炊宿舍 NZ$245-320／週",
+                    coverage_status="official_verified",
+                )
+            ],
+            tmp_path,
+        )
+        monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+        client = TestClient(create_app(tmp_path))
+    
+        response = client.get(
+            "/destination-profile", params={"school": partner.school_name}
+        )
+        list_response = client.get("/destination-profiles")
+        coverage = client.get("/coverage").json()
+    
+        assert response.status_code == 200
+>       assert response.json()["city"] == "Lincoln, Canterbury"
+E       AssertionError: assert '林肯, 坎特伯里' == 'Lincoln, Canterbury'
+E         
+E         - Lincoln, Canterbury
+E         + 林肯, 坎特伯里
+
+tests/test_experience_collector.py:1467: AssertionError
+___________ test_web_routes_states_and_touch_targets_are_consistent ____________
+
+    def test_web_routes_states_and_touch_targets_are_consistent() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert '<span>資格與志願</span>' in html
+        assert 'eligibility: "資格與志願"' in script
+        assert "function focusRouteHeading(selector)" in script
+        assert 'focusRouteHeading("#community-hub-title")' in script
+        assert '? PUBLIC_COMMUNITY_BOARD' in script
+        assert '? "我的追蹤"' in script
+        assert "跨校討論交換申請、簽證、住宿與海外生活。" in script
+        assert 'role="${isError ? "alert" : "status"}"' in script
+>       assert "renderCommunityEmpty(\"社群暫時無法載入\", error.message, \"error\")" in script
+E       assert 'renderCommunityEmpty("社群暫時無法載入", error.message, "error")' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:502: AssertionError
+_ test_community_identity_preview_matches_public_name_and_resets_per_submission _
+
+    def test_community_identity_preview_matches_public_name_and_resets_per_submission() -> None:
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+        assert "這次公開顯示：" in script
+        assert "（每次送出可重新選擇）" in script
+        assert 'aria-live="polite"' in script
+        assert "function resetCommunityIdentityPreviews(container)" in script
+        assert "resetCommunityIdentityPreviews(form);" in script
+        assert "post.viewer_can_delete" in script
+        assert "comment.viewer_can_delete" in script
+>       assert "fetchCommunityAuth(url)" in script
+E       assert 'fetchCommunityAuth(url)' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1002: AssertionError
+______ test_web_notification_center_and_explicit_email_opt_in_are_present ______
+
+    def test_web_notification_center_and_explicit_email_opt_in_are_present() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert 'id="notification-button"' in html
+        assert 'id="notification-dialog"' in html
+        assert 'id="notification-center-list"' in html
+        assert 'name="email_notifications"' in html
+        assert "只有勾選並儲存後才排入寄送" in html
+        assert 'fetchJson("/account/notifications?limit=50")' in script
+        assert 'fetchJson("/account/notifications/read-all"' in script
+        assert 'values.get("email_notifications") === "on"' in script
+        assert "紙本送件以送達日計算" in html
+        assert "官方規定更新" in script
+>       assert "重新核對申請清單" in script
+E       assert '重新核對申請清單' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1054: AssertionError
+_ test_application_center_separates_official_requirements_from_preparation_tools _
+
+    def test_application_center_separates_official_requirements_from_preparation_tools() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert 'id="application-requirement-list"' in html
+        assert "當期文件與官方表格" in html
+        assert "可填寫的準備工具" in html
+        assert "不代表當期校方必備文件" in html
+        assert "沒有確認的份數或表格不會被當成正式版本" in html
+        assert "/application-center/catalog" in script
+        assert "renderApplicationDocumentCatalog" in script
+        assert "下載校方正式表格" in script
+        assert "查看官方規定" in script
+        assert "份數待確認" in script
+>       assert "不會用其他年度或其他學校的文件代替" in script
+E       assert '不會用其他年度或其他學校的文件代替' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1296: AssertionError
+______ test_successful_login_closes_before_noncritical_account_hydration _______
+
+    def test_successful_login_closes_before_noncritical_account_hydration() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        accept_block = script.split("async function acceptAccountSession(session)", 1)[1].split(
+            "async function restoreAccount", 1
+        )[0]
+        submit_block = script.split("async function submitAccountForm(form, endpoint)", 1)[1].split(
+            "async function saveAccountProfile", 1
+        )[0]
+    
+>       assert "app.js?v=20260929-chinese-1" in html
+E       assert 'app.js?v=20260929-chinese-1' in '<!doctype html>\n<html lang="zh-Hant" data-theme="light">\n  <head>\n    <meta charset="utf-8" />\n    <meta name="vi...-1" defer></script>\n    <script src="/static/app.js?v=20261009-tku-ci-source-5" defer></script>\n  </body>\n</html>\n'
+
+tests/test_frontend_contract.py:1659: AssertionError
+___ test_personal_application_plan_uses_structured_api_and_progressive_login ___
+
+    def test_personal_application_plan_uses_structured_api_and_progressive_login() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        for element_id in (
+            "eligibility-department",
+            "eligibility-academic-year",
+            "eligibility-application-round",
+            "eligibility-preference-1",
+            "eligibility-preference-2",
+            "eligibility-preference-3",
+        ):
+>           assert f'id="{element_id}"' in html
+E           assert 'id="eligibility-department"' in '<!doctype html>\n<html lang="zh-Hant" data-theme="light">\n  <head>\n    <meta charset="utf-8" />\n    <meta name="vi...-1" defer></script>\n    <script src="/static/app.js?v=20261009-tku-ci-source-5" defer></script>\n  </body>\n</html>\n'
+
+tests/test_frontend_contract.py:1701: AssertionError
+___________ test_global_home_board_routing_and_following_are_present ___________
+
+    def test_global_home_board_routing_and_following_are_present() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+        assert 'href="#home"' in html
+        assert 'href="#following"' in html
+        assert 'href="#language-school-board"' in html
+        assert 'href="#board=長庚大學"' in html
+        assert 'data-follow-board="長庚大學"' in html
+        assert '<span>發布看板</span>' in html
+        assert '<select id="global-community-school" name="board_id"' in html
+        assert 'id="global-community-compose" type="button" class="primary-button" aria-label="發一篇文章"' in html
+        assert '<option value="public-study-abroad">公共留學板</option>' in html
+        assert '<option value="language-school">語言學校板</option>' in html
+        assert 'fetchJson("/community/boards")' in script
+        assert '"#language-school-board": "language"' in script
+        assert 'const LANGUAGE_SCHOOL_COMMUNITY_BOARD = "語言學校板"' in script
+        assert "function activeCommunityBoardAccess()" in script
+        assert "activeBoard && !activeBoard.can_post" in script
+        assert "activeBoard.unavailable_reason" in script
+>       assert "查看學生身分驗證" in script
+E       assert '查看學生身分驗證' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1734: AssertionError
+_ test_departmental_partner_references_are_visible_but_blocked_from_formal_plans _
+
+    def test_departmental_partner_references_are_visible_but_blocked_from_formal_plans() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert '<option value="departmental_reference">院級參考／當期需確認</option>' in html
+>       assert "暫不可建立正式申請計畫" in html
+E       assert '暫不可建立正式申請計畫' in '<!doctype html>\n<html lang="zh-Hant" data-theme="light">\n  <head>\n    <meta charset="utf-8" />\n    <meta name="vi...-1" defer></script>\n    <script src="/static/app.js?v=20261009-tku-ci-source-5" defer></script>\n  </body>\n</html>\n'
+
+tests/test_frontend_contract.py:1750: AssertionError
+________ test_hash_router_shows_one_feature_page_without_scroll_spying _________
+
+    def test_hash_router_shows_one_feature_page_without_scroll_spying() -> None:
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+        assert "const UNIVERSITY_PAGE_ROUTES" in script
+        assert "function showUniversityPage" in script
+        assert 'document.querySelectorAll("[data-university-page]")' in script
+        assert "node.hidden = !activePage" in script
+        assert "document.body.dataset.activeUniversityPage" in script
+        assert "document.body.dataset.universityPage" not in script
+        assert 'window.location.hash = "#partners"' in script
+>       assert 'window.location.hash = "#search"' in script
+E       assert 'window.location.hash = "#search"' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_independent_page_routing.py:41: AssertionError
+_________________ test_route_assets_are_cache_busted_together __________________
+
+    def test_route_assets_are_cache_busted_together() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+>       assert "styles.css?v=20260729-b306-progress-2" in html
+E       assert 'styles.css?v=20260729-b306-progress-2' in '<!doctype html>\n<html lang="zh-Hant" data-theme="light">\n  <head>\n    <meta charset="utf-8" />\n    <meta name="vi...-1" defer></script>\n    <script src="/static/app.js?v=20261009-tku-ci-source-5" defer></script>\n  </body>\n</html>\n'
+
+tests/test_independent_page_routing.py:49: AssertionError
+__________ test_private_community_writes_expose_retry_mutation_header __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_private_community_writes_0')
+
+    def test_private_community_writes_expose_retry_mutation_header(tmp_path) -> None:
+        paths = TestClient(create_app(tmp_path)).get("/openapi.json").json()["paths"]
+        writes = (
+            ("/community/conversations", "post"),
+            ("/community/conversations/{conversation_id}/accept", "post"),
+            ("/community/conversations/{conversation_id}/messages", "post"),
+            ("/community/blocks", "post"),
+            ("/community/reports", "post"),
+            ("/admin/community/reports/{report_id}", "patch"),
+        )
+    
+        for path, method in writes:
+            parameters = paths[path][method]["parameters"]
+>           mutation_header = next(
+                row for row in parameters if row["name"] == "X-Community-Mutation-ID"
+            )
+E           StopIteration
+
+tests/test_next_phase_contract.py:64: StopIteration
+_____ test_content_review_contract_exposes_nonpublishing_source_candidates _____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_content_review_contract_e0')
+
+    def test_content_review_contract_exposes_nonpublishing_source_candidates(tmp_path) -> None:
+        client = TestClient(create_app(tmp_path))
+        openapi = client.get("/openapi.json").json()
+        candidate_path = (
+            "/admin/application-workflow-source-replacement-candidates"
+        )
+        candidate_export_path = (
+            "/admin/application-workflow-source-replacement-review-queue.csv"
+        )
+        source_evidence_export_path = (
+            "/admin/application-workflow-review-backlog/source-evidence.csv"
+        )
+>       candidate = openapi["components"]["schemas"][
+            "ApplicationWorkflowSourceReplacementCandidate"
+        ]["properties"]
+E       KeyError: 'ApplicationWorkflowSourceReplacementCandidate'
+
+tests/test_next_phase_contract.py:314: KeyError
+____ test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing ____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_workflow_batch_stage_cont0')
+
+    def test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing(
+        tmp_path,
+    ) -> None:
+        client = TestClient(create_app(tmp_path))
+        openapi = client.get("/openapi.json").json()
+        path = "/admin/application-workflow-review-batches/{batch_id}/stage"
+        schemas = openapi["components"]["schemas"]
+    
+>       assert "post" in openapi["paths"][path]
+                         ^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: '/admin/application-workflow-review-batches/{batch_id}/stage'
+
+tests/test_next_phase_contract.py:388: KeyError
+_ test_destination_profile_review_contract_requires_explicit_audited_promotion _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_destination_profile_revie0')
+
+    def test_destination_profile_review_contract_requires_explicit_audited_promotion(
+        tmp_path,
+    ) -> None:
+        client = TestClient(create_app(tmp_path))
+        openapi = client.get("/openapi.json").json()
+        paths = openapi["paths"]
+        schemas = openapi["components"]["schemas"]
+    
+>       assert "get" in paths["/admin/destination-profile-review-queue"]
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: '/admin/destination-profile-review-queue'
+
+tests/test_next_phase_contract.py:415: KeyError
+_____ test_application_workflow_publication_contract_exposes_safe_rollback _____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_application_workflow_publ0')
+
+    def test_application_workflow_publication_contract_exposes_safe_rollback(tmp_path) -> None:
+        client = TestClient(create_app(tmp_path))
+        openapi = client.get("/openapi.json").json()
+        paths = openapi["paths"]
+        schemas = openapi["components"]["schemas"]
+    
+>       assert "get" in paths["/admin/application-workflow-publications"]
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: '/admin/application-workflow-publications'
+
+tests/test_next_phase_contract.py:542: KeyError
+_________ test_private_conversation_retry_replays_generated_resources __________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-113/test_private_conversation_retr0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f42a60f3110>
+
+    def test_private_conversation_retry_replays_generated_resources(
+        tmp_path, monkeypatch
+    ) -> None:
+        ensure_data_dirs(tmp_path)
+        partner = _partner()
+        monkeypatch.setattr(
+            "exchange_info.api.fetch_partner_universities", lambda: [partner]
+        )
+        client = TestClient(create_app(tmp_path))
+        _, sender_headers = _identity(tmp_path, client, "匿名海風")
+        recipient, _ = _identity(tmp_path, client, "匿名書桌")
+        mutation_headers = {
+            **sender_headers,
+            "X-Community-Mutation-ID": "private-api-retry-0001",
+        }
+        payload = {
+            "school_name": partner.school_name,
+            "recipient_id": recipient["id"],
+            "initial_message": "相同請求重送時，只能建立一組私訊資料。",
+        }
+    
+        first = client.post(
+            "/community/conversations", headers=mutation_headers, json=payload
+        )
+        save_anonymous_identities(
+            [
+                row
+                for row in load_anonymous_identities(tmp_path)
+                if row.id != recipient["id"]
+            ],
+            tmp_path,
+        )
+        replay = client.post(
+            "/community/conversations", headers=mutation_headers, json=payload
+        )
+    
+        assert first.status_code == 201
+>       assert replay.status_code == 201
+E       assert 422 == 201
+E        +  where 422 = <Response [422 Unprocessable Content]>.status_code
+
+tests/test_social_community_api.py:203: AssertionError
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_application_plan_api.py: Phase C data reviewed
+SKIPPED [2] tests/test_application_workflow.py: Phase C data reviewed
+SKIPPED [4] tests/test_cgu_bundled_data.py: Phase C data reviewed
+SKIPPED [1] tests/test_ntu_school_board_migration.py:25: opt in to isolated Docker PostgreSQL
+FAILED tests/test_community_permissions.py::test_guest_can_read_every_board_but_unverified_email_cannot_publish
+FAILED tests/test_community_permissions.py::test_post_rejects_unknown_or_conflicting_board_identifiers
+FAILED tests/test_community_permissions.py::test_ntpu_student_can_use_only_ntpu_board_for_posts_and_comments
+FAILED tests/test_community_permissions.py::test_identity_is_selected_per_submission_and_public_name_is_server_derived
+FAILED tests/test_community_permissions.py::test_reports_and_blocks_validate_targets_and_report_review_is_audited
+FAILED tests/test_community_permissions.py::test_author_can_delete_own_post_but_not_another_users_post
+FAILED tests/test_experience_collector.py::test_experience_api_reads_cache_and_refreshes_selected_school
+FAILED tests/test_experience_collector.py::test_destination_profile_api_returns_verified_official_summary
+FAILED tests/test_frontend_contract.py::test_web_routes_states_and_touch_targets_are_consistent
+FAILED tests/test_frontend_contract.py::test_community_identity_preview_matches_public_name_and_resets_per_submission
+FAILED tests/test_frontend_contract.py::test_web_notification_center_and_explicit_email_opt_in_are_present
+FAILED tests/test_frontend_contract.py::test_application_center_separates_official_requirements_from_preparation_tools
+FAILED tests/test_frontend_contract.py::test_successful_login_closes_before_noncritical_account_hydration
+FAILED tests/test_frontend_contract.py::test_personal_application_plan_uses_structured_api_and_progressive_login
+FAILED tests/test_frontend_contract.py::test_global_home_board_routing_and_following_are_present
+FAILED tests/test_frontend_contract.py::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans
+FAILED tests/test_independent_page_routing.py::test_hash_router_shows_one_feature_page_without_scroll_spying
+FAILED tests/test_independent_page_routing.py::test_route_assets_are_cache_busted_together
+FAILED tests/test_next_phase_contract.py::test_private_community_writes_expose_retry_mutation_header
+FAILED tests/test_next_phase_contract.py::test_content_review_contract_exposes_nonpublishing_source_candidates
+FAILED tests/test_next_phase_contract.py::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing
+FAILED tests/test_next_phase_contract.py::test_destination_profile_review_contract_requires_explicit_audited_promotion
+FAILED tests/test_next_phase_contract.py::test_application_workflow_publication_contract_exposes_safe_rollback
+FAILED tests/test_social_community_api.py::test_private_conversation_retry_replays_generated_resources
+24 failed, 1482 passed, 8 skipped in 807.18s (0:13:27)

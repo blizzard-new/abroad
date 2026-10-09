@@ -1,0 +1,3405 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku-draft-probe
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 61 items / 41 deselected / 20 selected
+
+tests/e2e/test_web_next_phase.py::test_partial_destination_profile_is_not_rendered_as_fully_verified PASSED [  5%]
+tests/e2e/test_web_next_phase.py::test_second_destination_batch_preserves_housing_availability_warning PASSED [ 10%]
+tests/e2e/test_web_next_phase.py::test_third_destination_batch_does_not_present_stale_costs_as_current PASSED [ 15%]
+tests/e2e/test_web_next_phase.py::test_fourth_destination_batch_keeps_multicampus_cost_limits_visible PASSED [ 20%]
+tests/e2e/test_web_next_phase.py::test_fifth_destination_batch_does_not_reuse_expired_welcome_dates PASSED [ 25%]
+tests/e2e/test_web_next_phase.py::test_sixth_destination_batch_keeps_stale_dorm_prices_out_of_current_budget FAILED [ 30%]
+tests/e2e/test_web_next_phase.py::test_seventh_destination_batch_does_not_apply_paris_budget_to_every_campus PASSED [ 35%]
+tests/e2e/test_web_next_phase.py::test_eighth_destination_batch_does_not_present_2021_free_housing_as_current PASSED [ 40%]
+tests/e2e/test_web_next_phase.py::test_ninth_destination_batch_does_not_make_optional_housing_package_mandatory PASSED [ 45%]
+tests/e2e/test_web_next_phase.py::test_tenth_destination_batch_keeps_campus_and_summer_program_limits_visible PASSED [ 50%]
+tests/e2e/test_web_next_phase.py::test_eleventh_destination_batch_keeps_campus_conflict_and_housing_limits_visible FAILED [ 55%]
+tests/e2e/test_web_next_phase.py::test_twelfth_destination_batch_keeps_old_prices_and_local_housing_separate FAILED [ 60%]
+tests/e2e/test_web_next_phase.py::test_thirteenth_destination_batch_keeps_department_scope_and_housing_limits_visible FAILED [ 65%]
+tests/e2e/test_web_next_phase.py::test_fourteenth_destination_batch_keeps_old_department_rules_out_of_current_exchange FAILED [ 70%]
+tests/e2e/test_web_next_phase.py::test_fifteenth_destination_batch_keeps_old_wuhan_costs_and_transport_out_of_current_plan FAILED [ 75%]
+tests/e2e/test_web_next_phase.py::test_sixteenth_destination_batch_keeps_icd_campuses_costs_and_deadlines_separate FAILED [ 80%]
+tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[390-620] PASSED [ 85%]
+tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[834-956] PASSED [ 90%]
+tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[1280-720] PASSED [ 95%]
+tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[1754-956] PASSED [100%]
+
+=================================== FAILURES ===================================
+__ test_sixth_destination_batch_keeps_stale_dorm_prices_out_of_current_budget __
+tests/e2e/test_web_next_phase.py:588: in test_sixth_destination_batch_keeps_stale_dorm_prices_out_of_current_budget
+    expect(official).to_contain_text("As of 2019")
+E   AssertionError: Locator expected to contain text 'As of 2019'
+E   Actual value: 
+E       
+E         
+E         官方生活資訊已查核已核對 4 個 KNU 官方來源並限定 Chuncheon Campus；交換頁可支持宿舍有保障，但公開宿舍費表仍明示為 2019 年，不能把舊 KRW 金額當現行費用。KNU 有多個校區，實際錄取校區、當期費用、入住與接機日期仍須依長庚提名及 KNU 錄取通知確認，且尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地春川（依長庚提名與 KNU 錄取確認）費用參考KNU Chuncheon 交換頁說明 KNU 的申請、入學與學費免繳，但學生仍需向原學校依規定繳費，並自行負擔宿舍與生活費。KNU 目前公開的宿舍費頁本身標示「截至 2019 年」，因此頁面上的 KRW 金額不能當作現行交換預算；校方也沒有在這組現行交換頁提供可核對的完整每月生活費總額。住宿KNU Chuncheon 的交換專案頁明示交換生宿舍有保障，但住宿費由學生負擔；一般宿舍頁另說新生第一學期由國際處代辦，之後自行申請與付款。不過該頁所有房型費用標示為 2019 年資料，入住日也要等宿舍公告；FAQ 說通常只能在開學前 3 天入住，提早抵達不能先住。交通Chuncheon 交換頁將首爾往返描述為搭公車或地鐵約 1 小時，並列有仁川機場接機服務；接機安排出現在學期末二月／八月底的流程中。實際接機資格、集合時間與班次必須以該梯次錄取通知確認，不能只按公開概覽自行購票銜接。校園生活這筆資料限定 KNU Chuncheon Campus 的 Student Exchange Program。校方列出 Buddy Program、文化活動與機場接機，但 FAQ 說 Buddy 是學生自願活動，無法處理所有事情或代付費用；獸醫、醫學、護理與法學等系所目前列為交換申請限制。校園地圖可確認國際宿舍與校內設施位置。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   韓國江原國立大學 Kangwon National University校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（4）
+E         
+E           
+E             
+E               KNU 學生交換計畫 – 春川校區確認姊妹校提名、Chuncheon 交換流程、免 KNU 學費、宿舍保障、交通支援與系所限制。
+E               查看原始來源
+E             
+E             
+E               KNU 學生宿舍 – Chuncheon 校區列出宿舍房型與申請方式，但費用表明確標示為 2019 年資料，不能作為現行價格。
+E               查看原始來源
+E             
+E             
+E               KNU 國際學生常見問題說明 Buddy 的自願性與限制，以及宿舍入住日期須待公告且不能提前入住。
+E               查看原始來源
+E             
+E             
+E               KNU 校園地圖 – 春川確認 Chuncheon 校區及國際宿舍、學習與生活設施的位置。
+E               查看原始來源
+E             
+E         
+E        
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator("#destination-official-content")
+E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+E          - unexpected value "
+E       
+E         
+E         官方生活資訊已查核已核對 4 個 KNU 官方來源並限定 Chuncheon Campus；交換頁可支持宿舍有保障，但公開宿舍費表仍明示為 2019 年，不能把舊 KRW 金額當現行費用。KNU 有多個校區，實際錄取校區、當期費用、入住與接機日期仍須依長庚提名及 KNU 錄取通知確認，且尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地春川（依長庚提名與 KNU 錄取確認）費用參考KNU Chuncheon 交換頁說明 KNU 的申請、入學與學費免繳，但學生仍需向原學校依規定繳費，並自行負擔宿舍與生活費。KNU 目前公開的宿舍費頁本身標示「截至 2019 年」，因此頁面上的 KRW 金額不能當作現行交換預算；校方也沒有在這組現行交換頁提供可核對的完整每月生活費總額。住宿KNU Chuncheon 的交換專案頁明示交換生宿舍有保障，但住宿費由學生負擔；一般宿舍頁另說新生第一學期由國際處代辦，之後自行申請與付款。不過該頁所有房型費用標示為 2019 年資料，入住日也要等宿舍公告；FAQ 說通常只能在開學前 3 天入住，提早抵達不能先住。交通Chuncheon 交換頁將首爾往返描述為搭公車或地鐵約 1 小時，並列有仁川機場接機服務；接機安排出現在學期末二月／八月底的流程中。實際接機資格、集合時間與班次必須以該梯次錄取通知確認，不能只按公開概覽自行購票銜接。校園生活這筆資料限定 KNU Chuncheon Campus 的 Student Exchange Program。校方列出 Buddy Program、文化活動與機場接機，但 FAQ 說 Buddy 是學生自願活動，無法處理所有事情或代付費用；獸醫、醫學、護理與法學等系所目前列為交換申請限制。校園地圖可確認國際宿舍與校內設施位置。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   韓國江原國立大學 Kangwon National University校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（4）
+E         
+E           
+E             
+E               KNU 學生交換計畫 – 春川校區確認姊妹校提名、Chuncheon 交換流程、免 KNU 學費、宿舍保障、交通支援與系所限制。
+E               查看原始來源
+E             
+E             
+E               KNU 學生宿舍 – Chuncheon 校區列出宿舍房型與申請方式，但費用表明確標示為 2019 年資料，不能作為現行價格。
+E               查看原始來源
+E             
+E             
+E               KNU 國際學生常見問題說明 Buddy 的自願性與限制，以及宿舍入住日期須待公告且不能提前入住。
+E               查看原始來源
+E             
+E             
+E               KNU 校園地圖 – 春川確認 Chuncheon 校區及國際宿舍、學習與生活設施的位置。
+E               查看原始來源
+E             
+E         
+E       "
+E   
+E   Aria snapshot:
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - complementary "系統功能":
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - navigation "公開探索導覽":
+E       - link "首頁":
+E         - /url: "#home"
+E       - link "學校搜尋":
+E         - /url: "#partners"
+E       - link "論壇":
+E         - /url: "#forum"
+E       - link "用戶評價":
+E         - /url: "#feedback"
+E       - group:
+E         - link "我的申請":
+E           - /url: "#advisor"
+E     - button "返回上一頁": 返回
+E     - button "選擇就讀學校":
+E       - strong: 選擇就讀學校
+E     - button "切換為深色模式"
+E     - button "重新整理最新資料"
+E     - button "登入或建立帳號": 登入
+E   - main:
+E     - status
+E     - region "韓國江原國立大學 Kangwon National University":
+E       - button "加入比較韓國江原國立大學 Kangwon National University": 加入比較
+E       - button "登入建立計畫"
+E       - img "韓國江原國立大學 Kangwon National University官方照片"
+E       - link "圖片來源":
+E         - /url: https://global.kangwon.ac.kr/global/index.do
+E       - text: 韓國 · 交換學生 下一站
+E       - strong: 韓國
+E       - text: 春川（依長庚提名與 KNU 錄取確認）
+E       - heading "韓國江原國立大學 Kangwon National University" [level=1]
+E       - text: 我的資格
+E       - strong: 尚未進行資格初判
+E       - text: 合作校參考時程
+E       - strong: 依當期長庚公告與 KNU 通知
+E       - text: 語言門檻
+E       - strong: 合作校未明確標示，請開啟官方來源
+E       - text: 生活費參考
+E       - strong: KNU Chuncheon 交換頁說明 KNU 的申請、入學與學費免繳，但學生仍需向原學校依規定繳費，並自行負擔宿舍與生活費。KNU 目前公開的宿舍費頁本身標示「截至 2019 年」，因此頁面上的 KRW 金額不能當作現行交換預算；校方也沒有在這組現行交換頁…
+E       - text: 交換名額
+E       - strong: 依當期公告
+E       - text: 研修期間
+E       - strong: 1 學期至 1 學年
+E       - tablist "交換學校詳細資訊":
+E         - tab "快速了解"
+E         - tab "申請方式"
+E         - tab "生活情報" [selected]
+E         - tab "出發前提醒"
+E         - tab "學生心得"
+E         - tab "學生社群"
+E       - tabpanel "生活情報":
+E         - heading "生活情報" [level=2]
+E         - status: 待更新
+E         - button "找學生分享"
+E         - button "更新資料"
+E         - group: 資料說明
+E         - group: 官方生活指南
+E         - article:
+E           - heading "住宿與宿舍" [level=3]
+E           - text: 官方
+E           - paragraph: KNU Chuncheon 的交換專案頁明示交換生宿舍有保障，但住宿費由學生負擔；一般宿舍頁另說新生第一學期由國際處代辦，之後自行申請與付款。不過該頁所有房型費用標示為 2019 年資料，入住日也要等宿舍公告；FAQ 說通常只能在開學前 3 天入住，提早抵達不能先住。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "每月生活預算" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: KNU Chuncheon 交換頁說明 KNU 的申請、入學與學費免繳，但學生仍需向原學校依規定繳費，並自行負擔宿舍與生活費。KNU 目前公開的宿舍費頁本身標示「截至 2019 年」，因此頁面上的 KRW 金額不能當作現行交換預算；校方也沒有在這組現行交換頁提供可核對的完整每月生活費總額。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - article:
+E           - heading "交通與地點" [level=3]
+E           - text: 官方
+E           - paragraph: Chuncheon 交換頁將首爾往返描述為搭公車或地鐵約 1 小時，並列有仁川機場接機服務；接機安排出現在學期末二月／八月底的流程中。實際接機資格、集合時間與班次必須以該梯次錄取通知確認，不能只按公開概覽自行購票銜接。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "校園活動與社交" [level=3]
+E           - text: 官方
+E           - paragraph: 這筆資料限定 KNU Chuncheon Campus 的 Student Exchange Program。校方列出 Buddy Program、文化活動與機場接機，但 FAQ 說 Buddy 是學生自願活動，無法處理所有事情或代付費用；獸醫、醫學、護理與法學等系所目前列為交換申請限制。校園地圖可確認國際宿舍與校內設施位置。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - group: 待補資料（6 項）
+E       - complementary "申請準備進度與官方來源":
+E         - heading "我的申請進度" [level=2]
+E         - progressbar "申請準備進度":
+E           - strong: 0 / 5 已完成
+E           - text: 準備中
+E         - paragraph:
+E           - text: 登入以保存進度
+E           - button "登入"
+E         - checkbox "確認資格與語言門檻" [disabled]
+E         - text: 確認資格與語言門檻
+E         - checkbox "比較課程、費用與生活" [disabled]
+E         - text: 比較課程、費用與生活
+E         - checkbox "備妥校內申請文件" [disabled]
+E         - text: 備妥校內申請文件
+E         - checkbox "完成校內甄選送件" [disabled]
+E         - text: 完成校內甄選送件
+E         - checkbox "完成合作校線上申請" [disabled]
+E         - text: 完成合作校線上申請
+E         - strong: 送件前確認
+E         - paragraph: 截止日與資格以當期官方公告為準。
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms
+_ test_eleventh_destination_batch_keeps_campus_conflict_and_housing_limits_visible _
+tests/e2e/test_web_next_phase.py:701: in test_eleventh_destination_batch_keeps_campus_conflict_and_housing_limits_visible
+    expect(official).to_contain_text("不能套用 Paris")
+E   AssertionError: Locator expected to contain text '不能套用 Paris'
+E   Actual value: 
+E       
+E         
+E         官方生活資訊已查核已用 4 個 雷恩 SB 官方來源確認 2026/27 期限、雷恩 生活費、住房與交通；等級 2 春季是否開放在 傳入的 頁與 交換資訊表 間存在衝突，且公開頁同時提到 雷恩／巴黎，因此校區與學級資格仍須依提名信確認，尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地雷恩（2026/27 交換資訊表；若錄取通知另列 巴黎 須改用 巴黎 資料）費用參考雷恩 SB 2026/27 交換資訊表 的 雷恩 生活費估算為住宿 EUR 450–700／月、餐費 EUR 150–200／月、公車月票 EUR 25.20、手機 EUR 15–20／月，以及簽證與保險等雜費 EUR 150–200／年。這些數字只標為 在雷恩的生活成本，不能套用 巴黎 校區。合作校交換生學費只向母校繳納、不另向 雷恩 SB 繳交；另列的 繳費學期 或暑期課程不是同一身分。住宿2026/27 交換資訊表要求學生取得錄取信後儘快在校方平台找房，須先完成雷恩商學院註冊才能取得住宿團隊服務的存取權；這是住房協助，不是保證床位。雷恩校區新學生宿舍預計2026年9月開放，官方只提供預先登記與 Studapart 等管道，沒有承諾每位交換生都能入住。實際租金、房型與供應須等錄取後確認。交通2026/27 交換資訊表 的 EUR 25.20 公車月票與 雷恩校區 頁的地鐵 CHU Pontchaillou 站、雷恩 35 公車站資訊都只適用 雷恩。雷恩 有兩條地鐵與 STAR 公車網；若錄取通知改列 巴黎，不得沿用 雷恩 票價與路線，必須改查 巴黎 現行交通。校園生活雷恩 SB 交換生須來自合作校、仍具母校學位生身分並先由母校提名；2026/27 秋季提名 5 月 10 日、申請 5 月 20 日，2027年春季 提名 10 月 10 日、申請 10 月 20 日。等級 2 至 5 依已修商管 ECTS 分流，課程為英語並要求 B2。現行 傳入的 頁寫 等級 2 只開秋季，但 2026/27 交換資訊表 的春季日程又列 Levels 2、4、5，兩個官方來源不一致，不能自行判定 等級 2 春季可申請；必須由長庚提名信或 雷恩 SB 交換辦公室 確認。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   雷恩商學院 Rennes School of Business校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（4）
+E         
+E           
+E             
+E               雷恩商學院 入學交換學生現行 傳入的 頁說明合作校、母校提名、學費、Levels 2–5、申請文件、英語課與住宿協助；其中 等級 2 寫為只開秋季。
+E               查看原始來源
+E             
+E             
+E               Rennes School of Business Fact Sheet 2026/20272026/27 文件列出秋春期限、學級資格、B2、雷恩 生活費與住宿平台；春季日程列 等級 2，與 傳入的 頁不一致。
+E               查看原始來源
+E             
+E             
+E               Rennes 商學院在 Rennes 生活列出 Rennes 住房協助、預計 2026 年 9 月開放的新宿舍、Studapart、地鐵、公車與單車資訊，沒有交換生床位保證。
+E               查看原始來源
+E             
+E             
+E               雷恩商學院 雷恩校區確認 Rennes 主校區地址、設施、住宿與交通位置；內容不能直接套用 Paris 校區。
+E               查看原始來源
+E             
+E         
+E        
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator("#destination-official-content")
+E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+E          - unexpected value "
+E       
+E         
+E         官方生活資訊已查核已用 4 個 雷恩 SB 官方來源確認 2026/27 期限、雷恩 生活費、住房與交通；等級 2 春季是否開放在 傳入的 頁與 交換資訊表 間存在衝突，且公開頁同時提到 雷恩／巴黎，因此校區與學級資格仍須依提名信確認，尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地雷恩（2026/27 交換資訊表；若錄取通知另列 巴黎 須改用 巴黎 資料）費用參考雷恩 SB 2026/27 交換資訊表 的 雷恩 生活費估算為住宿 EUR 450–700／月、餐費 EUR 150–200／月、公車月票 EUR 25.20、手機 EUR 15–20／月，以及簽證與保險等雜費 EUR 150–200／年。這些數字只標為 在雷恩的生活成本，不能套用 巴黎 校區。合作校交換生學費只向母校繳納、不另向 雷恩 SB 繳交；另列的 繳費學期 或暑期課程不是同一身分。住宿2026/27 交換資訊表要求學生取得錄取信後儘快在校方平台找房，須先完成雷恩商學院註冊才能取得住宿團隊服務的存取權；這是住房協助，不是保證床位。雷恩校區新學生宿舍預計2026年9月開放，官方只提供預先登記與 Studapart 等管道，沒有承諾每位交換生都能入住。實際租金、房型與供應須等錄取後確認。交通2026/27 交換資訊表 的 EUR 25.20 公車月票與 雷恩校區 頁的地鐵 CHU Pontchaillou 站、雷恩 35 公車站資訊都只適用 雷恩。雷恩 有兩條地鐵與 STAR 公車網；若錄取通知改列 巴黎，不得沿用 雷恩 票價與路線，必須改查 巴黎 現行交通。校園生活雷恩 SB 交換生須來自合作校、仍具母校學位生身分並先由母校提名；2026/27 秋季提名 5 月 10 日、申請 5 月 20 日，2027年春季 提名 10 月 10 日、申請 10 月 20 日。等級 2 至 5 依已修商管 ECTS 分流，課程為英語並要求 B2。現行 傳入的 頁寫 等級 2 只開秋季，但 2026/27 交換資訊表 的春季日程又列 Levels 2、4、5，兩個官方來源不一致，不能自行判定 等級 2 春季可申請；必須由長庚提名信或 雷恩 SB 交換辦公室 確認。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   雷恩商學院 Rennes School of Business校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（4）
+E         
+E           
+E             
+E               雷恩商學院 入學交換學生現行 傳入的 頁說明合作校、母校提名、學費、Levels 2–5、申請文件、英語課與住宿協助；其中 等級 2 寫為只開秋季。
+E               查看原始來源
+E             
+E             
+E               Rennes School of Business Fact Sheet 2026/20272026/27 文件列出秋春期限、學級資格、B2、雷恩 生活費與住宿平台；春季日程列 等級 2，與 傳入的 頁不一致。
+E               查看原始來源
+E             
+E             
+E               Rennes 商學院在 Rennes 生活列出 Rennes 住房協助、預計 2026 年 9 月開放的新宿舍、Studapart、地鐵、公車與單車資訊，沒有交換生床位保證。
+E               查看原始來源
+E             
+E             
+E               雷恩商學院 雷恩校區確認 Rennes 主校區地址、設施、住宿與交通位置；內容不能直接套用 Paris 校區。
+E               查看原始來源
+E             
+E         
+E       "
+E   
+E   Aria snapshot:
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - complementary "系統功能":
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - navigation "公開探索導覽":
+E       - link "首頁":
+E         - /url: "#home"
+E       - link "學校搜尋":
+E         - /url: "#partners"
+E       - link "論壇":
+E         - /url: "#forum"
+E       - link "用戶評價":
+E         - /url: "#feedback"
+E       - group:
+E         - link "我的申請":
+E           - /url: "#advisor"
+E     - button "返回上一頁": 返回
+E     - button "選擇就讀學校":
+E       - strong: 選擇就讀學校
+E     - button "切換為深色模式"
+E     - button "重新整理最新資料"
+E     - button "登入或建立帳號": 登入
+E   - main:
+E     - status
+E     - region "雷恩商學院 Rennes School of Business":
+E       - button "加入比較雷恩商學院 Rennes School of Business": 加入比較
+E       - button "登入建立計畫"
+E       - img "雷恩商學院 Rennes School of Business官方照片"
+E       - link "圖片來源":
+E         - /url: https://www.rennes-sb.com/exchange-programmes/double-degree-programmes/
+E       - text: 法國 · 交換學生 下一站
+E       - strong: 法國
+E       - heading "雷恩商學院 Rennes School of Business" [level=1]
+E       - text: 我的資格
+E       - strong: 尚未進行資格初判
+E       - text: 合作校參考時程
+E       - strong: 依當期長庚公告與 Rennes SB exchange 通知
+E       - text: 語言門檻
+E       - strong: 合作校未明確標示，請開啟官方來源
+E       - text: 生活費參考
+E       - strong: 雷恩 SB 2026/27 交換資訊表 的 雷恩 生活費估算為住宿 EUR 450–700／月、餐費 EUR 150–200／月、公車月票 EUR 25.20、手機 EUR 15–20／月，以及簽證與保險等雜費 EUR 150–200／年。這些數字只標為 在…
+E       - text: 交換名額
+E       - strong: 依當期公告
+E       - text: 研修期間
+E       - strong: 1 學期至 1 學年
+E       - tablist "交換學校詳細資訊":
+E         - tab "快速了解"
+E         - tab "申請方式"
+E         - tab "生活情報" [selected]
+E         - tab "出發前提醒"
+E         - tab "學生心得"
+E         - tab "學生社群"
+E       - tabpanel "生活情報":
+E         - heading "生活情報" [level=2]
+E         - status: 待更新
+E         - button "找學生分享"
+E         - button "更新資料"
+E         - group: 資料說明
+E         - group: 官方生活指南
+E         - article:
+E           - heading "住宿與宿舍" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: 2026/27 交換資訊表要求學生取得錄取信後儘快在校方平台找房，須先完成雷恩商學院註冊才能取得住宿團隊服務的存取權；這是住房協助，不是保證床位。雷恩校區新學生宿舍預計2026年9月開放，官方只提供預先登記與 Studapart 等管道，沒有承諾每位交換生都能入住。實際租金、房型與供應須等錄取後確認。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "每月生活預算" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: 雷恩 SB 2026/27 交換資訊表 的 雷恩 生活費估算為住宿 EUR 450–700／月、餐費 EUR 150–200／月、公車月票 EUR 25.20、手機 EUR 15–20／月，以及簽證與保險等雜費 EUR 150–200／年。這些數字只標為 在雷恩的生活成本，不能套用 巴黎 校區。合作校交換生學費只向母校繳納、不另向 雷恩 SB 繳交；另列的 繳費學期 或暑期課程不是同一身分。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - article:
+E           - heading "交通與地點" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: 2026/27 交換資訊表 的 EUR 25.20 公車月票與 雷恩校區 頁的地鐵 CHU Pontchaillou 站、雷恩 35 公車站資訊都只適用 雷恩。雷恩 有兩條地鐵與 STAR 公車網；若錄取通知改列 巴黎，不得沿用 雷恩 票價與路線，必須改查 巴黎 現行交通。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "校園活動與社交" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: 雷恩 SB 交換生須來自合作校、仍具母校學位生身分並先由母校提名；2026/27 秋季提名 5 月 10 日、申請 5 月 20 日，2027年春季 提名 10 月 10 日、申請 10 月 20 日。等級 2 至 5 依已修商管 ECTS 分流，課程為英語並要求 B2。現行 傳入的 頁寫 等級 2 只開秋季，但 2026/27 交換資訊表 的春季日程又列 Levels 2、4、5，兩個官方來源不一致，不能自行判定 等級 2 春季可申請；必須由長庚提名信或 雷恩 SB 交換辦公室 確認。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - group: 待補資料（6 項）
+E       - complementary "申請準備進度與官方來源":
+E         - heading "我的申請進度" [level=2]
+E         - progressbar "申請準備進度":
+E           - strong: 0 / 5 已完成
+E           - text: 準備中
+E         - paragraph:
+E           - text: 登入以保存進度
+E           - button "登入"
+E         - checkbox "確認資格與語言門檻" [disabled]
+E         - text: 確認資格與語言門檻
+E         - checkbox "比較課程、費用與生活" [disabled]
+E         - text: 比較課程、費用與生活
+E         - checkbox "備妥校內申請文件" [disabled]
+E         - text: 備妥校內申請文件
+E         - checkbox "完成校內甄選送件" [disabled]
+E         - text: 完成校內甄選送件
+E         - checkbox "完成合作校線上申請" [disabled]
+E         - text: 完成合作校線上申請
+E         - strong: 送件前確認
+E         - paragraph: 截止日與資格以當期官方公告為準。
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms
+__ test_twelfth_destination_batch_keeps_old_prices_and_local_housing_separate __
+tests/e2e/test_web_next_phase.py:724: in test_twelfth_destination_batch_keeps_old_prices_and_local_housing_separate
+    expect(official).to_contain_text("March 2023")
+E   AssertionError: Locator expected to contain text 'March 2023'
+E   Actual value: 
+E       
+E         
+E         官方生活資訊已查核已用 5 個 MSU 官方來源確認現行下載入口、2023年3月入學 文件、住房合約與本地生限定房型；當期交換期限、簽證費、課程、交通與交換生可用房型仍未有 2026/27 官方版本，尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地莎阿南, 雪蘭莪（MSU 主校區）費用參考MSU 官方下載區目前仍提供標示 2023年3月 的 入境手冊；其中寫合作校交換生學費向母校繳納，學生簽證費為 6 個月 MYR 1,150、12 個月 MYR 1,300，但這些都只是 2023 文件金額，不能當成 2026/27 現價。現行 抵達前 頁只要求準備足以支付最初三個月食宿、交通與書籍的資金，沒有公開一份交換生生活費總表；學生須向 全球事務 重新確認簽證、保險、課程及其他費用。住宿住宿手冊 列一般房型約 MYR 700–2,080／月、押金 MYR 2,500、不可退處理費 MYR 500，原則最短租六個月且房型依 可用性；資訊也明示可能不另通知即調整。雖另列四個月 三人共用 MYR 450／月、押金 MYR 900 與處理費 MYR 200，現行 三人同住 頁明寫 僅限在地學生，長庚交換生不能用這個較低價格估算。送件與入住都不等於保證配到指定房型。交通2023 入境手冊 寫 沙阿南 有公共交通，並把預計 2025 完成、位於 MSU 旁的 Malawati LRT3 當未來規劃；由於文件仍是 2023 版本，不能據此宣稱 2026 已正式營運、票價固定或提供學生免費通勤。學生應在錄取後依 MSU 現行校區指示查證 LRT3、巴士、機場與最後一段交通，不能把三年前的工程時程當成現況。校園生活2023 年 3 月入學手冊 把 全球流動計畫 列為一學期或一年，2月／9月入學；提名日為 10 月 1 日／5 月 1 日，申請日為 10 月 15 日／5 月 15 日，並列學期區間與可洽詢課程。由於官方下載區仍提供舊版 PDF，這些期限與課程只能作歷史參考，不能直接建立 2026/27 提醒。學生應先由長庚提名，再由 MSU 全球事務 確認當期 攝取、可選課、學分、英文要求、簽證與保險；抵達前 的國際學位生規定也不能全部自動套到交換身分。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   馬來西亞管理與科技大學 Management and Science University校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（5）
+E         
+E           
+E             
+E               MSU 官方手冊庫現行官方下載入口仍連到 Inbound 與 The Residence PDF；可證明文件由校方提供，但不代表舊 PDF 的日期與金額已更新。
+E               查看原始來源
+E             
+E             
+E               MSU 入學流動手冊，2023年3月列出 2023 版交換期、提名／申請日、學期、母校學費、簽證費、課程範圍、Shah Alam 與當時 LRT3 規劃；只作歷史基準。
+E               查看原始來源
+E             
+E             
+E               MSU 住宿手冊列一般房型、租金、押金、處理費、至少六個月租期、依房況及價格可能調整，另含四個月 運輸單位。
+E               查看原始來源
+E             
+E             
+E               MSU 三人共用公寓現行頁明示四個月 三人同住 房型為 僅限在地學生，不能把 MYR 450／月套到國際交換生。
+E               查看原始來源
+E             
+E             
+E               MSU 國際學生抵達前資訊列入境、學生簽證、體檢、隨身文件及先準備三個月食宿交通資金；屬一般國際生資訊，交換生仍須依 Global Affairs 通知。
+E               查看原始來源
+E             
+E         
+E        
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator("#destination-official-content")
+E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+E          - unexpected value "
+E       
+E         
+E         官方生活資訊已查核已用 5 個 MSU 官方來源確認現行下載入口、2023年3月入學 文件、住房合約與本地生限定房型；當期交換期限、簽證費、課程、交通與交換生可用房型仍未有 2026/27 官方版本，尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地莎阿南, 雪蘭莪（MSU 主校區）費用參考MSU 官方下載區目前仍提供標示 2023年3月 的 入境手冊；其中寫合作校交換生學費向母校繳納，學生簽證費為 6 個月 MYR 1,150、12 個月 MYR 1,300，但這些都只是 2023 文件金額，不能當成 2026/27 現價。現行 抵達前 頁只要求準備足以支付最初三個月食宿、交通與書籍的資金，沒有公開一份交換生生活費總表；學生須向 全球事務 重新確認簽證、保險、課程及其他費用。住宿住宿手冊 列一般房型約 MYR 700–2,080／月、押金 MYR 2,500、不可退處理費 MYR 500，原則最短租六個月且房型依 可用性；資訊也明示可能不另通知即調整。雖另列四個月 三人共用 MYR 450／月、押金 MYR 900 與處理費 MYR 200，現行 三人同住 頁明寫 僅限在地學生，長庚交換生不能用這個較低價格估算。送件與入住都不等於保證配到指定房型。交通2023 入境手冊 寫 沙阿南 有公共交通，並把預計 2025 完成、位於 MSU 旁的 Malawati LRT3 當未來規劃；由於文件仍是 2023 版本，不能據此宣稱 2026 已正式營運、票價固定或提供學生免費通勤。學生應在錄取後依 MSU 現行校區指示查證 LRT3、巴士、機場與最後一段交通，不能把三年前的工程時程當成現況。校園生活2023 年 3 月入學手冊 把 全球流動計畫 列為一學期或一年，2月／9月入學；提名日為 10 月 1 日／5 月 1 日，申請日為 10 月 15 日／5 月 15 日，並列學期區間與可洽詢課程。由於官方下載區仍提供舊版 PDF，這些期限與課程只能作歷史參考，不能直接建立 2026/27 提醒。學生應先由長庚提名，再由 MSU 全球事務 確認當期 攝取、可選課、學分、英文要求、簽證與保險；抵達前 的國際學位生規定也不能全部自動套到交換身分。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   馬來西亞管理與科技大學 Management and Science University校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（5）
+E         
+E           
+E             
+E               MSU 官方手冊庫現行官方下載入口仍連到 Inbound 與 The Residence PDF；可證明文件由校方提供，但不代表舊 PDF 的日期與金額已更新。
+E               查看原始來源
+E             
+E             
+E               MSU 入學流動手冊，2023年3月列出 2023 版交換期、提名／申請日、學期、母校學費、簽證費、課程範圍、Shah Alam 與當時 LRT3 規劃；只作歷史基準。
+E               查看原始來源
+E             
+E             
+E               MSU 住宿手冊列一般房型、租金、押金、處理費、至少六個月租期、依房況及價格可能調整，另含四個月 運輸單位。
+E               查看原始來源
+E             
+E             
+E               MSU 三人共用公寓現行頁明示四個月 三人同住 房型為 僅限在地學生，不能把 MYR 450／月套到國際交換生。
+E               查看原始來源
+E             
+E             
+E               MSU 國際學生抵達前資訊列入境、學生簽證、體檢、隨身文件及先準備三個月食宿交通資金；屬一般國際生資訊，交換生仍須依 Global Affairs 通知。
+E               查看原始來源
+E             
+E         
+E       "
+E   
+E   Aria snapshot:
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - complementary "系統功能":
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - navigation "公開探索導覽":
+E       - link "首頁":
+E         - /url: "#home"
+E       - link "學校搜尋":
+E         - /url: "#partners"
+E       - link "論壇":
+E         - /url: "#forum"
+E       - link "用戶評價":
+E         - /url: "#feedback"
+E       - group:
+E         - link "我的申請":
+E           - /url: "#advisor"
+E     - button "返回上一頁": 返回
+E     - button "選擇就讀學校":
+E       - strong: 選擇就讀學校
+E     - button "切換為深色模式"
+E     - button "重新整理最新資料"
+E     - button "登入或建立帳號": 登入
+E   - main:
+E     - status
+E     - region "馬來西亞管理與科技大學 Management and Science University":
+E       - button "加入比較馬來西亞管理與科技大學 Management and Science University": 加入比較
+E       - button "登入建立計畫"
+E       - img "馬來西亞管理與科技大學 Management and Science University官方照片"
+E       - link "圖片來源":
+E         - /url: https://www.msu.edu.my/
+E       - text: 馬來西亞 · 交換學生 / 自費研修 下一站
+E       - strong: 馬來西亞
+E       - text: 莎阿南, 雪蘭莪（MSU 主校區）
+E       - heading "馬來西亞管理與科技大學 Management and Science University" [level=1]
+E       - text: 我的資格
+E       - strong: 尚未進行資格初判
+E       - text: 合作校參考時程
+E       - strong: 依當期長庚公告與 MSU Global Affairs 通知
+E       - text: 語言門檻
+E       - strong: 合作校未明確標示，請開啟官方來源
+E       - text: 生活費參考
+E       - strong: MSU 官方下載區目前仍提供標示 2023年3月 的 入境手冊；其中寫合作校交換生學費向母校繳納，學生簽證費為 6 個月 MYR 1,150、12 個月 MYR 1,300，但這些都只是 2023 文件金額，不能當成 2026/27 現價。現行 抵達前 頁只…
+E       - text: 交換名額
+E       - strong: 依當期公告
+E       - text: 研修期間
+E       - strong: 1 學期至 1 學年
+E       - tablist "交換學校詳細資訊":
+E         - tab "快速了解"
+E         - tab "申請方式"
+E         - tab "生活情報" [selected]
+E         - tab "出發前提醒"
+E         - tab "學生心得"
+E         - tab "學生社群"
+E       - tabpanel "生活情報":
+E         - heading "生活情報" [level=2]
+E         - status: 正在更新資料…
+E         - button "找學生分享"
+E         - button "更新中" [disabled]
+E         - group: 資料說明
+E         - group: 官方生活指南
+E         - article:
+E           - heading "住宿與宿舍" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: 住宿手冊 列一般房型約 MYR 700–2,080／月、押金 MYR 2,500、不可退處理費 MYR 500，原則最短租六個月且房型依 可用性；資訊也明示可能不另通知即調整。雖另列四個月 三人共用 MYR 450／月、押金 MYR 900 與處理費 MYR 200，現行 三人同住 頁明寫 僅限在地學生，長庚交換生不能用這個較低價格估算。送件與入住都不等於保證配到指定房型。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "每月生活預算" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: MSU 官方下載區目前仍提供標示 2023年3月 的 入境手冊；其中寫合作校交換生學費向母校繳納，學生簽證費為 6 個月 MYR 1,150、12 個月 MYR 1,300，但這些都只是 2023 文件金額，不能當成 2026/27 現價。現行 抵達前 頁只要求準備足以支付最初三個月食宿、交通與書籍的資金，沒有公開一份交換生生活費總表；學生須向 全球事務 重新確認簽證、保險、課程及其他費用。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - article:
+E           - heading "交通與地點" [level=3]
+E           - text: 官方
+E           - paragraph: 2023 入境手冊 寫 沙阿南 有公共交通，並把預計 2025 完成、位於 MSU 旁的 Malawati LRT3 當未來規劃；由於文件仍是 2023 版本，不能據此宣稱 2026 已正式營運、票價固定或提供學生免費通勤。學生應在錄取後依 MSU 現行校區指示查證 LRT3、巴士、機場與最後一段交通，不能把三年前的工程時程當成現況。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "校園活動與社交" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: 2023 年 3 月入學手冊 把 全球流動計畫 列為一學期或一年，2月／9月入學；提名日為 10 月 1 日／5 月 1 日，申請日為 10 月 15 日／5 月 15 日，並列學期區間與可洽詢課程。由於官方下載區仍提供舊版 PDF，這些期限與課程只能作歷史參考，不能直接建立 2026/27 提醒。學生應先由長庚提名，再由 MSU 全球事務 確認當期 攝取、可選課、學分、英文要求、簽證與保險；抵達前 的國際學位生規定也不能全部自動套到交換身分。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - group: 待補資料（6 項）
+E       - complementary "申請準備進度與官方來源":
+E         - heading "我的申請進度" [level=2]
+E         - progressbar "申請準備進度":
+E           - strong: 0 / 5 已完成
+E           - text: 準備中
+E         - paragraph:
+E           - text: 登入以保存進度
+E           - button "登入"
+E         - checkbox "確認資格與語言門檻" [disabled]
+E         - text: 確認資格與語言門檻
+E         - checkbox "比較課程、費用與生活" [disabled]
+E         - text: 比較課程、費用與生活
+E         - checkbox "備妥校內申請文件" [disabled]
+E         - text: 備妥校內申請文件
+E         - checkbox "完成校內甄選送件" [disabled]
+E         - text: 完成校內甄選送件
+E         - checkbox "完成合作校線上申請" [disabled]
+E         - text: 完成合作校線上申請
+E         - strong: 送件前確認
+E         - paragraph: 截止日與資格以當期官方公告為準。
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms
+_ test_thirteenth_destination_batch_keeps_department_scope_and_housing_limits_visible _
+tests/e2e/test_web_next_phase.py:750: in test_thirteenth_destination_batch_keeps_department_scope_and_housing_limits_visible
+    expect(official).to_contain_text("free mover 或直接申請不符合資格")
+E   AssertionError: Locator expected to contain text 'free mover 或直接申請不符合資格'
+E   Actual value: 
+E       
+E         
+E         官方生活資訊已查核已確認 IAE Aix 是合作校提名制的管理學院交換、課程層級、年級年齡、語言、期限、Puyricard 校區與 CROUS 限制；長庚當期院級合作是否開放仍須人工確認，不能當成中央校級一般交換，且尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地皮里卡爾／普羅旺斯地區艾克斯（IAE Aix 管理學院）費用參考IAE Aix 現行 傳入的 頁只提供每月生活費估算：CROUS 住宿約 EUR 260 起、艾克斯普羅旺斯 私租約 EUR 450–800，水電 EUR 40–60、網路與電話 EUR 20–40、食物 EUR 200–300、醫療 EUR 30、月票 EUR 28，另有每年 EUR 40–60 的住宅與責任保險。這些都是一般指南、可能變動，不是長庚管理學院交換的固定帳單或保證價格，也沒有公開證明可直接申請或免除所有校費。住宿IAE Aix 可協助交換生接觸 艾克斯普羅旺斯 的 CROUS 校外學生住宅，但學校頁沒有保證床位；該住宅到 Puyricard 校區約 40 分鐘公車。AMU 的交換生 CROUS 流程是在錄取後取得提案，收到提案後 120 小時內接受，2026/27 起須線上支付 EUR 70 預付租金；不能選宿舍或房型，並採先到先得。EUR 260 起只是估算，不等於每位學生都能取得。交通IAE Aix 位於 Puyricard；官方估算公車月票約 EUR 28，CROUS 住宅到校區約 40 分鐘。這是生活預算與常見通勤描述，不是保證班次或住宿位置；若改住私租，必須依實際地址重算通勤，不能因校名含 Aix-Marseille 就假設課程在 Marseille 市中心。校園生活這筆資料只作長庚管理學院的院級交換參考，不是目前中央校級一般交換承諾。IAE Aix 只接受合作校學生，自由移動者 或直接申請不符合資格，須先由母校提名；秋季／全學年提名 4 月 1 日、學生申請 4 月 21 日，春季提名 10 月 1 日、學生申請 10 月 21 日。最低為學士三年級且年滿 21 歲，課程全部為 碩士程度；英文課通常須 TOEFL iBT 85（各項 21／21／21／22）或 IELTS 各項 6.0，法文課須 B2+。未先由長庚管理學院確認當期合作有效與提名資格，不得把這些合作校期限變成可直接申請的中央流程。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（4）
+E         
+E           
+E             
+E               IAE Aix 來校交換生 Exchange Program合作校提名、期限、文件、學級與語言門檻、課程、住宿及生活費估算。
+E               查看原始來源
+E             
+E             
+E               IAE Aix 學生生活與環境Puyricard 校區、CROUS 與私租資源及 艾克斯普羅旺斯 生活環境。
+E               查看原始來源
+E             
+E             
+E               艾克斯-馬賽維克大學交換學生住宿交換生 CROUS 提案、120 小時接受、2026/27 起 EUR 70 預付、不可選房與先到先得。
+E               查看原始來源
+E             
+E             
+E               IAE Aix 入學交換計畫法文現行頁與 2026/27 學期行事曆入口，用來交叉核對當期交換規則。
+E               查看原始來源
+E             
+E         
+E        
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator("#destination-official-content")
+E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+E          - unexpected value "
+E       
+E         
+E         官方生活資訊已查核已確認 IAE Aix 是合作校提名制的管理學院交換、課程層級、年級年齡、語言、期限、Puyricard 校區與 CROUS 限制；長庚當期院級合作是否開放仍須人工確認，不能當成中央校級一般交換，且尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地皮里卡爾／普羅旺斯地區艾克斯（IAE Aix 管理學院）費用參考IAE Aix 現行 傳入的 頁只提供每月生活費估算：CROUS 住宿約 EUR 260 起、艾克斯普羅旺斯 私租約 EUR 450–800，水電 EUR 40–60、網路與電話 EUR 20–40、食物 EUR 200–300、醫療 EUR 30、月票 EUR 28，另有每年 EUR 40–60 的住宅與責任保險。這些都是一般指南、可能變動，不是長庚管理學院交換的固定帳單或保證價格，也沒有公開證明可直接申請或免除所有校費。住宿IAE Aix 可協助交換生接觸 艾克斯普羅旺斯 的 CROUS 校外學生住宅，但學校頁沒有保證床位；該住宅到 Puyricard 校區約 40 分鐘公車。AMU 的交換生 CROUS 流程是在錄取後取得提案，收到提案後 120 小時內接受，2026/27 起須線上支付 EUR 70 預付租金；不能選宿舍或房型，並採先到先得。EUR 260 起只是估算，不等於每位學生都能取得。交通IAE Aix 位於 Puyricard；官方估算公車月票約 EUR 28，CROUS 住宅到校區約 40 分鐘。這是生活預算與常見通勤描述，不是保證班次或住宿位置；若改住私租，必須依實際地址重算通勤，不能因校名含 Aix-Marseille 就假設課程在 Marseille 市中心。校園生活這筆資料只作長庚管理學院的院級交換參考，不是目前中央校級一般交換承諾。IAE Aix 只接受合作校學生，自由移動者 或直接申請不符合資格，須先由母校提名；秋季／全學年提名 4 月 1 日、學生申請 4 月 21 日，春季提名 10 月 1 日、學生申請 10 月 21 日。最低為學士三年級且年滿 21 歲，課程全部為 碩士程度；英文課通常須 TOEFL iBT 85（各項 21／21／21／22）或 IELTS 各項 6.0，法文課須 B2+。未先由長庚管理學院確認當期合作有效與提名資格，不得把這些合作校期限變成可直接申請的中央流程。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（4）
+E         
+E           
+E             
+E               IAE Aix 來校交換生 Exchange Program合作校提名、期限、文件、學級與語言門檻、課程、住宿及生活費估算。
+E               查看原始來源
+E             
+E             
+E               IAE Aix 學生生活與環境Puyricard 校區、CROUS 與私租資源及 艾克斯普羅旺斯 生活環境。
+E               查看原始來源
+E             
+E             
+E               艾克斯-馬賽維克大學交換學生住宿交換生 CROUS 提案、120 小時接受、2026/27 起 EUR 70 預付、不可選房與先到先得。
+E               查看原始來源
+E             
+E             
+E               IAE Aix 入學交換計畫法文現行頁與 2026/27 學期行事曆入口，用來交叉核對當期交換規則。
+E               查看原始來源
+E             
+E         
+E       "
+E   
+E   Aria snapshot:
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - complementary "系統功能":
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - navigation "公開探索導覽":
+E       - link "首頁":
+E         - /url: "#home"
+E       - link "學校搜尋":
+E         - /url: "#partners"
+E       - link "論壇":
+E         - /url: "#forum"
+E       - link "用戶評價":
+E         - /url: "#feedback"
+E       - group:
+E         - link "我的申請":
+E           - /url: "#advisor"
+E     - button "返回上一頁": 返回
+E     - button "選擇就讀學校":
+E       - strong: 選擇就讀學校
+E     - button "切換為深色模式"
+E     - button "重新整理最新資料"
+E     - button "登入或建立帳號": 登入
+E   - main:
+E     - status
+E     - region "法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management":
+E       - button "加入比較法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management": 加入比較
+E       - button "當期開放待確認" [disabled]
+E       - img "法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management官方照片"
+E       - link "圖片來源":
+E         - /url: https://iae-aix.univ-amu.fr/fr/presentation
+E       - text: 法國 · 管理學院交換參考 下一站
+E       - strong: 法國
+E       - heading "法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management" [level=1]
+E       - text: 我的資格
+E       - strong: 尚未進行資格初判
+E       - text: 合作校參考時程
+E       - strong: 依長庚管理學院與 IAE Aix 當期通知（適用年度待確認）
+E       - text: 語言門檻
+E       - strong: 合作校未明確標示，請開啟官方來源
+E       - text: 生活費參考
+E       - strong: IAE Aix 現行 傳入的 頁只提供每月生活費估算：CROUS 住宿約 EUR 260 起、艾克斯普羅旺斯 私租約 EUR 450–800，水電 EUR 40–60、網路與電話 EUR 20–40、食物 EUR 200–300、醫療 EUR 30、月票 E…
+E       - text: 交換名額
+E       - strong: 依長庚管理學院當期公告
+E       - text: 研修期間
+E       - strong: 1 學期至 1 學年
+E       - tablist "交換學校詳細資訊":
+E         - tab "快速了解"
+E         - tab "申請方式"
+E         - tab "生活情報" [selected]
+E         - tab "出發前提醒"
+E         - tab "學生心得"
+E         - tab "學生社群"
+E       - tabpanel "生活情報":
+E         - heading "生活情報" [level=2]
+E         - status: 暫無新資料 · 2026/10/09 上午01:59
+E         - button "找學生分享"
+E         - button "更新資料" [disabled]
+E         - group: 資料說明
+E         - group: 官方生活指南
+E         - article:
+E           - heading "住宿與宿舍" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: IAE Aix 可協助交換生接觸 艾克斯普羅旺斯 的 CROUS 校外學生住宅，但學校頁沒有保證床位；該住宅到 Puyricard 校區約 40 分鐘公車。AMU 的交換生 CROUS 流程是在錄取後取得提案，收到提案後 120 小時內接受，2026/27 起須線上支付 EUR 70 預付租金；不能選宿舍或房型，並採先到先得。EUR 260 起只是估算，不等於每位學生都能取得。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "每月生活預算" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: IAE Aix 現行 傳入的 頁只提供每月生活費估算：CROUS 住宿約 EUR 260 起、艾克斯普羅旺斯 私租約 EUR 450–800，水電 EUR 40–60、網路與電話 EUR 20–40、食物 EUR 200–300、醫療 EUR 30、月票 EUR 28，另有每年 EUR 40–60 的住宅與責任保險。這些都是一般指南、可能變動，不是長庚管理學院交換的固定帳單或保證價格，也沒有公開證明可直接申請或免除所有校費。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - article:
+E           - heading "交通與地點" [level=3]
+E           - text: 官方
+E           - paragraph: IAE Aix 位於 Puyricard；官方估算公車月票約 EUR 28，CROUS 住宅到校區約 40 分鐘。這是生活預算與常見通勤描述，不是保證班次或住宿位置；若改住私租，必須依實際地址重算通勤，不能因校名含 Aix-Marseille 就假設課程在 Marseille 市中心。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "校園活動與社交" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: 這筆資料只作長庚管理學院的院級交換參考，不是目前中央校級一般交換承諾。IAE Aix 只接受合作校學生，自由移動者 或直接申請不符合資格，須先由母校提名；秋季／全學年提名 4 月 1 日、學生申請 4 月 21 日，春季提名 10 月 1 日、學生申請 10 月 21 日。最低為學士三年級且年滿 21 歲，課程全部為 碩士程度；英文課通常須 TOEFL iBT 85（各項 21／21／21／22）或 IELTS 各項 6.0，法文課須 B2+。未先由長庚管理學院確認當期合作有效與提名資格，不得把這些合作校期限變成可直接申請的中央流程。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - group: 待補資料（6 項）
+E       - complementary "申請準備進度與官方來源":
+E         - heading "我的申請進度" [level=2]
+E         - progressbar "申請準備進度":
+E           - strong: 0 / 5 已完成
+E           - text: 準備中
+E         - paragraph:
+E           - text: 登入以保存進度
+E           - button "登入"
+E         - checkbox "確認資格與語言門檻" [disabled]
+E         - text: 確認資格與語言門檻
+E         - checkbox "比較課程、費用與生活" [disabled]
+E         - text: 比較課程、費用與生活
+E         - checkbox "備妥校內申請文件" [disabled]
+E         - text: 備妥校內申請文件
+E         - checkbox "完成校內甄選送件" [disabled]
+E         - text: 完成校內甄選送件
+E         - checkbox "完成合作校線上申請" [disabled]
+E         - text: 完成合作校線上申請
+E         - strong: 送件前確認
+E         - paragraph: 截止日與資格以當期官方公告為準。
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms
+_ test_fourteenth_destination_batch_keeps_old_department_rules_out_of_current_exchange _
+tests/e2e/test_web_next_phase.py:778: in test_fourteenth_destination_batch_keeps_old_department_rules_out_of_current_exchange
+    expect(official).to_contain_text("2023–24 Chemical Engineering and Chemistry")
+E   AssertionError: Locator expected to contain text '2023–24 Chemical Engineering and Chemistry'
+E   Actual value: 
+E       
+E         
+E         官方生活資訊已查核已核對 2026–27 一般學位 手冊、2023–24 化工系所 來校交換生 交換資訊表 及 TU/e 校園住宿報導；目前沒有足以把舊系所期限、課程、費率或住宿承諾套到長庚 2026/27 交換的公開資料。尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地恩荷芬（實際交換系所與課程仍須由當期提名通知確認）費用參考TU/e 2026–27 一般國際 學士／碩士手冊 以約 EUR 1,200／月估算住宿、食物、書籍與基本生活，這是一般學位生參考，不是長庚交換帳單。2023–24 化學工程與化學 系所 交換資訊表 說明 雙邊交換 通常依合作協議辦理、自由移動者 則須向 TU/e 繳學費；該資料已過年度且只適用單一系所，不能用來斷定長庚當期交換身分或費率。住宿2026–27 一般學位 手冊 的有限 住宿抽籤 與提早準備建議不是交換生床位承諾；2023–24 化學工程與化學交換資訊表 也只說 TU/e 能保證的交換生住宿非常有限、採先到先得並在 六月／12月 通知結果。2025 年 TU/e 校園媒體仍報導 埃因霍溫 約短缺 1,500 個學生住宿單位，因此不能把提出申請、候補或校園新建住宿寫成保證有房。交通TU/e 位於 Eindhoven，但交換課程可能受主辦系所、先備知識、容量與實際住宿地址影響。確認當期系所、課表與住址前，只能讓學生預留通勤規劃，不能把 2023–24 化工系所的課程安排套到其他系所或產生固定交通任務。校園生活目前公開可核對的 傳入的 細節來自 2023–24 化學工程與化學 系所資料：須由合作校提名、課程容量不保證，且主要修課應在該系。舊資料所列 1 四月／1 五月、1 十月／1 11月 期限、行動線上、語言與課程規則都不能直接建立 2026/27 提醒；必須等長庚與 TU/e 確認當期合作系所、交換／自由移動者 身分、課程層級、語言、期限與申請入口。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   荷蘭恩荷芬理工大學 Eindhoven University of Technology校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（4）
+E         
+E           
+E             
+E               TU/e 概覽與學術計畫 2026–27由官方合作校保存的 TU/e 2026–27 一般學位 手冊；生活費與 住宿 說明不等於 入學交換 規則。
+E               查看原始來源
+E             
+E             
+E               TU/e 化學工程與化學系 入學流動資訊 2023–24由官方合作校保存的舊年度系所 交換資訊表；包含提名、自由移動者、課程與有限住宿規則，但不能套用全校或 2026/27。
+E               查看原始來源
+E             
+E             
+E               TU/e 校園上的 800 位新住戶TU/e 校園媒體記錄 2024 年新住宿供給；歷史房價與新增房間都不是交換生分配承諾。
+E               查看原始來源
+E             
+E             
+E               房間短缺預計在未來幾年不會改善TU/e 校園媒體 2025 年報導 Eindhoven 約短缺 1,500 個學生住宿單位，提醒學生不可預設一定有房。
+E               查看原始來源
+E             
+E         
+E        
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator("#destination-official-content")
+E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+E          - unexpected value "
+E       
+E         
+E         官方生活資訊已查核已核對 2026–27 一般學位 手冊、2023–24 化工系所 來校交換生 交換資訊表 及 TU/e 校園住宿報導；目前沒有足以把舊系所期限、課程、費率或住宿承諾套到長庚 2026/27 交換的公開資料。尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地恩荷芬（實際交換系所與課程仍須由當期提名通知確認）費用參考TU/e 2026–27 一般國際 學士／碩士手冊 以約 EUR 1,200／月估算住宿、食物、書籍與基本生活，這是一般學位生參考，不是長庚交換帳單。2023–24 化學工程與化學 系所 交換資訊表 說明 雙邊交換 通常依合作協議辦理、自由移動者 則須向 TU/e 繳學費；該資料已過年度且只適用單一系所，不能用來斷定長庚當期交換身分或費率。住宿2026–27 一般學位 手冊 的有限 住宿抽籤 與提早準備建議不是交換生床位承諾；2023–24 化學工程與化學交換資訊表 也只說 TU/e 能保證的交換生住宿非常有限、採先到先得並在 六月／12月 通知結果。2025 年 TU/e 校園媒體仍報導 埃因霍溫 約短缺 1,500 個學生住宿單位，因此不能把提出申請、候補或校園新建住宿寫成保證有房。交通TU/e 位於 Eindhoven，但交換課程可能受主辦系所、先備知識、容量與實際住宿地址影響。確認當期系所、課表與住址前，只能讓學生預留通勤規劃，不能把 2023–24 化工系所的課程安排套到其他系所或產生固定交通任務。校園生活目前公開可核對的 傳入的 細節來自 2023–24 化學工程與化學 系所資料：須由合作校提名、課程容量不保證，且主要修課應在該系。舊資料所列 1 四月／1 五月、1 十月／1 11月 期限、行動線上、語言與課程規則都不能直接建立 2026/27 提醒；必須等長庚與 TU/e 確認當期合作系所、交換／自由移動者 身分、課程層級、語言、期限與申請入口。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   荷蘭恩荷芬理工大學 Eindhoven University of Technology校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（4）
+E         
+E           
+E             
+E               TU/e 概覽與學術計畫 2026–27由官方合作校保存的 TU/e 2026–27 一般學位 手冊；生活費與 住宿 說明不等於 入學交換 規則。
+E               查看原始來源
+E             
+E             
+E               TU/e 化學工程與化學系 入學流動資訊 2023–24由官方合作校保存的舊年度系所 交換資訊表；包含提名、自由移動者、課程與有限住宿規則，但不能套用全校或 2026/27。
+E               查看原始來源
+E             
+E             
+E               TU/e 校園上的 800 位新住戶TU/e 校園媒體記錄 2024 年新住宿供給；歷史房價與新增房間都不是交換生分配承諾。
+E               查看原始來源
+E             
+E             
+E               房間短缺預計在未來幾年不會改善TU/e 校園媒體 2025 年報導 Eindhoven 約短缺 1,500 個學生住宿單位，提醒學生不可預設一定有房。
+E               查看原始來源
+E             
+E         
+E       "
+E   
+E   Aria snapshot:
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - complementary "系統功能":
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - navigation "公開探索導覽":
+E       - link "首頁":
+E         - /url: "#home"
+E       - link "學校搜尋":
+E         - /url: "#partners"
+E       - link "論壇":
+E         - /url: "#forum"
+E       - link "用戶評價":
+E         - /url: "#feedback"
+E       - group:
+E         - link "我的申請":
+E           - /url: "#advisor"
+E     - button "返回上一頁": 返回
+E     - button "選擇就讀學校":
+E       - strong: 選擇就讀學校
+E     - button "切換為深色模式"
+E     - button "重新整理最新資料"
+E     - button "登入或建立帳號": 登入
+E   - main:
+E     - status
+E     - region "荷蘭恩荷芬理工大學 Eindhoven University of Technology":
+E       - button "加入比較荷蘭恩荷芬理工大學 Eindhoven University of Technology": 加入比較
+E       - button "登入建立計畫"
+E       - img "荷蘭恩荷芬理工大學 Eindhoven University of Technology官方照片"
+E       - link "圖片來源":
+E         - /url: https://www.tue.nl/en/our-university/tue-campus
+E       - text: 荷蘭 · 交換學生 / 自費研修 下一站
+E       - strong: 荷蘭
+E       - text: 恩荷芬（實際交換系所與課程仍須由當期提名通知確認）
+E       - heading "荷蘭恩荷芬理工大學 Eindhoven University of Technology" [level=1]
+E       - text: 我的資格
+E       - strong: 尚未進行資格初判
+E       - text: 合作校參考時程
+E       - strong: 依當期長庚公告與 TU/e incoming 通知
+E       - text: 語言門檻
+E       - strong: 合作校未明確標示，請開啟官方來源
+E       - text: 生活費參考
+E       - strong: TU/e 2026–27 一般國際 學士／碩士手冊 以約 EUR 1,200／月估算住宿、食物、書籍與基本生活，這是一般學位生參考，不是長庚交換帳單。2023–24 化學工程與化學 系所 交換資訊表 說明 雙邊交換 通常依合作協議辦理、自由移動者 則須向 T…
+E       - text: 交換名額
+E       - strong: 依當期公告
+E       - text: 研修期間
+E       - strong: 1 學期至 1 學年
+E       - tablist "交換學校詳細資訊":
+E         - tab "快速了解"
+E         - tab "申請方式"
+E         - tab "生活情報" [selected]
+E         - tab "出發前提醒"
+E         - tab "學生心得"
+E         - tab "學生社群"
+E       - tabpanel "生活情報":
+E         - heading "生活情報" [level=2]
+E         - status: 正在更新資料…
+E         - button "找學生分享"
+E         - button "更新中" [disabled]
+E         - group: 資料說明
+E         - group: 官方生活指南
+E         - article:
+E           - heading "住宿與宿舍" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: 2026–27 一般學位 手冊 的有限 住宿抽籤 與提早準備建議不是交換生床位承諾；2023–24 化學工程與化學交換資訊表 也只說 TU/e 能保證的交換生住宿非常有限、採先到先得並在 六月／12月 通知結果。2025 年 TU/e 校園媒體仍報導 埃因霍溫 約短缺 1,500 個學生住宿單位，因此不能把提出申請、候補或校園新建住宿寫成保證有房。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "每月生活預算" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: TU/e 2026–27 一般國際 學士／碩士手冊 以約 EUR 1,200／月估算住宿、食物、書籍與基本生活，這是一般學位生參考，不是長庚交換帳單。2023–24 化學工程與化學 系所 交換資訊表 說明 雙邊交換 通常依合作協議辦理、自由移動者 則須向 TU/e 繳學費；該資料已過年度且只適用單一系所，不能用來斷定長庚當期交換身分或費率。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - article:
+E           - heading "交通與地點" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: TU/e 位於 Eindhoven，但交換課程可能受主辦系所、先備知識、容量與實際住宿地址影響。確認當期系所、課表與住址前，只能讓學生預留通勤規劃，不能把 2023–24 化工系所的課程安排套到其他系所或產生固定交通任務。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "校園活動與社交" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: 目前公開可核對的 傳入的 細節來自 2023–24 化學工程與化學 系所資料：須由合作校提名、課程容量不保證，且主要修課應在該系。舊資料所列 1 四月／1 五月、1 十月／1 11月 期限、行動線上、語言與課程規則都不能直接建立 2026/27 提醒；必須等長庚與 TU/e 確認當期合作系所、交換／自由移動者 身分、課程層級、語言、期限與申請入口。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - group: 待補資料（6 項）
+E       - complementary "申請準備進度與官方來源":
+E         - heading "我的申請進度" [level=2]
+E         - progressbar "申請準備進度":
+E           - strong: 0 / 5 已完成
+E           - text: 準備中
+E         - paragraph:
+E           - text: 登入以保存進度
+E           - button "登入"
+E         - checkbox "確認資格與語言門檻" [disabled]
+E         - text: 確認資格與語言門檻
+E         - checkbox "比較課程、費用與生活" [disabled]
+E         - text: 比較課程、費用與生活
+E         - checkbox "備妥校內申請文件" [disabled]
+E         - text: 備妥校內申請文件
+E         - checkbox "完成校內甄選送件" [disabled]
+E         - text: 完成校內甄選送件
+E         - checkbox "完成合作校線上申請" [disabled]
+E         - text: 完成合作校線上申請
+E         - strong: 送件前確認
+E         - paragraph: 截止日與資格以當期官方公告為準。
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms
+_ test_fifteenth_destination_batch_keeps_old_wuhan_costs_and_transport_out_of_current_plan _
+tests/e2e/test_web_next_phase.py:807: in test_fifteenth_destination_batch_keeps_old_wuhan_costs_and_transport_out_of_current_plan
+    expect(official).to_contain_text("2022 校園文章曾寫 school bus 調整為免費")
+E   AssertionError: Locator expected to contain text '2022 校園文章曾寫 school bus 調整為免費'
+E   Actual value: 
+E       
+E         
+E         官方生活資訊已查核已核對武漢大學交換舊表、住宿舊站及現行餐飲住宿、通勤與 校園卡 官方頁；公開 交換 與房價資料仍過時且未識別長庚，當期合作條件必須由提名通知確認。尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地武漢（文理、工程、資訊科學、醫學 等 校區／學院 區域）費用參考武漢大學公開 Students Exchange Programs 表格明示資料截至 June 2016，且沒有列出長庚大學；表中各合作案的學費、住宿與其他費用條件不同，不能拿任一列推定長庚交換待遇。舊 Campus Accommodation 頁列出的 RMB 600–1,400／月房價也位於『舊站備份』，沒有現行學年與交換名額證據，不能當成 2026/27 預算或帳單。住宿舊站住宿頁列出 Maple Garden 與醫學院外國學生宿舍房型、RMB 600–1,400／月歷史價格及住宿登記要求；現行 Dining & Accommodation 頁只確認學校有住宿分配與服務管理，沒有公開長庚交換生的房型、價格、申請期限或床位保證。學生應等當期錄取與住宿通知，不可把舊價或校內宿舍存在視為已分配。交通武漢大學 校區 範圍大且教學生活設施分散。2022 校園文章曾寫 校車 調整為免費，但 2026 校區 卡片 頁已把 校區 乘車費用 列為需使用儲值 校區 卡片 的消費情境；因此不能把 2022 免費校車當成現行交換生權益，實際路線與費率須抵達前重新確認。校園生活目前可公開查到的 交換計畫 清單仍標示 2016年6月，沒有長庚大學，也不能支持 工作流程 內的 15 四月／15 十月 作為 2026/27 精確期限。現行餐飲頁確認學生餐廳使用 校園卡／羅家電子卡 且不收現金，但這是到校生活資訊，不是交換申請規則。建立計畫仍須等長庚提名與武漢大學當期通知確認學院、校園、語言、課程、名額、學費、文件與期限。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   武漢大學 Wuhan University校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（5）
+E         
+E           
+E             
+E               武漢大學 學生交換計畫舊站交換表格，資料截至 June 2016 且未列長庚；只能證明不同合作案條件不一。
+E               查看原始來源
+E             
+E             
+E               Wuhan University 校區 住宿 Archive舊站住宿房型、歷史價格與住宿登記說明；不能作現行交換生床位或費率保證。
+E               查看原始來源
+E             
+E             
+E               武漢大學用餐與住宿彙整 2024–2025 現行餐飲與住宿服務文章，但沒有長庚交換生分配、價格或申請期限。
+E               查看原始來源
+E             
+E             
+E               武漢大學校園通勤變更 20222022 歷史文章曾說校車免費；不可忽略後續 校園卡 資訊而直接沿用。
+E               查看原始來源
+E             
+E             
+E               武漢大學校園卡 20262026 現行 校區 卡片 說明把 校區 乘車費用 列為儲值卡消費情境，顯示 2022 免費資訊不能直接當現況。
+E               查看原始來源
+E             
+E         
+E        
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator("#destination-official-content")
+E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+E          - unexpected value "
+E       
+E         
+E         官方生活資訊已查核已核對武漢大學交換舊表、住宿舊站及現行餐飲住宿、通勤與 校園卡 官方頁；公開 交換 與房價資料仍過時且未識別長庚，當期合作條件必須由提名通知確認。尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地武漢（文理、工程、資訊科學、醫學 等 校區／學院 區域）費用參考武漢大學公開 Students Exchange Programs 表格明示資料截至 June 2016，且沒有列出長庚大學；表中各合作案的學費、住宿與其他費用條件不同，不能拿任一列推定長庚交換待遇。舊 Campus Accommodation 頁列出的 RMB 600–1,400／月房價也位於『舊站備份』，沒有現行學年與交換名額證據，不能當成 2026/27 預算或帳單。住宿舊站住宿頁列出 Maple Garden 與醫學院外國學生宿舍房型、RMB 600–1,400／月歷史價格及住宿登記要求；現行 Dining & Accommodation 頁只確認學校有住宿分配與服務管理，沒有公開長庚交換生的房型、價格、申請期限或床位保證。學生應等當期錄取與住宿通知，不可把舊價或校內宿舍存在視為已分配。交通武漢大學 校區 範圍大且教學生活設施分散。2022 校園文章曾寫 校車 調整為免費，但 2026 校區 卡片 頁已把 校區 乘車費用 列為需使用儲值 校區 卡片 的消費情境；因此不能把 2022 免費校車當成現行交換生權益，實際路線與費率須抵達前重新確認。校園生活目前可公開查到的 交換計畫 清單仍標示 2016年6月，沒有長庚大學，也不能支持 工作流程 內的 15 四月／15 十月 作為 2026/27 精確期限。現行餐飲頁確認學生餐廳使用 校園卡／羅家電子卡 且不收現金，但這是到校生活資訊，不是交換申請規則。建立計畫仍須等長庚提名與武漢大學當期通知確認學院、校園、語言、課程、名額、學費、文件與期限。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   武漢大學 Wuhan University校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（5）
+E         
+E           
+E             
+E               武漢大學 學生交換計畫舊站交換表格，資料截至 June 2016 且未列長庚；只能證明不同合作案條件不一。
+E               查看原始來源
+E             
+E             
+E               Wuhan University 校區 住宿 Archive舊站住宿房型、歷史價格與住宿登記說明；不能作現行交換生床位或費率保證。
+E               查看原始來源
+E             
+E             
+E               武漢大學用餐與住宿彙整 2024–2025 現行餐飲與住宿服務文章，但沒有長庚交換生分配、價格或申請期限。
+E               查看原始來源
+E             
+E             
+E               武漢大學校園通勤變更 20222022 歷史文章曾說校車免費；不可忽略後續 校園卡 資訊而直接沿用。
+E               查看原始來源
+E             
+E             
+E               武漢大學校園卡 20262026 現行 校區 卡片 說明把 校區 乘車費用 列為儲值卡消費情境，顯示 2022 免費資訊不能直接當現況。
+E               查看原始來源
+E             
+E         
+E       "
+E   
+E   Aria snapshot:
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - complementary "系統功能":
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - navigation "公開探索導覽":
+E       - link "首頁":
+E         - /url: "#home"
+E       - link "學校搜尋":
+E         - /url: "#partners"
+E       - link "論壇":
+E         - /url: "#forum"
+E       - link "用戶評價":
+E         - /url: "#feedback"
+E       - group:
+E         - link "我的申請":
+E           - /url: "#advisor"
+E     - button "返回上一頁": 返回
+E     - button "選擇就讀學校":
+E       - strong: 選擇就讀學校
+E     - button "切換為深色模式"
+E     - button "重新整理最新資料"
+E     - button "登入或建立帳號": 登入
+E   - main:
+E     - status
+E     - region "武漢大學 Wuhan University":
+E       - button "加入比較武漢大學 Wuhan University": 加入比較
+E       - button "登入建立計畫"
+E       - img "武漢大學 Wuhan University官方照片"
+E       - link "圖片來源":
+E         - /url: https://en.whu.edu.cn/
+E       - text: 中國 · 交換學生 / 自費研修 下一站
+E       - strong: 中國
+E       - heading "武漢大學 Wuhan University" [level=1]
+E       - text: 我的資格
+E       - strong: 尚未進行資格初判
+E       - text: 合作校參考時程
+E       - strong: 依當期長庚公告與武漢大學交換通知
+E       - text: 語言門檻
+E       - strong: 合作校未明確標示，請開啟官方來源
+E       - text: 生活費參考
+E       - strong: 武漢大學公開 Students Exchange Programs 表格明示資料截至 June 2016，且沒有列出長庚大學；表中各合作案的學費、住宿與其他費用條件不同，不能拿任一列推定長庚交換待遇。舊 Campus Accommodation 頁列出的 R…
+E       - text: 交換名額
+E       - strong: 依當期公告
+E       - text: 研修期間
+E       - strong: 1 學期至 1 學年
+E       - tablist "交換學校詳細資訊":
+E         - tab "快速了解"
+E         - tab "申請方式"
+E         - tab "生活情報" [selected]
+E         - tab "出發前提醒"
+E         - tab "學生心得"
+E         - tab "學生社群"
+E       - tabpanel "生活情報":
+E         - heading "生活情報" [level=2]
+E         - status: 暫無新資料 · 2026/10/09 上午01:59
+E         - button "找學生分享"
+E         - button "更新資料" [disabled]
+E         - group: 資料說明
+E         - group: 官方生活指南
+E         - article:
+E           - heading "住宿與宿舍" [level=3]
+E           - text: 官方
+E           - paragraph: 舊站住宿頁列出 Maple Garden 與醫學院外國學生宿舍房型、RMB 600–1,400／月歷史價格及住宿登記要求；現行 Dining & Accommodation 頁只確認學校有住宿分配與服務管理，沒有公開長庚交換生的房型、價格、申請期限或床位保證。學生應等當期錄取與住宿通知，不可把舊價或校內宿舍存在視為已分配。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "每月生活預算" [level=3]
+E           - text: 官方
+E           - paragraph: 武漢大學公開 Students Exchange Programs 表格明示資料截至 June 2016，且沒有列出長庚大學；表中各合作案的學費、住宿與其他費用條件不同，不能拿任一列推定長庚交換待遇。舊 Campus Accommodation 頁列出的 RMB 600–1,400／月房價也位於『舊站備份』，沒有現行學年與交換名額證據，不能當成 2026/27 預算或帳單。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - article:
+E           - heading "交通與地點" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: 武漢大學 校區 範圍大且教學生活設施分散。2022 校園文章曾寫 校車 調整為免費，但 2026 校區 卡片 頁已把 校區 乘車費用 列為需使用儲值 校區 卡片 的消費情境；因此不能把 2022 免費校車當成現行交換生權益，實際路線與費率須抵達前重新確認。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "校園活動與社交" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: 目前可公開查到的 交換計畫 清單仍標示 2016年6月，沒有長庚大學，也不能支持 工作流程 內的 15 四月／15 十月 作為 2026/27 精確期限。現行餐飲頁確認學生餐廳使用 校園卡／羅家電子卡 且不收現金，但這是到校生活資訊，不是交換申請規則。建立計畫仍須等長庚提名與武漢大學當期通知確認學院、校園、語言、課程、名額、學費、文件與期限。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - group: 待補資料（6 項）
+E       - complementary "申請準備進度與官方來源":
+E         - heading "我的申請進度" [level=2]
+E         - progressbar "申請準備進度":
+E           - strong: 0 / 5 已完成
+E           - text: 準備中
+E         - paragraph:
+E           - text: 登入以保存進度
+E           - button "登入"
+E         - checkbox "確認資格與語言門檻" [disabled]
+E         - text: 確認資格與語言門檻
+E         - checkbox "比較課程、費用與生活" [disabled]
+E         - text: 比較課程、費用與生活
+E         - checkbox "備妥校內申請文件" [disabled]
+E         - text: 備妥校內申請文件
+E         - checkbox "完成校內甄選送件" [disabled]
+E         - text: 完成校內甄選送件
+E         - checkbox "完成合作校線上申請" [disabled]
+E         - text: 完成合作校線上申請
+E         - strong: 送件前確認
+E         - paragraph: 截止日與資格以當期官方公告為準。
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms
+_ test_sixteenth_destination_batch_keeps_icd_campuses_costs_and_deadlines_separate _
+tests/e2e/test_web_next_phase.py:829: in test_sixteenth_destination_batch_keeps_icd_campuses_costs_and_deadlines_separate
+    expect(official).to_contain_text("Paris 或 Toulouse")
+E   AssertionError: Locator expected to contain text 'Paris 或 Toulouse'
+E   Actual value: 
+E       
+E         
+E         官方生活資訊已查核已核對 ICD 來校交換生 頁、巴黎／Toulouse 2026–27 交換資訊表、生活資訊與學生服務；校區、長庚當期名額與文件仍須由提名通知確認，且春季申請期限存在 1 11月／15 11月 衝突。尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地巴黎 或 圖盧茲（長庚當期錄取 校區 須由提名或錄取通知確認；入學交換生 頁雖提及 里昂，但 2026–27 交換資訊表 只公開 巴黎 與 圖盧茲）費用參考ICD 2026–27 巴黎交換資訊表 列一般學費 EUR 5,495／學期，但明確標示不適用交換生；Toulouse 交換資訊表 也寫明交換生不收學費。這項待遇仍以合作校提名與兩校協議為前提，不代表生活成本免費。巴黎 校外住宿約 EUR 700–1,400／月、Navigo 約 EUR 90.80／月；圖盧茲 校外住宿約 EUR 500–1,000／月、未滿 25 歲持 Pastel 交通卡 的月票約 EUR 15.50。兩個 校園 的預算不可混用。住宿2026–27 交換資訊表 的住宿都是校外估算：巴黎 學生公寓約 EUR 900–1,200／月、寄宿家庭 EUR 950–1,200、工作室 EUR 900–1,400、合租 EUR 700–1,200；圖盧茲 學生公寓 EUR 500–700、工作室 EUR 800–1,000、合租 EUR 500–700。學校 實用資訊 與 學生服務 頁提供 Studapart、Adele 等搜尋或協助管道，但不保證床位；通常須在錄取後依 內部網路 與當期通知申請。交通巴黎 與 圖盧茲 的交通制度及費率不同。Paris 2026–27 交換資訊表 列 Navigo 約 EUR 90.80／月；Toulouse 交換資訊表 列未滿 25 歲持 Pastel 交通卡 約 EUR 15.50／月，Toulouse 校區 位於 Blagnac，實際通勤仍取決於住宿。未標年度的 實用資訊 舊費率不能覆蓋 2026–27 交換資訊表，也不能在 校園 未確認前建立固定交通預算。校園生活ICD 僅接受合作校提名申請。巴黎 與 Toulouse 2026–27 交換資訊表 均列秋季 5月15日提名、6 月 15 日申請；春季 10 月 15 日提名、11 月 1 日申請，但未標年度的 傳入的 頁把春季 申請 寫成 15 11月，兩者衝突，應以當期校區 交換資訊表 與長庚通知再次確認，不能直接建立提醒。一般門檻包含 GPA 2.5／4 或 B、英語 TOEFL iBT 70／B2（法語課程 B2）及每學期 25–30 ECTS；圖盧茲 不可混選不同年級或授課語言，課程也可能調整。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   法國ICD商學院 ICD Business School校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（5）
+E         
+E           
+E             
+E               ICD 來校交換生 Exchange Students確認合作校提名、一般學期資訊與未標年度的 15 June／15 November 期限；春季日期與 2026–27 fact sheet 衝突。
+E               查看原始來源
+E             
+E             
+E               ICD Paris 交換資訊表 2026–2027Paris 當期提名與申請期限、GPA／語言／ECTS、交換學費註記、校外住宿與交通估算。
+E               查看原始來源
+E             
+E             
+E               ICD Toulouse 交換資訊表 2026–2027圖盧茲 當期期限、資格、選課限制、交換免學費、校外住宿與 Pastel 交通卡 估算。
+E               查看原始來源
+E             
+E             
+E               ICD 實用資訊Paris／Toulouse 一般生活、住宿與交通說明；未標年度的費率不得覆蓋 2026–27 fact sheet。
+E               查看原始來源
+E             
+E             
+E               ICD 學生服務提供 Studapart、Adele 等住宿搜尋與協助入口，但不是交換生床位或價格保證。
+E               查看原始來源
+E             
+E         
+E        
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator("#destination-official-content")
+E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+E          - unexpected value "
+E       
+E         
+E         官方生活資訊已查核已核對 ICD 來校交換生 頁、巴黎／Toulouse 2026–27 交換資訊表、生活資訊與學生服務；校區、長庚當期名額與文件仍須由提名通知確認，且春季申請期限存在 1 11月／15 11月 衝突。尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+E       
+E       
+E         所在地巴黎 或 圖盧茲（長庚當期錄取 校區 須由提名或錄取通知確認；入學交換生 頁雖提及 里昂，但 2026–27 交換資訊表 只公開 巴黎 與 圖盧茲）費用參考ICD 2026–27 巴黎交換資訊表 列一般學費 EUR 5,495／學期，但明確標示不適用交換生；Toulouse 交換資訊表 也寫明交換生不收學費。這項待遇仍以合作校提名與兩校協議為前提，不代表生活成本免費。巴黎 校外住宿約 EUR 700–1,400／月、Navigo 約 EUR 90.80／月；圖盧茲 校外住宿約 EUR 500–1,000／月、未滿 25 歲持 Pastel 交通卡 的月票約 EUR 15.50。兩個 校園 的預算不可混用。住宿2026–27 交換資訊表 的住宿都是校外估算：巴黎 學生公寓約 EUR 900–1,200／月、寄宿家庭 EUR 950–1,200、工作室 EUR 900–1,400、合租 EUR 700–1,200；圖盧茲 學生公寓 EUR 500–700、工作室 EUR 800–1,000、合租 EUR 500–700。學校 實用資訊 與 學生服務 頁提供 Studapart、Adele 等搜尋或協助管道，但不保證床位；通常須在錄取後依 內部網路 與當期通知申請。交通巴黎 與 圖盧茲 的交通制度及費率不同。Paris 2026–27 交換資訊表 列 Navigo 約 EUR 90.80／月；Toulouse 交換資訊表 列未滿 25 歲持 Pastel 交通卡 約 EUR 15.50／月，Toulouse 校區 位於 Blagnac，實際通勤仍取決於住宿。未標年度的 實用資訊 舊費率不能覆蓋 2026–27 交換資訊表，也不能在 校園 未確認前建立固定交通預算。校園生活ICD 僅接受合作校提名申請。巴黎 與 Toulouse 2026–27 交換資訊表 均列秋季 5月15日提名、6 月 15 日申請；春季 10 月 15 日提名、11 月 1 日申請，但未標年度的 傳入的 頁把春季 申請 寫成 15 11月，兩者衝突，應以當期校區 交換資訊表 與長庚通知再次確認，不能直接建立提醒。一般門檻包含 GPA 2.5／4 或 B、英語 TOEFL iBT 70／B2（法語課程 B2）及每學期 25–30 ECTS；圖盧茲 不可混選不同年級或授課語言，課程也可能調整。
+E       
+E       
+E       
+E         
+E           交換生生存指南
+E   
+E         
+E         
+E           
+E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+E             
+E               
+E                 
+E                   
+E                     
+E                     校園
+E                   
+E                   法國ICD商學院 ICD Business School校園
+E                 
+E             
+E           
+E         
+E         
+E         
+E       
+E       
+E         查看本頁全部查核來源（5）
+E         
+E           
+E             
+E               ICD 來校交換生 Exchange Students確認合作校提名、一般學期資訊與未標年度的 15 June／15 November 期限；春季日期與 2026–27 fact sheet 衝突。
+E               查看原始來源
+E             
+E             
+E               ICD Paris 交換資訊表 2026–2027Paris 當期提名與申請期限、GPA／語言／ECTS、交換學費註記、校外住宿與交通估算。
+E               查看原始來源
+E             
+E             
+E               ICD Toulouse 交換資訊表 2026–2027圖盧茲 當期期限、資格、選課限制、交換免學費、校外住宿與 Pastel 交通卡 估算。
+E               查看原始來源
+E             
+E             
+E               ICD 實用資訊Paris／Toulouse 一般生活、住宿與交通說明；未標年度的費率不得覆蓋 2026–27 fact sheet。
+E               查看原始來源
+E             
+E             
+E               ICD 學生服務提供 Studapart、Adele 等住宿搜尋與協助入口，但不是交換生床位或價格保證。
+E               查看原始來源
+E             
+E         
+E       "
+E   
+E   Aria snapshot:
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - complementary "系統功能":
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - navigation "公開探索導覽":
+E       - link "首頁":
+E         - /url: "#home"
+E       - link "學校搜尋":
+E         - /url: "#partners"
+E       - link "論壇":
+E         - /url: "#forum"
+E       - link "用戶評價":
+E         - /url: "#feedback"
+E       - group:
+E         - link "我的申請":
+E           - /url: "#advisor"
+E     - button "返回上一頁": 返回
+E     - button "選擇就讀學校":
+E       - strong: 選擇就讀學校
+E     - button "切換為深色模式"
+E     - button "重新整理最新資料"
+E     - button "登入或建立帳號": 登入
+E   - main:
+E     - status
+E     - region "法國ICD商學院 ICD Business School":
+E       - button "加入比較法國ICD商學院 ICD Business School": 加入比較
+E       - button "登入建立計畫"
+E       - img "法國ICD商學院 ICD Business School官方照片"
+E       - link "圖片來源":
+E         - /url: https://www.icd-bs.com/
+E       - text: 法國 · 交換學生 / 自費研修 下一站
+E       - strong: 法國
+E       - heading "法國ICD商學院 ICD Business School" [level=1]
+E       - text: 我的資格
+E       - strong: 尚未進行資格初判
+E       - text: 合作校參考時程
+E       - strong: 依當期長庚公告與 ICD campus fact sheet 確認
+E       - text: 語言門檻
+E       - strong: 合作校未明確標示，請開啟官方來源
+E       - text: 生活費參考
+E       - strong: ICD 2026–27 巴黎交換資訊表 列一般學費 EUR 5,495／學期，但明確標示不適用交換生；Toulouse 交換資訊表 也寫明交換生不收學費。這項待遇仍以合作校提名與兩校協議為前提，不代表生活成本免費。巴黎 校外住宿約 EUR 700–1,400…
+E       - text: 交換名額
+E       - strong:
+E         - text: 每年 4 名
+E         - strong: 一學期
+E         - text: 交換名額；仍以長庚當期公告為準
+E       - text: 研修期間
+E       - strong: 1 學期至 1 學年
+E       - tablist "交換學校詳細資訊":
+E         - tab "快速了解"
+E         - tab "申請方式"
+E         - tab "生活情報" [selected]
+E         - tab "出發前提醒"
+E         - tab "學生心得"
+E         - tab "學生社群"
+E       - tabpanel "生活情報":
+E         - heading "生活情報" [level=2]
+E         - status: 暫無新資料 · 2026/10/09 上午02:00
+E         - button "找學生分享"
+E         - button "更新資料" [disabled]
+E         - group: 資料說明
+E         - group: 官方生活指南
+E         - article:
+E           - heading "住宿與宿舍" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: 2026–27 交換資訊表 的住宿都是校外估算：巴黎 學生公寓約 EUR 900–1,200／月、寄宿家庭 EUR 950–1,200、工作室 EUR 900–1,400、合租 EUR 700–1,200；圖盧茲 學生公寓 EUR 500–700、工作室 EUR 800–1,000、合租 EUR 500–700。學校 實用資訊 與 學生服務 頁提供 Studapart、Adele 等搜尋或協助管道，但不保證床位；通常須在錄取後依 內部網路 與當期通知申請。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "每月生活預算" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: ICD 2026–27 巴黎交換資訊表 列一般學費 EUR 5,495／學期，但明確標示不適用交換生；Toulouse 交換資訊表 也寫明交換生不收學費。這項待遇仍以合作校提名與兩校協議為前提，不代表生活成本免費。巴黎 校外住宿約 EUR 700–1,400／月、Navigo 約 EUR 90.80／月；圖盧茲 校外住宿約 EUR 500–1,000／月、未滿 25 歲持 Pastel 交通卡 的月票約 EUR 15.50。兩個 校園 的預算不可混用。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - article:
+E           - heading "交通與地點" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: 巴黎 與 圖盧茲 的交通制度及費率不同。Paris 2026–27 交換資訊表 列 Navigo 約 EUR 90.80／月；Toulouse 交換資訊表 列未滿 25 歲持 Pastel 交通卡 約 EUR 15.50／月，Toulouse 校區 位於 Blagnac，實際通勤仍取決於住宿。未標年度的 實用資訊 舊費率不能覆蓋 2026–27 交換資訊表，也不能在 校園 未確認前建立固定交通預算。
+E           - group: 原文與來源
+E           - text: AI 推論
+E           - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+E           - group: 推論依據
+E           - group: 繼續查詢
+E         - article:
+E           - heading "校園活動與社交" [level=3]
+E           - text: 官方 · 機器翻譯
+E           - paragraph: ICD 僅接受合作校提名申請。巴黎 與 Toulouse 2026–27 交換資訊表 均列秋季 5月15日提名、6 月 15 日申請；春季 10 月 15 日提名、11 月 1 日申請，但未標年度的 傳入的 頁把春季 申請 寫成 15 11月，兩者衝突，應以當期校區 交換資訊表 與長庚通知再次確認，不能直接建立提醒。一般門檻包含 GPA 2.5／4 或 B、英語 TOEFL iBT 70／B2（法語課程 B2）及每學期 25–30 ECTS；圖盧茲 不可混選不同年級或授課語言，課程也可能調整。
+E           - group: 原文與來源
+E           - group: 繼續查詢
+E         - group: 待補資料（6 項）
+E       - complementary "申請準備進度與官方來源":
+E         - heading "我的申請進度" [level=2]
+E         - progressbar "申請準備進度":
+E           - strong: 0 / 5 已完成
+E           - text: 準備中
+E         - paragraph:
+E           - text: 登入以保存進度
+E           - button "登入"
+E         - checkbox "確認資格與語言門檻" [disabled]
+E         - text: 確認資格與語言門檻
+E         - checkbox "比較課程、費用與生活" [disabled]
+E         - text: 比較課程、費用與生活
+E         - checkbox "備妥校內申請文件" [disabled]
+E         - text: 備妥校內申請文件
+E         - checkbox "完成校內甄選送件" [disabled]
+E         - text: 完成校內甄選送件
+E         - checkbox "完成合作校線上申請" [disabled]
+E         - text: 完成合作校線上申請
+E         - strong: 送件前確認
+E         - paragraph: 截止日與資格以當期官方公告為準。
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms
+------------- generated xml file: /tmp/tku-source-tools-probe.xml --------------
+=========================== short test summary info ============================
+FAILED tests/e2e/test_web_next_phase.py::test_sixth_destination_batch_keeps_stale_dorm_prices_out_of_current_budget - AssertionError: Locator expected to contain text 'As of 2019'
+Actual value: 
+    
+      
+      官方生活資訊已查核已核對 4 個 KNU 官方來源並限定 Chuncheon Campus；交換頁可支持宿舍有保障，但公開宿舍費表仍明示為 2019 年，不能把舊 KRW 金額當現行費用。KNU 有多個校區，實際錄取校區、當期費用、入住與接機日期仍須依長庚提名及 KNU 錄取通知確認，且尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地春川（依長庚提名與 KNU 錄取確認）費用參考KNU Chuncheon 交換頁說明 KNU 的申請、入學與學費免繳，但學生仍需向原學校依規定繳費，並自行負擔宿舍與生活費。KNU 目前公開的宿舍費頁本身標示「截至 2019 年」，因此頁面上的 KRW 金額不能當作現行交換預算；校方也沒有在這組現行交換頁提供可核對的完整每月生活費總額。住宿KNU Chuncheon 的交換專案頁明示交換生宿舍有保障，但住宿費由學生負擔；一般宿舍頁另說新生第一學期由國際處代辦，之後自行申請與付款。不過該頁所有房型費用標示為 2019 年資料，入住日也要等宿舍公告；FAQ 說通常只能在開學前 3 天入住，提早抵達不能先住。交通Chuncheon 交換頁將首爾往返描述為搭公車或地鐵約 1 小時，並列有仁川機場接機服務；接機安排出現在學期末二月／八月底的流程中。實際接機資格、集合時間與班次必須以該梯次錄取通知確認，不能只按公開概覽自行購票銜接。校園生活這筆資料限定 KNU Chuncheon Campus 的 Student Exchange Program。校方列出 Buddy Program、文化活動與機場接機，但 FAQ 說 Buddy 是學生自願活動，無法處理所有事情或代付費用；獸醫、醫學、護理與法學等系所目前列為交換申請限制。校園地圖可確認國際宿舍與校內設施位置。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                韓國江原國立大學 Kangwon National University校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（4）
+      
+        
+          
+            KNU 學生交換計畫 – 春川校區確認姊妹校提名、Chuncheon 交換流程、免 KNU 學費、宿舍保障、交通支援與系所限制。
+            查看原始來源
+          
+          
+            KNU 學生宿舍 – Chuncheon 校區列出宿舍房型與申請方式，但費用表明確標示為 2019 年資料，不能作為現行價格。
+            查看原始來源
+          
+          
+            KNU 國際學生常見問題說明 Buddy 的自願性與限制，以及宿舍入住日期須待公告且不能提前入住。
+            查看原始來源
+          
+          
+            KNU 校園地圖 – 春川確認 Chuncheon 校區及國際宿舍、學習與生活設施的位置。
+            查看原始來源
+          
+      
+     
+Call log:
+  - Expect "to_contain_text" with timeout 5000ms
+  - waiting for locator("#destination-official-content")
+    13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+       - unexpected value "
+    
+      
+      官方生活資訊已查核已核對 4 個 KNU 官方來源並限定 Chuncheon Campus；交換頁可支持宿舍有保障，但公開宿舍費表仍明示為 2019 年，不能把舊 KRW 金額當現行費用。KNU 有多個校區，實際錄取校區、當期費用、入住與接機日期仍須依長庚提名及 KNU 錄取通知確認，且尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地春川（依長庚提名與 KNU 錄取確認）費用參考KNU Chuncheon 交換頁說明 KNU 的申請、入學與學費免繳，但學生仍需向原學校依規定繳費，並自行負擔宿舍與生活費。KNU 目前公開的宿舍費頁本身標示「截至 2019 年」，因此頁面上的 KRW 金額不能當作現行交換預算；校方也沒有在這組現行交換頁提供可核對的完整每月生活費總額。住宿KNU Chuncheon 的交換專案頁明示交換生宿舍有保障，但住宿費由學生負擔；一般宿舍頁另說新生第一學期由國際處代辦，之後自行申請與付款。不過該頁所有房型費用標示為 2019 年資料，入住日也要等宿舍公告；FAQ 說通常只能在開學前 3 天入住，提早抵達不能先住。交通Chuncheon 交換頁將首爾往返描述為搭公車或地鐵約 1 小時，並列有仁川機場接機服務；接機安排出現在學期末二月／八月底的流程中。實際接機資格、集合時間與班次必須以該梯次錄取通知確認，不能只按公開概覽自行購票銜接。校園生活這筆資料限定 KNU Chuncheon Campus 的 Student Exchange Program。校方列出 Buddy Program、文化活動與機場接機，但 FAQ 說 Buddy 是學生自願活動，無法處理所有事情或代付費用；獸醫、醫學、護理與法學等系所目前列為交換申請限制。校園地圖可確認國際宿舍與校內設施位置。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                韓國江原國立大學 Kangwon National University校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（4）
+      
+        
+          
+            KNU 學生交換計畫 – 春川校區確認姊妹校提名、Chuncheon 交換流程、免 KNU 學費、宿舍保障、交通支援與系所限制。
+            查看原始來源
+          
+          
+            KNU 學生宿舍 – Chuncheon 校區列出宿舍房型與申請方式，但費用表明確標示為 2019 年資料，不能作為現行價格。
+            查看原始來源
+          
+          
+            KNU 國際學生常見問題說明 Buddy 的自願性與限制，以及宿舍入住日期須待公告且不能提前入住。
+            查看原始來源
+          
+          
+            KNU 校園地圖 – 春川確認 Chuncheon 校區及國際宿舍、學習與生活設施的位置。
+            查看原始來源
+          
+      
+    "
+
+Aria snapshot:
+- link "跳到主要內容":
+  - /url: "#main-content"
+- complementary "系統功能":
+  - link "UniWay 首頁":
+    - /url: "#home"
+    - strong: UniWay
+  - navigation "公開探索導覽":
+    - link "首頁":
+      - /url: "#home"
+    - link "學校搜尋":
+      - /url: "#partners"
+    - link "論壇":
+      - /url: "#forum"
+    - link "用戶評價":
+      - /url: "#feedback"
+    - group:
+      - link "我的申請":
+        - /url: "#advisor"
+  - button "返回上一頁": 返回
+  - button "選擇就讀學校":
+    - strong: 選擇就讀學校
+  - button "切換為深色模式"
+  - button "重新整理最新資料"
+  - button "登入或建立帳號": 登入
+- main:
+  - status
+  - region "韓國江原國立大學 Kangwon National University":
+    - button "加入比較韓國江原國立大學 Kangwon National University": 加入比較
+    - button "登入建立計畫"
+    - img "韓國江原國立大學 Kangwon National University官方照片"
+    - link "圖片來源":
+      - /url: https://global.kangwon.ac.kr/global/index.do
+    - text: 韓國 · 交換學生 下一站
+    - strong: 韓國
+    - text: 春川（依長庚提名與 KNU 錄取確認）
+    - heading "韓國江原國立大學 Kangwon National University" [level=1]
+    - text: 我的資格
+    - strong: 尚未進行資格初判
+    - text: 合作校參考時程
+    - strong: 依當期長庚公告與 KNU 通知
+    - text: 語言門檻
+    - strong: 合作校未明確標示，請開啟官方來源
+    - text: 生活費參考
+    - strong: KNU Chuncheon 交換頁說明 KNU 的申請、入學與學費免繳，但學生仍需向原學校依規定繳費，並自行負擔宿舍與生活費。KNU 目前公開的宿舍費頁本身標示「截至 2019 年」，因此頁面上的 KRW 金額不能當作現行交換預算；校方也沒有在這組現行交換頁…
+    - text: 交換名額
+    - strong: 依當期公告
+    - text: 研修期間
+    - strong: 1 學期至 1 學年
+    - tablist "交換學校詳細資訊":
+      - tab "快速了解"
+      - tab "申請方式"
+      - tab "生活情報" [selected]
+      - tab "出發前提醒"
+      - tab "學生心得"
+      - tab "學生社群"
+    - tabpanel "生活情報":
+      - heading "生活情報" [level=2]
+      - status: 待更新
+      - button "找學生分享"
+      - button "更新資料"
+      - group: 資料說明
+      - group: 官方生活指南
+      - article:
+        - heading "住宿與宿舍" [level=3]
+        - text: 官方
+        - paragraph: KNU Chuncheon 的交換專案頁明示交換生宿舍有保障，但住宿費由學生負擔；一般宿舍頁另說新生第一學期由國際處代辦，之後自行申請與付款。不過該頁所有房型費用標示為 2019 年資料，入住日也要等宿舍公告；FAQ 說通常只能在開學前 3 天入住，提早抵達不能先住。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "每月生活預算" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: KNU Chuncheon 交換頁說明 KNU 的申請、入學與學費免繳，但學生仍需向原學校依規定繳費，並自行負擔宿舍與生活費。KNU 目前公開的宿舍費頁本身標示「截至 2019 年」，因此頁面上的 KRW 金額不能當作現行交換預算；校方也沒有在這組現行交換頁提供可核對的完整每月生活費總額。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - article:
+        - heading "交通與地點" [level=3]
+        - text: 官方
+        - paragraph: Chuncheon 交換頁將首爾往返描述為搭公車或地鐵約 1 小時，並列有仁川機場接機服務；接機安排出現在學期末二月／八月底的流程中。實際接機資格、集合時間與班次必須以該梯次錄取通知確認，不能只按公開概覽自行購票銜接。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "校園活動與社交" [level=3]
+        - text: 官方
+        - paragraph: 這筆資料限定 KNU Chuncheon Campus 的 Student Exchange Program。校方列出 Buddy Program、文化活動與機場接機，但 FAQ 說 Buddy 是學生自願活動，無法處理所有事情或代付費用；獸醫、醫學、護理與法學等系所目前列為交換申請限制。校園地圖可確認國際宿舍與校內設施位置。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - group: 待補資料（6 項）
+    - complementary "申請準備進度與官方來源":
+      - heading "我的申請進度" [level=2]
+      - progressbar "申請準備進度":
+        - strong: 0 / 5 已完成
+        - text: 準備中
+      - paragraph:
+        - text: 登入以保存進度
+        - button "登入"
+      - checkbox "確認資格與語言門檻" [disabled]
+      - text: 確認資格與語言門檻
+      - checkbox "比較課程、費用與生活" [disabled]
+      - text: 比較課程、費用與生活
+      - checkbox "備妥校內申請文件" [disabled]
+      - text: 備妥校內申請文件
+      - checkbox "完成校內甄選送件" [disabled]
+      - text: 完成校內甄選送件
+      - checkbox "完成合作校線上申請" [disabled]
+      - text: 完成合作校線上申請
+      - strong: 送件前確認
+      - paragraph: 截止日與資格以當期官方公告為準。
+- paragraph:
+  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+  - button "停用匿名使用統計"
+  - text: 。
+  - link "隱私權政策":
+    - /url: /privacy
+  - link "使用條款":
+    - /url: /terms
+FAILED tests/e2e/test_web_next_phase.py::test_eleventh_destination_batch_keeps_campus_conflict_and_housing_limits_visible - AssertionError: Locator expected to contain text '不能套用 Paris'
+Actual value: 
+    
+      
+      官方生活資訊已查核已用 4 個 雷恩 SB 官方來源確認 2026/27 期限、雷恩 生活費、住房與交通；等級 2 春季是否開放在 傳入的 頁與 交換資訊表 間存在衝突，且公開頁同時提到 雷恩／巴黎，因此校區與學級資格仍須依提名信確認，尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地雷恩（2026/27 交換資訊表；若錄取通知另列 巴黎 須改用 巴黎 資料）費用參考雷恩 SB 2026/27 交換資訊表 的 雷恩 生活費估算為住宿 EUR 450–700／月、餐費 EUR 150–200／月、公車月票 EUR 25.20、手機 EUR 15–20／月，以及簽證與保險等雜費 EUR 150–200／年。這些數字只標為 在雷恩的生活成本，不能套用 巴黎 校區。合作校交換生學費只向母校繳納、不另向 雷恩 SB 繳交；另列的 繳費學期 或暑期課程不是同一身分。住宿2026/27 交換資訊表要求學生取得錄取信後儘快在校方平台找房，須先完成雷恩商學院註冊才能取得住宿團隊服務的存取權；這是住房協助，不是保證床位。雷恩校區新學生宿舍預計2026年9月開放，官方只提供預先登記與 Studapart 等管道，沒有承諾每位交換生都能入住。實際租金、房型與供應須等錄取後確認。交通2026/27 交換資訊表 的 EUR 25.20 公車月票與 雷恩校區 頁的地鐵 CHU Pontchaillou 站、雷恩 35 公車站資訊都只適用 雷恩。雷恩 有兩條地鐵與 STAR 公車網；若錄取通知改列 巴黎，不得沿用 雷恩 票價與路線，必須改查 巴黎 現行交通。校園生活雷恩 SB 交換生須來自合作校、仍具母校學位生身分並先由母校提名；2026/27 秋季提名 5 月 10 日、申請 5 月 20 日，2027年春季 提名 10 月 10 日、申請 10 月 20 日。等級 2 至 5 依已修商管 ECTS 分流，課程為英語並要求 B2。現行 傳入的 頁寫 等級 2 只開秋季，但 2026/27 交換資訊表 的春季日程又列 Levels 2、4、5，兩個官方來源不一致，不能自行判定 等級 2 春季可申請；必須由長庚提名信或 雷恩 SB 交換辦公室 確認。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                雷恩商學院 Rennes School of Business校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（4）
+      
+        
+          
+            雷恩商學院 入學交換學生現行 傳入的 頁說明合作校、母校提名、學費、Levels 2–5、申請文件、英語課與住宿協助；其中 等級 2 寫為只開秋季。
+            查看原始來源
+          
+          
+            Rennes School of Business Fact Sheet 2026/20272026/27 文件列出秋春期限、學級資格、B2、雷恩 生活費與住宿平台；春季日程列 等級 2，與 傳入的 頁不一致。
+            查看原始來源
+          
+          
+            Rennes 商學院在 Rennes 生活列出 Rennes 住房協助、預計 2026 年 9 月開放的新宿舍、Studapart、地鐵、公車與單車資訊，沒有交換生床位保證。
+            查看原始來源
+          
+          
+            雷恩商學院 雷恩校區確認 Rennes 主校區地址、設施、住宿與交通位置；內容不能直接套用 Paris 校區。
+            查看原始來源
+          
+      
+     
+Call log:
+  - Expect "to_contain_text" with timeout 5000ms
+  - waiting for locator("#destination-official-content")
+    13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+       - unexpected value "
+    
+      
+      官方生活資訊已查核已用 4 個 雷恩 SB 官方來源確認 2026/27 期限、雷恩 生活費、住房與交通；等級 2 春季是否開放在 傳入的 頁與 交換資訊表 間存在衝突，且公開頁同時提到 雷恩／巴黎，因此校區與學級資格仍須依提名信確認，尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地雷恩（2026/27 交換資訊表；若錄取通知另列 巴黎 須改用 巴黎 資料）費用參考雷恩 SB 2026/27 交換資訊表 的 雷恩 生活費估算為住宿 EUR 450–700／月、餐費 EUR 150–200／月、公車月票 EUR 25.20、手機 EUR 15–20／月，以及簽證與保險等雜費 EUR 150–200／年。這些數字只標為 在雷恩的生活成本，不能套用 巴黎 校區。合作校交換生學費只向母校繳納、不另向 雷恩 SB 繳交；另列的 繳費學期 或暑期課程不是同一身分。住宿2026/27 交換資訊表要求學生取得錄取信後儘快在校方平台找房，須先完成雷恩商學院註冊才能取得住宿團隊服務的存取權；這是住房協助，不是保證床位。雷恩校區新學生宿舍預計2026年9月開放，官方只提供預先登記與 Studapart 等管道，沒有承諾每位交換生都能入住。實際租金、房型與供應須等錄取後確認。交通2026/27 交換資訊表 的 EUR 25.20 公車月票與 雷恩校區 頁的地鐵 CHU Pontchaillou 站、雷恩 35 公車站資訊都只適用 雷恩。雷恩 有兩條地鐵與 STAR 公車網；若錄取通知改列 巴黎，不得沿用 雷恩 票價與路線，必須改查 巴黎 現行交通。校園生活雷恩 SB 交換生須來自合作校、仍具母校學位生身分並先由母校提名；2026/27 秋季提名 5 月 10 日、申請 5 月 20 日，2027年春季 提名 10 月 10 日、申請 10 月 20 日。等級 2 至 5 依已修商管 ECTS 分流，課程為英語並要求 B2。現行 傳入的 頁寫 等級 2 只開秋季，但 2026/27 交換資訊表 的春季日程又列 Levels 2、4、5，兩個官方來源不一致，不能自行判定 等級 2 春季可申請；必須由長庚提名信或 雷恩 SB 交換辦公室 確認。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                雷恩商學院 Rennes School of Business校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（4）
+      
+        
+          
+            雷恩商學院 入學交換學生現行 傳入的 頁說明合作校、母校提名、學費、Levels 2–5、申請文件、英語課與住宿協助；其中 等級 2 寫為只開秋季。
+            查看原始來源
+          
+          
+            Rennes School of Business Fact Sheet 2026/20272026/27 文件列出秋春期限、學級資格、B2、雷恩 生活費與住宿平台；春季日程列 等級 2，與 傳入的 頁不一致。
+            查看原始來源
+          
+          
+            Rennes 商學院在 Rennes 生活列出 Rennes 住房協助、預計 2026 年 9 月開放的新宿舍、Studapart、地鐵、公車與單車資訊，沒有交換生床位保證。
+            查看原始來源
+          
+          
+            雷恩商學院 雷恩校區確認 Rennes 主校區地址、設施、住宿與交通位置；內容不能直接套用 Paris 校區。
+            查看原始來源
+          
+      
+    "
+
+Aria snapshot:
+- link "跳到主要內容":
+  - /url: "#main-content"
+- complementary "系統功能":
+  - link "UniWay 首頁":
+    - /url: "#home"
+    - strong: UniWay
+  - navigation "公開探索導覽":
+    - link "首頁":
+      - /url: "#home"
+    - link "學校搜尋":
+      - /url: "#partners"
+    - link "論壇":
+      - /url: "#forum"
+    - link "用戶評價":
+      - /url: "#feedback"
+    - group:
+      - link "我的申請":
+        - /url: "#advisor"
+  - button "返回上一頁": 返回
+  - button "選擇就讀學校":
+    - strong: 選擇就讀學校
+  - button "切換為深色模式"
+  - button "重新整理最新資料"
+  - button "登入或建立帳號": 登入
+- main:
+  - status
+  - region "雷恩商學院 Rennes School of Business":
+    - button "加入比較雷恩商學院 Rennes School of Business": 加入比較
+    - button "登入建立計畫"
+    - img "雷恩商學院 Rennes School of Business官方照片"
+    - link "圖片來源":
+      - /url: https://www.rennes-sb.com/exchange-programmes/double-degree-programmes/
+    - text: 法國 · 交換學生 下一站
+    - strong: 法國
+    - heading "雷恩商學院 Rennes School of Business" [level=1]
+    - text: 我的資格
+    - strong: 尚未進行資格初判
+    - text: 合作校參考時程
+    - strong: 依當期長庚公告與 Rennes SB exchange 通知
+    - text: 語言門檻
+    - strong: 合作校未明確標示，請開啟官方來源
+    - text: 生活費參考
+    - strong: 雷恩 SB 2026/27 交換資訊表 的 雷恩 生活費估算為住宿 EUR 450–700／月、餐費 EUR 150–200／月、公車月票 EUR 25.20、手機 EUR 15–20／月，以及簽證與保險等雜費 EUR 150–200／年。這些數字只標為 在…
+    - text: 交換名額
+    - strong: 依當期公告
+    - text: 研修期間
+    - strong: 1 學期至 1 學年
+    - tablist "交換學校詳細資訊":
+      - tab "快速了解"
+      - tab "申請方式"
+      - tab "生活情報" [selected]
+      - tab "出發前提醒"
+      - tab "學生心得"
+      - tab "學生社群"
+    - tabpanel "生活情報":
+      - heading "生活情報" [level=2]
+      - status: 待更新
+      - button "找學生分享"
+      - button "更新資料"
+      - group: 資料說明
+      - group: 官方生活指南
+      - article:
+        - heading "住宿與宿舍" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: 2026/27 交換資訊表要求學生取得錄取信後儘快在校方平台找房，須先完成雷恩商學院註冊才能取得住宿團隊服務的存取權；這是住房協助，不是保證床位。雷恩校區新學生宿舍預計2026年9月開放，官方只提供預先登記與 Studapart 等管道，沒有承諾每位交換生都能入住。實際租金、房型與供應須等錄取後確認。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "每月生活預算" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: 雷恩 SB 2026/27 交換資訊表 的 雷恩 生活費估算為住宿 EUR 450–700／月、餐費 EUR 150–200／月、公車月票 EUR 25.20、手機 EUR 15–20／月，以及簽證與保險等雜費 EUR 150–200／年。這些數字只標為 在雷恩的生活成本，不能套用 巴黎 校區。合作校交換生學費只向母校繳納、不另向 雷恩 SB 繳交；另列的 繳費學期 或暑期課程不是同一身分。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - article:
+        - heading "交通與地點" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: 2026/27 交換資訊表 的 EUR 25.20 公車月票與 雷恩校區 頁的地鐵 CHU Pontchaillou 站、雷恩 35 公車站資訊都只適用 雷恩。雷恩 有兩條地鐵與 STAR 公車網；若錄取通知改列 巴黎，不得沿用 雷恩 票價與路線，必須改查 巴黎 現行交通。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "校園活動與社交" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: 雷恩 SB 交換生須來自合作校、仍具母校學位生身分並先由母校提名；2026/27 秋季提名 5 月 10 日、申請 5 月 20 日，2027年春季 提名 10 月 10 日、申請 10 月 20 日。等級 2 至 5 依已修商管 ECTS 分流，課程為英語並要求 B2。現行 傳入的 頁寫 等級 2 只開秋季，但 2026/27 交換資訊表 的春季日程又列 Levels 2、4、5，兩個官方來源不一致，不能自行判定 等級 2 春季可申請；必須由長庚提名信或 雷恩 SB 交換辦公室 確認。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - group: 待補資料（6 項）
+    - complementary "申請準備進度與官方來源":
+      - heading "我的申請進度" [level=2]
+      - progressbar "申請準備進度":
+        - strong: 0 / 5 已完成
+        - text: 準備中
+      - paragraph:
+        - text: 登入以保存進度
+        - button "登入"
+      - checkbox "確認資格與語言門檻" [disabled]
+      - text: 確認資格與語言門檻
+      - checkbox "比較課程、費用與生活" [disabled]
+      - text: 比較課程、費用與生活
+      - checkbox "備妥校內申請文件" [disabled]
+      - text: 備妥校內申請文件
+      - checkbox "完成校內甄選送件" [disabled]
+      - text: 完成校內甄選送件
+      - checkbox "完成合作校線上申請" [disabled]
+      - text: 完成合作校線上申請
+      - strong: 送件前確認
+      - paragraph: 截止日與資格以當期官方公告為準。
+- paragraph:
+  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+  - button "停用匿名使用統計"
+  - text: 。
+  - link "隱私權政策":
+    - /url: /privacy
+  - link "使用條款":
+    - /url: /terms
+FAILED tests/e2e/test_web_next_phase.py::test_twelfth_destination_batch_keeps_old_prices_and_local_housing_separate - AssertionError: Locator expected to contain text 'March 2023'
+Actual value: 
+    
+      
+      官方生活資訊已查核已用 5 個 MSU 官方來源確認現行下載入口、2023年3月入學 文件、住房合約與本地生限定房型；當期交換期限、簽證費、課程、交通與交換生可用房型仍未有 2026/27 官方版本，尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地莎阿南, 雪蘭莪（MSU 主校區）費用參考MSU 官方下載區目前仍提供標示 2023年3月 的 入境手冊；其中寫合作校交換生學費向母校繳納，學生簽證費為 6 個月 MYR 1,150、12 個月 MYR 1,300，但這些都只是 2023 文件金額，不能當成 2026/27 現價。現行 抵達前 頁只要求準備足以支付最初三個月食宿、交通與書籍的資金，沒有公開一份交換生生活費總表；學生須向 全球事務 重新確認簽證、保險、課程及其他費用。住宿住宿手冊 列一般房型約 MYR 700–2,080／月、押金 MYR 2,500、不可退處理費 MYR 500，原則最短租六個月且房型依 可用性；資訊也明示可能不另通知即調整。雖另列四個月 三人共用 MYR 450／月、押金 MYR 900 與處理費 MYR 200，現行 三人同住 頁明寫 僅限在地學生，長庚交換生不能用這個較低價格估算。送件與入住都不等於保證配到指定房型。交通2023 入境手冊 寫 沙阿南 有公共交通，並把預計 2025 完成、位於 MSU 旁的 Malawati LRT3 當未來規劃；由於文件仍是 2023 版本，不能據此宣稱 2026 已正式營運、票價固定或提供學生免費通勤。學生應在錄取後依 MSU 現行校區指示查證 LRT3、巴士、機場與最後一段交通，不能把三年前的工程時程當成現況。校園生活2023 年 3 月入學手冊 把 全球流動計畫 列為一學期或一年，2月／9月入學；提名日為 10 月 1 日／5 月 1 日，申請日為 10 月 15 日／5 月 15 日，並列學期區間與可洽詢課程。由於官方下載區仍提供舊版 PDF，這些期限與課程只能作歷史參考，不能直接建立 2026/27 提醒。學生應先由長庚提名，再由 MSU 全球事務 確認當期 攝取、可選課、學分、英文要求、簽證與保險；抵達前 的國際學位生規定也不能全部自動套到交換身分。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                馬來西亞管理與科技大學 Management and Science University校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（5）
+      
+        
+          
+            MSU 官方手冊庫現行官方下載入口仍連到 Inbound 與 The Residence PDF；可證明文件由校方提供，但不代表舊 PDF 的日期與金額已更新。
+            查看原始來源
+          
+          
+            MSU 入學流動手冊，2023年3月列出 2023 版交換期、提名／申請日、學期、母校學費、簽證費、課程範圍、Shah Alam 與當時 LRT3 規劃；只作歷史基準。
+            查看原始來源
+          
+          
+            MSU 住宿手冊列一般房型、租金、押金、處理費、至少六個月租期、依房況及價格可能調整，另含四個月 運輸單位。
+            查看原始來源
+          
+          
+            MSU 三人共用公寓現行頁明示四個月 三人同住 房型為 僅限在地學生，不能把 MYR 450／月套到國際交換生。
+            查看原始來源
+          
+          
+            MSU 國際學生抵達前資訊列入境、學生簽證、體檢、隨身文件及先準備三個月食宿交通資金；屬一般國際生資訊，交換生仍須依 Global Affairs 通知。
+            查看原始來源
+          
+      
+     
+Call log:
+  - Expect "to_contain_text" with timeout 5000ms
+  - waiting for locator("#destination-official-content")
+    13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+       - unexpected value "
+    
+      
+      官方生活資訊已查核已用 5 個 MSU 官方來源確認現行下載入口、2023年3月入學 文件、住房合約與本地生限定房型；當期交換期限、簽證費、課程、交通與交換生可用房型仍未有 2026/27 官方版本，尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地莎阿南, 雪蘭莪（MSU 主校區）費用參考MSU 官方下載區目前仍提供標示 2023年3月 的 入境手冊；其中寫合作校交換生學費向母校繳納，學生簽證費為 6 個月 MYR 1,150、12 個月 MYR 1,300，但這些都只是 2023 文件金額，不能當成 2026/27 現價。現行 抵達前 頁只要求準備足以支付最初三個月食宿、交通與書籍的資金，沒有公開一份交換生生活費總表；學生須向 全球事務 重新確認簽證、保險、課程及其他費用。住宿住宿手冊 列一般房型約 MYR 700–2,080／月、押金 MYR 2,500、不可退處理費 MYR 500，原則最短租六個月且房型依 可用性；資訊也明示可能不另通知即調整。雖另列四個月 三人共用 MYR 450／月、押金 MYR 900 與處理費 MYR 200，現行 三人同住 頁明寫 僅限在地學生，長庚交換生不能用這個較低價格估算。送件與入住都不等於保證配到指定房型。交通2023 入境手冊 寫 沙阿南 有公共交通，並把預計 2025 完成、位於 MSU 旁的 Malawati LRT3 當未來規劃；由於文件仍是 2023 版本，不能據此宣稱 2026 已正式營運、票價固定或提供學生免費通勤。學生應在錄取後依 MSU 現行校區指示查證 LRT3、巴士、機場與最後一段交通，不能把三年前的工程時程當成現況。校園生活2023 年 3 月入學手冊 把 全球流動計畫 列為一學期或一年，2月／9月入學；提名日為 10 月 1 日／5 月 1 日，申請日為 10 月 15 日／5 月 15 日，並列學期區間與可洽詢課程。由於官方下載區仍提供舊版 PDF，這些期限與課程只能作歷史參考，不能直接建立 2026/27 提醒。學生應先由長庚提名，再由 MSU 全球事務 確認當期 攝取、可選課、學分、英文要求、簽證與保險；抵達前 的國際學位生規定也不能全部自動套到交換身分。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                馬來西亞管理與科技大學 Management and Science University校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（5）
+      
+        
+          
+            MSU 官方手冊庫現行官方下載入口仍連到 Inbound 與 The Residence PDF；可證明文件由校方提供，但不代表舊 PDF 的日期與金額已更新。
+            查看原始來源
+          
+          
+            MSU 入學流動手冊，2023年3月列出 2023 版交換期、提名／申請日、學期、母校學費、簽證費、課程範圍、Shah Alam 與當時 LRT3 規劃；只作歷史基準。
+            查看原始來源
+          
+          
+            MSU 住宿手冊列一般房型、租金、押金、處理費、至少六個月租期、依房況及價格可能調整，另含四個月 運輸單位。
+            查看原始來源
+          
+          
+            MSU 三人共用公寓現行頁明示四個月 三人同住 房型為 僅限在地學生，不能把 MYR 450／月套到國際交換生。
+            查看原始來源
+          
+          
+            MSU 國際學生抵達前資訊列入境、學生簽證、體檢、隨身文件及先準備三個月食宿交通資金；屬一般國際生資訊，交換生仍須依 Global Affairs 通知。
+            查看原始來源
+          
+      
+    "
+
+Aria snapshot:
+- link "跳到主要內容":
+  - /url: "#main-content"
+- complementary "系統功能":
+  - link "UniWay 首頁":
+    - /url: "#home"
+    - strong: UniWay
+  - navigation "公開探索導覽":
+    - link "首頁":
+      - /url: "#home"
+    - link "學校搜尋":
+      - /url: "#partners"
+    - link "論壇":
+      - /url: "#forum"
+    - link "用戶評價":
+      - /url: "#feedback"
+    - group:
+      - link "我的申請":
+        - /url: "#advisor"
+  - button "返回上一頁": 返回
+  - button "選擇就讀學校":
+    - strong: 選擇就讀學校
+  - button "切換為深色模式"
+  - button "重新整理最新資料"
+  - button "登入或建立帳號": 登入
+- main:
+  - status
+  - region "馬來西亞管理與科技大學 Management and Science University":
+    - button "加入比較馬來西亞管理與科技大學 Management and Science University": 加入比較
+    - button "登入建立計畫"
+    - img "馬來西亞管理與科技大學 Management and Science University官方照片"
+    - link "圖片來源":
+      - /url: https://www.msu.edu.my/
+    - text: 馬來西亞 · 交換學生 / 自費研修 下一站
+    - strong: 馬來西亞
+    - text: 莎阿南, 雪蘭莪（MSU 主校區）
+    - heading "馬來西亞管理與科技大學 Management and Science University" [level=1]
+    - text: 我的資格
+    - strong: 尚未進行資格初判
+    - text: 合作校參考時程
+    - strong: 依當期長庚公告與 MSU Global Affairs 通知
+    - text: 語言門檻
+    - strong: 合作校未明確標示，請開啟官方來源
+    - text: 生活費參考
+    - strong: MSU 官方下載區目前仍提供標示 2023年3月 的 入境手冊；其中寫合作校交換生學費向母校繳納，學生簽證費為 6 個月 MYR 1,150、12 個月 MYR 1,300，但這些都只是 2023 文件金額，不能當成 2026/27 現價。現行 抵達前 頁只…
+    - text: 交換名額
+    - strong: 依當期公告
+    - text: 研修期間
+    - strong: 1 學期至 1 學年
+    - tablist "交換學校詳細資訊":
+      - tab "快速了解"
+      - tab "申請方式"
+      - tab "生活情報" [selected]
+      - tab "出發前提醒"
+      - tab "學生心得"
+      - tab "學生社群"
+    - tabpanel "生活情報":
+      - heading "生活情報" [level=2]
+      - status: 正在更新資料…
+      - button "找學生分享"
+      - button "更新中" [disabled]
+      - group: 資料說明
+      - group: 官方生活指南
+      - article:
+        - heading "住宿與宿舍" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: 住宿手冊 列一般房型約 MYR 700–2,080／月、押金 MYR 2,500、不可退處理費 MYR 500，原則最短租六個月且房型依 可用性；資訊也明示可能不另通知即調整。雖另列四個月 三人共用 MYR 450／月、押金 MYR 900 與處理費 MYR 200，現行 三人同住 頁明寫 僅限在地學生，長庚交換生不能用這個較低價格估算。送件與入住都不等於保證配到指定房型。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "每月生活預算" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: MSU 官方下載區目前仍提供標示 2023年3月 的 入境手冊；其中寫合作校交換生學費向母校繳納，學生簽證費為 6 個月 MYR 1,150、12 個月 MYR 1,300，但這些都只是 2023 文件金額，不能當成 2026/27 現價。現行 抵達前 頁只要求準備足以支付最初三個月食宿、交通與書籍的資金，沒有公開一份交換生生活費總表；學生須向 全球事務 重新確認簽證、保險、課程及其他費用。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - article:
+        - heading "交通與地點" [level=3]
+        - text: 官方
+        - paragraph: 2023 入境手冊 寫 沙阿南 有公共交通，並把預計 2025 完成、位於 MSU 旁的 Malawati LRT3 當未來規劃；由於文件仍是 2023 版本，不能據此宣稱 2026 已正式營運、票價固定或提供學生免費通勤。學生應在錄取後依 MSU 現行校區指示查證 LRT3、巴士、機場與最後一段交通，不能把三年前的工程時程當成現況。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "校園活動與社交" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: 2023 年 3 月入學手冊 把 全球流動計畫 列為一學期或一年，2月／9月入學；提名日為 10 月 1 日／5 月 1 日，申請日為 10 月 15 日／5 月 15 日，並列學期區間與可洽詢課程。由於官方下載區仍提供舊版 PDF，這些期限與課程只能作歷史參考，不能直接建立 2026/27 提醒。學生應先由長庚提名，再由 MSU 全球事務 確認當期 攝取、可選課、學分、英文要求、簽證與保險；抵達前 的國際學位生規定也不能全部自動套到交換身分。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - group: 待補資料（6 項）
+    - complementary "申請準備進度與官方來源":
+      - heading "我的申請進度" [level=2]
+      - progressbar "申請準備進度":
+        - strong: 0 / 5 已完成
+        - text: 準備中
+      - paragraph:
+        - text: 登入以保存進度
+        - button "登入"
+      - checkbox "確認資格與語言門檻" [disabled]
+      - text: 確認資格與語言門檻
+      - checkbox "比較課程、費用與生活" [disabled]
+      - text: 比較課程、費用與生活
+      - checkbox "備妥校內申請文件" [disabled]
+      - text: 備妥校內申請文件
+      - checkbox "完成校內甄選送件" [disabled]
+      - text: 完成校內甄選送件
+      - checkbox "完成合作校線上申請" [disabled]
+      - text: 完成合作校線上申請
+      - strong: 送件前確認
+      - paragraph: 截止日與資格以當期官方公告為準。
+- paragraph:
+  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+  - button "停用匿名使用統計"
+  - text: 。
+  - link "隱私權政策":
+    - /url: /privacy
+  - link "使用條款":
+    - /url: /terms
+FAILED tests/e2e/test_web_next_phase.py::test_thirteenth_destination_batch_keeps_department_scope_and_housing_limits_visible - AssertionError: Locator expected to contain text 'free mover 或直接申請不符合資格'
+Actual value: 
+    
+      
+      官方生活資訊已查核已確認 IAE Aix 是合作校提名制的管理學院交換、課程層級、年級年齡、語言、期限、Puyricard 校區與 CROUS 限制；長庚當期院級合作是否開放仍須人工確認，不能當成中央校級一般交換，且尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地皮里卡爾／普羅旺斯地區艾克斯（IAE Aix 管理學院）費用參考IAE Aix 現行 傳入的 頁只提供每月生活費估算：CROUS 住宿約 EUR 260 起、艾克斯普羅旺斯 私租約 EUR 450–800，水電 EUR 40–60、網路與電話 EUR 20–40、食物 EUR 200–300、醫療 EUR 30、月票 EUR 28，另有每年 EUR 40–60 的住宅與責任保險。這些都是一般指南、可能變動，不是長庚管理學院交換的固定帳單或保證價格，也沒有公開證明可直接申請或免除所有校費。住宿IAE Aix 可協助交換生接觸 艾克斯普羅旺斯 的 CROUS 校外學生住宅，但學校頁沒有保證床位；該住宅到 Puyricard 校區約 40 分鐘公車。AMU 的交換生 CROUS 流程是在錄取後取得提案，收到提案後 120 小時內接受，2026/27 起須線上支付 EUR 70 預付租金；不能選宿舍或房型，並採先到先得。EUR 260 起只是估算，不等於每位學生都能取得。交通IAE Aix 位於 Puyricard；官方估算公車月票約 EUR 28，CROUS 住宅到校區約 40 分鐘。這是生活預算與常見通勤描述，不是保證班次或住宿位置；若改住私租，必須依實際地址重算通勤，不能因校名含 Aix-Marseille 就假設課程在 Marseille 市中心。校園生活這筆資料只作長庚管理學院的院級交換參考，不是目前中央校級一般交換承諾。IAE Aix 只接受合作校學生，自由移動者 或直接申請不符合資格，須先由母校提名；秋季／全學年提名 4 月 1 日、學生申請 4 月 21 日，春季提名 10 月 1 日、學生申請 10 月 21 日。最低為學士三年級且年滿 21 歲，課程全部為 碩士程度；英文課通常須 TOEFL iBT 85（各項 21／21／21／22）或 IELTS 各項 6.0，法文課須 B2+。未先由長庚管理學院確認當期合作有效與提名資格，不得把這些合作校期限變成可直接申請的中央流程。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（4）
+      
+        
+          
+            IAE Aix 來校交換生 Exchange Program合作校提名、期限、文件、學級與語言門檻、課程、住宿及生活費估算。
+            查看原始來源
+          
+          
+            IAE Aix 學生生活與環境Puyricard 校區、CROUS 與私租資源及 艾克斯普羅旺斯 生活環境。
+            查看原始來源
+          
+          
+            艾克斯-馬賽維克大學交換學生住宿交換生 CROUS 提案、120 小時接受、2026/27 起 EUR 70 預付、不可選房與先到先得。
+            查看原始來源
+          
+          
+            IAE Aix 入學交換計畫法文現行頁與 2026/27 學期行事曆入口，用來交叉核對當期交換規則。
+            查看原始來源
+          
+      
+     
+Call log:
+  - Expect "to_contain_text" with timeout 5000ms
+  - waiting for locator("#destination-official-content")
+    13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+       - unexpected value "
+    
+      
+      官方生活資訊已查核已確認 IAE Aix 是合作校提名制的管理學院交換、課程層級、年級年齡、語言、期限、Puyricard 校區與 CROUS 限制；長庚當期院級合作是否開放仍須人工確認，不能當成中央校級一般交換，且尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地皮里卡爾／普羅旺斯地區艾克斯（IAE Aix 管理學院）費用參考IAE Aix 現行 傳入的 頁只提供每月生活費估算：CROUS 住宿約 EUR 260 起、艾克斯普羅旺斯 私租約 EUR 450–800，水電 EUR 40–60、網路與電話 EUR 20–40、食物 EUR 200–300、醫療 EUR 30、月票 EUR 28，另有每年 EUR 40–60 的住宅與責任保險。這些都是一般指南、可能變動，不是長庚管理學院交換的固定帳單或保證價格，也沒有公開證明可直接申請或免除所有校費。住宿IAE Aix 可協助交換生接觸 艾克斯普羅旺斯 的 CROUS 校外學生住宅，但學校頁沒有保證床位；該住宅到 Puyricard 校區約 40 分鐘公車。AMU 的交換生 CROUS 流程是在錄取後取得提案，收到提案後 120 小時內接受，2026/27 起須線上支付 EUR 70 預付租金；不能選宿舍或房型，並採先到先得。EUR 260 起只是估算，不等於每位學生都能取得。交通IAE Aix 位於 Puyricard；官方估算公車月票約 EUR 28，CROUS 住宅到校區約 40 分鐘。這是生活預算與常見通勤描述，不是保證班次或住宿位置；若改住私租，必須依實際地址重算通勤，不能因校名含 Aix-Marseille 就假設課程在 Marseille 市中心。校園生活這筆資料只作長庚管理學院的院級交換參考，不是目前中央校級一般交換承諾。IAE Aix 只接受合作校學生，自由移動者 或直接申請不符合資格，須先由母校提名；秋季／全學年提名 4 月 1 日、學生申請 4 月 21 日，春季提名 10 月 1 日、學生申請 10 月 21 日。最低為學士三年級且年滿 21 歲，課程全部為 碩士程度；英文課通常須 TOEFL iBT 85（各項 21／21／21／22）或 IELTS 各項 6.0，法文課須 B2+。未先由長庚管理學院確認當期合作有效與提名資格，不得把這些合作校期限變成可直接申請的中央流程。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（4）
+      
+        
+          
+            IAE Aix 來校交換生 Exchange Program合作校提名、期限、文件、學級與語言門檻、課程、住宿及生活費估算。
+            查看原始來源
+          
+          
+            IAE Aix 學生生活與環境Puyricard 校區、CROUS 與私租資源及 艾克斯普羅旺斯 生活環境。
+            查看原始來源
+          
+          
+            艾克斯-馬賽維克大學交換學生住宿交換生 CROUS 提案、120 小時接受、2026/27 起 EUR 70 預付、不可選房與先到先得。
+            查看原始來源
+          
+          
+            IAE Aix 入學交換計畫法文現行頁與 2026/27 學期行事曆入口，用來交叉核對當期交換規則。
+            查看原始來源
+          
+      
+    "
+
+Aria snapshot:
+- link "跳到主要內容":
+  - /url: "#main-content"
+- complementary "系統功能":
+  - link "UniWay 首頁":
+    - /url: "#home"
+    - strong: UniWay
+  - navigation "公開探索導覽":
+    - link "首頁":
+      - /url: "#home"
+    - link "學校搜尋":
+      - /url: "#partners"
+    - link "論壇":
+      - /url: "#forum"
+    - link "用戶評價":
+      - /url: "#feedback"
+    - group:
+      - link "我的申請":
+        - /url: "#advisor"
+  - button "返回上一頁": 返回
+  - button "選擇就讀學校":
+    - strong: 選擇就讀學校
+  - button "切換為深色模式"
+  - button "重新整理最新資料"
+  - button "登入或建立帳號": 登入
+- main:
+  - status
+  - region "法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management":
+    - button "加入比較法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management": 加入比較
+    - button "當期開放待確認" [disabled]
+    - img "法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management官方照片"
+    - link "圖片來源":
+      - /url: https://iae-aix.univ-amu.fr/fr/presentation
+    - text: 法國 · 管理學院交換參考 下一站
+    - strong: 法國
+    - heading "法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management" [level=1]
+    - text: 我的資格
+    - strong: 尚未進行資格初判
+    - text: 合作校參考時程
+    - strong: 依長庚管理學院與 IAE Aix 當期通知（適用年度待確認）
+    - text: 語言門檻
+    - strong: 合作校未明確標示，請開啟官方來源
+    - text: 生活費參考
+    - strong: IAE Aix 現行 傳入的 頁只提供每月生活費估算：CROUS 住宿約 EUR 260 起、艾克斯普羅旺斯 私租約 EUR 450–800，水電 EUR 40–60、網路與電話 EUR 20–40、食物 EUR 200–300、醫療 EUR 30、月票 E…
+    - text: 交換名額
+    - strong: 依長庚管理學院當期公告
+    - text: 研修期間
+    - strong: 1 學期至 1 學年
+    - tablist "交換學校詳細資訊":
+      - tab "快速了解"
+      - tab "申請方式"
+      - tab "生活情報" [selected]
+      - tab "出發前提醒"
+      - tab "學生心得"
+      - tab "學生社群"
+    - tabpanel "生活情報":
+      - heading "生活情報" [level=2]
+      - status: 暫無新資料 · 2026/10/09 上午01:59
+      - button "找學生分享"
+      - button "更新資料" [disabled]
+      - group: 資料說明
+      - group: 官方生活指南
+      - article:
+        - heading "住宿與宿舍" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: IAE Aix 可協助交換生接觸 艾克斯普羅旺斯 的 CROUS 校外學生住宅，但學校頁沒有保證床位；該住宅到 Puyricard 校區約 40 分鐘公車。AMU 的交換生 CROUS 流程是在錄取後取得提案，收到提案後 120 小時內接受，2026/27 起須線上支付 EUR 70 預付租金；不能選宿舍或房型，並採先到先得。EUR 260 起只是估算，不等於每位學生都能取得。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "每月生活預算" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: IAE Aix 現行 傳入的 頁只提供每月生活費估算：CROUS 住宿約 EUR 260 起、艾克斯普羅旺斯 私租約 EUR 450–800，水電 EUR 40–60、網路與電話 EUR 20–40、食物 EUR 200–300、醫療 EUR 30、月票 EUR 28，另有每年 EUR 40–60 的住宅與責任保險。這些都是一般指南、可能變動，不是長庚管理學院交換的固定帳單或保證價格，也沒有公開證明可直接申請或免除所有校費。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - article:
+        - heading "交通與地點" [level=3]
+        - text: 官方
+        - paragraph: IAE Aix 位於 Puyricard；官方估算公車月票約 EUR 28，CROUS 住宅到校區約 40 分鐘。這是生活預算與常見通勤描述，不是保證班次或住宿位置；若改住私租，必須依實際地址重算通勤，不能因校名含 Aix-Marseille 就假設課程在 Marseille 市中心。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "校園活動與社交" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: 這筆資料只作長庚管理學院的院級交換參考，不是目前中央校級一般交換承諾。IAE Aix 只接受合作校學生，自由移動者 或直接申請不符合資格，須先由母校提名；秋季／全學年提名 4 月 1 日、學生申請 4 月 21 日，春季提名 10 月 1 日、學生申請 10 月 21 日。最低為學士三年級且年滿 21 歲，課程全部為 碩士程度；英文課通常須 TOEFL iBT 85（各項 21／21／21／22）或 IELTS 各項 6.0，法文課須 B2+。未先由長庚管理學院確認當期合作有效與提名資格，不得把這些合作校期限變成可直接申請的中央流程。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - group: 待補資料（6 項）
+    - complementary "申請準備進度與官方來源":
+      - heading "我的申請進度" [level=2]
+      - progressbar "申請準備進度":
+        - strong: 0 / 5 已完成
+        - text: 準備中
+      - paragraph:
+        - text: 登入以保存進度
+        - button "登入"
+      - checkbox "確認資格與語言門檻" [disabled]
+      - text: 確認資格與語言門檻
+      - checkbox "比較課程、費用與生活" [disabled]
+      - text: 比較課程、費用與生活
+      - checkbox "備妥校內申請文件" [disabled]
+      - text: 備妥校內申請文件
+      - checkbox "完成校內甄選送件" [disabled]
+      - text: 完成校內甄選送件
+      - checkbox "完成合作校線上申請" [disabled]
+      - text: 完成合作校線上申請
+      - strong: 送件前確認
+      - paragraph: 截止日與資格以當期官方公告為準。
+- paragraph:
+  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+  - button "停用匿名使用統計"
+  - text: 。
+  - link "隱私權政策":
+    - /url: /privacy
+  - link "使用條款":
+    - /url: /terms
+FAILED tests/e2e/test_web_next_phase.py::test_fourteenth_destination_batch_keeps_old_department_rules_out_of_current_exchange - AssertionError: Locator expected to contain text '2023–24 Chemical Engineering and Chemistry'
+Actual value: 
+    
+      
+      官方生活資訊已查核已核對 2026–27 一般學位 手冊、2023–24 化工系所 來校交換生 交換資訊表 及 TU/e 校園住宿報導；目前沒有足以把舊系所期限、課程、費率或住宿承諾套到長庚 2026/27 交換的公開資料。尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地恩荷芬（實際交換系所與課程仍須由當期提名通知確認）費用參考TU/e 2026–27 一般國際 學士／碩士手冊 以約 EUR 1,200／月估算住宿、食物、書籍與基本生活，這是一般學位生參考，不是長庚交換帳單。2023–24 化學工程與化學 系所 交換資訊表 說明 雙邊交換 通常依合作協議辦理、自由移動者 則須向 TU/e 繳學費；該資料已過年度且只適用單一系所，不能用來斷定長庚當期交換身分或費率。住宿2026–27 一般學位 手冊 的有限 住宿抽籤 與提早準備建議不是交換生床位承諾；2023–24 化學工程與化學交換資訊表 也只說 TU/e 能保證的交換生住宿非常有限、採先到先得並在 六月／12月 通知結果。2025 年 TU/e 校園媒體仍報導 埃因霍溫 約短缺 1,500 個學生住宿單位，因此不能把提出申請、候補或校園新建住宿寫成保證有房。交通TU/e 位於 Eindhoven，但交換課程可能受主辦系所、先備知識、容量與實際住宿地址影響。確認當期系所、課表與住址前，只能讓學生預留通勤規劃，不能把 2023–24 化工系所的課程安排套到其他系所或產生固定交通任務。校園生活目前公開可核對的 傳入的 細節來自 2023–24 化學工程與化學 系所資料：須由合作校提名、課程容量不保證，且主要修課應在該系。舊資料所列 1 四月／1 五月、1 十月／1 11月 期限、行動線上、語言與課程規則都不能直接建立 2026/27 提醒；必須等長庚與 TU/e 確認當期合作系所、交換／自由移動者 身分、課程層級、語言、期限與申請入口。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                荷蘭恩荷芬理工大學 Eindhoven University of Technology校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（4）
+      
+        
+          
+            TU/e 概覽與學術計畫 2026–27由官方合作校保存的 TU/e 2026–27 一般學位 手冊；生活費與 住宿 說明不等於 入學交換 規則。
+            查看原始來源
+          
+          
+            TU/e 化學工程與化學系 入學流動資訊 2023–24由官方合作校保存的舊年度系所 交換資訊表；包含提名、自由移動者、課程與有限住宿規則，但不能套用全校或 2026/27。
+            查看原始來源
+          
+          
+            TU/e 校園上的 800 位新住戶TU/e 校園媒體記錄 2024 年新住宿供給；歷史房價與新增房間都不是交換生分配承諾。
+            查看原始來源
+          
+          
+            房間短缺預計在未來幾年不會改善TU/e 校園媒體 2025 年報導 Eindhoven 約短缺 1,500 個學生住宿單位，提醒學生不可預設一定有房。
+            查看原始來源
+          
+      
+     
+Call log:
+  - Expect "to_contain_text" with timeout 5000ms
+  - waiting for locator("#destination-official-content")
+    13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+       - unexpected value "
+    
+      
+      官方生活資訊已查核已核對 2026–27 一般學位 手冊、2023–24 化工系所 來校交換生 交換資訊表 及 TU/e 校園住宿報導；目前沒有足以把舊系所期限、課程、費率或住宿承諾套到長庚 2026/27 交換的公開資料。尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地恩荷芬（實際交換系所與課程仍須由當期提名通知確認）費用參考TU/e 2026–27 一般國際 學士／碩士手冊 以約 EUR 1,200／月估算住宿、食物、書籍與基本生活，這是一般學位生參考，不是長庚交換帳單。2023–24 化學工程與化學 系所 交換資訊表 說明 雙邊交換 通常依合作協議辦理、自由移動者 則須向 TU/e 繳學費；該資料已過年度且只適用單一系所，不能用來斷定長庚當期交換身分或費率。住宿2026–27 一般學位 手冊 的有限 住宿抽籤 與提早準備建議不是交換生床位承諾；2023–24 化學工程與化學交換資訊表 也只說 TU/e 能保證的交換生住宿非常有限、採先到先得並在 六月／12月 通知結果。2025 年 TU/e 校園媒體仍報導 埃因霍溫 約短缺 1,500 個學生住宿單位，因此不能把提出申請、候補或校園新建住宿寫成保證有房。交通TU/e 位於 Eindhoven，但交換課程可能受主辦系所、先備知識、容量與實際住宿地址影響。確認當期系所、課表與住址前，只能讓學生預留通勤規劃，不能把 2023–24 化工系所的課程安排套到其他系所或產生固定交通任務。校園生活目前公開可核對的 傳入的 細節來自 2023–24 化學工程與化學 系所資料：須由合作校提名、課程容量不保證，且主要修課應在該系。舊資料所列 1 四月／1 五月、1 十月／1 11月 期限、行動線上、語言與課程規則都不能直接建立 2026/27 提醒；必須等長庚與 TU/e 確認當期合作系所、交換／自由移動者 身分、課程層級、語言、期限與申請入口。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                荷蘭恩荷芬理工大學 Eindhoven University of Technology校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（4）
+      
+        
+          
+            TU/e 概覽與學術計畫 2026–27由官方合作校保存的 TU/e 2026–27 一般學位 手冊；生活費與 住宿 說明不等於 入學交換 規則。
+            查看原始來源
+          
+          
+            TU/e 化學工程與化學系 入學流動資訊 2023–24由官方合作校保存的舊年度系所 交換資訊表；包含提名、自由移動者、課程與有限住宿規則，但不能套用全校或 2026/27。
+            查看原始來源
+          
+          
+            TU/e 校園上的 800 位新住戶TU/e 校園媒體記錄 2024 年新住宿供給；歷史房價與新增房間都不是交換生分配承諾。
+            查看原始來源
+          
+          
+            房間短缺預計在未來幾年不會改善TU/e 校園媒體 2025 年報導 Eindhoven 約短缺 1,500 個學生住宿單位，提醒學生不可預設一定有房。
+            查看原始來源
+          
+      
+    "
+
+Aria snapshot:
+- link "跳到主要內容":
+  - /url: "#main-content"
+- complementary "系統功能":
+  - link "UniWay 首頁":
+    - /url: "#home"
+    - strong: UniWay
+  - navigation "公開探索導覽":
+    - link "首頁":
+      - /url: "#home"
+    - link "學校搜尋":
+      - /url: "#partners"
+    - link "論壇":
+      - /url: "#forum"
+    - link "用戶評價":
+      - /url: "#feedback"
+    - group:
+      - link "我的申請":
+        - /url: "#advisor"
+  - button "返回上一頁": 返回
+  - button "選擇就讀學校":
+    - strong: 選擇就讀學校
+  - button "切換為深色模式"
+  - button "重新整理最新資料"
+  - button "登入或建立帳號": 登入
+- main:
+  - status
+  - region "荷蘭恩荷芬理工大學 Eindhoven University of Technology":
+    - button "加入比較荷蘭恩荷芬理工大學 Eindhoven University of Technology": 加入比較
+    - button "登入建立計畫"
+    - img "荷蘭恩荷芬理工大學 Eindhoven University of Technology官方照片"
+    - link "圖片來源":
+      - /url: https://www.tue.nl/en/our-university/tue-campus
+    - text: 荷蘭 · 交換學生 / 自費研修 下一站
+    - strong: 荷蘭
+    - text: 恩荷芬（實際交換系所與課程仍須由當期提名通知確認）
+    - heading "荷蘭恩荷芬理工大學 Eindhoven University of Technology" [level=1]
+    - text: 我的資格
+    - strong: 尚未進行資格初判
+    - text: 合作校參考時程
+    - strong: 依當期長庚公告與 TU/e incoming 通知
+    - text: 語言門檻
+    - strong: 合作校未明確標示，請開啟官方來源
+    - text: 生活費參考
+    - strong: TU/e 2026–27 一般國際 學士／碩士手冊 以約 EUR 1,200／月估算住宿、食物、書籍與基本生活，這是一般學位生參考，不是長庚交換帳單。2023–24 化學工程與化學 系所 交換資訊表 說明 雙邊交換 通常依合作協議辦理、自由移動者 則須向 T…
+    - text: 交換名額
+    - strong: 依當期公告
+    - text: 研修期間
+    - strong: 1 學期至 1 學年
+    - tablist "交換學校詳細資訊":
+      - tab "快速了解"
+      - tab "申請方式"
+      - tab "生活情報" [selected]
+      - tab "出發前提醒"
+      - tab "學生心得"
+      - tab "學生社群"
+    - tabpanel "生活情報":
+      - heading "生活情報" [level=2]
+      - status: 正在更新資料…
+      - button "找學生分享"
+      - button "更新中" [disabled]
+      - group: 資料說明
+      - group: 官方生活指南
+      - article:
+        - heading "住宿與宿舍" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: 2026–27 一般學位 手冊 的有限 住宿抽籤 與提早準備建議不是交換生床位承諾；2023–24 化學工程與化學交換資訊表 也只說 TU/e 能保證的交換生住宿非常有限、採先到先得並在 六月／12月 通知結果。2025 年 TU/e 校園媒體仍報導 埃因霍溫 約短缺 1,500 個學生住宿單位，因此不能把提出申請、候補或校園新建住宿寫成保證有房。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "每月生活預算" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: TU/e 2026–27 一般國際 學士／碩士手冊 以約 EUR 1,200／月估算住宿、食物、書籍與基本生活，這是一般學位生參考，不是長庚交換帳單。2023–24 化學工程與化學 系所 交換資訊表 說明 雙邊交換 通常依合作協議辦理、自由移動者 則須向 TU/e 繳學費；該資料已過年度且只適用單一系所，不能用來斷定長庚當期交換身分或費率。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - article:
+        - heading "交通與地點" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: TU/e 位於 Eindhoven，但交換課程可能受主辦系所、先備知識、容量與實際住宿地址影響。確認當期系所、課表與住址前，只能讓學生預留通勤規劃，不能把 2023–24 化工系所的課程安排套到其他系所或產生固定交通任務。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "校園活動與社交" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: 目前公開可核對的 傳入的 細節來自 2023–24 化學工程與化學 系所資料：須由合作校提名、課程容量不保證，且主要修課應在該系。舊資料所列 1 四月／1 五月、1 十月／1 11月 期限、行動線上、語言與課程規則都不能直接建立 2026/27 提醒；必須等長庚與 TU/e 確認當期合作系所、交換／自由移動者 身分、課程層級、語言、期限與申請入口。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - group: 待補資料（6 項）
+    - complementary "申請準備進度與官方來源":
+      - heading "我的申請進度" [level=2]
+      - progressbar "申請準備進度":
+        - strong: 0 / 5 已完成
+        - text: 準備中
+      - paragraph:
+        - text: 登入以保存進度
+        - button "登入"
+      - checkbox "確認資格與語言門檻" [disabled]
+      - text: 確認資格與語言門檻
+      - checkbox "比較課程、費用與生活" [disabled]
+      - text: 比較課程、費用與生活
+      - checkbox "備妥校內申請文件" [disabled]
+      - text: 備妥校內申請文件
+      - checkbox "完成校內甄選送件" [disabled]
+      - text: 完成校內甄選送件
+      - checkbox "完成合作校線上申請" [disabled]
+      - text: 完成合作校線上申請
+      - strong: 送件前確認
+      - paragraph: 截止日與資格以當期官方公告為準。
+- paragraph:
+  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+  - button "停用匿名使用統計"
+  - text: 。
+  - link "隱私權政策":
+    - /url: /privacy
+  - link "使用條款":
+    - /url: /terms
+FAILED tests/e2e/test_web_next_phase.py::test_fifteenth_destination_batch_keeps_old_wuhan_costs_and_transport_out_of_current_plan - AssertionError: Locator expected to contain text '2022 校園文章曾寫 school bus 調整為免費'
+Actual value: 
+    
+      
+      官方生活資訊已查核已核對武漢大學交換舊表、住宿舊站及現行餐飲住宿、通勤與 校園卡 官方頁；公開 交換 與房價資料仍過時且未識別長庚，當期合作條件必須由提名通知確認。尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地武漢（文理、工程、資訊科學、醫學 等 校區／學院 區域）費用參考武漢大學公開 Students Exchange Programs 表格明示資料截至 June 2016，且沒有列出長庚大學；表中各合作案的學費、住宿與其他費用條件不同，不能拿任一列推定長庚交換待遇。舊 Campus Accommodation 頁列出的 RMB 600–1,400／月房價也位於『舊站備份』，沒有現行學年與交換名額證據，不能當成 2026/27 預算或帳單。住宿舊站住宿頁列出 Maple Garden 與醫學院外國學生宿舍房型、RMB 600–1,400／月歷史價格及住宿登記要求；現行 Dining & Accommodation 頁只確認學校有住宿分配與服務管理，沒有公開長庚交換生的房型、價格、申請期限或床位保證。學生應等當期錄取與住宿通知，不可把舊價或校內宿舍存在視為已分配。交通武漢大學 校區 範圍大且教學生活設施分散。2022 校園文章曾寫 校車 調整為免費，但 2026 校區 卡片 頁已把 校區 乘車費用 列為需使用儲值 校區 卡片 的消費情境；因此不能把 2022 免費校車當成現行交換生權益，實際路線與費率須抵達前重新確認。校園生活目前可公開查到的 交換計畫 清單仍標示 2016年6月，沒有長庚大學，也不能支持 工作流程 內的 15 四月／15 十月 作為 2026/27 精確期限。現行餐飲頁確認學生餐廳使用 校園卡／羅家電子卡 且不收現金，但這是到校生活資訊，不是交換申請規則。建立計畫仍須等長庚提名與武漢大學當期通知確認學院、校園、語言、課程、名額、學費、文件與期限。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                武漢大學 Wuhan University校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（5）
+      
+        
+          
+            武漢大學 學生交換計畫舊站交換表格，資料截至 June 2016 且未列長庚；只能證明不同合作案條件不一。
+            查看原始來源
+          
+          
+            Wuhan University 校區 住宿 Archive舊站住宿房型、歷史價格與住宿登記說明；不能作現行交換生床位或費率保證。
+            查看原始來源
+          
+          
+            武漢大學用餐與住宿彙整 2024–2025 現行餐飲與住宿服務文章，但沒有長庚交換生分配、價格或申請期限。
+            查看原始來源
+          
+          
+            武漢大學校園通勤變更 20222022 歷史文章曾說校車免費；不可忽略後續 校園卡 資訊而直接沿用。
+            查看原始來源
+          
+          
+            武漢大學校園卡 20262026 現行 校區 卡片 說明把 校區 乘車費用 列為儲值卡消費情境，顯示 2022 免費資訊不能直接當現況。
+            查看原始來源
+          
+      
+     
+Call log:
+  - Expect "to_contain_text" with timeout 5000ms
+  - waiting for locator("#destination-official-content")
+    13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+       - unexpected value "
+    
+      
+      官方生活資訊已查核已核對武漢大學交換舊表、住宿舊站及現行餐飲住宿、通勤與 校園卡 官方頁；公開 交換 與房價資料仍過時且未識別長庚，當期合作條件必須由提名通知確認。尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地武漢（文理、工程、資訊科學、醫學 等 校區／學院 區域）費用參考武漢大學公開 Students Exchange Programs 表格明示資料截至 June 2016，且沒有列出長庚大學；表中各合作案的學費、住宿與其他費用條件不同，不能拿任一列推定長庚交換待遇。舊 Campus Accommodation 頁列出的 RMB 600–1,400／月房價也位於『舊站備份』，沒有現行學年與交換名額證據，不能當成 2026/27 預算或帳單。住宿舊站住宿頁列出 Maple Garden 與醫學院外國學生宿舍房型、RMB 600–1,400／月歷史價格及住宿登記要求；現行 Dining & Accommodation 頁只確認學校有住宿分配與服務管理，沒有公開長庚交換生的房型、價格、申請期限或床位保證。學生應等當期錄取與住宿通知，不可把舊價或校內宿舍存在視為已分配。交通武漢大學 校區 範圍大且教學生活設施分散。2022 校園文章曾寫 校車 調整為免費，但 2026 校區 卡片 頁已把 校區 乘車費用 列為需使用儲值 校區 卡片 的消費情境；因此不能把 2022 免費校車當成現行交換生權益，實際路線與費率須抵達前重新確認。校園生活目前可公開查到的 交換計畫 清單仍標示 2016年6月，沒有長庚大學，也不能支持 工作流程 內的 15 四月／15 十月 作為 2026/27 精確期限。現行餐飲頁確認學生餐廳使用 校園卡／羅家電子卡 且不收現金，但這是到校生活資訊，不是交換申請規則。建立計畫仍須等長庚提名與武漢大學當期通知確認學院、校園、語言、課程、名額、學費、文件與期限。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                武漢大學 Wuhan University校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（5）
+      
+        
+          
+            武漢大學 學生交換計畫舊站交換表格，資料截至 June 2016 且未列長庚；只能證明不同合作案條件不一。
+            查看原始來源
+          
+          
+            Wuhan University 校區 住宿 Archive舊站住宿房型、歷史價格與住宿登記說明；不能作現行交換生床位或費率保證。
+            查看原始來源
+          
+          
+            武漢大學用餐與住宿彙整 2024–2025 現行餐飲與住宿服務文章，但沒有長庚交換生分配、價格或申請期限。
+            查看原始來源
+          
+          
+            武漢大學校園通勤變更 20222022 歷史文章曾說校車免費；不可忽略後續 校園卡 資訊而直接沿用。
+            查看原始來源
+          
+          
+            武漢大學校園卡 20262026 現行 校區 卡片 說明把 校區 乘車費用 列為儲值卡消費情境，顯示 2022 免費資訊不能直接當現況。
+            查看原始來源
+          
+      
+    "
+
+Aria snapshot:
+- link "跳到主要內容":
+  - /url: "#main-content"
+- complementary "系統功能":
+  - link "UniWay 首頁":
+    - /url: "#home"
+    - strong: UniWay
+  - navigation "公開探索導覽":
+    - link "首頁":
+      - /url: "#home"
+    - link "學校搜尋":
+      - /url: "#partners"
+    - link "論壇":
+      - /url: "#forum"
+    - link "用戶評價":
+      - /url: "#feedback"
+    - group:
+      - link "我的申請":
+        - /url: "#advisor"
+  - button "返回上一頁": 返回
+  - button "選擇就讀學校":
+    - strong: 選擇就讀學校
+  - button "切換為深色模式"
+  - button "重新整理最新資料"
+  - button "登入或建立帳號": 登入
+- main:
+  - status
+  - region "武漢大學 Wuhan University":
+    - button "加入比較武漢大學 Wuhan University": 加入比較
+    - button "登入建立計畫"
+    - img "武漢大學 Wuhan University官方照片"
+    - link "圖片來源":
+      - /url: https://en.whu.edu.cn/
+    - text: 中國 · 交換學生 / 自費研修 下一站
+    - strong: 中國
+    - heading "武漢大學 Wuhan University" [level=1]
+    - text: 我的資格
+    - strong: 尚未進行資格初判
+    - text: 合作校參考時程
+    - strong: 依當期長庚公告與武漢大學交換通知
+    - text: 語言門檻
+    - strong: 合作校未明確標示，請開啟官方來源
+    - text: 生活費參考
+    - strong: 武漢大學公開 Students Exchange Programs 表格明示資料截至 June 2016，且沒有列出長庚大學；表中各合作案的學費、住宿與其他費用條件不同，不能拿任一列推定長庚交換待遇。舊 Campus Accommodation 頁列出的 R…
+    - text: 交換名額
+    - strong: 依當期公告
+    - text: 研修期間
+    - strong: 1 學期至 1 學年
+    - tablist "交換學校詳細資訊":
+      - tab "快速了解"
+      - tab "申請方式"
+      - tab "生活情報" [selected]
+      - tab "出發前提醒"
+      - tab "學生心得"
+      - tab "學生社群"
+    - tabpanel "生活情報":
+      - heading "生活情報" [level=2]
+      - status: 暫無新資料 · 2026/10/09 上午01:59
+      - button "找學生分享"
+      - button "更新資料" [disabled]
+      - group: 資料說明
+      - group: 官方生活指南
+      - article:
+        - heading "住宿與宿舍" [level=3]
+        - text: 官方
+        - paragraph: 舊站住宿頁列出 Maple Garden 與醫學院外國學生宿舍房型、RMB 600–1,400／月歷史價格及住宿登記要求；現行 Dining & Accommodation 頁只確認學校有住宿分配與服務管理，沒有公開長庚交換生的房型、價格、申請期限或床位保證。學生應等當期錄取與住宿通知，不可把舊價或校內宿舍存在視為已分配。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "每月生活預算" [level=3]
+        - text: 官方
+        - paragraph: 武漢大學公開 Students Exchange Programs 表格明示資料截至 June 2016，且沒有列出長庚大學；表中各合作案的學費、住宿與其他費用條件不同，不能拿任一列推定長庚交換待遇。舊 Campus Accommodation 頁列出的 RMB 600–1,400／月房價也位於『舊站備份』，沒有現行學年與交換名額證據，不能當成 2026/27 預算或帳單。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - article:
+        - heading "交通與地點" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: 武漢大學 校區 範圍大且教學生活設施分散。2022 校園文章曾寫 校車 調整為免費，但 2026 校區 卡片 頁已把 校區 乘車費用 列為需使用儲值 校區 卡片 的消費情境；因此不能把 2022 免費校車當成現行交換生權益，實際路線與費率須抵達前重新確認。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "校園活動與社交" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: 目前可公開查到的 交換計畫 清單仍標示 2016年6月，沒有長庚大學，也不能支持 工作流程 內的 15 四月／15 十月 作為 2026/27 精確期限。現行餐飲頁確認學生餐廳使用 校園卡／羅家電子卡 且不收現金，但這是到校生活資訊，不是交換申請規則。建立計畫仍須等長庚提名與武漢大學當期通知確認學院、校園、語言、課程、名額、學費、文件與期限。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - group: 待補資料（6 項）
+    - complementary "申請準備進度與官方來源":
+      - heading "我的申請進度" [level=2]
+      - progressbar "申請準備進度":
+        - strong: 0 / 5 已完成
+        - text: 準備中
+      - paragraph:
+        - text: 登入以保存進度
+        - button "登入"
+      - checkbox "確認資格與語言門檻" [disabled]
+      - text: 確認資格與語言門檻
+      - checkbox "比較課程、費用與生活" [disabled]
+      - text: 比較課程、費用與生活
+      - checkbox "備妥校內申請文件" [disabled]
+      - text: 備妥校內申請文件
+      - checkbox "完成校內甄選送件" [disabled]
+      - text: 完成校內甄選送件
+      - checkbox "完成合作校線上申請" [disabled]
+      - text: 完成合作校線上申請
+      - strong: 送件前確認
+      - paragraph: 截止日與資格以當期官方公告為準。
+- paragraph:
+  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+  - button "停用匿名使用統計"
+  - text: 。
+  - link "隱私權政策":
+    - /url: /privacy
+  - link "使用條款":
+    - /url: /terms
+FAILED tests/e2e/test_web_next_phase.py::test_sixteenth_destination_batch_keeps_icd_campuses_costs_and_deadlines_separate - AssertionError: Locator expected to contain text 'Paris 或 Toulouse'
+Actual value: 
+    
+      
+      官方生活資訊已查核已核對 ICD 來校交換生 頁、巴黎／Toulouse 2026–27 交換資訊表、生活資訊與學生服務；校區、長庚當期名額與文件仍須由提名通知確認，且春季申請期限存在 1 11月／15 11月 衝突。尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地巴黎 或 圖盧茲（長庚當期錄取 校區 須由提名或錄取通知確認；入學交換生 頁雖提及 里昂，但 2026–27 交換資訊表 只公開 巴黎 與 圖盧茲）費用參考ICD 2026–27 巴黎交換資訊表 列一般學費 EUR 5,495／學期，但明確標示不適用交換生；Toulouse 交換資訊表 也寫明交換生不收學費。這項待遇仍以合作校提名與兩校協議為前提，不代表生活成本免費。巴黎 校外住宿約 EUR 700–1,400／月、Navigo 約 EUR 90.80／月；圖盧茲 校外住宿約 EUR 500–1,000／月、未滿 25 歲持 Pastel 交通卡 的月票約 EUR 15.50。兩個 校園 的預算不可混用。住宿2026–27 交換資訊表 的住宿都是校外估算：巴黎 學生公寓約 EUR 900–1,200／月、寄宿家庭 EUR 950–1,200、工作室 EUR 900–1,400、合租 EUR 700–1,200；圖盧茲 學生公寓 EUR 500–700、工作室 EUR 800–1,000、合租 EUR 500–700。學校 實用資訊 與 學生服務 頁提供 Studapart、Adele 等搜尋或協助管道，但不保證床位；通常須在錄取後依 內部網路 與當期通知申請。交通巴黎 與 圖盧茲 的交通制度及費率不同。Paris 2026–27 交換資訊表 列 Navigo 約 EUR 90.80／月；Toulouse 交換資訊表 列未滿 25 歲持 Pastel 交通卡 約 EUR 15.50／月，Toulouse 校區 位於 Blagnac，實際通勤仍取決於住宿。未標年度的 實用資訊 舊費率不能覆蓋 2026–27 交換資訊表，也不能在 校園 未確認前建立固定交通預算。校園生活ICD 僅接受合作校提名申請。巴黎 與 Toulouse 2026–27 交換資訊表 均列秋季 5月15日提名、6 月 15 日申請；春季 10 月 15 日提名、11 月 1 日申請，但未標年度的 傳入的 頁把春季 申請 寫成 15 11月，兩者衝突，應以當期校區 交換資訊表 與長庚通知再次確認，不能直接建立提醒。一般門檻包含 GPA 2.5／4 或 B、英語 TOEFL iBT 70／B2（法語課程 B2）及每學期 25–30 ECTS；圖盧茲 不可混選不同年級或授課語言，課程也可能調整。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                法國ICD商學院 ICD Business School校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（5）
+      
+        
+          
+            ICD 來校交換生 Exchange Students確認合作校提名、一般學期資訊與未標年度的 15 June／15 November 期限；春季日期與 2026–27 fact sheet 衝突。
+            查看原始來源
+          
+          
+            ICD Paris 交換資訊表 2026–2027Paris 當期提名與申請期限、GPA／語言／ECTS、交換學費註記、校外住宿與交通估算。
+            查看原始來源
+          
+          
+            ICD Toulouse 交換資訊表 2026–2027圖盧茲 當期期限、資格、選課限制、交換免學費、校外住宿與 Pastel 交通卡 估算。
+            查看原始來源
+          
+          
+            ICD 實用資訊Paris／Toulouse 一般生活、住宿與交通說明；未標年度的費率不得覆蓋 2026–27 fact sheet。
+            查看原始來源
+          
+          
+            ICD 學生服務提供 Studapart、Adele 等住宿搜尋與協助入口，但不是交換生床位或價格保證。
+            查看原始來源
+          
+      
+     
+Call log:
+  - Expect "to_contain_text" with timeout 5000ms
+  - waiting for locator("#destination-official-content")
+    13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+       - unexpected value "
+    
+      
+      官方生活資訊已查核已核對 ICD 來校交換生 頁、巴黎／Toulouse 2026–27 交換資訊表、生活資訊與學生服務；校區、長庚當期名額與文件仍須由提名通知確認，且春季申請期限存在 1 11月／15 11月 衝突。尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+    
+    
+      所在地巴黎 或 圖盧茲（長庚當期錄取 校區 須由提名或錄取通知確認；入學交換生 頁雖提及 里昂，但 2026–27 交換資訊表 只公開 巴黎 與 圖盧茲）費用參考ICD 2026–27 巴黎交換資訊表 列一般學費 EUR 5,495／學期，但明確標示不適用交換生；Toulouse 交換資訊表 也寫明交換生不收學費。這項待遇仍以合作校提名與兩校協議為前提，不代表生活成本免費。巴黎 校外住宿約 EUR 700–1,400／月、Navigo 約 EUR 90.80／月；圖盧茲 校外住宿約 EUR 500–1,000／月、未滿 25 歲持 Pastel 交通卡 的月票約 EUR 15.50。兩個 校園 的預算不可混用。住宿2026–27 交換資訊表 的住宿都是校外估算：巴黎 學生公寓約 EUR 900–1,200／月、寄宿家庭 EUR 950–1,200、工作室 EUR 900–1,400、合租 EUR 700–1,200；圖盧茲 學生公寓 EUR 500–700、工作室 EUR 800–1,000、合租 EUR 500–700。學校 實用資訊 與 學生服務 頁提供 Studapart、Adele 等搜尋或協助管道，但不保證床位；通常須在錄取後依 內部網路 與當期通知申請。交通巴黎 與 圖盧茲 的交通制度及費率不同。Paris 2026–27 交換資訊表 列 Navigo 約 EUR 90.80／月；Toulouse 交換資訊表 列未滿 25 歲持 Pastel 交通卡 約 EUR 15.50／月，Toulouse 校區 位於 Blagnac，實際通勤仍取決於住宿。未標年度的 實用資訊 舊費率不能覆蓋 2026–27 交換資訊表，也不能在 校園 未確認前建立固定交通預算。校園生活ICD 僅接受合作校提名申請。巴黎 與 Toulouse 2026–27 交換資訊表 均列秋季 5月15日提名、6 月 15 日申請；春季 10 月 15 日提名、11 月 1 日申請，但未標年度的 傳入的 頁把春季 申請 寫成 15 11月，兩者衝突，應以當期校區 交換資訊表 與長庚通知再次確認，不能直接建立提醒。一般門檻包含 GPA 2.5／4 或 B、英語 TOEFL iBT 70／B2（法語課程 B2）及每學期 25–30 ECTS；圖盧茲 不可混選不同年級或授課語言，課程也可能調整。
+    
+    
+    
+      
+        交換生生存指南
+
+      
+      
+        
+          校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+          
+            
+              
+                
+                  
+                  校園
+                
+                法國ICD商學院 ICD Business School校園
+              
+          
+        
+      
+      
+      
+    
+    
+      查看本頁全部查核來源（5）
+      
+        
+          
+            ICD 來校交換生 Exchange Students確認合作校提名、一般學期資訊與未標年度的 15 June／15 November 期限；春季日期與 2026–27 fact sheet 衝突。
+            查看原始來源
+          
+          
+            ICD Paris 交換資訊表 2026–2027Paris 當期提名與申請期限、GPA／語言／ECTS、交換學費註記、校外住宿與交通估算。
+            查看原始來源
+          
+          
+            ICD Toulouse 交換資訊表 2026–2027圖盧茲 當期期限、資格、選課限制、交換免學費、校外住宿與 Pastel 交通卡 估算。
+            查看原始來源
+          
+          
+            ICD 實用資訊Paris／Toulouse 一般生活、住宿與交通說明；未標年度的費率不得覆蓋 2026–27 fact sheet。
+            查看原始來源
+          
+          
+            ICD 學生服務提供 Studapart、Adele 等住宿搜尋與協助入口，但不是交換生床位或價格保證。
+            查看原始來源
+          
+      
+    "
+
+Aria snapshot:
+- link "跳到主要內容":
+  - /url: "#main-content"
+- complementary "系統功能":
+  - link "UniWay 首頁":
+    - /url: "#home"
+    - strong: UniWay
+  - navigation "公開探索導覽":
+    - link "首頁":
+      - /url: "#home"
+    - link "學校搜尋":
+      - /url: "#partners"
+    - link "論壇":
+      - /url: "#forum"
+    - link "用戶評價":
+      - /url: "#feedback"
+    - group:
+      - link "我的申請":
+        - /url: "#advisor"
+  - button "返回上一頁": 返回
+  - button "選擇就讀學校":
+    - strong: 選擇就讀學校
+  - button "切換為深色模式"
+  - button "重新整理最新資料"
+  - button "登入或建立帳號": 登入
+- main:
+  - status
+  - region "法國ICD商學院 ICD Business School":
+    - button "加入比較法國ICD商學院 ICD Business School": 加入比較
+    - button "登入建立計畫"
+    - img "法國ICD商學院 ICD Business School官方照片"
+    - link "圖片來源":
+      - /url: https://www.icd-bs.com/
+    - text: 法國 · 交換學生 / 自費研修 下一站
+    - strong: 法國
+    - heading "法國ICD商學院 ICD Business School" [level=1]
+    - text: 我的資格
+    - strong: 尚未進行資格初判
+    - text: 合作校參考時程
+    - strong: 依當期長庚公告與 ICD campus fact sheet 確認
+    - text: 語言門檻
+    - strong: 合作校未明確標示，請開啟官方來源
+    - text: 生活費參考
+    - strong: ICD 2026–27 巴黎交換資訊表 列一般學費 EUR 5,495／學期，但明確標示不適用交換生；Toulouse 交換資訊表 也寫明交換生不收學費。這項待遇仍以合作校提名與兩校協議為前提，不代表生活成本免費。巴黎 校外住宿約 EUR 700–1,400…
+    - text: 交換名額
+    - strong:
+      - text: 每年 4 名
+      - strong: 一學期
+      - text: 交換名額；仍以長庚當期公告為準
+    - text: 研修期間
+    - strong: 1 學期至 1 學年
+    - tablist "交換學校詳細資訊":
+      - tab "快速了解"
+      - tab "申請方式"
+      - tab "生活情報" [selected]
+      - tab "出發前提醒"
+      - tab "學生心得"
+      - tab "學生社群"
+    - tabpanel "生活情報":
+      - heading "生活情報" [level=2]
+      - status: 暫無新資料 · 2026/10/09 上午02:00
+      - button "找學生分享"
+      - button "更新資料" [disabled]
+      - group: 資料說明
+      - group: 官方生活指南
+      - article:
+        - heading "住宿與宿舍" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: 2026–27 交換資訊表 的住宿都是校外估算：巴黎 學生公寓約 EUR 900–1,200／月、寄宿家庭 EUR 950–1,200、工作室 EUR 900–1,400、合租 EUR 700–1,200；圖盧茲 學生公寓 EUR 500–700、工作室 EUR 800–1,000、合租 EUR 500–700。學校 實用資訊 與 學生服務 頁提供 Studapart、Adele 等搜尋或協助管道，但不保證床位；通常須在錄取後依 內部網路 與當期通知申請。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "每月生活預算" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: ICD 2026–27 巴黎交換資訊表 列一般學費 EUR 5,495／學期，但明確標示不適用交換生；Toulouse 交換資訊表 也寫明交換生不收學費。這項待遇仍以合作校提名與兩校協議為前提，不代表生活成本免費。巴黎 校外住宿約 EUR 700–1,400／月、Navigo 約 EUR 90.80／月；圖盧茲 校外住宿約 EUR 500–1,000／月、未滿 25 歲持 Pastel 交通卡 的月票約 EUR 15.50。兩個 校園 的預算不可混用。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - article:
+        - heading "交通與地點" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: 巴黎 與 圖盧茲 的交通制度及費率不同。Paris 2026–27 交換資訊表 列 Navigo 約 EUR 90.80／月；Toulouse 交換資訊表 列未滿 25 歲持 Pastel 交通卡 約 EUR 15.50／月，Toulouse 校區 位於 Blagnac，實際通勤仍取決於住宿。未標年度的 實用資訊 舊費率不能覆蓋 2026–27 交換資訊表，也不能在 校園 未確認前建立固定交通預算。
+        - group: 原文與來源
+        - text: AI 推論
+        - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+        - group: 推論依據
+        - group: 繼續查詢
+      - article:
+        - heading "校園活動與社交" [level=3]
+        - text: 官方 · 機器翻譯
+        - paragraph: ICD 僅接受合作校提名申請。巴黎 與 Toulouse 2026–27 交換資訊表 均列秋季 5月15日提名、6 月 15 日申請；春季 10 月 15 日提名、11 月 1 日申請，但未標年度的 傳入的 頁把春季 申請 寫成 15 11月，兩者衝突，應以當期校區 交換資訊表 與長庚通知再次確認，不能直接建立提醒。一般門檻包含 GPA 2.5／4 或 B、英語 TOEFL iBT 70／B2（法語課程 B2）及每學期 25–30 ECTS；圖盧茲 不可混選不同年級或授課語言，課程也可能調整。
+        - group: 原文與來源
+        - group: 繼續查詢
+      - group: 待補資料（6 項）
+    - complementary "申請準備進度與官方來源":
+      - heading "我的申請進度" [level=2]
+      - progressbar "申請準備進度":
+        - strong: 0 / 5 已完成
+        - text: 準備中
+      - paragraph:
+        - text: 登入以保存進度
+        - button "登入"
+      - checkbox "確認資格與語言門檻" [disabled]
+      - text: 確認資格與語言門檻
+      - checkbox "比較課程、費用與生活" [disabled]
+      - text: 比較課程、費用與生活
+      - checkbox "備妥校內申請文件" [disabled]
+      - text: 備妥校內申請文件
+      - checkbox "完成校內甄選送件" [disabled]
+      - text: 完成校內甄選送件
+      - checkbox "完成合作校線上申請" [disabled]
+      - text: 完成合作校線上申請
+      - strong: 送件前確認
+      - paragraph: 截止日與資格以當期官方公告為準。
+- paragraph:
+  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+  - button "停用匿名使用統計"
+  - text: 。
+  - link "隱私權政策":
+    - /url: /privacy
+  - link "使用條款":
+    - /url: /terms
+=========== 7 failed, 13 passed, 41 deselected in 138.06s (0:02:18) ============

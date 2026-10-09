@@ -1,0 +1,77 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 1 item
+
+tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward PASSED [100%]
+
+---------- generated xml file: /tmp/tku-navigation-scroll-probe/0.xml ----------
+============================== 1 passed in 17.96s ==============================
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 1 item
+
+tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward PASSED [100%]
+
+---------- generated xml file: /tmp/tku-navigation-scroll-probe/1.xml ----------
+============================== 1 passed in 7.38s ===============================
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 1 item
+
+tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward FAILED [100%]
+
+=================================== FAILURES ===================================
+____________ test_school_return_retains_filters_scroll_and_forward _____________
+tests/e2e/test_navigation_guide.py:113: in test_school_return_retains_filters_scroll_and_forward
+    trigger.scroll_into_view_if_needed()
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:19985: in scroll_into_view_if_needed
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:617: in scroll_into_view_if_needed
+    return await self._with_element(
+.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:118: in _with_element
+    return await task(
+.venv/lib/python3.12/site-packages/playwright/_impl/_element_handle.py:112: in scroll_into_view_if_needed
+    await self._channel.send(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.Error: Locator.scroll_into_view_if_needed: Element is not attached to the DOM
+E   Call log:
+E     - attempting scroll into view action
+E       - waiting for element to be stable
+---------- generated xml file: /tmp/tku-navigation-scroll-probe/2.xml ----------
+=========================== short test summary info ============================
+FAILED tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward - playwright._impl._errors.Error: Locator.scroll_into_view_if_needed: Element is not attached to the DOM
+Call log:
+  - attempting scroll into view action
+    - waiting for element to be stable
+============================== 1 failed in 5.19s ===============================
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 1 item
+
+tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward PASSED [100%]
+
+---------- generated xml file: /tmp/tku-navigation-scroll-probe/3.xml ----------
+============================== 1 passed in 5.44s ===============================

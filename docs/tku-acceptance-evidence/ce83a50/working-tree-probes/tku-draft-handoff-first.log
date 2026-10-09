@@ -1,0 +1,117 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku-draft-probe
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 3 items
+
+tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u9577\u5e9a\u5927\u5b78] FAILED [ 33%]
+tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u6de1\u6c5f\u5927\u5b78] PASSED [ 66%]
+tests/e2e/test_tku_draft_handoff.py::test_guest_draft_is_discarded_when_sign_in_changes_mother_school FAILED [100%]
+
+=================================== FAILURES ===================================
+_ test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u9577\u5e9a\u5927\u5b78] _
+tests/e2e/test_tku_draft_handoff.py:46: in test_same_session_guest_draft_follows_sign_in_but_is_not_saved
+    type_guest_draft(page, live_server, home)
+tests/e2e/test_tku_draft_handoff.py:19: in type_guest_draft
+    page.locator("#advisor-jlpt-level").select_option("N1")
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:20069: in select_option
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:633: in select_option
+    return await self._frame.select_option(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:814: in select_option
+    return await self._channel.send("selectOption", self._timeout, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("#advisor-jlpt-level")
+E       - locator resolved to <select disabled name="jlpt_level" id="advisor-jlpt-level">…</select>
+E     - attempting select option action
+E       2 × waiting for element to be visible and enabled
+E         - element is not visible
+E       - retrying select option action
+E       - waiting 20ms
+E       2 × waiting for element to be visible and enabled
+E         - element is not visible
+E       - retrying select option action
+E         - waiting 100ms
+E       59 × waiting for element to be visible and enabled
+E          - element is not visible
+E        - retrying select option action
+E          - waiting 500ms
+_______ test_guest_draft_is_discarded_when_sign_in_changes_mother_school _______
+tests/e2e/test_tku_draft_handoff.py:71: in test_guest_draft_is_discarded_when_sign_in_changes_mother_school
+    type_guest_draft(page, live_server, "長庚大學")
+tests/e2e/test_tku_draft_handoff.py:19: in type_guest_draft
+    page.locator("#advisor-jlpt-level").select_option("N1")
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:20069: in select_option
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:633: in select_option
+    return await self._frame.select_option(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:814: in select_option
+    return await self._channel.send("selectOption", self._timeout, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("#advisor-jlpt-level")
+E       - locator resolved to <select disabled name="jlpt_level" id="advisor-jlpt-level">…</select>
+E     - attempting select option action
+E       2 × waiting for element to be visible and enabled
+E         - element is not visible
+E       - retrying select option action
+E       - waiting 20ms
+E       2 × waiting for element to be visible and enabled
+E         - element is not visible
+E       - retrying select option action
+E         - waiting 100ms
+E       58 × waiting for element to be visible and enabled
+E          - element is not visible
+E        - retrying select option action
+E          - waiting 500ms
+------------- generated xml file: /tmp/tku-draft-handoff-probe.xml -------------
+=========================== short test summary info ============================
+FAILED tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u9577\u5e9a\u5927\u5b78] - playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#advisor-jlpt-level")
+    - locator resolved to <select disabled name="jlpt_level" id="advisor-jlpt-level">…</select>
+  - attempting select option action
+    2 × waiting for element to be visible and enabled
+      - element is not visible
+    - retrying select option action
+    - waiting 20ms
+    2 × waiting for element to be visible and enabled
+      - element is not visible
+    - retrying select option action
+      - waiting 100ms
+    59 × waiting for element to be visible and enabled
+       - element is not visible
+     - retrying select option action
+       - waiting 500ms
+FAILED tests/e2e/test_tku_draft_handoff.py::test_guest_draft_is_discarded_when_sign_in_changes_mother_school - playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#advisor-jlpt-level")
+    - locator resolved to <select disabled name="jlpt_level" id="advisor-jlpt-level">…</select>
+  - attempting select option action
+    2 × waiting for element to be visible and enabled
+      - element is not visible
+    - retrying select option action
+    - waiting 20ms
+    2 × waiting for element to be visible and enabled
+      - element is not visible
+    - retrying select option action
+      - waiting 100ms
+    58 × waiting for element to be visible and enabled
+       - element is not visible
+     - retrying select option action
+       - waiting 500ms
+==================== 2 failed, 1 passed in 83.36s (0:01:23) ====================

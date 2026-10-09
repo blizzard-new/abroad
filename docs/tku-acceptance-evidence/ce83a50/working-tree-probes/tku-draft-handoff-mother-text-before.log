@@ -1,0 +1,44 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku-draft-probe
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 3 items
+
+tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u9577\u5e9a\u5927\u5b78] PASSED [ 33%]
+tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u6de1\u6c5f\u5927\u5b78] PASSED [ 66%]
+tests/e2e/test_tku_draft_handoff.py::test_guest_draft_is_discarded_when_sign_in_changes_mother_school FAILED [100%]
+
+=================================== FAILURES ===================================
+_______ test_guest_draft_is_discarded_when_sign_in_changes_mother_school _______
+tests/e2e/test_tku_draft_handoff.py:77: in test_guest_draft_is_discarded_when_sign_in_changes_mother_school
+    expect(page.locator("#advisor-question")).to_have_value("")
+E   AssertionError: Locator expected to have Value ''
+E   Actual value: 合成未保存草稿，請核對當期文件。 
+E   Call log:
+E     - Expect "to_have_value" with timeout 5000ms
+E     - waiting for locator("#advisor-question")
+E       13 × locator resolved to <textarea rows="3" name="question" maxlength="500" id="advisor-question" placeholder="例如：申請日本交換需要哪些文件？"></textarea>
+E          - unexpected value "合成未保存草稿，請核對當期文件。"
+E   
+E   Aria snapshot:
+E   - textbox "想問什麼？":
+E     - /placeholder: 例如：申請日本交換需要哪些文件？
+E     - text: 合成未保存草稿，請核對當期文件。
+------------- generated xml file: /tmp/tku-draft-handoff-probe.xml -------------
+=========================== short test summary info ============================
+FAILED tests/e2e/test_tku_draft_handoff.py::test_guest_draft_is_discarded_when_sign_in_changes_mother_school - AssertionError: Locator expected to have Value ''
+Actual value: 合成未保存草稿，請核對當期文件。 
+Call log:
+  - Expect "to_have_value" with timeout 5000ms
+  - waiting for locator("#advisor-question")
+    13 × locator resolved to <textarea rows="3" name="question" maxlength="500" id="advisor-question" placeholder="例如：申請日本交換需要哪些文件？"></textarea>
+       - unexpected value "合成未保存草稿，請核對當期文件。"
+
+Aria snapshot:
+- textbox "想問什麼？":
+  - /placeholder: 例如：申請日本交換需要哪些文件？
+  - text: 合成未保存草稿，請核對當期文件。
+========================= 1 failed, 2 passed in 40.88s =========================

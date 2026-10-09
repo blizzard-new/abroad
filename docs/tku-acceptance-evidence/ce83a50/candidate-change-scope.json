@@ -1,0 +1,88 @@
+{
+  "tested_commit": "ce83a502e33a42906fdf716bfaa606e777970d61",
+  "previous_commit": "3ccbf7c3de75b47f2f93f7aa56e96143e2e48a38",
+  "changed_files": [
+    {
+      "path": "docs/tku-ci-timeout-followup-2026-10-09.md",
+      "sha256": "42f68e06bb2258a97e90629190ae03e378adc80303c43d51b52c3e54b4ef2415"
+    },
+    {
+      "path": "docs/tku-shared-integration-risks-2026-10-08.json",
+      "sha256": "3b832382561383fd73e00379558b6019f5a2dad74419458855e71f9f61c29536"
+    },
+    {
+      "path": "scripts/run_main_browser_control.py",
+      "sha256": "64f2f3c29a4e52cbaa62e0c8aaad91587bd25cbf4200e3e7c88ac1d4e09bef3f"
+    },
+    {
+      "path": "scripts/run_tku_acceptance_suite.py",
+      "sha256": "f9a171c2e09cf34e1a078cc831ea778435e4ccef99c8d7677473debc5b4667c7"
+    },
+    {
+      "path": "scripts/run_web_quality_tests.py",
+      "sha256": "2ea984cd3d6e74f115c226cb1fa9999aaadb9861475c9727a9653d985ea7d041"
+    },
+    {
+      "path": "src/exchange_info/static/app.js",
+      "sha256": "4c769d1d5afbdbdbb3a431e25db34e88b348bd6645cdd0e7f33daf3039e2ffd3"
+    },
+    {
+      "path": "src/exchange_info/static/index.html",
+      "sha256": "fcb045935b409250e9a21d0d32f80343d052764d44be9bc3f612866fe0a8efd3"
+    },
+    {
+      "path": "src/exchange_info/static/public-content-zh.js",
+      "sha256": "649aa88c9e1b7da65f3e972999cdb212eeeb10ad39486d358fc719cf1466cc9c"
+    },
+    {
+      "path": "tests/e2e/test_glass_theme.py",
+      "sha256": "fd95f79626d58e954cb2614c9a35aa236f8c629f4a873131a9b2b1a100a5730a"
+    },
+    {
+      "path": "tests/e2e/test_navigation_guide.py",
+      "sha256": "6ff69d9131867bb45d01976a7850265ddbb8193792766139d5227ea18335ec77"
+    },
+    {
+      "path": "tests/e2e/test_school_chinese_content.py",
+      "sha256": "ebf4c2fc8781e60b4518d91e618cc9b3621a9f115472df309ca902a1335ac2a6"
+    },
+    {
+      "path": "tests/e2e/test_tku_draft_handoff.py",
+      "sha256": "01565f504c0436aa325ab402799a9aeb93ac60a388f520eb005515d3d55b3fce"
+    },
+    {
+      "path": "tests/e2e/test_tku_source_rendering.py",
+      "sha256": "635e853ea5970f24a2e5b06d723c638ceffe40150c43d3692e6eb0a1d26182e2"
+    },
+    {
+      "path": "tests/e2e/test_web_next_phase.py",
+      "sha256": "e5cf68b41b5f4f7a4c5b1e26403c1e41a2577fdbcc1d9b7fc9f205183f136dda"
+    },
+    {
+      "path": "tests/test_tku_web_evidence.py",
+      "sha256": "6d5dd25a3573a9fd0f0749cc05c350900a7296914c0a6a0ecd5b48074b2fbacf"
+    }
+  ],
+  "protected_bundles_changed": [],
+  "api_models_sql_changed": [],
+  "official_data_tree_identical": true,
+  "collected_nodes": 1764,
+  "collected_files": 182,
+  "prior_nodes": 1757,
+  "added_regressions": 7,
+  "removed_tests": 0,
+  "new_skip_markers": 0,
+  "full_remote_candidate_gate_unchanged": true,
+  "actual_local_browser_files": [
+    "test_tku_acceptance.py",
+    "test_ntu_school.py",
+    "test_application_workspace.py",
+    "test_application_ui_refinements.py",
+    "test_application_periods.py",
+    "test_fit_and_completeness_ui.py",
+    "test_planning_workspace.py",
+    "test_tku_draft_handoff.py",
+    "test_tku_source_rendering.py"
+  ],
+  "reporter_scope_note": "Existing report_tku_acceptance.py not_run prose says seven selected suites. The actual guarded command includes nine named files and the CGU PDF node; original derived output will be retained with this correction, without relabeling unrun files as passed."
+}
