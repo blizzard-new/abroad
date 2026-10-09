@@ -56,7 +56,7 @@ def test_shared_progress_survives_reorder_removal_and_reload(page,live_server,wi
     # original direct server/readback/progress/reload assertions below.
     with page.expect_response(lambda r: r.request.method == 'PUT'
             and '/account/workspace' in r.url
-            and (r.request.post_data_json or {}).get('workspace', {}).get('application_schools') == [names[1], names[0]]) as reordered:
+            and (r.request.post_data_json or {}).get('application_schools') == [names[1], names[0]]) as reordered:
         page.locator('#multi-plan-preferences button').click()
     assert reordered.value.status == 200
     expect(page.locator('.multi-plan-branch').first).to_contain_text(names[1])
