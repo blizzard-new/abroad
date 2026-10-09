@@ -1,0 +1,399 @@
+{
+  "candidate_sha": "672eb5899693f06b211afdf517c2f63c1ec5f0c9",
+  "started_at": "2026-10-09T04:55:30.081463+00:00",
+  "start_sha": "672eb5899693f06b211afdf517c2f63c1ec5f0c9",
+  "start_worktree_porcelain": "",
+  "results": [
+    {
+      "name": "ncu_unit",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ncu_integration.py",
+        "tests/test_ncu_document_conditions.py",
+        "tests/test_ncu_source_collector.py",
+        "tests/test_school_completeness.py",
+        "tests/test_ncu_snapshot_cache.py",
+        "tests/test_ncu_japan3.py",
+        "tests/test_ncu_tcu_toyama_fukui.py",
+        "tests/test_ncu_shizuoka_chuo_kansai.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/ncu_unit.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-shizuoka-chuo-kansai",
+      "exit_code": 0,
+      "started_at": "2026-10-09T04:55:30.106871+00:00",
+      "finished_at": "2026-10-09T04:59:54.304752+00:00",
+      "log": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/ncu_unit.log",
+      "junit": {
+        "tests": 315,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": []
+    },
+    {
+      "name": "shared_regression",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_school_content.py",
+        "tests/test_ntpu_support.py",
+        "tests/test_ntu_audit.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_application_rules.py",
+        "tests/test_application_document_catalog.py",
+        "tests/test_application_documents_api.py",
+        "tests/test_fit_signals.py",
+        "tests/test_task_documents_and_reference_plan.py",
+        "tests/test_workflow_structuring.py",
+        "tests/test_account_workspace_api.py",
+        "tests/test_application_workflow.py",
+        "tests/test_workflow_context_api.py",
+        "tests/test_workflow_catalog_cache.py",
+        "tests/test_life_context.py",
+        "tests/test_public_translation.py",
+        "tests/test_public_translation_cold_cache.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/shared_regression.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-shizuoka-chuo-kansai",
+      "exit_code": 0,
+      "started_at": "2026-10-09T04:59:54.347621+00:00",
+      "finished_at": "2026-10-09T05:01:08.634538+00:00",
+      "log": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/shared_regression.log",
+      "junit": {
+        "tests": 195,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 2
+      },
+      "failed_test_cases": []
+    },
+    {
+      "name": "existing_gate_failures",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ntpu_bundled_data.py",
+        "tests/test_frontend_contract.py",
+        "tests/test_rag.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/existing_gate_failures.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-shizuoka-chuo-kansai",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:01:08.662020+00:00",
+      "finished_at": "2026-10-09T05:01:22.344726+00:00",
+      "log": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/existing_gate_failures.log",
+      "junit": {
+        "tests": 65,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": []
+    },
+    {
+      "name": "openapi",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "cwd": "/tmp/abroad-ncu-shizuoka-chuo-kansai",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:01:22.365708+00:00",
+      "finished_at": "2026-10-09T05:01:26.894305+00:00",
+      "log": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/openapi.log"
+    },
+    {
+      "name": "main_workflow_export",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "/tmp/ncu-omu-parity-export.py"
+      ],
+      "cwd": "/tmp/abroad-ncu-baseline",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:01:26.916330+00:00",
+      "finished_at": "2026-10-09T05:01:31.875334+00:00",
+      "log": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/main_workflow_export.log"
+    },
+    {
+      "name": "workflow_parity",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "/tmp/ncu-omu-parity-compare.py"
+      ],
+      "cwd": "/tmp/abroad-ncu-shizuoka-chuo-kansai",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:01:31.894142+00:00",
+      "finished_at": "2026-10-09T05:01:38.780030+00:00",
+      "log": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/workflow_parity.log"
+    },
+    {
+      "name": "js_app",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/app.js"
+      ],
+      "cwd": "/tmp/abroad-ncu-shizuoka-chuo-kansai",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:01:38.801967+00:00",
+      "finished_at": "2026-10-09T05:01:39.048269+00:00",
+      "log": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/js_app.log"
+    },
+    {
+      "name": "js_discovery-ui",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/discovery-ui.js"
+      ],
+      "cwd": "/tmp/abroad-ncu-shizuoka-chuo-kansai",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:01:39.070069+00:00",
+      "finished_at": "2026-10-09T05:01:39.119354+00:00",
+      "log": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/js_discovery-ui.log"
+    },
+    {
+      "name": "js_multi-plan",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/multi-plan.js"
+      ],
+      "cwd": "/tmp/abroad-ncu-shizuoka-chuo-kansai",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:01:39.140584+00:00",
+      "finished_at": "2026-10-09T05:01:39.214286+00:00",
+      "log": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/js_multi-plan.log"
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "HEAD^",
+        "HEAD"
+      ],
+      "cwd": "/tmp/abroad-ncu-shizuoka-chuo-kansai",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:01:39.236987+00:00",
+      "finished_at": "2026-10-09T05:01:39.865651+00:00",
+      "log": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/diff.log"
+    },
+    {
+      "name": "lock",
+      "command": [
+        "uv",
+        "lock",
+        "--check"
+      ],
+      "cwd": "/tmp/abroad-ncu-shizuoka-chuo-kansai",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:01:39.885419+00:00",
+      "finished_at": "2026-10-09T05:01:39.994706+00:00",
+      "log": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/lock.log"
+    },
+    {
+      "name": "browser_next3_content",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "ncu_verify_failure_events",
+        "tests/e2e/test_ncu_shizuoka_chuo_kansai.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser_next3_content.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-shizuoka-chuo-kansai",
+      "exit_code": 1,
+      "started_at": "2026-10-09T05:01:40.014634+00:00",
+      "finished_at": "2026-10-09T05:04:07.944028+00:00",
+      "log": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser_next3_content.log",
+      "junit": {
+        "tests": 6,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": [
+        {
+          "name": "test_ncu_reference_scope_and_student_content[kansai-\\u95dc\\u897f\\u5927\\u5b78-\\u521d\\u6b21\\u516d\\u985e\\u5171\\u901a\\uff0c\\u4e26\\u975e\\u6bcd\\u6821\\u4e03\\u4ef6-6-390]",
+          "class": "tests.e2e.test_ncu_shizuoka_chuo_kansai",
+          "message": "AssertionError: Locator expected to contain text '500000'\nActual value: \n      \n        合作校條件\n        \n      \n      \n        \n          \n            資格與語言重點\n            116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】關西國際大學（KUISs／KUINS），不是關西大學。舊incoming brochure只開神戶山手／尼崎；Miki不列交換可選。2026/10首頁與access列四校區，尼崎大物2026/4/1新設，不能自動擴充交換track。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央未標年度一頁介紹列神戶山手國際溝通／觀光／社會／心理與尼崎教育／經營；現首頁已新增Global／Information等名稱，116接收學部與實際校區需重新核對。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】未標年度brochure：多數日本語專業課要求N2或同等能力；Global Communication部分英語課與N3或同等能力分開，不能把兩program的N2／N3合成全校單一門檻。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】申請文件列JLPT證明if any；能力要求與一定要有JLPT證書是不同條件。未查到當期替代證明、英語強制分數或有效期，不從社群／degree入試補上。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央一頁介紹限Undergraduate，舊brochure與初次交換包作UG參考；沒有自行把現行degree招生／別科資格套本次交換。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS官方NCU個別頁的中文授課／大三英語課／台灣宿舍USD價格是KUINS學生來中央的資料，只支持exchange合作關係，不能反向套NCU學生去KUINS或當116接收條件。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】多數專業課日文，舊Global Communication部分英語；依實際校區、專業、先修及語言能力確認可修課，不能從現首頁所有學院推交換生自由修全部。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】2026/4一般留學生guide說明UNIPA／履修規則與學修支援，屬一般校務；最新交換課表、每學期最低課程與中央採認未取得。115年度列ncu-118名額原文：1（PDF第5頁）。這是歷史額度，未填入116名額。查看其餘 4 項說明【115年度第5頁，非116門檻】如左方連結說明【115年度第5頁，列ncu-118】本列沒有範圍備註，學制／科系與校區仍須查核【中央公開介紹參考；年份／116適用性未確認】申請資格：Undergraduate（關西國際大學.pdf PDF，第1頁；官方連結）【中央公開介紹參考；年份／116適用性未確認】語言要求：Fields of Study \nopen for \nExchange \nstudents \nKobeyamate Campus \n⚫ School of International Communication \n- Department of English Communication \n- Department of Tourism \n⚫ School of Sociology \n- Department of Sociology \n⚫ School of Psychology \n- Department of Psychology \nAmagasaki Campus \n⚫ School of Education \n- Department of Child Education and Social Welfare \n⚫ School of Business Administration \n- Department of Business Administration（關西國際大學.pdf PDF，第1頁；官方連結）\n          \n          \n            合作校申請步驟\n            校內線上申請2026/11/16 09:00至12/4 12:00（臺灣時間）。紙本資料另須12/11 17:00前交系所；系所12/18 17:00前送國際處，不能把系所送件日當學生截止日。校內初審只取得推薦資格；須由外校另行審查並核發入學許可，且取得簽證。校內必繳正式外語檢定，不限級數；英檢須兩年內有效，線上關閉前須備妥並上傳，不接受網路截圖或補繳。外校要求之語檢分開查核。校內必繳：簽核申請表、家長同意書、個資同意書、正式語檢影本、中文歷年成績、中文名次證明、加蓋國際處章戳之國際移動力證明。簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。外校文件／表格尚未取得並完成116適用性核對；中央通用提名流程不是外校文件清單。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】Brochure列11類參考件：Form1申請、Form2 COE、政府開立本人與支應者關係證明、Form3健康、正式成績、推薦、支應者收入、護照、六張30×40mm照片、JLPT if any、scholarship if applicable。財力關係／JLPT／scholarship按本人情況分開，不能以錄取狀態自動設全必繳。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】Form1／2／3及當期宿舍详细通知由host給母校；只讀到清單與送法，最新空白表／欄位／簽章／成績翻譯規範尚未取得，不宣稱host指定表格已查完。一般延簽文件不是初次COE清單。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】舊未標年度timeline：春季大約10月中申請，秋季大約4月中；錄取通知約1月末／7月末，visa約2月初／8月初。沒有精確日期／年份／時區，不生成116提醒或當目前可送。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】當期nomination／host內外截止與全新表格包未取得，是仍需查的缺口，沒有官方明示全部未公告。查看其餘 3 項說明【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】一般2026guide與現行頁要求4／10月15日前在籍簽名、留學生orientation及更新住所／電話／在留卡；本人签不能朋友代簽。這是一般校務時點，116接收通知另核。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】抵達後住所／國保、個人年金及銀行／手機順序按住所和銀行確認；可用校方學修支援、健康／相談室。臨時出境先提交校方海外渡航届，別把出境通知與移民再入境許可混為同一核准。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】離校前退租、結清水電／手機／銀行、轉出與國保結算、返國在留卡等，成績製發／寄送及中央採認時點未取得。\n          \n          \n            費用提醒\n            中央交換期間仍須註冊及繳本校學雜費；外校是否免學費與其他校方收費須逐方案核對，不保證一律免繳。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央116仍保有學籍與繳母校學雜費；host學費互免及其他費目需核協議。KUINS一般留學生2026guide的學位學費分期、納付期日／減免與交換不同，不当交換個人報價。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】至少分列舊宿舍30000–47000円／月、餐食／水電／交通／簽證與保險費，未取得當期完整生活費或COE最低財力；不只用住宿當總預算。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】2026一般guide JASSO48000円或其他學位／校內獎學金金額與過往受領數不是116交換保證，不混東北JASSO80000；獎學金if applicable先待核，不扣生活預算。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】舊incoming brochure明示交換生住指定校外宿舍，約30000–47000円／月、餐食另計；不能用一般學生租屋介紹或Miki友愛寮代替交換指定房。當期詳細通知由host給母校。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】一般住房頁介紹學生課物件／租屋公司，不保證交換床位、自選、公寓／指定宿舍份額。未取得116宿舍申請表、deadline、押金、寢具及個人分配。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】現有brochure只說宿舍詳細信息另給母校，沒有當期空白申請或截止；不能把timeline一般交換申請當宿舍deadline。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS現行日文頁明示全留學生國保＋學生生活總合保險；國保約20000円／年為一般參考、當地每年按所得核，所得申報／減額需申請，不自動免繳。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】日文資格確認書／MyNumber保險與舊卡文字分開；guide的2／4年保險已繳指學位在籍，不假定半年交換已付。交換適用方案、當期保費及海外保障是否足額另核中央規定。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】初次COE Form2／支應者關係及收入照舊brochure參考，最新指定空白未取得；學生visa依個人國籍／居住與館處原件核，不能把延簽10項當全部初次申請。查看其餘 2 項說明【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS一般延簽：母校機構部分由host出具，passport／在留卡／在學／成績／財力等另依個人；學位新生以前學校成績不同。頁面6000円不是116保證政府費，JPETS僅個人適用按政府核，不全設臺灣生TB。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】住定住所／組織異動、年金20–59、減免申請與再入境依政府個人條件；不得把留學身分當可直接打工或停學後仍可工作。未接觸／提交任何申請。\n          \n      \n\n     \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for locator(\"#detail-overview .partner-student-summary\")\n    12 × locator resolved to <section class=\"partner-student-summary\" aria-labelledby=\"partner-student-summary-title\">…</section>\n       - unexpected value \"\n      \n        合作校條件\n        \n      \n      \n        \n          \n            資格與語言重點\n            116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】關西國際大學（KUISs／KUINS），不是關西大學。舊incoming brochure只開神戶山手／尼崎；Miki不列交換可選。2026/10首頁與access列四校區，尼崎大物2026/4/1新設，不能自動擴充交換track。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央未標年度一頁介紹列神戶山手國際溝通／觀光／社會／心理與尼崎教育／經營；現首頁已新增Global／Information等名稱，116接收學部與實際校區需重新核對。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】未標年度brochure：多數日本語專業課要求N2或同等能力；Global Communication部分英語課與N3或同等能力分開，不能把兩program的N2／N3合成全校單一門檻。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】申請文件列JLPT證明if any；能力要求與一定要有JLPT證書是不同條件。未查到當期替代證明、英語強制分數或有效期，不從社群／degree入試補上。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央一頁介紹限Undergraduate，舊brochure與初次交換包作UG參考；沒有自行把現行degree招生／別科資格套本次交換。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS官方NCU個別頁的中文授課／大三英語課／台灣宿舍USD價格是KUINS學生來中央的資料，只支持exchange合作關係，不能反向套NCU學生去KUINS或當116接收條件。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】多數專業課日文，舊Global Communication部分英語；依實際校區、專業、先修及語言能力確認可修課，不能從現首頁所有學院推交換生自由修全部。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】2026/4一般留學生guide說明UNIPA／履修規則與學修支援，屬一般校務；最新交換課表、每學期最低課程與中央採認未取得。115年度列ncu-118名額原文：1（PDF第5頁）。這是歷史額度，未填入116名額。查看其餘 4 項說明【115年度第5頁，非116門檻】如左方連結說明【115年度第5頁，列ncu-118】本列沒有範圍備註，學制／科系與校區仍須查核【中央公開介紹參考；年份／116適用性未確認】申請資格：Undergraduate（關西國際大學.pdf PDF，第1頁；官方連結）【中央公開介紹參考；年份／116適用性未確認】語言要求：Fields of Study \nopen for \nExchange \nstudents \nKobeyamate Campus \n⚫ School of International Communication \n- Department of English Communication \n- Department of Tourism \n⚫ School of Sociology \n- Department of Sociology \n⚫ School of Psychology \n- Department of Psychology \nAmagasaki Campus \n⚫ School of Education \n- Department of Child Education and Social Welfare \n⚫ School of Business Administration \n- Department of Business Administration（關西國際大學.pdf PDF，第1頁；官方連結）\n          \n          \n            合作校申請步驟\n            校內線上申請2026/11/16 09:00至12/4 12:00（臺灣時間）。紙本資料另須12/11 17:00前交系所；系所12/18 17:00前送國際處，不能把系所送件日當學生截止日。校內初審只取得推薦資格；須由外校另行審查並核發入學許可，且取得簽證。校內必繳正式外語檢定，不限級數；英檢須兩年內有效，線上關閉前須備妥並上傳，不接受網路截圖或補繳。外校要求之語檢分開查核。校內必繳：簽核申請表、家長同意書、個資同意書、正式語檢影本、中文歷年成績、中文名次證明、加蓋國際處章戳之國際移動力證明。簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。外校文件／表格尚未取得並完成116適用性核對；中央通用提名流程不是外校文件清單。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】Brochure列11類參考件：Form1申請、Form2 COE、政府開立本人與支應者關係證明、Form3健康、正式成績、推薦、支應者收入、護照、六張30×40mm照片、JLPT if any、scholarship if applicable。財力關係／JLPT／scholarship按本人情況分開，不能以錄取狀態自動設全必繳。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】Form1／2／3及當期宿舍详细通知由host給母校；只讀到清單與送法，最新空白表／欄位／簽章／成績翻譯規範尚未取得，不宣稱host指定表格已查完。一般延簽文件不是初次COE清單。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】舊未標年度timeline：春季大約10月中申請，秋季大約4月中；錄取通知約1月末／7月末，visa約2月初／8月初。沒有精確日期／年份／時區，不生成116提醒或當目前可送。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】當期nomination／host內外截止與全新表格包未取得，是仍需查的缺口，沒有官方明示全部未公告。查看其餘 3 項說明【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】一般2026guide與現行頁要求4／10月15日前在籍簽名、留學生orientation及更新住所／電話／在留卡；本人签不能朋友代簽。這是一般校務時點，116接收通知另核。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】抵達後住所／國保、個人年金及銀行／手機順序按住所和銀行確認；可用校方學修支援、健康／相談室。臨時出境先提交校方海外渡航届，別把出境通知與移民再入境許可混為同一核准。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】離校前退租、結清水電／手機／銀行、轉出與國保結算、返國在留卡等，成績製發／寄送及中央採認時點未取得。\n          \n          \n            費用提醒\n            中央交換期間仍須註冊及繳本校學雜費；外校是否免學費與其他校方收費須逐方案核對，不保證一律免繳。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央116仍保有學籍與繳母校學雜費；host學費互免及其他費目需核協議。KUINS一般留學生2026guide的學位學費分期、納付期日／減免與交換不同，不当交換個人報價。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】至少分列舊宿舍30000–47000円／月、餐食／水電／交通／簽證與保險費，未取得當期完整生活費或COE最低財力；不只用住宿當總預算。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】2026一般guide JASSO48000円或其他學位／校內獎學金金額與過往受領數不是116交換保證，不混東北JASSO80000；獎學金if applicable先待核，不扣生活預算。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】舊incoming brochure明示交換生住指定校外宿舍，約30000–47000円／月、餐食另計；不能用一般學生租屋介紹或Miki友愛寮代替交換指定房。當期詳細通知由host給母校。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】一般住房頁介紹學生課物件／租屋公司，不保證交換床位、自選、公寓／指定宿舍份額。未取得116宿舍申請表、deadline、押金、寢具及個人分配。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】現有brochure只說宿舍詳細信息另給母校，沒有當期空白申請或截止；不能把timeline一般交換申請當宿舍deadline。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS現行日文頁明示全留學生國保＋學生生活總合保險；國保約20000円／年為一般參考、當地每年按所得核，所得申報／減額需申請，不自動免繳。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】日文資格確認書／MyNumber保險與舊卡文字分開；guide的2／4年保險已繳指學位在籍，不假定半年交換已付。交換適用方案、當期保費及海外保障是否足額另核中央規定。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】初次COE Form2／支應者關係及收入照舊brochure參考，最新指定空白未取得；學生visa依個人國籍／居住與館處原件核，不能把延簽10項當全部初次申請。查看其餘 2 項說明【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS一般延簽：母校機構部分由host出具，passport／在留卡／在學／成績／財力等另依個人；學位新生以前學校成績不同。頁面6000円不是116保證政府費，JPETS僅個人適用按政府核，不全設臺灣生TB。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】住定住所／組織異動、年金20–59、減免申請與再入境依政府個人條件；不得把留學身分當可直接打工或停學後仍可工作。未接觸／提交任何申請。\n          \n      \n\n    \"\n\nAria snapshot:\n- region \"合作校條件\":\n  - heading \"合作校條件\" [level=3]\n  - heading \"資格與語言重點\" [level=4]\n  - list:\n    - listitem: 116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】關西國際大學（KUISs／KUINS），不是關西大學。舊incoming brochure只開神戶山手／尼崎；Miki不列交換可選。2026/10首頁與access列四校區，尼崎大物2026/4/1新設，不能自動擴充交換track。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央未標年度一頁介紹列神戶山手國際溝通／觀光／社會／心理與尼崎教育／經營；現首頁已新增Global／Information等名稱，116接收學部與實際校區需重新核對。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】未標年度brochure：多數日本語專業課要求N2或同等能力；Global Communication部分英語課與N3或同等能力分開，不能把兩program的N2／N3合成全校單一門檻。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】申請文件列JLPT證明if any；能力要求與一定要有JLPT證書是不同條件。未查到當期替代證明、英語強制分數或有效期，不從社群／degree入試補上。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央一頁介紹限Undergraduate，舊brochure與初次交換包作UG參考；沒有自行把現行degree招生／別科資格套本次交換。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS官方NCU個別頁的中文授課／大三英語課／台灣宿舍USD價格是KUINS學生來中央的資料，只支持exchange合作關係，不能反向套NCU學生去KUINS或當116接收條件。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】多數專業課日文，舊Global Communication部分英語；依實際校區、專業、先修及語言能力確認可修課，不能從現首頁所有學院推交換生自由修全部。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】2026/4一般留學生guide說明UNIPA／履修規則與學修支援，屬一般校務；最新交換課表、每學期最低課程與中央採認未取得。\n    - listitem: 115年度列ncu-118名額原文：1（PDF第5頁）。這是歷史額度，未填入116名額。\n  - group: 查看其餘 4 項說明\n  - heading \"合作校申請步驟\" [level=4]\n  - list:\n    - listitem:\n      - text: 校內線上申請2026/11/16 09:00至12/4 12:00（臺灣時間）。紙本資料另須12/11 17:00前交系所；系所12/18 17:00前送國際處，不能把系所送件日當學生\n      - strong: 截止日\n      - text: 。\n    - listitem: 校內初審只取得推薦資格；須由外校另行審查並核發入學許可，且取得簽證。\n    - listitem: 校內必繳正式外語檢定，不限級數；英檢須兩年內有效，線上關閉前須備妥並上傳，不接受網路截圖或補繳。外校要求之語檢分開查核。\n    - listitem:\n      - text: 校內必繳：簽核\n      - strong: 申請表\n      - text: 、家長\n      - strong: 同意書\n      - text: 、個資\n      - strong: 同意書\n      - text: 、正式語檢影本、中文歷年成績、中文名次證明、加蓋國際處章戳之國際移動力證明。\n    - listitem: 簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。\n    - listitem: 外校文件／表格尚未取得並完成116適用性核對；中央通用提名流程不是外校文件清單。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】Brochure列11類參考件：Form1申請、Form2 COE、政府開立本人與支應者關係證明、Form3健康、正式成績、推薦、支應者收入、護照、六張30×40mm照片、JLPT if any、scholarship if applicable。財力關係／JLPT／scholarship按本人情況分開，不能以錄取狀態自動設全必繳。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】Form1／2／3及當期宿舍详细通知由host給母校；只讀到清單與送法，最新空白表／欄位／簽章／成績翻譯規範尚未取得，不宣稱host指定表格已查完。一般延簽文件不是初次COE清單。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】舊未標年度timeline：春季大約10月中申請，秋季大約4月中；錄取通知約1月末／7月末，visa約2月初／8月初。沒有精確日期／年份／時區，不生成116提醒或當目前可送。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】當期nomination／host內外截止與全新表格包未取得，是仍需查的缺口，沒有官方明示全部未公告。\n  - group: 查看其餘 3 項說明\n  - heading \"費用提醒\" [level=4]\n  - list:\n    - listitem: 中央交換期間仍須註冊及繳本校學雜費；外校是否免學費與其他校方收費須逐方案核對，不保證一律免繳。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央116仍保有學籍與繳母校學雜費；host學費互免及其他費目需核協議。KUINS一般留學生2026guide的學位學費分期、納付期日／減免與交換不同，不当交換個人報價。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】至少分列舊宿舍30000–47000円／月、餐食／水電／交通／簽證與保險費，未取得當期完整生活費或COE最低財力；不只用住宿當總預算。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】2026一般guide JASSO48000円或其他學位／校內獎學金金額與過往受領數不是116交換保證，不混東北JASSO80000；獎學金if applicable先待核，不扣生活預算。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】舊incoming brochure明示交換生住指定校外宿舍，約30000–47000円／月、餐食另計；不能用一般學生租屋介紹或Miki友愛寮代替交換指定房。當期詳細通知由host給母校。\n    - listitem:\n      - text: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】一般住房頁介紹學生課物件／租屋公司，不保證交換床位、自選、公寓／指定宿舍份額。未取得116宿舍\n      - strong: 申請表\n      - text: 、deadline、押金、寢具及個人分配。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】現有brochure只說宿舍詳細信息另給母校，沒有當期空白申請或截止；不能把timeline一般交換申請當宿舍deadline。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS現行日文頁明示全留學生國保＋學生生活總合保險；國保約20000円／年為一般參考、當地每年按所得核，所得申報／減額需申請，不自動免繳。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】日文資格確認書／MyNumber保險與舊卡文字分開；guide的2／4年保險已繳指學位在籍，不假定半年交換已付。交換適用方案、當期保費及海外保障是否足額另核中央規定。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】初次COE Form2／支應者關係及收入照舊brochure參考，最新指定空白未取得；學生visa依個人國籍／居住與館處原件核，不能把延簽10項當全部初次申請。\n  - group: 查看其餘 2 項說明"
+        },
+        {
+          "name": "test_ncu_reference_scope_and_student_content[kansai-\\u95dc\\u897f\\u5927\\u5b78-\\u521d\\u6b21\\u516d\\u985e\\u5171\\u901a\\uff0c\\u4e26\\u975e\\u6bcd\\u6821\\u4e03\\u4ef6-6-1440]",
+          "class": "tests.e2e.test_ncu_shizuoka_chuo_kansai",
+          "message": "AssertionError: Locator expected to contain text '500000'\nActual value: \n      \n        合作校條件\n        \n      \n      \n        \n          \n            資格與語言重點\n            116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】關西國際大學（KUISs／KUINS），不是關西大學。舊incoming brochure只開神戶山手／尼崎；Miki不列交換可選。2026/10首頁與access列四校區，尼崎大物2026/4/1新設，不能自動擴充交換track。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央未標年度一頁介紹列神戶山手國際溝通／觀光／社會／心理與尼崎教育／經營；現首頁已新增Global／Information等名稱，116接收學部與實際校區需重新核對。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】未標年度brochure：多數日本語專業課要求N2或同等能力；Global Communication部分英語課與N3或同等能力分開，不能把兩program的N2／N3合成全校單一門檻。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】申請文件列JLPT證明if any；能力要求與一定要有JLPT證書是不同條件。未查到當期替代證明、英語強制分數或有效期，不從社群／degree入試補上。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央一頁介紹限Undergraduate，舊brochure與初次交換包作UG參考；沒有自行把現行degree招生／別科資格套本次交換。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS官方NCU個別頁的中文授課／大三英語課／台灣宿舍USD價格是KUINS學生來中央的資料，只支持exchange合作關係，不能反向套NCU學生去KUINS或當116接收條件。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】多數專業課日文，舊Global Communication部分英語；依實際校區、專業、先修及語言能力確認可修課，不能從現首頁所有學院推交換生自由修全部。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】2026/4一般留學生guide說明UNIPA／履修規則與學修支援，屬一般校務；最新交換課表、每學期最低課程與中央採認未取得。115年度列ncu-118名額原文：1（PDF第5頁）。這是歷史額度，未填入116名額。查看其餘 4 項說明【115年度第5頁，非116門檻】如左方連結說明【115年度第5頁，列ncu-118】本列沒有範圍備註，學制／科系與校區仍須查核【中央公開介紹參考；年份／116適用性未確認】申請資格：Undergraduate（關西國際大學.pdf PDF，第1頁；官方連結）【中央公開介紹參考；年份／116適用性未確認】語言要求：Fields of Study \nopen for \nExchange \nstudents \nKobeyamate Campus \n⚫ School of International Communication \n- Department of English Communication \n- Department of Tourism \n⚫ School of Sociology \n- Department of Sociology \n⚫ School of Psychology \n- Department of Psychology \nAmagasaki Campus \n⚫ School of Education \n- Department of Child Education and Social Welfare \n⚫ School of Business Administration \n- Department of Business Administration（關西國際大學.pdf PDF，第1頁；官方連結）\n          \n          \n            合作校申請步驟\n            校內線上申請2026/11/16 09:00至12/4 12:00（臺灣時間）。紙本資料另須12/11 17:00前交系所；系所12/18 17:00前送國際處，不能把系所送件日當學生截止日。校內初審只取得推薦資格；須由外校另行審查並核發入學許可，且取得簽證。校內必繳正式外語檢定，不限級數；英檢須兩年內有效，線上關閉前須備妥並上傳，不接受網路截圖或補繳。外校要求之語檢分開查核。校內必繳：簽核申請表、家長同意書、個資同意書、正式語檢影本、中文歷年成績、中文名次證明、加蓋國際處章戳之國際移動力證明。簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。外校文件／表格尚未取得並完成116適用性核對；中央通用提名流程不是外校文件清單。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】Brochure列11類參考件：Form1申請、Form2 COE、政府開立本人與支應者關係證明、Form3健康、正式成績、推薦、支應者收入、護照、六張30×40mm照片、JLPT if any、scholarship if applicable。財力關係／JLPT／scholarship按本人情況分開，不能以錄取狀態自動設全必繳。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】Form1／2／3及當期宿舍详细通知由host給母校；只讀到清單與送法，最新空白表／欄位／簽章／成績翻譯規範尚未取得，不宣稱host指定表格已查完。一般延簽文件不是初次COE清單。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】舊未標年度timeline：春季大約10月中申請，秋季大約4月中；錄取通知約1月末／7月末，visa約2月初／8月初。沒有精確日期／年份／時區，不生成116提醒或當目前可送。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】當期nomination／host內外截止與全新表格包未取得，是仍需查的缺口，沒有官方明示全部未公告。查看其餘 3 項說明【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】一般2026guide與現行頁要求4／10月15日前在籍簽名、留學生orientation及更新住所／電話／在留卡；本人签不能朋友代簽。這是一般校務時點，116接收通知另核。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】抵達後住所／國保、個人年金及銀行／手機順序按住所和銀行確認；可用校方學修支援、健康／相談室。臨時出境先提交校方海外渡航届，別把出境通知與移民再入境許可混為同一核准。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】離校前退租、結清水電／手機／銀行、轉出與國保結算、返國在留卡等，成績製發／寄送及中央採認時點未取得。\n          \n          \n            費用提醒\n            中央交換期間仍須註冊及繳本校學雜費；外校是否免學費與其他校方收費須逐方案核對，不保證一律免繳。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央116仍保有學籍與繳母校學雜費；host學費互免及其他費目需核協議。KUINS一般留學生2026guide的學位學費分期、納付期日／減免與交換不同，不当交換個人報價。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】至少分列舊宿舍30000–47000円／月、餐食／水電／交通／簽證與保險費，未取得當期完整生活費或COE最低財力；不只用住宿當總預算。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】2026一般guide JASSO48000円或其他學位／校內獎學金金額與過往受領數不是116交換保證，不混東北JASSO80000；獎學金if applicable先待核，不扣生活預算。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】舊incoming brochure明示交換生住指定校外宿舍，約30000–47000円／月、餐食另計；不能用一般學生租屋介紹或Miki友愛寮代替交換指定房。當期詳細通知由host給母校。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】一般住房頁介紹學生課物件／租屋公司，不保證交換床位、自選、公寓／指定宿舍份額。未取得116宿舍申請表、deadline、押金、寢具及個人分配。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】現有brochure只說宿舍詳細信息另給母校，沒有當期空白申請或截止；不能把timeline一般交換申請當宿舍deadline。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS現行日文頁明示全留學生國保＋學生生活總合保險；國保約20000円／年為一般參考、當地每年按所得核，所得申報／減額需申請，不自動免繳。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】日文資格確認書／MyNumber保險與舊卡文字分開；guide的2／4年保險已繳指學位在籍，不假定半年交換已付。交換適用方案、當期保費及海外保障是否足額另核中央規定。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】初次COE Form2／支應者關係及收入照舊brochure參考，最新指定空白未取得；學生visa依個人國籍／居住與館處原件核，不能把延簽10項當全部初次申請。查看其餘 2 項說明【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS一般延簽：母校機構部分由host出具，passport／在留卡／在學／成績／財力等另依個人；學位新生以前學校成績不同。頁面6000円不是116保證政府費，JPETS僅個人適用按政府核，不全設臺灣生TB。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】住定住所／組織異動、年金20–59、減免申請與再入境依政府個人條件；不得把留學身分當可直接打工或停學後仍可工作。未接觸／提交任何申請。\n          \n      \n\n     \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for locator(\"#detail-overview .partner-student-summary\")\n    13 × locator resolved to <section class=\"partner-student-summary\" aria-labelledby=\"partner-student-summary-title\">…</section>\n       - unexpected value \"\n      \n        合作校條件\n        \n      \n      \n        \n          \n            資格與語言重點\n            116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】關西國際大學（KUISs／KUINS），不是關西大學。舊incoming brochure只開神戶山手／尼崎；Miki不列交換可選。2026/10首頁與access列四校區，尼崎大物2026/4/1新設，不能自動擴充交換track。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央未標年度一頁介紹列神戶山手國際溝通／觀光／社會／心理與尼崎教育／經營；現首頁已新增Global／Information等名稱，116接收學部與實際校區需重新核對。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】未標年度brochure：多數日本語專業課要求N2或同等能力；Global Communication部分英語課與N3或同等能力分開，不能把兩program的N2／N3合成全校單一門檻。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】申請文件列JLPT證明if any；能力要求與一定要有JLPT證書是不同條件。未查到當期替代證明、英語強制分數或有效期，不從社群／degree入試補上。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央一頁介紹限Undergraduate，舊brochure與初次交換包作UG參考；沒有自行把現行degree招生／別科資格套本次交換。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS官方NCU個別頁的中文授課／大三英語課／台灣宿舍USD價格是KUINS學生來中央的資料，只支持exchange合作關係，不能反向套NCU學生去KUINS或當116接收條件。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】多數專業課日文，舊Global Communication部分英語；依實際校區、專業、先修及語言能力確認可修課，不能從現首頁所有學院推交換生自由修全部。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】2026/4一般留學生guide說明UNIPA／履修規則與學修支援，屬一般校務；最新交換課表、每學期最低課程與中央採認未取得。115年度列ncu-118名額原文：1（PDF第5頁）。這是歷史額度，未填入116名額。查看其餘 4 項說明【115年度第5頁，非116門檻】如左方連結說明【115年度第5頁，列ncu-118】本列沒有範圍備註，學制／科系與校區仍須查核【中央公開介紹參考；年份／116適用性未確認】申請資格：Undergraduate（關西國際大學.pdf PDF，第1頁；官方連結）【中央公開介紹參考；年份／116適用性未確認】語言要求：Fields of Study \nopen for \nExchange \nstudents \nKobeyamate Campus \n⚫ School of International Communication \n- Department of English Communication \n- Department of Tourism \n⚫ School of Sociology \n- Department of Sociology \n⚫ School of Psychology \n- Department of Psychology \nAmagasaki Campus \n⚫ School of Education \n- Department of Child Education and Social Welfare \n⚫ School of Business Administration \n- Department of Business Administration（關西國際大學.pdf PDF，第1頁；官方連結）\n          \n          \n            合作校申請步驟\n            校內線上申請2026/11/16 09:00至12/4 12:00（臺灣時間）。紙本資料另須12/11 17:00前交系所；系所12/18 17:00前送國際處，不能把系所送件日當學生截止日。校內初審只取得推薦資格；須由外校另行審查並核發入學許可，且取得簽證。校內必繳正式外語檢定，不限級數；英檢須兩年內有效，線上關閉前須備妥並上傳，不接受網路截圖或補繳。外校要求之語檢分開查核。校內必繳：簽核申請表、家長同意書、個資同意書、正式語檢影本、中文歷年成績、中文名次證明、加蓋國際處章戳之國際移動力證明。簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。外校文件／表格尚未取得並完成116適用性核對；中央通用提名流程不是外校文件清單。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】Brochure列11類參考件：Form1申請、Form2 COE、政府開立本人與支應者關係證明、Form3健康、正式成績、推薦、支應者收入、護照、六張30×40mm照片、JLPT if any、scholarship if applicable。財力關係／JLPT／scholarship按本人情況分開，不能以錄取狀態自動設全必繳。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】Form1／2／3及當期宿舍详细通知由host給母校；只讀到清單與送法，最新空白表／欄位／簽章／成績翻譯規範尚未取得，不宣稱host指定表格已查完。一般延簽文件不是初次COE清單。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】舊未標年度timeline：春季大約10月中申請，秋季大約4月中；錄取通知約1月末／7月末，visa約2月初／8月初。沒有精確日期／年份／時區，不生成116提醒或當目前可送。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】當期nomination／host內外截止與全新表格包未取得，是仍需查的缺口，沒有官方明示全部未公告。查看其餘 3 項說明【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】一般2026guide與現行頁要求4／10月15日前在籍簽名、留學生orientation及更新住所／電話／在留卡；本人签不能朋友代簽。這是一般校務時點，116接收通知另核。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】抵達後住所／國保、個人年金及銀行／手機順序按住所和銀行確認；可用校方學修支援、健康／相談室。臨時出境先提交校方海外渡航届，別把出境通知與移民再入境許可混為同一核准。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】離校前退租、結清水電／手機／銀行、轉出與國保結算、返國在留卡等，成績製發／寄送及中央採認時點未取得。\n          \n          \n            費用提醒\n            中央交換期間仍須註冊及繳本校學雜費；外校是否免學費與其他校方收費須逐方案核對，不保證一律免繳。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央116仍保有學籍與繳母校學雜費；host學費互免及其他費目需核協議。KUINS一般留學生2026guide的學位學費分期、納付期日／減免與交換不同，不当交換個人報價。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】至少分列舊宿舍30000–47000円／月、餐食／水電／交通／簽證與保險費，未取得當期完整生活費或COE最低財力；不只用住宿當總預算。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】2026一般guide JASSO48000円或其他學位／校內獎學金金額與過往受領數不是116交換保證，不混東北JASSO80000；獎學金if applicable先待核，不扣生活預算。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】舊incoming brochure明示交換生住指定校外宿舍，約30000–47000円／月、餐食另計；不能用一般學生租屋介紹或Miki友愛寮代替交換指定房。當期詳細通知由host給母校。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】一般住房頁介紹學生課物件／租屋公司，不保證交換床位、自選、公寓／指定宿舍份額。未取得116宿舍申請表、deadline、押金、寢具及個人分配。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】現有brochure只說宿舍詳細信息另給母校，沒有當期空白申請或截止；不能把timeline一般交換申請當宿舍deadline。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS現行日文頁明示全留學生國保＋學生生活總合保險；國保約20000円／年為一般參考、當地每年按所得核，所得申報／減額需申請，不自動免繳。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】日文資格確認書／MyNumber保險與舊卡文字分開；guide的2／4年保險已繳指學位在籍，不假定半年交換已付。交換適用方案、當期保費及海外保障是否足額另核中央規定。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】初次COE Form2／支應者關係及收入照舊brochure參考，最新指定空白未取得；學生visa依個人國籍／居住與館處原件核，不能把延簽10項當全部初次申請。查看其餘 2 項說明【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS一般延簽：母校機構部分由host出具，passport／在留卡／在學／成績／財力等另依個人；學位新生以前學校成績不同。頁面6000円不是116保證政府費，JPETS僅個人適用按政府核，不全設臺灣生TB。【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】住定住所／組織異動、年金20–59、減免申請與再入境依政府個人條件；不得把留學身分當可直接打工或停學後仍可工作。未接觸／提交任何申請。\n          \n      \n\n    \"\n\nAria snapshot:\n- region \"合作校條件\":\n  - heading \"合作校條件\" [level=3]\n  - heading \"資格與語言重點\" [level=4]\n  - list:\n    - listitem: 116-1名額預定2026/10/12公告，目前只有115名單；不能據此判定當期開放。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】關西國際大學（KUISs／KUINS），不是關西大學。舊incoming brochure只開神戶山手／尼崎；Miki不列交換可選。2026/10首頁與access列四校區，尼崎大物2026/4/1新設，不能自動擴充交換track。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央未標年度一頁介紹列神戶山手國際溝通／觀光／社會／心理與尼崎教育／經營；現首頁已新增Global／Information等名稱，116接收學部與實際校區需重新核對。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】未標年度brochure：多數日本語專業課要求N2或同等能力；Global Communication部分英語課與N3或同等能力分開，不能把兩program的N2／N3合成全校單一門檻。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】申請文件列JLPT證明if any；能力要求與一定要有JLPT證書是不同條件。未查到當期替代證明、英語強制分數或有效期，不從社群／degree入試補上。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央一頁介紹限Undergraduate，舊brochure與初次交換包作UG參考；沒有自行把現行degree招生／別科資格套本次交換。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS官方NCU個別頁的中文授課／大三英語課／台灣宿舍USD價格是KUINS學生來中央的資料，只支持exchange合作關係，不能反向套NCU學生去KUINS或當116接收條件。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】多數專業課日文，舊Global Communication部分英語；依實際校區、專業、先修及語言能力確認可修課，不能從現首頁所有學院推交換生自由修全部。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】2026/4一般留學生guide說明UNIPA／履修規則與學修支援，屬一般校務；最新交換課表、每學期最低課程與中央採認未取得。\n    - listitem: 115年度列ncu-118名額原文：1（PDF第5頁）。這是歷史額度，未填入116名額。\n  - group: 查看其餘 4 項說明\n  - heading \"合作校申請步驟\" [level=4]\n  - list:\n    - listitem:\n      - text: 校內線上申請2026/11/16 09:00至12/4 12:00（臺灣時間）。紙本資料另須12/11 17:00前交系所；系所12/18 17:00前送國際處，不能把系所送件日當學生\n      - strong: 截止日\n      - text: 。\n    - listitem: 校內初審只取得推薦資格；須由外校另行審查並核發入學許可，且取得簽證。\n    - listitem: 校內必繳正式外語檢定，不限級數；英檢須兩年內有效，線上關閉前須備妥並上傳，不接受網路截圖或補繳。外校要求之語檢分開查核。\n    - listitem:\n      - text: 校內必繳：簽核\n      - strong: 申請表\n      - text: 、家長\n      - strong: 同意書\n      - text: 、個資\n      - strong: 同意書\n      - text: 、正式語檢影本、中文歷年成績、中文名次證明、加蓋國際處章戳之國際移動力證明。\n    - listitem: 簡章第4頁允許外校語檢至外校截止前補繳，第7頁規定提名前取得；請依較早的提名時點準備並向國際處確認。\n    - listitem: 外校文件／表格尚未取得並完成116適用性核對；中央通用提名流程不是外校文件清單。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】Brochure列11類參考件：Form1申請、Form2 COE、政府開立本人與支應者關係證明、Form3健康、正式成績、推薦、支應者收入、護照、六張30×40mm照片、JLPT if any、scholarship if applicable。財力關係／JLPT／scholarship按本人情況分開，不能以錄取狀態自動設全必繳。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】Form1／2／3及當期宿舍详细通知由host給母校；只讀到清單與送法，最新空白表／欄位／簽章／成績翻譯規範尚未取得，不宣稱host指定表格已查完。一般延簽文件不是初次COE清單。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】舊未標年度timeline：春季大約10月中申請，秋季大約4月中；錄取通知約1月末／7月末，visa約2月初／8月初。沒有精確日期／年份／時區，不生成116提醒或當目前可送。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】當期nomination／host內外截止與全新表格包未取得，是仍需查的缺口，沒有官方明示全部未公告。\n  - group: 查看其餘 3 項說明\n  - heading \"費用提醒\" [level=4]\n  - list:\n    - listitem: 中央交換期間仍須註冊及繳本校學雜費；外校是否免學費與其他校方收費須逐方案核對，不保證一律免繳。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】中央116仍保有學籍與繳母校學雜費；host學費互免及其他費目需核協議。KUINS一般留學生2026guide的學位學費分期、納付期日／減免與交換不同，不当交換個人報價。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】至少分列舊宿舍30000–47000円／月、餐食／水電／交通／簽證與保險費，未取得當期完整生活費或COE最低財力；不只用住宿當總預算。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】2026一般guide JASSO48000円或其他學位／校內獎學金金額與過往受領數不是116交換保證，不混東北JASSO80000；獎學金if applicable先待核，不扣生活預算。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】舊incoming brochure明示交換生住指定校外宿舍，約30000–47000円／月、餐食另計；不能用一般學生租屋介紹或Miki友愛寮代替交換指定房。當期詳細通知由host給母校。\n    - listitem:\n      - text: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】一般住房頁介紹學生課物件／租屋公司，不保證交換床位、自選、公寓／指定宿舍份額。未取得116宿舍\n      - strong: 申請表\n      - text: 、deadline、押金、寢具及個人分配。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】現有brochure只說宿舍詳細信息另給母校，沒有當期空白申請或截止；不能把timeline一般交換申請當宿舍deadline。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】KUINS現行日文頁明示全留學生國保＋學生生活總合保險；國保約20000円／年為一般參考、當地每年按所得核，所得申報／減額需申請，不自動免繳。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】日文資格確認書／MyNumber保險與舊卡文字分開；guide的2／4年保險已繳指學位在籍，不假定半年交換已付。交換適用方案、當期保費及海外保障是否足額另核中央規定。\n    - listitem: 【KUINS未標年度incoming brochure與2026/4一般留學生guide參考；不是關西大學。NCU116quota／program／最新接收包未核，所有host條件pending。】初次COE Form2／支應者關係及收入照舊brochure參考，最新指定空白未取得；學生visa依個人國籍／居住與館處原件核，不能把延簽10項當全部初次申請。\n  - group: 查看其餘 2 項說明"
+        }
+      ]
+    }
+  ],
+  "production_actions": false,
+  "full_ci_equivalence": false,
+  "data_coverage": {
+    "checked_at": "2026-10-08T00:00:00+00:00",
+    "academic_year": "116",
+    "home_notice_confirmed": true,
+    "current_list_status": "scheduled_not_yet_announced",
+    "current_list_expected_date": "2026-10-12",
+    "historical_rows": 216,
+    "catalog_entries": 214,
+    "source_documents_attempted": 459,
+    "source_documents_downloaded": 459,
+    "source_documents_any_text": 454,
+    "source_documents_all_pages_have_text": 423,
+    "source_documents_all_pages_read": 29,
+    "source_documents_visual_reviewed": 7,
+    "source_documents_ocr_reviewed": 1,
+    "source_documents_with_errors": 0,
+    "source_documents_with_text_quality_gaps": 2,
+    "source_documents_with_non_text_pages": 36,
+    "source_non_text_page_count": 100,
+    "host_web_checks": 921,
+    "host_web_checks_with_errors": 115,
+    "source_mapped_entries": 214,
+    "host_source_mapped_entries": 211,
+    "entries_with_any_host_text": 210,
+    "reviewed_host_records": 71,
+    "host_full_116_verification_count": 0,
+    "pending_workflows": 214,
+    "provenance_note": "提取不是當期資格核准；逐欄缺口與原文分列於field-audit.json。"
+  },
+  "data_acceptance_passed": false,
+  "ci_status": "not_checked_yet",
+  "prior_kyutech_failure_closed": false,
+  "browser_scope": "Six new school content cases at 390/1440; prior 20-case e79 19-pass/1-fail and original Kyutech root remain open. No new profiling or Kyutech reruns.",
+  "workflow_parity": {
+    "main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "compared_count": 851,
+    "semantic_differences": 0,
+    "method": "untouched main runtime export revalidated with identical current schema; serialized values compared as a multiset including duplicate workflows",
+    "counts": {
+      "國立臺北大學": 409,
+      "長庚大學": 154,
+      "國立臺灣大學": 288
+    }
+  },
+  "original_browser_evidence": [
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/original-browser/ncu-shizuoka-chuo-kansai-chuo-life-1440.png",
+      "sha256": "a487b68be109b43f9eb41be7c345b2bbda78b25aebaea5f682acc3d14324caaf"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/original-browser/ncu-shizuoka-chuo-kansai-chuo-life-390.png",
+      "sha256": "0111c2264145a003b4311f750befda8341fa021ac63098b1770e68d2c4fa610e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/original-browser/ncu-shizuoka-chuo-kansai-chuo-packet-1440.png",
+      "sha256": "a7a68eef5f8eba26fe7c31736b188258545ad4f1ef34599fe5b176d9992e82fb"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/original-browser/ncu-shizuoka-chuo-kansai-chuo-packet-390.png",
+      "sha256": "10d9fb8d14957b8c4d7b13260d81edf346c6f3f1b0eb7998bd98d9ce1a335b8d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/original-browser/ncu-shizuoka-chuo-kansai-chuo-source-1440.png",
+      "sha256": "a533b16067277bf8ea6368d69629b8bddda97a1a64262926ad765e7c3ce4b23a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/original-browser/ncu-shizuoka-chuo-kansai-chuo-source-390.png",
+      "sha256": "237fa7e3e8d0824862a4907db6fe6ad70e77725daed0c5422737cc83ec4493c3"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/original-browser/ncu-shizuoka-chuo-kansai-shizuoka-life-1440.png",
+      "sha256": "8895a6d49fbb5e0c5cc789b97ba2e582c0abf8139ecedda7119ee51b1d1de657"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/original-browser/ncu-shizuoka-chuo-kansai-shizuoka-life-390.png",
+      "sha256": "9082e9fba4a74552a630265855ec46703eb1c890407656abbad1213b2664ccad"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/original-browser/ncu-shizuoka-chuo-kansai-shizuoka-packet-1440.png",
+      "sha256": "0b9a938a4b4bdbea4babbe030a10f5bff068d72598ba07d8646bf2a09b7fdcdc"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/original-browser/ncu-shizuoka-chuo-kansai-shizuoka-packet-390.png",
+      "sha256": "b09ed8b3a2a73a7a3d31b8d2ec05d8af60a97c45f25aea745df2d2f200193dbb"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/original-browser/ncu-shizuoka-chuo-kansai-shizuoka-source-1440.png",
+      "sha256": "1c5dd591e8a1defcb224d6a36a39c6804f5fd634f42e5d32507bac84bf363677"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/original-browser/ncu-shizuoka-chuo-kansai-shizuoka-source-390.png",
+      "sha256": "6761ad94f26012cf3671e2b036fc9890b21e7da7b86cf9e9b61a6451785aba17"
+    }
+  ],
+  "performance": [],
+  "browser_evidence": [
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser/ncu-shizuoka-chuo-kansai-chuo-life-1440.png",
+      "sha256": "a487b68be109b43f9eb41be7c345b2bbda78b25aebaea5f682acc3d14324caaf"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser/ncu-shizuoka-chuo-kansai-chuo-life-390.png",
+      "sha256": "0111c2264145a003b4311f750befda8341fa021ac63098b1770e68d2c4fa610e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser/ncu-shizuoka-chuo-kansai-chuo-packet-1440.png",
+      "sha256": "a7a68eef5f8eba26fe7c31736b188258545ad4f1ef34599fe5b176d9992e82fb"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser/ncu-shizuoka-chuo-kansai-chuo-packet-390.png",
+      "sha256": "10d9fb8d14957b8c4d7b13260d81edf346c6f3f1b0eb7998bd98d9ce1a335b8d"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser/ncu-shizuoka-chuo-kansai-chuo-source-1440.png",
+      "sha256": "a533b16067277bf8ea6368d69629b8bddda97a1a64262926ad765e7c3ce4b23a"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser/ncu-shizuoka-chuo-kansai-chuo-source-390.png",
+      "sha256": "237fa7e3e8d0824862a4907db6fe6ad70e77725daed0c5422737cc83ec4493c3"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser/ncu-shizuoka-chuo-kansai-shizuoka-life-1440.png",
+      "sha256": "8895a6d49fbb5e0c5cc789b97ba2e582c0abf8139ecedda7119ee51b1d1de657"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser/ncu-shizuoka-chuo-kansai-shizuoka-life-390.png",
+      "sha256": "9082e9fba4a74552a630265855ec46703eb1c890407656abbad1213b2664ccad"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser/ncu-shizuoka-chuo-kansai-shizuoka-packet-1440.png",
+      "sha256": "0b9a938a4b4bdbea4babbe030a10f5bff068d72598ba07d8646bf2a09b7fdcdc"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser/ncu-shizuoka-chuo-kansai-shizuoka-packet-390.png",
+      "sha256": "b09ed8b3a2a73a7a3d31b8d2ec05d8af60a97c45f25aea745df2d2f200193dbb"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser/ncu-shizuoka-chuo-kansai-shizuoka-source-1440.png",
+      "sha256": "1c5dd591e8a1defcb224d6a36a39c6804f5fd634f42e5d32507bac84bf363677"
+    },
+    {
+      "path": "/tmp/ncu-candidate-672eb5899693f06b211afdf517c2f63c1ec5f0c9/browser/ncu-shizuoka-chuo-kansai-shizuoka-source-390.png",
+      "sha256": "6761ad94f26012cf3671e2b036fc9890b21e7da7b86cf9e9b61a6451785aba17"
+    }
+  ],
+  "end_sha": "672eb5899693f06b211afdf517c2f63c1ec5f0c9",
+  "end_worktree_porcelain": "",
+  "same_sha_at_end": true,
+  "necessary_local_tests_passed": false,
+  "acceptance_status": "blocked",
+  "finished_at": "2026-10-09T05:04:08.104262+00:00"
+}

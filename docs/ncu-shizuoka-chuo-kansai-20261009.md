@@ -43,3 +43,5 @@ Kyutech先前原事件與兩次有瑕疵的有界診斷證據見[診斷紀錄](n
 第一固定候選672eb58：315中央、193共享＋2skip、65gate、OpenAPI／851流程0差異／JS／lock均過；6 browser為4 pass／2 fail。兩個關西案例用搜尋結果第一項誤開關西國際（其文字包含「不是關西大學」），原始URL／畫面與失敗斷言已保留。測試改依完整school identity精確選卡並核對實際網址，沒有改平台搜尋規則或調長斷言timeout。32ead78另補原健康表持續治療medical information及三月規則護照範圍；最终固定候選將含這兩個修正另驗，672結果不改標為新版通過。
 
 16e95c3固定查驗亦315中央／193共享＋2skip／65gate及全部必要靜態通過，但新6 browser仍4 pass／2 fail：已精確選關西，source／初次六件／health／COE均過，最後生活頁500000斷言失敗。資料把保證上限只列在host文件而漏住房欄，現補同一Dormitory Guarantee原件1頁的住房說明。保留原生活頁斷言與timeout，新增API明確檢查該句在life，不只在summary。只重驗受影響的三校API／source、生活及新六個browser；既有315／193／65與OpenAPI／851紀錄保持原SHA，不重跑無關共享檢查，也不把已知Kyutech根因關閉。
+
+固定224284f於2026-10-09 05:17:32至05:20:12 UTC完成：25受影響API／source／生活、6個390／1440 browser、OpenAPI／851流程0差異／三JS／lock／diff全過，起迄SHA相同且乾淨。本批必要本機檢查true，資料驗收仍blocked（71 partial／214、116全欄核准0）。18張原始PNG中8張已實際看圖，原始失敗与通過紀錄、各候選SHA与CI failure／0jobs在[本批證據](ncu-test-evidence/shizuoka-chuo-kansai-20261009/README.md)。未重跑／改標315／193／65先前版本，Kyutech舊根因維持未解。
