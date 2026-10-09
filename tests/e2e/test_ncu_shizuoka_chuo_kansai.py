@@ -75,6 +75,8 @@ def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,nam
             expect(application.locator(f'.workflow-sources a[href$="{suffix}"]').first).to_be_visible()
     else:
         expect(group).to_contain_text('胸片≤6月')
+        expect(group).to_contain_text('medical information')
+        expect(group).to_contain_text('不能硬判發照三月')
         for term in ['親屬Dormitory Guarantee','不是要存入的deposit','11/10–19']:
             expect(application).to_contain_text(term)
         assert not group.locator('.workflow-documents > li').filter(has_text='成績').count()

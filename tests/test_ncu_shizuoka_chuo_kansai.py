@@ -53,6 +53,7 @@ def test_reference_packets_stay_separate_from_home_and_block_current_downloads(t
             'english_admissions_exchange_semester-or-full-year_C2_20260904.docx'}
         assert 'Kenkyusei' in json.dumps(steps[row+'-host-conditional-part1'],ensure_ascii=False)
     if row == 'ncu-129':
+        assert 'medical information' in json.dumps(steps[row+'-host-initial-reference'],ensure_ascii=False)
         assert not any('成績' in d['name'] for d in steps[row+'-host-initial-reference']['document_requirements'])
         order = list(steps)
         assert order.index(row+'-host-initial-housing') < order.index(row+'-host-apply')
@@ -97,7 +98,7 @@ def test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_lif
         for term in ['350000','1150000','50000','1500','Part2']:
             assert term in life or term in summary, term
     else:
-        for term in ['六月','三月','500000','不是','11/10','MCL']:
+        for term in ['六月','三月','500000','不是','11/10','MCL','不以護照發照日期自動拒收','medical information']:
             assert term in summary or term in life, term
         for term in ['41000','63000','末月','1650','404','all exchange']:
             assert term in life or term in summary, term
