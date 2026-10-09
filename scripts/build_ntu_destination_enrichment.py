@@ -7,7 +7,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from exchange_info.life_context import LifeResearchSnapshot
+from exchange_info.life_context import LifeResearchSnapshot, reviewed_life_snapshot
 from exchange_info.school_image_collector import SchoolImageRecord
 from exchange_info.school_identity import school_identity_key
 from exchange_info.university_locations import UniversityLocation, location_key
@@ -52,7 +52,7 @@ def build(snapshot_path: Path = SNAPSHOT) -> dict:
         record = UniversityLocation.model_validate(raw)
         locations[location_key(record.school_name, record.country)] = record
     location_path.write_text("".join(r.model_dump_json() + "\n" for _, r in sorted(locations.items())))
-    life = [LifeResearchSnapshot.model_validate(r) for r in snapshot["life"]]
+    life = [reviewed_life_snapshot(LifeResearchSnapshot.model_validate(r)) for r in snapshot["life"]]
     keys = [(r.school_name, r.country) for r in life]
     if len(keys) != 288 or len(set(keys)) != 288:
         raise ValueError("All 288 NTU destinations must have a distinct research result")

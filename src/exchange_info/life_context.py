@@ -138,13 +138,29 @@ def _cache_path(partner: PartnerUniversity, data_dir: Path) -> Path:
     return Path(data_dir) / "processed" / "life_research" / f"{key}.json"
 
 
+def reviewed_life_snapshot(snapshot: LifeResearchSnapshot) -> LifeResearchSnapshot:
+    """Error-page navigation is not student-life evidence, even with HTTP 200."""
+    evidence = [row for row in snapshot.evidence if not any(
+        re.search(r"^(?:404|403|not found)\b", source.title.strip(), re.I)
+        or re.search(r"/(?:error/)?404(?:[/.]|$)", urlsplit(source.url).path)
+        for source in row.sources
+    )]
+    if len(evidence) == len(snapshot.evidence):
+        return snapshot
+    return snapshot.model_copy(update={
+        "evidence": evidence,
+        "status": "partial" if evidence else "unavailable",
+        "notes": [*snapshot.notes, "已排除錯誤頁的導覽文字；相關生活資料待補查。"],
+    })
+
+
 @lru_cache(maxsize=1)
 def _bundled_ntu_research() -> dict[tuple[str, str], LifeResearchSnapshot]:
     records = {}
     if BUNDLED_NTU_LIFE.exists():
         for line in BUNDLED_NTU_LIFE.read_text(encoding="utf-8").splitlines():
             try:
-                row = LifeResearchSnapshot.model_validate_json(line)
+                row = reviewed_life_snapshot(LifeResearchSnapshot.model_validate_json(line))
                 if row.extraction_version == EXTRACTION_VERSION:
                     records[(school_search_name(row.school_name).casefold(), row.country or "")] = row
             except ValueError:
