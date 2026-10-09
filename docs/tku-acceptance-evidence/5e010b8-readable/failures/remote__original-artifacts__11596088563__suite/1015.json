@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/original-artifacts/11596088563/suite.xml",
+  "original_xml_sha256": "a8f979a964506d7b83275f8fd65aaae3be68660f334ccab7c42ff00169301ec1",
+  "case_attributes": {
+    "classname": "tests.test_next_phase_contract",
+    "name": "test_application_workflow_publication_contract_exposes_safe_rollback",
+    "time": "0.830"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "KeyError: '/admin/application-workflow-publications'"
+  },
+  "full_text": "tests/test_next_phase_contract.py:544: in test_application_workflow_publication_contract_exposes_safe_rollback\n    assert \"get\" in paths[\"/admin/application-workflow-publications\"]\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   KeyError: '/admin/application-workflow-publications'"
+}

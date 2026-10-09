@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/original-artifacts/11596088563/main-control/suite.xml",
+  "original_xml_sha256": "fd04be216cc2bea83600ce240c8e432f184fba40d5f29ce98f7c07687c8ed6be",
+  "case_attributes": {
+    "classname": "tests.e2e.test_web_next_phase",
+    "name": "test_advisor_waits_for_login_and_clears_private_conditions_on_logout",
+    "time": "13.598"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: Locator expected to have Value '84'\nActual value:  \nCall log:\n  - Expect \"to_have_value\" with timeout 5000ms\n  - waiting for locator(\"#advisor-academic-score\")\n    11 × locator resolved to <input min=\"0\" max=\"100\" step=\"0.1\" type=\"number\" inputmode=\"decimal\" placeholder=\"例如 82\" name=\"academic_score\" id=\"advisor-academic-score\"/>\n       - unexpected value \"\"\n\nAria snapshot:\n- spinbutton \"學業平均\""
+  },
+  "full_text": "tests/e2e/test_web_next_phase.py:435: in test_advisor_waits_for_login_and_clears_private_conditions_on_logout\n    expect(page.locator(\"#advisor-academic-score\")).to_have_value(\"84\")\nE   AssertionError: Locator expected to have Value '84'\nE   Actual value:  \nE   Call log:\nE     - Expect \"to_have_value\" with timeout 5000ms\nE     - waiting for locator(\"#advisor-academic-score\")\nE       11 × locator resolved to <input min=\"0\" max=\"100\" step=\"0.1\" type=\"number\" inputmode=\"decimal\" placeholder=\"例如 82\" name=\"academic_score\" id=\"advisor-academic-score\"/>\nE          - unexpected value \"\"\nE   \nE   Aria snapshot:\nE   - spinbutton \"學業平均\""
+}

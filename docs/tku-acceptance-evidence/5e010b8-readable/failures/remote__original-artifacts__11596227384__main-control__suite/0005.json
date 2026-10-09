@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/original-artifacts/11596227384/main-control/suite.xml",
+  "original_xml_sha256": "84579231f8df33ffc964bd5cfca444e71fd97989b38f0e702026fc43e9409827",
+  "case_attributes": {
+    "classname": "tests.e2e.test_travel_theme",
+    "name": "test_ticket_collection_and_destination_stamp_missing_city",
+    "time": "15.417"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: Locator expected to have text '林肯'\nActual value: 林肯, 坎特伯里（鄰近 基督城） \nCall log:\n  - Expect \"to_have_text\" with timeout 5000ms\n  - waiting for locator(\".travel-stamp-city\")\n    13 × locator resolved to <span class=\"travel-stamp-city\">林肯, 坎特伯里（鄰近 基督城）</span>\n       - unexpected value \"林肯, 坎特伯里（鄰近 基督城）\"\n\nAria snapshot:\n- text: 林肯, 坎特伯里（鄰近 基督城）"
+  },
+  "full_text": "tests/e2e/test_travel_theme.py:78: in test_ticket_collection_and_destination_stamp_missing_city\n    expect(page.locator(\".travel-stamp-city\")).to_have_text(\"林肯\")\nE   AssertionError: Locator expected to have text '林肯'\nE   Actual value: 林肯, 坎特伯里（鄰近 基督城） \nE   Call log:\nE     - Expect \"to_have_text\" with timeout 5000ms\nE     - waiting for locator(\".travel-stamp-city\")\nE       13 × locator resolved to <span class=\"travel-stamp-city\">林肯, 坎特伯里（鄰近 基督城）</span>\nE          - unexpected value \"林肯, 坎特伯里（鄰近 基督城）\"\nE   \nE   Aria snapshot:\nE   - text: 林肯, 坎特伯里（鄰近 基督城）"
+}

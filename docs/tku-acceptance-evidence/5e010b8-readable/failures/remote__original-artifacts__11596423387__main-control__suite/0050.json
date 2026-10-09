@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/original-artifacts/11596423387/main-control/suite.xml",
+  "original_xml_sha256": "53fbd907a80be2fc4dc545bfd6e2d2589effd9aeb222d0a0a96ba0610a38cb8f",
+  "case_attributes": {
+    "classname": "tests.test_social_community_api",
+    "name": "test_private_conversation_retry_replays_generated_resources",
+    "time": "0.160"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert 422 == 201\n +  where 422 = <Response [422 Unprocessable Content]>.status_code"
+  },
+  "full_text": "tests/test_social_community_api.py:203: in test_private_conversation_retry_replays_generated_resources\n    assert replay.status_code == 201\nE   assert 422 == 201\nE    +  where 422 = <Response [422 Unprocessable Content]>.status_code"
+}

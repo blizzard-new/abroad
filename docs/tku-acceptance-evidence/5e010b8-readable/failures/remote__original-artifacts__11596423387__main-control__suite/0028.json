@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/original-artifacts/11596423387/main-control/suite.xml",
+  "original_xml_sha256": "53fbd907a80be2fc4dc545bfd6e2d2589effd9aeb222d0a0a96ba0610a38cb8f",
+  "case_attributes": {
+    "classname": "tests.test_community_permissions",
+    "name": "test_post_rejects_unknown_or_conflicting_board_identifiers",
+    "time": "0.139"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: assert '\\u4e0d\\u5b58\\u5728' in '\\u4e0d\\u652f\\u63f4\\u5efa\\u7acb\\u6b64\\u8a0e\\u8ad6\\u677f\\u8cbc\\u6587\\u3002'"
+  },
+  "full_text": "tests/test_community_permissions.py:163: in test_post_rejects_unknown_or_conflicting_board_identifiers\n    assert \"不存在\" in unknown.json()[\"detail\"]\nE   AssertionError: assert '\\u4e0d\\u5b58\\u5728' in '\\u4e0d\\u652f\\u63f4\\u5efa\\u7acb\\u6b64\\u8a0e\\u8ad6\\u677f\\u8cbc\\u6587\\u3002'"
+}

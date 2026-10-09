@@ -1,0 +1,102 @@
+{
+  "tested_commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+  "remaining": [
+    {
+      "id": "tests.test_experience_collector::test_experience_api_reads_cache_and_refreshes_selected_school",
+      "group": "experience_collector_response_or_localization",
+      "assertion_message_preview": "assert 3 == 1",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_experience_collector::test_destination_profile_api_returns_verified_official_summary",
+      "group": "experience_collector_response_or_localization",
+      "assertion_message_preview": "AssertionError: assert '林肯, 坎特伯里' == 'Lincoln, Canterbury'\n  \n  - Lincoln, Canterbury\n  + 林肯, 坎特伯里",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_web_routes_states_and_touch_targets_are_consistent",
+      "group": "static_ui_or_router_literal_contract",
+      "assertion_message_preview": "assert 'renderCommunityEmpty(\"社群暫時無法載入\", error.message, \"error\")' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+      "group": "static_ui_or_router_literal_contract",
+      "assertion_message_preview": "assert 'fetchCommunityAuth(url)' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_web_notification_center_and_explicit_email_opt_in_are_present",
+      "group": "static_ui_or_router_literal_contract",
+      "assertion_message_preview": "assert '重新核對申請清單' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_application_center_separates_official_requirements_from_preparation_tools",
+      "group": "static_ui_or_router_literal_contract",
+      "assertion_message_preview": "assert '不會用其他年度或其他學校的文件代替' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_successful_login_closes_before_noncritical_account_hydration",
+      "group": "static_ui_or_router_literal_contract",
+      "assertion_message_preview": "assert 'app.js?v=20260929-chinese-1' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...-1\" defer></script>\\n    <script src=\"/static/app.js?v=20261009-tku-ci-source-5\" defer></script>\\n  </body>\\n</html>\\n'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_personal_application_plan_uses_structured_api_and_progressive_login",
+      "group": "static_ui_or_router_literal_contract",
+      "assertion_message_preview": "assert 'id=\"eligibility-department\"' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...-1\" defer></script>\\n    <script src=\"/static/app.js?v=20261009-tku-ci-source-5\" defer></script>\\n  </body>\\n</html>\\n'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_global_home_board_routing_and_following_are_present",
+      "group": "static_ui_or_router_literal_contract",
+      "assertion_message_preview": "assert '查看學生身分驗證' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_frontend_contract::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+      "group": "static_ui_or_router_literal_contract",
+      "assertion_message_preview": "assert '暫不可建立正式申請計畫' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...-1\" defer></script>\\n    <script src=\"/static/app.js?v=20261009-tku-ci-source-5\" defer></script>\\n  </body>\\n</html>\\n'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_independent_page_routing::test_hash_router_shows_one_feature_page_without_scroll_spying",
+      "group": "static_ui_or_router_literal_contract",
+      "assertion_message_preview": "assert 'window.location.hash = \"#search\"' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_independent_page_routing::test_route_assets_are_cache_busted_together",
+      "group": "static_ui_or_router_literal_contract",
+      "assertion_message_preview": "assert 'styles.css?v=20260729-b306-progress-2' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...-1\" defer></script>\\n    <script src=\"/static/app.js?v=20261009-tku-ci-source-5\" defer></script>\\n  </body>\\n</html>\\n'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_content_review_contract_exposes_nonpublishing_source_candidates",
+      "group": "missing_governance",
+      "assertion_message_preview": "KeyError: 'ApplicationWorkflowSourceReplacementCandidate'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing",
+      "group": "missing_governance",
+      "assertion_message_preview": "KeyError: '/admin/application-workflow-review-batches/{batch_id}/stage'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_destination_profile_review_contract_requires_explicit_audited_promotion",
+      "group": "missing_governance",
+      "assertion_message_preview": "KeyError: '/admin/destination-profile-review-queue'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_application_workflow_publication_contract_exposes_safe_rollback",
+      "group": "missing_governance",
+      "assertion_message_preview": "KeyError: '/admin/application-workflow-publications'",
+      "original_full_failure_evidence": "cbf51e2de358506ba22dd49b6087fbeb3fc04298/docs/tku-acceptance-evidence/a85c6d0-readable"
+    }
+  ],
+  "limitation": "Static failure kind describes the observed assertion only; it does not establish all related behavior safe or authorize rewriting tests. Candidate gate remains failed. Broader governance scope remains pending per committed integration plan."
+}

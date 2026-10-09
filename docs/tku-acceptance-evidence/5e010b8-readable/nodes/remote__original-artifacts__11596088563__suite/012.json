@@ -1,0 +1,502 @@
+[
+  {
+    "id": "tests.test_rag::test_structured_source_extraction_keeps_official_metadata",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_rag::test_document_rewrite_is_labeled_and_does_not_require_file_storage",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_rag::test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused",
+    "status": "passed",
+    "seconds": "0.170"
+  },
+  {
+    "id": "tests.test_regions::test_every_country_in_the_bundled_data_belongs_to_a_region",
+    "status": "passed",
+    "seconds": "0.151"
+  },
+  {
+    "id": "tests.test_regions::test_eastern_europe_is_the_nine_countries_ntpu_has_schools_in",
+    "status": "passed",
+    "seconds": "0.028"
+  },
+  {
+    "id": "tests.test_regions::test_a_region_group_contains_its_parts_and_turkey_counts_as_europe_like_ntpus_own_list",
+    "status": "passed",
+    "seconds": "0.070"
+  },
+  {
+    "id": "tests.test_regions::test_search_words_cover_the_ways_a_student_asks",
+    "status": "passed",
+    "seconds": "0.023"
+  },
+  {
+    "id": "tests.test_regions::test_the_drop_downs_only_offer_regions_that_have_a_school",
+    "status": "passed",
+    "seconds": "0.088"
+  },
+  {
+    "id": "tests.test_regions::test_the_czech_country_prefix_takes_the_word_republic_with_it",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_regions::test_no_school_name_in_the_bundled_data_starts_with_a_stray_republic",
+    "status": "passed",
+    "seconds": "0.332"
+  },
+  {
+    "id": "tests.test_regions::test_every_ntpu_school_still_finds_its_profile_after_the_rename",
+    "status": "passed",
+    "seconds": "0.766"
+  },
+  {
+    "id": "tests.test_request_origin::test_the_configured_public_address_wins_over_everything_else",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_render_provided_address_is_used_until_a_domain_is_configured",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_with_nothing_configured_the_address_the_request_arrived_on_is_used",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_without_a_configured_header_a_forged_one_is_ignored",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_the_configured_header_is_used_and_is_case_insensitive",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_ipv6_is_normalised_so_one_visitor_is_one_key",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_a_missing_or_malformed_value_falls_back_to_the_socket_address[]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_a_missing_or_malformed_value_falls_back_to_the_socket_address[not-an-ip]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_a_missing_or_malformed_value_falls_back_to_the_socket_address[203.0.113.9, 198.51.100.1]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_a_missing_or_malformed_value_falls_back_to_the_socket_address[203.0.113.9:443]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_a_missing_or_malformed_value_falls_back_to_the_socket_address[<script>]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_with_no_socket_and_no_header_the_default_is_used",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_school_photo_links_use_the_public_https_address_not_the_proxy_one",
+    "status": "passed",
+    "seconds": "0.765"
+  },
+  {
+    "id": "tests.test_request_origin::test_without_a_public_address_photo_links_follow_the_request",
+    "status": "passed",
+    "seconds": "2.109"
+  },
+  {
+    "id": "tests.test_request_origin::test_the_sign_in_return_address_is_the_public_one",
+    "status": "passed",
+    "seconds": "0.088"
+  },
+  {
+    "id": "tests.test_request_origin::test_on_render_the_sign_in_return_address_comes_from_render_itself",
+    "status": "passed",
+    "seconds": "0.087"
+  },
+  {
+    "id": "tests.test_request_origin::test_the_fingerprint_is_a_keyed_64_hex_hash_not_the_address",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_the_fingerprint_follows_the_trusted_proxy_header_when_configured",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_request_origin::test_sign_in_start_gives_the_store_a_value_the_database_will_accept",
+    "status": "passed",
+    "seconds": "0.085"
+  },
+  {
+    "id": "tests.test_requirements_traceability::test_product_spec_sections_6_through_19_have_owned_evidence_rows",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_requirements_traceability::test_traceability_preserves_local_ai_scope_and_web_first_app_gate",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_requirements_traceability::test_quality_workflow_runs_isolated_web_checks_and_contract_guard",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_responsive_css::test_the_responsive_stylesheet_is_the_last_one_the_page_loads",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_responsive_css::test_it_carries_the_fixes_found_by_looking_at_the_site_on_phones",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_responsive_css::test_the_page_still_declares_a_viewport_and_does_not_block_zooming",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_review_source_candidates::test_data_010_manifest_covers_every_current_insecure_review_source_once",
+    "status": "passed",
+    "seconds": "0.971"
+  },
+  {
+    "id": "tests.test_review_source_candidates::test_data_010_candidates_remain_non_publishing_human_review_evidence",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_review_source_candidates::test_data_010_candidate_identity_and_evidence_match_official_workflows",
+    "status": "passed",
+    "seconds": "0.148"
+  },
+  {
+    "id": "tests.test_review_source_candidates::test_data_003_current_year_pdf_is_only_a_candidate_not_public_data",
+    "status": "passed",
+    "seconds": "0.573"
+  },
+  {
+    "id": "tests.test_review_source_candidates::test_packaged_candidates_match_documented_replacements_and_remain_nonpublishing",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_review_source_candidates::test_candidate_transport_metadata_fails_closed_when_inconsistent",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_review_source_candidates::test_candidates_are_returned_only_for_exact_pending_revision_sources",
+    "status": "passed",
+    "seconds": "0.690"
+  },
+  {
+    "id": "tests.test_review_source_candidates::test_candidate_coverage_identifies_exact_current_review_queue",
+    "status": "passed",
+    "seconds": "1.847"
+  },
+  {
+    "id": "tests.test_review_source_candidates::test_source_replacement_review_queue_covers_staged_and_unstaged_workflows",
+    "status": "passed",
+    "seconds": "1.438"
+  },
+  {
+    "id": "tests.test_review_source_metadata_candidates::test_packaged_source_metadata_research_manifest_is_fail_closed",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_review_source_metadata_candidates::test_source_metadata_research_candidates_keep_exact_and_unavailable_sources_separate",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_review_source_metadata_candidates::test_source_metadata_candidate_lookup_uses_exact_url_without_mutation",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_review_source_metadata_candidates::test_source_metadata_candidate_model_rejects_unsafe_shortcuts",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_rls_auto_enable_migration::test_the_browser_roles_lose_the_right_to_call_it",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_rls_auto_enable_migration::test_the_owner_and_the_server_keep_it_and_the_trigger_is_left_alone",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_rls_auto_enable_migration::test_a_project_without_the_function_is_not_an_error",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_school_choice::test_the_first_pick_is_free_and_starts_the_lock",
+    "status": "passed",
+    "seconds": "0.100"
+  },
+  {
+    "id": "tests.test_school_choice::test_changing_the_school_inside_three_days_is_refused_and_leaves_it_unchanged",
+    "status": "passed",
+    "seconds": "0.100"
+  },
+  {
+    "id": "tests.test_school_choice::test_saving_the_same_school_again_is_not_a_change_and_does_not_restart_the_clock",
+    "status": "passed",
+    "seconds": "0.099"
+  },
+  {
+    "id": "tests.test_school_choice::test_after_three_days_the_school_can_be_changed_and_the_lock_starts_again",
+    "status": "passed",
+    "seconds": "0.099"
+  },
+  {
+    "id": "tests.test_school_choice::test_an_account_from_before_the_lock_existed_may_change_once",
+    "status": "passed",
+    "seconds": "0.098"
+  },
+  {
+    "id": "tests.test_school_choice::test_the_lock_helper_ignores_unset_schools_and_naive_timestamps",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_school_choice::test_the_student_card_endpoints_are_gone",
+    "status": "passed",
+    "seconds": "0.865"
+  },
+  {
+    "id": "tests.test_school_choice::test_the_school_identity_option_needs_a_school_not_a_verified_student",
+    "status": "passed",
+    "seconds": "0.795"
+  },
+  {
+    "id": "tests.test_school_choice::test_school_bound_posts_follow_the_picked_school",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_school_choice::test_the_profile_schema_publishes_the_lock",
+    "status": "passed",
+    "seconds": "0.823"
+  },
+  {
+    "id": "tests.test_school_choice_migration::test_every_search_string_is_in_the_latest_source_of_its_function",
+    "status": "passed",
+    "seconds": "0.014"
+  },
+  {
+    "id": "tests.test_school_choice_migration::test_each_step_stops_when_its_text_is_missing_and_is_skipped_once_applied",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_school_choice_migration::test_the_school_counts_as_long_as_it_is_set_and_not_the_unset_placeholder",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_school_choice_migration::test_the_migration_only_changes_functions_and_touches_no_data",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_school_choice_migration::test_the_sql_parses",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_school_completeness::test_empty_school_reports_every_gap_without_filling_any",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_school_completeness::test_available_partial_and_unpublished_statuses_are_distinguished",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_school_completeness::test_bundled_ntpu_school_has_workflow_documents_but_no_exact_deadline",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_school_completeness::test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_has",
+    "status": "passed",
+    "seconds": "0.054"
+  },
+  {
+    "id": "tests.test_school_completeness::test_endpoint_returns_completeness_for_a_supported_partner",
+    "status": "passed",
+    "seconds": "1.989"
+  },
+  {
+    "id": "tests.test_school_completeness::test_pdf_extraction_noise_does_not_hide_a_schools_workflow",
+    "status": "passed",
+    "seconds": "1.088"
+  },
+  {
+    "id": "tests.test_school_content::test_supplements_are_scoped_and_do_not_overwrite_newer_content",
+    "status": "passed",
+    "seconds": "0.007"
+  },
+  {
+    "id": "tests.test_school_content::test_life_additions_keep_their_specific_source_and_read_date",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_school_content::test_bundled_translations_are_source_bound_machine_labelled_and_validated",
+    "status": "passed",
+    "seconds": "0.009"
+  },
+  {
+    "id": "tests.test_school_content::test_bilingual_technical_terms_do_not_hide_existing_chinese",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_school_content::test_known_phrases_do_not_translate_addresses_or_person_names",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_school_image_collector::test_second_ntpu_korean_batch_has_official_photo_overrides",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_school_image_collector::test_ntpu_french_aliases_reuse_verified_official_photo_overrides",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_school_image_collector::test_ntpu_vietnamese_schools_with_bad_or_missing_auto_photos_have_reviewed_overrides",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_school_image_collector::test_ntpu_thailand_schools_have_reviewed_official_photo_overrides",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_school_image_collector::test_official_hero_image_ranks_above_logo",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_school_image_collector::test_relative_background_image_is_resolved",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_school_image_collector::test_nitro_lazy_image_attributes_are_discovered",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_school_image_collector::test_collecting_ntpu_image_preserves_existing_manifest_rows",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_school_photo_and_match::test_school_photo_manifest_files_and_aliases",
+    "status": "passed",
+    "seconds": "0.072"
+  },
+  {
+    "id": "tests.test_school_photo_and_match::test_match_missing_profile_fields_and_real_mismatches",
+    "status": "passed",
+    "seconds": "0.026"
+  },
+  {
+    "id": "tests.test_selection_conditions_sync::test_conditions_persist_across_sessions_and_legacy_write_does_not_erase",
+    "status": "passed",
+    "seconds": "0.114"
+  },
+  {
+    "id": "tests.test_selection_conditions_sync::test_conditions_reject_invalid_or_unrelated_fields[academic_score-101]",
+    "status": "passed",
+    "seconds": "0.091"
+  },
+  {
+    "id": "tests.test_selection_conditions_sync::test_conditions_reject_invalid_or_unrelated_fields[language_test-invented]",
+    "status": "passed",
+    "seconds": "0.757"
+  },
+  {
+    "id": "tests.test_selection_conditions_sync::test_conditions_reject_invalid_or_unrelated_fields[monthly_budget--1]",
+    "status": "passed",
+    "seconds": "0.095"
+  },
+  {
+    "id": "tests.test_selection_conditions_sync::test_conditions_reject_invalid_or_unrelated_fields[phone-0912345678]",
+    "status": "passed",
+    "seconds": "0.095"
+  },
+  {
+    "id": "tests.test_selection_conditions_sync::test_conditions_require_login_and_are_isolated_by_account_and_home",
+    "status": "passed",
+    "seconds": "0.123"
+  },
+  {
+    "id": "tests.test_selection_conditions_sync::test_workspace_extension_migration_keeps_atomic_commit_and_progress_ownership",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_selection_conditions_sync::test_older_client_without_teaching_language_or_course_fields_still_round_trips",
+    "status": "passed",
+    "seconds": "0.094"
+  },
+  {
+    "id": "tests.test_social_community_api::test_posts_chat_and_invitation_only_private_messages",
+    "status": "passed",
+    "seconds": "0.172"
+  },
+  {
+    "id": "tests.test_social_community_api::test_private_conversation_retry_replays_generated_resources",
+    "status": "passed",
+    "seconds": "0.113"
+  },
+  {
+    "id": "tests.test_social_community_api::test_social_post_requires_a_valid_anonymous_identity",
+    "status": "passed",
+    "seconds": "0.086"
+  },
+  {
+    "id": "tests.test_source_applicability_cleanup::test_cleanup_clears_pre_review_source_applicability",
+    "status": "passed",
+    "seconds": "0.000"
+  }
+]

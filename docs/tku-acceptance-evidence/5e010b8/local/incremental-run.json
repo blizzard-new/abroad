@@ -1,0 +1,33 @@
+{
+  "tested_commit": "5e010b80b59d274d8a30332aabcab2c46929a313",
+  "starting_state": {
+    "commit": "5e010b80b59d274d8a30332aabcab2c46929a313",
+    "dirty": ""
+  },
+  "ending_state": {
+    "commit": "5e010b80b59d274d8a30332aabcab2c46929a313",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "command": [
+    "/workspace/abroad-tku/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_tku_community_boundaries.py",
+    "tests/test_requirements_traceability.py",
+    "tests/test_tku_privacy_regressions.py",
+    "tests/e2e/test_web_next_phase.py::test_guest_can_save_device_selections_and_plan_actions_require_login",
+    "tests/e2e/test_web_next_phase.py::test_authenticated_plan_notifications_and_progress_sync_across_devices",
+    "tests/e2e/test_web_next_phase.py::test_workspace_conflict_retry_keeps_remote_fields_during_new_ui_change",
+    "tests/e2e/test_web_next_phase.py::test_workspace_load_advances_base_before_put_conflict",
+    "tests/e2e/test_web_next_phase.py::test_expired_session_and_logout_clear_private_browser_state",
+    "tests/e2e/test_web_next_phase.py::test_permissions_sensitive_consent_and_account_deletion_are_fail_closed",
+    "-q",
+    "-ra",
+    "--junitxml=/tmp/tku-acceptance-5e010b8/incremental.xml"
+  ],
+  "actual_exit_code": 0,
+  "elapsed_seconds": 126.87,
+  "production_access": false,
+  "scope": "Requested six original browser cases, 12 new boundary nodes, three traceability checks and 19 privacy regressions; no skipped or removed assertions."
+}

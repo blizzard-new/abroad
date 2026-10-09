@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/original-artifacts/11596088563/main-control/suite.xml",
+  "original_xml_sha256": "fd04be216cc2bea83600ce240c8e432f184fba40d5f29ce98f7c07687c8ed6be",
+  "case_attributes": {
+    "classname": "tests.e2e.test_web_next_phase",
+    "name": "test_session_restore_outage_quarantines_private_state_then_recovers_same_owner",
+    "time": "7.366"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert '\\u6797\\u80af\\u5927\\u5b78 Lincoln University' in []\n +  where [] = evaluate(\"JSON.parse(window.localStorage.getItem('exchange-guide-favorites') || '[]')\")\n +    where evaluate = <Page url='http://127.0.0.1:35089/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#home'>.evaluate"
+  },
+  "full_text": "tests/e2e/test_web_next_phase.py:1721: in test_session_restore_outage_quarantines_private_state_then_recovers_same_owner\n    assert LINCOLN in page.evaluate(\nE   assert '\\u6797\\u80af\\u5927\\u5b78 Lincoln University' in []\nE    +  where [] = evaluate(\"JSON.parse(window.localStorage.getItem('exchange-guide-favorites') || '[]')\")\nE    +    where evaluate = <Page url='http://127.0.0.1:35089/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#home'>.evaluate"
+}

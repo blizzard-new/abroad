@@ -1,0 +1,13 @@
+# TKU 5e010b8 固定純證據
+
+程式候選 5e010b80b59d274d8a30332aabcab2c46929a313，main f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59。PR 37884019406、push 37884013919 都完整 failure 終態：各1776 nodes／183檔，1742 passed／18 failed／16 skipped，零漏跑／重複／移除，原1757 IDs全部保留，新增19回歸；skip集合16不變，零新增失敗。原66已解48，18未解，完整IDs在remote/*-original-failure-triage.json。
+
+原18包含未補到的真正case4 test_workspace_conflict_preserves_remote_addition_and_local_removal，以及治理台browser404與16非browser。case4另外在5aeb8bb22649f610eba831b039a9bb61cd140453修正五個selector，保留全部409／遠端新增／本地移除／重載斷言，三個獨立browser通過；此結果沒有回填到5e。治理五組有界計畫已交，未擅增路由或發布。
+
+每輪62個同job immutable-main控制亦完整實跑：PR2P／60F，push3P／59F，actual pytest exit1，非豁免。PR merge6731d52951cbe62e53f001304b0128a5c57ddba8與5e同tree8323e82c3918b7306f3662cd12534a0621cfe427。8原candidate XML＋8原main-control XML、collect／partition／result／pytest.log／原ZIP都逐byte保留。八個真實隔離Supabase job通過32migrations、全原檢查與清理，加四校9資源／8次未驗證拒絕／零重送重複／SQL預覽署名一致。六個可取完整job log保留；兩個第0片巨大job log工具回傳Transport closed，未偽造取回，全數原uploaded artifact內pytest logs與JUnit成功持有。
+
+同5e增量40項全通過，local/incremental-run.json保存實際起訖SHA／dirty空。fresh wheel同5e source1009檔逐byte相同，138856960bytes，SHA9c488370bc3393c90dedb8fc54578a964f35d426cb4e1e81e3bacefb71f9823a；wheel不入Git。完整src與a85相同，只改probe重播idempotent旗標斷言。a85十步1526項1502P／16F／8S與其他九步exit0、851workflowhash零漂移，原證據固定cbf51e2。a85兩輪CI前置probe失敗而Web未執行／無JUnit的狀態保留，不混入5e結果。
+
+原CI result只記tested_commit，沒有完整起訖dirty欄；本證據不回填未記錄欄位。完整checkout同tree、原result和official-bundle後檢與本機guard分開說明。403不是本批工具錯誤；只有兩次Transport closed及最初system Python missing requests／零請求，後用projectvenv HTTP200。沒有改憑證、ACL/RLS、正式DB或部署。
+
+128方案列、4當期／124參考、7公告名額；校內9/30中午臺北已過，0可新申請。89／152欄核實58.6%，63缺口13矛盾組不提升；CGU／NTPU／NTU／TKU官方bundle與前候選同tree。pure evidence只加本候選結果，413及更早中斷／逾時歷史仍在原固定commit。原XML另提供可逆base64分塊與逐百node索引，全部閱讀檔<500KB；沒有重建JUnit或刪除失敗。
