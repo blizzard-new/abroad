@@ -3626,14 +3626,11 @@ def create_app(
         university, partner = partner_context_for_school(school, home_school)
         if university.id != NCU.id:
             raise HTTPException(status_code=404, detail="此校尚無逐欄來源查核記錄。")
-        from .ncu_student_view import ncu_field_audit, NCU_OFFICIAL_DATA_DIR
-        import gzip
-        audit = ncu_field_audit(partner.school_name)
+        from .ncu_student_view import ncu_source_audit
+        audit = ncu_source_audit(partner.school_name)
         if audit is None:
             raise HTTPException(status_code=404, detail="未找到此合作項目查核記錄。")
-        evidence = json.loads(gzip.decompress((NCU_OFFICIAL_DATA_DIR / "source-evidence.json.gz").read_bytes()))
-        source_ids = {source["id"] for source in audit["read_sources"]}
-        return {**audit, "source_evidence":[row for row in evidence if row["id"] in source_ids]}
+        return audit
 
     @app.get("/school-life-context", response_model=SchoolLifeContext)
     def school_life_context(

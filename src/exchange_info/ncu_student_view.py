@@ -1,6 +1,10 @@
 from __future__ import annotations
 import json
+import copy
+import gzip
+import threading
 from datetime import datetime, timezone
+from functools import lru_cache
 from pathlib import Path
 from .models import (
     ApplicationPeriodStatus,
@@ -19,6 +23,24 @@ NCU_INDEX_URL = "https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw"
 NCU_LIST_115_URL = "https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf"
 NCU_FORMS_URL = "https://oia.ncu.edu.tw/static/file/26/1026/img/272/forms-2022.pdf"
 NCU_CHECKED_AT = datetime(2026, 10, 8, tzinfo=timezone.utc)
+_audit_snapshot_lock = threading.Lock()
+
+
+@lru_cache(maxsize=2)
+def _read_audit_snapshot(path: Path, signature: tuple[int, int]):
+    raw = path.read_bytes()
+    return json.loads(gzip.decompress(raw) if path.suffix == ".gz" else raw)
+
+
+def _audit_snapshot(filename: str):
+    path = NCU_OFFICIAL_DATA_DIR / filename
+    stat = path.stat()
+    signature = (stat.st_mtime_ns, stat.st_size)
+    # A detail requests completeness and source audit concurrently. Parse each
+    # immutable bundle once, and invalidate it when the file changes. Returned
+    # records below are copied so a caller cannot modify this shared snapshot.
+    with _audit_snapshot_lock:
+        return _read_audit_snapshot(path, signature)
 
 
 def _payload(filename):
@@ -93,11 +115,27 @@ def ncu_processed_pages() -> list[ProcessedPage]:
 
 
 def ncu_field_audit(school_name: str) -> dict | None:
-    return next(
+    row = next(
         (
             row
-            for row in _payload("field-audit.json")
+            for row in _audit_snapshot("field-audit.json")
             if row["school_name"] == school_name
         ),
         None,
     )
+    return copy.deepcopy(row) if row is not None else None
+
+
+def ncu_source_audit(school_name: str) -> dict | None:
+    audit = ncu_field_audit(school_name)
+    if audit is None:
+        return None
+    source_ids = {source["id"] for source in audit["read_sources"]}
+    return {
+        **audit,
+        "source_evidence": [
+            copy.deepcopy(row)
+            for row in _audit_snapshot("source-evidence.json.gz")
+            if row["id"] in source_ids
+        ],
+    }
