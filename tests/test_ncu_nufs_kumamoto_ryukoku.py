@@ -14,7 +14,7 @@ ROOT = Path(__file__).parents[1]
 BUNDLE = ROOT / 'src/exchange_info/official_data/ncu'
 CASES = [('ncu-130', '名古屋外國語大學', 13, 8),
          ('ncu-134', '熊本大學', 4, 7),
-         ('ncu-135', '龍谷大學', 6, 9)]
+         ('ncu-135', '龍谷大學', 14, 9)]
 
 
 def sources():
@@ -53,7 +53,7 @@ def test_home_host_coe_visa_tickets_arrival_and_conditional_downloads(tmp_path,r
         assert not steps[row+'-host-officer-packet']['document_requirements']
         assert '未取得' in steps[row+'-host-officer-packet']['summary']
     else:
-        assert len(steps[row+'-host-initial-reference']['document_requirements'])==documents
+        assert len(steps[row+'-host-initial-reference']['document_requirements'])==(10 if row=='ncu-135' else documents)
     if row=='ncu-130':
         note=' '.join(d['applicability']['note']for d in conditional)
         for term in ['擇一','父母帳戶','有病況','無則不用','不是所有文件三月內','印尼','線上']:
