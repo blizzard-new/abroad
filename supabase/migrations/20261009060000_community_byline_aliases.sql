@@ -12,7 +12,15 @@ stable
 set search_path = public, pg_temp
 as $$
 declare
-  v_school text := case regexp_replace(lower(normalize(coalesce(p_profile ->> 'verified_university', ''), NFKC)), '[^0-9a-z一-鿿]+', '', 'g')
+  v_school text := nullif(btrim(p_profile ->> 'verified_university'), '');
+  v_department text := nullif(btrim(p_profile ->> 'verified_department'), '');
+  v_real_name text := nullif(btrim(p_profile ->> 'display_name'), '');
+  v_student_verified boolean := coalesce(
+    p_profile -> 'student_status_verified' = 'true'::jsonb,
+    false
+  );
+begin
+  v_school := case regexp_replace(lower(normalize(coalesce(v_school, ''), NFKC)), '[^0-9a-z一-鿿]+', '', 'g')
     when 'cgu' then '長庚大學'
     when 'changgunguniversity' then '長庚大學'
     when '長庚' then '長庚大學'
@@ -38,13 +46,7 @@ declare
     when '淡江大學' then '淡江大學'
     else null
   end;
-  v_department text := nullif(btrim(p_profile ->> 'verified_department'), '');
-  v_real_name text := nullif(btrim(p_profile ->> 'display_name'), '');
-  v_student_verified boolean := coalesce(
-    p_profile -> 'student_status_verified' = 'true'::jsonb,
-    false
-  );
-begin
+
   if p_identity_mode = 'anonymous' then
     return '匿名學生';
   end if;
