@@ -13,7 +13,7 @@
 
 [原始回歸 log](regression.txt)／[XML](regression.xml)、[browser XML](browser.xml)、[案例聯集](case-union.json)、兩組各自log/XML及browser-evidence保持原始內容。7 skip為6既有Phase C與1 Docker opt-in。4個390／1440四校正式bundle UI/API案例沒有response/state mock；8個延遲／排隊案例使用真實API回應或browser clock，未另延遲life頁。其他既有e2e fixture會替換CGU partner list，與4個獨立案例區分。
 
-104合作條目：52曾列非零名額、3名額空白（非零）、49灰字參考；55接收流程／概要。980來源、33校250文件要求（184當期、66待確認、59條件項）。935海外欄307當期、334待确认、202缺值、71矛盾、20參考、1官方明示未公告；0校17欄全當期、0完整host文件清單，functional_parity_complete=false。母校2027春三梯已截止，2027秋新版尚未核實，不等於官方明示尚未公告。
+104合作條目：52曾列非零名額、3 名額未知，不能視為 0、49灰字參考；55接收流程／概要。980來源、33校250文件要求（184當期、66待確認、59條件項）。935海外欄307當期、334待确认、202缺值、71矛盾、20參考、1官方明示未公告；0校17欄全當期、0完整host文件清單，functional_parity_complete=false。母校2027春三梯已截止，2027秋新版尚未核實，不等於官方明示尚未公告。
 
 CCU擷取程式已移除忽略憑證錯誤的context／CLI路徑，正常Chromium實際ERR_CERT_AUTHORITY_INVALID並fail closed。[14份逐來源正常TLS讀取收據](normal-tls-revalidation)分別是11份Mapúa／UNINTER重核及3份AMU指定頁。9份歷史不安全DOM／影像禁止現行引用；舊手冊本來就是正常TLS取得，另下載驗證與34頁抽取文字一致。[20份原始保留](historical-20-raw-files-preservation.json)、[舊目錄保留](prior-evidence-preservation.json)、[來源影響](../../../src/exchange_info/official_data/ccu/tls-source-impact.json)及[安全說明](../../ccu-tls-security-2026-10-09.md)保留方法與時序。共用既有image/content collectors未執行、未改；沒有宣稱整個repository已清除所有歷史bypass，範圍見[掃描證據](ccu-bypass-removal-scope.json)。
 
