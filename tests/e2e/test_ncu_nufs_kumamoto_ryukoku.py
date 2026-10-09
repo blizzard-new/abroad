@@ -144,7 +144,9 @@ def test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account(page,liv
             expect(item).to_be_visible();expect(item).to_contain_text('116當期')
         checkbox=task.locator('[data-multi-task]');saved_ids.append(checkbox.get_attribute('data-multi-task'))
         checkbox.check();expect(checkbox).to_be_checked()
-        task.scroll_into_view_if_needed();page.screenshot(path=str(out/f'ryukoku-{width}-{count}-{len(saved_ids)}-task-checked.png'))
+        wait_until(page,"document.querySelector('#account-workspace-sync-label').textContent === '已同步'",timeout=60)
+        expect(page.locator(f'[data-multi-task="{saved_ids[-1]}"]')).to_be_checked()
+        page.screenshot(path=str(out/f'ryukoku-{width}-{count}-{len(saved_ids)}-task-checked.png'))
     wait_until(page,"document.querySelector('#account-workspace-sync-label').textContent === '已同步'",timeout=60)
     response=requests.get(f'{live_server.base_url}/account/workspace',headers={'Authorization':f"Bearer {session['access_token']}"},params={'home_school':'國立中央大學'},timeout=10)
     assert response.status_code==200;workspace=response.json()['workspace']
