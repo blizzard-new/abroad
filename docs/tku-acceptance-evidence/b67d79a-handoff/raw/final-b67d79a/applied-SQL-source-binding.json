@@ -1,0 +1,179 @@
+{
+  "tested_commit": "b67d79aa3b6c30a9449801501256b64951f2c291",
+  "results": [
+    {
+      "result_path": "/tmp/tku-governance-b67d79a/sql-diagnostic/result.json",
+      "status": "passed",
+      "cleanup": "passed",
+      "actual_migrations": [
+        {
+          "name": "202607280002_application_content_governance.sql",
+          "sha256": "f518c1c6b55bcd8b8d6173cdccb681214685f3498d1e0205090515365e363017",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260729143531_dual_application_workflow_review.sql",
+          "sha256": "50a2138773ab7e0c1961b17d316b077e243586d9bc0f85db87d583e1ef655c24",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260807154026_application_workflow_revision_edit_history.sql",
+          "sha256": "1d0c46c5d446b2c22f8f461c347d7f834c4d25cf4b1fd395f63a48802fed43aa",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819090000_destination_profile_review_events.sql",
+          "sha256": "e3791dce44856f393e873b2867eb8c4f306aad4af04fa46af51a8a397062b0fb",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819110000_destination_profile_promotion_events.sql",
+          "sha256": "6ddf5014889d9e637d187df604d4e4606987899f13ca80b0d1d78df065960e8e",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819130000_destination_profile_publication_rollbacks.sql",
+          "sha256": "89b793c57396b266caaff382b35fd2947d1ad192cddbaa816765b789a2fe0d95",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819150000_application_workflow_publication_rollbacks.sql",
+          "sha256": "27a49c215b7ea4636745be6c928bb813fa0937b715eae784046daed353a17cc5",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819170000_application_workflow_publication_integrity.sql",
+          "sha256": "d83c1999b27a3c3f0a9b3224a2f0ff61cece5a762892495aaabb8c8c623e8c11",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260901100000_atomic_application_content_governance.sql",
+          "sha256": "8458a92be5cf2a13588fd094bae858fbdd51ab95a951a303c62b3cd679ce5be6",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20261009080000_atomic_governance_commands.sql",
+          "sha256": "a964701e160ef0284d2f4dab5bdd54821647bc98f78f3114aa233f7ac26a8053",
+          "matches_fixed_committed_source": true
+        }
+      ],
+      "note": "SQL guarded group has actual start/end source guards. Original-envelope direct driver independently verifies all ten applied migration hashes against fixed committed source; no invented start/end guard."
+    },
+    {
+      "result_path": "/tmp/tku-governance-b67d79a/original-envelope-fixed/result.json",
+      "status": "passed",
+      "cleanup": "passed",
+      "actual_migrations": [
+        {
+          "name": "202607280002_application_content_governance.sql",
+          "sha256": "f518c1c6b55bcd8b8d6173cdccb681214685f3498d1e0205090515365e363017",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260729143531_dual_application_workflow_review.sql",
+          "sha256": "50a2138773ab7e0c1961b17d316b077e243586d9bc0f85db87d583e1ef655c24",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260807154026_application_workflow_revision_edit_history.sql",
+          "sha256": "1d0c46c5d446b2c22f8f461c347d7f834c4d25cf4b1fd395f63a48802fed43aa",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819090000_destination_profile_review_events.sql",
+          "sha256": "e3791dce44856f393e873b2867eb8c4f306aad4af04fa46af51a8a397062b0fb",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819110000_destination_profile_promotion_events.sql",
+          "sha256": "6ddf5014889d9e637d187df604d4e4606987899f13ca80b0d1d78df065960e8e",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819130000_destination_profile_publication_rollbacks.sql",
+          "sha256": "89b793c57396b266caaff382b35fd2947d1ad192cddbaa816765b789a2fe0d95",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819150000_application_workflow_publication_rollbacks.sql",
+          "sha256": "27a49c215b7ea4636745be6c928bb813fa0937b715eae784046daed353a17cc5",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819170000_application_workflow_publication_integrity.sql",
+          "sha256": "d83c1999b27a3c3f0a9b3224a2f0ff61cece5a762892495aaabb8c8c623e8c11",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260901100000_atomic_application_content_governance.sql",
+          "sha256": "8458a92be5cf2a13588fd094bae858fbdd51ab95a951a303c62b3cd679ce5be6",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20261009080000_atomic_governance_commands.sql",
+          "sha256": "a964701e160ef0284d2f4dab5bdd54821647bc98f78f3114aa233f7ac26a8053",
+          "matches_fixed_committed_source": true
+        }
+      ],
+      "note": "SQL guarded group has actual start/end source guards. Original-envelope direct driver independently verifies all ten applied migration hashes against fixed committed source; no invented start/end guard."
+    },
+    {
+      "result_path": "/tmp/tku-governance-b67d79a/missing-array-original-fixed/result.json",
+      "status": "passed",
+      "cleanup": "passed",
+      "actual_migrations": [
+        {
+          "name": "202607280002_application_content_governance.sql",
+          "sha256": "f518c1c6b55bcd8b8d6173cdccb681214685f3498d1e0205090515365e363017",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260729143531_dual_application_workflow_review.sql",
+          "sha256": "50a2138773ab7e0c1961b17d316b077e243586d9bc0f85db87d583e1ef655c24",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260807154026_application_workflow_revision_edit_history.sql",
+          "sha256": "1d0c46c5d446b2c22f8f461c347d7f834c4d25cf4b1fd395f63a48802fed43aa",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819090000_destination_profile_review_events.sql",
+          "sha256": "e3791dce44856f393e873b2867eb8c4f306aad4af04fa46af51a8a397062b0fb",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819110000_destination_profile_promotion_events.sql",
+          "sha256": "6ddf5014889d9e637d187df604d4e4606987899f13ca80b0d1d78df065960e8e",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819130000_destination_profile_publication_rollbacks.sql",
+          "sha256": "89b793c57396b266caaff382b35fd2947d1ad192cddbaa816765b789a2fe0d95",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819150000_application_workflow_publication_rollbacks.sql",
+          "sha256": "27a49c215b7ea4636745be6c928bb813fa0937b715eae784046daed353a17cc5",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260819170000_application_workflow_publication_integrity.sql",
+          "sha256": "d83c1999b27a3c3f0a9b3224a2f0ff61cece5a762892495aaabb8c8c623e8c11",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20260901100000_atomic_application_content_governance.sql",
+          "sha256": "8458a92be5cf2a13588fd094bae858fbdd51ab95a951a303c62b3cd679ce5be6",
+          "matches_fixed_committed_source": true
+        },
+        {
+          "name": "20261009080000_atomic_governance_commands.sql",
+          "sha256": "a964701e160ef0284d2f4dab5bdd54821647bc98f78f3114aa233f7ac26a8053",
+          "matches_fixed_committed_source": true
+        }
+      ],
+      "note": "Exact original malformed envelope, exact original six-table fixture; independently checks applied migration bytes against fixed committed source. Initial fixture-only failures preserved separately."
+    }
+  ]
+}

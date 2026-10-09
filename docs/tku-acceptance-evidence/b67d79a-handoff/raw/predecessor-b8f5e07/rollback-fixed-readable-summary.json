@@ -1,0 +1,19 @@
+{
+  "fixed_commit": "b8f5e075fe920860492c0eb3e18e06c5da71903b",
+  "SQL_groups": 16,
+  "actual_RPCs": 55,
+  "actual_command_audit": 31,
+  "original_operation_only_relabel_denials": 1,
+  "all_operation_relabels_409_unchanged": true,
+  "rollback_negatives": 11,
+  "all_rollback_negatives_409_unchanged": true,
+  "historical_corruption_restored": true,
+  "chained_rollback": {
+    "exact_review_snapshot_preserved": true,
+    "timestamp_roundtrip_with_trailing_fractional_zeros": true,
+    "replay_no_mutations": true
+  },
+  "permissions_identical": true,
+  "cleanup": "passed",
+  "test_scope": "Isolated ten-governance-migration SQL subset; not the blocked full34 Storage harness."
+}

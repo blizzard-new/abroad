@@ -1,0 +1,48 @@
+{
+  "checked_at": "2026-10-09T12:47:09.806606+00:00",
+  "images": [
+    {
+      "image": "supabase/postgres",
+      "pinned_digest": "sha256:f371b5f3f2ac0a05703f33d6e6134515fb2498cab708fb948a0aeb7481467c00",
+      "layers": 29,
+      "compressed_bytes": 367203535,
+      "vfs_model_4KiB_bytes": 34884489216,
+      "increment_after_identical_compressed_layer_prefix_dedup_bytes": 34884489216,
+      "all_layer_bytes_and_digests_verified": true
+    },
+    {
+      "image": "supabase/storage-api",
+      "pinned_digest": "sha256:c8eb9858eafec891a97c27125470aaad54703c3f4eb4d55ca7f1bf6c6411febf",
+      "layers": 13,
+      "compressed_bytes": 244025276,
+      "vfs_model_4KiB_bytes": 6945726464,
+      "increment_after_identical_compressed_layer_prefix_dedup_bytes": 6935248896,
+      "all_layer_bytes_and_digests_verified": true
+    },
+    {
+      "image": "postgrest/postgrest",
+      "pinned_digest": "sha256:54000f24847d01a2c2302e0041cf0618b875c57fb48507d743cfa9aaa50bf43c",
+      "layers": 1,
+      "compressed_bytes": 6301482,
+      "vfs_model_4KiB_bytes": 21094400,
+      "increment_after_identical_compressed_layer_prefix_dedup_bytes": 21094400,
+      "all_layer_bytes_and_digests_verified": true
+    }
+  ],
+  "deduplicated_compressed_layer_prefixes": 42,
+  "model_regular_bytes": 38299252936,
+  "model_4KiB_bytes": 41840832512,
+  "model_4KiB_GiB": 38.967,
+  "root_available_bytes": 16341352448,
+  "root_total_bytes": 33770192896,
+  "model_vs_available_gap_bytes": 25499480064,
+  "model_vs_available_gap_GiB": 23.748,
+  "planning_target_free_GiB": 42,
+  "scope": "All three unique original pinned full-runtime images; two PostgREST containers reuse the same image. Model from verified public layer tar metadata, without saving layer contents.",
+  "limitations": "Model, not daemon physical/quota measurement. Identical compressed-layer prefixes are counted once; one identical prefix snapshot is shared and counted once. Compressed digest prefix dedup is a metadata model; daemon diffID/chainID and physical allocation remain unmeasured. Existing PostgREST image allocation is already part of used root space. Inodes, xattrs, per-container writable files, import transient copies and runtime DB/Storage data add overhead.",
+  "credentials_saved": false,
+  "image_or_layer_contents_saved": false,
+  "paid_expansion_or_new_environment": false,
+  "next": "Environment owner must confirm Docker writable mount/quota and safely reclaim resources outside this task if authorized; no repeated full-image retry in present confirmed resources.",
+  "identical_prefix_snapshots_counted_once": 1
+}

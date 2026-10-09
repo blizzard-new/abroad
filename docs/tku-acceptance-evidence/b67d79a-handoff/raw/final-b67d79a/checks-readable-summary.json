@@ -1,0 +1,42 @@
+{
+  "tested_commit": "b67d79aa3b6c30a9449801501256b64951f2c291",
+  "candidate_guard_passed": true,
+  "checks": [
+    {
+      "name": "openapi",
+      "actual_exit_code": 0,
+      "elapsed_seconds": 10.137
+    },
+    {
+      "name": "migrations-parse",
+      "actual_exit_code": 0,
+      "elapsed_seconds": 1.16
+    },
+    {
+      "name": "dependency-audit",
+      "actual_exit_code": 0,
+      "elapsed_seconds": 40.178
+    },
+    {
+      "name": "JS-app",
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.278
+    },
+    {
+      "name": "JS-content-review",
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.135
+    },
+    {
+      "name": "JS-icon-motion",
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.087
+    },
+    {
+      "name": "git-diff-check",
+      "actual_exit_code": 0,
+      "elapsed_seconds": 0.059
+    }
+  ],
+  "dependency_cache_scope": "Current fixed-source strict pip-audit uses only its own task-local supported --cache-dir. The producer note about an initial home cache denial refers to prior source wrapper history, not an invented failed b67 run."
+}

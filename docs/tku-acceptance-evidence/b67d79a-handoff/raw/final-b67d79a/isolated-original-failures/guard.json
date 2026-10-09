@@ -1,0 +1,48 @@
+{
+  "tested_commit": "b67d79aa3b6c30a9449801501256b64951f2c291",
+  "starting_state": {
+    "commit": "b67d79aa3b6c30a9449801501256b64951f2c291",
+    "dirty": ""
+  },
+  "ending_state": {
+    "commit": "b67d79aa3b6c30a9449801501256b64951f2c291",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "actual_exit_code": 0,
+  "command": [
+    "/workspace/abroad-tku/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser",
+    "tests/e2e/test_loading_screen.py::test_in_dark_mode_it_is_dark_from_the_start",
+    "tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion",
+    "tests/e2e/test_partner_globe.py::test_dynamic_home_school_real_japan_filter_and_shared_url",
+    "tests/e2e/test_partner_globe.py::test_empty_catalog",
+    "tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390]",
+    "tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390]",
+    "tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it",
+    "tests/e2e/test_web_next_phase.py::test_content_admin_explicitly_stages_one_review_batch_without_publication",
+    "-vv",
+    "--tb=short",
+    "--durations=25",
+    "--capture=tee-sys",
+    "--junitxml=/tmp/tku-governance-b67d79a/isolated-original-failures/suite.xml"
+  ],
+  "selected_nodeids": [
+    "tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser",
+    "tests/e2e/test_loading_screen.py::test_in_dark_mode_it_is_dark_from_the_start",
+    "tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion",
+    "tests/e2e/test_partner_globe.py::test_dynamic_home_school_real_japan_filter_and_shared_url",
+    "tests/e2e/test_partner_globe.py::test_empty_catalog",
+    "tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390]",
+    "tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390]",
+    "tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it",
+    "tests/e2e/test_web_next_phase.py::test_content_admin_explicitly_stages_one_review_batch_without_publication"
+  ],
+  "started_at": "2026-10-09T13:27:46.597290+00:00",
+  "elapsed_seconds": 225.495,
+  "test_source_timeout_skip_assertions_unchanged": true,
+  "execution": "Original b8 and b67 full suites both completed before this sequential isolated run. This does not replace either original full-suite result.",
+  "production_access": false
+}

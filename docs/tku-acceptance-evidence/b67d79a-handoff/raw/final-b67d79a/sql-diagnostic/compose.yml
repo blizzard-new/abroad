@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:17.6-alpine@sha256:ef257d85f76e48da1c64832459b59fcaba1a4dac97bf5d7450c77753542eee94
+    environment:
+      POSTGRES_PASSWORD: synthetic-diagnostic-only
+    tmpfs:
+      - /var/lib/postgresql/data
+  postgrest:
+    image: postgrest/postgrest:v14.12@sha256:54000f24847d01a2c2302e0041cf0618b875c57fb48507d743cfa9aaa50bf43c
+    environment:
+      PGRST_DB_URI: postgres://authenticator:synthetic-diagnostic-only@postgres:5432/postgres
+      PGRST_DB_SCHEMAS: public
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: exchange-runtime-validation-jwt-secret-32-bytes
+    ports:
+      - '127.0.0.1:51087:3000'
+  postgrest_secondary:
+    image: postgrest/postgrest:v14.12@sha256:54000f24847d01a2c2302e0041cf0618b875c57fb48507d743cfa9aaa50bf43c
+    environment:
+      PGRST_DB_URI: postgres://authenticator:synthetic-diagnostic-only@postgres:5432/postgres
+      PGRST_DB_SCHEMAS: public
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: exchange-runtime-validation-jwt-secret-32-bytes
+    ports:
+      - '127.0.0.1:60997:3000'

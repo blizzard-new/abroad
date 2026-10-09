@@ -1,0 +1,234 @@
+{
+  "task": "TKU ENOSPC recovery, authorized Quality disable, operation-only rollback repair",
+  "source_repo": "/workspace/abroad-tku",
+  "source_branch": "data/tku-exchange-20261008",
+  "local_fixed_candidate": "b8f5e075fe920860492c0eb3e18e06c5da71903b",
+  "candidate_not_pushed_yet": true,
+  "remote_candidate_before_full_tests": "5d48a01a7a58aad7fe972e7ec1434e0fb74e93c3",
+  "fixed_worktree": "/workspace/abroad-tku-governance-rollback",
+  "full_suite_output": "/tmp/tku-governance-b8f5e07",
+  "recovery_and_original_diagnoses": "/tmp/tku-governance-runtime-recovery",
+  "Quality": {
+    "id": 374368612,
+    "state": "disabled_manually",
+    "at_UTC": "2026-10-09T11:41:04Z",
+    "proof": "quality-disable-proof.json"
+  },
+  "deployment_workflow": {
+    "id": 374368613,
+    "state": "active",
+    "untouched": true
+  },
+  "Render_main_branch_protection_credentials_payment_unchanged": true,
+  "safe_cleanup_file_bytes": 380440118,
+  "no_worktree_key_user_data_or_unique_evidence_deleted": true,
+  "same_5d_full_runtime": {
+    "actual_exit": 1,
+    "duration_seconds": 104.53,
+    "error": "failed to register layer: no space left on device",
+    "clean_start_end": true,
+    "no_more_retries_without_resolving_daemon_storage": true
+  },
+  "pre_fix_rollback": {
+    "exact_original_RPC005": 409,
+    "only_operation_to_rollback": 200,
+    "six_tables_changed": true,
+    "scope": "service-only synthetic SQL, no general API reachability claim"
+  },
+  "fixed_b8_SQL": {
+    "groups": 16,
+    "actual_RPCs": 55,
+    "command_audit": 31,
+    "rollback_denials": 11,
+    "original_only_operation_relabel": 409,
+    "all_denials_six_tables_unchanged": true,
+    "legitimate_chained_rollback": true,
+    "trailing_timestamp_zero_roundtrip": true,
+    "permissions_unchanged": true,
+    "cleanup": "passed",
+    "scope": "ten-governance-migration isolated subset, not full34 Storage"
+  },
+  "collection": {
+    "unique_ids": 1827,
+    "files": 187,
+    "original_1789_preserved": true,
+    "removed": 0,
+    "duplicates": 0,
+    "source_and_E2E_unchanged_from_5d": true
+  },
+  "full_suite_sessions": {
+    "shard0": 67494,
+    "shard1": 88875,
+    "shard2": 39214,
+    "shard3": 37996
+  },
+  "SQL_session": 21691,
+  "collect_checks_session": 83844,
+  "observed_full_suite_failure_so_far": "tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser",
+  "no_original_test_body_assertions_timeouts_skips_changed": true,
+  "historical_evidence_branch_unchanged": "artifacts/tku-governance-m2@1343abda9d1f2c099947699096e3c86f0e1d42c0",
+  "keep_latest_raw_locally_and_push_candidate_only_after_full_local_results": true,
+  "remaining": [
+    "Full34 exact Supabase migration runtime, school-community/byline runtime and real Storage blocked by original environment ENOSPC.",
+    "Only integration owner01a120b8-5edf-753f-9a61-b4556eaf40b6 may merge/main/deploy; it must verify combined source and deployment migration order."
+  ],
+  "checkpoint_at": "2026-10-09T13:42:25.400964+00:00",
+  "current_local_head": "b67d79aa3b6c30a9449801501256b64951f2c291",
+  "candidate_pushed": true,
+  "quality_readback": {
+    "checked_at": "2026-10-09T12:22:15.230776+00:00",
+    "workflows": [
+      {
+        "id": 374368612,
+        "name": ".github/workflows/quality.yml",
+        "path": ".github/workflows/quality.yml",
+        "state": "disabled_manually"
+      },
+      {
+        "id": 374368613,
+        "name": "Deploy to Supabase",
+        "path": ".github/workflows/supabase-deploy.yml",
+        "state": "active"
+      }
+    ]
+  },
+  "missing_published_array_probe": {
+    "source_commit": "b8f5e075fe920860492c0eb3e18e06c5da71903b",
+    "proof_path": "/tmp/tku-governance-runtime-recovery/missing-published-pre-fix/case-result.json",
+    "actual_probe_exit": 1,
+    "intentional_probe_failure": "Intended malformed-publication-array reproduction completed: unsafe200",
+    "fixed": false
+  },
+  "running_full_shard_sessions": [
+    67494,
+    88875,
+    39214,
+    37996
+  ],
+  "full_suite_complete": true,
+  "next_required_work": [
+    "Fix null/missing published-array guards and bind receipt actual published payload; preserve original before/after snapshots.",
+    "Run SQL diagnostics and complete full local suite on final fixed source.",
+    "Preserve original full-suite failures; do not touch NTU tests/source.",
+    "Push only final tested code candidate after disabled Quality readback; do not push main/deploy/alter other workflow."
+  ],
+  "frozen_final_checkout": "/workspace/abroad-tku-governance-array-fixed",
+  "new_SQL_results": {
+    "checks": 17,
+    "actual_RPC": 74,
+    "audit_count": 31,
+    "standard_shape_denials": 9,
+    "rollback_denials": 21,
+    "original_RPC005_publish": 409,
+    "original_RPC005_operation_only": 409,
+    "original_missing_array_envelope": 400,
+    "all_negative_six_table_snapshots_unchanged": true
+  },
+  "original_full_shards": [
+    67494,
+    88875,
+    39214,
+    37996
+  ],
+  "new_full_pipeline_sessions": [
+    82693,
+    90762,
+    40306,
+    22194
+  ],
+  "new_full_output": "/tmp/tku-governance-b67d79a",
+  "replaced_wait_only_session": 32669,
+  "wait_only_reallocation_proof": "/tmp/tku-governance-b67d79a/shard-0-wait-only-reallocation.json",
+  "integration_owner": {
+    "thread": "01a120b8-5edf-753f-9a61-b4556eaf40b6",
+    "scope": "Parent handles PR2/3/4/5 merge and deployment order; this session only tests and pushes candidate; Quality remains disabled."
+  },
+  "finalizer_session": 88534,
+  "new_full_shard2_complete": {
+    "actual_exit_code": 0,
+    "passed": 75,
+    "source": "b67d79aa3b6c30a9449801501256b64951f2c291"
+  },
+  "new_full_shard0_started": true,
+  "complete_runtime_image_space_model": "/tmp/tku-governance-runtime-recovery/complete-runtime-image-space-model.json",
+  "last_full_progress": [
+    {
+      "source": "b8f5e07",
+      "shard": 0,
+      "complete": true,
+      "exit": 1
+    },
+    {
+      "source": "b8f5e07",
+      "shard": 1,
+      "complete": true,
+      "exit": 1
+    },
+    {
+      "source": "b8f5e07",
+      "shard": 2,
+      "complete": true,
+      "exit": 1
+    },
+    {
+      "source": "b8f5e07",
+      "shard": 3,
+      "complete": true,
+      "exit": 1
+    },
+    {
+      "source": "b67d79a",
+      "shard": 0,
+      "case_results": 8,
+      "last": "tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout "
+    },
+    {
+      "source": "b67d79a",
+      "shard": 1,
+      "case_results": 43,
+      "last": "tests/e2e/test_partner_globe.py::test_thousand_points_cluster_expand_and_keyboard "
+    },
+    {
+      "source": "b67d79a",
+      "shard": 2,
+      "complete": true,
+      "exit": 0
+    },
+    {
+      "source": "b67d79a",
+      "shard": 3,
+      "complete": true,
+      "exit": 0
+    }
+  ],
+  "new_full_shard3_complete": {
+    "source": "b67d79aa3b6c30a9449801501256b64951f2c291",
+    "actual_exit_code": 0,
+    "passed": 75
+  },
+  "resume_proof": "/tmp/tku-governance-b67d79a/actual-resume-capability.json",
+  "new_full_complete_shards": [
+    1,
+    2,
+    3
+  ],
+  "remaining_full_shards": [
+    0
+  ],
+  "task_local_verification_complete": true,
+  "remote_candidate_head": "b67d79aa3b6c30a9449801501256b64951f2c291",
+  "final_full_counts": {
+    "passed": 1813,
+    "failed": 0,
+    "skipped": 14,
+    "executed": 1827
+  },
+  "isolated_original_failures_counts": {
+    "passed": 9,
+    "failed": 0
+  },
+  "running_test_sessions": [],
+  "final_summary_path": "/tmp/tku-governance-b67d79a/final-review-summary.json",
+  "final_manifest_path": "/tmp/tku-governance-b67d79a/local-evidence-manifest.json",
+  "candidate_remote_proof_path": "/tmp/tku-governance-b67d79a/remote-push-readback-proof.json"
+}

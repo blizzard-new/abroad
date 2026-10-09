@@ -1,0 +1,615 @@
+{
+  "tested_commit": "b67d79aa3b6c30a9449801501256b64951f2c291",
+  "actual_SQL_guard": {
+    "tested_commit": "b67d79aa3b6c30a9449801501256b64951f2c291",
+    "starting_state": {
+      "commit": "b67d79aa3b6c30a9449801501256b64951f2c291",
+      "dirty": ""
+    },
+    "ending_state": {
+      "commit": "b67d79aa3b6c30a9449801501256b64951f2c291",
+      "dirty": ""
+    },
+    "candidate_guard_passed": true,
+    "command": [
+      "/workspace/abroad-tku/.venv/bin/python",
+      "/tmp/tku-governance-b67d79a/sql-diagnostic-driver.py"
+    ],
+    "actual_exit_code": 0,
+    "elapsed_seconds": 195.55,
+    "production_access": false,
+    "scope": "Actual isolated subset: ten original governance migrations, two original canonical functions and two real PostgREST instances. Not full34 Supabase/Storage validation."
+  },
+  "check_count": 17,
+  "passed_checks": [
+    "stage_zero_approval_zero_publication_idempotent",
+    "sql_independent_double_review_denies_single_duplicate_and_unpersisted_reviewer",
+    "operation_label_cannot_bypass_published_row_provenance",
+    "approval_is_one_independently_persisted_actor_bound_attestation",
+    "standard_publication_rejects_missing_null_and_non_array_commands_without_mutation",
+    "two_instances_cas_and_independent_double_review",
+    "source_edit_hash_conflict_invalidates_retains_attestations",
+    "workflow_late_failure_atomicity_retry_idempotency",
+    "rollback_rejects_operation_action_chain_and_unpersisted_historical_reviews",
+    "workflow_history_rollback_consistency",
+    "legitimate_restoration_of_a_previous_rollback_has_an_audited_review_lineage",
+    "destination_two_instances_cas_atomic_failure_replay_history_rollback",
+    "exact_original_workflow_and_destination_envelope_replay_no_mutations",
+    "legacy_fallback_refresh_superseded_reference_pending_public_unchanged",
+    "truly_overlapping_processes_exact_CAS_one_winner_and_envelope_replay",
+    "actual_postgrest_cap2_complete_five_table_snapshot_and_normal_write",
+    "append_only_full_command_audit"
+  ],
+  "actual_RPC_count": 74,
+  "actual_command_audit_count": 31,
+  "standard_publication_shape_cases": [
+    {
+      "case": "published_missing",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a",
+      "after_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a"
+    },
+    {
+      "case": "published_null",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a",
+      "after_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a"
+    },
+    {
+      "case": "published_object",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a",
+      "after_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a"
+    },
+    {
+      "case": "published_string",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a",
+      "after_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a"
+    },
+    {
+      "case": "revisions_missing",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a",
+      "after_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a"
+    },
+    {
+      "case": "revisions_null",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a",
+      "after_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a"
+    },
+    {
+      "case": "revisions_object",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a",
+      "after_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a"
+    },
+    {
+      "case": "revisions_string",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a",
+      "after_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a"
+    },
+    {
+      "case": "published_empty",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Publication must atomically include exactly one public payload"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a",
+      "after_snapshot_SHA256": "798074cc1e58f7633e1235afc9d926d0bd8552dfb45f859ef0136f8c6000a05a"
+    }
+  ],
+  "rollback_cases": [
+    {
+      "case": "publish_label_on_rollback",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Standard publication cannot carry a rollback action or chain"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "standard_action_with_chain",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Rollback requires an explicit restoration action and chain"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "null_rollback_IDs",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Rollback requires an explicit restoration action and chain"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "missing_restore",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Rollback must restore an audited older snapshot from the unique current publication"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "current_as_restore",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Rollback must restore an audited older snapshot from the unique current publication"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "superseded_as_current",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Rollback must restore an audited older snapshot from the unique current publication"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "wrong_version_chain",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Rollback must restore an audited older snapshot from the unique current publication"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "changed_restored_approvals",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Rollback must restore an audited older snapshot from the unique current publication"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "changed_superseded_companion",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Publication companions may only supersede the unchanged current revision"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "reject_label_with_published_row",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Published rows require a publication command and public payload"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "duplicate_revision_identity",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Revision identities must be unique within a command"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "published_missing",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "published_null",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "published_object",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "published_string",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "revisions_missing",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "revisions_null",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "revisions_object",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "revisions_string",
+      "HTTP_status": 400,
+      "response": {
+        "code": "22023",
+        "details": null,
+        "hint": null,
+        "message": "Governance revisions and published payloads must be arrays"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "empty_publication_array",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Publication must atomically include exactly one public payload"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "after_snapshot_SHA256": "73058b73436979940aaff186fcc1805c6adb58a5c61d16e052e92d24613a89ee",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    },
+    {
+      "case": "stored_historical_reviewer_without_approval_provenance",
+      "HTTP_status": 409,
+      "response": {
+        "code": "PT409",
+        "details": null,
+        "hint": null,
+        "message": "Every published snapshot requires independently stored review and publication provenance"
+      },
+      "all_six_snapshots_unchanged": true,
+      "before_snapshot_SHA256": "44646cf24259909761a193680af9c1d331b07676865d3bd2002756ff5edd551a",
+      "after_snapshot_SHA256": "44646cf24259909761a193680af9c1d331b07676865d3bd2002756ff5edd551a",
+      "snapshot_table_counts": {
+        "audit": 24,
+        "reviews": 0,
+        "revisions": 2,
+        "rollbacks": 0,
+        "workflows": 2,
+        "promotions": 0
+      }
+    }
+  ],
+  "legitimate_chained_rollback": {
+    "exact_review_snapshot_preserved": true,
+    "timestamp_roundtrip_with_trailing_fractional_zeros": true,
+    "replay_no_mutations": true
+  },
+  "ACL_owner_security_search_path_unchanged": true,
+  "production_access": false,
+  "scope": "Ten actual governance migrations + two original canonical fingerprint functions; full34/Storage remain blocked by original pinned-image ENOSPC."
+}

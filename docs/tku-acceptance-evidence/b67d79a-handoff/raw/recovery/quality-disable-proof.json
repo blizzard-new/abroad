@@ -1,0 +1,34 @@
+{
+  "authorization": "User approved disabling this repository automatic tests at2026-10-09T11:36:59.368787+00:00, Sentinel_780f8c823e6881918cc46fb748441995; parent delegated exact workflow scope.",
+  "repository": "blizzard-new/abroad",
+  "operation_started_UTC": "2026-10-09T11:41:04.544325+00:00",
+  "operation_finished_UTC": "2026-10-09T11:41:05.482292+00:00",
+  "command": [
+    "gh",
+    "api",
+    "--method",
+    "PUT",
+    "repos/blizzard-new/abroad/actions/workflows/374368612/disable"
+  ],
+  "actual_exit_code": 0,
+  "test_workflow": {
+    "id": 374368612,
+    "name": ".github/workflows/quality.yml",
+    "path": ".github/workflows/quality.yml",
+    "before": "active",
+    "after": "disabled_manually",
+    "updated_at": "2026-10-09T11:41:04.000Z"
+  },
+  "untouched_deployment_workflow": {
+    "id": 374368613,
+    "name": "Deploy to Supabase",
+    "before": "active",
+    "after": "active"
+  },
+  "no_main_push": true,
+  "Render_unchanged": true,
+  "branch_protection_unchanged": true,
+  "permissions_credentials_payment_unchanged": true,
+  "historical_runs_artifacts_untouched": true,
+  "readback_verified": true
+}

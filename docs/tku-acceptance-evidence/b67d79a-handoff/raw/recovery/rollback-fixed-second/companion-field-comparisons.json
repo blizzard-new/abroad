@@ -1,0 +1,141 @@
+[
+  {
+    "operation": "publish_workflow_revision",
+    "publication_action": "standard",
+    "differences": {}
+  },
+  {
+    "operation": "publish_workflow_revision",
+    "publication_action": "standard",
+    "differences": {}
+  },
+  {
+    "operation": "publish_workflow_revision",
+    "publication_action": "standard",
+    "differences": {}
+  },
+  {
+    "operation": "rollback_published_workflow",
+    "publication_action": "standard",
+    "differences": {}
+  },
+  {
+    "operation": "rollback_published_workflow",
+    "publication_action": "standard",
+    "differences": {}
+  },
+  {
+    "operation": "rollback_published_workflow",
+    "publication_action": "standard",
+    "differences": {}
+  },
+  {
+    "operation": "rollback_published_workflow",
+    "publication_action": "standard",
+    "differences": {}
+  },
+  {
+    "operation": "rollback_published_workflow",
+    "publication_action": "standard",
+    "differences": {}
+  },
+  {
+    "operation": "rollback_published_workflow",
+    "publication_action": "standard",
+    "differences": {}
+  },
+  {
+    "operation": "rollback_published_workflow",
+    "publication_action": "standard",
+    "differences": {}
+  },
+  {
+    "operation": "rollback_published_workflow",
+    "publication_action": "standard",
+    "differences": {
+      "review_approvals": {
+        "incoming": [
+          {
+            "reviewer_id": "synthetic-a",
+            "reviewed_at": "2026-10-09T12:00:38.779372Z",
+            "note": "Synthetic complete independent attestation",
+            "reviewed_content_hash": "f5171b8ccafa747f550868908d44351adef2084f02e66723daf0a8fa3c50cb26",
+            "reviewed_source_urls": [
+              "https://synthetic.edu/exchange"
+            ],
+            "reviewed_rule_keys": [
+              "workflow:applicability",
+              "step:0"
+            ]
+          },
+          {
+            "reviewer_id": "synthetic-unattested",
+            "reviewed_at": "2026-10-09T12:00:39.111635Z",
+            "note": "Synthetic complete independent attestation",
+            "reviewed_content_hash": "f5171b8ccafa747f550868908d44351adef2084f02e66723daf0a8fa3c50cb26",
+            "reviewed_source_urls": [
+              "https://synthetic.edu/exchange"
+            ],
+            "reviewed_rule_keys": [
+              "workflow:applicability",
+              "step:0"
+            ]
+          }
+        ],
+        "stored": [
+          {
+            "note": "Synthetic complete independent attestation",
+            "reviewed_at": "2026-10-09T12:00:38.779372Z",
+            "reviewer_id": "synthetic-a",
+            "reviewed_rule_keys": [
+              "workflow:applicability",
+              "step:0"
+            ],
+            "reviewed_source_urls": [
+              "https://synthetic.edu/exchange"
+            ],
+            "reviewed_content_hash": "f5171b8ccafa747f550868908d44351adef2084f02e66723daf0a8fa3c50cb26"
+          },
+          {
+            "note": "Synthetic complete independent attestation",
+            "reviewed_at": "2026-10-09T12:00:39.111635Z",
+            "reviewer_id": "synthetic-b",
+            "reviewed_rule_keys": [
+              "workflow:applicability",
+              "step:0"
+            ],
+            "reviewed_source_urls": [
+              "https://synthetic.edu/exchange"
+            ],
+            "reviewed_content_hash": "f5171b8ccafa747f550868908d44351adef2084f02e66723daf0a8fa3c50cb26"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "operation": "rollback_published_workflow",
+    "publication_action": "standard",
+    "differences": {}
+  },
+  {
+    "operation": "rollback_published_workflow",
+    "publication_action": "standard",
+    "differences": {}
+  },
+  {
+    "operation": "publish_workflow_revision",
+    "publication_action": "rollback",
+    "differences": {}
+  },
+  {
+    "operation": "rollback_published_workflow",
+    "publication_action": "standard",
+    "differences": {
+      "reviewed_at": {
+        "incoming": "2026-10-09T12:00:53.032280+00:00",
+        "stored": "2026-10-09T12:00:53.03228+00:00"
+      }
+    }
+  }
+]

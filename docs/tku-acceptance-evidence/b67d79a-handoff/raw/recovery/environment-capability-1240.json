@@ -1,0 +1,146 @@
+{
+  "checked_at": "2026-10-09T12:39:59.377902+00:00",
+  "actual_read_only_command_exit": 0,
+  "processes": [
+    {
+      "pid": 233553,
+      "parent": 233546,
+      "age_seconds": 1958,
+      "command_kind": "original fixed source wrapper"
+    },
+    {
+      "pid": 233560,
+      "parent": 233554,
+      "age_seconds": 1958,
+      "command_kind": "original fixed source wrapper"
+    },
+    {
+      "pid": 233592,
+      "parent": 233560,
+      "age_seconds": 1958,
+      "command_kind": "pytest partition"
+    },
+    {
+      "pid": 233593,
+      "parent": 233553,
+      "age_seconds": 1958,
+      "command_kind": "pytest partition"
+    },
+    {
+      "pid": 269933,
+      "parent": 269921,
+      "age_seconds": 520,
+      "command_kind": "new fixed source wrapper"
+    },
+    {
+      "pid": 269947,
+      "parent": 269942,
+      "age_seconds": 520,
+      "command_kind": "new fixed source wrapper"
+    },
+    {
+      "pid": 269955,
+      "parent": 269951,
+      "age_seconds": 520,
+      "command_kind": "new fixed source wrapper"
+    },
+    {
+      "pid": 269963,
+      "parent": 269954,
+      "age_seconds": 520,
+      "command_kind": "new fixed source wrapper"
+    },
+    {
+      "pid": 277138,
+      "parent": 269955,
+      "age_seconds": 385,
+      "command_kind": "new fixed source wrapper"
+    },
+    {
+      "pid": 277144,
+      "parent": 277138,
+      "age_seconds": 384,
+      "command_kind": "pytest partition"
+    },
+    {
+      "pid": 280404,
+      "parent": 269963,
+      "age_seconds": 288,
+      "command_kind": "new fixed source wrapper"
+    },
+    {
+      "pid": 280414,
+      "parent": 280404,
+      "age_seconds": 288,
+      "command_kind": "pytest partition"
+    }
+  ],
+  "log_progress": [
+    {
+      "source": "b8f5e07",
+      "shard": 0,
+      "bytes": 24072,
+      "mtime_UTC": "2026-10-09T12:39:47.310721+00:00",
+      "browser_case_results": 64,
+      "complete": false,
+      "last_line": [
+        "tests/e2e/test_web_next_phase.py::test_workspace_load_advances_base_before_put_conflict "
+      ]
+    },
+    {
+      "source": "b8f5e07",
+      "shard": 1,
+      "bytes": 29959,
+      "mtime_UTC": "2026-10-09T12:39:54.007935+00:00",
+      "browser_case_results": 59,
+      "complete": false,
+      "last_line": [
+        "tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[1754] "
+      ]
+    },
+    {
+      "source": "b8f5e07",
+      "shard": 2,
+      "bytes": 32216,
+      "mtime_UTC": "2026-10-09T12:33:33.181995+00:00",
+      "browser_case_results": 75,
+      "complete": true,
+      "last_line": [
+        "WEB_SHARD 2 exit=1 elapsed=1548.967s"
+      ]
+    },
+    {
+      "source": "b8f5e07",
+      "shard": 3,
+      "bytes": 62372,
+      "mtime_UTC": "2026-10-09T12:35:09.155502+00:00",
+      "browser_case_results": 75,
+      "complete": true,
+      "last_line": [
+        "WEB_SHARD 3 exit=1 elapsed=1644.959s"
+      ]
+    },
+    {
+      "source": "b67d79a",
+      "shard": 2,
+      "bytes": 13995,
+      "mtime_UTC": "2026-10-09T12:39:50.110650+00:00",
+      "browser_case_results": 24,
+      "complete": false,
+      "last_line": [
+        "tests/e2e/test_glass_theme.py::test_verified_catalog_search_map_and_saved_school[390] "
+      ]
+    },
+    {
+      "source": "b67d79a",
+      "shard": 3,
+      "bytes": 9114,
+      "mtime_UTC": "2026-10-09T12:39:58.951105+00:00",
+      "browser_case_results": 5,
+      "complete": false,
+      "last_line": [
+        "tests/e2e/test_conditions_account_sync.py::test_conflicting_submissions_keep_one_snapshot_and_tell_student "
+      ]
+    }
+  ]
+}

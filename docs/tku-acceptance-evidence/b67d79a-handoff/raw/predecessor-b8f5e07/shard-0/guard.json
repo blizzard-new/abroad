@@ -1,0 +1,28 @@
+{
+  "tested_commit": "b8f5e075fe920860492c0eb3e18e06c5da71903b",
+  "starting_state": {
+    "commit": "b8f5e075fe920860492c0eb3e18e06c5da71903b",
+    "dirty": ""
+  },
+  "ending_state": {
+    "commit": "b8f5e075fe920860492c0eb3e18e06c5da71903b",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "command": [
+    "/workspace/abroad-tku/.venv/bin/python",
+    "scripts/run_web_quality_tests.py",
+    "--shard",
+    "0",
+    "--shards",
+    "4",
+    "--junitxml",
+    "/tmp/tku-governance-b8f5e07/shard-0/suite.xml",
+    "--evidence-dir",
+    "/tmp/tku-governance-b8f5e07/shard-0"
+  ],
+  "actual_exit_code": 1,
+  "elapsed_seconds": 3220.43,
+  "production_access": false,
+  "scope": "Same repository full-suite partition command as CI; this is local execution, not a GitHub runner or full Supabase runtime."
+}

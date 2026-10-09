@@ -1,0 +1,40 @@
+{
+  "authorization": "Parent delegated cleanup of rebuildable task temp without credentials/user data/unique evidence.",
+  "started_UTC": "2026-10-09T11:42:25.489693+00:00",
+  "before_df": {
+    "/": "Filesystem       1B-blocks        Used   Available Use% Mounted on\noverlay        33770192896 14643757056 17391673344  46% /\n",
+    "/tmp": "Filesystem      1B-blocks       Used  Available Use% Mounted on\nnone           9466122240 6389907456 3076214784  68% /tmp\n"
+  },
+  "deleted": [
+    {
+      "path": "/tmp/tku-package-build-12b30cd/build/lib",
+      "source_copy_retained": "/tmp/tku-package-build-12b30cd/src",
+      "files": 1009,
+      "bytes": 190220884,
+      "every_file_SHA256_matches_source": true,
+      "contains_only_rebuildable_packaged_source": true
+    },
+    {
+      "path": "/tmp/tku-package-build-5e010b8/build/lib",
+      "source_copy_retained": "/tmp/tku-package-build-5e010b8/src",
+      "files": 1009,
+      "bytes": 190219234,
+      "every_file_SHA256_matches_source": true,
+      "contains_only_rebuildable_packaged_source": true
+    }
+  ],
+  "excluded": [
+    "All old worktrees because local keys and screenshots exist",
+    "All original logs/XML/evidence folders",
+    "Docker images/containers/volumes: no eligible stopped container/volume, dangling image ownership not proven",
+    "Other sessions /workspace/abroad and /tmp/ntu-audit",
+    "Credential directories and .git repositories"
+  ],
+  "after_df": {
+    "/": "Filesystem       1B-blocks        Used   Available Use% Mounted on\noverlay        33770192896 14643757056 17391673344  46% /\n",
+    "/tmp": "Filesystem      1B-blocks       Used  Available Use% Mounted on\nnone           9466122240 6005288960 3460833280  64% /tmp\n"
+  },
+  "finished_UTC": "2026-10-09T11:42:25.534861+00:00",
+  "actual_reclaimed_file_bytes": 380440118,
+  "all_deleted_paths_absent": true
+}

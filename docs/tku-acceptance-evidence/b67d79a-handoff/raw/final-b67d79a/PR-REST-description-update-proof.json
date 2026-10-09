@@ -1,0 +1,24 @@
+{
+  "checked_at": "2026-10-09T13:38:26.711089+00:00",
+  "command": [
+    "gh",
+    "api",
+    "--method",
+    "PATCH",
+    "repos/blizzard-new/abroad/pulls/2",
+    "--input",
+    "/tmp/tku-governance-b67d79a/PR-final-update-request.json"
+  ],
+  "actual_exit": 0,
+  "stderr": "",
+  "fallback_from": "gh pr edit GraphQL projectCards deprecation; original failure retained",
+  "fields_changed": [
+    "title",
+    "body"
+  ],
+  "no_draft_workflow_deploy_main_or_auth_changes": true,
+  "readback_title_body_exact": true,
+  "draft": true,
+  "head": "b67d79aa3b6c30a9449801501256b64951f2c291",
+  "url": "https://github.com/blizzard-new/abroad/pull/2"
+}

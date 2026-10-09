@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="75" time="1630.581" timestamp="2026-10-09T12:07:47.848054+00:00" hostname="f6ad0b7a0286"><testcase classname="tests.e2e.test_application_workspace" name="test_workspace_navigation_preserves_draft_target_and_old_routes[390]" time="51.864" /><testcase classname="tests.e2e.test_application_workspace" name="test_workspace_navigation_preserves_draft_target_and_old_routes[1754]" time="41.955" /><testcase classname="tests.e2e.test_application_workspace" name="test_saved_conditions_keep_application_period_when_refreshing_recommendations[390]" time="42.803" /><testcase classname="tests.e2e.test_application_workspace" name="test_saved_conditions_keep_application_period_when_refreshing_recommendations[1754]" time="48.942" /><testcase classname="tests.e2e.test_conditions_account_sync" name="test_complete_conditions_reach_new_device_and_clear_stays_cleared" time="64.718" /><testcase classname="tests.e2e.test_conditions_account_sync" name="test_conflicting_submissions_keep_one_snapshot_and_tell_student" time="64.159" /><testcase classname="tests.e2e.test_discussion_round2" name="test_reply_thread_reaction_retry_persistence_and_author_delete" time="53.476" /><testcase classname="tests.e2e.test_discussion_round2" name="test_moderator_approve_hide_report_review_and_suspend" time="23.982" /><testcase classname="tests.e2e.test_discussion_round2" name="test_account_bookmarks_sync_between_two_browser_contexts_and_import_legacy" time="23.792" /><testcase classname="tests.e2e.test_discussion_round2" name="test_login_from_reader_preserves_valid_fields_while_requests_settle" time="72.385" /><testcase classname="tests.e2e.test_discussion_round2" name="test_opening_login_does_not_steal_focus_from_user_selected_field" time="8.706" /><testcase classname="tests.e2e.test_discussion_round2" name="test_slow_bookmark_response_does_not_erase_new_search_text" time="13.875" /><testcase classname="tests.e2e.test_fit_and_completeness_ui" name="test_new_condition_fields_round_trip_through_the_saved_conditions_payload" time="18.608" /><testcase classname="tests.e2e.test_fit_and_completeness_ui" name="test_fit_details_state_reasons_and_never_say_affordable" time="15.014" /><testcase classname="tests.e2e.test_fit_and_completeness_ui" name="test_school_page_lists_what_data_is_missing[390]" time="14.482" /><testcase classname="tests.e2e.test_fit_and_completeness_ui" name="test_school_page_lists_what_data_is_missing[1754]" time="17.127" /><testcase classname="tests.e2e.test_life_context" name="test_life_fallback_retains_evidence_on_refresh_failure" time="25.055" /><testcase classname="tests.e2e.test_loading_screen" name="test_it_shows_the_mascot_while_the_page_waits_and_goes_when_the_page_is_ready" time="9.732" /><testcase classname="tests.e2e.test_loading_screen" name="test_it_also_goes_when_the_data_cannot_be_loaded" time="7.708" /><testcase classname="tests.e2e.test_loading_screen" name="test_a_page_that_never_finishes_still_gets_rid_of_it" time="4.292" /><testcase classname="tests.e2e.test_loading_screen" name="test_with_every_script_blocked_the_screen_never_covers_the_page" time="5.252" /><testcase classname="tests.e2e.test_loading_screen" name="test_the_stylesheet_alone_takes_it_away_when_no_timer_can_run" time="2.304" /><testcase classname="tests.e2e.test_loading_screen" name="test_the_slow_wake_up_note_only_appears_after_a_wait" time="5.508" /><testcase classname="tests.e2e.test_loading_screen" name="test_without_motion_it_stands_still_but_still_appears_and_goes" time="9.963" /><testcase classname="tests.e2e.test_loading_screen" name="test_in_dark_mode_it_is_dark_from_the_start" time="15.337"><failure message="playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 15000ms exceeded.">tests/e2e/test_loading_screen.py:130: in test_in_dark_mode_it_is_dark_from_the_start
+    wait_until_shown(page)
+tests/e2e/test_loading_screen.py:27: in wait_until_shown
+    page.wait_for_function(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:12761: in wait_for_function
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:1151: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:940: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 15000ms exceeded.</failure></testcase><testcase classname="tests.e2e.test_loading_screen" name="test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[320-568]" time="7.148" /><testcase classname="tests.e2e.test_loading_screen" name="test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[390-844]" time="3.600" /><testcase classname="tests.e2e.test_loading_screen" name="test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[844-390]" time="4.551" /><testcase classname="tests.e2e.test_loading_screen" name="test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[1280-900]" time="4.735" /><testcase classname="tests.e2e.test_loading_screen" name="test_the_mascot_blinks_hops_and_turns_when_tapped_in_the_advisor_card" time="14.670" /><testcase classname="tests.e2e.test_loading_screen" name="test_the_mascot_acts_out_each_state_of_the_assistant" time="8.625" /><testcase classname="tests.e2e.test_loading_screen" name="test_the_old_puppy_is_not_anywhere_on_the_page" time="8.927" /><testcase classname="tests.e2e.test_loading_screen" name="test_it_stays_until_the_whole_page_is_ready_not_just_the_first_data" time="8.706" /><testcase classname="tests.e2e.test_my_application_entry" name="test_new_student_picks_a_school_and_lands_on_selection_and_confirmation" time="13.861" /><testcase classname="tests.e2e.test_my_application_entry" name="test_returning_student_with_a_school_goes_straight_there_from_any_page" time="21.118" /><testcase classname="tests.e2e.test_my_application_entry" name="test_the_rail_entry_is_highlighted_on_the_selection_page_and_the_dropdown_still_offers_every_stage" time="13.259" /><testcase classname="tests.e2e.test_navigation_guide" name="test_home_is_the_guide_and_the_forum_is_one_click_away" time="15.579" /><testcase classname="tests.e2e.test_navigation_guide" name="test_an_old_guide_link_opens_the_home_page" time="8.477" /><testcase classname="tests.e2e.test_navigation_guide" name="test_an_old_community_link_opens_the_forum" time="6.830" /><testcase classname="tests.e2e.test_navigation_guide" name="test_guide_shared_shell_and_back_forward_without_loops" time="19.634" /><testcase classname="tests.e2e.test_navigation_guide" name="test_direct_entry_back_stays_inside_site[budget]" time="10.322" /><testcase classname="tests.e2e.test_navigation_guide" name="test_direct_entry_back_stays_inside_site[application-center]" time="11.032" /><testcase classname="tests.e2e.test_navigation_guide" name="test_direct_entry_back_stays_inside_site[school=\u6797\u80af\u5927\u5b78 Lincoln University]" time="11.311" /><testcase classname="tests.e2e.test_navigation_guide" name="test_every_tool_has_shared_navigation_and_return" time="28.899" /><testcase classname="tests.e2e.test_navigation_guide" name="test_school_return_retains_filters_scroll_and_forward" time="10.125" /><testcase classname="tests.e2e.test_navigation_guide" name="test_guide_responsive_menu_keyboard_and_theme[393]" time="11.528" /><testcase classname="tests.e2e.test_navigation_guide" name="test_guide_responsive_menu_keyboard_and_theme[834]" time="11.360" /><testcase classname="tests.e2e.test_navigation_guide" name="test_guide_responsive_menu_keyboard_and_theme[1440]" time="10.212" /><testcase classname="tests.e2e.test_responsive_layout" name="test_no_page_breaks_at_phone_and_tablet_sizes[320-640]" time="22.017" /><testcase classname="tests.e2e.test_responsive_layout" name="test_no_page_breaks_at_phone_and_tablet_sizes[375-812]" time="23.816" /><testcase classname="tests.e2e.test_responsive_layout" name="test_no_page_breaks_at_phone_and_tablet_sizes[414-896]" time="19.719" /><testcase classname="tests.e2e.test_responsive_layout" name="test_no_page_breaks_at_phone_and_tablet_sizes[768-1024]" time="16.152" /><testcase classname="tests.e2e.test_responsive_layout" name="test_no_page_breaks_at_phone_and_tablet_sizes[812-375]" time="18.819" /><testcase classname="tests.e2e.test_responsive_layout" name="test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[375-812]" time="8.988" /><testcase classname="tests.e2e.test_responsive_layout" name="test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[768-1024]" time="7.687" /><testcase classname="tests.e2e.test_responsive_layout" name="test_the_compose_button_shows_its_words_on_a_tablet" time="10.373" /><testcase classname="tests.e2e.test_school_chinese_content" name="test_school_life_uses_offline_chinese_and_retains_original[390]" time="45.523" /><testcase classname="tests.e2e.test_school_chinese_content" name="test_school_life_uses_offline_chinese_and_retains_original[1754]" time="41.759" /><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_jlpt_comparison_persistence_and_closed_cycle[390]" time="23.418" /><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_jlpt_comparison_persistence_and_closed_cycle[1280]" time="19.973" /><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[390]" time="41.041" /><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[1280]" time="51.633" /><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_list_filters_favorites_comparison_and_reload[390]" time="21.937" /><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_list_filters_favorites_comparison_and_reload[1280]" time="19.859" /><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_conditions_directory_native_years_and_no_false_open_plan[390]" time="22.908" /><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_conditions_directory_native_years_and_no_false_open_plan[1280]" time="30.767" /><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_documents_stages_conditions_official_sources_and_target_persistence[390]" time="34.145" /><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_documents_stages_conditions_official_sources_and_target_persistence[1280]" time="31.631" /><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390]" time="22.156"><failure message="AssertionError: Locator expected to be visible&#10;Actual value: hidden &#10;Call log:&#10;  - Expect &quot;to_be_visible&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;#application-document-form&quot;)&#10;    6 × locator resolved to &lt;form novalidate=&quot;&quot; id=&quot;application-document-form&quot; class=&quot;application-document-form&quot;&gt;…&lt;/form&gt;&#10;      - unexpected value &quot;hidden&quot;&#10;&#10;Aria snapshot:&#10;- status:&#10;  - paragraph: 正在載入中&#10;- link &quot;跳到主要內容&quot;:&#10;  - /url: &quot;#main-content&quot;&#10;- main:&#10;  - button &quot;開啟功能選單&quot;&#10;  - link &quot;UniWay 首頁&quot;:&#10;    - /url: &quot;#home&quot;&#10;    - strong: UniWay&#10;  - status: 正在取得最新整理資料…&#10;  - region &quot;我的申請工作區&quot;:&#10;    - text: 我的申請&#10;    - strong: 從選校到送件，接著完成下一步&#10;    - paragraph: 淡江大學 · 2027-2028 學年度&#10;    - navigation &quot;申請工作區階段&quot;:&#10;      - link &quot;選校與確認&quot;:&#10;        - /url: &quot;#advisor&quot;&#10;      - link &quot;準備與時程&quot;:&#10;        - /url: &quot;#overview&quot;&#10;      - link &quot;文件與送件&quot;:&#10;        - /url: &quot;#application-center&quot;&#10;    - navigation &quot;本階段操作&quot;:&#10;      - link &quot;填寫與列印&quot;:&#10;        - /url: &quot;#application-center&quot;&#10;      - link &quot;檢查文件&quot;:&#10;        - /url: &quot;#document-check&quot;&#10;      - link &quot;官方說明與私人文件&quot;:&#10;        - /url: &quot;#documents&quot;&#10;    - region &quot;申請文件&quot;:&#10;      - heading &quot;申請文件&quot; [level=2]&#10;      - link:&#10;        - /url: &quot;#document-check&quot;&#10;      - list &quot;申請文件處理流程&quot;:&#10;        - listitem: &quot;1&quot;&#10;        - listitem: &quot;2&quot;&#10;        - listitem: &quot;3&quot;&#10;        - listitem: &quot;4&quot;&#10;      - strong: 申請設定&#10;      - text: 申請類型&#10;      - combobox &quot;申請類型&quot;:&#10;        - option &quot;學期／學年交換&quot; [selected]&#10;        - option &quot;雙聯學位&quot;&#10;        - option &quot;海外實習&quot;&#10;        - option &quot;境外短期學分課程&quot;&#10;      - text: 目標學校&#10;      - combobox &quot;目標學校&quot;:&#10;        - option &quot;尚未決定&quot; [selected]&#10;      - text: 學年度&#10;      - textbox &quot;學年度&quot;:&#10;        - /placeholder: 例如 116&#10;        - text: 2027-2028&#10;      - text: 預計出國學期&#10;      - combobox &quot;預計出國學期&quot;:&#10;        - option &quot;尚未決定&quot; [selected]&#10;        - option &quot;第一學期&quot;&#10;        - option &quot;第二學期&quot;&#10;        - option &quot;一學年&quot;&#10;        - option &quot;寒假／暑假&quot;&#10;      - checkbox &quot;申請補助&quot;&#10;      - strong: 申請補助&#10;      - checkbox &quot;在學役男&quot;&#10;      - strong: 在學役男&#10;      - checkbox &quot;研修一學年以上&quot;&#10;      - strong: 研修一學年以上&#10;      - group:&#10;        - strong: 共用資料&#10;        - text: 0 / 9 欄已填&#10;      - region &quot;當期文件與官方表格&quot;:&#10;        - heading &quot;當期文件與官方表格&quot; [level=3]&#10;        - text: 請選擇學校&#10;        - paragraph: 選擇目標學校後，會依學系、年度與梯次列出文件；沒有確認的份數或表格不會被當成正式版本。&#10;        - paragraph: 尚未選擇目標學校。&#10;      - region &quot;可填寫的準備工具&quot;:&#10;        - heading &quot;可填寫的準備工具&quot; [level=3]&#10;        - text: 0 份 先看這個階段&#10;        - combobox &quot;先看這個階段&quot;&#10;        - paragraph: 可切換查看其他階段；這個選項不會變更你的錄取或送件狀態。&#10;        - paragraph: 以下工具用來整理草稿與列印，不代表當期校方必備文件；請以上方已確認的官方規定為準。&#10;        - paragraph: 目前條件下沒有需要產生的文件。&#10;      - complementary &quot;我的列印包&quot;:&#10;        - text: 整理與匯出&#10;        - heading &quot;我的列印包&quot; [level=3]&#10;        - text: 0 份&#10;        - paragraph: 選擇要匯出的文件，填完並核對目前版本後，即可整理成一份 PDF。&#10;        - status:&#10;          - strong: 選擇這次要匯出的文件&#10;          - text: 0 項可匯出&#10;          - progressbar &quot;已選文件的匯出準備進度&quot;: 0%&#10;        - strong: 只放這次要印的文件&#10;        - paragraph: 在準備工具勾選「列印包」，文件就會出現在這裡。填完並核對後才可匯出。&#10;        - status: 尚未選取文件&#10;        - button &quot;匯出列印包 PDF&quot; [disabled]&#10;        - group: 列印提醒&#10;- paragraph:&#10;  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），&#10;  - button &quot;停用匿名使用統計&quot;&#10;  - text: 。&#10;  - link &quot;隱私權政策&quot;:&#10;    - /url: /privacy&#10;  - link &quot;使用條款&quot;:&#10;    - /url: /terms">tests/e2e/test_tku_acceptance.py:318: in test_tku_preparation_pdf_is_not_an_official_application_form
+    expect(page.locator("#application-document-form")).to_be_visible()
+E   AssertionError: Locator expected to be visible
+E   Actual value: hidden 
+E   Call log:
+E     - Expect "to_be_visible" with timeout 5000ms
+E     - waiting for locator("#application-document-form")
+E       6 × locator resolved to &lt;form novalidate="" id="application-document-form" class="application-document-form"&gt;…&lt;/form&gt;
+E         - unexpected value "hidden"
+E   
+E   Aria snapshot:
+E   - status:
+E     - paragraph: 正在載入中
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - main:
+E     - button "開啟功能選單"
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - status: 正在取得最新整理資料…
+E     - region "我的申請工作區":
+E       - text: 我的申請
+E       - strong: 從選校到送件，接著完成下一步
+E       - paragraph: 淡江大學 · 2027-2028 學年度
+E       - navigation "申請工作區階段":
+E         - link "選校與確認":
+E           - /url: "#advisor"
+E         - link "準備與時程":
+E           - /url: "#overview"
+E         - link "文件與送件":
+E           - /url: "#application-center"
+E       - navigation "本階段操作":
+E         - link "填寫與列印":
+E           - /url: "#application-center"
+E         - link "檢查文件":
+E           - /url: "#document-check"
+E         - link "官方說明與私人文件":
+E           - /url: "#documents"
+E       - region "申請文件":
+E         - heading "申請文件" [level=2]
+E         - link:
+E           - /url: "#document-check"
+E         - list "申請文件處理流程":
+E           - listitem: "1"
+E           - listitem: "2"
+E           - listitem: "3"
+E           - listitem: "4"
+E         - strong: 申請設定
+E         - text: 申請類型
+E         - combobox "申請類型":
+E           - option "學期／學年交換" [selected]
+E           - option "雙聯學位"
+E           - option "海外實習"
+E           - option "境外短期學分課程"
+E         - text: 目標學校
+E         - combobox "目標學校":
+E           - option "尚未決定" [selected]
+E         - text: 學年度
+E         - textbox "學年度":
+E           - /placeholder: 例如 116
+E           - text: 2027-2028
+E         - text: 預計出國學期
+E         - combobox "預計出國學期":
+E           - option "尚未決定" [selected]
+E           - option "第一學期"
+E           - option "第二學期"
+E           - option "一學年"
+E           - option "寒假／暑假"
+E         - checkbox "申請補助"
+E         - strong: 申請補助
+E         - checkbox "在學役男"
+E         - strong: 在學役男
+E         - checkbox "研修一學年以上"
+E         - strong: 研修一學年以上
+E         - group:
+E           - strong: 共用資料
+E           - text: 0 / 9 欄已填
+E         - region "當期文件與官方表格":
+E           - heading "當期文件與官方表格" [level=3]
+E           - text: 請選擇學校
+E           - paragraph: 選擇目標學校後，會依學系、年度與梯次列出文件；沒有確認的份數或表格不會被當成正式版本。
+E           - paragraph: 尚未選擇目標學校。
+E         - region "可填寫的準備工具":
+E           - heading "可填寫的準備工具" [level=3]
+E           - text: 0 份 先看這個階段
+E           - combobox "先看這個階段"
+E           - paragraph: 可切換查看其他階段；這個選項不會變更你的錄取或送件狀態。
+E           - paragraph: 以下工具用來整理草稿與列印，不代表當期校方必備文件；請以上方已確認的官方規定為準。
+E           - paragraph: 目前條件下沒有需要產生的文件。
+E         - complementary "我的列印包":
+E           - text: 整理與匯出
+E           - heading "我的列印包" [level=3]
+E           - text: 0 份
+E           - paragraph: 選擇要匯出的文件，填完並核對目前版本後，即可整理成一份 PDF。
+E           - status:
+E             - strong: 選擇這次要匯出的文件
+E             - text: 0 項可匯出
+E             - progressbar "已選文件的匯出準備進度": 0%
+E           - strong: 只放這次要印的文件
+E           - paragraph: 在準備工具勾選「列印包」，文件就會出現在這裡。填完並核對後才可匯出。
+E           - status: 尚未選取文件
+E           - button "匯出列印包 PDF" [disabled]
+E           - group: 列印提醒
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms</failure></testcase><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-1280]" time="26.618" /><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390]" time="30.867"><failure message="AssertionError: Locator expected to be visible&#10;Actual value: hidden &#10;Call log:&#10;  - Expect &quot;to_be_visible&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;#application-document-form&quot;)&#10;    7 × locator resolved to &lt;form novalidate=&quot;&quot; id=&quot;application-document-form&quot; class=&quot;application-document-form&quot;&gt;…&lt;/form&gt;&#10;      - unexpected value &quot;hidden&quot;&#10;&#10;Aria snapshot:&#10;- status:&#10;  - paragraph: 正在載入中&#10;- link &quot;跳到主要內容&quot;:&#10;  - /url: &quot;#main-content&quot;&#10;- main:&#10;  - button &quot;開啟功能選單&quot;&#10;  - link &quot;UniWay 首頁&quot;:&#10;    - /url: &quot;#home&quot;&#10;    - strong: UniWay&#10;  - status&#10;  - region &quot;我的申請工作區&quot;:&#10;    - text: 我的申請&#10;    - strong: 從選校到送件，接著完成下一步&#10;    - paragraph: 淡江大學 · 2027-2028 學年度&#10;    - navigation &quot;申請工作區階段&quot;:&#10;      - link &quot;選校與確認&quot;:&#10;        - /url: &quot;#advisor&quot;&#10;      - link &quot;準備與時程&quot;:&#10;        - /url: &quot;#overview&quot;&#10;      - link &quot;文件與送件&quot;:&#10;        - /url: &quot;#application-center&quot;&#10;    - navigation &quot;本階段操作&quot;:&#10;      - link &quot;填寫與列印&quot;:&#10;        - /url: &quot;#application-center&quot;&#10;      - link &quot;檢查文件&quot;:&#10;        - /url: &quot;#document-check&quot;&#10;      - link &quot;官方說明與私人文件&quot;:&#10;        - /url: &quot;#documents&quot;&#10;    - region &quot;申請文件&quot;:&#10;      - heading &quot;申請文件&quot; [level=2]&#10;      - link:&#10;        - /url: &quot;#document-check&quot;&#10;      - list &quot;申請文件處理流程&quot;:&#10;        - listitem: &quot;1&quot;&#10;        - listitem: &quot;2&quot;&#10;        - listitem: &quot;3&quot;&#10;        - listitem: &quot;4&quot;&#10;      - strong: 申請設定&#10;      - text: 申請類型&#10;      - combobox &quot;申請類型&quot;:&#10;        - option &quot;學期／學年交換&quot; [selected]&#10;        - option &quot;雙聯學位&quot;&#10;        - option &quot;海外實習&quot;&#10;        - option &quot;境外短期學分課程&quot;&#10;      - text: 目標學校&#10;      - combobox &quot;目標學校&quot;:&#10;        - option &quot;尚未決定&quot; [selected]&#10;        - option &quot;日本 · 立命館大學 Ritsumeikan University&quot;&#10;        - option &quot;日本 · 成蹊大學 Seikei University&quot;&#10;        - option &quot;日本 · 長崎外國語大學 Nagasaki University of Foreign Studies&quot;&#10;        - option &quot;日本 · 電氣通信大學 University of Electro-Communications&quot;&#10;      - text: 學年度&#10;      - textbox &quot;學年度&quot;:&#10;        - /placeholder: 例如 116&#10;        - text: 2027-2028&#10;      - text: 預計出國學期&#10;      - combobox &quot;預計出國學期&quot;:&#10;        - option &quot;尚未決定&quot; [selected]&#10;        - option &quot;第一學期&quot;&#10;        - option &quot;第二學期&quot;&#10;        - option &quot;一學年&quot;&#10;        - option &quot;寒假／暑假&quot;&#10;      - checkbox &quot;申請補助&quot;&#10;      - strong: 申請補助&#10;      - checkbox &quot;在學役男&quot;&#10;      - strong: 在學役男&#10;      - checkbox &quot;研修一學年以上&quot;&#10;      - strong: 研修一學年以上&#10;      - group:&#10;        - strong: 共用資料&#10;        - text: 0 / 9 欄已填&#10;      - region &quot;當期文件與官方表格&quot;:&#10;        - heading &quot;當期文件與官方表格&quot; [level=3]&#10;        - text: 請選擇學校&#10;        - paragraph: 選擇目標學校後，會依學系、年度與梯次列出文件；沒有確認的份數或表格不會被當成正式版本。&#10;        - paragraph: 尚未選擇目標學校。&#10;      - region &quot;可填寫的準備工具&quot;:&#10;        - heading &quot;可填寫的準備工具&quot; [level=3]&#10;        - text: 0 份 先看這個階段&#10;        - combobox &quot;先看這個階段&quot;&#10;        - paragraph: 可切換查看其他階段；這個選項不會變更你的錄取或送件狀態。&#10;        - paragraph: 以下工具用來整理草稿與列印，不代表當期校方必備文件；請以上方已確認的官方規定為準。&#10;      - complementary &quot;我的列印包&quot;:&#10;        - text: 整理與匯出&#10;        - heading &quot;我的列印包&quot; [level=3]&#10;        - text: 0 份&#10;        - paragraph: 選擇要匯出的文件，填完並核對目前版本後，即可整理成一份 PDF。&#10;        - status:&#10;          - strong: 選擇這次要匯出的文件&#10;          - text: 0 項可匯出&#10;          - progressbar &quot;已選文件的匯出準備進度&quot;: 0%&#10;        - strong: 只放這次要印的文件&#10;        - paragraph: 在準備工具勾選「列印包」，文件就會出現在這裡。填完並核對後才可匯出。&#10;        - status: 尚未選取文件&#10;        - button &quot;匯出列印包 PDF&quot; [disabled]&#10;        - group: 列印提醒&#10;- paragraph:&#10;  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），&#10;  - button &quot;停用匿名使用統計&quot;&#10;  - text: 。&#10;  - link &quot;隱私權政策&quot;:&#10;    - /url: /privacy&#10;  - link &quot;使用條款&quot;:&#10;    - /url: /terms">tests/e2e/test_tku_acceptance.py:318: in test_tku_preparation_pdf_is_not_an_official_application_form
+    expect(page.locator("#application-document-form")).to_be_visible()
+E   AssertionError: Locator expected to be visible
+E   Actual value: hidden 
+E   Call log:
+E     - Expect "to_be_visible" with timeout 5000ms
+E     - waiting for locator("#application-document-form")
+E       7 × locator resolved to &lt;form novalidate="" id="application-document-form" class="application-document-form"&gt;…&lt;/form&gt;
+E         - unexpected value "hidden"
+E   
+E   Aria snapshot:
+E   - status:
+E     - paragraph: 正在載入中
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - main:
+E     - button "開啟功能選單"
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - status
+E     - region "我的申請工作區":
+E       - text: 我的申請
+E       - strong: 從選校到送件，接著完成下一步
+E       - paragraph: 淡江大學 · 2027-2028 學年度
+E       - navigation "申請工作區階段":
+E         - link "選校與確認":
+E           - /url: "#advisor"
+E         - link "準備與時程":
+E           - /url: "#overview"
+E         - link "文件與送件":
+E           - /url: "#application-center"
+E       - navigation "本階段操作":
+E         - link "填寫與列印":
+E           - /url: "#application-center"
+E         - link "檢查文件":
+E           - /url: "#document-check"
+E         - link "官方說明與私人文件":
+E           - /url: "#documents"
+E       - region "申請文件":
+E         - heading "申請文件" [level=2]
+E         - link:
+E           - /url: "#document-check"
+E         - list "申請文件處理流程":
+E           - listitem: "1"
+E           - listitem: "2"
+E           - listitem: "3"
+E           - listitem: "4"
+E         - strong: 申請設定
+E         - text: 申請類型
+E         - combobox "申請類型":
+E           - option "學期／學年交換" [selected]
+E           - option "雙聯學位"
+E           - option "海外實習"
+E           - option "境外短期學分課程"
+E         - text: 目標學校
+E         - combobox "目標學校":
+E           - option "尚未決定" [selected]
+E           - option "日本 · 立命館大學 Ritsumeikan University"
+E           - option "日本 · 成蹊大學 Seikei University"
+E           - option "日本 · 長崎外國語大學 Nagasaki University of Foreign Studies"
+E           - option "日本 · 電氣通信大學 University of Electro-Communications"
+E         - text: 學年度
+E         - textbox "學年度":
+E           - /placeholder: 例如 116
+E           - text: 2027-2028
+E         - text: 預計出國學期
+E         - combobox "預計出國學期":
+E           - option "尚未決定" [selected]
+E           - option "第一學期"
+E           - option "第二學期"
+E           - option "一學年"
+E           - option "寒假／暑假"
+E         - checkbox "申請補助"
+E         - strong: 申請補助
+E         - checkbox "在學役男"
+E         - strong: 在學役男
+E         - checkbox "研修一學年以上"
+E         - strong: 研修一學年以上
+E         - group:
+E           - strong: 共用資料
+E           - text: 0 / 9 欄已填
+E         - region "當期文件與官方表格":
+E           - heading "當期文件與官方表格" [level=3]
+E           - text: 請選擇學校
+E           - paragraph: 選擇目標學校後，會依學系、年度與梯次列出文件；沒有確認的份數或表格不會被當成正式版本。
+E           - paragraph: 尚未選擇目標學校。
+E         - region "可填寫的準備工具":
+E           - heading "可填寫的準備工具" [level=3]
+E           - text: 0 份 先看這個階段
+E           - combobox "先看這個階段"
+E           - paragraph: 可切換查看其他階段；這個選項不會變更你的錄取或送件狀態。
+E           - paragraph: 以下工具用來整理草稿與列印，不代表當期校方必備文件；請以上方已確認的官方規定為準。
+E         - complementary "我的列印包":
+E           - text: 整理與匯出
+E           - heading "我的列印包" [level=3]
+E           - text: 0 份
+E           - paragraph: 選擇要匯出的文件，填完並核對目前版本後，即可整理成一份 PDF。
+E           - status:
+E             - strong: 選擇這次要匯出的文件
+E             - text: 0 項可匯出
+E             - progressbar "已選文件的匯出準備進度": 0%
+E           - strong: 只放這次要印的文件
+E           - paragraph: 在準備工具勾選「列印包」，文件就會出現在這裡。填完並核對後才可匯出。
+E           - status: 尚未選取文件
+E           - button "匯出列印包 PDF" [disabled]
+E           - group: 列印提醒
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms</failure></testcase><testcase classname="tests.e2e.test_tku_acceptance" name="test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-1280]" time="23.923" /><testcase classname="tests.e2e.test_tku_draft_handoff" name="test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u9577\u5e9a\u5927\u5b78]" time="39.558" /><testcase classname="tests.e2e.test_tku_draft_handoff" name="test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u6de1\u6c5f\u5927\u5b78]" time="21.442" /><testcase classname="tests.e2e.test_tku_draft_handoff" name="test_guest_draft_is_discarded_when_sign_in_changes_mother_school" time="25.850" /></testsuite></testsuites>

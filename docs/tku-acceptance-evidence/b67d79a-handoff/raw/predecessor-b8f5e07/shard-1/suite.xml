@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="76" time="2432.723" timestamp="2026-10-09T12:07:47.827069+00:00" hostname="f6ad0b7a0286"><testcase classname="tests.e2e.test_application_periods" name="test_sourced_rounds_retry_and_keep_unsent_draft[390]" time="38.764" /><testcase classname="tests.e2e.test_application_periods" name="test_sourced_rounds_retry_and_keep_unsent_draft[1754]" time="28.842" /><testcase classname="tests.e2e.test_departure_tips_and_experience_digests" name="test_the_departure_tab_shows_the_countrys_guide_with_its_draft_notice_and_sources" time="14.245" /><testcase classname="tests.e2e.test_departure_tips_and_experience_digests" name="test_a_school_in_japan_shows_the_japan_guide_with_the_paperwork_and_bank_warnings" time="12.270" /><testcase classname="tests.e2e.test_departure_tips_and_experience_digests" name="test_topic_chips_scroll_in_place_and_never_change_the_page_address" time="11.287" /><testcase classname="tests.e2e.test_departure_tips_and_experience_digests" name="test_a_country_without_a_guide_gets_a_polite_pointer_to_the_official_site" time="9.516" /><testcase classname="tests.e2e.test_departure_tips_and_experience_digests" name="test_a_server_error_is_not_mistaken_for_a_missing_guide" time="15.907" /><testcase classname="tests.e2e.test_departure_tips_and_experience_digests" name="test_stories_with_a_chinese_write_up_lead_and_the_rest_are_filed_as_references" time="12.670" /><testcase classname="tests.e2e.test_departure_tips_and_experience_digests" name="test_opening_a_story_shows_the_chinese_write_up_and_how_it_was_made" time="12.608" /><testcase classname="tests.e2e.test_departure_tips_and_experience_digests" name="test_a_saved_story_still_opens_with_its_write_up" time="18.588" /><testcase classname="tests.e2e.test_document_flow" name="test_document_flow_guides_each_step_and_never_claims_submission[390]" time="32.829" /><testcase classname="tests.e2e.test_document_flow" name="test_document_flow_guides_each_step_and_never_claims_submission[1754]" time="34.033" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_mascot_stands_where_the_traveller_drawing_was_on_the_home_page" time="17.850" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_header_with_the_mascot_never_overflows_or_covers_the_words[320]" time="12.894" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_header_with_the_mascot_never_overflows_or_covers_the_words[390]" time="9.931" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_header_with_the_mascot_never_overflows_or_covers_the_words[768]" time="12.062" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_header_with_the_mascot_never_overflows_or_covers_the_words[1280]" time="11.253" /><testcase classname="tests.e2e.test_mascot_solid" name="test_it_has_sides_a_front_and_eyes_standing_in_front_of_it" time="8.489" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_eyes_stay_in_front_while_they_look_around" time="15.247" /><testcase classname="tests.e2e.test_mascot_solid" name="test_it_turns_towards_the_pointer_and_back_when_the_pointer_is_gone" time="13.662" /><testcase classname="tests.e2e.test_mascot_solid" name="test_a_light_slides_over_it_as_it_turns" time="9.184" /><testcase classname="tests.e2e.test_mascot_solid" name="test_with_no_motion_it_still_stands_turned_so_it_reads_as_a_solid" time="8.633" /><testcase classname="tests.e2e.test_mascot_solid" name="test_tapping_the_header_mascot_still_hops_turns_and_winks" time="13.947" /><testcase classname="tests.e2e.test_mascot_solid" name="test_the_loading_screen_mascot_is_the_same_solid" time="1.325" /><testcase classname="tests.e2e.test_ntu_school" name="test_visitor_can_browse_ntu_filter_details_and_switch_back[390]" time="45.887" /><testcase classname="tests.e2e.test_ntu_school" name="test_visitor_can_browse_ntu_filter_details_and_switch_back[1440]" time="37.922" /><testcase classname="tests.e2e.test_ntu_school" name="test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion" time="39.464"><failure message="AssertionError: Locator expected to have Value '2.3'&#10;Actual value:  &#10;Call log:&#10;  - Expect &quot;to_have_value&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;#advisor-academic-gpa&quot;)&#10;    5 × locator resolved to &lt;input min=&quot;0&quot; disabled max=&quot;4.3&quot; step=&quot;0.01&quot; type=&quot;number&quot; name=&quot;academic_gpa&quot; inputmode=&quot;decimal&quot; id=&quot;advisor-academic-gpa&quot; placeholder=&quot;例如 2.44；與排名擇一&quot;/&gt;&#10;      - unexpected value &quot;&quot;&#10;&#10;Aria snapshot:&#10;- status:&#10;  - paragraph: 正在載入中&#10;- link &quot;跳到主要內容&quot;:&#10;  - /url: &quot;#main-content&quot;&#10;- complementary &quot;系統功能&quot;:&#10;  - link &quot;UniWay 首頁&quot;:&#10;    - /url: &quot;#home&quot;&#10;    - strong: UniWay&#10;  - navigation &quot;公開探索導覽&quot;:&#10;    - link &quot;首頁&quot;:&#10;      - /url: &quot;#home&quot;&#10;    - link &quot;學校搜尋&quot;:&#10;      - /url: &quot;#partners&quot;&#10;    - link &quot;論壇&quot;:&#10;      - /url: &quot;#forum&quot;&#10;    - link &quot;用戶評價&quot;:&#10;      - /url: &quot;#feedback&quot;&#10;    - group:&#10;      - link &quot;我的申請&quot;:&#10;        - /url: &quot;#advisor&quot;&#10;  - button &quot;返回上一頁&quot;: 返回&#10;  - button &quot;國立臺灣大學&quot;:&#10;    - strong: 國立臺灣大學&#10;  - button &quot;切換為深色模式&quot;&#10;  - button &quot;重新整理最新資料&quot; [disabled]&#10;  - button &quot;開啟通知中心&quot;&#10;  - status &quot;正在同步&quot;: 正在同步 正在同步收藏與申請進度。&#10;  - button &quot;開啟E2E 測試學生帳號設定&quot;: E2E 測試學生&#10;- main:&#10;  - status: 正在取得最新整理資料…&#10;  - region &quot;我的申請工作區&quot;:&#10;    - text: 我的申請&#10;    - strong: 從選校到送件，接著完成下一步&#10;    - paragraph: 國立臺灣大學 · 116 學年度 · 文件與時程目標：一橋大學&#10;    - navigation &quot;申請工作區階段&quot;:&#10;      - link &quot;選校與確認&quot;:&#10;        - /url: &quot;#advisor&quot;&#10;      - link &quot;準備與時程&quot;:&#10;        - /url: &quot;#overview&quot;&#10;      - link &quot;文件與送件&quot;:&#10;        - /url: &quot;#application-center&quot;&#10;    - navigation &quot;本階段操作&quot;:&#10;      - link &quot;條件與推薦&quot;:&#10;        - /url: &quot;#advisor&quot;&#10;      - link &quot;候選與比較&quot;:&#10;        - /url: &quot;#favorites&quot;&#10;      - link &quot;當期資格與志願&quot;:&#10;        - /url: &quot;#eligibility&quot;&#10;    - region &quot;選校規劃&quot;:&#10;      - heading &quot;選校規劃&quot; [level=2]&#10;      - paragraph: 填一次條件，查看推薦與缺口，再選擇目標學校安排時程。&#10;      - strong: 我的條件&#10;      - text: 已保存條件 學院&#10;      - combobox &quot;學院&quot;&#10;      - text: 所屬系所&#10;      - combobox &quot;所屬系所&quot; [disabled]:&#10;        - option &quot;請先選擇學院&quot; [selected]&#10;      - text: 學制&#10;      - combobox &quot;學制&quot;:&#10;        - option &quot;尚未設定&quot; [selected]&#10;        - option &quot;大學部&quot;&#10;        - option &quot;研究所&quot;&#10;      - text: 學業平均&#10;      - spinbutton &quot;學業平均&quot;&#10;      - text: 語言測驗&#10;      - combobox &quot;語言測驗&quot;:&#10;        - option &quot;尚未考／尚未決定&quot; [selected]&#10;        - option &quot;TOEIC&quot;&#10;        - option &quot;IELTS Academic&quot;&#10;        - option &quot;TOEFL iBT（舊制120分）&quot;&#10;        - option &quot;TOEFL iBT（新制6分）&quot;&#10;        - option &quot;Duolingo&quot;&#10;        - option &quot;其他&quot;&#10;      - text: 語言分數&#10;      - spinbutton &quot;語言分數&quot;&#10;      - text: 想去的國家／地區&#10;      - combobox &quot;想去的國家／地區&quot;&#10;      - text: 預計出國學期&#10;      - combobox &quot;預計出國學期&quot;:&#10;        - option &quot;尚未決定&quot; [selected]&#10;        - option &quot;2027 春季&quot;&#10;        - option &quot;2027 秋季&quot;&#10;        - option &quot;2028 春季&quot;&#10;        - option &quot;2028 秋季&quot;&#10;      - paragraph: 選擇學院後顯示所屬系所。&#10;      - group:&#10;        - strong: 更多條件&#10;      - text: 想問什麼？&#10;      - textbox &quot;想問什麼？&quot;:&#10;        - /placeholder: 例如：申請日本交換需要哪些文件？&#10;      - button &quot;必要文件&quot;&#10;      - button &quot;語言門檻&quot;&#10;      - button &quot;補助&quot;&#10;      - button &quot;產生我的申請方案&quot;&#10;      - text: 僅依已查核來源作答；符合度不是錄取機率。未登入可先填寫，登入後才會送出並保存個人方案。&#10;      - region &quot;建立第一份申請方案&quot;:&#10;        - status:&#10;          - text: 留學小助手&#10;          - heading &quot;建立第一份申請方案&quot; [level=3]&#10;          - paragraph: 填寫條件後，我會整理候選學校、條件缺口與下一步。&#10;- paragraph:&#10;  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），&#10;  - button &quot;停用匿名使用統計&quot;&#10;  - text: 。&#10;  - link &quot;隱私權政策&quot;:&#10;    - /url: /privacy&#10;  - link &quot;使用條款&quot;:&#10;    - /url: /terms">tests/e2e/test_ntu_school.py:118: in test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion
+    expect(page.locator("#advisor-academic-gpa")).to_have_value("2.3")
+E   AssertionError: Locator expected to have Value '2.3'
+E   Actual value:  
+E   Call log:
+E     - Expect "to_have_value" with timeout 5000ms
+E     - waiting for locator("#advisor-academic-gpa")
+E       5 × locator resolved to &lt;input min="0" disabled max="4.3" step="0.01" type="number" name="academic_gpa" inputmode="decimal" id="advisor-academic-gpa" placeholder="例如 2.44；與排名擇一"/&gt;
+E         - unexpected value ""
+E   
+E   Aria snapshot:
+E   - status:
+E     - paragraph: 正在載入中
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - complementary "系統功能":
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - navigation "公開探索導覽":
+E       - link "首頁":
+E         - /url: "#home"
+E       - link "學校搜尋":
+E         - /url: "#partners"
+E       - link "論壇":
+E         - /url: "#forum"
+E       - link "用戶評價":
+E         - /url: "#feedback"
+E       - group:
+E         - link "我的申請":
+E           - /url: "#advisor"
+E     - button "返回上一頁": 返回
+E     - button "國立臺灣大學":
+E       - strong: 國立臺灣大學
+E     - button "切換為深色模式"
+E     - button "重新整理最新資料" [disabled]
+E     - button "開啟通知中心"
+E     - status "正在同步": 正在同步 正在同步收藏與申請進度。
+E     - button "開啟E2E 測試學生帳號設定": E2E 測試學生
+E   - main:
+E     - status: 正在取得最新整理資料…
+E     - region "我的申請工作區":
+E       - text: 我的申請
+E       - strong: 從選校到送件，接著完成下一步
+E       - paragraph: 國立臺灣大學 · 116 學年度 · 文件與時程目標：一橋大學
+E       - navigation "申請工作區階段":
+E         - link "選校與確認":
+E           - /url: "#advisor"
+E         - link "準備與時程":
+E           - /url: "#overview"
+E         - link "文件與送件":
+E           - /url: "#application-center"
+E       - navigation "本階段操作":
+E         - link "條件與推薦":
+E           - /url: "#advisor"
+E         - link "候選與比較":
+E           - /url: "#favorites"
+E         - link "當期資格與志願":
+E           - /url: "#eligibility"
+E       - region "選校規劃":
+E         - heading "選校規劃" [level=2]
+E         - paragraph: 填一次條件，查看推薦與缺口，再選擇目標學校安排時程。
+E         - strong: 我的條件
+E         - text: 已保存條件 學院
+E         - combobox "學院"
+E         - text: 所屬系所
+E         - combobox "所屬系所" [disabled]:
+E           - option "請先選擇學院" [selected]
+E         - text: 學制
+E         - combobox "學制":
+E           - option "尚未設定" [selected]
+E           - option "大學部"
+E           - option "研究所"
+E         - text: 學業平均
+E         - spinbutton "學業平均"
+E         - text: 語言測驗
+E         - combobox "語言測驗":
+E           - option "尚未考／尚未決定" [selected]
+E           - option "TOEIC"
+E           - option "IELTS Academic"
+E           - option "TOEFL iBT（舊制120分）"
+E           - option "TOEFL iBT（新制6分）"
+E           - option "Duolingo"
+E           - option "其他"
+E         - text: 語言分數
+E         - spinbutton "語言分數"
+E         - text: 想去的國家／地區
+E         - combobox "想去的國家／地區"
+E         - text: 預計出國學期
+E         - combobox "預計出國學期":
+E           - option "尚未決定" [selected]
+E           - option "2027 春季"
+E           - option "2027 秋季"
+E           - option "2028 春季"
+E           - option "2028 秋季"
+E         - paragraph: 選擇學院後顯示所屬系所。
+E         - group:
+E           - strong: 更多條件
+E         - text: 想問什麼？
+E         - textbox "想問什麼？":
+E           - /placeholder: 例如：申請日本交換需要哪些文件？
+E         - button "必要文件"
+E         - button "語言門檻"
+E         - button "補助"
+E         - button "產生我的申請方案"
+E         - text: 僅依已查核來源作答；符合度不是錄取機率。未登入可先填寫，登入後才會送出並保存個人方案。
+E         - region "建立第一份申請方案":
+E           - status:
+E             - text: 留學小助手
+E             - heading "建立第一份申請方案" [level=3]
+E             - paragraph: 填寫條件後，我會整理候選學校、條件缺口與下一步。
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms</failure></testcase><testcase classname="tests.e2e.test_ntu_school" name="test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u9577\u5e9a\u5927\u5b78]" time="12.380" /><testcase classname="tests.e2e.test_ntu_school" name="test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u570b\u7acb\u81fa\u5317\u5927\u5b78]" time="23.446" /><testcase classname="tests.e2e.test_ntu_school" name="test_ntu_document_language_conditions_change_in_real_form[390]" time="11.926" /><testcase classname="tests.e2e.test_ntu_school" name="test_ntu_document_language_conditions_change_in_real_form[1440]" time="14.899" /><testcase classname="tests.e2e.test_partner_globe" name="test_list_lazy_load_and_roundtrip_filters" time="42.672" /><testcase classname="tests.e2e.test_partner_globe" name="test_responsive_marker_preview_detail_and_back[size0]" time="49.803" /><testcase classname="tests.e2e.test_partner_globe" name="test_responsive_marker_preview_detail_and_back[size1]" time="38.796" /><testcase classname="tests.e2e.test_partner_globe" name="test_responsive_marker_preview_detail_and_back[size2]" time="31.902" /><testcase classname="tests.e2e.test_partner_globe" name="test_refresh_direct_url_and_missing_empty_states" time="69.824" /><testcase classname="tests.e2e.test_partner_globe" name="test_missing_coordinates_do_not_create_false_points" time="41.383" /><testcase classname="tests.e2e.test_partner_globe" name="test_empty_catalog" time="68.858"><failure message="AssertionError: Locator expected to have attribute 'true'&#10;Actual value: None &#10;Call log:&#10;  - Expect &quot;to_have_attribute&quot; with timeout 30000ms&#10;  - waiting for locator(&quot;#partner-globe&quot;)&#10;    5 × locator resolved to &lt;div id=&quot;partner-globe&quot; aria-label=&quot;互動地球：方向鍵平移，加減鍵縮放&quot; aria-describedby=&quot;partner-map-help&quot;&gt;&lt;/div&gt;&#10;      - unexpected value &quot;null&quot;&#10;    6 × locator resolved to &lt;div id=&quot;partner-globe&quot; class=&quot;maplibregl-map&quot; aria-label=&quot;互動地球：方向鍵平移，加減鍵縮放&quot; aria-describedby=&quot;partner-map-help&quot;&gt;…&lt;/div&gt;&#10;      - unexpected value &quot;null&quot;&#10;&#10;Aria snapshot:&#10;- region &quot;互動全球地圖。方向鍵平移，加减鍵縮放；也可用下方快速定位選單選校。&quot;&#10;- button &quot;放大地圖&quot;&#10;- button &quot;縮小地圖&quot;&#10;- button &quot;重設北方&quot;&#10;- group:&#10;  - link &quot;Natural Earth&quot;:&#10;    - /url: https://www.naturalearthdata.com/about/terms-of-use/&#10;  - text: ·&#10;  - link &quot;Wikidata&quot;:&#10;    - /url: https://www.wikidata.org/&#10;  - text: /&#10;  - link &quot;ROR&quot;:&#10;    - /url: https://ror.org/">tests/e2e/test_partner_globe.py:155: in test_empty_catalog
+    ready(page)
+tests/e2e/test_partner_globe.py:41: in ready
+    expect(page.locator("#partner-globe")).to_have_attribute("data-ready", "true", timeout=30000)
+E   AssertionError: Locator expected to have attribute 'true'
+E   Actual value: None 
+E   Call log:
+E     - Expect "to_have_attribute" with timeout 30000ms
+E     - waiting for locator("#partner-globe")
+E       5 × locator resolved to &lt;div id="partner-globe" aria-label="互動地球：方向鍵平移，加減鍵縮放" aria-describedby="partner-map-help"&gt;&lt;/div&gt;
+E         - unexpected value "null"
+E       6 × locator resolved to &lt;div id="partner-globe" class="maplibregl-map" aria-label="互動地球：方向鍵平移，加減鍵縮放" aria-describedby="partner-map-help"&gt;…&lt;/div&gt;
+E         - unexpected value "null"
+E   
+E   Aria snapshot:
+E   - region "互動全球地圖。方向鍵平移，加减鍵縮放；也可用下方快速定位選單選校。"
+E   - button "放大地圖"
+E   - button "縮小地圖"
+E   - button "重設北方"
+E   - group:
+E     - link "Natural Earth":
+E       - /url: https://www.naturalearthdata.com/about/terms-of-use/
+E     - text: ·
+E     - link "Wikidata":
+E       - /url: https://www.wikidata.org/
+E     - text: /
+E     - link "ROR":
+E       - /url: https://ror.org/</failure></testcase><testcase classname="tests.e2e.test_partner_globe" name="test_failures_are_recoverable_without_losing_filters[api]" time="19.019" /><testcase classname="tests.e2e.test_partner_globe" name="test_failures_are_recoverable_without_losing_filters[module]" time="22.253" /><testcase classname="tests.e2e.test_partner_globe" name="test_failures_are_recoverable_without_losing_filters[engine]" time="25.993" /><testcase classname="tests.e2e.test_partner_globe" name="test_failures_are_recoverable_without_losing_filters[worker]" time="44.495" /><testcase classname="tests.e2e.test_partner_globe" name="test_failures_are_recoverable_without_losing_filters[basemap]" time="31.990" /><testcase classname="tests.e2e.test_partner_globe" name="test_thousand_points_cluster_expand_and_keyboard" time="51.142" /><testcase classname="tests.e2e.test_partner_globe" name="test_dynamic_home_school_real_japan_filter_and_shared_url" time="85.777"><failure message="playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 30000ms exceeded.">tests/e2e/test_partner_globe.py:207: in test_dynamic_home_school_real_japan_filter_and_shared_url
+    ready(page)
+tests/e2e/test_partner_globe.py:42: in ready
+    page.wait_for_function("() =&gt; window.__testedMap &amp;&amp; !window.__testedMap.isMoving() &amp;&amp; window.__testedMap.isSourceLoaded('schools')")
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:12761: in wait_for_function
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:1151: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:940: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 30000ms exceeded.</failure></testcase><testcase classname="tests.e2e.test_partner_globe" name="test_direct_query_without_hash_and_all_shared_filters" time="107.171" /><testcase classname="tests.e2e.test_partner_globe" name="test_mobile_list_expansion_and_camera_survive_view_switch" time="46.928" /><testcase classname="tests.e2e.test_partner_globe" name="test_mobile_touch_drag_and_pinch" time="181.934" /><testcase classname="tests.e2e.test_partner_globe" name="test_coincident_locations_offer_each_school" time="31.621" /><testcase classname="tests.e2e.test_partner_globe" name="test_selection_motion_pauses_without_moving_camera_and_respects_preferences" time="19.655" /><testcase classname="tests.e2e.test_planning_workspace" name="test_matching_target_schedule_preview_and_idempotent_save[390]" time="78.091" /><testcase classname="tests.e2e.test_planning_workspace" name="test_matching_target_schedule_preview_and_idempotent_save[1754]" time="51.550" /><testcase classname="tests.e2e.test_planning_workspace" name="test_schedule_refuses_unconfirmed_or_unusable_dates[expired]" time="30.043" /><testcase classname="tests.e2e.test_planning_workspace" name="test_schedule_refuses_unconfirmed_or_unusable_dates[unverified]" time="29.274" /><testcase classname="tests.e2e.test_planning_workspace" name="test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_year]" time="33.677" /><testcase classname="tests.e2e.test_planning_workspace" name="test_schedule_refuses_unconfirmed_or_unusable_dates[missing_source]" time="33.333" /><testcase classname="tests.e2e.test_planning_workspace" name="test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_round]" time="32.943" /><testcase classname="tests.e2e.test_planning_workspace" name="test_schedule_refuses_unconfirmed_or_unusable_dates[unpublished]" time="29.105" /><testcase classname="tests.e2e.test_planning_workspace" name="test_print_packet_remains_blocked_until_current_content_review[390]" time="29.696" /><testcase classname="tests.e2e.test_planning_workspace" name="test_print_packet_remains_blocked_until_current_content_review[1754]" time="30.435" /><testcase classname="tests.e2e.test_system_motion" name="test_all_routes_share_motion_and_back_retains_working_history" time="48.498" /><testcase classname="tests.e2e.test_system_motion" name="test_dialog_menu_details_tabs_and_mobile_layout[393]" time="22.302" /><testcase classname="tests.e2e.test_system_motion" name="test_dialog_menu_details_tabs_and_mobile_layout[834]" time="23.928" /><testcase classname="tests.e2e.test_system_motion" name="test_dialog_menu_details_tabs_and_mobile_layout[1440]" time="18.727" /><testcase classname="tests.e2e.test_system_motion" name="test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion" time="13.508" /><testcase classname="tests.e2e.test_system_motion" name="test_reduced_motion_live_change_and_missing_runtime_are_usable" time="18.989" /><testcase classname="tests.e2e.test_task_documents_ui" name="test_unpublished_year_shows_estimated_tasks_with_documents_and_suggested_hours[390]" time="17.683" /><testcase classname="tests.e2e.test_task_documents_ui" name="test_unpublished_year_shows_estimated_tasks_with_documents_and_suggested_hours[1754]" time="20.860" /><testcase classname="tests.e2e.test_terms_consent" name="test_google_waits_for_the_tick_then_goes_on_with_the_version" time="17.183" /><testcase classname="tests.e2e.test_terms_consent" name="test_a_returning_browser_finds_the_current_version_already_ticked" time="28.896" /><testcase classname="tests.e2e.test_terms_consent" name="test_when_the_server_turns_a_sign_in_away_the_dialog_reopens_with_a_reminder" time="11.262" /><testcase classname="tests.e2e.test_tku_governance_transactions" name="test_current_admin_workbench_source_attestations_publish_and_destination_rollback" time="121.071" /><testcase classname="tests.e2e.test_travel_theme" name="test_home_search_navigation_school_switcher_and_responsive" time="31.800" /><testcase classname="tests.e2e.test_travel_theme" name="test_ticket_collection_and_destination_stamp_missing_city" time="46.316" /><testcase classname="tests.e2e.test_travel_theme" name="test_completed_stamp_persists_and_unchecking_removes_it" time="26.463"><failure message="AssertionError: Locator expected to be enabled&#10;Actual value: None&#10;Error: element(s) not found &#10;Call log:&#10;  - Expect &quot;to_be_enabled&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;#application-tracker .progress-checkbox&quot;).first&#10;&#10;Aria snapshot:&#10;- status:&#10;  - paragraph: 正在載入中&#10;- link &quot;跳到主要內容&quot;:&#10;  - /url: &quot;#main-content&quot;&#10;- complementary &quot;系統功能&quot;:&#10;  - link &quot;UniWay 首頁&quot;:&#10;    - /url: &quot;#home&quot;&#10;    - strong: UniWay&#10;  - navigation &quot;公開探索導覽&quot;:&#10;    - link &quot;首頁&quot;:&#10;      - /url: &quot;#home&quot;&#10;    - link &quot;學校搜尋&quot;:&#10;      - /url: &quot;#partners&quot;&#10;    - link &quot;論壇&quot;:&#10;      - /url: &quot;#forum&quot;&#10;    - link &quot;用戶評價&quot;:&#10;      - /url: &quot;#feedback&quot;&#10;    - group:&#10;      - link &quot;我的申請&quot;:&#10;        - /url: &quot;#advisor&quot;&#10;  - button &quot;返回首頁&quot;: 返回&#10;  - button &quot;長庚大學&quot;:&#10;    - strong: 長庚大學&#10;  - button &quot;切換為深色模式&quot;&#10;  - button &quot;重新整理最新資料&quot;&#10;  - button &quot;開啟通知中心&quot;&#10;  - status &quot;已同步&quot;: 已同步 條件、收藏與申請進度已同步。&#10;  - button &quot;開啟E2E 測試學生帳號設定&quot;: E2E 測試學生&#10;- main:&#10;  - status&#10;  - region &quot;我的申請工作區&quot;:&#10;    - text: 我的申請&#10;    - strong: 從選校到送件，接著完成下一步&#10;    - paragraph: 長庚大學&#10;    - navigation &quot;申請工作區階段&quot;:&#10;      - link &quot;選校與確認&quot;:&#10;        - /url: &quot;#advisor&quot;&#10;      - link &quot;準備與時程&quot;:&#10;        - /url: &quot;#overview&quot;&#10;      - link &quot;文件與送件&quot;:&#10;        - /url: &quot;#application-center&quot;&#10;    - navigation &quot;本階段操作&quot;:&#10;      - link &quot;我的準備&quot;:&#10;        - /url: &quot;#overview&quot;&#10;      - link &quot;日曆&quot;:&#10;        - /url: &quot;#calendar&quot;&#10;      - link &quot;官方期限&quot;:&#10;        - /url: &quot;#deadlines&quot;&#10;      - link &quot;預算&quot;:&#10;        - /url: &quot;#budget&quot;&#10;      - link &quot;補助&quot;:&#10;        - /url: &quot;#scholarships&quot;&#10;    - region &quot;我的交換計畫&quot;:&#10;      - region &quot;我的交換計畫&quot;:&#10;        - heading &quot;我的交換計畫&quot; [level=2]&#10;        - link &quot;調整我的條件&quot;:&#10;          - /url: &quot;#advisor&quot;&#10;        - text: 現在，先做這一件事&#10;        - strong: 從你的條件開始&#10;        - paragraph: 填寫你已知的資訊；尚未考語言測驗也能先探索學校。&#10;        - link &quot;填寫條件&quot;:&#10;          - /url: &quot;#advisor&quot;&#10;        - article:&#10;          - text: 我的條件&#10;          - strong: 先填學院、學制、成績與語言能力，系統會整理合適的候選學校。&#10;          - link &quot;開始選校規劃&quot;:&#10;            - /url: &quot;#advisor&quot;&#10;        - article:&#10;          - text: 我的目標&#10;          - strong: 尚未選定目標學校&#10;          - text: 查看推薦後，由你確認要申請的學校。&#10;      - region &quot;選出你的下一站&quot;:&#10;        - text: 條件配對&#10;        - heading &quot;選出你的下一站&quot; [level=2]&#10;        - link &quot;查看推薦與調整條件&quot;:&#10;          - /url: &quot;#advisor&quot;&#10;        - strong: 從你的條件，找到合適的下一站&#10;        - text: 依你的學院、語言能力與偏好整理候選，正式資格仍需核對。&#10;        - link &quot;填寫條件並配對&quot;:&#10;          - /url: &quot;#advisor&quot;&#10;      - region &quot;我的志願與共用準備&quot;:&#10;        - text: 一份清單，照顧所有志願&#10;        - heading &quot;我的志願與共用準備&quot; [level=2]&#10;        - link &quot;選校比較&quot;:&#10;          - /url: &quot;#favorites&quot;&#10;        - group: 設定與調整志願順序&#10;        - status: 從候選學校確認志願，這裡會整理成同一份準備清單。&#10;      - region &quot;我的準備工作台&quot;:&#10;        - text: 讓準備符合你的生活&#10;        - heading &quot;我的準備工作台&quot; [level=2]&#10;        - link &quot;完整日曆&quot;:&#10;          - /url: &quot;#calendar&quot;&#10;        - article:&#10;          - strong: 今天可以做什麼&#10;          - paragraph: 先設定每週可投入時間與各項工作時數，系統會安排今天與後續的工作。&#10;        - article:&#10;          - strong: 正在等待 0 項&#10;          - paragraph: 目前沒有記錄等待事項。等校方或他人回覆時，可在任務內填寫原因。&#10;        - group: 設定可投入時間與重新安排&#10;        - group: 任務工時、前置關係與文件&#10;        - paragraph: 目前沿用準備天數倒推。設定可投入時間後，才會產生逐日工作安排。&#10;        - group: 依官方期限預留準備天數&#10;      - heading &quot;接著，準備申請文件&quot; [level=2]&#10;      - paragraph: 送件資料：0 / 1 項已標記完成。填寫、列印與標記完成不代表已送件。&#10;      - link &quot;開啟申請文件&quot;:&#10;        - /url: &quot;#application-center&quot;&#10;- paragraph:&#10;  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），&#10;  - button &quot;停用匿名使用統計&quot;&#10;  - text: 。&#10;  - link &quot;隱私權政策&quot;:&#10;    - /url: /privacy&#10;  - link &quot;使用條款&quot;:&#10;    - /url: /terms">tests/e2e/test_travel_theme.py:107: in test_completed_stamp_persists_and_unchecking_removes_it
+    expect(checkbox).to_be_enabled()
+E   AssertionError: Locator expected to be enabled
+E   Actual value: None
+E   Error: element(s) not found 
+E   Call log:
+E     - Expect "to_be_enabled" with timeout 5000ms
+E     - waiting for locator("#application-tracker .progress-checkbox").first
+E   
+E   Aria snapshot:
+E   - status:
+E     - paragraph: 正在載入中
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - complementary "系統功能":
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - navigation "公開探索導覽":
+E       - link "首頁":
+E         - /url: "#home"
+E       - link "學校搜尋":
+E         - /url: "#partners"
+E       - link "論壇":
+E         - /url: "#forum"
+E       - link "用戶評價":
+E         - /url: "#feedback"
+E       - group:
+E         - link "我的申請":
+E           - /url: "#advisor"
+E     - button "返回首頁": 返回
+E     - button "長庚大學":
+E       - strong: 長庚大學
+E     - button "切換為深色模式"
+E     - button "重新整理最新資料"
+E     - button "開啟通知中心"
+E     - status "已同步": 已同步 條件、收藏與申請進度已同步。
+E     - button "開啟E2E 測試學生帳號設定": E2E 測試學生
+E   - main:
+E     - status
+E     - region "我的申請工作區":
+E       - text: 我的申請
+E       - strong: 從選校到送件，接著完成下一步
+E       - paragraph: 長庚大學
+E       - navigation "申請工作區階段":
+E         - link "選校與確認":
+E           - /url: "#advisor"
+E         - link "準備與時程":
+E           - /url: "#overview"
+E         - link "文件與送件":
+E           - /url: "#application-center"
+E       - navigation "本階段操作":
+E         - link "我的準備":
+E           - /url: "#overview"
+E         - link "日曆":
+E           - /url: "#calendar"
+E         - link "官方期限":
+E           - /url: "#deadlines"
+E         - link "預算":
+E           - /url: "#budget"
+E         - link "補助":
+E           - /url: "#scholarships"
+E       - region "我的交換計畫":
+E         - region "我的交換計畫":
+E           - heading "我的交換計畫" [level=2]
+E           - link "調整我的條件":
+E             - /url: "#advisor"
+E           - text: 現在，先做這一件事
+E           - strong: 從你的條件開始
+E           - paragraph: 填寫你已知的資訊；尚未考語言測驗也能先探索學校。
+E           - link "填寫條件":
+E             - /url: "#advisor"
+E           - article:
+E             - text: 我的條件
+E             - strong: 先填學院、學制、成績與語言能力，系統會整理合適的候選學校。
+E             - link "開始選校規劃":
+E               - /url: "#advisor"
+E           - article:
+E             - text: 我的目標
+E             - strong: 尚未選定目標學校
+E             - text: 查看推薦後，由你確認要申請的學校。
+E         - region "選出你的下一站":
+E           - text: 條件配對
+E           - heading "選出你的下一站" [level=2]
+E           - link "查看推薦與調整條件":
+E             - /url: "#advisor"
+E           - strong: 從你的條件，找到合適的下一站
+E           - text: 依你的學院、語言能力與偏好整理候選，正式資格仍需核對。
+E           - link "填寫條件並配對":
+E             - /url: "#advisor"
+E         - region "我的志願與共用準備":
+E           - text: 一份清單，照顧所有志願
+E           - heading "我的志願與共用準備" [level=2]
+E           - link "選校比較":
+E             - /url: "#favorites"
+E           - group: 設定與調整志願順序
+E           - status: 從候選學校確認志願，這裡會整理成同一份準備清單。
+E         - region "我的準備工作台":
+E           - text: 讓準備符合你的生活
+E           - heading "我的準備工作台" [level=2]
+E           - link "完整日曆":
+E             - /url: "#calendar"
+E           - article:
+E             - strong: 今天可以做什麼
+E             - paragraph: 先設定每週可投入時間與各項工作時數，系統會安排今天與後續的工作。
+E           - article:
+E             - strong: 正在等待 0 項
+E             - paragraph: 目前沒有記錄等待事項。等校方或他人回覆時，可在任務內填寫原因。
+E           - group: 設定可投入時間與重新安排
+E           - group: 任務工時、前置關係與文件
+E           - paragraph: 目前沿用準備天數倒推。設定可投入時間後，才會產生逐日工作安排。
+E           - group: 依官方期限預留準備天數
+E         - heading "接著，準備申請文件" [level=2]
+E         - paragraph: 送件資料：0 / 1 項已標記完成。填寫、列印與標記完成不代表已送件。
+E         - link "開啟申請文件":
+E           - /url: "#application-center"
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms</failure></testcase><testcase classname="tests.e2e.test_travel_theme" name="test_school_switcher_without_selected_school" time="8.549" /></testsuite></testsuites>
