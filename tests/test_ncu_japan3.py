@@ -18,12 +18,45 @@ SOURCES = ROOT / 'sources/ncu/2026-10-08'
 CASES = [
     ('ncu-118', '關西國際大學', 'initial-reference', 11, 7, 13),
     ('ncu-119', '駒澤大學', 'initial-reference', 8, 7, 9),
-    ('ncu-122', '東北大學', 'initial-support', 3, 16, 19),
+    ('ncu-122', '東北大學', 'initial-support', 3, 16, 20),
 ]
 
 
 def evidence():
     return {s['id']: s for s in json.loads(gzip.decompress((BUNDLE / 'source-evidence.json.gz').read_bytes()))}
+
+
+def test_tohoku_coe_passport_repeat_upload_and_unconditional_jasso_exclusion(tmp_path):
+    partner = next(p for p in fetch_ncu_partner_universities() if '東北大學' in p.school_name)
+    audit = ncu_field_audit(partner.school_name)
+    originals = audit['fields']['visa']['original_evidence']
+    assert any(o['source_id'] == 'host-tohoku-attachment-1' and o['page'] == 6 and 'passport (PDF)' in o['text'] for o in originals)
+    assert any(o['source_id'] == 'host-tohoku-attachment-1' and o['page'] == 10 and 'NOT acceptable' in o['text'] for o in originals)
+    assert any(o['source_id'] == 'host-tohoku-attachment-2' and o['page'] == 1 and 'Proceeding' in o['text'] for o in originals)
+    assert any(o['source_id'] == 'host-tohoku-attachment-2' and o['page'] == 2 and 'DO NOT' in o['text'] for o in originals)
+    assert '核定與否皆禁用' in audit['fields']['visa']['note']
+    assert 'JASSO未核定不當financial證明' not in audit['fields']['visa']['note']
+    assert '>200萬不另income proof' in audit['fields']['visa']['note']
+    client = TestClient(create_app(tmp_path))
+    workflow = client.get('/application-workflow', params={'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116'}).json()
+    steps = {s['rule_id']: s for s in workflow['steps']}
+    assert len(steps['ncu-122-host-initial-support']['document_requirements']) == 3
+    coe = steps['ncu-122-host-coe-financial']
+    assert len(coe['document_requirements']) == 4
+    passport = next(d for d in coe['document_requirements'] if '再次上傳護照PDF' in d['name'])
+    assert 'Proceeding' in passport['name'] and '有ID card／舊護照時' in passport['name']
+    assert passport['needs_confirmation'] and passport['official_form_url'] is None
+    assert not coe['deadline_reminder_eligible'] and workflow['review_status'] == 'pending_review'
+    dashboard = client.get('/student-dashboard', params={'school': 'NCU'}).json()
+    shown = next(p for p in dashboard['partner_universities'] if p['school_name'] == partner.school_name)
+    summary = json.dumps(shown['student_summary_zh'], ensure_ascii=False)
+    assert '再次上傳護照PDF' in summary and '核定與否皆禁用' in summary
+    life = client.get('/school-life-context', params={'home_school': 'NCU', 'school': partner.school_name})
+    assert 'JASSO獎學金證明一律不接受' in json.dumps(life.json(), ensure_ascii=False)
+    for admission in ['unknown', 'accepted']:
+        catalog = client.get('/application-center/catalog', params={'school': 'NCU', 'target_school': partner.school_name, 'academic_year': '116', 'host_admission_status': admission}).json()
+        document = next(d for d in catalog['items'] if d['name'] == passport['name'])
+        assert document['applicability']['status'] == 'needs_confirmation' and not document['download_available']
 
 
 @pytest.mark.parametrize('row,name,initial,count,stage_count,conditional_count', CASES)
@@ -69,7 +102,7 @@ def test_japan3_pending_packets_have_separate_home_initial_and_later_documents(
         assert any('700000' in d['name'] for d in steps[row + '-host-' + initial]['document_requirements'])
     else:
         assert len(steps[row + '-host-colabs-consent']['document_requirements']) == 4
-        assert len(steps[row + '-host-coe-financial']['document_requirements']) == 3
+        assert len(steps[row + '-host-coe-financial']['document_requirements']) == 4
         assert '內諾不是錄取' in steps[row + '-host-colabs-consent']['summary']
         assert 'IPLA排除' in steps[row + '-host-research-pledge-jcd']['summary']
         assert '只有JASSO' in steps[row + '-host-bank-if-jasso']['title']

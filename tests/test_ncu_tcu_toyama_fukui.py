@@ -58,6 +58,28 @@ def test_next3_home_host_and_coe_stages_remain_separate_and_pending(tmp_path, ro
         assert health['official_form_url'].endswith('/Application_form-3.zip')
 
 
+def test_source_check_dates_and_archive_citations_follow_actual_sources():
+    sources = source_records()
+    for row, name, *_ in CASES:
+        partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+        audit = ncu_field_audit(partner.school_name)
+        assert audit['checked_at'].startswith('2026-10-09')
+        for key, field in audit['fields'].items():
+            if key.startswith('home_') or key == 'quota':
+                continue
+            for original in field['original_evidence']:
+                source = sources[original['source_id']]
+                assert original['checked_at'] == source['checked_at']
+                assert original['source_url'] == source['url']
+        if row == 'ncu-125':
+            originals = audit['fields']['host_documents']['original_evidence']
+            members = [o for o in originals if o['source_id'] == 'host-fukui-forms2027spring-zip']
+            form_source = sources['host-fukui-forms2027spring-zip']
+            assert len(members) == 4
+            assert {o['archive_member'] for o in members} == {p['archive_member'] for p in form_source['pages']}
+            assert {o['member_sha256'] for o in members} == {p['member_sha256'] for p in form_source['pages']}
+
+
 @pytest.mark.parametrize('row,name,initial,stages,conditions', CASES)
 def test_next3_degree_language_year_contradictions_and_budget_reach_student_views(tmp_path, row, name, initial, stages, conditions):
     partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)

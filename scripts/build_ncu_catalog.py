@@ -349,6 +349,7 @@ def build(output):
         }.get(rs[0]["country"], rs[0]["country"])
         rowids = [r["id"] for r in rs]
         review = next((reviewed[r["id"]] for r in rs if r["id"] in reviewed), None)
+        record_checked = review.get("checked_at", CHECKED) if review else CHECKED
         research.append(
             dict(
                 home_university=HOME,
@@ -874,6 +875,9 @@ def build(output):
                 later_steps = tail[position + 1:]
             for step in later_steps:
                 step["order"] += 1
+        for step in [host_step, *host_nomination_steps, *host_followup_steps, *tail]:
+            if step["rule_id"].startswith(f"{rowids[0]}-host-"):
+                step["checked_at"] = record_checked
         workflows.append(
             dict(
                 home_university=HOME,
@@ -907,7 +911,7 @@ def build(output):
                         "checked_at": CHECKED,
                     },
                 ],
-                last_checked=CHECKED,
+                last_checked=record_checked,
                 coverage_status="official_partial",
                 coverage_note=f"已核對母校116-1；相關公開附件{len(related)}份，個別外校原文與當期適用性另核對。",
             )
@@ -1004,7 +1008,7 @@ def build(output):
                         for d in introductions
                     ],
                 ],
-                last_checked=CHECKED,
+                last_checked=record_checked,
                 coverage_status="official_partial",
                 coverage_note="母校行前義務已核對；外校生活內容為有標示來源的參考，尚未完成116與校區／track確認。",
             )
@@ -1118,7 +1122,8 @@ def build(output):
                         continue
                     p = next(p for p in d["pages"] if p["page"] == ref["page"]
                              and (not ref.get("slide") or p.get("slide") == ref["slide"])
-                             and (not ref.get("sheet") or p.get("sheet") == ref["sheet"]))
+                             and (not ref.get("sheet") or p.get("sheet") == ref["sheet"])
+                             and (not ref.get("archive_member") or p.get("archive_member") == ref["archive_member"]))
                     visual_passage = next(
                         (v for v in d.get("page_transcriptions", []) if v["page"] == p["page"]),
                         None,
@@ -1134,10 +1139,13 @@ def build(output):
                             if d.get("conversion_review")
                             else "original_extraction",
                             "source_url": d["url"],
+                            "source_id": d["id"],
                             "page": p["page"],
+                            **({"archive_member": p["archive_member"], "member_sha256": p["member_sha256"]}
+                               if p.get("archive_member") else {}),
                             "source_title": d["label"] + (f"（原文圖片{p['image']}；無PDF頁碼）" if p.get("image") else f"（原投影片{p['slide']}；無PDF頁碼）" if p.get("slide") else ""),
                             "applicability": review["applicability"],
-                            "checked_at": CHECKED,
+                            "checked_at": d["checked_at"],
                         }
                     )
                 byfield[key].update(
@@ -1173,7 +1181,7 @@ def build(output):
                 school_name=name,
                 country=country,
                 source_rows=rowids,
-                checked_at=CHECKED,
+                checked_at=record_checked,
                 fields=byfield,
                 read_sources=[
                     dict(
@@ -1215,7 +1223,7 @@ def build(output):
                     "source_url": docs[fid]["url"],
                     "role": "partner_university",
                     "authority": "partner_official",
-                    "checked_at": CHECKED,
+                    "checked_at": docs[fid]["checked_at"],
                 }
                 for fid in review["source_ids"]
                 if docs[fid].get("authority_kind", "partner_university")

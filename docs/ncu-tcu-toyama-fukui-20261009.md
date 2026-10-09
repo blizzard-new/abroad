@@ -37,3 +37,7 @@ Spring2027福井提名2026/9/11 24:00JST已過，學生app10/16 24:00JST是別�
 新候選提交後另跑固定SHA的全部NCU必要單元／共享回歸、既有gate、OpenAPI／851流程比較，以及新六個與既有來源／閱讀範圍browser案例。前一候選2ce9b25固定SHA295中央／193共享＋2skip／65gate、OpenAPI／851 workflows parity／JS／lock通過，完整62 browser亦通過，[原始證據已提交0984c39](ncu-test-evidence/japan3-65-20261009/README.md)，不改標本批結果。歷史3b14037的55／1（臺大GPA5秒仍空）與9bf90c8的52／4亦保留，未宣稱根因已修。
 
 最新main f6ad1b8、CCU5eadeb5、TKUce83a50；共享路徑交集15／20需逐段整合，未merge或覆蓋。未部署、套正式DB、改credentials／security或對外聯絡。
+
+固定95b30ac於2026-10-09 03:15:21 UTC完成：305 NCU、193 shared＋2skip、65 gate及OpenAPI／851流程0差異／JS／lock通過；20來源browser為14 passed／6 failed，necessary_local_tests_passed=false。新六個三校內容案例通過，但東北57頁與北海道83頁的既有閱讀範圍提示被新版metadata優先序遮掉，六個失敗均保留。改為合併兩種明示閱讀範圍，沒有改timeout或把未讀附件標成已讀。原始證據見[next3固定結果](ncu-test-evidence/next3-68-20261009/README.md)。
+
+後續核對另修逐欄來源查核日沿用10/8常數、福井ZIP欄位引文只取首個member的問題：現在引用原来源各自日期、member名與SHA，四個原件皆分列；新三校人工metadata複核時間另列，母校10/8原查核保留。UI顯示ZIP內檔名且明示無固定PDF頁碼。固定新SHA會另驗證這些修正及來源範圍回歸。

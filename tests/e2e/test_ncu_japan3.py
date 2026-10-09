@@ -87,12 +87,15 @@ def test_ncu_japan3_actual_language_packet_read_scope_and_life(
         expect(group).to_contain_text('700000')
         expect(group).to_contain_text('Original Copy')
     else:
-        for title, documents in [('教授事前內諾與四類資料', 4), ('三類指定資料／財力條件', 3), ('日文Pledge', 1)]:
+        for title, documents in [('教授事前內諾與四類資料', 4), ('四類指定資料／財力條件', 4), ('日文Pledge', 1)]:
             later = step(title)
             later.locator(':scope > summary').click()
             expect(later.locator('.workflow-documents > li')).to_have_count(documents)
         expect(step('教授事前內諾與四類資料')).to_contain_text('內諾不是錄取')
         expect(step('日文Pledge')).to_contain_text('IPLA排除')
+        coe = step('四類指定資料／財力條件')
+        for text in ['再次上傳護照PDF', 'Proceeding', 'ID card／舊護照', 'JASSO證明與資料核定與否皆禁用']:
+            expect(coe).to_contain_text(text)
         expect(step('銀行：只有JASSO')).to_be_visible()
         pledge = step('日文Pledge')
         form = pledge.get_by_role('link', name='官方參考表格（當期適用待確認）').first

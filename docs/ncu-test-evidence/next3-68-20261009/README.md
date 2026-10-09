@@ -1,5 +1,7 @@
 # 68 partial候選95b30ac的原始結果與失敗
 
+原始失敗產生的尾端空白保留。diff-check只豁免`candidate-95b30ac/browser_source_scope.log`與`candidate-95b30ac/browser_source_scope.xml`這兩個精確檔案；其餘檔案照常檢查，沒有清洗原始證據或改全域ignore／attributes。原始及存檔SHA仍逐檔核對。
+
 固定SHA `95b30acbdfbfadb02ce8d97a4cd7ac4d686f279b`於2026-10-09 03:02:33–03:15:21 UTC執行，起迄同SHA且clean。305 NCU、193 shared＋2skip、65 gate、OpenAPI、main851流程同schema／multiset0差異、三個JS、lock與候選diff通過。20個來源範圍browser為 **14 passed／6 failed（431.81秒）**，`necessary_local_tests_passed=false`；不能稱本候選驗收通過。
 
 新三校六個390／1440實際內容案例通過。東北兩個及北海道四個案例因新版人工閱讀註記優先序遮掉既有「原件57／83頁」閱讀範圍文字而失敗；不是以拉長timeout處理。後續改合併兩種明示範圍，新候選另驗證，不改寫本次原始失敗。

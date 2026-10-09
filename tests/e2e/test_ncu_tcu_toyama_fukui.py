@@ -51,6 +51,7 @@ def test_ncu_next3_real_year_scope_packet_and_life(page, live_server, width, slu
         source_url = 'https://www.u-fukui.ac.jp/wp/wp-content/uploads/Life-in-Fukui-Guidebok-2024_EN.pdf'
         source_text = 'URL含2024但內頁校曆明列2026'
     page.locator('#ncu-source-audit > summary').click()
+    expect(page.locator('#ncu-source-audit-body > p').first).to_contain_text('2026-10-09', timeout=60_000)
     if slug == 'tcu':
         # A 403 attempt has no original document to expand. Read its actual
         # failure and exact attempted URL instead of inventing a source page.
@@ -64,6 +65,17 @@ def test_ncu_next3_real_year_scope_packet_and_life(page, live_server, width, slu
         source.locator(':scope > summary').click()
         expect(source).to_contain_text(source_text)
         assert source.get_by_role('link', name='官方公開來源').get_attribute('href') == source_url
+    if slug == 'fukui':
+        archive_url = 'https://www.u-fukui.ac.jp/wp/wp-content/uploads/Application_form-3.zip'
+        archive = page.locator('#ncu-source-audit-body > details').filter(has=page.locator(f'a[href="{archive_url}"]')).first
+        archive.locator(':scope > summary').click()
+        members = archive.locator(':scope > details > summary')
+        expect(members).to_have_count(4)
+        health_member = members.filter(has_text='Form3')
+        expect(health_member).to_contain_text('ZIP內檔案，無PDF頁碼')
+        health_member.click()
+        expect(archive).to_contain_text('6  months  prior  to  the  certification')
+        archive.locator(':scope > summary').click()
     out = Path('/tmp/ncu-audit/browser');out.mkdir(parents=True, exist_ok=True)
     source.scroll_into_view_if_needed()
     page.screenshot(path=str(out / f'ncu-next3-{slug}-source-{width}.png'))
