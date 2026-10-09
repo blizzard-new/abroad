@@ -41,3 +41,5 @@ Kyutech先前原事件與兩次有瑕疵的有界診斷證據見[診斷紀錄](n
 最新main f6ad1b8、CCU5eadeb5與TKU4133667；與NCU分支共享路徑交集15／20，需逐段整合，未merge／覆蓋。本批只改NCU資料、來源metadata、測試與說明，未再改共用實作。未部署、套正式DB、改credentials／security或對外聯絡。
 
 第一固定候選672eb58：315中央、193共享＋2skip、65gate、OpenAPI／851流程0差異／JS／lock均過；6 browser為4 pass／2 fail。兩個關西案例用搜尋結果第一項誤開關西國際（其文字包含「不是關西大學」），原始URL／畫面與失敗斷言已保留。測試改依完整school identity精確選卡並核對實際網址，沒有改平台搜尋規則或調長斷言timeout。32ead78另補原健康表持續治療medical information及三月規則護照範圍；最终固定候選將含這兩個修正另驗，672結果不改標為新版通過。
+
+16e95c3固定查驗亦315中央／193共享＋2skip／65gate及全部必要靜態通過，但新6 browser仍4 pass／2 fail：已精確選關西，source／初次六件／health／COE均過，最後生活頁500000斷言失敗。資料把保證上限只列在host文件而漏住房欄，現補同一Dormitory Guarantee原件1頁的住房說明。保留原生活頁斷言與timeout，新增API明確檢查該句在life，不只在summary。只重驗受影響的三校API／source、生活及新六個browser；既有315／193／65與OpenAPI／851紀錄保持原SHA，不重跑無關共享檢查，也不把已知Kyutech根因關閉。

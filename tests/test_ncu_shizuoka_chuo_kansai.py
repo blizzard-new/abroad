@@ -98,6 +98,7 @@ def test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_lif
         for term in ['350000','1150000','50000','1500','Part2']:
             assert term in life or term in summary, term
     else:
+        assert '500000' in life and '債務保證上限' in life and '不是須先存入' in life
         for term in ['六月','三月','500000','不是','11/10','MCL','不以護照發照日期自動拒收','medical information']:
             assert term in summary or term in life, term
         for term in ['41000','63000','末月','1650','404','all exchange']:
