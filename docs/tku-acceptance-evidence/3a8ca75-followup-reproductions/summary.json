@@ -1,0 +1,17 @@
+{
+  "tested_product_commit": "3a8ca75680e941da478e06ec1162cebeb8152619",
+  "tested_migration_sha256": "9db91b01337c77a60a9114a0fb68acbd8f99e3561451bd3b4f357a590029cf5e",
+  "source_clean_after_reproductions": true,
+  "before_fix": {
+    "forge_accepted": true,
+    "forge_snapshot_unchanged": false,
+    "legacy_refresh_accepted": false,
+    "legacy_public_unchanged": true,
+    "pagination_DB_rows": 3,
+    "pagination_snapshot_rows": 2,
+    "pagination_truncation_detected": false
+  },
+  "production_access": false,
+  "scope": "Three requested bounded synthetic actual-SQL reproductions. All deliberately fail expected safeguards; not success/complete runtime.",
+  "reproduction_script_note": "Module later extended with pagination mode; earlier forge/refresh bodies retained. Pagination case originally inherited incorrect expected-text label; actual3 versus2 counts and assertion are authoritative."
+}

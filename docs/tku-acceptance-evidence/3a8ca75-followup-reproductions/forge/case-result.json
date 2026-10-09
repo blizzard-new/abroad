@@ -1,0 +1,1899 @@
+{
+  "kind": "forge",
+  "production_access": false,
+  "expected": "reject forged approval with all snapshots unchanged",
+  "accepted": true,
+  "error": null,
+  "snapshot_unchanged": false,
+  "before": {
+    "audit": [
+      {
+        "id": 1,
+        "note": "Atomic governance command schema 1",
+        "action": "detected",
+        "actor_id": null,
+        "metadata": {
+          "governance_command_schema": 1
+        },
+        "created_at": "2026-10-09T09:32:29.410694+00:00",
+        "revision_id": null,
+        "workflow_key": "__governance_command_schema__"
+      },
+      {
+        "id": 2,
+        "note": null,
+        "action": "detected",
+        "actor_id": null,
+        "metadata": {
+          "status": "pending_review",
+          "version": 1,
+          "publication_action": "standard",
+          "review_approvals_count": 0
+        },
+        "created_at": "2026-10-09T09:32:32.111319+00:00",
+        "revision_id": "8ab69b2be46a4f6f83783114e31cf479",
+        "workflow_key": "69f544188667215ffb25ff4de38b288c"
+      },
+      {
+        "id": 3,
+        "note": "stage_workflow_refresh",
+        "action": "submitted",
+        "actor_id": "automated_refresh",
+        "metadata": {
+          "kind": "workflow",
+          "actor": "automated_refresh",
+          "expected": {
+            "revisions": [],
+            "workflows": [
+              {
+                "program_type": null,
+                "published_at": null,
+                "workflow_key": "__governance_command_schema__",
+                "academic_year": null,
+                "home_university": "Internal governance schema",
+                "application_round": null,
+                "published_payload": null,
+                "published_version": null,
+                "partner_university": "No public workflow",
+                "current_revision_id": null
+              }
+            ]
+          },
+          "operation": "stage_workflow_refresh",
+          "published": [],
+          "revisions": [
+            {
+              "id": "8ab69b2be46a4f6f83783114e31cf479",
+              "status": "pending_review",
+              "version": 1,
+              "detected_at": "2026-10-09T09:32:32.110994+00:00",
+              "detected_by": "automated_refresh",
+              "review_note": null,
+              "reviewed_at": null,
+              "reviewed_by": null,
+              "base_version": null,
+              "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+              "edit_history": [],
+              "workflow_key": "69f544188667215ffb25ff4de38b288c",
+              "change_summary": [
+                "\u5efa\u7acb\u7b2c\u4e00\u7248\u7533\u8acb\u6d41\u7a0b\uff0c\u767c\u5e03\u524d\u9700\u78ba\u8a8d\u6240\u6709\u5b98\u65b9\u4f86\u6e90\u8207\u9069\u7528\u68af\u6b21\u3002"
+              ],
+              "review_approvals": [],
+              "workflow_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [
+                        "117"
+                      ],
+                      "home_universities": [
+                        "Synthetic governance home"
+                      ],
+                      "application_rounds": [],
+                      "partner_universities": [
+                        "Synthetic governance host"
+                      ]
+                    },
+                    "title": "Synthetic original",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": "2026-10-09T00:00:00Z",
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "not_applicable",
+                    "responsible_unit": "Synthetic student",
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": "2026-10-09T00:00:00Z",
+                    "deadline_source_url": "https://synthetic.edu/exchange",
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": 1,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T00:00:00Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "117"
+                  }
+                ],
+                "version": 1,
+                "disclaimer": "\u622a\u6b62\u65e5\u8207\u7533\u8acb\u65b9\u5f0f\u53ef\u80fd\u8abf\u6574\uff1b\u9001\u4ef6\u524d\u8acb\u518d\u6838\u5c0d\u6bcd\u6821\u570b\u969b\u8655\u3001\u5408\u4f5c\u6821\u901a\u77e5\u4fe1\u8207\u5b98\u65b9\u7533\u8acb\u9801\u3002",
+                "school_name": "Synthetic governance host",
+                "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                "last_checked": "2026-10-09T00:00:00Z",
+                "program_type": null,
+                "published_at": null,
+                "academic_year": "117",
+                "coverage_note": "\u5c1a\u672a\u67e5\u6838\u5408\u4f5c\u6821\u5b98\u65b9\u7533\u8acb\u6d41\u7a0b\u3002",
+                "review_status": "pending_review",
+                "governance_key": "69f544188667215ffb25ff4de38b288c",
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "\u5b98\u65b9\u4f86\u6e90\u9069\u7528 117 \u5b78\u5e74\u5ea6\uff0c\u68af\u6b21\u70baSynthetic round\uff1b\u4ecd\u61c9\u5728\u9001\u4ef6\u524d\u6838\u5c0d\u7576\u671f\u516c\u544a\u3002",
+                "supersedes_version": null,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": [
+                  "Synthetic round"
+                ]
+              },
+              "publication_action": "standard",
+              "required_rule_keys": [
+                "workflow:applicability",
+                "step:0"
+              ],
+              "required_source_urls": [
+                "https://synthetic.edu/exchange"
+              ],
+              "restored_revision_id": null,
+              "required_review_count": 2,
+              "rolled_back_from_revision_id": null
+            }
+          ]
+        },
+        "created_at": "2026-10-09T09:32:32.111319+00:00",
+        "revision_id": null,
+        "workflow_key": "69f544188667215ffb25ff4de38b288c"
+      },
+      {
+        "id": 4,
+        "note": null,
+        "action": "detected",
+        "actor_id": null,
+        "metadata": {
+          "status": "pending_review",
+          "version": 1,
+          "publication_action": "standard",
+          "review_approvals_count": 1
+        },
+        "created_at": "2026-10-09T09:32:32.159336+00:00",
+        "revision_id": "8ab69b2be46a4f6f83783114e31cf479",
+        "workflow_key": "69f544188667215ffb25ff4de38b288c"
+      },
+      {
+        "id": 5,
+        "note": "approve_workflow_revision",
+        "action": "submitted",
+        "actor_id": "synthetic-a",
+        "metadata": {
+          "kind": "workflow",
+          "actor": "synthetic-a",
+          "expected": {
+            "revisions": [
+              {
+                "id": "8ab69b2be46a4f6f83783114e31cf479",
+                "status": "pending_review",
+                "version": 1,
+                "detected_at": "2026-10-09T09:32:32.110994+00:00",
+                "detected_by": "automated_refresh",
+                "review_note": null,
+                "reviewed_at": null,
+                "reviewed_by": null,
+                "base_version": null,
+                "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+                "edit_history": [],
+                "workflow_key": "69f544188667215ffb25ff4de38b288c",
+                "change_summary": [
+                  "\u5efa\u7acb\u7b2c\u4e00\u7248\u7533\u8acb\u6d41\u7a0b\uff0c\u767c\u5e03\u524d\u9700\u78ba\u8a8d\u6240\u6709\u5b98\u65b9\u4f86\u6e90\u8207\u9069\u7528\u68af\u6b21\u3002"
+                ],
+                "review_approvals": [],
+                "workflow_payload": {
+                  "steps": [
+                    {
+                      "order": 1,
+                      "phase": "Synthetic phase",
+                      "scope": {
+                        "colleges": [],
+                        "departments": [],
+                        "academic_years": [
+                          "117"
+                        ],
+                        "home_universities": [
+                          "Synthetic governance home"
+                        ],
+                        "application_rounds": [],
+                        "partner_universities": [
+                          "Synthetic governance host"
+                        ]
+                      },
+                      "title": "Synthetic original",
+                      "timing": null,
+                      "details": [],
+                      "rule_id": "synthetic-rule",
+                      "summary": "Synthetic bounded requirement",
+                      "action_url": null,
+                      "checked_at": "2026-10-09T00:00:00Z",
+                      "submission": {
+                        "email": null,
+                        "method": "unknown",
+                        "office": null,
+                        "address": null,
+                        "portal_url": null,
+                        "send_by_at": null,
+                        "deadline_note": null,
+                        "receiving_hours": null,
+                        "arrival_deadline_at": null
+                      },
+                      "deadline_at": null,
+                      "source_urls": [
+                        "https://synthetic.edu/exchange"
+                      ],
+                      "support_status": "verified",
+                      "deadline_status": "not_applicable",
+                      "responsible_unit": "Synthetic student",
+                      "overrides_rule_id": null,
+                      "responsible_party": "Synthetic student",
+                      "needs_confirmation": false,
+                      "official_form_urls": [],
+                      "required_documents": [],
+                      "deadline_checked_at": "2026-10-09T00:00:00Z",
+                      "deadline_source_url": "https://synthetic.edu/exchange",
+                      "confirmation_contact": null,
+                      "document_requirements": [],
+                      "signature_requirements": [],
+                      "deadline_reminder_eligible": false
+                    }
+                  ],
+                  "country": null,
+                  "sources": [
+                    {
+                      "role": "home_university",
+                      "title": "Synthetic official notice",
+                      "priority": 1,
+                      "authority": "home_official_notice",
+                      "checked_at": "2026-10-09T00:00:00Z",
+                      "source_url": "https://synthetic.edu/exchange",
+                      "content_hash": null,
+                      "application_round": "Synthetic round",
+                      "effective_academic_year": "117"
+                    }
+                  ],
+                  "version": 1,
+                  "disclaimer": "\u622a\u6b62\u65e5\u8207\u7533\u8acb\u65b9\u5f0f\u53ef\u80fd\u8abf\u6574\uff1b\u9001\u4ef6\u524d\u8acb\u518d\u6838\u5c0d\u6bcd\u6821\u570b\u969b\u8655\u3001\u5408\u4f5c\u6821\u901a\u77e5\u4fe1\u8207\u5b98\u65b9\u7533\u8acb\u9801\u3002",
+                  "school_name": "Synthetic governance host",
+                  "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                  "last_checked": "2026-10-09T00:00:00Z",
+                  "program_type": null,
+                  "published_at": null,
+                  "academic_year": "117",
+                  "coverage_note": "\u5c1a\u672a\u67e5\u6838\u5408\u4f5c\u6821\u5b98\u65b9\u7533\u8acb\u6d41\u7a0b\u3002",
+                  "review_status": "pending_review",
+                  "governance_key": "69f544188667215ffb25ff4de38b288c",
+                  "applied_context": null,
+                  "coverage_status": "official_verified",
+                  "home_university": "Synthetic governance home",
+                  "partner_website": null,
+                  "application_round": "Synthetic round",
+                  "applicability_note": "\u5b98\u65b9\u4f86\u6e90\u9069\u7528 117 \u5b78\u5e74\u5ea6\uff0c\u68af\u6b21\u70baSynthetic round\uff1b\u4ecd\u61c9\u5728\u9001\u4ef6\u524d\u6838\u5c0d\u7576\u671f\u516c\u544a\u3002",
+                  "supersedes_version": null,
+                  "applicability_status": "verified",
+                  "issue_report_snapshot": null,
+                  "effective_application_rounds": [
+                    "Synthetic round"
+                  ]
+                },
+                "publication_action": "standard",
+                "restored_revision_id": null,
+                "required_review_count": 2,
+                "rolled_back_from_revision_id": null
+              }
+            ],
+            "workflows": [
+              {
+                "program_type": null,
+                "published_at": null,
+                "workflow_key": "69f544188667215ffb25ff4de38b288c",
+                "academic_year": "117",
+                "home_university": "Synthetic governance home",
+                "application_round": "Synthetic round",
+                "published_payload": null,
+                "published_version": null,
+                "partner_university": "Synthetic governance host",
+                "current_revision_id": null
+              },
+              {
+                "program_type": null,
+                "published_at": null,
+                "workflow_key": "__governance_command_schema__",
+                "academic_year": null,
+                "home_university": "Internal governance schema",
+                "application_round": null,
+                "published_payload": null,
+                "published_version": null,
+                "partner_university": "No public workflow",
+                "current_revision_id": null
+              }
+            ]
+          },
+          "operation": "approve_workflow_revision",
+          "published": [],
+          "revisions": [
+            {
+              "id": "8ab69b2be46a4f6f83783114e31cf479",
+              "status": "pending_review",
+              "version": 1,
+              "detected_at": "2026-10-09T09:32:32.110994+00:00",
+              "detected_by": "automated_refresh",
+              "review_note": null,
+              "reviewed_at": null,
+              "reviewed_by": null,
+              "base_version": null,
+              "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+              "edit_history": [],
+              "workflow_key": "69f544188667215ffb25ff4de38b288c",
+              "change_summary": [
+                "\u5efa\u7acb\u7b2c\u4e00\u7248\u7533\u8acb\u6d41\u7a0b\uff0c\u767c\u5e03\u524d\u9700\u78ba\u8a8d\u6240\u6709\u5b98\u65b9\u4f86\u6e90\u8207\u9069\u7528\u68af\u6b21\u3002"
+              ],
+              "review_approvals": [
+                {
+                  "note": "Synthetic complete independent attestation",
+                  "reviewed_at": "2026-10-09T09:32:32.158865Z",
+                  "reviewer_id": "synthetic-a",
+                  "reviewed_rule_keys": [
+                    "workflow:applicability",
+                    "step:0"
+                  ],
+                  "reviewed_source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+                }
+              ],
+              "workflow_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [
+                        "117"
+                      ],
+                      "home_universities": [
+                        "Synthetic governance home"
+                      ],
+                      "application_rounds": [],
+                      "partner_universities": [
+                        "Synthetic governance host"
+                      ]
+                    },
+                    "title": "Synthetic original",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": "2026-10-09T09:32:32.158865Z",
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "not_applicable",
+                    "responsible_unit": "Synthetic student",
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": "2026-10-09T00:00:00Z",
+                    "deadline_source_url": "https://synthetic.edu/exchange",
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": 1,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T09:32:32.158865Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "117"
+                  }
+                ],
+                "version": 1,
+                "disclaimer": "\u622a\u6b62\u65e5\u8207\u7533\u8acb\u65b9\u5f0f\u53ef\u80fd\u8abf\u6574\uff1b\u9001\u4ef6\u524d\u8acb\u518d\u6838\u5c0d\u6bcd\u6821\u570b\u969b\u8655\u3001\u5408\u4f5c\u6821\u901a\u77e5\u4fe1\u8207\u5b98\u65b9\u7533\u8acb\u9801\u3002",
+                "school_name": "Synthetic governance host",
+                "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                "last_checked": "2026-10-09T09:32:32.158865Z",
+                "program_type": null,
+                "published_at": null,
+                "academic_year": "117",
+                "coverage_note": "\u5c1a\u672a\u67e5\u6838\u5408\u4f5c\u6821\u5b98\u65b9\u7533\u8acb\u6d41\u7a0b\u3002",
+                "review_status": "pending_review",
+                "governance_key": "69f544188667215ffb25ff4de38b288c",
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "\u5b98\u65b9\u4f86\u6e90\u9069\u7528 117 \u5b78\u5e74\u5ea6\uff0c\u68af\u6b21\u70baSynthetic round\uff1b\u4ecd\u61c9\u5728\u9001\u4ef6\u524d\u6838\u5c0d\u7576\u671f\u516c\u544a\u3002",
+                "supersedes_version": null,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": [
+                  "Synthetic round"
+                ]
+              },
+              "publication_action": "standard",
+              "required_rule_keys": [
+                "workflow:applicability",
+                "step:0"
+              ],
+              "required_source_urls": [
+                "https://synthetic.edu/exchange"
+              ],
+              "restored_revision_id": null,
+              "required_review_count": 2,
+              "rolled_back_from_revision_id": null
+            }
+          ]
+        },
+        "created_at": "2026-10-09T09:32:32.159336+00:00",
+        "revision_id": null,
+        "workflow_key": "69f544188667215ffb25ff4de38b288c"
+      }
+    ],
+    "reviews": null,
+    "revisions": [
+      {
+        "id": "8ab69b2be46a4f6f83783114e31cf479",
+        "status": "pending_review",
+        "version": 1,
+        "detected_at": "2026-10-09T09:32:32.110994+00:00",
+        "detected_by": "automated_refresh",
+        "review_note": null,
+        "reviewed_at": null,
+        "reviewed_by": null,
+        "base_version": null,
+        "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+        "edit_history": [],
+        "workflow_key": "69f544188667215ffb25ff4de38b288c",
+        "change_summary": [
+          "\u5efa\u7acb\u7b2c\u4e00\u7248\u7533\u8acb\u6d41\u7a0b\uff0c\u767c\u5e03\u524d\u9700\u78ba\u8a8d\u6240\u6709\u5b98\u65b9\u4f86\u6e90\u8207\u9069\u7528\u68af\u6b21\u3002"
+        ],
+        "review_approvals": [
+          {
+            "note": "Synthetic complete independent attestation",
+            "reviewed_at": "2026-10-09T09:32:32.158865Z",
+            "reviewer_id": "synthetic-a",
+            "reviewed_rule_keys": [
+              "workflow:applicability",
+              "step:0"
+            ],
+            "reviewed_source_urls": [
+              "https://synthetic.edu/exchange"
+            ],
+            "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+          }
+        ],
+        "workflow_payload": {
+          "steps": [
+            {
+              "order": 1,
+              "phase": "Synthetic phase",
+              "scope": {
+                "colleges": [],
+                "departments": [],
+                "academic_years": [
+                  "117"
+                ],
+                "home_universities": [
+                  "Synthetic governance home"
+                ],
+                "application_rounds": [],
+                "partner_universities": [
+                  "Synthetic governance host"
+                ]
+              },
+              "title": "Synthetic original",
+              "timing": null,
+              "details": [],
+              "rule_id": "synthetic-rule",
+              "summary": "Synthetic bounded requirement",
+              "action_url": null,
+              "checked_at": "2026-10-09T09:32:32.158865Z",
+              "submission": {
+                "email": null,
+                "method": "unknown",
+                "office": null,
+                "address": null,
+                "portal_url": null,
+                "send_by_at": null,
+                "deadline_note": null,
+                "receiving_hours": null,
+                "arrival_deadline_at": null
+              },
+              "deadline_at": null,
+              "source_urls": [
+                "https://synthetic.edu/exchange"
+              ],
+              "support_status": "verified",
+              "deadline_status": "not_applicable",
+              "responsible_unit": "Synthetic student",
+              "overrides_rule_id": null,
+              "responsible_party": "Synthetic student",
+              "needs_confirmation": false,
+              "official_form_urls": [],
+              "required_documents": [],
+              "deadline_checked_at": "2026-10-09T00:00:00Z",
+              "deadline_source_url": "https://synthetic.edu/exchange",
+              "confirmation_contact": null,
+              "document_requirements": [],
+              "signature_requirements": [],
+              "deadline_reminder_eligible": false
+            }
+          ],
+          "country": null,
+          "sources": [
+            {
+              "role": "home_university",
+              "title": "Synthetic official notice",
+              "priority": 1,
+              "authority": "home_official_notice",
+              "checked_at": "2026-10-09T09:32:32.158865Z",
+              "source_url": "https://synthetic.edu/exchange",
+              "content_hash": null,
+              "application_round": "Synthetic round",
+              "effective_academic_year": "117"
+            }
+          ],
+          "version": 1,
+          "disclaimer": "\u622a\u6b62\u65e5\u8207\u7533\u8acb\u65b9\u5f0f\u53ef\u80fd\u8abf\u6574\uff1b\u9001\u4ef6\u524d\u8acb\u518d\u6838\u5c0d\u6bcd\u6821\u570b\u969b\u8655\u3001\u5408\u4f5c\u6821\u901a\u77e5\u4fe1\u8207\u5b98\u65b9\u7533\u8acb\u9801\u3002",
+          "school_name": "Synthetic governance host",
+          "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+          "last_checked": "2026-10-09T09:32:32.158865Z",
+          "program_type": null,
+          "published_at": null,
+          "academic_year": "117",
+          "coverage_note": "\u5c1a\u672a\u67e5\u6838\u5408\u4f5c\u6821\u5b98\u65b9\u7533\u8acb\u6d41\u7a0b\u3002",
+          "review_status": "pending_review",
+          "governance_key": "69f544188667215ffb25ff4de38b288c",
+          "applied_context": null,
+          "coverage_status": "official_verified",
+          "home_university": "Synthetic governance home",
+          "partner_website": null,
+          "application_round": "Synthetic round",
+          "applicability_note": "\u5b98\u65b9\u4f86\u6e90\u9069\u7528 117 \u5b78\u5e74\u5ea6\uff0c\u68af\u6b21\u70baSynthetic round\uff1b\u4ecd\u61c9\u5728\u9001\u4ef6\u524d\u6838\u5c0d\u7576\u671f\u516c\u544a\u3002",
+          "supersedes_version": null,
+          "applicability_status": "verified",
+          "issue_report_snapshot": null,
+          "effective_application_rounds": [
+            "Synthetic round"
+          ]
+        },
+        "publication_action": "standard",
+        "restored_revision_id": null,
+        "required_review_count": 2,
+        "rolled_back_from_revision_id": null
+      }
+    ],
+    "rollbacks": null,
+    "workflows": [
+      {
+        "created_at": "2026-10-09T09:32:32.11502+00:00",
+        "updated_at": "2026-10-09T09:32:32.159336+00:00",
+        "program_type": null,
+        "published_at": null,
+        "workflow_key": "69f544188667215ffb25ff4de38b288c",
+        "academic_year": "117",
+        "home_university": "Synthetic governance home",
+        "application_round": "Synthetic round",
+        "published_payload": null,
+        "published_version": null,
+        "partner_university": "Synthetic governance host",
+        "current_revision_id": null
+      },
+      {
+        "created_at": "2026-10-09T09:32:29.410145+00:00",
+        "updated_at": "2026-10-09T09:32:29.410145+00:00",
+        "program_type": null,
+        "published_at": null,
+        "workflow_key": "__governance_command_schema__",
+        "academic_year": null,
+        "home_university": "Internal governance schema",
+        "application_round": null,
+        "published_payload": null,
+        "published_version": null,
+        "partner_university": "No public workflow",
+        "current_revision_id": null
+      }
+    ],
+    "promotions": null
+  },
+  "after": {
+    "audit": [
+      {
+        "id": 1,
+        "note": "Atomic governance command schema 1",
+        "action": "detected",
+        "actor_id": null,
+        "metadata": {
+          "governance_command_schema": 1
+        },
+        "created_at": "2026-10-09T09:32:29.410694+00:00",
+        "revision_id": null,
+        "workflow_key": "__governance_command_schema__"
+      },
+      {
+        "id": 2,
+        "note": null,
+        "action": "detected",
+        "actor_id": null,
+        "metadata": {
+          "status": "pending_review",
+          "version": 1,
+          "publication_action": "standard",
+          "review_approvals_count": 0
+        },
+        "created_at": "2026-10-09T09:32:32.111319+00:00",
+        "revision_id": "8ab69b2be46a4f6f83783114e31cf479",
+        "workflow_key": "69f544188667215ffb25ff4de38b288c"
+      },
+      {
+        "id": 3,
+        "note": "stage_workflow_refresh",
+        "action": "submitted",
+        "actor_id": "automated_refresh",
+        "metadata": {
+          "kind": "workflow",
+          "actor": "automated_refresh",
+          "expected": {
+            "revisions": [],
+            "workflows": [
+              {
+                "program_type": null,
+                "published_at": null,
+                "workflow_key": "__governance_command_schema__",
+                "academic_year": null,
+                "home_university": "Internal governance schema",
+                "application_round": null,
+                "published_payload": null,
+                "published_version": null,
+                "partner_university": "No public workflow",
+                "current_revision_id": null
+              }
+            ]
+          },
+          "operation": "stage_workflow_refresh",
+          "published": [],
+          "revisions": [
+            {
+              "id": "8ab69b2be46a4f6f83783114e31cf479",
+              "status": "pending_review",
+              "version": 1,
+              "detected_at": "2026-10-09T09:32:32.110994+00:00",
+              "detected_by": "automated_refresh",
+              "review_note": null,
+              "reviewed_at": null,
+              "reviewed_by": null,
+              "base_version": null,
+              "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+              "edit_history": [],
+              "workflow_key": "69f544188667215ffb25ff4de38b288c",
+              "change_summary": [
+                "\u5efa\u7acb\u7b2c\u4e00\u7248\u7533\u8acb\u6d41\u7a0b\uff0c\u767c\u5e03\u524d\u9700\u78ba\u8a8d\u6240\u6709\u5b98\u65b9\u4f86\u6e90\u8207\u9069\u7528\u68af\u6b21\u3002"
+              ],
+              "review_approvals": [],
+              "workflow_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [
+                        "117"
+                      ],
+                      "home_universities": [
+                        "Synthetic governance home"
+                      ],
+                      "application_rounds": [],
+                      "partner_universities": [
+                        "Synthetic governance host"
+                      ]
+                    },
+                    "title": "Synthetic original",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": "2026-10-09T00:00:00Z",
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "not_applicable",
+                    "responsible_unit": "Synthetic student",
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": "2026-10-09T00:00:00Z",
+                    "deadline_source_url": "https://synthetic.edu/exchange",
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": 1,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T00:00:00Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "117"
+                  }
+                ],
+                "version": 1,
+                "disclaimer": "\u622a\u6b62\u65e5\u8207\u7533\u8acb\u65b9\u5f0f\u53ef\u80fd\u8abf\u6574\uff1b\u9001\u4ef6\u524d\u8acb\u518d\u6838\u5c0d\u6bcd\u6821\u570b\u969b\u8655\u3001\u5408\u4f5c\u6821\u901a\u77e5\u4fe1\u8207\u5b98\u65b9\u7533\u8acb\u9801\u3002",
+                "school_name": "Synthetic governance host",
+                "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                "last_checked": "2026-10-09T00:00:00Z",
+                "program_type": null,
+                "published_at": null,
+                "academic_year": "117",
+                "coverage_note": "\u5c1a\u672a\u67e5\u6838\u5408\u4f5c\u6821\u5b98\u65b9\u7533\u8acb\u6d41\u7a0b\u3002",
+                "review_status": "pending_review",
+                "governance_key": "69f544188667215ffb25ff4de38b288c",
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "\u5b98\u65b9\u4f86\u6e90\u9069\u7528 117 \u5b78\u5e74\u5ea6\uff0c\u68af\u6b21\u70baSynthetic round\uff1b\u4ecd\u61c9\u5728\u9001\u4ef6\u524d\u6838\u5c0d\u7576\u671f\u516c\u544a\u3002",
+                "supersedes_version": null,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": [
+                  "Synthetic round"
+                ]
+              },
+              "publication_action": "standard",
+              "required_rule_keys": [
+                "workflow:applicability",
+                "step:0"
+              ],
+              "required_source_urls": [
+                "https://synthetic.edu/exchange"
+              ],
+              "restored_revision_id": null,
+              "required_review_count": 2,
+              "rolled_back_from_revision_id": null
+            }
+          ]
+        },
+        "created_at": "2026-10-09T09:32:32.111319+00:00",
+        "revision_id": null,
+        "workflow_key": "69f544188667215ffb25ff4de38b288c"
+      },
+      {
+        "id": 4,
+        "note": null,
+        "action": "detected",
+        "actor_id": null,
+        "metadata": {
+          "status": "pending_review",
+          "version": 1,
+          "publication_action": "standard",
+          "review_approvals_count": 1
+        },
+        "created_at": "2026-10-09T09:32:32.159336+00:00",
+        "revision_id": "8ab69b2be46a4f6f83783114e31cf479",
+        "workflow_key": "69f544188667215ffb25ff4de38b288c"
+      },
+      {
+        "id": 5,
+        "note": "approve_workflow_revision",
+        "action": "submitted",
+        "actor_id": "synthetic-a",
+        "metadata": {
+          "kind": "workflow",
+          "actor": "synthetic-a",
+          "expected": {
+            "revisions": [
+              {
+                "id": "8ab69b2be46a4f6f83783114e31cf479",
+                "status": "pending_review",
+                "version": 1,
+                "detected_at": "2026-10-09T09:32:32.110994+00:00",
+                "detected_by": "automated_refresh",
+                "review_note": null,
+                "reviewed_at": null,
+                "reviewed_by": null,
+                "base_version": null,
+                "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+                "edit_history": [],
+                "workflow_key": "69f544188667215ffb25ff4de38b288c",
+                "change_summary": [
+                  "\u5efa\u7acb\u7b2c\u4e00\u7248\u7533\u8acb\u6d41\u7a0b\uff0c\u767c\u5e03\u524d\u9700\u78ba\u8a8d\u6240\u6709\u5b98\u65b9\u4f86\u6e90\u8207\u9069\u7528\u68af\u6b21\u3002"
+                ],
+                "review_approvals": [],
+                "workflow_payload": {
+                  "steps": [
+                    {
+                      "order": 1,
+                      "phase": "Synthetic phase",
+                      "scope": {
+                        "colleges": [],
+                        "departments": [],
+                        "academic_years": [
+                          "117"
+                        ],
+                        "home_universities": [
+                          "Synthetic governance home"
+                        ],
+                        "application_rounds": [],
+                        "partner_universities": [
+                          "Synthetic governance host"
+                        ]
+                      },
+                      "title": "Synthetic original",
+                      "timing": null,
+                      "details": [],
+                      "rule_id": "synthetic-rule",
+                      "summary": "Synthetic bounded requirement",
+                      "action_url": null,
+                      "checked_at": "2026-10-09T00:00:00Z",
+                      "submission": {
+                        "email": null,
+                        "method": "unknown",
+                        "office": null,
+                        "address": null,
+                        "portal_url": null,
+                        "send_by_at": null,
+                        "deadline_note": null,
+                        "receiving_hours": null,
+                        "arrival_deadline_at": null
+                      },
+                      "deadline_at": null,
+                      "source_urls": [
+                        "https://synthetic.edu/exchange"
+                      ],
+                      "support_status": "verified",
+                      "deadline_status": "not_applicable",
+                      "responsible_unit": "Synthetic student",
+                      "overrides_rule_id": null,
+                      "responsible_party": "Synthetic student",
+                      "needs_confirmation": false,
+                      "official_form_urls": [],
+                      "required_documents": [],
+                      "deadline_checked_at": "2026-10-09T00:00:00Z",
+                      "deadline_source_url": "https://synthetic.edu/exchange",
+                      "confirmation_contact": null,
+                      "document_requirements": [],
+                      "signature_requirements": [],
+                      "deadline_reminder_eligible": false
+                    }
+                  ],
+                  "country": null,
+                  "sources": [
+                    {
+                      "role": "home_university",
+                      "title": "Synthetic official notice",
+                      "priority": 1,
+                      "authority": "home_official_notice",
+                      "checked_at": "2026-10-09T00:00:00Z",
+                      "source_url": "https://synthetic.edu/exchange",
+                      "content_hash": null,
+                      "application_round": "Synthetic round",
+                      "effective_academic_year": "117"
+                    }
+                  ],
+                  "version": 1,
+                  "disclaimer": "\u622a\u6b62\u65e5\u8207\u7533\u8acb\u65b9\u5f0f\u53ef\u80fd\u8abf\u6574\uff1b\u9001\u4ef6\u524d\u8acb\u518d\u6838\u5c0d\u6bcd\u6821\u570b\u969b\u8655\u3001\u5408\u4f5c\u6821\u901a\u77e5\u4fe1\u8207\u5b98\u65b9\u7533\u8acb\u9801\u3002",
+                  "school_name": "Synthetic governance host",
+                  "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                  "last_checked": "2026-10-09T00:00:00Z",
+                  "program_type": null,
+                  "published_at": null,
+                  "academic_year": "117",
+                  "coverage_note": "\u5c1a\u672a\u67e5\u6838\u5408\u4f5c\u6821\u5b98\u65b9\u7533\u8acb\u6d41\u7a0b\u3002",
+                  "review_status": "pending_review",
+                  "governance_key": "69f544188667215ffb25ff4de38b288c",
+                  "applied_context": null,
+                  "coverage_status": "official_verified",
+                  "home_university": "Synthetic governance home",
+                  "partner_website": null,
+                  "application_round": "Synthetic round",
+                  "applicability_note": "\u5b98\u65b9\u4f86\u6e90\u9069\u7528 117 \u5b78\u5e74\u5ea6\uff0c\u68af\u6b21\u70baSynthetic round\uff1b\u4ecd\u61c9\u5728\u9001\u4ef6\u524d\u6838\u5c0d\u7576\u671f\u516c\u544a\u3002",
+                  "supersedes_version": null,
+                  "applicability_status": "verified",
+                  "issue_report_snapshot": null,
+                  "effective_application_rounds": [
+                    "Synthetic round"
+                  ]
+                },
+                "publication_action": "standard",
+                "restored_revision_id": null,
+                "required_review_count": 2,
+                "rolled_back_from_revision_id": null
+              }
+            ],
+            "workflows": [
+              {
+                "program_type": null,
+                "published_at": null,
+                "workflow_key": "69f544188667215ffb25ff4de38b288c",
+                "academic_year": "117",
+                "home_university": "Synthetic governance home",
+                "application_round": "Synthetic round",
+                "published_payload": null,
+                "published_version": null,
+                "partner_university": "Synthetic governance host",
+                "current_revision_id": null
+              },
+              {
+                "program_type": null,
+                "published_at": null,
+                "workflow_key": "__governance_command_schema__",
+                "academic_year": null,
+                "home_university": "Internal governance schema",
+                "application_round": null,
+                "published_payload": null,
+                "published_version": null,
+                "partner_university": "No public workflow",
+                "current_revision_id": null
+              }
+            ]
+          },
+          "operation": "approve_workflow_revision",
+          "published": [],
+          "revisions": [
+            {
+              "id": "8ab69b2be46a4f6f83783114e31cf479",
+              "status": "pending_review",
+              "version": 1,
+              "detected_at": "2026-10-09T09:32:32.110994+00:00",
+              "detected_by": "automated_refresh",
+              "review_note": null,
+              "reviewed_at": null,
+              "reviewed_by": null,
+              "base_version": null,
+              "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+              "edit_history": [],
+              "workflow_key": "69f544188667215ffb25ff4de38b288c",
+              "change_summary": [
+                "\u5efa\u7acb\u7b2c\u4e00\u7248\u7533\u8acb\u6d41\u7a0b\uff0c\u767c\u5e03\u524d\u9700\u78ba\u8a8d\u6240\u6709\u5b98\u65b9\u4f86\u6e90\u8207\u9069\u7528\u68af\u6b21\u3002"
+              ],
+              "review_approvals": [
+                {
+                  "note": "Synthetic complete independent attestation",
+                  "reviewed_at": "2026-10-09T09:32:32.158865Z",
+                  "reviewer_id": "synthetic-a",
+                  "reviewed_rule_keys": [
+                    "workflow:applicability",
+                    "step:0"
+                  ],
+                  "reviewed_source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+                }
+              ],
+              "workflow_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [
+                        "117"
+                      ],
+                      "home_universities": [
+                        "Synthetic governance home"
+                      ],
+                      "application_rounds": [],
+                      "partner_universities": [
+                        "Synthetic governance host"
+                      ]
+                    },
+                    "title": "Synthetic original",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": "2026-10-09T09:32:32.158865Z",
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "not_applicable",
+                    "responsible_unit": "Synthetic student",
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": "2026-10-09T00:00:00Z",
+                    "deadline_source_url": "https://synthetic.edu/exchange",
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": 1,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T09:32:32.158865Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "117"
+                  }
+                ],
+                "version": 1,
+                "disclaimer": "\u622a\u6b62\u65e5\u8207\u7533\u8acb\u65b9\u5f0f\u53ef\u80fd\u8abf\u6574\uff1b\u9001\u4ef6\u524d\u8acb\u518d\u6838\u5c0d\u6bcd\u6821\u570b\u969b\u8655\u3001\u5408\u4f5c\u6821\u901a\u77e5\u4fe1\u8207\u5b98\u65b9\u7533\u8acb\u9801\u3002",
+                "school_name": "Synthetic governance host",
+                "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                "last_checked": "2026-10-09T09:32:32.158865Z",
+                "program_type": null,
+                "published_at": null,
+                "academic_year": "117",
+                "coverage_note": "\u5c1a\u672a\u67e5\u6838\u5408\u4f5c\u6821\u5b98\u65b9\u7533\u8acb\u6d41\u7a0b\u3002",
+                "review_status": "pending_review",
+                "governance_key": "69f544188667215ffb25ff4de38b288c",
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "\u5b98\u65b9\u4f86\u6e90\u9069\u7528 117 \u5b78\u5e74\u5ea6\uff0c\u68af\u6b21\u70baSynthetic round\uff1b\u4ecd\u61c9\u5728\u9001\u4ef6\u524d\u6838\u5c0d\u7576\u671f\u516c\u544a\u3002",
+                "supersedes_version": null,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": [
+                  "Synthetic round"
+                ]
+              },
+              "publication_action": "standard",
+              "required_rule_keys": [
+                "workflow:applicability",
+                "step:0"
+              ],
+              "required_source_urls": [
+                "https://synthetic.edu/exchange"
+              ],
+              "restored_revision_id": null,
+              "required_review_count": 2,
+              "rolled_back_from_revision_id": null
+            }
+          ]
+        },
+        "created_at": "2026-10-09T09:32:32.159336+00:00",
+        "revision_id": null,
+        "workflow_key": "69f544188667215ffb25ff4de38b288c"
+      },
+      {
+        "id": 6,
+        "note": null,
+        "action": "published",
+        "actor_id": "synthetic-a",
+        "metadata": {
+          "status": "published",
+          "version": 1,
+          "publication_action": "standard",
+          "review_approvals_count": 2
+        },
+        "created_at": "2026-10-09T09:32:33.026133+00:00",
+        "revision_id": "8ab69b2be46a4f6f83783114e31cf479",
+        "workflow_key": "69f544188667215ffb25ff4de38b288c"
+      },
+      {
+        "id": 7,
+        "note": "publish_workflow_revision",
+        "action": "submitted",
+        "actor_id": "synthetic-a",
+        "metadata": {
+          "kind": "workflow",
+          "actor": "synthetic-a",
+          "expected": {
+            "revisions": [
+              {
+                "id": "8ab69b2be46a4f6f83783114e31cf479",
+                "status": "pending_review",
+                "version": 1,
+                "detected_at": "2026-10-09T09:32:32.110994+00:00",
+                "detected_by": "automated_refresh",
+                "review_note": null,
+                "reviewed_at": null,
+                "reviewed_by": null,
+                "base_version": null,
+                "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+                "edit_history": [],
+                "workflow_key": "69f544188667215ffb25ff4de38b288c",
+                "change_summary": [
+                  "\u5efa\u7acb\u7b2c\u4e00\u7248\u7533\u8acb\u6d41\u7a0b\uff0c\u767c\u5e03\u524d\u9700\u78ba\u8a8d\u6240\u6709\u5b98\u65b9\u4f86\u6e90\u8207\u9069\u7528\u68af\u6b21\u3002"
+                ],
+                "review_approvals": [
+                  {
+                    "note": "Synthetic complete independent attestation",
+                    "reviewed_at": "2026-10-09T09:32:32.158865Z",
+                    "reviewer_id": "synthetic-a",
+                    "reviewed_rule_keys": [
+                      "workflow:applicability",
+                      "step:0"
+                    ],
+                    "reviewed_source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+                  }
+                ],
+                "workflow_payload": {
+                  "steps": [
+                    {
+                      "order": 1,
+                      "phase": "Synthetic phase",
+                      "scope": {
+                        "colleges": [],
+                        "departments": [],
+                        "academic_years": [
+                          "117"
+                        ],
+                        "home_universities": [
+                          "Synthetic governance home"
+                        ],
+                        "application_rounds": [],
+                        "partner_universities": [
+                          "Synthetic governance host"
+                        ]
+                      },
+                      "title": "Synthetic original",
+                      "timing": null,
+                      "details": [],
+                      "rule_id": "synthetic-rule",
+                      "summary": "Synthetic bounded requirement",
+                      "action_url": null,
+                      "checked_at": "2026-10-09T09:32:32.158865Z",
+                      "submission": {
+                        "email": null,
+                        "method": "unknown",
+                        "office": null,
+                        "address": null,
+                        "portal_url": null,
+                        "send_by_at": null,
+                        "deadline_note": null,
+                        "receiving_hours": null,
+                        "arrival_deadline_at": null
+                      },
+                      "deadline_at": null,
+                      "source_urls": [
+                        "https://synthetic.edu/exchange"
+                      ],
+                      "support_status": "verified",
+                      "deadline_status": "not_applicable",
+                      "responsible_unit": "Synthetic student",
+                      "overrides_rule_id": null,
+                      "responsible_party": "Synthetic student",
+                      "needs_confirmation": false,
+                      "official_form_urls": [],
+                      "required_documents": [],
+                      "deadline_checked_at": "2026-10-09T00:00:00Z",
+                      "deadline_source_url": "https://synthetic.edu/exchange",
+                      "confirmation_contact": null,
+                      "document_requirements": [],
+                      "signature_requirements": [],
+                      "deadline_reminder_eligible": false
+                    }
+                  ],
+                  "country": null,
+                  "sources": [
+                    {
+                      "role": "home_university",
+                      "title": "Synthetic official notice",
+                      "priority": 1,
+                      "authority": "home_official_notice",
+                      "checked_at": "2026-10-09T09:32:32.158865Z",
+                      "source_url": "https://synthetic.edu/exchange",
+                      "content_hash": null,
+                      "application_round": "Synthetic round",
+                      "effective_academic_year": "117"
+                    }
+                  ],
+                  "version": 1,
+                  "disclaimer": "\u622a\u6b62\u65e5\u8207\u7533\u8acb\u65b9\u5f0f\u53ef\u80fd\u8abf\u6574\uff1b\u9001\u4ef6\u524d\u8acb\u518d\u6838\u5c0d\u6bcd\u6821\u570b\u969b\u8655\u3001\u5408\u4f5c\u6821\u901a\u77e5\u4fe1\u8207\u5b98\u65b9\u7533\u8acb\u9801\u3002",
+                  "school_name": "Synthetic governance host",
+                  "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                  "last_checked": "2026-10-09T09:32:32.158865Z",
+                  "program_type": null,
+                  "published_at": null,
+                  "academic_year": "117",
+                  "coverage_note": "\u5c1a\u672a\u67e5\u6838\u5408\u4f5c\u6821\u5b98\u65b9\u7533\u8acb\u6d41\u7a0b\u3002",
+                  "review_status": "pending_review",
+                  "governance_key": "69f544188667215ffb25ff4de38b288c",
+                  "applied_context": null,
+                  "coverage_status": "official_verified",
+                  "home_university": "Synthetic governance home",
+                  "partner_website": null,
+                  "application_round": "Synthetic round",
+                  "applicability_note": "\u5b98\u65b9\u4f86\u6e90\u9069\u7528 117 \u5b78\u5e74\u5ea6\uff0c\u68af\u6b21\u70baSynthetic round\uff1b\u4ecd\u61c9\u5728\u9001\u4ef6\u524d\u6838\u5c0d\u7576\u671f\u516c\u544a\u3002",
+                  "supersedes_version": null,
+                  "applicability_status": "verified",
+                  "issue_report_snapshot": null,
+                  "effective_application_rounds": [
+                    "Synthetic round"
+                  ]
+                },
+                "publication_action": "standard",
+                "restored_revision_id": null,
+                "required_review_count": 2,
+                "rolled_back_from_revision_id": null
+              }
+            ],
+            "workflows": [
+              {
+                "program_type": null,
+                "published_at": null,
+                "workflow_key": "69f544188667215ffb25ff4de38b288c",
+                "academic_year": "117",
+                "home_university": "Synthetic governance home",
+                "application_round": "Synthetic round",
+                "published_payload": null,
+                "published_version": null,
+                "partner_university": "Synthetic governance host",
+                "current_revision_id": null
+              },
+              {
+                "program_type": null,
+                "published_at": null,
+                "workflow_key": "__governance_command_schema__",
+                "academic_year": null,
+                "home_university": "Internal governance schema",
+                "application_round": null,
+                "published_payload": null,
+                "published_version": null,
+                "partner_university": "No public workflow",
+                "current_revision_id": null
+              }
+            ]
+          },
+          "operation": "publish_workflow_revision",
+          "published": [
+            {
+              "steps": [
+                {
+                  "order": 1,
+                  "phase": "Synthetic phase",
+                  "scope": {
+                    "colleges": [],
+                    "departments": [],
+                    "academic_years": [
+                      "117"
+                    ],
+                    "home_universities": [
+                      "Synthetic governance home"
+                    ],
+                    "application_rounds": [],
+                    "partner_universities": [
+                      "Synthetic governance host"
+                    ]
+                  },
+                  "title": "Synthetic original",
+                  "timing": null,
+                  "details": [],
+                  "rule_id": "synthetic-rule",
+                  "summary": "Synthetic bounded requirement",
+                  "action_url": null,
+                  "checked_at": "2026-10-09T09:32:32.158865Z",
+                  "submission": {
+                    "email": null,
+                    "method": "unknown",
+                    "office": null,
+                    "address": null,
+                    "portal_url": null,
+                    "send_by_at": null,
+                    "deadline_note": null,
+                    "receiving_hours": null,
+                    "arrival_deadline_at": null
+                  },
+                  "deadline_at": null,
+                  "source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "support_status": "verified",
+                  "deadline_status": "not_applicable",
+                  "responsible_unit": "Synthetic student",
+                  "overrides_rule_id": null,
+                  "responsible_party": "Synthetic student",
+                  "needs_confirmation": false,
+                  "official_form_urls": [],
+                  "required_documents": [],
+                  "deadline_checked_at": "2026-10-09T00:00:00Z",
+                  "deadline_source_url": "https://synthetic.edu/exchange",
+                  "confirmation_contact": null,
+                  "document_requirements": [],
+                  "signature_requirements": [],
+                  "deadline_reminder_eligible": false
+                }
+              ],
+              "country": null,
+              "sources": [
+                {
+                  "role": "home_university",
+                  "title": "Synthetic official notice",
+                  "priority": 1,
+                  "authority": "home_official_notice",
+                  "checked_at": "2026-10-09T09:32:32.158865Z",
+                  "source_url": "https://synthetic.edu/exchange",
+                  "content_hash": null,
+                  "application_round": "Synthetic round",
+                  "effective_academic_year": "117"
+                }
+              ],
+              "version": 1,
+              "disclaimer": "\u622a\u6b62\u65e5\u8207\u7533\u8acb\u65b9\u5f0f\u53ef\u80fd\u8abf\u6574\uff1b\u9001\u4ef6\u524d\u8acb\u518d\u6838\u5c0d\u6bcd\u6821\u570b\u969b\u8655\u3001\u5408\u4f5c\u6821\u901a\u77e5\u4fe1\u8207\u5b98\u65b9\u7533\u8acb\u9801\u3002",
+              "school_name": "Synthetic governance host",
+              "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+              "last_checked": "2026-10-09T09:32:32.158865Z",
+              "program_type": null,
+              "published_at": "2026-10-09T09:32:32.218060Z",
+              "academic_year": "117",
+              "coverage_note": "\u5c1a\u672a\u67e5\u6838\u5408\u4f5c\u6821\u5b98\u65b9\u7533\u8acb\u6d41\u7a0b\u3002",
+              "review_status": "published",
+              "governance_key": "69f544188667215ffb25ff4de38b288c",
+              "applied_context": null,
+              "coverage_status": "official_verified",
+              "home_university": "Synthetic governance home",
+              "partner_website": null,
+              "application_round": "Synthetic round",
+              "applicability_note": "\u5b98\u65b9\u4f86\u6e90\u9069\u7528 117 \u5b78\u5e74\u5ea6\uff0c\u68af\u6b21\u70baSynthetic round\uff1b\u4ecd\u61c9\u5728\u9001\u4ef6\u524d\u6838\u5c0d\u7576\u671f\u516c\u544a\u3002",
+              "supersedes_version": null,
+              "applicability_status": "verified",
+              "issue_report_snapshot": null,
+              "effective_application_rounds": [
+                "Synthetic round"
+              ]
+            }
+          ],
+          "revisions": [
+            {
+              "id": "8ab69b2be46a4f6f83783114e31cf479",
+              "status": "published",
+              "version": 1,
+              "detected_at": "2026-10-09T09:32:32.110994+00:00",
+              "detected_by": "automated_refresh",
+              "review_note": null,
+              "reviewed_at": "2026-10-09T09:32:32.218070+00:00",
+              "reviewed_by": "synthetic-a",
+              "base_version": null,
+              "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+              "edit_history": [],
+              "workflow_key": "69f544188667215ffb25ff4de38b288c",
+              "change_summary": [
+                "\u5efa\u7acb\u7b2c\u4e00\u7248\u7533\u8acb\u6d41\u7a0b\uff0c\u767c\u5e03\u524d\u9700\u78ba\u8a8d\u6240\u6709\u5b98\u65b9\u4f86\u6e90\u8207\u9069\u7528\u68af\u6b21\u3002"
+              ],
+              "review_approvals": [
+                {
+                  "note": "Synthetic complete independent attestation",
+                  "reviewed_at": "2026-10-09T09:32:32.158865Z",
+                  "reviewer_id": "synthetic-a",
+                  "reviewed_rule_keys": [
+                    "workflow:applicability",
+                    "step:0"
+                  ],
+                  "reviewed_source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+                },
+                {
+                  "note": "Synthetic complete independent attestation",
+                  "reviewed_at": "2026-10-09T09:32:32.158865Z",
+                  "reviewer_id": "synthetic-b",
+                  "reviewed_rule_keys": [
+                    "workflow:applicability",
+                    "step:0"
+                  ],
+                  "reviewed_source_urls": [
+                    "https://synthetic.edu/exchange"
+                  ],
+                  "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+                }
+              ],
+              "workflow_payload": {
+                "steps": [
+                  {
+                    "order": 1,
+                    "phase": "Synthetic phase",
+                    "scope": {
+                      "colleges": [],
+                      "departments": [],
+                      "academic_years": [
+                        "117"
+                      ],
+                      "home_universities": [
+                        "Synthetic governance home"
+                      ],
+                      "application_rounds": [],
+                      "partner_universities": [
+                        "Synthetic governance host"
+                      ]
+                    },
+                    "title": "Synthetic original",
+                    "timing": null,
+                    "details": [],
+                    "rule_id": "synthetic-rule",
+                    "summary": "Synthetic bounded requirement",
+                    "action_url": null,
+                    "checked_at": "2026-10-09T09:32:32.158865Z",
+                    "submission": {
+                      "email": null,
+                      "method": "unknown",
+                      "office": null,
+                      "address": null,
+                      "portal_url": null,
+                      "send_by_at": null,
+                      "deadline_note": null,
+                      "receiving_hours": null,
+                      "arrival_deadline_at": null
+                    },
+                    "deadline_at": null,
+                    "source_urls": [
+                      "https://synthetic.edu/exchange"
+                    ],
+                    "support_status": "verified",
+                    "deadline_status": "not_applicable",
+                    "responsible_unit": "Synthetic student",
+                    "overrides_rule_id": null,
+                    "responsible_party": "Synthetic student",
+                    "needs_confirmation": false,
+                    "official_form_urls": [],
+                    "required_documents": [],
+                    "deadline_checked_at": "2026-10-09T00:00:00Z",
+                    "deadline_source_url": "https://synthetic.edu/exchange",
+                    "confirmation_contact": null,
+                    "document_requirements": [],
+                    "signature_requirements": [],
+                    "deadline_reminder_eligible": false
+                  }
+                ],
+                "country": null,
+                "sources": [
+                  {
+                    "role": "home_university",
+                    "title": "Synthetic official notice",
+                    "priority": 1,
+                    "authority": "home_official_notice",
+                    "checked_at": "2026-10-09T09:32:32.158865Z",
+                    "source_url": "https://synthetic.edu/exchange",
+                    "content_hash": null,
+                    "application_round": "Synthetic round",
+                    "effective_academic_year": "117"
+                  }
+                ],
+                "version": 1,
+                "disclaimer": "\u622a\u6b62\u65e5\u8207\u7533\u8acb\u65b9\u5f0f\u53ef\u80fd\u8abf\u6574\uff1b\u9001\u4ef6\u524d\u8acb\u518d\u6838\u5c0d\u6bcd\u6821\u570b\u969b\u8655\u3001\u5408\u4f5c\u6821\u901a\u77e5\u4fe1\u8207\u5b98\u65b9\u7533\u8acb\u9801\u3002",
+                "school_name": "Synthetic governance host",
+                "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+                "last_checked": "2026-10-09T09:32:32.158865Z",
+                "program_type": null,
+                "published_at": "2026-10-09T09:32:32.218060Z",
+                "academic_year": "117",
+                "coverage_note": "\u5c1a\u672a\u67e5\u6838\u5408\u4f5c\u6821\u5b98\u65b9\u7533\u8acb\u6d41\u7a0b\u3002",
+                "review_status": "published",
+                "governance_key": "69f544188667215ffb25ff4de38b288c",
+                "applied_context": null,
+                "coverage_status": "official_verified",
+                "home_university": "Synthetic governance home",
+                "partner_website": null,
+                "application_round": "Synthetic round",
+                "applicability_note": "\u5b98\u65b9\u4f86\u6e90\u9069\u7528 117 \u5b78\u5e74\u5ea6\uff0c\u68af\u6b21\u70baSynthetic round\uff1b\u4ecd\u61c9\u5728\u9001\u4ef6\u524d\u6838\u5c0d\u7576\u671f\u516c\u544a\u3002",
+                "supersedes_version": null,
+                "applicability_status": "verified",
+                "issue_report_snapshot": null,
+                "effective_application_rounds": [
+                  "Synthetic round"
+                ]
+              },
+              "publication_action": "standard",
+              "required_rule_keys": [
+                "workflow:applicability",
+                "step:0"
+              ],
+              "required_source_urls": [
+                "https://synthetic.edu/exchange"
+              ],
+              "restored_revision_id": null,
+              "required_review_count": 2,
+              "rolled_back_from_revision_id": null
+            }
+          ]
+        },
+        "created_at": "2026-10-09T09:32:33.026133+00:00",
+        "revision_id": null,
+        "workflow_key": "69f544188667215ffb25ff4de38b288c"
+      }
+    ],
+    "reviews": null,
+    "revisions": [
+      {
+        "id": "8ab69b2be46a4f6f83783114e31cf479",
+        "status": "published",
+        "version": 1,
+        "detected_at": "2026-10-09T09:32:32.110994+00:00",
+        "detected_by": "automated_refresh",
+        "review_note": null,
+        "reviewed_at": "2026-10-09T09:32:32.21807+00:00",
+        "reviewed_by": "synthetic-a",
+        "base_version": null,
+        "content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25",
+        "edit_history": [],
+        "workflow_key": "69f544188667215ffb25ff4de38b288c",
+        "change_summary": [
+          "\u5efa\u7acb\u7b2c\u4e00\u7248\u7533\u8acb\u6d41\u7a0b\uff0c\u767c\u5e03\u524d\u9700\u78ba\u8a8d\u6240\u6709\u5b98\u65b9\u4f86\u6e90\u8207\u9069\u7528\u68af\u6b21\u3002"
+        ],
+        "review_approvals": [
+          {
+            "note": "Synthetic complete independent attestation",
+            "reviewed_at": "2026-10-09T09:32:32.158865Z",
+            "reviewer_id": "synthetic-a",
+            "reviewed_rule_keys": [
+              "workflow:applicability",
+              "step:0"
+            ],
+            "reviewed_source_urls": [
+              "https://synthetic.edu/exchange"
+            ],
+            "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+          },
+          {
+            "note": "Synthetic complete independent attestation",
+            "reviewed_at": "2026-10-09T09:32:32.158865Z",
+            "reviewer_id": "synthetic-b",
+            "reviewed_rule_keys": [
+              "workflow:applicability",
+              "step:0"
+            ],
+            "reviewed_source_urls": [
+              "https://synthetic.edu/exchange"
+            ],
+            "reviewed_content_hash": "ea1acf577aa5c48e7583dc14a175ef559f877b14ead78593af933343dbfb2e25"
+          }
+        ],
+        "workflow_payload": {
+          "steps": [
+            {
+              "order": 1,
+              "phase": "Synthetic phase",
+              "scope": {
+                "colleges": [],
+                "departments": [],
+                "academic_years": [
+                  "117"
+                ],
+                "home_universities": [
+                  "Synthetic governance home"
+                ],
+                "application_rounds": [],
+                "partner_universities": [
+                  "Synthetic governance host"
+                ]
+              },
+              "title": "Synthetic original",
+              "timing": null,
+              "details": [],
+              "rule_id": "synthetic-rule",
+              "summary": "Synthetic bounded requirement",
+              "action_url": null,
+              "checked_at": "2026-10-09T09:32:32.158865Z",
+              "submission": {
+                "email": null,
+                "method": "unknown",
+                "office": null,
+                "address": null,
+                "portal_url": null,
+                "send_by_at": null,
+                "deadline_note": null,
+                "receiving_hours": null,
+                "arrival_deadline_at": null
+              },
+              "deadline_at": null,
+              "source_urls": [
+                "https://synthetic.edu/exchange"
+              ],
+              "support_status": "verified",
+              "deadline_status": "not_applicable",
+              "responsible_unit": "Synthetic student",
+              "overrides_rule_id": null,
+              "responsible_party": "Synthetic student",
+              "needs_confirmation": false,
+              "official_form_urls": [],
+              "required_documents": [],
+              "deadline_checked_at": "2026-10-09T00:00:00Z",
+              "deadline_source_url": "https://synthetic.edu/exchange",
+              "confirmation_contact": null,
+              "document_requirements": [],
+              "signature_requirements": [],
+              "deadline_reminder_eligible": false
+            }
+          ],
+          "country": null,
+          "sources": [
+            {
+              "role": "home_university",
+              "title": "Synthetic official notice",
+              "priority": 1,
+              "authority": "home_official_notice",
+              "checked_at": "2026-10-09T09:32:32.158865Z",
+              "source_url": "https://synthetic.edu/exchange",
+              "content_hash": null,
+              "application_round": "Synthetic round",
+              "effective_academic_year": "117"
+            }
+          ],
+          "version": 1,
+          "disclaimer": "\u622a\u6b62\u65e5\u8207\u7533\u8acb\u65b9\u5f0f\u53ef\u80fd\u8abf\u6574\uff1b\u9001\u4ef6\u524d\u8acb\u518d\u6838\u5c0d\u6bcd\u6821\u570b\u969b\u8655\u3001\u5408\u4f5c\u6821\u901a\u77e5\u4fe1\u8207\u5b98\u65b9\u7533\u8acb\u9801\u3002",
+          "school_name": "Synthetic governance host",
+          "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+          "last_checked": "2026-10-09T09:32:32.158865Z",
+          "program_type": null,
+          "published_at": "2026-10-09T09:32:32.218060Z",
+          "academic_year": "117",
+          "coverage_note": "\u5c1a\u672a\u67e5\u6838\u5408\u4f5c\u6821\u5b98\u65b9\u7533\u8acb\u6d41\u7a0b\u3002",
+          "review_status": "published",
+          "governance_key": "69f544188667215ffb25ff4de38b288c",
+          "applied_context": null,
+          "coverage_status": "official_verified",
+          "home_university": "Synthetic governance home",
+          "partner_website": null,
+          "application_round": "Synthetic round",
+          "applicability_note": "\u5b98\u65b9\u4f86\u6e90\u9069\u7528 117 \u5b78\u5e74\u5ea6\uff0c\u68af\u6b21\u70baSynthetic round\uff1b\u4ecd\u61c9\u5728\u9001\u4ef6\u524d\u6838\u5c0d\u7576\u671f\u516c\u544a\u3002",
+          "supersedes_version": null,
+          "applicability_status": "verified",
+          "issue_report_snapshot": null,
+          "effective_application_rounds": [
+            "Synthetic round"
+          ]
+        },
+        "publication_action": "standard",
+        "restored_revision_id": null,
+        "required_review_count": 2,
+        "rolled_back_from_revision_id": null
+      }
+    ],
+    "rollbacks": null,
+    "workflows": [
+      {
+        "created_at": "2026-10-09T09:32:32.11502+00:00",
+        "updated_at": "2026-10-09T09:32:33.026133+00:00",
+        "program_type": null,
+        "published_at": "2026-10-09T09:32:32.21806+00:00",
+        "workflow_key": "69f544188667215ffb25ff4de38b288c",
+        "academic_year": "117",
+        "home_university": "Synthetic governance home",
+        "application_round": "Synthetic round",
+        "published_payload": {
+          "steps": [
+            {
+              "order": 1,
+              "phase": "Synthetic phase",
+              "scope": {
+                "colleges": [],
+                "departments": [],
+                "academic_years": [
+                  "117"
+                ],
+                "home_universities": [
+                  "Synthetic governance home"
+                ],
+                "application_rounds": [],
+                "partner_universities": [
+                  "Synthetic governance host"
+                ]
+              },
+              "title": "Synthetic original",
+              "timing": null,
+              "details": [],
+              "rule_id": "synthetic-rule",
+              "summary": "Synthetic bounded requirement",
+              "action_url": null,
+              "checked_at": "2026-10-09T09:32:32.158865Z",
+              "submission": {
+                "email": null,
+                "method": "unknown",
+                "office": null,
+                "address": null,
+                "portal_url": null,
+                "send_by_at": null,
+                "deadline_note": null,
+                "receiving_hours": null,
+                "arrival_deadline_at": null
+              },
+              "deadline_at": null,
+              "source_urls": [
+                "https://synthetic.edu/exchange"
+              ],
+              "support_status": "verified",
+              "deadline_status": "not_applicable",
+              "responsible_unit": "Synthetic student",
+              "overrides_rule_id": null,
+              "responsible_party": "Synthetic student",
+              "needs_confirmation": false,
+              "official_form_urls": [],
+              "required_documents": [],
+              "deadline_checked_at": "2026-10-09T00:00:00Z",
+              "deadline_source_url": "https://synthetic.edu/exchange",
+              "confirmation_contact": null,
+              "document_requirements": [],
+              "signature_requirements": [],
+              "deadline_reminder_eligible": false
+            }
+          ],
+          "country": null,
+          "sources": [
+            {
+              "role": "home_university",
+              "title": "Synthetic official notice",
+              "priority": 1,
+              "authority": "home_official_notice",
+              "checked_at": "2026-10-09T09:32:32.158865Z",
+              "source_url": "https://synthetic.edu/exchange",
+              "content_hash": null,
+              "application_round": "Synthetic round",
+              "effective_academic_year": "117"
+            }
+          ],
+          "version": 1,
+          "disclaimer": "\u622a\u6b62\u65e5\u8207\u7533\u8acb\u65b9\u5f0f\u53ef\u80fd\u8abf\u6574\uff1b\u9001\u4ef6\u524d\u8acb\u518d\u6838\u5c0d\u6bcd\u6821\u570b\u969b\u8655\u3001\u5408\u4f5c\u6821\u901a\u77e5\u4fe1\u8207\u5b98\u65b9\u7533\u8acb\u9801\u3002",
+          "school_name": "Synthetic governance host",
+          "workflow_id": "workflow-0b4d963f2d330b1613c6a2c0",
+          "last_checked": "2026-10-09T09:32:32.158865Z",
+          "program_type": null,
+          "published_at": "2026-10-09T09:32:32.218060Z",
+          "academic_year": "117",
+          "coverage_note": "\u5c1a\u672a\u67e5\u6838\u5408\u4f5c\u6821\u5b98\u65b9\u7533\u8acb\u6d41\u7a0b\u3002",
+          "review_status": "published",
+          "governance_key": "69f544188667215ffb25ff4de38b288c",
+          "applied_context": null,
+          "coverage_status": "official_verified",
+          "home_university": "Synthetic governance home",
+          "partner_website": null,
+          "application_round": "Synthetic round",
+          "applicability_note": "\u5b98\u65b9\u4f86\u6e90\u9069\u7528 117 \u5b78\u5e74\u5ea6\uff0c\u68af\u6b21\u70baSynthetic round\uff1b\u4ecd\u61c9\u5728\u9001\u4ef6\u524d\u6838\u5c0d\u7576\u671f\u516c\u544a\u3002",
+          "supersedes_version": null,
+          "applicability_status": "verified",
+          "issue_report_snapshot": null,
+          "effective_application_rounds": [
+            "Synthetic round"
+          ]
+        },
+        "published_version": 1,
+        "partner_university": "Synthetic governance host",
+        "current_revision_id": "8ab69b2be46a4f6f83783114e31cf479"
+      },
+      {
+        "created_at": "2026-10-09T09:32:29.410145+00:00",
+        "updated_at": "2026-10-09T09:32:29.410145+00:00",
+        "program_type": null,
+        "published_at": null,
+        "workflow_key": "__governance_command_schema__",
+        "academic_year": null,
+        "home_university": "Internal governance schema",
+        "application_round": null,
+        "published_payload": null,
+        "published_version": null,
+        "partner_university": "No public workflow",
+        "current_revision_id": null
+      }
+    ],
+    "promotions": null
+  }
+}

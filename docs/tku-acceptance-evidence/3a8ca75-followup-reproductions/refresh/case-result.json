@@ -1,0 +1,83 @@
+{
+  "kind": "refresh",
+  "production_access": false,
+  "expected": "superseded baseline and pending; public unchanged",
+  "actual_http_response": "{\"code\":\"22023\",\"details\":null,\"hint\":null,\"message\":\"Staging cannot approve or publish\"}",
+  "accepted": false,
+  "error": "400 Client Error: Bad Request for url: http://127.0.0.1:43483/rpc/exchange_commit_application_workflow_revision",
+  "snapshot_unchanged": true,
+  "public_unchanged": true,
+  "before": {
+    "audit": [
+      {
+        "id": 1,
+        "note": "Atomic governance command schema 1",
+        "action": "detected",
+        "actor_id": null,
+        "metadata": {
+          "governance_command_schema": 1
+        },
+        "created_at": "2026-10-09T09:32:53.715395+00:00",
+        "revision_id": null,
+        "workflow_key": "__governance_command_schema__"
+      }
+    ],
+    "reviews": null,
+    "revisions": null,
+    "rollbacks": null,
+    "workflows": [
+      {
+        "created_at": "2026-10-09T09:32:53.714698+00:00",
+        "updated_at": "2026-10-09T09:32:53.714698+00:00",
+        "program_type": null,
+        "published_at": null,
+        "workflow_key": "__governance_command_schema__",
+        "academic_year": null,
+        "home_university": "Internal governance schema",
+        "application_round": null,
+        "published_payload": null,
+        "published_version": null,
+        "partner_university": "No public workflow",
+        "current_revision_id": null
+      }
+    ],
+    "promotions": null
+  },
+  "after": {
+    "audit": [
+      {
+        "id": 1,
+        "note": "Atomic governance command schema 1",
+        "action": "detected",
+        "actor_id": null,
+        "metadata": {
+          "governance_command_schema": 1
+        },
+        "created_at": "2026-10-09T09:32:53.715395+00:00",
+        "revision_id": null,
+        "workflow_key": "__governance_command_schema__"
+      }
+    ],
+    "reviews": null,
+    "revisions": null,
+    "rollbacks": null,
+    "workflows": [
+      {
+        "created_at": "2026-10-09T09:32:53.714698+00:00",
+        "updated_at": "2026-10-09T09:32:53.714698+00:00",
+        "program_type": null,
+        "published_at": null,
+        "workflow_key": "__governance_command_schema__",
+        "academic_year": null,
+        "home_university": "Internal governance schema",
+        "application_round": null,
+        "published_payload": null,
+        "published_version": null,
+        "partner_university": "No public workflow",
+        "current_revision_id": null
+      }
+    ],
+    "promotions": null
+  },
+  "statuses": []
+}
