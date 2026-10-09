@@ -35,11 +35,16 @@ else:
 """
     # Reproduce the original buffered logger regardless of the outer test runner.
     environment = {key: value for key, value in os.environ.items() if key != "PYTHONUNBUFFERED"}
-    process = subprocess.Popen([sys.executable, "-c", program], stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=environment)
-    assert process.stderr.readline() == b"PIPE_FULL\n"
+    # readline() and communicate() share stderr. A buffered readline can prefetch
+    # the traceback, which communicate's descriptor reads then fail to return.
+    process = subprocess.Popen([sys.executable, "-c", program], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                               env=environment, bufsize=0)
     if not repair:
-        # Keep the reader stopped until the original logger reaches EAGAIN.
+        # Keep both readers stopped until the original logger reaches EAGAIN.
+        # This also exercises the case where the entire traceback is already
+        # available before the parent reads the PIPE_FULL marker.
         process.wait(timeout=10)
+    assert process.stderr.readline() == b"PIPE_FULL\n"
     output, error = process.communicate(timeout=30)
     if repair:
         assert process.returncode == 0, error.decode()
@@ -81,7 +86,7 @@ raise SystemExit(stream_pytest(json.loads(sys.argv[1])))
 """
     process = subprocess.Popen([sys.executable, "-c", program, json.dumps(command)],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-        cwd=Path(__file__).resolve().parents[1])
+        cwd=Path(__file__).resolve().parents[1], bufsize=0)
     assert process.stderr.readline() == b"PIPE_FULL\n"
     output, error = process.communicate(timeout=30)
     assert process.returncode == 1, error.decode()
