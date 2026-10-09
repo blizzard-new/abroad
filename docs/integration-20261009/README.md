@@ -1,10 +1,10 @@
-# PR #6 已合併，正式部署驗證中：2026-10-09 17:22 UTC
+# PR #6 正式流程通過，穩定觀察中：2026-10-09 17:35 UTC
 
 最終候選`49882dfce64449abeb682d01ae01a8da5c10ba8d`。完整2647案於`f3e0b666`執行，原始2629passed／4failed／14原skip；4失敗為3筆ENOSPC截图與1筆配對asset URL版本，原始紀錄不改寫。相同f3的3截圖補驗、最終49882dfc的6contract/pipe及9browser全部passed，四片原全套和最終補驗source guards均clean。有效唯一結果2633passed／0未解決failed／14原skip，沒有遺漏案例：[完整對帳](memory-final-acceptance-summary.json)。
 
 最終相對f3只變測試pipe I/O與一處community-reader快取query token；所有Python/JavaScript、資料、SQL、依賴、runner相同：[精確delta](memory-final-release-delta-proof.json)。最終重新建wheel，2527entries／2522來源檔byte相同／15張未授權新圖排除，SHA`d2283478e7650bc9ad7f945071a6af2bad7c97a9eed1eed2dc047a54e046ab18`。
 
-暖快取384GET／36選校／6NTU／3批八併發全部passed，峰值445.76MiB：[summary](memory-final-warm-soak-summary.json)。這是本機程序RSS/HWM，不是Render cgroup。35migration／實際Storage／17治理組74RPC／舊102Python模組相容性全passed。PR6沒有DB migration。PR6已依父授權合併為`8139be4d3604a60265029dbbe41af21c094e609d`，merge tree與固定候選完全相同：[merge proof](memory-pr6-merge-proof.json)。Render已自動建立`dep-db4i4obrjlhs738ng200`，正在build；OOM穩定性尚未正式解除，仍待精確版本live與低負載/記憶體/事件驗收。
+暖快取384GET／36選校／6NTU／3批八併發全部passed，峰值445.76MiB：[summary](memory-final-warm-soak-summary.json)。這是本機程序RSS/HWM，不是Render cgroup。35migration／實際Storage／17治理組74RPC／舊102Python模組相容性全passed。PR6沒有DB migration。PR6已依父授權合併為`8139be4d3604a60265029dbbe41af21c094e609d`，merge tree與固定候選完全相同：[merge proof](memory-pr6-merge-proof.json)。Render `dep-db4i4obrjlhs738ng200`於17:25:30UTC正式live。首頁/app.js exact bytes、6學校HTTP/6guest401/12browser切換與NTU390/1440照片地球生活全passed。實際Render峰值485654530bytes（463.16MiB），最近約458.66MiB，512MiB上限；事件尚無OOM/重啟。現正保留安靜觀察窗並於隔離環境補驗所有生活頁暖快取後再8併發的順序，尚未把有限觀察宣稱任意負載保證。
 
 [PR6發布/回復計畫](memory-release-plan.md) · [最新狀態](execution-status.json) · [全套原始結果](memory-final-full-summary.json)
 

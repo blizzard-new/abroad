@@ -1,0 +1,53 @@
+{
+  "checked_at": "2026-10-09T17:31:20.122711+00:00",
+  "url": "https://uniway-1167.onrender.com",
+  "render_commit": "8139be4d3604a60265029dbbe41af21c094e609d",
+  "http": [
+    {
+      "path": "/health",
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "school": "長庚大學",
+        "supported_schools": [
+          "長庚大學",
+          "國立臺北大學",
+          "國立臺灣大學",
+          "國立中正大學",
+          "國立中央大學",
+          "淡江大學"
+        ],
+        "pages": 0,
+        "exchange_info_ready": false
+      }
+    },
+    {
+      "path": "/student-dashboard?school=CGU",
+      "status": 200,
+      "school_name": "長庚大學",
+      "partners": 77
+    },
+    {
+      "path": "/student-dashboard?school=NTPU",
+      "status": 200,
+      "school_name": "國立臺北大學",
+      "partners": 206
+    },
+    {
+      "path": "/student-dashboard?school=NTU",
+      "status": 200,
+      "school_name": "國立臺灣大學",
+      "partners": 288
+    }
+  ],
+  "browser": [
+    {
+      "width": 390,
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "passed": true
+    }
+  ]
+}

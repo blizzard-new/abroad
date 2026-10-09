@@ -138,6 +138,13 @@ with tempfile.TemporaryDirectory(prefix='abroad-memory-profile-') as data:
                         sample(f'ntu-globe-photo-life-{width}')
                         page.close()
                     browser.close()
+            if '--burst-after-browser' in sys.argv:
+                for batch in range(3):
+                    endpoints = [('/student-dashboard', {'school':'CCU'})] * 8
+                    with ThreadPoolExecutor(max_workers=8) as pool:
+                        responses = list(pool.map(get, endpoints))
+                    assert len(responses) == 8
+                    sample(f'after-browser-eight-concurrent-ccu-dashboard-{batch}')
             sample('after-explicit-gc', collect=True)
         finally:
             server.terminate()

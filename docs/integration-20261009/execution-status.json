@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-09T17:21:05.577049+00:00",
+  "timestamp": "2026-10-09T17:35:35.132062+00:00",
   "environment": "exec recovered; latest commands succeed",
   "production": {
     "main": "8139be4d3604a60265029dbbe41af21c094e609d",
@@ -52,7 +52,7 @@
     "exact_deployed_python_source_and_models": "passed in separate interpreter, stage/dual-review/publish/readback, 12 HTTP200",
     "final_31234305_applied_filename_order": "passed full35, Storage and original five-school code/models; clean start/end"
   },
-  "remaining_gate": "Exact Render merge8139 live; static bytes, low-load6school/NTU flows, memory and failure/restart events, quiet observation.",
+  "remaining_gate": "Finish quiet Render memory/events window and isolated final-head post-browser burst order check, then publish final release evidence",
   "tku_production_migrations_applied": true,
   "pr2_merged": true,
   "original_full": {
@@ -105,7 +105,7 @@
   "memory_fix": {
     "sha": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
     "branch": "integration/six-school-memory-20261009",
-    "status": "PR6 merged; exact Render auto-deploy building, production stability pending",
+    "status": "All production flows passed; quiet observation and isolated post-browser cache-warm concurrency check ongoing",
     "scope": "3 Python source files, stable SVG rendering and asset URL, 4 test files, incident documentation; source datasets, migrations, dependencies, workflows unchanged",
     "tests": "fixed SHA 4 new regression tests and OpenAPI check passed; earlier focused 84 passed; full 2645 cases now running",
     "preliminary_peak_mib": {
@@ -214,6 +214,17 @@
     },
     "merge_sha": "8139be4d3604a60265029dbbe41af21c094e609d",
     "render_deploy": "dep-db4i4obrjlhs738ng200",
-    "render_status": "build_in_progress"
+    "render_status": "live",
+    "render_finished_at": "2026-10-09T17:25:30.577437Z",
+    "production_identity": "passed exact index/app.js bytes",
+    "production_six_school": "passed6HTTP,6guest401,12browser390/1440 switches,health and OpenAPI",
+    "production_ntu": "passed390and1440 exact original regression",
+    "production_metrics_after_flows": {
+      "peak_bytes": 485654530,
+      "settled_sample_bytes": 480944130,
+      "memory_limit_bytes": 536870900,
+      "new_instance": "srv-db26bgjbc2fs73fdsmhg-qvscr",
+      "server_failure_or_restart_events": 0
+    }
   }
 }

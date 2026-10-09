@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "/workspace/integration-tools/production_school_smoke.py",
+    "8139be4d3604a60265029dbbe41af21c094e609d",
+    "memory-production-six-school",
+    "--ncu",
+    "--tku"
+  ],
+  "cwd": "/workspace/abroad-memory",
+  "started_at": "2026-10-09T17:26:29.782019+00:00",
+  "start_guard": {
+    "sha": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
+    "tree": "923758571f97549da12091f1499ba745c625a2fd",
+    "status": ""
+  },
+  "timeout_seconds": 1200,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T17:30:56.858844+00:00",
+  "end_guard": {
+    "sha": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
+    "tree": "923758571f97549da12091f1499ba745c625a2fd",
+    "status": ""
+  }
+}
