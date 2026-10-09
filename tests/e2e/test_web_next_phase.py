@@ -2086,7 +2086,7 @@ def test_workspace_conflict_preserves_remote_addition_and_local_removal(
     page.evaluate("window.location.hash = '#partners'")
     page.locator("#partner-search").fill("林肯")
     lincoln = page.locator(
-        f'.favorite-toggle[data-school-name="{LINCOLN}"]'
+        f'#partner-table .favorite-toggle[data-school-name="{LINCOLN}"]:visible'
     ).first
     expect(lincoln).to_have_attribute("aria-pressed", "false")
     lincoln.click()
@@ -2110,7 +2110,7 @@ def test_workspace_conflict_preserves_remote_addition_and_local_removal(
         second_page.evaluate("window.location.hash = '#partners'")
         second_page.locator("#partner-search").fill("明治")
         meiji_on_second = second_page.locator(
-            f'.favorite-toggle[data-school-name="{MEIJI}"]'
+            f'#partner-table .favorite-toggle[data-school-name="{MEIJI}"]:visible'
         ).first
         expect(meiji_on_second).to_have_attribute("aria-pressed", "false")
         meiji_on_second.click()
@@ -2151,12 +2151,12 @@ def test_workspace_conflict_preserves_remote_addition_and_local_removal(
 
         page.locator("#partner-search").fill("明治")
         meiji_on_first = page.locator(
-            f'.favorite-toggle[data-school-name="{MEIJI}"]'
+            f'#partner-table .favorite-toggle[data-school-name="{MEIJI}"]:visible'
         ).first
         expect(meiji_on_first).to_have_attribute("aria-pressed", "true")
         page.locator("#partner-search").fill("威斯康辛")
         uwm = page.locator(
-            f'.favorite-toggle[data-school-name="{UWM}"]'
+            f'#partner-table .favorite-toggle[data-school-name="{UWM}"]:visible'
         ).first
         expect(uwm).to_have_attribute("aria-pressed", "false")
         uwm.click()
@@ -2186,7 +2186,7 @@ def test_workspace_conflict_preserves_remote_addition_and_local_removal(
             second_page.locator("#partner-search").fill(query)
             expect(
                 second_page.locator(
-                    f'.favorite-toggle[data-school-name="{school}"]'
+                    f'#partner-table .favorite-toggle[data-school-name="{school}"]:visible'
                 ).first
             ).to_have_attribute("aria-pressed", expected)
         assert set(_workspace(live_server, session)["workspace"]["favorite_schools"]) == {
