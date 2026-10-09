@@ -47,3 +47,5 @@ M1 `e1c551a` 完整原始 PR `37905061634`／push `37905055678` 各實際 1,786 
 `3cbe976` 四個本機全量分片實際完成；原批次 staging 仍有載入失敗，後續原XML計數另行封存，不把前一次單案例通過當成整批穩定通過。後續診斷先將 queue 與 readonly readiness 分開，單獨仍重現失敗，原XML保留。實際 cProfile 再定位到 batch builder 的來源 URL 正規化重複約50萬次：855 workflows／778 batch rows，9478萬calls／21.02秒。對完全純函式加4096筆LRU後，同一資料只350萬calls／3.60秒；1062個實際／邊界URL輸出與f99原函式相同，整個 normalization body AST不變，沒有改URL身份政策、公開資料、hash／CAS／雙審閘門或原test body／assert／15秒timeout。原staging診斷實際1passed／73.73秒；54frontend unit通過。後續新固定SHA guard與整批browser結果另作驗收。
 
 共用整合點補充：`source_url_policy.py` 僅新增純字串函式的有界結果快取；`content-review.js` 的 readiness 仍即時計算、失敗顯示 blocked／檢查失敗，queue和report均使用requestSequence拒絕舊回應。queue載入完成不表示readiness READY；所有發布仍由原server命令驗證。
+
+原始XML已核 `3cbe976` 本機全量1824案全部執行：1808 passed／2 failed／14原skipped，原1789 IDs全保留、增加35、added skips0。失敗為原staging15秒載入，以及舊migration syntax test固定33檔／559 statements／71 PL units；增加本治理migration後，實際應為34／563／73，11 SQL bodies不變。後續只提高精確計數並保留全部舊逐檔／nested-invalid拒絕斷言，另核新治理檔4 statements／2 PL units；來源原fail未改寫或豁免。
