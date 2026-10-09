@@ -14,11 +14,21 @@ from exchange_info.university_locations import UniversityLocation, location_key
 
 ROOT = Path(__file__).resolve().parents[1]
 SNAPSHOT = ROOT / "sources/ntu/destinations-2026-10-08.json.gz"
+PHOTO_REVIEW = ROOT / "sources/ntu/photo-license-review-2026-10-09.json"
 PACKAGE = ROOT / "src/exchange_info"
 
 
 def build(snapshot_path: Path = SNAPSHOT) -> dict:
     snapshot = json.loads(gzip.decompress(snapshot_path.read_bytes()))
+    review = json.loads(PHOTO_REVIEW.read_text())
+    if hashlib.sha256(snapshot_path.read_bytes()).hexdigest() != review["frozen_snapshot_sha256"]:
+        raise ValueError("Photo permission review belongs to a different snapshot")
+    pending = {(r["school_name"], r["country"]): r for r in review["rows"]}
+    for row in snapshot["photos"]:
+        if decision := pending.get((row["school_name"], row["country"])):
+            if decision["content_hash"] != row["content_hash"]:
+                raise ValueError("Photo permission review hash mismatch")
+            row.update(status="needs_review", local_path=None, note=decision["reason"])
     manifest_path = PACKAGE / "static/assets/school-images.json"
     manifest = json.loads(manifest_path.read_text())
     images = {(school_identity_key(r["school_name"]), r["country"]): r for r in manifest["schools"]}
@@ -29,7 +39,7 @@ def build(snapshot_path: Path = SNAPSHOT) -> dict:
             file = PACKAGE / "static" / relative
             if hashlib.sha256(file.read_bytes()).hexdigest() != record.content_hash:
                 raise ValueError(f"Photo hash mismatch: {record.school_name}")
-        elif record.status != "missing" or record.local_path:
+        elif record.status not in {"missing", "needs_review"} or record.local_path:
             raise ValueError("Only reviewed photographs or explicit missing records may be bundled")
         images[(school_identity_key(record.school_name), record.country)] = row
     manifest["schools"] = list(images.values())

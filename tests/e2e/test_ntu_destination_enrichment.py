@@ -23,7 +23,7 @@ def test_ntu_photos_globe_data_and_bundled_life_are_visible_without_refresh(page
         page.locator("#glass-menu-toggle").click()
     wait_until(page, "state.dashboard?.school_name === '國立臺灣大學' && state.dashboard.partner_universities.length === 288")
     assert page.evaluate("state.dashboard.partner_universities.filter(p => p.location?.geocode_status === 'verified').length") == 269
-    assert page.evaluate("state.dashboard.partner_universities.filter(p => p.image_status === 'verified').length") == 286
+    assert page.evaluate("state.dashboard.partner_universities.filter(p => p.image_status === 'verified').length") == 266
     # Exercise the actual globe with local vendor/data assets.
     page.locator('[data-partner-view="map"]').click()
     expect(page.locator("#partner-globe canvas")).to_be_visible(timeout=30000)

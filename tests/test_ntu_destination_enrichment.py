@@ -110,9 +110,16 @@ def test_all_ntu_destinations_have_reviewed_or_explicitly_missing_overlays():
         assert {(r["school_name"], r["country"]) for r in snapshot[key]} == names
     assert sum(r["status"] == "verified" for r in snapshot["photos"]) == 286
     assert sum(r["geocode_status"] == "verified" for r in snapshot["locations"]) == 269
+    review = json.loads(Path("sources/ntu/photo-license-review-2026-10-09.json").read_text())
+    pending = {(r["school_name"], r["country"]): r for r in review["rows"]}
+    assert len(pending) == 20
     for row in snapshot["photos"]:
         if row["status"] == "verified":
             path = Path("src/exchange_info/static") / row["local_path"].split("?")[0].removeprefix("/static/")
+            decision = pending.get((row["school_name"], row["country"]))
+            if decision and decision.get("quarantine_file"):
+                assert not path.exists()
+                path = Path(decision["quarantine_file"])
             assert hashlib.sha256(path.read_bytes()).hexdigest() == row["content_hash"]
             if "commons.wikimedia.org" in row["official_page_url"]:
                 assert row["license_name"]
@@ -136,7 +143,11 @@ def test_ntu_public_api_serves_photos_locations_and_life_without_network(tmp_pat
         assert response.status_code == 200
         partners = response.json()["partner_universities"]
         assert len(partners) == 288
-        assert sum(p["image_status"] == "verified" for p in partners) == 286
+        assert sum(p["image_status"] == "verified" for p in partners) == 266
+        pending = json.loads(Path("sources/ntu/photo-license-review-2026-10-09.json").read_text())["rows"]
+        for row in pending:
+            partner = next(p for p in partners if p["school_name"] == row["school_name"])
+            assert partner["image_status"] == "needs_review" and not partner["image_url"]
         assert sum(p["location"]["geocode_status"] == "verified" for p in partners) == 269
         # The systems have no single destination point; no HQ marker is inserted.
         for p in partners:

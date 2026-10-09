@@ -450,8 +450,16 @@ def _attach_school_images(
     partners = []
     for school in dashboard.partner_universities:
         visual = visuals.get((school_identity_key(school.school_name), school.country or ""))
-        if not visual or visual.get("status") != "verified":
+        if not visual:
             partners.append(school)
+            continue
+        if visual.get("status") != "verified":
+            partners.append(school.model_copy(update={
+                "image_url": None,
+                "image_source_url": None,
+                "image_page_url": visual.get("official_page_url") or None,
+                "image_status": str(visual.get("status") or "missing"),
+            }))
             continue
         local_path = str(visual.get("local_path") or "")
         image_url = f"{base}{local_path}" if local_path.startswith("/") else local_path
