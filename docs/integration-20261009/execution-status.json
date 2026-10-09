@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-09T16:58:11.195164+00:00",
+  "timestamp": "2026-10-09T17:05:57.679923+00:00",
   "environment": "exec recovered; latest commands succeed",
   "production": {
     "main": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
@@ -52,7 +52,7 @@
     "exact_deployed_python_source_and_models": "passed in separate interpreter, stage/dual-review/publish/readback, 12 HTTP200",
     "final_31234305_applied_filename_order": "passed full35, Storage and original five-school code/models; clean start/end"
   },
-  "remaining_gate": "Complete exact f3 full2647/runtime checks and 3 ENOSPC-case reruns, exact-SHA memory/browser run, then authorized PR6 merge and low-load production stability verification.",
+  "remaining_gate": "Complete f3 full2647 and reconcile documented ENOSPC reruns, then authorized fixed9327 PR6 merge and exact Render/live low-load stability verification.",
   "tku_production_migrations_applied": true,
   "pr2_merged": true,
   "original_full": {
@@ -103,7 +103,7 @@
   ],
   "pr2_merge_sha": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
   "memory_fix": {
-    "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+    "sha": "9327cfe0cb836ad09818310c46ad7322555ef4bb",
     "branch": "integration/six-school-memory-20261009",
     "status": "Draft PR6; fixed SHA full 2647-case regression in progress; not merged",
     "scope": "3 Python source files, stable SVG rendering and asset URL, 4 test files, incident documentation; source datasets, migrations, dependencies, workflows unchanged",
@@ -130,6 +130,36 @@
     "full_suite_status": "Three navigation screenshot failures explicitly report Errno28 ENOSPC. No application assertion failed in those three. Disk relocation preserves all files; exact failed cases will rerun after full test execution.",
     "ui_root_cause": "Real initIcons SVG replacement between pointerdown/up loses click; controlled reproduction fails on baseline and passes with stable existing SVGs. New/changed icon rendering also verified.",
     "calendar_root_cause": "Test Python UTC date differs from real Taipei notification day after16UTC; test now uses explicit Taipei browser timezone and actual browser local date. Original assertions preserved.",
-    "enospc_rerun": "All3 original navigation cases passed on unchangedf3; clean start/end; raw full-run3ENOSPC failures retained"
+    "enospc_rerun": "All3 original navigation cases passed on unchangedf3; clean start/end; raw full-run3ENOSPC failures retained",
+    "full_product_suite_sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+    "test_only_followup": "Only tests/test_tku_web_evidence.py changes afterf3; all product, dependency, SQL, data, scripts/config bytes identical;3 committed-head pipe tests passed",
+    "original_full": {
+      "sha": "bedc9a03c0968a57728d1d08f6654404a3474269",
+      "passed": 2628,
+      "failed": 3,
+      "skipped": 14,
+      "all_source_guards_clean": true
+    },
+    "final_warm_soak": {
+      "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+      "final_head_product_identical": "9327cfe0cb836ad09818310c46ad7322555ef4bb",
+      "status": "passed",
+      "source_guards_clean": true,
+      "warm_caches_enabled": true,
+      "explicit_http_gets": 384,
+      "school_switches": 36,
+      "full_ntu_globe_photo_life_runs": 6,
+      "eight_concurrent_ccu_batches": 3,
+      "sample_count": 120,
+      "peak_bytes": 467410944,
+      "peak_mib": 445.7578125,
+      "final_rss_bytes": 465358848,
+      "budget_bytes": 536870912,
+      "headroom_bytes": 69459968,
+      "started_at": "2026-10-09T16:57:51.760440+00:00",
+      "finished_at": "2026-10-09T17:03:56.233692+00:00",
+      "measurement": "Owned local single-worker Uvicorn process RSS/HWM; not Render cgroup metrics. No production load.",
+      "all_http_and_browser_assertions_passed": true
+    }
   }
 }

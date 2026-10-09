@@ -1,0 +1,47 @@
+{
+  "at": "2026-10-09T17:00:00Z",
+  "pr": {
+    "url": "https://github.com/blizzard-new/abroad/pull/6",
+    "number": 6,
+    "state": "open",
+    "merged": false,
+    "mergeable": true,
+    "draft": true,
+    "body": "Production merge `1c715d21d1fd23a87087b74bbb068f4efbe74aa1` was OOM-killed at 2026-10-09 15:54:55 UTC during school switching and NTU globe/photo/life verification, causing 502 responses on the 512 MiB service.\n\nThe fix structures workflow rows while reading, avoids deep-copying read-only partner provenance, reads destination bundles/publication history for the requested home school, and permits two large catalogue response builds concurrently. It preserves complete source payloads and independent collector copies. Browser regression also reproduced a lost-click race when `initIcons()` replaced a pressed SVG; unchanged icons now retain their nodes and the app asset version is bumped. The calendar reminder test now uses an explicit Taipei browser date, matching notification semantics across midnight; its assertions remain intact.\n\nFinal candidate: `f3e0b666f28d82deaf17ceec701d8f0131ea2b5c`. Full 2,647-case regression is being rerun on this SHA. The preceding complete run is retained with its original mobile navigation and UTC/Taipei calendar failures; both corrected scenarios and two new icon cases passed focused verification. No tests or skip markers were removed.\n\nMemory evidence on the preceding Python fix (`bedc9a03`): three batches of eight parallel CCU dashboard requests reduced local peak RSS/HWM from 586.57 MiB to 338.56 MiB (42.28%); every HTTP request completed. With background cache warming enabled, 360 GETs, 36 school switches and six full NTU globe/photo/life tests passed at 424.57 MiB peak. Full 35-migration PostgREST/Storage, 17 governance groups / 74 RPCs, six-school forum policy and deployed-client compatibility passed. Local process measurements are not production Render metrics; final live stability remains a required gate.\n\nNo DB migration is needed. Source datasets, licensed image/vendor assets, migration bytes, dependencies/lock, Actions definitions and OpenAPI are unchanged. Quality stays disabled_manually; no Render, plan, permission, credential or billing settings were changed. After acceptance, merge only the fixed head and verify the exact auto-deployed SHA, low-load six-school/NTU behavior, memory headroom and absence of failure/restart events. A code revert requires no DB reversal but returns to the known OOM-prone version.\n\n[Incident and release notes](https://github.com/blizzard-new/abroad/blob/f3e0b666f28d82deaf17ceec701d8f0131ea2b5c/docs/six-school-memory-2026-10-09.md) · [Raw evidence, failures and current gate](https://github.com/blizzard-new/abroad/tree/artifacts/integration-20261009/docs/integration-20261009).",
+    "title": "Fix catalogue memory spikes and preserve navigation clicks",
+    "base": "main",
+    "base_sha": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
+    "head": "integration/six-school-memory-20261009",
+    "head_sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+    "head_repo_id": 1403890375,
+    "head_repo_full_name": "blizzard-new/abroad",
+    "merge_commit_sha": "eb04b6caa62cbce8a12457aee2cc5a5c88fc4db6",
+    "user": {
+      "login": "blizzard-new",
+      "name": "blizzard-new",
+      "email": null,
+      "avatar_url": "https://avatars.githubusercontent.com/u/262101326?v=4",
+      "id": 262101326
+    },
+    "requested_reviewers": null,
+    "requested_team_reviewers": null,
+    "diff": null,
+    "comments": null,
+    "created_at": "2026-10-09T16:22:20Z",
+    "updated_at": "2026-10-09T16:46:02Z",
+    "closed_at": null,
+    "merged_at": null,
+    "commits": 2,
+    "changed_files": 10,
+    "additions": 286,
+    "deletions": 32,
+    "display_url": "https://github.com/blizzard-new/abroad/pull/6",
+    "display_title": "Fix catalogue memory spikes and preserve navigation clicks"
+  },
+  "render_failure_restart_events_since_recovery": [
+    {
+      "type": "text",
+      "text": "[]\n\n cursor: \"\""
+    }
+  ]
+}

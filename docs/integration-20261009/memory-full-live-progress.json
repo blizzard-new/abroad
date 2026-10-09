@@ -1,14 +1,15 @@
 {
-  "timestamp": "2026-10-09T16:58:27.513536+00:00",
+  "timestamp": "2026-10-09T17:00:07.352590+00:00",
   "sha": "bedc9a03c0968a57728d1d08f6654404a3474269",
   "source_status": "",
   "counts": {
-    "passed": 2265,
-    "failed": 2,
+    "passed": 2580,
+    "failed": 3,
     "skipped": 14
   },
   "failed": [
     "tests/e2e/test_web_next_phase.py::test_calendar_task_schedule_uses_student_days_and_completion_stops_start_marker",
+    "tests/test_tku_web_evidence.py::test_evidence_output_preserves_a_long_failure_on_a_full_pipe[False]",
     "tests/e2e/test_ccu_delayed_switching.py::test_queued_form_save_keeps_original_home_when_switching_before_debounce[390]"
   ],
   "shards": [
@@ -16,11 +17,11 @@
       "shard": 0,
       "state": "running",
       "counts": {
-        "passed": 1915,
-        "failed": 1,
+        "passed": 2230,
+        "failed": 2,
         "skipped": 14
       },
-      "last": "tests/test_review_source_candidates.py::test_data_010_candidate_identity_and_evidence_match_official_workflows "
+      "last": "tests/test_translation_requests.py::test_the_compact_list_keeps_what_the_list_views_read_and_drops_the_guide_bodies "
     },
     {
       "shard": 1,

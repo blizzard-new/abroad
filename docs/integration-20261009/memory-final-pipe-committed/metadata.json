@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_tku_web_evidence.py",
+    "--junitxml=/workspace/integration-evidence/memory-final-pipe-committed/results.xml"
+  ],
+  "cwd": "/workspace/abroad-memory",
+  "started_at": "2026-10-09T17:02:21.991015+00:00",
+  "start_guard": {
+    "sha": "9327cfe0cb836ad09818310c46ad7322555ef4bb",
+    "tree": "955a842cbc093fa8af86f6f2fd271aef170d21d0",
+    "status": ""
+  },
+  "timeout_seconds": 120,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T17:02:23.946857+00:00",
+  "end_guard": {
+    "sha": "9327cfe0cb836ad09818310c46ad7322555ef4bb",
+    "tree": "955a842cbc093fa8af86f6f2fd271aef170d21d0",
+    "status": ""
+  }
+}

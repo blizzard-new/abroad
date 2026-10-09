@@ -1,8 +1,10 @@
-# PR #6 穩定性修正驗證中：2026-10-09 16:59 UTC
+# PR #6 完整回歸最後驗證中：2026-10-09 17:05 UTC
 
-固定候選 `f3e0b666f28d82deaf17ceec701d8f0131ea2b5c`；[PR #6](https://github.com/blizzard-new/abroad/pull/6) 仍為draft，尚未合併。主程式仍是四支已授權PR的merge `1c715d21`。完整2647案正在跑；35migration／實際Storage／治理／舊Python相容性與wheel、lock、OpenAPI、JS、SQL已通過。三筆本機ENOSPC導覽截图失敗已在磁碟恢復後以相同SHA、原assertions重跑全部通過。原失敗保留。
+最終候選 `9327cfe0cb836ad09818310c46ad7322555ef4bb`；[PR #6](https://github.com/blizzard-new/abroad/pull/6)仍為draft，尚未合併。完整產品回歸SHA是`f3e0b666`；最終只改一份測試的pipe讀取，產品、資料、SQL、依賴、runner及部署設定完全相同：[identity proof](memory-final-test-only-identity.json)。
 
-本機8併發峰值由586.57降到338.56MiB；前一記憶體候選暖快取長跑360GET/36選校/6NTU流程峰值424.57MiB。最新f3長跑進行中；這些不是Render cgroup實測值，正式穩定驗收仍待合併後確認。讀[memory-progress.md](memory-progress.md)與[execution-status.json](execution-status.json)看當前門檻。
+暖快取長跑384GET／36選校／6NTU照片地球生活／3批八併發全部passed，峰值445.76MiB：[summary](memory-final-warm-soak-summary.json)。這是本機程序RSS/HWM，不是Render cgroup。最終f3的35migration／Storage／治理／舊Python相容性、wheel、lock、OpenAPI、JS、SQL也通過。完整2647案尚未全部完成；三筆本機ENOSPC導覽截圖失敗已在相同SHA上原案例全部補跑通過。原始失敗保留。
+
+前一bedc完整2645案是2628P／3F／14原skip：兩個UI/日期原因已修正；第三個測試stderr緩衝問題已有獨立可重現證據及9327提交後3案通過。讀[memory-progress.md](memory-progress.md)與[execution-status.json](execution-status.json)看當前門檻。
 
 ---
 
