@@ -14,7 +14,7 @@ ROOT = Path(__file__).parents[1]
 BUNDLE = ROOT / 'src/exchange_info/official_data/ncu'
 SOURCES = ROOT / 'sources/ncu/2026-10-08'
 CASES = [('ncu-126', '靜岡大學', 8, 7, 13),
-         ('ncu-128', '日本中央大學', 7, 8, 18),
+         ('ncu-128', '日本中央大學', 7, 9, 18),
          ('ncu-129', '關西大學', 6, 9, 12)]
 
 
@@ -46,6 +46,12 @@ def test_reference_packets_stay_separate_from_home_and_block_current_downloads(t
         assert len(rows) == conditions
         assert all(d['applicability']['status'] == 'needs_confirmation' and not d['download_available'] for d in rows)
     if row == 'ncu-128':
+        visa, arrival = steps[row+'-host-arrival-visa'], steps[row+'-host-arrival-orientation']
+        assert visa['phase'] == '行前準備' and arrival['phase'] == '抵達後'
+        assert visa['order'] < arrival['order']
+        assert '入境日本前須先取得COE、入學許可與Student visa' in visa['summary']
+        assert 'orientation期間完成正式選課' in arrival['summary']
+        assert visa['timing'] == arrival['timing']
         plan = next(d for d in steps[row+'-host-initial-reference']['document_requirements'] if 'C1' in d['name'])
         assert len(plan['source_urls']) == 2
         assert {u.rsplit('/',1)[-1]for u in plan['source_urls']} == {
@@ -53,6 +59,11 @@ def test_reference_packets_stay_separate_from_home_and_block_current_downloads(t
             'english_admissions_exchange_semester-or-full-year_C2_20260904.docx'}
         assert 'Kenkyusei' in json.dumps(steps[row+'-host-conditional-part1'],ensure_ascii=False)
     if row == 'ncu-129':
+        passport = next(d for d in steps[row+'-host-initial-reference']['document_requirements'] if d['name'].startswith('初次護照'))
+        assert '能確認姓名的官方證件' in passport['name'] and passport['needs_confirmation']
+        assert 'https://www.kansai-u.ac.jp/Kokusai/future/faq_en/' in passport['source_urls']
+        assert '不免除赴日簽證所需護照' in steps[row+'-host-initial-reference']['summary']
+        assert '收到錄取及e-COE後申請visa；取得visa後才購票' in steps[row+'-host-housing-visa-arrival']['summary']
         assert 'medical information' in json.dumps(steps[row+'-host-initial-reference'],ensure_ascii=False)
         assert not any('成績' in d['name'] for d in steps[row+'-host-initial-reference']['document_requirements'])
         order = list(steps)

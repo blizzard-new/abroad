@@ -42,6 +42,13 @@ def test_tohoku_coe_passport_repeat_upload_and_unconditional_jasso_exclusion(tmp
     steps = {s['rule_id']: s for s in workflow['steps']}
     assert len(steps['ncu-122-host-initial-support']['document_requirements']) == 3
     coe = steps['ncu-122-host-coe-financial']
+    assert coe['phase'] == '校方COE通知後（可早於正式錄取）'
+    assert '收到校方正式COE通知後' in coe['summary']
+    policies = json.loads((SOURCES / 'document-conditions.json').read_text())
+    coe_policies = [p for p in policies if p['rule_id'] == coe['rule_id']]
+    assert len(coe_policies) == 4
+    assert all(not p['requires_host_admission'] and p['requires_institutional_confirmation']
+               and not p['current_applicability_verified'] for p in coe_policies)
     assert len(coe['document_requirements']) == 4
     passport = next(d for d in coe['document_requirements'] if '再次上傳護照PDF' in d['name'])
     assert 'Proceeding' in passport['name'] and '有ID card／舊護照時' in passport['name']
@@ -53,10 +60,11 @@ def test_tohoku_coe_passport_repeat_upload_and_unconditional_jasso_exclusion(tmp
     assert '再次上傳護照PDF' in summary and '核定與否皆禁用' in summary
     life = client.get('/school-life-context', params={'home_school': 'NCU', 'school': partner.school_name})
     assert 'JASSO獎學金證明一律不接受' in json.dumps(life.json(), ensure_ascii=False)
-    for admission in ['unknown', 'accepted']:
+    for admission in ['unknown', 'not_accepted', 'accepted']:
         catalog = client.get('/application-center/catalog', params={'school': 'NCU', 'target_school': partner.school_name, 'academic_year': '116', 'host_admission_status': admission}).json()
         document = next(d for d in catalog['items'] if d['name'] == passport['name'])
         assert document['applicability']['status'] == 'needs_confirmation' and not document['download_available']
+        assert '收到校方正式COE通知後' in document['applicability']['note']
 
 
 @pytest.mark.parametrize('row,name,initial,count,stage_count,conditional_count', CASES)
