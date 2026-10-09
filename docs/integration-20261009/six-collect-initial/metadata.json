@@ -1,0 +1,27 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "--collect-only",
+    "-q",
+    "--junitxml=/workspace/integration-evidence/six-collect-initial/results.xml"
+  ],
+  "cwd": "/workspace/abroad-six",
+  "started_at": "2026-10-09T14:13:34.900889+00:00",
+  "start_guard": {
+    "sha": "f1633b92e6f7fd88c1d05a8ea908293221651133",
+    "tree": "fa754c7eb9ff4feacb26b2f8c6f5720674edb978",
+    "status": ""
+  },
+  "timeout_seconds": 240,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T14:13:42.558664+00:00",
+  "end_guard": {
+    "sha": "f1633b92e6f7fd88c1d05a8ea908293221651133",
+    "tree": "fa754c7eb9ff4feacb26b2f8c6f5720674edb978",
+    "status": ""
+  }
+}

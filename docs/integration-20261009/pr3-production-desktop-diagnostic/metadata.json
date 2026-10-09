@@ -1,0 +1,26 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "/workspace/integration-tools/production_school_smoke.py",
+    "b22220f811f91cd4b86e16da25da8e0684123d87",
+    "pr3-production-desktop-diagnostic",
+    "--desktop"
+  ],
+  "cwd": "/workspace/abroad-pr3",
+  "started_at": "2026-10-09T14:09:40.042540+00:00",
+  "start_guard": {
+    "sha": "dc4d054c2746388c40bd256f4203ef066b60be03",
+    "tree": "d13f1457418170702b44f9e1796ddbc98a8b0cbb",
+    "status": ""
+  },
+  "timeout_seconds": 800,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T14:10:38.268268+00:00",
+  "end_guard": {
+    "sha": "dc4d054c2746388c40bd256f4203ef066b60be03",
+    "tree": "d13f1457418170702b44f9e1796ddbc98a8b0cbb",
+    "status": ""
+  }
+}

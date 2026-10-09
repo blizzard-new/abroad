@@ -1,0 +1,36 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/e2e/test_ccu_candidate_acceptance.py",
+    "tests/e2e/test_ccu_composite_provenance.py",
+    "tests/e2e/test_ccu_delayed_switching.py",
+    "tests/e2e/test_ccu_scope_documents.py",
+    "tests/e2e/test_life_context.py",
+    "tests/e2e/test_ncu_acceptance.py",
+    "tests/e2e/test_ncu_kyutech.py",
+    "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py",
+    "tests/e2e/test_ntu_destination_enrichment.py",
+    "tests/e2e/test_ntu_school.py",
+    "--junitxml=/workspace/integration-evidence/five-school-browser-2233286/results.xml"
+  ],
+  "cwd": "/workspace/abroad-integration",
+  "started_at": "2026-10-09T14:01:26.638866+00:00",
+  "start_guard": {
+    "sha": "2233286b28666afbdbfc6f9ea1c8086f39848f18",
+    "tree": "27bacd6d43c0be4ac34bc8b22e4e30ed73a1587e",
+    "status": ""
+  },
+  "timeout_seconds": 1800,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T14:10:04.536872+00:00",
+  "end_guard": {
+    "sha": "2233286b28666afbdbfc6f9ea1c8086f39848f18",
+    "tree": "27bacd6d43c0be4ac34bc8b22e4e30ed73a1587e",
+    "status": ""
+  }
+}

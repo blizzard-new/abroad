@@ -8,4 +8,90 @@ sss................s.................................................... [ 50%]
 ........................................................................ [ 58%]
 ............................................................F........... [ 67%]
 ........................................................................ [ 75%]
-...................
+........................................................................ [ 84%]
+........................................................................ [ 92%]
+............................s....................................        [100%]
+=================================== FAILURES ===================================
+___________ test_ccu_frontend_preferences_gpa_and_legacy_restoration ___________
+
+    def test_ccu_frontend_preferences_gpa_and_legacy_restoration():
+        script = r"""
+        const assert = require('node:assert/strict'), fs = require('node:fs');
+        const source = fs.readFileSync(process.argv[1], 'utf8');
+        const state = {homeSchool:'國立中正大學',account:null,applications:[],dashboard:{maximum_preferences:3,academic_gpa_minimum:3,partner_universities:[]}};
+        const elements = new Map(), calls = new Map();
+        const $ = selector => {
+          if (!elements.has(selector)) { const label={hidden:false};elements.set(selector,{id:selector.slice(1),value:'old',dataset:{},closest:()=>label}); }
+          return elements.get(selector);
+        };
+        const activeHomeSchool = () => state.homeSchool;
+        const fillSelect = (selector,values,placeholder,selected) => calls.set(selector,values);
+        const document={querySelectorAll:()=>[]};
+        const homeSelectionRules=()=>state.dashboard.selection_rules || {};
+        eval(source.match(/^function renderAcademicFields\([^]*?^}/m)[0]);
+        eval(source.match(/^function renderEligibilityOptions\([^]*?^}/m)[0]);
+        renderEligibilityOptions();
+        assert.equal($('#advisor-gpa-field').hidden,false);
+        assert.equal($('#eligibility-preference-4').closest().hidden,true);
+        assert.equal($('#eligibility-preference-4').value,'');
+        assert.equal(calls.size,3);
+        state.dashboard={maximum_preferences:5,academic_gpa_minimum:null,partner_universities:[]};
+        renderEligibilityOptions();
+        assert.equal($('#advisor-gpa-field').hidden,true);
+        assert.equal($('#eligibility-preference-4').closest().hidden,false);
+        assert.equal(calls.size,5);
+        """
+        result = subprocess.run(
+            ["node", "-e", script, str(Path("src/exchange_info/static/app.js").resolve())],
+            capture_output=True,
+            text=True,
+        )
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: <anonymous_script>:12
+E             } else select.querySelectorAll("[data-ncu-option]").forEach(option => option.remove());
+E                           ^
+E         
+E         TypeError: select.querySelectorAll is not a function
+E             at renderAcademicFields (eval at <anonymous> ([eval]:14:5), <anonymous>:12:19)
+E             at renderEligibilityOptions (eval at <anonymous> ([eval]:15:5), <anonymous>:7:3)
+E             at [eval]:16:5
+E             at runScriptInThisContext (node:internal/vm:219:10)
+E             at node:internal/process/execution:451:12
+E             at [eval]-wrapper:6:24
+E             at runScriptInContext (node:internal/process/execution:449:60)
+E             at evalFunction (node:internal/process/execution:283:30)
+E             at evalTypeScript (node:internal/process/execution:295:3)
+E             at node:internal/main/eval_string:71:3
+E         
+E         Node.js v24.19.0
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['node', '-e', "\n    const assert = require('node:assert/strict'), fs = require('node:fs');\n  ...lTypeScript (node:internal/process/execution:295:3)\n    at node:internal/main/eval_string:71:3\n\nNode.js v24.19.0\n').returncode
+
+tests/test_ccu_support.py:336: AssertionError
+____________ test_bundle_rebuilds_exactly_from_tracked_source_data _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-20/test_bundle_rebuilds_exactly_f0')
+
+    def test_bundle_rebuilds_exactly_from_tracked_source_data(tmp_path):
+        subprocess.run(
+            [sys.executable, "scripts/build_ncu_catalog.py", "--output-dir", str(tmp_path)],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            timeout=40,
+        )
+        for item in BUNDLE.iterdir():
+            if item.is_file():
+>               assert (tmp_path / item.name).read_bytes() == item.read_bytes(), item.name
+E               AssertionError: student_dashboard.json
+E               assert b'{\n  "schoo...  }\n  ]\n}\n' == b'{\n  "schoo...  }\n  ]\n}\n'
+E                 
+E                 At index 308 diff: b'a' != b's'
+E                 Use -v to get more diff
+
+tests/test_ncu_integration.py:489: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_support.py::test_ccu_frontend_preferences_gpa_and_legacy_restoration
+FAILED tests/test_ncu_integration.py::test_bundle_rebuilds_exactly_from_tracked_source_data
+2 failed, 848 passed, 7 skipped in 414.09s (0:06:54)

@@ -1,0 +1,22 @@
+CONFTEST LOADED!
+........................................................................ [ 81%]
+......F.........                                                         [100%]
+=================================== FAILURES ===================================
+_______ test_every_bundled_step_is_either_linked_listed_or_documentless ________
+
+    def test_every_bundled_step_is_either_linked_listed_or_documentless():
+        workflows = storage.load_bundled_application_workflows()
+        # CGU 77 (115) + 77 (116); NTPU 203 (115) + 206 (116); NTU 288 (116-1).
+        assert len(workflows) == 1120
+        ncu = [w for w in workflows if w.home_university == "國立中央大學"]
+        assert len(ncu) == 214 and all(w.review_status == "pending_review" for w in ncu)
+        ccu = [w for w in workflows if w.home_university == "國立中正大學"]
+>       assert len(ccu) == 55 and all(w.review_status == "pending_review" for w in ccu)
+E       AssertionError: assert (55 == 55 and False)
+E        +  where 55 = len([UniversityApplicationWorkflow(workflow_id='workflow-16e42afc156db9080b7e3e50', governance_key=None, issue_report_snap...存查核狀態，已讀原文範圍另见審閱紀錄。仍有公開資料續查、缺值、舊年度、計畫差異與來源矛盾；流程未完成雙人審核發布。', disclaimer='截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。'), ...])
+E        +  and   False = all(<generator object test_every_bundled_step_is_either_linked_listed_or_documentless.<locals>.<genexpr> at 0x7f5e2eff4fb0>)
+
+tests/test_task_documents_and_reference_plan.py:58: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_task_documents_and_reference_plan.py::test_every_bundled_step_is_either_linked_listed_or_documentless
+1 failed, 87 passed in 12.72s

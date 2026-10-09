@@ -1,0 +1,31 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_supabase_migration_syntax.py",
+    "tests/test_frontend_contract.py",
+    "tests/test_fit_signals.py",
+    "tests/test_school_completeness.py",
+    "tests/test_task_documents_and_reference_plan.py",
+    "--junitxml=/workspace/integration-evidence/pr4-release-contract-check/results.xml"
+  ],
+  "cwd": "/workspace/abroad-integration",
+  "started_at": "2026-10-09T14:11:47.944553+00:00",
+  "start_guard": {
+    "sha": "ea313534091c8cf6bf7fd1fddb069b1dc2de742a",
+    "tree": "a7fd3398a4b758996a827d5086c7a78775e88966",
+    "status": ""
+  },
+  "timeout_seconds": 300,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-09T14:12:00.888573+00:00",
+  "end_guard": {
+    "sha": "ea313534091c8cf6bf7fd1fddb069b1dc2de742a",
+    "tree": "a7fd3398a4b758996a827d5086c7a78775e88966",
+    "status": ""
+  }
+}

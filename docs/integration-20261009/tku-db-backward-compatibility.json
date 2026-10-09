@@ -1,0 +1,6 @@
+{
+  "legacy_revision_body_difference": "Only fixes content_hash update on existing revision; other original body bytes identical",
+  "legacy_publication_body_only_adds_shared_advisory_lock": true,
+  "rollback_strategy": "Revert PR2 merge to the prior five-school application; retain backward-compatible new DB routines and append-only governance records. Never restore old RPC bodies while the schema capability marker or new application can be used. Repair DB routines with a forward migration if necessary.",
+  "sql_sha256": "dad7ca35dffbc2bab52d086b7ba8e0726c2736430f083a1c6e3cb2fa18990f49"
+}

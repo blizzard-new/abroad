@@ -5,8 +5,10 @@ for p in src.iterdir():
  if p.is_file() and p.suffix in {'.json','.md','.log','.sql','.png'}:
   shutil.copy2(p,out/p.name)
  elif p.is_dir():
+  meta=p/'metadata.json'
+  if meta.exists() and json.loads(meta.read_text()).get('test_result')=='running':continue
   for f in p.iterdir():
-   if f.is_file() and f.suffix in {'.json','.xml','.log','.jpg','.sql'}:
+   if f.is_file() and (f.suffix in {'.json','.xml','.log','.jpg','.sql'} or f.name=='collect-nodeids.txt'):
     dest=out/p.name/f.name;dest.parent.mkdir(exist_ok=True);shutil.copy2(f,dest)
 for f in pathlib.Path('/workspace/integration-tools').glob('*.py'):
  dest=out/'harness'/f.name;dest.parent.mkdir(exist_ok=True);shutil.copy2(f,dest)

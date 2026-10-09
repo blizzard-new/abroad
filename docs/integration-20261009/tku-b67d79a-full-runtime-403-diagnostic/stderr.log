@@ -1,0 +1,33 @@
+Traceback (most recent call last):
+  File "/workspace/integration-tools/run_pinned_flat_runtime.py", line 32, in <module>
+    raise SystemExit(tku.main())
+                     ^^^^^^^^^^
+  File "/workspace/abroad-pr2/scripts/validate_tku_community_runtime.py", line 110, in main
+    return runtime.main([])
+           ^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-pr2/scripts/validate_supabase_runtime.py", line 2944, in main
+    result = validate_runtime(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-pr2/scripts/validate_tku_community_runtime.py", line 104, in validate
+    result = original(context)
+             ^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-pr2/scripts/validate_supabase_runtime.py", line 2746, in validate_runtime
+    atomic_governance = validate_atomic_governance(context, psql=_psql)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-pr2/scripts/validate_governance_runtime.py", line 97, in validate_atomic_governance
+    baseline = stage_workflow_refresh(first, workflow("Synthetic original")).revision
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-pr2/src/exchange_info/governance_commands.py", line 225, in command
+    buffer.commit(function.__name__, actor)
+  File "/workspace/abroad-pr2/src/exchange_info/governance_commands.py", line 211, in commit
+    self.store.commit_command(self.expected, changed, list(self.changed_workflows.values()),
+  File "/workspace/abroad-pr2/src/exchange_info/content_governance.py", line 271, in commit_command
+    return supabase_commit_workflow_command(self, expected, changed, published, operation=operation, actor=actor)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-pr2/src/exchange_info/governance_commands.py", line 349, in supabase_commit_workflow_command
+    store._request("POST", "/rest/v1/rpc/exchange_commit_application_workflow_revision", json=rpc_command_parameters(command))
+  File "/workspace/abroad-pr2/src/exchange_info/content_governance.py", line 402, in _request
+    response.raise_for_status()
+  File "/workspace/abroad-pr2/.venv/lib/python3.12/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: http://127.0.0.1:51805/rpc/exchange_commit_application_workflow_revision

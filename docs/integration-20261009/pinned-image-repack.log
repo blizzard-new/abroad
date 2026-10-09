@@ -1,0 +1,65 @@
+{
+  "source": "supabase/postgres@sha256:f371b5f3f2ac0a05703f33d6e6134515fb2498cab708fb948a0aeb7481467c00",
+  "platform": "linux/amd64",
+  "original_layers": 29,
+  "filesystem_sha256": "311a283adf54c9524fc68ae521b7f120bc4a989ce703d0d66f51260dc0cc0d38",
+  "filesystem_tar_bytes": 1270199808,
+  "local_image_id": "sha256:d42429364090df059929f6009e67d0d4194330af0e22415070dcc1c658ebec50",
+  "local_image_tag": "abroad-validation/supabase-pinned-flat:17.6.1.136",
+  "runtime_config_identical": true,
+  "config": {
+    "ExposedPorts": {
+      "5432/tcp": {}
+    },
+    "Env": [
+      "PATH=/nix/var/nix/profiles/default/bin:/usr/lib/postgresql/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      "PGDATA=/var/lib/postgresql/data",
+      "POSTGRES_HOST=/var/run/postgresql",
+      "POSTGRES_USER=supabase_admin",
+      "POSTGRES_DB=postgres",
+      "POSTGRES_INITDB_ARGS=--allow-group-access --locale-provider=icu --encoding=UTF-8 --icu-locale=en_US.UTF-8",
+      "LANG=en_US.UTF-8",
+      "LANGUAGE=en_US:en",
+      "LC_ALL=en_US.UTF-8",
+      "GRN_PLUGINS_DIR=/usr/lib/groonga/plugins",
+      "LOCALE_ARCHIVE=/nix/var/nix/profiles/default/lib/locale/locale-archive"
+    ],
+    "Entrypoint": [
+      "docker-entrypoint.sh"
+    ],
+    "Cmd": [
+      "postgres",
+      "-D",
+      "/etc/postgresql"
+    ],
+    "WorkingDir": "/",
+    "StopSignal": "SIGINT",
+    "ArgsEscaped": true,
+    "Healthcheck": {
+      "Test": [
+        "CMD-SHELL",
+        "pg_isready -U postgres -h localhost"
+      ],
+      "Interval": 2000000000,
+      "Timeout": 2000000000,
+      "Retries": 10
+    },
+    "OnBuild": null
+  },
+  "changed": [
+    "OCI rootfs layer packaging",
+    "OCI build history only"
+  ],
+  "unchanged": [
+    "root filesystem from pinned digest",
+    "database and extensions",
+    "entrypoint",
+    "environment",
+    "command",
+    "healthcheck",
+    "working directory",
+    "stop signal"
+  ],
+  "docker_settings_changed": false,
+  "remote_registry_push": false
+}

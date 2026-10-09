@@ -1,0 +1,72 @@
+CONFTEST LOADED!
+................F................................................F.....F [ 81%]
+......F........F                                                         [100%]
+=================================== FAILURES ===================================
+__________ test_home_school_switch_rejects_stale_dashboard_responses ___________
+
+    def test_home_school_switch_rejects_stale_dashboard_responses() -> None:
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+        assert "function isCurrentHomeSchool" in script
+        assert "const requestedSchool = homeSchool;" in script
+>       assert "if (!isCurrentHomeSchool(requestedSchool)) return false;" in script
+E       assert 'if (!isCurrentHomeSchool(requestedSchool)) return false;' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:724: AssertionError
+________ test_bundled_destination_profiles_yield_honest_budget_results _________
+
+    def test_bundled_destination_profiles_yield_honest_budget_results():
+        profiles = storage.load_destination_profiles()
+>       assert len(profiles) == 785
+E       AssertionError: assert 840 == 785
+E        +  where 840 = len([DestinationProfile(home_university='國立臺北大學', school_name='ESIC大學(ESIC University)', country='西班牙', city=None, cost_su...erified', coverage_note='已實際讀取並摘要 1 個合作校官方生活資訊頁，整理 3 個生活面向。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。'), ...])
+
+tests/test_fit_signals.py:119: AssertionError
+_ test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_has _
+
+    def test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_has():
+        profiles = storage.load_destination_profiles()
+        scores = []
+        for profile in profiles:
+            result = build_school_completeness(
+                PartnerUniversity(program_type="交換", school_name=profile.school_name, source_url=SOURCE), profile, None)
+            expected_fields = 17 if profile.home_university == "國立中央大學" else 10
+            assert 0 <= result.score <= 1 and result.total_count == len(result.items) == expected_fields
+            if profile.home_university == "國立中央大學":
+                assert by_key(result)["quota"].status == "needs_confirmation"
+            else:
+                assert by_key(result)["workflow"].status == "missing"
+            scores.append(result.score)
+>       assert len(scores) == 785 and max(scores) < 1
+E       assert (840 == 785)
+E        +  where 840 = len([0.45, 0.45, 0.1, 0.25, 0.45, 0.35, ...])
+
+tests/test_school_completeness.py:83: AssertionError
+_______ test_every_bundled_step_is_either_linked_listed_or_documentless ________
+
+    def test_every_bundled_step_is_either_linked_listed_or_documentless():
+        workflows = storage.load_bundled_application_workflows()
+        # CGU 77 (115) + 77 (116); NTPU 203 (115) + 206 (116); NTU 288 (116-1).
+>       assert len(workflows) == 1065
+E       AssertionError: assert 1120 == 1065
+E        +  where 1120 = len([UniversityApplicationWorkflow(workflow_id='workflow-9df61997deebc976642cb931', governance_key=None, issue_report_snap...ote='已整合臺北大學校內流程與 3 個可讀取的合作校官方頁；未公開或無法讀取的細節會標示為需以提名信確認。', disclaimer='截止日與申請方式可能調整；送件前請再核對臺北大學國際處、合作校通知信與官方申請頁。'), ...])
+
+tests/test_task_documents_and_reference_plan.py:54: AssertionError
+_ test_every_bundled_workflow_yields_a_schedulable_estimated_plan_for_an_unpublished_year _
+
+    def test_every_bundled_workflow_yields_a_schedulable_estimated_plan_for_an_unpublished_year():
+        from exchange_info.models import PartnerUniversity
+    
+        workflows = storage.load_bundled_application_workflows()
+>       assert len(workflows) == 1065
+E       AssertionError: assert 1120 == 1065
+E        +  where 1120 = len([UniversityApplicationWorkflow(workflow_id='workflow-9df61997deebc976642cb931', governance_key=None, issue_report_snap...ote='已整合臺北大學校內流程與 3 個可讀取的合作校官方頁；未公開或無法讀取的細節會標示為需以提名信確認。', disclaimer='截止日與申請方式可能調整；送件前請再核對臺北大學國際處、合作校通知信與官方申請頁。'), ...])
+
+tests/test_task_documents_and_reference_plan.py:196: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_frontend_contract.py::test_home_school_switch_rejects_stale_dashboard_responses
+FAILED tests/test_fit_signals.py::test_bundled_destination_profiles_yield_honest_budget_results
+FAILED tests/test_school_completeness.py::test_every_bundled_destination_profile_scores_and_never_claims_more_than_it_has
+FAILED tests/test_task_documents_and_reference_plan.py::test_every_bundled_step_is_either_linked_listed_or_documentless
+FAILED tests/test_task_documents_and_reference_plan.py::test_every_bundled_workflow_yields_a_schedulable_estimated_plan_for_an_unpublished_year
+5 failed, 83 passed in 10.52s

@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "/workspace/integration-tools/run_pinned_flat_runtime.py"
+  ],
+  "cwd": "/workspace/abroad-pr2",
+  "started_at": "2026-10-09T14:04:40.234499+00:00",
+  "start_guard": {
+    "sha": "b67d79aa3b6c30a9449801501256b64951f2c291",
+    "tree": "7e8dcf9d8c6fba1889b70c000c2e782fefc2978e",
+    "status": ""
+  },
+  "timeout_seconds": 1800,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-09T14:05:35.253955+00:00",
+  "end_guard": {
+    "sha": "b67d79aa3b6c30a9449801501256b64951f2c291",
+    "tree": "7e8dcf9d8c6fba1889b70c000c2e782fefc2978e",
+    "status": ""
+  }
+}

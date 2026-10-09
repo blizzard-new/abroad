@@ -1,2 +1,57 @@
 CONFTEST LOADED!
-..............................
+.........................................FF.....                         [100%]
+=================================== FAILURES ===================================
+_______ test_visitor_can_browse_ntu_filter_details_and_switch_back[390] ________
+
+page = <Page url='http://127.0.0.1:51675/?view=list#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:51675', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-19/web-e2e-data7'))
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, "partners")
+        open_navigation(page)
+        page.locator("#school-switcher").click()
+>       expect(page.locator("#school-options [data-home-school]")).to_have_count(4)
+E       AssertionError: Locator expected to have count '4'
+E       Actual value: 5 
+E       Call log:
+E         - Expect "to_have_count" with timeout 5000ms
+E         - waiting for locator("#school-options [data-home-school]")
+E           14 × locator resolved to 5 elements
+E              - unexpected value "5"
+
+tests/e2e/test_ntu_school.py:20: AssertionError
+_______ test_visitor_can_browse_ntu_filter_details_and_switch_back[1440] _______
+
+page = <Page url='http://127.0.0.1:51675/?view=list#partners'>
+live_server = LiveServer(base_url='http://127.0.0.1:51675', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-19/web-e2e-data7'))
+width = 1440
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_visitor_can_browse_ntu_filter_details_and_switch_back(page, live_server, width):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        enter_public_site(page, live_server, "partners")
+        open_navigation(page)
+        page.locator("#school-switcher").click()
+>       expect(page.locator("#school-options [data-home-school]")).to_have_count(4)
+E       AssertionError: Locator expected to have count '4'
+E       Actual value: 5 
+E       Call log:
+E         - Expect "to_have_count" with timeout 5000ms
+E         - waiting for locator("#school-options [data-home-school]")
+E           14 × locator resolved to 5 elements
+E              - unexpected value "5"
+
+tests/e2e/test_ntu_school.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[390]
+FAILED tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[1440]
+2 failed, 46 passed in 523.01s (0:08:43)
