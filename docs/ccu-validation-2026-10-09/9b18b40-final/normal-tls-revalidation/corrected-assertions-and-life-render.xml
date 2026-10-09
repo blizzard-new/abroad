@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="5" time="4.746" timestamp="2026-10-09T00:51:55.470069+00:00" hostname="e5e438874453"><testcase classname="tests.test_ccu_fifth_pass" name="test_amu_erasmus_deadlines_do_not_replace_bilateral_and_phd_policy" time="0.108" /><testcase classname="tests.test_ccu_overseas" name="test_production_renderer_shows_years_conflicts_gaps_and_escapes_source_text" time="0.219" /><testcase classname="tests.test_ccu_seventeenth_pass" name="test_per_school_gap_inventory_distinguishes_mapping_from_exhaustion" time="0.247" /><testcase classname="tests.test_ccu_bounded_healthcare" name="test_general_amu_insurance_is_pending_with_private_options_and_no_phd_substitution" time="0.923"><failure message="AssertionError: node:fs:484&#10;      return binding.readFileUtf8(path, stringToFlags(options.flag));&#10;                     ^&#10;  &#10;  Error: ENOENT: no such file or directory, open '/workspace/abroad-ccu-20261008/src/static/ccu-partner-details.js'&#10;      at Object.readFileSync (node:fs:484:20)&#10;      at [eval]:3:13&#10;      at runScriptInThisContext (node:internal/vm:219:10)&#10;      at node:internal/process/execution:451:12&#10;      at [eval]-wrapper:6:24&#10;      at runScriptInContext (node:internal/process/execution:449:60)&#10;      at evalFunction (node:internal/process/execution:283:30)&#10;      at evalTypeScript (node:internal/process/execution:295:3)&#10;      at node:internal/main/eval_string:71:3 {&#10;    errno: -2,&#10;    code: 'ENOENT',&#10;    syscall: 'open',&#10;    path: '/workspace/abroad-ccu-20261008/src/static/ccu-partner-details.js'&#10;  }&#10;  &#10;  Node.js v24.19.0&#10;  &#10;assert 1 == 0&#10; +  where 1 = CompletedProcess(args=['node', '-e', '\n    const assert=require(\'node:assert/strict\'),fs=require(\'node:fs\'),windo...syscall: 'open',\n  path: '/workspace/abroad-ccu-20261008/src/static/ccu-partner-details.js'\n}\n\nNode.js v24.19.0\n&quot;).returncode">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-144/test_general_amu_insurance_is_0')
+
+    def test_general_amu_insurance_is_pending_with_private_options_and_no_phd_substitution(tmp_path):
+        amu = partner(95)
+        insurance = amu.partner_exchange_details["insurance"]
+        assert insurance.status == "needs_confirmation"
+        assert "NFZ不是唯一強制方案" in insurance.value and "2020" in insurance.value
+        assert all(e.status == "needs_confirmation" and "2027" in insurance.reason for e in insurance.evidence)
+        assert {e.source_url for e in insurance.evidence} == {
+            "https://amu.edu.pl/en/education/healthcare/general-insurance",
+            "https://amu.edu.pl/en/education/healthcare/voluntary-insurance",
+        }
+        assert "投保手續，非初次交換申請附件" in insurance.value
+        for source in read("twentyeighth-source-review.json")["source_reviews"]:
+            raw = read("overseas_sources/" + source["source_id"] + ".json")
+            assert raw["normal_tls_receipt"]["tls_verify"] and raw["http_status"] == 200
+            assert raw["content_applicability"] == "needs_confirmation"
+        profile = destination_profile(amu)
+        health = next(s for s in profile.student_guide_sections if s.key == "healthcare_reference")
+        assert "待確認" in health.caution and "2020" in health.summary
+        assert any(url.endswith("/medical-services") for url in health.source_urls)
+&gt;       assert_life_render(profile, "healthcare_reference", "NFZ")
+
+tests/test_ccu_bounded_healthcare.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+profile = DestinationProfile(home_university='國立中正大學', school_name='Adam Mickiewicz University, Poznan 亞當密砍凱維奇大學', country='波蘭',...imezone.utc), coverage_status='official_partial', coverage_note='已查核所列官方附件／頁面內容，仍有未載、未核實新版或矛盾；不能將歷史費率及一般入學資訊當作本期交換規定。')
+key = 'healthcare_reference', expected = 'NFZ'
+
+    def assert_life_render(profile, key, expected):
+        """Render the real API profile through the CCU production life renderer."""
+        script = r"""
+        const assert=require('node:assert/strict'),fs=require('node:fs'),window={};
+        eval(fs.readFileSync(process.argv[1],'utf8'));
+        const profile=JSON.parse(fs.readFileSync(0,'utf8'));
+        const section=profile.student_guide_sections.find(s=&gt;s.key===process.argv[2]);
+        section.summary+=' &lt;script&gt;unsafe()&lt;/script&gt;';
+        const escapeHtml=s=&gt;String(s).replaceAll('&amp;','&amp;amp;').replaceAll('&lt;','&amp;lt;').replaceAll('&gt;','&amp;gt;').replaceAll('"','&amp;quot;');
+        const html=window.UniWayCcuDetails.renderProfileLife(profile,escapeHtml);
+        assert.ok(html.includes('data-ccu-life-field="'+process.argv[2]+'"'));
+        assert.ok(html.includes(process.argv[3]));assert.ok(html.includes('待確認'));
+        assert.ok(html.includes('&amp;lt;script&amp;gt;unsafe'));assert.ok(!html.includes('&lt;script&gt;unsafe'));
+        for(const url of section.source_urls) assert.ok(html.includes(escapeHtml(url)));
+        """
+        result = subprocess.run([
+            "node", "-e", script, str(B.parents[2] / "static/ccu-partner-details.js"), key, expected,
+        ], input=profile.model_dump_json(), capture_output=True, text=True, check=False)
+&gt;       assert result.returncode == 0, result.stderr
+E       AssertionError: node:fs:484
+E             return binding.readFileUtf8(path, stringToFlags(options.flag));
+E                            ^
+E         
+E         Error: ENOENT: no such file or directory, open '/workspace/abroad-ccu-20261008/src/static/ccu-partner-details.js'
+E             at Object.readFileSync (node:fs:484:20)
+E             at [eval]:3:13
+E             at runScriptInThisContext (node:internal/vm:219:10)
+E             at node:internal/process/execution:451:12
+E             at [eval]-wrapper:6:24
+E             at runScriptInContext (node:internal/process/execution:449:60)
+E             at evalFunction (node:internal/process/execution:283:30)
+E             at evalTypeScript (node:internal/process/execution:295:3)
+E             at node:internal/main/eval_string:71:3 {
+E           errno: -2,
+E           code: 'ENOENT',
+E           syscall: 'open',
+E           path: '/workspace/abroad-ccu-20261008/src/static/ccu-partner-details.js'
+E         }
+E         
+E         Node.js v24.19.0
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['node', '-e', '\n    const assert=require(\'node:assert/strict\'),fs=require(\'node:fs\'),windo...syscall: 'open',\n  path: '/workspace/abroad-ccu-20261008/src/static/ccu-partner-details.js'\n}\n\nNode.js v24.19.0\n").returncode
+
+tests/test_ccu_bounded_healthcare.py:43: AssertionError</failure></testcase><testcase classname="tests.test_ccu_bounded_healthcare" name="test_mapua_passport_anchor_and_tor_are_pending_and_in_the_correct_stage" time="2.104"><failure message="AssertionError: node:fs:484&#10;      return binding.readFileUtf8(path, stringToFlags(options.flag));&#10;                     ^&#10;  &#10;  Error: ENOENT: no such file or directory, open '/workspace/abroad-ccu-20261008/src/static/ccu-partner-details.js'&#10;      at Object.readFileSync (node:fs:484:20)&#10;      at [eval]:3:13&#10;      at runScriptInThisContext (node:internal/vm:219:10)&#10;      at node:internal/process/execution:451:12&#10;      at [eval]-wrapper:6:24&#10;      at runScriptInContext (node:internal/process/execution:449:60)&#10;      at evalFunction (node:internal/process/execution:283:30)&#10;      at evalTypeScript (node:internal/process/execution:295:3)&#10;      at node:internal/main/eval_string:71:3 {&#10;    errno: -2,&#10;    code: 'ENOENT',&#10;    syscall: 'open',&#10;    path: '/workspace/abroad-ccu-20261008/src/static/ccu-partner-details.js'&#10;  }&#10;  &#10;  Node.js v24.19.0&#10;  &#10;assert 1 == 0&#10; +  where 1 = CompletedProcess(args=['node', '-e', '\n    const assert=require(\'node:assert/strict\'),fs=require(\'node:fs\'),windo...syscall: 'open',\n  path: '/workspace/abroad-ccu-20261008/src/static/ccu-partner-details.js'\n}\n\nNode.js v24.19.0\n&quot;).returncode">tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-144/test_mapua_passport_anchor_and0')
+
+    def test_mapua_passport_anchor_and_tor_are_pending_and_in_the_correct_stage(tmp_path):
+        mapua = partner(83)
+        row = next(r for r in read("partner-document-requirements.json") if r["ccu_page"] == 83)
+        passport = next(d for d in row["requirements"] if d["requirement"]["name"].startswith("護照資料頁"))
+        assert passport["applicability_status"] == "needs_confirmation"
+        assert "停留結束後6月" in passport["requirement"]["name"]
+        assert {p for e in passport["evidence"] if "international-handbook" in e["source_id"] for p in e["source_pages"]} == {18, 21}
+        assert all(e["status"] == "needs_confirmation" for e in passport["evidence"] if "international-handbook" in e["source_id"])
+        assert not any("TOR" in d["requirement"]["name"] for d in row["requirements"])
+        client = TestClient(create_app(tmp_path))
+        response = client.get("/application-workflow", params={"home_school": HOME, "school": mapua.school_name})
+        assert response.status_code == 200
+        steps = response.json()["steps"]
+        before_return = next(s for s in steps if s["phase"] == "行前與返國")
+        assert any("TOR" in text and "clearance" in text and "1–2週" in text and "待確認" in text for text in before_return["details"])
+        application = steps[4]
+        assert all("TOR" not in text for text in application["required_documents"])
+        profile = destination_profile(mapua)
+        section = next(s for s in profile.student_guide_sections if s.key == "return_preparation")
+        assert "待確認" in section.caution and "非初次申請文件" in section.summary
+&gt;       assert_life_render(profile, "return_preparation", "clearance")
+
+tests/test_ccu_bounded_healthcare.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+profile = DestinationProfile(home_university='國立中正大學', school_name='Mapua University 瑪普爾大學', country='菲律賓', city='Manila（Intramu...imezone.utc), coverage_status='official_partial', coverage_note='已查核所列官方附件／頁面內容，仍有未載、未核實新版或矛盾；不能將歷史費率及一般入學資訊當作本期交換規定。')
+key = 'return_preparation', expected = 'clearance'
+
+    def assert_life_render(profile, key, expected):
+        """Render the real API profile through the CCU production life renderer."""
+        script = r"""
+        const assert=require('node:assert/strict'),fs=require('node:fs'),window={};
+        eval(fs.readFileSync(process.argv[1],'utf8'));
+        const profile=JSON.parse(fs.readFileSync(0,'utf8'));
+        const section=profile.student_guide_sections.find(s=&gt;s.key===process.argv[2]);
+        section.summary+=' &lt;script&gt;unsafe()&lt;/script&gt;';
+        const escapeHtml=s=&gt;String(s).replaceAll('&amp;','&amp;amp;').replaceAll('&lt;','&amp;lt;').replaceAll('&gt;','&amp;gt;').replaceAll('"','&amp;quot;');
+        const html=window.UniWayCcuDetails.renderProfileLife(profile,escapeHtml);
+        assert.ok(html.includes('data-ccu-life-field="'+process.argv[2]+'"'));
+        assert.ok(html.includes(process.argv[3]));assert.ok(html.includes('待確認'));
+        assert.ok(html.includes('&amp;lt;script&amp;gt;unsafe'));assert.ok(!html.includes('&lt;script&gt;unsafe'));
+        for(const url of section.source_urls) assert.ok(html.includes(escapeHtml(url)));
+        """
+        result = subprocess.run([
+            "node", "-e", script, str(B.parents[2] / "static/ccu-partner-details.js"), key, expected,
+        ], input=profile.model_dump_json(), capture_output=True, text=True, check=False)
+&gt;       assert result.returncode == 0, result.stderr
+E       AssertionError: node:fs:484
+E             return binding.readFileUtf8(path, stringToFlags(options.flag));
+E                            ^
+E         
+E         Error: ENOENT: no such file or directory, open '/workspace/abroad-ccu-20261008/src/static/ccu-partner-details.js'
+E             at Object.readFileSync (node:fs:484:20)
+E             at [eval]:3:13
+E             at runScriptInThisContext (node:internal/vm:219:10)
+E             at node:internal/process/execution:451:12
+E             at [eval]-wrapper:6:24
+E             at runScriptInContext (node:internal/process/execution:449:60)
+E             at evalFunction (node:internal/process/execution:283:30)
+E             at evalTypeScript (node:internal/process/execution:295:3)
+E             at node:internal/main/eval_string:71:3 {
+E           errno: -2,
+E           code: 'ENOENT',
+E           syscall: 'open',
+E           path: '/workspace/abroad-ccu-20261008/src/static/ccu-partner-details.js'
+E         }
+E         
+E         Node.js v24.19.0
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['node', '-e', '\n    const assert=require(\'node:assert/strict\'),fs=require(\'node:fs\'),windo...syscall: 'open',\n  path: '/workspace/abroad-ccu-20261008/src/static/ccu-partner-details.js'\n}\n\nNode.js v24.19.0\n").returncode
+
+tests/test_ccu_bounded_healthcare.py:43: AssertionError</failure></testcase></testsuite></testsuites>

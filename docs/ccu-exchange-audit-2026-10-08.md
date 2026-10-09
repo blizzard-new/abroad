@@ -1,3 +1,5 @@
+最新固定候選 `9b18b409a370fd8a4fecc7cff1d18d399f4f9ab3`：473回歸passed／7skip、106瀏覽器passed，同SHA完整本地gate通過。[正常TLS與指定補核驗證](ccu-validation-2026-10-09/9b18b40-final/README.md)保存原始證據；[安全修正](ccu-tls-security-2026-10-09.md)限制9份歷史不安全来源，[指定補核](ccu-bounded-followups-2026-10-09.md)記載AMU／Mapúa待確認內容。以下舊候選、數量和取得方法均屬歷史，不代表現行安全狀態或最新完成度。資料仍部分、遠端CI與跨分支整合另列；未merge或部署。
+
 本輪最新候選為 `92e66f365d66c87889c8ddff82e9675327b66366`；462 回歸passed／7skip、102瀏覽器passed，同SHA完整本地gate通過。原始證據見[最終驗證](ccu-validation-2026-10-08/92e66f3-final/README.md)，最新數量／來源範圍見[第二十六輪](ccu-twentysixth-review-2026-10-08.md)。以下各舊候選與輪次為歷史記錄，不能當最新結果。資料仍部分、CI及跨分支整合限制另列；未merge或部署。
 
 # 中正大學 2027 春季校級薦外交換資料交接

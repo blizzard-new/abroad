@@ -1,0 +1,277 @@
+CONFTEST LOADED!
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______ test_amu_erasmus_deadlines_do_not_replace_bilateral_and_phd_policy ______
+
+    def test_amu_erasmus_deadlines_do_not_replace_bilateral_and_phd_policy():
+        f = fields(95)
+        assert f["language"].status == "needs_confirmation"
+        assert "recommend" in f["language"].value and "母校" in f["language"].value
+        assert f["academic_calendar"].status == "verified_current"
+        assert (
+            "06-20" in f["academic_calendar"].value
+            and "07-04" in f["academic_calendar"].value
+        )
+        assert f["nomination_deadline"].status == "needs_confirmation"
+        assert "Erasmus" in f["nomination_deadline"].value
+        assert f["application_deadline"].status == "needs_confirmation"
+        assert f["documents"].status == "reference_only"
+>       assert f["insurance"].status == "missing" and f["insurance"].value is None
+E       AssertionError: assert ('needs_confirmation' == 'missing'
+E         
+E         - missing
+E         + needs_confirmation)
+
+tests/test_ccu_fifth_pass.py:126: AssertionError
+_ test_production_renderer_shows_years_conflicts_gaps_and_escapes_source_text __
+
+    def test_production_renderer_shows_years_conflicts_gaps_and_escapes_source_text():
+        data = at(83).model_dump(mode="json")
+        data["partner_exchange_details"]["costs"]["value"] += "<script>unsafe()</script>"
+        script = r"""
+        const assert=require('node:assert/strict'), fs=require('node:fs');
+        const window={};eval(fs.readFileSync(process.argv[1],'utf8'));
+        const escapeHtml=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+        const html=window.UniWayCcuDetails.render(JSON.parse(process.argv[2]),escapeHtml);
+        assert.ok(html.includes('來源矛盾，待確認'));
+        assert.ok(html.includes('2026–2027'));
+        assert.ok(html.includes('2026-10-08'));
+        assert.ok(html.includes('PDF第5頁'));
+        assert.ok(html.includes('本期未核實／來源未載'));
+        assert.ok(!html.includes('<script>unsafe'));
+        assert.ok(html.includes('&lt;script&gt;unsafe'));
+        assert.equal(window.UniWayCcuDetails.render({school_name:'legacy'},escapeHtml),'');
+        """
+>       result = subprocess.run(
+            [
+                "node",
+                "-e",
+                script,
+                str(Path("src/exchange_info/static/ccu-partner-details.js").resolve()),
+                json.dumps(data, ensure_ascii=False),
+            ],
+            capture_output=True,
+            check=False,
+            text=True,
+        )
+
+tests/test_ccu_overseas.py:248: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:548: in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1026: in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Popen: returncode: 255 args: ['node', '-e', '\n    const assert=require(\'n...>
+args = ['node', '-e', "\n    const assert=require('node:assert/strict'), fs=require('node:fs');\n    const window={};eval(fs....) 7. • Bio page of passport (valid for at least 6 months)"], "tuition_points": [], "translated_from_english": false}}']
+executable = b'node', preexec_fn = None, close_fds = True, pass_fds = ()
+cwd = None, env = None, startupinfo = None, creationflags = 0, shell = False
+p2cread = -1, p2cwrite = -1, c2pread = 11, c2pwrite = 12, errread = 13
+errwrite = 14, restore_signals = True, gid = None, gids = None, uid = None
+umask = -1, start_new_session = False, process_group = -1
+
+    def _execute_child(self, args, executable, preexec_fn, close_fds,
+                       pass_fds, cwd, env,
+                       startupinfo, creationflags, shell,
+                       p2cread, p2cwrite,
+                       c2pread, c2pwrite,
+                       errread, errwrite,
+                       restore_signals,
+                       gid, gids, uid, umask,
+                       start_new_session, process_group):
+        """Execute program (POSIX version)"""
+    
+        if isinstance(args, (str, bytes)):
+            args = [args]
+        elif isinstance(args, os.PathLike):
+            if shell:
+                raise TypeError('path-like args is not allowed when '
+                                'shell is true')
+            args = [args]
+        else:
+            args = list(args)
+    
+        if shell:
+            # On Android the default shell is at '/system/bin/sh'.
+            unix_shell = ('/system/bin/sh' if
+                      hasattr(sys, 'getandroidapilevel') else '/bin/sh')
+            args = [unix_shell, "-c"] + args
+            if executable:
+                args[0] = executable
+    
+        if executable is None:
+            executable = args[0]
+    
+        sys.audit("subprocess.Popen", executable, args, cwd, env)
+    
+        if (_USE_POSIX_SPAWN
+                and os.path.dirname(executable)
+                and preexec_fn is None
+                and not close_fds
+                and not pass_fds
+                and cwd is None
+                and (p2cread == -1 or p2cread > 2)
+                and (c2pwrite == -1 or c2pwrite > 2)
+                and (errwrite == -1 or errwrite > 2)
+                and not start_new_session
+                and process_group == -1
+                and gid is None
+                and gids is None
+                and uid is None
+                and umask < 0):
+            self._posix_spawn(args, executable, env, restore_signals,
+                              p2cread, p2cwrite,
+                              c2pread, c2pwrite,
+                              errread, errwrite)
+            return
+    
+        orig_executable = executable
+    
+        # For transferring possible exec failure from child to parent.
+        # Data format: "exception name:hex errno:description"
+        # Pickle is not used; it is complex and involves memory allocation.
+        errpipe_read, errpipe_write = os.pipe()
+        # errpipe_write must not be in the standard io 0, 1, or 2 fd range.
+        low_fds_to_close = []
+        while errpipe_write < 3:
+            low_fds_to_close.append(errpipe_write)
+            errpipe_write = os.dup(errpipe_write)
+        for low_fd in low_fds_to_close:
+            os.close(low_fd)
+        try:
+            try:
+                # We must avoid complex work that could involve
+                # malloc or free in the child process to avoid
+                # potential deadlocks, thus we do all this here.
+                # and pass it to fork_exec()
+    
+                if env is not None:
+                    env_list = []
+                    for k, v in env.items():
+                        k = os.fsencode(k)
+                        if b'=' in k:
+                            raise ValueError("illegal environment variable name")
+                        env_list.append(k + b'=' + os.fsencode(v))
+                else:
+                    env_list = None  # Use execv instead of execve.
+                executable = os.fsencode(executable)
+                if os.path.dirname(executable):
+                    executable_list = (executable,)
+                else:
+                    # This matches the behavior of os._execvpe().
+                    executable_list = tuple(
+                        os.path.join(os.fsencode(dir), executable)
+                        for dir in os.get_exec_path(env))
+                fds_to_keep = set(pass_fds)
+                fds_to_keep.add(errpipe_write)
+                self.pid = _fork_exec(
+                        args, executable_list,
+                        close_fds, tuple(sorted(map(int, fds_to_keep))),
+                        cwd, env_list,
+                        p2cread, p2cwrite, c2pread, c2pwrite,
+                        errread, errwrite,
+                        errpipe_read, errpipe_write,
+                        restore_signals, start_new_session,
+                        process_group, gid, gids, uid, umask,
+                        preexec_fn, _USE_VFORK)
+                self._child_created = True
+            finally:
+                # be sure the FD is closed no matter what
+                os.close(errpipe_write)
+    
+            self._close_pipe_fds(p2cread, p2cwrite,
+                                 c2pread, c2pwrite,
+                                 errread, errwrite)
+    
+            # Wait for exec to fail or succeed; possibly raising an
+            # exception (limited in size)
+            errpipe_data = bytearray()
+            while True:
+                part = os.read(errpipe_read, 50000)
+                errpipe_data += part
+                if not part or len(errpipe_data) > 50000:
+                    break
+        finally:
+            # be sure the FD is closed no matter what
+            os.close(errpipe_read)
+    
+        if errpipe_data:
+            try:
+                pid, sts = os.waitpid(self.pid, 0)
+                if pid == self.pid:
+                    self._handle_exitstatus(sts)
+                else:
+                    self.returncode = sys.maxsize
+            except ChildProcessError:
+                pass
+    
+            try:
+                exception_name, hex_errno, err_msg = (
+                        errpipe_data.split(b':', 2))
+                # The encoding here should match the encoding
+                # written in by the subprocess implementations
+                # like _posixsubprocess
+                err_msg = err_msg.decode()
+            except ValueError:
+                exception_name = b'SubprocessError'
+                hex_errno = b'0'
+                err_msg = 'Bad exception data from child: {!r}'.format(
+                              bytes(errpipe_data))
+            child_exception_type = getattr(
+                    builtins, exception_name.decode('ascii'),
+                    SubprocessError)
+            if issubclass(child_exception_type, OSError) and hex_errno:
+                errno_num = int(hex_errno, 16)
+                if err_msg == "noexec:chdir":
+                    err_msg = ""
+                    # The error must be from chdir(cwd).
+                    err_filename = cwd
+                elif err_msg == "noexec":
+                    err_msg = ""
+                    err_filename = None
+                else:
+                    err_filename = orig_executable
+                if errno_num != 0:
+                    err_msg = os.strerror(errno_num)
+                if err_filename is not None:
+>                   raise child_exception_type(errno_num, err_msg, err_filename)
+E                   OSError: [Errno 7] Argument list too long: 'node'
+
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1955: OSError
+_____ test_per_school_gap_inventory_distinguishes_mapping_from_exhaustion ______
+
+    def test_per_school_gap_inventory_distinguishes_mapping_from_exhaustion():
+        report = json.loads((BUNDLE / "remaining-gaps.json").read_text())
+        assert report["school_count"] == 55 and report["source_count"] >= 876
+        for name, expected in report["input_sha256"].items():
+            assert hashlib.sha256((BUNDLE / name).read_bytes()).hexdigest() == expected
+        for sid, expected in report["input_source_json_sha256"].items():
+            assert hashlib.sha256((BUNDLE / "overseas_sources" / (sid + ".json")).read_bytes()).hexdigest() == expected
+        assert all(not r["public_sources_exhausted"] for r in report["schools"])
+        assert all(r["checked_sources"] for r in report["schools"])
+        nagoya = next(r for r in report["schools"] if r["ccu_page"] == 34)
+        assert "college_scope" not in nagoya["gaps"] and "degree_scope" not in nagoya["gaps"]
+        assert len(nagoya["academic_scope_options"]) == 2
+        mapped = {e["source_id"] for name in ["profile-reviewed-fields.json", "overseas-reviewed-fields.json"]
+                  for row in json.loads((BUNDLE / name).read_text())
+                  for field in row["fields"].values() for e in field["evidence"]}
+        mapped |= {e["source_id"] for row in json.loads((BUNDLE / "partner-document-requirements.json").read_text())
+                   for item in row["requirements"] for e in item["evidence"]}
+        for row in report["schools"]:
+            for source in row["checked_sources"]:
+                actual = json.loads((BUNDLE / "overseas_sources" / (source["source_id"] + ".json")).read_text())
+                limited = actual.get("access_result") in {"empty_response", "challenge_page", "captcha_required", "unrelated_content_anomaly", "password_protected"}
+>               assert (source["review_state"] == "mapped_field_evidence_not_whole_document_completion") is (source["source_id"] in mapped and not limited)
+E               AssertionError: assert ('mapped_field...nt_completion' == 'mapped_field...nt_completion'
+E                 
+E                 Skipping 40 identical leading characters in diff, use -v to show
+E                   _completion) is (('p95-r28-medical-services' in {'p0-profile-ccu-list', 'p10-mirror', 'p10-profile-root', 'p10-r11-clubs', 'p10-r19-6a33644ec3', 'p10-r21-0f50c78dc2', ...}))
+
+tests/test_ccu_seventeenth_pass.py:156: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ccu_fifth_pass.py::test_amu_erasmus_deadlines_do_not_replace_bilateral_and_phd_policy
+FAILED tests/test_ccu_overseas.py::test_production_renderer_shows_years_conflicts_gaps_and_escapes_source_text
+FAILED tests/test_ccu_seventeenth_pass.py::test_per_school_gap_inventory_distinguishes_mapping_from_exhaustion
+3 failed in 1.89s

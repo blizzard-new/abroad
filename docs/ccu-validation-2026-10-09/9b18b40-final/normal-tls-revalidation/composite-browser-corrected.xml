@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="42.102" timestamp="2026-10-09T01:06:26.660182+00:00" hostname="e5e438874453"><testcase classname="tests.e2e.test_ccu_composite_provenance" name="test_composite_claims_display_independent_source_dates_and_links[119-application_forms-p119-r27-form-metadata-normal-tls-\u6e05\u55ae\u521748\u9805-5-\u516c\u958b\u984c\u76eeAPI\u539f\u6587-390]" time="19.429"><failure message="AssertionError: Locator expected to have count '1'&#10;Actual value: 2 &#10;Call log:&#10;  - Expect &quot;to_have_count&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;#workflow-content&quot;).locator(&quot;details.workflow-step&quot;).filter(has_text=&quot;清單列48項&quot;).locator(&quot;li&quot;).filter(has_text=&quot;清單列48項&quot;)&#10;    14 × locator resolved to 2 elements&#10;       - unexpected value &quot;2&quot;">page = &lt;Page url='http://127.0.0.1:43489/?view=list&amp;home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Universidad%20Internacional%20%E5%A2%A8%E8%A5%BF%E5%93%A5%E5%9C%8B%E9%9A%9B%E5%A4%A7%E5%AD%B8'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:43489', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-148/web-e2e-data0'))
+width = 390, source_page = 119, key = 'application_forms'
+sid = 'p119-r27-form-metadata-normal-tls', claim = '清單列48項', pdf_page = 5
+medium = '公開題目API原文'
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page,key,sid,claim,pdf_page,medium", [
+        (119, "application_forms", "p119-r27-form-metadata-normal-tls", "清單列48項", 5, "公開題目API原文"),
+        (83, "academic_calendar", "p83-r27-calendar-image-normal-tls", "2027-02-01至04-24", 2, "官方校曆影像原文"),
+    ])
+    def test_composite_claims_display_independent_source_dates_and_links(page, live_server, width, source_page, key, sid, claim, pdf_page, medium):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = record_errors(page)
+        partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == source_page)
+        fresh = json.loads((BUNDLE / "overseas_sources" / (sid + ".json")).read_text())
+        old = next(e for e in partner.partner_exchange_details[key].evidence if e.source_url != fresh["source_url"])
+        enter_public_site(page, live_server, "partners")
+        choose_home(page, HOME)
+        page.evaluate("hash =&gt; {location.hash=hash}", "#school=" + quote(partner.school_name))
+        field = page.locator(f'#detail-overview [data-ccu-field="{key}"]')
+        expect(field).to_be_visible(timeout=30_000)
+        field.locator("&gt; summary").click()
+        expect(field).to_contain_text(claim)
+        links = field.locator("a").all()
+        normal = next(link for link in links if link.get_attribute("href") == fresh["source_url"])
+        expect(normal).not_to_contain_text("PDF第")
+        expect(normal.locator("xpath=following-sibling::p[1]")).to_contain_text("查核2026-10-09")
+        original = next(link for link in links if link.get_attribute("href") == old.source_url.split("#")[0] + f"#page={pdf_page}")
+        expect(original).to_contain_text(f"PDF第{pdf_page}頁")
+        expect(original.locator("xpath=following-sibling::p[1]")).to_contain_text("查核2026-10-08")
+        page.locator("#detail-tab-application").click()
+        content = page.locator("#workflow-content")
+        expect(content.locator("details.workflow-step")).not_to_have_count(0, timeout=30_000)
+        step = content.locator("details.workflow-step").filter(has_text=claim)
+        expect(step).to_have_count(1)
+        step.locator("&gt; summary").click()
+        detail = step.locator("li").filter(has_text=claim)
+&gt;       expect(detail).to_have_count(1)
+E       AssertionError: Locator expected to have count '1'
+E       Actual value: 2 
+E       Call log:
+E         - Expect "to_have_count" with timeout 5000ms
+E         - waiting for locator("#workflow-content").locator("details.workflow-step").filter(has_text="清單列48項").locator("li").filter(has_text="清單列48項")
+E           14 × locator resolved to 2 elements
+E              - unexpected value "2"
+
+tests/e2e/test_ccu_composite_provenance.py:49: AssertionError</failure></testcase><testcase classname="tests.e2e.test_ccu_composite_provenance" name="test_composite_claims_display_independent_source_dates_and_links[119-application_forms-p119-r27-form-metadata-normal-tls-\u6e05\u55ae\u521748\u9805-5-\u516c\u958b\u984c\u76eeAPI\u539f\u6587-1440]" time="14.472"><failure message="AssertionError: Locator expected to have count '1'&#10;Actual value: 2 &#10;Call log:&#10;  - Expect &quot;to_have_count&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;#workflow-content&quot;).locator(&quot;details.workflow-step&quot;).filter(has_text=&quot;清單列48項&quot;).locator(&quot;li&quot;).filter(has_text=&quot;清單列48項&quot;)&#10;    14 × locator resolved to 2 elements&#10;       - unexpected value &quot;2&quot;">page = &lt;Page url='http://127.0.0.1:43489/?view=list&amp;home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E6%AD%A3%E5%A4%A7%E5%AD%B8#school=Universidad%20Internacional%20%E5%A2%A8%E8%A5%BF%E5%93%A5%E5%9C%8B%E9%9A%9B%E5%A4%A7%E5%AD%B8'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:43489', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-148/web-e2e-data0'))
+width = 1440, source_page = 119, key = 'application_forms'
+sid = 'p119-r27-form-metadata-normal-tls', claim = '清單列48項', pdf_page = 5
+medium = '公開題目API原文'
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    @pytest.mark.parametrize("source_page,key,sid,claim,pdf_page,medium", [
+        (119, "application_forms", "p119-r27-form-metadata-normal-tls", "清單列48項", 5, "公開題目API原文"),
+        (83, "academic_calendar", "p83-r27-calendar-image-normal-tls", "2027-02-01至04-24", 2, "官方校曆影像原文"),
+    ])
+    def test_composite_claims_display_independent_source_dates_and_links(page, live_server, width, source_page, key, sid, claim, pdf_page, medium):
+        page.set_viewport_size({"width": width, "height": 956})
+        page.emulate_media(reduced_motion="reduce")
+        errors = record_errors(page)
+        partner = next(p for p in fetch_ccu_partner_universities() if p.source_pages[0] == source_page)
+        fresh = json.loads((BUNDLE / "overseas_sources" / (sid + ".json")).read_text())
+        old = next(e for e in partner.partner_exchange_details[key].evidence if e.source_url != fresh["source_url"])
+        enter_public_site(page, live_server, "partners")
+        choose_home(page, HOME)
+        page.evaluate("hash =&gt; {location.hash=hash}", "#school=" + quote(partner.school_name))
+        field = page.locator(f'#detail-overview [data-ccu-field="{key}"]')
+        expect(field).to_be_visible(timeout=30_000)
+        field.locator("&gt; summary").click()
+        expect(field).to_contain_text(claim)
+        links = field.locator("a").all()
+        normal = next(link for link in links if link.get_attribute("href") == fresh["source_url"])
+        expect(normal).not_to_contain_text("PDF第")
+        expect(normal.locator("xpath=following-sibling::p[1]")).to_contain_text("查核2026-10-09")
+        original = next(link for link in links if link.get_attribute("href") == old.source_url.split("#")[0] + f"#page={pdf_page}")
+        expect(original).to_contain_text(f"PDF第{pdf_page}頁")
+        expect(original.locator("xpath=following-sibling::p[1]")).to_contain_text("查核2026-10-08")
+        page.locator("#detail-tab-application").click()
+        content = page.locator("#workflow-content")
+        expect(content.locator("details.workflow-step")).not_to_have_count(0, timeout=30_000)
+        step = content.locator("details.workflow-step").filter(has_text=claim)
+        expect(step).to_have_count(1)
+        step.locator("&gt; summary").click()
+        detail = step.locator("li").filter(has_text=claim)
+&gt;       expect(detail).to_have_count(1)
+E       AssertionError: Locator expected to have count '1'
+E       Actual value: 2 
+E       Call log:
+E         - Expect "to_have_count" with timeout 5000ms
+E         - waiting for locator("#workflow-content").locator("details.workflow-step").filter(has_text="清單列48項").locator("li").filter(has_text="清單列48項")
+E           14 × locator resolved to 2 elements
+E              - unexpected value "2"
+
+tests/e2e/test_ccu_composite_provenance.py:49: AssertionError</failure></testcase><testcase time="0.029" /></testsuite></testsuites>
