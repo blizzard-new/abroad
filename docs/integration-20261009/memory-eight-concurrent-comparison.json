@@ -1,0 +1,79 @@
+{
+  "runs": [
+    {
+      "name": "memory-baseline-eight-concurrent",
+      "status": "passed",
+      "sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+      "peak_bytes": 615059456,
+      "final_bytes": 494231552,
+      "bursts": [
+        {
+          "label": "eight-concurrent-ccu-dashboard-0",
+          "time": "2026-10-09T16:28:47.048884+00:00",
+          "pid": 243567,
+          "rss_bytes": 475308032,
+          "peak_rss_bytes": 615059456,
+          "gc_collected": null
+        },
+        {
+          "label": "eight-concurrent-ccu-dashboard-1",
+          "time": "2026-10-09T16:28:51.824228+00:00",
+          "pid": 243567,
+          "rss_bytes": 509440000,
+          "peak_rss_bytes": 615059456,
+          "gc_collected": null
+        },
+        {
+          "label": "eight-concurrent-ccu-dashboard-2",
+          "time": "2026-10-09T16:28:57.041875+00:00",
+          "pid": 243567,
+          "rss_bytes": 510951424,
+          "peak_rss_bytes": 615059456,
+          "gc_collected": null
+        }
+      ],
+      "clean_source_guards": true
+    },
+    {
+      "name": "memory-fixed-eight-concurrent",
+      "status": "passed",
+      "sha": "bedc9a03c0968a57728d1d08f6654404a3474269",
+      "peak_bytes": 355004416,
+      "final_bytes": 355004416,
+      "bursts": [
+        {
+          "label": "eight-concurrent-ccu-dashboard-0",
+          "time": "2026-10-09T16:30:23.134185+00:00",
+          "pid": 244778,
+          "rss_bytes": 355004416,
+          "peak_rss_bytes": 354529280,
+          "gc_collected": null
+        },
+        {
+          "label": "eight-concurrent-ccu-dashboard-1",
+          "time": "2026-10-09T16:30:23.839376+00:00",
+          "pid": 244778,
+          "rss_bytes": 355004416,
+          "peak_rss_bytes": 354529280,
+          "gc_collected": null
+        },
+        {
+          "label": "eight-concurrent-ccu-dashboard-2",
+          "time": "2026-10-09T16:30:24.587697+00:00",
+          "pid": 244778,
+          "rss_bytes": 355004416,
+          "peak_rss_bytes": 354529280,
+          "gc_collected": null
+        }
+      ],
+      "clean_source_guards": true
+    }
+  ],
+  "parallel_requests_per_batch": 8,
+  "batches": 3,
+  "requests_all_http_200": true,
+  "baseline_exceeds_512_mib": true,
+  "fixed_below_512_mib": true,
+  "peak_reduction_percent": 42.28128475436365,
+  "measurement": "Owned local single-worker Uvicorn process RSS/HWM, not Render cgroup metric; no production load"
+}

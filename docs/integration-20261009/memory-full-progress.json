@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-10-09T16:24:47.799491+00:00",
+  "sha": "bedc9a03c0968a57728d1d08f6654404a3474269",
+  "collected": 2645,
+  "original": 2641,
+  "removed": [],
+  "added": [
+    "tests/test_catalogue_memory.py::test_catalogue_backpressure_keeps_health_available_and_releases_slots",
+    "tests/test_catalogue_memory.py::test_read_only_partner_overlay_preserves_every_nested_source_field",
+    "tests/test_catalogue_memory.py::test_scoped_destination_load_keeps_full_rows_and_local_override",
+    "tests/test_catalogue_memory.py::test_streamed_workflow_structuring_matches_original_payloads"
+  ],
+  "counts": {
+    "passed": 81
+  },
+  "failed": [],
+  "shards": [
+    {
+      "shard": 0,
+      "counts": {
+        "passed": 25
+      },
+      "last_line": "tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return "
+    },
+    {
+      "shard": 1,
+      "counts": {
+        "passed": 22
+      },
+      "last_line": "tests/e2e/test_ccu_twentieth_pass.py::test_dit_extra_grade_sheet_stays_pending_and_conditional[1440] "
+    },
+    {
+      "shard": 2,
+      "counts": {
+        "passed": 25
+      },
+      "last_line": "tests/e2e/test_ccu_school.py::test_all_six_school_grade_fields_remain_isolated "
+    },
+    {
+      "shard": 3,
+      "counts": {
+        "passed": 9
+      },
+      "last_line": "tests/e2e/test_ccu_delayed_switching.py::test_late_detail_evidence_cannot_replace_new_target_workflow_or_life[1440] "
+    }
+  ]
+}

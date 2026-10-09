@@ -61,8 +61,8 @@
   },
   {
     "path": "execution-status.json",
-    "bytes": 5258,
-    "sha256": "14cd6bd0d321c378d830558c9bc8e4ae7e1c4417b065faf923d4fda464f143ff"
+    "bytes": 5900,
+    "sha256": "d92e4a4a918581fe04b70a0db0904ae4bb7ddd4d47aee772c634b11d56fede99"
   },
   {
     "path": "final-full-progress.json",
@@ -235,6 +235,11 @@
     "sha256": "c62de658bca95210392d8c72d9eca0302e07c64652c920199827a15dfaa452eb"
   },
   {
+    "path": "harness/memory_full_progress.py",
+    "bytes": 1128,
+    "sha256": "abf4e425eb539db4f49bcf0f802e91428f7941538f20d53e9c3996ebbb3d3918"
+  },
+  {
     "path": "harness/package_evidence.py",
     "bytes": 2535,
     "sha256": "7e6dd3f029bda57271f48ffa89bc37407ff7111cbe37490c1bb51c171196030b"
@@ -260,6 +265,11 @@
     "sha256": "33dc2678773fce74e0454e1127c4078bf13167766032da5eb59aeba56319a87c"
   },
   {
+    "path": "harness/probe_delayed_switch.py",
+    "bytes": 2068,
+    "sha256": "a76f95117337ffb20262a1306c641b38f0832a9e24c04f41439c585c6c4ec368"
+  },
+  {
     "path": "harness/production_guest_smoke.py",
     "bytes": 3232,
     "sha256": "d3a674e7dde9a3c1cef82c79d00f72684b8b29a2f8b20b8eee17c51c7b97dc61"
@@ -276,8 +286,8 @@
   },
   {
     "path": "harness/profile_six_school_memory.py",
-    "bytes": 6839,
-    "sha256": "c7164f4b115635f055b3e524ac1d32417b1e845aa18d67db72758e85722e816d"
+    "bytes": 7247,
+    "sha256": "c4d2a8e5c19da9b01c9abd1f2ce6d8880c4be5f2e9337d9e65849ee1074f230d"
   },
   {
     "path": "harness/rerun_browser_failures.py",
@@ -455,6 +465,56 @@
     "sha256": "c073474c70ab21c862f218b3ffca0503a2ff7f1fbb4e090e5d81184fa0eefaa2"
   },
   {
+    "path": "memory-baseline-clock-probe/junit.xml",
+    "bytes": 409,
+    "sha256": "105d855eeeb8085b03d23fbc8ceba1e97b33d8691f349075d27e9a67afec42b7"
+  },
+  {
+    "path": "memory-baseline-clock-probe/metadata.json",
+    "bytes": 928,
+    "sha256": "369567e7a588f1d1daa2f89b1986ab7130c54f4e9b17fb68dc56ea3104f82592"
+  },
+  {
+    "path": "memory-baseline-clock-probe/navigation-events.json",
+    "bytes": 601,
+    "sha256": "ae9376ad71df6def728fa093b623cd0cd32ef30b85b3200307f8f296d974c205"
+  },
+  {
+    "path": "memory-baseline-clock-probe/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-baseline-clock-probe/stdout.log",
+    "bytes": 126,
+    "sha256": "4f130c38a6b4c0d01842439e0edb0c8171349ab26609dad0234d94d8f6a5f3e9"
+  },
+  {
+    "path": "memory-baseline-eight-concurrent/memory-samples.json",
+    "bytes": 4644,
+    "sha256": "006c08e26db16126b933b5eef1738a3cbc918457f19cc6947d198a0ef40229df"
+  },
+  {
+    "path": "memory-baseline-eight-concurrent/metadata.json",
+    "bytes": 867,
+    "sha256": "d6872c44c4cdd8b4ee4c44910cf28265e319fd8e58c5ebd05ff922ac6bff0559"
+  },
+  {
+    "path": "memory-baseline-eight-concurrent/server.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-baseline-eight-concurrent/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-baseline-eight-concurrent/stdout.log",
+    "bytes": 681,
+    "sha256": "a9d36c7a55d0f93d79f5915fd1cac4432812b4b7b564943f20dea368e5804bcd"
+  },
+  {
     "path": "memory-baseline-real-browser/memory-samples.json",
     "bytes": 6908,
     "sha256": "a3ae88d81aa012912bb742748afb7febaec5033cb7a692225565bdf7e3bfff6a"
@@ -505,6 +565,31 @@
     "sha256": "69b6dab9efabf6a1952e94adc5059f60c8b189b277f86d69a83aac38b03cb1bc"
   },
   {
+    "path": "memory-baseline-soak/memory-samples.json",
+    "bytes": 16790,
+    "sha256": "bfb354ea0ad9b0487fb055a28cde64a1ff0b57c795493a0426678770fce59d2b"
+  },
+  {
+    "path": "memory-baseline-soak/metadata.json",
+    "bytes": 872,
+    "sha256": "37213b0af7573ee56d339eb1c664ce9d2c5afd9b27515886451a306d09a82fae"
+  },
+  {
+    "path": "memory-baseline-soak/server.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-baseline-soak/stderr.log",
+    "bytes": 1626,
+    "sha256": "d377bdd46855b4c9154c995fbe1d8c2539197388fb59f69d2cf778bda9fd6985"
+  },
+  {
+    "path": "memory-baseline-soak/stdout.log",
+    "bytes": 2171,
+    "sha256": "b87938b3831688e61bd344db826734b0c8e1980b132b0feb280678bd65f27bbe"
+  },
+  {
     "path": "memory-bounded-catalogue-experiment/memory-samples.json",
     "bytes": 6908,
     "sha256": "803f74dad876c619c2390b6d385f2c6deb6bb5010e0fe9973823b0bd6f4bb29c"
@@ -530,6 +615,36 @@
     "sha256": "c96660a5dac1d5ec4ee6a37bb3911762758b97c9d42f614de27b9a08a182b374"
   },
   {
+    "path": "memory-clock-failure-probe/junit.xml",
+    "bytes": 2272,
+    "sha256": "5b1ed3275d1879ab3b8c4f33fb98bb36a4665b1de2f166deb47be1000ee02410"
+  },
+  {
+    "path": "memory-clock-failure-probe/metadata.json",
+    "bytes": 924,
+    "sha256": "d980af0a74ac8db7bde0c24c3feb38a26a6bf6462fe97a5de3449a63cb07695d"
+  },
+  {
+    "path": "memory-clock-failure-probe/navigation-events.json",
+    "bytes": 2080,
+    "sha256": "68719fbf6222b910444169b31a96b767405f5b940be783511f07fa1457d925b0"
+  },
+  {
+    "path": "memory-clock-failure-probe/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-clock-failure-probe/stdout.log",
+    "bytes": 1917,
+    "sha256": "298d0c412f6e8c4c030b9edba8b05ca3324dadc5f8ad00d2721e54d33173d946"
+  },
+  {
+    "path": "memory-eight-concurrent-comparison.json",
+    "bytes": 2423,
+    "sha256": "d1ec12ae9d57640f30a4fae45249a1dfc984fa73055bd3a9a5c34ea2ef8c6711"
+  },
+  {
     "path": "memory-final-focused-regression/junit.xml",
     "bytes": 11973,
     "sha256": "6f78f179f80d3ce0340a17ac9cc1f52385b7b9d17081cb4a8da9fcd14e3fdab1"
@@ -550,6 +665,56 @@
     "sha256": "ac5f4783c641bbd396cd1d2ea210972b2adfc02bccf4218ff69558c276b4fc12"
   },
   {
+    "path": "memory-final-soak/memory-samples.json",
+    "bytes": 16790,
+    "sha256": "c61b4ce902c4efa7028a791f114201ece962094e7b3a2d45d49515d7fed56d3b"
+  },
+  {
+    "path": "memory-final-soak/metadata.json",
+    "bytes": 866,
+    "sha256": "26b6dd27d04ad41c842ccb877515f067cf9e804e14364667e07b80e603256e9e"
+  },
+  {
+    "path": "memory-final-soak/server.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-final-soak/stderr.log",
+    "bytes": 1623,
+    "sha256": "40e253e1fefe8ec870faedc4178a87b583b638166ce812a3a4c83ed8b7900e64"
+  },
+  {
+    "path": "memory-final-soak/stdout.log",
+    "bytes": 2171,
+    "sha256": "57c2b9bf44be6b4525c1b25732001ca644a44b70f297be249d3a69a59af0fd29"
+  },
+  {
+    "path": "memory-final-warm-soak/memory-samples.json",
+    "bytes": 22984,
+    "sha256": "e73f496781ac3c8e95c480b821f527c0908d3c68ccb78a73cbd1b08c30003ead"
+  },
+  {
+    "path": "memory-final-warm-soak/metadata.json",
+    "bytes": 912,
+    "sha256": "677f6b6cc0e20de1bd624483e7ca5a39d85722ea989235cef818431ee942a329"
+  },
+  {
+    "path": "memory-final-warm-soak/server.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-final-warm-soak/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-final-warm-soak/stdout.log",
+    "bytes": 3397,
+    "sha256": "57616823384d4a795f91d6cc03712bbdd19c015652650f72f3214cdd4908202f"
+  },
+  {
     "path": "memory-fixed-contract/junit.xml",
     "bytes": 238,
     "sha256": "c576be244c3680d88b14e9c6d5877e00570fe6e12cf8e3eadd2e332ace3e0f13"
@@ -568,6 +733,31 @@
     "path": "memory-fixed-contract/stdout.log",
     "bytes": 23,
     "sha256": "a6fc53a5cef0fe8278c459c532a5e372bbe2dd65e4c365a7d7757a210299799f"
+  },
+  {
+    "path": "memory-fixed-eight-concurrent/memory-samples.json",
+    "bytes": 4644,
+    "sha256": "c0d44333db0ec78352e0be399502e0875e01136e149301bcb83eea11a0f1bd41"
+  },
+  {
+    "path": "memory-fixed-eight-concurrent/metadata.json",
+    "bytes": 861,
+    "sha256": "fa743fc3e5bcb149a9771e57d2d65c1cb172ed82ca115441c38475a3354da62a"
+  },
+  {
+    "path": "memory-fixed-eight-concurrent/server.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-fixed-eight-concurrent/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-fixed-eight-concurrent/stdout.log",
+    "bytes": 681,
+    "sha256": "d9d0e6472b49225b6ce42dea7533fad5e57710d88fa8d6351235a109e0788eda"
   },
   {
     "path": "memory-fixed-unit-regression/junit.xml",
@@ -635,6 +825,16 @@
     "sha256": "2e83325713c95967c8b2bcc241b4683bee1dd48c491df1c604e022e39a8c50c1"
   },
   {
+    "path": "memory-full-live-progress.json",
+    "bytes": 1291,
+    "sha256": "b0166da08a9a6420f0a1979f6ba19bab4c8908a07a49d4246100a4dcc2d59db9"
+  },
+  {
+    "path": "memory-full-progress.json",
+    "bytes": 1454,
+    "sha256": "d5c862b3439ed0503cf55c94d4dc617d4cfb444331626146eb3c66fa78398223"
+  },
+  {
     "path": "memory-openapi-export/metadata.json",
     "bytes": 752,
     "sha256": "5dbb5e409a605cb5dc43c4b377eafafe60a3a4b9472db564c85e6a88ec1dd0ec"
@@ -650,9 +850,19 @@
     "sha256": "d3334f4d99f99808d4efc223180be1cd01846b43d5910910a66b54385601ab02"
   },
   {
+    "path": "memory-pr6-initial.json",
+    "bytes": 301,
+    "sha256": "85b02e5238e970d4bda323fe536e4ace06797cd356ef38c3cdf0924127ec3de9"
+  },
+  {
+    "path": "memory-predeploy-render-events.json",
+    "bytes": 334,
+    "sha256": "7068c3d2c2ba367559ac70150c8732ca6a9d296ba75588d7c21c7413dedb7f88"
+  },
+  {
     "path": "memory-progress.md",
-    "bytes": 2007,
-    "sha256": "50a868e8818a43613919ba093f9cf2def75cb94033565237e1282f824e683c3e"
+    "bytes": 3375,
+    "sha256": "ec5c4587fa79a73e534b2a0488a439a8fa0b916fae496550080292ea2971b05f"
   },
   {
     "path": "memory-release-precheck.json",
@@ -663,6 +873,26 @@
     "path": "memory-release-scope-proof.json",
     "bytes": 1710,
     "sha256": "10445165e7adf0d64d3a9c33d5f859928538862002515883e915d6d350d00789"
+  },
+  {
+    "path": "memory-runtime-regression/metadata.json",
+    "bytes": 808,
+    "sha256": "dfe402280caba44a202cb467a5564d4bc5252e5f6699f53f975bcb225837c57b"
+  },
+  {
+    "path": "memory-runtime-regression/stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-runtime-regression/stdout.log",
+    "bytes": 3978620,
+    "sha256": "b078eb4c07083c04ab691b7e4c5547e23b086f2888ee9f639013e13735d60bf5"
+  },
+  {
+    "path": "memory-runtime-regression-result.json",
+    "bytes": 7381631,
+    "sha256": "e94c6c9030f190549d30b9c0a84de4c3a9206bb3cca836c7ab0834eeb1c69642"
   },
   {
     "path": "memory-scoped-profiles-browser/memory-samples.json",
@@ -788,6 +1018,31 @@
     "path": "memory-trace-six-catalogs/stdout.log",
     "bytes": 518,
     "sha256": "295a11450892f390f51bc45c2807a08865a646c32811d921eeb6c287c3815e35"
+  },
+  {
+    "path": "memory-warm-soak-summary.json",
+    "bytes": 658,
+    "sha256": "c2e1eb9bac3435696de7b293502707a6ae47067554ce8de2878315ed87d2189a"
+  },
+  {
+    "path": "memory-wheel-build/metadata.json",
+    "bytes": 822,
+    "sha256": "50caf19e3d8580f52064a1b6ca61fd780fb852baf1b076e375c61d11ad0f380c"
+  },
+  {
+    "path": "memory-wheel-build/stderr.log",
+    "bytes": 1003530,
+    "sha256": "987946743157acfcbaa7a177b3de60f85a850f835ff9c1e89c27bc8bcf2631a8"
+  },
+  {
+    "path": "memory-wheel-build/stdout.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "memory-wheel-proof.json",
+    "bytes": 411,
+    "sha256": "0ea87d825e4816aa15acf50d603a76fcbe99d6d98d2fe1c6fb11e3d589d50a11"
   },
   {
     "path": "new-school-forum-db-confirmed/metadata.json",

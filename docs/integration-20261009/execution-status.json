@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-09T16:21:27.342274+00:00",
+  "timestamp": "2026-10-09T16:35:35.932842+00:00",
   "environment": "exec recovered; latest commands succeed",
   "production": {
     "main": "1c715d21d1fd23a87087b74bbb068f4efbe74aa1",
@@ -52,7 +52,7 @@
     "exact_deployed_python_source_and_models": "passed in separate interpreter, stage/dual-review/publish/readback, 12 HTTP200",
     "final_31234305_applied_filename_order": "passed full35, Storage and original five-school code/models; clean start/end"
   },
-  "remaining_gate": "Memory fix full regression and comparative soak, then authorized fix PR merge/deploy and low-load live stability verification.",
+  "remaining_gate": "Finish full 2645-case run and resolve the mobile clock/navigation case before PR6 merge; deploy exact SHA and low-load production stability verification remain pending.",
   "tku_production_migrations_applied": true,
   "pr2_merged": true,
   "original_full": {
@@ -114,6 +114,19 @@
       "scoped_profiles": 445.3,
       "streamed_workflows": 435.0,
       "bounded_catalogue_diagnostic": 410.1
-    }
+    },
+    "pr": 6,
+    "url": "https://github.com/blizzard-new/abroad/pull/6",
+    "fixed_eight_concurrent_peak_mib": 338.56,
+    "baseline_eight_concurrent_peak_mib": 586.57,
+    "warm_soak": {
+      "status": "passed",
+      "http_requests": 360,
+      "school_switches": 36,
+      "ntu_globe_photo_life": 6,
+      "peak_mib": 424.57
+    },
+    "runtime": "passed full35, 17 governance groups / 74 RPCs, six-school forum policy, actual Storage and previous deployed Python tree",
+    "full_suite_status": "running; one mobile clock/navigation failure under investigation; baseline isolated case passed"
   }
 }

@@ -74,6 +74,13 @@ with tempfile.TemporaryDirectory(prefix='abroad-memory-profile-') as data:
                         for item in endpoints:
                             get(item)
                     sample(f'round-{iteration}-{school}')
+            if '--burst' in sys.argv:
+                for batch in range(3):
+                    endpoints = [('/student-dashboard', {'school':'CCU'})] * 8
+                    with ThreadPoolExecutor(max_workers=8) as pool:
+                        responses = list(pool.map(get, endpoints))
+                    assert len(responses) == 8
+                    sample(f'eight-concurrent-ccu-dashboard-{batch}')
             if '--browser' in sys.argv:
                 from types import SimpleNamespace
                 from playwright.sync_api import sync_playwright, expect

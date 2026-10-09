@@ -1,0 +1,27 @@
+CONFTEST LOADED!
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_queued_form_save_keeps_original_home_when_switching_before_debounce[390] _
+tests/e2e/test_ccu_delayed_switching.py:210: in test_queued_form_save_keeps_original_home_when_switching_before_debounce
+    click_home(page, "國立臺北大學")
+tests/e2e/test_ccu_delayed_switching.py:82: in click_home
+    open_navigation(page)
+tests/e2e/conftest.py:503: in open_navigation
+    page.locator("#glass-navigation").wait_for(state="visible")
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:20539: in wait_for
+    self._sync(
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:748: in wait_for
+    await self._frame.wait_for_selector(
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:394: in wait_for_selector
+    await self._channel.send(
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../abroad-six-final/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.wait_for: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("#glass-navigation") to be visible
+E       61 × locator resolved to hidden <aside inert="" tabindex="-1" aria-label="系統功能" id="glass-navigation" class="glass-navigation-rail">…</aside>
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ccu_delayed_switching.py::test_queued_form_save_keeps_original_home_when_switching_before_debounce[390]
+1 failed in 77.45s (0:01:17)

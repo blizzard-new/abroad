@@ -1,0 +1,25 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "/workspace/integration-tools/probe_delayed_switch.py",
+    "memory-baseline-clock-probe",
+    "tests/e2e/test_ccu_delayed_switching.py::test_queued_form_save_keeps_original_home_when_switching_before_debounce[390]"
+  ],
+  "cwd": "/workspace/abroad-six-final",
+  "started_at": "2026-10-09T16:33:22.985104+00:00",
+  "start_guard": {
+    "sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+    "tree": "7a9736031fb9e2d440426e14c1ca03f5438aca97",
+    "status": ""
+  },
+  "timeout_seconds": 600,
+  "test_result": "passed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 0,
+  "finished_at": "2026-10-09T16:34:30.197622+00:00",
+  "end_guard": {
+    "sha": "31234305f6ecd477ff8eb3915dd2d3d6f4141477",
+    "tree": "7a9736031fb9e2d440426e14c1ca03f5438aca97",
+    "status": ""
+  }
+}
