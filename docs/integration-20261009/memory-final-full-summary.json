@@ -1,0 +1,194 @@
+{
+  "candidate_sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+  "complete_full_suite": true,
+  "collected_unique_cases": 2647,
+  "executed_unique_cases": 2647,
+  "counts": {
+    "passed": 2629,
+    "failed": 4,
+    "skipped": 14
+  },
+  "all_source_guards_passed": true,
+  "shards": [
+    {
+      "shard": 0,
+      "metadata": {
+        "command": [
+          "/workspace/abroad-six-final/.venv/bin/python",
+          "scripts/run_web_quality_tests.py",
+          "--shard",
+          "0",
+          "--shards",
+          "4",
+          "--junitxml",
+          "/workspace/integration-evidence/memory-final-full-shard-0/results.xml",
+          "--evidence-dir",
+          "/workspace/integration-evidence/memory-final-full-shard-0"
+        ],
+        "cwd": "/workspace/abroad-memory-followup",
+        "started_at": "2026-10-09T16:50:49.986701+00:00",
+        "start_guard": {
+          "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+          "tree": "73cc9a22af2ccc9ae8112c14839f7ac544e0b875",
+          "status": ""
+        },
+        "timeout_seconds": 5400,
+        "test_result": "failed",
+        "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+        "exit_code": 1,
+        "finished_at": "2026-10-09T17:18:42.081619+00:00",
+        "end_guard": {
+          "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+          "tree": "73cc9a22af2ccc9ae8112c14839f7ac544e0b875",
+          "status": ""
+        }
+      },
+      "case_count": 2295,
+      "counts": {
+        "passed": 2277,
+        "failed": 4,
+        "skipped": 14
+      },
+      "source_guard_passed": true
+    },
+    {
+      "shard": 1,
+      "metadata": {
+        "command": [
+          "/workspace/abroad-six-final/.venv/bin/python",
+          "scripts/run_web_quality_tests.py",
+          "--shard",
+          "1",
+          "--shards",
+          "4",
+          "--junitxml",
+          "/workspace/integration-evidence/memory-final-full-shard-1/results.xml",
+          "--evidence-dir",
+          "/workspace/integration-evidence/memory-final-full-shard-1"
+        ],
+        "cwd": "/workspace/abroad-memory-followup",
+        "started_at": "2026-10-09T16:45:23.049563+00:00",
+        "start_guard": {
+          "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+          "tree": "73cc9a22af2ccc9ae8112c14839f7ac544e0b875",
+          "status": ""
+        },
+        "timeout_seconds": 5400,
+        "test_result": "passed",
+        "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+        "exit_code": 0,
+        "finished_at": "2026-10-09T17:03:56.251539+00:00",
+        "end_guard": {
+          "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+          "tree": "73cc9a22af2ccc9ae8112c14839f7ac544e0b875",
+          "status": ""
+        }
+      },
+      "case_count": 118,
+      "counts": {
+        "passed": 118
+      },
+      "source_guard_passed": true
+    },
+    {
+      "shard": 2,
+      "metadata": {
+        "command": [
+          "/workspace/abroad-six-final/.venv/bin/python",
+          "scripts/run_web_quality_tests.py",
+          "--shard",
+          "2",
+          "--shards",
+          "4",
+          "--junitxml",
+          "/workspace/integration-evidence/memory-final-full-shard-2/results.xml",
+          "--evidence-dir",
+          "/workspace/integration-evidence/memory-final-full-shard-2"
+        ],
+        "cwd": "/workspace/abroad-memory-followup",
+        "started_at": "2026-10-09T16:44:48.485791+00:00",
+        "start_guard": {
+          "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+          "tree": "73cc9a22af2ccc9ae8112c14839f7ac544e0b875",
+          "status": ""
+        },
+        "timeout_seconds": 5400,
+        "test_result": "passed",
+        "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+        "exit_code": 0,
+        "finished_at": "2026-10-09T16:57:36.637534+00:00",
+        "end_guard": {
+          "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+          "tree": "73cc9a22af2ccc9ae8112c14839f7ac544e0b875",
+          "status": ""
+        }
+      },
+      "case_count": 117,
+      "counts": {
+        "passed": 117
+      },
+      "source_guard_passed": true
+    },
+    {
+      "shard": 3,
+      "metadata": {
+        "command": [
+          "/workspace/abroad-six-final/.venv/bin/python",
+          "scripts/run_web_quality_tests.py",
+          "--shard",
+          "3",
+          "--shards",
+          "4",
+          "--junitxml",
+          "/workspace/integration-evidence/memory-final-full-shard-3/results.xml",
+          "--evidence-dir",
+          "/workspace/integration-evidence/memory-final-full-shard-3"
+        ],
+        "cwd": "/workspace/abroad-memory-followup",
+        "started_at": "2026-10-09T16:50:49.989091+00:00",
+        "start_guard": {
+          "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+          "tree": "73cc9a22af2ccc9ae8112c14839f7ac544e0b875",
+          "status": ""
+        },
+        "timeout_seconds": 5400,
+        "test_result": "passed",
+        "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+        "exit_code": 0,
+        "finished_at": "2026-10-09T17:09:56.634699+00:00",
+        "end_guard": {
+          "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+          "tree": "73cc9a22af2ccc9ae8112c14839f7ac544e0b875",
+          "status": ""
+        }
+      },
+      "case_count": 117,
+      "counts": {
+        "passed": 117
+      },
+      "source_guard_passed": true
+    }
+  ],
+  "failed_nodeids": [
+    "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[393]",
+    "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[834]",
+    "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[1440]",
+    "tests/test_independent_page_routing.py::test_route_assets_are_cache_busted_together"
+  ],
+  "skipped_nodeids": [
+    "tests/e2e/test_web_next_phase.py::test_content_admins_independently_attest_every_source_before_publish",
+    "tests/e2e/test_web_next_phase.py::test_content_admin_downloads_snapshot_bound_destination_profile_review_queue",
+    "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_fixed_10_questions_no_oom",
+    "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_cold_start_under_90s",
+    "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_overlong_prompt_handled",
+    "tests/integration/test_local_ai_runtime.py::TestLocalAIRuntime::test_service_recovers_after_timeout",
+    "tests/test_application_plan_api.py::test_application_plan_api_uses_bundled_workflow_with_isolated_runtime_data",
+    "tests/test_application_workflow.py::test_workflow_api_reads_cache_and_rejects_public_refresh",
+    "tests/test_application_workflow.py::test_workflow_api_applies_department_override",
+    "tests/test_cgu_bundled_data.py::test_bundled_cgu_workflows_are_available_without_local_cache",
+    "tests/test_cgu_bundled_data.py::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+    "tests/test_cgu_bundled_data.py::test_bundled_cgu_completeness_report_matches_export",
+    "tests/test_cgu_bundled_data.py::test_backfilled_cgu_workflows_keep_current_details_reference_only",
+    "tests/test_ntu_school_board_migration.py::test_ntu_forum_rpc_migration_preserves_authorization_and_replays"
+  ]
+}

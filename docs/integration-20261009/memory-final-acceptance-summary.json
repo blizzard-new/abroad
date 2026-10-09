@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-09T17:18:46.876322+00:00",
+  "status": "passed",
+  "final_head": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
+  "full_product_suite_sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+  "raw_full_suite_counts": {
+    "passed": 2629,
+    "failed": 4,
+    "skipped": 14
+  },
+  "raw_failures_retained": [
+    "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[393]",
+    "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[834]",
+    "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[1440]",
+    "tests/test_independent_page_routing.py::test_route_assets_are_cache_busted_together"
+  ],
+  "executed_unique_cases": 2647,
+  "effective_unique_outcomes": {
+    "passed": 2633,
+    "skipped": 14
+  },
+  "unexpected_or_unexecuted_cases": 0,
+  "original_skips_identical": true,
+  "reruns": [
+    {
+      "name": "memory-final-enospc-rerun",
+      "cases": 3,
+      "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+      "clean_source_guards": true
+    },
+    {
+      "name": "memory-final-assets-contract",
+      "cases": 6,
+      "sha": "49882dfce64449abeb682d01ae01a8da5c10ba8d",
+      "clean_source_guards": true
+    }
+  ],
+  "final_browser_followup_passed": 9,
+  "qualification": "Full suite executed on f3. Final head changes only deterministic subprocess test I/O and one paired reader cache query token. All Python/JavaScript, data, sources, migrations, dependencies and runner are byte-identical. Final asset/session/browser checks and rebuilt wheel cover the final delta. Raw failed attempts are not rewritten."
+}

@@ -1,10 +1,12 @@
-# PR #6 完整回歸最後驗證中：2026-10-09 17:05 UTC
+# PR #6 隔離驗收通過，待正式部署確認：2026-10-09 17:19 UTC
 
-最終候選 `9327cfe0cb836ad09818310c46ad7322555ef4bb`；[PR #6](https://github.com/blizzard-new/abroad/pull/6)仍為draft，尚未合併。完整產品回歸SHA是`f3e0b666`；最終只改一份測試的pipe讀取，產品、資料、SQL、依賴、runner及部署設定完全相同：[identity proof](memory-final-test-only-identity.json)。
+最終候選`49882dfce64449abeb682d01ae01a8da5c10ba8d`。完整2647案於`f3e0b666`執行，原始2629passed／4failed／14原skip；4失敗為3筆ENOSPC截图與1筆配對asset URL版本，原始紀錄不改寫。相同f3的3截圖補驗、最終49882dfc的6contract/pipe及9browser全部passed，四片原全套和最終補驗source guards均clean。有效唯一結果2633passed／0未解決failed／14原skip，沒有遺漏案例：[完整對帳](memory-final-acceptance-summary.json)。
 
-暖快取長跑384GET／36選校／6NTU照片地球生活／3批八併發全部passed，峰值445.76MiB：[summary](memory-final-warm-soak-summary.json)。這是本機程序RSS/HWM，不是Render cgroup。最終f3的35migration／Storage／治理／舊Python相容性、wheel、lock、OpenAPI、JS、SQL也通過。完整2647案尚未全部完成；三筆本機ENOSPC導覽截圖失敗已在相同SHA上原案例全部補跑通過。原始失敗保留。
+最終相對f3只變測試pipe I/O與一處community-reader快取query token；所有Python/JavaScript、資料、SQL、依賴、runner相同：[精確delta](memory-final-release-delta-proof.json)。最終重新建wheel，2527entries／2522來源檔byte相同／15張未授權新圖排除，SHA`d2283478e7650bc9ad7f945071a6af2bad7c97a9eed1eed2dc047a54e046ab18`。
 
-前一bedc完整2645案是2628P／3F／14原skip：兩個UI/日期原因已修正；第三個測試stderr緩衝問題已有獨立可重現證據及9327提交後3案通過。讀[memory-progress.md](memory-progress.md)與[execution-status.json](execution-status.json)看當前門檻。
+暖快取384GET／36選校／6NTU／3批八併發全部passed，峰值445.76MiB：[summary](memory-final-warm-soak-summary.json)。這是本機程序RSS/HWM，不是Render cgroup。35migration／實際Storage／17治理組74RPC／舊102Python模組相容性全passed。PR6沒有DB migration。main仍`1c715d21`，OOM穩定性尚未正式解除；下一步依父授權合併固定head並核實精確Render live與低負載穩定性。
+
+[PR6發布/回復計畫](memory-release-plan.md) · [最新狀態](execution-status.json) · [全套原始結果](memory-final-full-summary.json)
 
 ---
 

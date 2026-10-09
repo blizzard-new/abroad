@@ -1,0 +1,70 @@
+[
+  {
+    "name": "lock",
+    "command": [
+      "/workspace/.abroad-cloud-tools/python/bin/uv",
+      "lock",
+      "--check"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "openapi",
+    "command": [
+      "/workspace/abroad-six-final/.venv/bin/python",
+      "scripts/export_openapi.py",
+      "--check"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "python",
+    "command": [
+      "/workspace/abroad-six-final/.venv/bin/python",
+      "-m",
+      "compileall",
+      "-q",
+      "src"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "javascript",
+    "command": [
+      "node",
+      "--check",
+      "src/exchange_info/static/app.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "whitespace",
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "1c715d21",
+      "HEAD"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sql-parser",
+    "command": [
+      "/workspace/abroad-six-final/.venv/bin/python",
+      "scripts/validate_supabase_migrations.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "wheel",
+    "command": [
+      "/workspace/.abroad-cloud-tools/python/bin/uv",
+      "build",
+      "--wheel",
+      "--out-dir",
+      "/workspace/integration-evidence/memory-final-498-release-checks/wheel"
+    ],
+    "exit_code": 0
+  }
+]

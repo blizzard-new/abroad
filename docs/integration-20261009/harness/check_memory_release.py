@@ -1,7 +1,7 @@
 """Read-only contracts plus a wheel whose generated build tree is kept as evidence."""
 import hashlib,json,subprocess,sys,shutil,zipfile
 from pathlib import Path
-root=Path.cwd();out=Path('/workspace/integration-evidence/memory-final-release-checks')
+root=Path.cwd();out=Path('/workspace/integration-evidence')/(sys.argv[1] if len(sys.argv)>1 else 'memory-final-release-checks')
 uv='/workspace/.abroad-cloud-tools/python/bin/uv'
 commands=[('lock',[uv,'lock','--check']),('openapi',[sys.executable,'scripts/export_openapi.py','--check']),('python',[sys.executable,'-m','compileall','-q','src']),('javascript',['node','--check','src/exchange_info/static/app.js']),('whitespace',['git','diff','--check','1c715d21','HEAD']),('sql-parser',[sys.executable,'scripts/validate_supabase_migrations.py']),('wheel',[uv,'build','--wheel','--out-dir',str(out/'wheel')])]
 assert not (root/'build').exists()
@@ -27,4 +27,5 @@ with zipfile.ZipFile(wheel) as z:
   if not row['existing_shared_asset']:assert 'exchange_info'+row['original_local_path'] not in names
  proof={'head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'wheel':wheel.name,'sha256':hashlib.sha256(wheel.read_bytes()).hexdigest(),'entries':len(names),'source_files_byte_identical':checked,'quarantined_new_photos_excluded':15,'no_tracked_or_untracked_changes':not subprocess.check_output(['git','status','--porcelain=v1'],text=True).strip()}
  assert proof['no_tracked_or_untracked_changes']
-Path('/workspace/integration-evidence/memory-final-wheel-proof.json').write_text(json.dumps(proof,indent=2)+'\n');print(proof,flush=True)
+proof_path=out.parent/(out.name+'-wheel-proof.json') if len(sys.argv)>1 else out.parent/'memory-final-wheel-proof.json'
+proof_path.write_text(json.dumps(proof,indent=2)+'\n');print(proof,flush=True)

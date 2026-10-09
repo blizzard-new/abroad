@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-09T17:15:25.491423+00:00",
+  "service": {
+    "autoDeploy": "yes",
+    "autoDeployTrigger": "commit",
+    "branch": "main",
+    "createdAt": "2026-10-06T03:06:42.756777Z",
+    "dashboardUrl": "https://dashboard.render.com/web/srv-db26bgjbc2fs73fdsmhg",
+    "id": "srv-db26bgjbc2fs73fdsmhg",
+    "name": "uniway",
+    "notifyOnFail": "default",
+    "ownerId": "tea-db269mss728c73b8qaig",
+    "repo": "https://github.com/blizzard-new/abroad",
+    "rootDir": "",
+    "serviceDetails": {
+      "buildPlan": "starter",
+      "cache": {
+        "profile": "no-cache"
+      },
+      "env": "python",
+      "envSpecificDetails": {
+        "buildCommand": "pip install .",
+        "startCommand": "uvicorn exchange_info.api:app --host 0.0.0.0 --port $PORT --workers 1"
+      },
+      "healthCheckPath": "/health",
+      "ipAllowList": [
+        {
+          "cidrBlock": "0.0.0.0/0",
+          "description": "everywhere"
+        }
+      ],
+      "maintenanceMode": {
+        "enabled": false,
+        "uri": ""
+      },
+      "numInstances": 1,
+      "openPorts": [],
+      "plan": "free",
+      "previews": {
+        "generation": "off"
+      },
+      "pullRequestPreviewsEnabled": "no",
+      "region": "singapore",
+      "renderSubdomainPolicy": "enabled",
+      "runtime": "python",
+      "sshAddress": "srv-db26bgjbc2fs73fdsmhg@ssh.singapore.render.com",
+      "url": "https://uniway-1167.onrender.com"
+    },
+    "slug": "uniway-1167",
+    "suspended": "not_suspended",
+    "suspenders": [],
+    "type": "web_service",
+    "updatedAt": "2026-10-09T15:46:12.000327Z"
+  }
+}

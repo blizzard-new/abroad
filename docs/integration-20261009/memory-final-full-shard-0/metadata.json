@@ -1,0 +1,31 @@
+{
+  "command": [
+    "/workspace/abroad-six-final/.venv/bin/python",
+    "scripts/run_web_quality_tests.py",
+    "--shard",
+    "0",
+    "--shards",
+    "4",
+    "--junitxml",
+    "/workspace/integration-evidence/memory-final-full-shard-0/results.xml",
+    "--evidence-dir",
+    "/workspace/integration-evidence/memory-final-full-shard-0"
+  ],
+  "cwd": "/workspace/abroad-memory-followup",
+  "started_at": "2026-10-09T16:50:49.986701+00:00",
+  "start_guard": {
+    "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+    "tree": "73cc9a22af2ccc9ae8112c14839f7ac544e0b875",
+    "status": ""
+  },
+  "timeout_seconds": 5400,
+  "test_result": "failed",
+  "isolation": "production EXCHANGE/SUPABASE/DB environment removed; dedicated development data and browser paths",
+  "exit_code": 1,
+  "finished_at": "2026-10-09T17:18:42.081619+00:00",
+  "end_guard": {
+    "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
+    "tree": "73cc9a22af2ccc9ae8112c14839f7ac544e0b875",
+    "status": ""
+  }
+}

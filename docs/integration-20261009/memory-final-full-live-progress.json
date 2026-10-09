@@ -1,25 +1,28 @@
 {
-  "timestamp": "2026-10-09T17:05:57.168641+00:00",
+  "timestamp": "2026-10-09T17:18:11.993531+00:00",
   "sha": "f3e0b666f28d82deaf17ceec701d8f0131ea2b5c",
   "source_status": "",
   "counts": {
-    "passed": 429,
-    "failed": 3
+    "passed": 2511,
+    "failed": 4,
+    "skipped": 14
   },
   "failed": [
     "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[393]",
     "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[834]",
-    "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[1440]"
+    "tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[1440]",
+    "tests/test_independent_page_routing.py::test_route_assets_are_cache_busted_together"
   ],
   "shards": [
     {
       "shard": 0,
       "state": "running",
       "counts": {
-        "passed": 100,
-        "failed": 3
+        "passed": 2159,
+        "failed": 4,
+        "skipped": 14
       },
-      "last": "tests/e2e/test_web_next_phase.py::test_workspace_conflict_preserves_remote_addition_and_local_removal "
+      "last": "tests/test_tku_governance_routes.py::test_issue_report_status_filter_excludes_terminal_reports "
     },
     {
       "shard": 1,
@@ -39,11 +42,11 @@
     },
     {
       "shard": 3,
-      "state": "running",
+      "state": "passed",
       "counts": {
-        "passed": 94
+        "passed": 117
       },
-      "last": "tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[engine] "
+      "last": "WEB_SHARD 3 exit=0 elapsed=1140.070s"
     }
   ]
 }
