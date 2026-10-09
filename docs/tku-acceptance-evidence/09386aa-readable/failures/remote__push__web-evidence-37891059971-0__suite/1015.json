@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/push/web-evidence-37891059971-0/suite.xml",
+  "original_xml_sha256": "782de4ce9d917fddf76bf99e92a8629ded80b4db8e9572ceaf9311048b73ccd6",
+  "case_attributes": {
+    "classname": "tests.test_next_phase_contract",
+    "name": "test_destination_profile_review_contract_requires_explicit_audited_promotion",
+    "time": "1.339"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "KeyError: '/admin/destination-profile-review-queue'"
+  },
+  "full_text": "tests/test_next_phase_contract.py:417: in test_destination_profile_review_contract_requires_explicit_audited_promotion\n    assert \"get\" in paths[\"/admin/destination-profile-review-queue\"]\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   KeyError: '/admin/destination-profile-review-queue'"
+}

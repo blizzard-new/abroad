@@ -1,0 +1,272 @@
+[
+  {
+    "id": "tests.test_tku_community_boundaries::test_school_board_reads_and_writes_require_verified_email_across_all_views[cgu]",
+    "status": "passed",
+    "seconds": "0.248"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_school_board_reads_and_writes_require_verified_email_across_all_views[ntpu]",
+    "status": "passed",
+    "seconds": "0.287"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_school_board_reads_and_writes_require_verified_email_across_all_views[ntu]",
+    "status": "passed",
+    "seconds": "0.421"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_school_board_reads_and_writes_require_verified_email_across_all_views[tku]",
+    "status": "passed",
+    "seconds": "0.294"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_self_declared_school_never_enables_verified_student_bylines",
+    "status": "passed",
+    "seconds": "0.180"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_empty_legacy_board_rejected_and_valid_alias_preserved[university:-422]",
+    "status": "passed",
+    "seconds": "0.177"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_empty_legacy_board_rejected_and_valid_alias_preserved[university:   -422]",
+    "status": "passed",
+    "seconds": "0.143"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_empty_legacy_board_rejected_and_valid_alias_preserved[university:cgu-201]",
+    "status": "passed",
+    "seconds": "0.377"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_verified_alias_byline_preview_matches_publication[verified_school-CGU]",
+    "status": "passed",
+    "seconds": "0.158"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_verified_alias_byline_preview_matches_publication[verified_school-\\uff23\\uff0e\\uff27\\uff0e\\uff35]",
+    "status": "passed",
+    "seconds": "0.162"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_verified_alias_byline_preview_matches_publication[verified_department-CGU]",
+    "status": "passed",
+    "seconds": "0.149"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_verified_alias_byline_preview_matches_publication[verified_department-\\uff23\\uff0e\\uff27\\uff0e\\uff35]",
+    "status": "passed",
+    "seconds": "0.133"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_empty_or_unknown_verified_school_never_defaults_to_cgu_byline[   ]",
+    "status": "passed",
+    "seconds": "0.155"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_empty_or_unknown_verified_school_never_defaults_to_cgu_byline[unsupported-school]",
+    "status": "passed",
+    "seconds": "0.404"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_byline_preview_matches_stored_post_and_comment[anonymous]",
+    "status": "passed",
+    "seconds": "0.153"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_byline_preview_matches_stored_post_and_comment[real_name]",
+    "status": "passed",
+    "seconds": "0.140"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_byline_preview_matches_stored_post_and_comment[verified_school]",
+    "status": "passed",
+    "seconds": "0.135"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_byline_preview_matches_stored_post_and_comment[verified_department]",
+    "status": "passed",
+    "seconds": "0.163"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_private_mutations_replay_without_duplicate_resources_and_reject_foreign_actor",
+    "status": "passed",
+    "seconds": "0.200"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_failed_initial_message_rolls_back_invitation_and_retry_is_safe",
+    "status": "passed",
+    "seconds": "0.460"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_tku_runtime_keeps_all_base_checks_and_mandatory_cleanup",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_supabase_migration_syntax::test_all_supabase_migrations_parse_including_nested_function_bodies",
+    "status": "passed",
+    "seconds": "0.091"
+  },
+  {
+    "id": "tests.test_supabase_migration_syntax::test_nested_plpgsql_syntax_error_is_rejected",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_community_permissions::test_unlinked_anonymous_identity_cannot_bypass_login",
+    "status": "passed",
+    "seconds": "0.120"
+  },
+  {
+    "id": "tests.test_community_permissions::test_guest_can_read_every_board_but_unverified_email_cannot_publish",
+    "status": "passed",
+    "seconds": "0.145"
+  },
+  {
+    "id": "tests.test_community_permissions::test_post_rejects_unknown_or_conflicting_board_identifiers",
+    "status": "passed",
+    "seconds": "0.167"
+  },
+  {
+    "id": "tests.test_community_permissions::test_account_without_a_school_posts_anonymously_on_public_and_school_boards",
+    "status": "passed",
+    "seconds": "0.147"
+  },
+  {
+    "id": "tests.test_community_permissions::test_language_school_board_is_a_public_topic_board",
+    "status": "passed",
+    "seconds": "0.134"
+  },
+  {
+    "id": "tests.test_community_permissions::test_verified_student_can_use_matching_school_identity_only",
+    "status": "passed",
+    "seconds": "0.124"
+  },
+  {
+    "id": "tests.test_community_permissions::test_ntpu_student_can_use_only_ntpu_board_for_posts_and_comments",
+    "status": "passed",
+    "seconds": "0.627"
+  },
+  {
+    "id": "tests.test_community_permissions::test_verified_department_identity_is_derived_by_server",
+    "status": "passed",
+    "seconds": "0.148"
+  },
+  {
+    "id": "tests.test_community_permissions::test_identity_is_selected_per_submission_and_public_name_is_server_derived",
+    "status": "passed",
+    "seconds": "0.152"
+  },
+  {
+    "id": "tests.test_community_permissions::test_public_post_threads_hide_internal_author_ids_but_keep_owner_controls",
+    "status": "passed",
+    "seconds": "0.198"
+  },
+  {
+    "id": "tests.test_community_permissions::test_high_risk_content_waits_for_review_and_sensitive_ids_are_blocked",
+    "status": "passed",
+    "seconds": "0.183"
+  },
+  {
+    "id": "tests.test_community_permissions::test_new_account_has_a_ten_minute_publish_limit",
+    "status": "passed",
+    "seconds": "0.312"
+  },
+  {
+    "id": "tests.test_community_permissions::test_reports_and_blocks_validate_targets_and_report_review_is_audited",
+    "status": "passed",
+    "seconds": "0.228"
+  },
+  {
+    "id": "tests.test_community_permissions::test_admin_can_review_pending_content_and_temporarily_suspend_account",
+    "status": "passed",
+    "seconds": "0.186"
+  },
+  {
+    "id": "tests.test_community_permissions::test_author_can_delete_own_post_but_not_another_users_post",
+    "status": "passed",
+    "seconds": "0.162"
+  },
+  {
+    "id": "tests.test_community_permissions::test_account_deletion_keeps_public_content_but_removes_private_links",
+    "status": "passed",
+    "seconds": "0.678"
+  },
+  {
+    "id": "tests.test_community_permissions::test_deidentified_safety_report_expires_and_is_removed_after_review",
+    "status": "passed",
+    "seconds": "0.118"
+  },
+  {
+    "id": "tests.test_atomic_public_community_api::test_same_public_mutation_replays_one_resource_and_one_rate_event",
+    "status": "passed",
+    "seconds": "0.115"
+  },
+  {
+    "id": "tests.test_atomic_public_community_api::test_same_public_mutation_id_rejects_a_different_payload",
+    "status": "passed",
+    "seconds": "0.105"
+  },
+  {
+    "id": "tests.test_atomic_public_community_api::test_two_app_instances_atomically_limit_six_parallel_new_account_posts",
+    "status": "passed",
+    "seconds": "0.227"
+  },
+  {
+    "id": "tests.test_atomic_public_community_api::test_missing_answer_and_comment_parents_do_not_consume_publish_quota",
+    "status": "passed",
+    "seconds": "0.127"
+  },
+  {
+    "id": "tests.test_atomic_public_community_api::test_committed_suspension_blocks_publication_without_content_or_rate_event",
+    "status": "passed",
+    "seconds": "0.259"
+  },
+  {
+    "id": "tests.test_atomic_public_community_api::test_parallel_same_status_moderation_has_one_winner_and_one_audit",
+    "status": "passed",
+    "seconds": "1.020"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_private_community_tables_are_server_only_and_index_every_fk",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_private_mutations_share_idempotency_and_fixed_pair_lock_order",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_private_idempotency_hash_excludes_server_generated_resource_fields",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_each_private_write_has_one_service_role_rpc_wrapper",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_conversation_message_block_and_report_invariants_are_locked_in_sql",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_report_review_updates_report_and_audit_in_one_transaction",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_account_deletion_preflight_removes_private_rows_and_deidentifies_pending_reports",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_atomic_private_community_migration::test_private_tables_cascade_identity_data_but_retain_deidentified_reports",
+    "status": "passed",
+    "seconds": "0.000"
+  }
+]

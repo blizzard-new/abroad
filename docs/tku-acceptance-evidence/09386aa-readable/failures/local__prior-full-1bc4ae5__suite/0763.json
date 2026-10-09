@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/prior-full-1bc4ae5/suite.xml",
+  "original_xml_sha256": "d9889650b2739711f69bbe3624d42b36281ee04a6fea5fb5b435dbc37a6e2182",
+  "case_attributes": {
+    "classname": "tests.test_frontend_contract",
+    "name": "test_web_notification_center_and_explicit_email_opt_in_are_present",
+    "time": "0.004"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert '重新核對申請清單' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+  },
+  "full_text": "def test_web_notification_center_and_explicit_email_opt_in_are_present() -> None:\n        html = (STATIC_DIR / \"index.html\").read_text(encoding=\"utf-8\")\n        script = (STATIC_DIR / \"app.js\").read_text(encoding=\"utf-8\")\n        styles = (STATIC_DIR / \"product-v2.css\").read_text(encoding=\"utf-8\")\n    \n        assert 'id=\"notification-button\"' in html\n        assert 'id=\"notification-dialog\"' in html\n        assert 'id=\"notification-center-list\"' in html\n        assert 'name=\"email_notifications\"' in html\n        assert \"只有勾選並儲存後才排入寄送\" in html\n        assert 'fetchJson(\"/account/notifications?limit=50\")' in script\n        assert 'fetchJson(\"/account/notifications/read-all\"' in script\n        assert 'values.get(\"email_notifications\") === \"on\"' in script\n        assert \"紙本送件以送達日計算\" in html\n        assert \"官方規定更新\" in script\n>       assert \"重新核對申請清單\" in script\nE       assert '重新核對申請清單' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'\n\ntests/test_frontend_contract.py:1054: AssertionError"
+}

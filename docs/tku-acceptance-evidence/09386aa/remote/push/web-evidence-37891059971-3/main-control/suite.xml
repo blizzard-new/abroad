@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="4" time="105.858" timestamp="2026-10-09T06:11:47.485187+00:00" hostname="runnervmmprz5"><testcase classname="tests.e2e.test_discussion_round2" name="test_reply_thread_reaction_retry_persistence_and_author_delete" time="29.582" /><testcase classname="tests.e2e.test_life_context" name="test_life_fallback_retains_evidence_on_refresh_failure" time="36.926"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;[data-life-theme=\&quot;food\&quot;]&quot;).get_by_text(&quot;原文與來源&quot;, exact=True)">tests/e2e/test_life_context.py:39: in test_life_fallback_retains_evidence_on_refresh_failure
+    food.get_by_text("原文與來源", exact=True).click()
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("[data-life-theme=\"food\"]").get_by_text("原文與來源", exact=True)</failure></testcase><testcase classname="tests.e2e.test_navigation_guide" name="test_every_tool_has_shared_navigation_and_return" time="34.143"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;.application-tools-panel a[href=\&quot;#favorites\&quot;]&quot;)">tests/e2e/test_navigation_guide.py:95: in test_every_tool_has_shared_navigation_and_return
+    page.locator(f'.application-tools-panel a[href="#{route}"]').click()
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator(".application-tools-panel a[href=\"#favorites\"]")</failure></testcase><testcase classname="tests.e2e.test_navigation_guide" name="test_school_return_retains_filters_scroll_and_forward" time="4.247"><failure message="assert 8 &gt;= (383 + 119)">tests/e2e/test_navigation_guide.py:124: in test_school_return_retains_filters_scroll_and_forward
+    assert tabs["y"] &gt;= toolbar["y"] + toolbar["height"]
+E   assert 8 &gt;= (383 + 119)</failure></testcase></testsuite></testsuites>

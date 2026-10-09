@@ -1,0 +1,31 @@
+{
+  "tested_commit": "545d19dbd6d9ba3edda70fc105cecdab44bfc860",
+  "starting_state": {
+    "commit": "545d19dbd6d9ba3edda70fc105cecdab44bfc860",
+    "dirty": ""
+  },
+  "ending_state": {
+    "commit": "545d19dbd6d9ba3edda70fc105cecdab44bfc860",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "command": [
+    "/workspace/abroad-tku/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_tku_community_boundaries.py",
+    "tests/test_school_choice_migration.py",
+    "tests/test_supabase_migration_syntax.py",
+    "tests/test_requirements_traceability.py",
+    "tests/e2e/test_tku_session_boundaries.py",
+    "tests/e2e/test_discussion_reader.py",
+    "tests/test_tku_privacy_regressions.py",
+    "-q",
+    "-ra",
+    "--junitxml=/tmp/tku-acceptance-545d19d/incremental.xml"
+  ],
+  "actual_exit_code": 0,
+  "elapsed_seconds": 137.33,
+  "production_access": false,
+  "scope": "Boundary/SQL/traceability/privacy checks plus three new expiry and four existing public-reader cases. Original seven selected cases run separately to avoid the recorded fixture-loading error."
+}

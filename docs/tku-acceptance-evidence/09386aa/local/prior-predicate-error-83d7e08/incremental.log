@@ -1,0 +1,119 @@
+CONFTEST LOADED!
+.............................................FF...................       [100%]
+=================================== FAILURES ===================================
+________ test_shared_progress_survives_reorder_removal_and_reload[390] _________
+
+page = <Page url='http://127.0.0.1:60659/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#overview'>
+live_server = LiveServer(base_url='http://127.0.0.1:60659', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-158/web-e2e-data2'))
+width = 390
+
+    @pytest.mark.parametrize("width",[390,1754])
+    def test_shared_progress_survives_reorder_removal_and_reload(page,live_server,width):
+        page.set_viewport_size({"width":width,"height":956})
+        page.emulate_media(reduced_motion="reduce")
+        page.route("**/application-plan/evaluate",evaluate_fixture)
+        session=verified_login(page,live_server)
+        errors=[]
+        page.on("pageerror",lambda error:errors.append(str(error)))
+        page.evaluate("location.hash='#overview'")
+        expect(page.locator('#multi-plan-workspace')).to_be_visible()
+        page.locator('#multi-plan-settings > summary').click()
+        page.wait_for_function("() => state.dashboard && document.querySelector('#multi-plan-preferences select').options.length > 1",timeout=30000)
+        selects=page.locator('#multi-plan-preferences select')
+        expect(selects.first.locator('option')).not_to_have_count(1)
+        names=selects.first.locator('option').evaluate_all('rows=>rows.filter(row=>row.value).slice(0,2).map(row=>row.value)')
+        selects.nth(0).select_option(names[0]); selects.nth(1).select_option(names[1])
+        page.locator('#multi-plan-preferences button').click()
+        expect(page.locator('#multi-plan-status')).to_contain_text('2 個志願 · 3 項準備工作')
+        shared=page.locator('.multi-plan-shared [data-multi-task]')
+        expect(shared).to_have_count(1)
+        task_id=shared.get_attribute('data-multi-task')
+        shared.check()
+        page.wait_for_function("() => document.querySelector('#account-workspace-sync-label').textContent === '已同步'")
+        selects.nth(0).select_option(names[1]); selects.nth(1).select_option(names[0])
+        # The previous save can still show 已同步 before this click's debounce runs.
+        # Wait for this exact reordered payload to be acknowledged, then retain the
+        # original direct server/readback/progress/reload assertions below.
+>       with page.expect_response(lambda r: r.request.method == 'PUT'
+                and '/account/workspace' in r.url
+                and (r.request.post_data_json or {}).get('workspace', {}).get('application_schools') == [names[1], names[0]]) as reordered:
+
+tests/e2e/test_multi_plan_workspace.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py:85: in __exit__
+    self._event.value
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._sync_base.EventInfo object at 0x7f9a178b38c0>
+
+    @property
+    def value(self) -> T:
+        while not self._future.done():
+            self._sync_base._dispatcher_fiber.switch()
+        asyncio._set_running_loop(self._sync_base._loop)
+        exception = self._future.exception()
+        if exception:
+>           raise exception
+E           playwright._impl._errors.TimeoutError: Timeout 30000ms exceeded while waiting for event "response"
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py:59: TimeoutError
+________ test_shared_progress_survives_reorder_removal_and_reload[1754] ________
+
+page = <Page url='http://127.0.0.1:60659/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#overview'>
+live_server = LiveServer(base_url='http://127.0.0.1:60659', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-158/web-e2e-data2'))
+width = 1754
+
+    @pytest.mark.parametrize("width",[390,1754])
+    def test_shared_progress_survives_reorder_removal_and_reload(page,live_server,width):
+        page.set_viewport_size({"width":width,"height":956})
+        page.emulate_media(reduced_motion="reduce")
+        page.route("**/application-plan/evaluate",evaluate_fixture)
+        session=verified_login(page,live_server)
+        errors=[]
+        page.on("pageerror",lambda error:errors.append(str(error)))
+        page.evaluate("location.hash='#overview'")
+        expect(page.locator('#multi-plan-workspace')).to_be_visible()
+        page.locator('#multi-plan-settings > summary').click()
+        page.wait_for_function("() => state.dashboard && document.querySelector('#multi-plan-preferences select').options.length > 1",timeout=30000)
+        selects=page.locator('#multi-plan-preferences select')
+        expect(selects.first.locator('option')).not_to_have_count(1)
+        names=selects.first.locator('option').evaluate_all('rows=>rows.filter(row=>row.value).slice(0,2).map(row=>row.value)')
+        selects.nth(0).select_option(names[0]); selects.nth(1).select_option(names[1])
+        page.locator('#multi-plan-preferences button').click()
+        expect(page.locator('#multi-plan-status')).to_contain_text('2 個志願 · 3 項準備工作')
+        shared=page.locator('.multi-plan-shared [data-multi-task]')
+        expect(shared).to_have_count(1)
+        task_id=shared.get_attribute('data-multi-task')
+        shared.check()
+        page.wait_for_function("() => document.querySelector('#account-workspace-sync-label').textContent === '已同步'")
+        selects.nth(0).select_option(names[1]); selects.nth(1).select_option(names[0])
+        # The previous save can still show 已同步 before this click's debounce runs.
+        # Wait for this exact reordered payload to be acknowledged, then retain the
+        # original direct server/readback/progress/reload assertions below.
+>       with page.expect_response(lambda r: r.request.method == 'PUT'
+                and '/account/workspace' in r.url
+                and (r.request.post_data_json or {}).get('workspace', {}).get('application_schools') == [names[1], names[0]]) as reordered:
+
+tests/e2e/test_multi_plan_workspace.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py:85: in __exit__
+    self._event.value
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._sync_base.EventInfo object at 0x7f9a1765d850>
+
+    @property
+    def value(self) -> T:
+        while not self._future.done():
+            self._sync_base._dispatcher_fiber.switch()
+        asyncio._set_running_loop(self._sync_base._loop)
+        exception = self._future.exception()
+        if exception:
+>           raise exception
+E           playwright._impl._errors.TimeoutError: Timeout 30000ms exceeded while waiting for event "response"
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py:59: TimeoutError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_multi_plan_workspace.py::test_shared_progress_survives_reorder_removal_and_reload[390]
+FAILED tests/e2e/test_multi_plan_workspace.py::test_shared_progress_survives_reorder_removal_and_reload[1754]
+2 failed, 64 passed in 153.24s (0:02:33)

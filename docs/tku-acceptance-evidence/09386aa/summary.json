@@ -1,0 +1,559 @@
+{
+  "head_sha": "09386aa318c9574862a6f3b1447c5022a6c26433",
+  "pr_merge_sha": "65e885f68672a980910dd89dbbe912f31ba96a87",
+  "same_code_tree": "814ae15653711a5cec3475b5410a4139d9ee9646",
+  "runs": {
+    "pr": {
+      "run_id": 37891064942,
+      "counts": {
+        "passed": 1756,
+        "failed": 17,
+        "skipped": 16
+      },
+      "collected_nodes": 1789,
+      "collected_files": 184,
+      "executed_nodes": 1789,
+      "all_cases_exercised": true,
+      "missing_nodes": 0,
+      "unrun_nodes": [],
+      "duplicate_nodes": 0,
+      "removed_nodes": 0,
+      "added_regression_nodes": 32,
+      "same_job_main_control_counts": {
+        "failed": 58,
+        "passed": 4
+      },
+      "main_control_nodes": 62,
+      "shards": [
+        {
+          "shard": 0,
+          "artifact_id": 11598977773,
+          "actual_result": {
+            "shard": 0,
+            "exit_code": 1,
+            "elapsed_seconds": 944.826056911,
+            "tested_commit": "65e885f68672a980910dd89dbbe912f31ba96a87"
+          },
+          "counts": {
+            "passed": 1531,
+            "failed": 17,
+            "skipped": 16
+          },
+          "collected_nodes": 1564,
+          "executed_nodes": 1564,
+          "missing_nodes": 0,
+          "complete": true,
+          "archive_sha256": "c7e0753ffd6c586dd993ed292e6f8bd4535c7edfe059182f8dcb0844dd1190df",
+          "main_control_counts": {
+            "failed": 50,
+            "passed": 1
+          },
+          "main_control_actual_exit": 1,
+          "same_job_same_runner_control": true
+        },
+        {
+          "shard": 1,
+          "artifact_id": 11599295606,
+          "actual_result": {
+            "shard": 1,
+            "exit_code": 0,
+            "elapsed_seconds": 568.382975103,
+            "tested_commit": "65e885f68672a980910dd89dbbe912f31ba96a87"
+          },
+          "counts": {
+            "passed": 75
+          },
+          "collected_nodes": 75,
+          "executed_nodes": 75,
+          "missing_nodes": 0,
+          "complete": true,
+          "archive_sha256": "2d8690f5a2dbdae73bdcfff8a7306a9b40832c731d936eb720e63c4797d1c455",
+          "main_control_counts": {
+            "failed": 5,
+            "passed": 1
+          },
+          "main_control_actual_exit": 1,
+          "same_job_same_runner_control": true
+        },
+        {
+          "shard": 2,
+          "artifact_id": 11598686528,
+          "actual_result": {
+            "shard": 2,
+            "exit_code": 0,
+            "elapsed_seconds": 508.273488531,
+            "tested_commit": "65e885f68672a980910dd89dbbe912f31ba96a87"
+          },
+          "counts": {
+            "passed": 75
+          },
+          "collected_nodes": 75,
+          "executed_nodes": 75,
+          "missing_nodes": 0,
+          "complete": true,
+          "archive_sha256": "8f9c437ee6f43c216eec0be8c4354623b1990227681cd4086e6baf97429396ed",
+          "main_control_counts": {
+            "passed": 1
+          },
+          "main_control_actual_exit": 0,
+          "same_job_same_runner_control": true
+        },
+        {
+          "shard": 3,
+          "artifact_id": 11599126161,
+          "actual_result": {
+            "shard": 3,
+            "exit_code": 0,
+            "elapsed_seconds": 644.679143692,
+            "tested_commit": "65e885f68672a980910dd89dbbe912f31ba96a87"
+          },
+          "counts": {
+            "passed": 75
+          },
+          "collected_nodes": 75,
+          "executed_nodes": 75,
+          "missing_nodes": 0,
+          "complete": true,
+          "archive_sha256": "b0690dddd15994f0340fde72a6399619b7aa2d5c277b229ebf64388cf85b6d81",
+          "main_control_counts": {
+            "passed": 1,
+            "failed": 3
+          },
+          "main_control_actual_exit": 1,
+          "same_job_same_runner_control": true
+        }
+      ],
+      "original_failure_comparison": {
+        "original_failed_nodes": 66,
+        "resolved_original_nodes": 49,
+        "resolved": [
+          "tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader",
+          "tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete",
+          "tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph",
+          "tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure",
+          "tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return",
+          "tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward",
+          "tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters",
+          "tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history",
+          "tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393]",
+          "tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834]",
+          "tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-1280]",
+          "tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390]",
+          "tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-1280]",
+          "tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390]",
+          "tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive",
+          "tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city",
+          "tests/e2e/test_web_next_phase.py::test_advisor_waits_for_login_and_clears_private_conditions_on_logout",
+          "tests/e2e/test_web_next_phase.py::test_authenticated_plan_notifications_and_progress_sync_across_devices",
+          "tests/e2e/test_web_next_phase.py::test_eighth_destination_batch_does_not_present_2021_free_housing_as_current",
+          "tests/e2e/test_web_next_phase.py::test_eleventh_destination_batch_keeps_campus_conflict_and_housing_limits_visible",
+          "tests/e2e/test_web_next_phase.py::test_expired_session_and_logout_clear_private_browser_state",
+          "tests/e2e/test_web_next_phase.py::test_fifteenth_destination_batch_keeps_old_wuhan_costs_and_transport_out_of_current_plan",
+          "tests/e2e/test_web_next_phase.py::test_fifth_destination_batch_does_not_reuse_expired_welcome_dates",
+          "tests/e2e/test_web_next_phase.py::test_fourteenth_destination_batch_keeps_old_department_rules_out_of_current_exchange",
+          "tests/e2e/test_web_next_phase.py::test_fourth_destination_batch_keeps_multicampus_cost_limits_visible",
+          "tests/e2e/test_web_next_phase.py::test_guest_can_save_device_selections_and_plan_actions_require_login",
+          "tests/e2e/test_web_next_phase.py::test_ninth_destination_batch_does_not_make_optional_housing_package_mandatory",
+          "tests/e2e/test_web_next_phase.py::test_partial_destination_profile_is_not_rendered_as_fully_verified",
+          "tests/e2e/test_web_next_phase.py::test_permissions_sensitive_consent_and_account_deletion_are_fail_closed",
+          "tests/e2e/test_web_next_phase.py::test_reload_drains_pending_workspace_for_inactive_home_school",
+          "tests/e2e/test_web_next_phase.py::test_second_destination_batch_preserves_housing_availability_warning",
+          "tests/e2e/test_web_next_phase.py::test_session_restore_outage_quarantines_private_state_then_recovers_same_owner",
+          "tests/e2e/test_web_next_phase.py::test_seventh_destination_batch_does_not_apply_paris_budget_to_every_campus",
+          "tests/e2e/test_web_next_phase.py::test_sixteenth_destination_batch_keeps_icd_campuses_costs_and_deadlines_separate",
+          "tests/e2e/test_web_next_phase.py::test_sixth_destination_batch_keeps_stale_dorm_prices_out_of_current_budget",
+          "tests/e2e/test_web_next_phase.py::test_tenth_destination_batch_keeps_campus_and_summer_program_limits_visible",
+          "tests/e2e/test_web_next_phase.py::test_third_destination_batch_does_not_present_stale_costs_as_current",
+          "tests/e2e/test_web_next_phase.py::test_thirteenth_destination_batch_keeps_department_scope_and_housing_limits_visible",
+          "tests/e2e/test_web_next_phase.py::test_twelfth_destination_batch_keeps_old_prices_and_local_housing_separate",
+          "tests/e2e/test_web_next_phase.py::test_workspace_conflict_preserves_remote_addition_and_local_removal",
+          "tests/e2e/test_web_next_phase.py::test_workspace_load_advances_base_before_put_conflict",
+          "tests/test_community_permissions.py::test_author_can_delete_own_post_but_not_another_users_post",
+          "tests/test_community_permissions.py::test_guest_can_read_every_board_but_unverified_email_cannot_publish",
+          "tests/test_community_permissions.py::test_identity_is_selected_per_submission_and_public_name_is_server_derived",
+          "tests/test_community_permissions.py::test_ntpu_student_can_use_only_ntpu_board_for_posts_and_comments",
+          "tests/test_community_permissions.py::test_post_rejects_unknown_or_conflicting_board_identifiers",
+          "tests/test_community_permissions.py::test_reports_and_blocks_validate_targets_and_report_review_is_audited",
+          "tests/test_next_phase_contract.py::test_private_community_writes_expose_retry_mutation_header",
+          "tests/test_social_community_api.py::test_private_conversation_retry_replays_generated_resources"
+        ],
+        "remaining_original_nodes": 17,
+        "remaining": [
+          "tests/e2e/test_web_next_phase.py::test_verified_student_reports_workflow_issue_and_admin_closes_it",
+          "tests/test_experience_collector.py::test_destination_profile_api_returns_verified_official_summary",
+          "tests/test_experience_collector.py::test_experience_api_reads_cache_and_refreshes_selected_school",
+          "tests/test_frontend_contract.py::test_application_center_separates_official_requirements_from_preparation_tools",
+          "tests/test_frontend_contract.py::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+          "tests/test_frontend_contract.py::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+          "tests/test_frontend_contract.py::test_global_home_board_routing_and_following_are_present",
+          "tests/test_frontend_contract.py::test_personal_application_plan_uses_structured_api_and_progressive_login",
+          "tests/test_frontend_contract.py::test_successful_login_closes_before_noncritical_account_hydration",
+          "tests/test_frontend_contract.py::test_web_notification_center_and_explicit_email_opt_in_are_present",
+          "tests/test_frontend_contract.py::test_web_routes_states_and_touch_targets_are_consistent",
+          "tests/test_independent_page_routing.py::test_hash_router_shows_one_feature_page_without_scroll_spying",
+          "tests/test_independent_page_routing.py::test_route_assets_are_cache_busted_together",
+          "tests/test_next_phase_contract.py::test_application_workflow_publication_contract_exposes_safe_rollback",
+          "tests/test_next_phase_contract.py::test_content_review_contract_exposes_nonpublishing_source_candidates",
+          "tests/test_next_phase_contract.py::test_destination_profile_review_contract_requires_explicit_audited_promotion",
+          "tests/test_next_phase_contract.py::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing"
+        ],
+        "unrun_original_nodes": 0,
+        "unrun_original": [],
+        "new_failed_nodes": 0,
+        "new_failed": [],
+        "acceptance_waiver": false,
+        "criterion": "Original IDs retained in collect. Only actually exercised passing original failures counted resolved; unrun explicitly separate. All-case completeness separately verified against original JUnit."
+      },
+      "skip_comparison": {
+        "prior_skipped": 16,
+        "actual_skipped": 16,
+        "added_skipped": [],
+        "unrun_prior_skipped": [],
+        "collected_but_not_executed_prior_skips": []
+      },
+      "previous_5e_comparison": {
+        "previous_nodes": 1776,
+        "removed": [],
+        "added_nodes": 13,
+        "unrun_previous_nodes": [],
+        "unrun_previous_failures": [],
+        "previous_failures": 18,
+        "resolved": [
+          "tests/e2e/test_web_next_phase.py::test_workspace_conflict_preserves_remote_addition_and_local_removal"
+        ],
+        "remaining": [
+          "tests/e2e/test_web_next_phase.py::test_verified_student_reports_workflow_issue_and_admin_closes_it",
+          "tests/test_experience_collector.py::test_destination_profile_api_returns_verified_official_summary",
+          "tests/test_experience_collector.py::test_experience_api_reads_cache_and_refreshes_selected_school",
+          "tests/test_frontend_contract.py::test_application_center_separates_official_requirements_from_preparation_tools",
+          "tests/test_frontend_contract.py::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+          "tests/test_frontend_contract.py::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+          "tests/test_frontend_contract.py::test_global_home_board_routing_and_following_are_present",
+          "tests/test_frontend_contract.py::test_personal_application_plan_uses_structured_api_and_progressive_login",
+          "tests/test_frontend_contract.py::test_successful_login_closes_before_noncritical_account_hydration",
+          "tests/test_frontend_contract.py::test_web_notification_center_and_explicit_email_opt_in_are_present",
+          "tests/test_frontend_contract.py::test_web_routes_states_and_touch_targets_are_consistent",
+          "tests/test_independent_page_routing.py::test_hash_router_shows_one_feature_page_without_scroll_spying",
+          "tests/test_independent_page_routing.py::test_route_assets_are_cache_busted_together",
+          "tests/test_next_phase_contract.py::test_application_workflow_publication_contract_exposes_safe_rollback",
+          "tests/test_next_phase_contract.py::test_content_review_contract_exposes_nonpublishing_source_candidates",
+          "tests/test_next_phase_contract.py::test_destination_profile_review_contract_requires_explicit_audited_promotion",
+          "tests/test_next_phase_contract.py::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing"
+        ],
+        "new_failed": []
+      }
+    },
+    "push": {
+      "run_id": 37891059971,
+      "counts": {
+        "passed": 1756,
+        "failed": 17,
+        "skipped": 16
+      },
+      "collected_nodes": 1789,
+      "collected_files": 184,
+      "executed_nodes": 1789,
+      "all_cases_exercised": true,
+      "missing_nodes": 0,
+      "unrun_nodes": [],
+      "duplicate_nodes": 0,
+      "removed_nodes": 0,
+      "added_regression_nodes": 32,
+      "same_job_main_control_counts": {
+        "failed": 58,
+        "passed": 4
+      },
+      "main_control_nodes": 62,
+      "shards": [
+        {
+          "shard": 0,
+          "artifact_id": 11598677896,
+          "actual_result": {
+            "shard": 0,
+            "exit_code": 1,
+            "elapsed_seconds": 1231.871393527,
+            "tested_commit": "09386aa318c9574862a6f3b1447c5022a6c26433"
+          },
+          "counts": {
+            "passed": 1531,
+            "failed": 17,
+            "skipped": 16
+          },
+          "collected_nodes": 1564,
+          "executed_nodes": 1564,
+          "missing_nodes": 0,
+          "complete": true,
+          "archive_sha256": "fa1d533442a23c7303c9bed330f463585a9e4dd970fdca5d28299ced09475383",
+          "main_control_counts": {
+            "failed": 49,
+            "passed": 2
+          },
+          "main_control_actual_exit": 1,
+          "same_job_same_runner_control": true
+        },
+        {
+          "shard": 1,
+          "artifact_id": 11599117160,
+          "actual_result": {
+            "shard": 1,
+            "exit_code": 0,
+            "elapsed_seconds": 937.1382193640001,
+            "tested_commit": "09386aa318c9574862a6f3b1447c5022a6c26433"
+          },
+          "counts": {
+            "passed": 75
+          },
+          "collected_nodes": 75,
+          "executed_nodes": 75,
+          "missing_nodes": 0,
+          "complete": true,
+          "archive_sha256": "eef22ef9c7b09af807e93e20aaeb026db17154fde3184c888360e1069df3f31a",
+          "main_control_counts": {
+            "failed": 5,
+            "passed": 1
+          },
+          "main_control_actual_exit": 1,
+          "same_job_same_runner_control": true
+        },
+        {
+          "shard": 2,
+          "artifact_id": 11599385194,
+          "actual_result": {
+            "shard": 2,
+            "exit_code": 0,
+            "elapsed_seconds": 657.5189730279999,
+            "tested_commit": "09386aa318c9574862a6f3b1447c5022a6c26433"
+          },
+          "counts": {
+            "passed": 75
+          },
+          "collected_nodes": 75,
+          "executed_nodes": 75,
+          "missing_nodes": 0,
+          "complete": true,
+          "archive_sha256": "f7245930b58b1e3589117a6af5fded1cc54e0bb3550bc93cf2d7acc90e3abbb2",
+          "main_control_counts": {
+            "failed": 1
+          },
+          "main_control_actual_exit": 1,
+          "same_job_same_runner_control": true
+        },
+        {
+          "shard": 3,
+          "artifact_id": 11599325719,
+          "actual_result": {
+            "shard": 3,
+            "exit_code": 0,
+            "elapsed_seconds": 684.535784683,
+            "tested_commit": "09386aa318c9574862a6f3b1447c5022a6c26433"
+          },
+          "counts": {
+            "passed": 75
+          },
+          "collected_nodes": 75,
+          "executed_nodes": 75,
+          "missing_nodes": 0,
+          "complete": true,
+          "archive_sha256": "a92c479e802875b781f31ca13e7a21278aa0e6016327fc0aa560d399f0dc98d8",
+          "main_control_counts": {
+            "passed": 1,
+            "failed": 3
+          },
+          "main_control_actual_exit": 1,
+          "same_job_same_runner_control": true
+        }
+      ],
+      "original_failure_comparison": {
+        "original_failed_nodes": 66,
+        "resolved_original_nodes": 49,
+        "resolved": [
+          "tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader",
+          "tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete",
+          "tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph",
+          "tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure",
+          "tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return",
+          "tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward",
+          "tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters",
+          "tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history",
+          "tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393]",
+          "tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834]",
+          "tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-1280]",
+          "tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390]",
+          "tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-1280]",
+          "tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390]",
+          "tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive",
+          "tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city",
+          "tests/e2e/test_web_next_phase.py::test_advisor_waits_for_login_and_clears_private_conditions_on_logout",
+          "tests/e2e/test_web_next_phase.py::test_authenticated_plan_notifications_and_progress_sync_across_devices",
+          "tests/e2e/test_web_next_phase.py::test_eighth_destination_batch_does_not_present_2021_free_housing_as_current",
+          "tests/e2e/test_web_next_phase.py::test_eleventh_destination_batch_keeps_campus_conflict_and_housing_limits_visible",
+          "tests/e2e/test_web_next_phase.py::test_expired_session_and_logout_clear_private_browser_state",
+          "tests/e2e/test_web_next_phase.py::test_fifteenth_destination_batch_keeps_old_wuhan_costs_and_transport_out_of_current_plan",
+          "tests/e2e/test_web_next_phase.py::test_fifth_destination_batch_does_not_reuse_expired_welcome_dates",
+          "tests/e2e/test_web_next_phase.py::test_fourteenth_destination_batch_keeps_old_department_rules_out_of_current_exchange",
+          "tests/e2e/test_web_next_phase.py::test_fourth_destination_batch_keeps_multicampus_cost_limits_visible",
+          "tests/e2e/test_web_next_phase.py::test_guest_can_save_device_selections_and_plan_actions_require_login",
+          "tests/e2e/test_web_next_phase.py::test_ninth_destination_batch_does_not_make_optional_housing_package_mandatory",
+          "tests/e2e/test_web_next_phase.py::test_partial_destination_profile_is_not_rendered_as_fully_verified",
+          "tests/e2e/test_web_next_phase.py::test_permissions_sensitive_consent_and_account_deletion_are_fail_closed",
+          "tests/e2e/test_web_next_phase.py::test_reload_drains_pending_workspace_for_inactive_home_school",
+          "tests/e2e/test_web_next_phase.py::test_second_destination_batch_preserves_housing_availability_warning",
+          "tests/e2e/test_web_next_phase.py::test_session_restore_outage_quarantines_private_state_then_recovers_same_owner",
+          "tests/e2e/test_web_next_phase.py::test_seventh_destination_batch_does_not_apply_paris_budget_to_every_campus",
+          "tests/e2e/test_web_next_phase.py::test_sixteenth_destination_batch_keeps_icd_campuses_costs_and_deadlines_separate",
+          "tests/e2e/test_web_next_phase.py::test_sixth_destination_batch_keeps_stale_dorm_prices_out_of_current_budget",
+          "tests/e2e/test_web_next_phase.py::test_tenth_destination_batch_keeps_campus_and_summer_program_limits_visible",
+          "tests/e2e/test_web_next_phase.py::test_third_destination_batch_does_not_present_stale_costs_as_current",
+          "tests/e2e/test_web_next_phase.py::test_thirteenth_destination_batch_keeps_department_scope_and_housing_limits_visible",
+          "tests/e2e/test_web_next_phase.py::test_twelfth_destination_batch_keeps_old_prices_and_local_housing_separate",
+          "tests/e2e/test_web_next_phase.py::test_workspace_conflict_preserves_remote_addition_and_local_removal",
+          "tests/e2e/test_web_next_phase.py::test_workspace_load_advances_base_before_put_conflict",
+          "tests/test_community_permissions.py::test_author_can_delete_own_post_but_not_another_users_post",
+          "tests/test_community_permissions.py::test_guest_can_read_every_board_but_unverified_email_cannot_publish",
+          "tests/test_community_permissions.py::test_identity_is_selected_per_submission_and_public_name_is_server_derived",
+          "tests/test_community_permissions.py::test_ntpu_student_can_use_only_ntpu_board_for_posts_and_comments",
+          "tests/test_community_permissions.py::test_post_rejects_unknown_or_conflicting_board_identifiers",
+          "tests/test_community_permissions.py::test_reports_and_blocks_validate_targets_and_report_review_is_audited",
+          "tests/test_next_phase_contract.py::test_private_community_writes_expose_retry_mutation_header",
+          "tests/test_social_community_api.py::test_private_conversation_retry_replays_generated_resources"
+        ],
+        "remaining_original_nodes": 17,
+        "remaining": [
+          "tests/e2e/test_web_next_phase.py::test_verified_student_reports_workflow_issue_and_admin_closes_it",
+          "tests/test_experience_collector.py::test_destination_profile_api_returns_verified_official_summary",
+          "tests/test_experience_collector.py::test_experience_api_reads_cache_and_refreshes_selected_school",
+          "tests/test_frontend_contract.py::test_application_center_separates_official_requirements_from_preparation_tools",
+          "tests/test_frontend_contract.py::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+          "tests/test_frontend_contract.py::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+          "tests/test_frontend_contract.py::test_global_home_board_routing_and_following_are_present",
+          "tests/test_frontend_contract.py::test_personal_application_plan_uses_structured_api_and_progressive_login",
+          "tests/test_frontend_contract.py::test_successful_login_closes_before_noncritical_account_hydration",
+          "tests/test_frontend_contract.py::test_web_notification_center_and_explicit_email_opt_in_are_present",
+          "tests/test_frontend_contract.py::test_web_routes_states_and_touch_targets_are_consistent",
+          "tests/test_independent_page_routing.py::test_hash_router_shows_one_feature_page_without_scroll_spying",
+          "tests/test_independent_page_routing.py::test_route_assets_are_cache_busted_together",
+          "tests/test_next_phase_contract.py::test_application_workflow_publication_contract_exposes_safe_rollback",
+          "tests/test_next_phase_contract.py::test_content_review_contract_exposes_nonpublishing_source_candidates",
+          "tests/test_next_phase_contract.py::test_destination_profile_review_contract_requires_explicit_audited_promotion",
+          "tests/test_next_phase_contract.py::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing"
+        ],
+        "unrun_original_nodes": 0,
+        "unrun_original": [],
+        "new_failed_nodes": 0,
+        "new_failed": [],
+        "acceptance_waiver": false,
+        "criterion": "Original IDs retained in collect. Only actually exercised passing original failures counted resolved; unrun explicitly separate. All-case completeness separately verified against original JUnit."
+      },
+      "skip_comparison": {
+        "prior_skipped": 16,
+        "actual_skipped": 16,
+        "added_skipped": [],
+        "unrun_prior_skipped": [],
+        "collected_but_not_executed_prior_skips": []
+      },
+      "previous_5e_comparison": {
+        "previous_nodes": 1776,
+        "removed": [],
+        "added_nodes": 13,
+        "unrun_previous_nodes": [],
+        "unrun_previous_failures": [],
+        "previous_failures": 18,
+        "resolved": [
+          "tests/e2e/test_web_next_phase.py::test_workspace_conflict_preserves_remote_addition_and_local_removal"
+        ],
+        "remaining": [
+          "tests/e2e/test_web_next_phase.py::test_verified_student_reports_workflow_issue_and_admin_closes_it",
+          "tests/test_experience_collector.py::test_destination_profile_api_returns_verified_official_summary",
+          "tests/test_experience_collector.py::test_experience_api_reads_cache_and_refreshes_selected_school",
+          "tests/test_frontend_contract.py::test_application_center_separates_official_requirements_from_preparation_tools",
+          "tests/test_frontend_contract.py::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+          "tests/test_frontend_contract.py::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+          "tests/test_frontend_contract.py::test_global_home_board_routing_and_following_are_present",
+          "tests/test_frontend_contract.py::test_personal_application_plan_uses_structured_api_and_progressive_login",
+          "tests/test_frontend_contract.py::test_successful_login_closes_before_noncritical_account_hydration",
+          "tests/test_frontend_contract.py::test_web_notification_center_and_explicit_email_opt_in_are_present",
+          "tests/test_frontend_contract.py::test_web_routes_states_and_touch_targets_are_consistent",
+          "tests/test_independent_page_routing.py::test_hash_router_shows_one_feature_page_without_scroll_spying",
+          "tests/test_independent_page_routing.py::test_route_assets_are_cache_busted_together",
+          "tests/test_next_phase_contract.py::test_application_workflow_publication_contract_exposes_safe_rollback",
+          "tests/test_next_phase_contract.py::test_content_review_contract_exposes_nonpublishing_source_candidates",
+          "tests/test_next_phase_contract.py::test_destination_profile_review_contract_requires_explicit_audited_promotion",
+          "tests/test_next_phase_contract.py::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing"
+        ],
+        "new_failed": []
+      }
+    }
+  },
+  "acceptance_waiver": false,
+  "original_candidate_junit_count": 8,
+  "original_main_control_junit_count": 8,
+  "all_checks_passed": false,
+  "latest_incremental": {
+    "tested_commit": "09386aa318c9574862a6f3b1447c5022a6c26433",
+    "counts": {
+      "passed": 66
+    },
+    "actual_exit_code": 0,
+    "guard": {
+      "tested_commit": "09386aa318c9574862a6f3b1447c5022a6c26433",
+      "starting_state": {
+        "commit": "09386aa318c9574862a6f3b1447c5022a6c26433",
+        "dirty": ""
+      },
+      "ending_state": {
+        "commit": "09386aa318c9574862a6f3b1447c5022a6c26433",
+        "dirty": ""
+      },
+      "candidate_guard_passed": true,
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_tku_community_boundaries.py",
+        "tests/test_tku_web_evidence.py",
+        "tests/test_tku_acceptance_runner.py",
+        "tests/test_school_choice_migration.py",
+        "tests/test_supabase_migration_syntax.py",
+        "tests/test_requirements_traceability.py",
+        "tests/e2e/test_tku_session_boundaries.py",
+        "tests/e2e/test_discussion_reader.py",
+        "tests/e2e/test_multi_plan_workspace.py",
+        "tests/test_tku_privacy_regressions.py",
+        "-q",
+        "-ra",
+        "--junitxml=/tmp/tku-acceptance-09386aa/incremental.xml"
+      ],
+      "actual_exit_code": 0,
+      "elapsed_seconds": 113.19,
+      "production_access": false,
+      "scope": "Boundary/SQL/traceability/privacy checks plus three new expiry and four existing public-reader cases. Original seven selected cases run separately to avoid the recorded fixture-loading error."
+    }
+  },
+  "prior_full_suite": {
+    "tested_commit": "1bc4ae5ee856462552645143d6e25c8927e7268e",
+    "counts": {
+      "passed": 1511,
+      "failed": 16,
+      "skipped": 8
+    },
+    "all_ten_checks_executed": true,
+    "other_nine_actual_exits": 0,
+    "relevant_browser_passed": 54,
+    "not_relabelled_as_latest_candidate": true
+  },
+  "prior_paired_regressions": {
+    "545d19d_shard2_passed": 75,
+    "545d19d_incremental_passed": 57,
+    "607929e_incremental_passed": 57,
+    "83d7e08_wrong_predicate_actual": {
+      "passed": 64,
+      "failed": 2
+    },
+    "precommit_and_unguarded_diagnostic_results_not_counted_as_guarded_acceptance": true
+  },
+  "previous_12b_originals": "Immutable c6bd78f4fbeeb6fa4cdda012c3898121cf2f5800: push1788 all cases,1753/19/16; PR1090 executed,698 unrun,1062/13/15 plus1 internal EAGAIN. Originals retained, never rewritten.",
+  "production_database_or_deployment_changed": false,
+  "remote_ci_starting_and_ending_full_worktree_state": "Not recorded by the original CI runner; not retroactively invented. Local guards record exact start/end SHA and clean state. PR merge and head code trees match.",
+  "reproduction_scope": "All accounts, reader bodies, drafts, aliases and mutations use isolated synthetic fixtures; screenshots are not production leakage evidence.",
+  "governance_decision_document": "docs/tku-followup-governance-integration-plan-2026-10-09.md; five groups remain unexpanded pending product scope selection."
+}

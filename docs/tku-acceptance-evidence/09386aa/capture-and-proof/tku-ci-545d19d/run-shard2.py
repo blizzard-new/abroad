@@ -1,0 +1,7 @@
+import json,os,subprocess,sys,time
+from pathlib import Path
+root=Path('/workspace/abroad-tku-reader-fixture-fix');out=Path('/tmp/tku-acceptance-545d19d-shard2');out.mkdir(exist_ok=False);sha='545d19dbd6d9ba3edda70fc105cecdab44bfc860'
+def state():return {'commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),'dirty':subprocess.check_output(['git','status','--porcelain'],cwd=root,text=True).strip()}
+before=state();assert before=={'commit':sha,'dirty':''};start=time.time();cmd=[sys.executable,'scripts/run_web_quality_tests.py','--shard','2','--shards','4','--evidence-dir',str(out),'--junitxml',str(out/'suite.xml')]
+with (out/'driver.log').open('w') as f:r=subprocess.run(cmd,cwd=root,env={**os.environ,'PYTHONPATH':str(root/'src'),'PLAYWRIGHT_BROWSERS_PATH':'/tmp/tku-browsers','TKU_CI_EVIDENCE_DIR':str(out),'TKU_ACCEPTANCE_OUTPUT':str(out/'browser'),'UV_CACHE_DIR':'/tmp/tku-uv-cache'},stdout=f,stderr=subprocess.STDOUT)
+after=state();record={'tested_commit':sha,'starting_state':before,'ending_state':after,'candidate_guard_passed':before==after,'actual_exit_code':r.returncode,'elapsed_seconds':round(time.time()-start,2),'command':cmd,'scope':'Complete real CI shard2 after observed 12b push reader selection failure; all cases/old assertions retained.'};(out/'guarded-run.json').write_text(json.dumps(record,indent=2)+'\n');print(json.dumps(record));raise SystemExit(r.returncode if before==after else 2)

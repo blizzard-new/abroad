@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/push/web-evidence-37891059971-0/main-control/suite.xml",
+  "original_xml_sha256": "fc6e96a217a53e12a01c4b207fd28a3e802dbef5d26458b0429282571194f857",
+  "case_attributes": {
+    "classname": "tests.test_community_permissions",
+    "name": "test_guest_can_read_every_board_but_unverified_email_cannot_publish",
+    "time": "0.150"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: assert {'cgu', 'ntu', 'language-school', 'ntpu', 'public-study-abroad'} == {'public-study-abroad', 'university:ntpu', 'language-school', 'university:cgu'}\n  \n  Extra items in the left set:\n  'ntpu'\n  'cgu'\n  'ntu'\n  Extra items in the right set:\n  'university:ntpu'\n  'university:cgu'\n  \n  Full diff:\n    {\n  +     'cgu',\n        'language-school',\n  +     'ntpu',\n  +     'ntu',\n        'public-study-abroad',\n  -     'university:cgu',\n  -     'university:ntpu',\n    }"
+  },
+  "full_text": "tests/test_community_permissions.py:126: in test_guest_can_read_every_board_but_unverified_email_cannot_publish\n    assert {row[\"id\"] for row in guest_boards.json()} == {\nE   AssertionError: assert {'cgu', 'ntu', 'language-school', 'ntpu', 'public-study-abroad'} == {'public-study-abroad', 'university:ntpu', 'language-school', 'university:cgu'}\nE     \nE     Extra items in the left set:\nE     'ntpu'\nE     'cgu'\nE     'ntu'\nE     Extra items in the right set:\nE     'university:ntpu'\nE     'university:cgu'\nE     \nE     Full diff:\nE       {\nE     +     'cgu',\nE           'language-school',\nE     +     'ntpu',\nE     +     'ntu',\nE           'public-study-abroad',\nE     -     'university:cgu',\nE     -     'university:ntpu',\nE       }"
+}

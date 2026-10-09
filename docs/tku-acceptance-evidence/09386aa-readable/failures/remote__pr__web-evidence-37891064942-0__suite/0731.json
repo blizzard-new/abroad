@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/pr/web-evidence-37891064942-0/suite.xml",
+  "original_xml_sha256": "1654525cb0f7bbbc13e75337a19b6f35e8bdc376518c43c7a7a287fab570a836",
+  "case_attributes": {
+    "classname": "tests.test_experience_collector",
+    "name": "test_experience_api_reads_cache_and_refreshes_selected_school",
+    "time": "0.090"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert 3 == 1"
+  },
+  "full_text": "tests/test_experience_collector.py:1399: in test_experience_api_reads_cache_and_refreshes_selected_school\n    assert cached_response.json()[\"total_sources\"] == 1\nE   assert 3 == 1"
+}

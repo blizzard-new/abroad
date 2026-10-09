@@ -1,0 +1,504 @@
+[
+  {
+    "id": "tests.test_http_client::test_safe_session_allows_https",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_http_client::test_safe_session_blocks_private_ips",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_icon_motion_contract::test_icon_motion_assets_use_one_cache_version",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_icon_motion_contract::test_global_motion_contract_covers_static_and_dynamic_lucide_icons",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_icon_motion_contract::test_mutation_observer_is_singleton_batched_and_idempotent",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_icon_motion_contract::test_reduced_motion_disables_css_and_morphing",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_icon_motion_contract::test_only_loading_icons_can_repeat_infinitely",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_icon_motion_contract::test_morphicons_is_pinned_licensed_and_wired_to_real_state_pairs",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_icon_motion_contract::test_icon_motion_assets_match_packaging_and_ci_contracts",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_independent_page_routing::test_university_sidebar_features_have_independent_pages",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_independent_page_routing::test_hash_router_shows_one_feature_page_without_scroll_spying",
+    "status": "failure",
+    "seconds": "0.004",
+    "failure_file": "failures/local__prior-full-1bc4ae5__suite/0810.json"
+  },
+  {
+    "id": "tests.test_independent_page_routing::test_route_assets_are_cache_busted_together",
+    "status": "failure",
+    "seconds": "0.002",
+    "failure_file": "failures/local__prior-full-1bc4ae5__suite/0811.json"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_storage_lock_key_does_not_change_when_parent_and_file_appear",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_jsonl_replacement_never_exposes_a_partially_written_destination",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_jsonl_write_failure_preserves_previous_file_and_cleans_temporary",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_concurrent_jsonl_repository_account_upserts_do_not_lose_rows",
+    "status": "passed",
+    "seconds": "0.062"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_concurrent_jsonl_append_operations_do_not_lose_rows[<lambda>-append_community_question-load_community_questions]",
+    "status": "passed",
+    "seconds": "0.026"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_concurrent_jsonl_append_operations_do_not_lose_rows[<lambda>-append_community_answer-load_community_answers]",
+    "status": "passed",
+    "seconds": "0.023"
+  },
+  {
+    "id": "tests.test_jsonl_storage_integrity::test_concurrent_jsonl_append_operations_do_not_lose_rows[<lambda>-append_experience_submission-load_experience_submissions]",
+    "status": "passed",
+    "seconds": "0.022"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestSSRFProtection::test_ollama_url_is_loopback",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestSSRFProtection::test_no_cloud_fallback_in_gateway",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestPromptInjection::test_injections_still_get_redacted",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestPromptInjection::test_injection_in_filename",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestOversizedBody::test_very_large_text_redaction",
+    "status": "passed",
+    "seconds": "0.072"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestOversizedBody::test_large_text_with_pii",
+    "status": "passed",
+    "seconds": "0.013"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestLogPrivacy::test_log_entry_has_no_content_fields",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestLogPrivacy::test_traceback_should_not_contain_pii",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestTempFileCleanup::test_redaction_is_pure_function",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestNetworkIsolation::test_no_openai_key_required",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_lai_10_security_audit.TestNetworkIsolation::test_gateway_returns_none_without_cloud",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_both_pages_are_public_html_with_the_contact_address_filled_in",
+    "status": "passed",
+    "seconds": "0.141"
+  },
+  {
+    "id": "tests.test_legal_pages::test_the_pages_are_not_part_of_the_api_contract",
+    "status": "passed",
+    "seconds": "1.055"
+  },
+  {
+    "id": "tests.test_legal_pages::test_the_privacy_policy_says_what_google_and_the_law_expect",
+    "status": "passed",
+    "seconds": "0.109"
+  },
+  {
+    "id": "tests.test_legal_pages::test_the_terms_say_the_data_is_not_official_and_the_service_is_not_an_agency",
+    "status": "passed",
+    "seconds": "0.121"
+  },
+  {
+    "id": "tests.test_legal_pages::test_each_page_links_to_the_other_and_back_to_the_home_page",
+    "status": "passed",
+    "seconds": "0.130"
+  },
+  {
+    "id": "tests.test_legal_pages::test_the_home_page_links_to_both_pages",
+    "status": "passed",
+    "seconds": "0.138"
+  },
+  {
+    "id": "tests.test_legal_pages::test_without_a_configured_address_the_pages_say_so_instead_of_inventing_one",
+    "status": "passed",
+    "seconds": "0.107"
+  },
+  {
+    "id": "tests.test_legal_pages::test_an_odd_contact_setting_never_becomes_markup[\"><script>alert(1)</script>]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_an_odd_contact_setting_never_becomes_markup[not an address]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_an_odd_contact_setting_never_becomes_markup[a@b]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_an_odd_contact_setting_never_becomes_markup[x@y.z]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_an_odd_contact_setting_never_becomes_markup[a b@example.com]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_an_odd_contact_setting_never_becomes_markup[javascript:alert(1)]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_legal_pages::test_the_stylesheet_exists_and_the_pages_load_nothing_from_other_sites",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_life_context::test_verified_reference_and_foreign_student_are_distinct",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_life_context::test_no_evidence_no_inference_and_no_made_up_budget",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_life_context::test_profile_requires_reviewed_status_and_source",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_unknown_coordinates_never_search_nearby",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_map_records_require_valid_coordinates_and_supported_kind",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_official_search_snippet_and_offsite_redirect_are_not_facts",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_life_context::test_official_excerpts_do_not_classify_train_as_rain_or_different_as_rent",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_life_context::test_failed_refresh_preserves_old_facts_and_their_dates",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_life_context::test_changed_campus_invalidates_cached_nearby_places",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_life_context::test_multilingual_queries_and_pdf_candidate",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_life_context::test_pdf_reader_extracts_body_and_html_ignores_navigation",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_life_context::test_page_reader_rejects_unsafe_url_shapes[http://example.edu]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_page_reader_rejects_unsafe_url_shapes[https://x:y@example.edu]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_page_reader_rejects_unsafe_url_shapes[https://example.edu:8080]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_page_reader_rejects_unsafe_url_shapes[javascript:alert(1)]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_page_reader_rejects_unsafe_url_shapes[https://[bad]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_life_context::test_context_api_reads_without_network_and_rejects_unknown_school",
+    "status": "passed",
+    "seconds": "2.321"
+  },
+  {
+    "id": "tests.test_loading_screen::test_the_loading_screen_is_the_first_thing_in_the_body_and_is_announced_politely",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_loading_screen::test_its_script_is_an_external_file_because_the_page_forbids_inline_scripts",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_loading_screen::test_with_scripts_turned_off_the_screen_is_hidden_instead_of_covering_the_page",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_loading_screen::test_it_hides_itself_even_if_the_page_script_never_finishes",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_loading_screen::test_a_fast_load_never_shows_it_and_a_shown_one_does_not_flicker",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_loading_screen::test_the_page_tells_it_to_go_only_when_everything_is_loaded_and_whatever_happens",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_loading_screen::test_the_motion_includes_blinking_hopping_and_turning_and_stops_for_reduced_motion",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_loading_screen::test_tapping_the_mascot_cycles_hop_spin_wink",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_loading_screen::test_the_script_and_style_versions_are_in_the_page",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_loading_screen::test_it_cannot_show_before_the_saved_theme_is_applied",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_loading_screen::test_the_mascot_is_a_solid_with_sides_a_front_and_light",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_loading_screen::test_the_home_page_header_shows_the_mascot_where_the_traveller_drawing_was",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_local_ai::test_provider_requires_explicit_prototype_mode",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_BASE_URL-https://127.0.0.1:11434]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_BASE_URL-http://192.168.1.50:11434]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_BASE_URL-http://127.0.0.1:11434/api]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_BASE_URL-http://127.0.0.1:11435]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_CHAT_MODEL-gemma4:cloud]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_CHAT_MODEL-gemma4:e4b]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_EMBEDDING_MODEL-embeddinggemma:cloud]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_CONTEXT_WINDOW-999999]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_reject_unsafe_local_configuration[OLLAMA_REQUEST_TIMEOUT_SECONDS-nan]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_settings_accept_only_the_fixed_loopback_models",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_local_ai::test_provider_constructor_cannot_bypass_loopback_validation",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_provider_disables_proxy_environment_on_injected_requests_session",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_health_check_requires_both_pinned_models",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_local_ai::test_health_check_reports_missing_model_without_fallback",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_uses_schema_and_deterministic_local_options",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_fails_closed_for_invalid_or_failed_responses[<lambda>0]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_fails_closed_for_invalid_or_failed_responses[<lambda>1]",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_fails_closed_for_invalid_or_failed_responses[<lambda>2]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_fails_closed_for_invalid_or_failed_responses[<lambda>3]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_fails_closed_for_invalid_or_failed_responses[<lambda>4]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_local_ai::test_structured_output_rejects_bad_schema_and_oversized_input_before_request",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_single_inference_slot_returns_busy_without_request",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_local_ai::test_canceled_request_is_not_sent_or_returned",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_local_ai::test_embedding_uses_pinned_model_and_validates_vectors",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_embedding_rejects_invalid_vectors[body0]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_local_ai::test_embedding_rejects_invalid_vectors[body1]",
+    "status": "passed",
+    "seconds": "0.000"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/push/web-evidence-37891059971-0/main-control/suite.xml",
+  "original_xml_sha256": "fc6e96a217a53e12a01c4b207fd28a3e802dbef5d26458b0429282571194f857",
+  "case_attributes": {
+    "classname": "tests.test_experience_collector",
+    "name": "test_destination_profile_api_returns_verified_official_summary",
+    "time": "1.867"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: assert '林肯, 坎特伯里' == 'Lincoln, Canterbury'\n  \n  - Lincoln, Canterbury\n  + 林肯, 坎特伯里"
+  },
+  "full_text": "tests/test_experience_collector.py:1467: in test_destination_profile_api_returns_verified_official_summary\n    assert response.json()[\"city\"] == \"Lincoln, Canterbury\"\nE   AssertionError: assert '林肯, 坎特伯里' == 'Lincoln, Canterbury'\nE     \nE     - Lincoln, Canterbury\nE     + 林肯, 坎特伯里"
+}

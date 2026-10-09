@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="3.369" timestamp="2026-10-09T04:53:00.076312+00:00" hostname="f6ad0b7a0286"><testcase classname="test_reader_expiry" name="test_reader_expiry_clears_school_body_and_private_draft" time="1.510"><failure message="requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: http://127.0.0.1:44195/auth/email-verification/request">page = &lt;Page url='about:blank'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:44195', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-143/web-e2e-data0'))
+
+    def test_reader_expiry_clears_school_body_and_private_draft(page, live_server):
+        marker='合成校板私人正文'+uuid4().hex[:8]
+        post=CommunityPost(board_id='tku',board_kind='university_exchange',school_name='淡江大學',author_id='synthetic-owner',display_name='匿名學生',title=marker,body=marker+'，僅供隔離驗證。')
+        append_community_post(post,live_server.data_dir)
+        append_community_post_comment(CommunityPostComment(post_id=post.id,author_id='synthetic-commenter',display_name='匿名學生',body='合成校板回覆，僅供隔離驗證。'),live_server.data_dir)
+&gt;       email='reader-expiry-'+uuid4().hex[:8]+'@example.com';live_server.register(email)
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tmp/tku-ci-reader-repro/test_reader_expiry.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:43: in register
+    dispatched.raise_for_status()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;Response [403]&gt;
+
+    def raise_for_status(self) -&gt; None:
+        """Raises :class:`HTTPError`, if one occurred."""
+    
+        http_error_msg = ""
+        if isinstance(self.reason, bytes):
+            # We attempt to decode utf-8 first because some servers
+            # choose to localize their reason strings. If the string
+            # isn't utf-8, we fall back to iso-8859-1 for all other
+            # encodings. (See PR #3538)
+            try:
+                reason = self.reason.decode("utf-8")
+            except UnicodeDecodeError:
+                reason = self.reason.decode("iso-8859-1")
+        else:
+            reason = self.reason
+    
+        if 400 &lt;= self.status_code &lt; 500:
+            http_error_msg = (
+                f"{self.status_code} Client Error: {reason} for url: {self.url}"
+            )
+    
+        elif 500 &lt;= self.status_code &lt; 600:
+            http_error_msg = (
+                f"{self.status_code} Server Error: {reason} for url: {self.url}"
+            )
+    
+        if http_error_msg:
+&gt;           raise HTTPError(http_error_msg, response=self)
+E           requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: http://127.0.0.1:44195/auth/email-verification/request
+
+../abroad-tku/.venv/lib/python3.12/site-packages/requests/models.py:1167: HTTPError</failure></testcase></testsuite></testsuites>

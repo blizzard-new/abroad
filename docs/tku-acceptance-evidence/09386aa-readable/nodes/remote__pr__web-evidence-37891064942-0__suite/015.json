@@ -1,0 +1,322 @@
+[
+  {
+    "id": "tests.test_tku_support::test_build_is_reproducible_without_network",
+    "status": "passed",
+    "seconds": "4.087"
+  },
+  {
+    "id": "tests.test_tku_support::test_xlsx_parser_preserves_country_merges_and_quota_unknown_states",
+    "status": "passed",
+    "seconds": "0.026"
+  },
+  {
+    "id": "tests.test_tku_support::test_frontend_marks_closed_and_reference_choices_unavailable",
+    "status": "passed",
+    "seconds": "0.040"
+  },
+  {
+    "id": "tests.test_tku_web_evidence::test_evidence_output_preserves_a_long_failure_on_a_full_pipe[False]",
+    "status": "passed",
+    "seconds": "0.124"
+  },
+  {
+    "id": "tests.test_tku_web_evidence::test_evidence_output_preserves_a_long_failure_on_a_full_pipe[True]",
+    "status": "passed",
+    "seconds": "0.124"
+  },
+  {
+    "id": "tests.test_tku_web_evidence::test_real_pytest_terminal_flush_survives_flag_change_and_full_pipe",
+    "status": "passed",
+    "seconds": "0.426"
+  },
+  {
+    "id": "tests.test_transient_auth::test_local_store_consumes_once_without_wrong_identity_destroying_state",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_transient_auth::test_local_store_enforces_shared_rate_capacity_and_session_replacement",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_transient_auth::test_student_verification_session_is_ttl_bound_and_account_purgeable",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_transient_auth::test_transient_auth_factory_forbids_memory_in_production",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_transient_auth::test_supabase_store_uses_atomic_start_and_consume_rpcs",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_transient_auth::test_supabase_store_maps_atomic_start_rejections[rate_limited-TransientAuthRateLimitError]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_transient_auth::test_supabase_store_maps_atomic_start_rejections[capacity_reached-TransientAuthCapacityError]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_transient_auth::test_supabase_migration_keeps_transient_auth_private_and_atomic",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_translation_requests::test_texts_the_server_cannot_translate_are_not_asked_about_again_in_the_same_visit",
+    "status": "passed",
+    "seconds": "0.029"
+  },
+  {
+    "id": "tests.test_translation_requests::test_while_the_server_can_still_generate_translations_pending_texts_are_asked_again",
+    "status": "passed",
+    "seconds": "0.026"
+  },
+  {
+    "id": "tests.test_translation_requests::test_the_per_text_work_is_remembered_and_gives_the_same_answers",
+    "status": "passed",
+    "seconds": "0.007"
+  },
+  {
+    "id": "tests.test_translation_requests::test_a_translation_that_is_not_text_is_rejected_without_error",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_translation_requests::test_the_compact_list_keeps_what_the_list_views_read_and_drops_the_guide_bodies",
+    "status": "passed",
+    "seconds": "0.984"
+  },
+  {
+    "id": "tests.test_translation_requests::test_a_schools_full_profile_still_carries_its_guide",
+    "status": "passed",
+    "seconds": "1.854"
+  },
+  {
+    "id": "tests.test_translation_requests::test_the_default_list_is_unchanged",
+    "status": "passed",
+    "seconds": "0.858"
+  },
+  {
+    "id": "tests.test_university_locations::test_invalid_verified_location_is_rejected[fields0]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_university_locations::test_invalid_verified_location_is_rejected[fields1]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_university_locations::test_invalid_verified_location_is_rejected[fields2]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_university_locations::test_invalid_verified_location_is_rejected[fields3]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_university_locations::test_invalid_verified_location_is_rejected[fields4]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_university_locations::test_invalid_verified_location_is_rejected[fields5]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_university_locations::test_invalid_verified_location_is_rejected[fields6]",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_university_locations::test_bad_row_does_not_break_valid_schools_and_override_fails_closed",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_university_locations::test_pending_coordinate_candidate_is_not_exposed",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_university_locations::test_dashboard_adds_location_without_changing_partnerships",
+    "status": "passed",
+    "seconds": "0.098"
+  },
+  {
+    "id": "tests.test_university_locations::test_bundled_locations_are_valid_unique_and_sourced",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_university_locations::test_offline_candidate_matching_requires_unique_domain_country_and_campus",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_uniway_ui_contract::test_uniway_brand_and_public_discovery_are_present",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_uniway_ui_contract::test_personalized_routes_require_school_but_public_search_does_not",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_uniway_ui_contract::test_mobile_navigation_has_the_five_approved_destinations",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_uniway_ui_contract::test_uniway_theme_supports_light_dark_mobile_and_reduced_motion",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_web_review_findings_contract::test_web_review_findings_template_is_explicitly_unapproved",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_web_review_findings_contract::test_web_review_findings_template_has_privacy_and_reproduction_fields",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_web_review_findings_contract::test_web_review_findings_template_preserves_severity_and_flutter_gates",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_web_review_findings_contract::test_web_review_findings_template_covers_web_definition_of_done",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_web_review_findings_contract::test_web_review_checklist_links_the_findings_template",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_workflow_catalog_cache::test_indexed_merge_returns_exactly_what_the_scanning_merge_returned",
+    "status": "passed",
+    "seconds": "1.518"
+  },
+  {
+    "id": "tests.test_workflow_catalog_cache::test_a_later_override_can_replace_an_earlier_one",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workflow_catalog_cache::test_loading_the_bundled_catalogue_is_remembered_but_each_caller_gets_its_own_list",
+    "status": "passed",
+    "seconds": "1.718"
+  },
+  {
+    "id": "tests.test_workflow_catalog_cache::test_local_workflows_are_reread_when_the_file_changes",
+    "status": "passed",
+    "seconds": "0.007"
+  },
+  {
+    "id": "tests.test_workflow_context_api::test_details_use_effective_rounds_and_department_overrides",
+    "status": "passed",
+    "seconds": "0.108"
+  },
+  {
+    "id": "tests.test_workflow_structuring::test_legacy_workflow_is_structured_without_guessing_unknown_values",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workflow_structuring::test_paper_send_by_without_arrival_deadline_is_never_reminder_eligible",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workflow_structuring::test_exact_deadline_requires_published_workflow_before_reminder",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workflow_structuring::test_published_workflow_without_published_at_fails_structure_audit",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workflow_structuring::test_source_authority_follows_official_priority_order",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workflow_structuring::test_workflow_structuring_is_idempotent_and_passes_audit",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_workload_planning::test_capacity_and_dependencies_are_respected_across_schools",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workload_planning::test_replan_uses_remaining_effort_keeps_completed_and_never_moves_deadlines",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workload_planning::test_missing_effort_is_not_guessed_from_lead_days_and_blocks_dependents",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workload_planning::test_cycles_missing_references_and_waiting_do_not_block_independent_work",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workload_planning::test_shortfall_is_visible_and_no_work_is_scheduled_after_deadline",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workload_planning::test_late_and_invalid_dates_are_reported_without_fabrication",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workload_planning::test_release_date_and_preview_horizon_are_respected",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workload_planning::test_shared_capacity_and_predecessor_deadline_priority",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workload_planning::test_zero_remaining_requires_student_confirmation_and_model_rejects_invalid_weekdays",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_workload_planning_api::test_workload_endpoint_and_workspace_roundtrip",
+    "status": "passed",
+    "seconds": "0.117"
+  },
+  {
+    "id": "tests.test_workload_planning_api::test_workload_mode_does_not_bypass_entitlements_or_accept_invalid_capacity",
+    "status": "passed",
+    "seconds": "0.128"
+  }
+]

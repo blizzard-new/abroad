@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/prior-full-1bc4ae5/suite.xml",
+  "original_xml_sha256": "d9889650b2739711f69bbe3624d42b36281ee04a6fea5fb5b435dbc37a6e2182",
+  "case_attributes": {
+    "classname": "tests.test_frontend_contract",
+    "name": "test_application_center_separates_official_requirements_from_preparation_tools",
+    "time": "0.004"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert '不會用其他年度或其他學校的文件代替' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+  },
+  "full_text": "def test_application_center_separates_official_requirements_from_preparation_tools() -> None:\n        html = (STATIC_DIR / \"index.html\").read_text(encoding=\"utf-8\")\n        script = (STATIC_DIR / \"app.js\").read_text(encoding=\"utf-8\")\n        styles = (STATIC_DIR / \"product-v2.css\").read_text(encoding=\"utf-8\")\n    \n        assert 'id=\"application-requirement-list\"' in html\n        assert \"當期文件與官方表格\" in html\n        assert \"可填寫的準備工具\" in html\n        assert \"不代表當期校方必備文件\" in html\n        assert \"沒有確認的份數或表格不會被當成正式版本\" in html\n        assert \"/application-center/catalog\" in script\n        assert \"renderApplicationDocumentCatalog\" in script\n        assert \"下載校方正式表格\" in script\n        assert \"查看官方規定\" in script\n        assert \"份數待確認\" in script\n>       assert \"不會用其他年度或其他學校的文件代替\" in script\nE       assert '不會用其他年度或其他學校的文件代替' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'\n\ntests/test_frontend_contract.py:1296: AssertionError"
+}

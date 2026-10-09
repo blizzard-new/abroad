@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/prior-full-1bc4ae5/suite.xml",
+  "original_xml_sha256": "d9889650b2739711f69bbe3624d42b36281ee04a6fea5fb5b435dbc37a6e2182",
+  "case_attributes": {
+    "classname": "tests.test_next_phase_contract",
+    "name": "test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing",
+    "time": "1.187"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "KeyError: '/admin/application-workflow-review-batches/{batch_id}/stage'"
+  },
+  "full_text": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-151/test_workflow_batch_stage_cont0')\n\n    def test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing(\n        tmp_path,\n    ) -> None:\n        client = TestClient(create_app(tmp_path))\n        openapi = client.get(\"/openapi.json\").json()\n        path = \"/admin/application-workflow-review-batches/{batch_id}/stage\"\n        schemas = openapi[\"components\"][\"schemas\"]\n    \n>       assert \"post\" in openapi[\"paths\"][path]\n                         ^^^^^^^^^^^^^^^^^^^^^^\nE       KeyError: '/admin/application-workflow-review-batches/{batch_id}/stage'\n\ntests/test_next_phase_contract.py:390: KeyError"
+}

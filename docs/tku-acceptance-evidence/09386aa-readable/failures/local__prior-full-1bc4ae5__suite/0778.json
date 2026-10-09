@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/prior-full-1bc4ae5/suite.xml",
+  "original_xml_sha256": "d9889650b2739711f69bbe3624d42b36281ee04a6fea5fb5b435dbc37a6e2182",
+  "case_attributes": {
+    "classname": "tests.test_frontend_contract",
+    "name": "test_successful_login_closes_before_noncritical_account_hydration",
+    "time": "0.002"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert 'app.js?v=20260929-chinese-1' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...defer></script>\\n    <script src=\"/static/app.js?v=20261009-tku-reader-expiry-1\" defer></script>\\n  </body>\\n</html>\\n'"
+  },
+  "full_text": "def test_successful_login_closes_before_noncritical_account_hydration() -> None:\n        html = (STATIC_DIR / \"index.html\").read_text(encoding=\"utf-8\")\n        script = (STATIC_DIR / \"app.js\").read_text(encoding=\"utf-8\")\n        accept_block = script.split(\"async function acceptAccountSession(session)\", 1)[1].split(\n            \"async function restoreAccount\", 1\n        )[0]\n        submit_block = script.split(\"async function submitAccountForm(form, endpoint)\", 1)[1].split(\n            \"async function saveAccountProfile\", 1\n        )[0]\n    \n>       assert \"app.js?v=20260929-chinese-1\" in html\nE       assert 'app.js?v=20260929-chinese-1' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...defer></script>\\n    <script src=\"/static/app.js?v=20261009-tku-reader-expiry-1\" defer></script>\\n  </body>\\n</html>\\n'\n\ntests/test_frontend_contract.py:1659: AssertionError"
+}

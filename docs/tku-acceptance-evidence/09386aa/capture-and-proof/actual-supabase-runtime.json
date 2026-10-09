@@ -1,0 +1,620 @@
+{
+  "head_sha": "09386aa318c9574862a6f3b1447c5022a6c26433",
+  "runtime_successful_steps": 8,
+  "step_evidence": [
+    {
+      "kind": "pr",
+      "job_id": 113691880564,
+      "conclusion": "success"
+    },
+    {
+      "kind": "pr",
+      "job_id": 113691880712,
+      "conclusion": "success"
+    },
+    {
+      "kind": "pr",
+      "job_id": 113691880801,
+      "conclusion": "success"
+    },
+    {
+      "kind": "pr",
+      "job_id": 113691880844,
+      "conclusion": "success"
+    },
+    {
+      "kind": "push",
+      "job_id": 113691865202,
+      "conclusion": "success"
+    },
+    {
+      "kind": "push",
+      "job_id": 113691865279,
+      "conclusion": "success"
+    },
+    {
+      "kind": "push",
+      "job_id": 113691865297,
+      "conclusion": "success"
+    },
+    {
+      "kind": "push",
+      "job_id": 113691865355,
+      "conclusion": "success"
+    }
+  ],
+  "held_complete_runtime_json_count": 6,
+  "reports": [
+    {
+      "job_id": 113691865202,
+      "source_original_decoded_log": "job-113691865202.log",
+      "actual_runtime": {
+        "account_deletion": {
+          "rollback_preserved_rows": 8,
+          "storage_delete_replays": 1,
+          "storage_jobs_completed": 1,
+          "storage_objects_deleted": 1,
+          "storage_timeout_receipts_preserved": 1,
+          "workflow_issue_closed_deleted": 1,
+          "workflow_issue_pending_deidentified": 2,
+          "workflow_issue_purge_controls_preserved": 1,
+          "workflow_issue_purged": 2,
+          "workflow_issue_retention_shortened": 1,
+          "workflow_issue_review_replays": 1,
+          "workflow_issue_reviewer_deidentified": 1,
+          "workflow_issue_rollback_preserved_rows": 4
+        },
+        "cleanup_status": "passed",
+        "community_multi_instance": {
+          "postgrest_instances": 2,
+          "private_message_block_races": 1,
+          "private_message_blocked": 0,
+          "private_message_commits": 1,
+          "private_message_integrity_conflicts": 0,
+          "private_opposite_invitations": 2,
+          "private_report_review_commits": 1,
+          "private_report_review_conflicts": 1,
+          "public_idempotent_commits": 1,
+          "public_idempotent_replays": 1,
+          "public_parent_child_races": 1
+        },
+        "community_rollbacks": {
+          "late_failures_propagated": 6,
+          "partial_rows": 0,
+          "private_conversation_rollbacks": 1,
+          "private_message_rollbacks": 1,
+          "private_report_review_rollbacks": 1,
+          "private_report_rollbacks": 1,
+          "public_moderation_rollbacks": 1,
+          "public_publication_rollbacks": 1
+        },
+        "compose_project": "exchange-supabase-runtime-gh-c608e33653-5cdef0aa",
+        "migration_count": 33,
+        "permissions": {
+          "browser_grants": 0,
+          "rls_tables": 37,
+          "tables": 37,
+          "workflow_issue_service_rpcs": 3
+        },
+        "status": "passed",
+        "storage": {
+          "nested_objects_listed": 2,
+          "orphans_removed": 1,
+          "referenced_preserved": 1
+        },
+        "storage_api_scope": "real_storage_api_file_backend",
+        "tku_selected_community_policy": {
+          "blank_or_unsupported_bylines_denied": 3,
+          "committed_resources": 11,
+          "cross_school_comments": 4,
+          "cross_school_posts": 4,
+          "preview_matches_sql_byline": true,
+          "registry_alias_vectors": 27,
+          "retry_duplicates": 0,
+          "school_boards": 4,
+          "self_declared_byline_denied": true,
+          "unverified_writes_denied": 8,
+          "verified_alias_publications": 2
+        },
+        "transient_auth": {
+          "created": 1,
+          "rate_limited": 7
+        },
+        "workflow_issue_reports": {
+          "missing_accounts_rejected": 2,
+          "missing_reports_rejected": 1,
+          "rate_limited": 1,
+          "review_committed": 1,
+          "review_idempotency_conflicts": 1,
+          "review_idempotent_replays": 1,
+          "review_status_conflicts": 1,
+          "submit_idempotency_conflicts": 1,
+          "submit_idempotent_replays": 2,
+          "submitted_reports": 10,
+          "terminal_review_conflicts": 1,
+          "unsafe_source_urls_rejected": 6
+        },
+        "workspace": {
+          "committed": 1,
+          "conflict": 1
+        }
+      }
+    },
+    {
+      "job_id": 113691865279,
+      "source_original_decoded_log": "job-113691865279.log",
+      "actual_runtime": {
+        "account_deletion": {
+          "rollback_preserved_rows": 8,
+          "storage_delete_replays": 1,
+          "storage_jobs_completed": 1,
+          "storage_objects_deleted": 1,
+          "storage_timeout_receipts_preserved": 1,
+          "workflow_issue_closed_deleted": 1,
+          "workflow_issue_pending_deidentified": 2,
+          "workflow_issue_purge_controls_preserved": 1,
+          "workflow_issue_purged": 2,
+          "workflow_issue_retention_shortened": 1,
+          "workflow_issue_review_replays": 1,
+          "workflow_issue_reviewer_deidentified": 1,
+          "workflow_issue_rollback_preserved_rows": 4
+        },
+        "cleanup_status": "passed",
+        "community_multi_instance": {
+          "postgrest_instances": 2,
+          "private_message_block_races": 1,
+          "private_message_blocked": 0,
+          "private_message_commits": 1,
+          "private_message_integrity_conflicts": 0,
+          "private_opposite_invitations": 2,
+          "private_report_review_commits": 1,
+          "private_report_review_conflicts": 1,
+          "public_idempotent_commits": 1,
+          "public_idempotent_replays": 1,
+          "public_parent_child_races": 1
+        },
+        "community_rollbacks": {
+          "late_failures_propagated": 6,
+          "partial_rows": 0,
+          "private_conversation_rollbacks": 1,
+          "private_message_rollbacks": 1,
+          "private_report_review_rollbacks": 1,
+          "private_report_rollbacks": 1,
+          "public_moderation_rollbacks": 1,
+          "public_publication_rollbacks": 1
+        },
+        "compose_project": "exchange-supabase-runtime-gh-c608e33653-10886ea2",
+        "migration_count": 33,
+        "permissions": {
+          "browser_grants": 0,
+          "rls_tables": 37,
+          "tables": 37,
+          "workflow_issue_service_rpcs": 3
+        },
+        "status": "passed",
+        "storage": {
+          "nested_objects_listed": 2,
+          "orphans_removed": 1,
+          "referenced_preserved": 1
+        },
+        "storage_api_scope": "real_storage_api_file_backend",
+        "tku_selected_community_policy": {
+          "blank_or_unsupported_bylines_denied": 3,
+          "committed_resources": 11,
+          "cross_school_comments": 4,
+          "cross_school_posts": 4,
+          "preview_matches_sql_byline": true,
+          "registry_alias_vectors": 27,
+          "retry_duplicates": 0,
+          "school_boards": 4,
+          "self_declared_byline_denied": true,
+          "unverified_writes_denied": 8,
+          "verified_alias_publications": 2
+        },
+        "transient_auth": {
+          "created": 1,
+          "rate_limited": 7
+        },
+        "workflow_issue_reports": {
+          "missing_accounts_rejected": 2,
+          "missing_reports_rejected": 1,
+          "rate_limited": 1,
+          "review_committed": 1,
+          "review_idempotency_conflicts": 1,
+          "review_idempotent_replays": 1,
+          "review_status_conflicts": 1,
+          "submit_idempotency_conflicts": 1,
+          "submit_idempotent_replays": 2,
+          "submitted_reports": 10,
+          "terminal_review_conflicts": 1,
+          "unsafe_source_urls_rejected": 6
+        },
+        "workspace": {
+          "committed": 1,
+          "conflict": 1
+        }
+      }
+    },
+    {
+      "job_id": 113691865297,
+      "source_original_decoded_log": "job-113691865297.log",
+      "actual_runtime": {
+        "account_deletion": {
+          "rollback_preserved_rows": 8,
+          "storage_delete_replays": 1,
+          "storage_jobs_completed": 1,
+          "storage_objects_deleted": 1,
+          "storage_timeout_receipts_preserved": 1,
+          "workflow_issue_closed_deleted": 1,
+          "workflow_issue_pending_deidentified": 2,
+          "workflow_issue_purge_controls_preserved": 1,
+          "workflow_issue_purged": 2,
+          "workflow_issue_retention_shortened": 1,
+          "workflow_issue_review_replays": 1,
+          "workflow_issue_reviewer_deidentified": 1,
+          "workflow_issue_rollback_preserved_rows": 4
+        },
+        "cleanup_status": "passed",
+        "community_multi_instance": {
+          "postgrest_instances": 2,
+          "private_message_block_races": 1,
+          "private_message_blocked": 0,
+          "private_message_commits": 1,
+          "private_message_integrity_conflicts": 0,
+          "private_opposite_invitations": 2,
+          "private_report_review_commits": 1,
+          "private_report_review_conflicts": 1,
+          "public_idempotent_commits": 1,
+          "public_idempotent_replays": 1,
+          "public_parent_child_races": 1
+        },
+        "community_rollbacks": {
+          "late_failures_propagated": 6,
+          "partial_rows": 0,
+          "private_conversation_rollbacks": 1,
+          "private_message_rollbacks": 1,
+          "private_report_review_rollbacks": 1,
+          "private_report_rollbacks": 1,
+          "public_moderation_rollbacks": 1,
+          "public_publication_rollbacks": 1
+        },
+        "compose_project": "exchange-supabase-runtime-gh-c608e33653-660d265b",
+        "migration_count": 33,
+        "permissions": {
+          "browser_grants": 0,
+          "rls_tables": 37,
+          "tables": 37,
+          "workflow_issue_service_rpcs": 3
+        },
+        "status": "passed",
+        "storage": {
+          "nested_objects_listed": 2,
+          "orphans_removed": 1,
+          "referenced_preserved": 1
+        },
+        "storage_api_scope": "real_storage_api_file_backend",
+        "tku_selected_community_policy": {
+          "blank_or_unsupported_bylines_denied": 3,
+          "committed_resources": 11,
+          "cross_school_comments": 4,
+          "cross_school_posts": 4,
+          "preview_matches_sql_byline": true,
+          "registry_alias_vectors": 27,
+          "retry_duplicates": 0,
+          "school_boards": 4,
+          "self_declared_byline_denied": true,
+          "unverified_writes_denied": 8,
+          "verified_alias_publications": 2
+        },
+        "transient_auth": {
+          "created": 1,
+          "rate_limited": 7
+        },
+        "workflow_issue_reports": {
+          "missing_accounts_rejected": 2,
+          "missing_reports_rejected": 1,
+          "rate_limited": 1,
+          "review_committed": 1,
+          "review_idempotency_conflicts": 1,
+          "review_idempotent_replays": 1,
+          "review_status_conflicts": 1,
+          "submit_idempotency_conflicts": 1,
+          "submit_idempotent_replays": 2,
+          "submitted_reports": 10,
+          "terminal_review_conflicts": 1,
+          "unsafe_source_urls_rejected": 6
+        },
+        "workspace": {
+          "committed": 1,
+          "conflict": 1
+        }
+      }
+    },
+    {
+      "job_id": 113691880712,
+      "source_original_decoded_log": "job-113691880712.log",
+      "actual_runtime": {
+        "account_deletion": {
+          "rollback_preserved_rows": 8,
+          "storage_delete_replays": 1,
+          "storage_jobs_completed": 1,
+          "storage_objects_deleted": 1,
+          "storage_timeout_receipts_preserved": 1,
+          "workflow_issue_closed_deleted": 1,
+          "workflow_issue_pending_deidentified": 2,
+          "workflow_issue_purge_controls_preserved": 1,
+          "workflow_issue_purged": 2,
+          "workflow_issue_retention_shortened": 1,
+          "workflow_issue_review_replays": 1,
+          "workflow_issue_reviewer_deidentified": 1,
+          "workflow_issue_rollback_preserved_rows": 4
+        },
+        "cleanup_status": "passed",
+        "community_multi_instance": {
+          "postgrest_instances": 2,
+          "private_message_block_races": 1,
+          "private_message_blocked": 0,
+          "private_message_commits": 1,
+          "private_message_integrity_conflicts": 0,
+          "private_opposite_invitations": 2,
+          "private_report_review_commits": 1,
+          "private_report_review_conflicts": 1,
+          "public_idempotent_commits": 1,
+          "public_idempotent_replays": 1,
+          "public_parent_child_races": 1
+        },
+        "community_rollbacks": {
+          "late_failures_propagated": 6,
+          "partial_rows": 0,
+          "private_conversation_rollbacks": 1,
+          "private_message_rollbacks": 1,
+          "private_report_review_rollbacks": 1,
+          "private_report_rollbacks": 1,
+          "public_moderation_rollbacks": 1,
+          "public_publication_rollbacks": 1
+        },
+        "compose_project": "exchange-supabase-runtime-gh-490b05bb0b-e2cb2dc1",
+        "migration_count": 33,
+        "permissions": {
+          "browser_grants": 0,
+          "rls_tables": 37,
+          "tables": 37,
+          "workflow_issue_service_rpcs": 3
+        },
+        "status": "passed",
+        "storage": {
+          "nested_objects_listed": 2,
+          "orphans_removed": 1,
+          "referenced_preserved": 1
+        },
+        "storage_api_scope": "real_storage_api_file_backend",
+        "tku_selected_community_policy": {
+          "blank_or_unsupported_bylines_denied": 3,
+          "committed_resources": 11,
+          "cross_school_comments": 4,
+          "cross_school_posts": 4,
+          "preview_matches_sql_byline": true,
+          "registry_alias_vectors": 27,
+          "retry_duplicates": 0,
+          "school_boards": 4,
+          "self_declared_byline_denied": true,
+          "unverified_writes_denied": 8,
+          "verified_alias_publications": 2
+        },
+        "transient_auth": {
+          "created": 1,
+          "rate_limited": 7
+        },
+        "workflow_issue_reports": {
+          "missing_accounts_rejected": 2,
+          "missing_reports_rejected": 1,
+          "rate_limited": 1,
+          "review_committed": 1,
+          "review_idempotency_conflicts": 1,
+          "review_idempotent_replays": 1,
+          "review_status_conflicts": 1,
+          "submit_idempotency_conflicts": 1,
+          "submit_idempotent_replays": 2,
+          "submitted_reports": 10,
+          "terminal_review_conflicts": 1,
+          "unsafe_source_urls_rejected": 6
+        },
+        "workspace": {
+          "committed": 1,
+          "conflict": 1
+        }
+      }
+    },
+    {
+      "job_id": 113691880801,
+      "source_original_decoded_log": "job-113691880801.log",
+      "actual_runtime": {
+        "account_deletion": {
+          "rollback_preserved_rows": 8,
+          "storage_delete_replays": 1,
+          "storage_jobs_completed": 1,
+          "storage_objects_deleted": 1,
+          "storage_timeout_receipts_preserved": 1,
+          "workflow_issue_closed_deleted": 1,
+          "workflow_issue_pending_deidentified": 2,
+          "workflow_issue_purge_controls_preserved": 1,
+          "workflow_issue_purged": 2,
+          "workflow_issue_retention_shortened": 1,
+          "workflow_issue_review_replays": 1,
+          "workflow_issue_reviewer_deidentified": 1,
+          "workflow_issue_rollback_preserved_rows": 4
+        },
+        "cleanup_status": "passed",
+        "community_multi_instance": {
+          "postgrest_instances": 2,
+          "private_message_block_races": 1,
+          "private_message_blocked": 0,
+          "private_message_commits": 1,
+          "private_message_integrity_conflicts": 0,
+          "private_opposite_invitations": 2,
+          "private_report_review_commits": 1,
+          "private_report_review_conflicts": 1,
+          "public_idempotent_commits": 1,
+          "public_idempotent_replays": 1,
+          "public_parent_child_races": 1
+        },
+        "community_rollbacks": {
+          "late_failures_propagated": 6,
+          "partial_rows": 0,
+          "private_conversation_rollbacks": 1,
+          "private_message_rollbacks": 1,
+          "private_report_review_rollbacks": 1,
+          "private_report_rollbacks": 1,
+          "public_moderation_rollbacks": 1,
+          "public_publication_rollbacks": 1
+        },
+        "compose_project": "exchange-supabase-runtime-gh-490b05bb0b-809b248f",
+        "migration_count": 33,
+        "permissions": {
+          "browser_grants": 0,
+          "rls_tables": 37,
+          "tables": 37,
+          "workflow_issue_service_rpcs": 3
+        },
+        "status": "passed",
+        "storage": {
+          "nested_objects_listed": 2,
+          "orphans_removed": 1,
+          "referenced_preserved": 1
+        },
+        "storage_api_scope": "real_storage_api_file_backend",
+        "tku_selected_community_policy": {
+          "blank_or_unsupported_bylines_denied": 3,
+          "committed_resources": 11,
+          "cross_school_comments": 4,
+          "cross_school_posts": 4,
+          "preview_matches_sql_byline": true,
+          "registry_alias_vectors": 27,
+          "retry_duplicates": 0,
+          "school_boards": 4,
+          "self_declared_byline_denied": true,
+          "unverified_writes_denied": 8,
+          "verified_alias_publications": 2
+        },
+        "transient_auth": {
+          "created": 1,
+          "rate_limited": 7
+        },
+        "workflow_issue_reports": {
+          "missing_accounts_rejected": 2,
+          "missing_reports_rejected": 1,
+          "rate_limited": 1,
+          "review_committed": 1,
+          "review_idempotency_conflicts": 1,
+          "review_idempotent_replays": 1,
+          "review_status_conflicts": 1,
+          "submit_idempotency_conflicts": 1,
+          "submit_idempotent_replays": 2,
+          "submitted_reports": 10,
+          "terminal_review_conflicts": 1,
+          "unsafe_source_urls_rejected": 6
+        },
+        "workspace": {
+          "committed": 1,
+          "conflict": 1
+        }
+      }
+    },
+    {
+      "job_id": 113691880844,
+      "source_original_decoded_log": "job-113691880844.log",
+      "actual_runtime": {
+        "account_deletion": {
+          "rollback_preserved_rows": 8,
+          "storage_delete_replays": 1,
+          "storage_jobs_completed": 1,
+          "storage_objects_deleted": 1,
+          "storage_timeout_receipts_preserved": 1,
+          "workflow_issue_closed_deleted": 1,
+          "workflow_issue_pending_deidentified": 2,
+          "workflow_issue_purge_controls_preserved": 1,
+          "workflow_issue_purged": 2,
+          "workflow_issue_retention_shortened": 1,
+          "workflow_issue_review_replays": 1,
+          "workflow_issue_reviewer_deidentified": 1,
+          "workflow_issue_rollback_preserved_rows": 4
+        },
+        "cleanup_status": "passed",
+        "community_multi_instance": {
+          "postgrest_instances": 2,
+          "private_message_block_races": 1,
+          "private_message_blocked": 1,
+          "private_message_commits": 0,
+          "private_message_integrity_conflicts": 0,
+          "private_opposite_invitations": 2,
+          "private_report_review_commits": 1,
+          "private_report_review_conflicts": 1,
+          "public_idempotent_commits": 1,
+          "public_idempotent_replays": 1,
+          "public_parent_child_races": 1
+        },
+        "community_rollbacks": {
+          "late_failures_propagated": 6,
+          "partial_rows": 0,
+          "private_conversation_rollbacks": 1,
+          "private_message_rollbacks": 1,
+          "private_report_review_rollbacks": 1,
+          "private_report_rollbacks": 1,
+          "public_moderation_rollbacks": 1,
+          "public_publication_rollbacks": 1
+        },
+        "compose_project": "exchange-supabase-runtime-gh-490b05bb0b-974c729e",
+        "migration_count": 33,
+        "permissions": {
+          "browser_grants": 0,
+          "rls_tables": 37,
+          "tables": 37,
+          "workflow_issue_service_rpcs": 3
+        },
+        "status": "passed",
+        "storage": {
+          "nested_objects_listed": 2,
+          "orphans_removed": 1,
+          "referenced_preserved": 1
+        },
+        "storage_api_scope": "real_storage_api_file_backend",
+        "tku_selected_community_policy": {
+          "blank_or_unsupported_bylines_denied": 3,
+          "committed_resources": 11,
+          "cross_school_comments": 4,
+          "cross_school_posts": 4,
+          "preview_matches_sql_byline": true,
+          "registry_alias_vectors": 27,
+          "retry_duplicates": 0,
+          "school_boards": 4,
+          "self_declared_byline_denied": true,
+          "unverified_writes_denied": 8,
+          "verified_alias_publications": 2
+        },
+        "transient_auth": {
+          "created": 1,
+          "rate_limited": 7
+        },
+        "workflow_issue_reports": {
+          "missing_accounts_rejected": 2,
+          "missing_reports_rejected": 1,
+          "rate_limited": 1,
+          "review_committed": 1,
+          "review_idempotency_conflicts": 1,
+          "review_idempotent_replays": 1,
+          "review_status_conflicts": 1,
+          "submit_idempotency_conflicts": 1,
+          "submit_idempotent_replays": 2,
+          "submitted_reports": 10,
+          "terminal_review_conflicts": 1,
+          "unsafe_source_urls_rejected": 6
+        },
+        "workspace": {
+          "committed": 1,
+          "conflict": 1
+        }
+      }
+    }
+  ],
+  "limitation": "Full decoded shard0 job logs were not retrieved; eight successful runtime steps are original job metadata. Six runtime JSON reports are actual complete original smaller-job log lines; the other two reports are not invented. No production database used."
+}

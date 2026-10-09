@@ -1,0 +1,1037 @@
+﻿2026-10-09T05:57:34.0964324Z Current runner version: '2.337.0'
+2026-10-09T05:57:34.1000572Z ##[group]Runner Image Provisioner
+2026-10-09T05:57:34.1002298Z Hosted Compute Agent
+2026-10-09T05:57:34.1003395Z Version: 20261002.596
+2026-10-09T05:57:34.1004752Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-09T05:57:34.1006007Z Build Date: 2026-10-02T22:28:27Z
+2026-10-09T05:57:34.1007250Z Worker ID: {59a95399-ec61-42a4-8db2-f48f27f827e0}
+2026-10-09T05:57:34.1008960Z Region: eastus2
+2026-10-09T05:57:34.1009965Z Cloud: Azure
+2026-10-09T05:57:34.1011073Z ##[endgroup]
+2026-10-09T05:57:34.1013528Z ##[group]Operating System
+2026-10-09T05:57:34.1014571Z Ubuntu
+2026-10-09T05:57:34.1015676Z 24.04.5
+2026-10-09T05:57:34.1016571Z LTS
+2026-10-09T05:57:34.1017619Z ##[endgroup]
+2026-10-09T05:57:34.1019103Z ##[group]Runner Image
+2026-10-09T05:57:34.1020084Z Image: ubuntu-24.04
+2026-10-09T05:57:34.1021117Z Version: 20261004.327.1
+2026-10-09T05:57:34.1023316Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-09T05:57:34.1026044Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-09T05:57:34.1028194Z ##[endgroup]
+2026-10-09T05:57:34.1030115Z ##[group]GITHUB_TOKEN Permissions
+2026-10-09T05:57:34.1032949Z Contents: read
+2026-10-09T05:57:34.1033920Z Metadata: read
+2026-10-09T05:57:34.1034783Z ##[endgroup]
+2026-10-09T05:57:34.1038178Z Secret source: Actions
+2026-10-09T05:57:34.1039857Z Cache mode: write
+2026-10-09T05:57:34.1041312Z Prepare workflow directory
+2026-10-09T05:57:34.1592917Z Prepare all required actions
+2026-10-09T05:57:34.1666000Z Getting action download info
+2026-10-09T05:57:34.3854101Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-09T05:57:34.4971066Z Download action repository 'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-09T05:57:34.5952370Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-09T05:57:34.7027576Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-09T05:57:34.9289370Z Complete job name: test (3)
+2026-10-09T05:57:35.0116122Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-09T05:57:35.0117197Z with:
+2026-10-09T05:57:35.0117654Z   repository: blizzard-new/abroad
+2026-10-09T05:57:35.0121741Z   token: ***
+2026-10-09T05:57:35.0122182Z   ssh-strict: true
+2026-10-09T05:57:35.0122614Z   ssh-user: git
+2026-10-09T05:57:35.0123059Z   persist-credentials: true
+2026-10-09T05:57:35.0123547Z   clean: true
+2026-10-09T05:57:35.0123985Z   sparse-checkout-cone-mode: true
+2026-10-09T05:57:35.0124522Z   fetch-depth: 1
+2026-10-09T05:57:35.0124984Z   fetch-tags: false
+2026-10-09T05:57:35.0125415Z   show-progress: true
+2026-10-09T05:57:35.0125878Z   lfs: false
+2026-10-09T05:57:35.0126284Z   submodules: false
+2026-10-09T05:57:35.0126723Z   set-safe-directory: true
+2026-10-09T05:57:35.0127215Z   allow-unsafe-pr-checkout: false
+2026-10-09T05:57:35.0128311Z ##[endgroup]
+2026-10-09T05:57:35.1947019Z Syncing repository: blizzard-new/abroad
+2026-10-09T05:57:35.1950258Z ##[group]Getting Git version info
+2026-10-09T05:57:35.1951528Z Working directory is '/home/runner/work/abroad/abroad'
+2026-10-09T05:57:35.1953314Z [command]/usr/bin/git version
+2026-10-09T05:57:35.1954262Z git version 2.55.0
+2026-10-09T05:57:35.2019466Z ##[endgroup]
+2026-10-09T05:57:35.2211415Z Temporarily overriding HOME='/home/runner/work/_temp/c0f09b96-2953-4d71-8a5e-c2db96d52154' before making global git config changes
+2026-10-09T05:57:35.2235790Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T05:57:35.2249470Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/abroad/abroad
+2026-10-09T05:57:35.2278796Z Deleting the contents of '/home/runner/work/abroad/abroad'
+2026-10-09T05:57:35.2281051Z ##[group]Initializing the repository
+2026-10-09T05:57:35.2282421Z [command]/usr/bin/git init /home/runner/work/abroad/abroad
+2026-10-09T05:57:35.2454531Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-09T05:57:35.2459405Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-09T05:57:35.2469703Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-09T05:57:35.2471117Z hint: call:
+2026-10-09T05:57:35.2472029Z hint:
+2026-10-09T05:57:35.2473025Z hint: 	git config --global init.defaultBranch <name>
+2026-10-09T05:57:35.2474141Z hint:
+2026-10-09T05:57:35.2475926Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-09T05:57:35.2499744Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-09T05:57:35.2504452Z hint:
+2026-10-09T05:57:35.2507682Z hint: 	git branch -m <name>
+2026-10-09T05:57:35.2508986Z hint:
+2026-10-09T05:57:35.2510429Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-09T05:57:35.2512521Z Initialized empty Git repository in /home/runner/work/abroad/abroad/.git/
+2026-10-09T05:57:35.2516070Z [command]/usr/bin/git remote add origin https://github.com/blizzard-new/abroad
+2026-10-09T05:57:35.2550390Z ##[endgroup]
+2026-10-09T05:57:35.2552529Z ##[group]Disabling automatic garbage collection
+2026-10-09T05:57:35.2555657Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-09T05:57:35.2658643Z ##[endgroup]
+2026-10-09T05:57:35.2660011Z ##[group]Setting up auth
+2026-10-09T05:57:35.2661430Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T05:57:35.2721704Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T05:57:35.3262727Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T05:57:35.3324908Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T05:57:35.3615359Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T05:57:35.3643997Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T05:57:35.3901745Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-09T05:57:35.3935145Z ##[endgroup]
+2026-10-09T05:57:35.3937129Z ##[group]Fetching the repository
+2026-10-09T05:57:35.3947998Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +09386aa318c9574862a6f3b1447c5022a6c26433:refs/remotes/origin/data/tku-exchange-20261008
+2026-10-09T05:57:39.3526135Z From https://github.com/blizzard-new/abroad
+2026-10-09T05:57:39.3540301Z  * [new ref]         09386aa318c9574862a6f3b1447c5022a6c26433 -> origin/data/tku-exchange-20261008
+2026-10-09T05:57:39.3557172Z ##[endgroup]
+2026-10-09T05:57:39.3559957Z ##[group]Determining the checkout info
+2026-10-09T05:57:39.3563355Z ##[endgroup]
+2026-10-09T05:57:39.3566425Z [command]/usr/bin/git sparse-checkout disable
+2026-10-09T05:57:39.3615647Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-09T05:57:39.3662221Z ##[group]Checking out the ref
+2026-10-09T05:57:39.3665807Z [command]/usr/bin/git checkout --progress --force -B data/tku-exchange-20261008 refs/remotes/origin/data/tku-exchange-20261008
+2026-10-09T05:57:40.0977469Z Switched to a new branch 'data/tku-exchange-20261008'
+2026-10-09T05:57:40.0990449Z branch 'data/tku-exchange-20261008' set up to track 'origin/data/tku-exchange-20261008'.
+2026-10-09T05:57:40.1020560Z ##[endgroup]
+2026-10-09T05:57:40.1071536Z [command]/usr/bin/git log -1 --format=%H
+2026-10-09T05:57:40.1103203Z 09386aa318c9574862a6f3b1447c5022a6c26433
+2026-10-09T05:57:40.1409939Z ##[group]Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+2026-10-09T05:57:40.1410530Z with:
+2026-10-09T05:57:40.1410817Z   python-version: 3.12
+2026-10-09T05:57:40.1411131Z   check-latest: false
+2026-10-09T05:57:40.1413692Z   token: ***
+2026-10-09T05:57:40.1413996Z   update-environment: true
+2026-10-09T05:57:40.1414325Z   allow-prereleases: false
+2026-10-09T05:57:40.1414638Z   freethreaded: false
+2026-10-09T05:57:40.1414926Z ##[endgroup]
+2026-10-09T05:57:40.2823205Z ##[group]Installed versions
+2026-10-09T05:57:40.2934734Z (node:2067) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-09T05:57:40.2936549Z Successfully set up CPython (3.12.15)
+2026-10-09T05:57:40.2938042Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-09T05:57:40.2960105Z ##[endgroup]
+2026-10-09T05:57:40.3240166Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-10-09T05:57:40.3241097Z with:
+2026-10-09T05:57:40.3241608Z   node-version: 22
+2026-10-09T05:57:40.3242143Z   always-auth: false
+2026-10-09T05:57:40.3242660Z   check-latest: false
+2026-10-09T05:57:40.3247358Z   token: ***
+2026-10-09T05:57:40.3248068Z env:
+2026-10-09T05:57:40.3248666Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:57:40.3249626Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T05:57:40.3250561Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:57:40.3251401Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:57:40.3252240Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:57:40.3253096Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T05:57:40.3253826Z ##[endgroup]
+2026-10-09T05:57:40.4883063Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+2026-10-09T05:57:40.4884851Z (node:2076) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-09T05:57:40.4886441Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-09T05:57:40.4889388Z ##[group]Environment details
+2026-10-09T05:57:41.0567962Z node: v22.23.3
+2026-10-09T05:57:41.0574844Z npm: 10.9.9
+2026-10-09T05:57:41.0577065Z yarn: 1.22.22
+2026-10-09T05:57:41.0579162Z ##[endgroup]
+2026-10-09T05:57:41.0665474Z ##[group]Run python - <<'PY'
+2026-10-09T05:57:41.0665852Z [36;1mpython - <<'PY'[0m
+2026-10-09T05:57:41.0666118Z [36;1mimport os[0m
+2026-10-09T05:57:41.0666356Z [36;1mfrom pathlib import Path[0m
+2026-10-09T05:57:41.0666717Z [36;1mwith Path(os.environ["GITHUB_ENV"]).open("a") as handle:[0m
+2026-10-09T05:57:41.0667282Z [36;1m    handle.write(f"EXCHANGE_INFO_DATA_DIR={os.environ['RUNNER_TEMP']}/exchange-info-tests\n")[0m
+2026-10-09T05:57:41.0668146Z [36;1mPY[0m
+2026-10-09T05:57:41.1003256Z shell: /usr/bin/bash -e {0}
+2026-10-09T05:57:41.1003658Z env:
+2026-10-09T05:57:41.1004019Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:57:41.1004616Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T05:57:41.1005240Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:57:41.1005757Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:57:41.1006336Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:57:41.1006850Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T05:57:41.1007292Z ##[endgroup]
+2026-10-09T05:57:41.1795570Z ##[group]Run python -m pip install --disable-pip-version-check uv==0.11.26
+2026-10-09T05:57:41.1796163Z [36;1mpython -m pip install --disable-pip-version-check uv==0.11.26[0m
+2026-10-09T05:57:41.1796558Z [36;1muv lock --check[0m
+2026-10-09T05:57:41.1796808Z [36;1muv sync --frozen --extra dev[0m
+2026-10-09T05:57:41.1797443Z [36;1muv run --frozen python -m playwright install --with-deps chromium[0m
+2026-10-09T05:57:41.1864939Z shell: /usr/bin/bash -e {0}
+2026-10-09T05:57:41.1865203Z env:
+2026-10-09T05:57:41.1865477Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:57:41.1865934Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T05:57:41.1866367Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:57:41.1866753Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:57:41.1867143Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:57:41.1867587Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T05:57:41.1868257Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T05:57:41.1868628Z ##[endgroup]
+2026-10-09T05:57:42.4827169Z Collecting uv==0.11.26
+2026-10-09T05:57:42.5489338Z   Downloading uv-0.11.26-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+2026-10-09T05:57:42.5646001Z Downloading uv-0.11.26-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (26.3 MB)
+2026-10-09T05:57:42.9018459Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 26.3/26.3 MB 83.3 MB/s  0:00:00
+2026-10-09T05:57:42.9661027Z Installing collected packages: uv
+2026-10-09T05:57:43.2379949Z Successfully installed uv-0.11.26
+2026-10-09T05:57:43.3450229Z Using CPython 3.12.15 interpreter at: /opt/hostedtoolcache/Python/3.12.15/x64/bin/python3.12
+2026-10-09T05:57:43.3539630Z Resolved 87 packages in 0.66ms
+2026-10-09T05:57:43.3667275Z Using CPython 3.12.15 interpreter at: /opt/hostedtoolcache/Python/3.12.15/x64/bin/python3.12
+2026-10-09T05:57:43.3669196Z Creating virtual environment at: .venv
+2026-10-09T05:57:43.3935084Z    Building taiwan-exchange-info @ file:///home/runner/work/abroad/abroad
+2026-10-09T05:57:43.4889504Z Downloading reportlab (1.9MiB)
+2026-10-09T05:57:43.4908818Z Downloading cryptography (4.5MiB)
+2026-10-09T05:57:43.4928836Z Downloading uvloop (4.2MiB)
+2026-10-09T05:57:43.4929746Z Downloading lxml (5.0MiB)
+2026-10-09T05:57:43.4930405Z Downloading pygments (1.2MiB)
+2026-10-09T05:57:43.4931107Z Downloading pglast (6.0MiB)
+2026-10-09T05:57:43.4940940Z Downloading pip (1.7MiB)
+2026-10-09T05:57:43.4941817Z Downloading pillow (6.6MiB)
+2026-10-09T05:57:43.4942762Z Downloading pydantic-core (2.0MiB)
+2026-10-09T05:57:43.4943692Z Downloading playwright (45.5MiB)
+2026-10-09T05:57:43.4999063Z Downloading brotli (1.4MiB)
+2026-10-09T05:57:43.4999708Z Downloading primp (5.1MiB)
+2026-10-09T05:57:44.0034987Z  Downloaded brotli
+2026-10-09T05:57:44.0674495Z  Downloaded pydantic-core
+2026-10-09T05:57:44.2700222Z  Downloaded primp
+2026-10-09T05:57:44.4525907Z  Downloaded uvloop
+2026-10-09T05:57:44.4592277Z  Downloaded pillow
+2026-10-09T05:57:44.4708501Z  Downloaded pglast
+2026-10-09T05:57:44.6068879Z  Downloaded cryptography
+2026-10-09T05:57:44.7141151Z  Downloaded reportlab
+2026-10-09T05:57:44.7508324Z  Downloaded lxml
+2026-10-09T05:57:44.7706903Z  Downloaded pygments
+2026-10-09T05:57:44.8016167Z  Downloaded playwright
+2026-10-09T05:57:44.8221722Z  Downloaded pip
+2026-10-09T05:57:45.7384505Z       Built taiwan-exchange-info @ file:///home/runner/work/abroad/abroad
+2026-10-09T05:57:45.7396476Z Prepared 83 packages in 2.36s
+2026-10-09T05:57:45.8179587Z Installed 83 packages in 78ms
+2026-10-09T05:57:45.8180463Z  + annotated-doc==0.0.5
+2026-10-09T05:57:45.8198702Z  + annotated-types==0.8.0
+2026-10-09T05:57:45.8210172Z  + anyio==4.14.2
+2026-10-09T05:57:45.8210817Z  + attrs==26.1.0
+2026-10-09T05:57:45.8211403Z  + beautifulsoup4==4.15.0
+2026-10-09T05:57:45.8212024Z  + boolean-py==5.0
+2026-10-09T05:57:45.8212579Z  + brotli==1.2.0
+2026-10-09T05:57:45.8213535Z  + cachecontrol==0.14.4
+2026-10-09T05:57:45.8214184Z  + certifi==2026.7.22
+2026-10-09T05:57:45.8214760Z  + cffi==2.1.1
+2026-10-09T05:57:45.8215333Z  + charset-normalizer==3.5.1
+2026-10-09T05:57:45.8215970Z  + click==8.4.2
+2026-10-09T05:57:45.8216555Z  + cryptography==50.0.1
+2026-10-09T05:57:45.8217217Z  + cyclonedx-python-lib==11.12.0
+2026-10-09T05:57:45.8218391Z  + ddgs==9.15.0
+2026-10-09T05:57:45.8219095Z  + defusedxml==0.7.1
+2026-10-09T05:57:45.8219753Z  + fake-useragent==2.2.0
+2026-10-09T05:57:45.8238378Z  + fastapi==0.141.1
+2026-10-09T05:57:45.8238805Z  + filelock==3.32.4
+2026-10-09T05:57:45.8239202Z  + greenlet==3.5.5
+2026-10-09T05:57:45.8239569Z  + h11==0.16.0
+2026-10-09T05:57:45.8239908Z  + h2==4.4.1
+2026-10-09T05:57:45.8240330Z  + hpack==4.2.0
+2026-10-09T05:57:45.8240706Z  + httpcore==1.0.9
+2026-10-09T05:57:45.8241209Z  + httpcore2==2.12.0
+2026-10-09T05:57:45.8241609Z  + httptools==0.8.0
+2026-10-09T05:57:45.8241977Z  + httpx==0.28.1
+2026-10-09T05:57:45.8242353Z  + httpx2==2.12.0
+2026-10-09T05:57:45.8242902Z  + hyperframe==6.1.0
+2026-10-09T05:57:45.8284377Z  + idna==3.19
+2026-10-09T05:57:45.8284740Z  + iniconfig==2.3.0
+2026-10-09T05:57:45.8285116Z  + jsonschema==4.26.0
+2026-10-09T05:57:45.8285615Z  + jsonschema-specifications==2025.9.1
+2026-10-09T05:57:45.8286305Z  + license-expression==30.4.4
+2026-10-09T05:57:45.8286749Z  + lxml==6.1.2
+2026-10-09T05:57:45.8287155Z  + markdown-it-py==4.2.0
+2026-10-09T05:57:45.8287561Z  + mdurl==0.1.2
+2026-10-09T05:57:45.8288166Z  + msgpack==1.2.2
+2026-10-09T05:57:45.8288552Z  + packageurl-python==0.17.6
+2026-10-09T05:57:45.8288996Z  + packaging==26.3
+2026-10-09T05:57:45.8289366Z  + pglast==8.4
+2026-10-09T05:57:45.8289722Z  + pillow==12.3.0
+2026-10-09T05:57:45.8290080Z  + pip==26.2.1
+2026-10-09T05:57:45.8290436Z  + pip-api==0.0.34
+2026-10-09T05:57:45.8290806Z  + pip-audit==2.10.1
+2026-10-09T05:57:45.8291259Z  + pip-requirements-parser==32.0.1
+2026-10-09T05:57:45.8291746Z  + platformdirs==4.11.5
+2026-10-09T05:57:45.8292150Z  + playwright==1.62.0
+2026-10-09T05:57:45.8292540Z  + pluggy==1.6.0
+2026-10-09T05:57:45.8292895Z  + primp==1.3.1
+2026-10-09T05:57:45.8293264Z  + py-serializable==2.1.0
+2026-10-09T05:57:45.8293665Z  + pycparser==3.0
+2026-10-09T05:57:45.8294035Z  + pydantic==2.13.4
+2026-10-09T05:57:45.8294410Z  + pydantic-core==2.46.4
+2026-10-09T05:57:45.8294808Z  + pyee==13.0.1
+2026-10-09T05:57:45.8295180Z  + pygments==2.21.0
+2026-10-09T05:57:45.8295544Z  + pyparsing==3.3.2
+2026-10-09T05:57:45.8295896Z  + pypdf==6.16.2
+2026-10-09T05:57:45.8296260Z  + pytest==9.1.1
+2026-10-09T05:57:45.8296635Z  + python-docx==1.2.0
+2026-10-09T05:57:45.8297026Z  + python-dotenv==1.2.3
+2026-10-09T05:57:45.8297437Z  + python-multipart==0.0.32
+2026-10-09T05:57:45.8298094Z  + pyyaml==6.0.3
+2026-10-09T05:57:45.8298452Z  + referencing==0.37.0
+2026-10-09T05:57:45.8298874Z  + reportlab==5.0.1
+2026-10-09T05:57:45.8299323Z  + requests==2.34.2
+2026-10-09T05:57:45.8299689Z  + rich==15.0.0
+2026-10-09T05:57:45.8300041Z  + rpds-py==2026.6.3
+2026-10-09T05:57:45.8300408Z  + socksio==1.0.0
+2026-10-09T05:57:45.8300799Z  + sortedcontainers==2.4.0
+2026-10-09T05:57:45.8301210Z  + soupsieve==2.9.2
+2026-10-09T05:57:45.8301579Z  + starlette==1.6.0
+2026-10-09T05:57:45.8302242Z  + taiwan-exchange-info==0.1.0 (from file:///home/runner/work/abroad/abroad)
+2026-10-09T05:57:45.8302936Z  + tomli==2.4.1
+2026-10-09T05:57:45.8303307Z  + tomli-w==1.2.0
+2026-10-09T05:57:45.8303687Z  + truststore==0.10.4
+2026-10-09T05:57:45.8304090Z  + typing-extensions==4.16.0
+2026-10-09T05:57:45.8304537Z  + typing-inspection==0.4.4
+2026-10-09T05:57:45.8304950Z  + urllib3==2.7.0
+2026-10-09T05:57:45.8305327Z  + uvicorn==0.52.4
+2026-10-09T05:57:45.8305688Z  + uvloop==0.22.1
+2026-10-09T05:57:45.8306058Z  + watchfiles==1.2.0
+2026-10-09T05:57:45.8306436Z  + websockets==17.0.1
+2026-10-09T05:57:46.3046052Z Installing dependencies...
+2026-10-09T05:57:46.3116919Z Switching to root user to install dependencies...
+2026-10-09T05:57:46.4429266Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-09T05:57:46.5263547Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-10-09T05:57:46.5316225Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-10-09T05:57:46.5360880Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-10-09T05:57:46.5469203Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-10-09T05:57:46.5534735Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-10-09T05:57:46.7149122Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1375 kB]
+2026-10-09T05:57:46.7349670Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [306 kB]
+2026-10-09T05:57:46.7399362Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1702 kB]
+2026-10-09T05:57:46.7789915Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [342 kB]
+2026-10-09T05:57:46.7838783Z Get:15 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [475 kB]
+2026-10-09T05:57:46.7840737Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1761 kB]
+2026-10-09T05:57:46.7919379Z Get:16 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [12.3 kB]
+2026-10-09T05:57:46.7921817Z Get:17 https://packages.microsoft.com/ubuntu/24.04/prod noble/main all Packages [640 B]
+2026-10-09T05:57:46.7964089Z Get:18 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [531 kB]
+2026-10-09T05:57:46.8059106Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [401 kB]
+2026-10-09T05:57:46.8115060Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [55.0 kB]
+2026-10-09T05:57:46.8149494Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.3 kB]
+2026-10-09T05:57:46.9241459Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1118 kB]
+2026-10-09T05:57:46.9293843Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [228 kB]
+2026-10-09T05:57:46.9730008Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1220 kB]
+2026-10-09T05:57:46.9797337Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [245 kB]
+2026-10-09T05:57:46.9835202Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1667 kB]
+2026-10-09T05:57:46.9929238Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [383 kB]
+2026-10-09T05:57:46.9956120Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse amd64 Packages [49.8 kB]
+2026-10-09T05:57:46.9964475Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [12.4 kB]
+2026-10-09T05:57:50.2636412Z Fetched 12.3 MB in 2s (8054 kB/s)
+2026-10-09T05:57:51.1258249Z Reading package lists...
+2026-10-09T05:57:51.1503324Z Reading package lists...
+2026-10-09T05:57:51.3589496Z Building dependency tree...
+2026-10-09T05:57:51.3597241Z Reading state information...
+2026-10-09T05:57:51.5052942Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+2026-10-09T05:57:51.5053944Z libasound2t64 set to manually installed.
+2026-10-09T05:57:51.5055035Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-09T05:57:51.5056059Z libatk-bridge2.0-0t64 set to manually installed.
+2026-10-09T05:57:51.5057025Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-09T05:57:51.5058053Z libatk1.0-0t64 set to manually installed.
+2026-10-09T05:57:51.5058889Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-09T05:57:51.5059628Z libatspi2.0-0t64 set to manually installed.
+2026-10-09T05:57:51.5060139Z libcairo2 is already the newest version (1.18.0-3build1).
+2026-10-09T05:57:51.5060612Z libcairo2 set to manually installed.
+2026-10-09T05:57:51.5061356Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.14).
+2026-10-09T05:57:51.5061880Z libcups2t64 set to manually installed.
+2026-10-09T05:57:51.5062470Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+2026-10-09T05:57:51.5063181Z libdbus-1-3 set to manually installed.
+2026-10-09T05:57:51.5063691Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.2).
+2026-10-09T05:57:51.5064477Z libdrm2 set to manually installed.
+2026-10-09T05:57:51.5064968Z libgbm1 is already the newest version (25.2.8-0ubuntu0.24.04.4).
+2026-10-09T05:57:51.5065440Z libgbm1 set to manually installed.
+2026-10-09T05:57:51.5066148Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.9).
+2026-10-09T05:57:51.5066688Z libglib2.0-0t64 set to manually installed.
+2026-10-09T05:57:51.5067199Z libnspr4 is already the newest version (2:4.35-1.1build1).
+2026-10-09T05:57:51.5067675Z libnspr4 set to manually installed.
+2026-10-09T05:57:51.5068701Z libnss3 is already the newest version (2:3.98-1ubuntu0.2).
+2026-10-09T05:57:51.5069525Z libnss3 set to manually installed.
+2026-10-09T05:57:51.5070228Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+2026-10-09T05:57:51.5070989Z libpango-1.0-0 set to manually installed.
+2026-10-09T05:57:51.5072462Z libx11-6 is already the newest version (2:1.8.7-1build1).
+2026-10-09T05:57:51.5072865Z libx11-6 set to manually installed.
+2026-10-09T05:57:51.5073246Z libxcb1 is already the newest version (1.15-1ubuntu2).
+2026-10-09T05:57:51.5073611Z libxcb1 set to manually installed.
+2026-10-09T05:57:51.5074052Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+2026-10-09T05:57:51.5074492Z libxcomposite1 set to manually installed.
+2026-10-09T05:57:51.5074913Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+2026-10-09T05:57:51.5075620Z libxdamage1 set to manually installed.
+2026-10-09T05:57:51.5076347Z libxext6 is already the newest version (2:1.3.4-1build2).
+2026-10-09T05:57:51.5077008Z libxext6 set to manually installed.
+2026-10-09T05:57:51.5077525Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+2026-10-09T05:57:51.5078241Z libxfixes3 set to manually installed.
+2026-10-09T05:57:51.5078669Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+2026-10-09T05:57:51.5079085Z libxkbcommon0 set to manually installed.
+2026-10-09T05:57:51.5079546Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+2026-10-09T05:57:51.5080529Z libxrandr2 set to manually installed.
+2026-10-09T05:57:51.5088878Z xvfb is already the newest version (2:21.1.12-1ubuntu1.8).
+2026-10-09T05:57:51.5090027Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+2026-10-09T05:57:51.5091195Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+2026-10-09T05:57:51.5092081Z libfontconfig1 set to manually installed.
+2026-10-09T05:57:51.5092957Z fonts-liberation is already the newest version (1:2.1.5-3).
+2026-10-09T05:57:51.5093817Z fonts-liberation set to manually installed.
+2026-10-09T05:57:51.5094646Z The following additional packages will be installed:
+2026-10-09T05:57:51.5095391Z   xfonts-encodings xfonts-utils
+2026-10-09T05:57:51.5096029Z Recommended packages:
+2026-10-09T05:57:51.5096622Z   fonts-ipafont-mincho fonts-tlwg-loma
+2026-10-09T05:57:51.5256688Z The following NEW packages will be installed:
+2026-10-09T05:57:51.5258244Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2026-10-09T05:57:51.5264488Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2026-10-09T05:57:51.5265382Z   xfonts-utils
+2026-10-09T05:57:51.5269235Z The following packages will be upgraded:
+2026-10-09T05:57:51.5274744Z   libfreetype6
+2026-10-09T05:57:51.5444280Z 1 upgraded, 9 newly installed, 0 to remove and 22 not upgraded.
+2026-10-09T05:57:51.5445301Z Need to get 21.5 MB of archives.
+2026-10-09T05:57:51.5446417Z After this operation, 79.5 MB of additional disk space will be used.
+2026-10-09T05:57:51.5447562Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-09T05:57:51.6652420Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+2026-10-09T05:57:51.8790727Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+2026-10-09T05:57:52.1224123Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+2026-10-09T05:57:52.2333485Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+2026-10-09T05:57:52.3803691Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+2026-10-09T05:57:52.8059623Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libfreetype6 amd64 2.13.2+dfsg-1ubuntu0.2 [403 kB]
+2026-10-09T05:57:52.9330056Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+2026-10-09T05:57:53.0680835Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+2026-10-09T05:57:53.1807264Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+2026-10-09T05:57:53.3060527Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+2026-10-09T05:57:53.5915649Z Fetched 21.5 MB in 2s (12.1 MB/s)
+2026-10-09T05:57:53.6171588Z Selecting previously unselected package fonts-ipafont-gothic.
+2026-10-09T05:57:53.6493028Z (Reading database ... 
+2026-10-09T05:57:53.6493565Z (Reading database ... 5%
+2026-10-09T05:57:53.6494018Z (Reading database ... 10%
+2026-10-09T05:57:53.6494448Z (Reading database ... 15%
+2026-10-09T05:57:53.6494872Z (Reading database ... 20%
+2026-10-09T05:57:53.6495293Z (Reading database ... 25%
+2026-10-09T05:57:53.6495709Z (Reading database ... 30%
+2026-10-09T05:57:53.6496131Z (Reading database ... 35%
+2026-10-09T05:57:53.6496543Z (Reading database ... 40%
+2026-10-09T05:57:53.6496961Z (Reading database ... 45%
+2026-10-09T05:57:53.6498282Z (Reading database ... 50%
+2026-10-09T05:57:53.6560669Z (Reading database ... 55%
+2026-10-09T05:57:53.7442030Z (Reading database ... 60%
+2026-10-09T05:57:53.9857484Z (Reading database ... 65%
+2026-10-09T05:57:54.1579878Z (Reading database ... 70%
+2026-10-09T05:57:54.3376532Z (Reading database ... 75%
+2026-10-09T05:57:54.4982682Z (Reading database ... 80%
+2026-10-09T05:57:54.7026878Z (Reading database ... 85%
+2026-10-09T05:57:56.0880858Z (Reading database ... 90%
+2026-10-09T05:57:56.2688791Z (Reading database ... 95%
+2026-10-09T05:57:56.2689610Z (Reading database ... 100%
+2026-10-09T05:57:56.2690511Z (Reading database ... 203191 files and directories currently installed.)
+2026-10-09T05:57:56.2697078Z Preparing to unpack .../0-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+2026-10-09T05:57:56.2812721Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-10-09T05:57:56.5180515Z Selecting previously unselected package fonts-freefont-ttf.
+2026-10-09T05:57:56.5309927Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+2026-10-09T05:57:56.5318726Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-10-09T05:57:56.6196078Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2026-10-09T05:57:56.6322485Z Preparing to unpack .../2-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+2026-10-09T05:57:56.6331745Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-10-09T05:57:56.6560177Z Selecting previously unselected package fonts-unifont.
+2026-10-09T05:57:56.6688523Z Preparing to unpack .../3-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+2026-10-09T05:57:56.6708080Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+2026-10-09T05:57:56.7859623Z Selecting previously unselected package fonts-wqy-zenhei.
+2026-10-09T05:57:56.7989640Z Preparing to unpack .../4-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+2026-10-09T05:57:56.8108961Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+2026-10-09T05:57:57.2981489Z Preparing to unpack .../5-libfreetype6_2.13.2+dfsg-1ubuntu0.2_amd64.deb ...
+2026-10-09T05:57:57.3024229Z Unpacking libfreetype6:amd64 (2.13.2+dfsg-1ubuntu0.2) over (2.13.2+dfsg-1ubuntu0.1) ...
+2026-10-09T05:57:57.3295890Z Selecting previously unselected package xfonts-encodings.
+2026-10-09T05:57:57.3425842Z Preparing to unpack .../6-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+2026-10-09T05:57:57.3438696Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-10-09T05:57:57.3758579Z Selecting previously unselected package xfonts-utils.
+2026-10-09T05:57:57.3890977Z Preparing to unpack .../7-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+2026-10-09T05:57:57.3906587Z Unpacking xfonts-utils (1:7.7+6build3) ...
+2026-10-09T05:57:57.4300186Z Selecting previously unselected package xfonts-cyrillic.
+2026-10-09T05:57:57.4426447Z Preparing to unpack .../8-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+2026-10-09T05:57:57.4434275Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-10-09T05:57:57.4819148Z Selecting previously unselected package xfonts-scalable.
+2026-10-09T05:57:57.4933780Z Preparing to unpack .../9-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+2026-10-09T05:57:57.4942209Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+2026-10-09T05:57:57.5389437Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+2026-10-09T05:57:57.5510696Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-10-09T05:57:57.5528591Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-10-09T05:57:57.5546706Z Setting up libfreetype6:amd64 (2.13.2+dfsg-1ubuntu0.2) ...
+2026-10-09T05:57:57.5565645Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-10-09T05:57:57.5588761Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-10-09T05:57:57.5656338Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2026-10-09T05:57:57.5672165Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+2026-10-09T05:57:57.5690153Z Setting up xfonts-utils (1:7.7+6build3) ...
+2026-10-09T05:57:57.5741829Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-10-09T05:57:57.6040139Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+2026-10-09T05:57:57.6321340Z Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+2026-10-09T05:57:57.6662684Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-10-09T05:57:57.6688313Z Not building database; man-db/auto-update is not 'true'.
+2026-10-09T05:57:57.6708501Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+2026-10-09T05:57:58.4070237Z 
+2026-10-09T05:57:58.4071510Z Running kernel seems to be up-to-date.
+2026-10-09T05:57:58.4073778Z 
+2026-10-09T05:57:58.4074022Z Restarting services...
+2026-10-09T05:57:58.4150041Z  systemctl restart php8.3-fpm.service
+2026-10-09T05:57:58.5238783Z 
+2026-10-09T05:57:58.5239660Z No containers need to be restarted.
+2026-10-09T05:57:58.5240672Z 
+2026-10-09T05:57:58.5241221Z No user sessions are running outdated binaries.
+2026-10-09T05:57:58.5266934Z 
+2026-10-09T05:57:58.5268226Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-10-09T05:57:59.4343633Z Downloading Chrome for Testing 151.0.7922.34 (playwright chromium v1234) from https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-linux64.zip
+2026-10-09T05:58:00.4609950Z |                                                                                |   0% of 184.3 MiB
+2026-10-09T05:58:00.9733089Z |■■■■■■■■                                                                        |  10% of 184.3 MiB
+2026-10-09T05:58:01.1960496Z |■■■■■■■■■■■■■■■■                                                                |  20% of 184.3 MiB
+2026-10-09T05:58:01.3082416Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 184.3 MiB
+2026-10-09T05:58:01.4533850Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 184.3 MiB
+2026-10-09T05:58:01.5429336Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 184.3 MiB
+2026-10-09T05:58:01.7349994Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 184.3 MiB
+2026-10-09T05:58:01.8240775Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 184.3 MiB
+2026-10-09T05:58:01.9341509Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 184.3 MiB
+2026-10-09T05:58:02.0786587Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 184.3 MiB
+2026-10-09T05:58:02.1729879Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 184.3 MiB
+2026-10-09T05:58:06.3749757Z Chrome for Testing 151.0.7922.34 (playwright chromium v1234) downloaded to /home/runner/.cache/ms-playwright/chromium-1234
+2026-10-09T05:58:06.3754123Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+2026-10-09T05:58:07.3706295Z |                                                                                |   0% of 2.3 MiB
+2026-10-09T05:58:07.3815629Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+2026-10-09T05:58:07.3909296Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+2026-10-09T05:58:07.3941463Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+2026-10-09T05:58:07.3977645Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+2026-10-09T05:58:07.4010767Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+2026-10-09T05:58:07.4035927Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+2026-10-09T05:58:07.4061300Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+2026-10-09T05:58:07.4084116Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+2026-10-09T05:58:07.4110305Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+2026-10-09T05:58:07.4121170Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+2026-10-09T05:58:07.4823360Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+2026-10-09T05:58:07.4826110Z Downloading Chrome Headless Shell 151.0.7922.34 (playwright chromium-headless-shell v1234) from https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-headless-shell-linux64.zip
+2026-10-09T05:58:08.4988367Z |                                                                                |   0% of 114.7 MiB
+2026-10-09T05:58:08.7042456Z |■■■■■■■■                                                                        |  10% of 114.7 MiB
+2026-10-09T05:58:08.8338882Z |■■■■■■■■■■■■■■■■                                                                |  20% of 114.7 MiB
+2026-10-09T05:58:08.9447682Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 114.7 MiB
+2026-10-09T05:58:09.0236823Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 114.7 MiB
+2026-10-09T05:58:09.0920946Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 114.7 MiB
+2026-10-09T05:58:09.1906580Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 114.7 MiB
+2026-10-09T05:58:09.2542869Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 114.7 MiB
+2026-10-09T05:58:09.3401277Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 114.7 MiB
+2026-10-09T05:58:09.4309905Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 114.7 MiB
+2026-10-09T05:58:09.5474395Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.7 MiB
+2026-10-09T05:58:12.6879501Z Chrome Headless Shell 151.0.7922.34 (playwright chromium-headless-shell v1234) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1234
+2026-10-09T05:58:12.7162699Z ##[group]Run sudo apt-get update
+2026-10-09T05:58:12.7163036Z [36;1msudo apt-get update[0m
+2026-10-09T05:58:12.7163399Z [36;1msudo apt-get install -y --no-install-recommends poppler-utils[0m
+2026-10-09T05:58:12.7163817Z [36;1mpdftoppm -v[0m
+2026-10-09T05:58:12.7230336Z shell: /usr/bin/bash -e {0}
+2026-10-09T05:58:12.7230593Z env:
+2026-10-09T05:58:12.7230870Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:12.7231330Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T05:58:12.7231771Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:12.7232180Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:12.7232575Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:12.7232970Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T05:58:12.7233413Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T05:58:12.7233808Z ##[endgroup]
+2026-10-09T05:58:12.8033249Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-09T05:58:12.8870118Z Hit:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease
+2026-10-09T05:58:12.9229361Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-10-09T05:58:12.9256771Z Hit:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease
+2026-10-09T05:58:12.9259704Z Hit:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease
+2026-10-09T05:58:12.9261105Z Hit:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease
+2026-10-09T05:58:14.3409576Z Reading package lists...
+2026-10-09T05:58:14.3720297Z Reading package lists...
+2026-10-09T05:58:14.5676819Z Building dependency tree...
+2026-10-09T05:58:14.5685512Z Reading state information...
+2026-10-09T05:58:14.7086013Z The following additional packages will be installed:
+2026-10-09T05:58:14.7089486Z   libpoppler134
+2026-10-09T05:58:14.7095876Z Recommended packages:
+2026-10-09T05:58:14.7096511Z   poppler-data
+2026-10-09T05:58:14.7254002Z The following NEW packages will be installed:
+2026-10-09T05:58:14.7257372Z   libpoppler134 poppler-utils
+2026-10-09T05:58:14.7427302Z 0 upgraded, 2 newly installed, 0 to remove and 22 not upgraded.
+2026-10-09T05:58:14.7429125Z Need to get 1326 kB of archives.
+2026-10-09T05:58:14.7430157Z After this operation, 4440 kB of additional disk space will be used.
+2026-10-09T05:58:14.7431255Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-09T05:58:14.8686216Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libpoppler134 amd64 24.02.0-1ubuntu9.10 [1115 kB]
+2026-10-09T05:58:15.0228551Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 poppler-utils amd64 24.02.0-1ubuntu9.10 [212 kB]
+2026-10-09T05:58:15.2789183Z Fetched 1326 kB in 0s (4388 kB/s)
+2026-10-09T05:58:15.2998956Z Selecting previously unselected package libpoppler134:amd64.
+2026-10-09T05:58:15.3052393Z (Reading database ... 
+2026-10-09T05:58:15.3054106Z (Reading database ... 5%
+2026-10-09T05:58:15.3055286Z (Reading database ... 10%
+2026-10-09T05:58:15.3056277Z (Reading database ... 15%
+2026-10-09T05:58:15.3057302Z (Reading database ... 20%
+2026-10-09T05:58:15.3058473Z (Reading database ... 25%
+2026-10-09T05:58:15.3059439Z (Reading database ... 30%
+2026-10-09T05:58:15.3060410Z (Reading database ... 35%
+2026-10-09T05:58:15.3061386Z (Reading database ... 40%
+2026-10-09T05:58:15.3062353Z (Reading database ... 45%
+2026-10-09T05:58:15.3063347Z (Reading database ... 50%
+2026-10-09T05:58:15.3081332Z (Reading database ... 55%
+2026-10-09T05:58:15.3195202Z (Reading database ... 60%
+2026-10-09T05:58:15.3224898Z (Reading database ... 65%
+2026-10-09T05:58:15.3246983Z (Reading database ... 70%
+2026-10-09T05:58:15.3286335Z (Reading database ... 75%
+2026-10-09T05:58:15.3315186Z (Reading database ... 80%
+2026-10-09T05:58:15.3460578Z (Reading database ... 85%
+2026-10-09T05:58:15.3535305Z (Reading database ... 90%
+2026-10-09T05:58:15.3761788Z (Reading database ... 95%
+2026-10-09T05:58:15.3763477Z (Reading database ... 100%
+2026-10-09T05:58:15.3764691Z (Reading database ... 203458 files and directories currently installed.)
+2026-10-09T05:58:15.3806583Z Preparing to unpack .../libpoppler134_24.02.0-1ubuntu9.10_amd64.deb ...
+2026-10-09T05:58:15.3822789Z Unpacking libpoppler134:amd64 (24.02.0-1ubuntu9.10) ...
+2026-10-09T05:58:15.4172582Z Selecting previously unselected package poppler-utils.
+2026-10-09T05:58:15.4298374Z Preparing to unpack .../poppler-utils_24.02.0-1ubuntu9.10_amd64.deb ...
+2026-10-09T05:58:15.4305597Z Unpacking poppler-utils (24.02.0-1ubuntu9.10) ...
+2026-10-09T05:58:15.4795966Z Setting up libpoppler134:amd64 (24.02.0-1ubuntu9.10) ...
+2026-10-09T05:58:15.4821903Z Setting up poppler-utils (24.02.0-1ubuntu9.10) ...
+2026-10-09T05:58:15.4868787Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-10-09T05:58:15.4881763Z Not building database; man-db/auto-update is not 'true'.
+2026-10-09T05:58:15.4921043Z Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+2026-10-09T05:58:16.0507521Z 
+2026-10-09T05:58:16.0508636Z Running kernel seems to be up-to-date.
+2026-10-09T05:58:16.0509419Z 
+2026-10-09T05:58:16.0509856Z No services need to be restarted.
+2026-10-09T05:58:16.0510389Z 
+2026-10-09T05:58:16.0510825Z No containers need to be restarted.
+2026-10-09T05:58:16.0511315Z 
+2026-10-09T05:58:16.0511779Z No user sessions are running outdated binaries.
+2026-10-09T05:58:16.0512289Z 
+2026-10-09T05:58:16.0512926Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-10-09T05:58:17.0167449Z pdftoppm version 24.02.0
+2026-10-09T05:58:17.0171658Z Copyright 2005-2024 The Poppler Developers - http://poppler.freedesktop.org
+2026-10-09T05:58:17.0192323Z Copyright 1996-2011, 2022 Glyph & Cog, LLC
+2026-10-09T05:58:17.0227384Z ##[group]Run uv run --frozen python -m compileall -q src
+2026-10-09T05:58:17.0228251Z [36;1muv run --frozen python -m compileall -q src[0m
+2026-10-09T05:58:17.0228644Z [36;1mnode --check src/exchange_info/static/app.js[0m
+2026-10-09T05:58:17.0229041Z [36;1mnode --check src/exchange_info/static/content-review.js[0m
+2026-10-09T05:58:17.0229467Z [36;1mnode --check src/exchange_info/static/icon-motion.js[0m
+2026-10-09T05:58:17.0295056Z shell: /usr/bin/bash -e {0}
+2026-10-09T05:58:17.0295320Z env:
+2026-10-09T05:58:17.0295600Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:17.0296059Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T05:58:17.0296496Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:17.0296886Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:17.0297279Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:17.0297992Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T05:58:17.0298489Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T05:58:17.0298857Z ##[endgroup]
+2026-10-09T05:58:17.6435714Z ##[group]Run uv run --frozen python scripts/export_openapi.py --check
+2026-10-09T05:58:17.6436696Z [36;1muv run --frozen python scripts/export_openapi.py --check[0m
+2026-10-09T05:58:17.6529176Z shell: /usr/bin/bash -e {0}
+2026-10-09T05:58:17.6529478Z env:
+2026-10-09T05:58:17.6529765Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:17.6530240Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T05:58:17.6530727Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:17.6531136Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:17.6531534Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:17.6531933Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T05:58:17.6532364Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T05:58:17.6532730Z ##[endgroup]
+2026-10-09T05:58:22.2479383Z OpenAPI contract is current: /home/runner/work/abroad/abroad/docs/api/openapi.json
+2026-10-09T05:58:22.4838483Z ##[group]Run uv run --frozen python scripts/validate_supabase_migrations.py
+2026-10-09T05:58:22.4839504Z [36;1muv run --frozen python scripts/validate_supabase_migrations.py[0m
+2026-10-09T05:58:22.4922278Z shell: /usr/bin/bash -e {0}
+2026-10-09T05:58:22.4922712Z env:
+2026-10-09T05:58:22.4923185Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:22.4923984Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T05:58:22.4924771Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:22.4925482Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:22.4926183Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:22.4926886Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T05:58:22.4927917Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T05:58:22.4928580Z ##[endgroup]
+2026-10-09T05:58:22.8666746Z 202607190001_ai_rag.sql: 25 statements, 1 SQL bodies, 0 PL/pgSQL units
+2026-10-09T05:58:22.8668450Z 202607280002_application_content_governance.sql: 17 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T05:58:22.8670034Z 20260728120722_accounts_workspaces.sql: 16 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T05:58:22.8671367Z 20260728121446_notifications.sql: 11 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T05:58:22.8672561Z 20260728130940_document_vault.sql: 25 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T05:58:22.8673851Z 20260728213255_email_verification_challenges.sql: 6 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T05:58:22.8675067Z 20260729100000_form_drafts.sql: 5 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T05:58:22.8676334Z 20260729143531_dual_application_workflow_review.sql: 3 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T05:58:22.8677982Z 20260807154026_application_workflow_revision_edit_history.sql: 2 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T05:58:22.8679447Z 20260819090000_destination_profile_review_events.sql: 7 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T05:58:22.8680840Z 20260819110000_destination_profile_promotion_events.sql: 6 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T05:58:22.8682747Z 20260819130000_destination_profile_publication_rollbacks.sql: 8 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T05:58:22.8684280Z 20260819150000_application_workflow_publication_rollbacks.sql: 6 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T05:58:22.8685925Z 20260819170000_application_workflow_publication_integrity.sql: 3 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T05:58:22.8687283Z 20260821190000_transient_auth_state.sql: 23 statements, 0 SQL bodies, 3 PL/pgSQL units
+2026-10-09T05:58:22.8688935Z 20260823100000_atomic_auth_account_mutations.sql: 25 statements, 0 SQL bodies, 6 PL/pgSQL units
+2026-10-09T05:58:22.8690465Z 20260823130000_atomic_workspace_and_suspension.sql: 44 statements, 0 SQL bodies, 9 PL/pgSQL units
+2026-10-09T05:58:22.8691959Z 20260823160000_atomic_public_community.sql: 123 statements, 3 SQL bodies, 17 PL/pgSQL units
+2026-10-09T05:58:22.8693415Z 20260824100000_atomic_private_community.sql: 60 statements, 6 SQL bodies, 3 PL/pgSQL units
+2026-10-09T05:58:22.8694868Z 20260829100000_atomic_account_deletion.sql: 27 statements, 1 SQL bodies, 6 PL/pgSQL units
+2026-10-09T05:58:22.8696395Z 20260830100000_application_workflow_issue_reports.sql: 29 statements, 0 SQL bodies, 4 PL/pgSQL units
+2026-10-09T05:58:22.8698242Z 20260901100000_atomic_application_content_governance.sql: 6 statements, 0 SQL bodies, 2 PL/pgSQL units
+2026-10-09T05:58:22.8699758Z 20260930100000_discussion_threads_reactions.sql: 29 statements, 0 SQL bodies, 7 PL/pgSQL units
+2026-10-09T05:58:22.8701247Z 20261002120000_workspace_selection_and_planning.sql: 5 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T05:58:22.8702544Z 20261003100000_open_school_boards.sql: 5 statements, 0 SQL bodies, 2 PL/pgSQL units
+2026-10-09T05:58:22.8703916Z 20261003110000_analytics.sql: 29 statements, 0 SQL bodies, 2 PL/pgSQL units
+2026-10-09T05:58:22.8705333Z 20261007100000_school_choice_replaces_student_card.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T05:58:22.8706643Z 20261008100000_user_feedback.sql: 7 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T05:58:22.8708224Z 20261008110000_revoke_rls_auto_enable_api_access.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T05:58:22.8709792Z 20261008120000_fix_match_document_chunks_search_path.sql: 1 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T05:58:22.8711257Z 20261008130000_ntu_school_board.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T05:58:22.8712741Z 20261009040000_verified_email_school_community.sql: 2 statements, 0 SQL bodies, 2 PL/pgSQL units
+2026-10-09T05:58:22.8714251Z 20261009060000_community_byline_aliases.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T05:58:22.8715611Z Validated 33 migrations: 559 statements, 11 SQL bodies, 71 PL/pgSQL units
+2026-10-09T05:58:22.8871609Z ##[group]Run uv run --frozen python scripts/audit_python_dependencies.py
+2026-10-09T05:58:22.8872271Z [36;1muv run --frozen python scripts/audit_python_dependencies.py[0m
+2026-10-09T05:58:22.8935584Z shell: /usr/bin/bash -e {0}
+2026-10-09T05:58:22.8935937Z env:
+2026-10-09T05:58:22.8936416Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:22.8937034Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T05:58:22.8937620Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:22.8938350Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:22.8938848Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:22.8939395Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T05:58:22.8939926Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T05:58:22.8940368Z ##[endgroup]
+2026-10-09T05:58:34.4546429Z No known vulnerabilities found
+2026-10-09T05:58:34.5170471Z ##[group]Run uv run --frozen python scripts/validate_tku_community_runtime.py
+2026-10-09T05:58:34.5171242Z [36;1muv run --frozen python scripts/validate_tku_community_runtime.py[0m
+2026-10-09T05:58:34.5234869Z shell: /usr/bin/bash -e {0}
+2026-10-09T05:58:34.5235249Z env:
+2026-10-09T05:58:34.5235633Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:34.5236278Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T05:58:34.5236843Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:34.5237369Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:34.5238146Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T05:58:34.5238631Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T05:58:34.5239210Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T05:58:34.5239698Z ##[endgroup]
+2026-10-09T05:58:35.2849740Z Runtime Compose project: exchange-supabase-runtime-gh-c608e33653-10886ea2
+2026-10-09T06:00:05.4220819Z Starting isolated PostgreSQL...
+2026-10-09T06:00:05.4221515Z   migration applied: 202607190001_ai_rag.sql
+2026-10-09T06:00:05.4222904Z   migration applied: 202607280002_application_content_governance.sql
+2026-10-09T06:00:05.4227142Z   migration applied: 20260728120722_accounts_workspaces.sql
+2026-10-09T06:00:05.4228447Z   migration applied: 20260728121446_notifications.sql
+2026-10-09T06:00:05.4229266Z   migration applied: 20260728130940_document_vault.sql
+2026-10-09T06:00:05.4230138Z   migration applied: 20260728213255_email_verification_challenges.sql
+2026-10-09T06:00:05.4230988Z   migration applied: 20260729100000_form_drafts.sql
+2026-10-09T06:00:05.4231841Z   migration applied: 20260729143531_dual_application_workflow_review.sql
+2026-10-09T06:00:05.4232881Z   migration applied: 20260807154026_application_workflow_revision_edit_history.sql
+2026-10-09T06:00:05.4239121Z   migration applied: 20260819090000_destination_profile_review_events.sql
+2026-10-09T06:00:05.4240218Z   migration applied: 20260819110000_destination_profile_promotion_events.sql
+2026-10-09T06:00:05.4241308Z   migration applied: 20260819130000_destination_profile_publication_rollbacks.sql
+2026-10-09T06:00:05.4243471Z   migration applied: 20260819150000_application_workflow_publication_rollbacks.sql
+2026-10-09T06:00:05.4244652Z   migration applied: 20260819170000_application_workflow_publication_integrity.sql
+2026-10-09T06:00:05.4245640Z   migration applied: 20260821190000_transient_auth_state.sql
+2026-10-09T06:00:05.4246563Z   migration applied: 20260823100000_atomic_auth_account_mutations.sql
+2026-10-09T06:00:05.4247564Z   migration applied: 20260823130000_atomic_workspace_and_suspension.sql
+2026-10-09T06:00:05.4248840Z   migration applied: 20260823160000_atomic_public_community.sql
+2026-10-09T06:00:05.4249722Z   migration applied: 20260824100000_atomic_private_community.sql
+2026-10-09T06:00:05.4250613Z   migration applied: 20260829100000_atomic_account_deletion.sql
+2026-10-09T06:00:05.4251553Z   migration applied: 20260830100000_application_workflow_issue_reports.sql
+2026-10-09T06:00:05.4259074Z   migration applied: 20260901100000_atomic_application_content_governance.sql
+2026-10-09T06:00:05.4260164Z   migration applied: 20260930100000_discussion_threads_reactions.sql
+2026-10-09T06:00:05.4261150Z   migration applied: 20261002120000_workspace_selection_and_planning.sql
+2026-10-09T06:00:05.4262075Z   migration applied: 20261003100000_open_school_boards.sql
+2026-10-09T06:00:05.4262870Z   migration applied: 20261003110000_analytics.sql
+2026-10-09T06:00:05.4270134Z   migration applied: 20261007100000_school_choice_replaces_student_card.sql
+2026-10-09T06:00:05.4271082Z   migration applied: 20261008100000_user_feedback.sql
+2026-10-09T06:00:05.4272394Z   migration applied: 20261008110000_revoke_rls_auto_enable_api_access.sql
+2026-10-09T06:00:05.4273467Z   migration applied: 20261008120000_fix_match_document_chunks_search_path.sql
+2026-10-09T06:00:05.4275044Z   migration applied: 20261008130000_ntu_school_board.sql
+2026-10-09T06:00:05.4276763Z   migration applied: 20261009040000_verified_email_school_community.sql
+2026-10-09T06:00:05.4277997Z   migration applied: 20261009060000_community_byline_aliases.sql
+2026-10-09T06:00:05.4279180Z Starting two isolated PostgREST instances...
+2026-10-09T06:00:05.4279930Z Starting isolated Supabase Storage API...
+2026-10-09T06:00:05.4280709Z Validating RLS, grants and direct-DML denial...
+2026-10-09T06:00:05.4281464Z Validating transient-auth concurrency...
+2026-10-09T06:00:05.4282192Z Validating workspace CAS concurrency...
+2026-10-09T06:00:05.4283002Z Validating application-workflow issue report RPCs...
+2026-10-09T06:00:05.4284019Z Validating public/private community concurrency across two API instances...
+2026-10-09T06:00:05.4285138Z Validating late-failure rollback for public/private community transactions...
+2026-10-09T06:00:05.4286140Z Validating recursive Storage listing and orphan cleanup...
+2026-10-09T06:00:05.4287111Z Validating account-deletion rollback and real Storage cleanup...
+2026-10-09T06:00:05.4304234Z {"account_deletion": {"rollback_preserved_rows": 8, "storage_delete_replays": 1, "storage_jobs_completed": 1, "storage_objects_deleted": 1, "storage_timeout_receipts_preserved": 1, "workflow_issue_closed_deleted": 1, "workflow_issue_pending_deidentified": 2, "workflow_issue_purge_controls_preserved": 1, "workflow_issue_purged": 2, "workflow_issue_retention_shortened": 1, "workflow_issue_review_replays": 1, "workflow_issue_reviewer_deidentified": 1, "workflow_issue_rollback_preserved_rows": 4}, "cleanup_status": "passed", "community_multi_instance": {"postgrest_instances": 2, "private_message_block_races": 1, "private_message_blocked": 0, "private_message_commits": 1, "private_message_integrity_conflicts": 0, "private_opposite_invitations": 2, "private_report_review_commits": 1, "private_report_review_conflicts": 1, "public_idempotent_commits": 1, "public_idempotent_replays": 1, "public_parent_child_races": 1}, "community_rollbacks": {"late_failures_propagated": 6, "partial_rows": 0, "private_conversation_rollbacks": 1, "private_message_rollbacks": 1, "private_report_review_rollbacks": 1, "private_report_rollbacks": 1, "public_moderation_rollbacks": 1, "public_publication_rollbacks": 1}, "compose_project": "exchange-supabase-runtime-gh-c608e33653-10886ea2", "migration_count": 33, "permissions": {"browser_grants": 0, "rls_tables": 37, "tables": 37, "workflow_issue_service_rpcs": 3}, "status": "passed", "storage": {"nested_objects_listed": 2, "orphans_removed": 1, "referenced_preserved": 1}, "storage_api_scope": "real_storage_api_file_backend", "tku_selected_community_policy": {"blank_or_unsupported_bylines_denied": 3, "committed_resources": 11, "cross_school_comments": 4, "cross_school_posts": 4, "preview_matches_sql_byline": true, "registry_alias_vectors": 27, "retry_duplicates": 0, "school_boards": 4, "self_declared_byline_denied": true, "unverified_writes_denied": 8, "verified_alias_publications": 2}, "transient_auth": {"created": 1, "rate_limited": 7}, "workflow_issue_reports": {"missing_accounts_rejected": 2, "missing_reports_rejected": 1, "rate_limited": 1, "review_committed": 1, "review_idempotency_conflicts": 1, "review_idempotent_replays": 1, "review_status_conflicts": 1, "submit_idempotency_conflicts": 1, "submit_idempotent_replays": 2, "submitted_reports": 10, "terminal_review_conflicts": 1, "unsafe_source_urls_rejected": 6}, "workspace": {"committed": 1, "conflict": 1}}
+2026-10-09T06:00:05.5046085Z ##[group]Run mkdir -p "$RUNNER_TEMP/web-evidence"
+2026-10-09T06:00:05.5046502Z [36;1mmkdir -p "$RUNNER_TEMP/web-evidence"[0m
+2026-10-09T06:00:05.5046812Z [36;1mset -o pipefail[0m
+2026-10-09T06:00:05.5047917Z [36;1muv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4 --junitxml "$RUNNER_TEMP/web-evidence/suite.xml" --evidence-dir "$RUNNER_TEMP/web-evidence" 2>&1 | tee "$RUNNER_TEMP/web-evidence/pytest.log"[0m
+2026-10-09T06:00:05.5154719Z shell: /usr/bin/bash -e {0}
+2026-10-09T06:00:05.5154991Z env:
+2026-10-09T06:00:05.5155281Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:00:05.5155774Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T06:00:05.5156445Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:00:05.5156878Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:00:05.5157335Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:00:05.5157926Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T06:00:05.5158403Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T06:00:05.5158803Z   WEB_TEST_SHARD: 3
+2026-10-09T06:00:05.5159130Z   TKU_ACCEPTANCE_OUTPUT: /home/runner/work/_temp/web-evidence/browser
+2026-10-09T06:00:05.5159521Z ##[endgroup]
+2026-10-09T06:00:15.2579469Z {"shard": 3, "total_cases": 1789, "total_files": 184, "browser_cases_per_shard": [76, 75, 75, 75], "case_counts_per_shard": [1564, 75, 75, 75], "files_per_shard": [["tests/e2e/test_application_ui_refinements.py", "tests/e2e/test_discovery_workspace.py", "tests/e2e/test_discussion_reader.py", "tests/e2e/test_document_workbench.py", "tests/e2e/test_multi_plan_workspace.py", "tests/e2e/test_open_catalog.py", "tests/e2e/test_unified_preparation.py", "tests/e2e/test_web_next_phase.py", "tests/e2e/test_workload_journey.py", "tests/integration/test_local_ai_runtime.py", "tests/test_account_read_cache.py", "tests/test_account_workspace_api.py", "tests/test_advisor.py", "tests/test_advisor_mascot_contract.py", "tests/test_ai_gateway.py", "tests/test_ai_privacy.py", "tests/test_analytics_api.py", "tests/test_analytics_core.py", "tests/test_analytics_frontend_contract.py", "tests/test_analytics_report.py", "tests/test_api.py", "tests/test_application_document_catalog.py", "tests/test_application_documents_api.py", "tests/test_application_periods.py", "tests/test_application_plan_api.py", "tests/test_application_plan_schedule_api.py", "tests/test_application_plan_scheduling.py", "tests/test_application_rules.py", "tests/test_application_workflow.py", "tests/test_application_workflow_issue_report_migration.py", "tests/test_application_workflow_issue_reports.py", "tests/test_atomic_account_deletion_migration.py", "tests/test_atomic_auth_mutations.py", "tests/test_atomic_private_community_migration.py", "tests/test_atomic_public_community_api.py", "tests/test_atomic_public_community_migration.py", "tests/test_atomic_workspace_moderation.py", "tests/test_auth_api.py", "tests/test_b4_04_ai_limits.py", "tests/test_brand_assets.py", "tests/test_calendar_conflicts.py", "tests/test_calendar_sync_api.py", "tests/test_calendar_task_scheduling.py", "tests/test_catalog_access.py", "tests/test_catalogue_speed.py", "tests/test_cgu_bundled_data.py", "tests/test_change_impact.py", "tests/test_chinese_public_content.py", "tests/test_classifier.py", "tests/test_cli.py", "tests/test_college_options.py", "tests/test_community_api.py", "tests/test_community_browsing.py", "tests/test_community_permissions.py", "tests/test_community_repositories.py", "tests/test_content_governance_wrapper.py", "tests/test_content_summary.py", "tests/test_dependency_security_baseline.py", "tests/test_destination_tips.py", "tests/test_discovery.py", "tests/test_discussion_round2.py", "tests/test_document_check_entitlements.py", "tests/test_document_vault.py", "tests/test_email_verification.py", "tests/test_entitlements.py", "tests/test_experience_collector.py", "tests/test_experience_digests.py", "tests/test_feedback.py", "tests/test_feedback_migration.py", "tests/test_fit_signals.py", "tests/test_flutter_independent_pages.py", "tests/test_flutter_navigation_hierarchy.py", "tests/test_flutter_production_copy.py", "tests/test_form_drafts.py", "tests/test_frontend_contract.py", "tests/test_health_head.py", "tests/test_home_and_forum_routes.py", "tests/test_hong_kong_country.py", "tests/test_http_client.py", "tests/test_icon_motion_contract.py", "tests/test_independent_page_routing.py", "tests/test_jsonl_storage_integrity.py", "tests/test_lai_10_security_audit.py", "tests/test_legal_pages.py", "tests/test_life_context.py", "tests/test_loading_screen.py", "tests/test_local_ai.py", "tests/test_match_document_chunks_migration.py", "tests/test_multi_application_plan.py", "tests/test_my_application_entry.py", "tests/test_native_app_contract.py", "tests/test_next_phase_contract.py", "tests/test_notification_changes.py", "tests/test_notifications.py", "tests/test_ntpu_bundled_data.py", "tests/test_ntpu_support.py", "tests/test_ntu_audit.py", "tests/test_ntu_integration.py", "tests/test_ntu_school_board_migration.py", "tests/test_open_catalog_signup.py", "tests/test_partner_localization.py", "tests/test_partner_map_geometry.py", "tests/test_partner_research.py", "tests/test_pipeline.py", "tests/test_public_translation.py", "tests/test_qualification_scope_consistency.py", "tests/test_rag.py", "tests/test_regions.py", "tests/test_request_origin.py", "tests/test_requirements_traceability.py", "tests/test_responsive_css.py", "tests/test_review_source_candidates.py", "tests/test_review_source_metadata_candidates.py", "tests/test_rls_auto_enable_migration.py", "tests/test_school_choice.py", "tests/test_school_choice_migration.py", "tests/test_school_completeness.py", "tests/test_school_content.py", "tests/test_school_image_collector.py", "tests/test_school_photo_and_match.py", "tests/test_selection_conditions_sync.py", "tests/test_social_community_api.py", "tests/test_source_applicability_cleanup.py", "tests/test_source_metadata_research_audit.py", "tests/test_source_replacement_transport_audit.py", "tests/test_static_caching.py", "tests/test_student_view.py", "tests/test_submission_progress.py", "tests/test_supabase_migration_syntax.py", "tests/test_supabase_repositories.py", "tests/test_supabase_runtime_validation.py", "tests/test_supabase_setup_check.py", "tests/test_task_documents_and_reference_plan.py", "tests/test_terms_consent.py", "tests/test_tku_acceptance_runner.py", "tests/test_tku_community_boundaries.py", "tests/test_tku_continuation.py", "tests/test_tku_privacy_regressions.py", "tests/test_tku_support.py", "tests/test_tku_web_evidence.py", "tests/test_transient_auth.py", "tests/test_translation_requests.py", "tests/test_university_locations.py", "tests/test_uniway_ui_contract.py", "tests/test_web_review_findings_contract.py", "tests/test_workflow_catalog_cache.py", "tests/test_workflow_context_api.py", "tests/test_workflow_structuring.py", "tests/test_workload_planning.py", "tests/test_workload_planning_api.py"], ["tests/e2e/test_application_periods.py", "tests/e2e/test_departure_tips_and_experience_digests.py", "tests/e2e/test_document_flow.py", "tests/e2e/test_mascot_solid.py", "tests/e2e/test_ntu_school.py", "tests/e2e/test_partner_globe.py", "tests/e2e/test_planning_workspace.py", "tests/e2e/test_system_motion.py", "tests/e2e/test_task_documents_ui.py", "tests/e2e/test_terms_consent.py", "tests/e2e/test_travel_theme.py"], ["tests/e2e/test_analytics_tracking.py", "tests/e2e/test_feedback_page.py", "tests/e2e/test_glass_theme.py", "tests/e2e/test_icon_motion.py", "tests/e2e/test_notification_changes.py", "tests/e2e/test_region_search.py", "tests/e2e/test_school_lists.py", "tests/e2e/test_shared_conditions.py", "tests/e2e/test_student_journey_ux.py", "tests/e2e/test_tku_session_boundaries.py", "tests/e2e/test_tku_source_rendering.py"], ["tests/e2e/test_application_workspace.py", "tests/e2e/test_conditions_account_sync.py", "tests/e2e/test_discussion_round2.py", "tests/e2e/test_fit_and_completeness_ui.py", "tests/e2e/test_life_context.py", "tests/e2e/test_loading_screen.py", "tests/e2e/test_my_application_entry.py", "tests/e2e/test_navigation_guide.py", "tests/e2e/test_responsive_layout.py", "tests/e2e/test_school_chinese_content.py", "tests/e2e/test_tku_acceptance.py", "tests/e2e/test_tku_draft_handoff.py"]], "coverage": "all collected files; no new exclusions"}
+2026-10-09T06:00:19.2057241Z ============================= test session starts ==============================
+2026-10-09T06:00:19.2059586Z platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.6.0 -- /home/runner/work/abroad/abroad/.venv/bin/python3
+2026-10-09T06:00:19.2060939Z cachedir: .pytest_cache
+2026-10-09T06:00:19.2061780Z rootdir: /home/runner/work/abroad/abroad
+2026-10-09T06:00:19.2063037Z configfile: pyproject.toml
+2026-10-09T06:00:19.2063773Z plugins: anyio-4.14.2
+2026-10-09T06:00:19.4063080Z collecting ... CONFTEST LOADED!
+2026-10-09T06:00:19.4064441Z collected 75 items
+2026-10-09T06:00:19.4065021Z 
+2026-10-09T06:00:40.3806847Z tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[390] PASSED [  1%]WEB_CASE tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[390] call passed 19.922s
+2026-10-09T06:00:40.4298333Z 
+2026-10-09T06:00:58.3980458Z tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[1754] PASSED [  2%]WEB_CASE tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[1754] call passed 17.864s
+2026-10-09T06:00:58.4008156Z 
+2026-10-09T06:01:12.4468213Z tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[390] PASSED [  4%]WEB_CASE tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[390] call passed 13.957s
+2026-10-09T06:01:12.4470414Z 
+2026-10-09T06:01:29.3296093Z tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[1754] PASSED [  5%]WEB_CASE tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[1754] call passed 16.795s
+2026-10-09T06:01:29.4798222Z 
+2026-10-09T06:01:58.5791768Z tests/e2e/test_conditions_account_sync.py::test_complete_conditions_reach_new_device_and_clear_stays_cleared PASSED [  6%]WEB_CASE tests/e2e/test_conditions_account_sync.py::test_complete_conditions_reach_new_device_and_clear_stays_cleared call passed 28.583s
+2026-10-09T06:01:58.5817578Z 
+2026-10-09T06:02:25.5172868Z tests/e2e/test_conditions_account_sync.py::test_conflicting_submissions_keep_one_snapshot_and_tell_student PASSED [  8%]WEB_CASE tests/e2e/test_conditions_account_sync.py::test_conflicting_submissions_keep_one_snapshot_and_tell_student call passed 26.837s
+2026-10-09T06:02:25.6671332Z 
+2026-10-09T06:02:45.1952200Z tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete PASSED [  9%]WEB_CASE tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete call passed 19.327s
+2026-10-09T06:02:45.2458387Z 
+2026-10-09T06:02:58.4224461Z tests/e2e/test_discussion_round2.py::test_moderator_approve_hide_report_review_and_suspend PASSED [ 10%]WEB_CASE tests/e2e/test_discussion_round2.py::test_moderator_approve_hide_report_review_and_suspend call passed 13.111s
+2026-10-09T06:02:58.4248161Z 
+2026-10-09T06:03:11.6086139Z tests/e2e/test_discussion_round2.py::test_account_bookmarks_sync_between_two_browser_contexts_and_import_legacy PASSED [ 12%]WEB_CASE tests/e2e/test_discussion_round2.py::test_account_bookmarks_sync_between_two_browser_contexts_and_import_legacy call passed 13.103s
+2026-10-09T06:03:11.6696818Z 
+2026-10-09T06:03:49.2878798Z tests/e2e/test_discussion_round2.py::test_login_from_reader_preserves_valid_fields_while_requests_settle PASSED [ 13%]WEB_CASE tests/e2e/test_discussion_round2.py::test_login_from_reader_preserves_valid_fields_while_requests_settle call passed 37.518s
+2026-10-09T06:03:49.3368314Z 
+2026-10-09T06:03:54.0740590Z tests/e2e/test_discussion_round2.py::test_opening_login_does_not_steal_focus_from_user_selected_field PASSED [ 14%]WEB_CASE tests/e2e/test_discussion_round2.py::test_opening_login_does_not_steal_focus_from_user_selected_field call passed 4.583s
+2026-10-09T06:03:54.0768320Z 
+2026-10-09T06:03:59.5600585Z tests/e2e/test_discussion_round2.py::test_slow_bookmark_response_does_not_erase_new_search_text PASSED [ 16%]WEB_CASE tests/e2e/test_discussion_round2.py::test_slow_bookmark_response_does_not_erase_new_search_text call passed 5.408s
+2026-10-09T06:03:59.7596356Z 
+2026-10-09T06:04:09.0246684Z tests/e2e/test_fit_and_completeness_ui.py::test_new_condition_fields_round_trip_through_the_saved_conditions_payload PASSED [ 17%]WEB_CASE tests/e2e/test_fit_and_completeness_ui.py::test_new_condition_fields_round_trip_through_the_saved_conditions_payload call passed 9.087s
+2026-10-09T06:04:09.0750187Z 
+2026-10-09T06:04:18.1292127Z tests/e2e/test_fit_and_completeness_ui.py::test_fit_details_state_reasons_and_never_say_affordable PASSED [ 18%]WEB_CASE tests/e2e/test_fit_and_completeness_ui.py::test_fit_details_state_reasons_and_never_say_affordable call passed 9.015s
+2026-10-09T06:04:18.1338207Z 
+2026-10-09T06:04:25.9308672Z tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[390] PASSED [ 20%]WEB_CASE tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[390] call passed 7.650s
+2026-10-09T06:04:25.9360035Z 
+2026-10-09T06:04:34.1934841Z tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[1754] PASSED [ 21%]WEB_CASE tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[1754] call passed 8.189s
+2026-10-09T06:04:34.2935732Z 
+2026-10-09T06:04:45.4623784Z tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure PASSED [ 22%]WEB_CASE tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure call passed 10.926s
+2026-10-09T06:04:45.6130189Z 
+2026-10-09T06:04:50.7964204Z tests/e2e/test_loading_screen.py::test_it_shows_the_mascot_while_the_page_waits_and_goes_when_the_page_is_ready PASSED [ 24%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_shows_the_mascot_while_the_page_waits_and_goes_when_the_page_is_ready call passed 4.947s
+2026-10-09T06:04:50.7999221Z 
+2026-10-09T06:04:54.4208598Z tests/e2e/test_loading_screen.py::test_it_also_goes_when_the_data_cannot_be_loaded PASSED [ 25%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_also_goes_when_the_data_cannot_be_loaded call passed 3.546s
+2026-10-09T06:04:54.4738283Z 
+2026-10-09T06:04:55.6857660Z tests/e2e/test_loading_screen.py::test_a_page_that_never_finishes_still_gets_rid_of_it PASSED [ 26%]WEB_CASE tests/e2e/test_loading_screen.py::test_a_page_that_never_finishes_still_gets_rid_of_it call passed 1.151s
+2026-10-09T06:04:55.6889625Z 
+2026-10-09T06:04:57.3959573Z tests/e2e/test_loading_screen.py::test_with_every_script_blocked_the_screen_never_covers_the_page PASSED [ 28%]WEB_CASE tests/e2e/test_loading_screen.py::test_with_every_script_blocked_the_screen_never_covers_the_page call passed 1.609s
+2026-10-09T06:04:57.4021338Z 
+2026-10-09T06:04:58.5571215Z tests/e2e/test_loading_screen.py::test_the_stylesheet_alone_takes_it_away_when_no_timer_can_run PASSED [ 29%]WEB_CASE tests/e2e/test_loading_screen.py::test_the_stylesheet_alone_takes_it_away_when_no_timer_can_run call passed 1.060s
+2026-10-09T06:04:58.5578088Z 
+2026-10-09T06:05:01.1761673Z tests/e2e/test_loading_screen.py::test_the_slow_wake_up_note_only_appears_after_a_wait PASSED [ 30%]WEB_CASE tests/e2e/test_loading_screen.py::test_the_slow_wake_up_note_only_appears_after_a_wait call passed 2.548s
+2026-10-09T06:05:01.1788363Z 
+2026-10-09T06:05:04.4485505Z tests/e2e/test_loading_screen.py::test_without_motion_it_stands_still_but_still_appears_and_goes PASSED [ 32%]WEB_CASE tests/e2e/test_loading_screen.py::test_without_motion_it_stands_still_but_still_appears_and_goes call passed 3.163s
+2026-10-09T06:05:04.4491061Z 
+2026-10-09T06:05:06.1200326Z tests/e2e/test_loading_screen.py::test_in_dark_mode_it_is_dark_from_the_start PASSED [ 33%]WEB_CASE tests/e2e/test_loading_screen.py::test_in_dark_mode_it_is_dark_from_the_start call passed 1.580s
+2026-10-09T06:05:06.1201925Z 
+2026-10-09T06:05:08.0814107Z tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[320-568] PASSED [ 34%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[320-568] call passed 1.916s
+2026-10-09T06:05:08.0820070Z 
+2026-10-09T06:05:10.1972520Z tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[390-844] PASSED [ 36%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[390-844] call passed 2.030s
+2026-10-09T06:05:10.2470302Z 
+2026-10-09T06:05:12.0142043Z tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[844-390] PASSED [ 37%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[844-390] call passed 1.714s
+2026-10-09T06:05:12.0156219Z 
+2026-10-09T06:05:14.0243235Z tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[1280-900] PASSED [ 38%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_fits_every_screen_with_the_mascot_and_the_words_in_view[1280-900] call passed 1.900s
+2026-10-09T06:05:14.0251035Z 
+2026-10-09T06:05:22.7368065Z tests/e2e/test_loading_screen.py::test_the_mascot_blinks_hops_and_turns_when_tapped_in_the_advisor_card PASSED [ 40%]WEB_CASE tests/e2e/test_loading_screen.py::test_the_mascot_blinks_hops_and_turns_when_tapped_in_the_advisor_card call passed 8.641s
+2026-10-09T06:05:22.7731472Z 
+2026-10-09T06:05:27.7492372Z tests/e2e/test_loading_screen.py::test_the_mascot_acts_out_each_state_of_the_assistant PASSED [ 41%]WEB_CASE tests/e2e/test_loading_screen.py::test_the_mascot_acts_out_each_state_of_the_assistant call passed 4.918s
+2026-10-09T06:05:27.7514341Z 
+2026-10-09T06:05:32.0850995Z tests/e2e/test_loading_screen.py::test_the_old_puppy_is_not_anywhere_on_the_page PASSED [ 42%]WEB_CASE tests/e2e/test_loading_screen.py::test_the_old_puppy_is_not_anywhere_on_the_page call passed 4.269s
+2026-10-09T06:05:32.1322183Z 
+2026-10-09T06:05:38.4616495Z tests/e2e/test_loading_screen.py::test_it_stays_until_the_whole_page_is_ready_not_just_the_first_data PASSED [ 44%]WEB_CASE tests/e2e/test_loading_screen.py::test_it_stays_until_the_whole_page_is_ready_not_just_the_first_data call passed 6.278s
+2026-10-09T06:05:38.6651546Z 
+2026-10-09T06:05:45.1041084Z tests/e2e/test_my_application_entry.py::test_new_student_picks_a_school_and_lands_on_selection_and_confirmation PASSED [ 45%]WEB_CASE tests/e2e/test_my_application_entry.py::test_new_student_picks_a_school_and_lands_on_selection_and_confirmation call passed 6.274s
+2026-10-09T06:05:45.2050582Z 
+2026-10-09T06:05:55.8776250Z tests/e2e/test_my_application_entry.py::test_returning_student_with_a_school_goes_straight_there_from_any_page PASSED [ 46%]WEB_CASE tests/e2e/test_my_application_entry.py::test_returning_student_with_a_school_goes_straight_there_from_any_page call passed 10.577s
+2026-10-09T06:05:55.8848285Z 
+2026-10-09T06:06:01.7194727Z tests/e2e/test_my_application_entry.py::test_the_rail_entry_is_highlighted_on_the_selection_page_and_the_dropdown_still_offers_every_stage PASSED [ 48%]WEB_CASE tests/e2e/test_my_application_entry.py::test_the_rail_entry_is_highlighted_on_the_selection_page_and_the_dropdown_still_offers_every_stage call passed 5.742s
+2026-10-09T06:06:01.9197045Z 
+2026-10-09T06:06:07.5128884Z tests/e2e/test_navigation_guide.py::test_home_is_the_guide_and_the_forum_is_one_click_away PASSED [ 49%]WEB_CASE tests/e2e/test_navigation_guide.py::test_home_is_the_guide_and_the_forum_is_one_click_away call passed 5.429s
+2026-10-09T06:06:07.5629574Z 
+2026-10-09T06:06:11.4911843Z tests/e2e/test_navigation_guide.py::test_an_old_guide_link_opens_the_home_page PASSED [ 50%]WEB_CASE tests/e2e/test_navigation_guide.py::test_an_old_guide_link_opens_the_home_page call passed 3.873s
+2026-10-09T06:06:11.5405507Z 
+2026-10-09T06:06:15.5680143Z tests/e2e/test_navigation_guide.py::test_an_old_community_link_opens_the_forum PASSED [ 52%]WEB_CASE tests/e2e/test_navigation_guide.py::test_an_old_community_link_opens_the_forum call passed 3.961s
+2026-10-09T06:06:15.5720047Z 
+2026-10-09T06:06:23.3612926Z tests/e2e/test_navigation_guide.py::test_guide_shared_shell_and_back_forward_without_loops PASSED [ 53%]WEB_CASE tests/e2e/test_navigation_guide.py::test_guide_shared_shell_and_back_forward_without_loops call passed 7.696s
+2026-10-09T06:06:23.3628376Z 
+2026-10-09T06:06:27.9516315Z tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[budget] PASSED [ 54%]WEB_CASE tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[budget] call passed 4.480s
+2026-10-09T06:06:27.9517995Z 
+2026-10-09T06:06:32.7387085Z tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[application-center] PASSED [ 56%]WEB_CASE tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[application-center] call passed 4.690s
+2026-10-09T06:06:32.7408674Z 
+2026-10-09T06:06:38.8301195Z tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[school=\u6797\u80af\u5927\u5b78 Lincoln University] PASSED [ 57%]WEB_CASE tests/e2e/test_navigation_guide.py::test_direct_entry_back_stays_inside_site[school=\u6797\u80af\u5927\u5b78 Lincoln University] call passed 5.999s
+2026-10-09T06:06:38.8328129Z 
+2026-10-09T06:06:49.0484021Z tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return PASSED [ 58%]WEB_CASE tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return call passed 10.153s
+2026-10-09T06:06:49.0554773Z 
+2026-10-09T06:06:55.1908187Z tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward PASSED [ 60%]WEB_CASE tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward call passed 6.068s
+2026-10-09T06:06:55.1931344Z 
+2026-10-09T06:06:59.5780700Z tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[393] PASSED [ 61%]WEB_CASE tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[393] call passed 4.259s
+2026-10-09T06:06:59.5783150Z 
+2026-10-09T06:07:03.9631249Z tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[834] PASSED [ 62%]WEB_CASE tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[834] call passed 4.328s
+2026-10-09T06:07:03.9648157Z 
+2026-10-09T06:07:08.2441597Z tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[1440] PASSED [ 64%]WEB_CASE tests/e2e/test_navigation_guide.py::test_guide_responsive_menu_keyboard_and_theme[1440] call passed 4.172s
+2026-10-09T06:07:08.3943314Z 
+2026-10-09T06:07:23.8146431Z tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[320-640] PASSED [ 65%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[320-640] call passed 15.228s
+2026-10-09T06:07:23.8160424Z 
+2026-10-09T06:07:36.2362660Z tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[375-812] PASSED [ 66%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[375-812] call passed 12.446s
+2026-10-09T06:07:36.2379104Z 
+2026-10-09T06:07:47.9434599Z tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[414-896] PASSED [ 68%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[414-896] call passed 11.696s
+2026-10-09T06:07:47.9436440Z 
+2026-10-09T06:08:00.1534828Z tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[768-1024] PASSED [ 69%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[768-1024] call passed 12.197s
+2026-10-09T06:08:00.1559663Z 
+2026-10-09T06:08:12.2087568Z tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[812-375] PASSED [ 70%]WEB_CASE tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[812-375] call passed 12.072s
+2026-10-09T06:08:12.2111542Z 
+2026-10-09T06:08:16.0864964Z tests/e2e/test_responsive_layout.py::test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[375-812] PASSED [ 72%]WEB_CASE tests/e2e/test_responsive_layout.py::test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[375-812] call passed 3.845s
+2026-10-09T06:08:16.0874221Z 
+2026-10-09T06:08:18.9573160Z tests/e2e/test_responsive_layout.py::test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[768-1024] PASSED [ 73%]WEB_CASE tests/e2e/test_responsive_layout.py::test_every_field_is_at_least_16px_so_phones_do_not_zoom_in[768-1024] call passed 2.895s
+2026-10-09T06:08:18.9608360Z 
+2026-10-09T06:08:23.1881641Z tests/e2e/test_responsive_layout.py::test_the_compose_button_shows_its_words_on_a_tablet PASSED [ 74%]WEB_CASE tests/e2e/test_responsive_layout.py::test_the_compose_button_shows_its_words_on_a_tablet call passed 4.144s
+2026-10-09T06:08:23.3378338Z 
+2026-10-09T06:08:41.3969093Z tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[390] PASSED [ 76%]WEB_CASE tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[390] call passed 17.868s
+2026-10-09T06:08:41.4489074Z 
+2026-10-09T06:08:59.0034775Z tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[1754] PASSED [ 77%]WEB_CASE tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[1754] call passed 17.479s
+2026-10-09T06:08:59.1541682Z 
+2026-10-09T06:09:07.0212855Z tests/e2e/test_tku_acceptance.py::test_tku_jlpt_comparison_persistence_and_closed_cycle[390] PASSED [ 78%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_jlpt_comparison_persistence_and_closed_cycle[390] call passed 7.627s
+2026-10-09T06:09:07.0228525Z 
+2026-10-09T06:09:14.6275571Z tests/e2e/test_tku_acceptance.py::test_tku_jlpt_comparison_persistence_and_closed_cycle[1280] PASSED [ 80%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_jlpt_comparison_persistence_and_closed_cycle[1280] call passed 7.550s
+2026-10-09T06:09:14.6308645Z 
+2026-10-09T06:09:29.4420958Z tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[390] PASSED [ 81%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[390] call passed 14.710s
+2026-10-09T06:09:29.4880795Z 
+2026-10-09T06:09:44.6079638Z tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[1280] PASSED [ 82%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[1280] call passed 15.057s
+2026-10-09T06:09:44.6092821Z 
+2026-10-09T06:09:51.5686015Z tests/e2e/test_tku_acceptance.py::test_tku_list_filters_favorites_comparison_and_reload[390] PASSED [ 84%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_list_filters_favorites_comparison_and_reload[390] call passed 6.872s
+2026-10-09T06:09:51.5713972Z 
+2026-10-09T06:09:58.9271640Z tests/e2e/test_tku_acceptance.py::test_tku_list_filters_favorites_comparison_and_reload[1280] PASSED [ 85%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_list_filters_favorites_comparison_and_reload[1280] call passed 7.259s
+2026-10-09T06:09:58.9281358Z 
+2026-10-09T06:10:05.9740560Z tests/e2e/test_tku_acceptance.py::test_tku_conditions_directory_native_years_and_no_false_open_plan[390] PASSED [ 86%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_conditions_directory_native_years_and_no_false_open_plan[390] call passed 6.957s
+2026-10-09T06:10:05.9758334Z 
+2026-10-09T06:10:12.7238498Z tests/e2e/test_tku_acceptance.py::test_tku_conditions_directory_native_years_and_no_false_open_plan[1280] PASSED [ 88%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_conditions_directory_native_years_and_no_false_open_plan[1280] call passed 6.690s
+2026-10-09T06:10:12.7255479Z 
+2026-10-09T06:10:21.5912965Z tests/e2e/test_tku_acceptance.py::test_tku_documents_stages_conditions_official_sources_and_target_persistence[390] PASSED [ 89%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_documents_stages_conditions_official_sources_and_target_persistence[390] call passed 8.771s
+2026-10-09T06:10:21.6121549Z 
+2026-10-09T06:10:30.9631003Z tests/e2e/test_tku_acceptance.py::test_tku_documents_stages_conditions_official_sources_and_target_persistence[1280] PASSED [ 90%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_documents_stages_conditions_official_sources_and_target_persistence[1280] call passed 9.273s
+2026-10-09T06:10:30.9668230Z 
+2026-10-09T06:10:39.7350148Z tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390] PASSED [ 92%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390] call passed 8.688s
+2026-10-09T06:10:39.7369104Z 
+2026-10-09T06:10:48.5633074Z tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-1280] PASSED [ 93%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-1280] call passed 8.774s
+2026-10-09T06:10:48.5659079Z 
+2026-10-09T06:10:56.5801256Z tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390] PASSED [ 94%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390] call passed 7.949s
+2026-10-09T06:10:56.6292191Z 
+2026-10-09T06:11:05.6600057Z tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-1280] PASSED [ 96%]WEB_CASE tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-1280] call passed 8.967s
+2026-10-09T06:11:05.8099762Z 
+2026-10-09T06:11:19.1942806Z tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u9577\u5e9a\u5927\u5b78] PASSED [ 97%]WEB_CASE tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u9577\u5e9a\u5927\u5b78] call passed 13.191s
+2026-10-09T06:11:19.1978250Z 
+2026-10-09T06:11:30.4750819Z tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u6de1\u6c5f\u5927\u5b78] PASSED [ 98%]WEB_CASE tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u6de1\u6c5f\u5927\u5b78] call passed 11.135s
+2026-10-09T06:11:30.4752749Z 
+2026-10-09T06:11:39.9796935Z tests/e2e/test_tku_draft_handoff.py::test_guest_draft_is_discarded_when_sign_in_changes_mother_school PASSED [100%]WEB_CASE tests/e2e/test_tku_draft_handoff.py::test_guest_draft_is_discarded_when_sign_in_changes_mother_school call passed 9.384s
+2026-10-09T06:11:40.1808319Z 
+2026-10-09T06:11:40.1818259Z 
+2026-10-09T06:11:40.1820153Z ------ generated xml file: /home/runner/work/_temp/web-evidence/suite.xml ------
+2026-10-09T06:11:40.1821211Z ============================= slowest 25 durations =============================
+2026-10-09T06:11:40.1822434Z 37.52s call     tests/e2e/test_discussion_round2.py::test_login_from_reader_preserves_valid_fields_while_requests_settle
+2026-10-09T06:11:40.1823924Z 28.58s call     tests/e2e/test_conditions_account_sync.py::test_complete_conditions_reach_new_device_and_clear_stays_cleared
+2026-10-09T06:11:40.1825496Z 26.84s call     tests/e2e/test_conditions_account_sync.py::test_conflicting_submissions_keep_one_snapshot_and_tell_student
+2026-10-09T06:11:40.1827362Z 19.92s call     tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[390]
+2026-10-09T06:11:40.1829126Z 19.33s call     tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete
+2026-10-09T06:11:40.1830562Z 17.87s call     tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[390]
+2026-10-09T06:11:40.1832062Z 17.86s call     tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[1754]
+2026-10-09T06:11:40.1833583Z 17.48s call     tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[1754]
+2026-10-09T06:11:40.1835457Z 16.80s call     tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[1754]
+2026-10-09T06:11:40.1836955Z 15.23s call     tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[320-640]
+2026-10-09T06:11:40.1838586Z 15.06s call     tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[1280]
+2026-10-09T06:11:40.1840126Z 14.71s call     tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[390]
+2026-10-09T06:11:40.1841821Z 13.96s call     tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[390]
+2026-10-09T06:11:40.1846960Z 13.19s call     tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u9577\u5e9a\u5927\u5b78]
+2026-10-09T06:11:40.1848867Z 13.11s call     tests/e2e/test_discussion_round2.py::test_moderator_approve_hide_report_review_and_suspend
+2026-10-09T06:11:40.1850364Z 13.10s call     tests/e2e/test_discussion_round2.py::test_account_bookmarks_sync_between_two_browser_contexts_and_import_legacy
+2026-10-09T06:11:40.1851799Z 12.45s call     tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[375-812]
+2026-10-09T06:11:40.1853105Z 12.20s call     tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[768-1024]
+2026-10-09T06:11:40.1854383Z 12.07s call     tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[812-375]
+2026-10-09T06:11:40.1855658Z 11.70s call     tests/e2e/test_responsive_layout.py::test_no_page_breaks_at_phone_and_tablet_sizes[414-896]
+2026-10-09T06:11:40.1857156Z 11.13s call     tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u6de1\u6c5f\u5927\u5b78]
+2026-10-09T06:11:40.1858769Z 10.93s call     tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure
+2026-10-09T06:11:40.1860193Z 10.58s call     tests/e2e/test_my_application_entry.py::test_returning_student_with_a_school_goes_straight_there_from_any_page
+2026-10-09T06:11:40.1861560Z 10.15s call     tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return
+2026-10-09T06:11:40.1862912Z 9.38s call     tests/e2e/test_tku_draft_handoff.py::test_guest_draft_is_discarded_when_sign_in_changes_mother_school
+2026-10-09T06:11:40.1864028Z ======================== 75 passed in 680.98s (0:11:20) ========================
+2026-10-09T06:11:42.0863945Z WEB_SHARD 3 exit=0 elapsed=684.536s
+2026-10-09T06:11:42.1156106Z ##[group]Run uv run --frozen python scripts/run_main_browser_control.py --shard "$WEB_TEST_SHARD" --evidence-dir "$RUNNER_TEMP/web-evidence/main-control"
+2026-10-09T06:11:42.1157190Z [36;1muv run --frozen python scripts/run_main_browser_control.py --shard "$WEB_TEST_SHARD" --evidence-dir "$RUNNER_TEMP/web-evidence/main-control"[0m
+2026-10-09T06:11:42.1263394Z shell: /usr/bin/bash -e {0}
+2026-10-09T06:11:42.1263652Z env:
+2026-10-09T06:11:42.1263923Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:11:42.1264377Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T06:11:42.1264841Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:11:42.1265279Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:11:42.1265685Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:11:42.1266078Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T06:11:42.1266540Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T06:11:42.1266897Z   WEB_TEST_SHARD: 3
+2026-10-09T06:11:42.1267097Z ##[endgroup]
+2026-10-09T06:11:42.7286896Z From https://github.com/blizzard-new/abroad
+2026-10-09T06:11:42.7288291Z  * branch            f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59 -> FETCH_HEAD
+2026-10-09T06:11:43.0996395Z From https://github.com/blizzard-new/abroad
+2026-10-09T06:11:43.0997502Z  * branch            4e6cabd073e4792f94959545efeb4e323fefc3f5 -> FETCH_HEAD
+2026-10-09T06:13:34.5953392Z {"baseline_commit": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59", "unchanged_test_source_commit": "4e6cabd073e4792f94959545efeb4e323fefc3f5", "candidate_commit": "09386aa318c9574862a6f3b1447c5022a6c26433", "shard": 3, "cases": ["tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete", "tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure", "tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return", "tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward"], "actual_api_source": "/home/runner/work/_temp/tku-main-control-checkout-3/src/exchange_info/api.py", "assignment_source": "current candidate partition; each historical case stays on the same job as its candidate", "pytest_exit_code": 1, "elapsed_seconds": 108.75180664300001, "comparison_environment": "same job, interpreter, installed packages, browser and system dependencies", "acceptance_waiver": false, "log_sha256": "ea728666b3d5fdffebb0db58b2a74211bd17d1016cf22116a90ba9585fd7f61f"}
+2026-10-09T06:13:34.6112067Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-09T06:13:34.6112487Z with:
+2026-10-09T06:13:34.6112692Z   name: web-evidence-37891059971-3
+2026-10-09T06:13:34.6112979Z   path: /home/runner/work/_temp/web-evidence/
+2026-10-09T06:13:34.6113281Z   if-no-files-found: error
+2026-10-09T06:13:34.6113509Z   retention-days: 30
+2026-10-09T06:13:34.6113719Z   compression-level: 6
+2026-10-09T06:13:34.6113928Z   overwrite: false
+2026-10-09T06:13:34.6114137Z   include-hidden-files: false
+2026-10-09T06:13:34.6114369Z env:
+2026-10-09T06:13:34.6114612Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:13:34.6115033Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T06:13:34.6115468Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:13:34.6115841Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:13:34.6116247Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:13:34.6116632Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T06:13:34.6117049Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T06:13:34.6117398Z ##[endgroup]
+2026-10-09T06:13:34.8390413Z (node:12687) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-09T06:13:34.8392279Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-09T06:13:34.8818523Z With the provided path, there will be 49 files uploaded
+2026-10-09T06:13:34.8819801Z Artifact name is valid!
+2026-10-09T06:13:34.8820469Z Root directory input is valid!
+2026-10-09T06:13:35.0657516Z Beginning upload of artifact content to blob storage
+2026-10-09T06:13:35.2999064Z (node:12687) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-09T06:13:35.3860836Z Uploaded bytes 4859914
+2026-10-09T06:13:35.4037147Z Finished uploading artifact content to blob storage!
+2026-10-09T06:13:35.4039223Z SHA256 digest of uploaded artifact zip is a92c479e802875b781f31ca13e7a21278aa0e6016327fc0aa560d399f0dc98d8
+2026-10-09T06:13:35.4040688Z Finalizing artifact upload
+2026-10-09T06:13:35.6131863Z Artifact web-evidence-37891059971-3.zip successfully finalized. Artifact ID 11599325719
+2026-10-09T06:13:35.6133801Z Artifact web-evidence-37891059971-3 has been successfully uploaded! Final size is 4859914 bytes. Artifact ID is 11599325719
+2026-10-09T06:13:35.6140567Z Artifact download URL: https://github.com/blizzard-new/abroad/actions/runs/37891059971/artifacts/11599325719
+2026-10-09T06:13:35.6294555Z ##[group]Run git diff --exit-code -- src/exchange_info/official_data
+2026-10-09T06:13:35.6295368Z [36;1mgit diff --exit-code -- src/exchange_info/official_data[0m
+2026-10-09T06:13:35.6359132Z shell: /usr/bin/bash -e {0}
+2026-10-09T06:13:35.6359395Z env:
+2026-10-09T06:13:35.6359670Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:13:35.6360124Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T06:13:35.6360570Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:13:35.6360953Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:13:35.6361339Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T06:13:35.6361723Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T06:13:35.6362169Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T06:13:35.6362530Z ##[endgroup]
+2026-10-09T06:13:35.6555132Z Post job cleanup.
+2026-10-09T06:13:35.7916407Z (node:12707) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-09T06:13:35.7918422Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-09T06:13:35.8143081Z Post job cleanup.
+2026-10-09T06:13:36.0309484Z (node:12715) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-09T06:13:36.0311267Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-09T06:13:36.0593250Z Post job cleanup.
+2026-10-09T06:13:36.1816654Z [command]/usr/bin/git version
+2026-10-09T06:13:36.1958434Z git version 2.55.0
+2026-10-09T06:13:36.2028725Z Temporarily overriding HOME='/home/runner/work/_temp/e9aa30c0-9d90-44a6-b6eb-a03544330eba' before making global git config changes
+2026-10-09T06:13:36.2032323Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T06:13:36.2048831Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/abroad/abroad
+2026-10-09T06:13:36.2118651Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T06:13:36.2177592Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T06:13:36.2591585Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T06:13:36.2611532Z http.https://github.com/.extraheader
+2026-10-09T06:13:36.2615812Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-09T06:13:36.2679892Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T06:13:36.3079034Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T06:13:36.3129610Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T06:13:36.3672389Z Cleaning up orphan processes
+2026-10-09T06:13:36.3988675Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+
