@@ -1786,7 +1786,10 @@ def test_departmental_partner_references_are_visible_but_blocked_from_formal_pla
     assert 'status === "departmental_reference"' in script
     assert 'button.disabled = blocked' in script
     assert 'if (availability.blocked)' in script
-    assert '.filter((item) => (item.availability_status || "open") === "open")' in script
+    choices = script.split("function renderEligibilityOptions(", 1)[1].split(
+        "\nfunction ", 1
+    )[0]
+    assert '.filter(item=>!partnerAvailabilityMeta(item).blocked)' in choices
     assert ".partner-availability-notice" in styles
 
 

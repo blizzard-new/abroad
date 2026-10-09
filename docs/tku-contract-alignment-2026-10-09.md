@@ -14,7 +14,7 @@
 | `test_successful_login_closes_before_noncritical_account_hydration` | 固定在歷史 app／CSS cache tag | 解析真 HTML 資產、要求唯一引用／本地檔存在／有效 cache version；登入視窗先關閉、全部 hydration tasks 和 partial failure 斷言保留 |
 | `test_personal_application_plan_uses_structured_api_and_progressive_login` | 系所改為共用 `advisor-department`，仍屬同一份條件表 | 真 department name／advisor form／submit 接線、年度梯次、原三志願及現行四五志願；原 API 與 progressive login 保留 |
 | `test_global_home_board_routing_and_following_are_present` | 政策已明確改為跨校 verified-Email，舊學籍驗證文案不適用 | 現行驗證狀態入口、verified-Email 跨校政策；原板路由、發文權限、unavailable reason 和追蹤保留 |
-| `test_departmental_partner_references_are_visible_but_blocked_from_formal_plans` | 說明改為向學院／國際處確認，舊 HTML 固定文案已移除 | departmental branch 明確 `blocked:true`、確認提示；原按鈕 disabled、blocked guard、正式名單 filter 保留 |
+| `test_departmental_partner_references_are_visible_but_blocked_from_formal_plans` | 說明改為向學院／國際處確認，舊 HTML 固定文案已移除；志願選項現在共用 availability 判定，以保留其他母校待公告規劃政策 | departmental branch 明確 `blocked:true`、確認提示；原按鈕 disabled、blocked guard 保留，志願 filter 必須實際使用同一 blocked 判定，院級參考仍被排除 |
 | `test_hash_router_shows_one_feature_page_without_scroll_spying` | 搜尋入口是 `#partners`，`#search` 保留舊連結支援而無舊 submit handler | 真搜尋入口／輸入、舊 hash 被接受、既有 showUniversityPage 路由；原單頁 hidden／active dataset／無 scroll spying 保留 |
 | `test_route_assets_are_cache_busted_together` | 多個資產已更新，但舊測試固定七個歷史版本 | 真 HTML 中八個唯一、可解析、本地存在且有 version 的資產；app／reader 配對版本及載入順序；原 scroll／invite 行為斷言保留 |
 
