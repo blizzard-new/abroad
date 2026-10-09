@@ -1,0 +1,61 @@
+{
+  "tested_commit": "b455a18ce12ebf679f12c4f8ef4295f6546b2c60",
+  "synthetic_only": true,
+  "production_database_access": false,
+  "before": {
+    "commit": "b455a18ce12ebf679f12c4f8ef4295f6546b2c60",
+    "dirty": ""
+  },
+  "after": {
+    "commit": "b455a18ce12ebf679f12c4f8ef4295f6546b2c60",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "routes": [
+    {
+      "path": "/admin/application-workflow-source-replacement-candidates",
+      "method": "GET",
+      "registered_including_hidden": false,
+      "guest_status": 404,
+      "body": {
+        "detail": "Not Found"
+      }
+    },
+    {
+      "path": "/admin/application-workflow-review-batches/{batch_id}/stage",
+      "method": "POST",
+      "registered_including_hidden": false,
+      "guest_status": 404,
+      "body": {
+        "detail": "Not Found"
+      }
+    },
+    {
+      "path": "/admin/destination-profile-review-queue",
+      "method": "GET",
+      "registered_including_hidden": false,
+      "guest_status": 404,
+      "body": {
+        "detail": "Not Found"
+      }
+    },
+    {
+      "path": "/admin/application-workflow-publications",
+      "method": "GET",
+      "registered_including_hidden": false,
+      "guest_status": 404,
+      "body": {
+        "detail": "Not Found"
+      }
+    },
+    {
+      "path": "/admin/web-release-readiness",
+      "method": "GET",
+      "registered_including_hidden": false,
+      "guest_status": 404,
+      "body": {
+        "detail": "Not Found"
+      }
+    }
+  ]
+}

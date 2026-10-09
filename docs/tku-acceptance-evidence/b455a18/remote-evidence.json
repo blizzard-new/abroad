@@ -1,0 +1,137 @@
+{
+  "checked_at": "2026-10-09T00:30:29.654086+00:00",
+  "tested_commit": "b455a18ce12ebf679f12c4f8ef4295f6546b2c60",
+  "repository": "blizzard-new/abroad",
+  "main_commit": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "code_branch": "refs/heads/data/tku-exchange-20261008",
+  "remote_code_commit": "b455a18ce12ebf679f12c4f8ef4295f6546b2c60",
+  "original_evidence_commit": "1159874b7a3d3f48299d18c810646f38396c6ad9",
+  "original_evidence_preserved": true,
+  "draft_pr": {
+    "number": 2,
+    "url": "https://github.com/blizzard-new/abroad/pull/2",
+    "draft": true,
+    "state": "open",
+    "head": "b455a18ce12ebf679f12c4f8ef4295f6546b2c60"
+  },
+  "ci_summary": [
+    {
+      "event": "pull_request",
+      "run_id": 37861005211,
+      "head_sha": "b455a18ce12ebf679f12c4f8ef4295f6546b2c60",
+      "url": "https://github.com/blizzard-new/abroad/actions/runs/37861005211",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "job_count": 1,
+      "jobs": [
+        {
+          "id": 113596834594,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "failed_steps": [],
+          "passed_steps": [
+            "Set up job",
+            "Check out repository",
+            "Set up Python",
+            "Set up Node.js",
+            "Set isolated test data directory",
+            "Install project and browser",
+            "Check Python and JavaScript syntax",
+            "Check frozen OpenAPI contract",
+            "Parse Supabase migrations and function bodies",
+            "Audit runtime dependencies for known vulnerabilities",
+            "Validate isolated Supabase runtime",
+            "Post Check out repository",
+            "Complete job"
+          ]
+        }
+      ],
+      "log_command_exit_code": 0,
+      "web_test_summary_lines": [],
+      "log_jwt_redactions": 0,
+      "original_log_sha256": "1004813ed82cc376f60b615c6f21903042ad24a74c9d4127bbd341566bfe1557",
+      "retained_log_sha256": "1004813ed82cc376f60b615c6f21903042ad24a74c9d4127bbd341566bfe1557",
+      "timeout_confirmed": true,
+      "timeout_minutes": 45,
+      "timeout_evidence_file": "ci-pr-annotations.json",
+      "web_progress_lines": [
+        "test\tRun Web test suite\t2026-10-09T00:00:13.6715738Z .....F......................FF.......................................... [  4%]",
+        "test\tRun Web test suite\t2026-10-09T00:08:17.9164870Z ............FFF.............................F..........FF............... [  8%]",
+        "test\tRun Web test suite\t2026-10-09T00:24:13.5391660Z ...............F.....................................................FFF [ 12%]"
+      ],
+      "web_completed_summary": false,
+      "web_failure_case_ids_available": false,
+      "official_data_postcheck": "skipped"
+    },
+    {
+      "event": "push",
+      "run_id": 37861000761,
+      "head_sha": "b455a18ce12ebf679f12c4f8ef4295f6546b2c60",
+      "url": "https://github.com/blizzard-new/abroad/actions/runs/37861000761",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "job_count": 1,
+      "jobs": [
+        {
+          "id": 113596801704,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "failed_steps": [],
+          "passed_steps": [
+            "Set up job",
+            "Check out repository",
+            "Set up Python",
+            "Set up Node.js",
+            "Set isolated test data directory",
+            "Install project and browser",
+            "Check Python and JavaScript syntax",
+            "Check frozen OpenAPI contract",
+            "Parse Supabase migrations and function bodies",
+            "Audit runtime dependencies for known vulnerabilities",
+            "Validate isolated Supabase runtime",
+            "Post Check out repository",
+            "Complete job"
+          ]
+        }
+      ],
+      "log_command_exit_code": 0,
+      "web_test_summary_lines": [],
+      "log_jwt_redactions": 0,
+      "original_log_sha256": "56b0e71093dd86655d48e64331b4592f1a749a9dd8175bc44b64a501bdb28e25",
+      "retained_log_sha256": "56b0e71093dd86655d48e64331b4592f1a749a9dd8175bc44b64a501bdb28e25",
+      "timeout_confirmed": true,
+      "timeout_minutes": 45,
+      "timeout_evidence_file": "ci-push-annotations.json",
+      "web_progress_lines": [
+        "test\tRun Web test suite\t2026-10-08T23:59:41.2158329Z ............................FF..F..F.................................... [  4%]",
+        "test\tRun Web test suite\t2026-10-09T00:07:35.3242564Z ............F.F........................................FF............... [  8%]",
+        "test\tRun Web test suite\t2026-10-09T00:23:12.6098027Z ...............F.....................................................FFF [ 12%]"
+      ],
+      "web_completed_summary": false,
+      "web_failure_case_ids_available": false,
+      "official_data_postcheck": "skipped"
+    }
+  ],
+  "check_runs": [
+    {
+      "name": "test",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "url": "https://github.com/blizzard-new/abroad/actions/runs/37861005211/job/113596834594"
+    },
+    {
+      "name": "test",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "url": "https://github.com/blizzard-new/abroad/actions/runs/37861000761/job/113596801704"
+    },
+    {
+      "name": "Supabase Preview",
+      "status": "completed",
+      "conclusion": "skipped",
+      "url": "https://supabase.com/dashboard/project/wozrsrnkvbokzbbitkxf/branches"
+    }
+  ],
+  "production_deployed": false,
+  "main_merged": false
+}

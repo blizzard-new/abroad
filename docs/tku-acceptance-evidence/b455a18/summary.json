@@ -1,0 +1,151 @@
+{
+  "tested_commit": "b455a18ce12ebf679f12c4f8ef4295f6546b2c60",
+  "original_candidate": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+  "original_evidence_commit": "1159874b7a3d3f48299d18c810646f38396c6ad9",
+  "counts": {
+    "passed": 1475,
+    "skipped": 8,
+    "failure": 24
+  },
+  "runner_exit_code": 1,
+  "all_checks_passed": false,
+  "resolved_original_failures": 15,
+  "remaining_original_failures": 24,
+  "added_failures": [],
+  "data_scope": {
+    "records": 128,
+    "current_round": 4,
+    "reference_rows": 124,
+    "current_quota": 7,
+    "open_new_applications": 0,
+    "matrix_fields": 152,
+    "verified": 89,
+    "verified_percent": 58.6,
+    "original_gaps": 67,
+    "resolved_gaps": 4,
+    "remaining_gaps": 63,
+    "unresolved_source_conflicts": 13,
+    "host_documents": 53,
+    "official_exchange_attachments": 28,
+    "additional_reference_calendar": 1,
+    "registration_colleges": 9,
+    "registration_units": 44
+  },
+  "school_hash_preservation": {
+    "count": 851,
+    "candidate_count": 851,
+    "differences": [],
+    "counts": {
+      "國立臺北大學": 409,
+      "長庚大學": 154,
+      "國立臺灣大學": 288
+    }
+  },
+  "privacy_checks": 6,
+  "relevant_browser_counts": {
+    "passed": 49
+  },
+  "tku_unit_runner_counts": {
+    "passed": 62
+  },
+  "remote_ci": [
+    {
+      "event": "pull_request",
+      "run_id": 37861005211,
+      "head_sha": "b455a18ce12ebf679f12c4f8ef4295f6546b2c60",
+      "url": "https://github.com/blizzard-new/abroad/actions/runs/37861005211",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "job_count": 1,
+      "jobs": [
+        {
+          "id": 113596834594,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "failed_steps": [],
+          "passed_steps": [
+            "Set up job",
+            "Check out repository",
+            "Set up Python",
+            "Set up Node.js",
+            "Set isolated test data directory",
+            "Install project and browser",
+            "Check Python and JavaScript syntax",
+            "Check frozen OpenAPI contract",
+            "Parse Supabase migrations and function bodies",
+            "Audit runtime dependencies for known vulnerabilities",
+            "Validate isolated Supabase runtime",
+            "Post Check out repository",
+            "Complete job"
+          ]
+        }
+      ],
+      "log_command_exit_code": 0,
+      "web_test_summary_lines": [],
+      "log_jwt_redactions": 0,
+      "original_log_sha256": "1004813ed82cc376f60b615c6f21903042ad24a74c9d4127bbd341566bfe1557",
+      "retained_log_sha256": "1004813ed82cc376f60b615c6f21903042ad24a74c9d4127bbd341566bfe1557",
+      "timeout_confirmed": true,
+      "timeout_minutes": 45,
+      "timeout_evidence_file": "ci-pr-annotations.json",
+      "web_progress_lines": [
+        "test\tRun Web test suite\t2026-10-09T00:00:13.6715738Z .....F......................FF.......................................... [  4%]",
+        "test\tRun Web test suite\t2026-10-09T00:08:17.9164870Z ............FFF.............................F..........FF............... [  8%]",
+        "test\tRun Web test suite\t2026-10-09T00:24:13.5391660Z ...............F.....................................................FFF [ 12%]"
+      ],
+      "web_completed_summary": false,
+      "web_failure_case_ids_available": false,
+      "official_data_postcheck": "skipped"
+    },
+    {
+      "event": "push",
+      "run_id": 37861000761,
+      "head_sha": "b455a18ce12ebf679f12c4f8ef4295f6546b2c60",
+      "url": "https://github.com/blizzard-new/abroad/actions/runs/37861000761",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "job_count": 1,
+      "jobs": [
+        {
+          "id": 113596801704,
+          "status": "completed",
+          "conclusion": "cancelled",
+          "failed_steps": [],
+          "passed_steps": [
+            "Set up job",
+            "Check out repository",
+            "Set up Python",
+            "Set up Node.js",
+            "Set isolated test data directory",
+            "Install project and browser",
+            "Check Python and JavaScript syntax",
+            "Check frozen OpenAPI contract",
+            "Parse Supabase migrations and function bodies",
+            "Audit runtime dependencies for known vulnerabilities",
+            "Validate isolated Supabase runtime",
+            "Post Check out repository",
+            "Complete job"
+          ]
+        }
+      ],
+      "log_command_exit_code": 0,
+      "web_test_summary_lines": [],
+      "log_jwt_redactions": 0,
+      "original_log_sha256": "56b0e71093dd86655d48e64331b4592f1a749a9dd8175bc44b64a501bdb28e25",
+      "retained_log_sha256": "56b0e71093dd86655d48e64331b4592f1a749a9dd8175bc44b64a501bdb28e25",
+      "timeout_confirmed": true,
+      "timeout_minutes": 45,
+      "timeout_evidence_file": "ci-push-annotations.json",
+      "web_progress_lines": [
+        "test\tRun Web test suite\t2026-10-08T23:59:41.2158329Z ............................FF..F..F.................................... [  4%]",
+        "test\tRun Web test suite\t2026-10-09T00:07:35.3242564Z ............F.F........................................FF............... [  8%]",
+        "test\tRun Web test suite\t2026-10-09T00:23:12.6098027Z ...............F.....................................................FFF [ 12%]"
+      ],
+      "web_completed_summary": false,
+      "web_failure_case_ids_available": false,
+      "official_data_postcheck": "skipped"
+    }
+  ],
+  "acceptance": "blocked; matching baseline failures is not acceptance",
+  "remaining": "63 official-applicability gaps,13 source conflict groups,24 failed shared API/UI contracts; no permissions expanded or dummy admin routes added"
+}

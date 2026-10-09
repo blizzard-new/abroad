@@ -1,0 +1,694 @@
+test	Set up job	﻿2026-10-08T23:44:48.0563355Z Current runner version: '2.337.0'
+test	Set up job	2026-10-08T23:44:48.0596689Z ##[group]Runner Image Provisioner
+test	Set up job	2026-10-08T23:44:48.0597818Z Hosted Compute Agent
+test	Set up job	2026-10-08T23:44:48.0598673Z Version: 20261002.596
+test	Set up job	2026-10-08T23:44:48.0599517Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+test	Set up job	2026-10-08T23:44:48.0600495Z Build Date: 2026-10-02T22:28:27Z
+test	Set up job	2026-10-08T23:44:48.0601729Z Worker ID: {3f6f2081-d004-42e5-a0e4-4b186b4cf4ea}
+test	Set up job	2026-10-08T23:44:48.0602771Z Region: centralus
+test	Set up job	2026-10-08T23:44:48.0603528Z Cloud: Azure
+test	Set up job	2026-10-08T23:44:48.0604189Z ##[endgroup]
+test	Set up job	2026-10-08T23:44:48.0605975Z ##[group]Operating System
+test	Set up job	2026-10-08T23:44:48.0606878Z Ubuntu
+test	Set up job	2026-10-08T23:44:48.0607537Z 24.04.5
+test	Set up job	2026-10-08T23:44:48.0608580Z LTS
+test	Set up job	2026-10-08T23:44:48.0609364Z ##[endgroup]
+test	Set up job	2026-10-08T23:44:48.0610030Z ##[group]Runner Image
+test	Set up job	2026-10-08T23:44:48.0610831Z Image: ubuntu-24.04
+test	Set up job	2026-10-08T23:44:48.0611926Z Version: 20261004.327.1
+test	Set up job	2026-10-08T23:44:48.0613370Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+test	Set up job	2026-10-08T23:44:48.0615732Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+test	Set up job	2026-10-08T23:44:48.0617146Z ##[endgroup]
+test	Set up job	2026-10-08T23:44:48.0618680Z ##[group]GITHUB_TOKEN Permissions
+test	Set up job	2026-10-08T23:44:48.0621857Z Contents: read
+test	Set up job	2026-10-08T23:44:48.0622715Z Metadata: read
+test	Set up job	2026-10-08T23:44:48.0623482Z ##[endgroup]
+test	Set up job	2026-10-08T23:44:48.0626355Z Secret source: Actions
+test	Set up job	2026-10-08T23:44:48.0627574Z Cache mode: write
+test	Set up job	2026-10-08T23:44:48.0628952Z Prepare workflow directory
+test	Set up job	2026-10-08T23:44:48.1280137Z Prepare all required actions
+test	Set up job	2026-10-08T23:44:48.1429929Z Getting action download info
+test	Set up job	2026-10-08T23:44:48.4305158Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+test	Set up job	2026-10-08T23:44:48.6437604Z Download action repository 'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+test	Set up job	2026-10-08T23:44:49.3085506Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+test	Set up job	2026-10-08T23:44:50.8004222Z Complete job name: test
+test	Check out repository	﻿2026-10-08T23:44:50.9048950Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+test	Check out repository	2026-10-08T23:44:50.9049704Z with:
+test	Check out repository	2026-10-08T23:44:50.9050071Z   repository: blizzard-new/abroad
+test	Check out repository	2026-10-08T23:44:50.9053303Z   token: ***
+test	Check out repository	2026-10-08T23:44:50.9053674Z   ssh-strict: true
+test	Check out repository	2026-10-08T23:44:50.9054026Z   ssh-user: git
+test	Check out repository	2026-10-08T23:44:50.9054391Z   persist-credentials: true
+test	Check out repository	2026-10-08T23:44:50.9054766Z   clean: true
+test	Check out repository	2026-10-08T23:44:50.9055150Z   sparse-checkout-cone-mode: true
+test	Check out repository	2026-10-08T23:44:50.9055544Z   fetch-depth: 1
+test	Check out repository	2026-10-08T23:44:50.9055915Z   fetch-tags: false
+test	Check out repository	2026-10-08T23:44:50.9056274Z   show-progress: true
+test	Check out repository	2026-10-08T23:44:50.9056617Z   lfs: false
+test	Check out repository	2026-10-08T23:44:50.9056988Z   submodules: false
+test	Check out repository	2026-10-08T23:44:50.9057335Z   set-safe-directory: true
+test	Check out repository	2026-10-08T23:44:50.9057697Z   allow-unsafe-pr-checkout: false
+test	Check out repository	2026-10-08T23:44:50.9058329Z ##[endgroup]
+test	Check out repository	2026-10-08T23:44:51.0238553Z Syncing repository: blizzard-new/abroad
+test	Check out repository	2026-10-08T23:44:51.0241475Z ##[group]Getting Git version info
+test	Check out repository	2026-10-08T23:44:51.0243016Z Working directory is '/home/runner/work/abroad/abroad'
+test	Check out repository	2026-10-08T23:44:51.0424182Z [command]/usr/bin/git version
+test	Check out repository	2026-10-08T23:44:51.0424865Z git version 2.55.0
+test	Check out repository	2026-10-08T23:44:51.0478333Z ##[endgroup]
+test	Check out repository	2026-10-08T23:44:51.0527518Z Temporarily overriding HOME='/home/runner/work/_temp/87cc2b6e-1aa7-48ed-b26e-0102a247c8c9' before making global git config changes
+test	Check out repository	2026-10-08T23:44:51.0530025Z Adding repository directory to the temporary git global config as a safe directory
+test	Check out repository	2026-10-08T23:44:51.0531848Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/abroad/abroad
+test	Check out repository	2026-10-08T23:44:51.2337131Z Deleting the contents of '/home/runner/work/abroad/abroad'
+test	Check out repository	2026-10-08T23:44:51.2338682Z ##[group]Initializing the repository
+test	Check out repository	2026-10-08T23:44:51.2339561Z [command]/usr/bin/git init /home/runner/work/abroad/abroad
+test	Check out repository	2026-10-08T23:44:51.7341070Z hint: Using 'master' as the name for the initial branch. This default branch name
+test	Check out repository	2026-10-08T23:44:51.7342884Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+test	Check out repository	2026-10-08T23:44:51.7345374Z hint: to use in all of your new repositories, which will suppress this warning,
+test	Check out repository	2026-10-08T23:44:51.7346145Z hint: call:
+test	Check out repository	2026-10-08T23:44:51.7346903Z hint:
+test	Check out repository	2026-10-08T23:44:51.7347490Z hint: 	git config --global init.defaultBranch <name>
+test	Check out repository	2026-10-08T23:44:51.7348113Z hint:
+test	Check out repository	2026-10-08T23:44:51.7348669Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+test	Check out repository	2026-10-08T23:44:51.7349481Z hint: 'development'. The just-created branch can be renamed via this command:
+test	Check out repository	2026-10-08T23:44:51.7350109Z hint:
+test	Check out repository	2026-10-08T23:44:51.7350519Z hint: 	git branch -m <name>
+test	Check out repository	2026-10-08T23:44:51.7351000Z hint:
+test	Check out repository	2026-10-08T23:44:51.7351992Z hint: Disable this message with "git config set advice.defaultBranchName false"
+test	Check out repository	2026-10-08T23:44:51.7352865Z Initialized empty Git repository in /home/runner/work/abroad/abroad/.git/
+test	Check out repository	2026-10-08T23:44:51.7354691Z [command]/usr/bin/git remote add origin https://github.com/blizzard-new/abroad
+test	Check out repository	2026-10-08T23:44:51.7540368Z ##[endgroup]
+test	Check out repository	2026-10-08T23:44:51.7541847Z ##[group]Disabling automatic garbage collection
+test	Check out repository	2026-10-08T23:44:51.7547119Z [command]/usr/bin/git config --local gc.auto 0
+test	Check out repository	2026-10-08T23:44:51.7663419Z ##[endgroup]
+test	Check out repository	2026-10-08T23:44:51.7664778Z ##[group]Setting up auth
+test	Check out repository	2026-10-08T23:44:51.7665860Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+test	Check out repository	2026-10-08T23:44:51.7682747Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+test	Check out repository	2026-10-08T23:44:52.0100550Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+test	Check out repository	2026-10-08T23:44:52.0110330Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+test	Check out repository	2026-10-08T23:44:52.0266206Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+test	Check out repository	2026-10-08T23:44:52.0300254Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+test	Check out repository	2026-10-08T23:44:52.0496227Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+test	Check out repository	2026-10-08T23:44:52.1724288Z ##[endgroup]
+test	Check out repository	2026-10-08T23:44:52.1726016Z ##[group]Fetching the repository
+test	Check out repository	2026-10-08T23:44:52.1735765Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b455a18ce12ebf679f12c4f8ef4295f6546b2c60:refs/remotes/origin/data/tku-exchange-20261008
+test	Check out repository	2026-10-08T23:44:58.8353450Z From https://github.com/blizzard-new/abroad
+test	Check out repository	2026-10-08T23:44:58.8355168Z  * [new ref]         b455a18ce12ebf679f12c4f8ef4295f6546b2c60 -> origin/data/tku-exchange-20261008
+test	Check out repository	2026-10-08T23:44:58.8358815Z ##[endgroup]
+test	Check out repository	2026-10-08T23:44:58.8360009Z ##[group]Determining the checkout info
+test	Check out repository	2026-10-08T23:44:58.8362451Z ##[endgroup]
+test	Check out repository	2026-10-08T23:44:58.8382959Z [command]/usr/bin/git sparse-checkout disable
+test	Check out repository	2026-10-08T23:44:58.8463476Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+test	Check out repository	2026-10-08T23:44:58.8512663Z ##[group]Checking out the ref
+test	Check out repository	2026-10-08T23:44:58.8524144Z [command]/usr/bin/git checkout --progress --force -B data/tku-exchange-20261008 refs/remotes/origin/data/tku-exchange-20261008
+test	Check out repository	2026-10-08T23:44:59.6675106Z Switched to a new branch 'data/tku-exchange-20261008'
+test	Check out repository	2026-10-08T23:44:59.6696961Z branch 'data/tku-exchange-20261008' set up to track 'origin/data/tku-exchange-20261008'.
+test	Check out repository	2026-10-08T23:44:59.6723083Z ##[endgroup]
+test	Check out repository	2026-10-08T23:44:59.6767280Z [command]/usr/bin/git log -1 --format=%H
+test	Check out repository	2026-10-08T23:44:59.6793182Z b455a18ce12ebf679f12c4f8ef4295f6546b2c60
+test	Set up Python	﻿2026-10-08T23:44:59.7072386Z ##[group]Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+test	Set up Python	2026-10-08T23:44:59.7073058Z with:
+test	Set up Python	2026-10-08T23:44:59.7073347Z   python-version: 3.12
+test	Set up Python	2026-10-08T23:44:59.7073696Z   check-latest: false
+test	Set up Python	2026-10-08T23:44:59.7076250Z   token: ***
+test	Set up Python	2026-10-08T23:44:59.7076566Z   update-environment: true
+test	Set up Python	2026-10-08T23:44:59.7076901Z   allow-prereleases: false
+test	Set up Python	2026-10-08T23:44:59.7077260Z   freethreaded: false
+test	Set up Python	2026-10-08T23:44:59.7077535Z ##[endgroup]
+test	Set up Python	2026-10-08T23:44:59.8404538Z ##[group]Installed versions
+test	Set up Python	2026-10-08T23:44:59.8508457Z (node:2092) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+test	Set up Python	2026-10-08T23:44:59.8509631Z Successfully set up CPython (3.12.15)
+test	Set up Python	2026-10-08T23:44:59.8510632Z (Use `node --trace-deprecation ...` to show where the warning was created)
+test	Set up Python	2026-10-08T23:44:59.8511953Z ##[endgroup]
+test	Set up Node.js	﻿2026-10-08T23:44:59.8746739Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+test	Set up Node.js	2026-10-08T23:44:59.8747546Z with:
+test	Set up Node.js	2026-10-08T23:44:59.8748024Z   node-version: 22
+test	Set up Node.js	2026-10-08T23:44:59.8748449Z   always-auth: false
+test	Set up Node.js	2026-10-08T23:44:59.8748876Z   check-latest: false
+test	Set up Node.js	2026-10-08T23:44:59.8753712Z   token: ***
+test	Set up Node.js	2026-10-08T23:44:59.8754144Z env:
+test	Set up Node.js	2026-10-08T23:44:59.8754662Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Set up Node.js	2026-10-08T23:44:59.8755468Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+test	Set up Node.js	2026-10-08T23:44:59.8756222Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Set up Node.js	2026-10-08T23:44:59.8756961Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Set up Node.js	2026-10-08T23:44:59.8757668Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Set up Node.js	2026-10-08T23:44:59.8758365Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+test	Set up Node.js	2026-10-08T23:44:59.8758957Z ##[endgroup]
+test	Set up Node.js	2026-10-08T23:45:00.0375060Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+test	Set up Node.js	2026-10-08T23:45:00.0377055Z (node:2100) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+test	Set up Node.js	2026-10-08T23:45:00.0378207Z (Use `node --trace-deprecation ...` to show where the warning was created)
+test	Set up Node.js	2026-10-08T23:45:00.0380934Z ##[group]Environment details
+test	Set up Node.js	2026-10-08T23:45:00.6193245Z node: v22.23.3
+test	Set up Node.js	2026-10-08T23:45:00.6202380Z npm: 10.9.9
+test	Set up Node.js	2026-10-08T23:45:00.6212428Z yarn: 1.22.22
+test	Set up Node.js	2026-10-08T23:45:00.6217577Z ##[endgroup]
+test	Set isolated test data directory	﻿2026-10-08T23:45:00.6318216Z ##[group]Run python - <<'PY'
+test	Set isolated test data directory	2026-10-08T23:45:00.6318743Z [36;1mpython - <<'PY'[0m
+test	Set isolated test data directory	2026-10-08T23:45:00.6319102Z [36;1mimport os[0m
+test	Set isolated test data directory	2026-10-08T23:45:00.6319413Z [36;1mfrom pathlib import Path[0m
+test	Set isolated test data directory	2026-10-08T23:45:00.6319866Z [36;1mwith Path(os.environ["GITHUB_ENV"]).open("a") as handle:[0m
+test	Set isolated test data directory	2026-10-08T23:45:00.6320425Z [36;1m    handle.write(f"EXCHANGE_INFO_DATA_DIR={os.environ['RUNNER_TEMP']}/exchange-info-tests\n")[0m
+test	Set isolated test data directory	2026-10-08T23:45:00.6320929Z [36;1mPY[0m
+test	Set isolated test data directory	2026-10-08T23:45:00.6524733Z shell: /usr/bin/bash -e {0}
+test	Set isolated test data directory	2026-10-08T23:45:00.6525140Z env:
+test	Set isolated test data directory	2026-10-08T23:45:00.6525495Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Set isolated test data directory	2026-10-08T23:45:00.6526119Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+test	Set isolated test data directory	2026-10-08T23:45:00.6526713Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Set isolated test data directory	2026-10-08T23:45:00.6527335Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Set isolated test data directory	2026-10-08T23:45:00.6528000Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Set isolated test data directory	2026-10-08T23:45:00.6528563Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+test	Set isolated test data directory	2026-10-08T23:45:00.6528945Z ##[endgroup]
+test	Install project and browser	﻿2026-10-08T23:45:00.7258765Z ##[group]Run python -m pip install --disable-pip-version-check uv==0.11.26
+test	Install project and browser	2026-10-08T23:45:00.7259356Z [36;1mpython -m pip install --disable-pip-version-check uv==0.11.26[0m
+test	Install project and browser	2026-10-08T23:45:00.7259781Z [36;1muv lock --check[0m
+test	Install project and browser	2026-10-08T23:45:00.7260159Z [36;1muv sync --frozen --extra dev[0m
+test	Install project and browser	2026-10-08T23:45:00.7260596Z [36;1muv run --frozen python -m playwright install --with-deps chromium[0m
+test	Install project and browser	2026-10-08T23:45:00.7301543Z shell: /usr/bin/bash -e {0}
+test	Install project and browser	2026-10-08T23:45:00.7302180Z env:
+test	Install project and browser	2026-10-08T23:45:00.7302581Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Install project and browser	2026-10-08T23:45:00.7303057Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+test	Install project and browser	2026-10-08T23:45:00.7303514Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Install project and browser	2026-10-08T23:45:00.7304030Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Install project and browser	2026-10-08T23:45:00.7304453Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Install project and browser	2026-10-08T23:45:00.7304907Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+test	Install project and browser	2026-10-08T23:45:00.7305646Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+test	Install project and browser	2026-10-08T23:45:00.7306144Z ##[endgroup]
+test	Install project and browser	2026-10-08T23:45:01.9434777Z Collecting uv==0.11.26
+test	Install project and browser	2026-10-08T23:45:02.0152691Z   Downloading uv-0.11.26-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+test	Install project and browser	2026-10-08T23:45:02.0374133Z Downloading uv-0.11.26-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (26.3 MB)
+test	Install project and browser	2026-10-08T23:45:03.2653690Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 26.3/26.3 MB 21.7 MB/s  0:00:01
+test	Install project and browser	2026-10-08T23:45:03.5215317Z Installing collected packages: uv
+test	Install project and browser	2026-10-08T23:45:04.2045016Z Successfully installed uv-0.11.26
+test	Install project and browser	2026-10-08T23:45:04.3249686Z Using CPython 3.12.15 interpreter at: /opt/hostedtoolcache/Python/3.12.15/x64/bin/python3.12
+test	Install project and browser	2026-10-08T23:45:04.3333993Z Resolved 87 packages in 0.78ms
+test	Install project and browser	2026-10-08T23:45:04.3462239Z Using CPython 3.12.15 interpreter at: /opt/hostedtoolcache/Python/3.12.15/x64/bin/python3.12
+test	Install project and browser	2026-10-08T23:45:04.3463847Z Creating virtual environment at: .venv
+test	Install project and browser	2026-10-08T23:45:04.3733413Z    Building taiwan-exchange-info @ file:///home/runner/work/abroad/abroad
+test	Install project and browser	2026-10-08T23:45:04.4373598Z Downloading playwright (45.5MiB)
+test	Install project and browser	2026-10-08T23:45:04.4567145Z Downloading primp (5.1MiB)
+test	Install project and browser	2026-10-08T23:45:04.4568111Z Downloading uvloop (4.2MiB)
+test	Install project and browser	2026-10-08T23:45:04.4569173Z Downloading reportlab (1.9MiB)
+test	Install project and browser	2026-10-08T23:45:04.4569885Z Downloading brotli (1.4MiB)
+test	Install project and browser	2026-10-08T23:45:04.4570892Z Downloading cryptography (4.5MiB)
+test	Install project and browser	2026-10-08T23:45:04.4572293Z Downloading pydantic-core (2.0MiB)
+test	Install project and browser	2026-10-08T23:45:04.4576995Z Downloading pip (1.7MiB)
+test	Install project and browser	2026-10-08T23:45:04.4579792Z Downloading pillow (6.6MiB)
+test	Install project and browser	2026-10-08T23:45:04.4596660Z Downloading pygments (1.2MiB)
+test	Install project and browser	2026-10-08T23:45:04.4612772Z Downloading lxml (5.0MiB)
+test	Install project and browser	2026-10-08T23:45:04.4623051Z Downloading pglast (6.0MiB)
+test	Install project and browser	2026-10-08T23:45:05.0527318Z  Downloaded brotli
+test	Install project and browser	2026-10-08T23:45:05.4369672Z  Downloaded pydantic-core
+test	Install project and browser	2026-10-08T23:45:05.6368059Z  Downloaded primp
+test	Install project and browser	2026-10-08T23:45:05.9455846Z  Downloaded pillow
+test	Install project and browser	2026-10-08T23:45:06.0418024Z  Downloaded uvloop
+test	Install project and browser	2026-10-08T23:45:06.0422739Z  Downloaded pglast
+test	Install project and browser	2026-10-08T23:45:06.1271797Z  Downloaded cryptography
+test	Install project and browser	2026-10-08T23:45:06.1414243Z  Downloaded reportlab
+test	Install project and browser	2026-10-08T23:45:06.1509427Z  Downloaded lxml
+test	Install project and browser	2026-10-08T23:45:06.1537592Z  Downloaded pygments
+test	Install project and browser	2026-10-08T23:45:06.1792173Z  Downloaded playwright
+test	Install project and browser	2026-10-08T23:45:06.1827728Z  Downloaded pip
+test	Install project and browser	2026-10-08T23:45:07.7363692Z       Built taiwan-exchange-info @ file:///home/runner/work/abroad/abroad
+test	Install project and browser	2026-10-08T23:45:07.7376709Z Prepared 83 packages in 3.38s
+test	Install project and browser	2026-10-08T23:45:07.7883063Z Installed 83 packages in 50ms
+test	Install project and browser	2026-10-08T23:45:07.7883786Z  + annotated-doc==0.0.5
+test	Install project and browser	2026-10-08T23:45:07.7884563Z  + annotated-types==0.8.0
+test	Install project and browser	2026-10-08T23:45:07.7885049Z  + anyio==4.14.2
+test	Install project and browser	2026-10-08T23:45:07.7892064Z  + attrs==26.1.0
+test	Install project and browser	2026-10-08T23:45:07.7892823Z  + beautifulsoup4==4.15.0
+test	Install project and browser	2026-10-08T23:45:07.7893446Z  + boolean-py==5.0
+test	Install project and browser	2026-10-08T23:45:07.7894135Z  + brotli==1.2.0
+test	Install project and browser	2026-10-08T23:45:07.7894813Z  + cachecontrol==0.14.4
+test	Install project and browser	2026-10-08T23:45:07.7895803Z  + certifi==2026.7.22
+test	Install project and browser	2026-10-08T23:45:07.7896401Z  + cffi==2.1.1
+test	Install project and browser	2026-10-08T23:45:07.7897027Z  + charset-normalizer==3.5.1
+test	Install project and browser	2026-10-08T23:45:07.7897679Z  + click==8.4.2
+test	Install project and browser	2026-10-08T23:45:07.7898317Z  + cryptography==50.0.1
+test	Install project and browser	2026-10-08T23:45:07.7898915Z  + cyclonedx-python-lib==11.12.0
+test	Install project and browser	2026-10-08T23:45:07.7899480Z  + ddgs==9.15.0
+test	Install project and browser	2026-10-08T23:45:07.7900419Z  + defusedxml==0.7.1
+test	Install project and browser	2026-10-08T23:45:07.7901154Z  + fake-useragent==2.2.0
+test	Install project and browser	2026-10-08T23:45:07.7922440Z  + fastapi==0.141.1
+test	Install project and browser	2026-10-08T23:45:07.7927737Z  + filelock==3.32.4
+test	Install project and browser	2026-10-08T23:45:07.7928501Z  + greenlet==3.5.5
+test	Install project and browser	2026-10-08T23:45:07.7929109Z  + h11==0.16.0
+test	Install project and browser	2026-10-08T23:45:07.7929732Z  + h2==4.4.1
+test	Install project and browser	2026-10-08T23:45:07.7930231Z  + hpack==4.2.0
+test	Install project and browser	2026-10-08T23:45:07.7931287Z  + httpcore==1.0.9
+test	Install project and browser	2026-10-08T23:45:07.7932151Z  + httpcore2==2.12.0
+test	Install project and browser	2026-10-08T23:45:07.7942189Z  + httptools==0.8.0
+test	Install project and browser	2026-10-08T23:45:07.7953206Z  + httpx==0.28.1
+test	Install project and browser	2026-10-08T23:45:07.7955243Z  + httpx2==2.12.0
+test	Install project and browser	2026-10-08T23:45:07.7955964Z  + hyperframe==6.1.0
+test	Install project and browser	2026-10-08T23:45:07.7956542Z  + idna==3.19
+test	Install project and browser	2026-10-08T23:45:07.7957077Z  + iniconfig==2.3.0
+test	Install project and browser	2026-10-08T23:45:07.7957697Z  + jsonschema==4.26.0
+test	Install project and browser	2026-10-08T23:45:07.7958258Z  + jsonschema-specifications==2025.9.1
+test	Install project and browser	2026-10-08T23:45:07.7958970Z  + license-expression==30.4.4
+test	Install project and browser	2026-10-08T23:45:07.7959522Z  + lxml==6.1.2
+test	Install project and browser	2026-10-08T23:45:07.7960082Z  + markdown-it-py==4.2.0
+test	Install project and browser	2026-10-08T23:45:07.7960487Z  + mdurl==0.1.2
+test	Install project and browser	2026-10-08T23:45:07.7960850Z  + msgpack==1.2.2
+test	Install project and browser	2026-10-08T23:45:07.7961566Z  + packageurl-python==0.17.6
+test	Install project and browser	2026-10-08T23:45:07.7962287Z  + packaging==26.3
+test	Install project and browser	2026-10-08T23:45:07.7962937Z  + pglast==8.4
+test	Install project and browser	2026-10-08T23:45:07.7963374Z  + pillow==12.3.0
+test	Install project and browser	2026-10-08T23:45:07.7972018Z  + pip==26.2.1
+test	Install project and browser	2026-10-08T23:45:07.7972717Z  + pip-api==0.0.34
+test	Install project and browser	2026-10-08T23:45:07.7973102Z  + pip-audit==2.10.1
+test	Install project and browser	2026-10-08T23:45:07.7973584Z  + pip-requirements-parser==32.0.1
+test	Install project and browser	2026-10-08T23:45:07.7974063Z  + platformdirs==4.11.5
+test	Install project and browser	2026-10-08T23:45:07.7974559Z  + playwright==1.62.0
+test	Install project and browser	2026-10-08T23:45:07.7974957Z  + pluggy==1.6.0
+test	Install project and browser	2026-10-08T23:45:07.7975362Z  + primp==1.3.1
+test	Install project and browser	2026-10-08T23:45:07.7975784Z  + py-serializable==2.1.0
+test	Install project and browser	2026-10-08T23:45:07.7976205Z  + pycparser==3.0
+test	Install project and browser	2026-10-08T23:45:07.7976676Z  + pydantic==2.13.4
+test	Install project and browser	2026-10-08T23:45:07.7977082Z  + pydantic-core==2.46.4
+test	Install project and browser	2026-10-08T23:45:07.7977452Z  + pyee==13.0.1
+test	Install project and browser	2026-10-08T23:45:07.7977756Z  + pygments==2.21.0
+test	Install project and browser	2026-10-08T23:45:07.7978079Z  + pyparsing==3.3.2
+test	Install project and browser	2026-10-08T23:45:07.7978428Z  + pypdf==6.16.2
+test	Install project and browser	2026-10-08T23:45:07.7978717Z  + pytest==9.1.1
+test	Install project and browser	2026-10-08T23:45:07.7979014Z  + python-docx==1.2.0
+test	Install project and browser	2026-10-08T23:45:07.7979331Z  + python-dotenv==1.2.3
+test	Install project and browser	2026-10-08T23:45:07.7979642Z  + python-multipart==0.0.32
+test	Install project and browser	2026-10-08T23:45:07.7979961Z  + pyyaml==6.0.3
+test	Install project and browser	2026-10-08T23:45:07.7980305Z  + referencing==0.37.0
+test	Install project and browser	2026-10-08T23:45:07.7980744Z  + reportlab==5.0.1
+test	Install project and browser	2026-10-08T23:45:07.7981055Z  + requests==2.34.2
+test	Install project and browser	2026-10-08T23:45:07.7981571Z  + rich==15.0.0
+test	Install project and browser	2026-10-08T23:45:07.7982004Z  + rpds-py==2026.6.3
+test	Install project and browser	2026-10-08T23:45:07.7982397Z  + socksio==1.0.0
+test	Install project and browser	2026-10-08T23:45:07.7982776Z  + sortedcontainers==2.4.0
+test	Install project and browser	2026-10-08T23:45:07.7983209Z  + soupsieve==2.9.2
+test	Install project and browser	2026-10-08T23:45:07.7983605Z  + starlette==1.6.0
+test	Install project and browser	2026-10-08T23:45:07.7984186Z  + taiwan-exchange-info==0.1.0 (from file:///home/runner/work/abroad/abroad)
+test	Install project and browser	2026-10-08T23:45:07.7984893Z  + tomli==2.4.1
+test	Install project and browser	2026-10-08T23:45:07.7985277Z  + tomli-w==1.2.0
+test	Install project and browser	2026-10-08T23:45:07.7985689Z  + truststore==0.10.4
+test	Install project and browser	2026-10-08T23:45:07.7986110Z  + typing-extensions==4.16.0
+test	Install project and browser	2026-10-08T23:45:07.7986755Z  + typing-inspection==0.4.4
+test	Install project and browser	2026-10-08T23:45:07.7987250Z  + urllib3==2.7.0
+test	Install project and browser	2026-10-08T23:45:07.7987613Z  + uvicorn==0.52.4
+test	Install project and browser	2026-10-08T23:45:07.7987982Z  + uvloop==0.22.1
+test	Install project and browser	2026-10-08T23:45:07.7988371Z  + watchfiles==1.2.0
+test	Install project and browser	2026-10-08T23:45:07.7988732Z  + websockets==17.0.1
+test	Install project and browser	2026-10-08T23:45:08.2142122Z Installing dependencies...
+test	Install project and browser	2026-10-08T23:45:08.2207043Z Switching to root user to install dependencies...
+test	Install project and browser	2026-10-08T23:45:08.3395563Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+test	Install project and browser	2026-10-08T23:45:08.4126662Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+test	Install project and browser	2026-10-08T23:45:08.4128565Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+test	Install project and browser	2026-10-08T23:45:08.4161789Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+test	Install project and browser	2026-10-08T23:45:08.4284502Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+test	Install project and browser	2026-10-08T23:45:08.4394588Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+test	Install project and browser	2026-10-08T23:45:08.5617595Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [531 kB]
+test	Install project and browser	2026-10-08T23:45:08.6069946Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [474 kB]
+test	Install project and browser	2026-10-08T23:45:08.6143283Z Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main all Packages [640 B]
+test	Install project and browser	2026-10-08T23:45:08.6332811Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1375 kB]
+test	Install project and browser	2026-10-08T23:45:08.6334201Z Get:18 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [12.3 kB]
+test	Install project and browser	2026-10-08T23:45:08.6335407Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [306 kB]
+test	Install project and browser	2026-10-08T23:45:08.6484029Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1702 kB]
+test	Install project and browser	2026-10-08T23:45:08.6943987Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [342 kB]
+test	Install project and browser	2026-10-08T23:45:08.7785040Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1761 kB]
+test	Install project and browser	2026-10-08T23:45:08.7802981Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [401 kB]
+test	Install project and browser	2026-10-08T23:45:08.7823061Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [55.0 kB]
+test	Install project and browser	2026-10-08T23:45:08.7834880Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.3 kB]
+test	Install project and browser	2026-10-08T23:45:08.7836005Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1115 kB]
+test	Install project and browser	2026-10-08T23:45:08.7836866Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [227 kB]
+test	Install project and browser	2026-10-08T23:45:08.8286388Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1218 kB]
+test	Install project and browser	2026-10-08T23:45:08.8327147Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [245 kB]
+test	Install project and browser	2026-10-08T23:45:08.8406227Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1632 kB]
+test	Install project and browser	2026-10-08T23:45:08.8432918Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [376 kB]
+test	Install project and browser	2026-10-08T23:45:08.8441921Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [11.6 kB]
+test	Install project and browser	2026-10-08T23:45:13.8494395Z Fetched 12.2 MB in 2s (7989 kB/s)
+test	Install project and browser	2026-10-08T23:45:14.7008545Z Reading package lists...
+test	Install project and browser	2026-10-08T23:45:14.7277225Z Reading package lists...
+test	Install project and browser	2026-10-08T23:45:14.9102048Z Building dependency tree...
+test	Install project and browser	2026-10-08T23:45:14.9112232Z Reading state information...
+test	Install project and browser	2026-10-08T23:45:15.0807791Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+test	Install project and browser	2026-10-08T23:45:15.0809507Z libasound2t64 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0810793Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+test	Install project and browser	2026-10-08T23:45:15.0812588Z libatk-bridge2.0-0t64 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0813884Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+test	Install project and browser	2026-10-08T23:45:15.0814713Z libatk1.0-0t64 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0815507Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+test	Install project and browser	2026-10-08T23:45:15.0816195Z libatspi2.0-0t64 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0816948Z libcairo2 is already the newest version (1.18.0-3build1).
+test	Install project and browser	2026-10-08T23:45:15.0817511Z libcairo2 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0818060Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.14).
+test	Install project and browser	2026-10-08T23:45:15.0818985Z libcups2t64 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0819695Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+test	Install project and browser	2026-10-08T23:45:15.0820872Z libdbus-1-3 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0821960Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.2).
+test	Install project and browser	2026-10-08T23:45:15.0822775Z libdrm2 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0823484Z libgbm1 is already the newest version (25.2.8-0ubuntu0.24.04.4).
+test	Install project and browser	2026-10-08T23:45:15.0824240Z libgbm1 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0825036Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.9).
+test	Install project and browser	2026-10-08T23:45:15.0825954Z libglib2.0-0t64 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0826816Z libnspr4 is already the newest version (2:4.35-1.1build1).
+test	Install project and browser	2026-10-08T23:45:15.0827576Z libnspr4 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0828225Z libnss3 is already the newest version (2:3.98-1ubuntu0.2).
+test	Install project and browser	2026-10-08T23:45:15.0829056Z libnss3 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0830170Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+test	Install project and browser	2026-10-08T23:45:15.0830986Z libpango-1.0-0 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0832155Z libx11-6 is already the newest version (2:1.8.7-1build1).
+test	Install project and browser	2026-10-08T23:45:15.0832817Z libx11-6 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0833575Z libxcb1 is already the newest version (1.15-1ubuntu2).
+test	Install project and browser	2026-10-08T23:45:15.0834183Z libxcb1 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0835541Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+test	Install project and browser	2026-10-08T23:45:15.0836329Z libxcomposite1 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0837049Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+test	Install project and browser	2026-10-08T23:45:15.0837586Z libxdamage1 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0838073Z libxext6 is already the newest version (2:1.3.4-1build2).
+test	Install project and browser	2026-10-08T23:45:15.0838593Z libxext6 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0839149Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+test	Install project and browser	2026-10-08T23:45:15.0839891Z libxfixes3 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0840858Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+test	Install project and browser	2026-10-08T23:45:15.0842275Z libxkbcommon0 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0843235Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+test	Install project and browser	2026-10-08T23:45:15.0843953Z libxrandr2 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0844815Z xvfb is already the newest version (2:21.1.12-1ubuntu1.8).
+test	Install project and browser	2026-10-08T23:45:15.0845742Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+test	Install project and browser	2026-10-08T23:45:15.0846700Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+test	Install project and browser	2026-10-08T23:45:15.0847523Z libfontconfig1 set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0848306Z fonts-liberation is already the newest version (1:2.1.5-3).
+test	Install project and browser	2026-10-08T23:45:15.0849058Z fonts-liberation set to manually installed.
+test	Install project and browser	2026-10-08T23:45:15.0849854Z The following additional packages will be installed:
+test	Install project and browser	2026-10-08T23:45:15.0850510Z   xfonts-encodings xfonts-utils
+test	Install project and browser	2026-10-08T23:45:15.0851201Z Recommended packages:
+test	Install project and browser	2026-10-08T23:45:15.0852018Z   fonts-ipafont-mincho fonts-tlwg-loma
+test	Install project and browser	2026-10-08T23:45:15.0995876Z The following NEW packages will be installed:
+test	Install project and browser	2026-10-08T23:45:15.1008734Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+test	Install project and browser	2026-10-08T23:45:15.1012254Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+test	Install project and browser	2026-10-08T23:45:15.1014060Z   xfonts-utils
+test	Install project and browser	2026-10-08T23:45:15.1014855Z The following packages will be upgraded:
+test	Install project and browser	2026-10-08T23:45:15.1017359Z   libfreetype6
+test	Install project and browser	2026-10-08T23:45:15.1181202Z 1 upgraded, 9 newly installed, 0 to remove and 22 not upgraded.
+test	Install project and browser	2026-10-08T23:45:15.1185096Z Need to get 21.5 MB of archives.
+test	Install project and browser	2026-10-08T23:45:15.1185973Z After this operation, 79.5 MB of additional disk space will be used.
+test	Install project and browser	2026-10-08T23:45:15.1186677Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+test	Install project and browser	2026-10-08T23:45:15.1788842Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+test	Install project and browser	2026-10-08T23:45:15.2514047Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+test	Install project and browser	2026-10-08T23:45:15.4412653Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+test	Install project and browser	2026-10-08T23:45:15.4970938Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+test	Install project and browser	2026-10-08T23:45:15.6011770Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+test	Install project and browser	2026-10-08T23:45:15.7715034Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libfreetype6 amd64 2.13.2+dfsg-1ubuntu0.2 [403 kB]
+test	Install project and browser	2026-10-08T23:45:15.8219942Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+test	Install project and browser	2026-10-08T23:45:15.8724410Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+test	Install project and browser	2026-10-08T23:45:15.9207004Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+test	Install project and browser	2026-10-08T23:45:15.9673319Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+test	Install project and browser	2026-10-08T23:45:16.4425529Z Fetched 21.5 MB in 1s (25.0 MB/s)
+test	Install project and browser	2026-10-08T23:45:16.7113198Z Selecting previously unselected package fonts-ipafont-gothic.
+test	Install project and browser	2026-10-08T23:45:17.0625382Z (Reading database ... 
+test	Install project and browser	2026-10-08T23:45:17.0626619Z (Reading database ... 5%
+test	Install project and browser	2026-10-08T23:45:17.0627483Z (Reading database ... 10%
+test	Install project and browser	2026-10-08T23:45:17.0628115Z (Reading database ... 15%
+test	Install project and browser	2026-10-08T23:45:17.0628912Z (Reading database ... 20%
+test	Install project and browser	2026-10-08T23:45:17.0629906Z (Reading database ... 25%
+test	Install project and browser	2026-10-08T23:45:17.0630487Z (Reading database ... 30%
+test	Install project and browser	2026-10-08T23:45:17.0630864Z (Reading database ... 35%
+test	Install project and browser	2026-10-08T23:45:17.0631247Z (Reading database ... 40%
+test	Install project and browser	2026-10-08T23:45:17.0631919Z (Reading database ... 45%
+test	Install project and browser	2026-10-08T23:45:17.0632350Z (Reading database ... 50%
+test	Install project and browser	2026-10-08T23:45:17.0674862Z (Reading database ... 55%
+test	Install project and browser	2026-10-08T23:45:17.2206868Z (Reading database ... 60%
+test	Install project and browser	2026-10-08T23:45:17.4159357Z (Reading database ... 65%
+test	Install project and browser	2026-10-08T23:45:17.7838241Z (Reading database ... 70%
+test	Install project and browser	2026-10-08T23:45:17.9681121Z (Reading database ... 75%
+test	Install project and browser	2026-10-08T23:45:18.1213953Z (Reading database ... 80%
+test	Install project and browser	2026-10-08T23:45:18.2239494Z (Reading database ... 85%
+test	Install project and browser	2026-10-08T23:45:18.3745808Z (Reading database ... 90%
+test	Install project and browser	2026-10-08T23:45:18.4861643Z (Reading database ... 95%
+test	Install project and browser	2026-10-08T23:45:18.4863001Z (Reading database ... 100%
+test	Install project and browser	2026-10-08T23:45:18.4864015Z (Reading database ... 203191 files and directories currently installed.)
+test	Install project and browser	2026-10-08T23:45:18.4908459Z Preparing to unpack .../0-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+test	Install project and browser	2026-10-08T23:45:18.5131657Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+test	Install project and browser	2026-10-08T23:45:18.8788764Z Selecting previously unselected package fonts-freefont-ttf.
+test	Install project and browser	2026-10-08T23:45:18.8912256Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+test	Install project and browser	2026-10-08T23:45:18.8932272Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+test	Install project and browser	2026-10-08T23:45:19.0646100Z Selecting previously unselected package fonts-tlwg-loma-otf.
+test	Install project and browser	2026-10-08T23:45:19.0770353Z Preparing to unpack .../2-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+test	Install project and browser	2026-10-08T23:45:19.0783038Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+test	Install project and browser	2026-10-08T23:45:19.0961897Z Selecting previously unselected package fonts-unifont.
+test	Install project and browser	2026-10-08T23:45:19.1083496Z Preparing to unpack .../3-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+test	Install project and browser	2026-10-08T23:45:19.1094370Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+test	Install project and browser	2026-10-08T23:45:19.4963176Z Selecting previously unselected package fonts-wqy-zenhei.
+test	Install project and browser	2026-10-08T23:45:19.5089429Z Preparing to unpack .../4-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+test	Install project and browser	2026-10-08T23:45:19.5187535Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+test	Install project and browser	2026-10-08T23:45:20.2117501Z Preparing to unpack .../5-libfreetype6_2.13.2+dfsg-1ubuntu0.2_amd64.deb ...
+test	Install project and browser	2026-10-08T23:45:20.2160832Z Unpacking libfreetype6:amd64 (2.13.2+dfsg-1ubuntu0.2) over (2.13.2+dfsg-1ubuntu0.1) ...
+test	Install project and browser	2026-10-08T23:45:20.2408054Z Selecting previously unselected package xfonts-encodings.
+test	Install project and browser	2026-10-08T23:45:20.2532824Z Preparing to unpack .../6-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+test	Install project and browser	2026-10-08T23:45:20.2545637Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+test	Install project and browser	2026-10-08T23:45:20.2859953Z Selecting previously unselected package xfonts-utils.
+test	Install project and browser	2026-10-08T23:45:20.2981996Z Preparing to unpack .../7-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+test	Install project and browser	2026-10-08T23:45:20.2991226Z Unpacking xfonts-utils (1:7.7+6build3) ...
+test	Install project and browser	2026-10-08T23:45:20.3308400Z Selecting previously unselected package xfonts-cyrillic.
+test	Install project and browser	2026-10-08T23:45:20.3429545Z Preparing to unpack .../8-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+test	Install project and browser	2026-10-08T23:45:20.3442227Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+test	Install project and browser	2026-10-08T23:45:20.3772814Z Selecting previously unselected package xfonts-scalable.
+test	Install project and browser	2026-10-08T23:45:20.3882765Z Preparing to unpack .../9-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+test	Install project and browser	2026-10-08T23:45:20.3892433Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+test	Install project and browser	2026-10-08T23:45:20.4387806Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+test	Install project and browser	2026-10-08T23:45:20.4513543Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+test	Install project and browser	2026-10-08T23:45:20.4534563Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+test	Install project and browser	2026-10-08T23:45:20.4556805Z Setting up libfreetype6:amd64 (2.13.2+dfsg-1ubuntu0.2) ...
+test	Install project and browser	2026-10-08T23:45:20.4577659Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+test	Install project and browser	2026-10-08T23:45:20.4599515Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+test	Install project and browser	2026-10-08T23:45:20.4665091Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+test	Install project and browser	2026-10-08T23:45:20.4718899Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+test	Install project and browser	2026-10-08T23:45:20.4772893Z Setting up xfonts-utils (1:7.7+6build3) ...
+test	Install project and browser	2026-10-08T23:45:20.4799154Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+test	Install project and browser	2026-10-08T23:45:20.5112606Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+test	Install project and browser	2026-10-08T23:45:20.5352558Z Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+test	Install project and browser	2026-10-08T23:45:20.5622017Z Processing triggers for man-db (2.12.0-4build2) ...
+test	Install project and browser	2026-10-08T23:45:20.5643737Z Not building database; man-db/auto-update is not 'true'.
+test	Install project and browser	2026-10-08T23:45:20.5660698Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+test	Install project and browser	2026-10-08T23:45:21.2021892Z 
+test	Install project and browser	2026-10-08T23:45:21.2022956Z Running kernel seems to be up-to-date.
+test	Install project and browser	2026-10-08T23:45:21.2023308Z 
+test	Install project and browser	2026-10-08T23:45:21.2090302Z Restarting services...
+test	Install project and browser	2026-10-08T23:45:21.2091101Z  systemctl restart php8.3-fpm.service
+test	Install project and browser	2026-10-08T23:45:21.3062453Z 
+test	Install project and browser	2026-10-08T23:45:21.3063914Z No containers need to be restarted.
+test	Install project and browser	2026-10-08T23:45:21.3064608Z 
+test	Install project and browser	2026-10-08T23:45:21.3065093Z No user sessions are running outdated binaries.
+test	Install project and browser	2026-10-08T23:45:21.3065580Z 
+test	Install project and browser	2026-10-08T23:45:21.3066124Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+test	Install project and browser	2026-10-08T23:45:22.2475787Z Downloading Chrome for Testing 151.0.7922.34 (playwright chromium v1234) from https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-linux64.zip
+test	Install project and browser	2026-10-08T23:45:23.3180572Z |                                                                                |   0% of 184.3 MiB
+test	Install project and browser	2026-10-08T23:45:23.6638037Z |■■■■■■■■                                                                        |  10% of 184.3 MiB
+test	Install project and browser	2026-10-08T23:45:23.7715038Z |■■■■■■■■■■■■■■■■                                                                |  20% of 184.3 MiB
+test	Install project and browser	2026-10-08T23:45:23.8671060Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 184.3 MiB
+test	Install project and browser	2026-10-08T23:45:23.9738628Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 184.3 MiB
+test	Install project and browser	2026-10-08T23:45:24.0735189Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 184.3 MiB
+test	Install project and browser	2026-10-08T23:45:24.1309292Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 184.3 MiB
+test	Install project and browser	2026-10-08T23:45:24.2389007Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 184.3 MiB
+test	Install project and browser	2026-10-08T23:45:24.3256723Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 184.3 MiB
+test	Install project and browser	2026-10-08T23:45:24.4329435Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 184.3 MiB
+test	Install project and browser	2026-10-08T23:45:24.5673652Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 184.3 MiB
+test	Install project and browser	2026-10-08T23:45:28.3457575Z Chrome for Testing 151.0.7922.34 (playwright chromium v1234) downloaded to /home/runner/.cache/ms-playwright/chromium-1234
+test	Install project and browser	2026-10-08T23:45:28.3465343Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+test	Install project and browser	2026-10-08T23:45:29.3879637Z |                                                                                |   0% of 2.3 MiB
+test	Install project and browser	2026-10-08T23:45:29.4077948Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+test	Install project and browser	2026-10-08T23:45:29.4204900Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+test	Install project and browser	2026-10-08T23:45:29.4287191Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+test	Install project and browser	2026-10-08T23:45:29.4365665Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+test	Install project and browser	2026-10-08T23:45:29.4398772Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+test	Install project and browser	2026-10-08T23:45:29.4456824Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+test	Install project and browser	2026-10-08T23:45:29.4483552Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+test	Install project and browser	2026-10-08T23:45:29.4498871Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+test	Install project and browser	2026-10-08T23:45:29.4560937Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+test	Install project and browser	2026-10-08T23:45:29.4588007Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+test	Install project and browser	2026-10-08T23:45:29.5187121Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+test	Install project and browser	2026-10-08T23:45:29.5190428Z Downloading Chrome Headless Shell 151.0.7922.34 (playwright chromium-headless-shell v1234) from https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-headless-shell-linux64.zip
+test	Install project and browser	2026-10-08T23:45:30.5772047Z |                                                                                |   0% of 114.7 MiB
+test	Install project and browser	2026-10-08T23:45:30.9485730Z |■■■■■■■■                                                                        |  10% of 114.7 MiB
+test	Install project and browser	2026-10-08T23:45:31.0780223Z |■■■■■■■■■■■■■■■■                                                                |  20% of 114.7 MiB
+test	Install project and browser	2026-10-08T23:45:31.1210549Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 114.7 MiB
+test	Install project and browser	2026-10-08T23:45:31.1756892Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 114.7 MiB
+test	Install project and browser	2026-10-08T23:45:31.2672076Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 114.7 MiB
+test	Install project and browser	2026-10-08T23:45:31.3156347Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 114.7 MiB
+test	Install project and browser	2026-10-08T23:45:31.3513975Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 114.7 MiB
+test	Install project and browser	2026-10-08T23:45:31.4292163Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 114.7 MiB
+test	Install project and browser	2026-10-08T23:45:31.4913696Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 114.7 MiB
+test	Install project and browser	2026-10-08T23:45:31.5238754Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.7 MiB
+test	Install project and browser	2026-10-08T23:45:34.3153476Z Chrome Headless Shell 151.0.7922.34 (playwright chromium-headless-shell v1234) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1234
+test	Check Python and JavaScript syntax	﻿2026-10-08T23:45:34.3649610Z ##[group]Run uv run --frozen python -m compileall -q src
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3650146Z [36;1muv run --frozen python -m compileall -q src[0m
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3650607Z [36;1mnode --check src/exchange_info/static/app.js[0m
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3651141Z [36;1mnode --check src/exchange_info/static/content-review.js[0m
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3651895Z [36;1mnode --check src/exchange_info/static/icon-motion.js[0m
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3692501Z shell: /usr/bin/bash -e {0}
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3693018Z env:
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3693407Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3693927Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3694496Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3694962Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3695450Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3695954Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3696617Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+test	Check Python and JavaScript syntax	2026-10-08T23:45:34.3697135Z ##[endgroup]
+test	Check frozen OpenAPI contract	﻿2026-10-08T23:45:35.0308280Z ##[group]Run uv run --frozen python scripts/export_openapi.py --check
+test	Check frozen OpenAPI contract	2026-10-08T23:45:35.0309176Z [36;1muv run --frozen python scripts/export_openapi.py --check[0m
+test	Check frozen OpenAPI contract	2026-10-08T23:45:35.0368225Z shell: /usr/bin/bash -e {0}
+test	Check frozen OpenAPI contract	2026-10-08T23:45:35.0368873Z env:
+test	Check frozen OpenAPI contract	2026-10-08T23:45:35.0369400Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Check frozen OpenAPI contract	2026-10-08T23:45:35.0370161Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+test	Check frozen OpenAPI contract	2026-10-08T23:45:35.0370921Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Check frozen OpenAPI contract	2026-10-08T23:45:35.0371728Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Check frozen OpenAPI contract	2026-10-08T23:45:35.0372406Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Check frozen OpenAPI contract	2026-10-08T23:45:35.0373050Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+test	Check frozen OpenAPI contract	2026-10-08T23:45:35.0373734Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+test	Check frozen OpenAPI contract	2026-10-08T23:45:35.0374357Z ##[endgroup]
+test	Check frozen OpenAPI contract	2026-10-08T23:45:39.0104444Z OpenAPI contract is current: /home/runner/work/abroad/abroad/docs/api/openapi.json
+test	Parse Supabase migrations and function bodies	﻿2026-10-08T23:45:39.2661942Z ##[group]Run uv run --frozen python scripts/validate_supabase_migrations.py
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.2662908Z [36;1muv run --frozen python scripts/validate_supabase_migrations.py[0m
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.2721020Z shell: /usr/bin/bash -e {0}
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.2721817Z env:
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.2722450Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.2723203Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.2723946Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.2724672Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.2725298Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.2726647Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.2727353Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.2727965Z ##[endgroup]
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5812888Z 202607190001_ai_rag.sql: 25 statements, 1 SQL bodies, 0 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5815197Z 202607280002_application_content_governance.sql: 17 statements, 0 SQL bodies, 0 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5817052Z 20260728120722_accounts_workspaces.sql: 16 statements, 0 SQL bodies, 0 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5818968Z 20260728121446_notifications.sql: 11 statements, 0 SQL bodies, 0 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5820022Z 20260728130940_document_vault.sql: 25 statements, 0 SQL bodies, 1 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5821130Z 20260728213255_email_verification_challenges.sql: 6 statements, 0 SQL bodies, 0 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5822494Z 20260729100000_form_drafts.sql: 5 statements, 0 SQL bodies, 0 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5823577Z 20260729143531_dual_application_workflow_review.sql: 3 statements, 0 SQL bodies, 0 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5824833Z 20260807154026_application_workflow_revision_edit_history.sql: 2 statements, 0 SQL bodies, 0 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5826000Z 20260819090000_destination_profile_review_events.sql: 7 statements, 0 SQL bodies, 0 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5827217Z 20260819110000_destination_profile_promotion_events.sql: 6 statements, 0 SQL bodies, 0 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5828550Z 20260819130000_destination_profile_publication_rollbacks.sql: 8 statements, 0 SQL bodies, 0 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5829822Z 20260819150000_application_workflow_publication_rollbacks.sql: 6 statements, 0 SQL bodies, 1 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5831176Z 20260819170000_application_workflow_publication_integrity.sql: 3 statements, 0 SQL bodies, 1 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5832659Z 20260821190000_transient_auth_state.sql: 23 statements, 0 SQL bodies, 3 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5833829Z 20260823100000_atomic_auth_account_mutations.sql: 25 statements, 0 SQL bodies, 6 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5835019Z 20260823130000_atomic_workspace_and_suspension.sql: 44 statements, 0 SQL bodies, 9 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5836283Z 20260823160000_atomic_public_community.sql: 123 statements, 3 SQL bodies, 17 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5837639Z 20260824100000_atomic_private_community.sql: 60 statements, 6 SQL bodies, 3 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5838818Z 20260829100000_atomic_account_deletion.sql: 27 statements, 1 SQL bodies, 6 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5840048Z 20260830100000_application_workflow_issue_reports.sql: 29 statements, 0 SQL bodies, 4 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5841476Z 20260901100000_atomic_application_content_governance.sql: 6 statements, 0 SQL bodies, 2 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5843038Z 20260930100000_discussion_threads_reactions.sql: 29 statements, 0 SQL bodies, 7 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5844320Z 20261002120000_workspace_selection_and_planning.sql: 5 statements, 0 SQL bodies, 1 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5845574Z 20261003100000_open_school_boards.sql: 5 statements, 0 SQL bodies, 2 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5846768Z 20261003110000_analytics.sql: 29 statements, 0 SQL bodies, 2 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5849100Z 20261007100000_school_choice_replaces_student_card.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5850625Z 20261008100000_user_feedback.sql: 7 statements, 0 SQL bodies, 0 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5852600Z 20261008110000_revoke_rls_auto_enable_api_access.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5854224Z 20261008120000_fix_match_document_chunks_search_path.sql: 1 statements, 0 SQL bodies, 0 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5855944Z 20261008130000_ntu_school_board.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+test	Parse Supabase migrations and function bodies	2026-10-08T23:45:39.5857358Z Validated 31 migrations: 556 statements, 11 SQL bodies, 68 PL/pgSQL units
+test	Audit runtime dependencies for known vulnerabilities	﻿2026-10-08T23:45:39.6031703Z ##[group]Run uv run --frozen python scripts/audit_python_dependencies.py
+test	Audit runtime dependencies for known vulnerabilities	2026-10-08T23:45:39.6032617Z [36;1muv run --frozen python scripts/audit_python_dependencies.py[0m
+test	Audit runtime dependencies for known vulnerabilities	2026-10-08T23:45:39.6083705Z shell: /usr/bin/bash -e {0}
+test	Audit runtime dependencies for known vulnerabilities	2026-10-08T23:45:39.6084105Z env:
+test	Audit runtime dependencies for known vulnerabilities	2026-10-08T23:45:39.6084475Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Audit runtime dependencies for known vulnerabilities	2026-10-08T23:45:39.6084993Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+test	Audit runtime dependencies for known vulnerabilities	2026-10-08T23:45:39.6085518Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Audit runtime dependencies for known vulnerabilities	2026-10-08T23:45:39.6085959Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Audit runtime dependencies for known vulnerabilities	2026-10-08T23:45:39.6086444Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Audit runtime dependencies for known vulnerabilities	2026-10-08T23:45:39.6086943Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+test	Audit runtime dependencies for known vulnerabilities	2026-10-08T23:45:39.6087475Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+test	Audit runtime dependencies for known vulnerabilities	2026-10-08T23:45:39.6087949Z ##[endgroup]
+test	Audit runtime dependencies for known vulnerabilities	2026-10-08T23:45:50.9785776Z No known vulnerabilities found
+test	Validate isolated Supabase runtime	﻿2026-10-08T23:45:51.0476989Z ##[group]Run uv run --frozen python scripts/validate_supabase_runtime.py
+test	Validate isolated Supabase runtime	2026-10-08T23:45:51.0477603Z [36;1muv run --frozen python scripts/validate_supabase_runtime.py[0m
+test	Validate isolated Supabase runtime	2026-10-08T23:45:51.0518260Z shell: /usr/bin/bash -e {0}
+test	Validate isolated Supabase runtime	2026-10-08T23:45:51.0518686Z env:
+test	Validate isolated Supabase runtime	2026-10-08T23:45:51.0519162Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Validate isolated Supabase runtime	2026-10-08T23:45:51.0519765Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+test	Validate isolated Supabase runtime	2026-10-08T23:45:51.0520346Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Validate isolated Supabase runtime	2026-10-08T23:45:51.0520977Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Validate isolated Supabase runtime	2026-10-08T23:45:51.0521702Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Validate isolated Supabase runtime	2026-10-08T23:45:51.0522264Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+test	Validate isolated Supabase runtime	2026-10-08T23:45:51.0522829Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+test	Validate isolated Supabase runtime	2026-10-08T23:45:51.0523293Z ##[endgroup]
+test	Validate isolated Supabase runtime	2026-10-08T23:45:51.7082851Z Runtime Compose project: exchange-supabase-runtime-gh-5ba74e0201-0ec5eabb
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7691530Z Starting isolated PostgreSQL...
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7693008Z   migration applied: 202607190001_ai_rag.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7694512Z   migration applied: 202607280002_application_content_governance.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7696064Z   migration applied: 20260728120722_accounts_workspaces.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7697627Z   migration applied: 20260728121446_notifications.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7698823Z   migration applied: 20260728130940_document_vault.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7700031Z   migration applied: 20260728213255_email_verification_challenges.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7701237Z   migration applied: 20260729100000_form_drafts.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7702277Z   migration applied: 20260729143531_dual_application_workflow_review.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7703356Z   migration applied: 20260807154026_application_workflow_revision_edit_history.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7704623Z   migration applied: 20260819090000_destination_profile_review_events.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7706086Z   migration applied: 20260819110000_destination_profile_promotion_events.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7707510Z   migration applied: 20260819130000_destination_profile_publication_rollbacks.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7709094Z   migration applied: 20260819150000_application_workflow_publication_rollbacks.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7710640Z   migration applied: 20260819170000_application_workflow_publication_integrity.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7712344Z   migration applied: 20260821190000_transient_auth_state.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7714062Z   migration applied: 20260823100000_atomic_auth_account_mutations.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7715441Z   migration applied: 20260823130000_atomic_workspace_and_suspension.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7716730Z   migration applied: 20260823160000_atomic_public_community.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7718186Z   migration applied: 20260824100000_atomic_private_community.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7719475Z   migration applied: 20260829100000_atomic_account_deletion.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7720802Z   migration applied: 20260830100000_application_workflow_issue_reports.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7722476Z   migration applied: 20260901100000_atomic_application_content_governance.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7723913Z   migration applied: 20260930100000_discussion_threads_reactions.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7725231Z   migration applied: 20261002120000_workspace_selection_and_planning.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7726478Z   migration applied: 20261003100000_open_school_boards.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7727549Z   migration applied: 20261003110000_analytics.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7728807Z   migration applied: 20261007100000_school_choice_replaces_student_card.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7730055Z   migration applied: 20261008100000_user_feedback.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7731254Z   migration applied: 20261008110000_revoke_rls_auto_enable_api_access.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7732880Z   migration applied: 20261008120000_fix_match_document_chunks_search_path.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7734131Z   migration applied: 20261008130000_ntu_school_board.sql
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7735460Z Starting two isolated PostgREST instances...
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7736167Z Starting isolated Supabase Storage API...
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7736869Z Validating RLS, grants and direct-DML denial...
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7737634Z Validating transient-auth concurrency...
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7738299Z Validating workspace CAS concurrency...
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7738979Z Validating application-workflow issue report RPCs...
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7739885Z Validating public/private community concurrency across two API instances...
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7740908Z Validating late-failure rollback for public/private community transactions...
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7742088Z Validating recursive Storage listing and orphan cleanup...
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7742915Z Validating account-deletion rollback and real Storage cleanup...
+test	Validate isolated Supabase runtime	2026-10-08T23:47:22.7754228Z {"account_deletion": {"rollback_preserved_rows": 8, "storage_delete_replays": 1, "storage_jobs_completed": 1, "storage_objects_deleted": 1, "storage_timeout_receipts_preserved": 1, "workflow_issue_closed_deleted": 1, "workflow_issue_pending_deidentified": 2, "workflow_issue_purge_controls_preserved": 1, "workflow_issue_purged": 2, "workflow_issue_retention_shortened": 1, "workflow_issue_review_replays": 1, "workflow_issue_reviewer_deidentified": 1, "workflow_issue_rollback_preserved_rows": 4}, "cleanup_status": "passed", "community_multi_instance": {"postgrest_instances": 2, "private_message_block_races": 1, "private_message_blocked": 0, "private_message_commits": 1, "private_message_integrity_conflicts": 0, "private_opposite_invitations": 2, "private_report_review_commits": 1, "private_report_review_conflicts": 1, "public_idempotent_commits": 1, "public_idempotent_replays": 1, "public_parent_child_races": 1}, "community_rollbacks": {"late_failures_propagated": 6, "partial_rows": 0, "private_conversation_rollbacks": 1, "private_message_rollbacks": 1, "private_report_review_rollbacks": 1, "private_report_rollbacks": 1, "public_moderation_rollbacks": 1, "public_publication_rollbacks": 1}, "compose_project": "exchange-supabase-runtime-gh-5ba74e0201-0ec5eabb", "migration_count": 31, "permissions": {"browser_grants": 0, "rls_tables": 37, "tables": 37, "workflow_issue_service_rpcs": 3}, "status": "passed", "storage": {"nested_objects_listed": 2, "orphans_removed": 1, "referenced_preserved": 1}, "storage_api_scope": "real_storage_api_file_backend", "transient_auth": {"created": 1, "rate_limited": 7}, "workflow_issue_reports": {"missing_accounts_rejected": 2, "missing_reports_rejected": 1, "rate_limited": 1, "review_committed": 1, "review_idempotency_conflicts": 1, "review_idempotent_replays": 1, "review_status_conflicts": 1, "submit_idempotency_conflicts": 1, "submit_idempotent_replays": 2, "submitted_reports": 10, "terminal_review_conflicts": 1, "unsafe_source_urls_rejected": 6}, "workspace": {"committed": 1, "conflict": 1}}
+test	Run Web test suite	﻿2026-10-08T23:47:22.8380286Z ##[group]Run uv run --frozen python -m pytest -q
+test	Run Web test suite	2026-10-08T23:47:22.8380751Z [36;1muv run --frozen python -m pytest -q[0m
+test	Run Web test suite	2026-10-08T23:47:22.8445651Z shell: /usr/bin/bash -e {0}
+test	Run Web test suite	2026-10-08T23:47:22.8446141Z env:
+test	Run Web test suite	2026-10-08T23:47:22.8446502Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Run Web test suite	2026-10-08T23:47:22.8447042Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+test	Run Web test suite	2026-10-08T23:47:22.8447577Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Run Web test suite	2026-10-08T23:47:22.8447996Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Run Web test suite	2026-10-08T23:47:22.8448467Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+test	Run Web test suite	2026-10-08T23:47:22.8448903Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+test	Run Web test suite	2026-10-08T23:47:22.8449404Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+test	Run Web test suite	2026-10-08T23:47:22.8449832Z ##[endgroup]
+test	Run Web test suite	2026-10-08T23:47:45.7289610Z CONFTEST LOADED!
+test	Run Web test suite	2026-10-08T23:59:41.2158329Z ............................FF..F..F.................................... [  4%]
+test	Run Web test suite	2026-10-09T00:07:35.3242564Z ............F.F........................................FF............... [  8%]
+test	Run Web test suite	2026-10-09T00:23:12.6098027Z ...............F.....................................................FFF [ 12%]
+test	Run Web test suite	2026-10-09T00:30:02.5936065Z ##[error]The operation was canceled.
+test	Post Check out repository	﻿2026-10-09T00:30:02.6100088Z Post job cleanup.
+test	Post Check out repository	2026-10-09T00:30:03.3922542Z [command]/usr/bin/git version
+test	Post Check out repository	2026-10-09T00:30:03.3923146Z git version 2.55.0
+test	Post Check out repository	2026-10-09T00:30:03.3926521Z Temporarily overriding HOME='/home/runner/work/_temp/fabd77ba-cb88-4ada-bc19-6ee46923764b' before making global git config changes
+test	Post Check out repository	2026-10-09T00:30:03.3927743Z Adding repository directory to the temporary git global config as a safe directory
+test	Post Check out repository	2026-10-09T00:30:03.3928689Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/abroad/abroad
+test	Post Check out repository	2026-10-09T00:30:03.3929886Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+test	Post Check out repository	2026-10-09T00:30:03.3931601Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+test	Post Check out repository	2026-10-09T00:30:03.3933511Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+test	Post Check out repository	2026-10-09T00:30:03.3934185Z http.https://github.com/.extraheader
+test	Post Check out repository	2026-10-09T00:30:03.3935561Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+test	Post Check out repository	2026-10-09T00:30:03.3937578Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+test	Post Check out repository	2026-10-09T00:30:03.3939605Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+test	Post Check out repository	2026-10-09T00:30:03.3941162Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+test	Complete job	﻿2026-10-09T00:30:03.4007161Z Cleaning up orphan processes
+test	Complete job	2026-10-09T00:30:03.4179782Z Terminate orphan process: pid (8869) (uv)
+test	Complete job	2026-10-09T00:30:03.4207094Z Terminate orphan process: pid (8872) (python3)
+test	Complete job	2026-10-09T00:30:03.4236370Z Terminate orphan process: pid (8874) (MainThread)
+test	Complete job	2026-10-09T00:30:03.4265997Z Terminate orphan process: pid (8886) (chrome-headless-shell)
+test	Complete job	2026-10-09T00:30:03.4379461Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
