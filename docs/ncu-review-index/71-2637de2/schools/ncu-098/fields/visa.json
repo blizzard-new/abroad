@@ -1,0 +1,50 @@
+{
+  "key": "visa",
+  "label": "簽證／居留",
+  "status": "needs_confirmation",
+  "note": "外校說明居留許可與有效保險相關，到校須帶已簽章文件正本；不由未標年頁推定各國籍免簽、費用或居留期限。",
+  "source_urls": [
+    "https://erasmus.sdu.edu.tr/en/mobilities/general-health-insurance-6578s.html",
+    "https://erasmus.sdu.edu.tr/en/mobilities/application-procedure-5672s.html"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://erasmus.sdu.edu.tr/en/mobilities/general-health-insurance-6578s.html",
+      "source_id": "host-sdu-insurance",
+      "page": null,
+      "source_title": "SDU健康保險說明",
+      "applicability": "Süleyman Demirel University官方未標年Erasmus申請頁；2026/10/8重讀HTTP200，先前HTTP500是讀取失敗紀錄。中央116與KA171適用待核對。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 97,
+        "field": "visa",
+        "evidence_array_index": 0,
+        "text_sha256": "5311481fc7503eb38e5a127608d6a149f05357cb2a3cb9e5bead406c039eb853",
+        "char_count": 1516
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://erasmus.sdu.edu.tr/en/mobilities/application-procedure-5672s.html",
+      "source_id": "host-sdu-apply",
+      "page": null,
+      "source_title": "土耳其Suleyman Demirel申請",
+      "applicability": "Süleyman Demirel University官方未標年Erasmus申請頁；2026/10/8重讀HTTP200，先前HTTP500是讀取失敗紀錄。中央116與KA171適用待核對。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 97,
+        "field": "visa",
+        "evidence_array_index": 1,
+        "text_sha256": "70072d9a4b4220035a70cf12622846fdb8ef31949413b8e58d439737f92e06c0",
+        "char_count": 925
+      }
+    }
+  ],
+  "unresolved": "現行官方簽證／居留文件及預約流程未核對完整。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Süleyman Demirel University官方未標年Erasmus申請頁；2026/10/8重讀HTTP200，先前HTTP500是讀取失敗紀錄。中央116與KA171適用待核對。"
+}

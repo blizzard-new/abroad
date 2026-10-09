@@ -1,0 +1,116 @@
+{
+  "fields": [
+    {
+      "field": "city",
+      "status": "needs_confirmation",
+      "unresolved": "116實際接收學部／研究室／校區與住所未取得。"
+    },
+    {
+      "field": "transport",
+      "status": "needs_confirmation",
+      "unresolved": "2027接收通知、班表／接送及個人學生優惠未取得。"
+    },
+    {
+      "field": "quota",
+      "status": "needs_confirmation",
+      "unresolved": null
+    },
+    {
+      "field": "eligibility",
+      "status": "needs_confirmation",
+      "unresolved": "116校級名額、實際可提名program與接收單位未取得；全校program總名額不是中央quota。"
+    },
+    {
+      "field": "language",
+      "status": "needs_confirmation",
+      "unresolved": "116實際program／接收學部／英語替代資格及2028TOEFL適用時點未核；院級JLCSP排除不被語檢字串覆寫。"
+    },
+    {
+      "field": "home_documents",
+      "status": "available",
+      "unresolved": null
+    },
+    {
+      "field": "host_documents",
+      "status": "needs_confirmation",
+      "unresolved": "116完整指定包、正式送件連結及最新院級／校級資料未取得；PSS登錄HTTP故障／browser TLS失敗不當已查完。"
+    },
+    {
+      "field": "home_deadline",
+      "status": "available",
+      "unresolved": null
+    },
+    {
+      "field": "host_deadline",
+      "status": "needs_confirmation",
+      "unresolved": "116對應host截止與內部收件時點未取得；已知2027春提名過期不是零名額。"
+    },
+    {
+      "field": "study_period",
+      "status": "needs_confirmation",
+      "unresolved": "2027秋／2028春實際授課、考試、宿舍可住日與返程日尚未取得。"
+    },
+    {
+      "field": "courses",
+      "status": "needs_confirmation",
+      "unresolved": "116對應學期課綱、實際接收program、母校採認及research監督安排未取得；JLCSP無關課程禁修已公開，並非未公告。2026HUSTEP公開syllabus5–83頁仍可讀。"
+    },
+    {
+      "field": "tuition",
+      "status": "needs_confirmation",
+      "unresolved": "中央116實際接收身分、互免條款及其他校方收費未取得。"
+    },
+    {
+      "field": "cost",
+      "status": "needs_confirmation",
+      "unresolved": "116生活預算／財力指定證明、FY2027年金與實際獎學金尚未核。"
+    },
+    {
+      "field": "housing",
+      "status": "needs_confirmation",
+      "unresolved": "116宿舍申請表／指定時段、實際分配及付款、日英價／稅額矛盾尚未確認；宿舍名額不是NCU交換名額。"
+    },
+    {
+      "field": "insurance",
+      "status": "needs_confirmation",
+      "unresolved": "116非學位接收身分的保險方案／當期保費、條款與入居保险未取得。"
+    },
+    {
+      "field": "visa",
+      "status": "needs_confirmation",
+      "unresolved": "116完整COE／財力表、個人JPETS與簽證居留適用、新延簽費未核；ISA403及PSS瀏覽器TLS失敗保留。"
+    },
+    {
+      "field": "arrival",
+      "status": "needs_confirmation",
+      "unresolved": "116報到／宿舍通知、學部選課／IT、銀行個人資格與成績寄送程序未取得。"
+    }
+  ],
+  "unretrieved_sources": [
+    {
+      "id": "host-hokkaido-government-pension",
+      "url": "https://www.nenkin.go.jp/international/english/nationalpension/nationalpension.html",
+      "reason": "404 Client Error: Not Found for url: https://www.nenkin.go.jp/international/english/nationalpension/nationalpension.html"
+    },
+    {
+      "id": "host-hokkaido-government-student-residence",
+      "url": "https://www.moj.go.jp/isa/applications/status/student.html",
+      "reason": "403 Client Error: Forbidden for url: https://www.moj.go.jp/isa/applications/status/student.html"
+    },
+    {
+      "id": "host-hokkaido-government-affiliation",
+      "url": "https://www.moj.go.jp/isa/applications/procedures/shozokunikansuru_00001.html?hl=en",
+      "reason": "403 Client Error: Forbidden for url: https://www.moj.go.jp/isa/applications/procedures/shozokunikansuru_00001.html?hl=en"
+    },
+    {
+      "id": "host-hokkaido-pss-registration-public",
+      "url": "https://pre-admission.oia.hokudai.ac.jp/",
+      "reason": "HTTP200僅unsupported browser通知，含錯置京都email；不是所求北海道申請介面。Chromium另TLS失敗，沒有繞過或登入。"
+    },
+    {
+      "id": "host-hokkaido-pss-registration-browser",
+      "url": "https://pre-admission.oia.hokudai.ac.jp/",
+      "reason": "Chromium Page.goto: net::ERR_CERT_AUTHORITY_INVALID；未繞過TLS、未登入或提交表單。"
+    }
+  ]
+}

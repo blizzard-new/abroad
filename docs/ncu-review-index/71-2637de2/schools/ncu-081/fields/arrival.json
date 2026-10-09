@@ -1,0 +1,50 @@
+{
+  "key": "arrival",
+  "label": "到校與行前準備",
+  "status": "needs_confirmation",
+  "note": "已公告Spring2027orientation1/7–8，不當作116Spring2028日期。DVV身分登記須official ID、非EU居留卡、Peppi註冊證明，online form至少到辦公室前一天，護照本人到場；2026pop-in舊日期不用作2027提醒。 TYS租約起月第一工作日中午後才可領鑰匙；非營業時間可安排tutor或key locker，locker需前一工作日中午前通知，入住需Tenant Pages檢查。領鑰匙時間不減租期，週末抵達需先安排；不替學生寄出通知。",
+  "source_urls": [
+    "https://www.utu.fi/en/study-at-utu/accepted-exchange-students/orientation",
+    "https://tys.fi/exchange-students/arrival-and-keys"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.utu.fi/en/study-at-utu/accepted-exchange-students/orientation",
+      "source_id": "host-turku-orient",
+      "page": null,
+      "source_title": "Turku orientation 2026／Spring2027",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "arrival",
+        "evidence_array_index": 0,
+        "text_sha256": "721b543a1f85c2240628445854adff0f53950d9400990d018731f40ce8e592b5",
+        "char_count": 4418
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://tys.fi/exchange-students/arrival-and-keys",
+      "source_id": "host-turku-tys-arrival",
+      "page": null,
+      "source_title": "TYS到達領鑰匙",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "arrival",
+        "evidence_array_index": 1,
+        "text_sha256": "9dfbf0d037ed65eb7f6b3ddcc0776958d759e09b99d28775ad8354c301b60257",
+        "char_count": 3406
+      }
+    }
+  ],
+  "unresolved": "116orientation／DVV場次、入住與到校交通仍待查。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。"
+}

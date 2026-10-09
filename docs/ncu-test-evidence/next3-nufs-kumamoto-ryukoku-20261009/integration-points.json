@@ -1,0 +1,59 @@
+{
+  "main_sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "ncu_data_candidate_sha": "bb806740e702892e78d358973cb2c54b739d3dbd",
+  "peers": [
+    {
+      "branch": "data/ccu-exchange-20261008",
+      "sha": "5eadeb569ea0ae048e2c49450ee8c4012d24d630",
+      "whole_branch_shared_paths": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/advisor.py",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/application_rules.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "src/exchange_info/workflow_structuring.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_ntu_integration.py",
+        "uv.lock"
+      ],
+      "this_next3_delta_shared_paths": [],
+      "merged_into_ncu": false
+    },
+    {
+      "branch": "data/tku-exchange-20261008",
+      "sha": "5af863f50f4ceecbb2b042d512137344fb2988d7",
+      "whole_branch_shared_paths": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/advisor.py",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/openapi_contract.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/discovery-ui.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "tests/e2e/conftest.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_fit_signals.py",
+        "tests/test_frontend_contract.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_rag.py",
+        "tests/test_school_completeness.py",
+        "tests/test_task_documents_and_reference_plan.py",
+        "uv.lock"
+      ],
+      "this_next3_delta_shared_paths": [],
+      "merged_into_ncu": false
+    }
+  ],
+  "note_zh": "整條NCU與並行分支的共用路徑分列；本輪三校delta沒有peer共用檔。2026/10/9 ls-remote核對main／CCU／TKU，TKU由09386aa更新5af863f後explicit fetch並重算21個共用點。未merge peer或main。"
+}

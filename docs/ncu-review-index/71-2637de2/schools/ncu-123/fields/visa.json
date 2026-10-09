@@ -1,0 +1,50 @@
+{
+  "key": "visa",
+  "label": "簽證／居留",
+  "status": "needs_confirmation",
+  "note": "舊指南COE由TCU代送、可能最長三月並郵寄母校；不能當現行只有紙本郵寄。外交部一般Student visa頁（2023/3/17更新）允許電子COE呈現email或印本；COE不是保證簽證。 護照、visa申請表、照片與COE是一般簽證階段；國籍追加件、個人居留身分與最新程序須另查，與初次11件分開。",
+  "source_urls": [
+    "https://drive.google.com/file/d/1Lg1F3wJ44wD3hXv7AhCJNhDc2UyUYI33/view",
+    "https://www.mofa.go.jp/j_info/visit/visa/long/visa6.html"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://drive.google.com/file/d/1Lg1F3wJ44wD3hXv7AhCJNhDc2UyUYI33/view",
+      "source_id": "1Lg1F3wJ44wD3hXv7AhCJNhDc2UyUYI33",
+      "page": 4,
+      "source_title": "00. Guidelines for Inbound Exchange Students (Sepcial Auditing & Research Student) - EN.pdf PDF",
+      "applicability": "未標年度舊指南與介紹的master／本科、N1／N2範圍矛盾保留；116完整包及名額未核。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 122,
+        "field": "visa",
+        "evidence_array_index": 0,
+        "text_sha256": "57685d05deb647787aaf2c2e457f1f4311133b14d5560f528d2e3f0b0fa45a49",
+        "char_count": 1594
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.mofa.go.jp/j_info/visit/visa/long/visa6.html",
+      "source_id": "host-gov-mofa-student-visa",
+      "page": null,
+      "source_title": "gov-mofa-student-visa",
+      "applicability": "未標年度舊指南與介紹的master／本科、N1／N2範圍矛盾保留；116完整包及名額未核。",
+      "checked_at": "2026-10-09",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 122,
+        "field": "visa",
+        "evidence_array_index": 1,
+        "text_sha256": "f80bea3cdef681afc8748a1cd638609933973a99746c3a5da1158013f017687f",
+        "char_count": 2331
+      }
+    }
+  ],
+  "unresolved": "116指定COE表／時點與本人國籍、居留及當期政府費用未核，不使用舊紙本年例強制判斷。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "未標年度舊指南與介紹的master／本科、N1／N2範圍矛盾保留；116完整包及名額未核。"
+}

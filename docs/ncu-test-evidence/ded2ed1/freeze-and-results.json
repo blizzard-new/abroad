@@ -1,0 +1,77 @@
+{
+  "tested_sha": "ded2ed1a79a5f3cb009655790eb560816a7af61a",
+  "original_run_started_at": "2026-10-08T21:00:12.259097+00:00",
+  "original_run_finished_at": "2026-10-08T21:30:29.499747+00:00",
+  "start_head_sha": "ded2ed1a79a5f3cb009655790eb560816a7af61a",
+  "start_worktree": "clean (runner refuses nonempty git status --porcelain before execution)",
+  "end_head_sha": "ded2ed1a79a5f3cb009655790eb560816a7af61a",
+  "end_worktree": "clean (original manifest same_sha_at_end checks both HEAD equality and empty git status)",
+  "per_phase_freeze_checks": "runner checks HEAD and clean worktree before every phase",
+  "independent_after_run_healthcheck": {
+    "checked_at": "2026-10-08T21:36:10Z",
+    "observed_head_sha": "ded2ed1a79a5f3cb009655790eb560816a7af61a",
+    "observed_git_status_short": ""
+  },
+  "data_acceptance_passed": false,
+  "original_browser_result": {
+    "tests": 50,
+    "passed": 49,
+    "failed": 1,
+    "failed_test": "tests.e2e.test_ncu_niigata.test_ncu_niigata_iec_graduate_finance_and_source_scope[390]",
+    "actual": "flow still displaying 正在查核 after default 5000ms at test_ncu_niigata.py:29"
+  },
+  "same_sha_phone_repeats": [
+    {
+      "name": "niigata_phone_repeat_1",
+      "sha": "ded2ed1a79a5f3cb009655790eb560816a7af61a",
+      "cwd": "/workspace/abroad-ncu",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/e2e/test_ncu_niigata.py::test_ncu_niigata_iec_graduate_finance_and_source_scope[390]",
+        "--junitxml",
+        "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/niigata_phone_repeat_1.xml"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-08T21:36:58.801114+00:00",
+      "finished_at": "2026-10-08T21:38:35.042393+00:00"
+    },
+    {
+      "name": "niigata_phone_repeat_2",
+      "sha": "ded2ed1a79a5f3cb009655790eb560816a7af61a",
+      "cwd": "/workspace/abroad-ncu",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/e2e/test_ncu_niigata.py::test_ncu_niigata_iec_graduate_finance_and_source_scope[390]",
+        "--junitxml",
+        "/tmp/ncu-candidate-ded2ed1a79a5f3cb009655790eb560816a7af61a/niigata_phone_repeat_2.xml"
+      ],
+      "exit_code": 0,
+      "started_at": "2026-10-08T21:38:35.044963+00:00",
+      "finished_at": "2026-10-08T21:39:40.373446+00:00"
+    }
+  ],
+  "timeout_was_not_modified_for_repeats": true,
+  "performance_root_cause": "not established; API and rendering timings will be measured separately; larger timeout alone is not a performance fix",
+  "later_evidence_commit_is_not_tested_sha": true,
+  "ci": {
+    "quality_run": 37843684571,
+    "conclusion": "failure",
+    "jobs_total_count": 0,
+    "supabase_preview_check": 113539106475,
+    "supabase_preview_conclusion": "skipped",
+    "failure_root_cause": "not obtained"
+  },
+  "known_failure_comparison": {
+    "baseline_sha": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "failure_names_identical": true,
+    "candidate_failed": 10,
+    "baseline_failed": 10,
+    "baseline_is_not_launch_waiver": true
+  }
+}

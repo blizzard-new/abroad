@@ -1,0 +1,27 @@
+{
+  "baseline_sha": "bb4cecd8030946e59bed494509d206c356e5c210",
+  "test_overlay_path": "tests/test_ncu_next3_review_corrections.py",
+  "test_overlay_sha256": "4a65e867eec2071ade0ee7a0d5246ae8f10c951de246fadaecd779ce9a2a6826",
+  "runtime_and_data_clean_baseline": true,
+  "selected_cases": 5,
+  "failed_product_cases": 5,
+  "command": "pytest -q tests/test_ncu_next3_review_corrections.py -k 'initial_four or later_conditional or nationality or private_insurance or study_abroad'",
+  "primary_log": "pre-fix-corrected.log",
+  "primary_junit": "pre-fix-corrected.xml",
+  "earlier_invalid_probe": {
+    "log": "pre-fix.log",
+    "junit": "pre-fix.xml",
+    "reason": "Test used nonexistent audit points property in three cases; corrected to note before valid baseline replay."
+  },
+  "intermediate_unbuilt_probe": {
+    "log": "working-api.log",
+    "junit": "working-api.xml",
+    "reason": "Scope-copy script stopped before applying generated bundle (nonexistent optional research_records.jsonl); tests read old generated bundle. Superseded by rebuilt result and fixed-SHA validation."
+  },
+  "pre_commit_rebuilt_probe": {
+    "log": "working-api-rebuilt.log",
+    "junit": "working-api-rebuilt.xml",
+    "passed": 23,
+    "fixed_sha_evidence": false
+  }
+}

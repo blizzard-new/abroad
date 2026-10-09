@@ -1,0 +1,50 @@
+{
+  "key": "courses",
+  "label": "課程限制與選課",
+  "status": "needs_confirmation",
+  "note": "建議30ECTS／semester不是host強制最低，遵守home要求；LA不保證席位，另Peppi／課程方式註冊。可跨領域但需先修；非PhD研究／thesis至少半數課業是coursework且自行找supervisor，PhD例外。 Medicine／Dentistry本主修限定，biomed／mental health／nursing依背景、neuroscience minor另有開放；TSE限business且Turku／Pori分開，advanced課须相關25ECTS。Law／Education非本主修依剩餘位，不能一律判關閉。 可修鄰校Åbo Akademi但至少50%在UTU；语言課建議2–3，申請FAQ另最多半數。Spring2027課表官網明載2026/11/15發布，仍非Spring2028。",
+  "source_urls": [
+    "https://www.utu.fi/en/study-at-utu/courses-in-english-for-exchange-students",
+    "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.utu.fi/en/study-at-utu/courses-in-english-for-exchange-students",
+      "source_id": "host-turku-courses",
+      "page": null,
+      "source_title": "Turku課程限制及2027春課表發布",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "courses",
+        "evidence_array_index": 0,
+        "text_sha256": "7065ffb11ed1d3f1971f0e04d0d1495bdf665f37c61122c2492b557a1a1f7abf",
+        "char_count": 12803
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies",
+      "source_id": "host-turku-apply",
+      "page": null,
+      "source_title": "Turku官方交換申請文件與期限",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "courses",
+        "evidence_array_index": 1,
+        "text_sha256": "7a9bc2862b4586dee5b089d20b90a208b4cc555adf6062c8c28186320068ac39",
+        "char_count": 14280
+      }
+    }
+  ],
+  "unresolved": "116當期課表、席位、先修與非典型學制待逐課核對。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。"
+}

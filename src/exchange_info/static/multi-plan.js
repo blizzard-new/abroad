@@ -12,7 +12,7 @@ window.UniWayMultiPlan = (() => {
       academic_score:profile.academicScore ?? null, language_test:profile.languageTest || null,
       language_score:profile.languageScore ?? null, academic_year:context.academic_year || profile.academicYear || null,
       application_round:context.application_round || profile.applicationRound || null,
-      preferences:[...state.applications].map((school_name,index)=>({rank:index+1,school_name}))};
+      preferences:[...state.applications].map((school_name,index)=>({rank:index+1,school_name, ...(activeHomeSchool() === "國立中央大學" ? {document_preparation_state:ncuDocumentState(school_name,context.academic_year || profile.academicYear,context.application_round || profile.applicationRound)} : {})}))};
   }
   const bucket = task => task.task_scope === "home" ? activeHomeSchool() : task.school_names[0];
   function sanitizeSettings(value) {
@@ -101,7 +101,7 @@ window.UniWayMultiPlan = (() => {
     const markup = rows => rows.map(task=>`<li class="multi-plan-task">
       <label><input type="checkbox" data-multi-task="${escapeHtml(task.id)}" ${settingsFor(task).status === "ready" ? "checked" : ""} /><span><strong>${escapeHtml(task.title)}</strong><small>${escapeHtml(task.phase)} · ${escapeHtml(task.responsible_unit)}${task.task_origin === "reference_year" ? ` · <b class="multi-plan-estimate-badge">預估，非官方期限</b>` : ""}</small></span></label>
       <p>${escapeHtml(task.detail)}</p>${task.task_scope === "home" ? `<small>共用於 ${task.school_names.length} 個志願</small>` : ""}
-      ${documentLine(task)}${sourceLink(task.source_urls)}${taskEditor(task,tasks)}</li>`).join("");
+      ${documentApplicabilityMarkup(task.document_applicability)}${documentLine(task)}${sourceLink(task.source_urls)}${taskEditor(task,tasks)}</li>`).join("");
     const shared = tasks.filter(task=>task.task_scope === "home");
     list.innerHTML = `<p>勾選只記錄個人的準備進度；不代表正式送件、校方受理或錄取。來源或規定不同的工作會分開顯示。</p>
       ${shared.length ? `<section class="multi-plan-shared"><h3>共用的校內準備 · ${shared.length} 項</h3><ul>${markup(shared)}</ul></section>` : '<p class="workspace-empty">目前沒有能確認為共用的步驟，保留各校清單以便核對。</p>'}
@@ -124,11 +124,11 @@ window.UniWayMultiPlan = (() => {
     const currentFormKey = JSON.stringify([owner(), [...state.applications], state.dashboard?.partner_universities.map(row=>row.school_name)]);
     if (formKey !== currentFormKey && !form.contains(document.activeElement)) {
       formKey = currentFormKey;
-      const schools=(state.dashboard?.partner_universities || []).filter(row=>(row.availability_status || "open") === "open");
+      const schools=(state.dashboard?.partner_universities || []).filter(row=>(row.availability_status || "open") === "open" || (activeHomeSchool() === "國立中央大學" && partnerAvailabilityMeta(row).pending));
       const saved=[...state.applications];
       const names=[...new Set([...schools.map(row=>row.school_name),...saved])];
       form.querySelectorAll("select").forEach((select,index)=>{
-        select.innerHTML=`<option value="">${index ? "暫不設定" : "請選擇學校"}</option>${names.map(name=>`<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join("")}`;
+        select.innerHTML=`<option value="">${index ? "暫不設定" : "請選擇學校"}</option>${names.map(name=>`<option value="${escapeHtml(name)}">${escapeHtml(name)}${activeHomeSchool() === "國立中央大學" && partnerAvailabilityMeta(partnerByName(name)).pending ? " · 本期名額待公告" : ""}</option>`).join("")}`;
         select.value=saved[index] || "";
       });
     }

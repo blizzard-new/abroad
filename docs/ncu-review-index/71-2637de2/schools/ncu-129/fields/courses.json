@@ -1,0 +1,50 @@
+{
+  "key": "courses",
+  "label": "課程限制與選課",
+  "status": "needs_confirmation",
+  "note": "KUGF英授、日語班、本科專業日授及MCL不同；placement决定日語課及專業適合，不保证所列課或先修／容量。 每學期MCL一般段明指本科至少一門，後段又寫all exchange，研究生是否強制的範圍矛盾須確認。 本科一般頁more than7 classes與FAQ7 or more每週有邊界差異；研究生不套本科最低課堂。最高學分本科24／研究所14。成績春9月底、秋3月底不能為母校校曆改早；一般頁由校方送母校承辦，FAQ說email學生，實際收件者與補寄程序另核。 2026KUGF兩個page fragment只取得同一viewer介面；設定指向的全本PDF本輪HTTP404，各門課尚未讀，不代表未公告或不開課。",
+  "source_urls": [
+    "https://www.kansai-u.ac.jp/Kokusai/future/about_en/",
+    "https://www.kansai-u.ac.jp/Kokusai/future/faq_en/"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.kansai-u.ac.jp/Kokusai/future/about_en/",
+      "source_id": "host-kansai-about-current",
+      "page": null,
+      "source_title": "關西交換方案",
+      "applicability": "現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。",
+      "checked_at": "2026-10-09T04:22:48.611954+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 128,
+        "field": "courses",
+        "evidence_array_index": 0,
+        "text_sha256": "feca3f60646731db0060c7136aa8c497c918451c61424d282ea395bbfde6c297",
+        "char_count": 18558
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.kansai-u.ac.jp/Kokusai/future/faq_en/",
+      "source_id": "host-kansai-faq-current",
+      "page": null,
+      "source_title": "關西FAQ",
+      "applicability": "現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。",
+      "checked_at": "2026-10-09T04:22:48.764576+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 128,
+        "field": "courses",
+        "evidence_array_index": 1,
+        "text_sha256": "4aac5c6c1212852f84dc9a3017b7110a2a645accfe00629246fc1f4500ede375",
+        "char_count": 14187
+      }
+    }
+  ],
+  "unresolved": "116新KUGF與逐門syllabus未得；2026viewer只有介面、全本PDF404，各門未讀不是未開課。MCL與7堂邊界待核。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "現2027春指定程序、未標年一般交換／FAQ、2026KUGF viewer／宿舍現價與舊中央介紹分開；非中央116當期配額或2027秋／2028春完整核准。"
+}

@@ -1,0 +1,68 @@
+{
+  "key": "insurance",
+  "label": "保險",
+  "status": "needs_confirmation",
+  "note": "2025初次健康證明不等同保險。日本居住國保／個人年金依住所與政府核，中央醫療／意外／急難救助足額須另外確認；未取得駒澤116交換指定保險、費率與住宿賠償包。 不把其他日本host學研災／Inbound fee或一般degree已繳套本校；沒有直接假定母校海外保險能替代host強制保險。",
+  "source_urls": [
+    "https://drive.google.com/file/d/10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w/view",
+    "https://www.komazawa-u.ac.jp/campuslife/international/foreign-students.html",
+    "https://www.nenkin.go.jp/international/english/purpose/enroll/index.html"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://drive.google.com/file/d/10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w/view",
+      "source_id": "10GVU2yOeaLgQGUh8ch-IcgzpGKVRsH6w",
+      "page": 2,
+      "source_title": "1 Admission Information.pdf PDF",
+      "applicability": "最新取得2025Exchange Program、未標年度宿舍及2026一般外國學生頁；UG／Grad／学位與交換分身分。不是116核准，全部host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 118,
+        "field": "insurance",
+        "evidence_array_index": 0,
+        "text_sha256": "40b15599433dbcab33cda5e5fec286e3ec05af5241fe5ec8dc71067593c14140",
+        "char_count": 2420
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.komazawa-u.ac.jp/campuslife/international/foreign-students.html",
+      "source_id": "host-komazawa-foreign-students2026",
+      "page": null,
+      "source_title": "komazawa-foreign-students2026",
+      "applicability": "最新取得2025Exchange Program、未標年度宿舍及2026一般外國學生頁；UG／Grad／学位與交換分身分。不是116核准，全部host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 118,
+        "field": "insurance",
+        "evidence_array_index": 1,
+        "text_sha256": "d9c652679c6fb3d5a8991a5c220ae024836e47070cfb0684bfc3f2b31d618a3e",
+        "char_count": 3498
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.nenkin.go.jp/international/english/purpose/enroll/index.html",
+      "source_id": "host-hokkaido-government-pension-enroll",
+      "page": null,
+      "source_title": "日本年金20–59歲及14日登錄指南",
+      "applicability": "最新取得2025Exchange Program、未標年度宿舍及2026一般外國學生頁；UG／Grad／学位與交換分身分。不是116核准，全部host流程pending。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 118,
+        "field": "insurance",
+        "evidence_array_index": 2,
+        "text_sha256": "85eb8618b1d051bf80f7b0453e6853b1a54fcfd2fa52e6ee22ac6715e083b4db",
+        "char_count": 2485
+      }
+    }
+  ],
+  "unresolved": "116host交換保險要求／當期保費與保障範圍未取得。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "最新取得2025Exchange Program、未標年度宿舍及2026一般外國學生頁；UG／Grad／学位與交換分身分。不是116核准，全部host流程pending。"
+}

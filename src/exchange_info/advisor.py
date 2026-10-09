@@ -8,6 +8,7 @@ from typing import Iterable
 
 from .ai_gateway import structured_response
 from .fit_signals import course_interest_fit, school_budget_fit, teaching_language_fit
+from .ncu_eligibility import is_ncu, ncu_academic_check, ncu_language_check
 from .ntu_eligibility import is_ntu, ntu_academic_check, ntu_language_check
 from .qualification_scopes import (
     coupled_academic_scope_matches,
@@ -314,7 +315,19 @@ def _score_partner(
             blocked = True
         if partner.application_window_status == "closed":
             confirmation_items.append("中正2027春季校內收件已截止，需確認已有申請及提名資格")
-    if is_ntu(dashboard.school_name):
+    if is_ncu(dashboard.school_name):
+        status, detail = ncu_academic_check(profile.degree_level, profile.academic_score, profile.current_year)
+        if status == "pass":
+            score += 15
+            reasons.append(detail)
+        elif status == "fail":
+            blocked = True
+            gaps.append(detail)
+            blocking_reasons.append(detail)
+        else:
+            gaps.append(detail)
+            confirmation_items.append(detail)
+    elif is_ntu(dashboard.school_name):
         status, detail = ntu_academic_check(profile.degree_level, profile.academic_gpa, profile.class_rank_percent)
         if status == "pass":
             score += 15
@@ -360,7 +373,11 @@ def _score_partner(
         blocked = True
 
     home_language_minimum = dashboard.language_score_minimums.get(profile.language_test or "")
-    if is_ntu(dashboard.school_name):
+    if is_ncu(dashboard.school_name):
+        home_status, home_detail = ncu_language_check(profile.language_test, profile.language_score)
+        confirmation_items.append(home_detail)
+        gaps.append(home_detail)
+    elif is_ntu(dashboard.school_name):
         home_status, home_detail = ntu_language_check(profile.language_test, profile.language_score)
         if home_status == "pass":
             reasons.append(home_detail)
@@ -467,7 +484,9 @@ def _qualification_summary(
         rows.append("歷年GPA尚未填寫；須至少3.0且歷年平均至少70分" if profile.academic_gpa is None else
                     f"歷年GPA {profile.academic_gpa:g}，{'達' if profile.academic_gpa >= dashboard.academic_gpa_minimum else '未達'}門檻3.0")
     academic_minimum = dashboard.academic_score_minimum
-    if is_ntu(dashboard.school_name):
+    if is_ncu(dashboard.school_name):
+        rows.append(ncu_academic_check(profile.degree_level, profile.academic_score, profile.current_year)[1])
+    elif is_ntu(dashboard.school_name):
         rows.append(ntu_academic_check(profile.degree_level, profile.academic_gpa, profile.class_rank_percent)[1])
     elif profile.academic_score is None:
         rows.append("學業平均尚未填寫")
@@ -479,7 +498,9 @@ def _qualification_summary(
         rows.append(f"學業平均未達{dashboard.school_name}公開基本門檻 {academic_minimum:g} 分")
 
     test = profile.language_test
-    if is_ntu(dashboard.school_name):
+    if is_ncu(dashboard.school_name):
+        rows.append(ncu_language_check(test, profile.language_score)[1])
+    elif is_ntu(dashboard.school_name):
         rows.append(ntu_language_check(test, profile.language_score)[1])
     elif not test or test == "other" or profile.language_score is None:
         rows.append("語言成績尚未完成比對")

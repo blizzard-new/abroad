@@ -1,0 +1,776 @@
+{
+  "school_row_id": "ncu-134",
+  "school_name": "熊本大學 Kumamoto University",
+  "research_only": true,
+  "integrated": false,
+  "frozen_catalog_sha": "2637de25490e47bbb3987617bceefce02ae78446",
+  "checked_at": "2026-10-09T06:07:16.036647+00:00",
+  "reference_scope": "未標年本科Short-Term Exchange／一般到校；2026Fall住宿指南、2027費額plan；116與Grad包未取得。",
+  "quota": null,
+  "availability_status": "agreement_only",
+  "current_116_applicability_verified": false,
+  "publication_status": "latest_cycle_packet_not_retrieved; not an assertion that officially unpublished",
+  "fields": {
+    "city": {
+      "status": "reference_candidate_needs_review",
+      "note": "熊本市；公開地址2-39-1 Kurokami，學生處2-40-1 Kurokami。實際學部／研究科所屬校區未核。",
+      "sources": [
+        {
+          "source_id": "ug-exchange",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/undergraduate/exchange/",
+          "sha256": "e041597d61c7e9b7f21dd5835170225f7a288c3cfdc7503f3416d3c79959d5e4",
+          "checked_at": "2026-10-09T05:50:55.243931+00:00",
+          "metadata_path": "sources/ug-exchange/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "416f527633b3ea87f03c7586a3717ef87e9540b678d8cd08fb236fcaf7adda7e",
+              "char_count": 6471
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "housing-application",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/application/",
+          "sha256": "6122ea33200bb4fd1197596a7b9549dd530433ea43025b70a8fe80e077ed9903",
+          "checked_at": "2026-10-09T05:50:56.543339+00:00",
+          "metadata_path": "sources/housing-application/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "412cca9e849930cc0cbb9bb1562c53031cf7fb7865f931c0e05d1c53d84381b4",
+              "char_count": 5590
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "transport": {
+      "status": "reference_candidate_needs_review",
+      "note": "一般官方頁福岡／熊本機場→SAKURAMACHI Bus Terminal→校方接駁；巴士時間／票價屬未標年一般舊價未向運輸業者核。pickup限Short-Term Exchange且住International House、指定日工作日9–16時，須先填學生處發給連結。",
+      "sources": [
+        {
+          "source_id": "airport",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/arrival/airport/",
+          "sha256": "9fc89a374fa5aeea649ff767679eb043d428d3f7f9c4deef0de3f84e7943be89",
+          "checked_at": "2026-10-09T06:00:30.086857+00:00",
+          "metadata_path": "sources/airport/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "997bfdd933514effb923427ca773f553e80cde6c0b34f4bbe207b46c902768ca",
+              "char_count": 4716
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "immigration-pickup",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/arrival/immigration/",
+          "sha256": "67abe8287b5f44594452cf8d8eebbc355bbcfbb0e17907180bb7ed63edc5f710",
+          "checked_at": "2026-10-09T06:00:30.245703+00:00",
+          "metadata_path": "sources/immigration-pickup/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "e7e345471e4354ba4a85811f91fc372ac1d7f091cb03fe474a5f6d7fdf8705ee",
+              "char_count": 5184
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "travel",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/travel/",
+          "sha256": "13a78541ed2dba50365178112841febfa5b1f3a156e190f5bdd2749110b855e4",
+          "checked_at": "2026-10-09T06:00:29.239385+00:00",
+          "metadata_path": "sources/travel/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "d365e0dbab5d614b1d0f7152d0386af88272ab80e590a784e59d206bc46d44cd",
+              "char_count": 5780
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "quota": {
+      "status": "needs_confirmation",
+      "note": "116名額官方預定2026/10/12公告；115額度僅參考，未填入當期。",
+      "original_locator": {
+        "candidate_sha": "2637de25490e47bbb3987617bceefce02ae78446",
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 133,
+        "field": "quota"
+      },
+      "source_urls": [
+        "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf"
+      ],
+      "unresolved": null,
+      "current_116_host_verified": false
+    },
+    "eligibility": {
+      "status": "reference_candidate_needs_review",
+      "note": "Short-Term Exchange公開規則限full-time海外本科、開始時二年級以上、仍保母校全時在籍、協定校。E與J分開；這不是Grad接收條件。Graduate頁主要學位資訊，未取得當期非學位交換Grad包，不套本科規則。",
+      "sources": [
+        {
+          "source_id": "ug-exchange",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/undergraduate/exchange/",
+          "sha256": "e041597d61c7e9b7f21dd5835170225f7a288c3cfdc7503f3416d3c79959d5e4",
+          "checked_at": "2026-10-09T05:50:55.243931+00:00",
+          "metadata_path": "sources/ug-exchange/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "416f527633b3ea87f03c7586a3717ef87e9540b678d8cd08fb236fcaf7adda7e",
+              "char_count": 6471
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "graduate",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/graduate/",
+          "sha256": "fa5fdbe28daf08e913b90b5776ab65888524fb558c3be1eac84d71d3fa05dbeb",
+          "checked_at": "2026-10-09T05:52:37.182409+00:00",
+          "metadata_path": "sources/graduate/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "022d2845e611133298a9ed3df386b3869aaa131c821603fa5cbc7cb0e512a51e",
+              "char_count": 5580
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "language": {
+      "status": "reference_candidate_needs_review",
+      "note": "E非英語母語者TOEFLiBT≥61、IELTS可接受但頁面未列分數；CET／ELPT與教授信不收作語言證明。J限非日本籍、JLPT N2等同或更好、教授信不能語言證明。不能由IELTS可收自行算5.5或借其他年度表。",
+      "sources": [
+        {
+          "source_id": "ug-exchange",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/undergraduate/exchange/",
+          "sha256": "e041597d61c7e9b7f21dd5835170225f7a288c3cfdc7503f3416d3c79959d5e4",
+          "checked_at": "2026-10-09T05:50:55.243931+00:00",
+          "metadata_path": "sources/ug-exchange/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "416f527633b3ea87f03c7586a3717ef87e9540b678d8cd08fb236fcaf7adda7e",
+              "char_count": 6471
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "home_documents": {
+      "status": "available",
+      "note": "116母校簡章第4頁及首頁現行下載表格；home文件不代表host清單完整。",
+      "original_locator": {
+        "candidate_sha": "2637de25490e47bbb3987617bceefce02ae78446",
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 133,
+        "field": "home_documents"
+      },
+      "source_urls": [
+        "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf#page=4",
+        "https://oia.ncu.edu.tw/static/file/26/1026/img/272/forms-2022.pdf#page=1",
+        "https://oia.ncu.edu.tw/static/file/26/1026/img/272/forms-2022.pdf#page=2"
+      ],
+      "unresolved": null,
+      "current_116_host_verified": false
+    },
+    "host_documents": {
+      "status": "reference_candidate_needs_review",
+      "note": "公開頁指示向母校交換承辦取得application documents，且不接受學生個人寄信。已取得的是一般COE私費學生清單（申請、6月內4×3照、admission copy、財力、護照），不是初次host申請包；不得因此稱初次文件已查完。",
+      "sources": [
+        {
+          "source_id": "ug-exchange",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/undergraduate/exchange/",
+          "sha256": "e041597d61c7e9b7f21dd5835170225f7a288c3cfdc7503f3416d3c79959d5e4",
+          "checked_at": "2026-10-09T05:50:55.243931+00:00",
+          "metadata_path": "sources/ug-exchange/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "416f527633b3ea87f03c7586a3717ef87e9540b678d8cd08fb236fcaf7adda7e",
+              "char_count": 6471
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "coe",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/visas/certificate/",
+          "sha256": "08bca03d4999400341f6ab8fc7e85e00f42a6d03a874633fedd6b6d10073aa6f",
+          "checked_at": "2026-10-09T05:58:07.281739+00:00",
+          "metadata_path": "sources/coe/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "2e1cf6395a464bd7111abd076d2ca4ee95a9b3d3833ec5c09e4dfae4cb7a6093",
+              "char_count": 5131
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "home_deadline": {
+      "status": "available",
+      "note": "116線上12/4中午12時、系所紙本12/11下午5時（臺灣時間）；系所12/18送件不屬學生期限。",
+      "original_locator": {
+        "candidate_sha": "2637de25490e47bbb3987617bceefce02ae78446",
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 133,
+        "field": "home_deadline"
+      },
+      "source_urls": [
+        "https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf"
+      ],
+      "unresolved": null,
+      "current_116_host_verified": false
+    },
+    "host_deadline": {
+      "status": "reference_candidate_needs_review",
+      "note": "所查primary交換頁及附檔未取得當期提名／application截止；不能借其他sending university的Spring2027 October30日期，也不能寫官方未公告。",
+      "sources": [
+        {
+          "source_id": "ug-exchange",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/undergraduate/exchange/",
+          "sha256": "e041597d61c7e9b7f21dd5835170225f7a288c3cfdc7503f3416d3c79959d5e4",
+          "checked_at": "2026-10-09T05:50:55.243931+00:00",
+          "metadata_path": "sources/ug-exchange/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "416f527633b3ea87f03c7586a3717ef87e9540b678d8cd08fb236fcaf7adda7e",
+              "char_count": 6471
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "study_period": {
+      "status": "reference_candidate_needs_review",
+      "note": "公開Short-Term一般April／October入學，半年或一年；當期開始／結束／考試／離境日未取得。",
+      "sources": [
+        {
+          "source_id": "ug-exchange",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/undergraduate/exchange/",
+          "sha256": "e041597d61c7e9b7f21dd5835170225f7a288c3cfdc7503f3416d3c79959d5e4",
+          "checked_at": "2026-10-09T05:50:55.243931+00:00",
+          "metadata_path": "sources/ug-exchange/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "416f527633b3ea87f03c7586a3717ef87e9540b678d8cd08fb236fcaf7adda7e",
+              "char_count": 6471
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "courses": {
+      "status": "reference_candidate_needs_review",
+      "note": "E主修English Short-Term課＋部分Japanese，另可非學分初學日文；其他課先consult staff且不计completion。J主修學部專門課＋日文，可general education與English Short-Term；不套所有Grad。Brochure12頁全為圖片，已視讀封面／目錄，其餘未OCR／未讀。",
+      "sources": [
+        {
+          "source_id": "ug-exchange",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/undergraduate/exchange/",
+          "sha256": "e041597d61c7e9b7f21dd5835170225f7a288c3cfdc7503f3416d3c79959d5e4",
+          "checked_at": "2026-10-09T05:50:55.243931+00:00",
+          "metadata_path": "sources/ug-exchange/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "416f527633b3ea87f03c7586a3717ef87e9540b678d8cd08fb236fcaf7adda7e",
+              "char_count": 6471
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "ug-brochure",
+          "url": "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2022/02/ShortTermExchangeProgramBrochure.pdf",
+          "sha256": "0bfd276d71731f21cd14ded1120e695ad19484f798b84b09d7453191d28273b6",
+          "checked_at": "2026-10-09T05:52:39.092512+00:00",
+          "metadata_path": "sources/ug-brochure/metadata.json",
+          "original_text_pages": [
+            {
+              "page": 1,
+              "text_path": "page-001.txt",
+              "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "char_count": 0
+            },
+            {
+              "page": 2,
+              "text_path": "page-002.txt",
+              "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "char_count": 0
+            },
+            {
+              "page": 3,
+              "text_path": "page-003.txt",
+              "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "char_count": 0
+            },
+            {
+              "page": 4,
+              "text_path": "page-004.txt",
+              "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "char_count": 0
+            },
+            {
+              "page": 5,
+              "text_path": "page-005.txt",
+              "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "char_count": 0
+            },
+            {
+              "page": 6,
+              "text_path": "page-006.txt",
+              "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "char_count": 0
+            },
+            {
+              "page": 7,
+              "text_path": "page-007.txt",
+              "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "char_count": 0
+            },
+            {
+              "page": 8,
+              "text_path": "page-008.txt",
+              "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "char_count": 0
+            },
+            {
+              "page": 9,
+              "text_path": "page-009.txt",
+              "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "char_count": 0
+            },
+            {
+              "page": 10,
+              "text_path": "page-010.txt",
+              "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "char_count": 0
+            },
+            {
+              "page": 11,
+              "text_path": "page-011.txt",
+              "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "char_count": 0
+            },
+            {
+              "page": 12,
+              "text_path": "page-012.txt",
+              "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "char_count": 0
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "tuition": {
+      "status": "reference_candidate_needs_review",
+      "note": "一般fees頁列2026學位／research／auditing費及2027修費，但不是交換協定免學費證據。NCU116協議是否免除host費未取得，不能寫535800或auditing14800/credit為exchange費。",
+      "sources": [
+        {
+          "source_id": "fees",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/fees/",
+          "sha256": "3b2af9d541fd7bd676b5b05c5306edfa88d1e898977ebdecf12ac571b9a9fdc3",
+          "checked_at": "2026-10-09T05:52:38.307186+00:00",
+          "metadata_path": "sources/fees/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "b9549cd3232b6984dc5b72c56cf518824c69a6c13b3d6c092d4a5b208c62d4b1",
+              "char_count": 4755
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "ug-exchange",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/undergraduate/exchange/",
+          "sha256": "e041597d61c7e9b7f21dd5835170225f7a288c3cfdc7503f3416d3c79959d5e4",
+          "checked_at": "2026-10-09T05:50:55.243931+00:00",
+          "metadata_path": "sources/ug-exchange/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "416f527633b3ea87f03c7586a3717ef87e9540b678d8cd08fb236fcaf7adda7e",
+              "char_count": 6471
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "cost": {
+      "status": "reference_candidate_needs_review",
+      "note": "生活月預算未由已讀primary取得。International House現價與April2027 onwards plan分列：AB single9000rent＋8700planned common、C/D4400＋8700＋5000utilities、E9800＋8700＋actual，plan未定案；deposit27000／10000依房型別另列、不當月支出。全員租futon不退、費依月，個人公用事業與退宿清潔另核。",
+      "sources": [
+        {
+          "source_id": "housing-fees",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/charges/",
+          "sha256": "101db83becde79d2fa81e9f75e4d3f5f2d9397edb0c71ec2146117143c7d1c7e",
+          "checked_at": "2026-10-09T05:52:38.421399+00:00",
+          "metadata_path": "sources/housing-fees/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "f66735c04458459a7ac9ed615f0cb2a4aca3030b20c34367977935549731e4f2",
+              "char_count": 9487
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "housing-guidelines-fall2026",
+          "url": "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2026/06/2026_Fall_Semester_Applicaton_Guideline_en.pdf",
+          "sha256": "46753a404105c1dc5fd48c95628d0795ae3c01db2f8cecd8b6c3abe5a829a4fe",
+          "checked_at": "2026-10-09T05:58:05.347836+00:00",
+          "metadata_path": "sources/housing-guidelines-fall2026/metadata.json",
+          "original_text_pages": [
+            {
+              "page": 1,
+              "text_path": "page-001.txt",
+              "text_sha256": "ae50a24c6b5fcbfd963a2b0036307edfc6d0580ddf9e35ecf987a6225ce2ab21",
+              "char_count": 3477
+            },
+            {
+              "page": 2,
+              "text_path": "page-002.txt",
+              "text_sha256": "4b811899520dd5144dfdf4a1d72f8f5825f6b6fbd3c99b80f25ad06a335a2137",
+              "char_count": 2990
+            },
+            {
+              "page": 3,
+              "text_path": "page-003.txt",
+              "text_sha256": "5488d5f8b5ec4b5c7bb4c1d60b6c6fdc7628698b9f9b8746c84773a1b3dadd92",
+              "char_count": 1888
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "money-insurance",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/money/",
+          "sha256": "655432fd8c26dcede3162333af82d6e084ac574f702135497f82d4e475700438",
+          "checked_at": "2026-10-09T06:00:29.235113+00:00",
+          "metadata_path": "sources/money-insurance/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "b3e349081f86337075105f90595eeddf71f701e33368c62251d4e2598c7e18f6",
+              "char_count": 4601
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "housing": {
+      "status": "reference_candidate_needs_review",
+      "note": "宿舍學生申請透過academic supervisor校內限定System，入學前本人不能登入；一年約Jan／Jul。取得2026Fall指南7/17截止、未錄取也須先申請，exchange優先但不保房。C/D shared僅本科交換；入住最多5／11月、2027/2/26或8/27截止屬2026秋梯次，可能提前約2週，不套116。2027春／秋住宿包未取得。",
+      "sources": [
+        {
+          "source_id": "housing-application",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/application/",
+          "sha256": "6122ea33200bb4fd1197596a7b9549dd530433ea43025b70a8fe80e077ed9903",
+          "checked_at": "2026-10-09T05:50:56.543339+00:00",
+          "metadata_path": "sources/housing-application/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "412cca9e849930cc0cbb9bb1562c53031cf7fb7865f931c0e05d1c53d84381b4",
+              "char_count": 5590
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "housing-guidelines-fall2026",
+          "url": "https://ewww.kumamoto-u.ac.jp/media/medialibrary/2026/06/2026_Fall_Semester_Applicaton_Guideline_en.pdf",
+          "sha256": "46753a404105c1dc5fd48c95628d0795ae3c01db2f8cecd8b6c3abe5a829a4fe",
+          "checked_at": "2026-10-09T05:58:05.347836+00:00",
+          "metadata_path": "sources/housing-guidelines-fall2026/metadata.json",
+          "original_text_pages": [
+            {
+              "page": 1,
+              "text_path": "page-001.txt",
+              "text_sha256": "ae50a24c6b5fcbfd963a2b0036307edfc6d0580ddf9e35ecf987a6225ce2ab21",
+              "char_count": 3477
+            },
+            {
+              "page": 2,
+              "text_path": "page-002.txt",
+              "text_sha256": "4b811899520dd5144dfdf4a1d72f8f5825f6b6fbd3c99b80f25ad06a335a2137",
+              "char_count": 2990
+            },
+            {
+              "page": 3,
+              "text_path": "page-003.txt",
+              "text_sha256": "5488d5f8b5ec4b5c7bb4c1d60b6c6fdc7628698b9f9b8746c84773a1b3dadd92",
+              "char_count": 1888
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "housing",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/accommodation/international_house/",
+          "sha256": "ac1b02504c5b6c50379ce98816a85f935d2b4f1f1a9f47f15ec8dd1af5eb772a",
+          "checked_at": "2026-10-09T05:52:38.411467+00:00",
+          "metadata_path": "sources/housing/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "0ff62ccdb2f7caf7d815fbc119e2163d2ec81542b61184eb3f2867fab22eb47c",
+              "char_count": 4169
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "insurance": {
+      "status": "reference_candidate_needs_review",
+      "note": "出發一般頁travel accident是recommend；到校一般頁日本住>3月須國保、通常70%給付，回國需註銷。不能把recommend變強制；當期exchange其他強制校內責任險／精確費未核。",
+      "sources": [
+        {
+          "source_id": "money-insurance",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/money/",
+          "sha256": "655432fd8c26dcede3162333af82d6e084ac574f702135497f82d4e475700438",
+          "checked_at": "2026-10-09T06:00:29.235113+00:00",
+          "metadata_path": "sources/money-insurance/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "b3e349081f86337075105f90595eeddf71f701e33368c62251d4e2598c7e18f6",
+              "char_count": 4601
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "arrival-checklist",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/procedures/important/",
+          "sha256": "ad15da1f164cc84fc9bec8bc2b4101ca7c0e113eee5022d42e185e60dede9505",
+          "checked_at": "2026-10-09T06:00:30.515799+00:00",
+          "metadata_path": "sources/arrival-checklist/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "9db86f94c42517670f32c4f66c396b370c995a5775d4da322f3bc684153ef318",
+              "char_count": 7862
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "visa": {
+      "status": "reference_candidate_needs_review",
+      "note": "交換生收錄取及COE後持護照／照片向母國日本使領館申Student visa，赴日前取得；COE私費清單是另階段，一般約一月非保証。JPETS個人最新條件／当期移民清單未取得。",
+      "sources": [
+        {
+          "source_id": "passport-visa",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/passports/",
+          "sha256": "f7d06ee86746c9897a45d395871196afb146669e6be4fe336c9976b55ed8fad9",
+          "checked_at": "2026-10-09T06:00:29.226609+00:00",
+          "metadata_path": "sources/passport-visa/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "42886c92fff54fefda8793f14b0204eac4457e11a007c5ae994e2973bdbe1148",
+              "char_count": 5355
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "coe",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/visas/certificate/",
+          "sha256": "08bca03d4999400341f6ab8fc7e85e00f42a6d03a874633fedd6b6d10073aa6f",
+          "checked_at": "2026-10-09T05:58:07.281739+00:00",
+          "metadata_path": "sources/coe/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "2e1cf6395a464bd7111abd076d2ca4ee95a9b3d3833ec5c09e4dfae4cb7a6093",
+              "char_count": 5131
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    },
+    "arrival": {
+      "status": "reference_candidate_needs_review",
+      "note": "pickup form行前由学生處發連結、住IHouseShort-Term限定；一般到校表居民登記找到住所14日內、國保、年金20歲條件／非學位Menjo申請、銀行、orientation與Japanese placement／選課。頁面含舊alien registration與過時行李規定，僅參考不當最新法律或機場運輸規範；最新handbook／指定日未取得。",
+      "sources": [
+        {
+          "source_id": "immigration-pickup",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/arrival/immigration/",
+          "sha256": "67abe8287b5f44594452cf8d8eebbc355bbcfbb0e17907180bb7ed63edc5f710",
+          "checked_at": "2026-10-09T06:00:30.245703+00:00",
+          "metadata_path": "sources/immigration-pickup/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "e7e345471e4354ba4a85811f91fc372ac1d7f091cb03fe474a5f6d7fdf8705ee",
+              "char_count": 5184
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "post-arrival",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/procedures/",
+          "sha256": "6a46b4b31fd0b18adaf496163c9920e8690e757c74a452b87acf7a5d9cc30fc7",
+          "checked_at": "2026-10-09T05:58:06.663698+00:00",
+          "metadata_path": "sources/post-arrival/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "c6b11e5746c4c74b2b64f86a4669165e8ef30af977d2d898a4bb9757f5dccbe5",
+              "char_count": 4150
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "arrival-checklist",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/procedures/important/",
+          "sha256": "ad15da1f164cc84fc9bec8bc2b4101ca7c0e113eee5022d42e185e60dede9505",
+          "checked_at": "2026-10-09T06:00:30.515799+00:00",
+          "metadata_path": "sources/arrival-checklist/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "9db86f94c42517670f32c4f66c396b370c995a5775d4da322f3bc684153ef318",
+              "char_count": 7862
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "finance",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/procedures/finance/",
+          "sha256": "866156e2b004a20d70c0df352e6863efba6c306555475f75c7fdd8d6a9771957",
+          "checked_at": "2026-10-09T06:00:30.779416+00:00",
+          "metadata_path": "sources/finance/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "fc9e00ca05623e8d8fb732fb02a7225d662c062023b2be99b86bd7259073e31a",
+              "char_count": 5559
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "money-insurance",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/money/",
+          "sha256": "655432fd8c26dcede3162333af82d6e084ac574f702135497f82d4e475700438",
+          "checked_at": "2026-10-09T06:00:29.235113+00:00",
+          "metadata_path": "sources/money-insurance/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "b3e349081f86337075105f90595eeddf71f701e33368c62251d4e2598c7e18f6",
+              "char_count": 4601
+            }
+          ],
+          "full_document_read": false
+        },
+        {
+          "source_id": "travel",
+          "url": "https://ewww.kumamoto-u.ac.jp/en/prospective/departure/preparations/travel/",
+          "sha256": "13a78541ed2dba50365178112841febfa5b1f3a156e190f5bdd2749110b855e4",
+          "checked_at": "2026-10-09T06:00:29.239385+00:00",
+          "metadata_path": "sources/travel/metadata.json",
+          "original_text_pages": [
+            {
+              "page": null,
+              "text_path": "page-web.txt",
+              "text_sha256": "d365e0dbab5d614b1d0f7152d0386af88272ab80e590a784e59d206bc46d44cd",
+              "char_count": 5780
+            }
+          ],
+          "full_document_read": false
+        }
+      ],
+      "unresolved": "當期116／本人／協定範圍、最新表格與完整閱讀待review；各校具體缺口見unresolved.json。",
+      "current_116_host_verified": false
+    }
+  }
+}

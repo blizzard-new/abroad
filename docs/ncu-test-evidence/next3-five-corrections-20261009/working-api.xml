@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="12" skipped="0" tests="23" time="48.995" timestamp="2026-10-09T08:43:00.840951+00:00" hostname="e412858c778f"><testcase classname="tests.test_ncu_next3_review_corrections" name="test_ryukoku_initial_four_items_are_separate_and_jlpt_is_optional" time="4.949"><failure message="AssertionError: assert 6 == 10&#10; +  where 6 = len([{'name': '龍谷讀書計畫詳填（過短重寫、可另紙）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}, {'name': '母校日語能力評估... [], ...}, {'name': '全部交换生SPOT結果PDF（測驗三項、非語檢證書替代）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}])">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-17/test_ryukoku_initial_four_item0')
+
+    def test_ryukoku_initial_four_items_are_separate_and_jlpt_is_optional(tmp_path):
+        steps = {s['rule_id']: s for s in workflow(tmp_path)['steps']}
+        docs = steps['ncu-135-host-initial-reference']['document_requirements']
+&gt;       assert len(docs) == 10
+E       AssertionError: assert 6 == 10
+E        +  where 6 = len([{'name': '龍谷讀書計畫詳填（過短重寫、可另紙）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}, {'name': '母校日語能力評估... [], ...}, {'name': '全部交换生SPOT結果PDF（測驗三項、非語檢證書替代）', 'copies': None, 'copy_type': 'unspecified', 'signatures': [], ...}])
+
+tests/test_ncu_next3_review_corrections.py:30: AssertionError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_ryukoku_later_conditional_items_keep_stage_and_missing_forms" time="1.270"><failure message="AssertionError: assert [] == ['NASIC入寮日期回覆...；本人簽名，原件未取得）']&#10;  &#10;  Right contains 2 more items, first extra item: 'NASIC入寮日期回覆件（申請校方宿舍者；NASIC另送，原件未取得）'&#10;  Use -v to get more diff">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-17/test_ryukoku_later_conditional0')
+
+    def test_ryukoku_later_conditional_items_keep_stage_and_missing_forms(tmp_path):
+        steps = {s['rule_id']: s for s in workflow(tmp_path)['steps']}
+        for stage, names in [('housing', RYU_HOUSING), ('arrival', RYU_ARRIVAL)]:
+            docs = steps['ncu-135-host-' + stage]['document_requirements']
+&gt;           assert [d['name'] for d in docs] == names
+E           AssertionError: assert [] == ['NASIC入寮日期回覆...；本人簽名，原件未取得）']
+E             
+E             Right contains 2 more items, first extra item: 'NASIC入寮日期回覆件（申請校方宿舍者；NASIC另送，原件未取得）'
+E             Use -v to get more diff
+
+tests/test_ncu_next3_review_corrections.py:45: AssertionError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_kumamoto_nationality_and_language_submission_conditions_are_distinct" time="0.782"><failure message="AssertionError: assert '非日本國籍學生' in '現英／日交換頁：合作校正規在學、交換開始原則學部二年級以上、留在母校學籍、最長一年、可取得Student居留。舊2022路徑brochure第4頁卻寫三年級，保留版本矛盾。 E英文與J日文STEP學部方案；研究所degree admissions不能當研究所交換開放證明。健康文字由兩校／醫師審個案，不用regex自動拒收。'">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-17/test_kumamoto_nationality_and_0')
+
+    def test_kumamoto_nationality_and_language_submission_conditions_are_distinct(tmp_path):
+        p = partner('熊本'); a = ncu_field_audit(p.school_name)
+&gt;       assert '非日本國籍學生' in a['fields']['eligibility']['note']
+E       AssertionError: assert '非日本國籍學生' in '現英／日交換頁：合作校正規在學、交換開始原則學部二年級以上、留在母校學籍、最長一年、可取得Student居留。舊2022路徑brochure第4頁卻寫三年級，保留版本矛盾。 E英文與J日文STEP學部方案；研究所degree admissions不能當研究所交換開放證明。健康文字由兩校／醫師審個案，不用regex自動拒收。'
+
+tests/test_ncu_next3_review_corrections.py:55: AssertionError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_kumamoto_private_insurance_is_historical_one_time_not_annual" time="0.043"><failure message="AssertionError: assert ('一次性付款' in '一般行前頁建議旅行保險；抵達後住超三月辦NHI，校方說明通常給付70%。2022brochure私人保險年額只作歷史，不作116必繳保費。')">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-17/test_kumamoto_private_insuranc0')
+
+    def test_kumamoto_private_insurance_is_historical_one_time_not_annual(tmp_path):
+        p = partner('熊本'); a = ncu_field_audit(p.school_name)['fields']['insurance']
+        text = a['note']
+&gt;       assert '一次性付款' in text and '15,000' in text and '2022' in text
+E       AssertionError: assert ('一次性付款' in '一般行前頁建議旅行保險；抵達後住超三月辦NHI，校方說明通常給付70%。2022brochure私人保險年額只作歷史，不作116必繳保費。')
+
+tests/test_ncu_next3_review_corrections.py:71: AssertionError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_nufs_study_abroad_cannot_take_gjp_and_no_program_change_is_separate" time="0.050"><failure message="AssertionError: assert '不能修GJP課程' in 'GJP每週至少7個90分鐘課堂，建議不超過11；修日語者選一種core，intensive8堂16學分／semi4堂8學分，少於4人可取消。初級先熟悉平假名片假名。特別聽講建議10–12堂，不能套GJP上限。 GJSC英授容量可能抽籤...條件，JS904容量5、首堂缺席取消，2026資料不得當2027保證開課。 每90分鐘每週課一學期2NUFS學分，NUFS參考1學分=1.5ECTS；中央採認先由系所核定。placement頁到達後與FAQ提前六月／十二月測試說法不同。'">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-17/test_nufs_study_abroad_cannot_0')
+
+    def test_nufs_study_abroad_cannot_take_gjp_and_no_program_change_is_separate(tmp_path):
+        p = partner('名古屋外國語'); a = ncu_field_audit(p.school_name)
+&gt;       assert '不能修GJP課程' in a['fields']['courses']['note']
+E       AssertionError: assert '不能修GJP課程' in 'GJP每週至少7個90分鐘課堂，建議不超過11；修日語者選一種core，intensive8堂16學分／semi4堂8學分，少於4人可取消。初級先熟悉平假名片假名。特別聽講建議10–12堂，不能套GJP上限。 GJSC英授容量可能抽籤...條件，JS904容量5、首堂缺席取消，2026資料不得當2027保證開課。 每90分鐘每週課一學期2NUFS學分，NUFS參考1學分=1.5ECTS；中央採認先由系所核定。placement頁到達後與FAQ提前六月／十二月測試說法不同。'
+
+tests/test_ncu_next3_review_corrections.py:82: AssertionError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_ryukoku_reference_conditions_do_not_unlock_current_forms[unknown-unknown]" time="1.094"><failure message="KeyError: '證件照（Passport-style ID Photo）'">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-17/test_ryukoku_reference_conditi0')
+admission = 'unknown', housing = 'unknown'
+
+    @pytest.mark.parametrize('admission,housing', [('unknown', 'unknown'), ('accepted', 'on_campus'), ('accepted', 'off_campus')])
+    def test_ryukoku_reference_conditions_do_not_unlock_current_forms(tmp_path, admission, housing):
+        response = TestClient(create_app(tmp_path)).get('/application-center/catalog', params={'school': 'NCU', 'target_school': partner('龍谷').school_name, 'academic_year': '116', 'host_admission_status': admission, 'housing_choice': housing})
+        assert response.status_code == 200
+        items = {d['name']: d for d in response.json()['items']}
+        for name in RYU_INITIAL + RYU_HOUSING + RYU_ARRIVAL:
+&gt;           d = items[name]
+                ^^^^^^^^^^^
+E           KeyError: '證件照（Passport-style ID Photo）'
+
+tests/test_ncu_next3_review_corrections.py:97: KeyError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_ryukoku_reference_conditions_do_not_unlock_current_forms[accepted-on_campus]" time="0.525"><failure message="KeyError: '證件照（Passport-style ID Photo）'">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-17/test_ryukoku_reference_conditi1')
+admission = 'accepted', housing = 'on_campus'
+
+    @pytest.mark.parametrize('admission,housing', [('unknown', 'unknown'), ('accepted', 'on_campus'), ('accepted', 'off_campus')])
+    def test_ryukoku_reference_conditions_do_not_unlock_current_forms(tmp_path, admission, housing):
+        response = TestClient(create_app(tmp_path)).get('/application-center/catalog', params={'school': 'NCU', 'target_school': partner('龍谷').school_name, 'academic_year': '116', 'host_admission_status': admission, 'housing_choice': housing})
+        assert response.status_code == 200
+        items = {d['name']: d for d in response.json()['items']}
+        for name in RYU_INITIAL + RYU_HOUSING + RYU_ARRIVAL:
+&gt;           d = items[name]
+                ^^^^^^^^^^^
+E           KeyError: '證件照（Passport-style ID Photo）'
+
+tests/test_ncu_next3_review_corrections.py:97: KeyError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_ryukoku_reference_conditions_do_not_unlock_current_forms[accepted-off_campus]" time="4.574"><failure message="KeyError: '證件照（Passport-style ID Photo）'">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-17/test_ryukoku_reference_conditi2')
+admission = 'accepted', housing = 'off_campus'
+
+    @pytest.mark.parametrize('admission,housing', [('unknown', 'unknown'), ('accepted', 'on_campus'), ('accepted', 'off_campus')])
+    def test_ryukoku_reference_conditions_do_not_unlock_current_forms(tmp_path, admission, housing):
+        response = TestClient(create_app(tmp_path)).get('/application-center/catalog', params={'school': 'NCU', 'target_school': partner('龍谷').school_name, 'academic_year': '116', 'host_admission_status': admission, 'housing_choice': housing})
+        assert response.status_code == 200
+        items = {d['name']: d for d in response.json()['items']}
+        for name in RYU_INITIAL + RYU_HOUSING + RYU_ARRIVAL:
+&gt;           d = items[name]
+                ^^^^^^^^^^^
+E           KeyError: '證件照（Passport-style ID Photo）'
+
+tests/test_ncu_next3_review_corrections.py:97: KeyError</failure></testcase><testcase classname="tests.test_ncu_next3_review_corrections" name="test_new_reference_policies_bind_original_versions_and_explicit_conditions" time="1.026"><failure message="StopIteration">def test_new_reference_policies_bind_original_versions_and_explicit_conditions():
+        policies = json.loads((BUNDLE / 'document-conditions.json').read_text())
+        sources = {s['id']: s for s in json.loads(gzip.decompress((BUNDLE / 'source-evidence.json.gz').read_bytes()))}
+        for name in RYU_INITIAL + RYU_HOUSING + RYU_ARRIVAL:
+&gt;           p = next(p for p in policies if p['requirement_name'] == name)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           StopIteration
+
+tests/test_ncu_next3_review_corrections.py:110: StopIteration</failure></testcase><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_home_host_coe_visa_tickets_arrival_and_conditional_downloads[unknown-unknown-ncu-130-\u540d\u53e4\u5c4b\u5916\u570b\u8a9e\u5927\u5b78-13-8]" time="2.750" /><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_home_host_coe_visa_tickets_arrival_and_conditional_downloads[unknown-unknown-ncu-134-\u718a\u672c\u5927\u5b78-4-7]" time="1.244" /><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_home_host_coe_visa_tickets_arrival_and_conditional_downloads[unknown-unknown-ncu-135-\u9f8d\u8c37\u5927\u5b78-14-9]" time="0.966"><failure message="AssertionError: assert 6 == 14&#10; +  where 6 = len([{'id': '3ae516092c5d656f2fd1', 'sequence': 8, 'phase': '提名後外校申請', 'step_title': '龍谷初次申請與六份指定附件', ...}, {'id': 'd90f5e...與六份指定附件', ...}, {'id': '51f4776594dc3da93053', 'sequence': 13, 'phase': '提名後外校申請', 'step_title': '龍谷初次申請與六份指定附件', ...}])">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-17/test_home_host_coe_visa_ticket2')
+row = 'ncu-135', name = '龍谷大學', documents = 14, stages = 9
+admission = 'unknown', housing = 'unknown'
+
+    @pytest.mark.parametrize('row,name,documents,stages', CASES)
+    @pytest.mark.parametrize('admission,housing', [('unknown','unknown'), ('accepted','on_campus'), ('accepted','off_campus')])
+    def test_home_host_coe_visa_tickets_arrival_and_conditional_downloads(tmp_path,row,name,documents,stages,admission,housing):
+        partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+        assert partner.quota is None and partner.availability_status == 'agreement_only'
+        assert partner.degree_levels is None and partner.colleges is None
+        client=TestClient(create_app(tmp_path))
+        response=client.get('/application-workflow',params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'})
+        assert response.status_code == 200
+        workflow=response.json();steps={s['rule_id']:s for s in workflow['steps']}
+        assert workflow['review_status']=='pending_review' and workflow['published_at'] is None
+        assert len(steps['ncu-116-1-home-3']['document_requirements'])==7
+        assert not steps[row+'-host-apply']['document_requirements']
+        host=[s for k,s in steps.items() if k.startswith(row+'-host-')]
+        assert len(host)==stages+1 and all(not s['deadline_reminder_eligible'] and s['deadline_at'] is None for s in host)
+        coe,visa,tickets,arrival=[steps[row+'-host-'+s]for s in ['coe','visa','tickets','arrival']]
+        assert coe['order']&lt;visa['order']&lt;tickets['order']&lt;arrival['order']
+        assert len({s['phase']for s in [coe,visa,tickets,arrival]})==4
+        assert all(s['checked_at'].startswith('2026-10-09')for s in host)
+        response=client.get('/application-center/catalog',params={'school':'NCU','target_school':partner.school_name,'academic_year':'116','host_admission_status':admission,'housing_choice':housing})
+        assert response.status_code==200
+        conditional=[d for d in response.json()['items'] if d['applicability']]
+&gt;       assert len(conditional)==documents
+E       AssertionError: assert 6 == 14
+E        +  where 6 = len([{'id': '3ae516092c5d656f2fd1', 'sequence': 8, 'phase': '提名後外校申請', 'step_title': '龍谷初次申請與六份指定附件', ...}, {'id': 'd90f5e...與六份指定附件', ...}, {'id': '51f4776594dc3da93053', 'sequence': 13, 'phase': '提名後外校申請', 'step_title': '龍谷初次申請與六份指定附件', ...}])
+
+tests/test_ncu_nufs_kumamoto_ryukoku.py:46: AssertionError</failure></testcase><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_home_host_coe_visa_tickets_arrival_and_conditional_downloads[accepted-on_campus-ncu-130-\u540d\u53e4\u5c4b\u5916\u570b\u8a9e\u5927\u5b78-13-8]" time="5.917" /><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_home_host_coe_visa_tickets_arrival_and_conditional_downloads[accepted-on_campus-ncu-134-\u718a\u672c\u5927\u5b78-4-7]" time="1.217" /><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_home_host_coe_visa_tickets_arrival_and_conditional_downloads[accepted-on_campus-ncu-135-\u9f8d\u8c37\u5927\u5b78-14-9]" time="1.011"><failure message="AssertionError: assert 6 == 14&#10; +  where 6 = len([{'id': '3ae516092c5d656f2fd1', 'sequence': 8, 'phase': '提名後外校申請', 'step_title': '龍谷初次申請與六份指定附件', ...}, {'id': 'd90f5e...與六份指定附件', ...}, {'id': '51f4776594dc3da93053', 'sequence': 13, 'phase': '提名後外校申請', 'step_title': '龍谷初次申請與六份指定附件', ...}])">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-17/test_home_host_coe_visa_ticket5')
+row = 'ncu-135', name = '龍谷大學', documents = 14, stages = 9
+admission = 'accepted', housing = 'on_campus'
+
+    @pytest.mark.parametrize('row,name,documents,stages', CASES)
+    @pytest.mark.parametrize('admission,housing', [('unknown','unknown'), ('accepted','on_campus'), ('accepted','off_campus')])
+    def test_home_host_coe_visa_tickets_arrival_and_conditional_downloads(tmp_path,row,name,documents,stages,admission,housing):
+        partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+        assert partner.quota is None and partner.availability_status == 'agreement_only'
+        assert partner.degree_levels is None and partner.colleges is None
+        client=TestClient(create_app(tmp_path))
+        response=client.get('/application-workflow',params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'})
+        assert response.status_code == 200
+        workflow=response.json();steps={s['rule_id']:s for s in workflow['steps']}
+        assert workflow['review_status']=='pending_review' and workflow['published_at'] is None
+        assert len(steps['ncu-116-1-home-3']['document_requirements'])==7
+        assert not steps[row+'-host-apply']['document_requirements']
+        host=[s for k,s in steps.items() if k.startswith(row+'-host-')]
+        assert len(host)==stages+1 and all(not s['deadline_reminder_eligible'] and s['deadline_at'] is None for s in host)
+        coe,visa,tickets,arrival=[steps[row+'-host-'+s]for s in ['coe','visa','tickets','arrival']]
+        assert coe['order']&lt;visa['order']&lt;tickets['order']&lt;arrival['order']
+        assert len({s['phase']for s in [coe,visa,tickets,arrival]})==4
+        assert all(s['checked_at'].startswith('2026-10-09')for s in host)
+        response=client.get('/application-center/catalog',params={'school':'NCU','target_school':partner.school_name,'academic_year':'116','host_admission_status':admission,'housing_choice':housing})
+        assert response.status_code==200
+        conditional=[d for d in response.json()['items'] if d['applicability']]
+&gt;       assert len(conditional)==documents
+E       AssertionError: assert 6 == 14
+E        +  where 6 = len([{'id': '3ae516092c5d656f2fd1', 'sequence': 8, 'phase': '提名後外校申請', 'step_title': '龍谷初次申請與六份指定附件', ...}, {'id': 'd90f5e...與六份指定附件', ...}, {'id': '51f4776594dc3da93053', 'sequence': 13, 'phase': '提名後外校申請', 'step_title': '龍谷初次申請與六份指定附件', ...}])
+
+tests/test_ncu_nufs_kumamoto_ryukoku.py:46: AssertionError</failure></testcase><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_home_host_coe_visa_tickets_arrival_and_conditional_downloads[accepted-off_campus-ncu-130-\u540d\u53e4\u5c4b\u5916\u570b\u8a9e\u5927\u5b78-13-8]" time="2.253" /><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_home_host_coe_visa_tickets_arrival_and_conditional_downloads[accepted-off_campus-ncu-134-\u718a\u672c\u5927\u5b78-4-7]" time="4.225" /><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_home_host_coe_visa_tickets_arrival_and_conditional_downloads[accepted-off_campus-ncu-135-\u9f8d\u8c37\u5927\u5b78-14-9]" time="0.981"><failure message="AssertionError: assert 6 == 14&#10; +  where 6 = len([{'id': '3ae516092c5d656f2fd1', 'sequence': 8, 'phase': '提名後外校申請', 'step_title': '龍谷初次申請與六份指定附件', ...}, {'id': 'd90f5e...與六份指定附件', ...}, {'id': '51f4776594dc3da93053', 'sequence': 13, 'phase': '提名後外校申請', 'step_title': '龍谷初次申請與六份指定附件', ...}])">tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-17/test_home_host_coe_visa_ticket8')
+row = 'ncu-135', name = '龍谷大學', documents = 14, stages = 9
+admission = 'accepted', housing = 'off_campus'
+
+    @pytest.mark.parametrize('row,name,documents,stages', CASES)
+    @pytest.mark.parametrize('admission,housing', [('unknown','unknown'), ('accepted','on_campus'), ('accepted','off_campus')])
+    def test_home_host_coe_visa_tickets_arrival_and_conditional_downloads(tmp_path,row,name,documents,stages,admission,housing):
+        partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+        assert partner.quota is None and partner.availability_status == 'agreement_only'
+        assert partner.degree_levels is None and partner.colleges is None
+        client=TestClient(create_app(tmp_path))
+        response=client.get('/application-workflow',params={'home_school':'NCU','school':partner.school_name,'academic_year':'116'})
+        assert response.status_code == 200
+        workflow=response.json();steps={s['rule_id']:s for s in workflow['steps']}
+        assert workflow['review_status']=='pending_review' and workflow['published_at'] is None
+        assert len(steps['ncu-116-1-home-3']['document_requirements'])==7
+        assert not steps[row+'-host-apply']['document_requirements']
+        host=[s for k,s in steps.items() if k.startswith(row+'-host-')]
+        assert len(host)==stages+1 and all(not s['deadline_reminder_eligible'] and s['deadline_at'] is None for s in host)
+        coe,visa,tickets,arrival=[steps[row+'-host-'+s]for s in ['coe','visa','tickets','arrival']]
+        assert coe['order']&lt;visa['order']&lt;tickets['order']&lt;arrival['order']
+        assert len({s['phase']for s in [coe,visa,tickets,arrival]})==4
+        assert all(s['checked_at'].startswith('2026-10-09')for s in host)
+        response=client.get('/application-center/catalog',params={'school':'NCU','target_school':partner.school_name,'academic_year':'116','host_admission_status':admission,'housing_choice':housing})
+        assert response.status_code==200
+        conditional=[d for d in response.json()['items'] if d['applicability']]
+&gt;       assert len(conditional)==documents
+E       AssertionError: assert 6 == 14
+E        +  where 6 = len([{'id': '3ae516092c5d656f2fd1', 'sequence': 8, 'phase': '提名後外校申請', 'step_title': '龍谷初次申請與六份指定附件', ...}, {'id': 'd90f5e...與六份指定附件', ...}, {'id': '51f4776594dc3da93053', 'sequence': 13, 'phase': '提名後外校申請', 'step_title': '龍谷初次申請與六份指定附件', ...}])
+
+tests/test_ncu_nufs_kumamoto_ryukoku.py:46: AssertionError</failure></testcase><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_full_field_originals_student_summary_and_life_preserve_scope[ncu-130-\u540d\u53e4\u5c4b\u5916\u570b\u8a9e\u5927\u5b78-13-8]" time="6.165" /><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_full_field_originals_student_summary_and_life_preserve_scope[ncu-134-\u718a\u672c\u5927\u5b78-4-7]" time="1.287" /><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_full_field_originals_student_summary_and_life_preserve_scope[ncu-135-\u9f8d\u8c37\u5927\u5b78-14-9]" time="1.186" /><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_frozen_download_packet_is_immutable_and_new_reading_is_sha_bound" time="0.494" /><testcase classname="tests.test_ncu_nufs_kumamoto_ryukoku" name="test_visual_original_passages_do_not_invent_grade_scope_or_budget_total" time="0.566" /></testsuite></testsuites>

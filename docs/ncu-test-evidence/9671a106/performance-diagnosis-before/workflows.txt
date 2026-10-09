@@ -1,0 +1,39 @@
+{"case": "workflows", "elapsed_s": 8.546143760991981, "error": null}
+         1273945 function calls (1273927 primitive calls) in 8.546 seconds
+
+   Ordered by: cumulative time
+   List reduced from 155 to 30 due to restriction <30>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    8.546    8.546 ncu-cold-profile.py:10(<lambda>)
+        1    0.000    0.000    8.546    8.546 content_governance.py:177(load_published_workflows)
+        1    0.000    0.000    8.544    8.544 storage.py:548(cached_workflow_catalog)
+      3/1    0.029    0.010    8.544    8.544 storage.py:529(_cached_workflows)
+        1    0.000    0.000    8.544    8.544 content_governance.py:178(build)
+        1    0.000    0.000    8.493    8.493 storage.py:584(load_bundled_application_workflows)
+        1    0.025    0.025    8.463    8.463 storage.py:587(build)
+     1065    0.061    0.000    4.594    0.004 workflow_structuring.py:34(structure_application_workflow)
+     8559    0.441    0.000    4.148    0.000 workflow_structuring.py:271(_structure_step)
+        5    0.186    0.037    3.845    0.769 storage.py:369(read_jsonl)
+     1065    0.008    0.000    3.576    0.003 main.py:742(model_validate_json)
+     1065    1.654    0.002    3.568    0.003 {method 'validate_json' of 'pydantic_core._pydantic_core.SchemaValidator' objects}
+    49045    0.970    0.000    3.292    0.000 main.py:393(model_copy)
+    16475    0.124    0.000    2.207    0.000 workflow_structuring.py:502(_structure_document_requirement)
+    49045    0.304    0.000    2.074    0.000 main.py:971(__copy__)
+   147135    1.247    0.000    1.727    0.000 copy.py:61(copy)
+     8559    1.168    0.000    1.168    0.000 models.py:1287(populate_structured_legacy_fields)
+     7906    0.688    0.000    0.746    0.000 main.py:253(__init__)
+     5211    0.147    0.000    0.327    0.000 workflow_structuring.py:537(_infer_submission_method)
+    49045    0.305    0.000    0.305    0.000 {method 'copy' of 'set' objects}
+     5828    0.020    0.000    0.211    0.000 workflow_structuring.py:248(_structure_source)
+    49045    0.178    0.000    0.178    0.000 {method 'update' of 'set' objects}
+    49045    0.112    0.000    0.112    0.000 {method 'copy' of 'dict' objects}
+     8559    0.065    0.000    0.095    0.000 workflow_structuring.py:392(_deadline_metadata)
+    15684    0.092    0.000    0.092    0.000 {method 'casefold' of 'str' objects}
+    26704    0.044    0.000    0.086    0.000 {built-in method builtins.any}
+   196188    0.066    0.000    0.066    0.000 {method 'get' of 'dict' objects}
+     7906    0.058    0.000    0.058    0.000 {method 'validate_python' of 'pydantic_core._pydantic_core.SchemaValidator' objects}
+     2324    0.010    0.000    0.052    0.000 <frozen codecs>:319(decode)
+        1    0.002    0.002    0.050    0.050 storage.py:144(merge_application_workflows)
+
+

@@ -1,0 +1,50 @@
+{
+  "checked_at": "2026-10-08T23:50:35.720839+00:00",
+  "tested_ncu_sha": "fff2760b378d844701b6c5b373e5625ac74f1ca6",
+  "main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "branches": [
+    {
+      "branch": "origin/data/ccu-exchange-20261008",
+      "head": "0e70dbf29d0830ed3733c46090d5b7126689b958",
+      "shared_changed_paths": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/advisor.py",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/application_rules.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "src/exchange_info/workflow_structuring.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_ntu_integration.py"
+      ]
+    },
+    {
+      "branch": "origin/data/tku-exchange-20261008",
+      "head": "61659fe12cf5bb5f3fed2502f112039c7f8abd92",
+      "shared_changed_paths": [
+        "docs/api/openapi.json",
+        "pyproject.toml",
+        "src/exchange_info/api.py",
+        "src/exchange_info/application_documents.py",
+        "src/exchange_info/models.py",
+        "src/exchange_info/static/app.js",
+        "src/exchange_info/static/index.html",
+        "src/exchange_info/storage.py",
+        "src/exchange_info/university_registry.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/test_fit_signals.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_school_completeness.py",
+        "tests/test_task_documents_and_reference_plan.py"
+      ]
+    }
+  ],
+  "read_only_fetch": true,
+  "merge_performed": false,
+  "integration_order": "Shared loader/registry/models/API/UI paths require isolated combined-branch review and 851 workflow parity plus actual browser rerun. CI jobs.test.env change belongs to TKU; no workflow changes on NCU."
+}

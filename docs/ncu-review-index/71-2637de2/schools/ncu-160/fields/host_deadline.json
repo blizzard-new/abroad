@@ -1,0 +1,50 @@
+{
+  "key": "host_deadline",
+  "label": "提名與外校申請期限",
+  "status": "needs_confirmation",
+  "note": "官網Fall提名3/1–15、申請3/1–30；Spring提名9/1–15、申請9/1–30，年號未列。下載舊sheet只列2026/3/30與9/30，已過期；研究另至少開始前三月申請。",
+  "source_urls": [
+    "https://www.ntu.edu.sg/education/student-exchanges/exchange-programmes/inbound-programmes",
+    "https://gem.ntu.edu.sg/_customtags/ct_FileRetrieve.cfm?File_ID=21429"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.ntu.edu.sg/education/student-exchanges/exchange-programmes/inbound-programmes",
+      "source_id": "host-sgntu-apply",
+      "page": null,
+      "source_title": "南洋理工GEM Trailblazer申請",
+      "applicability": "南洋理工官網現行GEM Trailblazer；Information Sheet明載AY2026–27（2026/3/3更新），非116當期清單。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 158,
+        "field": "host_deadline",
+        "evidence_array_index": 0,
+        "text_sha256": "e01f5758e48200f877de23d204263f6c7dce34b664bca75da4e6187563f2d270",
+        "char_count": 5437
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://gem.ntu.edu.sg/_customtags/ct_FileRetrieve.cfm?File_ID=21429",
+      "source_id": "host-sgntu-info",
+      "page": 6,
+      "source_title": "南洋理工Information Sheet（官網連結）",
+      "applicability": "南洋理工官網現行GEM Trailblazer；Information Sheet明載AY2026–27（2026/3/3更新），非116當期清單。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 158,
+        "field": "host_deadline",
+        "evidence_array_index": 1,
+        "text_sha256": "c2f37b97477b6a95d179eafb26d3b327c5e53a31012dd360c3b9e17dac1cb63e",
+        "char_count": 2870
+      }
+    }
+  ],
+  "unresolved": "官網年度未列，2027當期期限尚未取得；舊2026日期禁止自動提醒。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "南洋理工官網現行GEM Trailblazer；Information Sheet明載AY2026–27（2026/3/3更新），非116當期清單。"
+}

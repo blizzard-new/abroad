@@ -5,6 +5,7 @@ from .discovery import localize_experience_digest
 from .experience_digests import attach_digests, load_digests, with_bundled_sources
 from .public_translation import PublicTranslationBatch, translate_public_batch
 from .school_content import complete_destination_profile
+from .ncu_document_conditions import preparation_state_key
 
 import csv
 from contextvars import ContextVar
@@ -18,7 +19,7 @@ from .access_control import (
 )
 from io import BytesIO, StringIO
 from pypdf import PdfReader
-from typing import Any, Mapping, Sequence
+from typing import Any, Literal, Mapping, Sequence
 from uuid import uuid4
 
 import hashlib
@@ -168,6 +169,7 @@ from .models import (
     AccountSessionRecord,
     AccountCalendarEvent,
     ApplicationCenterContext,
+    PartnerDocumentPreparationState,
     ApplicationDocumentCatalog,
     ApplicationDocumentTemplate,
     ApplicationFormDraft,
@@ -255,6 +257,7 @@ from .ntpu_student_view import (
     ntpu_exchange_info,
     ntpu_processed_pages,
 )
+from .ncu_student_view import build_ncu_student_dashboard, fetch_ncu_partner_universities, ncu_exchange_info, ncu_processed_pages
 from .ntu_student_view import (
     build_ntu_student_dashboard,
     fetch_ntu_partner_universities,
@@ -396,6 +399,7 @@ from .university_registry import (
     CGU,
     NTPU,
     NTU,
+    NCU,
     SUPPORTED_UNIVERSITIES,
     UniversityProfile,
     require_university,
@@ -1093,6 +1097,8 @@ def create_app(
                     partner_cache[university.id] = (
                         fetch_ccu_partner_universities()
                         if university.id == "ccu"
+                        else fetch_ncu_partner_universities()
+                        if university.id == NCU.id
                         else fetch_ntu_partner_universities()
                         if university.id == NTU.id
                         else fetch_ntpu_partner_universities()
@@ -1139,6 +1145,8 @@ def create_app(
         )
         if university.id == "ccu":
             return ccu_processed_pages()
+        if university.id == NCU.id:
+            return ncu_processed_pages()
         if university.id == NTU.id:
             return ntu_processed_pages()
         return (
@@ -1155,6 +1163,8 @@ def create_app(
             return ccu_exchange_info(partners_for_university(university))
         if university.id == NTPU.id:
             return ntpu_exchange_info(partners_for_university(university))
+        if university.id == NCU.id:
+            return ncu_exchange_info(partners_for_university(university))
         if university.id == NTU.id:
             return ntu_exchange_info(partners_for_university(university))
         return load_exchange_info(resolved_data_dir) or ExchangeInfo(school_name=CGU.school_name)
@@ -1206,6 +1216,8 @@ def create_app(
             return build_ntpu_student_dashboard(
                 partner_universities=partners_for_university(university)
             )
+        if university.id == NCU.id:
+            return build_ncu_student_dashboard(partner_universities=partners_for_university(university))
         if university.id == NTU.id:
             return build_ntu_student_dashboard(partner_universities=partners_for_university(university))
         # Building this one downloads the partner sheet and parses a dozen official PDFs: 10 to 40 seconds on the free
@@ -3189,6 +3201,9 @@ def create_app(
         program_type: str | None = Query(default=None, max_length=80),
         academic_year: str | None = Query(default=None, max_length=40),
         application_round: str | None = Query(default=None, max_length=80),
+        host_admission_status: Literal["unknown", "not_accepted", "accepted"] = Query(default="unknown"),
+        housing_choice: Literal["unknown", "on_campus", "off_campus"] = Query(default="unknown"),
+        semester: str | None = Query(default=None, max_length=30),
     ) -> ApplicationDocumentCatalog:
         university, partner = partner_context_for_school(target_school, school)
         context = ApplicationCenterContext(
@@ -3200,8 +3215,16 @@ def create_app(
             program_type=program_type or "exchange",
             academic_year=academic_year,
             application_round=application_round,
+            semester=semester,
+            partner_document_states={preparation_state_key(partner.school_name, academic_year, application_round, semester): PartnerDocumentPreparationState(
+                host_admission_status=host_admission_status, housing_choice=housing_choice,
+            )} if university.id == NCU.id else {},
         )
-        workflows = workflows_for_university(university) if university.id == "ccu" else load_application_workflows(resolved_data_dir)
+        workflows = (
+            workflows_for_university(university)
+            if university.id in {"ccu", NCU.id}
+            else load_application_workflows(resolved_data_dir)
+        )
         return build_application_document_catalog(context, workflows)
 
     @app.post(
@@ -3627,6 +3650,17 @@ def create_app(
             from .ccu_profile import align_completeness
             return align_completeness(result, partner)
         return result
+
+    @app.get("/partner-source-audit", response_model=dict)
+    def partner_source_audit(school: str = Query(min_length=2), home_school: str | None = Query(default=None)) -> dict:
+        university, partner = partner_context_for_school(school, home_school)
+        if university.id != NCU.id:
+            raise HTTPException(status_code=404, detail="此校尚無逐欄來源查核記錄。")
+        from .ncu_student_view import ncu_source_audit
+        audit = ncu_source_audit(partner.school_name)
+        if audit is None:
+            raise HTTPException(status_code=404, detail="未找到此合作項目查核記錄。")
+        return audit
 
     @app.get("/school-life-context", response_model=SchoolLifeContext)
     def school_life_context(

@@ -218,6 +218,22 @@ class ApplicationDocumentTemplate(BaseModel):
     version: str
 
 
+class PartnerDocumentPreparationState(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    host_admission_status: Literal["unknown", "not_accepted", "accepted"] = "unknown"
+    housing_choice: Literal["unknown", "on_campus", "off_campus"] = "unknown"
+
+
+class DocumentApplicability(BaseModel):
+    requirement_name: str
+    status: Literal["applicable", "not_applicable", "deferred", "needs_confirmation"]
+    note: str
+    source_urls: list[str] = Field(default_factory=list)
+    # Matching a personal condition never approves a source's academic year.
+    current_applicability_verified: bool = False
+
+
 class ApplicationCenterContext(BaseModel):
     school_name: str = "長庚大學"
     target_school: str | None = Field(default=None, max_length=200)
@@ -230,6 +246,7 @@ class ApplicationCenterContext(BaseModel):
     application_round: str | None = Field(default=None, max_length=80)
     semester: str | None = Field(default=None, max_length=30)
     flags: list[str] = Field(default_factory=list, max_length=20)
+    partner_document_states: dict[str, PartnerDocumentPreparationState] = Field(default_factory=dict, max_length=214)
 
 
 ApplicationDraftScalar = str | bool | int | float | None
@@ -1427,6 +1444,7 @@ class ApplicationPlanEligibilityStatus(str, Enum):
 class ApplicationPlanPreference(BaseModel):
     rank: int = Field(ge=1, le=5)
     school_name: str = Field(min_length=2, max_length=200)
+    document_preparation_state: PartnerDocumentPreparationState | None = None
 
 
 class ApplicationPlanEligibilityCheck(BaseModel):
@@ -1483,6 +1501,7 @@ class ApplicationPlanChecklistItem(BaseModel):
     task_origin: Literal["official", "reference_year"] = "official"
     reference_academic_year: str | None = None
     suggested_effort_hours: float | None = Field(default=None, gt=0, le=1000)
+    document_applicability: list[DocumentApplicability] = Field(default_factory=list)
 
 
 class UnifiedApplicationTask(ApplicationPlanChecklistItem):
@@ -1496,9 +1515,9 @@ class PersonalApplicationPlanRequest(BaseModel):
     college: str | None = Field(default=None, max_length=120)
     department: str | None = Field(default=None, max_length=120)
     degree_level: str | None = Field(default=None, max_length=80)
+    current_year: str | None = Field(default=None, max_length=40)
     academic_score: float | None = Field(default=None, ge=0, le=100)
     academic_gpa: float | None = Field(default=None, ge=0, le=4.3)
-    current_year: str | None = Field(default=None, max_length=40)
     class_rank_percent: float | None = Field(default=None, gt=0, le=100)
     language_test: Literal["toeic", "ielts", "toefl", "toefl_new", "duolingo", "other"] | None = None
     language_score: float | None = Field(default=None, ge=0, le=1000)
@@ -1568,6 +1587,7 @@ class ApplicationDocumentCatalogItem(BaseModel):
     applicability_status: Literal["verified_current", "needs_confirmation", "reference_only"] | None = None
     applicability_year: str | None = None
     applicability_note: str | None = None
+    applicability: DocumentApplicability | None = None
 
 
 class ApplicationDocumentCatalog(BaseModel):
@@ -2597,6 +2617,9 @@ class HomeSelectionRules(BaseModel):
     exclude_in_service: bool = False
     pending_quota_planning: bool = False
     partner_requirements_need_confirmation: bool = False
+    degree_score_minimums: dict[str, float] = Field(default_factory=dict)
+    excluded_undergraduate_years: list[str] = Field(default_factory=list)
+    language_certificate_required: bool = False
 
 
 class StudentDashboard(BaseModel):

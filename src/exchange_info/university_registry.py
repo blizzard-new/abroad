@@ -108,7 +108,25 @@ NTU = UniversityProfile(
 )
 
 
-SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU)
+NCU = UniversityProfile(
+    id="ncu",
+    school_name="國立中央大學",
+    short_name="中央",
+    english_name="National Central University",
+    aliases=("國立中央大學", "中央大學", "中央", "中大", "NCU", "National Central University"),
+    hero_image="/static/assets/ncu-campus.svg",
+    official_url="https://oia.ncu.edu.tw/p/412-1026-1872.php?Lang=zh-tw",
+    coverage_note="116學年度第一梯次簡章已公告；名額預定2026/10/12公告。115年度合作項目僅供規劃，外校當期條件逐項待核對。",
+    support_level="basic",
+    partner_count_hint=214,
+    academic_score_minimum=None,
+    student_card_signals=("國立中央大學", "NATIONALCENTRALUNIVERSITY", "NCU"),
+    # https://www.ncu.edu.tw/p/412-1000-87.php?Lang=zh-tw — checked 2026-10-08.
+    colleges=("文學院", "理學院", "工學院", "管理學院", "資訊電機學院", "地球科學學院", "客家學院", "生醫理工學院", "永續與綠能科技研究學院", "松濤全人學院"),
+)
+
+
+SUPPORTED_UNIVERSITIES = (CGU, NTPU, NTU, CCU, NCU)
 DEFAULT_UNIVERSITY = CGU
 
 

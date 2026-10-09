@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/ncu-bounded-audit-endpoints.py", line 7, in <module>
+    partners=fetch_ncu_partner_universities();names=[next(p.school_name for p in partners if word in p.school_name)for word in ['太原農林','復旦','新潟','北海道大學 Hokkaido University']]
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration

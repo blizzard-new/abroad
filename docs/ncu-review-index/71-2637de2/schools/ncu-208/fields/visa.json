@@ -1,0 +1,68 @@
+{
+  "key": "visa",
+  "label": "簽證／居留",
+  "status": "needs_confirmation",
+  "note": "UNY Current資源頁僅標題導航，沒有實際KITAS文件。另已查印尼政府E30F交換生類別頁，回200但正文Data Belum Tersedia；政府E30B與教育eVisa是不同類別，不能把degree財力／保費／有效期套給中央交換。",
+  "source_urls": [
+    "https://io.uny.ac.id/content/current-intl-students",
+    "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E30F",
+    "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E30B"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://io.uny.ac.id/content/current-intl-students",
+      "source_id": "host-uny-current",
+      "page": null,
+      "source_title": "UNY現行學生資源入口；正文不足",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "visa",
+        "evidence_array_index": 0,
+        "text_sha256": "95fc826fb4bc193a6a824734fe519c49551ff4d0a5f79d4ad809871477c31260",
+        "char_count": 21
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E30F",
+      "source_id": "gov-id-e30f",
+      "page": null,
+      "source_title": "印尼政府E30F交換生頁正文Data Belum Tersedia",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "visa",
+        "evidence_array_index": 1,
+        "text_sha256": "1baf7e8c04de7b64f5d4e8f3a9b46a6438a1e7ea4abbba4f9b899050b74d2e3e",
+        "char_count": 995
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.imigrasi.go.id/wna/daftar-visa-indonesia/E30B",
+      "source_id": "gov-id-e30b",
+      "page": null,
+      "source_title": "印尼政府E30B高等教育；不自動套交換",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "visa",
+        "evidence_array_index": 2,
+        "text_sha256": "b7aa70a3f39f6a88749de125c5fc117060e66b8ecf36ac31b4cdbddae2bf08e4",
+        "char_count": 5347
+      }
+    }
+  ],
+  "unresolved": "臺灣身份最新E30F具體文件／sponsor、申請／入境／到校與KITAS期限、費率仍待核對，政府單頁無內容與UNY未取得接收包分開。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。"
+}

@@ -1,0 +1,50 @@
+{
+  "key": "arrival",
+  "label": "到校與行前準備",
+  "status": "needs_confirmation",
+  "note": "港澳台公告確有2026/9/11到校與見面會、生活指南及各院學習說明，但只是新聞，不含可供116使用的註冊文件／時程。",
+  "source_urls": [
+    "https://global.sjtu.edu.cn/hmt/news/view/2314",
+    "https://global.sjtu.edu.cn/hmt/announcements"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://global.sjtu.edu.cn/hmt/news/view/2314",
+      "source_id": "host-sjtu-hmt-arrival",
+      "page": null,
+      "source_title": "SJTU2026秋港澳台交換到校公告（非完整申請指南）",
+      "applicability": "SJTU international factsheet2026–27與港澳台2026秋到校公告分開；中央115限定臺灣籍，116接收規則未核定。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 165,
+        "field": "arrival",
+        "evidence_array_index": 0,
+        "text_sha256": "fc10f1e63feec1d60adfc71b600b2499c874efcdcdb9386a8e5574854aa54990",
+        "char_count": 523
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://global.sjtu.edu.cn/hmt/announcements",
+      "source_id": "host-sjtu-hmt-notices",
+      "page": null,
+      "source_title": "SJTU港澳台公告索引（本次首頁無當期交換申請包）",
+      "applicability": "SJTU international factsheet2026–27與港澳台2026秋到校公告分開；中央115限定臺灣籍，116接收規則未核定。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 165,
+        "field": "arrival",
+        "evidence_array_index": 1,
+        "text_sha256": "6fafa09035f7d4773141cf194e52ab75ed506d1b3d82f2a2d73f3a361eb853f3",
+        "char_count": 528
+      }
+    }
+  ],
+  "unresolved": "116到校包、check-in與學院註冊要求未取得。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "SJTU international factsheet2026–27與港澳台2026秋到校公告分開；中央115限定臺灣籍，116接收規則未核定。"
+}

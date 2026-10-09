@@ -1,0 +1,68 @@
+{
+  "key": "housing",
+  "label": "住宿與申請期限",
+  "status": "needs_confirmation",
+  "note": "TYS供應者年例秋5/1、春10/1開始（三個月前），每人只填一份，可等錄取信後補。首頁卻稱spring2026於2026/10/1申請、11月出offer，年份矛盾保留；不是證實2028春開放。Offer僅一次且4天有效，接受具約束力；已讀頁無最後申請日。 整學期租約，遲到／早離仍付整期；每月6日繳租，確切租金以offer，官網租金含家具20／月、水／網路／每月4次sauna，未在同句確認電费。新約另一次EUR60；2026–27校表330–500舊估價不當2027最新報價。",
+  "source_urls": [
+    "https://tys.fi/en/exchange-students",
+    "https://tys.fi/exchange-students/when-and-how-to-apply",
+    "https://tys.fi/exchange-students/payments"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://tys.fi/en/exchange-students",
+      "source_id": "host-turku-tys",
+      "page": null,
+      "source_title": "TYS交換生住房供應者（非Turku校方）",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "housing",
+        "evidence_array_index": 0,
+        "text_sha256": "d2d2429cf4f71e75deb9e77176120075d88ababe31746e6a1141552ccc79a043",
+        "char_count": 1421
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://tys.fi/exchange-students/when-and-how-to-apply",
+      "source_id": "host-turku-tys-apply",
+      "page": null,
+      "source_title": "TYS住房申請開放／期限",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "housing",
+        "evidence_array_index": 1,
+        "text_sha256": "599fcdb401ddcf5063170a012913d4a1f849a2039b190e843c6e0e48d25d1474",
+        "char_count": 2368
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://tys.fi/exchange-students/payments",
+      "source_id": "host-turku-tys-payment",
+      "page": null,
+      "source_title": "TYS付款與租約",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "housing",
+        "evidence_array_index": 2,
+        "text_sha256": "92523a9b1e80517b6bf31cdb05f29f814cf49a882a1e37ba1da5d94bc2685a1a",
+        "char_count": 2086
+      }
+    }
+  ],
+  "unresolved": "116TYS實際開放／最後截止、房型報價、電費及首頁年份矛盾待確認。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。"
+}

@@ -1,0 +1,339 @@
+{
+  "candidate_sha": "2637de25490e47bbb3987617bceefce02ae78446",
+  "started_at": "2026-10-09T05:52:30.103238+00:00",
+  "start_sha": "2637de25490e47bbb3987617bceefce02ae78446",
+  "start_worktree_porcelain": "",
+  "results": [
+    {
+      "name": "affected_api_life",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ncu_japan3.py",
+        "tests/test_ncu_shizuoka_chuo_kansai.py",
+        "tests/test_ncu_document_conditions.py",
+        "tests/test_life_context.py",
+        "--junitxml",
+        "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/affected_api_life.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-freeze-correction",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:52:30.140021+00:00",
+      "finished_at": "2026-10-09T05:54:03.566482+00:00",
+      "log": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/affected_api_life.log",
+      "junit": {
+        "tests": 177,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": []
+    },
+    {
+      "name": "openapi",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "cwd": "/tmp/abroad-ncu-freeze-correction",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:54:03.597988+00:00",
+      "finished_at": "2026-10-09T05:54:07.839887+00:00",
+      "log": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/openapi.log"
+    },
+    {
+      "name": "workflow_parity",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "/tmp/ncu-omu-parity-compare.py"
+      ],
+      "cwd": "/tmp/abroad-ncu-freeze-correction",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:54:07.865760+00:00",
+      "finished_at": "2026-10-09T05:54:18.409199+00:00",
+      "log": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/workflow_parity.log"
+    },
+    {
+      "name": "js_app",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/app.js"
+      ],
+      "cwd": "/tmp/abroad-ncu-freeze-correction",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:54:18.434437+00:00",
+      "finished_at": "2026-10-09T05:54:18.596221+00:00",
+      "log": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/js_app.log"
+    },
+    {
+      "name": "js_discovery-ui",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/discovery-ui.js"
+      ],
+      "cwd": "/tmp/abroad-ncu-freeze-correction",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:54:18.613172+00:00",
+      "finished_at": "2026-10-09T05:54:18.668924+00:00",
+      "log": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/js_discovery-ui.log"
+    },
+    {
+      "name": "js_multi-plan",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/multi-plan.js"
+      ],
+      "cwd": "/tmp/abroad-ncu-freeze-correction",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:54:18.686742+00:00",
+      "finished_at": "2026-10-09T05:54:18.733062+00:00",
+      "log": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/js_multi-plan.log"
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "HEAD^",
+        "HEAD"
+      ],
+      "cwd": "/tmp/abroad-ncu-freeze-correction",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:54:18.753724+00:00",
+      "finished_at": "2026-10-09T05:54:19.217340+00:00",
+      "log": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/diff.log"
+    },
+    {
+      "name": "lock",
+      "command": [
+        "uv",
+        "lock",
+        "--check"
+      ],
+      "cwd": "/tmp/abroad-ncu-freeze-correction",
+      "exit_code": 0,
+      "started_at": "2026-10-09T05:54:19.250322+00:00",
+      "finished_at": "2026-10-09T05:54:19.376463+00:00",
+      "log": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/lock.log"
+    },
+    {
+      "name": "browser_corrected_content",
+      "command": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "ncu_verify_failure_events",
+        "tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[tohoku-\\u6771\\u5317\\u5927\\u5b78-\\u4e09\\u985e\\u521d\\u6b21\\u652f\\u63f4\\u4ef6-3-https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf-\\u539f\\u4ef657\\u9801-390]",
+        "tests/e2e/test_ncu_japan3.py::test_ncu_japan3_actual_language_packet_read_scope_and_life[tohoku-\\u6771\\u5317\\u5927\\u5b78-\\u4e09\\u985e\\u521d\\u6b21\\u652f\\u63f4\\u4ef6-3-https://sup.bureau.tohoku.ac.jp/cmssys/wp-content/uploads/2025/08/Arrival-Guide-for-New-International-Students.pdf-\\u539f\\u4ef657\\u9801-1440]",
+        "tests/e2e/test_ncu_shizuoka_chuo_kansai.py::test_ncu_reference_scope_and_student_content[chuo-\\u65e5\\u672c\\u4e2d\\u592e\\u5927\\u5b78-Part1\\u4e03\\u985e\\u5171\\u901a\\uff0cC1\\uff0fC2\\u6309\\u5b78\\u5236\\u64c7\\u4e00-7-390]",
+        "tests/e2e/test_ncu_shizuoka_chuo_kansai.py::test_ncu_reference_scope_and_student_content[chuo-\\u65e5\\u672c\\u4e2d\\u592e\\u5927\\u5b78-Part1\\u4e03\\u985e\\u5171\\u901a\\uff0cC1\\uff0fC2\\u6309\\u5b78\\u5236\\u64c7\\u4e00-7-1440]",
+        "tests/e2e/test_ncu_shizuoka_chuo_kansai.py::test_ncu_reference_scope_and_student_content[kansai-\\u95dc\\u897f\\u5927\\u5b78-\\u521d\\u6b21\\u516d\\u985e\\u5171\\u901a\\uff0c\\u4e26\\u975e\\u6bcd\\u6821\\u4e03\\u4ef6-6-390]",
+        "tests/e2e/test_ncu_shizuoka_chuo_kansai.py::test_ncu_reference_scope_and_student_content[kansai-\\u95dc\\u897f\\u5927\\u5b78-\\u521d\\u6b21\\u516d\\u985e\\u5171\\u901a\\uff0c\\u4e26\\u975e\\u6bcd\\u6821\\u4e03\\u4ef6-6-1440]",
+        "--junitxml",
+        "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser_corrected_content.xml"
+      ],
+      "cwd": "/tmp/abroad-ncu-freeze-correction",
+      "exit_code": 1,
+      "started_at": "2026-10-09T05:54:23.984669+00:00",
+      "finished_at": "2026-10-09T05:56:43.089270+00:00",
+      "log": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser_corrected_content.log",
+      "junit": {
+        "tests": 6,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_test_cases": [
+        {
+          "name": "test_ncu_reference_scope_and_student_content[chuo-\\u65e5\\u672c\\u4e2d\\u592e\\u5927\\u5b78-Part1\\u4e03\\u985e\\u5171\\u901a\\uff0cC1\\uff0fC2\\u6309\\u5b78\\u5236\\u64c7\\u4e00-7-390]",
+          "class": "tests.e2e.test_ncu_shizuoka_chuo_kansai",
+          "message": "AssertionError: Locator expected to contain text '抵達後'\nActual value: None\nError: element(s) not found \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for locator(\"#detail-application\").locator(\".workflow-step\").filter(has=locator(\":scope > summary\").filter(has_text=\"到校orientation及正式選課\")).first.locator(\":scope > summary\")\n\nAria snapshot:\n- link \"跳到主要內容\":\n  - /url: \"#main-content\"\n- main:\n  - button \"開啟功能選單\"\n  - link \"UniWay 首頁\":\n    - /url: \"#home\"\n    - strong: UniWay\n  - status\n  - region \"日本中央大學 Chuo University\":\n    - button \"加入比較日本中央大學 Chuo University\"\n    - button \"登入建立計畫\"\n    - img \"日本中央大學 Chuo University官方照片\"\n    - link \"圖片來源\":\n      - /url: https://www.chuo-u.ac.jp/english/admissions/exchange/\n    - text: 日本 · 交換學生 下一站\n    - strong: 日本\n    - text: 東京Tama／Myogadani／Korakuen／Ichigaya Tamachi\n    - heading \"日本中央大學 Chuo University\" [level=1]\n    - text: 我的資格\n    - strong: 尚未進行資格初判\n    - text: 合作校參考時程\n    - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】2027春提名2026/7/10起：Grad截止9/7、Part1 9/15–30已過；UG提名截止9/30已過、Part1 10/15–31；兩者Part2 11/1–10，健康可較晚但最終日未明。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】2027秋明示Tentative：提名2027/1/10起，Grad截止2/15、Part1 3/1–15；UG提名截止3/15、Part1 4/1–15；Part2 5/1–10。不能當116已核准精確提醒，2028春尚未取得。（適用年度待確認）\n    - text: 語言門檻\n    - strong: 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】法／經濟／文／政策／Global Mana…\n    - text: 生活費參考\n    - strong: 具互免協議交換者原則免Chuoregistration與tuition，仍繳中央母校學雜；日本語班free有成績學分。2027春表無一般交換獎學金，部分partner例外依協議。 2027春表生活費約50000／月不含住宿；國保約2000／月，醫療口譯支援通…\n    - text: 交換名額\n    - strong: 依公告\n    - text: 研修期間\n    - strong:\n      - text: 116母校方案：2027/9–2028/2\n      - strong: 一學期\n      - text: 、2027/9–2028/6\n      - strong: 一學年\n      - text: 、2028/2–6\n      - strong: 一學期\n      - text: ；實際依外校校曆與可提名學期確認。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】\n      - strong: 一學期\n      - text: 或兩學期；多全年課建議4月開始整學年，這是建議而非禁止秋入學。2027春表時程秋9/21，但AY2027獨立校曆classes begin9/20，矛盾保留。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】AY2027校曆春classes4/9、末課7/21、exam7/26–31；秋classes9/20、末課2028/1/22、exam1/24–29，學年到3/31。初到orientation另依接收通知。\n    - tablist \"交換學校詳細資訊\":\n      - tab \"快速了解\"\n      - tab \"申請方式\" [selected]\n      - tab \"生活情報\"\n      - tab \"出發前提醒\"\n      - tab \"學生心得\"\n      - tab \"學生社群\"\n    - tabpanel \"申請方式\":\n      - heading \"詳細申請流程\" [level=2]\n      - strong: 官方來源已整理，13 個步驟仍需確認\n      - paragraph: 已核對母校116-1；相關公開附件20份，個別外校原文與當期適用性另核對。\n      - text: 適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/09 上午04:48\n      - strong: 適用年度或梯次仍待確認\n      - text: 來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。\n      - strong: 這是尚未完成正式發布的參考流程\n      - text: 可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。\n      - strong: 共 18 個步驟\n      - button \"回報規定錯誤\"\n      - button \"重新載入流程資料\"\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 核對中央116-1資格與當期名額\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 完成中央線上申請並列印簽核\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 繳交中央校內紙本甄選文件至系所\n      - group:\n        - text: 甄選與提名 · 中央國際事務處／所屬系所\n        - strong: 核對校內錄取並準備提名\n      - group:\n        - text: 提名後外校申請 · 中央承辦（非學生自行提名）\n        - strong: 母校承辦：本科／研究所不同提名日\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 提名後外校申請 · 學生與中央承辦／接收單位\n        - strong: Part1七類共通，C1／C2按學制擇一\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n        - paragraph: manaba填survey＋upload，無須寄紙本；最新116／2028春未核。C1本科或C2研究所同列擇一；兩份空白格式都列於官方來源，不以本科表代研究所表。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 線上申請／上傳\n        - list:\n          - listitem: 期限說明：方式來自2027春／暫定2027秋參考程序；中央116指定入口、方式及精確日期仍須兩校確認，不代表已開放當期送件。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 尚未開始\n        - text: 線上申請／上傳 · 學生手動\n        - term: 下一步\n        - definition: 先備齊文件並再次核對官方送件方式。\n        - term: 承辦\n        - definition: 學生與中央承辦／接收單位\n        - term: 期限\n        - definition: 參考時程：明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。（精確日期待確認，不會自動提醒）\n        - term: 收件證明\n        - definition: 尚未記錄\n        - button \"登入後記錄進度\"\n        - paragraph: 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: manaba填survey＋upload，無須寄紙本；最新116／2028春未核。C1本科或C2研究所同列擇一；兩份空白格式都列於官方來源，不以本科表代研究所表。\n          - listitem: 最新116名額、學制／學院協議、所選學期與個人條件仍待確認；不因母校推薦、外校錄取或住宿選擇自動解除當期文件封鎖。\n        - heading \"這一步要準備\" [level=4]\n        - list:\n          - listitem: Part1線上web application（manaba提名者入口） 文件形式待確認 · 待官方確認\n          - listitem: Part1 A彩色ID照：JPEG高4×寬3cm 文件形式待確認 · 待官方確認\n          - listitem: Part1 B護照ID；辦理中官方ID／續期舊護照後補新本 影本 · 待官方確認\n          - listitem: Part1 C1本科或C2研究所電腦計畫（按學制擇一） 文件形式待確認 · 待官方確認\n          - listitem: Part1 D最近英文在學證明 文件形式待確認 · 待官方確認\n          - listitem: Part1 E最新正式英文成績 文件形式待確認 · 待官方確認\n          - listitem:\n            - text: Part1 G1全員親筆誓約 文件形式待確認 · 簽署：申請人親筆簽名 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://www.chuo-u.ac.jp/uploads/2024/12/G1-Pledge.docx\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 提名後外校申請 · 學生與中央承辦／接收單位\n        - strong: Part1學院／語言／研究所五類條件件\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 合作校申請 · 學生與兩校國際處\n        - strong: 核對外校當期文件並依通知申請\n      - group:\n        - text: 提名後外校申請 · 學生與中央承辦／接收單位\n        - strong: Part2 J＋K財力兩類（至少100000／月×全期）\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 提名後外校申請 · 學生與中央承辦／接收單位\n        - strong: Part2 L健康與條件JPETS追加\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 錄取後住房 · 學生與中央承辦／接收單位\n        - strong: 交換生住房survey／契約與無房保證\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 行前準備 · 中央國際事務處／所屬系所\n        - strong: 確認課程、學分與中央註冊繳費\n      - group:\n        - text: 行前準備 · 中央國際事務處／所屬系所\n        - strong: 出國前兩週完成中央行前程序\n        - text: 出國前兩週\n      - group:\n        - text: 行前準備 · 學生與中央承辦／接收單位\n        - strong: 行前COE／入學許可與Student visa\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 抵達後 · 學生與中央承辦／接收單位\n        - strong: 到校新生說明會及正式選課\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 抵達後 · 中央國際事務處／所屬系所\n        - strong: 到校註冊並回報當地聯絡方式\n      - group:\n        - text: 交換結束 · 學生與中央承辦／接收單位\n        - strong: manaba限期成績下載／母校直寄另申請\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 返國後 · 中央國際事務處／所屬系所\n        - strong: 返國後一週完成中央返校程序\n        - text: 返國後一週內\n      - strong: 本流程使用的官方來源\n      - link \"中央116-1甄選簡章 母校當期正式公告 · 優先級 1\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf\n      - link \"中央115名額表（歷史參考） 母校當期正式公告 · 優先級 1\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf\n      - link \"Academic Calendar 2027 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/07/english_admissions_exchange_semester-or-full-year_03_20260728.pdf\n      - link \"Fact Sheet for Chuo Student Exchange Program(Inbound) April 2027 enrollment 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/07/english_admissions_exchange_semester-or-full-year_01_20260707.pdf\n      - link \"日本中央2027春／暫定秋交換與現行表格 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/english/admissions/exchange/semester-or-full-year/\n      - link \"[F] Certificate of JPN language proficiency 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2024/12/F-Certificate-of-JPN-language-proficiency.doc\n      - link \"[C1] Study Plan 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_C1_20260904.docx\n      - link \"[C2] Study Plan 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_C2_20260904.docx\n      - link \"[G2] Confirmation on Application for Science & Engineering 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/08/english_admissions_exchange_semester-or-full-year_04_20260821.pdf\n      - link \"[H] Academic Reference 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2024/12/H-Academic-Reference_Graduate.doc\n      - link \"[J] Declaration and Certification of Finance 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2024/12/J-Declaration-and-Certification-of-Finances.doc\n      - link \"[L] Certificate of Health 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2024/12/L-Certificate-of-Health.pdf\n      - link \"International Residences FAQ 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/english/admissions/residences/faq/\n      - link \"List of Chuo Student Exchange Partners(as of July, 2026) 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/08/english_admissions_exchange_semester-or-full-year_02_20260818.pdf\n      - link \"[G1] Pledge 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2024/12/G1-Pledge.docx\n      - link \"Undergraduate Programs(Separate sheets are provided for each faculty.) 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_05_20260924.xlsx\n      - link \"Graduate Programs (Separate sheets are provided for each graduate school.) 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_02_20260924.xlsx\n      - link \"International Residence Chuo 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/english/admissions/residences/\n      - link \"FACT SHEET 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/07/english_admissions_exchange_semester-or-full-year_06_20260707.pdf\n      - link \"International Residence Chuo 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/english/admissions/residences/irc/\n      - paragraph: 截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。\n    - complementary \"申請準備進度與官方來源\":\n      - heading \"我的申請進度\" [level=2]\n      - progressbar \"申請準備進度\":\n        - strong: 0 / 5 已完成\n        - text: 準備中\n      - paragraph:\n        - text: 登入以保存進度\n        - button \"登入\"\n      - checkbox \"確認資格與語言門檻\" [disabled]\n      - text: 確認資格與語言門檻\n      - checkbox \"比較課程、費用與生活\" [disabled]\n      - text: 比較課程、費用與生活\n      - checkbox \"備妥校內申請文件\" [disabled]\n      - text: 備妥校內申請文件\n      - checkbox \"完成校內甄選送件\" [disabled]\n      - text: 完成校內甄選送件\n      - checkbox \"完成合作校線上申請\" [disabled]\n      - text: 完成合作校線上申請\n      - strong: 送件前確認\n      - paragraph: 截止日與資格以當期官方公告為準。\n- paragraph:\n  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），\n  - button \"停用匿名使用統計\"\n  - text: 。\n  - link \"隱私權政策\":\n    - /url: /privacy\n  - link \"使用條款\":\n    - /url: /terms"
+        },
+        {
+          "name": "test_ncu_reference_scope_and_student_content[chuo-\\u65e5\\u672c\\u4e2d\\u592e\\u5927\\u5b78-Part1\\u4e03\\u985e\\u5171\\u901a\\uff0cC1\\uff0fC2\\u6309\\u5b78\\u5236\\u64c7\\u4e00-7-1440]",
+          "class": "tests.e2e.test_ncu_shizuoka_chuo_kansai",
+          "message": "AssertionError: Locator expected to contain text '抵達後'\nActual value: None\nError: element(s) not found \nCall log:\n  - Expect \"to_contain_text\" with timeout 5000ms\n  - waiting for locator(\"#detail-application\").locator(\".workflow-step\").filter(has=locator(\":scope > summary\").filter(has_text=\"到校orientation及正式選課\")).first.locator(\":scope > summary\")\n\nAria snapshot:\n- link \"跳到主要內容\":\n  - /url: \"#main-content\"\n- complementary \"系統功能\":\n  - link \"UniWay 首頁\":\n    - /url: \"#home\"\n    - strong: UniWay\n  - navigation \"公開探索導覽\":\n    - link \"首頁\":\n      - /url: \"#home\"\n    - link \"學校搜尋\":\n      - /url: \"#partners\"\n    - link \"論壇\":\n      - /url: \"#forum\"\n    - link \"用戶評價\":\n      - /url: \"#feedback\"\n    - group:\n      - link \"我的申請\":\n        - /url: \"#advisor\"\n  - button \"返回上一頁\": 返回\n  - button \"國立中央大學\":\n    - strong: 國立中央大學\n  - button \"切換為深色模式\"\n  - button \"重新整理最新資料\"\n  - button \"登入或建立帳號\": 登入\n- main:\n  - status\n  - region \"日本中央大學 Chuo University\":\n    - button \"加入比較日本中央大學 Chuo University\": 加入比較\n    - button \"登入建立計畫\"\n    - img \"日本中央大學 Chuo University官方照片\"\n    - link \"圖片來源\":\n      - /url: https://www.chuo-u.ac.jp/english/admissions/exchange/\n    - text: 日本 · 交換學生 下一站\n    - strong: 日本\n    - text: 東京Tama／Myogadani／Korakuen／Ichigaya Tamachi\n    - heading \"日本中央大學 Chuo University\" [level=1]\n    - text: 我的資格\n    - strong: 尚未進行資格初判\n    - text: 合作校參考時程\n    - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】2027春提名2026/7/10起：Grad截止9/7、Part1 9/15–30已過；UG提名截止9/30已過、Part1 10/15–31；兩者Part2 11/1–10，健康可較晚但最終日未明。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】2027秋明示Tentative：提名2027/1/10起，Grad截止2/15、Part1 3/1–15；UG提名截止3/15、Part1 4/1–15；Part2 5/1–10。不能當116已核准精確提醒，2028春尚未取得。（適用年度待確認）\n    - text: 語言門檻\n    - strong: 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】法／經濟／文／政策／Global Mana…\n    - text: 生活費參考\n    - strong: 具互免協議交換者原則免Chuoregistration與tuition，仍繳中央母校學雜；日本語班free有成績學分。2027春表無一般交換獎學金，部分partner例外依協議。 2027春表生活費約50000／月不含住宿；國保約2000／月，醫療口譯支援通…\n    - text: 交換名額\n    - strong: 依公告\n    - text: 研修期間\n    - strong:\n      - text: 116母校方案：2027/9–2028/2\n      - strong: 一學期\n      - text: 、2027/9–2028/6\n      - strong: 一學年\n      - text: 、2028/2–6\n      - strong: 一學期\n      - text: ；實際依外校校曆與可提名學期確認。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】\n      - strong: 一學期\n      - text: 或兩學期；多全年課建議4月開始整學年，這是建議而非禁止秋入學。2027春表時程秋9/21，但AY2027獨立校曆classes begin9/20，矛盾保留。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】AY2027校曆春classes4/9、末課7/21、exam7/26–31；秋classes9/20、末課2028/1/22、exam1/24–29，學年到3/31。初到orientation另依接收通知。\n    - tablist \"交換學校詳細資訊\":\n      - tab \"快速了解\"\n      - tab \"申請方式\" [selected]\n      - tab \"生活情報\"\n      - tab \"出發前提醒\"\n      - tab \"學生心得\"\n      - tab \"學生社群\"\n    - tabpanel \"申請方式\":\n      - heading \"詳細申請流程\" [level=2]\n      - strong: 官方來源已整理，13 個步驟仍需確認\n      - paragraph: 已核對母校116-1；相關公開附件20份，個別外校原文與當期適用性另核對。\n      - text: 適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/09 上午04:48\n      - strong: 適用年度或梯次仍待確認\n      - text: 來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。\n      - strong: 這是尚未完成正式發布的參考流程\n      - text: 可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。\n      - strong: 共 18 個步驟\n      - button \"回報規定錯誤\"\n      - button \"重新載入流程資料\"\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 核對中央116-1資格與當期名額\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 完成中央線上申請並列印簽核\n      - group:\n        - text: 校內申請 · 中央國際事務處／所屬系所\n        - strong: 繳交中央校內紙本甄選文件至系所\n      - group:\n        - text: 甄選與提名 · 中央國際事務處／所屬系所\n        - strong: 核對校內錄取並準備提名\n      - group:\n        - text: 提名後外校申請 · 中央承辦（非學生自行提名）\n        - strong: 母校承辦：本科／研究所不同提名日\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 提名後外校申請 · 學生與中央承辦／接收單位\n        - strong: Part1七類共通，C1／C2按學制擇一\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n        - paragraph: manaba填survey＋upload，無須寄紙本；最新116／2028春未核。C1本科或C2研究所同列擇一；兩份空白格式都列於官方來源，不以本科表代研究所表。\n        - strong: 規劃範圍（當期適用待確認）\n        - text: 116 學年度\n        - strong: 此步驟仍有送件或文件細節待確認。\n        - text: 請聯絡：國立中央大學國際事務處\n        - strong: 目前只有參考時程，沒有當期精確日期。\n        - text: 參考：明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。\n        - heading \"送件方式\" [level=4]\n        - strong: 線上申請／上傳\n        - list:\n          - listitem: 期限說明：方式來自2027春／暫定2027秋參考程序；中央116指定入口、方式及精確日期仍須兩校確認，不代表已開放當期送件。\n        - heading \"我的送件紀錄\" [level=4]\n        - strong: 尚未開始\n        - text: 線上申請／上傳 · 學生手動\n        - term: 下一步\n        - definition: 先備齊文件並再次核對官方送件方式。\n        - term: 承辦\n        - definition: 學生與中央承辦／接收單位\n        - term: 期限\n        - definition: 參考時程：明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。（精確日期待確認，不會自動提醒）\n        - term: 收件證明\n        - definition: 尚未記錄\n        - button \"登入後記錄進度\"\n        - paragraph: 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。\n        - heading \"具體要做\" [level=4]\n        - list:\n          - listitem: manaba填survey＋upload，無須寄紙本；最新116／2028春未核。C1本科或C2研究所同列擇一；兩份空白格式都列於官方來源，不以本科表代研究所表。\n          - listitem: 最新116名額、學制／學院協議、所選學期與個人條件仍待確認；不因母校推薦、外校錄取或住宿選擇自動解除當期文件封鎖。\n        - heading \"這一步要準備\" [level=4]\n        - list:\n          - listitem: Part1線上web application（manaba提名者入口） 文件形式待確認 · 待官方確認\n          - listitem: Part1 A彩色ID照：JPEG高4×寬3cm 文件形式待確認 · 待官方確認\n          - listitem: Part1 B護照ID；辦理中官方ID／續期舊護照後補新本 影本 · 待官方確認\n          - listitem: Part1 C1本科或C2研究所電腦計畫（按學制擇一） 文件形式待確認 · 待官方確認\n          - listitem: Part1 D最近英文在學證明 文件形式待確認 · 待官方確認\n          - listitem: Part1 E最新正式英文成績 文件形式待確認 · 待官方確認\n          - listitem:\n            - text: Part1 G1全員親筆誓約 文件形式待確認 · 簽署：申請人親筆簽名 · 待官方確認\n            - link \"官方參考表格（當期適用待確認）\":\n              - /url: https://www.chuo-u.ac.jp/uploads/2024/12/G1-Pledge.docx\n        - text: 發現資格、期限、文件或送件資訊不一致？\n        - button \"回報此步驟\"\n      - group:\n        - text: 提名後外校申請 · 學生與中央承辦／接收單位\n        - strong: Part1學院／語言／研究所五類條件件\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 合作校申請 · 學生與兩校國際處\n        - strong: 核對外校當期文件並依通知申請\n      - group:\n        - text: 提名後外校申請 · 學生與中央承辦／接收單位\n        - strong: Part2 J＋K財力兩類（至少100000／月×全期）\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 提名後外校申請 · 學生與中央承辦／接收單位\n        - strong: Part2 L健康與條件JPETS追加\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 錄取後住房 · 學生與中央承辦／接收單位\n        - strong: 交換生住房survey／契約與無房保證\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 行前準備 · 中央國際事務處／所屬系所\n        - strong: 確認課程、學分與中央註冊繳費\n      - group:\n        - text: 行前準備 · 中央國際事務處／所屬系所\n        - strong: 出國前兩週完成中央行前程序\n        - text: 出國前兩週\n      - group:\n        - text: 行前準備 · 學生與中央承辦／接收單位\n        - strong: 行前COE／入學許可與Student visa\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 抵達後 · 學生與中央承辦／接收單位\n        - strong: 到校新生說明會及正式選課\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 抵達後 · 中央國際事務處／所屬系所\n        - strong: 到校註冊並回報當地聯絡方式\n      - group:\n        - text: 交換結束 · 學生與中央承辦／接收單位\n        - strong: manaba限期成績下載／母校直寄另申請\n        - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。\n      - group:\n        - text: 返國後 · 中央國際事務處／所屬系所\n        - strong: 返國後一週完成中央返校程序\n        - text: 返國後一週內\n      - strong: 本流程使用的官方來源\n      - link \"中央116-1甄選簡章 母校當期正式公告 · 優先級 1\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf\n      - link \"中央115名額表（歷史參考） 母校當期正式公告 · 優先級 1\":\n        - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf\n      - link \"Academic Calendar 2027 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/07/english_admissions_exchange_semester-or-full-year_03_20260728.pdf\n      - link \"Fact Sheet for Chuo Student Exchange Program(Inbound) April 2027 enrollment 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/07/english_admissions_exchange_semester-or-full-year_01_20260707.pdf\n      - link \"日本中央2027春／暫定秋交換與現行表格 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/english/admissions/exchange/semester-or-full-year/\n      - link \"[F] Certificate of JPN language proficiency 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2024/12/F-Certificate-of-JPN-language-proficiency.doc\n      - link \"[C1] Study Plan 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_C1_20260904.docx\n      - link \"[C2] Study Plan 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_C2_20260904.docx\n      - link \"[G2] Confirmation on Application for Science & Engineering 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/08/english_admissions_exchange_semester-or-full-year_04_20260821.pdf\n      - link \"[H] Academic Reference 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2024/12/H-Academic-Reference_Graduate.doc\n      - link \"[J] Declaration and Certification of Finance 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2024/12/J-Declaration-and-Certification-of-Finances.doc\n      - link \"[L] Certificate of Health 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2024/12/L-Certificate-of-Health.pdf\n      - link \"International Residences FAQ 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/english/admissions/residences/faq/\n      - link \"List of Chuo Student Exchange Partners(as of July, 2026) 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/08/english_admissions_exchange_semester-or-full-year_02_20260818.pdf\n      - link \"[G1] Pledge 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2024/12/G1-Pledge.docx\n      - link \"Undergraduate Programs(Separate sheets are provided for each faculty.) 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_05_20260924.xlsx\n      - link \"Graduate Programs (Separate sheets are provided for each graduate school.) 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_02_20260924.xlsx\n      - link \"International Residence Chuo 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/english/admissions/residences/\n      - link \"FACT SHEET 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/uploads/2026/07/english_admissions_exchange_semester-or-full-year_06_20260707.pdf\n      - link \"International Residence Chuo 合作校官方資訊 · 優先級 4\":\n        - /url: https://www.chuo-u.ac.jp/english/admissions/residences/irc/\n      - paragraph: 截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。\n    - complementary \"申請準備進度與官方來源\":\n      - heading \"我的申請進度\" [level=2]\n      - progressbar \"申請準備進度\":\n        - strong: 0 / 5 已完成\n        - text: 準備中\n      - paragraph:\n        - text: 登入以保存進度\n        - button \"登入\"\n      - checkbox \"確認資格與語言門檻\" [disabled]\n      - text: 確認資格與語言門檻\n      - checkbox \"比較課程、費用與生活\" [disabled]\n      - text: 比較課程、費用與生活\n      - checkbox \"備妥校內申請文件\" [disabled]\n      - text: 備妥校內申請文件\n      - checkbox \"完成校內甄選送件\" [disabled]\n      - text: 完成校內甄選送件\n      - checkbox \"完成合作校線上申請\" [disabled]\n      - text: 完成合作校線上申請\n      - strong: 送件前確認\n      - paragraph: 截止日與資格以當期官方公告為準。\n- paragraph:\n  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），\n  - button \"停用匿名使用統計\"\n  - text: 。\n  - link \"隱私權政策\":\n    - /url: /privacy\n  - link \"使用條款\":\n    - /url: /terms"
+        }
+      ]
+    }
+  ],
+  "production_actions": false,
+  "full_ci_equivalence": false,
+  "data_coverage": {
+    "checked_at": "2026-10-08T00:00:00+00:00",
+    "academic_year": "116",
+    "home_notice_confirmed": true,
+    "current_list_status": "scheduled_not_yet_announced",
+    "current_list_expected_date": "2026-10-12",
+    "historical_rows": 216,
+    "catalog_entries": 214,
+    "source_documents_attempted": 459,
+    "source_documents_downloaded": 459,
+    "source_documents_any_text": 454,
+    "source_documents_all_pages_have_text": 423,
+    "source_documents_all_pages_read": 29,
+    "source_documents_visual_reviewed": 7,
+    "source_documents_ocr_reviewed": 1,
+    "source_documents_with_errors": 0,
+    "source_documents_with_text_quality_gaps": 2,
+    "source_documents_with_non_text_pages": 36,
+    "source_non_text_page_count": 100,
+    "host_web_checks": 921,
+    "host_web_checks_with_errors": 115,
+    "source_mapped_entries": 214,
+    "host_source_mapped_entries": 211,
+    "entries_with_any_host_text": 210,
+    "reviewed_host_records": 71,
+    "host_full_116_verification_count": 0,
+    "pending_workflows": 214,
+    "provenance_note": "提取不是當期資格核准；逐欄缺口與原文分列於field-audit.json。"
+  },
+  "data_acceptance_passed": false,
+  "ci_status": "not_checked_yet",
+  "verification_scope": "177 affected Japan packet, document condition and life tests plus six corrected school browser content cases, OpenAPI/851 parity/JS/diff/lock; unchanged shared implementation was verified at 16e95c3 (315 NCU,193 shared+2 skipped,65 gate). This is not a rerun of those broad suites.",
+  "prior_kyutech_failure_closed": false,
+  "browser_scope": "Six corrected school content cases at 390/1440; prior 20-case e79 19-pass/1-fail and original Kyutech root remain open. No new profiling or Kyutech reruns.",
+  "workflow_parity": {
+    "main": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+    "compared_count": 851,
+    "semantic_differences": 0,
+    "method": "untouched main runtime export revalidated with identical current schema; serialized values compared as a multiset including duplicate workflows",
+    "counts": {
+      "國立臺北大學": 409,
+      "長庚大學": 154,
+      "國立臺灣大學": 288
+    }
+  },
+  "original_browser_evidence": [
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-japan3-tohoku-life-content-1440.png",
+      "sha256": "e8cfdb40b515972b0218cf7b06168a2f80f537d9a41fca0263f1e4b680a5dd61"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-japan3-tohoku-life-content-390.png",
+      "sha256": "64a5a0f4a65a94880ec774da1cff291e385305f1bba63cab79a8a7daf4e5872e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-japan3-tohoku-programme-documents-1440.png",
+      "sha256": "b8d6cc2b949662ad742fcce4b9c3463a9d0f54c4cac42cabe86a6b7181e89fd5"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-japan3-tohoku-programme-documents-390.png",
+      "sha256": "acdf05b2a18a2d7e2ffc8eed14e88d545b96e2273e837fde6560548bd58d7c41"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-japan3-tohoku-source-scope-1440.png",
+      "sha256": "78b8f69afb1868ba74c657052b69645a7f8a7fe7904b9d15a6a797b3bbb93327"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-japan3-tohoku-source-scope-390.png",
+      "sha256": "c0cd9a3b5dcef34e75361a14e2ccba81bb9ade568bbdd2a331ff3b99da92ae34"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-shizuoka-chuo-kansai-chuo-source-1440.png",
+      "sha256": "5e35bfabc93c96e726fb7117d156b43e85748abcfe0ed46d97162ec94295f121"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-shizuoka-chuo-kansai-chuo-source-390.png",
+      "sha256": "237fa7e3e8d0824862a4907db6fe6ad70e77725daed0c5422737cc83ec4493c3"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-shizuoka-chuo-kansai-kansai-life-1440.png",
+      "sha256": "c6bd077587068a9b26bbcee8e3032bc26140a43203123b8c79af61b2846074af"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-shizuoka-chuo-kansai-kansai-life-390.png",
+      "sha256": "fa555ba5a40106f03d0bae8d0606ef2fb18e30cd4dbea04a7ca8219c0c9745ff"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-shizuoka-chuo-kansai-kansai-packet-1440.png",
+      "sha256": "86ff7925b486d33c9e46f4b5c0cac72fc59ae7b4e0cb10c85aae49810350d812"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-shizuoka-chuo-kansai-kansai-packet-390.png",
+      "sha256": "d5a5b928fe897b8d23ba46353176da93f34017d44ff951fb90331f50f36dcd95"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-shizuoka-chuo-kansai-kansai-source-1440.png",
+      "sha256": "b52065c6b2aef3be2519a531e00841a3826ab094edb3b8c13ea9ccb042d36eaa"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/original-browser/ncu-shizuoka-chuo-kansai-kansai-source-390.png",
+      "sha256": "0e61edec9b75ca7be8acca687f5a08916344de5e6545ce788dcd164be2bc869b"
+    }
+  ],
+  "performance": [],
+  "browser_evidence": [
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-japan3-tohoku-life-content-1440.png",
+      "sha256": "e8cfdb40b515972b0218cf7b06168a2f80f537d9a41fca0263f1e4b680a5dd61"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-japan3-tohoku-life-content-390.png",
+      "sha256": "64a5a0f4a65a94880ec774da1cff291e385305f1bba63cab79a8a7daf4e5872e"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-japan3-tohoku-programme-documents-1440.png",
+      "sha256": "b8d6cc2b949662ad742fcce4b9c3463a9d0f54c4cac42cabe86a6b7181e89fd5"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-japan3-tohoku-programme-documents-390.png",
+      "sha256": "acdf05b2a18a2d7e2ffc8eed14e88d545b96e2273e837fde6560548bd58d7c41"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-japan3-tohoku-source-scope-1440.png",
+      "sha256": "78b8f69afb1868ba74c657052b69645a7f8a7fe7904b9d15a6a797b3bbb93327"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-japan3-tohoku-source-scope-390.png",
+      "sha256": "c0cd9a3b5dcef34e75361a14e2ccba81bb9ade568bbdd2a331ff3b99da92ae34"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-shizuoka-chuo-kansai-chuo-source-1440.png",
+      "sha256": "5e35bfabc93c96e726fb7117d156b43e85748abcfe0ed46d97162ec94295f121"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-shizuoka-chuo-kansai-chuo-source-390.png",
+      "sha256": "237fa7e3e8d0824862a4907db6fe6ad70e77725daed0c5422737cc83ec4493c3"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-shizuoka-chuo-kansai-kansai-life-1440.png",
+      "sha256": "c6bd077587068a9b26bbcee8e3032bc26140a43203123b8c79af61b2846074af"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-shizuoka-chuo-kansai-kansai-life-390.png",
+      "sha256": "fa555ba5a40106f03d0bae8d0606ef2fb18e30cd4dbea04a7ca8219c0c9745ff"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-shizuoka-chuo-kansai-kansai-packet-1440.png",
+      "sha256": "86ff7925b486d33c9e46f4b5c0cac72fc59ae7b4e0cb10c85aae49810350d812"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-shizuoka-chuo-kansai-kansai-packet-390.png",
+      "sha256": "d5a5b928fe897b8d23ba46353176da93f34017d44ff951fb90331f50f36dcd95"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-shizuoka-chuo-kansai-kansai-source-1440.png",
+      "sha256": "b52065c6b2aef3be2519a531e00841a3826ab094edb3b8c13ea9ccb042d36eaa"
+    },
+    {
+      "path": "/tmp/ncu-candidate-2637de25490e47bbb3987617bceefce02ae78446/browser/ncu-shizuoka-chuo-kansai-kansai-source-390.png",
+      "sha256": "0e61edec9b75ca7be8acca687f5a08916344de5e6545ce788dcd164be2bc869b"
+    }
+  ],
+  "end_sha": "2637de25490e47bbb3987617bceefce02ae78446",
+  "end_worktree_porcelain": "",
+  "same_sha_at_end": true,
+  "necessary_local_tests_passed": false,
+  "acceptance_status": "blocked",
+  "finished_at": "2026-10-09T05:56:43.300872+00:00"
+}

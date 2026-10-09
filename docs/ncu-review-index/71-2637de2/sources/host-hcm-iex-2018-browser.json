@@ -1,0 +1,50 @@
+{
+  "id": "host-hcm-iex-2018-browser",
+  "row_ids": [
+    "ncu-215"
+  ],
+  "url": "https://hcmiu.edu.vn/wp-content/uploads/2018/03/F-IEX1.pdf",
+  "title": "HCMIU F-IEX1 2018 PDF；browser可讀兩頁、本地僅挑選原文摘錄",
+  "label": "HCMIU F-IEX1 2018 PDF；browser原文摘錄（非完整本地PDF）",
+  "checked_at": "2026-10-08",
+  "status": 200,
+  "sha256": null,
+  "browser_excerpt_sha256": "bee998a8e933c551c072bf1bef10ae12339f23272b074321cab3e245b6e44548",
+  "retrieval_method": "web_pdf_text_selected_excerpt",
+  "source_excerpt_only": true,
+  "excerpt_note_zh": "browser工具解析官方兩頁PDF、印刷111／112頁。本地原件请求返回HTML cookie challenge，後續403；沒有取得原件SHA或把摘錄當全文。僅保存短原文與已核對欄位說明，完整當期表仍待查。",
+  "document_format": "pdf_browser_selected_passages",
+  "browser_verified_fields_zh": [
+    "第1頁：護照姓名／個資、現居／永久地址、緊急聯絡、在學學制年級／學校／主修／GPA、IELTS或TOEFL等分數及相片欄。",
+    "第2頁：Exchange與Study Abroad勾選、開學學期／年／長度、兩校課號／課名／學分對照、12–24學分；申請表及選課、母校正式提名函（exchange限定）、英文成績、英文能力證明、護照個資頁及本人簽名日期。"
+  ],
+  "status_note": "public_browser_excerpt_only_2018_reference",
+  "content_status": {
+    "response_bytes_received": false,
+    "downloaded": false,
+    "page_count": 2,
+    "text_page_count": 2,
+    "any_text": true,
+    "all_pages_have_text": false,
+    "all_pages_read": false,
+    "visual_reviewed_page_count": 0,
+    "visual_reviewed_image_count": 0,
+    "visual_reviewed": false,
+    "ocr_status": "not_performed"
+  },
+  "original_source_locator": {
+    "path": "src/exchange_info/official_data/ncu/source-evidence.json.gz",
+    "source_array_index": 650,
+    "source_id": "host-hcm-iex-2018-browser"
+  },
+  "pages": [
+    {
+      "page": 1,
+      "path": "host-hcm-iex-2018-browser/pages/000.json"
+    },
+    {
+      "page": 2,
+      "path": "host-hcm-iex-2018-browser/pages/001.json"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "key": "city",
+  "label": "城市與校區位置",
+  "status": "needs_confirmation",
+  "note": "首爾市東大門區，地址163 Seoulsiripdae-ro, Dongdaemun-gu, Seoul 02504；錄取課程與宿舍樓別仍須確認。",
+  "source_urls": [
+    "https://eng.uos.ac.kr/oia/web/file/download/uu/328b55bd2562426e9fc9284bed1a49fc",
+    "https://eng.uos.ac.kr/oia/web/contents/OIA_About_05_1"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "human_visual_selected_passages",
+      "source_url": "https://eng.uos.ac.kr/oia/web/file/download/uu/328b55bd2562426e9fc9284bed1a49fc",
+      "source_id": "host-uos-partner-current",
+      "page": 2,
+      "source_title": "UOS 現連Partner Information；未標年，有舊圖層須視覺核對",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "city",
+        "evidence_array_index": 0,
+        "text_sha256": "f3588c649250572f6b9e5a625ceea3ed9ddacf4dc3697234a667f75efaca3372",
+        "char_count": 186
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://eng.uos.ac.kr/oia/web/contents/OIA_About_05_1",
+      "source_id": "host-uos-location",
+      "page": null,
+      "source_title": "UOS 官方校區位置／交通",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "city",
+        "evidence_array_index": 1,
+        "text_sha256": "e4b34f270852996922f6ffc634507ae22bba6613ee05aa5237d177c02616ee8a",
+        "char_count": 160
+      }
+    }
+  ],
+  "unresolved": "參考內容已讀；整筆來源的116年度／校區／track適用性仍未核實。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。"
+}

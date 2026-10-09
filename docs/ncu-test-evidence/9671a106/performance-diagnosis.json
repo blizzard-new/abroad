@@ -1,0 +1,24 @@
+{
+  "original_failure_root_cause_uniquely_proven": false,
+  "confirmed_separate_catalog_race": "ded2ed1 clean source allowed 3 simultaneous callers to build and parse the same published/local/bundled cache keys 3 times. 9671a106 coordinates same-key builders through Future under existing lock; different keys remain independent.",
+  "original_niigata_test_5000ms_assertion_unchanged": true,
+  "before_cold_reports_v1_limit": "DOM ResourceTiming default buffer250 filled by icons; use ASGI+fetch headers+busy traces; lack response body ResourceTiming. All three separate clean ded2ed1 cold runs passed original function. This does not erase original 49/50 failure.",
+  "before_concurrency_file": "before-ded2ed1.json is clean original SHA; after-working-tree.json is DIRTY eb0b610 + pending Kyutech/fix and not final-SHA verification.",
+  "before_pytest_command_status": "cache-before-canceled.log/XML showed old source 12 reads vs expected4 and 1 failure; outer command canceled to stop browser resource contention; exit130, not a normally completed baseline gate.",
+  "final_cold_reports": [
+    {
+      "file": "performance/cold-1.json",
+      "original_result": "passed"
+    },
+    {
+      "file": "performance/cold-2.json",
+      "original_result": "passed"
+    },
+    {
+      "file": "performance/cold-3.json",
+      "original_result": "passed"
+    }
+  ],
+  "sample_size": 3,
+  "not_an_sla_or_ci_waiver": true
+}

@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="/static/glass-theme.css?v=20261001-ui-refinements-1" />
     <link rel="stylesheet" href="/static/planning-ux.css?v=20261008-regions-1" />
     <link rel="stylesheet" href="/static/application-journey.css?v=20261002-flow-1" />
-    <link rel="stylesheet" href="/static/application-workspace.css?v=20261002-flow-1" />
+    <link rel="stylesheet" href="/static/application-workspace.css?v=20261008-ncu-conditions-1" />
     <link rel="stylesheet" href="/static/document-workbench.css?v=20261002-flow-1" />
     <link rel="stylesheet" href="/static/destination-tips.css?v=20261004-tips-2" />
     <link rel="stylesheet" href="/static/brand.css?v=20261004-logo-2" />
@@ -143,7 +143,7 @@
           <span>搜尋台灣的大學</span>
           <span class="control-with-icon">
             <i data-lucide="search" aria-hidden="true"></i>
-            <input id="school-search" autocomplete="off" placeholder="輸入學校名稱，例如：長庚、臺北大學、臺大" />
+            <input id="school-search" autocomplete="off" placeholder="輸入學校名稱，例如：長庚、臺北大學、臺大、中央" />
           </span>
         </label>
 
@@ -163,8 +163,9 @@
             <span><strong>國立臺灣大學</strong><small>288項合作資料 · 282項名額待公布 · 6項零名額</small></span>
             <i data-lucide="circle" aria-hidden="true"></i>
           </button>
+          <button type="button" class="school-option" data-home-school="國立中央大學" role="option" aria-selected="false"><img src="/static/assets/ncu-campus.svg" alt="國立中央大學文字識別圖" /><span><strong>國立中央大學</strong><small>116-1簡章已公告 · 名額预定10/12公告</small></span><i data-lucide="circle" aria-hidden="true"></i></button>
         </div>
-        <p id="school-search-empty" class="school-search-empty" hidden>目前提供長庚大學、國立臺北大學與國立臺灣大學；其他學校會依資料查核進度加入。</p>
+        <p id="school-search-empty" class="school-search-empty" hidden>目前提供長庚大學、國立臺北大學、國立臺灣大學與國立中央大學；其他學校會依資料查核進度加入。</p>
 
         <div class="onboarding-actions">
           <button id="browse-first" type="button" class="secondary-button">先看看全部交換學校</button>
@@ -893,6 +894,12 @@
                   <label><span>學年度</span><input name="academic_year" maxlength="10" placeholder="例如 116" /></label>
                   <label><span>預計出國學期</span><select name="semester"><option value="">尚未決定</option><option value="第一學期">第一學期</option><option value="第二學期">第二學期</option><option value="一學年">一學年</option><option value="寒假／暑假">寒假／暑假</option></select></label>
                 </div>
+                <fieldset id="ncu-document-state" class="application-context-fields" hidden>
+                  <legend>外校錄取與住宿</legend>
+                  <label><span>外校錄取狀態</span><select id="ncu-host-admission"><option value="unknown">尚未確認</option><option value="not_accepted">尚未取得錄取</option><option value="accepted">已取得外校錄取</option></select></label>
+                  <label><span>住宿選擇</span><select id="ncu-housing-choice"><option value="unknown">尚未決定</option><option value="on_campus">校內宿舍</option><option value="off_campus">校外住宿</option></select></label>
+                  <small id="ncu-document-state-note">條件文件會依此顯示準備時點；當期要求仍須查核。</small>
+                </fieldset>
                 <div class="application-condition-toggles" aria-label="條件式文件">
                   <label><input type="checkbox" name="subsidy" /><span><i data-lucide="badge-dollar-sign" aria-hidden="true"></i><strong>申請補助</strong></span></label>
                   <label><input type="checkbox" name="military_service" /><span><i data-lucide="shield-check" aria-hidden="true"></i><strong>在學役男</strong></span></label>
@@ -1198,13 +1205,13 @@
     <dialog id="planning-target-change-dialog" class="planning-change-dialog" aria-labelledby="planning-target-change-title">
       <form method="dialog"><span class="section-kicker">更換目標前，先確認影響</span><h2 id="planning-target-change-title">改用這所學校規劃？</h2><p id="planning-target-change-summary"></p><ul id="planning-target-change-impact"></ul><footer><button id="planning-target-change-cancel" class="secondary-button" value="cancel">保留原目標</button><button class="primary-button" value="confirm">確認更換目標</button></footer></form>
     </dialog>
-    <script src="/static/multi-plan.js?v=20261002-flow-2" defer></script>
+    <script src="/static/multi-plan.js?v=20261008-ncu-conditions-1" defer></script>
     <script src="/static/application-workspace.js?v=20261002-flow-2" defer></script>
-    <script src="/static/application-journey.js?v=20261008-ntu-audit-3" defer></script>
-    <script src="/static/document-workbench.js?v=20261008-ntu-audit-3" defer></script>
+    <script src="/static/application-journey.js?v=20261008-ncu-1" defer></script>
+    <script src="/static/document-workbench.js?v=20261008-ncu-1" defer></script>
     <script src="/static/destination-tips.js?v=20261004-tips-2" defer></script>
     <script src="/static/analytics.js?v=20261003-analytics-1" defer></script>
     <script src="/static/feedback.js?v=20261008-2" defer></script>
-    <script src="/static/app.js?v=20261008-ntu-audit-3-ccu-switching-24" defer></script>
+    <script src="/static/app.js?v=20261009-five-schools-integration-1" defer></script>
   </body>
 </html>

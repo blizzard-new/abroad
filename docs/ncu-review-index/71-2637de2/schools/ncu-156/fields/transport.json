@@ -1,0 +1,50 @@
+{
+  "key": "transport",
+  "label": "抵達與日常交通",
+  "status": "needs_confirmation",
+  "note": "未標年官方行前頁：仁川機場6002巴士，T1站5B／T2站34、KRW17000；抵清涼里後可轉車，巴士回機場前下一站為UOS，FAQ要求上車告知司機目的地。地鐵需首爾站轉1號線；金浦可5號線至踏十里站後轉計程車。 官方頁估仁川計程車KRW80000–90000、金浦40000–50000；屬未標年參考，出發前須再核對機場／營運者時刻、站點與價目，不當2027保證。",
+  "source_urls": [
+    "https://eng.uos.ac.kr/oia/web/contents/OIA_Student_03_01",
+    "https://eng.uos.ac.kr/oia/web/bbs/oia_faq02/list?cp=4&sortOrder=BA_REGDATE&sortDirection=DESC&bcId=oia_faq02&baNotice=false&baCommSelec=false&baOpenDay=false&baUse=true"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://eng.uos.ac.kr/oia/web/contents/OIA_Student_03_01",
+      "source_id": "host-uos-before",
+      "page": null,
+      "source_title": "UOS 行前準備",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "transport",
+        "evidence_array_index": 0,
+        "text_sha256": "64f8317a1aa4005785eb38e4714fac2b42dbc36791bdf50c16910fbbb6ce65fe",
+        "char_count": 4406
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://eng.uos.ac.kr/oia/web/bbs/oia_faq02/list?cp=4&sortOrder=BA_REGDATE&sortDirection=DESC&bcId=oia_faq02&baNotice=false&baCommSelec=false&baOpenDay=false&baUse=true",
+      "source_id": "host-uos-faq-4",
+      "page": null,
+      "source_title": "UOS Exchange FAQ索引第4頁",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "transport",
+        "evidence_array_index": 1,
+        "text_sha256": "aa26f3fc70a474653cab80bc7fa97ec88be442b21f54e4cfd9bab2dd1934b40a",
+        "char_count": 4357
+      }
+    }
+  ],
+  "unresolved": "2027實際班次、最新車資與接機安排尚未取得核實。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。"
+}

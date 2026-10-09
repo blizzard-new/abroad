@@ -1,0 +1,50 @@
+{
+  "key": "host_deadline",
+  "label": "提名與外校申請期限",
+  "status": "needs_confirmation",
+  "note": "PMB degree截止2021/7/30、2021/8/12抵達及8/30開學均已過時；現行首頁2025/9/1迎新也不是中央116交换期限。",
+  "source_urls": [
+    "https://pmb.uny.ac.id/international-students/program",
+    "https://io.uny.ac.id/"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://pmb.uny.ac.id/international-students/program",
+      "source_id": "host-uny-old-degree",
+      "page": null,
+      "source_title": "UNY PMB國際Degree申請頁；仍列2021時程非交換",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "host_deadline",
+        "evidence_array_index": 0,
+        "text_sha256": "dfff6352f024a2ca1b39206866cbea2b8d3c9d85a97c8151a4f69c368ae804bf",
+        "char_count": 8400
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://io.uny.ac.id/",
+      "source_id": "host-uny-index",
+      "page": null,
+      "source_title": "UNY國際處現行首頁；仍列2025例",
+      "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 205,
+        "field": "host_deadline",
+        "evidence_array_index": 1,
+        "text_sha256": "10272e4b919930f836bafb75d544e04a586d439e2ade53343e6382e07383f5eb",
+        "char_count": 671
+      }
+    }
+  ],
+  "unresolved": "交換2027／2028提名、host申請及母校轉送窗口未取得。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "UNY現行國際處首頁與四個入口及PMB 2021一般degree頁逐頁核對；Study／Current頁只有標題導航，Visitor404，沒有取得中央116交換接收包。一般degree／DISS／KNB／雙聯與semester exchange分開。"
+}

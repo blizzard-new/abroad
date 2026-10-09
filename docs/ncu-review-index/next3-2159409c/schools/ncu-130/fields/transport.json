@@ -1,0 +1,50 @@
+{
+  "key": "transport",
+  "label": "抵達與日常交通",
+  "status": "needs_confirmation",
+  "note": "Centrair指定到達日接送一般14時／21:30；依AcceptancePackage核對指定日、集合點與航班，不把機場接送當日進校區日常通勤。",
+  "source_urls": [
+    "https://www-e.nufs.ac.jp/interchange/incoming/pickupservice/index.html",
+    "https://www-e.nufs.ac.jp/interchange/incoming/housing/index.html"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www-e.nufs.ac.jp/interchange/incoming/pickupservice/index.html",
+      "source_id": "host-nufs-next3-pickup",
+      "page": null,
+      "source_title": "Pick-up Service on arrival | International | Nagoya University of Foreign Studies",
+      "applicability": "2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。",
+      "checked_at": "2026-10-09T07:29:39.765864+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 129,
+        "field": "transport",
+        "evidence_array_index": 0,
+        "text_sha256": "ce6c4e4003199edf105af1f3d7b52b27e82743e4e52339a2420ee21c73f8e1d2",
+        "char_count": 1943
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www-e.nufs.ac.jp/interchange/incoming/housing/index.html",
+      "source_id": "host-nufs-next3-housing",
+      "page": null,
+      "source_title": "Housing Information -Dormitories- | International | Nagoya University of Foreign Studies",
+      "applicability": "2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。",
+      "checked_at": "2026-10-09T07:29:39.765864+00:00",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 129,
+        "field": "transport",
+        "evidence_array_index": 1,
+        "text_sha256": "4d4b174ef877bdc37ff634b437dd5245a358b56577d97d643f8a4f3998480e6a",
+        "char_count": 4560
+      }
+    }
+  ],
+  "unresolved": "116接送日期／預約期限、所住房型與課程校區交通費及班次未取得。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "2027春日期頁、2026春秋課綱、2021規程及未標年一般交換頁分開；完整閱讀不是中央116當期核准。"
+}

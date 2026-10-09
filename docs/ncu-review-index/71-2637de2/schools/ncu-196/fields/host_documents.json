@@ -1,0 +1,51 @@
+{
+  "key": "host_documents",
+  "label": "外校申請文件／最新表格",
+  "status": "needs_confirmation",
+  "note": "香港版只寫寄mail，未列初次交換附件／空白申請表；2025國際生報到有護照、X1JW202／體檢、4張30×40照與初次申請原件，是到校國際生程序不能拿來填臺灣初次host文件。 2025報到頁現連REGISTRATION NOTICE.pdf另試，HTTP200卻不是PDF原件；沒有宣稱該附件已讀或登入限定。",
+  "source_urls": [
+    "https://www.ln.edu.hk/oge/f/page/112418/E00184.pdf",
+    "https://isao.ujn.edu.cn/info/1058/1034.htm",
+    "https://isao.ujn.edu.cn/system/_content/download.jsp?urltype=news.DownloadAttachUrl&owner=1503692442&wbfileid=D915D651BEA5E0C778F9B00994C69EE5"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.ln.edu.hk/oge/f/page/112418/E00184.pdf",
+      "source_id": "host-ujn-partner-reference-2024",
+      "page": 2,
+      "source_title": "濟南大學2024交換資訊表（嶺南官方公開轉載）",
+      "applicability": "嶺南官方轉載5頁香港交換資訊表全讀，header2/8/2024、學期2025秋／2026春與2024/10/31／2025/4/30截止矛盾保留。2025/8/15外國留學生報到与2024交通另讀；不是廣州JNU、亦不自動套臺灣116。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 193,
+        "field": "host_documents",
+        "evidence_array_index": 0,
+        "text_sha256": "745ee8c8a8098ceb83123e65031cd8a83011169f07243009fa890bfaffb547ed",
+        "char_count": 914
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://isao.ujn.edu.cn/info/1058/1034.htm",
+      "source_id": "host-ujn-registration",
+      "page": null,
+      "source_title": "濟南2025國際生註冊指南（臺灣交換適用待確認）",
+      "applicability": "嶺南官方轉載5頁香港交換資訊表全讀，header2/8/2024、學期2025秋／2026春與2024/10/31／2025/4/30截止矛盾保留。2025/8/15外國留學生報到与2024交通另讀；不是廣州JNU、亦不自動套臺灣116。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 193,
+        "field": "host_documents",
+        "evidence_array_index": 1,
+        "text_sha256": "8091f89201810a5a64c5f0b8a5d475b2ff72e63013dedac2bcca75425d6965e5",
+        "char_count": 4874
+      }
+    }
+  ],
+  "unresolved": "臺灣116初次與提名全包、新表／簽章、錄取後及到校清單未取得，host結構清單保持空。現連PDF原件尚未取得（200非PDF回應），公開替代原件需續查。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "嶺南官方轉載5頁香港交換資訊表全讀，header2/8/2024、學期2025秋／2026春與2024/10/31／2025/4/30截止矛盾保留。2025/8/15外國留學生報到与2024交通另讀；不是廣州JNU、亦不自動套臺灣116。"
+}

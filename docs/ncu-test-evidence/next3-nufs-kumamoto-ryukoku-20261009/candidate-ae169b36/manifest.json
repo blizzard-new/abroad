@@ -1,0 +1,354 @@
+{
+  "candidate_sha": "ae169b3698129264274ca0e2bc3976cb483df2d7",
+  "start_sha": "ae169b3698129264274ca0e2bc3976cb483df2d7",
+  "start_porcelain": "",
+  "started_at": "2026-10-09T07:58:05.371590+00:00",
+  "baseline_sha": "012b580b9c38b20da0e52394eef1428c2ea90261",
+  "scope_rows": [
+    "ncu-130",
+    "ncu-134",
+    "ncu-135"
+  ],
+  "data_coverage": {
+    "checked_at": "2026-10-08T00:00:00+00:00",
+    "academic_year": "116",
+    "home_notice_confirmed": true,
+    "current_list_status": "scheduled_not_yet_announced",
+    "current_list_expected_date": "2026-10-12",
+    "historical_rows": 216,
+    "catalog_entries": 214,
+    "source_documents_attempted": 459,
+    "source_documents_downloaded": 459,
+    "source_documents_any_text": 454,
+    "source_documents_all_pages_have_text": 423,
+    "source_documents_all_pages_read": 29,
+    "source_documents_visual_reviewed": 7,
+    "source_documents_ocr_reviewed": 1,
+    "source_documents_with_errors": 0,
+    "source_documents_with_text_quality_gaps": 2,
+    "source_documents_with_non_text_pages": 36,
+    "source_non_text_page_count": 100,
+    "host_web_checks": 996,
+    "host_web_checks_with_errors": 117,
+    "source_mapped_entries": 214,
+    "host_source_mapped_entries": 211,
+    "entries_with_any_host_text": 210,
+    "reviewed_host_records": 74,
+    "host_full_116_verification_count": 0,
+    "pending_workflows": 214,
+    "provenance_note": "提取不是當期資格核准；逐欄缺口與原文分列於field-audit.json。"
+  },
+  "results": [
+    {
+      "name": "affected_three_school_api",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_ncu_nufs_kumamoto_ryukoku.py",
+        "--junitxml",
+        "/workspace/ncu-verification-tmp/next3-ae169b3698129264274ca0e2bc3976cb483df2d7/affected_three_school_api.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T07:58:05.458770+00:00",
+      "finished_at": "2026-10-09T07:59:01.778660+00:00",
+      "log": "affected_three_school_api.log",
+      "junit": {
+        "tests": 14,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_cases": [],
+      "skipped_cases": []
+    },
+    {
+      "name": "openapi_snapshot",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T07:59:01.982953+00:00",
+      "finished_at": "2026-10-09T07:59:06.104165+00:00",
+      "log": "openapi_snapshot.log"
+    },
+    {
+      "name": "browser_three_school_content",
+      "argv": [
+        "/workspace/abroad/.venv/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py",
+        "--junitxml",
+        "/workspace/ncu-verification-tmp/next3-ae169b3698129264274ca0e2bc3976cb483df2d7/browser_three_school_content.xml"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T07:59:06.178002+00:00",
+      "finished_at": "2026-10-09T08:01:32.658828+00:00",
+      "log": "browser_three_school_content.log",
+      "junit": {
+        "tests": 6,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "failed_cases": [],
+      "skipped_cases": []
+    },
+    {
+      "name": "lock_writable_cache",
+      "argv": [
+        "uv",
+        "lock",
+        "--check"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T08:01:32.826101+00:00",
+      "finished_at": "2026-10-09T08:01:33.020716+00:00",
+      "log": "lock_writable_cache.log"
+    },
+    {
+      "name": "test_only_scoped_diff",
+      "argv": [
+        "git",
+        "diff",
+        "--check",
+        "bb806740",
+        "ae169b3698129264274ca0e2bc3976cb483df2d7"
+      ],
+      "cwd": "/workspace/abroad-ncu-next3-fixed",
+      "exit_code": 0,
+      "started_at": "2026-10-09T08:01:33.089688+00:00",
+      "finished_at": "2026-10-09T08:01:33.104328+00:00",
+      "log": "test_only_scoped_diff.log"
+    }
+  ],
+  "full_ci_equivalence": false,
+  "current_116_data_acceptance": false,
+  "prior_kyutech_root_closed": false,
+  "production_actions": false,
+  "data_candidate_sha": "bb806740e702892e78d358973cb2c54b739d3dbd",
+  "data_and_shared_runtime_identical_to_bb806740": true,
+  "prior_full_api_manifest": "../next3-bb806740e702892e78d358973cb2c54b739d3dbd/manifest.json",
+  "prior_browser_result": {
+    "tests": 6,
+    "passed": 2,
+    "failed": 4,
+    "cause": "NUFS and Ryukoku orientation title selectors used English; existing public translation renders 新生說明會. Original failures/logs/screenshots preserved."
+  },
+  "browser_screenshots": [
+    {
+      "path": "browser/kumamoto-1440-arrival.png",
+      "sha256": "a276d9458751370fb22d0bf2db44952c490dacbca08295939839ba5cb853c528",
+      "bytes": 373182
+    },
+    {
+      "path": "browser/kumamoto-1440-card-or-row.png",
+      "sha256": "a4811e013af8aba05c1491ac3365f6652f933e094fdc41db51a86a67dac2b4db",
+      "bytes": 373133
+    },
+    {
+      "path": "browser/kumamoto-1440-coe-visa.png",
+      "sha256": "7a2b3fdf9c8f2ad46c7cb7a36fe05bfb299ca74d9c801fe61e806c770b58de08",
+      "bytes": 356213
+    },
+    {
+      "path": "browser/kumamoto-1440-life.png",
+      "sha256": "3539be64c22859c7c5577715524618d6daaaf25d5b76c6423f29a2fcae6478d7",
+      "bytes": 475266
+    },
+    {
+      "path": "browser/kumamoto-1440-overview.png",
+      "sha256": "cfa569fec2ac8344f5abf393d8f44a6d5b1077669d50baad641db37a3581e534",
+      "bytes": 1677940
+    },
+    {
+      "path": "browser/kumamoto-1440-packet.png",
+      "sha256": "b0a0e1f1b93e985d3bcc2a4d0fae200277874ea77e62b7f21a48d1ef224afcae",
+      "bytes": 379438
+    },
+    {
+      "path": "browser/kumamoto-1440-source-gap.png",
+      "sha256": "c59447ecf8506c235127e6eb21e8fac42635240b81fa15187cc78f0299bdc162",
+      "bytes": 416119
+    },
+    {
+      "path": "browser/kumamoto-390-arrival.png",
+      "sha256": "79c5ad04284daca8213be6b20e6ff9214d4b8d58caa523cde54dc6e577661845",
+      "bytes": 133598
+    },
+    {
+      "path": "browser/kumamoto-390-card-or-row.png",
+      "sha256": "2850db0c5893499cf949c10300e5d60a4e44cb794b586a7e76de14990e5ecd69",
+      "bytes": 143090
+    },
+    {
+      "path": "browser/kumamoto-390-coe-visa.png",
+      "sha256": "f8d1547987f05a9df4992f734dfa381d36487fafcad403dda05e997e40f756bb",
+      "bytes": 130497
+    },
+    {
+      "path": "browser/kumamoto-390-life.png",
+      "sha256": "5ed866ed846e0826b7a05b1ea8cdc6dd91c8c1e05cc2b0ec80d079beabe26a3a",
+      "bytes": 156080
+    },
+    {
+      "path": "browser/kumamoto-390-overview.png",
+      "sha256": "373e0d0c64ebadb08e47f2e0abaf34dac04710e9c335f43dd77ec2a0d4e16146",
+      "bytes": 1297500
+    },
+    {
+      "path": "browser/kumamoto-390-packet.png",
+      "sha256": "691d123af00dba79e0eec4c2fb2b350bdba7645bc8bb76eedb43f90aa6132539",
+      "bytes": 143897
+    },
+    {
+      "path": "browser/kumamoto-390-source-gap.png",
+      "sha256": "73038ba29c04aec3b90ca55c64a61fc3ba21772e42706229e8119165dfc036a6",
+      "bytes": 119890
+    },
+    {
+      "path": "browser/nufs-1440-arrival.png",
+      "sha256": "681498b70a62c459fdeaf2a0c711a33ee519f0f90f81fbc08bfd49743ba5ad83",
+      "bytes": 329864
+    },
+    {
+      "path": "browser/nufs-1440-card-or-row.png",
+      "sha256": "ee9ff986440793c9ac3a3006219c9649995f3e75ec9c37bb1c3ad3ece4a0e381",
+      "bytes": 374115
+    },
+    {
+      "path": "browser/nufs-1440-coe-visa.png",
+      "sha256": "edb8596b84d83e181ae5d1a8342f15834ade01ea8e2dc275472876599b45b7ea",
+      "bytes": 342792
+    },
+    {
+      "path": "browser/nufs-1440-life.png",
+      "sha256": "d4804e1350f62f3b6e996a29a2beb82b9bc49a72e1006c7ddff20f6987d71f43",
+      "bytes": 461859
+    },
+    {
+      "path": "browser/nufs-1440-overview.png",
+      "sha256": "8aafc41a5c3d95c030efe43f814cf28459325d4375b356c1e8e2b82b8e963624",
+      "bytes": 1762818
+    },
+    {
+      "path": "browser/nufs-1440-packet.png",
+      "sha256": "27dcc30f69f6993cdeadef79b70cc127462d32718be46e43ff09ce5440922e36",
+      "bytes": 390856
+    },
+    {
+      "path": "browser/nufs-390-arrival.png",
+      "sha256": "ba47183d095580797f6b87fb8392f47142aa2508a3e7220907317f3aa0a310c1",
+      "bytes": 136527
+    },
+    {
+      "path": "browser/nufs-390-card-or-row.png",
+      "sha256": "4ab1da94379facd3d220c50324c8b624bdf5a112334d19fbd24f0f4f87d2c27c",
+      "bytes": 138082
+    },
+    {
+      "path": "browser/nufs-390-coe-visa.png",
+      "sha256": "976fdbd817461fa653119942d7b30533d0b6a7db05f803872330a3124a65ca8b",
+      "bytes": 135305
+    },
+    {
+      "path": "browser/nufs-390-life.png",
+      "sha256": "ce0446e16d2e62f37e689a850f7058d87f0134c996bcc43d12d0bb4bb74efd43",
+      "bytes": 169239
+    },
+    {
+      "path": "browser/nufs-390-overview.png",
+      "sha256": "1d674625b313100be344051bc52e948134c0f84f79d167ca5bd0f64505997e8d",
+      "bytes": 1415812
+    },
+    {
+      "path": "browser/nufs-390-packet.png",
+      "sha256": "c03950fec964c28c91bae12a8d24e476fce7ee592def4476f133a720a758415c",
+      "bytes": 139302
+    },
+    {
+      "path": "browser/ryukoku-1440-arrival.png",
+      "sha256": "909d0a2a56803301cf19693d28b3c0bfef2fc37e6285d4bf304a23ae47fb4aca",
+      "bytes": 330953
+    },
+    {
+      "path": "browser/ryukoku-1440-card-or-row.png",
+      "sha256": "570049ba0dab99b3f305b0714b9157c21db42c10e999b39459108368db3e8263",
+      "bytes": 369488
+    },
+    {
+      "path": "browser/ryukoku-1440-coe-visa.png",
+      "sha256": "4e21f97e49504893de5577cacc1a42649d0b8c9bcf3cf7c3f59e1db582541531",
+      "bytes": 342689
+    },
+    {
+      "path": "browser/ryukoku-1440-life.png",
+      "sha256": "3d9394d1b745da33d6bac4a92a5dd34ac9f74af64937ab28a8bb4428fdc828e9",
+      "bytes": 451967
+    },
+    {
+      "path": "browser/ryukoku-1440-overview.png",
+      "sha256": "8753e400541cb57950c4632b6489c072a936cb6916ac8c0ed79af1dffac007d7",
+      "bytes": 1744728
+    },
+    {
+      "path": "browser/ryukoku-1440-packet.png",
+      "sha256": "77578b4a3eba4ea75f9b6a7358d0adf08247d8429d33abcee8fb731767a861a8",
+      "bytes": 392896
+    },
+    {
+      "path": "browser/ryukoku-1440-source-gap.png",
+      "sha256": "edeedda34eaf6bebe25ba3c0d4ec93b95ea9d06db8e50442c3bed06f36a4041b",
+      "bytes": 423934
+    },
+    {
+      "path": "browser/ryukoku-390-arrival.png",
+      "sha256": "f900bac83346426d947e03ed17447d4fd37b05d8eff7716919561c7e8b260835",
+      "bytes": 138767
+    },
+    {
+      "path": "browser/ryukoku-390-card-or-row.png",
+      "sha256": "15bdd69c086ca7b14651df3ba62ef04066758324045611586d2c4b1521b8d0d8",
+      "bytes": 138565
+    },
+    {
+      "path": "browser/ryukoku-390-coe-visa.png",
+      "sha256": "2da0dd4da1a2a7ef1b888c8a818eee8b4b81e020a2a10e5aa56f2e2266f0757c",
+      "bytes": 140945
+    },
+    {
+      "path": "browser/ryukoku-390-life.png",
+      "sha256": "ae3dccd5c985a4ff81523fc6a790d819f415e1f05f786ff5b6e03593f12d0bac",
+      "bytes": 151087
+    },
+    {
+      "path": "browser/ryukoku-390-overview.png",
+      "sha256": "7afc62c28585672bae37c9b79f966b396b4c6707a5beab78a331855fb8919c3d",
+      "bytes": 1369769
+    },
+    {
+      "path": "browser/ryukoku-390-packet.png",
+      "sha256": "af0b7dd7468bf1e2c23ddea803fa3b869f6cef0a8078889d0d636fd72ad9a17b",
+      "bytes": 139202
+    },
+    {
+      "path": "browser/ryukoku-390-source-gap.png",
+      "sha256": "ba817ec245ef1cc8d186901d8c55f05d47efd9e61c7647d85d6cd69cdd304966",
+      "bytes": 123301
+    }
+  ],
+  "end_sha": "ae169b3698129264274ca0e2bc3976cb483df2d7",
+  "end_porcelain": "",
+  "same_sha_and_clean": true,
+  "necessary_local_tests_passed": true,
+  "finished_at": "2026-10-09T08:01:33.254209+00:00"
+}

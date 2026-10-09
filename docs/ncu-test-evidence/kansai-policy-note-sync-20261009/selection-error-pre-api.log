@@ -1,0 +1,65 @@
+CONFTEST LOADED!
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception[unknown-unknown] _
+
+tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-2/test_kansai_initial_api_notes_0')
+admission = 'unknown', housing = 'unknown'
+
+    @pytest.mark.parametrize('admission,housing', [
+        ('unknown', 'unknown'), ('accepted', 'on_campus'), ('accepted', 'off_campus')])
+    def test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception(tmp_path, admission, housing):
+        client = TestClient(create_app(tmp_path))
+        response = client.get('/application-center/catalog', params={
+            'school': 'NCU', 'target_school': '關西大學 Kansai University',
+            'academic_year': '116', 'host_admission_status': admission, 'housing_choice': housing})
+        assert response.status_code == 200
+        initial = [item for item in response.json()['items'] if item['name'].startswith('初次')]
+>       assert len(initial) == 6
+E       AssertionError: assert 9 == 6
+E        +  where 9 = len([{'id': 'f7e133b1447e3280c31e', 'sequence': 8, 'phase': '提名後外校申請', 'step_title': '初次六類共通，並非母校七件', ...}, {'id': '23906a...七件', ...}, {'id': 'a476038a6cfbaade4108', 'sequence': 13, 'phase': '提名後外校申請', 'step_title': '初次六類共通，並非母校七件', ...}, ...])
+
+tests/test_ncu_shizuoka_chuo_kansai.py:86: AssertionError
+_ test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception[accepted-on_campus] _
+
+tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-2/test_kansai_initial_api_notes_1')
+admission = 'accepted', housing = 'on_campus'
+
+    @pytest.mark.parametrize('admission,housing', [
+        ('unknown', 'unknown'), ('accepted', 'on_campus'), ('accepted', 'off_campus')])
+    def test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception(tmp_path, admission, housing):
+        client = TestClient(create_app(tmp_path))
+        response = client.get('/application-center/catalog', params={
+            'school': 'NCU', 'target_school': '關西大學 Kansai University',
+            'academic_year': '116', 'host_admission_status': admission, 'housing_choice': housing})
+        assert response.status_code == 200
+        initial = [item for item in response.json()['items'] if item['name'].startswith('初次')]
+>       assert len(initial) == 6
+E       AssertionError: assert 9 == 6
+E        +  where 9 = len([{'id': 'f7e133b1447e3280c31e', 'sequence': 8, 'phase': '提名後外校申請', 'step_title': '初次六類共通，並非母校七件', ...}, {'id': '23906a...七件', ...}, {'id': 'a476038a6cfbaade4108', 'sequence': 13, 'phase': '提名後外校申請', 'step_title': '初次六類共通，並非母校七件', ...}, ...])
+
+tests/test_ncu_shizuoka_chuo_kansai.py:86: AssertionError
+_ test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception[accepted-off_campus] _
+
+tmp_path = PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-2/test_kansai_initial_api_notes_2')
+admission = 'accepted', housing = 'off_campus'
+
+    @pytest.mark.parametrize('admission,housing', [
+        ('unknown', 'unknown'), ('accepted', 'on_campus'), ('accepted', 'off_campus')])
+    def test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception(tmp_path, admission, housing):
+        client = TestClient(create_app(tmp_path))
+        response = client.get('/application-center/catalog', params={
+            'school': 'NCU', 'target_school': '關西大學 Kansai University',
+            'academic_year': '116', 'host_admission_status': admission, 'housing_choice': housing})
+        assert response.status_code == 200
+        initial = [item for item in response.json()['items'] if item['name'].startswith('初次')]
+>       assert len(initial) == 6
+E       AssertionError: assert 9 == 6
+E        +  where 9 = len([{'id': 'f7e133b1447e3280c31e', 'sequence': 8, 'phase': '提名後外校申請', 'step_title': '初次六類共通，並非母校七件', ...}, {'id': '23906a...七件', ...}, {'id': 'a476038a6cfbaade4108', 'sequence': 13, 'phase': '提名後外校申請', 'step_title': '初次六類共通，並非母校七件', ...}, ...])
+
+tests/test_ncu_shizuoka_chuo_kansai.py:86: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_shizuoka_chuo_kansai.py::test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception[unknown-unknown]
+FAILED tests/test_ncu_shizuoka_chuo_kansai.py::test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception[accepted-on_campus]
+FAILED tests/test_ncu_shizuoka_chuo_kansai.py::test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception[accepted-off_campus]
+3 failed in 9.41s

@@ -1,0 +1,407 @@
+{
+  "candidate_sha": "2637de25490e47bbb3987617bceefce02ae78446",
+  "baseline_data_sha": "224284f1460a792daf0015a6ab4342d83968ab8f",
+  "exception_corrections": [
+    "ncu-122",
+    "ncu-128",
+    "ncu-129"
+  ],
+  "input_sha256": {
+    "sources/ncu/2026-10-08/reviewed-host-records.json": "b90a333e8e87d4a52f2105a1afa4a95e0d31dcbf1584967a5592d79edec42f08",
+    "src/exchange_info/official_data/ncu/field-audit.json": "588800fc2032dac2c044d7b726ea9b7e5aed95121d41aeac11ce795b07ce90c0",
+    "src/exchange_info/official_data/ncu/application_workflows.jsonl": "70d8df66d718aa70ee7f3a0486ea6ef9f2a91968d09eabedb43819f5a6a928cb",
+    "src/exchange_info/official_data/ncu/document-conditions.json": "0572b2957dd615313c9a5dad5b25e0848aa1d8a3feb12250261c48e93e6fc630",
+    "src/exchange_info/official_data/ncu/source-evidence.json.gz": "58b0409b224bd60bddfb544743edbc9d7a0c81c5a36bfa044047470e4294f7ed",
+    "src/exchange_info/official_data/ncu/catalog-completeness.json": "aac6df214985e7b323e450c8c24369c2ebf1568908b433fe3635614f58b11cf5"
+  },
+  "catalog_coverage": {
+    "checked_at": "2026-10-08T00:00:00+00:00",
+    "academic_year": "116",
+    "home_notice_confirmed": true,
+    "current_list_status": "scheduled_not_yet_announced",
+    "current_list_expected_date": "2026-10-12",
+    "historical_rows": 216,
+    "catalog_entries": 214,
+    "source_documents_attempted": 459,
+    "source_documents_downloaded": 459,
+    "source_documents_any_text": 454,
+    "source_documents_all_pages_have_text": 423,
+    "source_documents_all_pages_read": 29,
+    "source_documents_visual_reviewed": 7,
+    "source_documents_ocr_reviewed": 1,
+    "source_documents_with_errors": 0,
+    "source_documents_with_text_quality_gaps": 2,
+    "source_documents_with_non_text_pages": 36,
+    "source_non_text_page_count": 100,
+    "host_web_checks": 921,
+    "host_web_checks_with_errors": 115,
+    "source_mapped_entries": 214,
+    "host_source_mapped_entries": 211,
+    "entries_with_any_host_text": 210,
+    "reviewed_host_records": 71,
+    "host_full_116_verification_count": 0,
+    "pending_workflows": 214,
+    "provenance_note": "提取不是當期資格核准；逐欄缺口與原文分列於field-audit.json。"
+  },
+  "school_count": 71,
+  "fields_per_school": 17,
+  "indexed_source_count": 1003,
+  "schools": [
+    {
+      "id": "ncu-001",
+      "school_name": "西雪梨大學 Western Sydney University",
+      "path": "schools/ncu-001/index.json"
+    },
+    {
+      "id": "ncu-008",
+      "school_name": "國立高等應用電子學院 Ecole Nationale Superieure de l'Electronique et de ses Applications ( ENSEA )",
+      "path": "schools/ncu-008/index.json"
+    },
+    {
+      "id": "ncu-018",
+      "school_name": "航太工程高等學院 Institute of Polytechnic Science and Aeronautics(IPSA)",
+      "path": "schools/ncu-018/index.json"
+    },
+    {
+      "id": "ncu-028",
+      "school_name": "史特拉斯堡大學 Universite de Strasbourg",
+      "path": "schools/ncu-028/index.json"
+    },
+    {
+      "id": "ncu-081",
+      "school_name": "圖爾庫大學 University of Turku",
+      "path": "schools/ncu-081/index.json"
+    },
+    {
+      "id": "ncu-083",
+      "school_name": "奧胡斯大學 Aarhus University School of Engineering",
+      "path": "schools/ncu-083/index.json"
+    },
+    {
+      "id": "ncu-097",
+      "school_name": "阿拉尼亞阿拉丁凱庫巴德大學 Alanya Alaaddin Keykubat University (ALKU)",
+      "path": "schools/ncu-097/index.json"
+    },
+    {
+      "id": "ncu-098",
+      "school_name": "蘇萊曼德米雷爾大學 Suleyman Demirel University（SDU）",
+      "path": "schools/ncu-098/index.json"
+    },
+    {
+      "id": "ncu-101",
+      "school_name": "曼尼托巴大學 University of Manitoba",
+      "path": "schools/ncu-101/index.json"
+    },
+    {
+      "id": "ncu-112",
+      "school_name": "莫瑞州立大學（自費） Murray State University（自費）",
+      "path": "schools/ncu-112/index.json"
+    },
+    {
+      "id": "ncu-115",
+      "school_name": "廣島大學 Hiroshima University",
+      "path": "schools/ncu-115/index.json"
+    },
+    {
+      "id": "ncu-116",
+      "school_name": "北海道大學(院級) Hokkaido University（院級）",
+      "path": "schools/ncu-116/index.json"
+    },
+    {
+      "id": "ncu-117",
+      "school_name": "北海道大學(校級) Hokkaido University（校級）",
+      "path": "schools/ncu-117/index.json"
+    },
+    {
+      "id": "ncu-118",
+      "school_name": "關西國際大學 Kansai University of International Studies",
+      "path": "schools/ncu-118/index.json"
+    },
+    {
+      "id": "ncu-119",
+      "school_name": "駒澤大學 Komazawa University",
+      "path": "schools/ncu-119/index.json"
+    },
+    {
+      "id": "ncu-120",
+      "school_name": "東京芝浦工業大學 SHIBAURA INSTITUTE OF TECHNOLOGY",
+      "path": "schools/ncu-120/index.json"
+    },
+    {
+      "id": "ncu-121",
+      "school_name": "信州大學 Shinshu University",
+      "path": "schools/ncu-121/index.json"
+    },
+    {
+      "id": "ncu-122",
+      "school_name": "東北大學 Tohoku University",
+      "path": "schools/ncu-122/index.json"
+    },
+    {
+      "id": "ncu-123",
+      "school_name": "東京都市大學 Tokyo City University",
+      "path": "schools/ncu-123/index.json"
+    },
+    {
+      "id": "ncu-124",
+      "school_name": "富山大學 University of Toyama",
+      "path": "schools/ncu-124/index.json"
+    },
+    {
+      "id": "ncu-125",
+      "school_name": "福井大學 University of Fukui",
+      "path": "schools/ncu-125/index.json"
+    },
+    {
+      "id": "ncu-126",
+      "school_name": "靜岡大學 Shizuoka University",
+      "path": "schools/ncu-126/index.json"
+    },
+    {
+      "id": "ncu-127",
+      "school_name": "千葉大學 Chiba University",
+      "path": "schools/ncu-127/index.json"
+    },
+    {
+      "id": "ncu-128",
+      "school_name": "日本中央大學 Chuo University",
+      "path": "schools/ncu-128/index.json"
+    },
+    {
+      "id": "ncu-129",
+      "school_name": "關西大學 Kansai University",
+      "path": "schools/ncu-129/index.json"
+    },
+    {
+      "id": "ncu-131",
+      "school_name": "新潟大學 Niigata University",
+      "path": "schools/ncu-131/index.json"
+    },
+    {
+      "id": "ncu-132",
+      "school_name": "大阪公立大學 Osaka Metropolitan University",
+      "path": "schools/ncu-132/index.json"
+    },
+    {
+      "id": "ncu-133",
+      "school_name": "東京科學大學 Institute of Science Tokyo",
+      "path": "schools/ncu-133/index.json"
+    },
+    {
+      "id": "ncu-140",
+      "school_name": "九州工業大學 Kyushu Institute of Technology",
+      "path": "schools/ncu-140/index.json"
+    },
+    {
+      "id": "ncu-150",
+      "school_name": "釜慶大學 Pukyong National University",
+      "path": "schools/ncu-150/index.json"
+    },
+    {
+      "id": "ncu-156",
+      "school_name": "首爾市立大學 University of Seoul",
+      "path": "schools/ncu-156/index.json"
+    },
+    {
+      "id": "ncu-160",
+      "school_name": "南洋理工大學 Nanyang Technological University（NTU）",
+      "path": "schools/ncu-160/index.json"
+    },
+    {
+      "id": "ncu-167",
+      "school_name": "上海大學 Shanghai University",
+      "path": "schools/ncu-167/index.json"
+    },
+    {
+      "id": "ncu-168",
+      "school_name": "上海交通大學 Shanghai Jiao Tong University",
+      "path": "schools/ncu-168/index.json"
+    },
+    {
+      "id": "ncu-169",
+      "school_name": "上海東華大學 Donghua University",
+      "path": "schools/ncu-169/index.json"
+    },
+    {
+      "id": "ncu-170",
+      "school_name": "上海財經大學 Shanghai University of Fiance and Economics",
+      "path": "schools/ncu-170/index.json"
+    },
+    {
+      "id": "ncu-171",
+      "school_name": "上海同濟大學 Tongji University",
+      "path": "schools/ncu-171/index.json"
+    },
+    {
+      "id": "ncu-172",
+      "school_name": "復旦大學 Fudan University",
+      "path": "schools/ncu-172/index.json"
+    },
+    {
+      "id": "ncu-173",
+      "school_name": "大連理工大學 Dalian University of Technology",
+      "path": "schools/ncu-173/index.json"
+    },
+    {
+      "id": "ncu-174",
+      "school_name": "天津大學 Tianjin University",
+      "path": "schools/ncu-174/index.json"
+    },
+    {
+      "id": "ncu-175",
+      "school_name": "北京師範大學 Beijing Normal University",
+      "path": "schools/ncu-175/index.json"
+    },
+    {
+      "id": "ncu-176",
+      "school_name": "北京郵電大學 Beijing University of Posts and Telecommunications",
+      "path": "schools/ncu-176/index.json"
+    },
+    {
+      "id": "ncu-177",
+      "school_name": "吉林大學 Jilin University",
+      "path": "schools/ncu-177/index.json"
+    },
+    {
+      "id": "ncu-178",
+      "school_name": "西安交通大學 Xian Jiaotong University",
+      "path": "schools/ncu-178/index.json"
+    },
+    {
+      "id": "ncu-179",
+      "school_name": "西南大學 SOUTHWEST UNIVERSITY",
+      "path": "schools/ncu-179/index.json"
+    },
+    {
+      "id": "ncu-180",
+      "school_name": "東南大學 Southeast University",
+      "path": "schools/ncu-180/index.json"
+    },
+    {
+      "id": "ncu-181",
+      "school_name": "東北林業大學 NORTHEAST FORESTRY UNIVERSITY",
+      "path": "schools/ncu-181/index.json"
+    },
+    {
+      "id": "ncu-182",
+      "school_name": "武漢大學 Wuhan University",
+      "path": "schools/ncu-182/index.json"
+    },
+    {
+      "id": "ncu-183",
+      "school_name": "長安大學 Changan University",
+      "path": "schools/ncu-183/index.json"
+    },
+    {
+      "id": "ncu-184",
+      "school_name": "南京大學 Nanjing University",
+      "path": "schools/ncu-184/index.json"
+    },
+    {
+      "id": "ncu-185",
+      "school_name": "西交利物浦大學 Xi'an Jiaotong-Liverpool University",
+      "path": "schools/ncu-185/index.json"
+    },
+    {
+      "id": "ncu-186",
+      "school_name": "南京信息工程大學 Nanjing University of Information Science and Technology",
+      "path": "schools/ncu-186/index.json"
+    },
+    {
+      "id": "ncu-187",
+      "school_name": "重慶大學 Chongqing University",
+      "path": "schools/ncu-187/index.json"
+    },
+    {
+      "id": "ncu-188",
+      "school_name": "浙江大學 Zhejiang University",
+      "path": "schools/ncu-188/index.json"
+    },
+    {
+      "id": "ncu-189",
+      "school_name": "華中師範大學 Central China Normal University",
+      "path": "schools/ncu-189/index.json"
+    },
+    {
+      "id": "ncu-190",
+      "school_name": "華中科技大學 Huazhong University of Science and Technology",
+      "path": "schools/ncu-190/index.json"
+    },
+    {
+      "id": "ncu-191",
+      "school_name": "華南理工大學 South China University of Technology",
+      "path": "schools/ncu-191/index.json"
+    },
+    {
+      "id": "ncu-192",
+      "school_name": "廈門大學 Xiamen University",
+      "path": "schools/ncu-192/index.json"
+    },
+    {
+      "id": "ncu-193",
+      "school_name": "廣西大學 Guangxi University",
+      "path": "schools/ncu-193/index.json"
+    },
+    {
+      "id": "ncu-194",
+      "school_name": "鄭州大學 Zhengzhou University",
+      "path": "schools/ncu-194/index.json"
+    },
+    {
+      "id": "ncu-195",
+      "school_name": "貴州大學 Guizhou University",
+      "path": "schools/ncu-195/index.json"
+    },
+    {
+      "id": "ncu-196",
+      "school_name": "濟南大學 University of Jinan",
+      "path": "schools/ncu-196/index.json"
+    },
+    {
+      "id": "ncu-199",
+      "school_name": "太歷國立大學 Tarlac State University",
+      "path": "schools/ncu-199/index.json"
+    },
+    {
+      "id": "ncu-206",
+      "school_name": "沃瑪德瓦大學 Universitas Warmadewa",
+      "path": "schools/ncu-206/index.json"
+    },
+    {
+      "id": "ncu-208",
+      "school_name": "日惹國立大學 Universitas Negeri Yogyakarta",
+      "path": "schools/ncu-208/index.json"
+    },
+    {
+      "id": "ncu-209",
+      "school_name": "迪波內戈羅大學 Universitas Diponegoro",
+      "path": "schools/ncu-209/index.json"
+    },
+    {
+      "id": "ncu-211",
+      "school_name": "蘇門答臘理工學院 Institut Teknologi Sumatera (ITERA)",
+      "path": "schools/ncu-211/index.json"
+    },
+    {
+      "id": "ncu-213",
+      "school_name": "太原農林大學 THAI NGUYEN UNIVERSITY OF AGRICULTURE AND FORESTRY (TUAF)",
+      "path": "schools/ncu-213/index.json"
+    },
+    {
+      "id": "ncu-214",
+      "school_name": "胡志明市科技師範大學 Ho Chi Min City University of Technology and Education",
+      "path": "schools/ncu-214/index.json"
+    },
+    {
+      "id": "ncu-215",
+      "school_name": "胡志明市國際大學 International University, Viet Nam National University",
+      "path": "schools/ncu-215/index.json"
+    },
+    {
+      "id": "ncu-216",
+      "school_name": "胡志明市自然科學大學 VNUHCM-University of Science, Ho Chi Minh City (HCMUS)",
+      "path": "schools/ncu-216/index.json"
+    }
+  ],
+  "note_zh": "原始大檔保留。索引不修改資料／補核當期；共享來源去重，原文由不可變Git候選與精確位置／hash讀回。"
+}

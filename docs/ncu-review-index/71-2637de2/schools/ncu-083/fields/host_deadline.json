@@ -1,0 +1,32 @@
+{
+  "key": "host_deadline",
+  "label": "提名與外校申請期限",
+  "status": "needs_confirmation",
+  "note": "官網每年Autumn：提名2/15–3/25、學生申請3/1–4/1；Spring：提名8/15–9/25、學生申請9/1–10/1。未列2027–28年號與時刻，不設定精確提醒。",
+  "source_urls": [
+    "https://international.au.dk/education/admissions/exchange/admission-to-aarhus-university/how-to-apply"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://international.au.dk/education/admissions/exchange/admission-to-aarhus-university/how-to-apply",
+      "source_id": "host-au-apply",
+      "page": null,
+      "source_title": "Aarhus申請；2026/9/15修訂",
+      "applicability": "Aarhus官方2026/8–10更新；Technical Sciences頁2026/10/6修訂，含2027變更與仍列2026的課目。中央115僅School of Engineering，116方案與院別待確認。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 82,
+        "field": "host_deadline",
+        "evidence_array_index": 0,
+        "text_sha256": "d03c18b20a9985592e348b5ce202d4dbe92f0ab285050ac027341587fd4350c6",
+        "char_count": 2299
+      }
+    }
+  ],
+  "unresolved": "當期提名及申請年份、時間與工程方案範圍需確認。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Aarhus官方2026/8–10更新；Technical Sciences頁2026/10/6修訂，含2027變更與仍列2026的課目。中央115僅School of Engineering，116方案與院別待確認。"
+}

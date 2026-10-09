@@ -1,0 +1,32 @@
+{
+  "key": "language",
+  "label": "強制與建議語言",
+  "status": "needs_confirmation",
+  "note": "官網B2與兩年內語言證明；可用母校蓋章簽名B2函／Language Assessment Sheet／認可測驗，不接受OLS、TOEIC、Duolingo。全英文學士以上學位或native有transcript重傳形式豁免。中央接受TOEIC，不等於Turku也接受。 官網TOEFL段落標ITP但值為iBT，分界寫2026/1/26，舊總72／新4各科4；另IELTS6、PTE62、不收MyBest、IELTS單科60天內重考。保留ITP／iBT及日期差異，不由regex自行改為ETS分界。",
+  "source_urls": [
+    "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies",
+      "source_id": "host-turku-apply",
+      "page": null,
+      "source_title": "Turku官方交換申請文件與期限",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "language",
+        "evidence_array_index": 0,
+        "text_sha256": "7a9bc2862b4586dee5b089d20b90a208b4cc555adf6062c8c28186320068ac39",
+        "char_count": 14280
+      }
+    }
+  ],
+  "unresolved": "當期TOEFL名稱／分界及學制豁免需確認；home與host證明不能混用。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。"
+}

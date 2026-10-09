@@ -57,9 +57,11 @@ from .models import (
     UniversityApplicationWorkflow,
 )
 from .application_rules import select_application_workflow
-from .university_registry import NTPU, NTU, require_university
 from .ccu_sources import CHECKED_AT as CCU_SOURCE_CHECKED_AT
+from .ncu_document_conditions import document_applicability, preparation_state_key
+from .university_registry import NTPU, NTU, NCU, require_university, resolve_university
 from .ntu_student_view import NTU_GUIDELINES_URL
+from .ncu_student_view import NCU_GUIDELINES_URL, NCU_CHECKED_AT, NCU_FORMS_URL
 
 
 FLOW_SOURCE_URL = "https://www.cgu.edu.tw/oia-ch/Subject?nodeId=15680"
@@ -831,11 +833,76 @@ def _ntu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentT
     return ApplicationDocumentTemplate.model_validate(payload)
 
 
+def _ncu_template(template: ApplicationDocumentTemplate) -> ApplicationDocumentTemplate | None:
+    descriptions = {
+        "exchange-application-data": "整理中央116-1個人資料與校內附件；正式報名須完成校方線上申請、列印簽核及系所紙本繳件。大學部平均60分、研究生70分，在職專班可申請但無研修獎學金。",
+        "study-plan": "個人研修與選課規劃工具；中央116-1校內必繳清單沒有列研修計畫。外校若要求，須依該校格式另備。",
+        "course-preapproval": "出發前向中央所屬系所確認學分採認；依外校修課規定，無規定時至少兩門且一門專業課。學則另規定兩門或六學分，須分別核對。",
+        "predeparture-notice": "出國前兩週完成中央行前程序單並繳文件；自行辦理護照、簽證、足額醫療／意外／急難救助保險及役男許可。此工具不代替中央正式表格。",
+        "return-report": "返國後一週內填中央返校程序單；心得須WORD電子檔800–1500字並至少四張照片。此工具協助草擬，正式程序單須依國際處通知取得。",
+        "credit-transfer": "整理外校原始成績證明與課程資料；依中央系所規定於畢業前完成採認，延畢生另核對校際選課兩階段程序及學雜費。",
+    }
+    if template.id not in descriptions:
+        return None
+    def adapt(value):
+        if isinstance(value, str): return value.replace("長庚大學", "國立中央大學").replace("長庚", "中央")
+        if isinstance(value, list): return [adapt(x) for x in value]
+        if isinstance(value, dict): return {k:adapt(v) for k,v in value.items()}
+        return value
+    payload = adapt(template.model_dump(mode="json"))
+    for field in payload["fields"]:
+        if field["id"] == "degree_level" and field["options"]:
+            field["options"] = list(dict.fromkeys([*field["options"], "在職碩士班"]))
+        if field["id"] == "class_rank_percent":
+            field["help_text"] = "中央校內須中文成績名次證明；本欄僅整理資料，不替代正式文件。"
+        if field["id"] == "language_test":
+            field["options"] = ["TOEFL iBT", "TOEFL ITP（第4頁；與第6頁PBT差異須確認）", "IELTS Academic", "GEPT（複試通過）", "TOEIC（聽讀）", "Linguaskill（實用組）", "BESTEP", "志願校接受之第三外語檢定"]
+            field["help_text"] = "校內必繳正式外語檢定成績，不限分數級數；英文檢定须兩年內有效。簡章第4頁列ITP、第6頁列PBT，先向國際處確認。合作校規定之語檢另查，提名前須具備。"
+        if field["id"] == "language_result_date":
+            field["label"] = "實際考試日期"
+            field["field_type"] = "date"
+            field["help_text"] = "填已發生的實際考試日期；正式英檢在校內申請及外校送件時均須有效。預計日期或網路截圖不能代替校內必繳正式成績。"
+    payload.update(description=descriptions[template.id], source_url=NCU_GUIDELINES_URL,
+        source_checked_at=NCU_CHECKED_AT, official_layout=False, official_form_number=None,
+        official_file_name=None, official_download_url=None, default_copies=1, signatures=[], stamps=[],
+        stage={"predeparture-notice":"出國前兩週", "return-report":"返國後一週"}.get(template.id,"申請與文件準備"),
+        version="116-1準備工具-2026-10-08.1", destinations=["學生自存備份"],
+        conditional_note="此為個人準備工具；中央正式申請表由系統列印完成簽核。家長／個資同意書請用中央現行下載檔。校內文件與外校文件分開，份數與其他正式表格依承辦通知。")
+    return ApplicationDocumentTemplate.model_validate(payload)
+
+
 def application_field_required(field: ApplicationFormField, values: dict[str, Any]) -> bool:
     return field.required or any(
         all(str(values.get(key, "")) in allowed for key, allowed in clause.items())
         for clause in field.required_when
     )
+
+
+def _ncu_language_validation(template: ApplicationDocumentTemplate, values: dict[str, Any]) -> dict[str, str]:
+    if template.source_url != NCU_GUIDELINES_URL or template.id != "exchange-application-data":
+        return {}
+    errors = {}
+    test = str(values.get("language_test") or "")
+    allowed = next(field.options for field in template.fields if field.id == "language_test")
+    if test and test not in allowed:
+        errors["language_test"] = "請依中央116-1正式語檢種類選擇；外校接受的其他測驗不能直接取代校內必繳證明。"
+    actual = str(values.get("language_result_date") or "")
+    if actual:
+        try:
+            date = datetime.strptime(actual, "%Y-%m-%d").date()
+            today = datetime.now(timezone.utc).date()
+            if date > today:
+                errors["language_result_date"] = "須填已發生的實際考試日期；預計日期不能代替正式語檢成績。"
+            elif test and test != "志願校接受之第三外語檢定":
+                try:
+                    expiry = date.replace(year=date.year + 2)
+                except ValueError:
+                    expiry = date.replace(year=date.year + 2, day=28)
+                if expiry < today:
+                    errors["language_result_date"] = "英文檢定已超過中央兩年效期；實際送件當日亦須有效，請備妥正式成績。"
+        except ValueError:
+            errors["language_result_date"] = "請填有效的實際考試日期。"
+    return errors
 
 
 def _ntu_language_validation(template: ApplicationDocumentTemplate, values: dict[str, Any]) -> dict[str, str]:
@@ -869,6 +936,8 @@ def _templates_for_school(school_name: str) -> list[ApplicationDocumentTemplate]
         from .ccu_application_documents import ccu_application_templates
 
         return ccu_application_templates()
+    if university.id == NCU.id:
+        return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ncu_template(template)) is not None]
     if university.id == NTU.id:
         return [adapted for template in APPLICATION_TEMPLATES if (adapted := _ntu_template(template)) is not None]
     if university.id != NTPU.id:
@@ -923,6 +992,7 @@ def build_application_document_catalog(
     workflow_is_published = (
         workflow.review_status == ApplicationWorkflowReviewStatus.PUBLISHED
     )
+    requirement_sources_only = resolve_university(context.school_name) == NCU
     items: list[ApplicationDocumentCatalogItem] = []
     sequence = 0
     stages = {
@@ -952,7 +1022,7 @@ def build_application_document_catalog(
                     [
                         *requirement.source_urls,
                         *([official_form_url] if official_form_url else []),
-                        *step.source_urls,
+                        *(step.source_urls if not requirement_sources_only or not requirement.source_urls else []),
                     ]
                 )
             )
@@ -1009,6 +1079,12 @@ def build_application_document_catalog(
                         or contact_unit
                         if needs_confirmation
                         else None
+                    ),
+                    applicability=document_applicability(
+                        context.school_name, workflow.school_name, requirement,
+                        context.partner_document_states.get(preparation_state_key(
+                            workflow.school_name, context.academic_year, context.application_round, context.semester,
+                        )),
                     ),
                 )
             )
@@ -1268,7 +1344,7 @@ def build_packet_manifest(
             field.id: answer_for_field(field, request.profile, answers)
             for field in template.fields
         }
-        language_errors = _ntu_language_validation(template, field_values)
+        language_errors = {**_ntu_language_validation(template, field_values), **_ncu_language_validation(template, field_values)}
         attachment_payloads: list[_AttachmentPayload] = []
         attachment_errors: dict[str, str] = {}
         for field in _attachment_fields_in_order(template):
@@ -1360,6 +1436,8 @@ def build_packet_manifest(
         source_checked_at=(
             CCU_SOURCE_CHECKED_AT
             if require_university(request.context.school_name).id == "ccu"
+            else NCU_CHECKED_AT
+            if require_university(request.context.school_name).id == NCU.id
             else NTU_SOURCE_CHECKED_AT
             if require_university(request.context.school_name).id == NTU.id
             else NTPU_SOURCE_CHECKED_AT

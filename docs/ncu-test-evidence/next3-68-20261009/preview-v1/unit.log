@@ -1,0 +1,22 @@
+CONFTEST LOADED!
+.......F...................................                              [100%]
+=================================== FAILURES ===================================
+_ test_current_forms_are_one_archive_with_four_sha_bound_members_and_reference_scope _
+
+    def test_current_forms_are_one_archive_with_four_sha_bound_members_and_reference_scope():
+        sources = source_records()
+        forms = sources['host-fukui-forms2027spring-zip']
+        review = json.loads((SOURCES / 'host-fukui-forms2027spring-members-review.json').read_text())
+        assert forms['sha256'] == review['sha256']
+        assert len(forms['archive_members']) == len(forms['pages']) == len(review['reviewed_members']) == 4
+        assert all(p['page'] is None and p['archive_member'] and p['member_sha256'] for p in forms['pages'])
+        assert all(p['native_text_read'] and not p['visual_read'] for p in review['reviewed_members'])
+        text = '\n'.join(p['text'] for p in forms['pages'])
+        assert '6  months  prior  to  the  certification' in text
+>       assert '2027' in text and '2028' in text
+E       assert ('2027' in 'Letter of Recommendation\n受入れ候補者推薦書\n \nTo:\nPresident, \nUniversity\n of Fukui\n福井大学長\u3000\n殿\nI hereby recommend t...      {\n        "cell": "AA77",\n        "value": "Telephone No.",\n        "formula": null\n      }\n    ]\n  }\n]\n')
+
+tests/test_ncu_tcu_toyama_fukui.py:122: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_tcu_toyama_fukui.py::test_current_forms_are_one_archive_with_four_sha_bound_members_and_reference_scope
+1 failed, 42 passed in 55.07s

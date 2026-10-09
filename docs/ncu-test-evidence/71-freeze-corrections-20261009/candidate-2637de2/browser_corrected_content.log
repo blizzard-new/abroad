@@ -1,0 +1,657 @@
+CONFTEST LOADED!
+..FF..                                                                   [100%]
+=================================== FAILURES ===================================
+_ test_ncu_reference_scope_and_student_content[chuo-\u65e5\u672c\u4e2d\u592e\u5927\u5b78-Part1\u4e03\u985e\u5171\u901a\uff0cC1\uff0fC2\u6309\u5b78\u5236\u64c7\u4e00-7-390] _
+
+page = <Page url='http://127.0.0.1:48209/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E6%97%A5%E...E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8#school=%E6%97%A5%E6%9C%AC%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8%20Chuo%20University'>
+live_server = LiveServer(base_url='http://127.0.0.1:48209', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-244/web-e2e-data1'))
+width = 390, slug = 'chuo', name = '日本中央大學', title = 'Part1七類共通，C1／C2按學制擇一'
+count = 7
+
+    @pytest.mark.parametrize('width',[390,1440])
+    @pytest.mark.parametrize('slug,name,title,count',CASES)
+    def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,name,title,count):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[]
+        page.on('pageerror',lambda e:errors.append(str(e)))
+        enter_public_site(page,live_server,'partners')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+        open_navigation(page)
+        page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立中央大學"]').click()
+        page.locator('#confirm-school').click()
+        wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60)
+        if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
+            page.locator('#glass-menu-toggle').click()
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(name)
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        full_name={'shizuoka':'靜岡大學 Shizuoka University',
+                   'chuo':'日本中央大學 Chuo University',
+                   'kansai':'關西大學 Kansai University'}[slug]
+        exact_trigger=f'.school-detail-trigger[data-school-name="{full_name}"]'
+        if width<700:
+            page.locator('#partner-table .partner-card').filter(has=page.locator(exact_trigger)).locator(':scope > summary').click()
+        page.locator(f'#partner-table {exact_trigger}:visible').first.click()
+        assert page.evaluate('new URLSearchParams(location.hash.slice(1)).get("school")') == full_name
+        summary=page.locator('#detail-overview .partner-student-summary')
+        terms={'shizuoka':['不是正式申請門檻','10/1','10/14','closed'],
+               'chuo':['Tentative','N3','Kenkyusei','五門','六列'],
+               'kansai':['500000','11/10','MCL','三月']}
+        for term in terms[slug]:expect(summary).to_contain_text(term)
+        page.locator('#ncu-source-audit > summary').click()
+        expect(page.locator('#ncu-source-audit-body > p').first).to_contain_text('2026-10-09',timeout=60_000)
+        if slug=='shizuoka':
+            failed=page.locator('.ncu-unretrieved-source[data-source-id="host-shizuoka-housing-current"]')
+            expect(failed).to_be_visible(timeout=60_000)
+            expect(failed).to_contain_text('English Top')
+            assert failed.get_by_role('link',name='已查網址（本次未取得）').get_attribute('href')=='https://www.suoic.shizuoka.ac.jp/english/international/campuslife/housing/'
+        else:
+            url=('https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_05_20260924.xlsx' if slug=='chuo' else
+                 'https://www.kansai-u.ac.jp/Kokusai/KUGFCourseGuide/2026/#target/page_no=19')
+            source=page.locator('#ncu-source-audit-body > details').filter(has=page.locator(f'a[href="{url}"]')).first
+            expect(source.locator(':scope > summary')).to_be_visible(timeout=60_000)
+            source.locator(':scope > summary').click()
+            expect(source).to_contain_text('未逐門' if slug=='chuo' else '未取得PDF第19頁')
+            assert source.get_by_role('link',name='官方公開來源').get_attribute('href')==url
+        out=Path('/tmp/ncu-audit/browser');out.mkdir(parents=True,exist_ok=True)
+        page.screenshot(path=str(out/f'ncu-shizuoka-chuo-kansai-{slug}-source-{width}.png'))
+        page.locator('#detail-tab-application').click()
+        group=page.locator('#detail-application .workflow-step').filter(has=page.locator(':scope > summary').filter(has_text=title)).first
+        group.locator(':scope > summary').click()
+        expect(group.locator('.workflow-documents > li')).to_have_count(count)
+        expect(group.locator('.workflow-rule-meta > strong')).to_have_text('規劃範圍（當期適用待確認）')
+        application=page.locator('#detail-application')
+        if slug=='shizuoka':
+            expect(group).to_contain_text('健康、Confirmation、經費新格式未取得')
+            expect(application).to_contain_text('修士專業／研究')
+            expect(application).to_contain_text('錄取後才通知宿舍')
+        elif slug=='chuo':
+            visa=application.locator('.workflow-step').filter(has=page.locator(':scope > summary').filter(has_text='行前COE／入學許可與Student visa')).first
+            arrival=application.locator('.workflow-step').filter(has=page.locator(':scope > summary').filter(has_text='到校orientation及正式選課')).first
+            expect(visa.locator(':scope > summary')).to_contain_text('行前準備')
+>           expect(arrival.locator(':scope > summary')).to_contain_text('抵達後')
+E           AssertionError: Locator expected to contain text '抵達後'
+E           Actual value: None
+E           Error: element(s) not found 
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#detail-application").locator(".workflow-step").filter(has=locator(":scope > summary").filter(has_text="到校orientation及正式選課")).first.locator(":scope > summary")
+E           
+E           Aria snapshot:
+E           - link "跳到主要內容":
+E             - /url: "#main-content"
+E           - main:
+E             - button "開啟功能選單"
+E             - link "UniWay 首頁":
+E               - /url: "#home"
+E               - strong: UniWay
+E             - status
+E             - region "日本中央大學 Chuo University":
+E               - button "加入比較日本中央大學 Chuo University"
+E               - button "登入建立計畫"
+E               - img "日本中央大學 Chuo University官方照片"
+E               - link "圖片來源":
+E                 - /url: https://www.chuo-u.ac.jp/english/admissions/exchange/
+E               - text: 日本 · 交換學生 下一站
+E               - strong: 日本
+E               - text: 東京Tama／Myogadani／Korakuen／Ichigaya Tamachi
+E               - heading "日本中央大學 Chuo University" [level=1]
+E               - text: 我的資格
+E               - strong: 尚未進行資格初判
+E               - text: 合作校參考時程
+E               - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】2027春提名2026/7/10起：Grad截止9/7、Part1 9/15–30已過；UG提名截止9/30已過、Part1 10/15–31；兩者Part2 11/1–10，健康可較晚但最終日未明。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】2027秋明示Tentative：提名2027/1/10起，Grad截止2/15、Part1 3/1–15；UG提名截止3/15、Part1 4/1–15；Part2 5/1–10。不能當116已核准精確提醒，2028春尚未取得。（適用年度待確認）
+E               - text: 語言門檻
+E               - strong: 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】法／經濟／文／政策／Global Mana…
+E               - text: 生活費參考
+E               - strong: 具互免協議交換者原則免Chuoregistration與tuition，仍繳中央母校學雜；日本語班free有成績學分。2027春表無一般交換獎學金，部分partner例外依協議。 2027春表生活費約50000／月不含住宿；國保約2000／月，醫療口譯支援通…
+E               - text: 交換名額
+E               - strong: 依公告
+E               - text: 研修期間
+E               - strong:
+E                 - text: 116母校方案：2027/9–2028/2
+E                 - strong: 一學期
+E                 - text: 、2027/9–2028/6
+E                 - strong: 一學年
+E                 - text: 、2028/2–6
+E                 - strong: 一學期
+E                 - text: ；實際依外校校曆與可提名學期確認。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】
+E                 - strong: 一學期
+E                 - text: 或兩學期；多全年課建議4月開始整學年，這是建議而非禁止秋入學。2027春表時程秋9/21，但AY2027獨立校曆classes begin9/20，矛盾保留。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】AY2027校曆春classes4/9、末課7/21、exam7/26–31；秋classes9/20、末課2028/1/22、exam1/24–29，學年到3/31。初到orientation另依接收通知。
+E               - tablist "交換學校詳細資訊":
+E                 - tab "快速了解"
+E                 - tab "申請方式" [selected]
+E                 - tab "生活情報"
+E                 - tab "出發前提醒"
+E                 - tab "學生心得"
+E                 - tab "學生社群"
+E               - tabpanel "申請方式":
+E                 - heading "詳細申請流程" [level=2]
+E                 - strong: 官方來源已整理，13 個步驟仍需確認
+E                 - paragraph: 已核對母校116-1；相關公開附件20份，個別外校原文與當期適用性另核對。
+E                 - text: 適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/09 上午04:48
+E                 - strong: 適用年度或梯次仍待確認
+E                 - text: 來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。
+E                 - strong: 這是尚未完成正式發布的參考流程
+E                 - text: 可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。
+E                 - strong: 共 18 個步驟
+E                 - button "回報規定錯誤"
+E                 - button "重新載入流程資料"
+E                 - group:
+E                   - text: 校內申請 · 中央國際事務處／所屬系所
+E                   - strong: 核對中央116-1資格與當期名額
+E                 - group:
+E                   - text: 校內申請 · 中央國際事務處／所屬系所
+E                   - strong: 完成中央線上申請並列印簽核
+E                 - group:
+E                   - text: 校內申請 · 中央國際事務處／所屬系所
+E                   - strong: 繳交中央校內紙本甄選文件至系所
+E                 - group:
+E                   - text: 甄選與提名 · 中央國際事務處／所屬系所
+E                   - strong: 核對校內錄取並準備提名
+E                 - group:
+E                   - text: 提名後外校申請 · 中央承辦（非學生自行提名）
+E                   - strong: 母校承辦：本科／研究所不同提名日
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 提名後外校申請 · 學生與中央承辦／接收單位
+E                   - strong: Part1七類共通，C1／C2按學制擇一
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                   - paragraph: manaba填survey＋upload，無須寄紙本；最新116／2028春未核。C1本科或C2研究所同列擇一；兩份空白格式都列於官方來源，不以本科表代研究所表。
+E                   - strong: 規劃範圍（當期適用待確認）
+E                   - text: 116 學年度
+E                   - strong: 此步驟仍有送件或文件細節待確認。
+E                   - text: 請聯絡：國立中央大學國際事務處
+E                   - strong: 目前只有參考時程，沒有當期精確日期。
+E                   - text: 參考：明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+E                   - heading "送件方式" [level=4]
+E                   - strong: 線上申請／上傳
+E                   - list:
+E                     - listitem: 期限說明：方式來自2027春／暫定2027秋參考程序；中央116指定入口、方式及精確日期仍須兩校確認，不代表已開放當期送件。
+E                   - heading "我的送件紀錄" [level=4]
+E                   - strong: 尚未開始
+E                   - text: 線上申請／上傳 · 學生手動
+E                   - term: 下一步
+E                   - definition: 先備齊文件並再次核對官方送件方式。
+E                   - term: 承辦
+E                   - definition: 學生與中央承辦／接收單位
+E                   - term: 期限
+E                   - definition: 參考時程：明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。（精確日期待確認，不會自動提醒）
+E                   - term: 收件證明
+E                   - definition: 尚未記錄
+E                   - button "登入後記錄進度"
+E                   - paragraph: 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E                   - heading "具體要做" [level=4]
+E                   - list:
+E                     - listitem: manaba填survey＋upload，無須寄紙本；最新116／2028春未核。C1本科或C2研究所同列擇一；兩份空白格式都列於官方來源，不以本科表代研究所表。
+E                     - listitem: 最新116名額、學制／學院協議、所選學期與個人條件仍待確認；不因母校推薦、外校錄取或住宿選擇自動解除當期文件封鎖。
+E                   - heading "這一步要準備" [level=4]
+E                   - list:
+E                     - listitem: Part1線上web application（manaba提名者入口） 文件形式待確認 · 待官方確認
+E                     - listitem: Part1 A彩色ID照：JPEG高4×寬3cm 文件形式待確認 · 待官方確認
+E                     - listitem: Part1 B護照ID；辦理中官方ID／續期舊護照後補新本 影本 · 待官方確認
+E                     - listitem: Part1 C1本科或C2研究所電腦計畫（按學制擇一） 文件形式待確認 · 待官方確認
+E                     - listitem: Part1 D最近英文在學證明 文件形式待確認 · 待官方確認
+E                     - listitem: Part1 E最新正式英文成績 文件形式待確認 · 待官方確認
+E                     - listitem:
+E                       - text: Part1 G1全員親筆誓約 文件形式待確認 · 簽署：申請人親筆簽名 · 待官方確認
+E                       - link "官方參考表格（當期適用待確認）":
+E                         - /url: https://www.chuo-u.ac.jp/uploads/2024/12/G1-Pledge.docx
+E                   - text: 發現資格、期限、文件或送件資訊不一致？
+E                   - button "回報此步驟"
+E                 - group:
+E                   - text: 提名後外校申請 · 學生與中央承辦／接收單位
+E                   - strong: Part1學院／語言／研究所五類條件件
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 合作校申請 · 學生與兩校國際處
+E                   - strong: 核對外校當期文件並依通知申請
+E                 - group:
+E                   - text: 提名後外校申請 · 學生與中央承辦／接收單位
+E                   - strong: Part2 J＋K財力兩類（至少100000／月×全期）
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 提名後外校申請 · 學生與中央承辦／接收單位
+E                   - strong: Part2 L健康與條件JPETS追加
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 錄取後住房 · 學生與中央承辦／接收單位
+E                   - strong: 交換生住房survey／契約與無房保證
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 行前準備 · 中央國際事務處／所屬系所
+E                   - strong: 確認課程、學分與中央註冊繳費
+E                 - group:
+E                   - text: 行前準備 · 中央國際事務處／所屬系所
+E                   - strong: 出國前兩週完成中央行前程序
+E                   - text: 出國前兩週
+E                 - group:
+E                   - text: 行前準備 · 學生與中央承辦／接收單位
+E                   - strong: 行前COE／入學許可與Student visa
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 抵達後 · 學生與中央承辦／接收單位
+E                   - strong: 到校新生說明會及正式選課
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 抵達後 · 中央國際事務處／所屬系所
+E                   - strong: 到校註冊並回報當地聯絡方式
+E                 - group:
+E                   - text: 交換結束 · 學生與中央承辦／接收單位
+E                   - strong: manaba限期成績下載／母校直寄另申請
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 返國後 · 中央國際事務處／所屬系所
+E                   - strong: 返國後一週完成中央返校程序
+E                   - text: 返國後一週內
+E                 - strong: 本流程使用的官方來源
+E                 - link "中央116-1甄選簡章 母校當期正式公告 · 優先級 1":
+E                   - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf
+E                 - link "中央115名額表（歷史參考） 母校當期正式公告 · 優先級 1":
+E                   - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf
+E                 - link "Academic Calendar 2027 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/07/english_admissions_exchange_semester-or-full-year_03_20260728.pdf
+E                 - link "Fact Sheet for Chuo Student Exchange Program(Inbound) April 2027 enrollment 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/07/english_admissions_exchange_semester-or-full-year_01_20260707.pdf
+E                 - link "日本中央2027春／暫定秋交換與現行表格 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/english/admissions/exchange/semester-or-full-year/
+E                 - link "[F] Certificate of JPN language proficiency 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2024/12/F-Certificate-of-JPN-language-proficiency.doc
+E                 - link "[C1] Study Plan 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_C1_20260904.docx
+E                 - link "[C2] Study Plan 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_C2_20260904.docx
+E                 - link "[G2] Confirmation on Application for Science & Engineering 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/08/english_admissions_exchange_semester-or-full-year_04_20260821.pdf
+E                 - link "[H] Academic Reference 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2024/12/H-Academic-Reference_Graduate.doc
+E                 - link "[J] Declaration and Certification of Finance 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2024/12/J-Declaration-and-Certification-of-Finances.doc
+E                 - link "[L] Certificate of Health 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2024/12/L-Certificate-of-Health.pdf
+E                 - link "International Residences FAQ 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/english/admissions/residences/faq/
+E                 - link "List of Chuo Student Exchange Partners(as of July, 2026) 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/08/english_admissions_exchange_semester-or-full-year_02_20260818.pdf
+E                 - link "[G1] Pledge 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2024/12/G1-Pledge.docx
+E                 - link "Undergraduate Programs(Separate sheets are provided for each faculty.) 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_05_20260924.xlsx
+E                 - link "Graduate Programs (Separate sheets are provided for each graduate school.) 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_02_20260924.xlsx
+E                 - link "International Residence Chuo 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/english/admissions/residences/
+E                 - link "FACT SHEET 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/07/english_admissions_exchange_semester-or-full-year_06_20260707.pdf
+E                 - link "International Residence Chuo 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/english/admissions/residences/irc/
+E                 - paragraph: 截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。
+E               - complementary "申請準備進度與官方來源":
+E                 - heading "我的申請進度" [level=2]
+E                 - progressbar "申請準備進度":
+E                   - strong: 0 / 5 已完成
+E                   - text: 準備中
+E                 - paragraph:
+E                   - text: 登入以保存進度
+E                   - button "登入"
+E                 - checkbox "確認資格與語言門檻" [disabled]
+E                 - text: 確認資格與語言門檻
+E                 - checkbox "比較課程、費用與生活" [disabled]
+E                 - text: 比較課程、費用與生活
+E                 - checkbox "備妥校內申請文件" [disabled]
+E                 - text: 備妥校內申請文件
+E                 - checkbox "完成校內甄選送件" [disabled]
+E                 - text: 完成校內甄選送件
+E                 - checkbox "完成合作校線上申請" [disabled]
+E                 - text: 完成合作校線上申請
+E                 - strong: 送件前確認
+E                 - paragraph: 截止日與資格以當期官方公告為準。
+E           - paragraph:
+E             - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E             - button "停用匿名使用統計"
+E             - text: 。
+E             - link "隱私權政策":
+E               - /url: /privacy
+E             - link "使用條款":
+E               - /url: /terms
+
+tests/e2e/test_ncu_shizuoka_chuo_kansai.py:78: AssertionError
+_ test_ncu_reference_scope_and_student_content[chuo-\u65e5\u672c\u4e2d\u592e\u5927\u5b78-Part1\u4e03\u985e\u5171\u901a\uff0cC1\uff0fC2\u6309\u5b78\u5236\u64c7\u4e00-7-1440] _
+
+page = <Page url='http://127.0.0.1:48209/?view=list&home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8&q=%E6%97%A5%E...E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8#school=%E6%97%A5%E6%9C%AC%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8%20Chuo%20University'>
+live_server = LiveServer(base_url='http://127.0.0.1:48209', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-244/web-e2e-data1'))
+width = 1440, slug = 'chuo', name = '日本中央大學', title = 'Part1七類共通，C1／C2按學制擇一'
+count = 7
+
+    @pytest.mark.parametrize('width',[390,1440])
+    @pytest.mark.parametrize('slug,name,title,count',CASES)
+    def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,name,title,count):
+        page.set_viewport_size({'width':width,'height':956})
+        page.emulate_media(reduced_motion='reduce')
+        errors=[]
+        page.on('pageerror',lambda e:errors.append(str(e)))
+        enter_public_site(page,live_server,'partners')
+        expect(page.locator('#boot-splash')).to_be_hidden(timeout=60_000)
+        open_navigation(page)
+        page.locator('#school-switcher').click()
+        page.locator('[data-home-school="國立中央大學"]').click()
+        page.locator('#confirm-school').click()
+        wait_until(page,"state.dashboard?.school_name === '國立中央大學'",timeout=60)
+        if width<700 and page.locator('#glass-menu-toggle').get_attribute('aria-expanded')=='true':
+            page.locator('#glass-menu-toggle').click()
+        page.locator('[data-partner-view="list"]').click()
+        page.locator('#partner-search').fill(name)
+        expect(page.locator('#partner-table')).to_contain_text('本期名額待公告')
+        full_name={'shizuoka':'靜岡大學 Shizuoka University',
+                   'chuo':'日本中央大學 Chuo University',
+                   'kansai':'關西大學 Kansai University'}[slug]
+        exact_trigger=f'.school-detail-trigger[data-school-name="{full_name}"]'
+        if width<700:
+            page.locator('#partner-table .partner-card').filter(has=page.locator(exact_trigger)).locator(':scope > summary').click()
+        page.locator(f'#partner-table {exact_trigger}:visible').first.click()
+        assert page.evaluate('new URLSearchParams(location.hash.slice(1)).get("school")') == full_name
+        summary=page.locator('#detail-overview .partner-student-summary')
+        terms={'shizuoka':['不是正式申請門檻','10/1','10/14','closed'],
+               'chuo':['Tentative','N3','Kenkyusei','五門','六列'],
+               'kansai':['500000','11/10','MCL','三月']}
+        for term in terms[slug]:expect(summary).to_contain_text(term)
+        page.locator('#ncu-source-audit > summary').click()
+        expect(page.locator('#ncu-source-audit-body > p').first).to_contain_text('2026-10-09',timeout=60_000)
+        if slug=='shizuoka':
+            failed=page.locator('.ncu-unretrieved-source[data-source-id="host-shizuoka-housing-current"]')
+            expect(failed).to_be_visible(timeout=60_000)
+            expect(failed).to_contain_text('English Top')
+            assert failed.get_by_role('link',name='已查網址（本次未取得）').get_attribute('href')=='https://www.suoic.shizuoka.ac.jp/english/international/campuslife/housing/'
+        else:
+            url=('https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_05_20260924.xlsx' if slug=='chuo' else
+                 'https://www.kansai-u.ac.jp/Kokusai/KUGFCourseGuide/2026/#target/page_no=19')
+            source=page.locator('#ncu-source-audit-body > details').filter(has=page.locator(f'a[href="{url}"]')).first
+            expect(source.locator(':scope > summary')).to_be_visible(timeout=60_000)
+            source.locator(':scope > summary').click()
+            expect(source).to_contain_text('未逐門' if slug=='chuo' else '未取得PDF第19頁')
+            assert source.get_by_role('link',name='官方公開來源').get_attribute('href')==url
+        out=Path('/tmp/ncu-audit/browser');out.mkdir(parents=True,exist_ok=True)
+        page.screenshot(path=str(out/f'ncu-shizuoka-chuo-kansai-{slug}-source-{width}.png'))
+        page.locator('#detail-tab-application').click()
+        group=page.locator('#detail-application .workflow-step').filter(has=page.locator(':scope > summary').filter(has_text=title)).first
+        group.locator(':scope > summary').click()
+        expect(group.locator('.workflow-documents > li')).to_have_count(count)
+        expect(group.locator('.workflow-rule-meta > strong')).to_have_text('規劃範圍（當期適用待確認）')
+        application=page.locator('#detail-application')
+        if slug=='shizuoka':
+            expect(group).to_contain_text('健康、Confirmation、經費新格式未取得')
+            expect(application).to_contain_text('修士專業／研究')
+            expect(application).to_contain_text('錄取後才通知宿舍')
+        elif slug=='chuo':
+            visa=application.locator('.workflow-step').filter(has=page.locator(':scope > summary').filter(has_text='行前COE／入學許可與Student visa')).first
+            arrival=application.locator('.workflow-step').filter(has=page.locator(':scope > summary').filter(has_text='到校orientation及正式選課')).first
+            expect(visa.locator(':scope > summary')).to_contain_text('行前準備')
+>           expect(arrival.locator(':scope > summary')).to_contain_text('抵達後')
+E           AssertionError: Locator expected to contain text '抵達後'
+E           Actual value: None
+E           Error: element(s) not found 
+E           Call log:
+E             - Expect "to_contain_text" with timeout 5000ms
+E             - waiting for locator("#detail-application").locator(".workflow-step").filter(has=locator(":scope > summary").filter(has_text="到校orientation及正式選課")).first.locator(":scope > summary")
+E           
+E           Aria snapshot:
+E           - link "跳到主要內容":
+E             - /url: "#main-content"
+E           - complementary "系統功能":
+E             - link "UniWay 首頁":
+E               - /url: "#home"
+E               - strong: UniWay
+E             - navigation "公開探索導覽":
+E               - link "首頁":
+E                 - /url: "#home"
+E               - link "學校搜尋":
+E                 - /url: "#partners"
+E               - link "論壇":
+E                 - /url: "#forum"
+E               - link "用戶評價":
+E                 - /url: "#feedback"
+E               - group:
+E                 - link "我的申請":
+E                   - /url: "#advisor"
+E             - button "返回上一頁": 返回
+E             - button "國立中央大學":
+E               - strong: 國立中央大學
+E             - button "切換為深色模式"
+E             - button "重新整理最新資料"
+E             - button "登入或建立帳號": 登入
+E           - main:
+E             - status
+E             - region "日本中央大學 Chuo University":
+E               - button "加入比較日本中央大學 Chuo University": 加入比較
+E               - button "登入建立計畫"
+E               - img "日本中央大學 Chuo University官方照片"
+E               - link "圖片來源":
+E                 - /url: https://www.chuo-u.ac.jp/english/admissions/exchange/
+E               - text: 日本 · 交換學生 下一站
+E               - strong: 日本
+E               - text: 東京Tama／Myogadani／Korakuen／Ichigaya Tamachi
+E               - heading "日本中央大學 Chuo University" [level=1]
+E               - text: 我的資格
+E               - strong: 尚未進行資格初判
+E               - text: 合作校參考時程
+E               - strong: 中央線上2026/12/4 12:00、系所紙本12/11 17:00（臺灣時間）；外校116當期提名／申請期限尚未取得核對。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】2027春提名2026/7/10起：Grad截止9/7、Part1 9/15–30已過；UG提名截止9/30已過、Part1 10/15–31；兩者Part2 11/1–10，健康可較晚但最終日未明。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】2027秋明示Tentative：提名2027/1/10起，Grad截止2/15、Part1 3/1–15；UG提名截止3/15、Part1 4/1–15；Part2 5/1–10。不能當116已核准精確提醒，2028春尚未取得。（適用年度待確認）
+E               - text: 語言門檻
+E               - strong: 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】法／經濟／文／政策／Global Mana…
+E               - text: 生活費參考
+E               - strong: 具互免協議交換者原則免Chuoregistration與tuition，仍繳中央母校學雜；日本語班free有成績學分。2027春表無一般交換獎學金，部分partner例外依協議。 2027春表生活費約50000／月不含住宿；國保約2000／月，醫療口譯支援通…
+E               - text: 交換名額
+E               - strong: 依公告
+E               - text: 研修期間
+E               - strong:
+E                 - text: 116母校方案：2027/9–2028/2
+E                 - strong: 一學期
+E                 - text: 、2027/9–2028/6
+E                 - strong: 一學年
+E                 - text: 、2028/2–6
+E                 - strong: 一學期
+E                 - text: ；實際依外校校曆與可提名學期確認。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】
+E                 - strong: 一學期
+E                 - text: 或兩學期；多全年課建議4月開始整學年，這是建議而非禁止秋入學。2027春表時程秋9/21，但AY2027獨立校曆classes begin9/20，矛盾保留。 【現網2027春／暫定2027秋、AY2027校曆、2026課表與現掛空白表，與2024春舊fact／未標年介紹分開；中央116配額、學制track與2028春完整包未核准。】AY2027校曆春classes4/9、末課7/21、exam7/26–31；秋classes9/20、末課2028/1/22、exam1/24–29，學年到3/31。初到orientation另依接收通知。
+E               - tablist "交換學校詳細資訊":
+E                 - tab "快速了解"
+E                 - tab "申請方式" [selected]
+E                 - tab "生活情報"
+E                 - tab "出發前提醒"
+E                 - tab "學生心得"
+E                 - tab "學生社群"
+E               - tabpanel "申請方式":
+E                 - heading "詳細申請流程" [level=2]
+E                 - strong: 官方來源已整理，13 個步驟仍需確認
+E                 - paragraph: 已核對母校116-1；相關公開附件20份，個別外校原文與當期適用性另核對。
+E                 - text: 適用學年度：116 · 申請梯次：第一梯次 · 版本 1 · 最後查核：2026/10/09 上午04:48
+E                 - strong: 適用年度或梯次仍待確認
+E                 - text: 來源適用學年度尚未完成官方確認；不能把學生選擇的年度或梯次套用到這份流程。
+E                 - strong: 這是尚未完成正式發布的參考流程
+E                 - text: 可查看來源與準備方向，但正式發布前，即使資料中有精確日期也不會加入行事曆或截止提醒。
+E                 - strong: 共 18 個步驟
+E                 - button "回報規定錯誤"
+E                 - button "重新載入流程資料"
+E                 - group:
+E                   - text: 校內申請 · 中央國際事務處／所屬系所
+E                   - strong: 核對中央116-1資格與當期名額
+E                 - group:
+E                   - text: 校內申請 · 中央國際事務處／所屬系所
+E                   - strong: 完成中央線上申請並列印簽核
+E                 - group:
+E                   - text: 校內申請 · 中央國際事務處／所屬系所
+E                   - strong: 繳交中央校內紙本甄選文件至系所
+E                 - group:
+E                   - text: 甄選與提名 · 中央國際事務處／所屬系所
+E                   - strong: 核對校內錄取並準備提名
+E                 - group:
+E                   - text: 提名後外校申請 · 中央承辦（非學生自行提名）
+E                   - strong: 母校承辦：本科／研究所不同提名日
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 提名後外校申請 · 學生與中央承辦／接收單位
+E                   - strong: Part1七類共通，C1／C2按學制擇一
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                   - paragraph: manaba填survey＋upload，無須寄紙本；最新116／2028春未核。C1本科或C2研究所同列擇一；兩份空白格式都列於官方來源，不以本科表代研究所表。
+E                   - strong: 規劃範圍（當期適用待確認）
+E                   - text: 116 學年度
+E                   - strong: 此步驟仍有送件或文件細節待確認。
+E                   - text: 請聯絡：國立中央大學國際事務處
+E                   - strong: 目前只有參考時程，沒有當期精確日期。
+E                   - text: 參考：明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。；這個日期不會加入行事曆或截止提醒，請聯絡 國立中央大學國際事務處。
+E                   - heading "送件方式" [level=4]
+E                   - strong: 線上申請／上傳
+E                   - list:
+E                     - listitem: 期限說明：方式來自2027春／暫定2027秋參考程序；中央116指定入口、方式及精確日期仍須兩校確認，不代表已開放當期送件。
+E                   - heading "我的送件紀錄" [level=4]
+E                   - strong: 尚未開始
+E                   - text: 線上申請／上傳 · 學生手動
+E                   - term: 下一步
+E                   - definition: 先備齊文件並再次核對官方送件方式。
+E                   - term: 承辦
+E                   - definition: 學生與中央承辦／接收單位
+E                   - term: 期限
+E                   - definition: 參考時程：明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。（精確日期待確認，不會自動提醒）
+E                   - term: 收件證明
+E                   - definition: 尚未記錄
+E                   - button "登入後記錄進度"
+E                   - paragraph: 所有狀態與收件證明都由你手動記錄；平台不會代送，也不會把這些標記當成校方正式收件結果。
+E                   - heading "具體要做" [level=4]
+E                   - list:
+E                     - listitem: manaba填survey＋upload，無須寄紙本；最新116／2028春未核。C1本科或C2研究所同列擇一；兩份空白格式都列於官方來源，不以本科表代研究所表。
+E                     - listitem: 最新116名額、學制／學院協議、所選學期與個人條件仍待確認；不因母校推薦、外校錄取或住宿選擇自動解除當期文件封鎖。
+E                   - heading "這一步要準備" [level=4]
+E                   - list:
+E                     - listitem: Part1線上web application（manaba提名者入口） 文件形式待確認 · 待官方確認
+E                     - listitem: Part1 A彩色ID照：JPEG高4×寬3cm 文件形式待確認 · 待官方確認
+E                     - listitem: Part1 B護照ID；辦理中官方ID／續期舊護照後補新本 影本 · 待官方確認
+E                     - listitem: Part1 C1本科或C2研究所電腦計畫（按學制擇一） 文件形式待確認 · 待官方確認
+E                     - listitem: Part1 D最近英文在學證明 文件形式待確認 · 待官方確認
+E                     - listitem: Part1 E最新正式英文成績 文件形式待確認 · 待官方確認
+E                     - listitem:
+E                       - text: Part1 G1全員親筆誓約 文件形式待確認 · 簽署：申請人親筆簽名 · 待官方確認
+E                       - link "官方參考表格（當期適用待確認）":
+E                         - /url: https://www.chuo-u.ac.jp/uploads/2024/12/G1-Pledge.docx
+E                   - text: 發現資格、期限、文件或送件資訊不一致？
+E                   - button "回報此步驟"
+E                 - group:
+E                   - text: 提名後外校申請 · 學生與中央承辦／接收單位
+E                   - strong: Part1學院／語言／研究所五類條件件
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 合作校申請 · 學生與兩校國際處
+E                   - strong: 核對外校當期文件並依通知申請
+E                 - group:
+E                   - text: 提名後外校申請 · 學生與中央承辦／接收單位
+E                   - strong: Part2 J＋K財力兩類（至少100000／月×全期）
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 提名後外校申請 · 學生與中央承辦／接收單位
+E                   - strong: Part2 L健康與條件JPETS追加
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 錄取後住房 · 學生與中央承辦／接收單位
+E                   - strong: 交換生住房survey／契約與無房保證
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 行前準備 · 中央國際事務處／所屬系所
+E                   - strong: 確認課程、學分與中央註冊繳費
+E                 - group:
+E                   - text: 行前準備 · 中央國際事務處／所屬系所
+E                   - strong: 出國前兩週完成中央行前程序
+E                   - text: 出國前兩週
+E                 - group:
+E                   - text: 行前準備 · 學生與中央承辦／接收單位
+E                   - strong: 行前COE／入學許可與Student visa
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 抵達後 · 學生與中央承辦／接收單位
+E                   - strong: 到校新生說明會及正式選課
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 抵達後 · 中央國際事務處／所屬系所
+E                   - strong: 到校註冊並回報當地聯絡方式
+E                 - group:
+E                   - text: 交換結束 · 學生與中央承辦／接收單位
+E                   - strong: manaba限期成績下載／母校直寄另申請
+E                   - text: 明示2027春／暫定2027秋或一般程序僅供參考；中央116指定梯次待兩校確認。
+E                 - group:
+E                   - text: 返國後 · 中央國際事務處／所屬系所
+E                   - strong: 返國後一週完成中央返校程序
+E                   - text: 返國後一週內
+E                 - strong: 本流程使用的官方來源
+E                 - link "中央116-1甄選簡章 母校當期正式公告 · 優先級 1":
+E                   - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/277/116exchangenotice.pdf
+E                 - link "中央115名額表（歷史參考） 母校當期正式公告 · 優先級 1":
+E                   - /url: https://oia.ncu.edu.tw/static/file/26/1026/img/272/115exchangeschoolist-20251127.pdf
+E                 - link "Academic Calendar 2027 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/07/english_admissions_exchange_semester-or-full-year_03_20260728.pdf
+E                 - link "Fact Sheet for Chuo Student Exchange Program(Inbound) April 2027 enrollment 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/07/english_admissions_exchange_semester-or-full-year_01_20260707.pdf
+E                 - link "日本中央2027春／暫定秋交換與現行表格 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/english/admissions/exchange/semester-or-full-year/
+E                 - link "[F] Certificate of JPN language proficiency 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2024/12/F-Certificate-of-JPN-language-proficiency.doc
+E                 - link "[C1] Study Plan 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_C1_20260904.docx
+E                 - link "[C2] Study Plan 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_C2_20260904.docx
+E                 - link "[G2] Confirmation on Application for Science & Engineering 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/08/english_admissions_exchange_semester-or-full-year_04_20260821.pdf
+E                 - link "[H] Academic Reference 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2024/12/H-Academic-Reference_Graduate.doc
+E                 - link "[J] Declaration and Certification of Finance 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2024/12/J-Declaration-and-Certification-of-Finances.doc
+E                 - link "[L] Certificate of Health 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2024/12/L-Certificate-of-Health.pdf
+E                 - link "International Residences FAQ 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/english/admissions/residences/faq/
+E                 - link "List of Chuo Student Exchange Partners(as of July, 2026) 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/08/english_admissions_exchange_semester-or-full-year_02_20260818.pdf
+E                 - link "[G1] Pledge 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2024/12/G1-Pledge.docx
+E                 - link "Undergraduate Programs(Separate sheets are provided for each faculty.) 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_05_20260924.xlsx
+E                 - link "Graduate Programs (Separate sheets are provided for each graduate school.) 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/09/english_admissions_exchange_semester-or-full-year_02_20260924.xlsx
+E                 - link "International Residence Chuo 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/english/admissions/residences/
+E                 - link "FACT SHEET 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/uploads/2026/07/english_admissions_exchange_semester-or-full-year_06_20260707.pdf
+E                 - link "International Residence Chuo 合作校官方資訊 · 優先級 4":
+E                   - /url: https://www.chuo-u.ac.jp/english/admissions/residences/irc/
+E                 - paragraph: 截止日與申請方式可能調整；送件前請再核對母校國際處、合作校通知信與官方申請頁。
+E               - complementary "申請準備進度與官方來源":
+E                 - heading "我的申請進度" [level=2]
+E                 - progressbar "申請準備進度":
+E                   - strong: 0 / 5 已完成
+E                   - text: 準備中
+E                 - paragraph:
+E                   - text: 登入以保存進度
+E                   - button "登入"
+E                 - checkbox "確認資格與語言門檻" [disabled]
+E                 - text: 確認資格與語言門檻
+E                 - checkbox "比較課程、費用與生活" [disabled]
+E                 - text: 比較課程、費用與生活
+E                 - checkbox "備妥校內申請文件" [disabled]
+E                 - text: 備妥校內申請文件
+E                 - checkbox "完成校內甄選送件" [disabled]
+E                 - text: 完成校內甄選送件
+E                 - checkbox "完成合作校線上申請" [disabled]
+E                 - text: 完成合作校線上申請
+E                 - strong: 送件前確認
+E                 - paragraph: 截止日與資格以當期官方公告為準。
+E           - paragraph:
+E             - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E             - button "停用匿名使用統計"
+E             - text: 。
+E             - link "隱私權政策":
+E               - /url: /privacy
+E             - link "使用條款":
+E               - /url: /terms
+
+tests/e2e/test_ncu_shizuoka_chuo_kansai.py:78: AssertionError
+=========================== short test summary info ============================
+FAILED tests/e2e/test_ncu_shizuoka_chuo_kansai.py::test_ncu_reference_scope_and_student_content[chuo-\u65e5\u672c\u4e2d\u592e\u5927\u5b78-Part1\u4e03\u985e\u5171\u901a\uff0cC1\uff0fC2\u6309\u5b78\u5236\u64c7\u4e00-7-390]
+FAILED tests/e2e/test_ncu_shizuoka_chuo_kansai.py::test_ncu_reference_scope_and_student_content[chuo-\u65e5\u672c\u4e2d\u592e\u5927\u5b78-Part1\u4e03\u985e\u5171\u901a\uff0cC1\uff0fC2\u6309\u5b78\u5236\u64c7\u4e00-7-1440]
+2 failed, 4 passed in 131.94s (0:02:11)

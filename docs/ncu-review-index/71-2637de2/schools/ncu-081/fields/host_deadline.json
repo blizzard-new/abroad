@@ -1,0 +1,50 @@
+{
+  "key": "host_deadline",
+  "label": "提名與外校申請期限",
+  "status": "needs_confirmation",
+  "note": "PDF Fall2026非EU提名3/1–4/1申請3/15–4/15；Spring2027提名卻寫2027/8/15–10/1，申請為2026/9/1–10/15，原文順序矛盾。官網年例申請Fall非EU4/15、EU4/30、Spring10/15 Finnish23:59；不自動校正PDF提名年或推定116截止。",
+  "source_urls": [
+    "https://drive.google.com/file/d/13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF/view",
+    "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://drive.google.com/file/d/13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF/view",
+      "source_id": "13HE9I87Z-H0yMUBeKXGxGkPpFPHiUApF",
+      "page": 1,
+      "source_title": "FACT-SHEET-2026-2027_UTU.pdf PDF",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "host_deadline",
+        "evidence_array_index": 0,
+        "text_sha256": "5a4253dbb00b5b406742880b0c2a85fc8935ac5cc6b8d361b38dca4eba974127",
+        "char_count": 2428
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.utu.fi/en/study-at-utu/how-to-apply-for-exchange-studies",
+      "source_id": "host-turku-apply",
+      "page": null,
+      "source_title": "Turku官方交換申請文件與期限",
+      "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 80,
+        "field": "host_deadline",
+        "evidence_array_index": 1,
+        "text_sha256": "7a9bc2862b4586dee5b089d20b90a208b4cc555adf6062c8c28186320068ac39",
+        "char_count": 14280
+      }
+    }
+  ],
+  "unresolved": "Spring2027提名年份矛盾待官方確認；1162027–28期限仍未取得。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "Turku AY2026–27 factsheet與2026/10/8官網；Spring2027仍早於中央116出發。2027–28與提名年分矛盾保留。"
+}

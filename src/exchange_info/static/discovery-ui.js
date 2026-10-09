@@ -126,6 +126,7 @@ function renderDiscoveryRecents() {
 function renderDiscoveryWorkspace() {
   const host = $("#selection-workspace");
   if (!host || !state.dashboard) return;
+  host.dataset.homeUniversity = activeHomeSchool();
   const data = discoveryData(), selections = activeSchoolSelections();
   const schools = state.dashboard.partner_universities.filter(p => selections.has(p.school_name));
   $("#discovery-selection-count").textContent = schools.length || "";

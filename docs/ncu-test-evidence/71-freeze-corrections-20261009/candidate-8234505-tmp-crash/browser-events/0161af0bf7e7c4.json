@@ -1,0 +1,2536 @@
+{
+  "nodeid": "tests/e2e/test_ncu_shizuoka_chuo_kansai.py::test_ncu_reference_scope_and_student_content[kansai-\\u95dc\\u897f\\u5927\\u5b78-\\u521d\\u6b21\\u516d\\u985e\\u5171\\u901a\\uff0c\\u4e26\\u975e\\u6bcd\\u6821\\u4e03\\u4ef6-6-1440]",
+  "actual_result": "failed",
+  "failure": {
+    "phase": "call",
+    "message": "page = <Page url='http://127.0.0.1:50171/#partners'>\nlive_server = LiveServer(base_url='http://127.0.0.1:50171', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-246/web-e2e-data1'))\nwidth = 1440, slug = 'kansai', name = '關西大學', title = '初次六類共通，並非母校七件', count = 6\n\n    @pytest.mark.parametrize('width',[390,1440])\n    @pytest.mark.parametrize('slug,name,title,count',CASES)\n    def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,name,title,count):\n        page.set_viewport_size({'width':width,'height':956})\n        page.emulate_media(reduced_motion='reduce')\n        errors=[]\n        page.on('pageerror',lambda e:errors.append(str(e)))\n>       enter_public_site(page,live_server,'partners')\n\ntests/e2e/test_ncu_shizuoka_chuo_kansai.py:22: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \ntests/e2e/conftest.py:475: in enter_public_site\n    page.goto(f\"{live_server.base_url}/#{route}\")\n/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:9875: in goto\n    self._sync(\n/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:560: in goto\n    return await self._main_frame.goto(**locals_to_params(locals()))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:156: in goto\n    await self._channel.send(\n/workspace/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send\n    return await self._connection.wrap_api_call(\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <playwright._impl._connection.Connection object at 0x7fbc437493d0>\ncb = <function Channel.send.<locals>.<lambda> at 0x7fbc405b14e0>\nis_internal = Fa"
+  },
+  "events": [
+    {
+      "kind": "request",
+      "ms": 18.67,
+      "url": "http://127.0.0.1:50171/",
+      "resource": "document"
+    },
+    {
+      "kind": "response_headers",
+      "ms": 26.6,
+      "url": "http://127.0.0.1:50171/",
+      "status": 200
+    },
+    {
+      "kind": "request",
+      "ms": 55.11,
+      "url": "http://127.0.0.1:50171/static/styles.css?v=20261003-open-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 55.69,
+      "url": "http://127.0.0.1:50171/static/design-system.css?v=20260716-platform-12",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 55.99,
+      "url": "http://127.0.0.1:50171/static/platform.css?v=20260721-student-survival-4",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 56.2,
+      "url": "http://127.0.0.1:50171/static/product-v2.css?v=20261006-terms-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 56.37,
+      "url": "http://127.0.0.1:50171/static/icon-motion.css?v=20260820-icon-motion-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 56.6,
+      "url": "http://127.0.0.1:50171/static/mascot.css?v=20261007-solid-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 56.87,
+      "url": "http://127.0.0.1:50171/static/advisor-mascot.css?v=20261007-solid-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 57.07,
+      "url": "http://127.0.0.1:50171/static/uniway.css?v=20260820-uniway-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 64.08,
+      "url": "http://127.0.0.1:50171/static/partner-map.css?v=20260923-no-lines-3",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 64.38,
+      "url": "http://127.0.0.1:50171/static/school-detail.css?v=20260924-concise-zh-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 64.61,
+      "url": "http://127.0.0.1:50171/static/discovery.css?v=20261004-digest-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 64.84,
+      "url": "http://127.0.0.1:50171/static/navigation.css?v=20260929-tools-headings-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 65.02,
+      "url": "http://127.0.0.1:50171/static/travel.css?v=20260927-home-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 65.17,
+      "url": "http://127.0.0.1:50171/static/motion.css?v=20260926-motion-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 65.31,
+      "url": "http://127.0.0.1:50171/static/journey.css?v=20260929-photos-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 65.46,
+      "url": "http://127.0.0.1:50171/static/journey-canvas.css?v=20261008-regions-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 65.7,
+      "url": "http://127.0.0.1:50171/static/typography.css?v=20260929-fonts-2",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 66.28,
+      "url": "http://127.0.0.1:50171/static/community-reader.css?v=20260930-discussion-2b",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 69.07,
+      "url": "http://127.0.0.1:50171/static/community-feed.css?v=20260930-forum-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 69.33,
+      "url": "http://127.0.0.1:50171/static/glass-theme.css?v=20261001-ui-refinements-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 69.51,
+      "url": "http://127.0.0.1:50171/static/planning-ux.css?v=20261008-regions-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 70.72,
+      "url": "http://127.0.0.1:50171/static/application-journey.css?v=20261002-flow-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 70.95,
+      "url": "http://127.0.0.1:50171/static/application-workspace.css?v=20261008-ncu-conditions-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 71.14,
+      "url": "http://127.0.0.1:50171/static/document-workbench.css?v=20261002-flow-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 71.32,
+      "url": "http://127.0.0.1:50171/static/destination-tips.css?v=20261004-tips-2",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 71.49,
+      "url": "http://127.0.0.1:50171/static/brand.css?v=20261004-logo-2",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 71.68,
+      "url": "http://127.0.0.1:50171/static/feedback.css?v=20261008-4",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 76.4,
+      "url": "http://127.0.0.1:50171/static/responsive.css?v=20261007-responsive-1",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 76.67,
+      "url": "http://127.0.0.1:50171/static/assets/mascot/suitcase.webp?v=20261007-solid-1",
+      "resource": "image"
+    },
+    {
+      "kind": "request",
+      "ms": 77.38,
+      "url": "http://127.0.0.1:50171/static/mascot.js?v=20261007-solid-1",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 77.83,
+      "url": "http://127.0.0.1:50171/static/assets/brand/uniway-mark.webp?v=20261004-logo-2",
+      "resource": "image"
+    },
+    {
+      "kind": "request",
+      "ms": 78.3,
+      "url": "http://127.0.0.1:50171/static/assets/cgu-campus.jpg",
+      "resource": "image"
+    },
+    {
+      "kind": "request",
+      "ms": 79.05,
+      "url": "http://127.0.0.1:50171/static/assets/ntpu-campus.jpg",
+      "resource": "image"
+    },
+    {
+      "kind": "request",
+      "ms": 79.31,
+      "url": "http://127.0.0.1:50171/static/assets/ntu-campus.svg",
+      "resource": "image"
+    },
+    {
+      "kind": "request",
+      "ms": 79.49,
+      "url": "http://127.0.0.1:50171/static/assets/ncu-campus.svg",
+      "resource": "image"
+    },
+    {
+      "kind": "request",
+      "ms": 79.69,
+      "url": "http://127.0.0.1:50171/static/vendor/lucide/0.468.0/lucide.min.js",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 81.19,
+      "url": "http://127.0.0.1:50171/static/icon-motion.js?v=20260820-icon-motion-1",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 81.39,
+      "url": "http://127.0.0.1:50171/static/public-content-zh.js?v=20261007-requests-1",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 81.85,
+      "url": "http://127.0.0.1:50171/static/regions.js?v=20261008-ntu-review-2",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 83.25,
+      "url": "http://127.0.0.1:50171/static/discovery-core.js?v=20260924-selection-1",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 83.5,
+      "url": "http://127.0.0.1:50171/static/discovery-ui.js?v=20261004-digest-2",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 88.18,
+      "url": "http://127.0.0.1:50171/static/navigation.js?v=20261001-planning-workspace-1",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 89.06,
+      "url": "http://127.0.0.1:50171/static/motion.js?v=20261007-forum-1",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 89.34,
+      "url": "http://127.0.0.1:50171/static/community-reader.js?v=20260930-forum-1",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 89.75,
+      "url": "http://127.0.0.1:50171/static/community-moderation.js?v=20260930-discussion-2b",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 90.24,
+      "url": "http://127.0.0.1:50171/static/academic-units.js?v=20261001-departments-1",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 90.9,
+      "url": "http://127.0.0.1:50171/static/multi-plan.js?v=20261008-ncu-conditions-1",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 91.25,
+      "url": "http://127.0.0.1:50171/static/application-workspace.js?v=20261002-flow-2",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 91.47,
+      "url": "http://127.0.0.1:50171/static/application-journey.js?v=20261008-ncu-1",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 91.93,
+      "url": "http://127.0.0.1:50171/static/document-workbench.js?v=20261008-ncu-1",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 93.55,
+      "url": "http://127.0.0.1:50171/static/destination-tips.js?v=20261004-tips-2",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 94.21,
+      "url": "http://127.0.0.1:50171/static/analytics.js?v=20261003-analytics-1",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 95.33,
+      "url": "http://127.0.0.1:50171/static/feedback.js?v=20261008-2",
+      "resource": "script"
+    },
+    {
+      "kind": "request",
+      "ms": 99.17,
+      "url": "http://127.0.0.1:50171/static/app.js?v=20261008-ncu-sources-3",
+      "resource": "script"
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 99.33,
+      "url": "http://127.0.0.1:50171/",
+      "timing": {
+        "startTime": 1791525587175.263,
+        "domainLookupStart": 0.872,
+        "domainLookupEnd": 0.986,
+        "connectStart": 0.986,
+        "secureConnectionStart": -1,
+        "connectEnd": 1.281,
+        "requestStart": 1.362,
+        "responseStart": 4.928,
+        "responseEnd": 8.621
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 99.53,
+      "url": "http://127.0.0.1:50171/static/styles.css?v=20261003-open-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 99.63,
+      "url": "http://127.0.0.1:50171/static/styles.css?v=20261003-open-1",
+      "timing": {
+        "startTime": 1791525587200.8499,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.728,
+        "responseStart": 8.708,
+        "responseEnd": 14.055
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 115.04,
+      "url": "http://127.0.0.1:50171/static/mascot.css?v=20261007-solid-1",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 122.24,
+      "url": "http://127.0.0.1:50171/static/product-v2.css?v=20261006-terms-1",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 123.02,
+      "url": "http://127.0.0.1:50171/static/advisor-mascot.css?v=20261007-solid-1",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 125.95,
+      "url": "http://127.0.0.1:50171/static/platform.css?v=20260721-student-survival-4",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 126.17,
+      "url": "http://127.0.0.1:50171/static/mascot.css?v=20261007-solid-1",
+      "timing": {
+        "startTime": 1791525587207.356,
+        "domainLookupStart": 0.109,
+        "domainLookupEnd": 0.116,
+        "connectStart": 0.116,
+        "secureConnectionStart": -1,
+        "connectEnd": 5.278,
+        "requestStart": 44.207,
+        "responseStart": 54.583,
+        "responseEnd": 74.175
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 128.07,
+      "url": "http://127.0.0.1:50171/static/design-system.css?v=20260716-platform-12",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 129.84,
+      "url": "http://127.0.0.1:50171/static/icon-motion.css?v=20260820-icon-motion-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 132.82,
+      "url": "http://127.0.0.1:50171/static/advisor-mascot.css?v=20261007-solid-1",
+      "timing": {
+        "startTime": 1791525587208.717,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 43.757,
+        "responseStart": 63.902,
+        "responseEnd": 85.074
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 139.62,
+      "url": "http://127.0.0.1:50171/static/platform.css?v=20260721-student-survival-4",
+      "timing": {
+        "startTime": 1791525587204.096,
+        "domainLookupStart": 0.119,
+        "domainLookupEnd": 0.131,
+        "connectStart": 0.131,
+        "secureConnectionStart": -1,
+        "connectEnd": 5.376,
+        "requestStart": 42.186,
+        "responseStart": 69.228,
+        "responseEnd": 85.57
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 146.3,
+      "url": "http://127.0.0.1:50171/static/product-v2.css?v=20261006-terms-1",
+      "timing": {
+        "startTime": 1791525587205.657,
+        "domainLookupStart": 0.29,
+        "domainLookupEnd": 0.3,
+        "connectStart": 0.3,
+        "secureConnectionStart": -1,
+        "connectEnd": 6.964,
+        "requestStart": 45.723,
+        "responseStart": 65.202,
+        "responseEnd": 87.121
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 148.31,
+      "url": "http://127.0.0.1:50171/static/design-system.css?v=20260716-platform-12",
+      "timing": {
+        "startTime": 1791525587201.574,
+        "domainLookupStart": 0.388,
+        "domainLookupEnd": 0.398,
+        "connectStart": 0.398,
+        "secureConnectionStart": -1,
+        "connectEnd": 7.889,
+        "requestStart": 38.807,
+        "responseStart": 76.15,
+        "responseEnd": 86.779
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 148.69,
+      "url": "http://127.0.0.1:50171/static/icon-motion.css?v=20260820-icon-motion-1",
+      "timing": {
+        "startTime": 1791525587206.5989,
+        "domainLookupStart": 0.084,
+        "domainLookupEnd": 0.091,
+        "connectStart": 0.091,
+        "secureConnectionStart": -1,
+        "connectEnd": 6.031,
+        "requestStart": 44.901,
+        "responseStart": 73.961,
+        "responseEnd": 86.148
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 149.04,
+      "url": "http://127.0.0.1:50171/static/discovery.css?v=20261004-digest-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 149.17,
+      "url": "http://127.0.0.1:50171/static/discovery.css?v=20261004-digest-1",
+      "timing": {
+        "startTime": 1791525587212.9812,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 75.287,
+        "responseStart": 79.404,
+        "responseEnd": 94.427
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 149.33,
+      "url": "http://127.0.0.1:50171/static/partner-map.css?v=20260923-no-lines-3",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 149.41,
+      "url": "http://127.0.0.1:50171/static/partner-map.css?v=20260923-no-lines-3",
+      "timing": {
+        "startTime": 1791525587211.608,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 76.582,
+        "responseStart": 81.294,
+        "responseEnd": 98.587
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 149.57,
+      "url": "http://127.0.0.1:50171/static/uniway.css?v=20260820-uniway-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 150.35,
+      "url": "http://127.0.0.1:50171/static/uniway.css?v=20260820-uniway-1",
+      "timing": {
+        "startTime": 1791525587211.397,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 76.717,
+        "responseStart": 82.717,
+        "responseEnd": 96.116
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 151.21,
+      "url": "http://127.0.0.1:50171/static/travel.css?v=20260927-home-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 151.32,
+      "url": "http://127.0.0.1:50171/static/travel.css?v=20260927-home-1",
+      "timing": {
+        "startTime": 1791525587214.1553,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 74.179,
+        "responseStart": 82.689,
+        "responseEnd": 100.03
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 161.46,
+      "url": "http://127.0.0.1:50171/static/school-detail.css?v=20260924-concise-zh-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 161.81,
+      "url": "http://127.0.0.1:50171/static/school-detail.css?v=20260924-concise-zh-1",
+      "timing": {
+        "startTime": 1791525587212.521,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 75.712,
+        "responseStart": 85.244,
+        "responseEnd": 99.907
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 162.22,
+      "url": "http://127.0.0.1:50171/static/navigation.css?v=20260929-tools-headings-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 162.38,
+      "url": "http://127.0.0.1:50171/static/navigation.css?v=20260929-tools-headings-1",
+      "timing": {
+        "startTime": 1791525587213.93,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 74.367,
+        "responseStart": 84.437,
+        "responseEnd": 98.889
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 163.06,
+      "url": "http://127.0.0.1:50171/static/motion.css?v=20260926-motion-1",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 163.84,
+      "url": "http://127.0.0.1:50171/static/community-reader.css?v=20260930-discussion-2b",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 164.15,
+      "url": "http://127.0.0.1:50171/static/typography.css?v=20260929-fonts-2",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 167.83,
+      "url": "http://127.0.0.1:50171/static/journey.css?v=20260929-photos-1",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 168.03,
+      "url": "http://127.0.0.1:50171/static/community-feed.css?v=20260930-forum-1",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 174.69,
+      "url": "http://127.0.0.1:50171/static/journey-canvas.css?v=20261008-regions-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 174.84,
+      "url": "http://127.0.0.1:50171/static/motion.css?v=20260926-motion-1",
+      "timing": {
+        "startTime": 1791525587214.342,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 86.504,
+        "responseStart": 99.686,
+        "responseEnd": 123.492
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 174.94,
+      "url": "http://127.0.0.1:50171/static/community-reader.css?v=20260930-discussion-2b",
+      "timing": {
+        "startTime": 1791525587214.924,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 90.435,
+        "responseStart": 102.655,
+        "responseEnd": 123.148
+      }
+    },
+    {
+      "kind": "request",
+      "ms": 175.29,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular.css",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 175.57,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Medium.css",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "request",
+      "ms": 175.82,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold.css",
+      "resource": "stylesheet"
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 176.06,
+      "url": "http://127.0.0.1:50171/static/typography.css?v=20260929-fonts-2",
+      "timing": {
+        "startTime": 1791525587214.626,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 88.933,
+        "responseStart": 104.371,
+        "responseEnd": 125.016
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 177.44,
+      "url": "http://127.0.0.1:50171/static/journey-canvas.css?v=20261008-regions-1",
+      "timing": {
+        "startTime": 1791525587214.528,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 88.963,
+        "responseStart": 107.871,
+        "responseEnd": 126.371
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 177.75,
+      "url": "http://127.0.0.1:50171/static/journey.css?v=20260929-photos-1",
+      "timing": {
+        "startTime": 1791525587214.4119,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 88.973,
+        "responseStart": 105.703,
+        "responseEnd": 127.716
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 177.85,
+      "url": "http://127.0.0.1:50171/static/community-feed.css?v=20260930-forum-1",
+      "timing": {
+        "startTime": 1791525587215.047,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 90.489,
+        "responseStart": 106.03,
+        "responseEnd": 128.349
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 179.33,
+      "url": "http://127.0.0.1:50171/static/planning-ux.css?v=20261008-regions-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 183.34,
+      "url": "http://127.0.0.1:50171/static/planning-ux.css?v=20261008-regions-1",
+      "timing": {
+        "startTime": 1791525587216.493,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 108.435,
+        "responseStart": 113.695,
+        "responseEnd": 136.092
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 187.23,
+      "url": "http://127.0.0.1:50171/static/glass-theme.css?v=20261001-ui-refinements-1",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 187.54,
+      "url": "http://127.0.0.1:50171/static/application-journey.css?v=20261002-flow-1",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 187.84,
+      "url": "http://127.0.0.1:50171/static/application-workspace.css?v=20261008-ncu-conditions-1",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 188.09,
+      "url": "http://127.0.0.1:50171/static/document-workbench.css?v=20261002-flow-1",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 194.61,
+      "url": "http://127.0.0.1:50171/static/destination-tips.css?v=20261004-tips-2",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 195.25,
+      "url": "http://127.0.0.1:50171/static/application-journey.css?v=20261002-flow-1",
+      "timing": {
+        "startTime": 1791525587216.613,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 112.7,
+        "responseStart": 122.574,
+        "responseEnd": 142.665
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 195.38,
+      "url": "http://127.0.0.1:50171/static/glass-theme.css?v=20261001-ui-refinements-1",
+      "timing": {
+        "startTime": 1791525587216.11,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 108.689,
+        "responseStart": 122.027,
+        "responseEnd": 143.489
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 195.56,
+      "url": "http://127.0.0.1:50171/static/application-workspace.css?v=20261008-ncu-conditions-1",
+      "timing": {
+        "startTime": 1791525587216.712,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 114.319,
+        "responseStart": 123.493,
+        "responseEnd": 143.425
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 195.77,
+      "url": "http://127.0.0.1:50171/static/document-workbench.css?v=20261002-flow-1",
+      "timing": {
+        "startTime": 1791525587216.7961,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 114.578,
+        "responseStart": 123.968,
+        "responseEnd": 145.735
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 197.79,
+      "url": "http://127.0.0.1:50171/static/brand.css?v=20261004-logo-2",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 199.55,
+      "url": "http://127.0.0.1:50171/static/destination-tips.css?v=20261004-tips-2",
+      "timing": {
+        "startTime": 1791525587216.9202,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 114.559,
+        "responseStart": 126.379,
+        "responseEnd": 152.512
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 204.14,
+      "url": "http://127.0.0.1:50171/static/feedback.css?v=20261008-4",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 204.75,
+      "url": "http://127.0.0.1:50171/static/responsive.css?v=20261007-responsive-1",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 205.03,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular.css",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 213.81,
+      "url": "http://127.0.0.1:50171/static/feedback.css?v=20261008-4",
+      "timing": {
+        "startTime": 1791525587217.324,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 128.195,
+        "responseStart": 137.386,
+        "responseEnd": 157.443
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 214.04,
+      "url": "http://127.0.0.1:50171/static/responsive.css?v=20261007-responsive-1",
+      "timing": {
+        "startTime": 1791525587217.438,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 128.193,
+        "responseStart": 137.877,
+        "responseEnd": 157.951
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 215.45,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular.css",
+      "timing": {
+        "startTime": 1791525587328.817,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 16.909,
+        "responseStart": 27.466,
+        "responseEnd": 32.73
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 215.99,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Medium.css",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 216.69,
+      "url": "http://127.0.0.1:50171/static/brand.css?v=20261004-logo-2",
+      "timing": {
+        "startTime": 1791525587217.1973,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 122.891,
+        "responseStart": 132.936,
+        "responseEnd": 162.061
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 217.38,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold.css",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 217.87,
+      "url": "http://127.0.0.1:50171/static/assets/mascot/suitcase.webp?v=20261007-solid-1",
+      "status": 200
+    },
+    {
+      "kind": "response_headers",
+      "ms": 221.24,
+      "url": "http://127.0.0.1:50171/static/assets/ntpu-campus.jpg",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 221.86,
+      "url": "http://127.0.0.1:50171/static/assets/ntpu-campus.jpg",
+      "timing": {
+        "startTime": 1791525587364.634,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.111,
+        "responseStart": 4.651,
+        "responseEnd": 170.612
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 222.33,
+      "url": "http://127.0.0.1:50171/static/assets/mascot/suitcase.webp?v=20261007-solid-1",
+      "timing": {
+        "startTime": 1791525587217.628,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 144.779,
+        "responseStart": 148.438,
+        "responseEnd": 168.861
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 223.04,
+      "url": "http://127.0.0.1:50171/static/assets/cgu-campus.jpg",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 237.85,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Medium.css",
+      "timing": {
+        "startTime": 1791525587329.122,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 19.106,
+        "responseStart": 32.113,
+        "responseEnd": 59.76
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 247.74,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold.css",
+      "timing": {
+        "startTime": 1791525587329.235,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 30.053,
+        "responseStart": 36.093,
+        "responseEnd": 60.777
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 275.94,
+      "url": "http://127.0.0.1:50171/static/assets/ncu-campus.svg",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 276.12,
+      "url": "http://127.0.0.1:50171/static/assets/ncu-campus.svg",
+      "timing": {
+        "startTime": 1791525587374.398,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.219,
+        "responseStart": 16.1,
+        "responseEnd": 191.527
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 283.72,
+      "url": "http://127.0.0.1:50171/static/assets/ntu-campus.svg",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 283.89,
+      "url": "http://127.0.0.1:50171/static/assets/ntu-campus.svg",
+      "timing": {
+        "startTime": 1791525587373.978,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.547,
+        "responseStart": 18.228,
+        "responseEnd": 191.735
+      }
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 288.32,
+      "url": "http://127.0.0.1:50171/static/assets/cgu-campus.jpg",
+      "timing": {
+        "startTime": 1791525587362.22,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.411,
+        "responseStart": 9.051,
+        "responseEnd": 193.364
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 289.43,
+      "url": "http://127.0.0.1:50171/static/assets/brand/uniway-mark.webp?v=20261004-logo-2",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 289.67,
+      "url": "http://127.0.0.1:50171/static/assets/brand/uniway-mark.webp?v=20261004-logo-2",
+      "timing": {
+        "startTime": 1791525587394.3623,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.954,
+        "responseStart": 22.354,
+        "responseEnd": 220.306
+      }
+    },
+    {
+      "kind": "request",
+      "ms": 350.94,
+      "url": "http://127.0.0.1:50171/static/assets/mascot/suitcase.webp?v=20261007-solid-1",
+      "resource": "image"
+    },
+    {
+      "kind": "request",
+      "ms": 351.78,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/poppins/Poppins-Bold.ttf",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 352.02,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/poppins/Poppins-Regular.ttf",
+      "resource": "font"
+    },
+    {
+      "kind": "response_headers",
+      "ms": 353.03,
+      "url": "http://127.0.0.1:50171/static/assets/mascot/suitcase.webp?v=20261007-solid-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 353.19,
+      "url": "http://127.0.0.1:50171/static/assets/mascot/suitcase.webp?v=20261007-solid-1",
+      "timing": {
+        "startTime": 1791525587471.3628,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.05,
+        "responseStart": 1.823,
+        "responseEnd": 14.966
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 353.41,
+      "url": "http://127.0.0.1:50171/static/mascot.js?v=20261007-solid-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 354.06,
+      "url": "http://127.0.0.1:50171/static/mascot.js?v=20261007-solid-1",
+      "timing": {
+        "startTime": 1791525587252.6118,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 109.873,
+        "responseStart": 113.894,
+        "responseEnd": 187.93
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 360.91,
+      "url": "http://127.0.0.1:50171/static/icon-motion.js?v=20260820-icon-motion-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 361.06,
+      "url": "http://127.0.0.1:50171/static/icon-motion.js?v=20260820-icon-motion-1",
+      "timing": {
+        "startTime": 1791525587394.417,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.946,
+        "responseStart": 10.249,
+        "responseEnd": 204.178
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 365.1,
+      "url": "http://127.0.0.1:50171/static/regions.js?v=20261008-ntu-review-2",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 365.25,
+      "url": "http://127.0.0.1:50171/static/regions.js?v=20261008-ntu-review-2",
+      "timing": {
+        "startTime": 1791525587395.57,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.762,
+        "responseStart": 7.98,
+        "responseEnd": 205.542
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 365.72,
+      "url": "http://127.0.0.1:50171/static/public-content-zh.js?v=20261007-requests-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 365.85,
+      "url": "http://127.0.0.1:50171/static/public-content-zh.js?v=20261007-requests-1",
+      "timing": {
+        "startTime": 1791525587395.4822,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.732,
+        "responseStart": 7.476,
+        "responseEnd": 211.794
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 366.09,
+      "url": "http://127.0.0.1:50171/static/discovery-core.js?v=20260924-selection-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 368.09,
+      "url": "http://127.0.0.1:50171/static/discovery-core.js?v=20260924-selection-1",
+      "timing": {
+        "startTime": 1791525587396.534,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.154,
+        "responseStart": 9.772,
+        "responseEnd": 212.367
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 369.29,
+      "url": "http://127.0.0.1:50171/static/discovery-ui.js?v=20261004-digest-2",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 369.44,
+      "url": "http://127.0.0.1:50171/static/discovery-ui.js?v=20261004-digest-2",
+      "timing": {
+        "startTime": 1791525587407.5972,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.631,
+        "responseStart": 8.366,
+        "responseEnd": 221.032
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 369.96,
+      "url": "http://127.0.0.1:50171/static/navigation.js?v=20261001-planning-workspace-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 370.12,
+      "url": "http://127.0.0.1:50171/static/navigation.js?v=20261001-planning-workspace-1",
+      "timing": {
+        "startTime": 1791525587408.9329,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 12.631,
+        "responseStart": 17.486,
+        "responseEnd": 226.968
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 370.84,
+      "url": "http://127.0.0.1:50171/static/vendor/lucide/0.468.0/lucide.min.js",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 371.01,
+      "url": "http://127.0.0.1:50171/static/vendor/lucide/0.468.0/lucide.min.js",
+      "timing": {
+        "startTime": 1791525587393.6838,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 1.525,
+        "responseStart": 24.891,
+        "responseEnd": 233.379
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 371.36,
+      "url": "http://127.0.0.1:50171/static/community-reader.js?v=20260930-forum-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 371.48,
+      "url": "http://127.0.0.1:50171/static/community-reader.js?v=20260930-forum-1",
+      "timing": {
+        "startTime": 1791525587424.7441,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 3.14,
+        "responseStart": 7.451,
+        "responseEnd": 241.185
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 371.72,
+      "url": "http://127.0.0.1:50171/static/motion.js?v=20261007-forum-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 371.83,
+      "url": "http://127.0.0.1:50171/static/motion.js?v=20261007-forum-1",
+      "timing": {
+        "startTime": 1791525587424.5242,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 3.243,
+        "responseStart": 9.919,
+        "responseEnd": 244.028
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 372.03,
+      "url": "http://127.0.0.1:50171/static/academic-units.js?v=20261001-departments-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 372.13,
+      "url": "http://127.0.0.1:50171/static/academic-units.js?v=20261001-departments-1",
+      "timing": {
+        "startTime": 1791525587427.594,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 2.912,
+        "responseStart": 11.597,
+        "responseEnd": 246.375
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 372.54,
+      "url": "http://127.0.0.1:50171/static/community-moderation.js?v=20260930-discussion-2b",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 372.78,
+      "url": "http://127.0.0.1:50171/static/community-moderation.js?v=20260930-discussion-2b",
+      "timing": {
+        "startTime": 1791525587427.18,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 3.228,
+        "responseStart": 13.258,
+        "responseEnd": 245.267
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 373.0,
+      "url": "http://127.0.0.1:50171/static/application-workspace.js?v=20261002-flow-2",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 373.1,
+      "url": "http://127.0.0.1:50171/static/application-workspace.js?v=20261002-flow-2",
+      "timing": {
+        "startTime": 1791525587437.01,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.143,
+        "responseStart": 9.52,
+        "responseEnd": 247.11
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 373.31,
+      "url": "http://127.0.0.1:50171/static/multi-plan.js?v=20261008-ncu-conditions-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 373.41,
+      "url": "http://127.0.0.1:50171/static/multi-plan.js?v=20261008-ncu-conditions-1",
+      "timing": {
+        "startTime": 1791525587431.13,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 4.979,
+        "responseStart": 13.816,
+        "responseEnd": 246.925
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 374.3,
+      "url": "http://127.0.0.1:50171/static/feedback.js?v=20261008-2",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 374.47,
+      "url": "http://127.0.0.1:50171/static/feedback.js?v=20261008-2",
+      "timing": {
+        "startTime": 1791525587451.2498,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.26,
+        "responseStart": 5.8,
+        "responseEnd": 263.223
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 375.22,
+      "url": "http://127.0.0.1:50171/static/analytics.js?v=20261003-analytics-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 375.38,
+      "url": "http://127.0.0.1:50171/static/analytics.js?v=20261003-analytics-1",
+      "timing": {
+        "startTime": 1791525587451.184,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.269,
+        "responseStart": 10.478,
+        "responseEnd": 262.787
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 376.97,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/poppins/Poppins-Regular.ttf",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 377.1,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/poppins/Poppins-Regular.ttf",
+      "timing": {
+        "startTime": 1791525587503.556,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.483,
+        "responseStart": 2.961,
+        "responseEnd": 52.318
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 381.78,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/poppins/Poppins-Bold.ttf",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 381.93,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/poppins/Poppins-Bold.ttf",
+      "timing": {
+        "startTime": 1791525587503.313,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.111,
+        "responseStart": 5.557,
+        "responseEnd": 57.788
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 382.77,
+      "url": "http://127.0.0.1:50171/static/destination-tips.js?v=20261004-tips-2",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 382.91,
+      "url": "http://127.0.0.1:50171/static/destination-tips.js?v=20261004-tips-2",
+      "timing": {
+        "startTime": 1791525587450.969,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.446,
+        "responseStart": 11.709,
+        "responseEnd": 263.604
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 383.08,
+      "url": "http://127.0.0.1:50171/static/application-journey.js?v=20261008-ncu-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 383.26,
+      "url": "http://127.0.0.1:50171/static/application-journey.js?v=20261008-ncu-1",
+      "timing": {
+        "startTime": 1791525587448.848,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 2.239,
+        "responseStart": 7.618,
+        "responseEnd": 265.358
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 383.88,
+      "url": "http://127.0.0.1:50171/static/document-workbench.js?v=20261008-ncu-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 383.98,
+      "url": "http://127.0.0.1:50171/static/document-workbench.js?v=20261008-ncu-1",
+      "timing": {
+        "startTime": 1791525587450.712,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.653,
+        "responseStart": 12.772,
+        "responseEnd": 268.957
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 387.68,
+      "url": "http://127.0.0.1:50171/static/app.js?v=20261008-ncu-sources-3",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 387.82,
+      "url": "http://127.0.0.1:50171/static/app.js?v=20261008-ncu-sources-3",
+      "timing": {
+        "startTime": 1791525587451.297,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.254,
+        "responseStart": 9.368,
+        "responseEnd": 274.783
+      }
+    },
+    {
+      "kind": "request",
+      "ms": 391.86,
+      "url": "http://127.0.0.1:50171/static/assets/mascot/suitcase-side.webp?v=20261007-solid-1",
+      "resource": "image"
+    },
+    {
+      "kind": "request",
+      "ms": 400.15,
+      "url": "http://127.0.0.1:50171/static/assets/mascot/suitcase.webp?v=20261007-solid-1",
+      "resource": "image"
+    },
+    {
+      "kind": "response_headers",
+      "ms": 402.9,
+      "url": "http://127.0.0.1:50171/static/assets/mascot/suitcase-side.webp?v=20261007-solid-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 403.08,
+      "url": "http://127.0.0.1:50171/static/assets/mascot/suitcase-side.webp?v=20261007-solid-1",
+      "timing": {
+        "startTime": 1791525587543.778,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.215,
+        "responseStart": 3.79,
+        "responseEnd": 9.422
+      }
+    },
+    {
+      "kind": "request",
+      "ms": 653.27,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/poppins/Poppins-Medium.ttf",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 653.94,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-117.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 654.8,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-100.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 655.9,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-99.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 656.29,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-96.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 671.44,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-64.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 671.86,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-116.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 672.89,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-97.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 673.16,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-75.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 673.36,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-60.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 677.71,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-113.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 678.11,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-14.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 678.37,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-115.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 679.33,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-110.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 679.51,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-107.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 679.7,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-109.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 679.98,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-41.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 680.48,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-94.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 681.46,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-119.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 685.36,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-117.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 686.38,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-116.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 687.05,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-114.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 693.03,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-112.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 693.32,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-110.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 693.55,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-109.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 694.07,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-105.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 694.36,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-103.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 694.83,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-62.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 695.01,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-61.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 695.16,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-24.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 695.31,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-15.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 695.95,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-94.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 696.75,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-106.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 697.08,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-115.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 697.34,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-108.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 697.88,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-100.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 698.87,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-96.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 699.28,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-66.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 699.52,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-64.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 699.82,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-41.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 700.12,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-112.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 701.17,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-111.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 701.78,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-106.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 702.28,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-88.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 702.96,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-13.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 703.48,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-107.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 703.75,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-33.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 703.94,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-22.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 704.48,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-97.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 704.87,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-90.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 705.06,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-83.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 705.22,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-102.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 705.39,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-79.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 705.78,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-70.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 707.18,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-37.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 708.07,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-31.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 708.91,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-19.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 709.25,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-16.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 709.51,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-113.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 709.81,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-98.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 709.96,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-76.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 710.62,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-48.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 711.26,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-103.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 711.88,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-101.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 712.62,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-98.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 713.06,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-38.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 713.45,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-15.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 714.92,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-69.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 715.36,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-84.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 715.56,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-62.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 715.76,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-82.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 715.93,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-48.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 717.38,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-39.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "response_headers",
+      "ms": 718.95,
+      "url": "http://127.0.0.1:50171/static/assets/mascot/suitcase.webp?v=20261007-solid-1",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 719.37,
+      "url": "http://127.0.0.1:50171/static/assets/mascot/suitcase.webp?v=20261007-solid-1",
+      "timing": {
+        "startTime": 1791525587556.8389,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.038,
+        "responseStart": 0.135,
+        "responseEnd": 2.353
+      }
+    },
+    {
+      "kind": "request",
+      "ms": 849.05,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-119.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 866.29,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-105.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 867.19,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-66.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 867.62,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-63.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 868.98,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-23.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 870.17,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-8.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 870.63,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-5.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 870.91,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-101.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 871.17,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-78.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 871.81,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-63.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 872.05,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-46.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 872.26,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-17.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 872.42,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-50.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 873.32,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-67.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 873.67,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-42.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 873.88,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-23.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 874.2,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-8.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 874.55,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-114.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 874.84,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-111.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 875.16,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-60.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 875.79,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-36.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 876.1,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-25.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 876.38,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-10.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 877.06,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-104.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 877.3,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-99.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 877.51,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-18.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 878.35,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-91.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 878.72,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-81.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 878.93,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-34.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "request",
+      "ms": 879.4,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Regular-25d484bcb37fb067b80f977d4c3e443ec1ededa80bfb59c6a2265d67a29aa088-21.woff2",
+      "resource": "font"
+    },
+    {
+      "kind": "response_headers",
+      "ms": 879.85,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-96.woff2",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 880.0,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-96.woff2",
+      "timing": {
+        "startTime": 1791525587816.23,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 3.925,
+        "responseStart": 114.263,
+        "responseEnd": 359.677
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 880.5,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-117.woff2",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 880.86,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-117.woff2",
+      "timing": {
+        "startTime": 1791525587815.39,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.999,
+        "responseStart": 120.061,
+        "responseEnd": 361.962
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 881.27,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-64.woff2",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 881.52,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-64.woff2",
+      "timing": {
+        "startTime": 1791525587816.5532,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 7.964,
+        "responseStart": 108.35,
+        "responseEnd": 361.183
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 882.29,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-100.woff2",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 882.62,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-100.woff2",
+      "timing": {
+        "startTime": 1791525587815.5652,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 2.567,
+        "responseStart": 122.155,
+        "responseEnd": 364.344
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 883.75,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-99.woff2",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 883.87,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/genjyuu/GenJyuuGothic-Bold-13a3b8c9ceaa77280a81200aafc902a31d99237af4703bb0f39ca9c8f0839ce5-99.woff2",
+      "timing": {
+        "startTime": 1791525587816.06,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 2.62,
+        "responseStart": 124.948,
+        "responseEnd": 385.857
+      }
+    },
+    {
+      "kind": "response_headers",
+      "ms": 884.18,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/poppins/Poppins-Medium.ttf",
+      "status": 200
+    },
+    {
+      "kind": "requestfinished",
+      "ms": 884.3,
+      "url": "http://127.0.0.1:50171/static/assets/fonts/poppins/Poppins-Medium.ttf",
+      "timing": {
+        "startTime": 1791525587808.786,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.565,
+        "responseStart": 113.35,
+        "responseEnd": 400.217
+      }
+    },
+    {
+      "kind": "diagnostic_state_read_failed",
+      "ms": 1265.83,
+      "error": "Page.evaluate: Target crashed "
+    },
+    {
+      "kind": "diagnostic_screenshot_failed",
+      "ms": 1269.33,
+      "error": "Page.screenshot: Target crashed \nCall log:\n  - taking page screenshot\n  - waiting for fonts to load...\n  - fonts loaded\n"
+    }
+  ],
+  "states": [],
+  "original_timeouts_and_assertions_unchanged": true
+}

@@ -59,6 +59,7 @@
 .discovery-rank-controls button:disabled { opacity:.3; }
 #discovery-use-preferences { width:100%; margin-top:16px; }
 .discovery-comparison { grid-column:1/-1; min-width:0; }
+#selection-workspace[data-home-university="國立中央大學"] .discovery-ranking { position:static; }
 .discovery-comparison .compare-scroll { overflow:auto; max-width:100%; }
 .discovery-empty { padding:40px 24px; text-align:center; background:var(--uw-surface,#fff); border-radius:20px; color:var(--uw-muted,#526279); }
 .discovery-topic-bar { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }

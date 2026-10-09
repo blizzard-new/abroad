@@ -273,6 +273,10 @@ def _structure_step(
     academic_year: str | None,
     publication_eligible: bool,
 ) -> ApplicationStep:
+    # NCU's bundle is explicitly reviewed, including unknowns and alternatives.
+    # Legacy text inference must not turn a coordinator's signature-or-seal into
+    # an applicant signature, or classify reference spring text as this round.
+    infer_from_text = workflow.home_university != "國立中央大學"
     method = step.submission.method
     # This CCU step combines housing, visa and arrival notices from several
     # host offices. A notice sent by email does not establish how a later form
@@ -282,7 +286,7 @@ def _structure_step(
         workflow.home_university == "國立中正大學"
         and step.phase == "合作校行前與生活"
     )
-    if method == ApplicationSubmissionMethod.UNKNOWN and not ccu_host_life:
+    if infer_from_text and method == ApplicationSubmissionMethod.UNKNOWN and not ccu_host_life:
         method = _infer_submission_method(step)
     submission = step.submission.model_copy(
         update={
@@ -315,7 +319,8 @@ def _structure_step(
                 or ([academic_year] if academic_year else [])
             ),
             "application_rounds": (
-                step.scope.application_rounds or _infer_application_rounds(step)
+                step.scope.application_rounds
+                or (_infer_application_rounds(step) if infer_from_text else [])
             ),
         }
     )
@@ -324,6 +329,7 @@ def _structure_step(
             requirement,
             step=step,
             submission=submission,
+            infer_from_text=infer_from_text,
         )
         for requirement in step.document_requirements
     ]
@@ -504,6 +510,7 @@ def _structure_document_requirement(
     *,
     step: ApplicationStep,
     submission: ApplicationSubmissionDetails,
+    infer_from_text: bool = True,
 ) -> ApplicationDocumentRequirement:
     # Individually reviewed receiving documents already supply their metadata.
     # A name such as "non-OECD: original" must not impose originals on everyone.
@@ -517,12 +524,14 @@ def _structure_document_requirement(
             }
         )
     copies = requirement.copies
-    if copies is None and (match := COPY_COUNT_PATTERN.search(requirement.name)):
+    if infer_from_text and copies is None and (match := COPY_COUNT_PATTERN.search(requirement.name)):
         copies = int(match.group(1))
     copy_type = requirement.copy_type
-    if copy_type == ApplicationCopyType.UNSPECIFIED:
+    if infer_from_text and copy_type == ApplicationCopyType.UNSPECIFIED:
         copy_type = _infer_copy_type(requirement.name, submission.method)
-    signatures = requirement.signatures or _explicit_signatures(requirement.name)
+    signatures = requirement.signatures or (
+        _explicit_signatures(requirement.name) if infer_from_text else []
+    )
     needs_confirmation = requirement.needs_confirmation or step.needs_confirmation
     if submission.method in {
         ApplicationSubmissionMethod.UNKNOWN,

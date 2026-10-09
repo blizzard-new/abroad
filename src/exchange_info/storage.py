@@ -4,6 +4,7 @@ import json
 import os
 import tempfile
 import threading
+from concurrent.futures import Future
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Generator, Iterable, TextIO, TypeVar
@@ -48,7 +49,7 @@ from .models import (
 )
 from .settings import DEFAULT_DATA_DIR
 from .school_identity import school_identity_key
-from .university_registry import CCU, CGU, NTPU, NTU
+from .university_registry import CCU, CGU, NTPU, NTU, NCU
 from .workflow_structuring import structure_application_workflow
 from .workflow_identity import workflow_storage_key
 
@@ -59,6 +60,7 @@ BUNDLED_NTPU_DIR = PACKAGE_DIR / "official_data" / "ntpu"
 BUNDLED_CGU_DIR = PACKAGE_DIR / "official_data" / "cgu"
 BUNDLED_CCU_DIR = PACKAGE_DIR / "official_data" / "ccu"
 BUNDLED_NTU_DIR = PACKAGE_DIR / "official_data" / "ntu"
+BUNDLED_NCU_DIR = PACKAGE_DIR / "official_data" / "ncu"
 
 _STORAGE_LOCKS_GUARD = threading.Lock()
 _STORAGE_LOCKS: dict[str, threading.RLock] = {}
@@ -514,6 +516,7 @@ def replace_school_experiences(
 _WORKFLOW_CACHE_LIMIT = 8
 _workflow_cache_lock = threading.Lock()
 _workflow_cache: dict[tuple, list[UniversityApplicationWorkflow]] = {}
+_workflow_cache_builds: dict[tuple, Future] = {}
 
 
 def _file_signature(path: Path) -> tuple[int, int] | None:
@@ -533,13 +536,32 @@ def file_signature(path: Path) -> tuple[int, int] | None:
 def _cached_workflows(key: tuple, build) -> list[UniversityApplicationWorkflow]:
     with _workflow_cache_lock:
         cached = _workflow_cache.get(key)
-    if cached is None:
+        if cached is not None:
+            return list(cached)
+        pending = _workflow_cache_builds.get(key)
+        owns_build = pending is None
+        if owns_build:
+            pending = Future()
+            _workflow_cache_builds[key] = pending
+    if not owns_build:
+        return list(pending.result())
+    # A cold page requests the same catalogue concurrently. Parse it once;
+    # other signatures can still build independently, and nested local/bundled
+    # catalogue reads do not hold the cache lock while they build or wait.
+    try:
         cached = build()
         with _workflow_cache_lock:
             while len(_workflow_cache) >= _WORKFLOW_CACHE_LIMIT:
                 _workflow_cache.pop(next(iter(_workflow_cache)))
             _workflow_cache[key] = cached
-    return list(cached)
+        pending.set_result(cached)
+        return list(cached)
+    except BaseException as error:
+        pending.set_exception(error)
+        raise
+    finally:
+        with _workflow_cache_lock:
+            _workflow_cache_builds.pop(key, None)
 
 
 def workflow_catalog_token(data_dir: Path = DEFAULT_DATA_DIR) -> tuple:
@@ -556,7 +578,7 @@ def cached_workflow_catalog(key: tuple, build) -> list[UniversityApplicationWork
 
 
 def _bundled_workflow_paths() -> tuple[Path, ...]:
-    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR))
+    return tuple(directory / "application_workflows.jsonl" for directory in (BUNDLED_NTPU_DIR, BUNDLED_CGU_DIR, BUNDLED_NTU_DIR, BUNDLED_CCU_DIR, BUNDLED_NCU_DIR))
 
 
 def _bundled_workflow_signature() -> tuple:
@@ -718,6 +740,7 @@ def load_destination_profiles(
             (BUNDLED_CGU_DIR, CGU.school_name),
             (BUNDLED_NTU_DIR, NTU.school_name),
             (BUNDLED_CCU_DIR, CCU.school_name),
+            (BUNDLED_NCU_DIR, NCU.school_name),
         )
         for row in read_jsonl(
             directory / "destination_profiles.jsonl",
@@ -751,7 +774,7 @@ def load_partner_research(
         return local
     bundled = [
         row
-        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR)
+        for directory in (BUNDLED_NTPU_DIR, BUNDLED_NTU_DIR, BUNDLED_NCU_DIR)
         for row in read_jsonl(directory / "partner_research.jsonl", PartnerResearchRecord)
     ]
     return _merge_rows(

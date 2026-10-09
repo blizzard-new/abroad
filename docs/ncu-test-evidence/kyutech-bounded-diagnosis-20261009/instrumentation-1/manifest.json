@@ -1,0 +1,46 @@
+{
+  "candidate_sha": "e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409",
+  "started_at": "2026-10-09T04:17:45.367920+00:00",
+  "command": [
+    "/workspace/abroad/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "ncu_verify_failure_events",
+    "-p",
+    "ncu_kyutech_server_diagnostic",
+    "tests/e2e/test_ncu_kyutech.py::test_ncu_kyutech_support_levels_arrival_split_and_reading_scope[1440]",
+    "--junitxml=/tmp/ncu-kyutech-server-diagnostic-e79e0ba-20261009/browser.xml"
+  ],
+  "instrumentation": "External diagnostic pytest plugin: ASGI Server-Timing, handler wall/thread CPU, event-loop delays, targeted cProfile. No product or test edits. Profiler overhead possible.",
+  "bounded_run_limit": 1,
+  "original_19_passed_1_failed_unchanged": true,
+  "root_cause_closed": false,
+  "exit_code": 0,
+  "finished_at": "2026-10-09T04:18:35.181287+00:00",
+  "end_sha": "e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409",
+  "end_clean": true,
+  "files": [
+    {
+      "path": "browser-events/2d6088b353e970.json",
+      "sha256": "adec18ef3aa91576dc599b9973d9aa291dd292f6fca6e66f1f51a67d7178a22a"
+    },
+    {
+      "path": "browser.log",
+      "sha256": "8b8a8d3b93d70ccafba408626fb1a168c7dfdbceb455d31b1bfec65e6952b1f4"
+    },
+    {
+      "path": "browser.xml",
+      "sha256": "0dbfc7ce9356a2c943494f811240bc43d9be6bf42607e1cadabb3e72ddfe582f"
+    },
+    {
+      "path": "server/browser-server-timing.json",
+      "sha256": "bc2e05eaac5ae958c736b78184c3d3259fc89ab6719febd449b8ea3621d477fa"
+    },
+    {
+      "path": "server/server-events.json",
+      "sha256": "81638365e0caf1bb80fb975915a6d587d5928ad26dedaf7687e7e87a92371479"
+    }
+  ]
+}

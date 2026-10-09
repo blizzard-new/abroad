@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="8" time="243.658" timestamp="2026-10-09T08:55:20.163015+00:00" hostname="e412858c778f"><testcase classname="tests.e2e.test_ncu_nufs_kumamoto_ryukoku" name="test_next3_reference_packets_and_living_content[nufs-\u540d\u53e4\u5c4b\u5916\u570b\u8a9e\u5927\u5b78-\u540d\u53e4\u5c4b\u5916\u570b\u8a9e\u5927\u5b78 Nagoya University of Foreign Studies-NUFS\u521d\u6b21\u7533\u8acb\u8207\u689d\u4ef6\u9644\u4ef6-13-390]" time="36.687" /><testcase classname="tests.e2e.test_ncu_nufs_kumamoto_ryukoku" name="test_next3_reference_packets_and_living_content[nufs-\u540d\u53e4\u5c4b\u5916\u570b\u8a9e\u5927\u5b78-\u540d\u53e4\u5c4b\u5916\u570b\u8a9e\u5927\u5b78 Nagoya University of Foreign Studies-NUFS\u521d\u6b21\u7533\u8acb\u8207\u689d\u4ef6\u9644\u4ef6-13-1440]" time="20.667" /><testcase classname="tests.e2e.test_ncu_nufs_kumamoto_ryukoku" name="test_next3_reference_packets_and_living_content[kumamoto-\u718a\u672c\u5927\u5b78-\u718a\u672c\u5927\u5b78 Kumamoto University-\u718a\u672c\u7531\u4e2d\u592e\u53d6\u5f97STEP\u7533\u8acbpacket-0-390]" time="17.111" /><testcase classname="tests.e2e.test_ncu_nufs_kumamoto_ryukoku" name="test_next3_reference_packets_and_living_content[kumamoto-\u718a\u672c\u5927\u5b78-\u718a\u672c\u5927\u5b78 Kumamoto University-\u718a\u672c\u7531\u4e2d\u592e\u53d6\u5f97STEP\u7533\u8acbpacket-0-1440]" time="22.704" /><testcase classname="tests.e2e.test_ncu_nufs_kumamoto_ryukoku" name="test_next3_reference_packets_and_living_content[ryukoku-\u9f8d\u8c37\u5927\u5b78-\u9f8d\u8c37\u5927\u5b78 Ryukoku University-\u9f8d\u8c37\u521d\u6b21\u7533\u8acb\u8207\u5341\u9805\u53c3\u8003\u6587\u4ef6\uff08JLPT\u6709\u5247\u9644\uff09-10-390]" time="25.424" /><testcase classname="tests.e2e.test_ncu_nufs_kumamoto_ryukoku" name="test_next3_reference_packets_and_living_content[ryukoku-\u9f8d\u8c37\u5927\u5b78-\u9f8d\u8c37\u5927\u5b78 Ryukoku University-\u9f8d\u8c37\u521d\u6b21\u7533\u8acb\u8207\u5341\u9805\u53c3\u8003\u6587\u4ef6\uff08JLPT\u6709\u5247\u9644\uff09-10-1440]" time="25.375" /><testcase classname="tests.e2e.test_ncu_nufs_kumamoto_ryukoku" name="test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account[390]" time="47.651"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;.multi-plan-branch&quot;).filter(has=locator(&quot;:scope &gt; summary&quot;).filter(has_text=&quot;Ryukoku University&quot;)).locator(&quot;.multi-plan-task&quot;).filter(has=locator(&quot;:scope &gt; label strong&quot;).filter(has_text=&quot;龍谷初次申請與十項參考文件&quot;)).locator(&quot;.multi-plan-documents &gt; summary&quot;)">page = &lt;Page url='http://127.0.0.1:47317/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8#overview'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:47317', data_dir=PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-22/web-e2e-data0'))
+width = 390
+
+    @pytest.mark.parametrize('width',[390,1440])
+    def test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account(page,live_server,width):
+        """Use the existing stage checklist, actual 14 reference items and saved account state."""
+        import json
+        import requests
+        RYU_INITIAL=['證件照（Passport-style ID Photo）','護照照片頁影像','正式成績單（Official Transcript）','JLPT成績證明（有則附；不是全員必交）']
+        RYU_HOUSING=['NASIC入寮日期回覆件（申請校方宿舍者；NASIC另送，原件未取得）','NASIC Pledge（申請校方宿舍者；本人簽名，原件未取得）']
+        RYU_ARRIVAL=['日本銀行帳戶開戶表（入寮時無日本可用帳戶者；入寮後發，原件未取得）','在留卡影本（入寮時無日本可用帳戶者的開戶附件）']
+    
+        session=sign_in_cookie(live_server,school='國立中央大學')
+        live_server.verify_student(session['profile']['id'],university='國立中央大學')
+        attach_session(page,live_server,session)
+        page.set_viewport_size({'width':width,'height':956});page.emulate_media(reduced_motion='reduce')
+        errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
+        out=Path(os.environ.get('NCU_NEXT3_BROWSER_OUT','/workspace/ncu-verification-tmp/next3-browser'));out.mkdir(parents=True,exist_ok=True)
+        enter_public_site(page,live_server,'application-center')
+        wait_until(page,"state.dashboard?.school_name === '國立中央大學' &amp;&amp; !state.applicationLoading &amp;&amp; state.accountWorkspaceLoadingCount === 0",timeout=60)
+        target=page.locator('#application-target-school')
+        name=target.locator('option').filter(has_text='Ryukoku University').first.get_attribute('value')
+        target.select_option(name)
+        expect(page.locator('#application-requirement-list [data-document-applicability="needs_confirmation"]')).to_have_count(14)
+        for group in page.locator('#application-requirement-list .application-requirement-group').all():
+            if group.get_attribute('open') is None:group.locator(':scope &gt; summary').click()
+        for document in RYU_INITIAL+RYU_HOUSING+RYU_ARRIVAL:
+            item=page.locator('.application-requirement-item').filter(has=page.locator(':scope &gt; div &gt; strong').filter(has_text=document))
+            expect(item).to_have_count(1);expect(item).to_be_visible()
+            expect(item).to_contain_text('116當期')
+            assert item.get_by_text('下載校方正式表格',exact=True).count()==0
+        page.locator('#ncu-host-admission').select_option('accepted')
+        page.locator('#ncu-housing-choice').select_option('on_campus')
+        expect(page.locator('#application-requirement-list [data-document-applicability="needs_confirmation"]')).to_have_count(14)
+        page.locator('#application-requirement-list').scroll_into_view_if_needed()
+        page.screenshot(path=str(out/f'ryukoku-{width}-corrected-catalog.png'),full_page=True)
+        page.evaluate("location.hash='#overview'")
+        expect(page.locator('#multi-plan-workspace')).to_be_visible()
+        page.locator('#multi-plan-settings &gt; summary').click()
+        page.locator('#multi-plan-preferences select').nth(0).select_option(name)
+        page.locator('#multi-plan-preferences button').click()
+        expect(page.locator('#multi-plan-status')).to_contain_text('1 個志願')
+        branch=page.locator('.multi-plan-branch').filter(has=page.locator(':scope &gt; summary').filter(has_text='Ryukoku University'))
+        branch.locator(':scope &gt; summary').click()
+        saved_ids=[]
+        stages=[('龍谷初次申請與十項參考文件',RYU_INITIAL,10),('龍谷等候交換宿舍另送申請資訊',RYU_HOUSING,2),('龍谷到校新生說明會、NHI與銀行扣款',RYU_ARRIVAL,2)]
+        for title,documents,count in stages:
+            task=branch.locator('.multi-plan-task').filter(has=page.locator(':scope &gt; label strong').filter(has_text=title))
+            expect(task).to_have_count(1)
+&gt;           task.locator('.multi-plan-documents &gt; summary').click()
+
+tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py:138: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+../abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7f468b6d7380&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7f464eed00e0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E           Call log:
+E             - waiting for locator(".multi-plan-branch").filter(has=locator(":scope &gt; summary").filter(has_text="Ryukoku University")).locator(".multi-plan-task").filter(has=locator(":scope &gt; label strong").filter(has_text="龍谷初次申請與十項參考文件")).locator(".multi-plan-documents &gt; summary")
+
+../abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: TimeoutError</failure></testcase><testcase classname="tests.e2e.test_ncu_nufs_kumamoto_ryukoku" name="test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account[1440]" time="47.134"><failure message="playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;.multi-plan-branch&quot;).filter(has=locator(&quot;:scope &gt; summary&quot;).filter(has_text=&quot;Ryukoku University&quot;)).locator(&quot;.multi-plan-task&quot;).filter(has=locator(&quot;:scope &gt; label strong&quot;).filter(has_text=&quot;龍谷初次申請與十項參考文件&quot;)).locator(&quot;.multi-plan-documents &gt; summary&quot;)">page = &lt;Page url='http://127.0.0.1:47317/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8#overview'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:47317', data_dir=PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-22/web-e2e-data0'))
+width = 1440
+
+    @pytest.mark.parametrize('width',[390,1440])
+    def test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account(page,live_server,width):
+        """Use the existing stage checklist, actual 14 reference items and saved account state."""
+        import json
+        import requests
+        RYU_INITIAL=['證件照（Passport-style ID Photo）','護照照片頁影像','正式成績單（Official Transcript）','JLPT成績證明（有則附；不是全員必交）']
+        RYU_HOUSING=['NASIC入寮日期回覆件（申請校方宿舍者；NASIC另送，原件未取得）','NASIC Pledge（申請校方宿舍者；本人簽名，原件未取得）']
+        RYU_ARRIVAL=['日本銀行帳戶開戶表（入寮時無日本可用帳戶者；入寮後發，原件未取得）','在留卡影本（入寮時無日本可用帳戶者的開戶附件）']
+    
+        session=sign_in_cookie(live_server,school='國立中央大學')
+        live_server.verify_student(session['profile']['id'],university='國立中央大學')
+        attach_session(page,live_server,session)
+        page.set_viewport_size({'width':width,'height':956});page.emulate_media(reduced_motion='reduce')
+        errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
+        out=Path(os.environ.get('NCU_NEXT3_BROWSER_OUT','/workspace/ncu-verification-tmp/next3-browser'));out.mkdir(parents=True,exist_ok=True)
+        enter_public_site(page,live_server,'application-center')
+        wait_until(page,"state.dashboard?.school_name === '國立中央大學' &amp;&amp; !state.applicationLoading &amp;&amp; state.accountWorkspaceLoadingCount === 0",timeout=60)
+        target=page.locator('#application-target-school')
+        name=target.locator('option').filter(has_text='Ryukoku University').first.get_attribute('value')
+        target.select_option(name)
+        expect(page.locator('#application-requirement-list [data-document-applicability="needs_confirmation"]')).to_have_count(14)
+        for group in page.locator('#application-requirement-list .application-requirement-group').all():
+            if group.get_attribute('open') is None:group.locator(':scope &gt; summary').click()
+        for document in RYU_INITIAL+RYU_HOUSING+RYU_ARRIVAL:
+            item=page.locator('.application-requirement-item').filter(has=page.locator(':scope &gt; div &gt; strong').filter(has_text=document))
+            expect(item).to_have_count(1);expect(item).to_be_visible()
+            expect(item).to_contain_text('116當期')
+            assert item.get_by_text('下載校方正式表格',exact=True).count()==0
+        page.locator('#ncu-host-admission').select_option('accepted')
+        page.locator('#ncu-housing-choice').select_option('on_campus')
+        expect(page.locator('#application-requirement-list [data-document-applicability="needs_confirmation"]')).to_have_count(14)
+        page.locator('#application-requirement-list').scroll_into_view_if_needed()
+        page.screenshot(path=str(out/f'ryukoku-{width}-corrected-catalog.png'),full_page=True)
+        page.evaluate("location.hash='#overview'")
+        expect(page.locator('#multi-plan-workspace')).to_be_visible()
+        page.locator('#multi-plan-settings &gt; summary').click()
+        page.locator('#multi-plan-preferences select').nth(0).select_option(name)
+        page.locator('#multi-plan-preferences button').click()
+        expect(page.locator('#multi-plan-status')).to_contain_text('1 個志願')
+        branch=page.locator('.multi-plan-branch').filter(has=page.locator(':scope &gt; summary').filter(has_text='Ryukoku University'))
+        branch.locator(':scope &gt; summary').click()
+        saved_ids=[]
+        stages=[('龍谷初次申請與十項參考文件',RYU_INITIAL,10),('龍谷等候交換宿舍另送申請資訊',RYU_HOUSING,2),('龍谷到校新生說明會、NHI與銀行扣款',RYU_ARRIVAL,2)]
+        for title,documents,count in stages:
+            task=branch.locator('.multi-plan-task').filter(has=page.locator(':scope &gt; label strong').filter(has_text=title))
+            expect(task).to_have_count(1)
+&gt;           task.locator('.multi-plan-documents &gt; summary').click()
+
+tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py:138: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+../abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;playwright._impl._connection.Connection object at 0x7f468b6d7380&gt;
+cb = &lt;function Channel.send.&lt;locals&gt;.&lt;lambda&gt; at 0x7f465c831da0&gt;
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -&gt; Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+&gt;           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E           Call log:
+E             - waiting for locator(".multi-plan-branch").filter(has=locator(":scope &gt; summary").filter(has_text="Ryukoku University")).locator(".multi-plan-task").filter(has=locator(":scope &gt; label strong").filter(has_text="龍谷初次申請與十項參考文件")).locator(".multi-plan-documents &gt; summary")
+
+../abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: TimeoutError</failure></testcase></testsuite></testsuites>

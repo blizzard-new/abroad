@@ -1,0 +1,126 @@
+CONFTEST LOADED!
+.F.F.F..                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_reference_packets_stay_separate_from_home_and_block_current_downloads[ncu-128-\u65e5\u672c\u4e2d\u592e\u5927\u5b78-7-8-18] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-230/test_reference_packets_stay_se1')
+row = 'ncu-128', name = '日本中央大學', initial = 7, stages = 8, conditions = 18
+
+    @pytest.mark.parametrize('row,name,initial,stages,conditions', CASES)
+    def test_reference_packets_stay_separate_from_home_and_block_current_downloads(tmp_path, row, name, initial, stages, conditions):
+        partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+        assert partner.quota is None and partner.availability_status == 'agreement_only'
+        client = TestClient(create_app(tmp_path))
+        response = client.get('/application-workflow', params={'home_school': 'NCU', 'school': partner.school_name, 'academic_year': '116'})
+        assert response.status_code == 200
+        workflow = response.json()
+        assert workflow['review_status'] == 'pending_review' and workflow['published_at'] is None
+        steps = {s['rule_id']: s for s in workflow['steps']}
+        assert len(steps['ncu-116-1-home-3']['document_requirements']) == 7
+        assert steps[row + '-host-apply']['document_requirements'] == []
+        assert len(steps[row + '-host-initial-reference']['document_requirements']) == initial
+        assert len([k for k in steps if k.startswith(row + '-host-') and k != row + '-host-apply']) == stages
+        assert all(s['deadline_at'] is None and not s['deadline_reminder_eligible'] for k,s in steps.items() if k.startswith(row+'-host-'))
+        for admitted, housing in [('unknown', 'unknown'), ('accepted', 'on_campus'), ('accepted', 'off_campus')]:
+            response = client.get('/application-center/catalog', params={'school': 'NCU', 'target_school': partner.school_name, 'academic_year': '116', 'host_admission_status': admitted, 'housing_choice': housing})
+            assert response.status_code == 200
+            rows = [d for d in response.json()['items'] if d['applicability']]
+            assert len(rows) == conditions
+            assert all(d['applicability']['status'] == 'needs_confirmation' and not d['download_available'] for d in rows)
+        if row == 'ncu-128':
+            plan = next(d for d in steps[row+'-host-initial-reference']['document_requirements'] if 'C1' in d['name'])
+            assert len(plan['source_urls']) == 2
+>           assert any('20260728.docx' in u for u in plan['source_urls'])
+E           assert False
+E            +  where False = any(<generator object test_reference_packets_stay_separate_from_home_and_block_current_downloads.<locals>.<genexpr> at 0x7efe2c643920>)
+
+tests/test_ncu_shizuoka_chuo_kansai.py:49: AssertionError
+_ test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_life[ncu-126-\u975c\u5ca1\u5927\u5b78-8-7-13] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-230/test_degree_language_contradic0')
+row = 'ncu-126', name = '靜岡大學', initial = 8, stages = 7, conditions = 13
+
+    @pytest.mark.parametrize('row,name,initial,stages,conditions', CASES)
+    def test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_life(tmp_path, row, name, initial, stages, conditions):
+        partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+        audit = ncu_field_audit(partner.school_name)
+        assert len(audit['fields']) == 17 and audit['checked_at'].startswith('2026-10-09')
+        sources = source_records()
+        for key, field in audit['fields'].items():
+            assert field['original_evidence'], key
+            if not key.startswith('home_'):
+                assert field['status'] == 'needs_confirmation'
+            if not key.startswith('home_') and key != 'quota':
+                assert field['unresolved'], key
+            for original in field['original_evidence']:
+                assert original['text'] and original['source_url'] and original['checked_at'] and original['applicability']
+                if original.get('source_id') in sources:
+                    assert original['checked_at'] == sources[original['source_id']]['checked_at']
+        client = TestClient(create_app(tmp_path))
+        shown = next(p for p in client.get('/student-dashboard',params={'school':'NCU'}).json()['partner_universities'] if p['school_name']==partner.school_name)
+        summary = json.dumps(shown['student_summary_zh'],ensure_ascii=False)
+        profile = client.get('/destination-profile',params={'home_school':'中央','school':partner.school_name})
+        assert profile.status_code == 200 and profile.json()['coverage_status']=='official_partial'
+        response = client.get('/school-life-context',params={'home_school':'NCU','school':partner.school_name})
+        assert response.status_code == 200
+        life = json.dumps(response.json(),ensure_ascii=False)
+        if row == 'ncu-126':
+            for term in ['不是正式申請門檻','10/1','10/14','closed','faculty agreement']:
+>               assert term in summary, term
+E               AssertionError: faculty agreement
+E               assert 'faculty agreement' in '{"study_period": "116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【2027春university-agreement事實...開放／配額核准。】移居靜岡／濱松後14日內住所登錄；續居留、變更與打工許可依本人入管辦理。FAQ許可後通常每週28小時／長假日8小時，不能把許可當所有活動都可做。"], "translated_from_english": false}'
+
+tests/test_ncu_shizuoka_chuo_kansai.py:87: AssertionError
+_ test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_life[ncu-129-\u95dc\u897f\u5927\u5b78-6-9-12] _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-230/test_degree_language_contradic2')
+row = 'ncu-129', name = '關西大學', initial = 6, stages = 9, conditions = 12
+
+    @pytest.mark.parametrize('row,name,initial,stages,conditions', CASES)
+    def test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_life(tmp_path, row, name, initial, stages, conditions):
+        partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
+        audit = ncu_field_audit(partner.school_name)
+        assert len(audit['fields']) == 17 and audit['checked_at'].startswith('2026-10-09')
+        sources = source_records()
+        for key, field in audit['fields'].items():
+            assert field['original_evidence'], key
+            if not key.startswith('home_'):
+                assert field['status'] == 'needs_confirmation'
+            if not key.startswith('home_') and key != 'quota':
+                assert field['unresolved'], key
+            for original in field['original_evidence']:
+                assert original['text'] and original['source_url'] and original['checked_at'] and original['applicability']
+                if original.get('source_id') in sources:
+                    assert original['checked_at'] == sources[original['source_id']]['checked_at']
+        client = TestClient(create_app(tmp_path))
+        shown = next(p for p in client.get('/student-dashboard',params={'school':'NCU'}).json()['partner_universities'] if p['school_name']==partner.school_name)
+        summary = json.dumps(shown['student_summary_zh'],ensure_ascii=False)
+        profile = client.get('/destination-profile',params={'home_school':'中央','school':partner.school_name})
+        assert profile.status_code == 200 and profile.json()['coverage_status']=='official_partial'
+        response = client.get('/school-life-context',params={'home_school':'NCU','school':partner.school_name})
+        assert response.status_code == 200
+        life = json.dumps(response.json(),ensure_ascii=False)
+        if row == 'ncu-126':
+            for term in ['不是正式申請門檻','10/1','10/14','closed','faculty agreement']:
+                assert term in summary, term
+            for term in ['27400','23300','2013/1','14日','20日前','80000–100000']:
+                assert term in life, term
+        elif row == 'ncu-128':
+            for term in ['Tentative','N3','Kenkyusei','五門','六列','9/20']:
+                assert term in summary, term
+            for term in ['350000','1150000','50000','1500','Part2']:
+                assert term in life or term in summary, term
+        else:
+            for term in ['六月','三月','500000','不是','11/10','MCL']:
+                assert term in summary or term in life, term
+            for term in ['41000','63000','末月','1650','404','all exchange']:
+>               assert term in life or term in summary, term
+E               AssertionError: 404
+E               assert ('404' in '{"school_name": "關西大學 Kansai University", "location_note": "尚無已核對的校區座標；不以城市中心代替學校，也不推算附近設施距離。", "research_status": "n...ttps://www.google.com/search?q=Kansai+University+%E6%97%A5%E6%9C%AC+tourism+public+transport"}], "research_notes": []}' or '404' in '{"study_period": "116母校方案：2027/9–2028/2一學期、2027/9–2028/6一學年、2028/2–6一學期；實際依外校校曆與可提名學期確認。 【現2027春指定程序、未標年一般交換／FAQ、2026...中央116當期配額或2027秋／2028春完整核准。】收到e-COE與錄取、申好Student visa才買機票；e-COE無保證出件日，個人使領館追加件須確認。"], "translated_from_english": false}')
+
+tests/test_ncu_shizuoka_chuo_kansai.py:99: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_ncu_shizuoka_chuo_kansai.py::test_reference_packets_stay_separate_from_home_and_block_current_downloads[ncu-128-\u65e5\u672c\u4e2d\u592e\u5927\u5b78-7-8-18]
+FAILED tests/test_ncu_shizuoka_chuo_kansai.py::test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_life[ncu-126-\u975c\u5ca1\u5927\u5b78-8-7-13]
+FAILED tests/test_ncu_shizuoka_chuo_kansai.py::test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_life[ncu-129-\u95dc\u897f\u5927\u5b78-6-9-12]
+3 failed, 5 passed in 24.24s

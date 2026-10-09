@@ -1,0 +1,152 @@
+{
+  "platform_disconnect_notification_received": true,
+  "healthcheck_succeeded_at": "2026-10-09T09:16:00Z",
+  "cwd": "/workspace/abroad-ncu",
+  "branch": "data/ncu-exchange-20261008",
+  "head_at_healthcheck": "e7b2a47b2d8d67b8758aa109c0440fe675c7c4f4",
+  "uncommitted_at_healthcheck": [
+    "docs/ncu-review-index/next3-2159409c/ (untracked generated index)"
+  ],
+  "five_data_corrections_committed_sha": "2159409cacb6d8ac36bbafcc3ca6f2925f860fc9",
+  "previous_test_processes_completed_normally": [
+    {
+      "sha": "2159409cacb6d8ac36bbafcc3ca6f2925f860fc9",
+      "completed_at": "2026-10-09T08:59:28.915832+00:00",
+      "same_sha_and_clean": true,
+      "results": [
+        {
+          "name": "ncu_api_sources_life",
+          "exit_code": 0,
+          "junit": {
+            "tests": 342,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        {
+          "name": "cgu_ntpu_ntu_shared_regression",
+          "exit_code": 0,
+          "junit": {
+            "tests": 215,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 6
+          }
+        },
+        {
+          "name": "existing_contract_gate",
+          "exit_code": 0,
+          "junit": {
+            "tests": 65,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        {
+          "name": "openapi_snapshot",
+          "exit_code": 0,
+          "junit": null
+        },
+        {
+          "name": "frozen_71_index",
+          "exit_code": 0,
+          "junit": null
+        },
+        {
+          "name": "prior_three_school_index",
+          "exit_code": 0,
+          "junit": null
+        },
+        {
+          "name": "browser_corrected_three_school_content_and_save",
+          "exit_code": 1,
+          "junit": {
+            "tests": 8,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        {
+          "name": "lock_writable_cache",
+          "exit_code": 0,
+          "junit": null
+        },
+        {
+          "name": "scoped_whitespace",
+          "exit_code": 0,
+          "junit": null
+        }
+      ]
+    },
+    {
+      "sha": "5d2536530296523fa99137d9f5ac570d87257c9b",
+      "completed_at": "2026-10-09T09:14:07.408162+00:00",
+      "same_sha_and_clean": true,
+      "results": [
+        {
+          "name": "affected_three_school_api",
+          "exit_code": 1,
+          "junit": {
+            "tests": 25,
+            "failures": 1,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        {
+          "name": "openapi_snapshot",
+          "exit_code": 0,
+          "junit": null
+        },
+        {
+          "name": "browser_corrected_content_and_account_save",
+          "exit_code": 1,
+          "junit": {
+            "tests": 8,
+            "failures": 2,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        {
+          "name": "test_only_whitespace",
+          "exit_code": 0,
+          "junit": null
+        }
+      ]
+    },
+    {
+      "sha": "cc3c37c74e01fc9c602453a75a0f6a85d63954af",
+      "completed_at": "2026-10-09T09:14:07.256060+00:00",
+      "same_sha_and_clean": true,
+      "results": [
+        {
+          "name": "affected_three_school_api",
+          "exit_code": 0,
+          "junit": {
+            "tests": 25,
+            "failures": 0,
+            "errors": 0,
+            "skipped": 0
+          }
+        },
+        {
+          "name": "openapi_snapshot",
+          "exit_code": 0,
+          "junit": null
+        },
+        {
+          "name": "test_only_whitespace",
+          "exit_code": 0,
+          "junit": null
+        }
+      ]
+    }
+  ],
+  "test_interruption_observed": false,
+  "new_execution_environment_opened": false,
+  "latest_save_retry_is_separate_process": true
+}

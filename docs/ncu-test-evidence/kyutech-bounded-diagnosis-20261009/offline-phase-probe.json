@@ -1,0 +1,295 @@
+{
+  "started_at": "2026-10-09T04:22:37.970258+00:00",
+  "finished_at": "2026-10-09T04:22:43.289030+00:00",
+  "candidate_sha": "e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409",
+  "request_limit": 3,
+  "concurrent_group_count": 1,
+  "browser_reruns": 0,
+  "production_actions": false,
+  "results": [
+    {
+      "path": "/application-workflow",
+      "status": 200,
+      "wall_ms": 4284.337165008765,
+      "server_timing": "ncu_diag;dur=4277.968",
+      "document_title_present": true,
+      "response_length": 76826
+    },
+    {
+      "path": "/destination-profile",
+      "status": 200,
+      "wall_ms": 493.7679059949005,
+      "server_timing": "ncu_diag;dur=483.830",
+      "document_title_present": false,
+      "response_length": 74193
+    },
+    {
+      "path": "/school-data-completeness",
+      "status": 200,
+      "wall_ms": 5293.2670440059155,
+      "server_timing": "ncu_diag;dur=5282.566",
+      "document_title_present": false,
+      "response_length": 25010
+    }
+  ],
+  "spans": [
+    {
+      "rid": "88739625407867",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 0.12250500731170177,
+      "thread_cpu_ms": 0.12242399999999598
+    },
+    {
+      "rid": "88739633078197",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 0.12041599256917834,
+      "thread_cpu_ms": 0.12066500000000005
+    },
+    {
+      "rid": "88739636547334",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 0.21207300596870482,
+      "thread_cpu_ms": 0.21191699999999983
+    },
+    {
+      "rid": "88739625407867",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 0.054849995649419725,
+      "thread_cpu_ms": 0.05565300000000273
+    },
+    {
+      "rid": "88739625407867",
+      "function": "exchange_info.storage._cached_workflows",
+      "wall_ms": 0.09176599269267172,
+      "thread_cpu_ms": 0.09118299999999468
+    },
+    {
+      "rid": "88739633078197",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 0.09108800441026688,
+      "thread_cpu_ms": 0.09101100000000195
+    },
+    {
+      "rid": "88739633078197",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 0.09781999688129872,
+      "thread_cpu_ms": 0.09810299999999869
+    },
+    {
+      "rid": "88739633078197",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 196.9583459867863,
+      "thread_cpu_ms": 165.047511
+    },
+    {
+      "rid": "88739633078197",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 10.56105099269189,
+      "thread_cpu_ms": 7.170238999999995
+    },
+    {
+      "rid": "88739633078197",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 27.392874006181955,
+      "thread_cpu_ms": 16.243107000000006
+    },
+    {
+      "rid": "88739633078197",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 92.18797399080358,
+      "thread_cpu_ms": 67.78142500000001
+    },
+    {
+      "rid": "88739633078197",
+      "function": "exchange_info.api.load_destination_profiles",
+      "wall_ms": 344.03612300229724,
+      "thread_cpu_ms": 273.030429
+    },
+    {
+      "rid": "88739633078197",
+      "function": "exchange_info.api.complete_destination_profile",
+      "wall_ms": 15.138201997615397,
+      "thread_cpu_ms": 13.156144999999952
+    },
+    {
+      "rid": "88739633078197",
+      "function": "handler:/destination-profile",
+      "wall_ms": 468.2706669991603,
+      "thread_cpu_ms": 306.546666
+    },
+    {
+      "rid": "88739625407867",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 801.3003619998926,
+      "thread_cpu_ms": 502.16174699999993
+    },
+    {
+      "rid": "88739625407867",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 111.16024700459093,
+      "thread_cpu_ms": 110.50154699999992
+    },
+    {
+      "rid": "88739625407867",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 520.693612008472,
+      "thread_cpu_ms": 518.512957
+    },
+    {
+      "rid": "88739625407867",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 501.4435610064538,
+      "thread_cpu_ms": 500.88406799999996
+    },
+    {
+      "rid": "88739625407867",
+      "function": "exchange_info.storage._cached_workflows",
+      "wall_ms": 3836.021916999016,
+      "thread_cpu_ms": 3532.3907390000004
+    },
+    {
+      "rid": "88739625407867",
+      "function": "exchange_info.storage._cached_workflows",
+      "wall_ms": 3860.388311004499,
+      "thread_cpu_ms": 3546.170392
+    },
+    {
+      "rid": "88739636547334",
+      "function": "exchange_info.storage._cached_workflows",
+      "wall_ms": 3828.787327001919,
+      "thread_cpu_ms": 0.3009499999999977
+    },
+    {
+      "rid": "88739625407867",
+      "function": "handler:/application-workflow",
+      "wall_ms": 4259.4873790076235,
+      "thread_cpu_ms": 3788.488425
+    },
+    {
+      "rid": "88739636547334",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 0.13630899775307626,
+      "thread_cpu_ms": 0.13362299999999938
+    },
+    {
+      "rid": "88739636547334",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 0.44854500447399914,
+      "thread_cpu_ms": 0.4496940000000005
+    },
+    {
+      "rid": "88739636547334",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 0.19507299293763936,
+      "thread_cpu_ms": 0.19531999999999883
+    },
+    {
+      "rid": "88739636547334",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 39.46205400279723,
+      "thread_cpu_ms": 39.45482100000003
+    },
+    {
+      "rid": "88739636547334",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 13.276986006530933,
+      "thread_cpu_ms": 13.277378000000006
+    },
+    {
+      "rid": "88739636547334",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 13.428787991870195,
+      "thread_cpu_ms": 13.429674000000002
+    },
+    {
+      "rid": "88739636547334",
+      "function": "exchange_info.storage.read_jsonl",
+      "wall_ms": 48.8978479988873,
+      "thread_cpu_ms": 48.89927699999996
+    },
+    {
+      "rid": "88739636547334",
+      "function": "exchange_info.api.load_destination_profiles",
+      "wall_ms": 127.27915300638415,
+      "thread_cpu_ms": 127.27076299999999
+    },
+    {
+      "rid": "88739636547334",
+      "function": "exchange_info.api.complete_destination_profile",
+      "wall_ms": 7.84464601019863,
+      "thread_cpu_ms": 7.8464779999999905
+    },
+    {
+      "rid": "88739636547334",
+      "function": "handler:/school-data-completeness",
+      "wall_ms": 5275.56766300404,
+      "thread_cpu_ms": 1184.640811
+    }
+  ],
+  "server_events": [
+    {
+      "kind": "asgi_received",
+      "ms": 295.088,
+      "rid": "88739625407867",
+      "path": "/application-workflow",
+      "query": "school=%E4%B9%9D%E5%B7%9E%E5%B7%A5%E6%A5%AD%E5%A4%A7%E5%AD%B8+Kyushu+Institute+of+Technology&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8"
+    },
+    {
+      "kind": "asgi_received",
+      "ms": 302.739,
+      "rid": "88739633078197",
+      "path": "/destination-profile",
+      "query": "school=%E4%B9%9D%E5%B7%9E%E5%B7%A5%E6%A5%AD%E5%A4%A7%E5%AD%B8+Kyushu+Institute+of+Technology&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8"
+    },
+    {
+      "kind": "asgi_received",
+      "ms": 306.208,
+      "rid": "88739636547334",
+      "path": "/school-data-completeness",
+      "query": "school=%E4%B9%9D%E5%B7%9E%E5%B7%A5%E6%A5%AD%E5%A4%A7%E5%AD%B8+Kyushu+Institute+of+Technology&home_school=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8"
+    },
+    {
+      "kind": "response_start",
+      "ms": 786.584,
+      "rid": "88739633078197",
+      "path": "/destination-profile",
+      "status": 200,
+      "duration_ms": 483.83
+    },
+    {
+      "kind": "response_body_end",
+      "ms": 786.724,
+      "rid": "88739633078197",
+      "path": "/destination-profile"
+    },
+    {
+      "kind": "response_start",
+      "ms": 4573.084,
+      "rid": "88739625407867",
+      "path": "/application-workflow",
+      "status": 200,
+      "duration_ms": 4277.968
+    },
+    {
+      "kind": "response_body_end",
+      "ms": 4573.277,
+      "rid": "88739625407867",
+      "path": "/application-workflow"
+    },
+    {
+      "kind": "response_start",
+      "ms": 5588.783,
+      "rid": "88739636547334",
+      "path": "/school-data-completeness",
+      "status": 200,
+      "duration_ms": 5282.566
+    },
+    {
+      "kind": "response_body_end",
+      "ms": 5588.86,
+      "rid": "88739636547334",
+      "path": "/school-data-completeness"
+    }
+  ],
+  "limitation": "Cold isolated ASGI three-request group only. No browser boot/public-translations/static-font load, no original-run server timestamps; cannot establish original failure root cause."
+}

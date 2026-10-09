@@ -1,0 +1,104 @@
+{
+  "key": "tuition",
+  "label": "兩校學費／其他校方收費",
+  "status": "needs_confirmation",
+  "note": "符合校級互免協議的ACAP／YSEP免host申請、入學及學費、母校仍繳；其他付費交換／visiting另料金，不把2023FAQ9800／84600／29700月套此兩track。JASSO80000JPY補助需選定且名額有限，非住宿或全生活費保證。 2026/10官方伙伴原始JSON已核對唯一中央列：type01校級、exchange02學生交流／exchange03免學費皆t，另讀官方JS與搜尋控制對應。僅中央1列公開摘錄、不是262伙伴全文已讀；協議2007.10締結不代表116名額、當期接收或個人免學費核准。",
+  "source_urls": [
+    "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap",
+    "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep",
+    "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree",
+    "https://www.titech.ac.jp/english/global/collaborations/resultlist.json",
+    "https://www.titech.ac.jp/english/global/collaborations/wide"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/acap",
+      "source_id": "host-science-acap",
+      "page": null,
+      "source_title": "東京科學官方：acap",
+      "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 132,
+        "field": "tuition",
+        "evidence_array_index": 0,
+        "text_sha256": "8a223f135df0d2b870845c8e82d8eac150512aee5019ba014ba1cdac904ae8fc",
+        "char_count": 18637
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree/ysep",
+      "source_id": "host-science-ysep",
+      "page": null,
+      "source_title": "東京科學官方：ysep",
+      "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 132,
+        "field": "tuition",
+        "evidence_array_index": 1,
+        "text_sha256": "1501762be4c68dc7cf50435f458792edc54597f5ffab17f2b901d0f1b23da890",
+        "char_count": 17065
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.titech.ac.jp/english/international-student-exchange/prospective-students/non-degree",
+      "source_id": "host-science-non-degree-index",
+      "page": null,
+      "source_title": "東京科學官方：non-degree-index",
+      "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 132,
+        "field": "tuition",
+        "evidence_array_index": 2,
+        "text_sha256": "5bb0f6a70729e3d6cbdbe7a63b2c0feb938c9d0ab1edb50695be51b9697ea9e0",
+        "char_count": 6961
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.titech.ac.jp/english/global/collaborations/resultlist.json",
+      "source_id": "host-science-partner-resultlist",
+      "page": null,
+      "source_title": "Science Tokyo官方2026/10伙伴JSON：中央校級學生交流及免學費標記；116名額未核",
+      "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 132,
+        "field": "tuition",
+        "evidence_array_index": 3,
+        "text_sha256": "f8eddaf504f9182458aa4a9781eaa17fedf7fa5ed742952e7d0b4a060ddf5a30",
+        "char_count": 290
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://www.titech.ac.jp/english/global/collaborations/wide",
+      "source_id": "host-science-agreement-list",
+      "page": null,
+      "source_title": "東京科學官方：agreement-list",
+      "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 132,
+        "field": "tuition",
+        "evidence_array_index": 4,
+        "text_sha256": "38e024da75b8a47254575629858a65bb5226e9c1a07fe0b234bc133d5350ee15",
+        "char_count": 5446
+      }
+    }
+  ],
+  "unresolved": "116中央有效互免協議、課程／設備其他收費及獎學金核准仍待確認，不能先抵扣未獲補助。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "中央115表僅限115-2、3名僅歷史參考；116是否開放未核。現連ACAP／YSEP頁仍列2026入學日期，2026/10健康新表與2027/3 TIEC新費率已公告，各有適用條件，不能全部當116接收核准。"
+}

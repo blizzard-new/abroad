@@ -1,0 +1,68 @@
+{
+  "key": "courses",
+  "label": "課程限制與選課",
+  "status": "needs_confirmation",
+  "note": "國際交換先被某學院錄取，跨學院課須事先同意；醫學與SAIF關閉、CS席位少、安泰要求經管背景，但同頁安泰本科段又稱無主修限制，保留範圍差異。Global College及SPEIT只能該院錄取者修；UG／grad不可一律互修。港澳台2026到校公告列自動化、法學與外語接收院，不能推定116全院開放。",
+  "source_urls": [
+    "https://global.sjtu.edu.cn/en/study-sjtu/prospective/non-degree-programs/281",
+    "https://global.sjtu.edu.cn/hmt/news/view/2314",
+    "https://global.sjtu.edu.cn/hmt/announcements"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://global.sjtu.edu.cn/en/study-sjtu/prospective/non-degree-programs/281",
+      "source_id": "host-sjtu-incoming",
+      "page": null,
+      "source_title": "SJTU2026–27 incoming international（國籍適用待核對）",
+      "applicability": "SJTU international factsheet2026–27與港澳台2026秋到校公告分開；中央115限定臺灣籍，116接收規則未核定。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 165,
+        "field": "courses",
+        "evidence_array_index": 0,
+        "text_sha256": "94276e57f7222d5cacd507dcc8c9780b57d5b48c8a032c48d3f186bf6166686f",
+        "char_count": 23851
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://global.sjtu.edu.cn/hmt/news/view/2314",
+      "source_id": "host-sjtu-hmt-arrival",
+      "page": null,
+      "source_title": "SJTU2026秋港澳台交換到校公告（非完整申請指南）",
+      "applicability": "SJTU international factsheet2026–27與港澳台2026秋到校公告分開；中央115限定臺灣籍，116接收規則未核定。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 165,
+        "field": "courses",
+        "evidence_array_index": 1,
+        "text_sha256": "fc10f1e63feec1d60adfc71b600b2499c874efcdcdb9386a8e5574854aa54990",
+        "char_count": 523
+      }
+    },
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://global.sjtu.edu.cn/hmt/announcements",
+      "source_id": "host-sjtu-hmt-notices",
+      "page": null,
+      "source_title": "SJTU港澳台公告索引（本次首頁無當期交換申請包）",
+      "applicability": "SJTU international factsheet2026–27與港澳台2026秋到校公告分開；中央115限定臺灣籍，116接收規則未核定。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 165,
+        "field": "courses",
+        "evidence_array_index": 2,
+        "text_sha256": "6fafa09035f7d4773141cf194e52ab75ed506d1b3d82f2a2d73f3a361eb853f3",
+        "char_count": 528
+      }
+    }
+  ],
+  "unresolved": "臺灣籍協議、安泰背景／限額及116可修課仍待查。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "SJTU international factsheet2026–27與港澳台2026秋到校公告分開；中央115限定臺灣籍，116接收規則未核定。"
+}

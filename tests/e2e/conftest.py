@@ -479,6 +479,9 @@ def enter_public_site(page: Page, live_server: LiveServer, route: str = "home") 
     # otherwise rapid destination cases can leave requests queued on the shared
     # E2E server and make a later, unrelated login response time out.
     page.wait_for_load_state("networkidle", timeout=60_000)
+    # Rendering the larger offline catalog can continue after network idle.
+    # Wait for the real boot overlay to finish before attempting navigation.
+    page.locator("#boot-splash").wait_for(state="hidden", timeout=60_000)
 
 
 def open_navigation(page: Page) -> None:

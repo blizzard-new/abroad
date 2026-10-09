@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="92.424" timestamp="2026-10-09T09:17:09.108596+00:00" hostname="e412858c778f"><testcase classname="tests.e2e.test_ncu_nufs_kumamoto_ryukoku" name="test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account[390]" time="53.524"><failure message="AssertionError: Locator expected to have count '1'&#10;Actual value: 0 &#10;Call log:&#10;  - Expect &quot;to_have_count&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;.multi-plan-branch&quot;).filter(has=locator(&quot;:scope &gt; summary&quot;).filter(has_text=&quot;Ryukoku University&quot;)).locator(&quot;.multi-plan-task&quot;).filter(has=locator(&quot;:scope &gt; label strong&quot;).filter(has_text=&quot;龍谷到校新生說明會、NHI與銀行扣款&quot;))&#10;    13 × locator resolved to 0 elements&#10;       - unexpected value &quot;0&quot;">page = &lt;Page url='http://127.0.0.1:43771/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8#overview'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:43771', data_dir=PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-27/web-e2e-data0'))
+width = 390
+
+    @pytest.mark.parametrize('width',[390,1440])
+    def test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account(page,live_server,width):
+        """Use the existing stage checklist, actual 14 reference items and saved account state."""
+        import json
+        import requests
+        RYU_INITIAL=['證件照（Passport-style ID Photo）','護照照片頁影像','正式成績單（Official Transcript）','JLPT成績證明（有則附；不是全員必交）']
+        RYU_HOUSING=['NASIC入寮日期回覆件（申請校方宿舍者；NASIC另送，原件未取得）','NASIC Pledge（申請校方宿舍者；本人簽名，原件未取得）']
+        RYU_ARRIVAL=['日本銀行帳戶開戶表（入寮時無日本可用帳戶者；入寮後發，原件未取得）','在留卡影本（入寮時無日本可用帳戶者的開戶附件）']
+    
+        session=sign_in_cookie(live_server,school='國立中央大學')
+        live_server.verify_student(session['profile']['id'],university='國立中央大學')
+        attach_session(page,live_server,session)
+        page.set_viewport_size({'width':width,'height':956});page.emulate_media(reduced_motion='reduce')
+        errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
+        out=Path(os.environ.get('NCU_NEXT3_BROWSER_OUT','/workspace/ncu-verification-tmp/next3-browser'));out.mkdir(parents=True,exist_ok=True)
+        enter_public_site(page,live_server,'application-center')
+        wait_until(page,"state.dashboard?.school_name === '國立中央大學' &amp;&amp; !state.applicationLoading &amp;&amp; state.accountWorkspaceLoadingCount === 0",timeout=60)
+        target=page.locator('#application-target-school')
+        name=target.locator('option').filter(has_text='Ryukoku University').first.get_attribute('value')
+        target.select_option(name)
+        expect(page.locator('#application-requirement-list [data-document-applicability="needs_confirmation"]')).to_have_count(14)
+        for group in page.locator('#application-requirement-list .application-requirement-group').all():
+            if group.get_attribute('open') is None:group.locator(':scope &gt; summary').click()
+        for document in RYU_INITIAL+RYU_HOUSING+RYU_ARRIVAL:
+            item=page.locator('.application-requirement-item').filter(has=page.locator(':scope &gt; div &gt; strong').filter(has_text=document))
+            expect(item).to_have_count(1);expect(item).to_be_visible()
+            expect(item).to_contain_text('116當期')
+            assert item.get_by_text('下載校方正式表格',exact=True).count()==0
+        page.locator('#ncu-host-admission').select_option('accepted')
+        page.locator('#ncu-housing-choice').select_option('on_campus')
+        expect(page.locator('#application-requirement-list [data-document-applicability="needs_confirmation"]')).to_have_count(14)
+        page.locator('#application-requirement-list').scroll_into_view_if_needed()
+        page.screenshot(path=str(out/f'ryukoku-{width}-corrected-catalog.png'),full_page=True)
+        page.evaluate("location.hash='#overview'")
+        expect(page.locator('#multi-plan-workspace')).to_be_visible()
+        page.locator('#multi-plan-settings &gt; summary').click()
+        page.locator('#multi-plan-preferences select').nth(0).select_option(name)
+        page.locator('#multi-plan-preferences button').click()
+        expect(page.locator('#multi-plan-status')).to_contain_text('1 個志願')
+        branch=page.locator('.multi-plan-branch').filter(has=page.locator(':scope &gt; summary').filter(has_text='Ryukoku University'))
+        branch.locator(':scope &gt; summary').click()
+        saved_ids=[]
+        stages=[('龍谷初次申請與十項參考文件',RYU_INITIAL,10),('龍谷等候交換宿舍另送申請資訊',RYU_HOUSING,2),('龍谷到校新生說明會、NHI與銀行扣款',RYU_ARRIVAL,2)]
+        for title,documents,count in stages:
+            task=branch.locator('.multi-plan-task').filter(has=page.locator(':scope &gt; label strong').filter(has_text=title))
+&gt;           expect(task).to_have_count(1)
+E           AssertionError: Locator expected to have count '1'
+E           Actual value: 0 
+E           Call log:
+E             - Expect "to_have_count" with timeout 5000ms
+E             - waiting for locator(".multi-plan-branch").filter(has=locator(":scope &gt; summary").filter(has_text="Ryukoku University")).locator(".multi-plan-task").filter(has=locator(":scope &gt; label strong").filter(has_text="龍谷到校新生說明會、NHI與銀行扣款"))
+E               13 × locator resolved to 0 elements
+E                  - unexpected value "0"
+
+tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py:137: AssertionError</failure></testcase><testcase classname="tests.e2e.test_ncu_nufs_kumamoto_ryukoku" name="test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account[1440]" time="38.631"><failure message="AssertionError: Locator expected to have count '1'&#10;Actual value: 0 &#10;Call log:&#10;  - Expect &quot;to_have_count&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;.multi-plan-branch&quot;).filter(has=locator(&quot;:scope &gt; summary&quot;).filter(has_text=&quot;Ryukoku University&quot;)).locator(&quot;.multi-plan-task&quot;).filter(has=locator(&quot;:scope &gt; label strong&quot;).filter(has_text=&quot;龍谷到校新生說明會、NHI與銀行扣款&quot;))&#10;    13 × locator resolved to 0 elements&#10;       - unexpected value &quot;0&quot;">page = &lt;Page url='http://127.0.0.1:43771/?home=%E5%9C%8B%E7%AB%8B%E4%B8%AD%E5%A4%AE%E5%A4%A7%E5%AD%B8#overview'&gt;
+live_server = LiveServer(base_url='http://127.0.0.1:43771', data_dir=PosixPath('/workspace/ncu-verification-tmp/pytest-of-agent/pytest-27/web-e2e-data0'))
+width = 1440
+
+    @pytest.mark.parametrize('width',[390,1440])
+    def test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account(page,live_server,width):
+        """Use the existing stage checklist, actual 14 reference items and saved account state."""
+        import json
+        import requests
+        RYU_INITIAL=['證件照（Passport-style ID Photo）','護照照片頁影像','正式成績單（Official Transcript）','JLPT成績證明（有則附；不是全員必交）']
+        RYU_HOUSING=['NASIC入寮日期回覆件（申請校方宿舍者；NASIC另送，原件未取得）','NASIC Pledge（申請校方宿舍者；本人簽名，原件未取得）']
+        RYU_ARRIVAL=['日本銀行帳戶開戶表（入寮時無日本可用帳戶者；入寮後發，原件未取得）','在留卡影本（入寮時無日本可用帳戶者的開戶附件）']
+    
+        session=sign_in_cookie(live_server,school='國立中央大學')
+        live_server.verify_student(session['profile']['id'],university='國立中央大學')
+        attach_session(page,live_server,session)
+        page.set_viewport_size({'width':width,'height':956});page.emulate_media(reduced_motion='reduce')
+        errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
+        out=Path(os.environ.get('NCU_NEXT3_BROWSER_OUT','/workspace/ncu-verification-tmp/next3-browser'));out.mkdir(parents=True,exist_ok=True)
+        enter_public_site(page,live_server,'application-center')
+        wait_until(page,"state.dashboard?.school_name === '國立中央大學' &amp;&amp; !state.applicationLoading &amp;&amp; state.accountWorkspaceLoadingCount === 0",timeout=60)
+        target=page.locator('#application-target-school')
+        name=target.locator('option').filter(has_text='Ryukoku University').first.get_attribute('value')
+        target.select_option(name)
+        expect(page.locator('#application-requirement-list [data-document-applicability="needs_confirmation"]')).to_have_count(14)
+        for group in page.locator('#application-requirement-list .application-requirement-group').all():
+            if group.get_attribute('open') is None:group.locator(':scope &gt; summary').click()
+        for document in RYU_INITIAL+RYU_HOUSING+RYU_ARRIVAL:
+            item=page.locator('.application-requirement-item').filter(has=page.locator(':scope &gt; div &gt; strong').filter(has_text=document))
+            expect(item).to_have_count(1);expect(item).to_be_visible()
+            expect(item).to_contain_text('116當期')
+            assert item.get_by_text('下載校方正式表格',exact=True).count()==0
+        page.locator('#ncu-host-admission').select_option('accepted')
+        page.locator('#ncu-housing-choice').select_option('on_campus')
+        expect(page.locator('#application-requirement-list [data-document-applicability="needs_confirmation"]')).to_have_count(14)
+        page.locator('#application-requirement-list').scroll_into_view_if_needed()
+        page.screenshot(path=str(out/f'ryukoku-{width}-corrected-catalog.png'),full_page=True)
+        page.evaluate("location.hash='#overview'")
+        expect(page.locator('#multi-plan-workspace')).to_be_visible()
+        page.locator('#multi-plan-settings &gt; summary').click()
+        page.locator('#multi-plan-preferences select').nth(0).select_option(name)
+        page.locator('#multi-plan-preferences button').click()
+        expect(page.locator('#multi-plan-status')).to_contain_text('1 個志願')
+        branch=page.locator('.multi-plan-branch').filter(has=page.locator(':scope &gt; summary').filter(has_text='Ryukoku University'))
+        branch.locator(':scope &gt; summary').click()
+        saved_ids=[]
+        stages=[('龍谷初次申請與十項參考文件',RYU_INITIAL,10),('龍谷等候交換宿舍另送申請資訊',RYU_HOUSING,2),('龍谷到校新生說明會、NHI與銀行扣款',RYU_ARRIVAL,2)]
+        for title,documents,count in stages:
+            task=branch.locator('.multi-plan-task').filter(has=page.locator(':scope &gt; label strong').filter(has_text=title))
+&gt;           expect(task).to_have_count(1)
+E           AssertionError: Locator expected to have count '1'
+E           Actual value: 0 
+E           Call log:
+E             - Expect "to_have_count" with timeout 5000ms
+E             - waiting for locator(".multi-plan-branch").filter(has=locator(":scope &gt; summary").filter(has_text="Ryukoku University")).locator(".multi-plan-task").filter(has=locator(":scope &gt; label strong").filter(has_text="龍谷到校新生說明會、NHI與銀行扣款"))
+E               13 × locator resolved to 0 elements
+E                  - unexpected value "0"
+
+tests/e2e/test_ncu_nufs_kumamoto_ryukoku.py:137: AssertionError</failure></testcase></testsuite></testsuites>

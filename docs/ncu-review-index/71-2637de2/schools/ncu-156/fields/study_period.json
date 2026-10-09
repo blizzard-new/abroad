@@ -1,0 +1,50 @@
+{
+  "key": "study_period",
+  "label": "交換期間／校曆",
+  "status": "needs_confirmation",
+  "note": "官網AY2027秋季迎新2027/8/31、課程9/1–12/21，冬假12/22–2028/2/29；春季2027迎新2/26、課程3/2–6/18，不能用於116之Spring2028。 校曆內文稱截至2026/8/31、日期subject to change，但表格說明殘留2025；舊Drive影像版明載2023日期，版本差異保留。",
+  "source_urls": [
+    "https://eng.uos.ac.kr/oia/web/contents/OIA_Studyat_01_01",
+    "https://drive.google.com/file/d/1YTU2HTNgu80it9DHNHy-2OVZSFu7tEqd/view"
+  ],
+  "original_evidence": [
+    {
+      "text_method": "original_extraction",
+      "source_url": "https://eng.uos.ac.kr/oia/web/contents/OIA_Studyat_01_01",
+      "source_id": "host-uos-calendar",
+      "page": null,
+      "source_title": "UOS 精確校曆與學期",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "study_period",
+        "evidence_array_index": 0,
+        "text_sha256": "00ab2f550381b206223b65b23d20b642078632d4d482b61e0683b1741a5727c1",
+        "char_count": 839
+      }
+    },
+    {
+      "text_method": "human_visual_selected_passages",
+      "source_url": "https://drive.google.com/file/d/1YTU2HTNgu80it9DHNHy-2OVZSFu7tEqd/view",
+      "source_id": "1YTU2HTNgu80it9DHNHy-2OVZSFu7tEqd",
+      "page": 3,
+      "source_title": "UOS Partner Information_Web.pdf PDF",
+      "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。",
+      "checked_at": "2026-10-08",
+      "original_text_locator": {
+        "path": "src/exchange_info/official_data/ncu/field-audit.json",
+        "audit_array_index": 154,
+        "field": "study_period",
+        "evidence_array_index": 1,
+        "text_sha256": "17e19d2bf1f0a4d3c864ba79b0b3a6665b28f397022c7724999e9d4226a026c0",
+        "char_count": 501
+      }
+    }
+  ],
+  "unresolved": "Spring2028正式校曆與實際入住日待確認。",
+  "reference_status": "reviewed_partial_reference",
+  "current_applicability_status": "unconfirmed",
+  "applicability": "UOS官網AY2027校曆（2026/8/31狀態）、2026Fall課單、未標年新版Partner Information及2025房價；中央Drive舊版明列2023。全部另核對中央116提名與Spring2028，非整筆當期核准。"
+}
