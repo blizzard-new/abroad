@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/full-suite-browser-path-error/suite.xml",
+  "original_xml_sha256": "7fee2f5ccecee25fbae0d5daed9d100a84a8354371bdfc73b773779e9acb08a8",
+  "case_attributes": {
+    "classname": "tests.test_experience_collector",
+    "name": "test_destination_profile_api_returns_verified_official_summary",
+    "time": "3.728"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: assert '林肯, 坎特伯里' == 'Lincoln, Canterbury'\n  \n  - Lincoln, Canterbury\n  + 林肯, 坎特伯里"
+  },
+  "full_text": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-148/test_destination_profile_api_r0')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f76acaaec00>\n\n    def test_destination_profile_api_returns_verified_official_summary(tmp_path, monkeypatch) -> None:\n        ensure_data_dirs(tmp_path)\n        partner = _partner()\n        save_destination_profiles(\n            [\n                DestinationProfile(\n                    school_name=partner.school_name,\n                    country=partner.country,\n                    city=\"Lincoln, Canterbury\",\n                    cost_summary=\"自炊宿舍 NZ$245-320／週\",\n                    coverage_status=\"official_verified\",\n                )\n            ],\n            tmp_path,\n        )\n        monkeypatch.setattr(\"exchange_info.api.fetch_partner_universities\", lambda: [partner])\n        client = TestClient(create_app(tmp_path))\n    \n        response = client.get(\n            \"/destination-profile\", params={\"school\": partner.school_name}\n        )\n        list_response = client.get(\"/destination-profiles\")\n        coverage = client.get(\"/coverage\").json()\n    \n        assert response.status_code == 200\n>       assert response.json()[\"city\"] == \"Lincoln, Canterbury\"\nE       AssertionError: assert '林肯, 坎特伯里' == 'Lincoln, Canterbury'\nE         \nE         - Lincoln, Canterbury\nE         + 林肯, 坎特伯里\n\ntests/test_experience_collector.py:1467: AssertionError"
+}

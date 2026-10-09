@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/full-suite-browser-path-error/suite.xml",
+  "original_xml_sha256": "7fee2f5ccecee25fbae0d5daed9d100a84a8354371bdfc73b773779e9acb08a8",
+  "case_attributes": {
+    "classname": "tests.test_experience_collector",
+    "name": "test_experience_api_reads_cache_and_refreshes_selected_school",
+    "time": "0.127"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert 3 == 1"
+  },
+  "full_text": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-148/test_experience_api_reads_cach0')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f76ad0ad550>\n\n    def test_experience_api_reads_cache_and_refreshes_selected_school(tmp_path, monkeypatch) -> None:\n        ensure_data_dirs(tmp_path)\n        partner = _partner()\n        cached = _source()\n        replace_school_experiences(partner.school_name, [cached], tmp_path)\n        monkeypatch.setattr(\"exchange_info.api.fetch_partner_universities\", lambda: [partner])\n        refreshed = _source(source_url=\"https://example.com/refreshed\")\n        monkeypatch.setattr(\n            \"exchange_info.api.collect_student_experiences\",\n            lambda partner, max_sources=12: [refreshed],\n        )\n        client = TestClient(create_app(tmp_path))\n    \n        cached_response = client.get(\n            \"/student-experiences\", params={\"school\": partner.school_name}\n        )\n        assert cached_response.status_code == 200\n>       assert cached_response.json()[\"total_sources\"] == 1\nE       assert 3 == 1\n\ntests/test_experience_collector.py:1399: AssertionError"
+}

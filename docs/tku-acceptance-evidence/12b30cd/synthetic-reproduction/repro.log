@@ -1,0 +1,57 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_reader_expiry_clears_school_body_and_private_draft ____________
+
+page = <Page url='about:blank'>
+live_server = LiveServer(base_url='http://127.0.0.1:44195', data_dir=PosixPath('/tmp/pytest-of-agent/pytest-143/web-e2e-data0'))
+
+    def test_reader_expiry_clears_school_body_and_private_draft(page, live_server):
+        marker='合成校板私人正文'+uuid4().hex[:8]
+        post=CommunityPost(board_id='tku',board_kind='university_exchange',school_name='淡江大學',author_id='synthetic-owner',display_name='匿名學生',title=marker,body=marker+'，僅供隔離驗證。')
+        append_community_post(post,live_server.data_dir)
+        append_community_post_comment(CommunityPostComment(post_id=post.id,author_id='synthetic-commenter',display_name='匿名學生',body='合成校板回覆，僅供隔離驗證。'),live_server.data_dir)
+>       email='reader-expiry-'+uuid4().hex[:8]+'@example.com';live_server.register(email)
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+/tmp/tku-ci-reader-repro/test_reader_expiry.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/e2e/conftest.py:43: in register
+    dispatched.raise_for_status()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Response [403]>
+
+    def raise_for_status(self) -> None:
+        """Raises :class:`HTTPError`, if one occurred."""
+    
+        http_error_msg = ""
+        if isinstance(self.reason, bytes):
+            # We attempt to decode utf-8 first because some servers
+            # choose to localize their reason strings. If the string
+            # isn't utf-8, we fall back to iso-8859-1 for all other
+            # encodings. (See PR #3538)
+            try:
+                reason = self.reason.decode("utf-8")
+            except UnicodeDecodeError:
+                reason = self.reason.decode("iso-8859-1")
+        else:
+            reason = self.reason
+    
+        if 400 <= self.status_code < 500:
+            http_error_msg = (
+                f"{self.status_code} Client Error: {reason} for url: {self.url}"
+            )
+    
+        elif 500 <= self.status_code < 600:
+            http_error_msg = (
+                f"{self.status_code} Server Error: {reason} for url: {self.url}"
+            )
+    
+        if http_error_msg:
+>           raise HTTPError(http_error_msg, response=self)
+E           requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: http://127.0.0.1:44195/auth/email-verification/request
+
+../abroad-tku/.venv/lib/python3.12/site-packages/requests/models.py:1167: HTTPError
+=========================== short test summary info ============================
+FAILED ../../tmp/tku-ci-reader-repro/test_reader_expiry.py::test_reader_expiry_clears_school_body_and_private_draft
+1 failed in 3.37s

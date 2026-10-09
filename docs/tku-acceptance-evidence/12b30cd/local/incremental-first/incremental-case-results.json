@@ -1,0 +1,297 @@
+[
+  {
+    "id": "tests.test_tku_community_boundaries::test_school_board_reads_and_writes_require_verified_email_across_all_views[cgu]",
+    "status": "passed",
+    "seconds": "0.350"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_school_board_reads_and_writes_require_verified_email_across_all_views[ntpu]",
+    "status": "passed",
+    "seconds": "0.235"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_school_board_reads_and_writes_require_verified_email_across_all_views[ntu]",
+    "status": "passed",
+    "seconds": "0.254"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_school_board_reads_and_writes_require_verified_email_across_all_views[tku]",
+    "status": "passed",
+    "seconds": "0.238"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_self_declared_school_never_enables_verified_student_bylines",
+    "status": "passed",
+    "seconds": "0.313"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_empty_legacy_board_rejected_and_valid_alias_preserved[university:-422]",
+    "status": "passed",
+    "seconds": "0.114"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_empty_legacy_board_rejected_and_valid_alias_preserved[university:   -422]",
+    "status": "passed",
+    "seconds": "0.128"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_empty_legacy_board_rejected_and_valid_alias_preserved[university:cgu-201]",
+    "status": "passed",
+    "seconds": "0.136"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_verified_alias_byline_preview_matches_publication[verified_school-CGU]",
+    "status": "passed",
+    "seconds": "0.146"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_verified_alias_byline_preview_matches_publication[verified_school-\\uff23\\uff0e\\uff27\\uff0e\\uff35]",
+    "status": "passed",
+    "seconds": "0.364"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_verified_alias_byline_preview_matches_publication[verified_department-CGU]",
+    "status": "passed",
+    "seconds": "0.146"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_verified_alias_byline_preview_matches_publication[verified_department-\\uff23\\uff0e\\uff27\\uff0e\\uff35]",
+    "status": "passed",
+    "seconds": "0.150"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_empty_or_unknown_verified_school_never_defaults_to_cgu_byline[   ]",
+    "status": "passed",
+    "seconds": "0.130"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_empty_or_unknown_verified_school_never_defaults_to_cgu_byline[unsupported-school]",
+    "status": "passed",
+    "seconds": "0.138"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_byline_preview_matches_stored_post_and_comment[anonymous]",
+    "status": "passed",
+    "seconds": "0.185"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_byline_preview_matches_stored_post_and_comment[real_name]",
+    "status": "passed",
+    "seconds": "0.478"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_byline_preview_matches_stored_post_and_comment[verified_school]",
+    "status": "passed",
+    "seconds": "0.155"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_byline_preview_matches_stored_post_and_comment[verified_department]",
+    "status": "passed",
+    "seconds": "0.157"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_private_mutations_replay_without_duplicate_resources_and_reject_foreign_actor",
+    "status": "passed",
+    "seconds": "0.261"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_failed_initial_message_rolls_back_invitation_and_retry_is_safe",
+    "status": "passed",
+    "seconds": "0.167"
+  },
+  {
+    "id": "tests.test_tku_community_boundaries::test_tku_runtime_keeps_all_base_checks_and_mandatory_cleanup",
+    "status": "passed",
+    "seconds": "0.008"
+  },
+  {
+    "id": "tests.test_supabase_migration_syntax::test_all_supabase_migrations_parse_including_nested_function_bodies",
+    "status": "passed",
+    "seconds": "0.120"
+  },
+  {
+    "id": "tests.test_supabase_migration_syntax::test_nested_plpgsql_syntax_error_is_rejected",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_requirements_traceability::test_product_spec_sections_6_through_19_have_owned_evidence_rows",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_requirements_traceability::test_traceability_preserves_local_ai_scope_and_web_first_app_gate",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_requirements_traceability::test_quality_workflow_runs_isolated_web_checks_and_contract_guard",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.e2e.test_tku_session_boundaries::test_expired_school_reader_closes_and_discards_drafts_and_late_responses[none]",
+    "status": "passed",
+    "seconds": "20.106"
+  },
+  {
+    "id": "tests.e2e.test_tku_session_boundaries::test_expired_school_reader_closes_and_discards_drafts_and_late_responses[comments]",
+    "status": "passed",
+    "seconds": "11.527"
+  },
+  {
+    "id": "tests.e2e.test_tku_session_boundaries::test_expired_school_reader_closes_and_discards_drafts_and_late_responses[detail]",
+    "status": "passed",
+    "seconds": "11.868"
+  },
+  {
+    "id": "tests.e2e.test_discussion_reader::test_lazy_reader_permalink_saved_and_back_restore",
+    "status": "passed",
+    "seconds": "7.834"
+  },
+  {
+    "id": "tests.e2e.test_discussion_reader::test_quote_draft_and_cookie_reply",
+    "status": "passed",
+    "seconds": "10.504"
+  },
+  {
+    "id": "tests.e2e.test_discussion_reader::test_mobile_reader_keyboard_exit_and_comment_failure_isolated",
+    "status": "passed",
+    "seconds": "3.645"
+  },
+  {
+    "id": "tests.e2e.test_discussion_reader::test_guest_can_enter_login_from_modal_and_resume_article",
+    "status": "passed",
+    "seconds": "9.511"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[committed-204-False]",
+    "status": "passed",
+    "seconds": "0.142"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[committed-204-True]",
+    "status": "passed",
+    "seconds": "0.134"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[integrity_conflict-503-False]",
+    "status": "passed",
+    "seconds": "0.126"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[integrity_conflict-503-True]",
+    "status": "passed",
+    "seconds": "0.131"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[False]",
+    "status": "passed",
+    "seconds": "0.194"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[True]",
+    "status": "passed",
+    "seconds": "0.167"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_failed_cleanup_retains_account_and_can_be_retried[False]",
+    "status": "passed",
+    "seconds": "0.149"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_failed_cleanup_retains_account_and_can_be_retried[True]",
+    "status": "passed",
+    "seconds": "0.131"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_sensitive_id_is_rejected_before_storage_and_publication[post-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1aA12345678]",
+    "status": "passed",
+    "seconds": "0.111"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_sensitive_id_is_rejected_before_storage_and_publication[post-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1a\\uff21\\uff11\\uff12\\uff13\\uff14\\uff15\\uff16\\uff17\\uff18]",
+    "status": "passed",
+    "seconds": "0.995"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_sensitive_id_is_rejected_before_storage_and_publication[post-\\u5408\\u6210\\u8eab\\u5206\\u8b49\\u5b57\\u865f\\uff1aA123456789]",
+    "status": "passed",
+    "seconds": "0.157"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_sensitive_id_is_rejected_before_storage_and_publication[post-Synthetic passport number: 123456789]",
+    "status": "passed",
+    "seconds": "0.153"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_sensitive_id_is_rejected_before_storage_and_publication[post-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc A12345678\\u8acb\\u4e0d\\u8981\\u516c\\u958b]",
+    "status": "passed",
+    "seconds": "0.152"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1aA12345678]",
+    "status": "passed",
+    "seconds": "0.175"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1a\\uff21\\uff11\\uff12\\uff13\\uff14\\uff15\\uff16\\uff17\\uff18]",
+    "status": "passed",
+    "seconds": "0.144"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8eab\\u5206\\u8b49\\u5b57\\u865f\\uff1aA123456789]",
+    "status": "passed",
+    "seconds": "0.158"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_sensitive_id_is_rejected_before_storage_and_publication[comment-Synthetic passport number: 123456789]",
+    "status": "passed",
+    "seconds": "0.157"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc A12345678\\u8acb\\u4e0d\\u8981\\u516c\\u958b]",
+    "status": "passed",
+    "seconds": "0.148"
+  },
+  {
+    "id": "tests.test_tku_privacy_regressions::test_id_instructions_and_course_numbers_are_not_blocked",
+    "status": "passed",
+    "seconds": "0.164"
+  },
+  {
+    "id": "tests.e2e.test_web_next_phase::test_guest_can_save_device_selections_and_plan_actions_require_login",
+    "status": "error",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.e2e.test_web_next_phase::test_authenticated_plan_notifications_and_progress_sync_across_devices",
+    "status": "error",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.e2e.test_web_next_phase::test_workspace_conflict_preserves_remote_addition_and_local_removal",
+    "status": "error",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.e2e.test_web_next_phase::test_workspace_conflict_retry_keeps_remote_fields_during_new_ui_change",
+    "status": "error",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.e2e.test_web_next_phase::test_workspace_load_advances_base_before_put_conflict",
+    "status": "error",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.e2e.test_web_next_phase::test_expired_session_and_logout_clear_private_browser_state",
+    "status": "error",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.e2e.test_web_next_phase::test_permissions_sensitive_consent_and_account_deletion_are_fail_closed",
+    "status": "error",
+    "seconds": "0.067"
+  }
+]

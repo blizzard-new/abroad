@@ -1,0 +1,3127 @@
+CONFTEST LOADED!
+........................................................................ [  4%]
+........................................................................ [  9%]
+.......s....................................ss.......................... [ 14%]
+........................................................................ [ 18%]
+........................................................................ [ 23%]
+............................sss................s........................ [ 28%]
+........................................................................ [ 32%]
+........................................................................ [ 37%]
+........................................................................ [ 42%]
+.F.F.................................................................... [ 46%]
+............F............................F.F......F.......F.FFF......... [ 51%]
+..................FF.................................................... [ 56%]
+...................................................................FFFF. [ 60%]
+........................................................................ [ 65%]
+................................s....................................... [ 70%]
+........................................................................ [ 75%]
+.............................F.......................................... [ 79%]
+........................................................................ [ 84%]
+........................................................................ [ 89%]
+........................................................................ [ 93%]
+.........................................EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE [ 98%]
+EEEEEEEEEEEEEEEEEEEEEEE                                                  [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_tku_jlpt_comparison_persistence_and_closed_cycle[390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_tku_jlpt_comparison_persistence_and_closed_cycle[1280] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[1280] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_tku_list_filters_favorites_comparison_and_reload[390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_tku_list_filters_favorites_comparison_and_reload[1280] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_tku_conditions_directory_native_years_and_no_false_open_plan[390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_tku_conditions_directory_native_years_and_no_false_open_plan[1280] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_tku_documents_stages_conditions_official_sources_and_target_persistence[390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_tku_documents_stages_conditions_official_sources_and_target_persistence[1280] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-1280] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-1280] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_visitor_can_browse_ntu_filter_details_and_switch_back[390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_visitor_can_browse_ntu_filter_details_and_switch_back[1440] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u9577\u5e9a\u5927\u5b78] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u570b\u7acb\u81fa\u5317\u5927\u5b78] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_ntu_document_language_conditions_change_in_real_form[390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_ntu_document_language_conditions_change_in_real_form[1440] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_workspace_navigation_preserves_draft_target_and_old_routes[390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_workspace_navigation_preserves_draft_target_and_old_routes[1754] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_saved_conditions_keep_application_period_when_refreshing_recommendations[390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_saved_conditions_keep_application_period_when_refreshing_recommendations[1754] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+____ ERROR at setup of test_matching_actions_are_readable_and_aligned[390] _____
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+____ ERROR at setup of test_matching_actions_are_readable_and_aligned[1754] ____
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+___ ERROR at setup of test_calendar_appears_first_and_tools_still_work[390] ____
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+___ ERROR at setup of test_calendar_appears_first_and_tools_still_work[1754] ___
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_department_follows_college_and_saved_profile[\u570b\u7acb\u81fa\u5317\u5927\u5b78-\u6cd5\u5f8b\u5b78\u9662-\u6cd5\u5f8b\u5b78\u7cfb-\u5546\u5b78\u9662] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_department_follows_college_and_saved_profile[\u9577\u5e9a\u5927\u5b78-\u5de5\u5b78\u9662-\u8cc7\u8a0a\u5de5\u7a0b\u5b78\u7cfb-\u91ab\u5b78\u9662] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+___ ERROR at setup of test_calendar_preparation_and_completion_through_tools ___
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+____ ERROR at setup of test_sourced_rounds_retry_and_keep_unsent_draft[390] ____
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+___ ERROR at setup of test_sourced_rounds_retry_and_keep_unsent_draft[1754] ____
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_new_condition_fields_round_trip_through_the_saved_conditions_payload _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+__ ERROR at setup of test_fit_details_state_reasons_and_never_say_affordable ___
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+______ ERROR at setup of test_school_page_lists_what_data_is_missing[390] ______
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_____ ERROR at setup of test_school_page_lists_what_data_is_missing[1754] ______
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_matching_target_schedule_preview_and_idempotent_save[390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_matching_target_schedule_preview_and_idempotent_save[1754] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_schedule_refuses_unconfirmed_or_unusable_dates[expired] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_schedule_refuses_unconfirmed_or_unusable_dates[unverified] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_year] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_schedule_refuses_unconfirmed_or_unusable_dates[missing_source] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_round] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_schedule_refuses_unconfirmed_or_unusable_dates[unpublished] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_print_packet_remains_blocked_until_current_content_review[390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_print_packet_remains_blocked_until_current_content_review[1754] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u9577\u5e9a\u5927\u5b78] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u6de1\u6c5f\u5927\u5b78] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_guest_draft_is_discarded_when_sign_in_changes_mother_school _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_original_source_facts_are_available_without_hiding_current_cost_limits[390] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_ ERROR at setup of test_original_source_facts_are_available_without_hiding_current_cost_limits[1280] _
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+_____ ERROR at setup of test_application_form_sync_review_and_pdf_download _____
+
+playwright_runtime = <playwright._impl._playwright.Playwright object at 0x7f769b150ec0>
+
+    @pytest.fixture(scope="session")
+    def browser(playwright_runtime: Playwright) -> Browser:
+>       instance = playwright_runtime.chromium.launch(headless=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/e2e/conftest.py:466: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:16702: in launch
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:97: in launch
+    await self._channel.send(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f769b153260>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f76a4c9fec0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        parsed_st = _attach_api_call_information(
+            getattr(task, "__pw_stack__", None) or _capture_stack_trace(),
+            is_internal,
+            title,
+        )
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.Error: BrowserType.launch: Executable doesn't exist at /home/agent/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell
+E           ╔════════════════════════════════════════════════════════════╗
+E           ║ Looks like Playwright was just installed or updated.       ║
+E           ║ Please run the following command to download new browsers: ║
+E           ║                                                            ║
+E           ║     playwright install                                     ║
+E           ║                                                            ║
+E           ║ <3 Playwright Team                                         ║
+E           ╚════════════════════════════════════════════════════════════╝
+
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: Error
+=================================== FAILURES ===================================
+________ test_experience_api_reads_cache_and_refreshes_selected_school _________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-148/test_experience_api_reads_cach0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f76ad0ad550>
+
+    def test_experience_api_reads_cache_and_refreshes_selected_school(tmp_path, monkeypatch) -> None:
+        ensure_data_dirs(tmp_path)
+        partner = _partner()
+        cached = _source()
+        replace_school_experiences(partner.school_name, [cached], tmp_path)
+        monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+        refreshed = _source(source_url="https://example.com/refreshed")
+        monkeypatch.setattr(
+            "exchange_info.api.collect_student_experiences",
+            lambda partner, max_sources=12: [refreshed],
+        )
+        client = TestClient(create_app(tmp_path))
+    
+        cached_response = client.get(
+            "/student-experiences", params={"school": partner.school_name}
+        )
+        assert cached_response.status_code == 200
+>       assert cached_response.json()["total_sources"] == 1
+E       assert 3 == 1
+
+tests/test_experience_collector.py:1399: AssertionError
+________ test_destination_profile_api_returns_verified_official_summary ________
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-148/test_destination_profile_api_r0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f76acaaec00>
+
+    def test_destination_profile_api_returns_verified_official_summary(tmp_path, monkeypatch) -> None:
+        ensure_data_dirs(tmp_path)
+        partner = _partner()
+        save_destination_profiles(
+            [
+                DestinationProfile(
+                    school_name=partner.school_name,
+                    country=partner.country,
+                    city="Lincoln, Canterbury",
+                    cost_summary="自炊宿舍 NZ$245-320／週",
+                    coverage_status="official_verified",
+                )
+            ],
+            tmp_path,
+        )
+        monkeypatch.setattr("exchange_info.api.fetch_partner_universities", lambda: [partner])
+        client = TestClient(create_app(tmp_path))
+    
+        response = client.get(
+            "/destination-profile", params={"school": partner.school_name}
+        )
+        list_response = client.get("/destination-profiles")
+        coverage = client.get("/coverage").json()
+    
+        assert response.status_code == 200
+>       assert response.json()["city"] == "Lincoln, Canterbury"
+E       AssertionError: assert '林肯, 坎特伯里' == 'Lincoln, Canterbury'
+E         
+E         - Lincoln, Canterbury
+E         + 林肯, 坎特伯里
+
+tests/test_experience_collector.py:1467: AssertionError
+___________ test_web_routes_states_and_touch_targets_are_consistent ____________
+
+    def test_web_routes_states_and_touch_targets_are_consistent() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert '<span>資格與志願</span>' in html
+        assert 'eligibility: "資格與志願"' in script
+        assert "function focusRouteHeading(selector)" in script
+        assert 'focusRouteHeading("#community-hub-title")' in script
+        assert '? PUBLIC_COMMUNITY_BOARD' in script
+        assert '? "我的追蹤"' in script
+        assert "跨校討論交換申請、簽證、住宿與海外生活。" in script
+        assert 'role="${isError ? "alert" : "status"}"' in script
+>       assert "renderCommunityEmpty(\"社群暫時無法載入\", error.message, \"error\")" in script
+E       assert 'renderCommunityEmpty("社群暫時無法載入", error.message, "error")' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:502: AssertionError
+_ test_community_identity_preview_matches_public_name_and_resets_per_submission _
+
+    def test_community_identity_preview_matches_public_name_and_resets_per_submission() -> None:
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+        assert "這次公開顯示：" in script
+        assert "（每次送出可重新選擇）" in script
+        assert 'aria-live="polite"' in script
+        assert "function resetCommunityIdentityPreviews(container)" in script
+        assert "resetCommunityIdentityPreviews(form);" in script
+        assert "post.viewer_can_delete" in script
+        assert "comment.viewer_can_delete" in script
+>       assert "fetchCommunityAuth(url)" in script
+E       assert 'fetchCommunityAuth(url)' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1002: AssertionError
+______ test_web_notification_center_and_explicit_email_opt_in_are_present ______
+
+    def test_web_notification_center_and_explicit_email_opt_in_are_present() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert 'id="notification-button"' in html
+        assert 'id="notification-dialog"' in html
+        assert 'id="notification-center-list"' in html
+        assert 'name="email_notifications"' in html
+        assert "只有勾選並儲存後才排入寄送" in html
+        assert 'fetchJson("/account/notifications?limit=50")' in script
+        assert 'fetchJson("/account/notifications/read-all"' in script
+        assert 'values.get("email_notifications") === "on"' in script
+        assert "紙本送件以送達日計算" in html
+        assert "官方規定更新" in script
+>       assert "重新核對申請清單" in script
+E       assert '重新核對申請清單' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1054: AssertionError
+_ test_application_center_separates_official_requirements_from_preparation_tools _
+
+    def test_application_center_separates_official_requirements_from_preparation_tools() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert 'id="application-requirement-list"' in html
+        assert "當期文件與官方表格" in html
+        assert "可填寫的準備工具" in html
+        assert "不代表當期校方必備文件" in html
+        assert "沒有確認的份數或表格不會被當成正式版本" in html
+        assert "/application-center/catalog" in script
+        assert "renderApplicationDocumentCatalog" in script
+        assert "下載校方正式表格" in script
+        assert "查看官方規定" in script
+        assert "份數待確認" in script
+>       assert "不會用其他年度或其他學校的文件代替" in script
+E       assert '不會用其他年度或其他學校的文件代替' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1296: AssertionError
+______ test_successful_login_closes_before_noncritical_account_hydration _______
+
+    def test_successful_login_closes_before_noncritical_account_hydration() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        accept_block = script.split("async function acceptAccountSession(session)", 1)[1].split(
+            "async function restoreAccount", 1
+        )[0]
+        submit_block = script.split("async function submitAccountForm(form, endpoint)", 1)[1].split(
+            "async function saveAccountProfile", 1
+        )[0]
+    
+>       assert "app.js?v=20260929-chinese-1" in html
+E       assert 'app.js?v=20260929-chinese-1' in '<!doctype html>\n<html lang="zh-Hant" data-theme="light">\n  <head>\n    <meta charset="utf-8" />\n    <meta name="vi...defer></script>\n    <script src="/static/app.js?v=20261009-tku-reader-expiry-1" defer></script>\n  </body>\n</html>\n'
+
+tests/test_frontend_contract.py:1659: AssertionError
+___ test_personal_application_plan_uses_structured_api_and_progressive_login ___
+
+    def test_personal_application_plan_uses_structured_api_and_progressive_login() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        for element_id in (
+            "eligibility-department",
+            "eligibility-academic-year",
+            "eligibility-application-round",
+            "eligibility-preference-1",
+            "eligibility-preference-2",
+            "eligibility-preference-3",
+        ):
+>           assert f'id="{element_id}"' in html
+E           assert 'id="eligibility-department"' in '<!doctype html>\n<html lang="zh-Hant" data-theme="light">\n  <head>\n    <meta charset="utf-8" />\n    <meta name="vi...defer></script>\n    <script src="/static/app.js?v=20261009-tku-reader-expiry-1" defer></script>\n  </body>\n</html>\n'
+
+tests/test_frontend_contract.py:1701: AssertionError
+___________ test_global_home_board_routing_and_following_are_present ___________
+
+    def test_global_home_board_routing_and_following_are_present() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+        assert 'href="#home"' in html
+        assert 'href="#following"' in html
+        assert 'href="#language-school-board"' in html
+        assert 'href="#board=長庚大學"' in html
+        assert 'data-follow-board="長庚大學"' in html
+        assert '<span>發布看板</span>' in html
+        assert '<select id="global-community-school" name="board_id"' in html
+        assert 'id="global-community-compose" type="button" class="primary-button" aria-label="發一篇文章"' in html
+        assert '<option value="public-study-abroad">公共留學板</option>' in html
+        assert '<option value="language-school">語言學校板</option>' in html
+        assert 'fetchJson("/community/boards")' in script
+        assert '"#language-school-board": "language"' in script
+        assert 'const LANGUAGE_SCHOOL_COMMUNITY_BOARD = "語言學校板"' in script
+        assert "function activeCommunityBoardAccess()" in script
+        assert "activeBoard && !activeBoard.can_post" in script
+        assert "activeBoard.unavailable_reason" in script
+>       assert "查看學生身分驗證" in script
+E       assert '查看學生身分驗證' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_frontend_contract.py:1734: AssertionError
+_ test_departmental_partner_references_are_visible_but_blocked_from_formal_plans _
+
+    def test_departmental_partner_references_are_visible_but_blocked_from_formal_plans() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+        styles = (STATIC_DIR / "product-v2.css").read_text(encoding="utf-8")
+    
+        assert '<option value="departmental_reference">院級參考／當期需確認</option>' in html
+>       assert "暫不可建立正式申請計畫" in html
+E       assert '暫不可建立正式申請計畫' in '<!doctype html>\n<html lang="zh-Hant" data-theme="light">\n  <head>\n    <meta charset="utf-8" />\n    <meta name="vi...defer></script>\n    <script src="/static/app.js?v=20261009-tku-reader-expiry-1" defer></script>\n  </body>\n</html>\n'
+
+tests/test_frontend_contract.py:1750: AssertionError
+________ test_hash_router_shows_one_feature_page_without_scroll_spying _________
+
+    def test_hash_router_shows_one_feature_page_without_scroll_spying() -> None:
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+        assert "const UNIVERSITY_PAGE_ROUTES" in script
+        assert "function showUniversityPage" in script
+        assert 'document.querySelectorAll("[data-university-page]")' in script
+        assert "node.hidden = !activePage" in script
+        assert "document.body.dataset.activeUniversityPage" in script
+        assert "document.body.dataset.universityPage" not in script
+        assert 'window.location.hash = "#partners"' in script
+>       assert 'window.location.hash = "#search"' in script
+E       assert 'window.location.hash = "#search"' in 'const state = {\n  dashboard: null,\n  query: "",\n  partnerQuery: "",\n  partnerView: "list",\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\nboot().finally(() => window.UniWaySplash?.done());\n'
+
+tests/test_independent_page_routing.py:41: AssertionError
+_________________ test_route_assets_are_cache_busted_together __________________
+
+    def test_route_assets_are_cache_busted_together() -> None:
+        html = (STATIC_DIR / "index.html").read_text(encoding="utf-8")
+        script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    
+>       assert "styles.css?v=20260729-b306-progress-2" in html
+E       assert 'styles.css?v=20260729-b306-progress-2' in '<!doctype html>\n<html lang="zh-Hant" data-theme="light">\n  <head>\n    <meta charset="utf-8" />\n    <meta name="vi...defer></script>\n    <script src="/static/app.js?v=20261009-tku-reader-expiry-1" defer></script>\n  </body>\n</html>\n'
+
+tests/test_independent_page_routing.py:49: AssertionError
+_____ test_content_review_contract_exposes_nonpublishing_source_candidates _____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-148/test_content_review_contract_e0')
+
+    def test_content_review_contract_exposes_nonpublishing_source_candidates(tmp_path) -> None:
+        client = TestClient(create_app(tmp_path))
+        openapi = client.get("/openapi.json").json()
+        candidate_path = (
+            "/admin/application-workflow-source-replacement-candidates"
+        )
+        candidate_export_path = (
+            "/admin/application-workflow-source-replacement-review-queue.csv"
+        )
+        source_evidence_export_path = (
+            "/admin/application-workflow-review-backlog/source-evidence.csv"
+        )
+>       candidate = openapi["components"]["schemas"][
+            "ApplicationWorkflowSourceReplacementCandidate"
+        ]["properties"]
+E       KeyError: 'ApplicationWorkflowSourceReplacementCandidate'
+
+tests/test_next_phase_contract.py:316: KeyError
+____ test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing ____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-148/test_workflow_batch_stage_cont0')
+
+    def test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing(
+        tmp_path,
+    ) -> None:
+        client = TestClient(create_app(tmp_path))
+        openapi = client.get("/openapi.json").json()
+        path = "/admin/application-workflow-review-batches/{batch_id}/stage"
+        schemas = openapi["components"]["schemas"]
+    
+>       assert "post" in openapi["paths"][path]
+                         ^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: '/admin/application-workflow-review-batches/{batch_id}/stage'
+
+tests/test_next_phase_contract.py:390: KeyError
+_ test_destination_profile_review_contract_requires_explicit_audited_promotion _
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-148/test_destination_profile_revie0')
+
+    def test_destination_profile_review_contract_requires_explicit_audited_promotion(
+        tmp_path,
+    ) -> None:
+        client = TestClient(create_app(tmp_path))
+        openapi = client.get("/openapi.json").json()
+        paths = openapi["paths"]
+        schemas = openapi["components"]["schemas"]
+    
+>       assert "get" in paths["/admin/destination-profile-review-queue"]
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: '/admin/destination-profile-review-queue'
+
+tests/test_next_phase_contract.py:417: KeyError
+_____ test_application_workflow_publication_contract_exposes_safe_rollback _____
+
+tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-148/test_application_workflow_publ0')
+
+    def test_application_workflow_publication_contract_exposes_safe_rollback(tmp_path) -> None:
+        client = TestClient(create_app(tmp_path))
+        openapi = client.get("/openapi.json").json()
+        paths = openapi["paths"]
+        schemas = openapi["components"]["schemas"]
+    
+>       assert "get" in paths["/admin/application-workflow-publications"]
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: '/admin/application-workflow-publications'
+
+tests/test_next_phase_contract.py:544: KeyError
+_______ test_every_search_string_is_in_the_latest_source_of_its_function _______
+
+    def test_every_search_string_is_in_the_latest_source_of_its_function() -> None:
+        searches = re.findall(r"v_old := \$p\$(.*?)\$p\$;", _sql(), re.DOTALL)
+        assert len(searches) == sum(count for _, count in PATCHED)
+        cursor = 0
+        for function, count in PATCHED:
+            source = _latest_source(function)
+            for search in searches[cursor:cursor + count]:
+>               assert search in source, f"{function}: the migration looks for text that is not there:\n{search}"
+E               AssertionError: exchange_community_display_name: the migration looks for text that is not there:
+E                   v_school text := nullif(btrim(p_profile ->> 'verified_university'), '');
+E               assert "  v_school text := nullif(btrim(p_profile ->> 'verified_university'), '');" in "-- Match the existing Python registry alias key (NFKC, case folding, punctuation removal).\n-- Only server-verified s...rtment is not null then\n    return v_school || ' ' || v_department || '學生';\n  end if;\n\n  return null;\nend;\n$$;\n"
+
+tests/test_school_choice_migration.py:42: AssertionError
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_application_plan_api.py: Phase C data reviewed
+SKIPPED [2] tests/test_application_workflow.py: Phase C data reviewed
+SKIPPED [4] tests/test_cgu_bundled_data.py: Phase C data reviewed
+SKIPPED [1] tests/test_ntu_school_board_migration.py:25: opt in to isolated Docker PostgreSQL
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_jlpt_comparison_persistence_and_closed_cycle[390]
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_jlpt_comparison_persistence_and_closed_cycle[1280]
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[390]
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_shared_home_query_follows_explicit_school_choice_and_navigation[1280]
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_list_filters_favorites_comparison_and_reload[390]
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_list_filters_favorites_comparison_and_reload[1280]
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_conditions_directory_native_years_and_no_false_open_plan[390]
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_conditions_directory_native_years_and_no_false_open_plan[1280]
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_documents_stages_conditions_official_sources_and_target_persistence[390]
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_documents_stages_conditions_official_sources_and_target_persistence[1280]
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-390]
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-autobiography-preparation-1280]
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-390]
+ERROR tests/e2e/test_tku_acceptance.py::test_tku_preparation_pdf_is_not_an_official_application_form[tku-study-plan-preparation-1280]
+ERROR tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[390]
+ERROR tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[1440]
+ERROR tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion
+ERROR tests/e2e/test_ntu_school.py::test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u9577\u5e9a\u5927\u5b78]
+ERROR tests/e2e/test_ntu_school.py::test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u570b\u7acb\u81fa\u5317\u5927\u5b78]
+ERROR tests/e2e/test_ntu_school.py::test_ntu_document_language_conditions_change_in_real_form[390]
+ERROR tests/e2e/test_ntu_school.py::test_ntu_document_language_conditions_change_in_real_form[1440]
+ERROR tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[390]
+ERROR tests/e2e/test_application_workspace.py::test_workspace_navigation_preserves_draft_target_and_old_routes[1754]
+ERROR tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[390]
+ERROR tests/e2e/test_application_workspace.py::test_saved_conditions_keep_application_period_when_refreshing_recommendations[1754]
+ERROR tests/e2e/test_application_ui_refinements.py::test_matching_actions_are_readable_and_aligned[390]
+ERROR tests/e2e/test_application_ui_refinements.py::test_matching_actions_are_readable_and_aligned[1754]
+ERROR tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[390]
+ERROR tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[1754]
+ERROR tests/e2e/test_application_ui_refinements.py::test_department_follows_college_and_saved_profile[\u570b\u7acb\u81fa\u5317\u5927\u5b78-\u6cd5\u5f8b\u5b78\u9662-\u6cd5\u5f8b\u5b78\u7cfb-\u5546\u5b78\u9662]
+ERROR tests/e2e/test_application_ui_refinements.py::test_department_follows_college_and_saved_profile[\u9577\u5e9a\u5927\u5b78-\u5de5\u5b78\u9662-\u8cc7\u8a0a\u5de5\u7a0b\u5b78\u7cfb-\u91ab\u5b78\u9662]
+ERROR tests/e2e/test_application_ui_refinements.py::test_calendar_preparation_and_completion_through_tools
+ERROR tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390]
+ERROR tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754]
+ERROR tests/e2e/test_fit_and_completeness_ui.py::test_new_condition_fields_round_trip_through_the_saved_conditions_payload
+ERROR tests/e2e/test_fit_and_completeness_ui.py::test_fit_details_state_reasons_and_never_say_affordable
+ERROR tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[390]
+ERROR tests/e2e/test_fit_and_completeness_ui.py::test_school_page_lists_what_data_is_missing[1754]
+ERROR tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[390]
+ERROR tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[1754]
+ERROR tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[expired]
+ERROR tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unverified]
+ERROR tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_year]
+ERROR tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[missing_source]
+ERROR tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_round]
+ERROR tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unpublished]
+ERROR tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[390]
+ERROR tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[1754]
+ERROR tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u9577\u5e9a\u5927\u5b78]
+ERROR tests/e2e/test_tku_draft_handoff.py::test_same_session_guest_draft_follows_sign_in_but_is_not_saved[\u6de1\u6c5f\u5927\u5b78]
+ERROR tests/e2e/test_tku_draft_handoff.py::test_guest_draft_is_discarded_when_sign_in_changes_mother_school
+ERROR tests/e2e/test_tku_source_rendering.py::test_original_source_facts_are_available_without_hiding_current_cost_limits[390]
+ERROR tests/e2e/test_tku_source_rendering.py::test_original_source_facts_are_available_without_hiding_current_cost_limits[1280]
+ERROR tests/e2e/test_web_next_phase.py::test_application_form_sync_review_and_pdf_download
+FAILED tests/test_experience_collector.py::test_experience_api_reads_cache_and_refreshes_selected_school
+FAILED tests/test_experience_collector.py::test_destination_profile_api_returns_verified_official_summary
+FAILED tests/test_frontend_contract.py::test_web_routes_states_and_touch_targets_are_consistent
+FAILED tests/test_frontend_contract.py::test_community_identity_preview_matches_public_name_and_resets_per_submission
+FAILED tests/test_frontend_contract.py::test_web_notification_center_and_explicit_email_opt_in_are_present
+FAILED tests/test_frontend_contract.py::test_application_center_separates_official_requirements_from_preparation_tools
+FAILED tests/test_frontend_contract.py::test_successful_login_closes_before_noncritical_account_hydration
+FAILED tests/test_frontend_contract.py::test_personal_application_plan_uses_structured_api_and_progressive_login
+FAILED tests/test_frontend_contract.py::test_global_home_board_routing_and_following_are_present
+FAILED tests/test_frontend_contract.py::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans
+FAILED tests/test_independent_page_routing.py::test_hash_router_shows_one_feature_page_without_scroll_spying
+FAILED tests/test_independent_page_routing.py::test_route_assets_are_cache_busted_together
+FAILED tests/test_next_phase_contract.py::test_content_review_contract_exposes_nonpublishing_source_candidates
+FAILED tests/test_next_phase_contract.py::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing
+FAILED tests/test_next_phase_contract.py::test_destination_profile_review_contract_requires_explicit_audited_promotion
+FAILED tests/test_next_phase_contract.py::test_application_workflow_publication_contract_exposes_safe_rollback
+FAILED tests/test_school_choice_migration.py::test_every_search_string_is_in_the_latest_source_of_its_function
+17 failed, 1456 passed, 8 skipped, 54 errors in 340.95s (0:05:40)

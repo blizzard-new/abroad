@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/full-suite-browser-path-error/suite.xml",
+  "original_xml_sha256": "7fee2f5ccecee25fbae0d5daed9d100a84a8354371bdfc73b773779e9acb08a8",
+  "case_attributes": {
+    "classname": "tests.test_frontend_contract",
+    "name": "test_global_home_board_routing_and_following_are_present",
+    "time": "0.005"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert '查看學生身分驗證' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+  },
+  "full_text": "def test_global_home_board_routing_and_following_are_present() -> None:\n        html = (STATIC_DIR / \"index.html\").read_text(encoding=\"utf-8\")\n        script = (STATIC_DIR / \"app.js\").read_text(encoding=\"utf-8\")\n    \n        assert 'href=\"#home\"' in html\n        assert 'href=\"#following\"' in html\n        assert 'href=\"#language-school-board\"' in html\n        assert 'href=\"#board=長庚大學\"' in html\n        assert 'data-follow-board=\"長庚大學\"' in html\n        assert '<span>發布看板</span>' in html\n        assert '<select id=\"global-community-school\" name=\"board_id\"' in html\n        assert 'id=\"global-community-compose\" type=\"button\" class=\"primary-button\" aria-label=\"發一篇文章\"' in html\n        assert '<option value=\"public-study-abroad\">公共留學板</option>' in html\n        assert '<option value=\"language-school\">語言學校板</option>' in html\n        assert 'fetchJson(\"/community/boards\")' in script\n        assert '\"#language-school-board\": \"language\"' in script\n        assert 'const LANGUAGE_SCHOOL_COMMUNITY_BOARD = \"語言學校板\"' in script\n        assert \"function activeCommunityBoardAccess()\" in script\n        assert \"activeBoard && !activeBoard.can_post\" in script\n        assert \"activeBoard.unavailable_reason\" in script\n>       assert \"查看學生身分驗證\" in script\nE       assert '查看學生身分驗證' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'\n\ntests/test_frontend_contract.py:1734: AssertionError"
+}

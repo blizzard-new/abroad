@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/pr/web-evidence-37887692057-2/suite.xml",
+  "original_xml_sha256": "4cffd055c33b7689b95c6b75cd59b2e6c56aa535fc48b1c4d55432395f8bfacc",
+  "case_attributes": {
+    "classname": "tests.e2e.test_tku_session_boundaries",
+    "name": "test_expired_school_reader_closes_and_discards_drafts_and_late_responses[none]",
+    "time": "41.324"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#discussion-comment-sort\")\n    - locator resolved to <select id=\"discussion-comment-sort\">…</select>\n  - attempting select option action\n    - waiting for element to be visible and enabled\n  - element was detached from the DOM, retrying"
+  },
+  "full_text": "tests/e2e/test_tku_session_boundaries.py:59: in test_expired_school_reader_closes_and_discards_drafts_and_late_responses\n    page.locator(\"#discussion-comment-sort\").select_option(\"latest\")\n.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:20069: in select_option\n    self._sync(\n.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:633: in select_option\n    return await self._frame.select_option(\n.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:814: in select_option\n    return await self._channel.send(\"selectOption\", self._timeout, params)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send\n    return await self._connection.wrap_api_call(\n.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nE   playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.\nE   Call log:\nE     - waiting for locator(\"#discussion-comment-sort\")\nE       - locator resolved to <select id=\"discussion-comment-sort\">…</select>\nE     - attempting select option action\nE       - waiting for element to be visible and enabled\nE     - element was detached from the DOM, retrying"
+}

@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/full-suite-browser-path-error/suite.xml",
+  "original_xml_sha256": "7fee2f5ccecee25fbae0d5daed9d100a84a8354371bdfc73b773779e9acb08a8",
+  "case_attributes": {
+    "classname": "tests.test_independent_page_routing",
+    "name": "test_route_assets_are_cache_busted_together",
+    "time": "0.002"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert 'styles.css?v=20260729-b306-progress-2' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...defer></script>\\n    <script src=\"/static/app.js?v=20261009-tku-reader-expiry-1\" defer></script>\\n  </body>\\n</html>\\n'"
+  },
+  "full_text": "def test_route_assets_are_cache_busted_together() -> None:\n        html = (STATIC_DIR / \"index.html\").read_text(encoding=\"utf-8\")\n        script = (STATIC_DIR / \"app.js\").read_text(encoding=\"utf-8\")\n    \n>       assert \"styles.css?v=20260729-b306-progress-2\" in html\nE       assert 'styles.css?v=20260729-b306-progress-2' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...defer></script>\\n    <script src=\"/static/app.js?v=20261009-tku-reader-expiry-1\" defer></script>\\n  </body>\\n</html>\\n'\n\ntests/test_independent_page_routing.py:49: AssertionError"
+}

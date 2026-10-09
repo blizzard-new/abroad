@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/pr/web-evidence-37887692057-0/suite.xml",
+  "original_xml_sha256": "a639e9e9e08614db357d0b37ae87159cb14ba30be163b8287477ee1ee175e531",
+  "case_attributes": {
+    "classname": "tests.e2e.test_multi_plan_workspace",
+    "name": "test_shared_progress_survives_reorder_removal_and_reload[1754]",
+    "time": "8.808"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: assert ['林肯大學 Lincoln University', '明治大學 Meiji University'] == ['明治大學 Meiji University', '林肯大學 Lincoln University']\n  \n  At index 0 diff: '林肯大學 Lincoln University' != '明治大學 Meiji University'\n  \n  Full diff:\n    [\n  +     '林肯大學 Lincoln University',\n        '明治大學 Meiji University',\n  -     '林肯大學 Lincoln University',\n    ]"
+  },
+  "full_text": "tests/e2e/test_multi_plan_workspace.py:59: in test_shared_progress_survives_reorder_removal_and_reload\n    assert workspace['application_schools'] == [names[1],names[0]]\nE   AssertionError: assert ['林肯大學 Lincoln University', '明治大學 Meiji University'] == ['明治大學 Meiji University', '林肯大學 Lincoln University']\nE     \nE     At index 0 diff: '林肯大學 Lincoln University' != '明治大學 Meiji University'\nE     \nE     Full diff:\nE       [\nE     +     '林肯大學 Lincoln University',\nE           '明治大學 Meiji University',\nE     -     '林肯大學 Lincoln University',\nE       ]"
+}

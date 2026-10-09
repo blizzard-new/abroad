@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/push/web-evidence-37887687888-0/main-control/suite.xml",
+  "original_xml_sha256": "7843c5518a1ef811fc351ac98996c8298fe7ac4948adf56ca1152f33659c8937",
+  "case_attributes": {
+    "classname": "tests.e2e.test_web_next_phase",
+    "name": "test_verified_student_reports_workflow_issue_and_admin_closes_it",
+    "time": "17.741"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: Locator expected to have text 'workflow-issue-reviewer-cc4374a02b@example.com'\nActual value: None\nError: element(s) not found \nCall log:\n  - Expect \"to_have_text\" with timeout 5000ms\n  - waiting for locator(\"#reviewer-email\")\n\nAria snapshot:\n- text: \"{\\\"detail\\\":\\\"Not Found\\\"}\""
+  },
+  "full_text": "tests/e2e/test_web_next_phase.py:1449: in test_verified_student_reports_workflow_issue_and_admin_closes_it\n    _open_content_review_workbench(\ntests/e2e/test_web_next_phase.py:201: in _open_content_review_workbench\n    expect(page.locator(\"#reviewer-email\")).to_have_text(email)\nE   AssertionError: Locator expected to have text 'workflow-issue-reviewer-cc4374a02b@example.com'\nE   Actual value: None\nE   Error: element(s) not found \nE   Call log:\nE     - Expect \"to_have_text\" with timeout 5000ms\nE     - waiting for locator(\"#reviewer-email\")\nE   \nE   Aria snapshot:\nE   - text: \"{\\\"detail\\\":\\\"Not Found\\\"}\""
+}

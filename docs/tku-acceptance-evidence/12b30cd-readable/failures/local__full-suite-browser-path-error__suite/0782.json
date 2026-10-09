@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/full-suite-browser-path-error/suite.xml",
+  "original_xml_sha256": "7fee2f5ccecee25fbae0d5daed9d100a84a8354371bdfc73b773779e9acb08a8",
+  "case_attributes": {
+    "classname": "tests.test_frontend_contract",
+    "name": "test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+    "time": "0.002"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert '暫不可建立正式申請計畫' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...defer></script>\\n    <script src=\"/static/app.js?v=20261009-tku-reader-expiry-1\" defer></script>\\n  </body>\\n</html>\\n'"
+  },
+  "full_text": "def test_departmental_partner_references_are_visible_but_blocked_from_formal_plans() -> None:\n        html = (STATIC_DIR / \"index.html\").read_text(encoding=\"utf-8\")\n        script = (STATIC_DIR / \"app.js\").read_text(encoding=\"utf-8\")\n        styles = (STATIC_DIR / \"product-v2.css\").read_text(encoding=\"utf-8\")\n    \n        assert '<option value=\"departmental_reference\">院級參考／當期需確認</option>' in html\n>       assert \"暫不可建立正式申請計畫\" in html\nE       assert '暫不可建立正式申請計畫' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...defer></script>\\n    <script src=\"/static/app.js?v=20261009-tku-reader-expiry-1\" defer></script>\\n  </body>\\n</html>\\n'\n\ntests/test_frontend_contract.py:1750: AssertionError"
+}

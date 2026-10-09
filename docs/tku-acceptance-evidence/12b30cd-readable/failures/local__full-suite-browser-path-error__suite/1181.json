@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/full-suite-browser-path-error/suite.xml",
+  "original_xml_sha256": "7fee2f5ccecee25fbae0d5daed9d100a84a8354371bdfc73b773779e9acb08a8",
+  "case_attributes": {
+    "classname": "tests.test_school_choice_migration",
+    "name": "test_every_search_string_is_in_the_latest_source_of_its_function",
+    "time": "0.009"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: exchange_community_display_name: the migration looks for text that is not there:\n    v_school text := nullif(btrim(p_profile ->> 'verified_university'), '');\nassert \"  v_school text := nullif(btrim(p_profile ->> 'verified_university'), '');\" in \"-- Match the existing Python registry alias key (NFKC, case folding, punctuation removal).\\n-- Only server-verified s...rtment is not null then\\n    return v_school || ' ' || v_department || '學生';\\n  end if;\\n\\n  return null;\\nend;\\n$$;\\n\""
+  },
+  "full_text": "def test_every_search_string_is_in_the_latest_source_of_its_function() -> None:\n        searches = re.findall(r\"v_old := \\$p\\$(.*?)\\$p\\$;\", _sql(), re.DOTALL)\n        assert len(searches) == sum(count for _, count in PATCHED)\n        cursor = 0\n        for function, count in PATCHED:\n            source = _latest_source(function)\n            for search in searches[cursor:cursor + count]:\n>               assert search in source, f\"{function}: the migration looks for text that is not there:\\n{search}\"\nE               AssertionError: exchange_community_display_name: the migration looks for text that is not there:\nE                   v_school text := nullif(btrim(p_profile ->> 'verified_university'), '');\nE               assert \"  v_school text := nullif(btrim(p_profile ->> 'verified_university'), '');\" in \"-- Match the existing Python registry alias key (NFKC, case folding, punctuation removal).\\n-- Only server-verified s...rtment is not null then\\n    return v_school || ' ' || v_department || '學生';\\n  end if;\\n\\n  return null;\\nend;\\n$$;\\n\"\n\ntests/test_school_choice_migration.py:42: AssertionError"
+}

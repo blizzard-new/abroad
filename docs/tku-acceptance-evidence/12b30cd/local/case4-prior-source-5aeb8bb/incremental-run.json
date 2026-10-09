@@ -1,0 +1,27 @@
+{
+  "tested_commit": "5aeb8bb22649f610eba831b039a9bb61cd140453",
+  "starting_state": {
+    "commit": "5aeb8bb22649f610eba831b039a9bb61cd140453",
+    "dirty": ""
+  },
+  "ending_state": {
+    "commit": "5aeb8bb22649f610eba831b039a9bb61cd140453",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "command": [
+    "/workspace/abroad-tku/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/e2e/test_web_next_phase.py::test_workspace_conflict_preserves_remote_addition_and_local_removal",
+    "tests/e2e/test_web_next_phase.py::test_workspace_conflict_retry_keeps_remote_fields_during_new_ui_change",
+    "tests/e2e/test_web_next_phase.py::test_workspace_load_advances_base_before_put_conflict",
+    "-q",
+    "-ra",
+    "--junitxml=/tmp/tku-acceptance-5aeb8bb/incremental.xml"
+  ],
+  "actual_exit_code": 0,
+  "elapsed_seconds": 63.84,
+  "production_access": false,
+  "scope": "Original case4 plus adjacent retry race and load-base cases, with every original 409/remote-add/local-remove/reload assertion retained."
+}

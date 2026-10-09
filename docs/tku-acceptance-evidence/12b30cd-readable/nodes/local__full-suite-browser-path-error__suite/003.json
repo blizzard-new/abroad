@@ -1,0 +1,502 @@
+[
+  {
+    "id": "tests.test_auth_api::test_email_account_profile_and_account_linked_community_identity",
+    "status": "passed",
+    "seconds": "0.219"
+  },
+  {
+    "id": "tests.test_auth_api::test_supabase_account_deletion_replays_after_session_cascade",
+    "status": "passed",
+    "seconds": "0.202"
+  },
+  {
+    "id": "tests.test_auth_api::test_login_rejects_wrong_password_and_accepts_correct_password",
+    "status": "passed",
+    "seconds": "0.363"
+  },
+  {
+    "id": "tests.test_auth_api::test_registration_without_a_verified_email_is_rejected",
+    "status": "passed",
+    "seconds": "0.107"
+  },
+  {
+    "id": "tests.test_auth_api::test_profile_update_racing_account_delete_never_resurrects_account",
+    "status": "passed",
+    "seconds": "0.206"
+  },
+  {
+    "id": "tests.test_auth_api::test_global_community_posts_can_be_filtered_by_topic",
+    "status": "passed",
+    "seconds": "0.298"
+  },
+  {
+    "id": "tests.test_auth_api::test_public_and_cgu_boards_can_be_posted_and_filtered",
+    "status": "passed",
+    "seconds": "0.299"
+  },
+  {
+    "id": "tests.test_auth_api::test_social_provider_buttons_report_configuration_state",
+    "status": "passed",
+    "seconds": "0.230"
+  },
+  {
+    "id": "tests.test_auth_api::test_google_oauth_state_is_bound_to_initiating_browser_cookie",
+    "status": "passed",
+    "seconds": "0.148"
+  },
+  {
+    "id": "tests.test_auth_api::test_google_oauth_callback_can_finish_on_another_app_instance",
+    "status": "passed",
+    "seconds": "0.286"
+  },
+  {
+    "id": "tests.test_auth_api::test_google_oauth_terminal_failures_consume_state_and_clear_flow_cookie",
+    "status": "passed",
+    "seconds": "0.237"
+  },
+  {
+    "id": "tests.test_auth_api::test_google_oauth_start_rate_limit_bounds_state_creation",
+    "status": "passed",
+    "seconds": "0.211"
+  },
+  {
+    "id": "tests.test_auth_api::test_oauth_provider_path_mismatch_does_not_consume_valid_state",
+    "status": "passed",
+    "seconds": "0.169"
+  },
+  {
+    "id": "tests.test_auth_api::test_google_verified_email_can_link_existing_email_account",
+    "status": "passed",
+    "seconds": "0.283"
+  },
+  {
+    "id": "tests.test_auth_api::test_verified_oauth_email_cannot_claim_legacy_unverified_email_account",
+    "status": "passed",
+    "seconds": "0.144"
+  },
+  {
+    "id": "tests.test_auth_api::test_provider_subject_cannot_claim_verified_email_owned_by_another_account",
+    "status": "passed",
+    "seconds": "0.301"
+  },
+  {
+    "id": "tests.test_auth_api::test_same_provider_different_subject_cannot_share_verified_email",
+    "status": "passed",
+    "seconds": "2.390"
+  },
+  {
+    "id": "tests.test_auth_api::test_facebook_unverified_email_does_not_link_or_persist_by_email",
+    "status": "passed",
+    "seconds": "0.272"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestPIIRedaction::test_taiwan_national_id",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestPIIRedaction::test_passport_number",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestPIIRedaction::test_phone_number_formats",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestPIIRedaction::test_email_address",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestPIIRedaction::test_student_id",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestPIIRedaction::test_user_name_redaction",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestPIIRedaction::test_user_name_given_name_also_redacted",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestPIIRedaction::test_empty_text_returns_empty",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestPIIRedaction::test_no_pii_text_unchanged",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestContainsPII::test_detects_email",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestContainsPII::test_detects_id",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestContainsPII::test_safe_text",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestContainsPII::test_empty",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestLogSanitization::test_redact_for_logging_has_only_safe_fields",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestLogSanitization::test_validate_no_pii_passes_for_clean_log",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestLogSanitization::test_validate_no_pii_fails_if_pii_smuggled_in",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestPromptInjection::test_system_override_attempt",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_b4_04_ai_limits.TestPromptInjection::test_encoded_pii_in_prompt",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_brand_assets::test_every_page_points_its_tab_icon_at_the_logo_files_that_exist",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_brand_assets::test_the_home_page_declares_every_icon_size_and_loads_the_brand_stylesheet_last",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_brand_assets::test_every_brand_mark_shows_the_logo_instead_of_a_stock_icon",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_brand_assets::test_the_sign_in_and_school_dialogs_show_the_logo_not_a_compass",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_brand_assets::test_logo_images_have_the_sizes_browsers_expect",
+    "status": "passed",
+    "seconds": "0.078"
+  },
+  {
+    "id": "tests.test_brand_assets::test_icons_are_transparent_so_they_suit_light_and_dark_tab_bars",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_brand_assets::test_the_favicon_route_serves_the_icon_even_for_pages_without_a_link",
+    "status": "passed",
+    "seconds": "1.484"
+  },
+  {
+    "id": "tests.test_brand_assets::test_the_icon_and_mark_pass_the_content_security_policy",
+    "status": "passed",
+    "seconds": "0.178"
+  },
+  {
+    "id": "tests.test_brand_assets::test_the_build_script_regenerates_the_icon_set_from_the_source_logo",
+    "status": "passed",
+    "seconds": "0.990"
+  },
+  {
+    "id": "tests.test_brand_assets::test_the_frame_centres_the_mark_on_a_transparent_square_of_any_margin",
+    "status": "passed",
+    "seconds": "0.038"
+  },
+  {
+    "id": "tests.test_brand_assets::test_a_fully_transparent_logo_is_refused",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_calendar_conflicts::test_same_day_conflict_requires_two_distinct_application_schools",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_calendar_conflicts::test_tight_window_detects_cross_plan_deadlines_up_to_three_days_apart",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_calendar_conflicts::test_conflict_analysis_ignores_same_plan_invalid_dates_and_duplicate_ids",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_calendar_conflicts::test_calendar_conflict_api_is_entitled_read_only_and_no_store",
+    "status": "passed",
+    "seconds": "0.122"
+  },
+  {
+    "id": "tests.test_calendar_conflicts::test_calendar_conflict_api_requires_login_and_public_subscription_access",
+    "status": "passed",
+    "seconds": "0.141"
+  },
+  {
+    "id": "tests.test_calendar_sync_api::test_calendar_subscription_syncs_events_and_can_be_revoked",
+    "status": "passed",
+    "seconds": "0.269"
+  },
+  {
+    "id": "tests.test_calendar_sync_api::test_calendar_sync_requires_login",
+    "status": "passed",
+    "seconds": "0.213"
+  },
+  {
+    "id": "tests.test_calendar_sync_api::test_public_free_account_cannot_use_external_calendar_but_can_revoke",
+    "status": "passed",
+    "seconds": "0.187"
+  },
+  {
+    "id": "tests.test_calendar_sync_api::test_public_subscription_account_can_use_external_calendar",
+    "status": "passed",
+    "seconds": "0.129"
+  },
+  {
+    "id": "tests.test_calendar_sync_api::test_stale_calendar_sync_cannot_restore_revoked_feed_token",
+    "status": "passed",
+    "seconds": "0.121"
+  },
+  {
+    "id": "tests.test_calendar_task_scheduling::test_schedule_uses_only_user_provided_preparation_days",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_calendar_task_scheduling::test_schedule_deduplicates_events_and_ignores_generated_start_markers",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_calendar_task_scheduling::test_schedule_api_is_entitled_read_only_and_no_store",
+    "status": "passed",
+    "seconds": "0.146"
+  },
+  {
+    "id": "tests.test_calendar_task_scheduling::test_schedule_api_requires_login_and_subscription_in_public_mode",
+    "status": "passed",
+    "seconds": "0.134"
+  },
+  {
+    "id": "tests.test_catalog_access::test_guests_can_read_the_catalog_without_an_account[/student-dashboard]",
+    "status": "passed",
+    "seconds": "0.121"
+  },
+  {
+    "id": "tests.test_catalog_access::test_guests_can_read_the_catalog_without_an_account[/exchange-info]",
+    "status": "passed",
+    "seconds": "0.126"
+  },
+  {
+    "id": "tests.test_catalog_access::test_guests_can_read_the_catalog_without_an_account[/coverage]",
+    "status": "passed",
+    "seconds": "0.183"
+  },
+  {
+    "id": "tests.test_catalog_access::test_guests_can_read_the_catalog_without_an_account[/sources]",
+    "status": "passed",
+    "seconds": "0.116"
+  },
+  {
+    "id": "tests.test_catalog_access::test_guests_can_read_the_catalog_without_an_account[/documents]",
+    "status": "passed",
+    "seconds": "1.646"
+  },
+  {
+    "id": "tests.test_catalog_access::test_guests_can_read_the_catalog_without_an_account[/deadlines]",
+    "status": "passed",
+    "seconds": "0.120"
+  },
+  {
+    "id": "tests.test_catalog_access::test_guests_can_read_the_catalog_without_an_account[/search?q=\\u4ea4\\u63db]",
+    "status": "passed",
+    "seconds": "0.117"
+  },
+  {
+    "id": "tests.test_catalog_access::test_guests_can_read_the_catalog_without_an_account[/destination-profiles]",
+    "status": "passed",
+    "seconds": "0.124"
+  },
+  {
+    "id": "tests.test_catalog_access::test_guests_can_read_the_catalog_without_an_account[/application-center/templates]",
+    "status": "passed",
+    "seconds": "0.131"
+  },
+  {
+    "id": "tests.test_catalog_access::test_guests_can_read_the_catalog_without_an_account[/application-workflow?school=\\u5317\\u5927\\u9650\\u5b9a\\u5408\\u4f5c\\u6821]",
+    "status": "passed",
+    "seconds": "0.388"
+  },
+  {
+    "id": "tests.test_catalog_access::test_guests_can_read_the_catalog_without_an_account[/ai/structured-sources]",
+    "status": "passed",
+    "seconds": "0.142"
+  },
+  {
+    "id": "tests.test_catalog_access::test_guests_choose_the_school_and_every_school_is_readable",
+    "status": "passed",
+    "seconds": "0.148"
+  },
+  {
+    "id": "tests.test_catalog_access::test_account_school_is_only_the_default_and_profile_cannot_escalate",
+    "status": "passed",
+    "seconds": "0.141"
+  },
+  {
+    "id": "tests.test_catalog_access::test_unverified_account_opens_on_its_declared_school_and_may_change_it",
+    "status": "passed",
+    "seconds": "0.165"
+  },
+  {
+    "id": "tests.test_catalog_access::test_admin_can_switch_catalogs_and_read_private_responses",
+    "status": "passed",
+    "seconds": "0.172"
+  },
+  {
+    "id": "tests.test_catalog_access::test_destination_profiles_and_direct_links_follow_the_requested_school",
+    "status": "passed",
+    "seconds": "3.428"
+  },
+  {
+    "id": "tests.test_catalog_access::test_request_scopes_do_not_leak_between_simultaneous_accounts",
+    "status": "passed",
+    "seconds": "0.238"
+  },
+  {
+    "id": "tests.test_catalog_access::test_every_verified_email_account_can_post_on_every_board",
+    "status": "passed",
+    "seconds": "0.418"
+  },
+  {
+    "id": "tests.test_catalog_access::test_a_school_byline_still_needs_a_verified_student",
+    "status": "passed",
+    "seconds": "0.182"
+  },
+  {
+    "id": "tests.test_catalogue_speed::test_the_cgu_dashboard_is_built_once_for_everyone_within_the_window",
+    "status": "passed",
+    "seconds": "0.160"
+  },
+  {
+    "id": "tests.test_catalogue_speed::test_the_dashboard_is_built_again_when_its_data_is_rewritten",
+    "status": "passed",
+    "seconds": "0.156"
+  },
+  {
+    "id": "tests.test_catalogue_speed::test_an_old_dashboard_is_still_served_at_once_while_a_new_one_is_built_behind_it",
+    "status": "passed",
+    "seconds": "0.166"
+  },
+  {
+    "id": "tests.test_catalogue_speed::test_visitors_arriving_together_share_one_build",
+    "status": "passed",
+    "seconds": "0.202"
+  },
+  {
+    "id": "tests.test_catalogue_speed::test_a_caller_cannot_change_what_the_next_visitor_gets",
+    "status": "passed",
+    "seconds": "0.139"
+  },
+  {
+    "id": "tests.test_catalogue_speed::test_the_warm_up_is_off_unless_asked_for",
+    "status": "passed",
+    "seconds": "0.133"
+  },
+  {
+    "id": "tests.test_catalogue_speed::test_the_warm_up_builds_the_dashboards_before_the_first_visitor_asks",
+    "status": "passed",
+    "seconds": "0.767"
+  },
+  {
+    "id": "tests.test_catalogue_speed::test_a_failing_warm_up_step_does_not_stop_the_site",
+    "status": "passed",
+    "seconds": "1.142"
+  },
+  {
+    "id": "tests.test_cgu_bundled_data::test_bundled_cgu_workflows_are_available_without_local_cache",
+    "status": "skipped",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_cgu_bundled_data::test_bundled_cgu_destination_profiles_are_available_without_local_cache",
+    "status": "skipped",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_cgu_bundled_data::test_bundled_cgu_completeness_report_matches_export",
+    "status": "skipped",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_001_keeps_current_limits_and_review_status",
+    "status": "passed",
+    "seconds": "0.068"
+  },
+  {
+    "id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_002_keeps_current_limits_and_review_status",
+    "status": "passed",
+    "seconds": "0.060"
+  },
+  {
+    "id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_003_keeps_current_limits_and_review_status",
+    "status": "passed",
+    "seconds": "0.066"
+  },
+  {
+    "id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_004_keeps_current_limits_and_review_status",
+    "status": "passed",
+    "seconds": "0.055"
+  },
+  {
+    "id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_005_keeps_current_limits_and_review_status",
+    "status": "passed",
+    "seconds": "0.037"
+  },
+  {
+    "id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_006_separates_current_facts_from_stale_prices",
+    "status": "passed",
+    "seconds": "1.761"
+  },
+  {
+    "id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_007_keeps_fee_and_campus_scope_explicit",
+    "status": "passed",
+    "seconds": "0.048"
+  },
+  {
+    "id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_008_keeps_conflicts_and_stale_terms_visible",
+    "status": "passed",
+    "seconds": "0.041"
+  },
+  {
+    "id": "tests.test_cgu_bundled_data::test_cgu_destination_batch_009_keeps_fee_categories_and_options_separate",
+    "status": "passed",
+    "seconds": "0.041"
+  }
+]

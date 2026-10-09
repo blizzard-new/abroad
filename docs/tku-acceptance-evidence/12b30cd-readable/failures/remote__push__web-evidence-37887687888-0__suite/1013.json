@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/push/web-evidence-37887687888-0/suite.xml",
+  "original_xml_sha256": "847f50b40a8cc1694f9fe61dd7350ce1dfc1855e5177e8f92f5c86445b79a841",
+  "case_attributes": {
+    "classname": "tests.test_next_phase_contract",
+    "name": "test_content_review_contract_exposes_nonpublishing_source_candidates",
+    "time": "1.328"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "KeyError: 'ApplicationWorkflowSourceReplacementCandidate'"
+  },
+  "full_text": "tests/test_next_phase_contract.py:316: in test_content_review_contract_exposes_nonpublishing_source_candidates\n    candidate = openapi[\"components\"][\"schemas\"][\nE   KeyError: 'ApplicationWorkflowSourceReplacementCandidate'"
+}
