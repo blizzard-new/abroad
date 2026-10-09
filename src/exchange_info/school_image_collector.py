@@ -451,6 +451,11 @@ class SchoolImageRecord:
     checked_at: str
     status: str
     note: str | None = None
+    artist: str | None = None
+    license_name: str | None = None
+    license_url: str | None = None
+    identity_source_url: str | None = None
+    description: str | None = None
 
 
 def collect_school_images(

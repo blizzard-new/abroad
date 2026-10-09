@@ -19,6 +19,7 @@ from exchange_info.models import (
     ProcessedPage, StudentDashboard, UniversityApplicationWorkflow,
 )
 from exchange_info.ntu_partner_summary import with_ntu_partner_summary
+from exchange_info.life_context import LifeResearchSnapshot, reviewed_life_snapshot
 
 SCHOOL = "國立臺灣大學"
 GUIDELINES = "https://studyabroad.ntu.edu.tw/wp-content/uploads/2026/07/116-1-Selection-Guidelines_CH.pdf"
@@ -296,6 +297,10 @@ def main():
         "documents_status_counts": dict(Counter(row["fields"].get("documents", {}).get("status", "missing") for row in ledger)),
         "missing_information_note": "缺文字證據或尚未找到新版，不等於官方未公告；288校名單核對不代表全部欄位完成當期確認。",
     })
+    enrichment = SNAPSHOT.with_name("destinations-2026-10-08.json.gz")
+    if enrichment.exists():
+        researched = json.loads(gzip.decompress(enrichment.read_bytes()))
+        write_rows("student_life.jsonl", [reviewed_life_snapshot(LifeResearchSnapshot.model_validate(row)).model_dump(mode="json") for row in researched["life"]], LifeResearchSnapshot)
     print(f"NTU: {len(partner_rows)} partners, {len(workflows)} workflows, {len(destinations)} destinations; 282 pending / 6 zero quotas")
 
 

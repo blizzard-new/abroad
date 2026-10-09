@@ -426,7 +426,7 @@ CGU_COMMUNITY_BOARD = "長庚大學"
 HOME_UNIVERSITY_BOARDS = {item.school_name for item in SUPPORTED_UNIVERSITIES}
 
 
-def _load_school_image_manifest() -> dict[str, dict[str, object]]:
+def _load_school_image_manifest() -> dict[tuple[str, str], dict[str, object]]:
     if not SCHOOL_IMAGE_MANIFEST.exists():
         return {}
     try:
@@ -434,7 +434,7 @@ def _load_school_image_manifest() -> dict[str, dict[str, object]]:
     except (OSError, json.JSONDecodeError):
         return {}
     return {
-        school_identity_key(str(item.get("school_name", ""))): item
+        (school_identity_key(str(item.get("school_name", ""))), str(item.get("country") or "")): item
         for item in payload.get("schools", [])
         if isinstance(item, dict) and item.get("school_name")
     }
@@ -449,9 +449,17 @@ def _attach_school_images(
     base = base_url.rstrip("/")
     partners = []
     for school in dashboard.partner_universities:
-        visual = visuals.get(school_identity_key(school.school_name))
-        if not visual or visual.get("status") != "verified":
+        visual = visuals.get((school_identity_key(school.school_name), school.country or ""))
+        if not visual:
             partners.append(school)
+            continue
+        if visual.get("status") != "verified":
+            partners.append(school.model_copy(update={
+                "image_url": None,
+                "image_source_url": None,
+                "image_page_url": visual.get("official_page_url") or None,
+                "image_status": str(visual.get("status") or "missing"),
+            }))
             continue
         local_path = str(visual.get("local_path") or "")
         image_url = f"{base}{local_path}" if local_path.startswith("/") else local_path
@@ -2774,10 +2782,10 @@ def create_app(
         rows: list[PartnerCoverage] = []
         for partner in partners:
             normalized = normalize_school(partner.school_name)
-            visual = school_images.get(school_identity_key(partner.school_name))
+            visual = school_images.get((school_identity_key(partner.school_name), partner.country or ""))
             partner_experiences = experience_map.get(normalized, [])
             workflow = workflow_map.get(normalized)
-            destination = destination_map.get((home_key, normalized)) or destination_map.get((normalize_school(CGU.school_name), normalized))
+            destination = destination_map.get((home_key, normalized))
             experience_audit = experience_audit_map.get(normalized)
             destination_audit = destination_audit_map.get(normalized)
             website_research = research_map.get(normalized)
@@ -2800,7 +2808,7 @@ def create_app(
                 if destination_audit
                 else (
                     destination.coverage_status
-                    if university.id in {CGU.id, NTU.id} and destination
+                    if destination
                     else "not_collected"
                 )
             )
@@ -2840,7 +2848,7 @@ def create_app(
                         destination_audit.checked_at
                         if destination_audit
                         else destination.last_checked
-                        if university.id in {CGU.id, NTU.id} and destination
+                        if destination
                         else None
                     ),
                 )

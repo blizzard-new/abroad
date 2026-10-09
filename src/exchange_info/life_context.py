@@ -8,6 +8,7 @@ import re
 import threading
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
+from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 from urllib.parse import urlencode, urlsplit
@@ -20,10 +21,12 @@ from .life_sources import fetch_public_bytes, public_https_url, read_life_page
 from .models import DestinationProfile, PartnerUniversity, StudentExperienceSource
 from .public_translation import cached_translation, needs_translation, translate_public_excerpts
 from .school_content import school_field_addition
+from .school_identity import school_identity_key
 from .university_locations import UniversityLocation
 from .web_search import search_text
 
 REFERENCE_DATA = Path(__file__).parent / "official_data" / "life_reference_data.json"
+BUNDLED_NTU_LIFE = Path(__file__).parent / "official_data" / "ntu" / "student_life.jsonl"
 THEMES = ("housing", "cost", "food", "transport", "academics", "climate", "social", "safety", "campus_culture", "travel")
 THEME_QUERIES = dict(zip(THEMES, (
     "international student housing", "student living costs", "cafeteria supermarket restaurants",
@@ -115,14 +118,14 @@ class SchoolLifeContext(BaseModel):
 
 
 def _identity(partner: PartnerUniversity) -> tuple[str, str]:
-    return school_search_name(partner.school_name).casefold(), partner.country or ""
+    return school_identity_key(partner.school_name), partner.country or ""
 
 
 def reference_record(partner: PartnerUniversity) -> dict:
     if not REFERENCE_DATA.exists():
         return {}
     records = json.loads(REFERENCE_DATA.read_text(encoding="utf-8"))
-    name, country = _identity(partner)
+    name, country = school_search_name(partner.school_name).casefold(), partner.country or ""
     return next((row for row in records if row["identity"].casefold() == name and row["country"] == country), {})
 
 
@@ -136,18 +139,55 @@ def _cache_path(partner: PartnerUniversity, data_dir: Path) -> Path:
     return Path(data_dir) / "processed" / "life_research" / f"{key}.json"
 
 
+def reviewed_life_snapshot(snapshot: LifeResearchSnapshot) -> LifeResearchSnapshot:
+    """Error-page navigation is not student-life evidence, even with HTTP 200."""
+    evidence = [row for row in snapshot.evidence if not any(
+        re.search(r"^(?:404|403|not found)\b", source.title.strip(), re.I)
+        or re.search(r"/(?:error/)?404(?:[/.]|$)", urlsplit(source.url).path)
+        for source in row.sources
+    )]
+    if len(evidence) == len(snapshot.evidence):
+        return snapshot
+    return snapshot.model_copy(update={
+        "evidence": evidence,
+        "status": "partial" if evidence else "unavailable",
+        "notes": [*snapshot.notes, "已排除錯誤頁的導覽文字；相關生活資料待補查。"],
+    })
+
+
+@lru_cache(maxsize=1)
+def _bundled_ntu_research() -> dict[tuple[str, str], LifeResearchSnapshot]:
+    records = {}
+    if BUNDLED_NTU_LIFE.exists():
+        for line in BUNDLED_NTU_LIFE.read_text(encoding="utf-8").splitlines():
+            try:
+                row = reviewed_life_snapshot(LifeResearchSnapshot.model_validate_json(line))
+                if row.extraction_version == EXTRACTION_VERSION:
+                    records[(school_identity_key(row.school_name), row.country or "")] = row
+            except ValueError:
+                continue
+    return records
+
+
 def read_research(partner: PartnerUniversity, data_dir: Path) -> LifeResearchSnapshot:
     path = _cache_path(partner, data_dir)
+    empty_cache = None
     try:
         raw = json.loads(path.read_text(encoding="utf-8"))
         if raw.get("extraction_version") != EXTRACTION_VERSION:
-            return LifeResearchSnapshot(school_name=partner.school_name, country=partner.country)
+            raw = {}
         snapshot = LifeResearchSnapshot.model_validate(raw)
-        if snapshot.country == partner.country and school_search_name(snapshot.school_name).casefold() == _identity(partner)[0]:
-            return snapshot
+        if snapshot.country == partner.country and school_identity_key(snapshot.school_name) == _identity(partner)[0]:
+            if snapshot.evidence:
+                return snapshot
+            empty_cache = snapshot
     except (OSError, ValueError):
         pass
-    return LifeResearchSnapshot(school_name=partner.school_name, country=partner.country)
+    # These are host-school facts, keyed by exact school and country; they do
+    # not grant home-school eligibility, quotas or guaranteed accommodation.
+    if bundled := _bundled_ntu_research().get(_identity(partner)):
+        return bundled
+    return empty_cache or LifeResearchSnapshot(school_name=partner.school_name, country=partner.country)
 
 
 def research_is_fresh(snapshot: LifeResearchSnapshot) -> bool:
@@ -162,6 +202,9 @@ def _location_signature(location: UniversityLocation) -> str:
 def _for_location(snapshot: LifeResearchSnapshot, location: UniversityLocation) -> LifeResearchSnapshot:
     if snapshot.location_signature == _location_signature(location):
         return snapshot
+    if not any(row.kind == "geographic" for row in snapshot.evidence):
+        # Official school-wide excerpts do not depend on a map point.
+        return snapshot.model_copy(update={"location_signature": _location_signature(location)})
     # A corrected campus must never inherit nearby places from the old point.
     return snapshot.model_copy(update={"checked_at": None, "status": "not_collected",
         "evidence": [row for row in snapshot.evidence if row.kind != "geographic"]})
