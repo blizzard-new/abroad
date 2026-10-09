@@ -135,9 +135,13 @@ def test_ryukoku_corrected_catalog_and_stage_checkboxes_save_to_account(page,liv
     for title,documents,count in stages:
         task=branch.locator('.multi-plan-task').filter(has=page.locator(':scope > label strong').filter(has_text=title))
         expect(task).to_have_count(1)
-        task.locator('.multi-plan-documents > summary').click()
-        expect(task.locator('.multi-plan-documents ul > li')).to_have_count(count)
-        for document in documents:expect(task.locator('.multi-plan-documents ul')).to_contain_text(document)
+        # Pending references stay in the confirmation list, excluded from the
+        # active document/tool link until the institutional conditions are met.
+        reference=task.locator('.document-applicability[data-document-applicability="needs_confirmation"]')
+        expect(reference).to_have_count(count)
+        for document in documents:
+            item=reference.filter(has=page.locator(':scope > strong').filter(has_text=document))
+            expect(item).to_be_visible();expect(item).to_contain_text('116當期')
         checkbox=task.locator('[data-multi-task]');saved_ids.append(checkbox.get_attribute('data-multi-task'))
         checkbox.check();expect(checkbox).to_be_checked()
         task.scroll_into_view_if_needed();page.screenshot(path=str(out/f'ryukoku-{width}-{count}-{len(saved_ids)}-task-checked.png'))
