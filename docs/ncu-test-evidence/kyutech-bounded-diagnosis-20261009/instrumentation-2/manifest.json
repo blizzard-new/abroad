@@ -1,0 +1,63 @@
+{
+  "candidate_sha": "e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409",
+  "started_at": "2026-10-09T04:19:45.880847+00:00",
+  "command": [
+    "/workspace/abroad/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "ncu_verify_failure_events",
+    "-p",
+    "ncu_kyutech_server_diagnostic",
+    "tests/e2e/test_ncu_kyutech.py::test_ncu_kyutech_support_levels_arrival_split_and_reading_scope[1440]",
+    "--junitxml=/tmp/ncu-kyutech-server-diagnostic-e79e0ba-20261009-v2/browser.xml"
+  ],
+  "instrumentation": "External diagnostic pytest plugin: ASGI Server-Timing, handler wall/thread CPU, event-loop delays, targeted cProfile. No product or test edits. Profiler overhead possible.",
+  "bounded_run_limit": 2,
+  "instrumentation_retry_reason": "First run patched a duplicate conftest module and recorded no server timings; retain as instrumentation failure",
+  "original_19_passed_1_failed_unchanged": true,
+  "root_cause_closed": false,
+  "exit_code": 1,
+  "finished_at": "2026-10-09T04:20:36.558910+00:00",
+  "end_sha": "e79e0ba50cd247284f8a61b86f6fb5ff4c9a6409",
+  "end_clean": true,
+  "files": [
+    {
+      "path": "browser-events/2d6088b353e970-failure.png",
+      "sha256": "a7a3797322f98e2ebd2628cddfb42d2e4bd531884740b69f6a6fba20e55082dd"
+    },
+    {
+      "path": "browser-events/2d6088b353e970.json",
+      "sha256": "e8daa6defb7d9ba3fe1d0e8d06fa4ea20f1e3b788b94912d9fa2c30339d7953e"
+    },
+    {
+      "path": "browser.log",
+      "sha256": "11418989b76e829d529b312f0dae53a13a3fc33b21da71339d6f4bab80e7c2e5"
+    },
+    {
+      "path": "browser.xml",
+      "sha256": "04c79da62eca2ddddd0a2fa2dc09e6464050eda18da5b4841d6760c1d32742f7"
+    },
+    {
+      "path": "server/88578266565029-application-period-options.pstats",
+      "sha256": "4182e2d4fb9dc4a204cb0d91ec09e0f10bba00710a90419f23e8613552b1c0ef"
+    },
+    {
+      "path": "server/88605667716394-application-period-options.pstats",
+      "sha256": "b585958451cc0907eda7479655879cb12354363c6647a727923140f0d9935998"
+    },
+    {
+      "path": "server/88609778008195-student-experiences.pstats",
+      "sha256": "74ffa88c6cd9fc699baa8ff066775ccff8efa9b3ca77ad91b5020384c36c1158"
+    },
+    {
+      "path": "server/browser-server-timing.json",
+      "sha256": "364ffdee2028c6affa8ac1185034169b77d504d65758b6bea5e45b5c78623454"
+    },
+    {
+      "path": "server/server-events.json",
+      "sha256": "a1344ff0cb29bba694e54fc6ee2c2a9e6651ea592a81bceece9db259c1cde6bf"
+    }
+  ]
+}
