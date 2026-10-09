@@ -779,7 +779,7 @@ def create_app(
         "/student-dashboard", "/coverage", "/destination-profiles", "/destination-profile",
         "/application-center/templates", "/application-center/catalog", "/application-period-options",
         "/application-workflow", "/advisor/plan", "/advisor/ask",
-        "/school-life-context", "/school-completeness", "/student-experiences",
+        "/school-life-context", "/school-data-completeness", "/student-experiences",
     }
 
     @asynccontextmanager
