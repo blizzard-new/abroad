@@ -2774,10 +2774,10 @@ def create_app(
         rows: list[PartnerCoverage] = []
         for partner in partners:
             normalized = normalize_school(partner.school_name)
-            visual = school_images.get(school_identity_key(partner.school_name))
+            visual = school_images.get((school_identity_key(partner.school_name), partner.country or ""))
             partner_experiences = experience_map.get(normalized, [])
             workflow = workflow_map.get(normalized)
-            destination = destination_map.get((home_key, normalized)) or destination_map.get((normalize_school(CGU.school_name), normalized))
+            destination = destination_map.get((home_key, normalized))
             experience_audit = experience_audit_map.get(normalized)
             destination_audit = destination_audit_map.get(normalized)
             website_research = research_map.get(normalized)
@@ -2800,7 +2800,7 @@ def create_app(
                 if destination_audit
                 else (
                     destination.coverage_status
-                    if university.id in {CGU.id, NTU.id} and destination
+                    if destination
                     else "not_collected"
                 )
             )
@@ -2840,7 +2840,7 @@ def create_app(
                         destination_audit.checked_at
                         if destination_audit
                         else destination.last_checked
-                        if university.id in {CGU.id, NTU.id} and destination
+                        if destination
                         else None
                     ),
                 )
