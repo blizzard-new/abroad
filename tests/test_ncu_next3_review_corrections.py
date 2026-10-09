@@ -136,11 +136,11 @@ def test_correction_locators_bind_frozen_lines_and_same_pdf_image():
 
 
 def test_ryukoku_preparation_tasks_display_pending_documents_without_active_tool_links(tmp_path):
-    response = TestClient(create_app(tmp_path)).post('/application-plan/evaluate', json={'home_school': 'NCU', 'academic_year': '116', 'application_round': '第一梯次', 'preferences': [{'rank': 1, 'school_name': partner('龍谷').school_name}]})
+    response = TestClient(create_app(tmp_path)).post('/application-plan/evaluate', json={'home_school': '國立中央大學', 'academic_year': '116', 'application_round': '第一梯次', 'preferences': [{'rank': 1, 'school_name': partner('龍谷').school_name}]})
     assert response.status_code == 200
     tasks = response.json()['tasks']
-    for title, names, count in [('龍谷初次申請與十項參考文件', RYU_INITIAL, 10), ('龍谷等候交換宿舍另送申請資訊', RYU_HOUSING, 2), ('龍谷到校orientation', RYU_ARRIVAL, 2)]:
-        task = next(t for t in tasks if title in t['title'])
+    for phase, names, count in [('提名後外校申請', RYU_INITIAL, 10), ('住宿準備', RYU_HOUSING, 2), ('到校準備', RYU_ARRIVAL, 2)]:
+        task = next(t for t in tasks if t['phase'] == phase and set(names) <= {d['requirement_name'] for d in t['document_applicability']})
         assert task['needs_confirmation'] and task['official_deadline_at'] is None
         assert len(task['document_applicability']) == count
         assert {d['requirement_name'] for d in task['document_applicability']} >= set(names)
