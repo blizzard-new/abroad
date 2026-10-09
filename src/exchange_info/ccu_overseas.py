@@ -7,7 +7,14 @@ import json
 import re
 from functools import lru_cache
 
-from .ccu_sources import BUNDLE, CHECKED_AT, HOME, require_usable_source
+from .ccu_sources import (
+    BUNDLE,
+    CHECKED_AT,
+    HOME,
+    describe_evidence,
+    describe_evidence_list,
+    require_usable_source,
+)
 from .models import (
     ApplicationDocumentRequirement,
     ApplicationStep,
@@ -243,15 +250,7 @@ def apply_overseas_review(partner: PartnerUniversity) -> PartnerUniversity:
 
 
 def describe_field(key: str, field: PartnerExchangeDetailField) -> str:
-    evidence = field.evidence[0] if field.evidence else None
-    scope = ""
-    if evidence:
-        pages = (
-            "；PDF第" + "、".join(map(str, evidence.source_pages)) + "頁"
-            if evidence.source_pages
-            else "；官方文件／網頁原文"
-        )
-        scope = f"（{evidence.academic_year}{pages}；查核{evidence.checked_at.date().isoformat()}）"
+    scope = "（" + describe_evidence_list(field.evidence) + "）" if field.evidence else ""
     return f"{LABELS[key]} · {STATUS_LABELS[field.status]}：{field.value or field.reason}{scope}"
 
 
@@ -369,7 +368,7 @@ def enrich_workflow(workflow, partner: PartnerUniversity):
         refs.update({e["source_url"]: ExchangeFieldEvidence.model_validate(e) for e in guide["evidence"]})
     workflow.sources.extend(
         ApplicationWorkflowSource(
-            title="合作校接收資料（逐欄年度另見詳情）",
+            title="合作校接收資料 · " + describe_evidence(ev),
             source_url=url,
             role="partner_university",
             authority="partner_official",
@@ -435,7 +434,7 @@ def destination_profile(partner: PartnerUniversity) -> DestinationProfile:
         student_guide_sections=sections,
         sources=[
             SourceReference(
-                title="合作校生活資料（適用年度逐欄標示）",
+                title="合作校生活資料 · " + describe_evidence(ev),
                 source_url=url,
                 category=PageCategory.PARTNER_SCHOOL,
                 summary=f"{ev.academic_year}；查核{ev.checked_at.date().isoformat()}；" + (ev.excerpt or ""),

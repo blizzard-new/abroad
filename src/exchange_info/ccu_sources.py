@@ -36,6 +36,36 @@ def require_usable_source(source):
     if ("ignore_https_errors=True" in source.get("acquisition_method", "")
             or not source_security_record(source).get("current_use_allowed", True)):
         raise ValueError("Historical insecure CCU acquisition cannot support current mappings")
+
+
+@lru_cache(maxsize=1)
+def source_formats():
+    rows = json.loads((BUNDLE / "overseas-source-registry.json").read_text())
+    return {row["source_url"]: row.get("status", "") for row in rows}
+
+
+def describe_evidence(evidence):
+    """Label each source independently; extracted HTML/JSON indices are not PDF pages."""
+    ev = evidence if isinstance(evidence, dict) else evidence.model_dump(mode="json")
+    url = ev["source_url"]
+    kind = source_formats().get(url, "")
+    if "影像" in (ev.get("academic_year") or "") or kind == "image":
+        location = "官方校曆影像原文"
+    elif "/formapi/" in url or kind == "json":
+        location = "公開題目API原文"
+    elif "pdf" in kind or url.split("?")[0].lower().endswith(".pdf"):
+        pages = ev.get("source_pages", [])
+        location = "PDF第" + "、".join(map(str, pages)) + "頁" if pages else "官方PDF原文"
+    else:
+        location = "官方文件／網頁原文"
+    checked = ev["checked_at"].split("T")[0]
+    return f"{ev.get('academic_year') or '年度未核實'}；{location}；查核{checked}"
+
+
+def describe_evidence_list(evidence):
+    return "；".join(f"依據{i}：{describe_evidence(ev)}" for i, ev in enumerate(evidence, 1))
+
+
 NEWS_URL = "https://oia.ccu.edu.tw/p/412-1008-3408.php?Lang=zh-tw"
 ANNOUNCEMENT_URL = "https://oia.ccu.edu.tw/p/406-1008-93586,r1714.php?Lang=zh-tw"
 PARTNERS_URL = "https://oia.ccu.edu.tw/var/file/8/1008/img/1130/717520038.pdf"

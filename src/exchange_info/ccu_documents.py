@@ -8,7 +8,7 @@ import re
 from functools import lru_cache
 from urllib.parse import unquote
 
-from .ccu_sources import BUNDLE, require_usable_source
+from .ccu_sources import BUNDLE, describe_evidence_list, require_usable_source
 from .models import (
     ApplicationDocumentRequirement,
     ApplicationStep,
@@ -199,14 +199,8 @@ def enrich_documents(workflow, partner):
         )
         target = targets[item["stage"]]
         target.document_requirements.append(requirement)
-        ev = item["evidence"][0]
-        pages = (
-            "；PDF第" + "、".join(map(str, ev["source_pages"])) + "頁"
-            if ev["source_pages"]
-            else "；官方原文"
-        )
         target.details.append(
-            f"{requirement.name} · 階段{item['stage']}；{ev['academic_year']}{pages}；查核{ev['checked_at'].split('T')[0]}"
+            f"{requirement.name} · 階段{item['stage']}；{describe_evidence_list(item['evidence'])}"
         )
         target.source_urls = list(
             dict.fromkeys([*target.source_urls, *requirement.source_urls])
