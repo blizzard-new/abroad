@@ -73,13 +73,17 @@ def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,nam
         expect(application).to_contain_text('錄取後才通知宿舍')
     elif slug=='chuo':
         visa=application.locator('.workflow-step').filter(has=page.locator(':scope > summary').filter(has_text='行前COE／入學許可與Student visa')).first
-        arrival=application.locator('.workflow-step').filter(has=page.locator(':scope > summary').filter(has_text='到校orientation及正式選課')).first
+        arrival=application.locator('.workflow-step').filter(has=page.locator(':scope > summary').filter(has_text='到校新生說明會及正式選課')).first
         expect(visa.locator(':scope > summary')).to_contain_text('行前準備')
         expect(arrival.locator(':scope > summary')).to_contain_text('抵達後')
         visa.locator(':scope > summary').click()
         arrival.locator(':scope > summary').click()
         expect(visa).to_contain_text('入境日本前須先取得COE、入學許可與Student visa')
-        expect(arrival).to_contain_text('orientation期間完成正式選課')
+        expect(arrival).to_contain_text('期間完成正式選課')
+        visa.scroll_into_view_if_needed()
+        page.screenshot(path=str(out/f'ncu-freeze-chuo-before-entry-{width}.png'))
+        arrival.scroll_into_view_if_needed()
+        page.screenshot(path=str(out/f'ncu-freeze-chuo-after-arrival-{width}.png'))
         for term in ['C1本科或C2研究所','Part2 J＋K','Kenkyusei原件明免']:
             expect(application).to_contain_text(term)
         plan=group.locator('.workflow-documents > li').filter(has_text='C1本科或C2')
@@ -92,6 +96,8 @@ def test_ncu_reference_scope_and_student_content(page,live_server,width,slug,nam
         visa=application.locator('.workflow-step').filter(has=page.locator(':scope > summary').filter(has_text='錄取後Welcome Pack／房源結果與visa')).first
         visa.locator(':scope > summary').click()
         expect(visa).to_contain_text('收到錄取及e-COE後申請visa；取得visa後才購票')
+        visa.scroll_into_view_if_needed()
+        page.screenshot(path=str(out/f'ncu-freeze-kansai-visa-ticket-{width}.png'))
         expect(group).to_contain_text('胸片≤6月')
         expect(group).to_contain_text('medical information')
         expect(group).to_contain_text('不能硬判發照三月')

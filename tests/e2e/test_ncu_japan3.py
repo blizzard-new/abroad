@@ -97,6 +97,8 @@ def test_ncu_japan3_actual_language_packet_read_scope_and_life(
         expect(coe.locator(':scope > summary')).to_contain_text('校方COE通知後（可早於正式錄取）')
         expect(coe).to_contain_text('收到校方正式COE通知後')
         expect(coe).to_contain_text('並非所有申請人可立即辦理')
+        coe.scroll_into_view_if_needed()
+        page.screenshot(path=str(out / f'ncu-freeze-tohoku-coe-notice-{width}.png'))
         for text in ['再次上傳護照PDF', 'Proceeding', 'ID card／舊護照', 'JASSO證明與資料核定與否皆禁用']:
             expect(coe).to_contain_text(text)
         expect(step('銀行：只有JASSO')).to_be_visible()
