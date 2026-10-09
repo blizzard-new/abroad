@@ -137,10 +137,21 @@ def test_all_ntu_destinations_have_reviewed_or_explicitly_missing_overlays():
 
 def test_error_page_navigation_is_not_served_as_student_life_evidence():
     records = list(life._bundled_ntu_research().values())
+    assert len(records) == 288
     assert sum(len(row.evidence) for row in records) == 1622
     akita = next(row for row in records if row.school_name == "秋田大學")
-    assert akita.status == "unavailable" and not akita.evidence
+    assert akita.status == "partial" and akita.evidence
+    assert not any("404" in source.url for row in akita.evidence for source in row.sources)
     assert any("已排除錯誤頁" in note for note in akita.notes)
+
+
+def test_program_suffix_does_not_mix_distinct_universities_or_cache(tmp_path):
+    names = ["夏威夷大學希羅分校", "奧瑞岡大學", "夏威夷大學瑪諾亞分校"]
+    partners = [PartnerUniversity(school_name=name + "（E交換學生計畫、V訪問學生計畫）",
+        country="美國", program_type="交換學生", source_url="https://oia.ntu.edu.tw/") for name in names]
+    assert len({life._cache_path(partner, tmp_path) for partner in partners}) == 3
+    for partner in partners:
+        assert life.read_research(partner, tmp_path).school_name == partner.school_name
 
 
 def test_ntu_public_api_serves_photos_locations_and_life_without_network(tmp_path, monkeypatch):

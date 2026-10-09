@@ -21,6 +21,7 @@ from .life_sources import fetch_public_bytes, public_https_url, read_life_page
 from .models import DestinationProfile, PartnerUniversity, StudentExperienceSource
 from .public_translation import cached_translation, needs_translation, translate_public_excerpts
 from .school_content import school_field_addition
+from .school_identity import school_identity_key
 from .university_locations import UniversityLocation
 from .web_search import search_text
 
@@ -117,14 +118,14 @@ class SchoolLifeContext(BaseModel):
 
 
 def _identity(partner: PartnerUniversity) -> tuple[str, str]:
-    return school_search_name(partner.school_name).casefold(), partner.country or ""
+    return school_identity_key(partner.school_name), partner.country or ""
 
 
 def reference_record(partner: PartnerUniversity) -> dict:
     if not REFERENCE_DATA.exists():
         return {}
     records = json.loads(REFERENCE_DATA.read_text(encoding="utf-8"))
-    name, country = _identity(partner)
+    name, country = school_search_name(partner.school_name).casefold(), partner.country or ""
     return next((row for row in records if row["identity"].casefold() == name and row["country"] == country), {})
 
 
@@ -162,7 +163,7 @@ def _bundled_ntu_research() -> dict[tuple[str, str], LifeResearchSnapshot]:
             try:
                 row = reviewed_life_snapshot(LifeResearchSnapshot.model_validate_json(line))
                 if row.extraction_version == EXTRACTION_VERSION:
-                    records[(school_search_name(row.school_name).casefold(), row.country or "")] = row
+                    records[(school_identity_key(row.school_name), row.country or "")] = row
             except ValueError:
                 continue
     return records
@@ -176,7 +177,7 @@ def read_research(partner: PartnerUniversity, data_dir: Path) -> LifeResearchSna
         if raw.get("extraction_version") != EXTRACTION_VERSION:
             raw = {}
         snapshot = LifeResearchSnapshot.model_validate(raw)
-        if snapshot.country == partner.country and school_search_name(snapshot.school_name).casefold() == _identity(partner)[0]:
+        if snapshot.country == partner.country and school_identity_key(snapshot.school_name) == _identity(partner)[0]:
             if snapshot.evidence:
                 return snapshot
             empty_cache = snapshot
