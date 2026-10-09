@@ -1,0 +1,16 @@
+{
+  "tested_commit": "4e6cabd073e4792f94959545efeb4e323fefc3f5",
+  "jsonl_workspace_real_browser": "N1 persisted and restored; numeric English score remained null",
+  "supabase_workspace_jlpt_api_integration": "not specifically exercised; no production DB access",
+  "read_only_sql_evidence": {
+    "file": "supabase/migrations/20261002120000_workspace_selection_and_planning.sql",
+    "sha256": "2a3e08feadf3dfb663bb866b060b3a72eb4b47bea269e49391cc9ee55d1fb0d8",
+    "line_start": 170,
+    "line_end": 176,
+    "quote": "  if jsonb_typeof(p_candidate_workspace -> 'selection_conditions') = 'object' then\n    if not (p_candidate_workspace -> 'selection_conditions' ? 'profile')\n       or jsonb_typeof(p_candidate_workspace -> 'selection_conditions' -> 'profile') not in ('object', 'null')\n       or exists (select 1 from jsonb_object_keys(p_candidate_workspace -> 'selection_conditions') as field(name)\n                  where name <> 'profile') then\n      return jsonb_build_object('status', 'invalid_request', 'source', 'selection_conditions');\n    end if;",
+    "interpretation": "Nested profile is validated as object/null; no field-level key whitelist excludes jlpt_level. No SQL or schema mutation required."
+  },
+  "remote_supabase_runtime": "Existing isolated runtime suite is a separate CI check; not presented as a specific JLPT persistence integration test",
+  "source_equivalence_evidence": "runtime-source-equivalence.json",
+  "execution_scope": "Read-only source recheck; real browser cases have separate fresh candidate JUnit."
+}

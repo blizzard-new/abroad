@@ -1,0 +1,661 @@
+{
+  "total_count": 4,
+  "jobs": [
+    {
+      "id": 113613253994,
+      "run_id": 37866154237,
+      "workflow_name": "Web quality",
+      "head_branch": "data/tku-exchange-20261008",
+      "run_url": "https://api.github.com/repos/blizzard-new/abroad/actions/runs/37866154237",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU62qx88AAAAac-Ctag",
+      "head_sha": "4e6cabd073e4792f94959545efeb4e323fefc3f5",
+      "url": "https://api.github.com/repos/blizzard-new/abroad/actions/jobs/113613253994",
+      "html_url": "https://github.com/blizzard-new/abroad/actions/runs/37866154237/job/113613253994",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-09T00:42:44Z",
+      "started_at": "2026-10-09T00:42:46Z",
+      "completed_at": "2026-10-09T00:52:56Z",
+      "name": "test (3)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-09T00:42:47Z",
+          "completed_at": "2026-10-09T00:42:49Z"
+        },
+        {
+          "name": "Check out repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-09T00:42:49Z",
+          "completed_at": "2026-10-09T00:42:54Z"
+        },
+        {
+          "name": "Set up Python",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-09T00:42:54Z",
+          "completed_at": "2026-10-09T00:42:54Z"
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-09T00:42:54Z",
+          "completed_at": "2026-10-09T00:42:55Z"
+        },
+        {
+          "name": "Set isolated test data directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-09T00:42:55Z",
+          "completed_at": "2026-10-09T00:42:55Z"
+        },
+        {
+          "name": "Install project and browser",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-09T00:42:55Z",
+          "completed_at": "2026-10-09T00:43:25Z"
+        },
+        {
+          "name": "Check Python and JavaScript syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-09T00:43:25Z",
+          "completed_at": "2026-10-09T00:43:26Z"
+        },
+        {
+          "name": "Check frozen OpenAPI contract",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-09T00:43:26Z",
+          "completed_at": "2026-10-09T00:43:29Z"
+        },
+        {
+          "name": "Parse Supabase migrations and function bodies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-09T00:43:29Z",
+          "completed_at": "2026-10-09T00:43:29Z"
+        },
+        {
+          "name": "Audit runtime dependencies for known vulnerabilities",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-09T00:43:29Z",
+          "completed_at": "2026-10-09T00:43:38Z"
+        },
+        {
+          "name": "Validate isolated Supabase runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-09T00:43:38Z",
+          "completed_at": "2026-10-09T00:44:59Z"
+        },
+        {
+          "name": "Run Web test suite",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 12,
+          "started_at": "2026-10-09T00:44:59Z",
+          "completed_at": "2026-10-09T00:52:53Z"
+        },
+        {
+          "name": "Confirm bundled official data was not mutated",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-09T00:52:53Z",
+          "completed_at": "2026-10-09T00:52:53Z"
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 24,
+          "started_at": "2026-10-09T00:52:53Z",
+          "completed_at": "2026-10-09T00:52:53Z"
+        },
+        {
+          "name": "Post Set up Python",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 25,
+          "started_at": "2026-10-09T00:52:53Z",
+          "completed_at": "2026-10-09T00:52:53Z"
+        },
+        {
+          "name": "Post Check out repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-10-09T00:52:53Z",
+          "completed_at": "2026-10-09T00:52:54Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-10-09T00:52:54Z",
+          "completed_at": "2026-10-09T00:52:54Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/blizzard-new/abroad/check-runs/113613253994",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000022,
+      "runner_name": "GitHub Actions 1000000022",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 113613254218,
+      "run_id": 37866154237,
+      "workflow_name": "Web quality",
+      "head_branch": "data/tku-exchange-20261008",
+      "run_url": "https://api.github.com/repos/blizzard-new/abroad/actions/runs/37866154237",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU62qx88AAAAac-CuSg",
+      "head_sha": "4e6cabd073e4792f94959545efeb4e323fefc3f5",
+      "url": "https://api.github.com/repos/blizzard-new/abroad/actions/jobs/113613254218",
+      "html_url": "https://github.com/blizzard-new/abroad/actions/runs/37866154237/job/113613254218",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-09T00:42:44Z",
+      "started_at": "2026-10-09T00:42:46Z",
+      "completed_at": "2026-10-09T00:59:48Z",
+      "name": "test (1)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-09T00:42:47Z",
+          "completed_at": "2026-10-09T00:42:48Z"
+        },
+        {
+          "name": "Check out repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-09T00:42:48Z",
+          "completed_at": "2026-10-09T00:42:56Z"
+        },
+        {
+          "name": "Set up Python",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-09T00:42:56Z",
+          "completed_at": "2026-10-09T00:42:56Z"
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-09T00:42:56Z",
+          "completed_at": "2026-10-09T00:43:01Z"
+        },
+        {
+          "name": "Set isolated test data directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-09T00:43:01Z",
+          "completed_at": "2026-10-09T00:43:02Z"
+        },
+        {
+          "name": "Install project and browser",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-09T00:43:02Z",
+          "completed_at": "2026-10-09T00:43:50Z"
+        },
+        {
+          "name": "Check Python and JavaScript syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-09T00:43:50Z",
+          "completed_at": "2026-10-09T00:43:51Z"
+        },
+        {
+          "name": "Check frozen OpenAPI contract",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-09T00:43:51Z",
+          "completed_at": "2026-10-09T00:43:55Z"
+        },
+        {
+          "name": "Parse Supabase migrations and function bodies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-09T00:43:55Z",
+          "completed_at": "2026-10-09T00:43:56Z"
+        },
+        {
+          "name": "Audit runtime dependencies for known vulnerabilities",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-09T00:43:56Z",
+          "completed_at": "2026-10-09T00:44:08Z"
+        },
+        {
+          "name": "Validate isolated Supabase runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-09T00:44:08Z",
+          "completed_at": "2026-10-09T00:45:43Z"
+        },
+        {
+          "name": "Run Web test suite",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 12,
+          "started_at": "2026-10-09T00:45:43Z",
+          "completed_at": "2026-10-09T00:59:44Z"
+        },
+        {
+          "name": "Confirm bundled official data was not mutated",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-09T00:59:44Z",
+          "completed_at": "2026-10-09T00:59:44Z"
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 24,
+          "started_at": "2026-10-09T00:59:44Z",
+          "completed_at": "2026-10-09T00:59:44Z"
+        },
+        {
+          "name": "Post Set up Python",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 25,
+          "started_at": "2026-10-09T00:59:44Z",
+          "completed_at": "2026-10-09T00:59:44Z"
+        },
+        {
+          "name": "Post Check out repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-10-09T00:59:44Z",
+          "completed_at": "2026-10-09T00:59:45Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-10-09T00:59:45Z",
+          "completed_at": "2026-10-09T00:59:45Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/blizzard-new/abroad/check-runs/113613254218",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000023,
+      "runner_name": "GitHub Actions 1000000023",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 113613254266,
+      "run_id": 37866154237,
+      "workflow_name": "Web quality",
+      "head_branch": "data/tku-exchange-20261008",
+      "run_url": "https://api.github.com/repos/blizzard-new/abroad/actions/runs/37866154237",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU62qx88AAAAac-Cueg",
+      "head_sha": "4e6cabd073e4792f94959545efeb4e323fefc3f5",
+      "url": "https://api.github.com/repos/blizzard-new/abroad/actions/jobs/113613254266",
+      "html_url": "https://github.com/blizzard-new/abroad/actions/runs/37866154237/job/113613254266",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-09T00:42:44Z",
+      "started_at": "2026-10-09T00:42:46Z",
+      "completed_at": "2026-10-09T00:56:27Z",
+      "name": "test (2)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-09T00:43:23Z",
+          "completed_at": "2026-10-09T00:43:23Z"
+        },
+        {
+          "name": "Check out repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-09T00:43:23Z",
+          "completed_at": "2026-10-09T00:43:28Z"
+        },
+        {
+          "name": "Set up Python",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-09T00:43:28Z",
+          "completed_at": "2026-10-09T00:43:29Z"
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-09T00:43:29Z",
+          "completed_at": "2026-10-09T00:43:29Z"
+        },
+        {
+          "name": "Set isolated test data directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-09T00:43:29Z",
+          "completed_at": "2026-10-09T00:43:30Z"
+        },
+        {
+          "name": "Install project and browser",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-09T00:43:30Z",
+          "completed_at": "2026-10-09T00:44:04Z"
+        },
+        {
+          "name": "Check Python and JavaScript syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-09T00:44:04Z",
+          "completed_at": "2026-10-09T00:44:05Z"
+        },
+        {
+          "name": "Check frozen OpenAPI contract",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-09T00:44:05Z",
+          "completed_at": "2026-10-09T00:44:10Z"
+        },
+        {
+          "name": "Parse Supabase migrations and function bodies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-09T00:44:10Z",
+          "completed_at": "2026-10-09T00:44:10Z"
+        },
+        {
+          "name": "Audit runtime dependencies for known vulnerabilities",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-09T00:44:10Z",
+          "completed_at": "2026-10-09T00:44:28Z"
+        },
+        {
+          "name": "Validate isolated Supabase runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-09T00:44:28Z",
+          "completed_at": "2026-10-09T00:45:53Z"
+        },
+        {
+          "name": "Run Web test suite",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 12,
+          "started_at": "2026-10-09T00:45:53Z",
+          "completed_at": "2026-10-09T00:56:25Z"
+        },
+        {
+          "name": "Confirm bundled official data was not mutated",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-09T00:56:25Z",
+          "completed_at": "2026-10-09T00:56:25Z"
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 24,
+          "started_at": "2026-10-09T00:56:25Z",
+          "completed_at": "2026-10-09T00:56:25Z"
+        },
+        {
+          "name": "Post Set up Python",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 25,
+          "started_at": "2026-10-09T00:56:25Z",
+          "completed_at": "2026-10-09T00:56:25Z"
+        },
+        {
+          "name": "Post Check out repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-10-09T00:56:25Z",
+          "completed_at": "2026-10-09T00:56:25Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-10-09T00:56:25Z",
+          "completed_at": "2026-10-09T00:56:25Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/blizzard-new/abroad/check-runs/113613254266",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000024,
+      "runner_name": "GitHub Actions 1000000024",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 113613254302,
+      "run_id": 37866154237,
+      "workflow_name": "Web quality",
+      "head_branch": "data/tku-exchange-20261008",
+      "run_url": "https://api.github.com/repos/blizzard-new/abroad/actions/runs/37866154237",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU62qx88AAAAac-Cung",
+      "head_sha": "4e6cabd073e4792f94959545efeb4e323fefc3f5",
+      "url": "https://api.github.com/repos/blizzard-new/abroad/actions/jobs/113613254302",
+      "html_url": "https://github.com/blizzard-new/abroad/actions/runs/37866154237/job/113613254302",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-09T00:42:44Z",
+      "started_at": "2026-10-09T00:42:46Z",
+      "completed_at": "2026-10-09T01:06:45Z",
+      "name": "test (0)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-09T00:42:47Z",
+          "completed_at": "2026-10-09T00:42:48Z"
+        },
+        {
+          "name": "Check out repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-09T00:42:48Z",
+          "completed_at": "2026-10-09T00:42:54Z"
+        },
+        {
+          "name": "Set up Python",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-09T00:42:54Z",
+          "completed_at": "2026-10-09T00:42:55Z"
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-09T00:42:55Z",
+          "completed_at": "2026-10-09T00:42:55Z"
+        },
+        {
+          "name": "Set isolated test data directory",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-09T00:42:55Z",
+          "completed_at": "2026-10-09T00:42:56Z"
+        },
+        {
+          "name": "Install project and browser",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-09T00:42:56Z",
+          "completed_at": "2026-10-09T00:43:26Z"
+        },
+        {
+          "name": "Check Python and JavaScript syntax",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-09T00:43:26Z",
+          "completed_at": "2026-10-09T00:43:27Z"
+        },
+        {
+          "name": "Check frozen OpenAPI contract",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-09T00:43:27Z",
+          "completed_at": "2026-10-09T00:43:32Z"
+        },
+        {
+          "name": "Parse Supabase migrations and function bodies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-09T00:43:32Z",
+          "completed_at": "2026-10-09T00:43:32Z"
+        },
+        {
+          "name": "Audit runtime dependencies for known vulnerabilities",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-09T00:43:32Z",
+          "completed_at": "2026-10-09T00:43:44Z"
+        },
+        {
+          "name": "Validate isolated Supabase runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-09T00:43:44Z",
+          "completed_at": "2026-10-09T00:45:12Z"
+        },
+        {
+          "name": "Run Web test suite",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 12,
+          "started_at": "2026-10-09T00:45:12Z",
+          "completed_at": "2026-10-09T01:06:41Z"
+        },
+        {
+          "name": "Confirm bundled official data was not mutated",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-09T01:06:41Z",
+          "completed_at": "2026-10-09T01:06:42Z"
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 24,
+          "started_at": "2026-10-09T01:06:42Z",
+          "completed_at": "2026-10-09T01:06:42Z"
+        },
+        {
+          "name": "Post Set up Python",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 25,
+          "started_at": "2026-10-09T01:06:42Z",
+          "completed_at": "2026-10-09T01:06:42Z"
+        },
+        {
+          "name": "Post Check out repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-10-09T01:06:42Z",
+          "completed_at": "2026-10-09T01:06:42Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-10-09T01:06:42Z",
+          "completed_at": "2026-10-09T01:06:42Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/blizzard-new/abroad/check-runs/113613254302",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000025,
+      "runner_name": "GitHub Actions 1000000025",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

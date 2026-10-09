@@ -1,0 +1,1304 @@
+﻿2026-10-09T00:42:51.2807373Z Current runner version: '2.337.0'
+2026-10-09T00:42:51.2851751Z ##[group]Runner Image Provisioner
+2026-10-09T00:42:51.2853309Z Hosted Compute Agent
+2026-10-09T00:42:51.2854768Z Version: 20261002.596
+2026-10-09T00:42:51.2856133Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-09T00:42:51.2857476Z Build Date: 2026-10-02T22:28:27Z
+2026-10-09T00:42:51.2858619Z Worker ID: {5627b502-be26-4f47-91f3-292e0fd85bd6}
+2026-10-09T00:42:51.2859990Z Region: eastus
+2026-10-09T00:42:51.2860957Z Cloud: Azure
+2026-10-09T00:42:51.2862042Z ##[endgroup]
+2026-10-09T00:42:51.2864660Z ##[group]Operating System
+2026-10-09T00:42:51.2865750Z Ubuntu
+2026-10-09T00:42:51.2867130Z 24.04.5
+2026-10-09T00:42:51.2868142Z LTS
+2026-10-09T00:42:51.2869210Z ##[endgroup]
+2026-10-09T00:42:51.2870525Z ##[group]Runner Image
+2026-10-09T00:42:51.2871630Z Image: ubuntu-24.04
+2026-10-09T00:42:51.2872802Z Version: 20261004.327.1
+2026-10-09T00:42:51.2875568Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-09T00:42:51.2878658Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-09T00:42:51.2880533Z ##[endgroup]
+2026-10-09T00:42:51.2882731Z ##[group]GITHUB_TOKEN Permissions
+2026-10-09T00:42:51.2886331Z Contents: read
+2026-10-09T00:42:51.2887529Z Metadata: read
+2026-10-09T00:42:51.2888605Z ##[endgroup]
+2026-10-09T00:42:51.2891659Z Secret source: Actions
+2026-10-09T00:42:51.2893547Z Cache mode: write
+2026-10-09T00:42:51.2895777Z Prepare workflow directory
+2026-10-09T00:42:51.3378409Z Prepare all required actions
+2026-10-09T00:42:51.3450434Z Getting action download info
+2026-10-09T00:42:51.5668600Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-09T00:42:51.6798417Z Download action repository 'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-09T00:42:51.7873703Z Download action repository 'actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-09T00:42:51.9860461Z Complete job name: test (1)
+2026-10-09T00:42:52.0676977Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-09T00:42:52.0678089Z with:
+2026-10-09T00:42:52.0678573Z   repository: blizzard-new/abroad
+2026-10-09T00:42:52.0682468Z   token: ***
+2026-10-09T00:42:52.0682926Z   ssh-strict: true
+2026-10-09T00:42:52.0683401Z   ssh-user: git
+2026-10-09T00:42:52.0684294Z   persist-credentials: true
+2026-10-09T00:42:52.0684845Z   clean: true
+2026-10-09T00:42:52.0685311Z   sparse-checkout-cone-mode: true
+2026-10-09T00:42:52.0685857Z   fetch-depth: 1
+2026-10-09T00:42:52.0686301Z   fetch-tags: false
+2026-10-09T00:42:52.0686766Z   show-progress: true
+2026-10-09T00:42:52.0687223Z   lfs: false
+2026-10-09T00:42:52.0687651Z   submodules: false
+2026-10-09T00:42:52.0688120Z   set-safe-directory: true
+2026-10-09T00:42:52.0688645Z   allow-unsafe-pr-checkout: false
+2026-10-09T00:42:52.0689545Z ##[endgroup]
+2026-10-09T00:42:52.1870194Z Syncing repository: blizzard-new/abroad
+2026-10-09T00:42:52.1874120Z ##[group]Getting Git version info
+2026-10-09T00:42:52.1875872Z Working directory is '/home/runner/work/abroad/abroad'
+2026-10-09T00:42:52.1880002Z [command]/usr/bin/git version
+2026-10-09T00:42:52.2068218Z git version 2.55.0
+2026-10-09T00:42:52.2118139Z ##[endgroup]
+2026-10-09T00:42:52.2129669Z Temporarily overriding HOME='/home/runner/work/_temp/c6336306-9b68-47a9-b58e-19d974cd7163' before making global git config changes
+2026-10-09T00:42:52.2132463Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T00:42:52.2168404Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/abroad/abroad
+2026-10-09T00:42:52.2172742Z Deleting the contents of '/home/runner/work/abroad/abroad'
+2026-10-09T00:42:52.2176000Z ##[group]Initializing the repository
+2026-10-09T00:42:52.2184999Z [command]/usr/bin/git init /home/runner/work/abroad/abroad
+2026-10-09T00:42:52.2316347Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-09T00:42:52.2318632Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-09T00:42:52.2321025Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-09T00:42:52.2327635Z hint: call:
+2026-10-09T00:42:52.2329239Z hint:
+2026-10-09T00:42:52.2330626Z hint: 	git config --global init.defaultBranch <name>
+2026-10-09T00:42:52.2332286Z hint:
+2026-10-09T00:42:52.2333678Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-09T00:42:52.2336446Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-09T00:42:52.2338185Z hint:
+2026-10-09T00:42:52.2339717Z hint: 	git branch -m <name>
+2026-10-09T00:42:52.2340944Z hint:
+2026-10-09T00:42:52.2342611Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-09T00:42:52.2345200Z Initialized empty Git repository in /home/runner/work/abroad/abroad/.git/
+2026-10-09T00:42:52.2350318Z [command]/usr/bin/git remote add origin https://github.com/blizzard-new/abroad
+2026-10-09T00:42:52.2675391Z ##[endgroup]
+2026-10-09T00:42:52.2677921Z ##[group]Disabling automatic garbage collection
+2026-10-09T00:42:52.2679339Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-09T00:42:52.2702160Z ##[endgroup]
+2026-10-09T00:42:52.2703689Z ##[group]Setting up auth
+2026-10-09T00:42:52.2705395Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T00:42:52.2709238Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T00:42:52.4240620Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T00:42:52.4246551Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T00:42:52.4251351Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T00:42:52.4255411Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T00:42:52.4259046Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-09T00:42:52.4262334Z ##[endgroup]
+2026-10-09T00:42:52.4263681Z ##[group]Fetching the repository
+2026-10-09T00:42:52.4266648Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +a02788c17a2c285bb35f96b76f1bfe12064ee5a0:refs/remotes/pull/2/merge
+2026-10-09T00:42:56.1296472Z From https://github.com/blizzard-new/abroad
+2026-10-09T00:42:56.1310384Z  * [new ref]         a02788c17a2c285bb35f96b76f1bfe12064ee5a0 -> pull/2/merge
+2026-10-09T00:42:56.1315802Z ##[endgroup]
+2026-10-09T00:42:56.1317678Z ##[group]Determining the checkout info
+2026-10-09T00:42:56.1319704Z ##[endgroup]
+2026-10-09T00:42:56.1322716Z [command]/usr/bin/git sparse-checkout disable
+2026-10-09T00:42:56.1380416Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-09T00:42:56.1417868Z ##[group]Checking out the ref
+2026-10-09T00:42:56.1421039Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/2/merge
+2026-10-09T00:42:57.1663622Z Note: switching to 'refs/remotes/pull/2/merge'.
+2026-10-09T00:42:57.1664578Z 
+2026-10-09T00:42:57.1664982Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-09T00:42:57.1665824Z changes and commit them, and you can discard any commits you make in this
+2026-10-09T00:42:57.1666878Z state without impacting any branches by switching back to a branch.
+2026-10-09T00:42:57.1667401Z 
+2026-10-09T00:42:57.1674972Z If you want to create a new branch to retain commits you create, you may
+2026-10-09T00:42:57.1676675Z do so (now or later) by using -c with the switch command. Example:
+2026-10-09T00:42:57.1677386Z 
+2026-10-09T00:42:57.1677768Z   git switch -c <new-branch-name>
+2026-10-09T00:42:57.1678327Z 
+2026-10-09T00:42:57.1678695Z Or undo this operation with:
+2026-10-09T00:42:57.1679169Z 
+2026-10-09T00:42:57.1679455Z   git switch -
+2026-10-09T00:42:57.1679929Z 
+2026-10-09T00:42:57.1680425Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-09T00:42:57.1681066Z 
+2026-10-09T00:42:57.1681814Z HEAD is now at a02788c Merge 4e6cabd073e4792f94959545efeb4e323fefc3f5 into f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59
+2026-10-09T00:42:57.1716625Z ##[endgroup]
+2026-10-09T00:42:57.1768106Z [command]/usr/bin/git log -1 --format=%H
+2026-10-09T00:42:57.1798189Z a02788c17a2c285bb35f96b76f1bfe12064ee5a0
+2026-10-09T00:42:57.2081886Z ##[group]Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+2026-10-09T00:42:57.2082334Z with:
+2026-10-09T00:42:57.2082573Z   python-version: 3.12
+2026-10-09T00:42:57.2082828Z   check-latest: false
+2026-10-09T00:42:57.2085602Z   token: ***
+2026-10-09T00:42:57.2085831Z   update-environment: true
+2026-10-09T00:42:57.2086093Z   allow-prereleases: false
+2026-10-09T00:42:57.2086345Z   freethreaded: false
+2026-10-09T00:42:57.2086577Z ##[endgroup]
+2026-10-09T00:42:57.3465600Z ##[group]Installed versions
+2026-10-09T00:42:57.3570108Z (node:2073) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-09T00:42:57.3571696Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-09T00:42:57.3572893Z Successfully set up CPython (3.12.15)
+2026-10-09T00:42:57.3574183Z ##[endgroup]
+2026-10-09T00:42:57.3857936Z ##[group]Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+2026-10-09T00:42:57.3858623Z with:
+2026-10-09T00:42:57.3858950Z   node-version: 22
+2026-10-09T00:42:57.3859306Z   always-auth: false
+2026-10-09T00:42:57.3859669Z   check-latest: false
+2026-10-09T00:42:57.3865058Z   token: ***
+2026-10-09T00:42:57.3865398Z env:
+2026-10-09T00:42:57.3865823Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:42:57.3866569Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T00:42:57.3867290Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:42:57.3867938Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:42:57.3868590Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:42:57.3869243Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T00:42:57.3869793Z ##[endgroup]
+2026-10-09T00:42:57.5553442Z (node:2082) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-09T00:42:57.5565380Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-09T00:42:57.5567127Z Found in cache @ /opt/hostedtoolcache/node/22.23.3/x64
+2026-10-09T00:42:57.5569172Z ##[group]Environment details
+2026-10-09T00:42:58.7312204Z node: v22.23.3
+2026-10-09T00:42:58.7314796Z npm: 10.9.9
+2026-10-09T00:42:58.7335978Z yarn: 1.22.22
+2026-10-09T00:42:58.7356017Z ##[endgroup]
+2026-10-09T00:42:58.7520861Z ##[group]Run python - <<'PY'
+2026-10-09T00:42:58.7521246Z [36;1mpython - <<'PY'[0m
+2026-10-09T00:42:58.7521496Z [36;1mimport os[0m
+2026-10-09T00:42:58.7521744Z [36;1mfrom pathlib import Path[0m
+2026-10-09T00:42:58.7522124Z [36;1mwith Path(os.environ["GITHUB_ENV"]).open("a") as handle:[0m
+2026-10-09T00:42:58.7522712Z [36;1m    handle.write(f"EXCHANGE_INFO_DATA_DIR={os.environ['RUNNER_TEMP']}/exchange-info-tests\n")[0m
+2026-10-09T00:42:58.7523193Z [36;1mPY[0m
+2026-10-09T00:42:58.7829227Z shell: /usr/bin/bash -e {0}
+2026-10-09T00:42:58.7829527Z env:
+2026-10-09T00:42:58.7829820Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:42:58.7830326Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T00:42:58.7831027Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:42:58.7831441Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:42:58.7831905Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:42:58.7832329Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T00:42:58.7832684Z ##[endgroup]
+2026-10-09T00:42:58.8608269Z ##[group]Run python -m pip install --disable-pip-version-check uv==0.11.26
+2026-10-09T00:42:58.8608855Z [36;1mpython -m pip install --disable-pip-version-check uv==0.11.26[0m
+2026-10-09T00:42:58.8609262Z [36;1muv lock --check[0m
+2026-10-09T00:42:58.8609514Z [36;1muv sync --frozen --extra dev[0m
+2026-10-09T00:42:58.8609910Z [36;1muv run --frozen python -m playwright install --with-deps chromium[0m
+2026-10-09T00:42:58.8677699Z shell: /usr/bin/bash -e {0}
+2026-10-09T00:42:58.8677981Z env:
+2026-10-09T00:42:58.8678260Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:42:58.8678741Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T00:42:58.8679222Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:42:58.8679656Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:42:58.8680055Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:42:58.8680487Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T00:42:58.8680922Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T00:42:58.8681293Z ##[endgroup]
+2026-10-09T00:43:00.4311380Z Collecting uv==0.11.26
+2026-10-09T00:43:00.6736881Z   Downloading uv-0.11.26-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (11 kB)
+2026-10-09T00:43:00.7573530Z Downloading uv-0.11.26-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (26.3 MB)
+2026-10-09T00:43:01.7210293Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 26.3/26.3 MB 34.0 MB/s  0:00:00
+2026-10-09T00:43:01.7843129Z Installing collected packages: uv
+2026-10-09T00:43:02.0565488Z Successfully installed uv-0.11.26
+2026-10-09T00:43:02.1582600Z Using CPython 3.12.15 interpreter at: /opt/hostedtoolcache/Python/3.12.15/x64/bin/python3.12
+2026-10-09T00:43:02.1709622Z Resolved 87 packages in 0.78ms
+2026-10-09T00:43:02.1870029Z Using CPython 3.12.15 interpreter at: /opt/hostedtoolcache/Python/3.12.15/x64/bin/python3.12
+2026-10-09T00:43:02.1874960Z Creating virtual environment at: .venv
+2026-10-09T00:43:02.2695377Z    Building taiwan-exchange-info @ file:///home/runner/work/abroad/abroad
+2026-10-09T00:43:02.2938313Z Downloading brotli (1.4MiB)
+2026-10-09T00:43:02.3172478Z Downloading pip (1.7MiB)
+2026-10-09T00:43:02.3175894Z Downloading reportlab (1.9MiB)
+2026-10-09T00:43:02.3179089Z Downloading pillow (6.6MiB)
+2026-10-09T00:43:02.3195357Z Downloading pygments (1.2MiB)
+2026-10-09T00:43:02.3201409Z Downloading lxml (5.0MiB)
+2026-10-09T00:43:02.3205806Z Downloading uvloop (4.2MiB)
+2026-10-09T00:43:02.3209803Z Downloading primp (5.1MiB)
+2026-10-09T00:43:02.3233199Z Downloading pglast (6.0MiB)
+2026-10-09T00:43:02.3234479Z Downloading playwright (45.5MiB)
+2026-10-09T00:43:02.3244672Z Downloading cryptography (4.5MiB)
+2026-10-09T00:43:02.3257844Z Downloading pydantic-core (2.0MiB)
+2026-10-09T00:43:02.8242985Z  Downloaded brotli
+2026-10-09T00:43:02.9109767Z  Downloaded pydantic-core
+2026-10-09T00:43:03.1221218Z  Downloaded primp
+2026-10-09T00:43:03.4110851Z  Downloaded pillow
+2026-10-09T00:43:03.4206997Z  Downloaded uvloop
+2026-10-09T00:43:03.4268419Z  Downloaded pglast
+2026-10-09T00:43:03.5397187Z  Downloaded reportlab
+2026-10-09T00:43:03.5405333Z  Downloaded cryptography
+2026-10-09T00:43:03.5616589Z  Downloaded lxml
+2026-10-09T00:43:03.5656270Z  Downloaded pygments
+2026-10-09T00:43:03.5912365Z  Downloaded playwright
+2026-10-09T00:43:03.5941326Z  Downloaded pip
+2026-10-09T00:43:05.1569249Z       Built taiwan-exchange-info @ file:///home/runner/work/abroad/abroad
+2026-10-09T00:43:05.1578820Z Prepared 83 packages in 2.96s
+2026-10-09T00:43:05.2370489Z Installed 83 packages in 78ms
+2026-10-09T00:43:05.2371630Z  + annotated-doc==0.0.5
+2026-10-09T00:43:05.2372399Z  + annotated-types==0.8.0
+2026-10-09T00:43:05.2372975Z  + anyio==4.14.2
+2026-10-09T00:43:05.2373529Z  + attrs==26.1.0
+2026-10-09T00:43:05.2374400Z  + beautifulsoup4==4.15.0
+2026-10-09T00:43:05.2374984Z  + boolean-py==5.0
+2026-10-09T00:43:05.2375503Z  + brotli==1.2.0
+2026-10-09T00:43:05.2376293Z  + cachecontrol==0.14.4
+2026-10-09T00:43:05.2376871Z  + certifi==2026.7.22
+2026-10-09T00:43:05.2377393Z  + cffi==2.1.1
+2026-10-09T00:43:05.2377921Z  + charset-normalizer==3.5.1
+2026-10-09T00:43:05.2378487Z  + click==8.4.2
+2026-10-09T00:43:05.2378996Z  + cryptography==50.0.1
+2026-10-09T00:43:05.2379604Z  + cyclonedx-python-lib==11.12.0
+2026-10-09T00:43:05.2380197Z  + ddgs==9.15.0
+2026-10-09T00:43:05.2380771Z  + defusedxml==0.7.1
+2026-10-09T00:43:05.2381304Z  + fake-useragent==2.2.0
+2026-10-09T00:43:05.2381848Z  + fastapi==0.141.1
+2026-10-09T00:43:05.2382357Z  + filelock==3.32.4
+2026-10-09T00:43:05.2382865Z  + greenlet==3.5.5
+2026-10-09T00:43:05.2383375Z  + h11==0.16.0
+2026-10-09T00:43:05.2384057Z  + h2==4.4.1
+2026-10-09T00:43:05.2384625Z  + hpack==4.2.0
+2026-10-09T00:43:05.2385147Z  + httpcore==1.0.9
+2026-10-09T00:43:05.2385658Z  + httpcore2==2.12.0
+2026-10-09T00:43:05.2386185Z  + httptools==0.8.0
+2026-10-09T00:43:05.2386692Z  + httpx==0.28.1
+2026-10-09T00:43:05.2387192Z  + httpx2==2.12.0
+2026-10-09T00:43:05.2427150Z  + hyperframe==6.1.0
+2026-10-09T00:43:05.2427722Z  + idna==3.19
+2026-10-09T00:43:05.2428385Z  + iniconfig==2.3.0
+2026-10-09T00:43:05.2429056Z  + jsonschema==4.26.0
+2026-10-09T00:43:05.2429827Z  + jsonschema-specifications==2025.9.1
+2026-10-09T00:43:05.2430602Z  + license-expression==30.4.4
+2026-10-09T00:43:05.2431366Z  + lxml==6.1.2
+2026-10-09T00:43:05.2432065Z  + markdown-it-py==4.2.0
+2026-10-09T00:43:05.2432820Z  + mdurl==0.1.2
+2026-10-09T00:43:05.2433494Z  + msgpack==1.2.2
+2026-10-09T00:43:05.2434521Z  + packageurl-python==0.17.6
+2026-10-09T00:43:05.2435232Z  + packaging==26.3
+2026-10-09T00:43:05.2435882Z  + pglast==8.4
+2026-10-09T00:43:05.2436496Z  + pillow==12.3.0
+2026-10-09T00:43:05.2437127Z  + pip==26.2.1
+2026-10-09T00:43:05.2437747Z  + pip-api==0.0.34
+2026-10-09T00:43:05.2438383Z  + pip-audit==2.10.1
+2026-10-09T00:43:05.2439102Z  + pip-requirements-parser==32.0.1
+2026-10-09T00:43:05.2439853Z  + platformdirs==4.11.5
+2026-10-09T00:43:05.2440501Z  + playwright==1.62.0
+2026-10-09T00:43:05.2441162Z  + pluggy==1.6.0
+2026-10-09T00:43:05.2441790Z  + primp==1.3.1
+2026-10-09T00:43:05.2442431Z  + py-serializable==2.1.0
+2026-10-09T00:43:05.2443108Z  + pycparser==3.0
+2026-10-09T00:43:05.2444011Z  + pydantic==2.13.4
+2026-10-09T00:43:05.2444672Z  + pydantic-core==2.46.4
+2026-10-09T00:43:05.2445342Z  + pyee==13.0.1
+2026-10-09T00:43:05.2445959Z  + pygments==2.21.0
+2026-10-09T00:43:05.2446621Z  + pyparsing==3.3.2
+2026-10-09T00:43:05.2447302Z  + pypdf==6.16.2
+2026-10-09T00:43:05.2447966Z  + pytest==9.1.1
+2026-10-09T00:43:05.2448603Z  + python-docx==1.2.0
+2026-10-09T00:43:05.2449300Z  + python-dotenv==1.2.3
+2026-10-09T00:43:05.2449998Z  + python-multipart==0.0.32
+2026-10-09T00:43:05.2450666Z  + pyyaml==6.0.3
+2026-10-09T00:43:05.2451271Z  + referencing==0.37.0
+2026-10-09T00:43:05.2451913Z  + reportlab==5.0.1
+2026-10-09T00:43:05.2452533Z  + requests==2.34.2
+2026-10-09T00:43:05.2453157Z  + rich==15.0.0
+2026-10-09T00:43:05.2454065Z  + rpds-py==2026.6.3
+2026-10-09T00:43:05.2454757Z  + socksio==1.0.0
+2026-10-09T00:43:05.2455413Z  + sortedcontainers==2.4.0
+2026-10-09T00:43:05.2456080Z  + soupsieve==2.9.2
+2026-10-09T00:43:05.2456689Z  + starlette==1.6.0
+2026-10-09T00:43:05.2457617Z  + taiwan-exchange-info==0.1.0 (from file:///home/runner/work/abroad/abroad)
+2026-10-09T00:43:05.2458567Z  + tomli==2.4.1
+2026-10-09T00:43:05.2459191Z  + tomli-w==1.2.0
+2026-10-09T00:43:05.2459808Z  + truststore==0.10.4
+2026-10-09T00:43:05.2460474Z  + typing-extensions==4.16.0
+2026-10-09T00:43:05.2461164Z  + typing-inspection==0.4.4
+2026-10-09T00:43:05.2461827Z  + urllib3==2.7.0
+2026-10-09T00:43:05.2462415Z  + uvicorn==0.52.4
+2026-10-09T00:43:05.2463043Z  + uvloop==0.22.1
+2026-10-09T00:43:05.2464144Z  + watchfiles==1.2.0
+2026-10-09T00:43:05.2475370Z  + websockets==17.0.1
+2026-10-09T00:43:05.7005067Z Installing dependencies...
+2026-10-09T00:43:05.7070693Z Switching to root user to install dependencies...
+2026-10-09T00:43:05.8226530Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-09T00:43:05.8785277Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-10-09T00:43:05.8786308Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-10-09T00:43:05.9031471Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-10-09T00:43:05.9032847Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-10-09T00:43:05.9034342Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-10-09T00:43:06.0766233Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1375 kB]
+2026-10-09T00:43:06.1195734Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [306 kB]
+2026-10-09T00:43:06.1204942Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1702 kB]
+2026-10-09T00:43:06.1435386Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [342 kB]
+2026-10-09T00:43:06.1455161Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1761 kB]
+2026-10-09T00:43:06.1505373Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [401 kB]
+2026-10-09T00:43:06.1549706Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [55.0 kB]
+2026-10-09T00:43:06.1565091Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.3 kB]
+2026-10-09T00:43:06.2101282Z Get:15 https://packages.microsoft.com/ubuntu/24.04/prod noble/main all Packages [640 B]
+2026-10-09T00:43:06.2124831Z Get:16 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [474 kB]
+2026-10-09T00:43:06.2365395Z Get:17 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [12.3 kB]
+2026-10-09T00:43:06.2367058Z Get:18 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [531 kB]
+2026-10-09T00:43:06.3142840Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1116 kB]
+2026-10-09T00:43:06.3166829Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [228 kB]
+2026-10-09T00:43:06.3705049Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1220 kB]
+2026-10-09T00:43:06.3861764Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [245 kB]
+2026-10-09T00:43:06.3863171Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1632 kB]
+2026-10-09T00:43:06.3957802Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [376 kB]
+2026-10-09T00:43:06.3959646Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-security/multiverse Translation-en [11.6 kB]
+2026-10-09T00:43:09.6385657Z Fetched 12.2 MB in 1s (8244 kB/s)
+2026-10-09T00:43:10.4612341Z Reading package lists...
+2026-10-09T00:43:10.4860765Z Reading package lists...
+2026-10-09T00:43:10.6640760Z Building dependency tree...
+2026-10-09T00:43:10.6649674Z Reading state information...
+2026-10-09T00:43:10.8063402Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+2026-10-09T00:43:10.8064791Z libasound2t64 set to manually installed.
+2026-10-09T00:43:10.8066058Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-09T00:43:10.8067296Z libatk-bridge2.0-0t64 set to manually installed.
+2026-10-09T00:43:10.8068322Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-09T00:43:10.8069363Z libatk1.0-0t64 set to manually installed.
+2026-10-09T00:43:10.8070071Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+2026-10-09T00:43:10.8070747Z libatspi2.0-0t64 set to manually installed.
+2026-10-09T00:43:10.8072211Z libcairo2 is already the newest version (1.18.0-3build1).
+2026-10-09T00:43:10.8072821Z libcairo2 set to manually installed.
+2026-10-09T00:43:10.8073559Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.14).
+2026-10-09T00:43:10.8074522Z libcups2t64 set to manually installed.
+2026-10-09T00:43:10.8075546Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+2026-10-09T00:43:10.8076456Z libdbus-1-3 set to manually installed.
+2026-10-09T00:43:10.8077205Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.2).
+2026-10-09T00:43:10.8077870Z libdrm2 set to manually installed.
+2026-10-09T00:43:10.8078300Z libgbm1 is already the newest version (25.2.8-0ubuntu0.24.04.4).
+2026-10-09T00:43:10.8078727Z libgbm1 set to manually installed.
+2026-10-09T00:43:10.8079170Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.9).
+2026-10-09T00:43:10.8079808Z libglib2.0-0t64 set to manually installed.
+2026-10-09T00:43:10.8080523Z libnspr4 is already the newest version (2:4.35-1.1build1).
+2026-10-09T00:43:10.8081182Z libnspr4 set to manually installed.
+2026-10-09T00:43:10.8081879Z libnss3 is already the newest version (2:3.98-1ubuntu0.2).
+2026-10-09T00:43:10.8082524Z libnss3 set to manually installed.
+2026-10-09T00:43:10.8083084Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+2026-10-09T00:43:10.8083515Z libpango-1.0-0 set to manually installed.
+2026-10-09T00:43:10.8084435Z libx11-6 is already the newest version (2:1.8.7-1build1).
+2026-10-09T00:43:10.8085055Z libx11-6 set to manually installed.
+2026-10-09T00:43:10.8085455Z libxcb1 is already the newest version (1.15-1ubuntu2).
+2026-10-09T00:43:10.8086313Z libxcb1 set to manually installed.
+2026-10-09T00:43:10.8087106Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+2026-10-09T00:43:10.8087844Z libxcomposite1 set to manually installed.
+2026-10-09T00:43:10.8088300Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+2026-10-09T00:43:10.8088722Z libxdamage1 set to manually installed.
+2026-10-09T00:43:10.8089127Z libxext6 is already the newest version (2:1.3.4-1build2).
+2026-10-09T00:43:10.8089500Z libxext6 set to manually installed.
+2026-10-09T00:43:10.8089906Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+2026-10-09T00:43:10.8090650Z libxfixes3 set to manually installed.
+2026-10-09T00:43:10.8091418Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+2026-10-09T00:43:10.8092181Z libxkbcommon0 set to manually installed.
+2026-10-09T00:43:10.8092952Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+2026-10-09T00:43:10.8093658Z libxrandr2 set to manually installed.
+2026-10-09T00:43:10.8094626Z xvfb is already the newest version (2:21.1.12-1ubuntu1.8).
+2026-10-09T00:43:10.8095602Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+2026-10-09T00:43:10.8096622Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+2026-10-09T00:43:10.8097374Z libfontconfig1 set to manually installed.
+2026-10-09T00:43:10.8098132Z fonts-liberation is already the newest version (1:2.1.5-3).
+2026-10-09T00:43:10.8098863Z fonts-liberation set to manually installed.
+2026-10-09T00:43:10.8099582Z The following additional packages will be installed:
+2026-10-09T00:43:10.8100220Z   xfonts-encodings xfonts-utils
+2026-10-09T00:43:10.8100719Z Recommended packages:
+2026-10-09T00:43:10.8101214Z   fonts-ipafont-mincho fonts-tlwg-loma
+2026-10-09T00:43:10.8289830Z The following NEW packages will be installed:
+2026-10-09T00:43:10.8291227Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+2026-10-09T00:43:10.8296704Z   fonts-wqy-zenhei xfonts-cyrillic xfonts-encodings xfonts-scalable
+2026-10-09T00:43:10.8297730Z   xfonts-utils
+2026-10-09T00:43:10.8302171Z The following packages will be upgraded:
+2026-10-09T00:43:10.8308073Z   libfreetype6
+2026-10-09T00:43:10.8483983Z 1 upgraded, 9 newly installed, 0 to remove and 22 not upgraded.
+2026-10-09T00:43:10.8485001Z Need to get 21.5 MB of archives.
+2026-10-09T00:43:10.8488899Z After this operation, 79.5 MB of additional disk space will be used.
+2026-10-09T00:43:10.8490044Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-09T00:43:10.9495524Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+2026-10-09T00:43:11.1224387Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+2026-10-09T00:43:11.3523230Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+2026-10-09T00:43:11.4362639Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+2026-10-09T00:43:11.5944571Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+2026-10-09T00:43:11.8700621Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libfreetype6 amd64 2.13.2+dfsg-1ubuntu0.2 [403 kB]
+2026-10-09T00:43:11.9609510Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+2026-10-09T00:43:12.0576193Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+2026-10-09T00:43:12.1405161Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+2026-10-09T00:43:12.2326654Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+2026-10-09T00:43:12.4880962Z Fetched 21.5 MB in 1s (15.3 MB/s)
+2026-10-09T00:43:12.5116285Z Selecting previously unselected package fonts-ipafont-gothic.
+2026-10-09T00:43:12.5426097Z (Reading database ... 
+2026-10-09T00:43:12.5428796Z (Reading database ... 5%
+2026-10-09T00:43:12.5429237Z (Reading database ... 10%
+2026-10-09T00:43:12.5429642Z (Reading database ... 15%
+2026-10-09T00:43:12.5430081Z (Reading database ... 20%
+2026-10-09T00:43:12.5430518Z (Reading database ... 25%
+2026-10-09T00:43:12.5430987Z (Reading database ... 30%
+2026-10-09T00:43:12.5431414Z (Reading database ... 35%
+2026-10-09T00:43:12.5431836Z (Reading database ... 40%
+2026-10-09T00:43:12.5432263Z (Reading database ... 45%
+2026-10-09T00:43:12.5432692Z (Reading database ... 50%
+2026-10-09T00:43:12.5481040Z (Reading database ... 55%
+2026-10-09T00:43:12.6339285Z (Reading database ... 60%
+2026-10-09T00:43:12.7797728Z (Reading database ... 65%
+2026-10-09T00:43:13.2281325Z (Reading database ... 70%
+2026-10-09T00:43:13.9763978Z (Reading database ... 75%
+2026-10-09T00:43:14.1304331Z (Reading database ... 80%
+2026-10-09T00:43:14.2697867Z (Reading database ... 85%
+2026-10-09T00:43:14.4304007Z (Reading database ... 90%
+2026-10-09T00:43:14.5742437Z (Reading database ... 95%
+2026-10-09T00:43:14.5754611Z (Reading database ... 100%
+2026-10-09T00:43:14.5755547Z (Reading database ... 203191 files and directories currently installed.)
+2026-10-09T00:43:14.5788122Z Preparing to unpack .../0-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+2026-10-09T00:43:14.5906704Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-10-09T00:43:14.8252103Z Selecting previously unselected package fonts-freefont-ttf.
+2026-10-09T00:43:14.8378831Z Preparing to unpack .../1-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+2026-10-09T00:43:14.8387204Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-10-09T00:43:14.9259792Z Selecting previously unselected package fonts-tlwg-loma-otf.
+2026-10-09T00:43:14.9388257Z Preparing to unpack .../2-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+2026-10-09T00:43:14.9395028Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-10-09T00:43:14.9604675Z Selecting previously unselected package fonts-unifont.
+2026-10-09T00:43:14.9733545Z Preparing to unpack .../3-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+2026-10-09T00:43:14.9742506Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+2026-10-09T00:43:15.0885364Z Selecting previously unselected package fonts-wqy-zenhei.
+2026-10-09T00:43:15.1012397Z Preparing to unpack .../4-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+2026-10-09T00:43:15.1112044Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+2026-10-09T00:43:15.6020996Z Preparing to unpack .../5-libfreetype6_2.13.2+dfsg-1ubuntu0.2_amd64.deb ...
+2026-10-09T00:43:15.6063563Z Unpacking libfreetype6:amd64 (2.13.2+dfsg-1ubuntu0.2) over (2.13.2+dfsg-1ubuntu0.1) ...
+2026-10-09T00:43:15.6335697Z Selecting previously unselected package xfonts-encodings.
+2026-10-09T00:43:15.6442167Z Preparing to unpack .../6-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+2026-10-09T00:43:15.6454725Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-10-09T00:43:15.6744697Z Selecting previously unselected package xfonts-utils.
+2026-10-09T00:43:15.6862045Z Preparing to unpack .../7-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+2026-10-09T00:43:15.6874507Z Unpacking xfonts-utils (1:7.7+6build3) ...
+2026-10-09T00:43:15.7258299Z Selecting previously unselected package xfonts-cyrillic.
+2026-10-09T00:43:15.7385364Z Preparing to unpack .../8-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+2026-10-09T00:43:15.7395191Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-10-09T00:43:15.7748953Z Selecting previously unselected package xfonts-scalable.
+2026-10-09T00:43:15.7879312Z Preparing to unpack .../9-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+2026-10-09T00:43:15.7886521Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+2026-10-09T00:43:15.8335254Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+2026-10-09T00:43:15.8459775Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+2026-10-09T00:43:15.8477900Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+2026-10-09T00:43:15.8495460Z Setting up libfreetype6:amd64 (2.13.2+dfsg-1ubuntu0.2) ...
+2026-10-09T00:43:15.8513288Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+2026-10-09T00:43:15.8536007Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+2026-10-09T00:43:15.8599141Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+2026-10-09T00:43:15.8615305Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+2026-10-09T00:43:15.8634459Z Setting up xfonts-utils (1:7.7+6build3) ...
+2026-10-09T00:43:15.8672849Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+2026-10-09T00:43:15.8962436Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+2026-10-09T00:43:15.9239165Z Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+2026-10-09T00:43:15.9563198Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-10-09T00:43:15.9584899Z Not building database; man-db/auto-update is not 'true'.
+2026-10-09T00:43:15.9605955Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+2026-10-09T00:43:16.6908568Z 
+2026-10-09T00:43:16.6909358Z Running kernel seems to be up-to-date.
+2026-10-09T00:43:16.6911370Z 
+2026-10-09T00:43:16.6911597Z Restarting services...
+2026-10-09T00:43:16.6982032Z  systemctl restart php8.3-fpm.service
+2026-10-09T00:43:16.8135817Z 
+2026-10-09T00:43:16.8136789Z No containers need to be restarted.
+2026-10-09T00:43:16.8142120Z 
+2026-10-09T00:43:16.8142941Z No user sessions are running outdated binaries.
+2026-10-09T00:43:16.8144157Z 
+2026-10-09T00:43:16.8144957Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-10-09T00:43:17.6871972Z Downloading Chrome for Testing 151.0.7922.34 (playwright chromium v1234) from https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-linux64.zip
+2026-10-09T00:43:18.6960654Z |                                                                                |   0% of 184.3 MiB
+2026-10-09T00:43:19.1200592Z |■■■■■■■■                                                                        |  10% of 184.3 MiB
+2026-10-09T00:43:19.3212029Z |■■■■■■■■■■■■■■■■                                                                |  20% of 184.3 MiB
+2026-10-09T00:43:19.4456170Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 184.3 MiB
+2026-10-09T00:43:19.5863638Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 184.3 MiB
+2026-10-09T00:43:19.7192297Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 184.3 MiB
+2026-10-09T00:43:19.8402586Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 184.3 MiB
+2026-10-09T00:43:19.9265091Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 184.3 MiB
+2026-10-09T00:43:20.0424597Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 184.3 MiB
+2026-10-09T00:43:20.2153046Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 184.3 MiB
+2026-10-09T00:43:20.3185673Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 184.3 MiB
+2026-10-09T00:43:24.4599646Z Chrome for Testing 151.0.7922.34 (playwright chromium v1234) downloaded to /home/runner/.cache/ms-playwright/chromium-1234
+2026-10-09T00:43:24.4605162Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+2026-10-09T00:43:25.4871229Z |                                                                                |   0% of 2.3 MiB
+2026-10-09T00:43:25.5262146Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+2026-10-09T00:43:25.5423977Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+2026-10-09T00:43:25.5559439Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+2026-10-09T00:43:25.5683651Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+2026-10-09T00:43:25.5725212Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+2026-10-09T00:43:25.5830029Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+2026-10-09T00:43:25.5845543Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+2026-10-09T00:43:25.5902904Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+2026-10-09T00:43:25.5976131Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+2026-10-09T00:43:25.5995220Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+2026-10-09T00:43:25.6727890Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+2026-10-09T00:43:25.6730996Z Downloading Chrome Headless Shell 151.0.7922.34 (playwright chromium-headless-shell v1234) from https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-headless-shell-linux64.zip
+2026-10-09T00:43:26.6815143Z |                                                                                |   0% of 114.7 MiB
+2026-10-09T00:43:26.8320998Z |■■■■■■■■                                                                        |  10% of 114.7 MiB
+2026-10-09T00:43:26.9467891Z |■■■■■■■■■■■■■■■■                                                                |  20% of 114.7 MiB
+2026-10-09T00:43:27.0233514Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 114.7 MiB
+2026-10-09T00:43:27.1292754Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 114.7 MiB
+2026-10-09T00:43:27.1934257Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 114.7 MiB
+2026-10-09T00:43:27.2506036Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 114.7 MiB
+2026-10-09T00:43:27.3424843Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 114.7 MiB
+2026-10-09T00:43:27.3997092Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 114.7 MiB
+2026-10-09T00:43:27.4532225Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 114.7 MiB
+2026-10-09T00:43:27.5416789Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.7 MiB
+2026-10-09T00:43:31.0186257Z Chrome Headless Shell 151.0.7922.34 (playwright chromium-headless-shell v1234) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1234
+2026-10-09T00:43:31.1224705Z ##[group]Run uv run --frozen python -m compileall -q src
+2026-10-09T00:43:31.1225442Z [36;1muv run --frozen python -m compileall -q src[0m
+2026-10-09T00:43:31.1226044Z [36;1mnode --check src/exchange_info/static/app.js[0m
+2026-10-09T00:43:31.1226681Z [36;1mnode --check src/exchange_info/static/content-review.js[0m
+2026-10-09T00:43:31.1227395Z [36;1mnode --check src/exchange_info/static/icon-motion.js[0m
+2026-10-09T00:43:31.1332697Z shell: /usr/bin/bash -e {0}
+2026-10-09T00:43:31.1333127Z env:
+2026-10-09T00:43:31.1333577Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:31.1334803Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T00:43:31.1335548Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:31.1336204Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:31.1336865Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:31.1337575Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T00:43:31.1338331Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T00:43:31.1338936Z ##[endgroup]
+2026-10-09T00:43:31.9911891Z ##[group]Run uv run --frozen python scripts/export_openapi.py --check
+2026-10-09T00:43:31.9912750Z [36;1muv run --frozen python scripts/export_openapi.py --check[0m
+2026-10-09T00:43:32.0001558Z shell: /usr/bin/bash -e {0}
+2026-10-09T00:43:32.0002020Z env:
+2026-10-09T00:43:32.0002482Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:32.0003388Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T00:43:32.0004895Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:32.0005564Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:32.0006231Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:32.0006895Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T00:43:32.0007623Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T00:43:32.0008229Z ##[endgroup]
+2026-10-09T00:43:37.6649682Z OpenAPI contract is current: /home/runner/work/abroad/abroad/docs/api/openapi.json
+2026-10-09T00:43:37.8784571Z ##[group]Run uv run --frozen python scripts/validate_supabase_migrations.py
+2026-10-09T00:43:37.8785534Z [36;1muv run --frozen python scripts/validate_supabase_migrations.py[0m
+2026-10-09T00:43:37.8856077Z shell: /usr/bin/bash -e {0}
+2026-10-09T00:43:37.8856343Z env:
+2026-10-09T00:43:37.8856865Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:37.8857677Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T00:43:37.8858503Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:37.8859110Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:37.8859506Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:37.8859898Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T00:43:37.8860326Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T00:43:37.8860690Z ##[endgroup]
+2026-10-09T00:43:38.2659930Z 202607190001_ai_rag.sql: 25 statements, 1 SQL bodies, 0 PL/pgSQL units
+2026-10-09T00:43:38.2661367Z 202607280002_application_content_governance.sql: 17 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T00:43:38.2684882Z 20260728120722_accounts_workspaces.sql: 16 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T00:43:38.2686453Z 20260728121446_notifications.sql: 11 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T00:43:38.2704782Z 20260728130940_document_vault.sql: 25 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T00:43:38.2706325Z 20260728213255_email_verification_challenges.sql: 6 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T00:43:38.2724853Z 20260729100000_form_drafts.sql: 5 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T00:43:38.2745078Z 20260729143531_dual_application_workflow_review.sql: 3 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T00:43:38.2765515Z 20260807154026_application_workflow_revision_edit_history.sql: 2 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T00:43:38.2768667Z 20260819090000_destination_profile_review_events.sql: 7 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T00:43:38.2782602Z 20260819110000_destination_profile_promotion_events.sql: 6 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T00:43:38.2784629Z 20260819130000_destination_profile_publication_rollbacks.sql: 8 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T00:43:38.2786335Z 20260819150000_application_workflow_publication_rollbacks.sql: 6 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T00:43:38.2788055Z 20260819170000_application_workflow_publication_integrity.sql: 3 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T00:43:38.2789770Z 20260821190000_transient_auth_state.sql: 23 statements, 0 SQL bodies, 3 PL/pgSQL units
+2026-10-09T00:43:38.2791532Z 20260823100000_atomic_auth_account_mutations.sql: 25 statements, 0 SQL bodies, 6 PL/pgSQL units
+2026-10-09T00:43:38.2793251Z 20260823130000_atomic_workspace_and_suspension.sql: 44 statements, 0 SQL bodies, 9 PL/pgSQL units
+2026-10-09T00:43:38.2795229Z 20260823160000_atomic_public_community.sql: 123 statements, 3 SQL bodies, 17 PL/pgSQL units
+2026-10-09T00:43:38.2796995Z 20260824100000_atomic_private_community.sql: 60 statements, 6 SQL bodies, 3 PL/pgSQL units
+2026-10-09T00:43:38.2798643Z 20260829100000_atomic_account_deletion.sql: 27 statements, 1 SQL bodies, 6 PL/pgSQL units
+2026-10-09T00:43:38.2800666Z 20260830100000_application_workflow_issue_reports.sql: 29 statements, 0 SQL bodies, 4 PL/pgSQL units
+2026-10-09T00:43:38.2802432Z 20260901100000_atomic_application_content_governance.sql: 6 statements, 0 SQL bodies, 2 PL/pgSQL units
+2026-10-09T00:43:38.2804446Z 20260930100000_discussion_threads_reactions.sql: 29 statements, 0 SQL bodies, 7 PL/pgSQL units
+2026-10-09T00:43:38.2806097Z 20261002120000_workspace_selection_and_planning.sql: 5 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T00:43:38.2807593Z 20261003100000_open_school_boards.sql: 5 statements, 0 SQL bodies, 2 PL/pgSQL units
+2026-10-09T00:43:38.2809293Z 20261003110000_analytics.sql: 29 statements, 0 SQL bodies, 2 PL/pgSQL units
+2026-10-09T00:43:38.2825802Z 20261007100000_school_choice_replaces_student_card.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T00:43:38.2832261Z 20261008100000_user_feedback.sql: 7 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T00:43:38.2833564Z 20261008110000_revoke_rls_auto_enable_api_access.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T00:43:38.2839177Z 20261008120000_fix_match_document_chunks_search_path.sql: 1 statements, 0 SQL bodies, 0 PL/pgSQL units
+2026-10-09T00:43:38.2847034Z 20261008130000_ntu_school_board.sql: 1 statements, 0 SQL bodies, 1 PL/pgSQL units
+2026-10-09T00:43:38.2848147Z Validated 31 migrations: 556 statements, 11 SQL bodies, 68 PL/pgSQL units
+2026-10-09T00:43:38.2911771Z ##[group]Run uv run --frozen python scripts/audit_python_dependencies.py
+2026-10-09T00:43:38.2912785Z [36;1muv run --frozen python scripts/audit_python_dependencies.py[0m
+2026-10-09T00:43:38.3004977Z shell: /usr/bin/bash -e {0}
+2026-10-09T00:43:38.3005419Z env:
+2026-10-09T00:43:38.3005886Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:38.3006670Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T00:43:38.3007450Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:38.3008191Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:38.3008905Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:43:38.3009617Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T00:43:38.3010398Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T00:43:38.3011054Z ##[endgroup]
+2026-10-09T00:44:00.2143679Z No known vulnerabilities found
+2026-10-09T00:44:00.2722800Z ##[group]Run uv run --frozen python scripts/validate_supabase_runtime.py
+2026-10-09T00:44:00.2723347Z [36;1muv run --frozen python scripts/validate_supabase_runtime.py[0m
+2026-10-09T00:44:00.2786955Z shell: /usr/bin/bash -e {0}
+2026-10-09T00:44:00.2787227Z env:
+2026-10-09T00:44:00.2787512Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:44:00.2787981Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T00:44:00.2788435Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:44:00.2788844Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:44:00.2789242Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:44:00.2789650Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T00:44:00.2790083Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T00:44:00.2790448Z ##[endgroup]
+2026-10-09T00:44:01.0446864Z Runtime Compose project: exchange-supabase-runtime-gh-3a95f20526-02540e47
+2026-10-09T00:45:23.6873210Z Starting isolated PostgreSQL...
+2026-10-09T00:45:23.6874392Z   migration applied: 202607190001_ai_rag.sql
+2026-10-09T00:45:23.6875535Z   migration applied: 202607280002_application_content_governance.sql
+2026-10-09T00:45:23.6876556Z   migration applied: 20260728120722_accounts_workspaces.sql
+2026-10-09T00:45:23.6877430Z   migration applied: 20260728121446_notifications.sql
+2026-10-09T00:45:23.6878230Z   migration applied: 20260728130940_document_vault.sql
+2026-10-09T00:45:23.6879612Z   migration applied: 20260728213255_email_verification_challenges.sql
+2026-10-09T00:45:23.6880474Z   migration applied: 20260729100000_form_drafts.sql
+2026-10-09T00:45:23.6881362Z   migration applied: 20260729143531_dual_application_workflow_review.sql
+2026-10-09T00:45:23.6882434Z   migration applied: 20260807154026_application_workflow_revision_edit_history.sql
+2026-10-09T00:45:23.6883518Z   migration applied: 20260819090000_destination_profile_review_events.sql
+2026-10-09T00:45:23.6884853Z   migration applied: 20260819110000_destination_profile_promotion_events.sql
+2026-10-09T00:45:23.6885921Z   migration applied: 20260819130000_destination_profile_publication_rollbacks.sql
+2026-10-09T00:45:23.6887017Z   migration applied: 20260819150000_application_workflow_publication_rollbacks.sql
+2026-10-09T00:45:23.6888129Z   migration applied: 20260819170000_application_workflow_publication_integrity.sql
+2026-10-09T00:45:23.6889096Z   migration applied: 20260821190000_transient_auth_state.sql
+2026-10-09T00:45:23.6890016Z   migration applied: 20260823100000_atomic_auth_account_mutations.sql
+2026-10-09T00:45:23.6890965Z   migration applied: 20260823130000_atomic_workspace_and_suspension.sql
+2026-10-09T00:45:23.6891867Z   migration applied: 20260823160000_atomic_public_community.sql
+2026-10-09T00:45:23.6892807Z   migration applied: 20260824100000_atomic_private_community.sql
+2026-10-09T00:45:23.6893701Z   migration applied: 20260829100000_atomic_account_deletion.sql
+2026-10-09T00:45:23.6894842Z   migration applied: 20260830100000_application_workflow_issue_reports.sql
+2026-10-09T00:45:23.6895878Z   migration applied: 20260901100000_atomic_application_content_governance.sql
+2026-10-09T00:45:23.6896878Z   migration applied: 20260930100000_discussion_threads_reactions.sql
+2026-10-09T00:45:23.6897847Z   migration applied: 20261002120000_workspace_selection_and_planning.sql
+2026-10-09T00:45:23.6898749Z   migration applied: 20261003100000_open_school_boards.sql
+2026-10-09T00:45:23.6899527Z   migration applied: 20261003110000_analytics.sql
+2026-10-09T00:45:23.6900427Z   migration applied: 20261007100000_school_choice_replaces_student_card.sql
+2026-10-09T00:45:23.6901342Z   migration applied: 20261008100000_user_feedback.sql
+2026-10-09T00:45:23.6902214Z   migration applied: 20261008110000_revoke_rls_auto_enable_api_access.sql
+2026-10-09T00:45:23.6903239Z   migration applied: 20261008120000_fix_match_document_chunks_search_path.sql
+2026-10-09T00:45:23.6904635Z   migration applied: 20261008130000_ntu_school_board.sql
+2026-10-09T00:45:23.6905476Z Starting two isolated PostgREST instances...
+2026-10-09T00:45:23.6906226Z Starting isolated Supabase Storage API...
+2026-10-09T00:45:23.6906978Z Validating RLS, grants and direct-DML denial...
+2026-10-09T00:45:23.6907727Z Validating transient-auth concurrency...
+2026-10-09T00:45:23.6908448Z Validating workspace CAS concurrency...
+2026-10-09T00:45:23.6909262Z Validating application-workflow issue report RPCs...
+2026-10-09T00:45:23.6910264Z Validating public/private community concurrency across two API instances...
+2026-10-09T00:45:23.6911481Z Validating late-failure rollback for public/private community transactions...
+2026-10-09T00:45:23.6912507Z Validating recursive Storage listing and orphan cleanup...
+2026-10-09T00:45:23.6913497Z Validating account-deletion rollback and real Storage cleanup...
+2026-10-09T00:45:23.6928300Z {"account_deletion": {"rollback_preserved_rows": 8, "storage_delete_replays": 1, "storage_jobs_completed": 1, "storage_objects_deleted": 1, "storage_timeout_receipts_preserved": 1, "workflow_issue_closed_deleted": 1, "workflow_issue_pending_deidentified": 2, "workflow_issue_purge_controls_preserved": 1, "workflow_issue_purged": 2, "workflow_issue_retention_shortened": 1, "workflow_issue_review_replays": 1, "workflow_issue_reviewer_deidentified": 1, "workflow_issue_rollback_preserved_rows": 4}, "cleanup_status": "passed", "community_multi_instance": {"postgrest_instances": 2, "private_message_block_races": 1, "private_message_blocked": 0, "private_message_commits": 1, "private_message_integrity_conflicts": 0, "private_opposite_invitations": 2, "private_report_review_commits": 1, "private_report_review_conflicts": 1, "public_idempotent_commits": 1, "public_idempotent_replays": 1, "public_parent_child_races": 1}, "community_rollbacks": {"late_failures_propagated": 6, "partial_rows": 0, "private_conversation_rollbacks": 1, "private_message_rollbacks": 1, "private_report_review_rollbacks": 1, "private_report_rollbacks": 1, "public_moderation_rollbacks": 1, "public_publication_rollbacks": 1}, "compose_project": "exchange-supabase-runtime-gh-3a95f20526-02540e47", "migration_count": 31, "permissions": {"browser_grants": 0, "rls_tables": 37, "tables": 37, "workflow_issue_service_rpcs": 3}, "status": "passed", "storage": {"nested_objects_listed": 2, "orphans_removed": 1, "referenced_preserved": 1}, "storage_api_scope": "real_storage_api_file_backend", "transient_auth": {"created": 1, "rate_limited": 7}, "workflow_issue_reports": {"missing_accounts_rejected": 2, "missing_reports_rejected": 1, "rate_limited": 1, "review_committed": 1, "review_idempotency_conflicts": 1, "review_idempotent_replays": 1, "review_status_conflicts": 1, "submit_idempotency_conflicts": 1, "submit_idempotent_replays": 2, "submitted_reports": 10, "terminal_review_conflicts": 1, "unsafe_source_urls_rejected": 6}, "workspace": {"committed": 1, "conflict": 1}}
+2026-10-09T00:45:23.7517574Z ##[group]Run uv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4 --junitxml "$RUNNER_TEMP/web-tests-$WEB_TEST_SHARD.xml"
+2026-10-09T00:45:23.7518672Z [36;1muv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4 --junitxml "$RUNNER_TEMP/web-tests-$WEB_TEST_SHARD.xml"[0m
+2026-10-09T00:45:23.7610081Z shell: /usr/bin/bash -e {0}
+2026-10-09T00:45:23.7610348Z env:
+2026-10-09T00:45:23.7610628Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:45:23.7611077Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T00:45:23.7611527Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:45:23.7611914Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:45:23.7612300Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:45:23.7612685Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T00:45:23.7613150Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T00:45:23.7613515Z   WEB_TEST_SHARD: 1
+2026-10-09T00:45:23.7613957Z ##[endgroup]
+2026-10-09T00:45:32.6534975Z {"shard": 1, "total_cases": 1757, "total_files": 179, "browser_cases_per_shard": [73, 73, 74, 73], "case_counts_per_shard": [1537, 73, 74, 73], "files_per_shard": [["tests/e2e/test_application_ui_refinements.py", "tests/e2e/test_conditions_account_sync.py", "tests/e2e/test_discovery_workspace.py", "tests/e2e/test_discussion_reader.py", "tests/e2e/test_document_workbench.py", "tests/e2e/test_open_catalog.py", "tests/e2e/test_school_chinese_content.py", "tests/e2e/test_web_next_phase.py", "tests/integration/test_local_ai_runtime.py", "tests/test_account_read_cache.py", "tests/test_account_workspace_api.py", "tests/test_advisor.py", "tests/test_advisor_mascot_contract.py", "tests/test_ai_gateway.py", "tests/test_ai_privacy.py", "tests/test_analytics_api.py", "tests/test_analytics_core.py", "tests/test_analytics_frontend_contract.py", "tests/test_analytics_report.py", "tests/test_api.py", "tests/test_application_document_catalog.py", "tests/test_application_documents_api.py", "tests/test_application_periods.py", "tests/test_application_plan_api.py", "tests/test_application_plan_schedule_api.py", "tests/test_application_plan_scheduling.py", "tests/test_application_rules.py", "tests/test_application_workflow.py", "tests/test_application_workflow_issue_report_migration.py", "tests/test_application_workflow_issue_reports.py", "tests/test_atomic_account_deletion_migration.py", "tests/test_atomic_auth_mutations.py", "tests/test_atomic_private_community_migration.py", "tests/test_atomic_public_community_api.py", "tests/test_atomic_public_community_migration.py", "tests/test_atomic_workspace_moderation.py", "tests/test_auth_api.py", "tests/test_b4_04_ai_limits.py", "tests/test_brand_assets.py", "tests/test_calendar_conflicts.py", "tests/test_calendar_sync_api.py", "tests/test_calendar_task_scheduling.py", "tests/test_catalog_access.py", "tests/test_catalogue_speed.py", "tests/test_cgu_bundled_data.py", "tests/test_change_impact.py", "tests/test_chinese_public_content.py", "tests/test_classifier.py", "tests/test_cli.py", "tests/test_college_options.py", "tests/test_community_api.py", "tests/test_community_browsing.py", "tests/test_community_permissions.py", "tests/test_community_repositories.py", "tests/test_content_governance_wrapper.py", "tests/test_content_summary.py", "tests/test_dependency_security_baseline.py", "tests/test_destination_tips.py", "tests/test_discovery.py", "tests/test_discussion_round2.py", "tests/test_document_check_entitlements.py", "tests/test_document_vault.py", "tests/test_email_verification.py", "tests/test_entitlements.py", "tests/test_experience_collector.py", "tests/test_experience_digests.py", "tests/test_feedback.py", "tests/test_feedback_migration.py", "tests/test_fit_signals.py", "tests/test_flutter_independent_pages.py", "tests/test_flutter_navigation_hierarchy.py", "tests/test_flutter_production_copy.py", "tests/test_form_drafts.py", "tests/test_frontend_contract.py", "tests/test_health_head.py", "tests/test_home_and_forum_routes.py", "tests/test_hong_kong_country.py", "tests/test_http_client.py", "tests/test_icon_motion_contract.py", "tests/test_independent_page_routing.py", "tests/test_jsonl_storage_integrity.py", "tests/test_lai_10_security_audit.py", "tests/test_legal_pages.py", "tests/test_life_context.py", "tests/test_loading_screen.py", "tests/test_local_ai.py", "tests/test_match_document_chunks_migration.py", "tests/test_multi_application_plan.py", "tests/test_my_application_entry.py", "tests/test_native_app_contract.py", "tests/test_next_phase_contract.py", "tests/test_notification_changes.py", "tests/test_notifications.py", "tests/test_ntpu_bundled_data.py", "tests/test_ntpu_support.py", "tests/test_ntu_audit.py", "tests/test_ntu_integration.py", "tests/test_ntu_school_board_migration.py", "tests/test_open_catalog_signup.py", "tests/test_partner_localization.py", "tests/test_partner_map_geometry.py", "tests/test_partner_research.py", "tests/test_pipeline.py", "tests/test_public_translation.py", "tests/test_qualification_scope_consistency.py", "tests/test_rag.py", "tests/test_regions.py", "tests/test_request_origin.py", "tests/test_requirements_traceability.py", "tests/test_responsive_css.py", "tests/test_review_source_candidates.py", "tests/test_review_source_metadata_candidates.py", "tests/test_rls_auto_enable_migration.py", "tests/test_school_choice.py", "tests/test_school_choice_migration.py", "tests/test_school_completeness.py", "tests/test_school_content.py", "tests/test_school_image_collector.py", "tests/test_school_photo_and_match.py", "tests/test_selection_conditions_sync.py", "tests/test_social_community_api.py", "tests/test_source_applicability_cleanup.py", "tests/test_source_metadata_research_audit.py", "tests/test_source_replacement_transport_audit.py", "tests/test_static_caching.py", "tests/test_student_view.py", "tests/test_submission_progress.py", "tests/test_supabase_migration_syntax.py", "tests/test_supabase_repositories.py", "tests/test_supabase_runtime_validation.py", "tests/test_supabase_setup_check.py", "tests/test_task_documents_and_reference_plan.py", "tests/test_terms_consent.py", "tests/test_tku_acceptance_runner.py", "tests/test_tku_continuation.py", "tests/test_tku_privacy_regressions.py", "tests/test_tku_support.py", "tests/test_transient_auth.py", "tests/test_translation_requests.py", "tests/test_university_locations.py", "tests/test_uniway_ui_contract.py", "tests/test_web_review_findings_contract.py", "tests/test_workflow_catalog_cache.py", "tests/test_workflow_context_api.py", "tests/test_workflow_structuring.py", "tests/test_workload_planning.py", "tests/test_workload_planning_api.py"], ["tests/e2e/test_departure_tips_and_experience_digests.py", "tests/e2e/test_document_flow.py", "tests/e2e/test_mascot_solid.py", "tests/e2e/test_ntu_school.py", "tests/e2e/test_partner_globe.py", "tests/e2e/test_planning_workspace.py", "tests/e2e/test_system_motion.py", "tests/e2e/test_task_documents_ui.py", "tests/e2e/test_terms_consent.py", "tests/e2e/test_travel_theme.py"], ["tests/e2e/test_analytics_tracking.py", "tests/e2e/test_application_periods.py", "tests/e2e/test_feedback_page.py", "tests/e2e/test_glass_theme.py", "tests/e2e/test_icon_motion.py", "tests/e2e/test_notification_changes.py", "tests/e2e/test_region_search.py", "tests/e2e/test_school_lists.py", "tests/e2e/test_shared_conditions.py", "tests/e2e/test_student_journey_ux.py", "tests/e2e/test_unified_preparation.py"], ["tests/e2e/test_application_workspace.py", "tests/e2e/test_discussion_round2.py", "tests/e2e/test_fit_and_completeness_ui.py", "tests/e2e/test_life_context.py", "tests/e2e/test_loading_screen.py", "tests/e2e/test_multi_plan_workspace.py", "tests/e2e/test_my_application_entry.py", "tests/e2e/test_navigation_guide.py", "tests/e2e/test_responsive_layout.py", "tests/e2e/test_tku_acceptance.py", "tests/e2e/test_workload_journey.py"]], "coverage": "all collected files; no new exclusions"}
+2026-10-09T00:45:34.1784548Z ============================= test session starts ==============================
+2026-10-09T00:45:34.1786203Z platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.6.0 -- /home/runner/work/abroad/abroad/.venv/bin/python3
+2026-10-09T00:45:34.1787363Z cachedir: .pytest_cache
+2026-10-09T00:45:34.1788079Z rootdir: /home/runner/work/abroad/abroad
+2026-10-09T00:45:34.1788823Z configfile: pyproject.toml
+2026-10-09T00:45:34.1789441Z plugins: anyio-4.14.2
+2026-10-09T00:45:34.3361560Z collecting ... CONFTEST LOADED!
+2026-10-09T00:45:34.3363161Z collected 73 items
+2026-10-09T00:45:34.3363701Z 
+2026-10-09T00:45:54.1037445Z tests/e2e/test_departure_tips_and_experience_digests.py::test_the_departure_tab_shows_the_countrys_guide_with_its_draft_notice_and_sources PASSED [  1%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_the_departure_tab_shows_the_countrys_guide_with_its_draft_notice_and_sources call passed 18.688s
+2026-10-09T00:45:54.1299922Z 
+2026-10-09T00:46:00.9647213Z tests/e2e/test_departure_tips_and_experience_digests.py::test_a_school_in_japan_shows_the_japan_guide_with_the_paperwork_and_bank_warnings PASSED [  2%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_a_school_in_japan_shows_the_japan_guide_with_the_paperwork_and_bank_warnings call passed 6.750s
+2026-10-09T00:46:00.9764255Z 
+2026-10-09T00:46:07.9102522Z tests/e2e/test_departure_tips_and_experience_digests.py::test_topic_chips_scroll_in_place_and_never_change_the_page_address PASSED [  4%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_topic_chips_scroll_in_place_and_never_change_the_page_address call passed 6.861s
+2026-10-09T00:46:07.9256819Z 
+2026-10-09T00:46:14.1785486Z tests/e2e/test_departure_tips_and_experience_digests.py::test_a_country_without_a_guide_gets_a_polite_pointer_to_the_official_site PASSED [  5%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_a_country_without_a_guide_gets_a_polite_pointer_to_the_official_site call passed 6.170s
+2026-10-09T00:46:14.1871368Z 
+2026-10-09T00:46:20.3346665Z tests/e2e/test_departure_tips_and_experience_digests.py::test_a_server_error_is_not_mistaken_for_a_missing_guide PASSED [  6%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_a_server_error_is_not_mistaken_for_a_missing_guide call passed 6.071s
+2026-10-09T00:46:20.3484413Z 
+2026-10-09T00:46:26.0067348Z tests/e2e/test_departure_tips_and_experience_digests.py::test_stories_with_a_chinese_write_up_lead_and_the_rest_are_filed_as_references PASSED [  8%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_stories_with_a_chinese_write_up_lead_and_the_rest_are_filed_as_references call passed 5.587s
+2026-10-09T00:46:26.0246494Z 
+2026-10-09T00:46:32.3745296Z tests/e2e/test_departure_tips_and_experience_digests.py::test_opening_a_story_shows_the_chinese_write_up_and_how_it_was_made PASSED [  9%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_opening_a_story_shows_the_chinese_write_up_and_how_it_was_made call passed 6.263s
+2026-10-09T00:46:32.3877085Z 
+2026-10-09T00:46:42.0198630Z tests/e2e/test_departure_tips_and_experience_digests.py::test_a_saved_story_still_opens_with_its_write_up PASSED [ 10%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_a_saved_story_still_opens_with_its_write_up call passed 9.552s
+2026-10-09T00:46:42.2129108Z 
+2026-10-09T00:46:51.8069395Z tests/e2e/test_document_flow.py::test_document_flow_guides_each_step_and_never_claims_submission[390] PASSED [ 12%]WEB_CASE tests/e2e/test_document_flow.py::test_document_flow_guides_each_step_and_never_claims_submission[390] call passed 9.326s
+2026-10-09T00:46:51.8212787Z 
+2026-10-09T00:47:02.5545054Z tests/e2e/test_document_flow.py::test_document_flow_guides_each_step_and_never_claims_submission[1754] PASSED [ 13%]WEB_CASE tests/e2e/test_document_flow.py::test_document_flow_guides_each_step_and_never_claims_submission[1754] call passed 10.658s
+2026-10-09T00:47:02.7474551Z 
+2026-10-09T00:47:06.8832716Z tests/e2e/test_mascot_solid.py::test_the_mascot_stands_where_the_traveller_drawing_was_on_the_home_page PASSED [ 15%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_mascot_stands_where_the_traveller_drawing_was_on_the_home_page call passed 3.943s
+2026-10-09T00:47:06.8929736Z 
+2026-10-09T00:47:10.3146497Z tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[320] PASSED [ 16%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[320] call passed 3.297s
+2026-10-09T00:47:10.3164097Z 
+2026-10-09T00:47:14.1811035Z tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[390] PASSED [ 17%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[390] call passed 3.819s
+2026-10-09T00:47:14.1923090Z 
+2026-10-09T00:47:18.1561867Z tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[768] PASSED [ 19%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[768] call passed 3.895s
+2026-10-09T00:47:18.1684369Z 
+2026-10-09T00:47:22.0777300Z tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[1280] PASSED [ 20%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[1280] call passed 3.828s
+2026-10-09T00:47:22.0904644Z 
+2026-10-09T00:47:26.3569002Z tests/e2e/test_mascot_solid.py::test_it_has_sides_a_front_and_eyes_standing_in_front_of_it PASSED [ 21%]WEB_CASE tests/e2e/test_mascot_solid.py::test_it_has_sides_a_front_and_eyes_standing_in_front_of_it call passed 4.190s
+2026-10-09T00:47:26.3675275Z 
+2026-10-09T00:47:30.4336584Z tests/e2e/test_mascot_solid.py::test_the_eyes_stay_in_front_while_they_look_around PASSED [ 23%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_eyes_stay_in_front_while_they_look_around call passed 3.973s
+2026-10-09T00:47:30.4491730Z 
+2026-10-09T00:47:34.7966711Z tests/e2e/test_mascot_solid.py::test_it_turns_towards_the_pointer_and_back_when_the_pointer_is_gone PASSED [ 24%]WEB_CASE tests/e2e/test_mascot_solid.py::test_it_turns_towards_the_pointer_and_back_when_the_pointer_is_gone call passed 4.270s
+2026-10-09T00:47:34.8103506Z 
+2026-10-09T00:47:39.1257993Z tests/e2e/test_mascot_solid.py::test_a_light_slides_over_it_as_it_turns PASSED [ 26%]WEB_CASE tests/e2e/test_mascot_solid.py::test_a_light_slides_over_it_as_it_turns call passed 4.233s
+2026-10-09T00:47:39.1443099Z 
+2026-10-09T00:47:42.7555792Z tests/e2e/test_mascot_solid.py::test_with_no_motion_it_still_stands_turned_so_it_reads_as_a_solid PASSED [ 27%]WEB_CASE tests/e2e/test_mascot_solid.py::test_with_no_motion_it_still_stands_turned_so_it_reads_as_a_solid call passed 3.530s
+2026-10-09T00:47:42.7695355Z 
+2026-10-09T00:47:50.0028941Z tests/e2e/test_mascot_solid.py::test_tapping_the_header_mascot_still_hops_turns_and_winks PASSED [ 28%]WEB_CASE tests/e2e/test_mascot_solid.py::test_tapping_the_header_mascot_still_hops_turns_and_winks call passed 7.162s
+2026-10-09T00:47:50.0167401Z 
+2026-10-09T00:47:50.6476229Z tests/e2e/test_mascot_solid.py::test_the_loading_screen_mascot_is_the_same_solid PASSED [ 30%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_loading_screen_mascot_is_the_same_solid call passed 0.538s
+2026-10-09T00:47:50.8040616Z 
+2026-10-09T00:48:08.1392356Z tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[390] PASSED [ 31%]WEB_CASE tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[390] call passed 17.086s
+2026-10-09T00:48:08.1540088Z 
+2026-10-09T00:48:23.3114501Z tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[1440] PASSED [ 32%]WEB_CASE tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[1440] call passed 15.087s
+2026-10-09T00:48:23.3295897Z 
+2026-10-09T00:48:40.5957428Z tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion PASSED [ 34%]WEB_CASE tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion call passed 17.193s
+2026-10-09T00:48:40.6644960Z 
+2026-10-09T00:48:44.5767398Z tests/e2e/test_ntu_school.py::test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u9577\u5e9a\u5927\u5b78] PASSED [ 35%]WEB_CASE tests/e2e/test_ntu_school.py::test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u9577\u5e9a\u5927\u5b78] call passed 3.766s
+2026-10-09T00:48:44.5924682Z 
+2026-10-09T00:48:51.4365717Z tests/e2e/test_ntu_school.py::test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u570b\u7acb\u81fa\u5317\u5927\u5b78] PASSED [ 36%]WEB_CASE tests/e2e/test_ntu_school.py::test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u570b\u7acb\u81fa\u5317\u5927\u5b78] call passed 6.743s
+2026-10-09T00:48:51.4526332Z 
+2026-10-09T00:48:57.8891623Z tests/e2e/test_ntu_school.py::test_ntu_document_language_conditions_change_in_real_form[390] PASSED [ 38%]WEB_CASE tests/e2e/test_ntu_school.py::test_ntu_document_language_conditions_change_in_real_form[390] call passed 6.355s
+2026-10-09T00:48:57.9022211Z 
+2026-10-09T00:49:04.7316693Z tests/e2e/test_ntu_school.py::test_ntu_document_language_conditions_change_in_real_form[1440] PASSED [ 39%]WEB_CASE tests/e2e/test_ntu_school.py::test_ntu_document_language_conditions_change_in_real_form[1440] call passed 6.749s
+2026-10-09T00:49:04.9224553Z 
+2026-10-09T00:49:21.9166520Z tests/e2e/test_partner_globe.py::test_list_lazy_load_and_roundtrip_filters PASSED [ 41%]WEB_CASE tests/e2e/test_partner_globe.py::test_list_lazy_load_and_roundtrip_filters call passed 16.792s
+2026-10-09T00:49:21.9360292Z 
+2026-10-09T00:49:38.6705787Z tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size0] PASSED [ 42%]WEB_CASE tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size0] call passed 16.645s
+2026-10-09T00:49:38.6800647Z 
+2026-10-09T00:49:54.9534346Z tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size1] PASSED [ 43%]WEB_CASE tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size1] call passed 16.194s
+2026-10-09T00:49:54.9611132Z 
+2026-10-09T00:50:06.1450010Z tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size2] PASSED [ 45%]WEB_CASE tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size2] call passed 11.099s
+2026-10-09T00:50:06.1564408Z 
+2026-10-09T00:50:33.0480911Z tests/e2e/test_partner_globe.py::test_refresh_direct_url_and_missing_empty_states PASSED [ 46%]WEB_CASE tests/e2e/test_partner_globe.py::test_refresh_direct_url_and_missing_empty_states call passed 26.811s
+2026-10-09T00:50:33.0704384Z 
+2026-10-09T00:50:46.3062331Z tests/e2e/test_partner_globe.py::test_missing_coordinates_do_not_create_false_points PASSED [ 47%]WEB_CASE tests/e2e/test_partner_globe.py::test_missing_coordinates_do_not_create_false_points call passed 13.112s
+2026-10-09T00:50:46.3245814Z 
+2026-10-09T00:50:58.9150318Z tests/e2e/test_partner_globe.py::test_empty_catalog PASSED               [ 49%]WEB_CASE tests/e2e/test_partner_globe.py::test_empty_catalog call passed 12.491s
+2026-10-09T00:50:58.9370699Z 
+2026-10-09T00:51:08.2586461Z tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[api] PASSED [ 50%]WEB_CASE tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[api] call passed 9.248s
+2026-10-09T00:51:08.2747236Z 
+2026-10-09T00:51:17.6587197Z tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[module] PASSED [ 52%]WEB_CASE tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[module] call passed 9.309s
+2026-10-09T00:51:17.6770896Z 
+2026-10-09T00:51:27.3907372Z tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[engine] PASSED [ 53%]WEB_CASE tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[engine] call passed 9.650s
+2026-10-09T00:51:27.4084174Z 
+2026-10-09T00:51:57.7511803Z tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[worker] PASSED [ 54%]WEB_CASE tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[worker] call passed 30.263s
+2026-10-09T00:51:57.7754374Z 
+2026-10-09T00:52:07.1781421Z tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[basemap] PASSED [ 56%]WEB_CASE tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[basemap] call passed 9.311s
+2026-10-09T00:52:07.1974603Z 
+2026-10-09T00:52:24.2341517Z tests/e2e/test_partner_globe.py::test_thousand_points_cluster_expand_and_keyboard PASSED [ 57%]WEB_CASE tests/e2e/test_partner_globe.py::test_thousand_points_cluster_expand_and_keyboard call passed 16.946s
+2026-10-09T00:52:24.2550980Z 
+2026-10-09T00:53:07.9156496Z tests/e2e/test_partner_globe.py::test_dynamic_home_school_real_japan_filter_and_shared_url PASSED [ 58%]WEB_CASE tests/e2e/test_partner_globe.py::test_dynamic_home_school_real_japan_filter_and_shared_url call passed 43.524s
+2026-10-09T00:53:08.0280443Z 
+2026-10-09T00:53:52.1063312Z tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters FAILED [ 60%]WEB_CASE tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters call failed 43.737s
+2026-10-09T00:53:52.1066146Z tests/e2e/test_partner_globe.py:230: in test_direct_query_without_hash_and_all_shared_filters
+2026-10-09T00:53:52.1067792Z     page.locator("#college-filter").select_option("商管")
+2026-10-09T00:53:52.1069248Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:20069: in select_option
+2026-10-09T00:53:52.1070257Z     self._sync(
+2026-10-09T00:53:52.1071232Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:633: in select_option
+2026-10-09T00:53:52.1072260Z     return await self._frame.select_option(
+2026-10-09T00:53:52.1073484Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:814: in select_option
+2026-10-09T00:53:52.1075323Z     return await self._channel.send("selectOption", self._timeout, params)
+2026-10-09T00:53:52.1077142Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T00:53:52.1079252Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T00:53:52.1114776Z     return await self._connection.wrap_api_call(
+2026-10-09T00:53:52.1125738Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T00:53:52.1158824Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T00:53:52.1185607Z E   playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+2026-10-09T00:53:52.1199167Z E   Call log:
+2026-10-09T00:53:52.1237132Z E     - waiting for locator("#college-filter")
+2026-10-09T00:53:52.1258515Z E       - locator resolved to <select id="college-filter">…</select>
+2026-10-09T00:53:52.1278446Z E     - attempting select option action
+2026-10-09T00:53:52.1279627Z E       2 × waiting for element to be visible and enabled
+2026-10-09T00:53:52.1280446Z E         - did not find some options
+2026-10-09T00:53:52.1281151Z E       - retrying select option action
+2026-10-09T00:53:52.1281773Z E       - waiting 20ms
+2026-10-09T00:53:52.1282590Z E       2 × waiting for element to be visible and enabled
+2026-10-09T00:53:52.1283434Z E         - did not find some options
+2026-10-09T00:53:52.1284506Z E       - retrying select option action
+2026-10-09T00:53:52.1285246Z E         - waiting 100ms
+2026-10-09T00:53:52.1286315Z E       44 × waiting for element to be visible and enabled
+2026-10-09T00:53:52.1287311Z E          - did not find some options
+2026-10-09T00:53:52.1288405Z E        - retrying select option action
+2026-10-09T00:53:52.1289343Z E          - waiting 500ms
+2026-10-09T00:53:52.1289869Z 
+2026-10-09T00:54:06.7803273Z tests/e2e/test_partner_globe.py::test_mobile_list_expansion_and_camera_survive_view_switch PASSED [ 61%]WEB_CASE tests/e2e/test_partner_globe.py::test_mobile_list_expansion_and_camera_survive_view_switch call passed 14.590s
+2026-10-09T00:54:06.7994753Z 
+2026-10-09T00:54:44.4296074Z tests/e2e/test_partner_globe.py::test_mobile_touch_drag_and_pinch PASSED [ 63%]WEB_CASE tests/e2e/test_partner_globe.py::test_mobile_touch_drag_and_pinch call passed 37.629s
+2026-10-09T00:54:44.4369869Z 
+2026-10-09T00:55:00.6814626Z tests/e2e/test_partner_globe.py::test_coincident_locations_offer_each_school PASSED [ 64%]WEB_CASE tests/e2e/test_partner_globe.py::test_coincident_locations_offer_each_school call passed 16.132s
+2026-10-09T00:55:00.7020370Z 
+2026-10-09T00:55:20.1386697Z tests/e2e/test_partner_globe.py::test_selection_motion_pauses_without_moving_camera_and_respects_preferences PASSED [ 65%]WEB_CASE tests/e2e/test_partner_globe.py::test_selection_motion_pauses_without_moving_camera_and_respects_preferences call passed 19.362s
+2026-10-09T00:55:20.3025002Z 
+2026-10-09T00:55:34.6688416Z tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[390] PASSED [ 67%]WEB_CASE tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[390] call passed 14.018s
+2026-10-09T00:55:34.6922842Z 
+2026-10-09T00:55:50.2966574Z tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[1754] PASSED [ 68%]WEB_CASE tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[1754] call passed 15.512s
+2026-10-09T00:55:50.3091715Z 
+2026-10-09T00:56:03.8301240Z tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[expired] PASSED [ 69%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[expired] call passed 13.441s
+2026-10-09T00:56:03.8389456Z 
+2026-10-09T00:56:16.7235352Z tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unverified] PASSED [ 71%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unverified] call passed 12.778s
+2026-10-09T00:56:16.7404233Z 
+2026-10-09T00:56:29.7616977Z tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_year] PASSED [ 72%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_year] call passed 12.912s
+2026-10-09T00:56:29.7618852Z 
+2026-10-09T00:56:43.1503463Z tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[missing_source] PASSED [ 73%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[missing_source] call passed 13.323s
+2026-10-09T00:56:43.1595015Z 
+2026-10-09T00:56:56.3329947Z tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_round] PASSED [ 75%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_round] call passed 13.096s
+2026-10-09T00:56:56.3524509Z 
+2026-10-09T00:57:09.9369546Z tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unpublished] PASSED [ 76%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unpublished] call passed 13.494s
+2026-10-09T00:57:09.9554353Z 
+2026-10-09T00:57:19.2706908Z tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[390] PASSED [ 78%]WEB_CASE tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[390] call passed 9.223s
+2026-10-09T00:57:19.2794467Z 
+2026-10-09T00:57:29.8226438Z tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[1754] PASSED [ 79%]WEB_CASE tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[1754] call passed 10.467s
+2026-10-09T00:57:29.9884542Z 
+2026-10-09T00:58:05.1235187Z tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history FAILED [ 80%]WEB_CASE tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history call failed 34.758s
+2026-10-09T00:58:05.1241787Z tests/e2e/test_system_motion.py:51: in test_all_routes_share_motion_and_back_retains_working_history
+2026-10-09T00:58:05.1250232Z     page.locator("#page-back").click()
+2026-10-09T00:58:05.1258943Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T00:58:05.1259980Z     self._sync(
+2026-10-09T00:58:05.1261091Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T00:58:05.1262276Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T00:58:05.1263198Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T00:58:05.1264442Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T00:58:05.1265624Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T00:58:05.1266850Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T00:58:05.1267777Z     return await self._connection.wrap_api_call(
+2026-10-09T00:58:05.1268825Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T00:58:05.1269943Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T00:58:05.1271059Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T00:58:05.1271892Z E   Call log:
+2026-10-09T00:58:05.1272485Z E     - waiting for locator("#page-back")
+2026-10-09T00:58:05.1274211Z E       - locator resolved to <button type="button" id="page-back" class="route-back" aria-label="返回上一頁">…</button>
+2026-10-09T00:58:05.1275260Z E     - attempting click action
+2026-10-09T00:58:05.1276155Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T00:58:05.1277001Z E         - element is not visible
+2026-10-09T00:58:05.1277627Z E       - retrying click action
+2026-10-09T00:58:05.1278196Z E       - waiting 20ms
+2026-10-09T00:58:05.1279001Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T00:58:05.1279757Z E         - element is not visible
+2026-10-09T00:58:05.1280378Z E       - retrying click action
+2026-10-09T00:58:05.1280930Z E         - waiting 100ms
+2026-10-09T00:58:05.1281766Z E       57 × waiting for element to be visible, enabled and stable
+2026-10-09T00:58:05.1282526Z E          - element is not visible
+2026-10-09T00:58:05.1283568Z E        - retrying click action
+2026-10-09T00:58:05.1284448Z E          - waiting 500ms
+2026-10-09T00:58:05.1362174Z 
+2026-10-09T00:58:39.1434856Z tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393] FAILED [ 82%]WEB_CASE tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393] call failed 33.548s
+2026-10-09T00:58:39.1437128Z tests/e2e/test_system_motion.py:63: in test_dialog_menu_details_tabs_and_mobile_layout
+2026-10-09T00:58:39.1438134Z     page.locator("#school-switcher").click()
+2026-10-09T00:58:39.1444146Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T00:58:39.1445137Z     self._sync(
+2026-10-09T00:58:39.1446243Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T00:58:39.1447493Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T00:58:39.1448514Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T00:58:39.1449556Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T00:58:39.1450666Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T00:58:39.1451877Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T00:58:39.1453679Z     return await self._connection.wrap_api_call(
+2026-10-09T00:58:39.1455106Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T00:58:39.1456230Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T00:58:39.1457392Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T00:58:39.1458200Z E   Call log:
+2026-10-09T00:58:39.1458812Z E     - waiting for locator("#school-switcher")
+2026-10-09T00:58:39.1460518Z E       - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+2026-10-09T00:58:39.1461730Z E     - attempting click action
+2026-10-09T00:58:39.1462684Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T00:58:39.1463490Z E         - element is not visible
+2026-10-09T00:58:39.1464436Z E       - retrying click action
+2026-10-09T00:58:39.1465003Z E       - waiting 20ms
+2026-10-09T00:58:39.1465868Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T00:58:39.1466655Z E         - element is not visible
+2026-10-09T00:58:39.1467286Z E       - retrying click action
+2026-10-09T00:58:39.1467836Z E         - waiting 100ms
+2026-10-09T00:58:39.1468725Z E       56 × waiting for element to be visible, enabled and stable
+2026-10-09T00:58:39.1469525Z E          - element is not visible
+2026-10-09T00:58:39.1470163Z E        - retrying click action
+2026-10-09T00:58:39.1470769Z E          - waiting 500ms
+2026-10-09T00:58:39.1574896Z 
+2026-10-09T00:59:13.2905998Z tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834] FAILED [ 83%]WEB_CASE tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834] call failed 33.737s
+2026-10-09T00:59:13.2923343Z tests/e2e/test_system_motion.py:63: in test_dialog_menu_details_tabs_and_mobile_layout
+2026-10-09T00:59:13.2964010Z     page.locator("#school-switcher").click()
+2026-10-09T00:59:13.2987606Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T00:59:13.3045317Z     self._sync(
+2026-10-09T00:59:13.3079043Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T00:59:13.3114731Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T00:59:13.3167957Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T00:59:13.3193388Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T00:59:13.3214715Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T00:59:13.3238065Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T00:59:13.3255424Z     return await self._connection.wrap_api_call(
+2026-10-09T00:59:13.3256664Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T00:59:13.3273019Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T00:59:13.3293188Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T00:59:13.3314240Z E   Call log:
+2026-10-09T00:59:13.3322060Z E     - waiting for locator("#school-switcher")
+2026-10-09T00:59:13.3338027Z E       - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+2026-10-09T00:59:13.3339291Z E     - attempting click action
+2026-10-09T00:59:13.3340270Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T00:59:13.3341112Z E         - element is not visible
+2026-10-09T00:59:13.3341838Z E       - retrying click action
+2026-10-09T00:59:13.3342503Z E       - waiting 20ms
+2026-10-09T00:59:13.3343391Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T00:59:13.3344574Z E         - element is not visible
+2026-10-09T00:59:13.3346207Z E       - retrying click action
+2026-10-09T00:59:13.3347265Z E         - waiting 100ms
+2026-10-09T00:59:13.3348394Z E       55 × waiting for element to be visible, enabled and stable
+2026-10-09T00:59:13.3349244Z E          - element is not visible
+2026-10-09T00:59:13.3350001Z E        - retrying click action
+2026-10-09T00:59:13.3350695Z E          - waiting 500ms
+2026-10-09T00:59:13.3351227Z 
+2026-10-09T00:59:22.8662622Z tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[1440] PASSED [ 84%]WEB_CASE tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[1440] call passed 9.490s
+2026-10-09T00:59:22.8802456Z 
+2026-10-09T00:59:28.7519454Z tests/e2e/test_system_motion.py::test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion PASSED [ 86%]WEB_CASE tests/e2e/test_system_motion.py::test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion call passed 5.808s
+2026-10-09T00:59:28.7665236Z 
+2026-10-09T00:59:36.8176032Z tests/e2e/test_system_motion.py::test_reduced_motion_live_change_and_missing_runtime_are_usable PASSED [ 87%]WEB_CASE tests/e2e/test_system_motion.py::test_reduced_motion_live_change_and_missing_runtime_are_usable call passed 7.964s
+2026-10-09T00:59:36.9414411Z 
+2026-10-09T00:59:45.7346772Z tests/e2e/test_task_documents_ui.py::test_unpublished_year_shows_estimated_tasks_with_documents_and_suggested_hours[390] PASSED [ 89%]WEB_CASE tests/e2e/test_task_documents_ui.py::test_unpublished_year_shows_estimated_tasks_with_documents_and_suggested_hours[390] call passed 8.554s
+2026-10-09T00:59:45.7474772Z 
+2026-10-09T00:59:55.7068108Z tests/e2e/test_task_documents_ui.py::test_unpublished_year_shows_estimated_tasks_with_documents_and_suggested_hours[1754] PASSED [ 90%]WEB_CASE tests/e2e/test_task_documents_ui.py::test_unpublished_year_shows_estimated_tasks_with_documents_and_suggested_hours[1754] call passed 9.876s
+2026-10-09T00:59:55.8804519Z 
+2026-10-09T01:00:07.5961277Z tests/e2e/test_terms_consent.py::test_google_waits_for_the_tick_then_goes_on_with_the_version PASSED [ 91%]WEB_CASE tests/e2e/test_terms_consent.py::test_google_waits_for_the_tick_then_goes_on_with_the_version call passed 11.528s
+2026-10-09T01:00:07.6126525Z 
+2026-10-09T01:00:22.9518618Z tests/e2e/test_terms_consent.py::test_a_returning_browser_finds_the_current_version_already_ticked PASSED [ 93%]WEB_CASE tests/e2e/test_terms_consent.py::test_a_returning_browser_finds_the_current_version_already_ticked call passed 15.252s
+2026-10-09T01:00:22.9746701Z 
+2026-10-09T01:00:27.6169858Z tests/e2e/test_terms_consent.py::test_when_the_server_turns_a_sign_in_away_the_dialog_reopens_with_a_reminder PASSED [ 94%]WEB_CASE tests/e2e/test_terms_consent.py::test_when_the_server_turns_a_sign_in_away_the_dialog_reopens_with_a_reminder call passed 4.551s
+2026-10-09T01:00:27.7806959Z 
+2026-10-09T01:01:11.3851748Z tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive FAILED [ 95%]WEB_CASE tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive call failed 42.695s
+2026-10-09T01:01:11.3854335Z tests/e2e/test_travel_theme.py:51: in test_home_search_navigation_school_switcher_and_responsive
+2026-10-09T01:01:11.3856019Z     page.locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True).click()
+2026-10-09T01:01:11.3857973Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T01:01:11.3858854Z     self._sync(
+2026-10-09T01:01:11.3859707Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T01:01:11.3860735Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T01:01:11.3864443Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T01:01:11.3865524Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T01:01:11.3866705Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T01:01:11.3868452Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T01:01:11.3869538Z     return await self._connection.wrap_api_call(
+2026-10-09T01:01:11.3870702Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T01:01:11.3871920Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T01:01:11.3873000Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:11.3874065Z E   Call log:
+2026-10-09T01:01:11.3875147Z E     - waiting for locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True)
+2026-10-09T01:01:11.3984649Z 
+2026-10-09T01:01:29.7260797Z tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city FAILED [ 97%]WEB_CASE tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city call failed 18.249s
+2026-10-09T01:01:29.7263287Z tests/e2e/test_travel_theme.py:78: in test_ticket_collection_and_destination_stamp_missing_city
+2026-10-09T01:01:29.7265440Z     expect(page.locator(".travel-stamp-city")).to_have_text("林肯")
+2026-10-09T01:01:29.7266674Z E   AssertionError: Locator expected to have text '林肯'
+2026-10-09T01:01:29.7270210Z E   Actual value: 林肯, 坎特伯里（鄰近 基督城） 
+2026-10-09T01:01:29.7273120Z E   Call log:
+2026-10-09T01:01:29.7274495Z E     - Expect "to_have_text" with timeout 5000ms
+2026-10-09T01:01:29.7275352Z E     - waiting for locator(".travel-stamp-city")
+2026-10-09T01:01:29.7276637Z E       13 × locator resolved to <span class="travel-stamp-city">林肯, 坎特伯里（鄰近 基督城）</span>
+2026-10-09T01:01:29.7277739Z E          - unexpected value "林肯, 坎特伯里（鄰近 基督城）"
+2026-10-09T01:01:29.7278698Z E   
+2026-10-09T01:01:29.7279248Z E   Aria snapshot:
+2026-10-09T01:01:29.7280523Z E   - text: 林肯, 坎特伯里（鄰近 基督城）
+2026-10-09T01:01:29.7361967Z 
+2026-10-09T01:01:52.3586764Z tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it PASSED [ 98%]WEB_CASE tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it call passed 22.543s
+2026-10-09T01:01:52.3844518Z 
+2026-10-09T01:01:57.5151477Z tests/e2e/test_travel_theme.py::test_school_switcher_without_selected_school PASSED [100%]WEB_CASE tests/e2e/test_travel_theme.py::test_school_switcher_without_selected_school call passed 4.973s
+2026-10-09T01:01:57.7407449Z 
+2026-10-09T01:01:57.7407674Z 
+2026-10-09T01:01:57.7408609Z =================================== FAILURES ===================================
+2026-10-09T01:01:57.7409813Z ____________ test_direct_query_without_hash_and_all_shared_filters _____________
+2026-10-09T01:01:57.7411123Z tests/e2e/test_partner_globe.py:230: in test_direct_query_without_hash_and_all_shared_filters
+2026-10-09T01:01:57.7412937Z     page.locator("#college-filter").select_option("商管")
+2026-10-09T01:01:57.7414467Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:20069: in select_option
+2026-10-09T01:01:57.7415485Z     self._sync(
+2026-10-09T01:01:57.7416512Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:633: in select_option
+2026-10-09T01:01:57.7417582Z     return await self._frame.select_option(
+2026-10-09T01:01:57.7418686Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:814: in select_option
+2026-10-09T01:01:57.7419868Z     return await self._channel.send("selectOption", self._timeout, params)
+2026-10-09T01:01:57.7420800Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T01:01:57.7421758Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T01:01:57.7422608Z     return await self._connection.wrap_api_call(
+2026-10-09T01:01:57.7423641Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T01:01:57.7425033Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T01:01:57.7426160Z E   playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7426965Z E   Call log:
+2026-10-09T01:01:57.7427792Z E     - waiting for locator("#college-filter")
+2026-10-09T01:01:57.7428815Z E       - locator resolved to <select id="college-filter">…</select>
+2026-10-09T01:01:57.7429582Z E     - attempting select option action
+2026-10-09T01:01:57.7430354Z E       2 × waiting for element to be visible and enabled
+2026-10-09T01:01:57.7431007Z E         - did not find some options
+2026-10-09T01:01:57.7431583Z E       - retrying select option action
+2026-10-09T01:01:57.7432117Z E       - waiting 20ms
+2026-10-09T01:01:57.7432785Z E       2 × waiting for element to be visible and enabled
+2026-10-09T01:01:57.7433421Z E         - did not find some options
+2026-10-09T01:01:57.7434251Z E       - retrying select option action
+2026-10-09T01:01:57.7434811Z E         - waiting 100ms
+2026-10-09T01:01:57.7435536Z E       44 × waiting for element to be visible and enabled
+2026-10-09T01:01:57.7436196Z E          - did not find some options
+2026-10-09T01:01:57.7436783Z E        - retrying select option action
+2026-10-09T01:01:57.7437352Z E          - waiting 500ms
+2026-10-09T01:01:57.7438144Z ________ test_all_routes_share_motion_and_back_retains_working_history _________
+2026-10-09T01:01:57.7439358Z tests/e2e/test_system_motion.py:51: in test_all_routes_share_motion_and_back_retains_working_history
+2026-10-09T01:01:57.7440256Z     page.locator("#page-back").click()
+2026-10-09T01:01:57.7441186Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T01:01:57.7441958Z     self._sync(
+2026-10-09T01:01:57.7442704Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T01:01:57.7444035Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T01:01:57.7444908Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T01:01:57.7445815Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T01:01:57.7446786Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T01:01:57.7447859Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T01:01:57.7448701Z     return await self._connection.wrap_api_call(
+2026-10-09T01:01:57.7449652Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T01:01:57.7450655Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T01:01:57.7451695Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7452425Z E   Call log:
+2026-10-09T01:01:57.7452924Z E     - waiting for locator("#page-back")
+2026-10-09T01:01:57.7454376Z E       - locator resolved to <button type="button" id="page-back" class="route-back" aria-label="返回上一頁">…</button>
+2026-10-09T01:01:57.7455573Z E     - attempting click action
+2026-10-09T01:01:57.7456365Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7457073Z E         - element is not visible
+2026-10-09T01:01:57.7457667Z E       - retrying click action
+2026-10-09T01:01:57.7458172Z E       - waiting 20ms
+2026-10-09T01:01:57.7458975Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7459674Z E         - element is not visible
+2026-10-09T01:01:57.7460233Z E       - retrying click action
+2026-10-09T01:01:57.7460726Z E         - waiting 100ms
+2026-10-09T01:01:57.7461491Z E       57 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7462194Z E          - element is not visible
+2026-10-09T01:01:57.7462763Z E        - retrying click action
+2026-10-09T01:01:57.7463264Z E          - waiting 500ms
+2026-10-09T01:01:57.7464304Z _____________ test_dialog_menu_details_tabs_and_mobile_layout[393] _____________
+2026-10-09T01:01:57.7465413Z tests/e2e/test_system_motion.py:63: in test_dialog_menu_details_tabs_and_mobile_layout
+2026-10-09T01:01:57.7466409Z     page.locator("#school-switcher").click()
+2026-10-09T01:01:57.7467580Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T01:01:57.7468384Z     self._sync(
+2026-10-09T01:01:57.7469127Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T01:01:57.7470057Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T01:01:57.7470933Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T01:01:57.7471826Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T01:01:57.7472804Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T01:01:57.7474035Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T01:01:57.7474877Z     return await self._connection.wrap_api_call(
+2026-10-09T01:01:57.7475852Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T01:01:57.7476859Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T01:01:57.7477923Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7478675Z E   Call log:
+2026-10-09T01:01:57.7479204Z E     - waiting for locator("#school-switcher")
+2026-10-09T01:01:57.7486781Z E       - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+2026-10-09T01:01:57.7487906Z E     - attempting click action
+2026-10-09T01:01:57.7488710Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7489410Z E         - element is not visible
+2026-10-09T01:01:57.7489979Z E       - retrying click action
+2026-10-09T01:01:57.7490512Z E       - waiting 20ms
+2026-10-09T01:01:57.7491252Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7491943Z E         - element is not visible
+2026-10-09T01:01:57.7492525Z E       - retrying click action
+2026-10-09T01:01:57.7493050Z E         - waiting 100ms
+2026-10-09T01:01:57.7494079Z E       56 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7494816Z E          - element is not visible
+2026-10-09T01:01:57.7495387Z E        - retrying click action
+2026-10-09T01:01:57.7495914Z E          - waiting 500ms
+2026-10-09T01:01:57.7496701Z _____________ test_dialog_menu_details_tabs_and_mobile_layout[834] _____________
+2026-10-09T01:01:57.7497806Z tests/e2e/test_system_motion.py:63: in test_dialog_menu_details_tabs_and_mobile_layout
+2026-10-09T01:01:57.7498664Z     page.locator("#school-switcher").click()
+2026-10-09T01:01:57.7499641Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T01:01:57.7500708Z     self._sync(
+2026-10-09T01:01:57.7501497Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T01:01:57.7502463Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T01:01:57.7503232Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T01:01:57.7504410Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T01:01:57.7505712Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T01:01:57.7506897Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T01:01:57.7507738Z     return await self._connection.wrap_api_call(
+2026-10-09T01:01:57.7508747Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T01:01:57.7509797Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T01:01:57.7510884Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7511671Z E   Call log:
+2026-10-09T01:01:57.7512239Z E     - waiting for locator("#school-switcher")
+2026-10-09T01:01:57.7513680Z E       - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+2026-10-09T01:01:57.7515225Z E     - attempting click action
+2026-10-09T01:01:57.7516103Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7516862Z E         - element is not visible
+2026-10-09T01:01:57.7517461Z E       - retrying click action
+2026-10-09T01:01:57.7517993Z E       - waiting 20ms
+2026-10-09T01:01:57.7518750Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7519456Z E         - element is not visible
+2026-10-09T01:01:57.7520031Z E       - retrying click action
+2026-10-09T01:01:57.7520579Z E         - waiting 100ms
+2026-10-09T01:01:57.7521378Z E       55 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7522116Z E          - element is not visible
+2026-10-09T01:01:57.7522715Z E        - retrying click action
+2026-10-09T01:01:57.7523258Z E          - waiting 500ms
+2026-10-09T01:01:57.7524274Z __________ test_home_search_navigation_school_switcher_and_responsive __________
+2026-10-09T01:01:57.7525462Z tests/e2e/test_travel_theme.py:51: in test_home_search_navigation_school_switcher_and_responsive
+2026-10-09T01:01:57.7526736Z     page.locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True).click()
+2026-10-09T01:01:57.7527944Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T01:01:57.7528717Z     self._sync(
+2026-10-09T01:01:57.7529489Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T01:01:57.7530444Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T01:01:57.7531285Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T01:01:57.7532245Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T01:01:57.7533248Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T01:01:57.7534875Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T01:01:57.7535765Z     return await self._connection.wrap_api_call(
+2026-10-09T01:01:57.7536752Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T01:01:57.7537875Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T01:01:57.7538933Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7539688Z E   Call log:
+2026-10-09T01:01:57.7540669Z E     - waiting for locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True)
+2026-10-09T01:01:57.7541786Z __________ test_ticket_collection_and_destination_stamp_missing_city ___________
+2026-10-09T01:01:57.7543561Z tests/e2e/test_travel_theme.py:78: in test_ticket_collection_and_destination_stamp_missing_city
+2026-10-09T01:01:57.7545479Z     expect(page.locator(".travel-stamp-city")).to_have_text("林肯")
+2026-10-09T01:01:57.7546457Z E   AssertionError: Locator expected to have text '林肯'
+2026-10-09T01:01:57.7547242Z E   Actual value: 林肯, 坎特伯里（鄰近 基督城） 
+2026-10-09T01:01:57.7547770Z E   Call log:
+2026-10-09T01:01:57.7548341Z E     - Expect "to_have_text" with timeout 5000ms
+2026-10-09T01:01:57.7549054Z E     - waiting for locator(".travel-stamp-city")
+2026-10-09T01:01:57.7550077Z E       13 × locator resolved to <span class="travel-stamp-city">林肯, 坎特伯里（鄰近 基督城）</span>
+2026-10-09T01:01:57.7551009Z E          - unexpected value "林肯, 坎特伯里（鄰近 基督城）"
+2026-10-09T01:01:57.7551559Z E   
+2026-10-09T01:01:57.7551991Z E   Aria snapshot:
+2026-10-09T01:01:57.7552536Z E   - text: 林肯, 坎特伯里（鄰近 基督城）
+2026-10-09T01:01:57.7553245Z =============================== warnings summary ===============================
+2026-10-09T01:01:57.7554668Z tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[1440]
+2026-10-09T01:01:57.7557762Z   /home/runner/work/abroad/abroad/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py:1110: InsecureRequestWarning: Unverified HTTPS request is being made to host 'overpass-api.de'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+2026-10-09T01:01:57.7560026Z     warnings.warn(
+2026-10-09T01:01:57.7560250Z 
+2026-10-09T01:01:57.7560999Z tests/e2e/test_system_motion.py::test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion
+2026-10-09T01:01:57.7563658Z   /home/runner/work/abroad/abroad/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py:1110: InsecureRequestWarning: Unverified HTTPS request is being made to host 'www.lincoln.ac.nz'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+2026-10-09T01:01:57.7565873Z     warnings.warn(
+2026-10-09T01:01:57.7566076Z 
+2026-10-09T01:01:57.7566722Z tests/e2e/test_system_motion.py::test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion
+2026-10-09T01:01:57.7569319Z   /home/runner/work/abroad/abroad/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py:1110: InsecureRequestWarning: Unverified HTTPS request is being made to host 'livingheritage.lincoln.ac.nz'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+2026-10-09T01:01:57.7571304Z     warnings.warn(
+2026-10-09T01:01:57.7571494Z 
+2026-10-09T01:01:57.7572064Z tests/e2e/test_system_motion.py::test_reduced_motion_live_change_and_missing_runtime_are_usable
+2026-10-09T01:01:57.7574775Z   /home/runner/work/abroad/abroad/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py:1110: InsecureRequestWarning: Unverified HTTPS request is being made to host 'overpass.private.coffee'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+2026-10-09T01:01:57.7576741Z     warnings.warn(
+2026-10-09T01:01:57.7576930Z 
+2026-10-09T01:01:57.7577350Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-10-09T01:01:57.7578255Z --------- generated xml file: /home/runner/work/_temp/web-tests-1.xml ----------
+2026-10-09T01:01:57.7579038Z ============================= slowest 25 durations =============================
+2026-10-09T01:01:57.7579961Z 43.74s call     tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters
+2026-10-09T01:01:57.7581134Z 43.52s call     tests/e2e/test_partner_globe.py::test_dynamic_home_school_real_japan_filter_and_shared_url
+2026-10-09T01:01:57.7582319Z 42.70s call     tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive
+2026-10-09T01:01:57.7583344Z 37.63s call     tests/e2e/test_partner_globe.py::test_mobile_touch_drag_and_pinch
+2026-10-09T01:01:57.7584934Z 34.76s call     tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history
+2026-10-09T01:01:57.7586120Z 33.74s call     tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834]
+2026-10-09T01:01:57.7587245Z 33.55s call     tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393]
+2026-10-09T01:01:57.7588410Z 30.26s call     tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[worker]
+2026-10-09T01:01:57.7589542Z 26.81s call     tests/e2e/test_partner_globe.py::test_refresh_direct_url_and_missing_empty_states
+2026-10-09T01:01:57.7590702Z 22.54s call     tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it
+2026-10-09T01:01:57.7592017Z 19.36s call     tests/e2e/test_partner_globe.py::test_selection_motion_pauses_without_moving_camera_and_respects_preferences
+2026-10-09T01:01:57.7593646Z 18.69s call     tests/e2e/test_departure_tips_and_experience_digests.py::test_the_departure_tab_shows_the_countrys_guide_with_its_draft_notice_and_sources
+2026-10-09T01:01:57.7595274Z 18.25s call     tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city
+2026-10-09T01:01:57.7596680Z 17.19s call     tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion
+2026-10-09T01:01:57.7597932Z 17.09s call     tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[390]
+2026-10-09T01:01:57.7599078Z 16.95s call     tests/e2e/test_partner_globe.py::test_thousand_points_cluster_expand_and_keyboard
+2026-10-09T01:01:57.7600100Z 16.79s call     tests/e2e/test_partner_globe.py::test_list_lazy_load_and_roundtrip_filters
+2026-10-09T01:01:57.7601187Z 16.65s call     tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size0]
+2026-10-09T01:01:57.7602366Z 16.19s call     tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size1]
+2026-10-09T01:01:57.7603472Z 16.13s call     tests/e2e/test_partner_globe.py::test_coincident_locations_offer_each_school
+2026-10-09T01:01:57.7604855Z 15.51s call     tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[1754]
+2026-10-09T01:01:57.7606182Z 15.25s call     tests/e2e/test_terms_consent.py::test_a_returning_browser_finds_the_current_version_already_ticked
+2026-10-09T01:01:57.7607462Z 15.09s call     tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[1440]
+2026-10-09T01:01:57.7608652Z 14.59s call     tests/e2e/test_partner_globe.py::test_mobile_list_expansion_and_camera_survive_view_switch
+2026-10-09T01:01:57.7609896Z 14.02s call     tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[390]
+2026-10-09T01:01:57.7610881Z =========================== short test summary info ============================
+2026-10-09T01:01:57.7612429Z FAILED tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters - playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7613583Z Call log:
+2026-10-09T01:01:57.7614113Z   - waiting for locator("#college-filter")
+2026-10-09T01:01:57.7614865Z     - locator resolved to <select id="college-filter">…</select>
+2026-10-09T01:01:57.7615441Z   - attempting select option action
+2026-10-09T01:01:57.7616040Z     2 × waiting for element to be visible and enabled
+2026-10-09T01:01:57.7616553Z       - did not find some options
+2026-10-09T01:01:57.7616973Z     - retrying select option action
+2026-10-09T01:01:57.7617356Z     - waiting 20ms
+2026-10-09T01:01:57.7617835Z     2 × waiting for element to be visible and enabled
+2026-10-09T01:01:57.7618329Z       - did not find some options
+2026-10-09T01:01:57.7618747Z     - retrying select option action
+2026-10-09T01:01:57.7619128Z       - waiting 100ms
+2026-10-09T01:01:57.7619626Z     44 × waiting for element to be visible and enabled
+2026-10-09T01:01:57.7620317Z        - did not find some options
+2026-10-09T01:01:57.7620743Z      - retrying select option action
+2026-10-09T01:01:57.7621135Z        - waiting 500ms
+2026-10-09T01:01:57.7622521Z FAILED tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7623646Z Call log:
+2026-10-09T01:01:57.7624174Z   - waiting for locator("#page-back")
+2026-10-09T01:01:57.7625148Z     - locator resolved to <button type="button" id="page-back" class="route-back" aria-label="返回上一頁">…</button>
+2026-10-09T01:01:57.7625891Z   - attempting click action
+2026-10-09T01:01:57.7626474Z     2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7626993Z       - element is not visible
+2026-10-09T01:01:57.7627356Z     - retrying click action
+2026-10-09T01:01:57.7627698Z     - waiting 20ms
+2026-10-09T01:01:57.7628227Z     2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7628764Z       - element is not visible
+2026-10-09T01:01:57.7629122Z     - retrying click action
+2026-10-09T01:01:57.7629471Z       - waiting 100ms
+2026-10-09T01:01:57.7630012Z     57 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7630700Z        - element is not visible
+2026-10-09T01:01:57.7631094Z      - retrying click action
+2026-10-09T01:01:57.7631451Z        - waiting 500ms
+2026-10-09T01:01:57.7632796Z FAILED tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393] - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7634066Z Call log:
+2026-10-09T01:01:57.7634430Z   - waiting for locator("#school-switcher")
+2026-10-09T01:01:57.7635526Z     - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+2026-10-09T01:01:57.7636355Z   - attempting click action
+2026-10-09T01:01:57.7636917Z     2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7637445Z       - element is not visible
+2026-10-09T01:01:57.7637819Z     - retrying click action
+2026-10-09T01:01:57.7638176Z     - waiting 20ms
+2026-10-09T01:01:57.7638701Z     2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7639219Z       - element is not visible
+2026-10-09T01:01:57.7639577Z     - retrying click action
+2026-10-09T01:01:57.7639921Z       - waiting 100ms
+2026-10-09T01:01:57.7640461Z     56 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7641029Z        - element is not visible
+2026-10-09T01:01:57.7641444Z      - retrying click action
+2026-10-09T01:01:58.5980497Z        - waiting 500ms
+2026-10-09T01:01:58.5982428Z FAILED tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834] - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:58.5984518Z Call log:
+2026-10-09T01:01:58.5985185Z   - waiting for locator("#school-switcher")
+2026-10-09T01:01:58.5987260Z     - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+2026-10-09T01:01:58.5988316Z   - attempting click action
+2026-10-09T01:01:58.5989132Z     2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:58.5989921Z       - element is not visible
+2026-10-09T01:01:58.5990492Z     - retrying click action
+2026-10-09T01:01:58.5991037Z     - waiting 20ms
+2026-10-09T01:01:58.5991764Z     2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:58.5992496Z       - element is not visible
+2026-10-09T01:01:58.5993064Z     - retrying click action
+2026-10-09T01:01:58.5993595Z       - waiting 100ms
+2026-10-09T01:01:58.5994572Z     55 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:58.5995312Z        - element is not visible
+2026-10-09T01:01:58.5995885Z      - retrying click action
+2026-10-09T01:01:58.5996434Z        - waiting 500ms
+2026-10-09T01:01:58.5998063Z FAILED tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:58.5999454Z Call log:
+2026-10-09T01:01:58.6000413Z   - waiting for locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True)
+2026-10-09T01:01:58.6002314Z FAILED tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city - AssertionError: Locator expected to have text '林肯'
+2026-10-09T01:01:58.6003712Z Actual value: 林肯, 坎特伯里（鄰近 基督城） 
+2026-10-09T01:01:58.6004476Z Call log:
+2026-10-09T01:01:58.6005045Z   - Expect "to_have_text" with timeout 5000ms
+2026-10-09T01:01:58.6005763Z   - waiting for locator(".travel-stamp-city")
+2026-10-09T01:01:58.6006821Z     13 × locator resolved to <span class="travel-stamp-city">林肯, 坎特伯里（鄰近 基督城）</span>
+2026-10-09T01:01:58.6007824Z        - unexpected value "林肯, 坎特伯里（鄰近 基督城）"
+2026-10-09T01:01:58.6008320Z 
+2026-10-09T01:01:58.6008648Z Aria snapshot:
+2026-10-09T01:01:58.6009235Z - text: 林肯, 坎特伯里（鄰近 基督城）
+2026-10-09T01:01:58.6010058Z ============= 6 failed, 67 passed, 4 warnings in 983.56s (0:16:23) =============
+2026-10-09T01:01:58.6010880Z WEB_SHARD 1 exit=1 elapsed=985.950s
+2026-10-09T01:02:00.6206653Z ##[error]Process completed with exit code 1.
+2026-10-09T01:02:00.6275324Z ##[group]Run git diff --exit-code -- src/exchange_info/official_data
+2026-10-09T01:02:00.6275842Z [36;1mgit diff --exit-code -- src/exchange_info/official_data[0m
+2026-10-09T01:02:00.6339389Z shell: /usr/bin/bash -e {0}
+2026-10-09T01:02:00.6339645Z env:
+2026-10-09T01:02:00.6339929Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T01:02:00.6340378Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T01:02:00.6340823Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T01:02:00.6341246Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T01:02:00.6341669Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T01:02:00.6342067Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T01:02:00.6342497Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T01:02:00.6342859Z ##[endgroup]
+2026-10-09T01:02:00.6598746Z Post job cleanup.
+2026-10-09T01:02:00.9440490Z [command]/usr/bin/git version
+2026-10-09T01:02:00.9604836Z git version 2.55.0
+2026-10-09T01:02:00.9715415Z Temporarily overriding HOME='/home/runner/work/_temp/ac3649a9-cd21-47f1-9029-f4afeda4054f' before making global git config changes
+2026-10-09T01:02:00.9734875Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-09T01:02:00.9755188Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/abroad/abroad
+2026-10-09T01:02:00.9894861Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-09T01:02:01.0007144Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-09T01:02:01.0732095Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-09T01:02:01.0824809Z http.https://github.com/.extraheader
+2026-10-09T01:02:01.0881551Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-09T01:02:01.0966186Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-09T01:02:01.1768415Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-09T01:02:01.1870840Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-09T01:02:01.2382524Z Cleaning up orphan processes
+2026-10-09T01:02:01.2679372Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020, actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

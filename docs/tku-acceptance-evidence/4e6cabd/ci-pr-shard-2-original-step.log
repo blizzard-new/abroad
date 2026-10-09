@@ -1,0 +1,212 @@
+﻿2026-10-09T00:44:53.6230194Z ##[group]Run uv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4 --junitxml "$RUNNER_TEMP/web-tests-$WEB_TEST_SHARD.xml"
+2026-10-09T00:44:53.6231248Z [36;1muv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4 --junitxml "$RUNNER_TEMP/web-tests-$WEB_TEST_SHARD.xml"[0m
+2026-10-09T00:44:53.6287671Z shell: /usr/bin/bash -e {0}
+2026-10-09T00:44:53.6287941Z env:
+2026-10-09T00:44:53.6288227Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:44:53.6288661Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T00:44:53.6289096Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:44:53.6289661Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:44:53.6290042Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:44:53.6290415Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T00:44:53.6290825Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T00:44:53.6313996Z   WEB_TEST_SHARD: 2
+2026-10-09T00:44:53.6314359Z ##[endgroup]
+2026-10-09T00:45:02.2508186Z {"shard": 2, "total_cases": 1757, "total_files": 179, "browser_cases_per_shard": [73, 73, 74, 73], "case_counts_per_shard": [1537, 73, 74, 73], "files_per_shard": [["tests/e2e/test_application_ui_refinements.py", "tests/e2e/test_conditions_account_sync.py", "tests/e2e/test_discovery_workspace.py", "tests/e2e/test_discussion_reader.py", "tests/e2e/test_document_workbench.py", "tests/e2e/test_open_catalog.py", "tests/e2e/test_school_chinese_content.py", "tests/e2e/test_web_next_phase.py", "tests/integration/test_local_ai_runtime.py", "tests/test_account_read_cache.py", "tests/test_account_workspace_api.py", "tests/test_advisor.py", "tests/test_advisor_mascot_contract.py", "tests/test_ai_gateway.py", "tests/test_ai_privacy.py", "tests/test_analytics_api.py", "tests/test_analytics_core.py", "tests/test_analytics_frontend_contract.py", "tests/test_analytics_report.py", "tests/test_api.py", "tests/test_application_document_catalog.py", "tests/test_application_documents_api.py", "tests/test_application_periods.py", "tests/test_application_plan_api.py", "tests/test_application_plan_schedule_api.py", "tests/test_application_plan_scheduling.py", "tests/test_application_rules.py", "tests/test_application_workflow.py", "tests/test_application_workflow_issue_report_migration.py", "tests/test_application_workflow_issue_reports.py", "tests/test_atomic_account_deletion_migration.py", "tests/test_atomic_auth_mutations.py", "tests/test_atomic_private_community_migration.py", "tests/test_atomic_public_community_api.py", "tests/test_atomic_public_community_migration.py", "tests/test_atomic_workspace_moderation.py", "tests/test_auth_api.py", "tests/test_b4_04_ai_limits.py", "tests/test_brand_assets.py", "tests/test_calendar_conflicts.py", "tests/test_calendar_sync_api.py", "tests/test_calendar_task_scheduling.py", "tests/test_catalog_access.py", "tests/test_catalogue_speed.py", "tests/test_cgu_bundled_data.py", "tests/test_change_impact.py", "tests/test_chinese_public_content.py", "tests/test_classifier.py", "tests/test_cli.py", "tests/test_college_options.py", "tests/test_community_api.py", "tests/test_community_browsing.py", "tests/test_community_permissions.py", "tests/test_community_repositories.py", "tests/test_content_governance_wrapper.py", "tests/test_content_summary.py", "tests/test_dependency_security_baseline.py", "tests/test_destination_tips.py", "tests/test_discovery.py", "tests/test_discussion_round2.py", "tests/test_document_check_entitlements.py", "tests/test_document_vault.py", "tests/test_email_verification.py", "tests/test_entitlements.py", "tests/test_experience_collector.py", "tests/test_experience_digests.py", "tests/test_feedback.py", "tests/test_feedback_migration.py", "tests/test_fit_signals.py", "tests/test_flutter_independent_pages.py", "tests/test_flutter_navigation_hierarchy.py", "tests/test_flutter_production_copy.py", "tests/test_form_drafts.py", "tests/test_frontend_contract.py", "tests/test_health_head.py", "tests/test_home_and_forum_routes.py", "tests/test_hong_kong_country.py", "tests/test_http_client.py", "tests/test_icon_motion_contract.py", "tests/test_independent_page_routing.py", "tests/test_jsonl_storage_integrity.py", "tests/test_lai_10_security_audit.py", "tests/test_legal_pages.py", "tests/test_life_context.py", "tests/test_loading_screen.py", "tests/test_local_ai.py", "tests/test_match_document_chunks_migration.py", "tests/test_multi_application_plan.py", "tests/test_my_application_entry.py", "tests/test_native_app_contract.py", "tests/test_next_phase_contract.py", "tests/test_notification_changes.py", "tests/test_notifications.py", "tests/test_ntpu_bundled_data.py", "tests/test_ntpu_support.py", "tests/test_ntu_audit.py", "tests/test_ntu_integration.py", "tests/test_ntu_school_board_migration.py", "tests/test_open_catalog_signup.py", "tests/test_partner_localization.py", "tests/test_partner_map_geometry.py", "tests/test_partner_research.py", "tests/test_pipeline.py", "tests/test_public_translation.py", "tests/test_qualification_scope_consistency.py", "tests/test_rag.py", "tests/test_regions.py", "tests/test_request_origin.py", "tests/test_requirements_traceability.py", "tests/test_responsive_css.py", "tests/test_review_source_candidates.py", "tests/test_review_source_metadata_candidates.py", "tests/test_rls_auto_enable_migration.py", "tests/test_school_choice.py", "tests/test_school_choice_migration.py", "tests/test_school_completeness.py", "tests/test_school_content.py", "tests/test_school_image_collector.py", "tests/test_school_photo_and_match.py", "tests/test_selection_conditions_sync.py", "tests/test_social_community_api.py", "tests/test_source_applicability_cleanup.py", "tests/test_source_metadata_research_audit.py", "tests/test_source_replacement_transport_audit.py", "tests/test_static_caching.py", "tests/test_student_view.py", "tests/test_submission_progress.py", "tests/test_supabase_migration_syntax.py", "tests/test_supabase_repositories.py", "tests/test_supabase_runtime_validation.py", "tests/test_supabase_setup_check.py", "tests/test_task_documents_and_reference_plan.py", "tests/test_terms_consent.py", "tests/test_tku_acceptance_runner.py", "tests/test_tku_continuation.py", "tests/test_tku_privacy_regressions.py", "tests/test_tku_support.py", "tests/test_transient_auth.py", "tests/test_translation_requests.py", "tests/test_university_locations.py", "tests/test_uniway_ui_contract.py", "tests/test_web_review_findings_contract.py", "tests/test_workflow_catalog_cache.py", "tests/test_workflow_context_api.py", "tests/test_workflow_structuring.py", "tests/test_workload_planning.py", "tests/test_workload_planning_api.py"], ["tests/e2e/test_departure_tips_and_experience_digests.py", "tests/e2e/test_document_flow.py", "tests/e2e/test_mascot_solid.py", "tests/e2e/test_ntu_school.py", "tests/e2e/test_partner_globe.py", "tests/e2e/test_planning_workspace.py", "tests/e2e/test_system_motion.py", "tests/e2e/test_task_documents_ui.py", "tests/e2e/test_terms_consent.py", "tests/e2e/test_travel_theme.py"], ["tests/e2e/test_analytics_tracking.py", "tests/e2e/test_application_periods.py", "tests/e2e/test_feedback_page.py", "tests/e2e/test_glass_theme.py", "tests/e2e/test_icon_motion.py", "tests/e2e/test_notification_changes.py", "tests/e2e/test_region_search.py", "tests/e2e/test_school_lists.py", "tests/e2e/test_shared_conditions.py", "tests/e2e/test_student_journey_ux.py", "tests/e2e/test_unified_preparation.py"], ["tests/e2e/test_application_workspace.py", "tests/e2e/test_discussion_round2.py", "tests/e2e/test_fit_and_completeness_ui.py", "tests/e2e/test_life_context.py", "tests/e2e/test_loading_screen.py", "tests/e2e/test_multi_plan_workspace.py", "tests/e2e/test_my_application_entry.py", "tests/e2e/test_navigation_guide.py", "tests/e2e/test_responsive_layout.py", "tests/e2e/test_tku_acceptance.py", "tests/e2e/test_workload_journey.py"]], "coverage": "all collected files; no new exclusions"}
+2026-10-09T00:45:03.6038417Z ============================= test session starts ==============================
+2026-10-09T00:45:03.6040526Z platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.6.0 -- /home/runner/work/abroad/abroad/.venv/bin/python3
+2026-10-09T00:45:03.6041631Z cachedir: .pytest_cache
+2026-10-09T00:45:03.6042382Z rootdir: /home/runner/work/abroad/abroad
+2026-10-09T00:45:03.6043112Z configfile: pyproject.toml
+2026-10-09T00:45:03.6043728Z plugins: anyio-4.14.2
+2026-10-09T00:45:03.7661018Z collecting ... CONFTEST LOADED!
+2026-10-09T00:45:03.7661900Z collected 74 items
+2026-10-09T00:45:03.7662381Z 
+2026-10-09T00:45:24.5001453Z tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens PASSED [  1%]WEB_CASE tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens call passed 19.741s
+2026-10-09T00:45:24.5309886Z 
+2026-10-09T00:45:31.6406605Z tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked PASSED [  2%]WEB_CASE tests/e2e/test_analytics_tracking.py::test_automated_browsers_are_not_tracked_unless_asked call passed 6.995s
+2026-10-09T00:45:31.6509615Z 
+2026-10-09T00:45:38.9208319Z tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything PASSED [  4%]WEB_CASE tests/e2e/test_analytics_tracking.py::test_do_not_track_and_opt_out_stop_everything call passed 7.207s
+2026-10-09T00:45:38.9339847Z 
+2026-10-09T00:45:50.8552519Z tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in PASSED [  5%]WEB_CASE tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in call passed 11.859s
+2026-10-09T00:45:50.8633719Z 
+2026-10-09T00:45:56.7528980Z tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser PASSED [  6%]WEB_CASE tests/e2e/test_analytics_tracking.py::test_the_address_bar_switch_excludes_your_own_browser call passed 5.807s
+2026-10-09T00:45:56.8837609Z 
+2026-10-09T00:46:05.6652647Z tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390] PASSED [  8%]WEB_CASE tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390] call passed 8.595s
+2026-10-09T00:46:05.6809828Z 
+2026-10-09T00:46:15.0668450Z tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754] PASSED [  9%]WEB_CASE tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754] call passed 9.313s
+2026-10-09T00:46:15.2199714Z 
+2026-10-09T00:46:23.7262694Z tests/e2e/test_feedback_page.py::test_the_menu_has_a_user_reviews_entry_that_opens_the_page PASSED [ 10%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_menu_has_a_user_reviews_entry_that_opens_the_page call passed 8.332s
+2026-10-09T00:46:23.7424088Z 
+2026-10-09T00:46:27.9954777Z tests/e2e/test_feedback_page.py::test_a_message_that_is_too_short_is_not_sent PASSED [ 12%]WEB_CASE tests/e2e/test_feedback_page.py::test_a_message_that_is_too_short_is_not_sent call passed 4.182s
+2026-10-09T00:46:28.0084099Z 
+2026-10-09T00:46:31.1459728Z tests/e2e/test_feedback_page.py::test_the_counter_the_stars_and_the_clear_button_work PASSED [ 13%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_counter_the_stars_and_the_clear_button_work call passed 3.066s
+2026-10-09T00:46:31.1603186Z 
+2026-10-09T00:46:37.1122323Z tests/e2e/test_feedback_page.py::test_sending_a_message_thanks_the_visitor_and_sends_what_was_typed PASSED [ 14%]WEB_CASE tests/e2e/test_feedback_page.py::test_sending_a_message_thanks_the_visitor_and_sends_what_was_typed call passed 5.867s
+2026-10-09T00:46:37.1231001Z 
+2026-10-09T00:46:41.2272614Z tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[429-{}-\u9001\u51fa\u5f97\u592a\u983b\u7e41\u4e86] PASSED [ 16%]WEB_CASE tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[429-{}-\u9001\u51fa\u5f97\u592a\u983b\u7e41\u4e86] call passed 4.032s
+2026-10-09T00:46:41.2379684Z 
+2026-10-09T00:46:45.2198398Z tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[503-{}-\u66ab\u6642\u7121\u6cd5\u9001\u51fa] PASSED [ 17%]WEB_CASE tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[503-{}-\u66ab\u6642\u7121\u6cd5\u9001\u51fa] call passed 3.900s
+2026-10-09T00:46:45.2327169Z 
+2026-10-09T00:46:50.0097987Z tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[422-{"detail": "\u8acb\u4e0d\u8981\u5728\u5167\u5bb9\u88e1\u653e\u592a\u591a\u9023\u7d50\u3002"}-\u8acb\u4e0d\u8981\u5728\u5167\u5bb9\u88e1\u653e\u592a\u591a\u9023\u7d50\u3002] PASSED [ 18%]WEB_CASE tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[422-{"detail": "\u8acb\u4e0d\u8981\u5728\u5167\u5bb9\u88e1\u653e\u592a\u591a\u9023\u7d50\u3002"}-\u8acb\u4e0d\u8981\u5728\u5167\u5bb9\u88e1\u653e\u592a\u591a\u9023\u7d50\u3002] call passed 4.700s
+2026-10-09T00:46:50.0212041Z 
+2026-10-09T00:46:54.2382412Z tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[422-{"detail": [{"msg": "too short"}]}-\u5167\u5bb9\u7684\u683c\u5f0f\u4e0d\u7b26] PASSED [ 20%]WEB_CASE tests/e2e/test_feedback_page.py::test_when_sending_fails_the_visitor_is_told_why_and_keeps_what_was_typed[422-{"detail": [{"msg": "too short"}]}-\u5167\u5bb9\u7684\u683c\u5f0f\u4e0d\u7b26] call passed 4.140s
+2026-10-09T00:46:54.2547873Z 
+2026-10-09T00:46:58.4331290Z tests/e2e/test_feedback_page.py::test_the_network_going_away_does_not_lose_the_text PASSED [ 21%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_network_going_away_does_not_lose_the_text call passed 4.108s
+2026-10-09T00:46:58.4499666Z 
+2026-10-09T00:47:02.4111618Z tests/e2e/test_feedback_page.py::test_the_hidden_field_for_bots_cannot_be_reached_by_a_person PASSED [ 22%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_hidden_field_for_bots_cannot_be_reached_by_a_person call passed 3.883s
+2026-10-09T00:47:02.4244575Z 
+2026-10-09T00:47:05.7429523Z tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[320] PASSED [ 24%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[320] call passed 3.253s
+2026-10-09T00:47:05.7519986Z 
+2026-10-09T00:47:09.7556091Z tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[390] PASSED [ 25%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[390] call passed 3.665s
+2026-10-09T00:47:09.7660810Z 
+2026-10-09T00:47:13.9171751Z tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[1280] PASSED [ 27%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_page_fits_every_screen_with_big_enough_targets[1280] call passed 4.083s
+2026-10-09T00:47:13.9296820Z 
+2026-10-09T00:47:20.7605024Z tests/e2e/test_feedback_page.py::test_the_administrator_reads_the_message_in_the_inbox_and_marks_it_done PASSED [ 28%]WEB_CASE tests/e2e/test_feedback_page.py::test_the_administrator_reads_the_message_in_the_inbox_and_marks_it_done call passed 6.735s
+2026-10-09T00:47:20.7610527Z 
+2026-10-09T00:47:27.1019390Z tests/e2e/test_feedback_page.py::test_an_ordinary_student_cannot_open_the_inbox PASSED [ 29%]WEB_CASE tests/e2e/test_feedback_page.py::test_an_ordinary_student_cannot_open_the_inbox call passed 6.289s
+2026-10-09T00:47:27.1199979Z 
+2026-10-09T00:47:33.6264085Z tests/e2e/test_feedback_page.py::test_a_message_written_in_markup_is_shown_as_plain_text_in_the_inbox PASSED [ 31%]WEB_CASE tests/e2e/test_feedback_page.py::test_a_message_written_in_markup_is_shown_as_plain_text_in_the_inbox call passed 6.397s
+2026-10-09T00:47:33.7809819Z 
+2026-10-09T00:47:39.0870186Z tests/e2e/test_glass_theme.py::test_home_displays_stored_posts_without_destination_sections[390] PASSED [ 32%]WEB_CASE tests/e2e/test_glass_theme.py::test_home_displays_stored_posts_without_destination_sections[390] call passed 5.079s
+2026-10-09T00:47:39.0973612Z 
+2026-10-09T00:47:44.7203361Z tests/e2e/test_glass_theme.py::test_home_displays_stored_posts_without_destination_sections[834] PASSED [ 33%]WEB_CASE tests/e2e/test_glass_theme.py::test_home_displays_stored_posts_without_destination_sections[834] call passed 5.533s
+2026-10-09T00:47:44.7359908Z 
+2026-10-09T00:47:50.1752761Z tests/e2e/test_glass_theme.py::test_home_displays_stored_posts_without_destination_sections[1754] PASSED [ 35%]WEB_CASE tests/e2e/test_glass_theme.py::test_home_displays_stored_posts_without_destination_sections[1754] call passed 5.366s
+2026-10-09T00:47:50.1960969Z 
+2026-10-09T00:48:06.1356633Z tests/e2e/test_glass_theme.py::test_verified_catalog_search_map_and_saved_school[390] PASSED [ 36%]WEB_CASE tests/e2e/test_glass_theme.py::test_verified_catalog_search_map_and_saved_school[390] call passed 15.837s
+2026-10-09T00:48:06.1632337Z 
+2026-10-09T00:48:26.2342237Z tests/e2e/test_glass_theme.py::test_verified_catalog_search_map_and_saved_school[1440] PASSED [ 37%]WEB_CASE tests/e2e/test_glass_theme.py::test_verified_catalog_search_map_and_saved_school[1440] call passed 19.965s
+2026-10-09T00:48:26.2520250Z 
+2026-10-09T00:48:34.3521302Z tests/e2e/test_glass_theme.py::test_glass_navigation_and_responsive_routes[390] PASSED [ 39%]WEB_CASE tests/e2e/test_glass_theme.py::test_glass_navigation_and_responsive_routes[390] call passed 7.990s
+2026-10-09T00:48:34.3680074Z 
+2026-10-09T00:48:41.5650165Z tests/e2e/test_glass_theme.py::test_glass_navigation_and_responsive_routes[834] PASSED [ 40%]WEB_CASE tests/e2e/test_glass_theme.py::test_glass_navigation_and_responsive_routes[834] call passed 7.119s
+2026-10-09T00:48:41.5850574Z 
+2026-10-09T00:48:47.9993470Z tests/e2e/test_glass_theme.py::test_glass_navigation_and_responsive_routes[1440] PASSED [ 41%]WEB_CASE tests/e2e/test_glass_theme.py::test_glass_navigation_and_responsive_routes[1440] call passed 6.317s
+2026-10-09T00:48:48.0155712Z 
+2026-10-09T00:48:54.0481952Z tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[390-620] PASSED [ 43%]WEB_CASE tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[390-620] call passed 5.940s
+2026-10-09T00:48:54.0594436Z 
+2026-10-09T00:49:01.0557538Z tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[834-956] PASSED [ 44%]WEB_CASE tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[834-956] call passed 6.927s
+2026-10-09T00:49:01.0791790Z 
+2026-10-09T00:49:07.6431383Z tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[1280-720] PASSED [ 45%]WEB_CASE tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[1280-720] call passed 6.481s
+2026-10-09T00:49:07.6586293Z 
+2026-10-09T00:49:14.2226973Z tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[1754-956] PASSED [ 47%]WEB_CASE tests/e2e/test_glass_theme.py::test_expanded_tools_do_not_overlap_account_controls[1754-956] call passed 6.466s
+2026-10-09T00:49:14.2305857Z 
+2026-10-09T00:49:20.1763102Z tests/e2e/test_glass_theme.py::test_mobile_navigation_focus_escape_and_login PASSED [ 48%]WEB_CASE tests/e2e/test_glass_theme.py::test_mobile_navigation_focus_escape_and_login call passed 5.877s
+2026-10-09T00:49:20.1885196Z 
+2026-10-09T00:49:25.6078976Z tests/e2e/test_glass_theme.py::test_compact_rail_labels_and_tools_follow_pointer_and_keyboard[False] PASSED [ 50%]WEB_CASE tests/e2e/test_glass_theme.py::test_compact_rail_labels_and_tools_follow_pointer_and_keyboard[False] call passed 5.320s
+2026-10-09T00:49:25.6224055Z 
+2026-10-09T00:49:29.6712280Z tests/e2e/test_glass_theme.py::test_compact_rail_labels_and_tools_follow_pointer_and_keyboard[True] PASSED [ 51%]WEB_CASE tests/e2e/test_glass_theme.py::test_compact_rail_labels_and_tools_follow_pointer_and_keyboard[True] call passed 3.944s
+2026-10-09T00:49:29.8359640Z 
+2026-10-09T00:49:35.2326972Z tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph FAILED [ 52%]WEB_CASE tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph call failed 5.081s
+2026-10-09T00:49:35.2385799Z tests/e2e/test_icon_motion.py:42: in test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph
+2026-10-09T00:49:35.2431937Z     assert start != middle
+2026-10-09T00:49:35.2492720Z E   AssertionError: assert 'M12 3C9.5147 5.4853 9.5147 9.5147 12 12C14.4853 14.4853 18.5147 14.4853 21 12C21 16.9706 16.9706 21 12 21C7.0294 21 3 16.9706 3 12C3 7.0294 7.0294 3 12 3Z' != 'M12 3C9.5147 5.4853 9.5147 9.5147 12 12C14.4853 14.4853 18.5147 14.4853 21 12C21 16.9706 16.9706 21 12 21C7.0294 21 3 16.9706 3 12C3 7.0294 7.0294 3 12 3Z'
+2026-10-09T00:49:35.2548212Z 
+2026-10-09T00:49:38.9108177Z tests/e2e/test_icon_motion.py::test_reduced_motion_switches_morphicons_to_an_immediate_final_state PASSED [ 54%]WEB_CASE tests/e2e/test_icon_motion.py::test_reduced_motion_switches_morphicons_to_an_immediate_final_state call passed 3.659s
+2026-10-09T00:49:39.0559713Z 
+2026-10-09T00:49:45.8971807Z tests/e2e/test_notification_changes.py::test_student_change_comparison_retries_and_fits_dialog[390] PASSED [ 55%]WEB_CASE tests/e2e/test_notification_changes.py::test_student_change_comparison_retries_and_fits_dialog[390] call passed 6.612s
+2026-10-09T00:49:45.9420122Z 
+2026-10-09T00:49:54.3566884Z tests/e2e/test_notification_changes.py::test_student_change_comparison_retries_and_fits_dialog[1754] PASSED [ 56%]WEB_CASE tests/e2e/test_notification_changes.py::test_student_change_comparison_retries_and_fits_dialog[1754] call passed 8.307s
+2026-10-09T00:49:54.4028366Z 
+2026-10-09T00:50:03.4021879Z tests/e2e/test_notification_changes.py::test_unverified_account_syncs_its_workspace_like_any_other PASSED [ 58%]WEB_CASE tests/e2e/test_notification_changes.py::test_unverified_account_syncs_its_workspace_like_any_other call passed 8.888s
+2026-10-09T00:50:03.5348317Z 
+2026-10-09T00:50:20.8435838Z tests/e2e/test_region_search.py::test_searching_for_eastern_europe_finds_every_school_of_those_countries PASSED [ 59%]WEB_CASE tests/e2e/test_region_search.py::test_searching_for_eastern_europe_finds_every_school_of_those_countries call passed 16.913s
+2026-10-09T00:50:20.8566566Z 
+2026-10-09T00:50:30.2441601Z tests/e2e/test_region_search.py::test_english_country_names_and_europe_work_as_search_words PASSED [ 60%]WEB_CASE tests/e2e/test_region_search.py::test_english_country_names_and_europe_work_as_search_words call passed 9.285s
+2026-10-09T00:50:30.2631528Z 
+2026-10-09T00:50:39.4569966Z tests/e2e/test_region_search.py::test_the_region_filter_narrows_the_countries_and_clears PASSED [ 62%]WEB_CASE tests/e2e/test_region_search.py::test_the_region_filter_narrows_the_countries_and_clears call passed 9.077s
+2026-10-09T00:50:39.4670013Z 
+2026-10-09T00:50:46.3498370Z tests/e2e/test_region_search.py::test_the_country_list_is_grouped_by_region_and_a_country_filter_alone_still_works PASSED [ 63%]WEB_CASE tests/e2e/test_region_search.py::test_the_country_list_is_grouped_by_region_and_a_country_filter_alone_still_works call passed 6.809s
+2026-10-09T00:50:46.3584764Z 
+2026-10-09T00:51:01.9061859Z tests/e2e/test_region_search.py::test_a_region_in_the_address_is_applied_and_a_made_up_one_is_dropped PASSED [ 64%]WEB_CASE tests/e2e/test_region_search.py::test_a_region_in_the_address_is_applied_and_a_made_up_one_is_dropped call passed 15.475s
+2026-10-09T00:51:01.9307729Z 
+2026-10-09T00:51:09.0462083Z tests/e2e/test_region_search.py::test_the_czech_schools_have_no_stray_republic_in_their_names PASSED [ 66%]WEB_CASE tests/e2e/test_region_search.py::test_the_czech_schools_have_no_stray_republic_in_their_names call passed 6.986s
+2026-10-09T00:51:09.0611338Z 
+2026-10-09T00:51:17.0682427Z tests/e2e/test_region_search.py::test_the_quota_filter_says_this_period_and_a_signed_school_without_places_is_explained PASSED [ 67%]WEB_CASE tests/e2e/test_region_search.py::test_the_quota_filter_says_this_period_and_a_signed_school_without_places_is_explained call passed 7.925s
+2026-10-09T00:51:17.0880169Z 
+2026-10-09T00:51:28.4925652Z tests/e2e/test_region_search.py::test_the_region_filter_fits_on_a_phone_and_on_a_desktop PASSED [ 68%]WEB_CASE tests/e2e/test_region_search.py::test_the_region_filter_fits_on_a_phone_and_on_a_desktop call passed 11.291s
+2026-10-09T00:51:28.5060571Z 
+2026-10-09T00:51:33.7850300Z tests/e2e/test_region_search.py::test_the_reviews_page_invites_people_who_have_been_on_exchange PASSED [ 70%]WEB_CASE tests/e2e/test_region_search.py::test_the_reviews_page_invites_people_who_have_been_on_exchange call passed 5.175s
+2026-10-09T00:51:33.9757350Z 
+2026-10-09T00:51:43.4778398Z tests/e2e/test_school_lists.py::test_a_country_the_student_chose_gets_only_that_country_and_says_so PASSED [ 71%]WEB_CASE tests/e2e/test_school_lists.py::test_a_country_the_student_chose_gets_only_that_country_and_says_so call passed 9.292s
+2026-10-09T00:51:43.4960792Z 
+2026-10-09T00:51:50.7122572Z tests/e2e/test_school_lists.py::test_every_recommended_school_is_reachable_not_just_the_first_five PASSED [ 72%]WEB_CASE tests/e2e/test_school_lists.py::test_every_recommended_school_is_reachable_not_just_the_first_five call passed 7.138s
+2026-10-09T00:51:50.7339877Z 
+2026-10-09T00:51:56.7860691Z tests/e2e/test_school_lists.py::test_a_small_group_has_no_show_more_button PASSED [ 74%]WEB_CASE tests/e2e/test_school_lists.py::test_a_small_group_has_no_show_more_button call passed 5.976s
+2026-10-09T00:51:56.8031967Z 
+2026-10-09T00:52:02.7713523Z tests/e2e/test_school_lists.py::test_a_country_with_no_open_school_says_so_and_lists_the_others PASSED [ 75%]WEB_CASE tests/e2e/test_school_lists.py::test_a_country_with_no_open_school_says_so_and_lists_the_others call passed 5.898s
+2026-10-09T00:52:02.7879087Z 
+2026-10-09T00:52:09.6083771Z tests/e2e/test_school_lists.py::test_the_school_list_shows_a_full_page_and_the_count[390-20] PASSED [ 77%]WEB_CASE tests/e2e/test_school_lists.py::test_the_school_list_shows_a_full_page_and_the_count[390-20] call passed 6.748s
+2026-10-09T00:52:09.6209812Z 
+2026-10-09T00:52:17.0934288Z tests/e2e/test_school_lists.py::test_the_school_list_shows_a_full_page_and_the_count[1280-30] PASSED [ 78%]WEB_CASE tests/e2e/test_school_lists.py::test_the_school_list_shows_a_full_page_and_the_count[1280-30] call passed 7.384s
+2026-10-09T00:52:17.1150419Z 
+2026-10-09T00:52:24.1975230Z tests/e2e/test_school_lists.py::test_filtering_to_a_country_shows_all_of_its_schools_and_only_those PASSED [ 79%]WEB_CASE tests/e2e/test_school_lists.py::test_filtering_to_a_country_shows_all_of_its_schools_and_only_those call passed 6.978s
+2026-10-09T00:52:24.3676406Z 
+2026-10-09T00:52:35.6444700Z tests/e2e/test_shared_conditions.py::test_one_form_keeps_unsaved_conditions_across_modes_and_saves_same_inputs[390] PASSED [ 81%]WEB_CASE tests/e2e/test_shared_conditions.py::test_one_form_keeps_unsaved_conditions_across_modes_and_saves_same_inputs[390] call passed 11.040s
+2026-10-09T00:52:35.6669893Z 
+2026-10-09T00:52:47.9082253Z tests/e2e/test_shared_conditions.py::test_one_form_keeps_unsaved_conditions_across_modes_and_saves_same_inputs[1754] PASSED [ 82%]WEB_CASE tests/e2e/test_shared_conditions.py::test_one_form_keeps_unsaved_conditions_across_modes_and_saves_same_inputs[1754] call passed 12.159s
+2026-10-09T00:52:47.9179770Z 
+2026-10-09T00:53:01.2826417Z tests/e2e/test_shared_conditions.py::test_real_response_after_edit_is_not_applied_or_saved[/advisor/plan] PASSED [ 83%]WEB_CASE tests/e2e/test_shared_conditions.py::test_real_response_after_edit_is_not_applied_or_saved[/advisor/plan] call passed 13.286s
+2026-10-09T00:53:01.2959645Z 
+2026-10-09T00:53:15.8335789Z tests/e2e/test_shared_conditions.py::test_real_response_after_edit_is_not_applied_or_saved[/application-plan/evaluate] PASSED [ 85%]WEB_CASE tests/e2e/test_shared_conditions.py::test_real_response_after_edit_is_not_applied_or_saved[/application-plan/evaluate] call passed 14.454s
+2026-10-09T00:53:15.9874717Z 
+2026-10-09T00:53:25.8441500Z tests/e2e/test_student_journey_ux.py::test_calendar_empty_state_enters_planning_and_bad_dates_offer_recovery[390] PASSED [ 86%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_calendar_empty_state_enters_planning_and_bad_dates_offer_recovery[390] call passed 9.629s
+2026-10-09T00:53:25.8629623Z 
+2026-10-09T00:53:37.8026450Z tests/e2e/test_student_journey_ux.py::test_calendar_empty_state_enters_planning_and_bad_dates_offer_recovery[1754] PASSED [ 87%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_calendar_empty_state_enters_planning_and_bad_dates_offer_recovery[1754] call passed 11.838s
+2026-10-09T00:53:37.8140757Z 
+2026-10-09T00:53:47.8334021Z tests/e2e/test_student_journey_ux.py::test_task_duration_changes_require_new_preview_and_save_adjusted_start[390] PASSED [ 89%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_task_duration_changes_require_new_preview_and_save_adjusted_start[390] call passed 9.929s
+2026-10-09T00:53:47.8420584Z 
+2026-10-09T00:53:59.7580554Z tests/e2e/test_student_journey_ux.py::test_task_duration_changes_require_new_preview_and_save_adjusted_start[1754] PASSED [ 90%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_task_duration_changes_require_new_preview_and_save_adjusted_start[1754] call passed 11.847s
+2026-10-09T00:53:59.7714993Z 
+2026-10-09T00:54:11.6265209Z tests/e2e/test_student_journey_ux.py::test_unknown_language_is_saved_without_zero_and_term_carries_to_documents PASSED [ 91%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_unknown_language_is_saved_without_zero_and_term_carries_to_documents call passed 11.751s
+2026-10-09T00:54:11.6355451Z 
+2026-10-09T00:54:18.3151693Z tests/e2e/test_student_journey_ux.py::test_documents_show_current_phase_and_only_selected_print_items[390] PASSED [ 93%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_documents_show_current_phase_and_only_selected_print_items[390] call passed 6.597s
+2026-10-09T00:54:18.3766868Z 
+2026-10-09T00:54:25.9812764Z tests/e2e/test_student_journey_ux.py::test_documents_show_current_phase_and_only_selected_print_items[1754] PASSED [ 94%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_documents_show_current_phase_and_only_selected_print_items[1754] call passed 7.563s
+2026-10-09T00:54:25.9929896Z 
+2026-10-09T00:54:40.9912297Z tests/e2e/test_student_journey_ux.py::test_target_change_can_be_cancelled_and_preserves_old_tasks_and_draft PASSED [ 95%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_target_change_can_be_cancelled_and_preserves_old_tasks_and_draft call passed 14.901s
+2026-10-09T00:54:41.0199696Z 
+2026-10-09T00:54:50.6961924Z tests/e2e/test_student_journey_ux.py::test_known_mismatch_has_no_choose_target_action_and_recommendation_is_not_probability PASSED [ 97%]WEB_CASE tests/e2e/test_student_journey_ux.py::test_known_mismatch_has_no_choose_target_action_and_recommendation_is_not_probability call passed 9.590s
+2026-10-09T00:54:50.8931771Z 
+2026-10-09T00:55:08.8901998Z tests/e2e/test_unified_preparation.py::test_real_shared_plan_settings_schedule_documents_and_reload[390] PASSED [ 98%]WEB_CASE tests/e2e/test_unified_preparation.py::test_real_shared_plan_settings_schedule_documents_and_reload[390] call passed 17.823s
+2026-10-09T00:55:08.9080272Z 
+2026-10-09T00:55:26.9409827Z tests/e2e/test_unified_preparation.py::test_real_shared_plan_settings_schedule_documents_and_reload[1754] PASSED [100%]WEB_CASE tests/e2e/test_unified_preparation.py::test_real_shared_plan_settings_schedule_documents_and_reload[1754] call passed 17.960s
+2026-10-09T00:55:27.6273083Z 
+2026-10-09T00:55:27.6273325Z 
+2026-10-09T00:55:27.6274453Z =================================== FAILURES ===================================
+2026-10-09T00:55:27.6276422Z _____ test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph ______
+2026-10-09T00:55:27.6278813Z tests/e2e/test_icon_motion.py:42: in test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph
+2026-10-09T00:55:27.6280697Z     assert start != middle
+2026-10-09T00:55:27.6285177Z E   AssertionError: assert 'M12 3C9.5147 5.4853 9.5147 9.5147 12 12C14.4853 14.4853 18.5147 14.4853 21 12C21 16.9706 16.9706 21 12 21C7.0294 21 3 16.9706 3 12C3 7.0294 7.0294 3 12 3Z' != 'M12 3C9.5147 5.4853 9.5147 9.5147 12 12C14.4853 14.4853 18.5147 14.4853 21 12C21 16.9706 16.9706 21 12 21C7.0294 21 3 16.9706 3 12C3 7.0294 7.0294 3 12 3Z'
+2026-10-09T00:55:27.6290622Z --------- generated xml file: /home/runner/work/_temp/web-tests-2.xml ----------
+2026-10-09T00:55:27.6292450Z ============================= slowest 25 durations =============================
+2026-10-09T00:55:27.6294471Z 19.96s call     tests/e2e/test_glass_theme.py::test_verified_catalog_search_map_and_saved_school[1440]
+2026-10-09T00:55:27.6297077Z 19.74s call     tests/e2e/test_analytics_tracking.py::test_a_visit_is_recorded_with_pages_searches_and_school_opens
+2026-10-09T00:55:27.6300087Z 17.96s call     tests/e2e/test_unified_preparation.py::test_real_shared_plan_settings_schedule_documents_and_reload[1754]
+2026-10-09T00:55:27.6303058Z 17.82s call     tests/e2e/test_unified_preparation.py::test_real_shared_plan_settings_schedule_documents_and_reload[390]
+2026-10-09T00:55:27.6305928Z 16.91s call     tests/e2e/test_region_search.py::test_searching_for_eastern_europe_finds_every_school_of_those_countries
+2026-10-09T00:55:27.6308499Z 15.84s call     tests/e2e/test_glass_theme.py::test_verified_catalog_search_map_and_saved_school[390]
+2026-10-09T00:55:27.6311295Z 15.47s call     tests/e2e/test_region_search.py::test_a_region_in_the_address_is_applied_and_a_made_up_one_is_dropped
+2026-10-09T00:55:27.6314038Z 14.90s call     tests/e2e/test_student_journey_ux.py::test_target_change_can_be_cancelled_and_preserves_old_tasks_and_draft
+2026-10-09T00:55:27.6317050Z 14.45s call     tests/e2e/test_shared_conditions.py::test_real_response_after_edit_is_not_applied_or_saved[/application-plan/evaluate]
+2026-10-09T00:55:27.6320184Z 13.29s call     tests/e2e/test_shared_conditions.py::test_real_response_after_edit_is_not_applied_or_saved[/advisor/plan]
+2026-10-09T00:55:27.6323227Z 12.16s call     tests/e2e/test_shared_conditions.py::test_one_form_keeps_unsaved_conditions_across_modes_and_saves_same_inputs[1754]
+2026-10-09T00:55:27.6325909Z 11.86s call     tests/e2e/test_analytics_tracking.py::test_the_footer_button_opts_out_and_back_in
+2026-10-09T00:55:27.6328656Z 11.85s call     tests/e2e/test_student_journey_ux.py::test_task_duration_changes_require_new_preview_and_save_adjusted_start[1754]
+2026-10-09T00:55:27.6331883Z 11.84s call     tests/e2e/test_student_journey_ux.py::test_calendar_empty_state_enters_planning_and_bad_dates_offer_recovery[1754]
+2026-10-09T00:55:27.6334956Z 11.75s call     tests/e2e/test_student_journey_ux.py::test_unknown_language_is_saved_without_zero_and_term_carries_to_documents
+2026-10-09T00:55:27.6337703Z 11.29s call     tests/e2e/test_region_search.py::test_the_region_filter_fits_on_a_phone_and_on_a_desktop
+2026-10-09T00:55:27.6340718Z 11.04s call     tests/e2e/test_shared_conditions.py::test_one_form_keeps_unsaved_conditions_across_modes_and_saves_same_inputs[390]
+2026-10-09T00:55:27.6344271Z 9.93s call     tests/e2e/test_student_journey_ux.py::test_task_duration_changes_require_new_preview_and_save_adjusted_start[390]
+2026-10-09T00:55:27.6347415Z 9.63s call     tests/e2e/test_student_journey_ux.py::test_calendar_empty_state_enters_planning_and_bad_dates_offer_recovery[390]
+2026-10-09T00:55:27.6350820Z 9.59s call     tests/e2e/test_student_journey_ux.py::test_known_mismatch_has_no_choose_target_action_and_recommendation_is_not_probability
+2026-10-09T00:55:27.6353836Z 9.31s call     tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754]
+2026-10-09T00:55:27.6356400Z 9.29s call     tests/e2e/test_school_lists.py::test_a_country_the_student_chose_gets_only_that_country_and_says_so
+2026-10-09T00:55:27.6359077Z 9.28s call     tests/e2e/test_region_search.py::test_english_country_names_and_europe_work_as_search_words
+2026-10-09T00:55:27.6361726Z 9.08s call     tests/e2e/test_region_search.py::test_the_region_filter_narrows_the_countries_and_clears
+2026-10-09T00:55:27.6364372Z 8.89s call     tests/e2e/test_notification_changes.py::test_unverified_account_syncs_its_workspace_like_any_other
+2026-10-09T00:55:27.6366459Z =========================== short test summary info ============================
+2026-10-09T00:55:27.6373193Z FAILED tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph - AssertionError: assert 'M12 3C9.5147 5.4853 9.5147 9.5147 12 12C14.4853 14.4853 18.5147 14.4853 21 12C21 16.9706 16.9706 21 12 21C7.0294 21 3 16.9706 3 12C3 7.0294 7.0294 3 12 3Z' != 'M12 3C9.5147 5.4853 9.5147 9.5147 12 12C14.4853 14.4853 18.5147 14.4853 21 12C21 16.9706 16.9706 21 12 21C7.0294 21 3 16.9706 3 12C3 7.0294 7.0294 3 12 3Z'
+2026-10-09T00:55:27.6378383Z =================== 1 failed, 73 passed in 623.57s (0:10:23) ===================
+2026-10-09T00:55:27.6379821Z WEB_SHARD 2 exit=1 elapsed=625.381s
+2026-10-09T00:55:28.7780188Z ##[error]Process completed with exit code 1.

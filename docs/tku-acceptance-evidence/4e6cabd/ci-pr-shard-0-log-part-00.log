@@ -1,0 +1,2000 @@
+﻿2026-10-09T00:45:15.1735726Z ##[group]Run uv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4 --junitxml "$RUNNER_TEMP/web-tests-$WEB_TEST_SHARD.xml"
+2026-10-09T00:45:15.1736843Z [36;1muv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4 --junitxml "$RUNNER_TEMP/web-tests-$WEB_TEST_SHARD.xml"[0m
+2026-10-09T00:45:15.1823733Z shell: /usr/bin/bash -e {0}
+2026-10-09T00:45:15.1823993Z env:
+2026-10-09T00:45:15.1824265Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:45:15.1824713Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T00:45:15.1825173Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:45:15.1825555Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:45:15.1825934Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:45:15.1826313Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T00:45:15.1826735Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T00:45:15.1827163Z   WEB_TEST_SHARD: 0
+2026-10-09T00:45:15.1827369Z ##[endgroup]
+2026-10-09T00:45:24.5022660Z {"shard": 0, "total_cases": 1757, "total_files": 179, "browser_cases_per_shard": [73, 73, 74, 73], "case_counts_per_shard": [1537, 73, 74, 73], "files_per_shard": [["tests/e2e/test_application_ui_refinements.py", "tests/e2e/test_conditions_account_sync.py", "tests/e2e/test_discovery_workspace.py", "tests/e2e/test_discussion_reader.py", "tests/e2e/test_document_workbench.py", "tests/e2e/test_open_catalog.py", "tests/e2e/test_school_chinese_content.py", "tests/e2e/test_web_next_phase.py", "tests/integration/test_local_ai_runtime.py", "tests/test_account_read_cache.py", "tests/test_account_workspace_api.py", "tests/test_advisor.py", "tests/test_advisor_mascot_contract.py", "tests/test_ai_gateway.py", "tests/test_ai_privacy.py", "tests/test_analytics_api.py", "tests/test_analytics_core.py", "tests/test_analytics_frontend_contract.py", "tests/test_analytics_report.py", "tests/test_api.py", "tests/test_application_document_catalog.py", "tests/test_application_documents_api.py", "tests/test_application_periods.py", "tests/test_application_plan_api.py", "tests/test_application_plan_schedule_api.py", "tests/test_application_plan_scheduling.py", "tests/test_application_rules.py", "tests/test_application_workflow.py", "tests/test_application_workflow_issue_report_migration.py", "tests/test_application_workflow_issue_reports.py", "tests/test_atomic_account_deletion_migration.py", "tests/test_atomic_auth_mutations.py", "tests/test_atomic_private_community_migration.py", "tests/test_atomic_public_community_api.py", "tests/test_atomic_public_community_migration.py", "tests/test_atomic_workspace_moderation.py", "tests/test_auth_api.py", "tests/test_b4_04_ai_limits.py", "tests/test_brand_assets.py", "tests/test_calendar_conflicts.py", "tests/test_calendar_sync_api.py", "tests/test_calendar_task_scheduling.py", "tests/test_catalog_access.py", "tests/test_catalogue_speed.py", "tests/test_cgu_bundled_data.py", "tests/test_change_impact.py", "tests/test_chinese_public_content.py", "tests/test_classifier.py", "tests/test_cli.py", "tests/test_college_options.py", "tests/test_community_api.py", "tests/test_community_browsing.py", "tests/test_community_permissions.py", "tests/test_community_repositories.py", "tests/test_content_governance_wrapper.py", "tests/test_content_summary.py", "tests/test_dependency_security_baseline.py", "tests/test_destination_tips.py", "tests/test_discovery.py", "tests/test_discussion_round2.py", "tests/test_document_check_entitlements.py", "tests/test_document_vault.py", "tests/test_email_verification.py", "tests/test_entitlements.py", "tests/test_experience_collector.py", "tests/test_experience_digests.py", "tests/test_feedback.py", "tests/test_feedback_migration.py", "tests/test_fit_signals.py", "tests/test_flutter_independent_pages.py", "tests/test_flutter_navigation_hierarchy.py", "tests/test_flutter_production_copy.py", "tests/test_form_drafts.py", "tests/test_frontend_contract.py", "tests/test_health_head.py", "tests/test_home_and_forum_routes.py", "tests/test_hong_kong_country.py", "tests/test_http_client.py", "tests/test_icon_motion_contract.py", "tests/test_independent_page_routing.py", "tests/test_jsonl_storage_integrity.py", "tests/test_lai_10_security_audit.py", "tests/test_legal_pages.py", "tests/test_life_context.py", "tests/test_loading_screen.py", "tests/test_local_ai.py", "tests/test_match_document_chunks_migration.py", "tests/test_multi_application_plan.py", "tests/test_my_application_entry.py", "tests/test_native_app_contract.py", "tests/test_next_phase_contract.py", "tests/test_notification_changes.py", "tests/test_notifications.py", "tests/test_ntpu_bundled_data.py", "tests/test_ntpu_support.py", "tests/test_ntu_audit.py", "tests/test_ntu_integration.py", "tests/test_ntu_school_board_migration.py", "tests/test_open_catalog_signup.py", "tests/test_partner_localization.py", "tests/test_partner_map_geometry.py", "tests/test_partner_research.py", "tests/test_pipeline.py", "tests/test_public_translation.py", "tests/test_qualification_scope_consistency.py", "tests/test_rag.py", "tests/test_regions.py", "tests/test_request_origin.py", "tests/test_requirements_traceability.py", "tests/test_responsive_css.py", "tests/test_review_source_candidates.py", "tests/test_review_source_metadata_candidates.py", "tests/test_rls_auto_enable_migration.py", "tests/test_school_choice.py", "tests/test_school_choice_migration.py", "tests/test_school_completeness.py", "tests/test_school_content.py", "tests/test_school_image_collector.py", "tests/test_school_photo_and_match.py", "tests/test_selection_conditions_sync.py", "tests/test_social_community_api.py", "tests/test_source_applicability_cleanup.py", "tests/test_source_metadata_research_audit.py", "tests/test_source_replacement_transport_audit.py", "tests/test_static_caching.py", "tests/test_student_view.py", "tests/test_submission_progress.py", "tests/test_supabase_migration_syntax.py", "tests/test_supabase_repositories.py", "tests/test_supabase_runtime_validation.py", "tests/test_supabase_setup_check.py", "tests/test_task_documents_and_reference_plan.py", "tests/test_terms_consent.py", "tests/test_tku_acceptance_runner.py", "tests/test_tku_continuation.py", "tests/test_tku_privacy_regressions.py", "tests/test_tku_support.py", "tests/test_transient_auth.py", "tests/test_translation_requests.py", "tests/test_university_locations.py", "tests/test_uniway_ui_contract.py", "tests/test_web_review_findings_contract.py", "tests/test_workflow_catalog_cache.py", "tests/test_workflow_context_api.py", "tests/test_workflow_structuring.py", "tests/test_workload_planning.py", "tests/test_workload_planning_api.py"], ["tests/e2e/test_departure_tips_and_experience_digests.py", "tests/e2e/test_document_flow.py", "tests/e2e/test_mascot_solid.py", "tests/e2e/test_ntu_school.py", "tests/e2e/test_partner_globe.py", "tests/e2e/test_planning_workspace.py", "tests/e2e/test_system_motion.py", "tests/e2e/test_task_documents_ui.py", "tests/e2e/test_terms_consent.py", "tests/e2e/test_travel_theme.py"], ["tests/e2e/test_analytics_tracking.py", "tests/e2e/test_application_periods.py", "tests/e2e/test_feedback_page.py", "tests/e2e/test_glass_theme.py", "tests/e2e/test_icon_motion.py", "tests/e2e/test_notification_changes.py", "tests/e2e/test_region_search.py", "tests/e2e/test_school_lists.py", "tests/e2e/test_shared_conditions.py", "tests/e2e/test_student_journey_ux.py", "tests/e2e/test_unified_preparation.py"], ["tests/e2e/test_application_workspace.py", "tests/e2e/test_discussion_round2.py", "tests/e2e/test_fit_and_completeness_ui.py", "tests/e2e/test_life_context.py", "tests/e2e/test_loading_screen.py", "tests/e2e/test_multi_plan_workspace.py", "tests/e2e/test_my_application_entry.py", "tests/e2e/test_navigation_guide.py", "tests/e2e/test_responsive_layout.py", "tests/e2e/test_tku_acceptance.py", "tests/e2e/test_workload_journey.py"]], "coverage": "all collected files; no new exclusions"}
+2026-10-09T00:45:26.0446400Z ============================= test session starts ==============================
+2026-10-09T00:45:26.0449563Z platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.6.0 -- /home/runner/work/abroad/abroad/.venv/bin/python3
+2026-10-09T00:45:26.0452825Z cachedir: .pytest_cache
+2026-10-09T00:45:26.0453423Z rootdir: /home/runner/work/abroad/abroad
+2026-10-09T00:45:26.0454004Z configfile: pyproject.toml
+2026-10-09T00:45:26.0454482Z plugins: anyio-4.14.2
+2026-10-09T00:45:29.2659274Z collecting ... CONFTEST LOADED!
+2026-10-09T00:45:29.2660086Z collected 1537 items
+2026-10-09T00:45:29.2660487Z 
+2026-10-09T00:45:45.9390453Z tests/e2e/test_application_ui_refinements.py::test_matching_actions_are_readable_and_aligned[390] PASSED [  0%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_matching_actions_are_readable_and_aligned[390] call passed 15.634s
+2026-10-09T00:45:45.9567101Z 
+2026-10-09T00:45:57.1710333Z tests/e2e/test_application_ui_refinements.py::test_matching_actions_are_readable_and_aligned[1754] PASSED [  0%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_matching_actions_are_readable_and_aligned[1754] call passed 11.129s
+2026-10-09T00:45:57.1928119Z 
+2026-10-09T00:46:08.5565799Z tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[390] PASSED [  0%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[390] call passed 11.265s
+2026-10-09T00:46:08.5698337Z 
+2026-10-09T00:46:17.8027968Z tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[1754] PASSED [  0%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_calendar_appears_first_and_tools_still_work[1754] call passed 9.162s
+2026-10-09T00:46:17.8121376Z 
+2026-10-09T00:46:40.7431664Z tests/e2e/test_application_ui_refinements.py::test_department_follows_college_and_saved_profile[\u570b\u7acb\u81fa\u5317\u5927\u5b78-\u6cd5\u5f8b\u5b78\u9662-\u6cd5\u5f8b\u5b78\u7cfb-\u5546\u5b78\u9662] PASSED [  0%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_department_follows_college_and_saved_profile[\u570b\u7acb\u81fa\u5317\u5927\u5b78-\u6cd5\u5f8b\u5b78\u9662-\u6cd5\u5f8b\u5b78\u7cfb-\u5546\u5b78\u9662] call passed 22.782s
+2026-10-09T00:46:40.8278101Z 
+2026-10-09T00:46:57.2781713Z tests/e2e/test_application_ui_refinements.py::test_department_follows_college_and_saved_profile[\u9577\u5e9a\u5927\u5b78-\u5de5\u5b78\u9662-\u8cc7\u8a0a\u5de5\u7a0b\u5b78\u7cfb-\u91ab\u5b78\u9662] PASSED [  0%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_department_follows_college_and_saved_profile[\u9577\u5e9a\u5927\u5b78-\u5de5\u5b78\u9662-\u8cc7\u8a0a\u5de5\u7a0b\u5b78\u7cfb-\u91ab\u5b78\u9662] call passed 16.330s
+2026-10-09T00:46:57.2988116Z 
+2026-10-09T00:47:17.0603625Z tests/e2e/test_application_ui_refinements.py::test_calendar_preparation_and_completion_through_tools PASSED [  0%]WEB_CASE tests/e2e/test_application_ui_refinements.py::test_calendar_preparation_and_completion_through_tools call passed 19.660s
+2026-10-09T00:47:17.2278257Z 
+2026-10-09T00:47:44.3572117Z tests/e2e/test_conditions_account_sync.py::test_complete_conditions_reach_new_device_and_clear_stays_cleared PASSED [  0%]WEB_CASE tests/e2e/test_conditions_account_sync.py::test_complete_conditions_reach_new_device_and_clear_stays_cleared call passed 26.929s
+2026-10-09T00:47:44.3768021Z 
+2026-10-09T00:48:08.8223290Z tests/e2e/test_conditions_account_sync.py::test_conflicting_submissions_keep_one_snapshot_and_tell_student PASSED [  0%]WEB_CASE tests/e2e/test_conditions_account_sync.py::test_conflicting_submissions_keep_one_snapshot_and_tell_student call passed 24.344s
+2026-10-09T00:48:09.0108135Z 
+2026-10-09T00:48:31.0337157Z tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader FAILED [  0%]WEB_CASE tests/e2e/test_discovery_workspace.py::test_combined_search_map_preview_and_chinese_reader call failed 21.549s
+2026-10-09T00:48:31.0365120Z tests/e2e/test_discovery_workspace.py:56: in test_combined_search_map_preview_and_chinese_reader
+2026-10-09T00:48:31.0372950Z     expect(page.locator(".discovery-reader-original")).to_contain_text("I cooked")
+2026-10-09T00:48:31.0381744Z E   AssertionError: Locator expected to contain text 'I cooked'
+2026-10-09T00:48:31.0390958Z E   Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 
+2026-10-09T00:48:31.0399173Z E   Call log:
+2026-10-09T00:48:31.0407998Z E     - Expect "to_contain_text" with timeout 5000ms
+2026-10-09T00:48:31.0417854Z E     - waiting for locator(".discovery-reader-original")
+2026-10-09T00:48:31.0436628Z E       10 × locator resolved to <details open="" class="discovery-reader-original">…</details>
+2026-10-09T00:48:31.0472034Z E          - unexpected value "資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。"
+2026-10-09T00:48:31.0596932Z E   
+2026-10-09T00:48:31.0612570Z E   Aria snapshot:
+2026-10-09T00:48:31.0618944Z E   - group:
+2026-10-09T00:48:31.0685888Z E     - text: 資料來源
+2026-10-09T00:48:31.0740190Z E     - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。
+2026-10-09T00:48:31.0777922Z 
+2026-10-09T00:49:10.0508035Z tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout PASSED [  0%]WEB_CASE tests/e2e/test_discovery_workspace.py::test_cloud_selection_roundtrip_home_isolation_and_logout call passed 38.886s
+2026-10-09T00:49:10.0648240Z 
+2026-10-09T00:49:29.1222564Z tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history PASSED [  0%]WEB_CASE tests/e2e/test_discovery_workspace.py::test_candidates_notes_order_persistence_mobile_and_history call passed 18.972s
+2026-10-09T00:49:29.2492464Z 
+2026-10-09T00:49:39.4605372Z tests/e2e/test_discussion_reader.py::test_lazy_reader_permalink_saved_and_back_restore PASSED [  0%]WEB_CASE tests/e2e/test_discussion_reader.py::test_lazy_reader_permalink_saved_and_back_restore call passed 9.953s
+2026-10-09T00:49:39.4848016Z 
+2026-10-09T00:49:53.1023421Z tests/e2e/test_discussion_reader.py::test_quote_draft_and_cookie_reply PASSED [  0%]WEB_CASE tests/e2e/test_discussion_reader.py::test_quote_draft_and_cookie_reply call passed 13.517s
+2026-10-09T00:49:53.1168904Z 
+2026-10-09T00:49:58.1841284Z tests/e2e/test_discussion_reader.py::test_mobile_reader_keyboard_exit_and_comment_failure_isolated PASSED [  0%]WEB_CASE tests/e2e/test_discussion_reader.py::test_mobile_reader_keyboard_exit_and_comment_failure_isolated call passed 4.988s
+2026-10-09T00:49:58.1958679Z 
+2026-10-09T00:50:08.1360456Z tests/e2e/test_discussion_reader.py::test_guest_can_enter_login_from_modal_and_resume_article PASSED [  1%]WEB_CASE tests/e2e/test_discussion_reader.py::test_guest_can_enter_login_from_modal_and_resume_article call passed 9.868s
+2026-10-09T00:50:08.2958029Z 
+2026-10-09T00:50:20.8441693Z tests/e2e/test_document_workbench.py::test_document_panes_keep_draft_and_legacy_tools_have_one_form[390] PASSED [  1%]WEB_CASE tests/e2e/test_document_workbench.py::test_document_panes_keep_draft_and_legacy_tools_have_one_form[390] call passed 12.297s
+2026-10-09T00:50:20.8808063Z 
+2026-10-09T00:50:32.2771177Z tests/e2e/test_document_workbench.py::test_document_panes_keep_draft_and_legacy_tools_have_one_form[1754] PASSED [  1%]WEB_CASE tests/e2e/test_document_workbench.py::test_document_panes_keep_draft_and_legacy_tools_have_one_form[1754] call passed 11.268s
+2026-10-09T00:50:32.3114595Z 
+2026-10-09T00:50:47.7265659Z tests/e2e/test_document_workbench.py::test_generated_pdf_is_checked_and_saved_only_with_separate_consent PASSED [  1%]WEB_CASE tests/e2e/test_document_workbench.py::test_generated_pdf_is_checked_and_saved_only_with_separate_consent call passed 15.295s
+2026-10-09T00:50:47.7418175Z 
+2026-10-09T00:50:59.0520384Z tests/e2e/test_document_workbench.py::test_switching_template_discards_previous_file_consent_and_late_check PASSED [  1%]WEB_CASE tests/e2e/test_document_workbench.py::test_switching_template_discards_previous_file_consent_and_late_check call passed 11.216s
+2026-10-09T00:50:59.0732995Z 
+2026-10-09T00:51:13.6754984Z tests/e2e/test_document_workbench.py::test_editing_after_generation_does_not_offer_old_pdf_as_current_document PASSED [  1%]WEB_CASE tests/e2e/test_document_workbench.py::test_editing_after_generation_does_not_offer_old_pdf_as_current_document call passed 14.510s
+2026-10-09T00:51:13.6921223Z 
+2026-10-09T00:51:28.5050414Z tests/e2e/test_document_workbench.py::test_logout_clears_live_fields_and_selected_check_file PASSED [  1%]WEB_CASE tests/e2e/test_document_workbench.py::test_logout_clears_live_fields_and_selected_check_file call passed 14.719s
+2026-10-09T00:51:28.7105254Z 
+2026-10-09T00:51:38.3835115Z tests/e2e/test_open_catalog.py::test_visitor_switches_schools_without_an_account PASSED [  1%]WEB_CASE tests/e2e/test_open_catalog.py::test_visitor_switches_schools_without_an_account call passed 9.462s
+2026-10-09T00:51:38.4061788Z 
+2026-10-09T00:51:48.8152100Z tests/e2e/test_open_catalog.py::test_account_without_a_school_is_asked_once_after_google_returns PASSED [  1%]WEB_CASE tests/e2e/test_open_catalog.py::test_account_without_a_school_is_asked_once_after_google_returns call passed 10.301s
+2026-10-09T00:51:48.8307355Z 
+2026-10-09T00:51:56.8120966Z tests/e2e/test_open_catalog.py::test_signing_out_keeps_the_catalogue_open PASSED [  1%]WEB_CASE tests/e2e/test_open_catalog.py::test_signing_out_keeps_the_catalogue_open call passed 7.895s
+2026-10-09T00:51:57.0968056Z 
+2026-10-09T00:52:13.4280195Z tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[390] PASSED [  1%]WEB_CASE tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[390] call passed 16.123s
+2026-10-09T00:52:13.4368064Z 
+2026-10-09T00:52:28.5023611Z tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[1754] PASSED [  1%]WEB_CASE tests/e2e/test_school_chinese_content.py::test_school_life_uses_offline_chinese_and_retains_original[1754] call passed 14.986s
+2026-10-09T00:52:28.7038111Z 
+2026-10-09T00:52:39.7676958Z tests/e2e/test_web_next_phase.py::test_guest_can_save_device_selections_and_plan_actions_require_login FAILED [  1%]WEB_CASE tests/e2e/test_web_next_phase.py::test_guest_can_save_device_selections_and_plan_actions_require_login call failed 10.722s
+2026-10-09T00:52:39.7686607Z tests/e2e/test_web_next_phase.py:269: in test_guest_can_save_device_selections_and_plan_actions_require_login
+2026-10-09T00:52:39.7688197Z     expect(page.locator("#documents")).to_be_visible()
+2026-10-09T00:52:39.7689182Z E   AssertionError: Locator expected to be visible
+2026-10-09T00:52:39.7689957Z E   Actual value: hidden 
+2026-10-09T00:52:39.7690519Z E   Call log:
+2026-10-09T00:52:39.7691239Z E     - Expect "to_be_visible" with timeout 5000ms
+2026-10-09T00:52:39.7697061Z E     - waiting for locator("#documents")
+2026-10-09T00:52:39.7699681Z E       13 × locator resolved to <section hidden="" id="documents" class="page-section" data-university-page="documents" aria-labelledby="documents-title">…</section>
+2026-10-09T00:52:39.7702974Z E          - unexpected value "hidden"
+2026-10-09T00:52:39.7703756Z E   
+2026-10-09T00:52:39.7704119Z E   Aria snapshot:
+2026-10-09T00:52:39.7705993Z E   - link "跳到主要內容":
+2026-10-09T00:52:39.7708017Z E     - /url: "#main-content"
+2026-10-09T00:52:39.7708647Z E   - complementary "系統功能":
+2026-10-09T00:52:39.7709151Z E     - link "UniWay 首頁":
+2026-10-09T00:52:39.7709544Z E       - /url: "#home"
+2026-10-09T00:52:39.7710242Z E       - strong: UniWay
+2026-10-09T00:52:39.7710794Z E     - navigation "公開探索導覽":
+2026-10-09T00:52:39.7711519Z E       - link "首頁":
+2026-10-09T00:52:39.7711892Z E         - /url: "#home"
+2026-10-09T00:52:39.7714305Z E       - link "學校搜尋":
+2026-10-09T00:52:39.7714780Z E         - /url: "#partners"
+2026-10-09T00:52:39.7715329Z E       - link "論壇":
+2026-10-09T00:52:39.7715701Z E         - /url: "#forum"
+2026-10-09T00:52:39.7716166Z E       - link "用戶評價":
+2026-10-09T00:52:39.7716572Z E         - /url: "#feedback"
+2026-10-09T00:52:39.7716974Z E       - group:
+2026-10-09T00:52:39.7717668Z E         - link "我的申請":
+2026-10-09T00:52:39.7718141Z E           - /url: "#advisor"
+2026-10-09T00:52:39.7719047Z E     - button "返回上一頁": 返回
+2026-10-09T00:52:39.7719592Z E     - button "選擇就讀學校":
+2026-10-09T00:52:39.7720062Z E       - strong: 選擇就讀學校
+2026-10-09T00:52:39.7720522Z E     - button "切換為深色模式"
+2026-10-09T00:52:39.7721010Z E     - button "重新整理最新資料"
+2026-10-09T00:52:39.7778695Z E     - button "登入或建立帳號": 登入
+2026-10-09T00:52:39.7779852Z E   - dialog "你目前就讀哪一所台灣大學？":
+2026-10-09T00:52:39.7780642Z E     - text: UniWay
+2026-10-09T00:52:39.7781510Z E     - heading "你目前就讀哪一所台灣大學？" [level=1]
+2026-10-09T00:52:39.7782750Z E     - paragraph: 選擇後，我們會顯示你真正能申請的學校、資格與申請時程；也可以先略過直接瀏覽。
+2026-10-09T00:52:39.7783758Z E     - text: 搜尋台灣的大學
+2026-10-09T00:52:39.7784677Z E     - textbox "搜尋台灣的大學":
+2026-10-09T00:52:39.7785729Z E       - /placeholder: 輸入學校名稱，例如：長庚、臺北大學、臺大
+2026-10-09T00:52:39.7786675Z E     - listbox "可選擇的大學":
+2026-10-09T00:52:39.7788195Z E       - option "長庚大學識別圖 長庚大學 完整支援試點：已整理長庚大學交換、補助、文件與合作校申請流程。 75 間合作校" [selected]:
+2026-10-09T00:52:39.7789164Z E         - img "長庚大學識別圖"
+2026-10-09T00:52:39.7789901Z E         - strong: 長庚大學
+2026-10-09T00:52:39.7790899Z E         - text: 完整支援試點：已整理長庚大學交換、補助、文件與合作校申請流程。 75 間合作校
+2026-10-09T00:52:39.7828494Z E       - option "國立臺北大學識別圖 國立臺北大學 完整支援試點：已套用交換申請流程與 116 學年度三語組官方名額表。 169 間合作校":
+2026-10-09T00:52:39.7832370Z E         - img "國立臺北大學識別圖"
+2026-10-09T00:52:39.7848278Z E         - strong: 國立臺北大學
+2026-10-09T00:52:39.7855855Z E         - text: 完整支援試點：已套用交換申請流程與 116 學年度三語組官方名額表。 169 間合作校
+2026-10-09T00:52:39.7857254Z E       - option "國立臺灣大學識別圖 國立臺灣大學 已整理116-1校級甄選、文件、補助與288個合作項目；合作校本期名額與未核實條件標示待確認。 288 間合作校":
+2026-10-09T00:52:39.7858613Z E         - img "國立臺灣大學識別圖"
+2026-10-09T00:52:39.7859373Z E         - strong: 國立臺灣大學
+2026-10-09T00:52:39.7860946Z E         - text: 已整理116-1校級甄選、文件、補助與288個合作項目；合作校本期名額與未核實條件標示待確認。 288 間合作校
+2026-10-09T00:52:39.7862872Z E       - option "淡江大學識別圖 淡江大學 部分支援：2027–2028日語第二次甄選4校7名，已截止；英歐及中文組新版尚未核實，124筆舊期資料獨立保存。 4 間合作校":
+2026-10-09T00:52:39.7864187Z E         - img "淡江大學識別圖"
+2026-10-09T00:52:39.7879999Z E         - strong: 淡江大學
+2026-10-09T00:52:39.7881216Z E         - text: 部分支援：2027–2028日語第二次甄選4校7名，已截止；英歐及中文組新版尚未核實，124筆舊期資料獨立保存。 4 間合作校
+2026-10-09T00:52:39.7882457Z E     - button "先看看全部交換學校"
+2026-10-09T00:52:39.7888170Z E     - button "選擇我的學校"
+2026-10-09T00:52:39.7889020Z E     - text: 瀏覽公開資料不需要登入；收藏、進度與社群功能才需要帳號。
+2026-10-09T00:52:39.7889625Z E   - main:
+2026-10-09T00:52:39.7890094Z E     - status
+2026-10-09T00:52:39.7890685Z E     - region "我的申請工作區":
+2026-10-09T00:52:39.7891314Z E       - text: 我的申請
+2026-10-09T00:52:39.7892000Z E       - strong: 從選校到送件，接著完成下一步
+2026-10-09T00:52:39.7892674Z E       - paragraph: 長庚大學
+2026-10-09T00:52:39.7893368Z E       - navigation "申請工作區階段":
+2026-10-09T00:52:39.7894072Z E         - link "選校與確認":
+2026-10-09T00:52:39.7894677Z E           - /url: "#advisor"
+2026-10-09T00:52:39.7929855Z E         - link "準備與時程":
+2026-10-09T00:52:39.7931892Z E           - /url: "#overview"
+2026-10-09T00:52:39.7932850Z E         - link "文件與送件":
+2026-10-09T00:52:39.7933641Z E           - /url: "#application-center"
+2026-10-09T00:52:39.7934516Z E       - navigation "本階段操作":
+2026-10-09T00:52:39.7935596Z E         - link "填寫與列印":
+2026-10-09T00:52:39.7936284Z E           - /url: "#application-center"
+2026-10-09T00:52:39.7937015Z E         - link "檢查文件":
+2026-10-09T00:52:39.7937948Z E           - /url: "#document-check"
+2026-10-09T00:52:39.7938666Z E         - link "官方說明與私人文件":
+2026-10-09T00:52:39.7939283Z E           - /url: "#documents"
+2026-10-09T00:52:39.7939908Z E       - region "申請文件":
+2026-10-09T00:52:39.7940573Z E         - heading "申請文件" [level=2]
+2026-10-09T00:52:39.7941229Z E         - link "檢查已寫文件":
+2026-10-09T00:52:39.7941845Z E           - /url: "#document-check"
+2026-10-09T00:52:39.7942531Z E         - list "申請文件處理流程":
+2026-10-09T00:52:39.7943089Z E           - listitem:
+2026-10-09T00:52:39.7943619Z E             - text: "1"
+2026-10-09T00:52:39.7944219Z E             - strong: 建立申請
+2026-10-09T00:52:39.7944777Z E           - listitem:
+2026-10-09T00:52:39.7945305Z E             - text: "2"
+2026-10-09T00:52:39.7945900Z E             - strong: 填寫文件
+2026-10-09T00:52:39.7946459Z E           - listitem:
+2026-10-09T00:52:39.7946978Z E             - text: "3"
+2026-10-09T00:52:39.7947844Z E             - strong: 檢查簽核
+2026-10-09T00:52:39.7948508Z E           - listitem:
+2026-10-09T00:52:39.7949136Z E             - text: "4"
+2026-10-09T00:52:39.7949835Z E             - strong: 下載列印
+2026-10-09T00:52:39.7950552Z E         - strong: 申請設定
+2026-10-09T00:52:39.7951258Z E         - text: 申請類型
+2026-10-09T00:52:39.7951980Z E         - combobox "申請類型":
+2026-10-09T00:52:39.7952782Z E           - option "學期／學年交換" [selected]
+2026-10-09T00:52:39.7953539Z E           - option "雙聯學位"
+2026-10-09T00:52:39.7954538Z E           - option "海外實習"
+2026-10-09T00:52:39.7955318Z E           - option "境外短期學分課程"
+2026-10-09T00:52:39.7956863Z E         - text: 目標學校
+2026-10-09T00:52:39.7958269Z E         - combobox "目標學校":
+2026-10-09T00:52:39.7959398Z E           - option "尚未決定" [selected]
+2026-10-09T00:52:39.7960295Z E           - option "中國 · 武漢大學 Wuhan University"
+2026-10-09T00:52:39.7961297Z E           - option "日本 · 明治大學 Meiji University"
+2026-10-09T00:52:39.7962569Z E           - option "比利時 · 比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences"
+2026-10-09T00:52:39.7963840Z E           - option "印度 · 印度昌迪加爾大學 Chandigarh University"
+2026-10-09T00:52:39.7965305Z E           - option "法國 · 法國艾克斯馬賽大學管理研究所 IAE Aix-Marseille Graduate School of Management"
+2026-10-09T00:52:39.7966574Z E           - option "法國 · 法國薩克雷大學 University of Paris-Saclay"
+2026-10-09T00:52:39.7968108Z E           - option "法國 · 法國EPF工程師學校 EPF École d'ingénieurs"
+2026-10-09T00:52:39.7969285Z E           - option "法國 · 法國ICD商學院 ICD Business School"
+2026-10-09T00:52:39.7970380Z E           - option "法國 · 雷恩商學院 Rennes School of Business"
+2026-10-09T00:52:39.7971503Z E           - option "法國 · 歐洲知識經濟與管理學院 Skema Business School"
+2026-10-09T00:52:39.7974670Z E           - option "美國 · 威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee"
+2026-10-09T00:52:39.7975877Z E           - option "紐西蘭 · 林肯大學 Lincoln University"
+2026-10-09T00:52:39.7977124Z E           - option "馬來西亞 · 馬來西亞馬來亞大學 Universiti Malaya"
+2026-10-09T00:52:39.7978483Z E           - option "馬來西亞 · 馬來西亞管理與科技大學 Management and Science University"
+2026-10-09T00:52:39.7979645Z E           - option "捷克 · 捷克布拉格紐約大學 University of New York in Prague (UNYP)"
+2026-10-09T00:52:39.7980761Z E           - option "荷蘭 · 荷蘭恩荷芬理工大學 Eindhoven University of Technology"
+2026-10-09T00:52:39.7981835Z E           - option "德國 · 德國呂貝克應用科技大學 Technische Hochschule Lübeck"
+2026-10-09T00:52:39.7983376Z E           - option "韓國 · 韓國江原國立大學 Kangwon National University"
+2026-10-09T00:52:39.7984384Z E         - text: 學年度
+2026-10-09T00:52:39.7985813Z E         - textbox "學年度":
+2026-10-09T00:52:39.7986597Z E           - /placeholder: 例如 116
+2026-10-09T00:52:39.7987323Z E         - text: 預計出國學期
+2026-10-09T00:52:39.7988342Z E         - combobox "預計出國學期":
+2026-10-09T00:52:39.7989143Z E           - option "尚未決定" [selected]
+2026-10-09T00:52:39.7989947Z E           - option "第一學期"
+2026-10-09T00:52:39.7990924Z E           - option "第二學期"
+2026-10-09T00:52:39.7991863Z E           - option "一學年"
+2026-10-09T00:52:39.7992686Z E           - option "寒假／暑假"
+2026-10-09T00:52:39.7993774Z E         - checkbox "申請補助"
+2026-10-09T00:52:39.7994524Z E         - strong: 申請補助
+2026-10-09T00:52:39.7995236Z E         - checkbox "在學役男"
+2026-10-09T00:52:39.7995948Z E         - strong: 在學役男
+2026-10-09T00:52:39.7996691Z E         - checkbox "研修一學年以上"
+2026-10-09T00:52:39.7997662Z E         - strong: 研修一學年以上
+2026-10-09T00:52:39.7998399Z E         - region "當期文件與官方表格":
+2026-10-09T00:52:39.7999130Z E           - heading "當期文件與官方表格" [level=3]
+2026-10-09T00:52:39.7999822Z E           - text: 請選擇學校
+2026-10-09T00:52:39.8000992Z E           - paragraph: 選擇目標學校後，會依學系、年度與梯次列出文件；沒有確認的份數或表格不會被當成正式版本。
+2026-10-09T00:52:39.8001830Z E           - paragraph: 尚未選擇目標學校。
+2026-10-09T00:52:39.8002536Z E         - strong: 登入後使用自動填表與列印套件
+2026-10-09T00:52:39.8003386Z E         - text: 申請規定、官方來源與校方原始表格仍可免登入免費查看；登入不代表同意上傳個人文件。
+2026-10-09T00:52:39.8004096Z E         - button "登入後使用"
+2026-10-09T00:52:39.8004777Z E         - region "可填寫的準備工具":
+2026-10-09T00:52:39.8005599Z E           - heading "可填寫的準備工具" [level=3]
+2026-10-09T00:52:39.8006323Z E           - text: 10 份 先看這個階段
+2026-10-09T00:52:39.8006990Z E           - combobox "先看這個階段":
+2026-10-09T00:52:39.8007910Z E             - option "校內申請" [selected]
+2026-10-09T00:52:39.8008658Z E             - option "校內初審通過後"
+2026-10-09T00:52:39.8009334Z E             - option "錄取後／出國前"
+2026-10-09T00:52:39.8010121Z E             - option "抵達後 14 天內"
+2026-10-09T00:52:39.8010784Z E             - option "返國後"
+2026-10-09T00:52:39.8011599Z E           - paragraph: 可切換查看其他階段；這個選項不會變更你的錄取或送件狀態。
+2026-10-09T00:52:39.8012625Z E           - paragraph: 以下工具用來整理草稿與列印，不代表當期校方必備文件；請以上方已確認的官方規定為準。
+2026-10-09T00:52:39.8013334Z E           - group:
+2026-10-09T00:52:39.8013862Z E             - strong:
+2026-10-09T00:52:39.8014447Z E               - text: 校內申請
+2026-10-09T00:52:39.8015115Z E               - emphasis: 目前查看
+2026-10-09T00:52:39.8015735Z E             - text: 3 份
+2026-10-09T00:52:39.8016322Z E             - article:
+2026-10-09T00:52:39.8016979Z E               - text: 申請 待填寫
+2026-10-09T00:52:39.8017964Z E               - strong: 校內申請資料
+2026-10-09T00:52:39.8018584Z E               - text: 0%
+2026-10-09T00:52:39.8019276Z E               - emphasis: 1 份
+2026-10-09T00:52:39.8020135Z E               - checkbox "加入校內申請資料到列印包" [disabled]
+2026-10-09T00:52:39.8020971Z E               - text: 列印包
+2026-10-09T00:52:39.8021755Z E               - button "登入後填寫校內申請資料"
+2026-10-09T00:52:39.8022421Z E             - article:
+2026-10-09T00:52:39.8023156Z E               - text: 同意書 待填寫
+2026-10-09T00:52:39.8023952Z E               - strong: 家長同意書
+2026-10-09T00:52:39.8024584Z E               - text: 0%
+2026-10-09T00:52:39.8025312Z E               - emphasis: 1 份
+2026-10-09T00:52:39.8026157Z E               - checkbox "加入家長同意書到列印包" [disabled]
+2026-10-09T00:52:39.8026927Z E               - text: 列印包
+2026-10-09T00:52:39.8027921Z E               - button "登入後填寫家長同意書"
+2026-10-09T00:52:39.8028884Z E             - article:
+2026-10-09T00:52:39.8029589Z E               - text: 計畫書 待填寫
+2026-10-09T00:52:39.8030298Z E               - strong: 讀書計畫
+2026-10-09T00:52:39.8030906Z E               - text: 0%
+2026-10-09T00:52:39.8031556Z E               - emphasis: 1 份
+2026-10-09T00:52:39.8032417Z E               - checkbox "加入讀書計畫到列印包" [disabled]
+2026-10-09T00:52:39.8033292Z E               - text: 列印包
+2026-10-09T00:52:39.8034080Z E               - button "登入後填寫讀書計畫"
+2026-10-09T00:52:39.8034764Z E           - group:
+2026-10-09T00:52:39.8035523Z E             - strong: 校內初審通過後
+2026-10-09T00:52:39.8036188Z E             - text: 1 份
+2026-10-09T00:52:39.8036785Z E           - group:
+2026-10-09T00:52:39.8037701Z E             - strong: 錄取後／出國前
+2026-10-09T00:52:39.8038431Z E             - text: 3 份
+2026-10-09T00:52:39.8039036Z E           - group:
+2026-10-09T00:52:39.8039761Z E             - strong: 抵達後 14 天內
+2026-10-09T00:52:39.8040433Z E             - text: 1 份
+2026-10-09T00:52:39.8041029Z E           - group:
+2026-10-09T00:52:39.8041757Z E             - strong: 返國後
+2026-10-09T00:52:39.8042607Z E             - text: 2 份
+2026-10-09T00:52:39.8043423Z E         - complementary "我的列印包":
+2026-10-09T00:52:39.8044184Z E           - text: 整理與匯出
+2026-10-09T00:52:39.8044933Z E           - heading "我的列印包" [level=3]
+2026-10-09T00:52:39.8045646Z E           - text: 0 份
+2026-10-09T00:52:39.8046529Z E           - paragraph: 選擇要匯出的文件，填完並核對目前版本後，即可整理成一份 PDF。
+2026-10-09T00:52:39.8047324Z E           - status:
+2026-10-09T00:52:39.8048455Z E             - strong: 選擇這次要匯出的文件
+2026-10-09T00:52:39.8049188Z E             - text: 0 項可匯出
+2026-10-09T00:52:39.8052356Z E             - progressbar "已選文件的匯出準備進度": 0%
+2026-10-09T00:52:39.8053706Z E           - strong: 只放這次要印的文件
+2026-10-09T00:52:39.8054700Z E           - paragraph: 在準備工具勾選「列印包」，文件就會出現在這裡。填完並核對後才可匯出。
+2026-10-09T00:52:39.8055633Z E           - status: 登入後可建立列印套件
+2026-10-09T00:52:39.8056511Z E           - button "匯出列印包 PDF" [disabled]
+2026-10-09T00:52:39.8057333Z E           - group: 列印提醒
+2026-10-09T00:52:39.8058213Z E   - paragraph:
+2026-10-09T00:52:39.8059351Z E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+2026-10-09T00:52:39.8060327Z E     - button "停用匿名使用統計"
+2026-10-09T00:52:39.8060977Z E     - text: 。
+2026-10-09T00:52:39.8061686Z E     - link "隱私權政策":
+2026-10-09T00:52:39.8062339Z E       - /url: /privacy
+2026-10-09T00:52:39.8063082Z E     - link "使用條款":
+2026-10-09T00:52:39.8063721Z E       - /url: /terms
+2026-10-09T00:52:39.8064190Z 
+2026-10-09T00:52:55.0180367Z tests/e2e/test_web_next_phase.py::test_advisor_waits_for_login_and_clears_private_conditions_on_logout FAILED [  1%]WEB_CASE tests/e2e/test_web_next_phase.py::test_advisor_waits_for_login_and_clears_private_conditions_on_logout call failed 14.976s
+2026-10-09T00:52:55.0186667Z tests/e2e/test_web_next_phase.py:435: in test_advisor_waits_for_login_and_clears_private_conditions_on_logout
+2026-10-09T00:52:55.0188488Z     expect(page.locator("#advisor-academic-score")).to_have_value("84")
+2026-10-09T00:52:55.0189977Z E   AssertionError: Locator expected to have Value '84'
+2026-10-09T00:52:55.0190691Z E   Actual value:  
+2026-10-09T00:52:55.0191172Z E   Call log:
+2026-10-09T00:52:55.0191808Z E     - Expect "to_have_value" with timeout 5000ms
+2026-10-09T00:52:55.0192652Z E     - waiting for locator("#advisor-academic-score")
+2026-10-09T00:52:55.0194745Z E       10 × locator resolved to <input min="0" max="100" step="0.1" type="number" inputmode="decimal" placeholder="例如 82" name="academic_score" id="advisor-academic-score"/>
+2026-10-09T00:52:55.0196289Z E          - unexpected value ""
+2026-10-09T00:52:55.0196888Z E   
+2026-10-09T00:52:55.0197704Z E   Aria snapshot:
+2026-10-09T00:52:55.0198341Z E   - spinbutton "學業平均"
+2026-10-09T00:52:55.0322780Z 
+2026-10-09T00:53:06.3240641Z tests/e2e/test_web_next_phase.py::test_partial_destination_profile_is_not_rendered_as_fully_verified FAILED [  1%]WEB_CASE tests/e2e/test_web_next_phase.py::test_partial_destination_profile_is_not_rendered_as_fully_verified call failed 11.093s
+2026-10-09T00:53:06.3263058Z tests/e2e/test_web_next_phase.py:485: in test_partial_destination_profile_is_not_rendered_as_fully_verified
+2026-10-09T00:53:06.3264736Z     expect(official).to_contain_text("查看本頁全部查核來源（3）")
+2026-10-09T00:53:06.3266006Z E   AssertionError: Locator expected to contain text '查看本頁全部查核來源（3）'
+2026-10-09T00:53:06.3266855Z E   Actual value: 
+2026-10-09T00:53:06.3267658Z E       
+2026-10-09T00:53:06.3268187Z E         
+2026-10-09T00:53:06.3270045Z E         官方生活資訊已查核已核對 3 個 UM 官方頁面，但尚未完成第二位真人內容審查。2026 秋季校內宿舍不可用；費用為官方估算而非固定報價，之後梯次須重新確認。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:53:06.3271596Z E       
+2026-10-09T00:53:06.3272087Z E       
+2026-10-09T00:53:06.3276092Z E         所在地吉隆坡費用參考UM 2025/26 長期交換頁列合作校學生學費依校際協議、所有 流動性 學生每學期另付 MYR 750 處理費，申請時不收申請費；不含住宿的一般生活支出估計約 MYR 1,000／月，包含交通、餐食與娛樂，但會隨個人習慣變動。簽證、保險與抵達後體檢費另依 EMGS 計算。住宿UM 官方住宿頁於 2026-07-16 明示：因所有宿舍整修，2026 秋季 流動性 學生不能入住校內宿舍。學生須自行安排校外住宿，校方列出的周邊私人房源參考約 MYR 800–2,000／月／人，實際租金、押金與水電須向房東確認。交通UM 未公布交換生固定交通月票預算；官方長期交換頁的 MYR 1,000 一般月支出估算已包含交通。找校外住宿時應優先核對到校交通與實際校區，不應把這項平均估算視為保證。校園生活長期交換可在 15 個學院選擇課程；UM Global Buddies 提供在地學生同儕支援及學期活動，包含語言、文化與交流活動。活動內容與開放梯次仍以當期公告為準。
+2026-10-09T00:53:06.3278734Z E       
+2026-10-09T00:53:06.3279207Z E       
+2026-10-09T00:53:06.3279733Z E       
+2026-10-09T00:53:06.3280207Z E         
+2026-10-09T00:53:06.3311256Z E           交換生生存指南
+2026-10-09T00:53:06.3318150Z E   
+2026-10-09T00:53:06.3327059Z E         
+2026-10-09T00:53:06.3327796Z E         
+2026-10-09T00:53:06.3347886Z E           
+2026-10-09T00:53:06.3388126Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:53:06.3422571Z E             
+2026-10-09T00:53:06.3423450Z E               
+2026-10-09T00:53:06.3427053Z E                 
+2026-10-09T00:53:06.3427954Z E                   
+2026-10-09T00:53:06.3428702Z E                     
+2026-10-09T00:53:06.3429398Z E                     校園
+2026-10-09T00:53:06.3429920Z E                   
+2026-10-09T00:53:06.3430659Z E                   馬來西亞馬來亞大學 Universiti Malaya校園
+2026-10-09T00:53:06.3431640Z E                 
+2026-10-09T00:53:06.3432053Z E             
+2026-10-09T00:53:06.3432437Z E           
+2026-10-09T00:53:06.3432838Z E         
+2026-10-09T00:53:06.3433222Z E         
+2026-10-09T00:53:06.3433583Z E         
+2026-10-09T00:53:06.3433935Z E       
+2026-10-09T00:53:06.3434282Z E       
+2026-10-09T00:53:06.3434734Z E         來源（3）
+2026-10-09T00:53:06.3435140Z E         
+2026-10-09T00:53:06.3435518Z E           
+2026-10-09T00:53:06.3435900Z E             
+2026-10-09T00:53:06.3436774Z E               馬來西亞大學入學長期流動2026-08-03 更新；列出合作校學費原則、MYR 750 處理費、住宿與一般生活費估算。
+2026-10-09T00:53:06.3437799Z E               查看原始來源
+2026-10-09T00:53:06.3438251Z E             
+2026-10-09T00:53:06.3438633Z E             
+2026-10-09T00:53:06.3439442Z E               馬來亞大學移動學生住宿2026-07-16 更新；明示 2026 秋季校內宿舍因整修不可用，並列校外住宿範圍與自行簽約提醒。
+2026-10-09T00:53:06.3440111Z E               查看原始來源
+2026-10-09T00:53:06.3440529Z E             
+2026-10-09T00:53:06.3440898Z E             
+2026-10-09T00:53:06.3441556Z E               馬來亞大學全球夥伴說明國際交換生可使用的在地學生同儕支援與交流活動。
+2026-10-09T00:53:06.3442149Z E               查看原始來源
+2026-10-09T00:53:06.3442552Z E             
+2026-10-09T00:53:06.3443324Z E         
+2026-10-09T00:53:06.3443703Z E        
+2026-10-09T00:53:06.3444071Z E   Call log:
+2026-10-09T00:53:06.3444632Z E     - Expect "to_contain_text" with timeout 5000ms
+2026-10-09T00:53:06.3445411Z E     - waiting for locator("#destination-official-content")
+2026-10-09T00:53:06.3447029Z E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+2026-10-09T00:53:06.3449444Z E          - unexpected value "
+2026-10-09T00:53:06.3450141Z E       
+2026-10-09T00:53:06.3450766Z E         
+2026-10-09T00:53:06.3452508Z E         官方生活資訊已查核已核對 3 個 UM 官方頁面，但尚未完成第二位真人內容審查。2026 秋季校內宿舍不可用；費用為官方估算而非固定報價，之後梯次須重新確認。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:53:06.3454318Z E       
+2026-10-09T00:53:06.3454962Z E       
+2026-10-09T00:53:06.3459287Z E         所在地吉隆坡費用參考UM 2025/26 長期交換頁列合作校學生學費依校際協議、所有 流動性 學生每學期另付 MYR 750 處理費，申請時不收申請費；不含住宿的一般生活支出估計約 MYR 1,000／月，包含交通、餐食與娛樂，但會隨個人習慣變動。簽證、保險與抵達後體檢費另依 EMGS 計算。住宿UM 官方住宿頁於 2026-07-16 明示：因所有宿舍整修，2026 秋季 流動性 學生不能入住校內宿舍。學生須自行安排校外住宿，校方列出的周邊私人房源參考約 MYR 800–2,000／月／人，實際租金、押金與水電須向房東確認。交通UM 未公布交換生固定交通月票預算；官方長期交換頁的 MYR 1,000 一般月支出估算已包含交通。找校外住宿時應優先核對到校交通與實際校區，不應把這項平均估算視為保證。校園生活長期交換可在 15 個學院選擇課程；UM Global Buddies 提供在地學生同儕支援及學期活動，包含語言、文化與交流活動。活動內容與開放梯次仍以當期公告為準。
+2026-10-09T00:53:06.3461329Z E       
+2026-10-09T00:53:06.3461759Z E       
+2026-10-09T00:53:06.3462173Z E       
+2026-10-09T00:53:06.3462634Z E         
+2026-10-09T00:53:06.3463177Z E           交換生生存指南
+2026-10-09T00:53:06.3463646Z E   
+2026-10-09T00:53:06.3464062Z E         
+2026-10-09T00:53:06.3464486Z E         
+2026-10-09T00:53:06.3464916Z E           
+2026-10-09T00:53:06.3465571Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:53:06.3466227Z E             
+2026-10-09T00:53:06.3466670Z E               
+2026-10-09T00:53:06.3467663Z E                 
+2026-10-09T00:53:06.3468159Z E                   
+2026-10-09T00:53:06.3468695Z E                     
+2026-10-09T00:53:06.3469304Z E                     校園
+2026-10-09T00:53:06.3469937Z E                   
+2026-10-09T00:53:06.3470803Z E                   馬來西亞馬來亞大學 Universiti Malaya校園
+2026-10-09T00:53:06.3471525Z E                 
+2026-10-09T00:53:06.3472111Z E             
+2026-10-09T00:53:06.3472680Z E           
+2026-10-09T00:53:06.3473260Z E         
+2026-10-09T00:53:06.3473876Z E         
+2026-10-09T00:53:06.3474414Z E         
+2026-10-09T00:53:06.3474931Z E       
+2026-10-09T00:53:06.3475430Z E       
+2026-10-09T00:53:06.3475989Z E         來源（3）
+2026-10-09T00:53:06.3476521Z E         
+2026-10-09T00:53:06.3477017Z E           
+2026-10-09T00:53:06.3477772Z E             
+2026-10-09T00:53:06.3478878Z E               馬來西亞大學入學長期流動2026-08-03 更新；列出合作校學費原則、MYR 750 處理費、住宿與一般生活費估算。
+2026-10-09T00:53:06.3479882Z E               查看原始來源
+2026-10-09T00:53:06.3480503Z E             
+2026-10-09T00:53:06.3481003Z E             
+2026-10-09T00:53:06.3481955Z E               馬來亞大學移動學生住宿2026-07-16 更新；明示 2026 秋季校內宿舍因整修不可用，並列校外住宿範圍與自行簽約提醒。
+2026-10-09T00:53:06.3482845Z E               查看原始來源
+2026-10-09T00:53:06.3483410Z E             
+2026-10-09T00:53:06.3483905Z E             
+2026-10-09T00:53:06.3484670Z E               馬來亞大學全球夥伴說明國際交換生可使用的在地學生同儕支援與交流活動。
+2026-10-09T00:53:06.3485419Z E               查看原始來源
+2026-10-09T00:53:06.3486732Z E             
+2026-10-09T00:53:06.3487250Z E         
+2026-10-09T00:53:06.3488470Z E       "
+2026-10-09T00:53:06.3488973Z E   
+2026-10-09T00:53:06.3489504Z E   Aria snapshot:
+2026-10-09T00:53:06.3490512Z E   - link "跳到主要內容":
+2026-10-09T00:53:06.3491159Z E     - /url: "#main-content"
+2026-10-09T00:53:06.3491937Z E   - complementary "系統功能":
+2026-10-09T00:53:06.3492691Z E     - link "UniWay 首頁":
+2026-10-09T00:53:06.3493346Z E       - /url: "#home"
+2026-10-09T00:53:06.3493953Z E       - strong: UniWay
+2026-10-09T00:53:06.3494619Z E     - navigation "公開探索導覽":
+2026-10-09T00:53:06.3495252Z E       - link "首頁":
+2026-10-09T00:53:06.3495763Z E         - /url: "#home"
+2026-10-09T00:53:06.3496355Z E       - link "學校搜尋":
+2026-10-09T00:53:06.3496882Z E         - /url: "#partners"
+2026-10-09T00:53:06.3497677Z E       - link "論壇":
+2026-10-09T00:53:06.3498306Z E         - /url: "#forum"
+2026-10-09T00:53:06.3499098Z E       - link "用戶評價":
+2026-10-09T00:53:06.3499746Z E         - /url: "#feedback"
+2026-10-09T00:53:06.3500366Z E       - group:
+2026-10-09T00:53:06.3501061Z E         - link "我的申請":
+2026-10-09T00:53:06.3502122Z E           - /url: "#advisor"
+2026-10-09T00:53:06.3502870Z E     - button "返回上一頁": 返回
+2026-10-09T00:53:06.3503547Z E     - button "選擇就讀學校":
+2026-10-09T00:53:06.3504190Z E       - strong: 選擇就讀學校
+2026-10-09T00:53:06.3504914Z E     - button "切換為深色模式"
+2026-10-09T00:53:06.3505626Z E     - button "重新整理最新資料"
+2026-10-09T00:53:06.3506331Z E     - button "登入或建立帳號": 登入
+2026-10-09T00:53:06.3509120Z E   - main:
+2026-10-09T00:53:06.3509622Z E     - status
+2026-10-09T00:53:06.3510631Z E     - region "馬來西亞馬來亞大學 Universiti Malaya":
+2026-10-09T00:53:06.3511606Z E       - button "加入比較馬來西亞馬來亞大學 Universiti Malaya": 加入比較
+2026-10-09T00:53:06.3512357Z E       - button "登入建立計畫"
+2026-10-09T00:53:06.3513237Z E       - img "馬來西亞馬來亞大學 Universiti Malaya官方照片"
+2026-10-09T00:53:06.3514033Z E       - link "圖片來源":
+2026-10-09T00:53:06.3520516Z E         - /url: https://www.um.edu.my/news/indexnews.php
+2026-10-09T00:53:06.3548370Z E       - text: 馬來西亞 · 交換學生 下一站
+2026-10-09T00:53:06.3566122Z E       - strong: 馬來西亞
+2026-10-09T00:53:06.3589706Z E       - heading "馬來西亞馬來亞大學 Universiti Malaya" [level=1]
+2026-10-09T00:53:06.3637804Z E       - text: 我的資格
+2026-10-09T00:53:06.3676070Z E       - strong: 尚未進行資格初判
+2026-10-09T00:53:06.3718034Z E       - text: 合作校參考時程
+2026-10-09T00:53:06.3734229Z E       - strong: 依當期長庚公告與合作校通知
+2026-10-09T00:53:06.3771049Z E       - text: 語言門檻
+2026-10-09T00:53:06.3808361Z E       - strong: 合作校未明確標示，請開啟官方來源
+2026-10-09T00:53:06.3848268Z E       - text: 生活費參考
+2026-10-09T00:53:06.3869216Z E       - strong: UM 2025/26 長期交換頁列合作校學生學費依校際協議、所有 流動性 學生每學期另付 MYR 750 處理費，申請時不收申請費；不含住宿的一般生活支出估計約 MYR 1,000／月，包含交通、餐食與娛樂，但會隨個人習慣變動。簽證、保險與抵達後體檢費另依…
+2026-10-09T00:53:06.3891858Z E       - text: 交換名額
+2026-10-09T00:53:06.3945248Z E       - strong: 依當期公告
+2026-10-09T00:53:06.3988345Z E       - text: 研修期間
+2026-10-09T00:53:06.4016355Z E       - strong: 1 學期至 1 學年
+2026-10-09T00:53:06.4077786Z E       - tablist "交換學校詳細資訊":
+2026-10-09T00:53:06.4115482Z E         - tab "快速了解"
+2026-10-09T00:53:06.4124066Z E         - tab "申請方式"
+2026-10-09T00:53:06.4178640Z E         - tab "生活情報" [selected]
+2026-10-09T00:53:06.4198149Z E         - tab "出發前提醒"
+2026-10-09T00:53:06.4212560Z E         - tab "學生心得"
+2026-10-09T00:53:06.4238223Z E         - tab "學生社群"
+2026-10-09T00:53:06.4268453Z E       - tabpanel "生活情報":
+2026-10-09T00:53:06.4314382Z E         - heading "生活情報" [level=2]
+2026-10-09T00:53:06.4315297Z E         - status: 暫無新資料 · 2026/10/09 上午12:53
+2026-10-09T00:53:06.4318507Z E         - button "找學生分享"
+2026-10-09T00:53:06.4319589Z E         - button "更新資料" [disabled]
+2026-10-09T00:53:06.4320412Z E         - group: 資料說明
+2026-10-09T00:53:06.4321163Z E         - group: 官方生活指南
+2026-10-09T00:53:06.4334357Z E         - article:
+2026-10-09T00:53:06.4370230Z E           - heading "住宿與宿舍" [level=3]
+2026-10-09T00:53:06.4371312Z E           - text: 官方 · 機器翻譯
+2026-10-09T00:53:06.4373387Z E           - paragraph: UM 官方住宿頁於 2026-07-16 明示：因所有宿舍整修，2026 秋季 流動性 學生不能入住校內宿舍。學生須自行安排校外住宿，校方列出的周邊私人房源參考約 MYR 800–2,000／月／人，實際租金、押金與水電須向房東確認。
+2026-10-09T00:53:06.4376893Z E           - group: 資料來源
+2026-10-09T00:53:06.4377991Z E           - text: AI 推論
+2026-10-09T00:53:06.4379208Z E           - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+2026-10-09T00:53:06.4380268Z E           - group: 推論依據
+2026-10-09T00:53:06.4381035Z E           - group: 繼續查詢
+2026-10-09T00:53:06.4381667Z E         - article:
+2026-10-09T00:53:06.4382507Z E           - heading "每月生活預算" [level=3]
+2026-10-09T00:53:06.4383471Z E           - text: 官方 · 機器翻譯
+2026-10-09T00:53:06.4385264Z E           - paragraph: UM 2025/26 長期交換頁列合作校學生學費依校際協議、所有 流動性 學生每學期另付 MYR 750 處理費，申請時不收申請費；不含住宿的一般生活支出估計約 MYR 1,000／月，包含交通、餐食與娛樂，但會隨個人習慣變動。簽證、保險與抵達後體檢費另依 EMGS 計算。
+2026-10-09T00:53:06.4388098Z E           - group: 資料來源
+2026-10-09T00:53:06.4388794Z E           - group: 繼續查詢
+2026-10-09T00:53:06.4389397Z E         - article:
+2026-10-09T00:53:06.4390443Z E           - heading "交通與地點" [level=3]
+2026-10-09T00:53:06.4392356Z E           - text: 官方
+2026-10-09T00:53:06.4393659Z E           - paragraph: UM 未公布交換生固定交通月票預算；官方長期交換頁的 MYR 1,000 一般月支出估算已包含交通。找校外住宿時應優先核對到校交通與實際校區，不應把這項平均估算視為保證。
+2026-10-09T00:53:06.4394727Z E           - group: 資料來源
+2026-10-09T00:53:06.4395478Z E           - text: AI 推論
+2026-10-09T00:53:06.4396316Z E           - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+2026-10-09T00:53:06.4397131Z E           - group: 推論依據
+2026-10-09T00:53:06.4398160Z E           - group: 繼續查詢
+2026-10-09T00:53:06.4398787Z E         - article:
+2026-10-09T00:53:06.4414001Z E           - heading "校園活動與社交" [level=3]
+2026-10-09T00:53:06.4415040Z E           - text: 官方
+2026-10-09T00:53:06.4416412Z E           - paragraph: 長期交換可在 15 個學院選擇課程；UM Global Buddies 提供在地學生同儕支援及學期活動，包含語言、文化與交流活動。活動內容與開放梯次仍以當期公告為準。
+2026-10-09T00:53:06.4417811Z E           - group: 資料來源
+2026-10-09T00:53:06.4418915Z E           - group: 繼續查詢
+2026-10-09T00:53:06.4419653Z E         - group: 待補資料（6 項）
+2026-10-09T00:53:06.4420439Z E       - complementary "申請準備進度與官方來源":
+2026-10-09T00:53:06.4421237Z E         - heading "我的申請進度" [level=2]
+2026-10-09T00:53:06.4421997Z E         - progressbar "申請準備進度":
+2026-10-09T00:53:06.4422755Z E           - strong: 0 / 5 已完成
+2026-10-09T00:53:06.4423442Z E           - text: 準備中
+2026-10-09T00:53:06.4424491Z E         - paragraph:
+2026-10-09T00:53:06.4425211Z E           - text: 登入以保存進度
+2026-10-09T00:53:06.4425943Z E           - button "登入"
+2026-10-09T00:53:06.4426720Z E         - checkbox "確認資格與語言門檻" [disabled]
+2026-10-09T00:53:06.4427709Z E         - text: 確認資格與語言門檻
+2026-10-09T00:53:06.4428552Z E         - checkbox "比較課程、費用與生活" [disabled]
+2026-10-09T00:53:06.4429363Z E         - text: 比較課程、費用與生活
+2026-10-09T00:53:06.4430154Z E         - checkbox "備妥校內申請文件" [disabled]
+2026-10-09T00:53:06.4430885Z E         - text: 備妥校內申請文件
+2026-10-09T00:53:06.4431630Z E         - checkbox "完成校內甄選送件" [disabled]
+2026-10-09T00:53:06.4432359Z E         - text: 完成校內甄選送件
+2026-10-09T00:53:06.4433119Z E         - checkbox "完成合作校線上申請" [disabled]
+2026-10-09T00:53:06.4433853Z E         - text: 完成合作校線上申請
+2026-10-09T00:53:06.4434499Z E         - strong: 送件前確認
+2026-10-09T00:53:06.4435252Z E         - paragraph: 截止日與資格以當期官方公告為準。
+2026-10-09T00:53:06.4435870Z E   - paragraph:
+2026-10-09T00:53:06.4436973Z E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+2026-10-09T00:53:06.4439221Z E     - button "停用匿名使用統計"
+2026-10-09T00:53:06.4440090Z E     - text: 。
+2026-10-09T00:53:06.4442508Z E     - link "隱私權政策":
+2026-10-09T00:53:06.4457297Z E       - /url: /privacy
+2026-10-09T00:53:06.4462008Z E     - link "使用條款":
+2026-10-09T00:53:06.4462792Z E       - /url: /terms
+2026-10-09T00:53:06.4463505Z 
+2026-10-09T00:53:17.6319113Z tests/e2e/test_web_next_phase.py::test_second_destination_batch_preserves_housing_availability_warning FAILED [  2%]WEB_CASE tests/e2e/test_web_next_phase.py::test_second_destination_batch_preserves_housing_availability_warning call failed 11.115s
+2026-10-09T00:53:17.6329761Z tests/e2e/test_web_next_phase.py:505: in test_second_destination_batch_preserves_housing_availability_warning
+2026-10-09T00:53:17.6331342Z     expect(official).to_contain_text("查看本頁全部查核來源（6）")
+2026-10-09T00:53:17.6332514Z E   AssertionError: Locator expected to contain text '查看本頁全部查核來源（6）'
+2026-10-09T00:53:17.6333412Z E   Actual value: 
+2026-10-09T00:53:17.6333954Z E       
+2026-10-09T00:53:17.6334446Z E         
+2026-10-09T00:53:17.6336079Z E         官方生活資訊已查核已核對 6 個 UWM 官方來源，但尚未完成第二位真人內容審查。最低財力證明不是實際預算；2026/27 一般宿舍合約已截止，床位、餐飲與費用須依候補結果及個人帳單確認。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:53:17.6337101Z E       
+2026-10-09T00:53:17.6337880Z E       
+2026-10-09T00:53:17.6345373Z E         所在地密爾瓦基, 威斯康辛州費用參考UWM 來校交換生 交換 頁要求最低財力證明為每學期 USD 8,000、學年 USD 16,000，並明示實際支出可能更高，不能把這個門檻當成預算。2026/27 宿舍年度房費約 USD 5,620–8,900；部分宿舍另強制購買餐飲方案，交換協議、學分與其他費用須依個人帳單確認。住宿UWM 2026/27 宿舍雙／三人與單人房年度費率約 USD 5,620–8,900，Kenilworth 合住房每人約 USD 585–810／月；價格可能調整。校方已於 2026-05-01 停止接受一般 2026/27 宿舍合約，未送件者須加入候補或透過 Off-Campus Resource Center 找房，不能假設仍有校內床位。交通交換生抵校後的官方步驟包含啟用學生公車證；UWM 交通頁提供 MCTS、U-PASS、Prowl Line 與 B.O.S.S. 等選項。U-PASS 通常由 拆分費用 支應，仍需等註冊狀態與 UWM 帳號生效後申請 優惠代碼；2026 秋季代碼自 8 月 17 日開放。校園生活交換生會收到強制 定向 日期並使用國際生支援資源；Student Involvement 提供 300 多個學生團體、領導訓練、文化活動、電影與講座，Student Union 另有藝文、休閒與社交空間。實際活動與資格依當期註冊狀態。
+2026-10-09T00:53:17.6378428Z E       
+2026-10-09T00:53:17.6380359Z E       
+2026-10-09T00:53:17.6380836Z E       
+2026-10-09T00:53:17.6381260Z E         
+2026-10-09T00:53:17.6381829Z E           交換生生存指南
+2026-10-09T00:53:17.6382290Z E   
+2026-10-09T00:53:17.6382704Z E         
+2026-10-09T00:53:17.6383119Z E         
+2026-10-09T00:53:17.6383529Z E           
+2026-10-09T00:53:17.6384245Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:53:17.6384798Z E             
+2026-10-09T00:53:17.6385238Z E               
+2026-10-09T00:53:17.6385685Z E                 
+2026-10-09T00:53:17.6386144Z E                   
+2026-10-09T00:53:17.6386612Z E                     
+2026-10-09T00:53:17.6387162Z E                     校園
+2026-10-09T00:53:17.6388030Z E                   
+2026-10-09T00:53:17.6388903Z E                   威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee校園
+2026-10-09T00:53:17.6389568Z E                 
+2026-10-09T00:53:17.6390003Z E             
+2026-10-09T00:53:17.6390440Z E           
+2026-10-09T00:53:17.6390893Z E         
+2026-10-09T00:53:17.6391302Z E         
+2026-10-09T00:53:17.6391706Z E         
+2026-10-09T00:53:17.6392112Z E       
+2026-10-09T00:53:17.6392520Z E       
+2026-10-09T00:53:17.6392980Z E         來源（6）
+2026-10-09T00:53:17.6393414Z E         
+2026-10-09T00:53:17.6393821Z E           
+2026-10-09T00:53:17.6394232Z E             
+2026-10-09T00:53:17.6395386Z E               UWM 來校交換生 Exchange Students入學交換 專頁；說明最低財力證明、費用用途、住宿成本入口與抵校 定向。
+2026-10-09T00:53:17.6396147Z E               查看原始來源
+2026-10-09T00:53:17.6396609Z E             
+2026-10-09T00:53:17.6397050Z E             
+2026-10-09T00:53:17.6398042Z E               UWM 新交換學生概覽列出交換生抵校後的 報到、定向、學生證、公車證及基本生活入口。
+2026-10-09T00:53:17.6398807Z E               查看原始來源
+2026-10-09T00:53:17.6399369Z E             
+2026-10-09T00:53:17.6399853Z E             
+2026-10-09T00:53:17.6400923Z E               UWM University 住宿 費用 2026/272026/27 宿舍與 Kenilworth 合住房價，並說明水電網路、餐飲方案及費率可能調整。
+2026-10-09T00:53:17.6402860Z E               查看原始來源
+2026-10-09T00:53:17.6403432Z E             
+2026-10-09T00:53:17.6404623Z E             
+2026-10-09T00:53:17.6405601Z E               UWM 國際學生校外住宿資源明示 2026/27 校內住宿一般合約已於 2026-05-01 截止，提供候補與國際生校外租屋支援。
+2026-10-09T00:53:17.6408132Z E               查看原始來源
+2026-10-09T00:53:17.6408689Z E             
+2026-10-09T00:53:17.6409173Z E             
+2026-10-09T00:53:17.6410316Z E               UWM 交通服務現行交通入口；涵蓋 MCTS、U-PASS、校園交通及 2026 秋季代碼開放日期。
+2026-10-09T00:53:17.6411609Z E               查看原始來源
+2026-10-09T00:53:17.6412725Z E             
+2026-10-09T00:53:17.6413255Z E             
+2026-10-09T00:53:17.6414143Z E               UWM 學生參與說明 300 多個學生團體、領導與文化活動，以及 Student Union 參與空間。
+2026-10-09T00:53:17.6414910Z E               查看原始來源
+2026-10-09T00:53:17.6415483Z E             
+2026-10-09T00:53:17.6416081Z E         
+2026-10-09T00:53:17.6416551Z E        
+2026-10-09T00:53:17.6417023Z E   Call log:
+2026-10-09T00:53:17.6418278Z E     - Expect "to_contain_text" with timeout 5000ms
+2026-10-09T00:53:17.6419381Z E     - waiting for locator("#destination-official-content")
+2026-10-09T00:53:17.6421736Z E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+2026-10-09T00:53:17.6422942Z E          - unexpected value "
+2026-10-09T00:53:17.6423453Z E       
+2026-10-09T00:53:17.6423871Z E         
+2026-10-09T00:53:17.6425474Z E         官方生活資訊已查核已核對 6 個 UWM 官方來源，但尚未完成第二位真人內容審查。最低財力證明不是實際預算；2026/27 一般宿舍合約已截止，床位、餐飲與費用須依候補結果及個人帳單確認。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:53:17.6426568Z E       
+2026-10-09T00:53:17.6427004Z E       
+2026-10-09T00:53:17.6432052Z E         所在地密爾瓦基, 威斯康辛州費用參考UWM 來校交換生 交換 頁要求最低財力證明為每學期 USD 8,000、學年 USD 16,000，並明示實際支出可能更高，不能把這個門檻當成預算。2026/27 宿舍年度房費約 USD 5,620–8,900；部分宿舍另強制購買餐飲方案，交換協議、學分與其他費用須依個人帳單確認。住宿UWM 2026/27 宿舍雙／三人與單人房年度費率約 USD 5,620–8,900，Kenilworth 合住房每人約 USD 585–810／月；價格可能調整。校方已於 2026-05-01 停止接受一般 2026/27 宿舍合約，未送件者須加入候補或透過 Off-Campus Resource Center 找房，不能假設仍有校內床位。交通交換生抵校後的官方步驟包含啟用學生公車證；UWM 交通頁提供 MCTS、U-PASS、Prowl Line 與 B.O.S.S. 等選項。U-PASS 通常由 拆分費用 支應，仍需等註冊狀態與 UWM 帳號生效後申請 優惠代碼；2026 秋季代碼自 8 月 17 日開放。校園生活交換生會收到強制 定向 日期並使用國際生支援資源；Student Involvement 提供 300 多個學生團體、領導訓練、文化活動、電影與講座，Student Union 另有藝文、休閒與社交空間。實際活動與資格依當期註冊狀態。
+2026-10-09T00:53:17.6434906Z E       
+2026-10-09T00:53:17.6435332Z E       
+2026-10-09T00:53:17.6435743Z E       
+2026-10-09T00:53:17.6436150Z E         
+2026-10-09T00:53:17.6436951Z E           交換生生存指南
+2026-10-09T00:53:17.6437853Z E   
+2026-10-09T00:53:17.6438450Z E         
+2026-10-09T00:53:17.6438928Z E         
+2026-10-09T00:53:17.6439413Z E           
+2026-10-09T00:53:17.6440190Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:53:17.6441290Z E             
+2026-10-09T00:53:17.6442361Z E               
+2026-10-09T00:53:17.6443513Z E                 
+2026-10-09T00:53:17.6444120Z E                   
+2026-10-09T00:53:17.6444714Z E                     
+2026-10-09T00:53:17.6445429Z E                     校園
+2026-10-09T00:53:17.6446090Z E                   
+2026-10-09T00:53:17.6447179Z E                   威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee校園
+2026-10-09T00:53:17.6448426Z E                 
+2026-10-09T00:53:17.6449068Z E             
+2026-10-09T00:53:17.6449679Z E           
+2026-10-09T00:53:17.6450314Z E         
+2026-10-09T00:53:17.6450936Z E         
+2026-10-09T00:53:17.6451543Z E         
+2026-10-09T00:53:17.6452026Z E       
+2026-10-09T00:53:17.6452565Z E       
+2026-10-09T00:53:17.6453159Z E         來源（6）
+2026-10-09T00:53:17.6453711Z E         
+2026-10-09T00:53:17.6454199Z E           
+2026-10-09T00:53:17.6454718Z E             
+2026-10-09T00:53:17.6455752Z E               UWM 來校交換生 Exchange Students入學交換 專頁；說明最低財力證明、費用用途、住宿成本入口與抵校 定向。
+2026-10-09T00:53:17.6456833Z E               查看原始來源
+2026-10-09T00:53:17.6457809Z E             
+2026-10-09T00:53:17.6458413Z E             
+2026-10-09T00:53:17.6459380Z E               UWM 新交換學生概覽列出交換生抵校後的 報到、定向、學生證、公車證及基本生活入口。
+2026-10-09T00:53:17.6460301Z E               查看原始來源
+2026-10-09T00:53:17.6460907Z E             
+2026-10-09T00:53:17.6461737Z E             
+2026-10-09T00:53:17.6462847Z E               UWM University 住宿 費用 2026/272026/27 宿舍與 Kenilworth 合住房價，並說明水電網路、餐飲方案及費率可能調整。
+2026-10-09T00:53:17.6463826Z E               查看原始來源
+2026-10-09T00:53:17.6464382Z E             
+2026-10-09T00:53:17.6464885Z E             
+2026-10-09T00:53:17.6465899Z E               UWM 國際學生校外住宿資源明示 2026/27 校內住宿一般合約已於 2026-05-01 截止，提供候補與國際生校外租屋支援。
+2026-10-09T00:53:17.6466920Z E               查看原始來源
+2026-10-09T00:53:17.6467701Z E             
+2026-10-09T00:53:17.6468174Z E             
+2026-10-09T00:53:17.6468971Z E               UWM 交通服務現行交通入口；涵蓋 MCTS、U-PASS、校園交通及 2026 秋季代碼開放日期。
+2026-10-09T00:53:17.6469689Z E               查看原始來源
+2026-10-09T00:53:17.6470153Z E             
+2026-10-09T00:53:17.6470582Z E             
+2026-10-09T00:53:17.6471343Z E               UWM 學生參與說明 300 多個學生團體、領導與文化活動，以及 Student Union 參與空間。
+2026-10-09T00:53:17.6472034Z E               查看原始來源
+2026-10-09T00:53:17.6472482Z E             
+2026-10-09T00:53:17.6472902Z E         
+2026-10-09T00:53:17.6473429Z E       "
+2026-10-09T00:53:17.6473848Z E   
+2026-10-09T00:53:17.6474304Z E   Aria snapshot:
+2026-10-09T00:53:17.6474878Z E   - link "跳到主要內容":
+2026-10-09T00:53:17.6475405Z E     - /url: "#main-content"
+2026-10-09T00:53:17.6476056Z E   - complementary "系統功能":
+2026-10-09T00:53:17.6476658Z E     - link "UniWay 首頁":
+2026-10-09T00:53:17.6477176Z E       - /url: "#home"
+2026-10-09T00:53:17.6478176Z E       - strong: UniWay
+2026-10-09T00:53:17.6478822Z E     - navigation "公開探索導覽":
+2026-10-09T00:53:17.6479416Z E       - link "首頁":
+2026-10-09T00:53:17.6479903Z E         - /url: "#home"
+2026-10-09T00:53:17.6480472Z E       - link "學校搜尋":
+2026-10-09T00:53:17.6481077Z E         - /url: "#partners"
+2026-10-09T00:53:17.6481681Z E       - link "論壇":
+2026-10-09T00:53:17.6482199Z E         - /url: "#forum"
+2026-10-09T00:53:17.6482790Z E       - link "用戶評價":
+2026-10-09T00:53:17.6483312Z E         - /url: "#feedback"
+2026-10-09T00:53:17.6483831Z E       - group:
+2026-10-09T00:53:17.6484381Z E         - link "我的申請":
+2026-10-09T00:53:17.6484973Z E           - /url: "#advisor"
+2026-10-09T00:53:17.6485575Z E     - button "返回上一頁": 返回
+2026-10-09T00:53:17.6486134Z E     - button "選擇就讀學校":
+2026-10-09T00:53:17.6486693Z E       - strong: 選擇就讀學校
+2026-10-09T00:53:17.6487257Z E     - button "切換為深色模式"
+2026-10-09T00:53:17.6488053Z E     - button "重新整理最新資料"
+2026-10-09T00:53:17.6488706Z E     - button "登入或建立帳號": 登入
+2026-10-09T00:53:17.6489265Z E   - main:
+2026-10-09T00:53:17.6489758Z E     - status
+2026-10-09T00:53:17.6490689Z E     - region "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee":
+2026-10-09T00:53:17.6491899Z E       - button "加入比較威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee": 加入比較
+2026-10-09T00:53:17.6492881Z E       - button "登入建立計畫"
+2026-10-09T00:53:17.6493835Z E       - img "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee官方照片"
+2026-10-09T00:53:17.6494761Z E       - link "圖片來源":
+2026-10-09T00:53:17.6495476Z E         - /url: https://uwm.edu/about/
+2026-10-09T00:53:17.6496340Z E       - text: 美國 · 交換學生 下一站
+2026-10-09T00:53:17.6497335Z E       - strong: 美國
+2026-10-09T00:53:17.6498983Z E       - heading "威斯康辛大學密爾基分校 University of Wisconsin-Milwaukee" [level=1]
+2026-10-09T00:53:17.6500105Z E       - text: 我的資格
+2026-10-09T00:53:17.6501008Z E       - strong: 尚未進行資格初判
+2026-10-09T00:53:17.6501883Z E       - text: 合作校參考時程
+2026-10-09T00:53:17.6502799Z E       - strong: 依當期長庚公告與合作校通知
+2026-10-09T00:53:17.6503608Z E       - text: 語言門檻
+2026-10-09T00:53:17.6504597Z E       - strong: 合作校未明確標示，請開啟官方來源
+2026-10-09T00:53:17.6505345Z E       - text: 生活費參考
+2026-10-09T00:53:17.6507256Z E       - strong: UWM 來校交換生 交換 頁要求最低財力證明為每學期 USD 8,000、學年 USD 16,000，並明示實際支出可能更高，不能把這個門檻當成預算。2026/27 宿舍年度房費約 USD 5,620–8,900；部分宿舍另強制購買餐飲方案，交換協議、學分與…
+2026-10-09T00:53:17.6508938Z E       - text: 交換名額
+2026-10-09T00:53:17.6509714Z E       - strong: 依當期公告
+2026-10-09T00:53:17.6510523Z E       - text: 研修期間
+2026-10-09T00:53:17.6511280Z E       - strong: 1 學期至 1 學年
+2026-10-09T00:53:17.6512196Z E       - tablist "交換學校詳細資訊":
+2026-10-09T00:53:17.6513059Z E         - tab "快速了解"
+2026-10-09T00:53:17.6513876Z E         - tab "申請方式"
+2026-10-09T00:53:17.6514759Z E         - tab "生活情報" [selected]
+2026-10-09T00:53:17.6515654Z E         - tab "出發前提醒"
+2026-10-09T00:53:17.6516461Z E         - tab "學生心得"
+2026-10-09T00:53:17.6517268Z E         - tab "學生社群"
+2026-10-09T00:53:17.6518136Z E       - tabpanel "生活情報":
+2026-10-09T00:53:17.6518894Z E         - heading "生活情報" [level=2]
+2026-10-09T00:53:17.6519835Z E         - status: 部分資料已更新 · 2026/10/09 上午12:53
+2026-10-09T00:53:17.6520670Z E         - button "找學生分享"
+2026-10-09T00:53:17.6521401Z E         - button "更新資料"
+2026-10-09T00:53:17.6522099Z E         - group: 資料說明
+2026-10-09T00:53:17.6522724Z E         - group: 官方生活指南
+2026-10-09T00:53:17.6523247Z E         - article:
+2026-10-09T00:53:17.6523907Z E           - heading "住宿與宿舍" [level=3]
+2026-10-09T00:53:17.6524570Z E           - text: 官方 · 原文
+2026-10-09T00:53:17.6525715Z E           - paragraph: Get information about housing on and off campus, grocery store options, and how to set up a U.S.
+2026-10-09T00:53:17.6526889Z E           - group: 資料來源
+2026-10-09T00:53:17.6527690Z E           - text: 官方 · 原文
+2026-10-09T00:53:17.6528860Z E           - paragraph: "On-campus housing : UWM Housing has strict move-in dates, and you MUST complete the Early Move-In form."
+2026-10-09T00:53:17.6530192Z E           - group: 資料來源
+2026-10-09T00:53:17.6530836Z E           - group: 再看 1 則資料
+2026-10-09T00:53:17.6531832Z E           - text: AI 推論
+2026-10-09T00:53:17.6532663Z E           - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+2026-10-09T00:53:17.6533354Z E           - group: 推論依據
+2026-10-09T00:53:17.6533947Z E           - group: 繼續查詢
+2026-10-09T00:53:17.6534446Z E         - article:
+2026-10-09T00:53:17.6535081Z E           - heading "每月生活預算" [level=3]
+2026-10-09T00:53:17.6535760Z E           - text: 官方 · 原文
+2026-10-09T00:53:17.6537115Z E           - paragraph: Access info about tuition, living expenses, insurance and other fees associated with being an international student.
+2026-10-09T00:53:17.6538644Z E           - group: 資料來源
+2026-10-09T00:53:17.6539373Z E           - text: 官方 · 原文
+2026-10-09T00:53:17.6570516Z E           - paragraph: Choose from a variety of flexible meal plans tailored to your lifestyle and budget.
+2026-10-09T00:53:17.6572285Z E           - group: 資料來源
+2026-10-09T00:53:17.6573077Z E           - group: 再看 1 則資料
+2026-10-09T00:53:17.6573942Z E           - group: 繼續查詢
+2026-10-09T00:53:17.6574705Z E         - article:
+2026-10-09T00:53:17.6575542Z E           - heading "飲食與採買" [level=3]
+2026-10-09T00:53:17.6576339Z E           - text: 官方 · 原文
+2026-10-09T00:53:17.6577882Z E           - paragraph: Get information about housing on and off campus, grocery store options, and how to set up a U.S.
+2026-10-09T00:53:17.6579211Z E           - group: 資料來源
+2026-10-09T00:53:17.6580362Z E           - text: 官方 · 原文
+2026-10-09T00:53:17.6582973Z E           - paragraph: Choose from a variety of flexible meal plans tailored to your lifestyle and budget.
+2026-10-09T00:53:17.6584648Z E           - group: 資料來源
+2026-10-09T00:53:17.6585896Z E           - text: AI 推論
+2026-10-09T00:53:17.6587003Z E           - paragraph: 可將這些地點列為用餐與採買候選，再比對上課校區及宿舍位置。
+2026-10-09T00:53:17.6588165Z E           - group: 推論依據
+2026-10-09T00:53:17.6588787Z E           - group: 繼續查詢
+2026-10-09T00:53:17.6589337Z E         - article:
+2026-10-09T00:53:17.6589983Z E           - heading "交通與地點" [level=3]
+2026-10-09T00:53:17.6590633Z E           - text: 官方 · 原文
+2026-10-09T00:53:17.6591575Z E           - paragraph: "Transportation : Options will be more limited late at night."
+2026-10-09T00:53:17.6592446Z E           - group: 資料來源
+2026-10-09T00:53:17.6593042Z E           - text: 官方 · 機器翻譯
+2026-10-09T00:53:17.6594608Z E           - paragraph: 交換生抵校後的官方步驟包含啟用學生公車證；UWM 交通頁提供 MCTS、U-PASS、Prowl Line 與 B.O.S.S. 等選項。U-PASS 通常由 拆分費用 支應，仍需等註冊狀態與 UWM 帳號生效後申請 優惠代碼；2026 秋季代碼自 8 月 17 日開放。
+2026-10-09T00:53:17.6595729Z E           - group: 資料來源
+2026-10-09T00:53:17.6596308Z E           - text: AI 推論
+2026-10-09T00:53:17.6597012Z E           - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+2026-10-09T00:53:17.6598019Z E           - group: 推論依據
+2026-10-09T00:53:17.6598604Z E           - group: 繼續查詢
+2026-10-09T00:53:17.6599122Z E         - article:
+2026-10-09T00:53:17.6599783Z E           - heading "課業與教學" [level=3]
+2026-10-09T00:53:17.6600431Z E           - text: 官方 · 原文
+2026-10-09T00:53:17.6601866Z E           - paragraph: Access the UWM academic calendar to see important dates, such as the start and end of each semester, holiday breaks, final exams and graduation.
+2026-10-09T00:53:17.6603463Z E           - group: 資料來源
+2026-10-09T00:53:17.6604051Z E           - group: 繼續查詢
+2026-10-09T00:53:17.6604552Z E         - article:
+2026-10-09T00:53:17.6605194Z E           - heading "校園活動與社交" [level=3]
+2026-10-09T00:53:17.6605838Z E           - text: 官方 · 原文
+2026-10-09T00:53:17.6607091Z E           - paragraph: If you need accommodation before your move-in date, you may need to stay in a hotel, Airbnb, or with friends/relatives.
+2026-10-09T00:53:17.6608491Z E           - group: 資料來源
+2026-10-09T00:53:17.6609197Z E           - text: 官方 · 機器翻譯
+2026-10-09T00:53:17.6610774Z E           - paragraph: 交換生會收到強制 定向 日期並使用國際生支援資源；Student Involvement 提供 300 多個學生團體、領導訓練、文化活動、電影與講座，Student Union 另有藝文、休閒與社交空間。實際活動與資格依當期註冊狀態。
+2026-10-09T00:53:17.6612543Z E           - group: 資料來源
+2026-10-09T00:53:17.6658253Z E           - group: 繼續查詢
+2026-10-09T00:53:17.6658987Z E         - article:
+2026-10-09T00:53:17.6698763Z E           - heading "安全、醫療與保險" [level=3]
+2026-10-09T00:53:17.6748198Z E           - text: 官方 · 原文
+2026-10-09T00:53:17.6769211Z E           - paragraph: Access info about tuition, living expenses, insurance and other fees associated with being an international student.
+2026-10-09T00:53:17.6809847Z E           - group: 資料來源
+2026-10-09T00:53:17.6825981Z E           - text: AI 推論
+2026-10-09T00:53:17.6865919Z E           - paragraph: 可先查詢上述健康服務；接診、語言與保險適用性仍須確認。
+2026-10-09T00:53:17.6908534Z E           - group: 推論依據
+2026-10-09T00:53:17.6928082Z E           - group: 繼續查詢
+2026-10-09T00:53:17.6969497Z E         - article:
+2026-10-09T00:53:17.6978325Z E           - heading "旅行與周邊城市" [level=3]
+2026-10-09T00:53:17.7008598Z E           - text: 官方 · 原文
+2026-10-09T00:53:17.7049139Z E           - paragraph: The Milwaukee General Mitchell International Airport (MKE) is the closest airport to the UWM campus.
+2026-10-09T00:53:17.7083707Z E           - group: 資料來源
+2026-10-09T00:53:17.7098922Z E           - group: 繼續查詢
+2026-10-09T00:53:17.7115254Z E         - group: 待補資料（2 項）
+2026-10-09T00:53:17.7128808Z E       - complementary "申請準備進度與官方來源":
+2026-10-09T00:53:17.7152300Z E         - heading "我的申請進度" [level=2]
+2026-10-09T00:53:17.7171163Z E         - progressbar "申請準備進度":
+2026-10-09T00:53:17.7189999Z E           - strong: 0 / 5 已完成
+2026-10-09T00:53:17.7195948Z E           - text: 準備中
+2026-10-09T00:53:17.7198659Z E         - paragraph:
+2026-10-09T00:53:17.7244962Z E           - text: 登入以保存進度
+2026-10-09T00:53:17.7273424Z E           - button "登入"
+2026-10-09T00:53:17.7288804Z E         - checkbox "確認資格與語言門檻" [disabled]
+2026-10-09T00:53:17.7290108Z E         - text: 確認資格與語言門檻
+2026-10-09T00:53:17.7291418Z E         - checkbox "比較課程、費用與生活" [disabled]
+2026-10-09T00:53:17.7292567Z E         - text: 比較課程、費用與生活
+2026-10-09T00:53:17.7293662Z E         - checkbox "備妥校內申請文件" [disabled]
+2026-10-09T00:53:17.7294713Z E         - text: 備妥校內申請文件
+2026-10-09T00:53:17.7295769Z E         - checkbox "完成校內甄選送件" [disabled]
+2026-10-09T00:53:17.7296804Z E         - text: 完成校內甄選送件
+2026-10-09T00:53:17.7298363Z E         - checkbox "完成合作校線上申請" [disabled]
+2026-10-09T00:53:17.7300188Z E         - text: 完成合作校線上申請
+2026-10-09T00:53:17.7301129Z E         - strong: 送件前確認
+2026-10-09T00:53:17.7302213Z E         - paragraph: 截止日與資格以當期官方公告為準。
+2026-10-09T00:53:17.7303129Z E   - paragraph:
+2026-10-09T00:53:17.7304462Z E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+2026-10-09T00:53:17.7305680Z E     - button "停用匿名使用統計"
+2026-10-09T00:53:17.7306794Z E     - text: 。
+2026-10-09T00:53:17.7307939Z E     - link "隱私權政策":
+2026-10-09T00:53:17.7308660Z E       - /url: /privacy
+2026-10-09T00:53:17.7309742Z E     - link "使用條款":
+2026-10-09T00:53:17.7310549Z E       - /url: /terms
+2026-10-09T00:53:17.7311189Z 
+2026-10-09T00:53:29.0787250Z tests/e2e/test_web_next_phase.py::test_third_destination_batch_does_not_present_stale_costs_as_current FAILED [  2%]WEB_CASE tests/e2e/test_web_next_phase.py::test_third_destination_batch_does_not_present_stale_costs_as_current call failed 11.240s
+2026-10-09T00:53:29.0820093Z tests/e2e/test_web_next_phase.py:526: in test_third_destination_batch_does_not_present_stale_costs_as_current
+2026-10-09T00:53:29.0825546Z     expect(official).to_contain_text("查看本頁全部查核來源（5）")
+2026-10-09T00:53:29.0827282Z E   AssertionError: Locator expected to contain text '查看本頁全部查核來源（5）'
+2026-10-09T00:53:29.0828142Z E   Actual value: 
+2026-10-09T00:53:29.0828472Z E       
+2026-10-09T00:53:29.0828755Z E         
+2026-10-09T00:53:29.0830372Z E         官方生活資訊已查核已核對 5 個 Paris-Saclay 官方來源，但尚未完成第二位真人內容審查。住宿名額與校區都未保證；生活費與交通頁仍含 2021 年舊金額，因此本批不把它們當成 2026/27 預算或固定票價。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:53:29.0833185Z E       
+2026-10-09T00:53:29.0833479Z E       
+2026-10-09T00:53:29.0838644Z E         所在地巴黎地區（依學院／校區）費用參考Paris-Saclay 官方生活費頁提醒巴黎地區住宿與落地首月成本偏高，需另計首月房租、押金、仲介費、水電通訊與住宅保險；但頁面仍引用 2021／2021-22 年費率與票價，因此不能把其中金額當成 2026/27 預算。學生須依實際校區、住宿 提供 與當期法國官方費率重新估算。住宿2026/27 CROUS 住宿一般申請包含 2026-05-31 前完成 DSE、三輪分配及 2026-07-07 起追加階段；收到 提供 後需在 48 小時內確認並繳預訂費。校方也明示名額有限、依條件與供應分配，沒有獲配者須使用其他平台找房；不能把送出申請視為已取得住宿。交通Paris-Saclay 有多個校區，路線必須依錄取學院確認：例如 Orsay-Vallée 可由 RER B 至 Orsay-Ville，Plateau du Moulon 可由 RER B 接公車 9、91.10 或 91.06。官方交通頁的票價範例較舊，本批只採路線結構，不提供 2026 固定票價。校園生活校方 2026 國際生迎新安排涵蓋 Orsay-Bures、薩克萊高原、索索、Guyancourt 與 Évry 等校區，另有 夥伴計畫 與 9 月 24 日 歡迎日，內容包括社團、運動、文化、住宿、餐飲和交通。學生可選方便的 抵達日，但日常服務仍依實際註冊學院與校區。
+2026-10-09T00:53:29.0841339Z E       
+2026-10-09T00:53:29.0841643Z E       
+2026-10-09T00:53:29.0841918Z E       
+2026-10-09T00:53:29.0842187Z E         
+2026-10-09T00:53:29.0865727Z E           交換生生存指南
+2026-10-09T00:53:29.0866076Z E   
+2026-10-09T00:53:29.0866427Z E         
+2026-10-09T00:53:29.0866731Z E         
+2026-10-09T00:53:29.0867019Z E           
+2026-10-09T00:53:29.0867856Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:53:29.0877915Z E             
+2026-10-09T00:53:29.0878303Z E               
+2026-10-09T00:53:29.0878673Z E                 
+2026-10-09T00:53:29.0879034Z E                   
+2026-10-09T00:53:29.0879765Z E                     
+2026-10-09T00:53:29.0880255Z E                     校園
+2026-10-09T00:53:29.0880640Z E                   
+2026-10-09T00:53:29.0881258Z E                   法國薩克雷大學 University of Paris-Saclay校園
+2026-10-09T00:53:29.0881752Z E                 
+2026-10-09T00:53:29.0882066Z E             
+2026-10-09T00:53:29.0882360Z E           
+2026-10-09T00:53:29.0882639Z E         
+2026-10-09T00:53:29.0882914Z E         
+2026-10-09T00:53:29.0883184Z E         
+2026-10-09T00:53:29.0884179Z E       
+2026-10-09T00:53:29.0884852Z E       
+2026-10-09T00:53:29.0885367Z E         來源（5）
+2026-10-09T00:53:29.0885760Z E         
+2026-10-09T00:53:29.0886113Z E           
+2026-10-09T00:53:29.0886447Z E             
+2026-10-09T00:53:29.0887167Z E               巴黎薩克萊大學交換計畫交換生官方入口；說明合作協議、母校提名、不同學院及課程選擇責任。
+2026-10-09T00:53:29.0888089Z E               查看原始來源
+2026-10-09T00:53:29.0888490Z E             
+2026-10-09T00:53:29.0888819Z E             
+2026-10-09T00:53:29.0889659Z E               巴黎薩克萊大學 2026-2027 住宿列出 2026/27 CROUS 申請輪次、追加階段、確認期限、校區窗口與名額供應限制。
+2026-10-09T00:53:29.0894229Z E               查看原始來源
+2026-10-09T00:53:29.0894838Z E             
+2026-10-09T00:53:29.0895515Z E             
+2026-10-09T00:53:29.0896464Z E               巴黎薩克萊大學生活成本官方預算說明仍含 2021／2021-22 年金額；本批只採首月成本項目與高成本警示，不當成 2026/27 定價。
+2026-10-09T00:53:29.0897240Z E               查看原始來源
+2026-10-09T00:53:29.0898072Z E             
+2026-10-09T00:53:29.0898526Z E             
+2026-10-09T00:53:29.0899716Z E               Université Paris-Saclay 交通工具說明 Orsay、Plateau du Moulon 等校區的 RER 與公車轉乘路線；票價範例不作 2026 固定價格。
+2026-10-09T00:53:29.0900726Z E               查看原始來源
+2026-10-09T00:53:29.0901498Z E             
+2026-10-09T00:53:29.0902027Z E             
+2026-10-09T00:53:29.0903311Z E               Université Paris-Saclay 2026 年國際學生歡迎頁面2026 Arrival Days、Buddy Programme 與 Welcome Day；涵蓋多校區支援、社團、住宿及交通資訊。
+2026-10-09T00:53:29.0904387Z E               查看原始來源
+2026-10-09T00:53:29.0904854Z E             
+2026-10-09T00:53:29.0905292Z E         
+2026-10-09T00:53:29.0905767Z E        
+2026-10-09T00:53:29.0911930Z E   Call log:
+2026-10-09T00:53:29.0917381Z E     - Expect "to_contain_text" with timeout 5000ms
+2026-10-09T00:53:29.0918904Z E     - waiting for locator("#destination-official-content")
+2026-10-09T00:53:29.0921018Z E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+2026-10-09T00:53:29.0922469Z E          - unexpected value "
+2026-10-09T00:53:29.0923115Z E       
+2026-10-09T00:53:29.0923687Z E         
+2026-10-09T00:53:29.0925694Z E         官方生活資訊已查核已核對 5 個 Paris-Saclay 官方來源，但尚未完成第二位真人內容審查。住宿名額與校區都未保證；生活費與交通頁仍含 2021 年舊金額，因此本批不把它們當成 2026/27 預算或固定票價。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:53:29.0956765Z E       
+2026-10-09T00:53:29.0957399Z E       
+2026-10-09T00:53:29.0962431Z E         所在地巴黎地區（依學院／校區）費用參考Paris-Saclay 官方生活費頁提醒巴黎地區住宿與落地首月成本偏高，需另計首月房租、押金、仲介費、水電通訊與住宅保險；但頁面仍引用 2021／2021-22 年費率與票價，因此不能把其中金額當成 2026/27 預算。學生須依實際校區、住宿 提供 與當期法國官方費率重新估算。住宿2026/27 CROUS 住宿一般申請包含 2026-05-31 前完成 DSE、三輪分配及 2026-07-07 起追加階段；收到 提供 後需在 48 小時內確認並繳預訂費。校方也明示名額有限、依條件與供應分配，沒有獲配者須使用其他平台找房；不能把送出申請視為已取得住宿。交通Paris-Saclay 有多個校區，路線必須依錄取學院確認：例如 Orsay-Vallée 可由 RER B 至 Orsay-Ville，Plateau du Moulon 可由 RER B 接公車 9、91.10 或 91.06。官方交通頁的票價範例較舊，本批只採路線結構，不提供 2026 固定票價。校園生活校方 2026 國際生迎新安排涵蓋 Orsay-Bures、薩克萊高原、索索、Guyancourt 與 Évry 等校區，另有 夥伴計畫 與 9 月 24 日 歡迎日，內容包括社團、運動、文化、住宿、餐飲和交通。學生可選方便的 抵達日，但日常服務仍依實際註冊學院與校區。
+2026-10-09T00:53:29.0965514Z E       
+2026-10-09T00:53:29.0966095Z E       
+2026-10-09T00:53:29.0966579Z E       
+2026-10-09T00:53:29.0967053Z E         
+2026-10-09T00:53:29.0968004Z E           交換生生存指南
+2026-10-09T00:53:29.0968632Z E   
+2026-10-09T00:53:29.0969107Z E         
+2026-10-09T00:53:29.0969608Z E         
+2026-10-09T00:53:29.0970206Z E           
+2026-10-09T00:53:29.0971096Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:53:29.0971922Z E             
+2026-10-09T00:53:29.0972577Z E               
+2026-10-09T00:53:29.0973236Z E                 
+2026-10-09T00:53:29.0973978Z E                   
+2026-10-09T00:53:29.0974640Z E                     
+2026-10-09T00:53:29.0975388Z E                     校園
+2026-10-09T00:53:29.0976122Z E                   
+2026-10-09T00:53:29.0977139Z E                   法國薩克雷大學 University of Paris-Saclay校園
+2026-10-09T00:53:29.0978420Z E                 
+2026-10-09T00:53:29.0979177Z E             
+2026-10-09T00:53:29.0979892Z E           
+2026-10-09T00:53:29.0980598Z E         
+2026-10-09T00:53:29.0981277Z E         
+2026-10-09T00:53:29.0981880Z E         
+2026-10-09T00:53:29.0982545Z E       
+2026-10-09T00:53:29.0983230Z E       
+2026-10-09T00:53:29.0984303Z E         來源（5）
+2026-10-09T00:53:29.0985037Z E         
+2026-10-09T00:53:29.0985691Z E           
+2026-10-09T00:53:29.0986345Z E             
+2026-10-09T00:53:29.0987667Z E               巴黎薩克萊大學交換計畫交換生官方入口；說明合作協議、母校提名、不同學院及課程選擇責任。
+2026-10-09T00:53:29.0988746Z E               查看原始來源
+2026-10-09T00:53:29.0989506Z E             
+2026-10-09T00:53:29.0990174Z E             
+2026-10-09T00:53:29.0991416Z E               巴黎薩克萊大學 2026-2027 住宿列出 2026/27 CROUS 申請輪次、追加階段、確認期限、校區窗口與名額供應限制。
+2026-10-09T00:53:29.0992443Z E               查看原始來源
+2026-10-09T00:53:29.0993105Z E             
+2026-10-09T00:53:29.0993758Z E             
+2026-10-09T00:53:29.0994953Z E               巴黎薩克萊大學生活成本官方預算說明仍含 2021／2021-22 年金額；本批只採首月成本項目與高成本警示，不當成 2026/27 定價。
+2026-10-09T00:53:29.0996101Z E               查看原始來源
+2026-10-09T00:53:29.0996823Z E             
+2026-10-09T00:53:29.0997384Z E             
+2026-10-09T00:53:29.0998895Z E               Université Paris-Saclay 交通工具說明 Orsay、Plateau du Moulon 等校區的 RER 與公車轉乘路線；票價範例不作 2026 固定價格。
+2026-10-09T00:53:29.1000002Z E               查看原始來源
+2026-10-09T00:53:29.1000687Z E             
+2026-10-09T00:53:29.1001296Z E             
+2026-10-09T00:53:29.1002770Z E               Université Paris-Saclay 2026 年國際學生歡迎頁面2026 Arrival Days、Buddy Programme 與 Welcome Day；涵蓋多校區支援、社團、住宿及交通資訊。
+2026-10-09T00:53:29.1004061Z E               查看原始來源
+2026-10-09T00:53:29.1047786Z E             
+2026-10-09T00:53:29.1067791Z E         
+2026-10-09T00:53:29.1068472Z E       "
+2026-10-09T00:53:29.1069021Z E   
+2026-10-09T00:53:29.1070433Z E   Aria snapshot:
+2026-10-09T00:53:29.1071249Z E   - link "跳到主要內容":
+2026-10-09T00:53:29.1071913Z E     - /url: "#main-content"
+2026-10-09T00:53:29.1072830Z E   - complementary "系統功能":
+2026-10-09T00:53:29.1073508Z E     - link "UniWay 首頁":
+2026-10-09T00:53:29.1074089Z E       - /url: "#home"
+2026-10-09T00:53:29.1074665Z E       - strong: UniWay
+2026-10-09T00:53:29.1075342Z E     - navigation "公開探索導覽":
+2026-10-09T00:53:29.1075998Z E       - link "首頁":
+2026-10-09T00:53:29.1076559Z E         - /url: "#home"
+2026-10-09T00:53:29.1077214Z E       - link "學校搜尋":
+2026-10-09T00:53:29.1078062Z E         - /url: "#partners"
+2026-10-09T00:53:29.1078859Z E       - link "論壇":
+2026-10-09T00:53:29.1079415Z E         - /url: "#forum"
+2026-10-09T00:53:29.1080055Z E       - link "用戶評價":
+2026-10-09T00:53:29.1080622Z E         - /url: "#feedback"
+2026-10-09T00:53:29.1081196Z E       - group:
+2026-10-09T00:53:29.1081832Z E         - link "我的申請":
+2026-10-09T00:53:29.1082493Z E           - /url: "#advisor"
+2026-10-09T00:53:29.1083275Z E     - button "返回上一頁": 返回
+2026-10-09T00:53:29.1084108Z E     - button "選擇就讀學校":
+2026-10-09T00:53:29.1084749Z E       - strong: 選擇就讀學校
+2026-10-09T00:53:29.1085483Z E     - button "切換為深色模式"
+2026-10-09T00:53:29.1086131Z E     - button "重新整理最新資料"
+2026-10-09T00:53:29.1086959Z E     - button "登入或建立帳號": 登入
+2026-10-09T00:53:29.1087933Z E   - main:
+2026-10-09T00:53:29.1088399Z E     - status
+2026-10-09T00:53:29.1089151Z E     - region "法國薩克雷大學 University of Paris-Saclay":
+2026-10-09T00:53:29.1090097Z E       - button "加入比較法國薩克雷大學 University of Paris-Saclay": 加入比較
+2026-10-09T00:53:29.1091172Z E       - button "登入建立計畫"
+2026-10-09T00:53:29.1091939Z E       - img "法國薩克雷大學 University of Paris-Saclay官方照片"
+2026-10-09T00:53:29.1092636Z E       - link "圖片來源":
+2026-10-09T00:53:29.1093477Z E         - /url: https://www.universite-paris-saclay.fr/luniversite/les-campus
+2026-10-09T00:53:29.1094391Z E       - text: 法國 · 交換學生 下一站
+2026-10-09T00:53:29.1094972Z E       - strong: 法國
+2026-10-09T00:53:29.1095552Z E       - text: 巴黎地區（依學院／校區）
+2026-10-09T00:53:29.1096370Z E       - heading "法國薩克雷大學 University of Paris-Saclay" [level=1]
+2026-10-09T00:53:29.1097092Z E       - text: 我的資格
+2026-10-09T00:53:29.1097875Z E       - strong: 尚未進行資格初判
+2026-10-09T00:53:29.1098477Z E       - text: 合作校參考時程
+2026-10-09T00:53:29.1099111Z E       - strong: 依當期長庚公告與合作校通知
+2026-10-09T00:53:29.1099705Z E       - text: 語言門檻
+2026-10-09T00:53:29.1100328Z E       - strong: 合作校未明確標示，請開啟官方來源
+2026-10-09T00:53:29.1100986Z E       - text: 生活費參考
+2026-10-09T00:53:29.1102444Z E       - strong: Paris-Saclay 官方生活費頁提醒巴黎地區住宿與落地首月成本偏高，需另計首月房租、押金、仲介費、水電通訊與住宅保險；但頁面仍引用 2021／2021-22 年費率與票價，因此不能把其中金額當成 2026/27 預算。學生須依實際校區、住宿 提供 與當…
+2026-10-09T00:53:29.1103470Z E       - text: 交換名額
+2026-10-09T00:53:29.1104017Z E       - strong: 依當期公告
+2026-10-09T00:53:29.1104561Z E       - text: 研修期間
+2026-10-09T00:53:29.1105116Z E       - strong: 1 學期至 1 學年
+2026-10-09T00:53:29.1105966Z E       - tablist "交換學校詳細資訊":
+2026-10-09T00:53:29.1106562Z E         - tab "快速了解"
+2026-10-09T00:53:29.1107126Z E         - tab "申請方式"
+2026-10-09T00:53:29.1108021Z E         - tab "生活情報" [selected]
+2026-10-09T00:53:29.1108702Z E         - tab "出發前提醒"
+2026-10-09T00:53:29.1109306Z E         - tab "學生心得"
+2026-10-09T00:53:29.1109893Z E         - tab "學生社群"
+2026-10-09T00:53:29.1110497Z E       - tabpanel "生活情報":
+2026-10-09T00:53:29.1111196Z E         - heading "生活情報" [level=2]
+2026-10-09T00:53:29.1111879Z E         - status: 正在更新資料…
+2026-10-09T00:53:29.1112505Z E         - button "找學生分享"
+2026-10-09T00:53:29.1113188Z E         - button "更新中" [disabled]
+2026-10-09T00:53:29.1113961Z E         - group: 資料說明
+2026-10-09T00:53:29.1114703Z E         - group: 官方生活指南
+2026-10-09T00:53:29.1115291Z E         - article:
+2026-10-09T00:53:29.1116024Z E           - heading "住宿與宿舍" [level=3]
+2026-10-09T00:53:29.1116837Z E           - text: 官方 · 機器翻譯
+2026-10-09T00:53:29.1118966Z E           - paragraph: 2026/27 CROUS 住宿一般申請包含 2026-05-31 前完成 DSE、三輪分配及 2026-07-07 起追加階段；收到 提供 後需在 48 小時內確認並繳預訂費。校方也明示名額有限、依條件與供應分配，沒有獲配者須使用其他平台找房；不能把送出申請視為已取得住宿。
+2026-10-09T00:53:29.1120408Z E           - group: 資料來源
+2026-10-09T00:53:29.1121235Z E           - text: AI 推論
+2026-10-09T00:53:29.1122281Z E           - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+2026-10-09T00:53:29.1124093Z E           - group: 推論依據
+2026-10-09T00:53:29.1124801Z E           - group: 繼續查詢
+2026-10-09T00:53:29.1125359Z E         - article:
+2026-10-09T00:53:29.1126066Z E           - heading "每月生活預算" [level=3]
+2026-10-09T00:53:29.1126890Z E           - text: 官方 · 機器翻譯
+2026-10-09T00:53:29.1128877Z E           - paragraph: Paris-Saclay 官方生活費頁提醒巴黎地區住宿與落地首月成本偏高，需另計首月房租、押金、仲介費、水電通訊與住宅保險；但頁面仍引用 2021／2021-22 年費率與票價，因此不能把其中金額當成 2026/27 預算。學生須依實際校區、住宿 提供 與當期法國官方費率重新估算。
+2026-10-09T00:53:29.1130431Z E           - group: 資料來源
+2026-10-09T00:53:29.1131075Z E           - group: 繼續查詢
+2026-10-09T00:53:29.1131625Z E         - article:
+2026-10-09T00:53:29.1132310Z E           - heading "交通與地點" [level=3]
+2026-10-09T00:53:29.1133052Z E           - text: 官方
+2026-10-09T00:53:29.1134934Z E           - paragraph: Paris-Saclay 有多個校區，路線必須依錄取學院確認：例如 Orsay-Vallée 可由 RER B 至 Orsay-Ville，Plateau du Moulon 可由 RER B 接公車 9、91.10 或 91.06。官方交通頁的票價範例較舊，本批只採路線結構，不提供 2026 固定票價。
+2026-10-09T00:53:29.1139267Z E           - group: 資料來源
+2026-10-09T00:53:29.1140171Z E           - text: AI 推論
+2026-10-09T00:53:29.1141043Z E           - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+2026-10-09T00:53:29.1141773Z E           - group: 推論依據
+2026-10-09T00:53:29.1142396Z E           - group: 繼續查詢
+2026-10-09T00:53:29.1142923Z E         - article:
+2026-10-09T00:53:29.1143600Z E           - heading "校園活動與社交" [level=3]
+2026-10-09T00:53:29.1144301Z E           - text: 官方
+2026-10-09T00:53:29.1145773Z E           - paragraph: 校方 2026 國際生迎新安排涵蓋 Orsay-Bures、薩克萊高原、索索、Guyancourt 與 Évry 等校區，另有 夥伴計畫 與 9 月 24 日 歡迎日，內容包括社團、運動、文化、住宿、餐飲和交通。學生可選方便的 抵達日，但日常服務仍依實際註冊學院與校區。
+2026-10-09T00:53:29.1146934Z E           - group: 資料來源
+2026-10-09T00:53:29.1147763Z E           - group: 繼續查詢
+2026-10-09T00:53:29.1148819Z E         - group: 待補資料（6 項）
+2026-10-09T00:53:29.1149553Z E       - complementary "申請準備進度與官方來源":
+2026-10-09T00:53:29.1150300Z E         - heading "我的申請進度" [level=2]
+2026-10-09T00:53:29.1151000Z E         - progressbar "申請準備進度":
+2026-10-09T00:53:29.1151644Z E           - strong: 0 / 5 已完成
+2026-10-09T00:53:29.1152220Z E           - text: 準備中
+2026-10-09T00:53:29.1152719Z E         - paragraph:
+2026-10-09T00:53:29.1153306Z E           - text: 登入以保存進度
+2026-10-09T00:53:29.1153902Z E           - button "登入"
+2026-10-09T00:53:29.1154604Z E         - checkbox "確認資格與語言門檻" [disabled]
+2026-10-09T00:53:29.1155414Z E         - text: 確認資格與語言門檻
+2026-10-09T00:53:29.1156206Z E         - checkbox "比較課程、費用與生活" [disabled]
+2026-10-09T00:53:29.1156905Z E         - text: 比較課程、費用與生活
+2026-10-09T00:53:29.1157825Z E         - checkbox "備妥校內申請文件" [disabled]
+2026-10-09T00:53:29.1158485Z E         - text: 備妥校內申請文件
+2026-10-09T00:53:29.1159152Z E         - checkbox "完成校內甄選送件" [disabled]
+2026-10-09T00:53:29.1159891Z E         - text: 完成校內甄選送件
+2026-10-09T00:53:29.1160637Z E         - checkbox "完成合作校線上申請" [disabled]
+2026-10-09T00:53:29.1188805Z E         - text: 完成合作校線上申請
+2026-10-09T00:53:29.1191772Z E         - strong: 送件前確認
+2026-10-09T00:53:29.1207033Z E         - paragraph: 截止日與資格以當期官方公告為準。
+2026-10-09T00:53:29.1208018Z E   - paragraph:
+2026-10-09T00:53:29.1209278Z E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+2026-10-09T00:53:29.1210282Z E     - button "停用匿名使用統計"
+2026-10-09T00:53:29.1210940Z E     - text: 。
+2026-10-09T00:53:29.1211605Z E     - link "隱私權政策":
+2026-10-09T00:53:29.1212300Z E       - /url: /privacy
+2026-10-09T00:53:29.1213318Z E     - link "使用條款":
+2026-10-09T00:53:29.1213926Z E       - /url: /terms
+2026-10-09T00:53:29.1214349Z 
+2026-10-09T00:53:40.6202162Z tests/e2e/test_web_next_phase.py::test_fourth_destination_batch_keeps_multicampus_cost_limits_visible FAILED [  2%]WEB_CASE tests/e2e/test_web_next_phase.py::test_fourth_destination_batch_keeps_multicampus_cost_limits_visible call failed 11.348s
+2026-10-09T00:53:40.6211635Z tests/e2e/test_web_next_phase.py:547: in test_fourth_destination_batch_keeps_multicampus_cost_limits_visible
+2026-10-09T00:53:40.6213168Z     expect(official).to_contain_text("查看本頁全部查核來源（5）")
+2026-10-09T00:53:40.6214428Z E   AssertionError: Locator expected to contain text '查看本頁全部查核來源（5）'
+2026-10-09T00:53:40.6215374Z E   Actual value: 
+2026-10-09T00:53:40.6216096Z E       
+2026-10-09T00:53:40.6220404Z E         
+2026-10-09T00:53:40.6222767Z E         官方生活資訊已查核已實際讀取 5 個 Thomas More 官方頁面，但尚未完成第二位真人內容審查。交換課程分布多校區，一般生活費估算只適用單一全日制學位生且不含交通；交換 FAQ 的 凍結帳戶 金額仍標示 2025/26，本批不把它當成 2026/27 現行要求。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:53:40.6225649Z E       
+2026-10-09T00:53:40.6226151Z E       
+2026-10-09T00:53:40.6233811Z E         所在地比利時（依交換課程／校區）費用參考Thomas More 的官方研究估算顯示，單一全日制學位生每月生活費約 EUR 850–1,150，7 個月約 EUR 5,990–8,000，完整學年約 EUR 10,260–13,590；這些數字不含學費與交通，也不是交換生個別預算或價格保證。簽證、國際旅費與特定教材還要另計。住宿交換學生透過校方住宿資料庫找房後，仍要自行聯絡房東、確認條件並簽約；校方沒有承諾床位。住宿選項與承辦窗口依 Antwerp、Mechelen、Geel、Turnhout 等實際交換校區而異，不能在課程與校區未定時套用單一城市資訊。交通Thomas More Student Services 依校區提供自行車、到校交通與共乘等協助。官方一般生活費估算明確不含交通，因此實際月票、單車或通勤成本須等交換課程、校區與住宿地址確定後另行核對。校園生活Thomas More 有 40 多個英文交換課程，分布於 10 個校區；實際校園生活依課程與校區不同。2026/27 秋季交換生 新生說明會 天 為 2026-09-14 至 09-18，春季為 2027-02-01 至 02-05，並提供 夥伴 協助適應。
+2026-10-09T00:53:40.6240639Z E       
+2026-10-09T00:53:40.6241187Z E       
+2026-10-09T00:53:40.6241663Z E       
+2026-10-09T00:53:40.6242125Z E         
+2026-10-09T00:53:40.6242752Z E           交換生生存指南
+2026-10-09T00:53:40.6243260Z E   
+2026-10-09T00:53:40.6243736Z E         
+2026-10-09T00:53:40.6244417Z E         
+2026-10-09T00:53:40.6244877Z E           
+2026-10-09T00:53:40.6245582Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:53:40.6246177Z E             
+2026-10-09T00:53:40.6246690Z E               
+2026-10-09T00:53:40.6247212Z E                 
+2026-10-09T00:53:40.6248055Z E                   
+2026-10-09T00:53:40.6291972Z E                     
+2026-10-09T00:53:40.6293186Z E                     校園
+2026-10-09T00:53:40.6293938Z E                   
+2026-10-09T00:53:40.6295286Z E                   比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences校園
+2026-10-09T00:53:40.6296281Z E                 
+2026-10-09T00:53:40.6296863Z E             
+2026-10-09T00:53:40.6297390Z E           
+2026-10-09T00:53:40.6298685Z E         
+2026-10-09T00:53:40.6299437Z E         
+2026-10-09T00:53:40.6299932Z E         
+2026-10-09T00:53:40.6300421Z E       
+2026-10-09T00:53:40.6300912Z E       
+2026-10-09T00:53:40.6318392Z E         來源（5）
+2026-10-09T00:53:40.6323368Z E         
+2026-10-09T00:53:40.6324381Z E           
+2026-10-09T00:53:40.6324932Z E             
+2026-10-09T00:53:40.6325887Z E               Thomas More 交換學生常見問題說明合作校提名、住宿自行聯絡與簽約、迎新及多校區交換安排。
+2026-10-09T00:53:40.6326832Z E               查看原始來源
+2026-10-09T00:53:40.6327343Z E             
+2026-10-09T00:53:40.6328208Z E             
+2026-10-09T00:53:40.6328995Z E               Thomas More 生活成本公布全日制學位生研究估算，明示金額不含學費與交通。
+2026-10-09T00:53:40.6329746Z E               查看原始來源
+2026-10-09T00:53:40.6330224Z E             
+2026-10-09T00:53:40.6330691Z E             
+2026-10-09T00:53:40.6331528Z E               Thomas More 學生服務依不同校區提供住宿與交通等學生服務窗口。
+2026-10-09T00:53:40.6332273Z E               查看原始來源
+2026-10-09T00:53:40.6332754Z E             
+2026-10-09T00:53:40.6333217Z E             
+2026-10-09T00:53:40.6334063Z E               Thomas More 交換計畫列出 40 多個英文交換課程與 10 個校區，顯示實際地點取決於交換課程。
+2026-10-09T00:53:40.6334779Z E               查看原始來源
+2026-10-09T00:53:40.6335287Z E             
+2026-10-09T00:53:40.6335732Z E             
+2026-10-09T00:53:40.6336612Z E               Thomas More 入學與導向日 2026/27公布 2026/27 秋、春季迎新日期、校區安排與 夥伴 支援。
+2026-10-09T00:53:40.6337760Z E               查看原始來源
+2026-10-09T00:53:40.6338326Z E             
+2026-10-09T00:53:40.6338957Z E         
+2026-10-09T00:53:40.6339541Z E        
+2026-10-09T00:53:40.6340116Z E   Call log:
+2026-10-09T00:53:40.6340953Z E     - Expect "to_contain_text" with timeout 5000ms
+2026-10-09T00:53:40.6342492Z E     - waiting for locator("#destination-official-content")
+2026-10-09T00:53:40.6344520Z E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+2026-10-09T00:53:40.6346145Z E          - unexpected value "
+2026-10-09T00:53:40.6346814Z E       
+2026-10-09T00:53:40.6347390Z E         
+2026-10-09T00:53:40.6349824Z E         官方生活資訊已查核已實際讀取 5 個 Thomas More 官方頁面，但尚未完成第二位真人內容審查。交換課程分布多校區，一般生活費估算只適用單一全日制學位生且不含交通；交換 FAQ 的 凍結帳戶 金額仍標示 2025/26，本批不把它當成 2026/27 現行要求。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:53:40.6351951Z E       
+2026-10-09T00:53:40.6356101Z E       
+2026-10-09T00:53:40.6364892Z E         所在地比利時（依交換課程／校區）費用參考Thomas More 的官方研究估算顯示，單一全日制學位生每月生活費約 EUR 850–1,150，7 個月約 EUR 5,990–8,000，完整學年約 EUR 10,260–13,590；這些數字不含學費與交通，也不是交換生個別預算或價格保證。簽證、國際旅費與特定教材還要另計。住宿交換學生透過校方住宿資料庫找房後，仍要自行聯絡房東、確認條件並簽約；校方沒有承諾床位。住宿選項與承辦窗口依 Antwerp、Mechelen、Geel、Turnhout 等實際交換校區而異，不能在課程與校區未定時套用單一城市資訊。交通Thomas More Student Services 依校區提供自行車、到校交通與共乘等協助。官方一般生活費估算明確不含交通，因此實際月票、單車或通勤成本須等交換課程、校區與住宿地址確定後另行核對。校園生活Thomas More 有 40 多個英文交換課程，分布於 10 個校區；實際校園生活依課程與校區不同。2026/27 秋季交換生 新生說明會 天 為 2026-09-14 至 09-18，春季為 2027-02-01 至 02-05，並提供 夥伴 協助適應。
+2026-10-09T00:53:40.6384769Z E       
+2026-10-09T00:53:40.6385288Z E       
+2026-10-09T00:53:40.6385711Z E       
+2026-10-09T00:53:40.6386139Z E         
+2026-10-09T00:53:40.6386721Z E           交換生生存指南
+2026-10-09T00:53:40.6387212Z E   
+2026-10-09T00:53:40.6388124Z E         
+2026-10-09T00:53:40.6388703Z E         
+2026-10-09T00:53:40.6389228Z E           
+2026-10-09T00:53:40.6390296Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:53:40.6391565Z E             
+2026-10-09T00:53:40.6392133Z E               
+2026-10-09T00:53:40.6392784Z E                 
+2026-10-09T00:53:40.6393440Z E                   
+2026-10-09T00:53:40.6394097Z E                     
+2026-10-09T00:53:40.6394847Z E                     校園
+2026-10-09T00:53:40.6395548Z E                   
+2026-10-09T00:53:40.6396822Z E                   比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences校園
+2026-10-09T00:53:40.6397938Z E                 
+2026-10-09T00:53:40.6398514Z E             
+2026-10-09T00:53:40.6398980Z E           
+2026-10-09T00:53:40.6399413Z E         
+2026-10-09T00:53:40.6399820Z E         
+2026-10-09T00:53:40.6400234Z E         
+2026-10-09T00:53:40.6400661Z E       
+2026-10-09T00:53:40.6401092Z E       
+2026-10-09T00:53:40.6401582Z E         來源（5）
+2026-10-09T00:53:40.6402034Z E         
+2026-10-09T00:53:40.6402445Z E           
+2026-10-09T00:53:40.6402860Z E             
+2026-10-09T00:53:40.6403641Z E               Thomas More 交換學生常見問題說明合作校提名、住宿自行聯絡與簽約、迎新及多校區交換安排。
+2026-10-09T00:53:40.6404362Z E               查看原始來源
+2026-10-09T00:53:40.6404841Z E             
+2026-10-09T00:53:40.6405287Z E             
+2026-10-09T00:53:40.6406035Z E               Thomas More 生活成本公布全日制學位生研究估算，明示金額不含學費與交通。
+2026-10-09T00:53:40.6406730Z E               查看原始來源
+2026-10-09T00:53:40.6407197Z E             
+2026-10-09T00:53:40.6408392Z E             
+2026-10-09T00:53:40.6409215Z E               Thomas More 學生服務依不同校區提供住宿與交通等學生服務窗口。
+2026-10-09T00:53:40.6409996Z E               查看原始來源
+2026-10-09T00:53:40.6410506Z E             
+2026-10-09T00:53:40.6410974Z E             
+2026-10-09T00:53:40.6411873Z E               Thomas More 交換計畫列出 40 多個英文交換課程與 10 個校區，顯示實際地點取決於交換課程。
+2026-10-09T00:53:40.6412696Z E               查看原始來源
+2026-10-09T00:53:40.6413214Z E             
+2026-10-09T00:53:40.6413679Z E             
+2026-10-09T00:53:40.6414549Z E               Thomas More 入學與導向日 2026/27公布 2026/27 秋、春季迎新日期、校區安排與 夥伴 支援。
+2026-10-09T00:53:40.6415349Z E               查看原始來源
+2026-10-09T00:53:40.6416816Z E             
+2026-10-09T00:53:40.6418005Z E         
+2026-10-09T00:53:40.6418540Z E       "
+2026-10-09T00:53:40.6419024Z E   
+2026-10-09T00:53:40.6419525Z E   Aria snapshot:
+2026-10-09T00:53:40.6420198Z E   - link "跳到主要內容":
+2026-10-09T00:53:40.6420829Z E     - /url: "#main-content"
+2026-10-09T00:53:40.6421595Z E   - complementary "系統功能":
+2026-10-09T00:53:40.6422391Z E     - link "UniWay 首頁":
+2026-10-09T00:53:40.6423034Z E       - /url: "#home"
+2026-10-09T00:53:40.6423659Z E       - strong: UniWay
+2026-10-09T00:53:40.6424401Z E     - navigation "公開探索導覽":
+2026-10-09T00:53:40.6425092Z E       - link "首頁":
+2026-10-09T00:53:40.6425672Z E         - /url: "#home"
+2026-10-09T00:53:40.6426359Z E       - link "學校搜尋":
+2026-10-09T00:53:40.6426986Z E         - /url: "#partners"
+2026-10-09T00:53:40.6427976Z E       - link "論壇":
+2026-10-09T00:53:40.6428981Z E         - /url: "#forum"
+2026-10-09T00:53:40.6429640Z E       - link "用戶評價":
+2026-10-09T00:53:40.6430254Z E         - /url: "#feedback"
+2026-10-09T00:53:40.6431225Z E       - group:
+2026-10-09T00:53:40.6431877Z E         - link "我的申請":
+2026-10-09T00:53:40.6432520Z E           - /url: "#advisor"
+2026-10-09T00:53:40.6433263Z E     - button "返回上一頁": 返回
+2026-10-09T00:53:40.6433915Z E     - button "選擇就讀學校":
+2026-10-09T00:53:40.6434614Z E       - strong: 選擇就讀學校
+2026-10-09T00:53:40.6435324Z E     - button "切換為深色模式"
+2026-10-09T00:53:40.6436007Z E     - button "重新整理最新資料"
+2026-10-09T00:53:40.6438096Z E     - button "登入或建立帳號": 登入
+2026-10-09T00:53:40.6438686Z E   - main:
+2026-10-09T00:53:40.6439189Z E     - status
+2026-10-09T00:53:40.6440219Z E     - region "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences":
+2026-10-09T00:53:40.6441799Z E       - button "加入比較比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences": 加入比較
+2026-10-09T00:53:40.6442865Z E       - button "登入建立計畫"
+2026-10-09T00:53:40.6443876Z E       - img "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences官方照片"
+2026-10-09T00:53:40.6444741Z E       - link "圖片來源":
+2026-10-09T00:53:40.6445428Z E         - /url: https://thomasmore.be/en
+2026-10-09T00:53:40.6446208Z E       - text: 比利時 · 交換學生 下一站
+2026-10-09T00:53:40.6446832Z E       - strong: 比利時
+2026-10-09T00:53:40.6448133Z E       - heading "比利時托馬斯莫爾應用科技大學 Thomas More University of Applied Sciences" [level=1]
+2026-10-09T00:53:40.6449073Z E       - text: 我的資格
+2026-10-09T00:53:40.6449709Z E       - strong: 尚未進行資格初判
+2026-10-09T00:53:40.6450349Z E       - text: 合作校參考時程
+2026-10-09T00:53:40.6451155Z E       - strong: 依當期長庚公告與合作校通知
+2026-10-09T00:53:40.6452243Z E       - text: 語言門檻
+2026-10-09T00:53:40.6453089Z E       - strong: 合作校未明確標示，請開啟官方來源
+2026-10-09T00:53:40.6453793Z E       - text: 生活費參考
+2026-10-09T00:53:40.6456135Z E       - strong: Thomas More 的官方研究估算顯示，單一全日制學位生每月生活費約 EUR 850–1,150，7 個月約 EUR 5,990–8,000，完整學年約 EUR 10,260–13,590；這些數字不含學費與交通，也不是交換生個別預算或價格保證。簽證、國…
+2026-10-09T00:53:40.6457291Z E       - text: 交換名額
+2026-10-09T00:53:40.6458343Z E       - strong: 依當期公告
+2026-10-09T00:53:40.6459048Z E       - text: 研修期間
+2026-10-09T00:53:40.6459740Z E       - strong: 1 學期至 1 學年
+2026-10-09T00:53:40.6460430Z E       - tablist "交換學校詳細資訊":
+2026-10-09T00:53:40.6461152Z E         - tab "快速了解"
+2026-10-09T00:53:40.6461771Z E         - tab "申請方式"
+2026-10-09T00:53:40.6462427Z E         - tab "生活情報" [selected]
+2026-10-09T00:53:40.6463040Z E         - tab "出發前提醒"
+2026-10-09T00:53:40.6463622Z E         - tab "學生心得"
+2026-10-09T00:53:40.6464581Z E         - tab "學生社群"
+2026-10-09T00:53:40.6465145Z E       - tabpanel "生活情報":
+2026-10-09T00:53:40.6465811Z E         - heading "生活情報" [level=2]
+2026-10-09T00:53:40.6466597Z E         - status: 暫無新資料 · 2026/10/09 上午12:53
+2026-10-09T00:53:40.6467268Z E         - button "找學生分享"
+2026-10-09T00:53:40.6468153Z E         - button "更新資料" [disabled]
+2026-10-09T00:53:40.6468777Z E         - group: 資料說明
+2026-10-09T00:53:40.6469342Z E         - group: 官方生活指南
+2026-10-09T00:53:40.6469841Z E         - article:
+2026-10-09T00:53:40.6470463Z E           - heading "住宿與宿舍" [level=3]
+2026-10-09T00:53:40.6471068Z E           - text: 官方
+2026-10-09T00:53:40.6472487Z E           - paragraph: 交換學生透過校方住宿資料庫找房後，仍要自行聯絡房東、確認條件並簽約；校方沒有承諾床位。住宿選項與承辦窗口依 Antwerp、Mechelen、Geel、Turnhout 等實際交換校區而異，不能在課程與校區未定時套用單一城市資訊。
+2026-10-09T00:53:40.6473498Z E           - group: 資料來源
+2026-10-09T00:53:40.6474056Z E           - text: AI 推論
+2026-10-09T00:53:40.6474755Z E           - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+2026-10-09T00:53:40.6475434Z E           - group: 推論依據
+2026-10-09T00:53:40.6476007Z E           - group: 繼續查詢
+2026-10-09T00:53:40.6476498Z E         - article:
+2026-10-09T00:53:40.6477120Z E           - heading "每月生活預算" [level=3]
+2026-10-09T00:53:40.6478002Z E           - text: 官方
+2026-10-09T00:53:40.6479629Z E           - paragraph: Thomas More 的官方研究估算顯示，單一全日制學位生每月生活費約 EUR 850–1,150，7 個月約 EUR 5,990–8,000，完整學年約 EUR 10,260–13,590；這些數字不含學費與交通，也不是交換生個別預算或價格保證。簽證、國際旅費與特定教材還要另計。
+2026-10-09T00:53:40.6480961Z E           - group: 資料來源
+2026-10-09T00:53:40.6481746Z E           - group: 繼續查詢
+2026-10-09T00:53:40.6482501Z E         - article:
+2026-10-09T00:53:40.6483657Z E           - heading "交通與地點" [level=3]
+2026-10-09T00:53:40.6484458Z E           - text: 官方
+2026-10-09T00:53:40.6485931Z E           - paragraph: Thomas More Student Services 依校區提供自行車、到校交通與共乘等協助。官方一般生活費估算明確不含交通，因此實際月票、單車或通勤成本須等交換課程、校區與住宿地址確定後另行核對。
+2026-10-09T00:53:40.6487057Z E           - group: 資料來源
+2026-10-09T00:53:40.6488137Z E           - text: AI 推論
+2026-10-09T00:53:40.6489000Z E           - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+2026-10-09T00:53:40.6489859Z E           - group: 推論依據
+2026-10-09T00:53:40.6490655Z E           - group: 繼續查詢
+2026-10-09T00:53:40.6491383Z E         - article:
+2026-10-09T00:53:40.6492141Z E           - heading "校園活動與社交" [level=3]
+2026-10-09T00:53:40.6493027Z E           - text: 官方 · 機器翻譯
+2026-10-09T00:53:40.6494775Z E           - paragraph: Thomas More 有 40 多個英文交換課程，分布於 10 個校區；實際校園生活依課程與校區不同。2026/27 秋季交換生 新生說明會 天 為 2026-09-14 至 09-18，春季為 2027-02-01 至 02-05，並提供 夥伴 協助適應。
+2026-10-09T00:53:40.6496006Z E           - group: 資料來源
+2026-10-09T00:53:40.6496666Z E           - group: 繼續查詢
+2026-10-09T00:53:40.6498197Z E         - group: 待補資料（6 項）
+2026-10-09T00:53:40.6499404Z E       - complementary "申請準備進度與官方來源":
+2026-10-09T00:53:40.6500440Z E         - heading "我的申請進度" [level=2]
+2026-10-09T00:53:40.6501245Z E         - progressbar "申請準備進度":
+2026-10-09T00:53:40.6502050Z E           - strong: 0 / 5 已完成
+2026-10-09T00:53:40.6502740Z E           - text: 準備中
+2026-10-09T00:53:40.6503692Z E         - paragraph:
+2026-10-09T00:53:40.6504362Z E           - text: 登入以保存進度
+2026-10-09T00:53:40.6505031Z E           - button "登入"
+2026-10-09T00:53:40.6505791Z E         - checkbox "確認資格與語言門檻" [disabled]
+2026-10-09T00:53:40.6506517Z E         - text: 確認資格與語言門檻
+2026-10-09T00:53:40.6507272Z E         - checkbox "比較課程、費用與生活" [disabled]
+2026-10-09T00:53:40.6508321Z E         - text: 比較課程、費用與生活
+2026-10-09T00:53:40.6509093Z E         - checkbox "備妥校內申請文件" [disabled]
+2026-10-09T00:53:40.6509851Z E         - text: 備妥校內申請文件
+2026-10-09T00:53:40.6510590Z E         - checkbox "完成校內甄選送件" [disabled]
+2026-10-09T00:53:40.6511310Z E         - text: 完成校內甄選送件
+2026-10-09T00:53:40.6512035Z E         - checkbox "完成合作校線上申請" [disabled]
+2026-10-09T00:53:40.6512730Z E         - text: 完成合作校線上申請
+2026-10-09T00:53:40.6513363Z E         - strong: 送件前確認
+2026-10-09T00:53:40.6514088Z E         - paragraph: 截止日與資格以當期官方公告為準。
+2026-10-09T00:53:40.6514674Z E   - paragraph:
+2026-10-09T00:53:40.6515716Z E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+2026-10-09T00:53:40.6516659Z E     - button "停用匿名使用統計"
+2026-10-09T00:53:40.6517305Z E     - text: 。
+2026-10-09T00:53:40.6518199Z E     - link "隱私權政策":
+2026-10-09T00:53:40.6518765Z E       - /url: /privacy
+2026-10-09T00:53:40.6519432Z E     - link "使用條款":
+2026-10-09T00:53:40.6519992Z E       - /url: /terms
+2026-10-09T00:53:40.6520376Z 
+2026-10-09T00:53:52.0329463Z tests/e2e/test_web_next_phase.py::test_fifth_destination_batch_does_not_reuse_expired_welcome_dates FAILED [  2%]WEB_CASE tests/e2e/test_web_next_phase.py::test_fifth_destination_batch_does_not_reuse_expired_welcome_dates call failed 11.220s
+2026-10-09T00:53:52.0333106Z tests/e2e/test_web_next_phase.py:569: in test_fifth_destination_batch_does_not_reuse_expired_welcome_dates
+2026-10-09T00:53:52.0334689Z     expect(official).to_contain_text("查看本頁全部查核來源（5）")
+2026-10-09T00:53:52.0335870Z E   AssertionError: Locator expected to contain text '查看本頁全部查核來源（5）'
+2026-10-09T00:53:52.0336682Z E   Actual value: 
+2026-10-09T00:53:52.0337197Z E       
+2026-10-09T00:53:52.0338019Z E         
+2026-10-09T00:53:52.0343870Z E         官方生活資訊已查核已實際讀取 5 個 TH 呂貝克 官方頁面，但尚未完成第二位真人內容審查。2026/27 冬季 學期費用 與生活費估算可確認，住宿不保證；迎新週 頁仍顯示已過的 2026 年 3 月日期，下一梯次迎新日期尚不能確認。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:53:52.0345897Z E       
+2026-10-09T00:53:52.0346405Z E       
+2026-10-09T00:53:52.0352149Z E         所在地呂貝克費用參考TH 呂貝克 現行官方估算為每月生活費約 EUR 900–1,000，其中房租約 EUR 350–500、30 歲以下學生健保約 EUR 120、學生餐廳午餐約 EUR 2.50–5、電話與網路約 EUR 50、其他支出約 EUR 100；不含往返旅費。學校不收學費，但 2026/27 冬季學期 學期費用 為 EUR 394.30 且可能調整，其中包含公共運輸 學期票。住宿Studentenwerk Schleswig-Holstein 在 Lübeck 經營四個宿舍，但校方明示床位不足以供應所有申請者；學生應儘早申請並同步自行找房。租屋時還要確認電力、瓦斯與 Wi-Fi 是否另行辦理，找到住所後須請房東出具居住證明。交通從 Hamburg Airport 搭 S-Bahn 與區域快車到 Lübeck 約 80 分鐘；Lübeck 中央車站／ZOB 可搭 1、9、32 號公車到 Technische Hochschule 站。完成註冊後的 Deutschland-Semesterticket 可用於參與系統的德國境內二等大眾運輸，但不含自行車與狗，且每學期要重新申請。校園生活交換生須先由母校提名，課程依系所及英／德語 B2 要求選擇。迎新週 提供必參加的資訊、德語課程、城市與社交活動，並由 跨文化中心導師 協助；但目前官方頁仍顯示 2026-03-10 至 03-21 的已過日期，下一梯次日期須等校方更新，不能當成未來迎新日。
+2026-10-09T00:53:52.0355722Z E       
+2026-10-09T00:53:52.0356195Z E       
+2026-10-09T00:53:52.0356627Z E       
+2026-10-09T00:53:52.0357087Z E         
+2026-10-09T00:53:52.0357916Z E           交換生生存指南
+2026-10-09T00:53:52.0358406Z E   
+2026-10-09T00:53:52.0358840Z E         
+2026-10-09T00:53:52.0359286Z E         
+2026-10-09T00:53:52.0359733Z E           
+2026-10-09T00:53:52.0360456Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:53:52.0361047Z E             
+2026-10-09T00:53:52.0361513Z E               
+2026-10-09T00:53:52.0362001Z E                 
+2026-10-09T00:53:52.0362884Z E                   
+2026-10-09T00:53:52.0363348Z E                     
+2026-10-09T00:53:52.0363944Z E                     校園
+2026-10-09T00:53:52.0364483Z E                   
+2026-10-09T00:53:52.0383483Z E                   德國呂貝克應用科技大學 Technische Hochschule Lübeck校園
+2026-10-09T00:53:52.0384204Z E                 
+2026-10-09T00:53:52.0384677Z E             
+2026-10-09T00:53:52.0385142Z E           
+2026-10-09T00:53:52.0385533Z E         
+2026-10-09T00:53:52.0385908Z E         
+2026-10-09T00:53:52.0386269Z E         
+2026-10-09T00:53:52.0386646Z E       
+2026-10-09T00:53:52.0386999Z E       
+2026-10-09T00:53:52.0387716Z E         來源（5）
+2026-10-09T00:53:52.0388133Z E         
+2026-10-09T00:53:52.0388494Z E           
+2026-10-09T00:53:52.0388866Z E             
+2026-10-09T00:53:52.0389569Z E               TH Lübeck 交換學習說明合作校提名、交換申請、英／德語 B2 與英文授課課程範圍。
+2026-10-09T00:53:52.0390220Z E               查看原始來源
+2026-10-09T00:53:52.0390654Z E             
+2026-10-09T00:53:52.0391021Z E             
+2026-10-09T00:53:52.0391724Z E               TH Lübeck 費用與規費公布 2026/27 冬季學期 學期費用 與目前每月生活費估算。
+2026-10-09T00:53:52.0392354Z E               查看原始來源
+2026-10-09T00:53:52.0392754Z E             
+2026-10-09T00:53:52.0393115Z E             
+2026-10-09T00:53:52.0393762Z E               TH Lübeck 到達與住宿逐步指南說明提早找房、到校交通、學期票、註冊與居留準備。
+2026-10-09T00:53:52.0394360Z E               查看原始來源
+2026-10-09T00:53:52.0394794Z E             
+2026-10-09T00:53:52.0395164Z E             
+2026-10-09T00:53:52.0395809Z E               TH 呂貝克 住宿列出 Studentenwerk 與私人宿舍入口，明示須自行申請住宿。
+2026-10-09T00:53:52.0396414Z E               查看原始來源
+2026-10-09T00:53:52.0396808Z E             
+2026-10-09T00:53:52.0397175Z E             
+2026-10-09T00:53:52.0398145Z E               呂貝克應用科技大學迎新週說明歡迎週的必參加資訊與導師支援；目前頁面日期仍為 2026 年 3 月。
+2026-10-09T00:53:52.0398884Z E               查看原始來源
+2026-10-09T00:53:52.0399374Z E             
+2026-10-09T00:53:52.0399783Z E         
+2026-10-09T00:53:52.0400211Z E        
+2026-10-09T00:53:52.0400611Z E   Call log:
+2026-10-09T00:53:52.0401246Z E     - Expect "to_contain_text" with timeout 5000ms
+2026-10-09T00:53:52.0402062Z E     - waiting for locator("#destination-official-content")
+2026-10-09T00:53:52.0403765Z E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+2026-10-09T00:53:52.0404972Z E          - unexpected value "
+2026-10-09T00:53:52.0405750Z E       
+2026-10-09T00:53:52.0406149Z E         
+2026-10-09T00:53:52.0409939Z E         官方生活資訊已查核已實際讀取 5 個 TH 呂貝克 官方頁面，但尚未完成第二位真人內容審查。2026/27 冬季 學期費用 與生活費估算可確認，住宿不保證；迎新週 頁仍顯示已過的 2026 年 3 月日期，下一梯次迎新日期尚不能確認。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:53:52.0411099Z E       
+2026-10-09T00:53:52.0411504Z E       
+2026-10-09T00:53:52.0417897Z E         所在地呂貝克費用參考TH 呂貝克 現行官方估算為每月生活費約 EUR 900–1,000，其中房租約 EUR 350–500、30 歲以下學生健保約 EUR 120、學生餐廳午餐約 EUR 2.50–5、電話與網路約 EUR 50、其他支出約 EUR 100；不含往返旅費。學校不收學費，但 2026/27 冬季學期 學期費用 為 EUR 394.30 且可能調整，其中包含公共運輸 學期票。住宿Studentenwerk Schleswig-Holstein 在 Lübeck 經營四個宿舍，但校方明示床位不足以供應所有申請者；學生應儘早申請並同步自行找房。租屋時還要確認電力、瓦斯與 Wi-Fi 是否另行辦理，找到住所後須請房東出具居住證明。交通從 Hamburg Airport 搭 S-Bahn 與區域快車到 Lübeck 約 80 分鐘；Lübeck 中央車站／ZOB 可搭 1、9、32 號公車到 Technische Hochschule 站。完成註冊後的 Deutschland-Semesterticket 可用於參與系統的德國境內二等大眾運輸，但不含自行車與狗，且每學期要重新申請。校園生活交換生須先由母校提名，課程依系所及英／德語 B2 要求選擇。迎新週 提供必參加的資訊、德語課程、城市與社交活動，並由 跨文化中心導師 協助；但目前官方頁仍顯示 2026-03-10 至 03-21 的已過日期，下一梯次日期須等校方更新，不能當成未來迎新日。
+2026-10-09T00:53:52.0421177Z E       
+2026-10-09T00:53:52.0421598Z E       
+2026-10-09T00:53:52.0421966Z E       
+2026-10-09T00:53:52.0422321Z E         
+2026-10-09T00:53:52.0422810Z E           交換生生存指南
+2026-10-09T00:53:52.0423227Z E   
+2026-10-09T00:53:52.0423584Z E         
+2026-10-09T00:53:52.0423950Z E         
+2026-10-09T00:53:52.0424445Z E           
+2026-10-09T00:53:52.0425143Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:53:52.0425725Z E             
+2026-10-09T00:53:52.0426186Z E               
+2026-10-09T00:53:52.0426656Z E                 
+2026-10-09T00:53:52.0427101Z E                   
+2026-10-09T00:53:52.0427847Z E                     
+2026-10-09T00:53:52.0435678Z E                     校園
+2026-10-09T00:53:52.0488504Z E                   
+2026-10-09T00:53:52.0730675Z E                   德國呂貝克應用科技大學 Technische Hochschule Lübeck校園
+2026-10-09T00:53:52.0769080Z E                 
+2026-10-09T00:53:52.0851289Z E             
+2026-10-09T00:53:52.0855264Z E           
+2026-10-09T00:53:52.0860847Z E         
+2026-10-09T00:53:52.0861501Z E         
+2026-10-09T00:53:52.0862434Z E         
+2026-10-09T00:53:52.0864334Z E       
+2026-10-09T00:53:52.0865261Z E       
+2026-10-09T00:53:52.0872068Z E         來源（5）
+2026-10-09T00:53:52.0873735Z E         
+2026-10-09T00:53:52.0874915Z E           
+2026-10-09T00:53:52.0875231Z E             
+2026-10-09T00:53:52.0875989Z E               TH Lübeck 交換學習說明合作校提名、交換申請、英／德語 B2 與英文授課課程範圍。
+2026-10-09T00:53:52.0876566Z E               查看原始來源
+2026-10-09T00:53:52.0876877Z E             
+2026-10-09T00:53:52.0877153Z E             
+2026-10-09T00:53:52.0878013Z E               TH Lübeck 費用與規費公布 2026/27 冬季學期 學期費用 與目前每月生活費估算。
+2026-10-09T00:53:52.0878581Z E               查看原始來源
+2026-10-09T00:53:52.0878934Z E             
+2026-10-09T00:53:52.0880080Z E             
+2026-10-09T00:53:52.0883299Z E               TH Lübeck 到達與住宿逐步指南說明提早找房、到校交通、學期票、註冊與居留準備。
+2026-10-09T00:53:52.0886175Z E               查看原始來源
+2026-10-09T00:53:52.0888065Z E             
+2026-10-09T00:53:52.0896763Z E             
+2026-10-09T00:53:52.0908443Z E               TH 呂貝克 住宿列出 Studentenwerk 與私人宿舍入口，明示須自行申請住宿。
+2026-10-09T00:53:52.0909045Z E               查看原始來源
+2026-10-09T00:53:52.0909374Z E             
+2026-10-09T00:53:52.0909665Z E             
+2026-10-09T00:53:52.0910406Z E               呂貝克應用科技大學迎新週說明歡迎週的必參加資訊與導師支援；目前頁面日期仍為 2026 年 3 月。
+2026-10-09T00:53:52.0911062Z E               查看原始來源
+2026-10-09T00:53:52.0911427Z E             
+2026-10-09T00:53:52.0911717Z E         
+2026-10-09T00:53:52.0911987Z E       "
+2026-10-09T00:53:52.0912250Z E   
+2026-10-09T00:53:52.0912549Z E   Aria snapshot:
+2026-10-09T00:53:52.0913258Z E   - link "跳到主要內容":
+2026-10-09T00:53:52.0913629Z E     - /url: "#main-content"
+2026-10-09T00:53:52.0914111Z E   - complementary "系統功能":
+2026-10-09T00:53:52.0914546Z E     - link "UniWay 首頁":
+2026-10-09T00:53:52.0914909Z E       - /url: "#home"
+2026-10-09T00:53:52.0915262Z E       - strong: UniWay
+2026-10-09T00:53:52.0915699Z E     - navigation "公開探索導覽":
+2026-10-09T00:53:52.0916134Z E       - link "首頁":
+2026-10-09T00:53:52.0916568Z E         - /url: "#home"
+2026-10-09T00:53:52.0917139Z E       - link "學校搜尋":
+2026-10-09T00:53:52.0927910Z E         - /url: "#partners"
+2026-10-09T00:53:52.0928537Z E       - link "論壇":
+2026-10-09T00:53:52.0928972Z E         - /url: "#forum"
+2026-10-09T00:53:52.0929477Z E       - link "用戶評價":
+2026-10-09T00:53:52.0929908Z E         - /url: "#feedback"
+2026-10-09T00:53:52.0930311Z E       - group:
+2026-10-09T00:53:52.0930735Z E         - link "我的申請":
+2026-10-09T00:53:52.0931171Z E           - /url: "#advisor"
+2026-10-09T00:53:52.0931674Z E     - button "返回上一頁": 返回
+2026-10-09T00:53:52.0932176Z E     - button "選擇就讀學校":
+2026-10-09T00:53:52.0932630Z E       - strong: 選擇就讀學校
+2026-10-09T00:53:52.0933103Z E     - button "切換為深色模式"
+2026-10-09T00:53:52.0933566Z E     - button "重新整理最新資料"
+2026-10-09T00:53:52.0934047Z E     - button "登入或建立帳號": 登入
+2026-10-09T00:53:52.0934421Z E   - main:
+2026-10-09T00:53:52.0934724Z E     - status
+2026-10-09T00:53:52.0935395Z E     - region "德國呂貝克應用科技大學 Technische Hochschule Lübeck":
+2026-10-09T00:53:52.0936331Z E       - button "加入比較德國呂貝克應用科技大學 Technische Hochschule Lübeck": 加入比較
+2026-10-09T00:53:52.0937007Z E       - button "登入建立計畫"
+2026-10-09T00:53:52.0937963Z E       - img "德國呂貝克應用科技大學 Technische Hochschule Lübeck官方照片"
+2026-10-09T00:53:52.0938534Z E       - link "圖片來源":
+2026-10-09T00:53:52.0938994Z E         - /url: https://www.th-luebeck.de/
+2026-10-09T00:53:52.0958293Z E       - text: 德國 · 交換學生 下一站
+2026-10-09T00:53:52.0958831Z E       - strong: 德國
+2026-10-09T00:53:52.0959269Z E       - text: 呂貝克
+2026-10-09T00:53:52.0960006Z E       - heading "德國呂貝克應用科技大學 Technische Hochschule Lübeck" [level=1]
+2026-10-09T00:53:52.0960718Z E       - text: 我的資格
+2026-10-09T00:53:52.0961170Z E       - strong: 尚未進行資格初判
+2026-10-09T00:53:52.0961630Z E       - text: 合作校參考時程
+2026-10-09T00:53:52.0962141Z E       - strong: 依當期長庚公告與合作校通知
+2026-10-09T00:53:52.0962609Z E       - text: 語言門檻
+2026-10-09T00:53:52.0963121Z E       - strong: 合作校未明確標示，請開啟官方來源
+2026-10-09T00:53:52.0963907Z E       - text: 生活費參考
+2026-10-09T00:53:52.0965304Z E       - strong: TH 呂貝克 現行官方估算為每月生活費約 EUR 900–1,000，其中房租約 EUR 350–500、30 歲以下學生健保約 EUR 120、學生餐廳午餐約 EUR 2.50–5、電話與網路約 EUR 50、其他支出約 EUR 100；不含往返旅費。學校…
+2026-10-09T00:53:52.0966272Z E       - text: 交換名額
+2026-10-09T00:53:52.0966710Z E       - strong: 依當期公告
+2026-10-09T00:53:52.0967132Z E       - text: 研修期間
+2026-10-09T00:53:52.0968144Z E       - strong: 1 學期至 1 學年
+2026-10-09T00:53:52.0968666Z E       - tablist "交換學校詳細資訊":
+2026-10-09T00:53:52.0969172Z E         - tab "快速了解"
+2026-10-09T00:53:52.0969605Z E         - tab "申請方式"
+2026-10-09T00:53:52.0970125Z E         - tab "生活情報" [selected]
+2026-10-09T00:53:52.0970654Z E         - tab "出發前提醒"
+2026-10-09T00:53:52.0971071Z E         - tab "學生心得"
+2026-10-09T00:53:52.0971461Z E         - tab "學生社群"
+2026-10-09T00:53:52.0971857Z E       - tabpanel "生活情報":
+2026-10-09T00:53:52.0972335Z E         - heading "生活情報" [level=2]
+2026-10-09T00:53:52.0972809Z E         - status: 正在更新資料…
+2026-10-09T00:53:52.0973249Z E         - button "找學生分享"
+2026-10-09T00:53:52.0973743Z E         - button "更新中" [disabled]
+2026-10-09T00:53:52.0974251Z E         - group: 資料說明
+2026-10-09T00:53:52.0974716Z E         - group: 官方生活指南
+2026-10-09T00:53:52.0975144Z E         - article:
+2026-10-09T00:53:52.0975683Z E           - heading "每月生活預算" [level=3]
+2026-10-09T00:53:52.0976265Z E           - text: 官方 · 機器翻譯
+2026-10-09T00:53:52.0978328Z E           - paragraph: TH 呂貝克 現行官方估算為每月生活費約 EUR 900–1,000，其中房租約 EUR 350–500、30 歲以下學生健保約 EUR 120、學生餐廳午餐約 EUR 2.50–5、電話與網路約 EUR 50、其他支出約 EUR 100；不含往返旅費。學校不收學費，但 2026/27 冬季學期 學期費用 為 EUR 394.30 且可能調整，其中包含公共運輸 學期票。
+2026-10-09T00:53:52.0979824Z E           - group: 資料來源
+2026-10-09T00:53:52.0980311Z E           - group: 繼續查詢
+2026-10-09T00:53:52.0980708Z E         - article:
+2026-10-09T00:53:52.0981257Z E           - heading "交通與地點" [level=3]
+2026-10-09T00:53:52.0981767Z E           - text: 官方
+2026-10-09T00:53:52.0983711Z E           - paragraph: 從 Hamburg Airport 搭 S-Bahn 與區域快車到 Lübeck 約 80 分鐘；Lübeck 中央車站／ZOB 可搭 1、9、32 號公車到 Technische Hochschule 站。完成註冊後的 Deutschland-Semesterticket 可用於參與系統的德國境內二等大眾運輸，但不含自行車與狗，且每學期要重新申請。
+2026-10-09T00:53:52.0985100Z E           - group: 資料來源
+2026-10-09T00:53:52.0985574Z E           - text: AI 推論
+2026-10-09T00:53:52.0986202Z E           - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+2026-10-09T00:53:52.0986747Z E           - group: 推論依據
+2026-10-09T00:53:52.0987160Z E           - group: 繼續查詢
+2026-10-09T00:53:52.1015260Z E         - article:
+2026-10-09T00:53:52.1015940Z E           - heading "校園活動與社交" [level=3]
+2026-10-09T00:53:52.1016538Z E           - text: 官方 · 機器翻譯
+2026-10-09T00:53:52.1018259Z E           - paragraph: 交換生須先由母校提名，課程依系所及英／德語 B2 要求選擇。迎新週 提供必參加的資訊、德語課程、城市與社交活動，並由 跨文化中心導師 協助；但目前官方頁仍顯示 2026-03-10 至 03-21 的已過日期，下一梯次日期須等校方更新，不能當成未來迎新日。
+2026-10-09T00:53:52.1019292Z E           - group: 資料來源
+2026-10-09T00:53:52.1019794Z E           - group: 繼續查詢
+2026-10-09T00:53:52.1020309Z E         - group: 待補資料（7 項）
+2026-10-09T00:53:52.1020887Z E       - complementary "申請準備進度與官方來源":
+2026-10-09T00:53:52.1021774Z E         - heading "我的申請進度" [level=2]
+2026-10-09T00:53:52.1022378Z E         - progressbar "申請準備進度":
+2026-10-09T00:53:52.1022961Z E           - strong: 0 / 5 已完成
+2026-10-09T00:53:52.1023403Z E           - text: 準備中
+2026-10-09T00:53:52.1023771Z E         - paragraph:
+2026-10-09T00:53:52.1024258Z E           - text: 登入以保存進度
+2026-10-09T00:53:52.1024737Z E           - button "登入"
+2026-10-09T00:53:52.1025318Z E         - checkbox "確認資格與語言門檻" [disabled]
+2026-10-09T00:53:52.1025839Z E         - text: 確認資格與語言門檻
+2026-10-09T00:53:52.1026418Z E         - checkbox "比較課程、費用與生活" [disabled]
+2026-10-09T00:53:52.1026984Z E         - text: 比較課程、費用與生活
+2026-10-09T00:53:52.1027758Z E         - checkbox "備妥校內申請文件" [disabled]
+2026-10-09T00:53:52.1028265Z E         - text: 備妥校內申請文件
+2026-10-09T00:53:52.1028860Z E         - checkbox "完成校內甄選送件" [disabled]
+2026-10-09T00:53:52.1029423Z E         - text: 完成校內甄選送件
+2026-10-09T00:53:52.1029999Z E         - checkbox "完成合作校線上申請" [disabled]
+2026-10-09T00:53:52.1030510Z E         - text: 完成合作校線上申請
+2026-10-09T00:53:52.1030999Z E         - strong: 送件前確認
+2026-10-09T00:53:52.1031575Z E         - paragraph: 截止日與資格以當期官方公告為準。
+2026-10-09T00:53:52.1032031Z E   - paragraph:
+2026-10-09T00:53:52.1032909Z E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+2026-10-09T00:53:52.1033644Z E     - button "停用匿名使用統計"
+2026-10-09T00:53:52.1034042Z E     - text: 。
+2026-10-09T00:53:52.1034481Z E     - link "隱私權政策":
+2026-10-09T00:53:52.1034865Z E       - /url: /privacy
+2026-10-09T00:53:52.1035307Z E     - link "使用條款":
+2026-10-09T00:53:52.1035690Z E       - /url: /terms
+2026-10-09T00:53:52.1036223Z 
+2026-10-09T00:54:03.2561848Z tests/e2e/test_web_next_phase.py::test_sixth_destination_batch_keeps_stale_dorm_prices_out_of_current_budget FAILED [  2%]WEB_CASE tests/e2e/test_web_next_phase.py::test_sixth_destination_batch_keeps_stale_dorm_prices_out_of_current_budget call failed 11.040s
+2026-10-09T00:54:03.2571160Z tests/e2e/test_web_next_phase.py:588: in test_sixth_destination_batch_keeps_stale_dorm_prices_out_of_current_budget
+2026-10-09T00:54:03.2572384Z     expect(official).to_contain_text("As of 2019")
+2026-10-09T00:54:03.2573550Z E   AssertionError: Locator expected to contain text 'As of 2019'
+2026-10-09T00:54:03.2574391Z E   Actual value: 
+2026-10-09T00:54:03.2574935Z E       
+2026-10-09T00:54:03.2575433Z E         
+2026-10-09T00:54:03.2579386Z E         官方生活資訊已查核已核對 4 個 KNU 官方來源並限定 Chuncheon Campus；交換頁可支持宿舍有保障，但公開宿舍費表仍明示為 2019 年，不能把舊 KRW 金額當現行費用。KNU 有多個校區，實際錄取校區、當期費用、入住與接機日期仍須依長庚提名及 KNU 錄取通知確認，且尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:54:03.2583900Z E       
+2026-10-09T00:54:03.2584423Z E       
+2026-10-09T00:54:03.2589340Z E         所在地春川（依長庚提名與 KNU 錄取確認）費用參考KNU Chuncheon 交換頁說明 KNU 的申請、入學與學費免繳，但學生仍需向原學校依規定繳費，並自行負擔宿舍與生活費。KNU 目前公開的宿舍費頁本身標示「截至 2019 年」，因此頁面上的 KRW 金額不能當作現行交換預算；校方也沒有在這組現行交換頁提供可核對的完整每月生活費總額。住宿KNU Chuncheon 的交換專案頁明示交換生宿舍有保障，但住宿費由學生負擔；一般宿舍頁另說新生第一學期由國際處代辦，之後自行申請與付款。不過該頁所有房型費用標示為 2019 年資料，入住日也要等宿舍公告；FAQ 說通常只能在開學前 3 天入住，提早抵達不能先住。交通Chuncheon 交換頁將首爾往返描述為搭公車或地鐵約 1 小時，並列有仁川機場接機服務；接機安排出現在學期末二月／八月底的流程中。實際接機資格、集合時間與班次必須以該梯次錄取通知確認，不能只按公開概覽自行購票銜接。校園生活這筆資料限定 KNU Chuncheon Campus 的 Student Exchange Program。校方列出 Buddy Program、文化活動與機場接機，但 FAQ 說 Buddy 是學生自願活動，無法處理所有事情或代付費用；獸醫、醫學、護理與法學等系所目前列為交換申請限制。校園地圖可確認國際宿舍與校內設施位置。
+2026-10-09T00:54:03.2592472Z E       
+2026-10-09T00:54:03.2594145Z E       
+2026-10-09T00:54:03.2594599Z E       
+2026-10-09T00:54:03.2595044Z E         
+2026-10-09T00:54:03.2595655Z E           交換生生存指南
+2026-10-09T00:54:03.2596168Z E   
+2026-10-09T00:54:03.2596619Z E         
+2026-10-09T00:54:03.2597082Z E         
+2026-10-09T00:54:03.2598112Z E           
+2026-10-09T00:54:03.2598914Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:54:03.2599522Z E             
+2026-10-09T00:54:03.2600001Z E               
+2026-10-09T00:54:03.2600516Z E                 
+2026-10-09T00:54:03.2601178Z E                   
+2026-10-09T00:54:03.2601669Z E                     
+2026-10-09T00:54:03.2602243Z E                     校園
+2026-10-09T00:54:03.2602808Z E                   
+2026-10-09T00:54:03.2603552Z E                   韓國江原國立大學 Kangwon National University校園
+2026-10-09T00:54:03.2604175Z E                 
+2026-10-09T00:54:03.2604629Z E             
+2026-10-09T00:54:03.2605153Z E           
+2026-10-09T00:54:03.2605629Z E         
+2026-10-09T00:54:03.2606099Z E         
+2026-10-09T00:54:03.2606566Z E         
+2026-10-09T00:54:03.2607022Z E       
+2026-10-09T00:54:03.2607668Z E       
+2026-10-09T00:54:03.2608192Z E         來源（4）
+2026-10-09T00:54:03.2608633Z E         
+2026-10-09T00:54:03.2609047Z E           
+2026-10-09T00:54:03.2609469Z E             
+2026-10-09T00:54:03.2610336Z E               KNU 學生交換計畫 – 春川校區確認姊妹校提名、Chuncheon 交換流程、免 KNU 學費、宿舍保障、交通支援與系所限制。
+2026-10-09T00:54:03.2611086Z E               查看原始來源
+2026-10-09T00:54:03.2611561Z E             
+2026-10-09T00:54:03.2611988Z E             
+2026-10-09T00:54:03.2612827Z E               KNU 學生宿舍 – Chuncheon 校區列出宿舍房型與申請方式，但費用表明確標示為 2019 年資料，不能作為現行價格。
+2026-10-09T00:54:03.2613588Z E               查看原始來源
+2026-10-09T00:54:03.2614036Z E             
+2026-10-09T00:54:03.2614445Z E             
+2026-10-09T00:54:03.2615183Z E               KNU 國際學生常見問題說明 Buddy 的自願性與限制，以及宿舍入住日期須待公告且不能提前入住。
+2026-10-09T00:54:03.2615862Z E               查看原始來源
+2026-10-09T00:54:03.2616311Z E             
+2026-10-09T00:54:03.2616725Z E             
+2026-10-09T00:54:03.2617614Z E               KNU 校園地圖 – 春川確認 Chuncheon 校區及國際宿舍、學習與生活設施的位置。
+2026-10-09T00:54:03.2618390Z E               查看原始來源
+2026-10-09T00:54:03.2619669Z E             
+2026-10-09T00:54:03.2620162Z E         
+2026-10-09T00:54:03.2620610Z E        
+2026-10-09T00:54:03.2621088Z E   Call log:
+2026-10-09T00:54:03.2621743Z E     - Expect "to_contain_text" with timeout 5000ms
+2026-10-09T00:54:03.2622675Z E     - waiting for locator("#destination-official-content")
+2026-10-09T00:54:03.2625510Z E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+2026-10-09T00:54:03.2627328Z E          - unexpected value "
+2026-10-09T00:54:03.2632042Z E       
+2026-10-09T00:54:03.2632572Z E         
+2026-10-09T00:54:03.2634783Z E         官方生活資訊已查核已核對 4 個 KNU 官方來源並限定 Chuncheon Campus；交換頁可支持宿舍有保障，但公開宿舍費表仍明示為 2019 年，不能把舊 KRW 金額當現行費用。KNU 有多個校區，實際錄取校區、當期費用、入住與接機日期仍須依長庚提名及 KNU 錄取通知確認，且尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:54:03.2636833Z E       
+2026-10-09T00:54:03.2637301Z E       
+2026-10-09T00:54:03.2642264Z E         所在地春川（依長庚提名與 KNU 錄取確認）費用參考KNU Chuncheon 交換頁說明 KNU 的申請、入學與學費免繳，但學生仍需向原學校依規定繳費，並自行負擔宿舍與生活費。KNU 目前公開的宿舍費頁本身標示「截至 2019 年」，因此頁面上的 KRW 金額不能當作現行交換預算；校方也沒有在這組現行交換頁提供可核對的完整每月生活費總額。住宿KNU Chuncheon 的交換專案頁明示交換生宿舍有保障，但住宿費由學生負擔；一般宿舍頁另說新生第一學期由國際處代辦，之後自行申請與付款。不過該頁所有房型費用標示為 2019 年資料，入住日也要等宿舍公告；FAQ 說通常只能在開學前 3 天入住，提早抵達不能先住。交通Chuncheon 交換頁將首爾往返描述為搭公車或地鐵約 1 小時，並列有仁川機場接機服務；接機安排出現在學期末二月／八月底的流程中。實際接機資格、集合時間與班次必須以該梯次錄取通知確認，不能只按公開概覽自行購票銜接。校園生活這筆資料限定 KNU Chuncheon Campus 的 Student Exchange Program。校方列出 Buddy Program、文化活動與機場接機，但 FAQ 說 Buddy 是學生自願活動，無法處理所有事情或代付費用；獸醫、醫學、護理與法學等系所目前列為交換申請限制。校園地圖可確認國際宿舍與校內設施位置。
+2026-10-09T00:54:03.2645308Z E       
+2026-10-09T00:54:03.2646041Z E       
+2026-10-09T00:54:03.2646522Z E       
+2026-10-09T00:54:03.2647394Z E         
+2026-10-09T00:54:03.2648307Z E           交換生生存指南
+2026-10-09T00:54:03.2648852Z E   
+2026-10-09T00:54:03.2649333Z E         
+2026-10-09T00:54:03.2649904Z E         
+2026-10-09T00:54:03.2650404Z E           
+2026-10-09T00:54:03.2651479Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:54:03.2652115Z E             
+2026-10-09T00:54:03.2652591Z E               
+2026-10-09T00:54:03.2654355Z E                 
+2026-10-09T00:54:03.2654944Z E                   
+2026-10-09T00:54:03.2655466Z E                     
+2026-10-09T00:54:03.2656540Z E                     校園
+2026-10-09T00:54:03.2657329Z E                   
+2026-10-09T00:54:03.2659318Z E                   韓國江原國立大學 Kangwon National University校園
+2026-10-09T00:54:03.2660424Z E                 
+2026-10-09T00:54:03.2668561Z E             
+2026-10-09T00:54:03.2669103Z E           
+2026-10-09T00:54:03.2669576Z E         
+2026-10-09T00:54:03.2670110Z E         
+2026-10-09T00:54:03.2670582Z E         
+2026-10-09T00:54:03.2671042Z E       
+2026-10-09T00:54:03.2671531Z E       
+2026-10-09T00:54:03.2672168Z E         來源（4）
+2026-10-09T00:54:03.2672870Z E         
+2026-10-09T00:54:03.2673483Z E           
+2026-10-09T00:54:03.2674145Z E             
+2026-10-09T00:54:03.2675497Z E               KNU 學生交換計畫 – 春川校區確認姊妹校提名、Chuncheon 交換流程、免 KNU 學費、宿舍保障、交通支援與系所限制。
+2026-10-09T00:54:03.2676656Z E               查看原始來源
+2026-10-09T00:54:03.2677257Z E             
+2026-10-09T00:54:03.2678269Z E             
+2026-10-09T00:54:03.2679371Z E               KNU 學生宿舍 – Chuncheon 校區列出宿舍房型與申請方式，但費用表明確標示為 2019 年資料，不能作為現行價格。
+2026-10-09T00:54:03.2698558Z E               查看原始來源
+2026-10-09T00:54:03.2700735Z E             
+2026-10-09T00:54:03.2701504Z E             
+2026-10-09T00:54:03.2702714Z E               KNU 國際學生常見問題說明 Buddy 的自願性與限制，以及宿舍入住日期須待公告且不能提前入住。
+2026-10-09T00:54:03.2703822Z E               查看原始來源
+2026-10-09T00:54:03.2704561Z E             
+2026-10-09T00:54:03.2705276Z E             
+2026-10-09T00:54:03.2706425Z E               KNU 校園地圖 – 春川確認 Chuncheon 校區及國際宿舍、學習與生活設施的位置。
+2026-10-09T00:54:03.2707749Z E               查看原始來源
+2026-10-09T00:54:03.2708398Z E             
+2026-10-09T00:54:03.2712134Z E         
+2026-10-09T00:54:03.2712641Z E       "
+2026-10-09T00:54:03.2713090Z E   
+2026-10-09T00:54:03.2713573Z E   Aria snapshot:
+2026-10-09T00:54:03.2714202Z E   - link "跳到主要內容":
+2026-10-09T00:54:03.2714765Z E     - /url: "#main-content"
+2026-10-09T00:54:03.2715417Z E   - complementary "系統功能":
+2026-10-09T00:54:03.2716402Z E     - link "UniWay 首頁":
+2026-10-09T00:54:03.2716962Z E       - /url: "#home"
+2026-10-09T00:54:03.2717770Z E       - strong: UniWay
+2026-10-09T00:54:03.2718667Z E     - navigation "公開探索導覽":
+2026-10-09T00:54:03.2719479Z E       - link "首頁":
+2026-10-09T00:54:03.2720195Z E         - /url: "#home"
+2026-10-09T00:54:03.2721046Z E       - link "學校搜尋":
+2026-10-09T00:54:03.2721702Z E         - /url: "#partners"
+2026-10-09T00:54:03.2722523Z E       - link "論壇":
+2026-10-09T00:54:03.2723266Z E         - /url: "#forum"
+2026-10-09T00:54:03.2724102Z E       - link "用戶評價":
+2026-10-09T00:54:03.2724848Z E         - /url: "#feedback"
+2026-10-09T00:54:03.2725573Z E       - group:
+2026-10-09T00:54:03.2726318Z E         - link "我的申請":
+2026-10-09T00:54:03.2727085Z E           - /url: "#advisor"
+2026-10-09T00:54:03.2728424Z E     - button "返回上一頁": 返回
+2026-10-09T00:54:03.2729221Z E     - button "選擇就讀學校":
+2026-10-09T00:54:03.2729976Z E       - strong: 選擇就讀學校
+2026-10-09T00:54:03.2730680Z E     - button "切換為深色模式"
+2026-10-09T00:54:03.2731404Z E     - button "重新整理最新資料"
+2026-10-09T00:54:03.2732398Z E     - button "登入或建立帳號": 登入
+2026-10-09T00:54:03.2733915Z E   - main:
+2026-10-09T00:54:03.2734490Z E     - status
+2026-10-09T00:54:03.2735405Z E     - region "韓國江原國立大學 Kangwon National University":
+2026-10-09T00:54:03.2736558Z E       - button "加入比較韓國江原國立大學 Kangwon National University": 加入比較
+2026-10-09T00:54:03.2737795Z E       - button "登入建立計畫"
+2026-10-09T00:54:03.2738762Z E       - img "韓國江原國立大學 Kangwon National University官方照片"
+2026-10-09T00:54:03.2739609Z E       - link "圖片來源":
+2026-10-09T00:54:03.2740439Z E         - /url: https://global.kangwon.ac.kr/global/index.do
+2026-10-09T00:54:03.2741327Z E       - text: 韓國 · 交換學生 下一站
+2026-10-09T00:54:03.2742043Z E       - strong: 韓國
+2026-10-09T00:54:03.2742854Z E       - text: 春川（依長庚提名與 KNU 錄取確認）
+2026-10-09T00:54:03.2743932Z E       - heading "韓國江原國立大學 Kangwon National University" [level=1]
+2026-10-09T00:54:03.2744848Z E       - text: 我的資格
+2026-10-09T00:54:03.2745588Z E       - strong: 尚未進行資格初判
+2026-10-09T00:54:03.2746341Z E       - text: 合作校參考時程
+2026-10-09T00:54:03.2747172Z E       - strong: 依當期長庚公告與 KNU 通知
+2026-10-09T00:54:03.2748253Z E       - text: 語言門檻
+2026-10-09T00:54:03.2749111Z E       - strong: 合作校未明確標示，請開啟官方來源
+2026-10-09T00:54:03.2749897Z E       - text: 生活費參考
+2026-10-09T00:54:03.2751641Z E       - strong: KNU Chuncheon 交換頁說明 KNU 的申請、入學與學費免繳，但學生仍需向原學校依規定繳費，並自行負擔宿舍與生活費。KNU 目前公開的宿舍費頁本身標示「截至 2019 年」，因此頁面上的 KRW 金額不能當作現行交換預算；校方也沒有在這組現行交換頁…
+2026-10-09T00:54:03.2753256Z E       - text: 交換名額
+2026-10-09T00:54:03.2753904Z E       - strong: 依當期公告
+2026-10-09T00:54:03.2754496Z E       - text: 研修期間
+2026-10-09T00:54:03.2755089Z E       - strong: 1 學期至 1 學年
+2026-10-09T00:54:03.2755717Z E       - tablist "交換學校詳細資訊":
+2026-10-09T00:54:03.2756335Z E         - tab "快速了解"
+2026-10-09T00:54:03.2757023Z E         - tab "申請方式"
+2026-10-09T00:54:03.2757951Z E         - tab "生活情報" [selected]
+2026-10-09T00:54:03.2758607Z E         - tab "出發前提醒"
+2026-10-09T00:54:03.2759178Z E         - tab "學生心得"
+2026-10-09T00:54:03.2759795Z E         - tab "學生社群"
+2026-10-09T00:54:03.2760374Z E       - tabpanel "生活情報":
+2026-10-09T00:54:03.2761057Z E         - heading "生活情報" [level=2]
+2026-10-09T00:54:03.2761711Z E         - status: 待更新
+2026-10-09T00:54:03.2762310Z E         - button "找學生分享"
+2026-10-09T00:54:03.2762906Z E         - button "更新資料"
+2026-10-09T00:54:03.2763463Z E         - group: 資料說明
+2026-10-09T00:54:03.2764058Z E         - group: 官方生活指南
+2026-10-09T00:54:03.2764561Z E         - article:
+2026-10-09T00:54:03.2765212Z E           - heading "住宿與宿舍" [level=3]
+2026-10-09T00:54:03.2765861Z E           - text: 官方
+2026-10-09T00:54:03.2767572Z E           - paragraph: KNU Chuncheon 的交換專案頁明示交換生宿舍有保障，但住宿費由學生負擔；一般宿舍頁另說新生第一學期由國際處代辦，之後自行申請與付款。不過該頁所有房型費用標示為 2019 年資料，入住日也要等宿舍公告；FAQ 說通常只能在開學前 3 天入住，提早抵達不能先住。
+2026-10-09T00:54:03.2768805Z E           - group: 資料來源
+2026-10-09T00:54:03.2769503Z E           - text: AI 推論
+2026-10-09T00:54:03.2770379Z E           - paragraph: 先確認交換生住宿資格，再把交通與餐食納入預算。
+2026-10-09T00:54:03.2788084Z E           - group: 推論依據
+2026-10-09T00:54:03.2788671Z E           - group: 繼續查詢
+2026-10-09T00:54:03.2789092Z E         - article:
+2026-10-09T00:54:03.2789655Z E           - heading "每月生活預算" [level=3]
+2026-10-09T00:54:03.2790224Z E           - text: 官方 · 機器翻譯
+2026-10-09T00:54:03.2791804Z E           - paragraph: KNU Chuncheon 交換頁說明 KNU 的申請、入學與學費免繳，但學生仍需向原學校依規定繳費，並自行負擔宿舍與生活費。KNU 目前公開的宿舍費頁本身標示「截至 2019 年」，因此頁面上的 KRW 金額不能當作現行交換預算；校方也沒有在這組現行交換頁提供可核對的完整每月生活費總額。
+2026-10-09T00:54:03.2792888Z E           - group: 資料來源
+2026-10-09T00:54:03.2793347Z E           - group: 繼續查詢
+2026-10-09T00:54:03.2793723Z E         - article:
+2026-10-09T00:54:03.2794240Z E           - heading "交通與地點" [level=3]
+2026-10-09T00:54:03.2794732Z E           - text: 官方
+2026-10-09T00:54:03.2795965Z E           - paragraph: Chuncheon 交換頁將首爾往返描述為搭公車或地鐵約 1 小時，並列有仁川機場接機服務；接機安排出現在學期末二月／八月底的流程中。實際接機資格、集合時間與班次必須以該梯次錄取通知確認，不能只按公開概覽自行購票銜接。
+2026-10-09T00:54:03.2796825Z E           - group: 資料來源
+2026-10-09T00:54:03.2797271Z E           - text: AI 推論
+2026-10-09T00:54:03.2812863Z E           - paragraph: 可比較住宿到上述站點的路線，評估通勤選擇。
+2026-10-09T00:54:03.2813441Z E           - group: 推論依據
+2026-10-09T00:54:03.2813881Z E           - group: 繼續查詢
+2026-10-09T00:54:03.2814246Z E         - article:
+2026-10-09T00:54:03.2814769Z E           - heading "校園活動與社交" [level=3]
+2026-10-09T00:54:03.2815244Z E           - text: 官方
+2026-10-09T00:54:03.2817169Z E           - paragraph: 這筆資料限定 KNU Chuncheon Campus 的 Student Exchange Program。校方列出 Buddy Program、文化活動與機場接機，但 FAQ 說 Buddy 是學生自願活動，無法處理所有事情或代付費用；獸醫、醫學、護理與法學等系所目前列為交換申請限制。校園地圖可確認國際宿舍與校內設施位置。
+2026-10-09T00:54:03.2850253Z E           - group: 資料來源
+2026-10-09T00:54:03.2850873Z E           - group: 繼續查詢
+2026-10-09T00:54:03.2851377Z E         - group: 待補資料（6 項）
+2026-10-09T00:54:03.2851956Z E       - complementary "申請準備進度與官方來源":
+2026-10-09T00:54:03.2852566Z E         - heading "我的申請進度" [level=2]
+2026-10-09T00:54:03.2853094Z E         - progressbar "申請準備進度":
+2026-10-09T00:54:03.2853592Z E           - strong: 0 / 5 已完成
+2026-10-09T00:54:03.2854285Z E           - text: 準備中
+2026-10-09T00:54:03.2854637Z E         - paragraph:
+2026-10-09T00:54:03.2855087Z E           - text: 登入以保存進度
+2026-10-09T00:54:03.2855544Z E           - button "登入"
+2026-10-09T00:54:03.2856096Z E         - checkbox "確認資格與語言門檻" [disabled]
+2026-10-09T00:54:03.2856631Z E         - text: 確認資格與語言門檻
+2026-10-09T00:54:03.2857210Z E         - checkbox "比較課程、費用與生活" [disabled]
+2026-10-09T00:54:03.2858104Z E         - text: 比較課程、費用與生活
+2026-10-09T00:54:03.2858678Z E         - checkbox "備妥校內申請文件" [disabled]
+2026-10-09T00:54:03.2859207Z E         - text: 備妥校內申請文件
+2026-10-09T00:54:03.2859733Z E         - checkbox "完成校內甄選送件" [disabled]
+2026-10-09T00:54:03.2860201Z E         - text: 完成校內甄選送件
+2026-10-09T00:54:03.2860708Z E         - checkbox "完成合作校線上申請" [disabled]
+2026-10-09T00:54:03.2861191Z E         - text: 完成合作校線上申請
+2026-10-09T00:54:03.2861597Z E         - strong: 送件前確認
+2026-10-09T00:54:03.2862139Z E         - paragraph: 截止日與資格以當期官方公告為準。
+2026-10-09T00:54:03.2862571Z E   - paragraph:
+2026-10-09T00:54:03.2863460Z E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+2026-10-09T00:54:03.2864164Z E     - button "停用匿名使用統計"
+2026-10-09T00:54:03.2864547Z E     - text: 。
+2026-10-09T00:54:03.2864951Z E     - link "隱私權政策":
+2026-10-09T00:54:03.2865328Z E       - /url: /privacy
+2026-10-09T00:54:03.2865768Z E     - link "使用條款":
+2026-10-09T00:54:03.2866128Z E       - /url: /terms
+2026-10-09T00:54:03.2866321Z 
+2026-10-09T00:54:14.4456445Z tests/e2e/test_web_next_phase.py::test_seventh_destination_batch_does_not_apply_paris_budget_to_every_campus FAILED [  2%]WEB_CASE tests/e2e/test_web_next_phase.py::test_seventh_destination_batch_does_not_apply_paris_budget_to_every_campus call failed 11.003s
+2026-10-09T00:54:14.4467224Z tests/e2e/test_web_next_phase.py:613: in test_seventh_destination_batch_does_not_apply_paris_budget_to_every_campus
+2026-10-09T00:54:14.4469242Z     expect(official).to_contain_text("查看本頁全部查核來源（3）")
+2026-10-09T00:54:14.4472539Z E   AssertionError: Locator expected to contain text '查看本頁全部查核來源（3）'
+2026-10-09T00:54:14.4473335Z E   Actual value: 
+2026-10-09T00:54:14.4473688Z E       
+2026-10-09T00:54:14.4474002Z E         
+2026-10-09T00:54:14.4476667Z E         官方生活資訊已查核已核對 3 個 SKEMA 官方來源並以 2026–2027 交換資訊表 為核心。長庚名單把合作校列在法國，但 SKEMA 有多個國際校區；本資料只描述 里勒、Grand Paris 與 Sophia Antipolis，學生必須等錄取確認實際法國校區。Grand Paris 的 EUR 900–1,800 月預算不能套到其他校區，住宿 入口網站 也不代表保證住宿；實際 學程、校區、費用與日期仍須依提名／錄取通知確認，且尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:54:14.4478973Z E       
+2026-10-09T00:54:14.4479286Z E       
+2026-10-09T00:54:14.4484804Z E         所在地法國校區待確認：里爾／大巴黎／索菲亞安蒂波利斯費用參考SKEMA 2026–2027 fact sheet 說法國校區住宿通常平均約 EUR 650–1,000／月，但沒有提供三個法國校區共通的完整生活費總額。校方 2026 年 Grand Paris 預算頁估計國際學生每月約 EUR 900–1,800，第一個月還可能因押金、仲介與交通設定多支出 EUR 1,000–2,000；這些數字只適合已確認 Grand Paris／Suresnes 的學生，不能套到 Lille 或 Sophia Antipolis。住宿SKEMA 2026–2027 交換資訊表 明示三個法國校區都沒有校內住宿，只與校區周邊部分 住所 合作並提供 住宿 入口網站 協助。EUR 650–1,000 是一般平均，不是床位或租金保證；學生必須先確認錄取校區，再依該城市準備押金、保證人與替代房源。交通交通方式依校區不同：Sophia Antipolis 多由 Nice 機場轉乘並以公車往返，Lille 校區位於 Lille Flandres／Lille Europe 車站附近，Grand Paris／Suresnes 則可使用 T2 電車、L 線火車或指定公車。未確認錄取校區前，不能把其中任一路線或票價當成個人抵達指示。校園生活SKEMA 2026–2027 交換資訊表 列秋季提名約四月底、申請約五月中，春季提名約九月中、申請約十月初；交換申請在線上完成。交換生須依 計畫 與校區選課，常規交換 的語言門檻另有 TOEFL、IELTS、Duolingo 等標準；新生說明會 天 會說明課表、學生證、校園與居留等事項。
+2026-10-09T00:54:14.4501535Z E       
+2026-10-09T00:54:14.4501873Z E       
+2026-10-09T00:54:14.4502237Z E       
+2026-10-09T00:54:14.4502531Z E         
+2026-10-09T00:54:14.4502994Z E           交換生生存指南
+2026-10-09T00:54:14.4503333Z E   
+2026-10-09T00:54:14.4503598Z E         
+2026-10-09T00:54:14.4503890Z E         
+2026-10-09T00:54:14.4504206Z E           
+2026-10-09T00:54:14.4504795Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:54:14.4505684Z E             
+2026-10-09T00:54:14.4506026Z E               
+2026-10-09T00:54:14.4506369Z E                 
+2026-10-09T00:54:14.4506732Z E                   
+2026-10-09T00:54:14.4507096Z E                     
+2026-10-09T00:54:14.4507809Z E                     校園
+2026-10-09T00:54:14.4510094Z E                   
+2026-10-09T00:54:14.4510764Z E                   歐洲知識經濟與管理學院 Skema Business School校園
+2026-10-09T00:54:14.4511250Z E                 
+2026-10-09T00:54:14.4511564Z E             
+2026-10-09T00:54:14.4521066Z E           
+2026-10-09T00:54:14.4521492Z E         
+2026-10-09T00:54:14.4521816Z E         
+2026-10-09T00:54:14.4522404Z E         
+2026-10-09T00:54:14.4522706Z E       
+2026-10-09T00:54:14.4523006Z E       
+2026-10-09T00:54:14.4523409Z E         來源（3）
+2026-10-09T00:54:14.4523751Z E         
+2026-10-09T00:54:14.4524052Z E           
+2026-10-09T00:54:14.4524355Z E             
+2026-10-09T00:54:14.4524974Z E               SKEMA 交換學生確認 SKEMA 交換生入口、校園生活與錄取後平台支援。
+2026-10-09T00:54:14.4525558Z E               查看原始來源
+2026-10-09T00:54:14.4525918Z E             
+2026-10-09T00:54:14.4526239Z E             
+2026-10-09T00:54:14.4527079Z E               SKEMA 2026–2027 交換學生交換資訊表提供 2026–2027 提名／申請時程、語言要求、法國三校區住宿、交通與校園差異。
+2026-10-09T00:54:14.4588270Z E               查看原始來源
+2026-10-09T00:54:14.4588670Z E             
+2026-10-09T00:54:14.4588983Z E             
+2026-10-09T00:54:14.4589989Z E               SKEMA 學生在巴黎大都會區的預算 2026提供 2026 年 Grand Paris 月預算與首月搬入成本估算；不適用 Lille 或 Sophia Antipolis。
+2026-10-09T00:54:14.4590794Z E               查看原始來源
+2026-10-09T00:54:14.4591133Z E             
+2026-10-09T00:54:14.4591438Z E         
+2026-10-09T00:54:14.4591750Z E        
+2026-10-09T00:54:14.4592042Z E   Call log:
+2026-10-09T00:54:14.4592541Z E     - Expect "to_contain_text" with timeout 5000ms
+2026-10-09T00:54:14.4593235Z E     - waiting for locator("#destination-official-content")
+2026-10-09T00:54:14.4594658Z E       13 × locator resolved to <div aria-busy="false" aria-live="polite" class="destination-official" id="destination-official-content">…</div>
+2026-10-09T00:54:14.4595742Z E          - unexpected value "
+2026-10-09T00:54:14.4596134Z E       
+2026-10-09T00:54:14.4596426Z E         
+2026-10-09T00:54:14.4599528Z E         官方生活資訊已查核已核對 3 個 SKEMA 官方來源並以 2026–2027 交換資訊表 為核心。長庚名單把合作校列在法國，但 SKEMA 有多個國際校區；本資料只描述 里勒、Grand Paris 與 Sophia Antipolis，學生必須等錄取確認實際法國校區。Grand Paris 的 EUR 900–1,800 月預算不能套到其他校區，住宿 入口網站 也不代表保證住宿；實際 學程、校區、費用與日期仍須依提名／錄取通知確認，且尚未完成第二位真人內容審查。；已由兩位不同內容審查者逐一核對全部官方來源與內容區塊，並由內容負責人確認升級；仍請以最新官方公告為準。最後查核：2026/08/12 下午04:00
+2026-10-09T00:54:14.4601863Z E       
+2026-10-09T00:54:14.4602202Z E       
+2026-10-09T00:54:14.4616966Z E         所在地法國校區待確認：里爾／大巴黎／索菲亞安蒂波利斯費用參考SKEMA 2026–2027 fact sheet 說法國校區住宿通常平均約 EUR 650–1,000／月，但沒有提供三個法國校區共通的完整生活費總額。校方 2026 年 Grand Paris 預算頁估計國際學生每月約 EUR 900–1,800，第一個月還可能因押金、仲介與交通設定多支出 EUR 1,000–2,000；這些數字只適合已確認 Grand Paris／Suresnes 的學生，不能套到 Lille 或 Sophia Antipolis。住宿SKEMA 2026–2027 交換資訊表 明示三個法國校區都沒有校內住宿，只與校區周邊部分 住所 合作並提供 住宿 入口網站 協助。EUR 650–1,000 是一般平均，不是床位或租金保證；學生必須先確認錄取校區，再依該城市準備押金、保證人與替代房源。交通交通方式依校區不同：Sophia Antipolis 多由 Nice 機場轉乘並以公車往返，Lille 校區位於 Lille Flandres／Lille Europe 車站附近，Grand Paris／Suresnes 則可使用 T2 電車、L 線火車或指定公車。未確認錄取校區前，不能把其中任一路線或票價當成個人抵達指示。校園生活SKEMA 2026–2027 交換資訊表 列秋季提名約四月底、申請約五月中，春季提名約九月中、申請約十月初；交換申請在線上完成。交換生須依 計畫 與校區選課，常規交換 的語言門檻另有 TOEFL、IELTS、Duolingo 等標準；新生說明會 天 會說明課表、學生證、校園與居留等事項。
+2026-10-09T00:54:14.4628943Z E       
+2026-10-09T00:54:14.4629304Z E       
+2026-10-09T00:54:14.4629621Z E       
+2026-10-09T00:54:14.4629971Z E         
+2026-10-09T00:54:14.4630500Z E           交換生生存指南
+2026-10-09T00:54:14.4630862Z E   
+2026-10-09T00:54:14.4631177Z E         
+2026-10-09T00:54:14.4631478Z E         
+2026-10-09T00:54:14.4632047Z E           
+2026-10-09T00:54:14.4632604Z E             校園照片1 張已附來源校園照片 · 住宿照片待校方公開
+2026-10-09T00:54:14.4633035Z E             
+2026-10-09T00:54:14.4633345Z E               
+2026-10-09T00:54:14.4633675Z E                 
+2026-10-09T00:54:14.4634008Z E                   
+2026-10-09T00:54:14.4634328Z E                     
+2026-10-09T00:54:14.4634723Z E                     校園
+2026-10-09T00:54:14.4635056Z E                   
+2026-10-09T00:54:14.4635645Z E                   歐洲知識經濟與管理學院 Skema Business School校園
+2026-10-09T00:54:14.4636135Z E                 
+2026-10-09T00:54:14.4636454Z E             
+2026-10-09T00:54:14.4636778Z E           
+2026-10-09T00:54:14.4637071Z E         
+2026-10-09T00:54:14.4637354Z E         
+2026-10-09T00:54:14.4638151Z E         
+2026-10-09T00:54:14.4638475Z E       
+2026-10-09T00:54:14.4638787Z E       
+2026-10-09T00:54:14.4639166Z E         來源（3）
+2026-10-09T00:54:14.4639478Z E         
+2026-10-09T00:54:14.4639807Z E           
+2026-10-09T00:54:14.4640130Z E             
+2026-10-09T00:54:14.4640807Z E               SKEMA 交換學生確認 SKEMA 交換生入口、校園生活與錄取後平台支援。
+2026-10-09T00:54:14.4641449Z E               查看原始來源
+2026-10-09T00:54:14.4641796Z E             
+2026-10-09T00:54:14.4642366Z E             
+2026-10-09T00:54:14.4643202Z E               SKEMA 2026–2027 交換學生交換資訊表提供 2026–2027 提名／申請時程、語言要求、法國三校區住宿、交通與校園差異。
+2026-10-09T00:54:14.4643833Z E               查看原始來源
+2026-10-09T00:54:14.4644141Z E             
+2026-10-09T00:54:14.4644414Z E             
+2026-10-09T00:54:14.4645297Z E               SKEMA 學生在巴黎大都會區的預算 2026提供 2026 年 Grand Paris 月預算與首月搬入成本估算；不適用 Lille 或 Sophia Antipolis。
+2026-10-09T00:54:14.4646315Z E               查看原始來源
+2026-10-09T00:54:14.4646662Z E             
+2026-10-09T00:54:14.4646942Z E         
+2026-10-09T00:54:14.4647210Z E       "
+2026-10-09T00:54:14.4647720Z E   
+2026-10-09T00:54:14.4648079Z E   Aria snapshot:
+2026-10-09T00:54:14.4648567Z E   - link "跳到主要內容":
+2026-10-09T00:54:14.4652569Z E     - /url: "#main-content"
+2026-10-09T00:54:14.4653223Z E   - complementary "系統功能":
+2026-10-09T00:54:14.4653793Z E     - link "UniWay 首頁":
+2026-10-09T00:54:14.4654238Z E       - /url: "#home"
+2026-10-09T00:54:14.4654627Z E       - strong: UniWay
+2026-10-09T00:54:14.4655112Z E     - navigation "公開探索導覽":
+2026-10-09T00:54:14.4655538Z E       - link "首頁":
+2026-10-09T00:54:14.4655884Z E         - /url: "#home"
+2026-10-09T00:54:14.4656296Z E       - link "學校搜尋":
+2026-10-09T00:54:14.4656662Z E         - /url: "#partners"
+2026-10-09T00:54:14.4657089Z E       - link "論壇":
+2026-10-09T00:54:14.4666786Z E         - /url: "#forum"
+2026-10-09T00:54:14.4667753Z E       - link "用戶評價":
+2026-10-09T00:54:14.4668223Z E         - /url: "#feedback"
+2026-10-09T00:54:14.4668609Z E       - group:
+2026-10-09T00:54:14.4669039Z E         - link "我的申請":
+2026-10-09T00:54:14.4669459Z E           - /url: "#advisor"
+2026-10-09T00:54:14.4669919Z E     - button "返回上一頁": 返回
+2026-10-09T00:54:14.4670433Z E     - button "選擇就讀學校":
+2026-10-09T00:54:14.4670861Z E       - strong: 選擇就讀學校
+2026-10-09T00:54:14.4671531Z E     - button "切換為深色模式"
+2026-10-09T00:54:14.4671949Z E     - button "重新整理最新資料"
+2026-10-09T00:54:14.4672394Z E     - button "登入或建立帳號": 登入
+2026-10-09T00:54:14.4672742Z E   - main:
+2026-10-09T00:54:14.4673032Z E     - status
+2026-10-09T00:54:14.4673588Z E     - region "歐洲知識經濟與管理學院 Skema Business School":
+2026-10-09T00:54:14.4674425Z E       - button "加入比較歐洲知識經濟與管理學院 Skema Business School": 加入比較
+2026-10-09T00:54:14.4675064Z E       - button "登入建立計畫"
+2026-10-09T00:54:14.4675758Z E       - img "歐洲知識經濟與管理學院 Skema Business School官方照片"
+2026-10-09T00:54:14.4676343Z E       - link "圖片來源":
+2026-10-09T00:54:14.4676911Z E         - /url: https://www.skema.edu/en/campus/paris
+2026-10-09T00:54:14.4677747Z E       - text: 法國 · 交換學生 下一站
+2026-10-09T00:54:14.4678180Z E       - strong: 法國
+2026-10-09T00:54:14.4678783Z E       - heading "歐洲知識經濟與管理學院 Skema Business School" [level=1]
+2026-10-09T00:54:14.4679323Z E       - text: 我的資格
+2026-10-09T00:54:14.4679744Z E       - strong: 尚未進行資格初判
+2026-10-09T00:54:14.4680220Z E       - text: 合作校參考時程
+2026-10-09T00:54:14.4680818Z E       - strong: 依當期長庚公告與 SKEMA 2026–2027 通知
+2026-10-09T00:54:14.4681391Z E       - text: 語言門檻
+2026-10-09T00:54:14.4681964Z E       - strong: 合作校未明確標示，請開啟官方來源
+2026-10-09T00:54:14.4682455Z E       - text: 生活費參考
+2026-10-09T00:54:14.4683807Z E       - strong: SKEMA 2026–2027 fact sheet 說法國校區住宿通常平均約 EUR 650–1,000／月，但沒有提供三個法國校區共通的完整生活費總額。校方 2026 年 Grand Paris 預算頁估計國際學生每月約 EUR 900–1,800，第一…
+2026-10-09T00:54:14.4684830Z E       - text: 交換名額
+2026-10-09T00:54:14.4685297Z E       - strong: 依當期公告
+2026-10-09T00:54:14.4688008Z E       - text: 研修期間
+2026-10-09T00:54:14.4692529Z E       - strong: 1 學期至 1 學年
+2026-10-09T00:54:14.4693512Z E       - tablist "交換學校詳細資訊":
+2026-10-09T00:54:14.4694035Z E         - tab "快速了解"
+2026-10-09T00:54:14.4694516Z E         - tab "申請方式"
+2026-10-09T00:54:14.4695027Z E         - tab "生活情報" [selected]

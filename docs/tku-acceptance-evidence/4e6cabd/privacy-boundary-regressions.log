@@ -1,0 +1,38 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 19 items
+
+tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[committed-204-False] PASSED [  5%]
+tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[committed-204-True] PASSED [ 10%]
+tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[integrity_conflict-503-False] PASSED [ 15%]
+tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[integrity_conflict-503-True] PASSED [ 21%]
+tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[False] PASSED [ 26%]
+tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[True] PASSED [ 31%]
+tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[False] PASSED [ 36%]
+tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[True] PASSED [ 42%]
+tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-\u5408\u6210\u8b77\u7167\u865f\u78bc\uff1aA12345678] PASSED [ 47%]
+tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-\u5408\u6210\u8b77\u7167\u865f\u78bc\uff1a\uff21\uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18] PASSED [ 52%]
+tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-\u5408\u6210\u8eab\u5206\u8b49\u5b57\u865f\uff1aA123456789] PASSED [ 57%]
+tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-Synthetic passport number: 123456789] PASSED [ 63%]
+tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-\u5408\u6210\u8b77\u7167\u865f\u78bc A12345678\u8acb\u4e0d\u8981\u516c\u958b] PASSED [ 68%]
+tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\u5408\u6210\u8b77\u7167\u865f\u78bc\uff1aA12345678] PASSED [ 73%]
+tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\u5408\u6210\u8b77\u7167\u865f\u78bc\uff1a\uff21\uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18] PASSED [ 78%]
+tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\u5408\u6210\u8eab\u5206\u8b49\u5b57\u865f\uff1aA123456789] PASSED [ 84%]
+tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-Synthetic passport number: 123456789] PASSED [ 89%]
+tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\u5408\u6210\u8b77\u7167\u865f\u78bc A12345678\u8acb\u4e0d\u8981\u516c\u958b] PASSED [ 94%]
+tests/test_tku_privacy_regressions.py::test_id_instructions_and_course_numbers_are_not_blocked PASSED [100%]
+
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/_pytest/config/__init__.py:1345
+  /workspace/abroad-tku/.venv/lib/python3.12/site-packages/_pytest/config/__init__.py:1345: PytestAssertRewriteWarning: Module already imported so cannot be rewritten; anyio
+    self._mark_plugins_for_rewrite(hook, disable_autoload)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /tmp/tku-acceptance-4e6cabd/privacy-boundary-regressions.xml -
+======================== 19 passed, 1 warning in 4.61s =========================
+{"tested_commit": "4e6cabd073e4792f94959545efeb4e323fefc3f5", "actual_exit_code": 0, "candidate_guard_passed": true, "captured_http_calls": 54, "deletes": [{"case": "tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[committed-204-False]", "status": 204, "simulated": true, "atomic_calls": [{"mutation_id": "1b9d9c9d30b3dc44aae0a5d487488691", "account_id": "1b2e30c88b8040b7b5d6bbaff7f0edf4", "session_id": "1d8bd2e7c5044d07b9914328ed5ce683", "returned_status": "committed"}]}, {"case": "tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[committed-204-True]", "status": 204, "simulated": true, "atomic_calls": [{"mutation_id": "synthetic-supabase-routing-0001", "account_id": "368cfd9229c1400ca8e8a13c256cb1cd", "session_id": "6e3e77e316b14fe2b425fb0b0d8d4397", "returned_status": "committed"}]}, {"case": "tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[integrity_conflict-503-False]", "status": 503, "simulated": true, "atomic_calls": [{"mutation_id": "80f16e5394d80453c8858412bf9f3534", "account_id": "7e4beccfa5884f85aacfd80795b15914", "session_id": "147f8082788441ee9e626aa2a8c38c4b", "returned_status": "integrity_conflict"}]}, {"case": "tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[integrity_conflict-503-True]", "status": 503, "simulated": true, "atomic_calls": [{"mutation_id": "synthetic-supabase-routing-0001", "account_id": "91512655e2da4afca602301d9bf533ac", "session_id": "0ebf79cc27b34d0f9b916088462877ac", "returned_status": "integrity_conflict"}]}, {"case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[False]", "status": 204, "simulated": false, "atomic_calls": []}, {"case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[True]", "status": 204, "simulated": false, "atomic_calls": [{"mutation_id": "synthetic-delete-mutation-0001", "account_id": "95b7b063f4e243968c8e38599811bb9d", "session_id": "fd2dda57f3c945fab40b479375b009ed", "returned_status": "committed"}]}, {"case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[False]", "status": 503, "simulated": false, "atomic_calls": []}, {"case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[False]", "status": 204, "simulated": false, "atomic_calls": []}, {"case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[True]", "status": 503, "simulated": false, "atomic_calls": []}, {"case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[True]", "status": 204, "simulated": false, "atomic_calls": [{"mutation_id": "synthetic-delete-mutation-0002", "account_id": "4766ac34912f416aabb342939a82df1d", "session_id": "50b495b6ab724273ba56be0f7726e884", "returned_status": "committed"}]}]}

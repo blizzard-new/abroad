@@ -1,0 +1,297 @@
+{
+  "tested_commit": "4e6cabd073e4792f94959545efeb4e323fefc3f5",
+  "original_candidate": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+  "original_evidence_commit": "1159874b7a3d3f48299d18c810646f38396c6ad9",
+  "remote_full_pr_counts": {
+    "passed": 1675,
+    "failed": 66,
+    "skipped": 16
+  },
+  "counts": {
+    "passed": 1475,
+    "skipped": 8,
+    "failure": 24
+  },
+  "runner_exit_code": 1,
+  "all_checks_passed": false,
+  "resolved_original_failures": 15,
+  "remaining_original_failures": 24,
+  "added_failures": [],
+  "data_scope": {
+    "records": 128,
+    "current_round": 4,
+    "reference_rows": 124,
+    "current_quota": 7,
+    "open_new_applications": 0,
+    "matrix_fields": 152,
+    "verified": 89,
+    "verified_percent": 58.6,
+    "original_gaps": 67,
+    "resolved_gaps": 4,
+    "remaining_gaps": 63,
+    "unresolved_source_conflicts": 13,
+    "host_documents": 53,
+    "official_exchange_attachments": 28,
+    "additional_reference_calendar": 1,
+    "registration_colleges": 9,
+    "registration_units": 44
+  },
+  "school_hash_preservation": {
+    "count": 851,
+    "candidate_count": 851,
+    "differences": [],
+    "counts": {
+      "國立臺北大學": 409,
+      "長庚大學": 154,
+      "國立臺灣大學": 288
+    }
+  },
+  "privacy_checks": 6,
+  "relevant_browser_counts": {
+    "passed": 49
+  },
+  "tku_unit_runner_counts": {
+    "passed": 62
+  },
+  "remote_ci": [
+    {
+      "event": "pull_request",
+      "run_id": 37866158645,
+      "head_sha": "4e6cabd073e4792f94959545efeb4e323fefc3f5",
+      "url": "https://github.com/blizzard-new/abroad/actions/runs/37866158645",
+      "status": "completed",
+      "conclusion": "failure",
+      "job_count": 4,
+      "reported_unique_cases": 1757,
+      "case_results_file": "ci-pr-complete-case-results.json",
+      "jobs": [
+        {
+          "id": 113613269312,
+          "status": "completed",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Run Web test suite"
+          ],
+          "passed_steps": [
+            "Set up job",
+            "Check out repository",
+            "Set up Python",
+            "Set up Node.js",
+            "Set isolated test data directory",
+            "Install project and browser",
+            "Check Python and JavaScript syntax",
+            "Check frozen OpenAPI contract",
+            "Parse Supabase migrations and function bodies",
+            "Audit runtime dependencies for known vulnerabilities",
+            "Validate isolated Supabase runtime",
+            "Confirm bundled official data was not mutated",
+            "Post Check out repository",
+            "Complete job"
+          ]
+        },
+        {
+          "id": 113613269481,
+          "status": "completed",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Run Web test suite"
+          ],
+          "passed_steps": [
+            "Set up job",
+            "Check out repository",
+            "Set up Python",
+            "Set up Node.js",
+            "Set isolated test data directory",
+            "Install project and browser",
+            "Check Python and JavaScript syntax",
+            "Check frozen OpenAPI contract",
+            "Parse Supabase migrations and function bodies",
+            "Audit runtime dependencies for known vulnerabilities",
+            "Validate isolated Supabase runtime",
+            "Confirm bundled official data was not mutated",
+            "Post Check out repository",
+            "Complete job"
+          ]
+        },
+        {
+          "id": 113613269674,
+          "status": "completed",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Run Web test suite"
+          ],
+          "passed_steps": [
+            "Set up job",
+            "Check out repository",
+            "Set up Python",
+            "Set up Node.js",
+            "Set isolated test data directory",
+            "Install project and browser",
+            "Check Python and JavaScript syntax",
+            "Check frozen OpenAPI contract",
+            "Parse Supabase migrations and function bodies",
+            "Audit runtime dependencies for known vulnerabilities",
+            "Validate isolated Supabase runtime",
+            "Confirm bundled official data was not mutated",
+            "Post Check out repository",
+            "Complete job"
+          ]
+        },
+        {
+          "id": 113613269700,
+          "status": "completed",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Run Web test suite"
+          ],
+          "passed_steps": [
+            "Set up job",
+            "Check out repository",
+            "Set up Python",
+            "Set up Node.js",
+            "Set isolated test data directory",
+            "Install project and browser",
+            "Check Python and JavaScript syntax",
+            "Check frozen OpenAPI contract",
+            "Parse Supabase migrations and function bodies",
+            "Audit runtime dependencies for known vulnerabilities",
+            "Validate isolated Supabase runtime",
+            "Confirm bundled official data was not mutated",
+            "Post Check out repository",
+            "Complete job"
+          ]
+        }
+      ],
+      "log_command_exit_code": 0,
+      "web_test_summary_lines": [
+        "test (2)\tRun Web test suite\t2026-10-09T00:55:27.6378383Z =================== 1 failed, 73 passed in 623.57s (0:10:23) ===================",
+        "test (1)\tRun Web test suite\t2026-10-09T01:01:58.6010052Z ============= 6 failed, 67 passed, 4 warnings in 983.56s (0:16:23) =============",
+        "test (3)\tRun Web test suite\t2026-10-09T00:55:08.5816748Z =================== 8 failed, 65 passed in 562.55s (0:09:22) ==================="
+      ],
+      "log_jwt_redactions": 0,
+      "original_log_sha256": "d4e7dc3bbfbfb3c2525d817687858753eff843e6d0744e11322154a24f73f318",
+      "retained_log_sha256": "d4e7dc3bbfbfb3c2525d817687858753eff843e6d0744e11322154a24f73f318",
+      "log_truncation_note": "gh run view partial; full archive separately preserved"
+    },
+    {
+      "event": "push",
+      "run_id": 37866154237,
+      "head_sha": "4e6cabd073e4792f94959545efeb4e323fefc3f5",
+      "url": "https://github.com/blizzard-new/abroad/actions/runs/37866154237",
+      "status": "completed",
+      "conclusion": "failure",
+      "job_count": 4,
+      "reported_unique_cases": 1032,
+      "case_results_file": "ci-push-case-results.json",
+      "jobs": [
+        {
+          "id": 113613253994,
+          "status": "completed",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Run Web test suite"
+          ],
+          "passed_steps": [
+            "Set up job",
+            "Check out repository",
+            "Set up Python",
+            "Set up Node.js",
+            "Set isolated test data directory",
+            "Install project and browser",
+            "Check Python and JavaScript syntax",
+            "Check frozen OpenAPI contract",
+            "Parse Supabase migrations and function bodies",
+            "Audit runtime dependencies for known vulnerabilities",
+            "Validate isolated Supabase runtime",
+            "Confirm bundled official data was not mutated",
+            "Post Check out repository",
+            "Complete job"
+          ]
+        },
+        {
+          "id": 113613254218,
+          "status": "completed",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Run Web test suite"
+          ],
+          "passed_steps": [
+            "Set up job",
+            "Check out repository",
+            "Set up Python",
+            "Set up Node.js",
+            "Set isolated test data directory",
+            "Install project and browser",
+            "Check Python and JavaScript syntax",
+            "Check frozen OpenAPI contract",
+            "Parse Supabase migrations and function bodies",
+            "Audit runtime dependencies for known vulnerabilities",
+            "Validate isolated Supabase runtime",
+            "Confirm bundled official data was not mutated",
+            "Post Check out repository",
+            "Complete job"
+          ]
+        },
+        {
+          "id": 113613254266,
+          "status": "completed",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Run Web test suite"
+          ],
+          "passed_steps": [
+            "Set up job",
+            "Check out repository",
+            "Set up Python",
+            "Set up Node.js",
+            "Set isolated test data directory",
+            "Install project and browser",
+            "Check Python and JavaScript syntax",
+            "Check frozen OpenAPI contract",
+            "Parse Supabase migrations and function bodies",
+            "Audit runtime dependencies for known vulnerabilities",
+            "Validate isolated Supabase runtime",
+            "Confirm bundled official data was not mutated",
+            "Post Check out repository",
+            "Complete job"
+          ]
+        },
+        {
+          "id": 113613254302,
+          "status": "completed",
+          "conclusion": "failure",
+          "failed_steps": [
+            "Run Web test suite"
+          ],
+          "passed_steps": [
+            "Set up job",
+            "Check out repository",
+            "Set up Python",
+            "Set up Node.js",
+            "Set isolated test data directory",
+            "Install project and browser",
+            "Check Python and JavaScript syntax",
+            "Check frozen OpenAPI contract",
+            "Parse Supabase migrations and function bodies",
+            "Audit runtime dependencies for known vulnerabilities",
+            "Validate isolated Supabase runtime",
+            "Confirm bundled official data was not mutated",
+            "Post Check out repository",
+            "Complete job"
+          ]
+        }
+      ],
+      "log_command_exit_code": 0,
+      "web_test_summary_lines": [
+        "test (3)\tRun Web test suite\t2026-10-09T00:52:51.2412318Z =================== 7 failed, 66 passed in 462.27s (0:07:42) ===================",
+        "test (1)\tRun Web test suite\t2026-10-09T00:59:42.2174695Z ============= 6 failed, 67 passed, 1 warning in 827.54s (0:13:47) ==============",
+        "test (2)\tRun Web test suite\t2026-10-09T00:56:23.8247282Z =================== 1 failed, 73 passed in 618.27s (0:10:18) ==================="
+      ],
+      "log_jwt_redactions": 0,
+      "original_log_sha256": "f74f4da8d0261fc0c316ce06920d452d7f87cdc58228168852cff5113addb92a",
+      "retained_log_sha256": "f74f4da8d0261fc0c316ce06920d452d7f87cdc58228168852cff5113addb92a"
+    }
+  ],
+  "acceptance": "blocked; matching baseline failures is not acceptance",
+  "remaining": "63 official-applicability gaps,13 source conflict groups,24 failed shared API/UI contracts; no permissions expanded or dummy admin routes added"
+}

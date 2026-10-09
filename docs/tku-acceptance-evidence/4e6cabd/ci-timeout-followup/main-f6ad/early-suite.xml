@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="10" time="153.156" timestamp="2026-10-09T00:38:06.217971+00:00" hostname="f6ad0b7a0286"><testcase classname="tests.e2e.test_analytics_tracking" name="test_a_visit_is_recorded_with_pages_searches_and_school_opens" time="11.847" /><testcase classname="tests.e2e.test_analytics_tracking" name="test_automated_browsers_are_not_tracked_unless_asked" time="4.610" /><testcase classname="tests.e2e.test_analytics_tracking" name="test_do_not_track_and_opt_out_stop_everything" time="5.266" /><testcase classname="tests.e2e.test_analytics_tracking" name="test_the_footer_button_opts_out_and_back_in" time="8.083" /><testcase classname="tests.e2e.test_analytics_tracking" name="test_the_address_bar_switch_excludes_your_own_browser" time="5.408" /><testcase classname="tests.e2e.test_application_periods" name="test_sourced_rounds_retry_and_keep_unsent_draft[390]" time="6.872" /><testcase classname="tests.e2e.test_application_periods" name="test_sourced_rounds_retry_and_keep_unsent_draft[1754]" time="7.556" /><testcase classname="tests.e2e.test_discovery_workspace" name="test_combined_search_map_preview_and_chinese_reader" time="20.542"><failure message="AssertionError: Locator expected to contain text 'I cooked'&#10;Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;.discovery-reader-original&quot;)&#10;    13 × locator resolved to &lt;details open=&quot;&quot; class=&quot;discovery-reader-original&quot;&gt;…&lt;/details&gt;&#10;       - unexpected value &quot;資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。&quot;&#10;&#10;Aria snapshot:&#10;- group:&#10;  - text: 資料來源&#10;  - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。">tests/e2e/test_discovery_workspace.py:54: in test_combined_search_map_preview_and_chinese_reader
+    expect(page.locator(".discovery-reader-original")).to_contain_text("I cooked")
+E   AssertionError: Locator expected to contain text 'I cooked'
+E   Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator(".discovery-reader-original")
+E       13 × locator resolved to &lt;details open="" class="discovery-reader-original"&gt;…&lt;/details&gt;
+E          - unexpected value "資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。"
+E   
+E   Aria snapshot:
+E   - group:
+E     - text: 資料來源
+E     - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。</failure></testcase><testcase classname="tests.e2e.test_discovery_workspace" name="test_cloud_selection_roundtrip_home_isolation_and_logout" time="60.729"><failure message="playwright._impl._errors.TimeoutError: Locator.fill: Timeout 30000ms exceeded.&#10;Call log:&#10;  - waiting for locator(&quot;[data-school-note=\&quot;林肯大學 Lincoln University\&quot;]&quot;)&#10;    - locator resolved to &lt;textarea rows=&quot;2&quot; maxlength=&quot;1000&quot; placeholder=&quot;留下選校理由…&quot; data-school-note=&quot;林肯大學 Lincoln University&quot;&gt;只給這個帳號看的選校理由&lt;/textarea&gt;&#10;    - fill(&quot;過期後不能上傳&quot;)&#10;  - attempting fill action&#10;    - waiting for element to be visible, enabled and editable&#10;  - element was detached from the DOM, retrying">tests/e2e/test_discovery_workspace.py:139: in test_cloud_selection_roundtrip_home_isolation_and_logout
+    page.locator(f'[data-school-note="{LINCOLN}"]').fill("過期後不能上傳")
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:18242: in fill
+    self._sync(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:219: in fill
+    return await self._frame.fill(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:636: in fill
+    await self._fill(**locals_to_params(locals()))
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:648: in _fill
+    await self._channel.send("fill", self._timeout, locals_to_params(locals()))
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.fill: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("[data-school-note=\"林肯大學 Lincoln University\"]")
+E       - locator resolved to &lt;textarea rows="2" maxlength="1000" placeholder="留下選校理由…" data-school-note="林肯大學 Lincoln University"&gt;只給這個帳號看的選校理由&lt;/textarea&gt;
+E       - fill("過期後不能上傳")
+E     - attempting fill action
+E       - waiting for element to be visible, enabled and editable
+E     - element was detached from the DOM, retrying</failure></testcase><testcase classname="tests.e2e.test_discovery_workspace" name="test_candidates_notes_order_persistence_mobile_and_history" time="21.360" /></testsuite></testsuites>

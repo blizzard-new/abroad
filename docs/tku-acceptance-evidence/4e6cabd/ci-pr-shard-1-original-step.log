@@ -1,0 +1,603 @@
+﻿2026-10-09T00:45:23.7517559Z ##[group]Run uv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4 --junitxml "$RUNNER_TEMP/web-tests-$WEB_TEST_SHARD.xml"
+2026-10-09T00:45:23.7518668Z [36;1muv run --frozen python scripts/run_web_quality_tests.py --shard "$WEB_TEST_SHARD" --shards 4 --junitxml "$RUNNER_TEMP/web-tests-$WEB_TEST_SHARD.xml"[0m
+2026-10-09T00:45:23.7610074Z shell: /usr/bin/bash -e {0}
+2026-10-09T00:45:23.7610346Z env:
+2026-10-09T00:45:23.7610625Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:45:23.7611075Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib/pkgconfig
+2026-10-09T00:45:23.7611524Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:45:23.7611912Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:45:23.7612298Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.15/x64
+2026-10-09T00:45:23.7612684Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.15/x64/lib
+2026-10-09T00:45:23.7613116Z   EXCHANGE_INFO_DATA_DIR: /home/runner/work/_temp/exchange-info-tests
+2026-10-09T00:45:23.7613512Z   WEB_TEST_SHARD: 1
+2026-10-09T00:45:23.7613950Z ##[endgroup]
+2026-10-09T00:45:32.6534346Z {"shard": 1, "total_cases": 1757, "total_files": 179, "browser_cases_per_shard": [73, 73, 74, 73], "case_counts_per_shard": [1537, 73, 74, 73], "files_per_shard": [["tests/e2e/test_application_ui_refinements.py", "tests/e2e/test_conditions_account_sync.py", "tests/e2e/test_discovery_workspace.py", "tests/e2e/test_discussion_reader.py", "tests/e2e/test_document_workbench.py", "tests/e2e/test_open_catalog.py", "tests/e2e/test_school_chinese_content.py", "tests/e2e/test_web_next_phase.py", "tests/integration/test_local_ai_runtime.py", "tests/test_account_read_cache.py", "tests/test_account_workspace_api.py", "tests/test_advisor.py", "tests/test_advisor_mascot_contract.py", "tests/test_ai_gateway.py", "tests/test_ai_privacy.py", "tests/test_analytics_api.py", "tests/test_analytics_core.py", "tests/test_analytics_frontend_contract.py", "tests/test_analytics_report.py", "tests/test_api.py", "tests/test_application_document_catalog.py", "tests/test_application_documents_api.py", "tests/test_application_periods.py", "tests/test_application_plan_api.py", "tests/test_application_plan_schedule_api.py", "tests/test_application_plan_scheduling.py", "tests/test_application_rules.py", "tests/test_application_workflow.py", "tests/test_application_workflow_issue_report_migration.py", "tests/test_application_workflow_issue_reports.py", "tests/test_atomic_account_deletion_migration.py", "tests/test_atomic_auth_mutations.py", "tests/test_atomic_private_community_migration.py", "tests/test_atomic_public_community_api.py", "tests/test_atomic_public_community_migration.py", "tests/test_atomic_workspace_moderation.py", "tests/test_auth_api.py", "tests/test_b4_04_ai_limits.py", "tests/test_brand_assets.py", "tests/test_calendar_conflicts.py", "tests/test_calendar_sync_api.py", "tests/test_calendar_task_scheduling.py", "tests/test_catalog_access.py", "tests/test_catalogue_speed.py", "tests/test_cgu_bundled_data.py", "tests/test_change_impact.py", "tests/test_chinese_public_content.py", "tests/test_classifier.py", "tests/test_cli.py", "tests/test_college_options.py", "tests/test_community_api.py", "tests/test_community_browsing.py", "tests/test_community_permissions.py", "tests/test_community_repositories.py", "tests/test_content_governance_wrapper.py", "tests/test_content_summary.py", "tests/test_dependency_security_baseline.py", "tests/test_destination_tips.py", "tests/test_discovery.py", "tests/test_discussion_round2.py", "tests/test_document_check_entitlements.py", "tests/test_document_vault.py", "tests/test_email_verification.py", "tests/test_entitlements.py", "tests/test_experience_collector.py", "tests/test_experience_digests.py", "tests/test_feedback.py", "tests/test_feedback_migration.py", "tests/test_fit_signals.py", "tests/test_flutter_independent_pages.py", "tests/test_flutter_navigation_hierarchy.py", "tests/test_flutter_production_copy.py", "tests/test_form_drafts.py", "tests/test_frontend_contract.py", "tests/test_health_head.py", "tests/test_home_and_forum_routes.py", "tests/test_hong_kong_country.py", "tests/test_http_client.py", "tests/test_icon_motion_contract.py", "tests/test_independent_page_routing.py", "tests/test_jsonl_storage_integrity.py", "tests/test_lai_10_security_audit.py", "tests/test_legal_pages.py", "tests/test_life_context.py", "tests/test_loading_screen.py", "tests/test_local_ai.py", "tests/test_match_document_chunks_migration.py", "tests/test_multi_application_plan.py", "tests/test_my_application_entry.py", "tests/test_native_app_contract.py", "tests/test_next_phase_contract.py", "tests/test_notification_changes.py", "tests/test_notifications.py", "tests/test_ntpu_bundled_data.py", "tests/test_ntpu_support.py", "tests/test_ntu_audit.py", "tests/test_ntu_integration.py", "tests/test_ntu_school_board_migration.py", "tests/test_open_catalog_signup.py", "tests/test_partner_localization.py", "tests/test_partner_map_geometry.py", "tests/test_partner_research.py", "tests/test_pipeline.py", "tests/test_public_translation.py", "tests/test_qualification_scope_consistency.py", "tests/test_rag.py", "tests/test_regions.py", "tests/test_request_origin.py", "tests/test_requirements_traceability.py", "tests/test_responsive_css.py", "tests/test_review_source_candidates.py", "tests/test_review_source_metadata_candidates.py", "tests/test_rls_auto_enable_migration.py", "tests/test_school_choice.py", "tests/test_school_choice_migration.py", "tests/test_school_completeness.py", "tests/test_school_content.py", "tests/test_school_image_collector.py", "tests/test_school_photo_and_match.py", "tests/test_selection_conditions_sync.py", "tests/test_social_community_api.py", "tests/test_source_applicability_cleanup.py", "tests/test_source_metadata_research_audit.py", "tests/test_source_replacement_transport_audit.py", "tests/test_static_caching.py", "tests/test_student_view.py", "tests/test_submission_progress.py", "tests/test_supabase_migration_syntax.py", "tests/test_supabase_repositories.py", "tests/test_supabase_runtime_validation.py", "tests/test_supabase_setup_check.py", "tests/test_task_documents_and_reference_plan.py", "tests/test_terms_consent.py", "tests/test_tku_acceptance_runner.py", "tests/test_tku_continuation.py", "tests/test_tku_privacy_regressions.py", "tests/test_tku_support.py", "tests/test_transient_auth.py", "tests/test_translation_requests.py", "tests/test_university_locations.py", "tests/test_uniway_ui_contract.py", "tests/test_web_review_findings_contract.py", "tests/test_workflow_catalog_cache.py", "tests/test_workflow_context_api.py", "tests/test_workflow_structuring.py", "tests/test_workload_planning.py", "tests/test_workload_planning_api.py"], ["tests/e2e/test_departure_tips_and_experience_digests.py", "tests/e2e/test_document_flow.py", "tests/e2e/test_mascot_solid.py", "tests/e2e/test_ntu_school.py", "tests/e2e/test_partner_globe.py", "tests/e2e/test_planning_workspace.py", "tests/e2e/test_system_motion.py", "tests/e2e/test_task_documents_ui.py", "tests/e2e/test_terms_consent.py", "tests/e2e/test_travel_theme.py"], ["tests/e2e/test_analytics_tracking.py", "tests/e2e/test_application_periods.py", "tests/e2e/test_feedback_page.py", "tests/e2e/test_glass_theme.py", "tests/e2e/test_icon_motion.py", "tests/e2e/test_notification_changes.py", "tests/e2e/test_region_search.py", "tests/e2e/test_school_lists.py", "tests/e2e/test_shared_conditions.py", "tests/e2e/test_student_journey_ux.py", "tests/e2e/test_unified_preparation.py"], ["tests/e2e/test_application_workspace.py", "tests/e2e/test_discussion_round2.py", "tests/e2e/test_fit_and_completeness_ui.py", "tests/e2e/test_life_context.py", "tests/e2e/test_loading_screen.py", "tests/e2e/test_multi_plan_workspace.py", "tests/e2e/test_my_application_entry.py", "tests/e2e/test_navigation_guide.py", "tests/e2e/test_responsive_layout.py", "tests/e2e/test_tku_acceptance.py", "tests/e2e/test_workload_journey.py"]], "coverage": "all collected files; no new exclusions"}
+2026-10-09T00:45:34.1784069Z ============================= test session starts ==============================
+2026-10-09T00:45:34.1786193Z platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.6.0 -- /home/runner/work/abroad/abroad/.venv/bin/python3
+2026-10-09T00:45:34.1787355Z cachedir: .pytest_cache
+2026-10-09T00:45:34.1788071Z rootdir: /home/runner/work/abroad/abroad
+2026-10-09T00:45:34.1788816Z configfile: pyproject.toml
+2026-10-09T00:45:34.1789435Z plugins: anyio-4.14.2
+2026-10-09T00:45:34.3361540Z collecting ... CONFTEST LOADED!
+2026-10-09T00:45:34.3363148Z collected 73 items
+2026-10-09T00:45:34.3363693Z 
+2026-10-09T00:45:54.1037400Z tests/e2e/test_departure_tips_and_experience_digests.py::test_the_departure_tab_shows_the_countrys_guide_with_its_draft_notice_and_sources PASSED [  1%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_the_departure_tab_shows_the_countrys_guide_with_its_draft_notice_and_sources call passed 18.688s
+2026-10-09T00:45:54.1299872Z 
+2026-10-09T00:46:00.9647130Z tests/e2e/test_departure_tips_and_experience_digests.py::test_a_school_in_japan_shows_the_japan_guide_with_the_paperwork_and_bank_warnings PASSED [  2%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_a_school_in_japan_shows_the_japan_guide_with_the_paperwork_and_bank_warnings call passed 6.750s
+2026-10-09T00:46:00.9764224Z 
+2026-10-09T00:46:07.9102456Z tests/e2e/test_departure_tips_and_experience_digests.py::test_topic_chips_scroll_in_place_and_never_change_the_page_address PASSED [  4%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_topic_chips_scroll_in_place_and_never_change_the_page_address call passed 6.861s
+2026-10-09T00:46:07.9256784Z 
+2026-10-09T00:46:14.1785440Z tests/e2e/test_departure_tips_and_experience_digests.py::test_a_country_without_a_guide_gets_a_polite_pointer_to_the_official_site PASSED [  5%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_a_country_without_a_guide_gets_a_polite_pointer_to_the_official_site call passed 6.170s
+2026-10-09T00:46:14.1871301Z 
+2026-10-09T00:46:20.3346618Z tests/e2e/test_departure_tips_and_experience_digests.py::test_a_server_error_is_not_mistaken_for_a_missing_guide PASSED [  6%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_a_server_error_is_not_mistaken_for_a_missing_guide call passed 6.071s
+2026-10-09T00:46:20.3484384Z 
+2026-10-09T00:46:26.0067300Z tests/e2e/test_departure_tips_and_experience_digests.py::test_stories_with_a_chinese_write_up_lead_and_the_rest_are_filed_as_references PASSED [  8%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_stories_with_a_chinese_write_up_lead_and_the_rest_are_filed_as_references call passed 5.587s
+2026-10-09T00:46:26.0246444Z 
+2026-10-09T00:46:32.3745218Z tests/e2e/test_departure_tips_and_experience_digests.py::test_opening_a_story_shows_the_chinese_write_up_and_how_it_was_made PASSED [  9%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_opening_a_story_shows_the_chinese_write_up_and_how_it_was_made call passed 6.263s
+2026-10-09T00:46:32.3877051Z 
+2026-10-09T00:46:42.0198584Z tests/e2e/test_departure_tips_and_experience_digests.py::test_a_saved_story_still_opens_with_its_write_up PASSED [ 10%]WEB_CASE tests/e2e/test_departure_tips_and_experience_digests.py::test_a_saved_story_still_opens_with_its_write_up call passed 9.552s
+2026-10-09T00:46:42.2129072Z 
+2026-10-09T00:46:51.8069349Z tests/e2e/test_document_flow.py::test_document_flow_guides_each_step_and_never_claims_submission[390] PASSED [ 12%]WEB_CASE tests/e2e/test_document_flow.py::test_document_flow_guides_each_step_and_never_claims_submission[390] call passed 9.326s
+2026-10-09T00:46:51.8212725Z 
+2026-10-09T00:47:02.5545003Z tests/e2e/test_document_flow.py::test_document_flow_guides_each_step_and_never_claims_submission[1754] PASSED [ 13%]WEB_CASE tests/e2e/test_document_flow.py::test_document_flow_guides_each_step_and_never_claims_submission[1754] call passed 10.658s
+2026-10-09T00:47:02.7474514Z 
+2026-10-09T00:47:06.8832060Z tests/e2e/test_mascot_solid.py::test_the_mascot_stands_where_the_traveller_drawing_was_on_the_home_page PASSED [ 15%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_mascot_stands_where_the_traveller_drawing_was_on_the_home_page call passed 3.943s
+2026-10-09T00:47:06.8929710Z 
+2026-10-09T00:47:10.3146445Z tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[320] PASSED [ 16%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[320] call passed 3.297s
+2026-10-09T00:47:10.3164082Z 
+2026-10-09T00:47:14.1810988Z tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[390] PASSED [ 17%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[390] call passed 3.819s
+2026-10-09T00:47:14.1923048Z 
+2026-10-09T00:47:18.1561788Z tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[768] PASSED [ 19%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[768] call passed 3.895s
+2026-10-09T00:47:18.1684331Z 
+2026-10-09T00:47:22.0777256Z tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[1280] PASSED [ 20%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_header_with_the_mascot_never_overflows_or_covers_the_words[1280] call passed 3.828s
+2026-10-09T00:47:22.0904578Z 
+2026-10-09T00:47:26.3568941Z tests/e2e/test_mascot_solid.py::test_it_has_sides_a_front_and_eyes_standing_in_front_of_it PASSED [ 21%]WEB_CASE tests/e2e/test_mascot_solid.py::test_it_has_sides_a_front_and_eyes_standing_in_front_of_it call passed 4.190s
+2026-10-09T00:47:26.3675241Z 
+2026-10-09T00:47:30.4336543Z tests/e2e/test_mascot_solid.py::test_the_eyes_stay_in_front_while_they_look_around PASSED [ 23%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_eyes_stay_in_front_while_they_look_around call passed 3.973s
+2026-10-09T00:47:30.4491685Z 
+2026-10-09T00:47:34.7966637Z tests/e2e/test_mascot_solid.py::test_it_turns_towards_the_pointer_and_back_when_the_pointer_is_gone PASSED [ 24%]WEB_CASE tests/e2e/test_mascot_solid.py::test_it_turns_towards_the_pointer_and_back_when_the_pointer_is_gone call passed 4.270s
+2026-10-09T00:47:34.8103459Z 
+2026-10-09T00:47:39.1257944Z tests/e2e/test_mascot_solid.py::test_a_light_slides_over_it_as_it_turns PASSED [ 26%]WEB_CASE tests/e2e/test_mascot_solid.py::test_a_light_slides_over_it_as_it_turns call passed 4.233s
+2026-10-09T00:47:39.1443070Z 
+2026-10-09T00:47:42.7555746Z tests/e2e/test_mascot_solid.py::test_with_no_motion_it_still_stands_turned_so_it_reads_as_a_solid PASSED [ 27%]WEB_CASE tests/e2e/test_mascot_solid.py::test_with_no_motion_it_still_stands_turned_so_it_reads_as_a_solid call passed 3.530s
+2026-10-09T00:47:42.7695308Z 
+2026-10-09T00:47:50.0028853Z tests/e2e/test_mascot_solid.py::test_tapping_the_header_mascot_still_hops_turns_and_winks PASSED [ 28%]WEB_CASE tests/e2e/test_mascot_solid.py::test_tapping_the_header_mascot_still_hops_turns_and_winks call passed 7.162s
+2026-10-09T00:47:50.0167369Z 
+2026-10-09T00:47:50.6476183Z tests/e2e/test_mascot_solid.py::test_the_loading_screen_mascot_is_the_same_solid PASSED [ 30%]WEB_CASE tests/e2e/test_mascot_solid.py::test_the_loading_screen_mascot_is_the_same_solid call passed 0.538s
+2026-10-09T00:47:50.8040568Z 
+2026-10-09T00:48:08.1392308Z tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[390] PASSED [ 31%]WEB_CASE tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[390] call passed 17.086s
+2026-10-09T00:48:08.1540062Z 
+2026-10-09T00:48:23.3114436Z tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[1440] PASSED [ 32%]WEB_CASE tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[1440] call passed 15.087s
+2026-10-09T00:48:23.3295851Z 
+2026-10-09T00:48:40.5956821Z tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion PASSED [ 34%]WEB_CASE tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion call passed 17.193s
+2026-10-09T00:48:40.6644914Z 
+2026-10-09T00:48:44.5767337Z tests/e2e/test_ntu_school.py::test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u9577\u5e9a\u5927\u5b78] PASSED [ 35%]WEB_CASE tests/e2e/test_ntu_school.py::test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u9577\u5e9a\u5927\u5b78] call passed 3.766s
+2026-10-09T00:48:44.5924631Z 
+2026-10-09T00:48:51.4365672Z tests/e2e/test_ntu_school.py::test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u570b\u7acb\u81fa\u5317\u5927\u5b78] PASSED [ 36%]WEB_CASE tests/e2e/test_ntu_school.py::test_new_toefl_has_confirmation_instead_of_nan_on_existing_schools[\u570b\u7acb\u81fa\u5317\u5927\u5b78] call passed 6.743s
+2026-10-09T00:48:51.4526289Z 
+2026-10-09T00:48:57.8891547Z tests/e2e/test_ntu_school.py::test_ntu_document_language_conditions_change_in_real_form[390] PASSED [ 38%]WEB_CASE tests/e2e/test_ntu_school.py::test_ntu_document_language_conditions_change_in_real_form[390] call passed 6.355s
+2026-10-09T00:48:57.9022161Z 
+2026-10-09T00:49:04.7316627Z tests/e2e/test_ntu_school.py::test_ntu_document_language_conditions_change_in_real_form[1440] PASSED [ 39%]WEB_CASE tests/e2e/test_ntu_school.py::test_ntu_document_language_conditions_change_in_real_form[1440] call passed 6.749s
+2026-10-09T00:49:04.9224506Z 
+2026-10-09T00:49:21.9166469Z tests/e2e/test_partner_globe.py::test_list_lazy_load_and_roundtrip_filters PASSED [ 41%]WEB_CASE tests/e2e/test_partner_globe.py::test_list_lazy_load_and_roundtrip_filters call passed 16.792s
+2026-10-09T00:49:21.9360246Z 
+2026-10-09T00:49:38.6705738Z tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size0] PASSED [ 42%]WEB_CASE tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size0] call passed 16.645s
+2026-10-09T00:49:38.6800625Z 
+2026-10-09T00:49:54.9534268Z tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size1] PASSED [ 43%]WEB_CASE tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size1] call passed 16.194s
+2026-10-09T00:49:54.9611109Z 
+2026-10-09T00:50:06.1449964Z tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size2] PASSED [ 45%]WEB_CASE tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size2] call passed 11.099s
+2026-10-09T00:50:06.1564376Z 
+2026-10-09T00:50:33.0480858Z tests/e2e/test_partner_globe.py::test_refresh_direct_url_and_missing_empty_states PASSED [ 46%]WEB_CASE tests/e2e/test_partner_globe.py::test_refresh_direct_url_and_missing_empty_states call passed 26.811s
+2026-10-09T00:50:33.0704344Z 
+2026-10-09T00:50:46.3062255Z tests/e2e/test_partner_globe.py::test_missing_coordinates_do_not_create_false_points PASSED [ 47%]WEB_CASE tests/e2e/test_partner_globe.py::test_missing_coordinates_do_not_create_false_points call passed 13.112s
+2026-10-09T00:50:46.3245783Z 
+2026-10-09T00:50:58.9150271Z tests/e2e/test_partner_globe.py::test_empty_catalog PASSED               [ 49%]WEB_CASE tests/e2e/test_partner_globe.py::test_empty_catalog call passed 12.491s
+2026-10-09T00:50:58.9370654Z 
+2026-10-09T00:51:08.2586413Z tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[api] PASSED [ 50%]WEB_CASE tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[api] call passed 9.248s
+2026-10-09T00:51:08.2747195Z 
+2026-10-09T00:51:17.6587134Z tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[module] PASSED [ 52%]WEB_CASE tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[module] call passed 9.309s
+2026-10-09T00:51:17.6770852Z 
+2026-10-09T00:51:27.3906865Z tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[engine] PASSED [ 53%]WEB_CASE tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[engine] call passed 9.650s
+2026-10-09T00:51:27.4084133Z 
+2026-10-09T00:51:57.7511755Z tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[worker] PASSED [ 54%]WEB_CASE tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[worker] call passed 30.263s
+2026-10-09T00:51:57.7754326Z 
+2026-10-09T00:52:07.1781375Z tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[basemap] PASSED [ 56%]WEB_CASE tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[basemap] call passed 9.311s
+2026-10-09T00:52:07.1974552Z 
+2026-10-09T00:52:24.2341469Z tests/e2e/test_partner_globe.py::test_thousand_points_cluster_expand_and_keyboard PASSED [ 57%]WEB_CASE tests/e2e/test_partner_globe.py::test_thousand_points_cluster_expand_and_keyboard call passed 16.946s
+2026-10-09T00:52:24.2550936Z 
+2026-10-09T00:53:07.9156416Z tests/e2e/test_partner_globe.py::test_dynamic_home_school_real_japan_filter_and_shared_url PASSED [ 58%]WEB_CASE tests/e2e/test_partner_globe.py::test_dynamic_home_school_real_japan_filter_and_shared_url call passed 43.524s
+2026-10-09T00:53:08.0280384Z 
+2026-10-09T00:53:52.1063268Z tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters FAILED [ 60%]WEB_CASE tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters call failed 43.737s
+2026-10-09T00:53:52.1066134Z tests/e2e/test_partner_globe.py:230: in test_direct_query_without_hash_and_all_shared_filters
+2026-10-09T00:53:52.1067779Z     page.locator("#college-filter").select_option("商管")
+2026-10-09T00:53:52.1069240Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:20069: in select_option
+2026-10-09T00:53:52.1070251Z     self._sync(
+2026-10-09T00:53:52.1071226Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:633: in select_option
+2026-10-09T00:53:52.1072253Z     return await self._frame.select_option(
+2026-10-09T00:53:52.1073451Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:814: in select_option
+2026-10-09T00:53:52.1075311Z     return await self._channel.send("selectOption", self._timeout, params)
+2026-10-09T00:53:52.1077130Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T00:53:52.1079241Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T00:53:52.1114764Z     return await self._connection.wrap_api_call(
+2026-10-09T00:53:52.1125723Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T00:53:52.1158809Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T00:53:52.1185594Z E   playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+2026-10-09T00:53:52.1199152Z E   Call log:
+2026-10-09T00:53:52.1237117Z E     - waiting for locator("#college-filter")
+2026-10-09T00:53:52.1258480Z E       - locator resolved to <select id="college-filter">…</select>
+2026-10-09T00:53:52.1278432Z E     - attempting select option action
+2026-10-09T00:53:52.1279622Z E       2 × waiting for element to be visible and enabled
+2026-10-09T00:53:52.1280441Z E         - did not find some options
+2026-10-09T00:53:52.1281146Z E       - retrying select option action
+2026-10-09T00:53:52.1281769Z E       - waiting 20ms
+2026-10-09T00:53:52.1282579Z E       2 × waiting for element to be visible and enabled
+2026-10-09T00:53:52.1283429Z E         - did not find some options
+2026-10-09T00:53:52.1284499Z E       - retrying select option action
+2026-10-09T00:53:52.1285242Z E         - waiting 100ms
+2026-10-09T00:53:52.1286308Z E       44 × waiting for element to be visible and enabled
+2026-10-09T00:53:52.1287305Z E          - did not find some options
+2026-10-09T00:53:52.1288399Z E        - retrying select option action
+2026-10-09T00:53:52.1289338Z E          - waiting 500ms
+2026-10-09T00:53:52.1289864Z 
+2026-10-09T00:54:06.7802751Z tests/e2e/test_partner_globe.py::test_mobile_list_expansion_and_camera_survive_view_switch PASSED [ 61%]WEB_CASE tests/e2e/test_partner_globe.py::test_mobile_list_expansion_and_camera_survive_view_switch call passed 14.590s
+2026-10-09T00:54:06.7994718Z 
+2026-10-09T00:54:44.4296026Z tests/e2e/test_partner_globe.py::test_mobile_touch_drag_and_pinch PASSED [ 63%]WEB_CASE tests/e2e/test_partner_globe.py::test_mobile_touch_drag_and_pinch call passed 37.629s
+2026-10-09T00:54:44.4369845Z 
+2026-10-09T00:55:00.6814572Z tests/e2e/test_partner_globe.py::test_coincident_locations_offer_each_school PASSED [ 64%]WEB_CASE tests/e2e/test_partner_globe.py::test_coincident_locations_offer_each_school call passed 16.132s
+2026-10-09T00:55:00.7020329Z 
+2026-10-09T00:55:20.1386652Z tests/e2e/test_partner_globe.py::test_selection_motion_pauses_without_moving_camera_and_respects_preferences PASSED [ 65%]WEB_CASE tests/e2e/test_partner_globe.py::test_selection_motion_pauses_without_moving_camera_and_respects_preferences call passed 19.362s
+2026-10-09T00:55:20.3024921Z 
+2026-10-09T00:55:34.6688353Z tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[390] PASSED [ 67%]WEB_CASE tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[390] call passed 14.018s
+2026-10-09T00:55:34.6922790Z 
+2026-10-09T00:55:50.2966526Z tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[1754] PASSED [ 68%]WEB_CASE tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[1754] call passed 15.512s
+2026-10-09T00:55:50.3091683Z 
+2026-10-09T00:56:03.8301197Z tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[expired] PASSED [ 69%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[expired] call passed 13.441s
+2026-10-09T00:56:03.8389421Z 
+2026-10-09T00:56:16.7235275Z tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unverified] PASSED [ 71%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unverified] call passed 12.778s
+2026-10-09T00:56:16.7404185Z 
+2026-10-09T00:56:29.7616925Z tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_year] PASSED [ 72%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_year] call passed 12.912s
+2026-10-09T00:56:29.7618846Z 
+2026-10-09T00:56:43.1503415Z tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[missing_source] PASSED [ 73%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[missing_source] call passed 13.323s
+2026-10-09T00:56:43.1594992Z 
+2026-10-09T00:56:56.3329854Z tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_round] PASSED [ 75%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[wrong_round] call passed 13.096s
+2026-10-09T00:56:56.3524426Z 
+2026-10-09T00:57:09.9369498Z tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unpublished] PASSED [ 76%]WEB_CASE tests/e2e/test_planning_workspace.py::test_schedule_refuses_unconfirmed_or_unusable_dates[unpublished] call passed 13.494s
+2026-10-09T00:57:09.9554279Z 
+2026-10-09T00:57:19.2706860Z tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[390] PASSED [ 78%]WEB_CASE tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[390] call passed 9.223s
+2026-10-09T00:57:19.2794428Z 
+2026-10-09T00:57:29.8226389Z tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[1754] PASSED [ 79%]WEB_CASE tests/e2e/test_planning_workspace.py::test_print_packet_remains_blocked_until_current_content_review[1754] call passed 10.467s
+2026-10-09T00:57:29.9884238Z 
+2026-10-09T00:58:05.1235133Z tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history FAILED [ 80%]WEB_CASE tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history call failed 34.758s
+2026-10-09T00:58:05.1241772Z tests/e2e/test_system_motion.py:51: in test_all_routes_share_motion_and_back_retains_working_history
+2026-10-09T00:58:05.1250218Z     page.locator("#page-back").click()
+2026-10-09T00:58:05.1258927Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T00:58:05.1259974Z     self._sync(
+2026-10-09T00:58:05.1261084Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T00:58:05.1262269Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T00:58:05.1263194Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T00:58:05.1264420Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T00:58:05.1265616Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T00:58:05.1266844Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T00:58:05.1267773Z     return await self._connection.wrap_api_call(
+2026-10-09T00:58:05.1268820Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T00:58:05.1269938Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T00:58:05.1271055Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T00:58:05.1271887Z E   Call log:
+2026-10-09T00:58:05.1272480Z E     - waiting for locator("#page-back")
+2026-10-09T00:58:05.1274203Z E       - locator resolved to <button type="button" id="page-back" class="route-back" aria-label="返回上一頁">…</button>
+2026-10-09T00:58:05.1275256Z E     - attempting click action
+2026-10-09T00:58:05.1276137Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T00:58:05.1276996Z E         - element is not visible
+2026-10-09T00:58:05.1277624Z E       - retrying click action
+2026-10-09T00:58:05.1278191Z E       - waiting 20ms
+2026-10-09T00:58:05.1278996Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T00:58:05.1279753Z E         - element is not visible
+2026-10-09T00:58:05.1280374Z E       - retrying click action
+2026-10-09T00:58:05.1280926Z E         - waiting 100ms
+2026-10-09T00:58:05.1281761Z E       57 × waiting for element to be visible, enabled and stable
+2026-10-09T00:58:05.1282521Z E          - element is not visible
+2026-10-09T00:58:05.1283563Z E        - retrying click action
+2026-10-09T00:58:05.1284441Z E          - waiting 500ms
+2026-10-09T00:58:05.1362157Z 
+2026-10-09T00:58:39.1434761Z tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393] FAILED [ 82%]WEB_CASE tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393] call failed 33.548s
+2026-10-09T00:58:39.1437113Z tests/e2e/test_system_motion.py:63: in test_dialog_menu_details_tabs_and_mobile_layout
+2026-10-09T00:58:39.1438125Z     page.locator("#school-switcher").click()
+2026-10-09T00:58:39.1444130Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T00:58:39.1445128Z     self._sync(
+2026-10-09T00:58:39.1446234Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T00:58:39.1447484Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T00:58:39.1448509Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T00:58:39.1449551Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T00:58:39.1450661Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T00:58:39.1451871Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T00:58:39.1453091Z     return await self._connection.wrap_api_call(
+2026-10-09T00:58:39.1455100Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T00:58:39.1456227Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T00:58:39.1457388Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T00:58:39.1458196Z E   Call log:
+2026-10-09T00:58:39.1458808Z E     - waiting for locator("#school-switcher")
+2026-10-09T00:58:39.1460512Z E       - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+2026-10-09T00:58:39.1461724Z E     - attempting click action
+2026-10-09T00:58:39.1462678Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T00:58:39.1463485Z E         - element is not visible
+2026-10-09T00:58:39.1464430Z E       - retrying click action
+2026-10-09T00:58:39.1464998Z E       - waiting 20ms
+2026-10-09T00:58:39.1465843Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T00:58:39.1466648Z E         - element is not visible
+2026-10-09T00:58:39.1467281Z E       - retrying click action
+2026-10-09T00:58:39.1467832Z E         - waiting 100ms
+2026-10-09T00:58:39.1468718Z E       56 × waiting for element to be visible, enabled and stable
+2026-10-09T00:58:39.1469519Z E          - element is not visible
+2026-10-09T00:58:39.1470157Z E        - retrying click action
+2026-10-09T00:58:39.1470764Z E          - waiting 500ms
+2026-10-09T00:58:39.1574881Z 
+2026-10-09T00:59:13.2905948Z tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834] FAILED [ 83%]WEB_CASE tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834] call failed 33.737s
+2026-10-09T00:59:13.2923312Z tests/e2e/test_system_motion.py:63: in test_dialog_menu_details_tabs_and_mobile_layout
+2026-10-09T00:59:13.2963704Z     page.locator("#school-switcher").click()
+2026-10-09T00:59:13.2987553Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T00:59:13.3045294Z     self._sync(
+2026-10-09T00:59:13.3079024Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T00:59:13.3114709Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T00:59:13.3167938Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T00:59:13.3193369Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T00:59:13.3214697Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T00:59:13.3238048Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T00:59:13.3255410Z     return await self._connection.wrap_api_call(
+2026-10-09T00:59:13.3256658Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T00:59:13.3272981Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T00:59:13.3293173Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T00:59:13.3314224Z E   Call log:
+2026-10-09T00:59:13.3322047Z E     - waiting for locator("#school-switcher")
+2026-10-09T00:59:13.3338009Z E       - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+2026-10-09T00:59:13.3339286Z E     - attempting click action
+2026-10-09T00:59:13.3340263Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T00:59:13.3341108Z E         - element is not visible
+2026-10-09T00:59:13.3341833Z E       - retrying click action
+2026-10-09T00:59:13.3342499Z E       - waiting 20ms
+2026-10-09T00:59:13.3343385Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T00:59:13.3344568Z E         - element is not visible
+2026-10-09T00:59:13.3346196Z E       - retrying click action
+2026-10-09T00:59:13.3346920Z E         - waiting 100ms
+2026-10-09T00:59:13.3348383Z E       55 × waiting for element to be visible, enabled and stable
+2026-10-09T00:59:13.3349238Z E          - element is not visible
+2026-10-09T00:59:13.3349993Z E        - retrying click action
+2026-10-09T00:59:13.3350688Z E          - waiting 500ms
+2026-10-09T00:59:13.3351220Z 
+2026-10-09T00:59:22.8662574Z tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[1440] PASSED [ 84%]WEB_CASE tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[1440] call passed 9.490s
+2026-10-09T00:59:22.8802419Z 
+2026-10-09T00:59:28.7519404Z tests/e2e/test_system_motion.py::test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion PASSED [ 86%]WEB_CASE tests/e2e/test_system_motion.py::test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion call passed 5.808s
+2026-10-09T00:59:28.7665187Z 
+2026-10-09T00:59:36.8175951Z tests/e2e/test_system_motion.py::test_reduced_motion_live_change_and_missing_runtime_are_usable PASSED [ 87%]WEB_CASE tests/e2e/test_system_motion.py::test_reduced_motion_live_change_and_missing_runtime_are_usable call passed 7.964s
+2026-10-09T00:59:36.9414361Z 
+2026-10-09T00:59:45.7346726Z tests/e2e/test_task_documents_ui.py::test_unpublished_year_shows_estimated_tasks_with_documents_and_suggested_hours[390] PASSED [ 89%]WEB_CASE tests/e2e/test_task_documents_ui.py::test_unpublished_year_shows_estimated_tasks_with_documents_and_suggested_hours[390] call passed 8.554s
+2026-10-09T00:59:45.7474729Z 
+2026-10-09T00:59:55.7068052Z tests/e2e/test_task_documents_ui.py::test_unpublished_year_shows_estimated_tasks_with_documents_and_suggested_hours[1754] PASSED [ 90%]WEB_CASE tests/e2e/test_task_documents_ui.py::test_unpublished_year_shows_estimated_tasks_with_documents_and_suggested_hours[1754] call passed 9.876s
+2026-10-09T00:59:55.8804466Z 
+2026-10-09T01:00:07.5961186Z tests/e2e/test_terms_consent.py::test_google_waits_for_the_tick_then_goes_on_with_the_version PASSED [ 91%]WEB_CASE tests/e2e/test_terms_consent.py::test_google_waits_for_the_tick_then_goes_on_with_the_version call passed 11.528s
+2026-10-09T01:00:07.6126482Z 
+2026-10-09T01:00:22.9518571Z tests/e2e/test_terms_consent.py::test_a_returning_browser_finds_the_current_version_already_ticked PASSED [ 93%]WEB_CASE tests/e2e/test_terms_consent.py::test_a_returning_browser_finds_the_current_version_already_ticked call passed 15.252s
+2026-10-09T01:00:22.9746650Z 
+2026-10-09T01:00:27.6169802Z tests/e2e/test_terms_consent.py::test_when_the_server_turns_a_sign_in_away_the_dialog_reopens_with_a_reminder PASSED [ 94%]WEB_CASE tests/e2e/test_terms_consent.py::test_when_the_server_turns_a_sign_in_away_the_dialog_reopens_with_a_reminder call passed 4.551s
+2026-10-09T01:00:27.7806909Z 
+2026-10-09T01:01:11.3851698Z tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive FAILED [ 95%]WEB_CASE tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive call failed 42.695s
+2026-10-09T01:01:11.3854295Z tests/e2e/test_travel_theme.py:51: in test_home_search_navigation_school_switcher_and_responsive
+2026-10-09T01:01:11.3855998Z     page.locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True).click()
+2026-10-09T01:01:11.3857960Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T01:01:11.3858847Z     self._sync(
+2026-10-09T01:01:11.3859702Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T01:01:11.3860725Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T01:01:11.3864432Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T01:01:11.3865515Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T01:01:11.3866697Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T01:01:11.3867913Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T01:01:11.3869525Z     return await self._connection.wrap_api_call(
+2026-10-09T01:01:11.3870693Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T01:01:11.3871911Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T01:01:11.3872993Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:11.3874057Z E   Call log:
+2026-10-09T01:01:11.3875140Z E     - waiting for locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True)
+2026-10-09T01:01:11.3984594Z 
+2026-10-09T01:01:29.7260750Z tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city FAILED [ 97%]WEB_CASE tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city call failed 18.249s
+2026-10-09T01:01:29.7263275Z tests/e2e/test_travel_theme.py:78: in test_ticket_collection_and_destination_stamp_missing_city
+2026-10-09T01:01:29.7265405Z     expect(page.locator(".travel-stamp-city")).to_have_text("林肯")
+2026-10-09T01:01:29.7266663Z E   AssertionError: Locator expected to have text '林肯'
+2026-10-09T01:01:29.7270197Z E   Actual value: 林肯, 坎特伯里（鄰近 基督城） 
+2026-10-09T01:01:29.7273106Z E   Call log:
+2026-10-09T01:01:29.7274486Z E     - Expect "to_have_text" with timeout 5000ms
+2026-10-09T01:01:29.7275345Z E     - waiting for locator(".travel-stamp-city")
+2026-10-09T01:01:29.7276628Z E       13 × locator resolved to <span class="travel-stamp-city">林肯, 坎特伯里（鄰近 基督城）</span>
+2026-10-09T01:01:29.7277730Z E          - unexpected value "林肯, 坎特伯里（鄰近 基督城）"
+2026-10-09T01:01:29.7278690Z E   
+2026-10-09T01:01:29.7279243Z E   Aria snapshot:
+2026-10-09T01:01:29.7280517Z E   - text: 林肯, 坎特伯里（鄰近 基督城）
+2026-10-09T01:01:29.7361949Z 
+2026-10-09T01:01:52.3586674Z tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it PASSED [ 98%]WEB_CASE tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it call passed 22.543s
+2026-10-09T01:01:52.3844461Z 
+2026-10-09T01:01:57.5151427Z tests/e2e/test_travel_theme.py::test_school_switcher_without_selected_school PASSED [100%]WEB_CASE tests/e2e/test_travel_theme.py::test_school_switcher_without_selected_school call passed 4.973s
+2026-10-09T01:01:57.7407390Z 
+2026-10-09T01:01:57.7407668Z 
+2026-10-09T01:01:57.7408599Z =================================== FAILURES ===================================
+2026-10-09T01:01:57.7409805Z ____________ test_direct_query_without_hash_and_all_shared_filters _____________
+2026-10-09T01:01:57.7411114Z tests/e2e/test_partner_globe.py:230: in test_direct_query_without_hash_and_all_shared_filters
+2026-10-09T01:01:57.7412926Z     page.locator("#college-filter").select_option("商管")
+2026-10-09T01:01:57.7414456Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:20069: in select_option
+2026-10-09T01:01:57.7415468Z     self._sync(
+2026-10-09T01:01:57.7416485Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:633: in select_option
+2026-10-09T01:01:57.7417574Z     return await self._frame.select_option(
+2026-10-09T01:01:57.7418678Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:814: in select_option
+2026-10-09T01:01:57.7419859Z     return await self._channel.send("selectOption", self._timeout, params)
+2026-10-09T01:01:57.7420796Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T01:01:57.7421753Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T01:01:57.7422604Z     return await self._connection.wrap_api_call(
+2026-10-09T01:01:57.7423636Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T01:01:57.7425028Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T01:01:57.7426156Z E   playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7426960Z E   Call log:
+2026-10-09T01:01:57.7427506Z E     - waiting for locator("#college-filter")
+2026-10-09T01:01:57.7428803Z E       - locator resolved to <select id="college-filter">…</select>
+2026-10-09T01:01:57.7429577Z E     - attempting select option action
+2026-10-09T01:01:57.7430350Z E       2 × waiting for element to be visible and enabled
+2026-10-09T01:01:57.7431003Z E         - did not find some options
+2026-10-09T01:01:57.7431580Z E       - retrying select option action
+2026-10-09T01:01:57.7432114Z E       - waiting 20ms
+2026-10-09T01:01:57.7432780Z E       2 × waiting for element to be visible and enabled
+2026-10-09T01:01:57.7433416Z E         - did not find some options
+2026-10-09T01:01:57.7434245Z E       - retrying select option action
+2026-10-09T01:01:57.7434807Z E         - waiting 100ms
+2026-10-09T01:01:57.7435531Z E       44 × waiting for element to be visible and enabled
+2026-10-09T01:01:57.7436191Z E          - did not find some options
+2026-10-09T01:01:57.7436779Z E        - retrying select option action
+2026-10-09T01:01:57.7437331Z E          - waiting 500ms
+2026-10-09T01:01:57.7438139Z ________ test_all_routes_share_motion_and_back_retains_working_history _________
+2026-10-09T01:01:57.7439351Z tests/e2e/test_system_motion.py:51: in test_all_routes_share_motion_and_back_retains_working_history
+2026-10-09T01:01:57.7440252Z     page.locator("#page-back").click()
+2026-10-09T01:01:57.7441180Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T01:01:57.7441954Z     self._sync(
+2026-10-09T01:01:57.7442699Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T01:01:57.7443931Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T01:01:57.7444903Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T01:01:57.7445811Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T01:01:57.7446782Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T01:01:57.7447847Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T01:01:57.7448696Z     return await self._connection.wrap_api_call(
+2026-10-09T01:01:57.7449649Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T01:01:57.7450645Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T01:01:57.7451691Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7452421Z E   Call log:
+2026-10-09T01:01:57.7452921Z E     - waiting for locator("#page-back")
+2026-10-09T01:01:57.7454369Z E       - locator resolved to <button type="button" id="page-back" class="route-back" aria-label="返回上一頁">…</button>
+2026-10-09T01:01:57.7455568Z E     - attempting click action
+2026-10-09T01:01:57.7456360Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7457069Z E         - element is not visible
+2026-10-09T01:01:57.7457647Z E       - retrying click action
+2026-10-09T01:01:57.7458168Z E       - waiting 20ms
+2026-10-09T01:01:57.7458971Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7459670Z E         - element is not visible
+2026-10-09T01:01:57.7460229Z E       - retrying click action
+2026-10-09T01:01:57.7460722Z E         - waiting 100ms
+2026-10-09T01:01:57.7461486Z E       57 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7462189Z E          - element is not visible
+2026-10-09T01:01:57.7462759Z E        - retrying click action
+2026-10-09T01:01:57.7463261Z E          - waiting 500ms
+2026-10-09T01:01:57.7464299Z _____________ test_dialog_menu_details_tabs_and_mobile_layout[393] _____________
+2026-10-09T01:01:57.7465408Z tests/e2e/test_system_motion.py:63: in test_dialog_menu_details_tabs_and_mobile_layout
+2026-10-09T01:01:57.7466404Z     page.locator("#school-switcher").click()
+2026-10-09T01:01:57.7467371Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T01:01:57.7468379Z     self._sync(
+2026-10-09T01:01:57.7469122Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T01:01:57.7470052Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T01:01:57.7470929Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T01:01:57.7471822Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T01:01:57.7472800Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T01:01:57.7474029Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T01:01:57.7474873Z     return await self._connection.wrap_api_call(
+2026-10-09T01:01:57.7475847Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T01:01:57.7476855Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T01:01:57.7477911Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7478671Z E   Call log:
+2026-10-09T01:01:57.7479200Z E     - waiting for locator("#school-switcher")
+2026-10-09T01:01:57.7486767Z E       - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+2026-10-09T01:01:57.7487901Z E     - attempting click action
+2026-10-09T01:01:57.7488705Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7489406Z E         - element is not visible
+2026-10-09T01:01:57.7489975Z E       - retrying click action
+2026-10-09T01:01:57.7490507Z E       - waiting 20ms
+2026-10-09T01:01:57.7491247Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7491938Z E         - element is not visible
+2026-10-09T01:01:57.7492521Z E       - retrying click action
+2026-10-09T01:01:57.7493046Z E         - waiting 100ms
+2026-10-09T01:01:57.7494059Z E       56 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7494810Z E          - element is not visible
+2026-10-09T01:01:57.7495383Z E        - retrying click action
+2026-10-09T01:01:57.7495909Z E          - waiting 500ms
+2026-10-09T01:01:57.7496689Z _____________ test_dialog_menu_details_tabs_and_mobile_layout[834] _____________
+2026-10-09T01:01:57.7497801Z tests/e2e/test_system_motion.py:63: in test_dialog_menu_details_tabs_and_mobile_layout
+2026-10-09T01:01:57.7498659Z     page.locator("#school-switcher").click()
+2026-10-09T01:01:57.7499635Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T01:01:57.7500703Z     self._sync(
+2026-10-09T01:01:57.7501491Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T01:01:57.7502459Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T01:01:57.7503228Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T01:01:57.7504392Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T01:01:57.7505707Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T01:01:57.7506893Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T01:01:57.7507733Z     return await self._connection.wrap_api_call(
+2026-10-09T01:01:57.7508743Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T01:01:57.7509792Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T01:01:57.7510880Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7511664Z E   Call log:
+2026-10-09T01:01:57.7512234Z E     - waiting for locator("#school-switcher")
+2026-10-09T01:01:57.7513673Z E       - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+2026-10-09T01:01:57.7515010Z E     - attempting click action
+2026-10-09T01:01:57.7516097Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7516858Z E         - element is not visible
+2026-10-09T01:01:57.7517456Z E       - retrying click action
+2026-10-09T01:01:57.7517989Z E       - waiting 20ms
+2026-10-09T01:01:57.7518745Z E       2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7519452Z E         - element is not visible
+2026-10-09T01:01:57.7520028Z E       - retrying click action
+2026-10-09T01:01:57.7520572Z E         - waiting 100ms
+2026-10-09T01:01:57.7521374Z E       55 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7522112Z E          - element is not visible
+2026-10-09T01:01:57.7522710Z E        - retrying click action
+2026-10-09T01:01:57.7523254Z E          - waiting 500ms
+2026-10-09T01:01:57.7524268Z __________ test_home_search_navigation_school_switcher_and_responsive __________
+2026-10-09T01:01:57.7525446Z tests/e2e/test_travel_theme.py:51: in test_home_search_navigation_school_switcher_and_responsive
+2026-10-09T01:01:57.7526731Z     page.locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True).click()
+2026-10-09T01:01:57.7527940Z .venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+2026-10-09T01:01:57.7528713Z     self._sync(
+2026-10-09T01:01:57.7529484Z .venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+2026-10-09T01:01:57.7530440Z     return await self._frame._click(self._selector, strict=True, **params)
+2026-10-09T01:01:57.7531281Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-09T01:01:57.7532241Z .venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+2026-10-09T01:01:57.7533244Z     await self._channel.send("click", self._timeout, locals_to_params(locals()))
+2026-10-09T01:01:57.7534871Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+2026-10-09T01:01:57.7535744Z     return await self._connection.wrap_api_call(
+2026-10-09T01:01:57.7536748Z .venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+2026-10-09T01:01:57.7537865Z     raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+2026-10-09T01:01:57.7538928Z E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7539685Z E   Call log:
+2026-10-09T01:01:57.7540663Z E     - waiting for locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True)
+2026-10-09T01:01:57.7541782Z __________ test_ticket_collection_and_destination_stamp_missing_city ___________
+2026-10-09T01:01:57.7543553Z tests/e2e/test_travel_theme.py:78: in test_ticket_collection_and_destination_stamp_missing_city
+2026-10-09T01:01:57.7545471Z     expect(page.locator(".travel-stamp-city")).to_have_text("林肯")
+2026-10-09T01:01:57.7546451Z E   AssertionError: Locator expected to have text '林肯'
+2026-10-09T01:01:57.7547223Z E   Actual value: 林肯, 坎特伯里（鄰近 基督城） 
+2026-10-09T01:01:57.7547766Z E   Call log:
+2026-10-09T01:01:57.7548337Z E     - Expect "to_have_text" with timeout 5000ms
+2026-10-09T01:01:57.7549050Z E     - waiting for locator(".travel-stamp-city")
+2026-10-09T01:01:57.7550071Z E       13 × locator resolved to <span class="travel-stamp-city">林肯, 坎特伯里（鄰近 基督城）</span>
+2026-10-09T01:01:57.7551005Z E          - unexpected value "林肯, 坎特伯里（鄰近 基督城）"
+2026-10-09T01:01:57.7551554Z E   
+2026-10-09T01:01:57.7551987Z E   Aria snapshot:
+2026-10-09T01:01:57.7552531Z E   - text: 林肯, 坎特伯里（鄰近 基督城）
+2026-10-09T01:01:57.7553240Z =============================== warnings summary ===============================
+2026-10-09T01:01:57.7554653Z tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[1440]
+2026-10-09T01:01:57.7557487Z   /home/runner/work/abroad/abroad/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py:1110: InsecureRequestWarning: Unverified HTTPS request is being made to host 'overpass-api.de'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+2026-10-09T01:01:57.7560022Z     warnings.warn(
+2026-10-09T01:01:57.7560246Z 
+2026-10-09T01:01:57.7560995Z tests/e2e/test_system_motion.py::test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion
+2026-10-09T01:01:57.7563651Z   /home/runner/work/abroad/abroad/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py:1110: InsecureRequestWarning: Unverified HTTPS request is being made to host 'www.lincoln.ac.nz'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+2026-10-09T01:01:57.7565867Z     warnings.warn(
+2026-10-09T01:01:57.7566073Z 
+2026-10-09T01:01:57.7566719Z tests/e2e/test_system_motion.py::test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion
+2026-10-09T01:01:57.7569305Z   /home/runner/work/abroad/abroad/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py:1110: InsecureRequestWarning: Unverified HTTPS request is being made to host 'livingheritage.lincoln.ac.nz'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+2026-10-09T01:01:57.7571300Z     warnings.warn(
+2026-10-09T01:01:57.7571491Z 
+2026-10-09T01:01:57.7572059Z tests/e2e/test_system_motion.py::test_reduced_motion_live_change_and_missing_runtime_are_usable
+2026-10-09T01:01:57.7574769Z   /home/runner/work/abroad/abroad/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py:1110: InsecureRequestWarning: Unverified HTTPS request is being made to host 'overpass.private.coffee'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+2026-10-09T01:01:57.7576737Z     warnings.warn(
+2026-10-09T01:01:57.7576926Z 
+2026-10-09T01:01:57.7577347Z -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2026-10-09T01:01:57.7578244Z --------- generated xml file: /home/runner/work/_temp/web-tests-1.xml ----------
+2026-10-09T01:01:57.7579034Z ============================= slowest 25 durations =============================
+2026-10-09T01:01:57.7579957Z 43.74s call     tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters
+2026-10-09T01:01:57.7581131Z 43.52s call     tests/e2e/test_partner_globe.py::test_dynamic_home_school_real_japan_filter_and_shared_url
+2026-10-09T01:01:57.7582308Z 42.70s call     tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive
+2026-10-09T01:01:57.7583340Z 37.63s call     tests/e2e/test_partner_globe.py::test_mobile_touch_drag_and_pinch
+2026-10-09T01:01:57.7584928Z 34.76s call     tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history
+2026-10-09T01:01:57.7586115Z 33.74s call     tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834]
+2026-10-09T01:01:57.7587233Z 33.55s call     tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393]
+2026-10-09T01:01:57.7588406Z 30.26s call     tests/e2e/test_partner_globe.py::test_failures_are_recoverable_without_losing_filters[worker]
+2026-10-09T01:01:57.7589538Z 26.81s call     tests/e2e/test_partner_globe.py::test_refresh_direct_url_and_missing_empty_states
+2026-10-09T01:01:57.7590699Z 22.54s call     tests/e2e/test_travel_theme.py::test_completed_stamp_persists_and_unchecking_removes_it
+2026-10-09T01:01:57.7592008Z 19.36s call     tests/e2e/test_partner_globe.py::test_selection_motion_pauses_without_moving_camera_and_respects_preferences
+2026-10-09T01:01:57.7593641Z 18.69s call     tests/e2e/test_departure_tips_and_experience_digests.py::test_the_departure_tab_shows_the_countrys_guide_with_its_draft_notice_and_sources
+2026-10-09T01:01:57.7595269Z 18.25s call     tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city
+2026-10-09T01:01:57.7596498Z 17.19s call     tests/e2e/test_ntu_school.py::test_ntu_saved_conditions_keep_gpa_and_rank_without_percent_conversion
+2026-10-09T01:01:57.7597927Z 17.09s call     tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[390]
+2026-10-09T01:01:57.7599075Z 16.95s call     tests/e2e/test_partner_globe.py::test_thousand_points_cluster_expand_and_keyboard
+2026-10-09T01:01:57.7600096Z 16.79s call     tests/e2e/test_partner_globe.py::test_list_lazy_load_and_roundtrip_filters
+2026-10-09T01:01:57.7601182Z 16.65s call     tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size0]
+2026-10-09T01:01:57.7602363Z 16.19s call     tests/e2e/test_partner_globe.py::test_responsive_marker_preview_detail_and_back[size1]
+2026-10-09T01:01:57.7603461Z 16.13s call     tests/e2e/test_partner_globe.py::test_coincident_locations_offer_each_school
+2026-10-09T01:01:57.7604849Z 15.51s call     tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[1754]
+2026-10-09T01:01:57.7606166Z 15.25s call     tests/e2e/test_terms_consent.py::test_a_returning_browser_finds_the_current_version_already_ticked
+2026-10-09T01:01:57.7607459Z 15.09s call     tests/e2e/test_ntu_school.py::test_visitor_can_browse_ntu_filter_details_and_switch_back[1440]
+2026-10-09T01:01:57.7608648Z 14.59s call     tests/e2e/test_partner_globe.py::test_mobile_list_expansion_and_camera_survive_view_switch
+2026-10-09T01:01:57.7609892Z 14.02s call     tests/e2e/test_planning_workspace.py::test_matching_target_schedule_preview_and_idempotent_save[390]
+2026-10-09T01:01:57.7610878Z =========================== short test summary info ============================
+2026-10-09T01:01:57.7612425Z FAILED tests/e2e/test_partner_globe.py::test_direct_query_without_hash_and_all_shared_filters - playwright._impl._errors.TimeoutError: Locator.select_option: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7613579Z Call log:
+2026-10-09T01:01:57.7614108Z   - waiting for locator("#college-filter")
+2026-10-09T01:01:57.7614852Z     - locator resolved to <select id="college-filter">…</select>
+2026-10-09T01:01:57.7615436Z   - attempting select option action
+2026-10-09T01:01:57.7616036Z     2 × waiting for element to be visible and enabled
+2026-10-09T01:01:57.7616549Z       - did not find some options
+2026-10-09T01:01:57.7616970Z     - retrying select option action
+2026-10-09T01:01:57.7617353Z     - waiting 20ms
+2026-10-09T01:01:57.7617831Z     2 × waiting for element to be visible and enabled
+2026-10-09T01:01:57.7618325Z       - did not find some options
+2026-10-09T01:01:57.7618744Z     - retrying select option action
+2026-10-09T01:01:57.7619124Z       - waiting 100ms
+2026-10-09T01:01:57.7619622Z     44 × waiting for element to be visible and enabled
+2026-10-09T01:01:57.7620313Z        - did not find some options
+2026-10-09T01:01:57.7620740Z      - retrying select option action
+2026-10-09T01:01:57.7621126Z        - waiting 500ms
+2026-10-09T01:01:57.7622504Z FAILED tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7623642Z Call log:
+2026-10-09T01:01:57.7624169Z   - waiting for locator("#page-back")
+2026-10-09T01:01:57.7625144Z     - locator resolved to <button type="button" id="page-back" class="route-back" aria-label="返回上一頁">…</button>
+2026-10-09T01:01:57.7625879Z   - attempting click action
+2026-10-09T01:01:57.7626470Z     2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7626990Z       - element is not visible
+2026-10-09T01:01:57.7627353Z     - retrying click action
+2026-10-09T01:01:57.7627695Z     - waiting 20ms
+2026-10-09T01:01:57.7628224Z     2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7628761Z       - element is not visible
+2026-10-09T01:01:57.7629120Z     - retrying click action
+2026-10-09T01:01:57.7629468Z       - waiting 100ms
+2026-10-09T01:01:57.7630008Z     57 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7630523Z        - element is not visible
+2026-10-09T01:01:57.7631091Z      - retrying click action
+2026-10-09T01:01:57.7631447Z        - waiting 500ms
+2026-10-09T01:01:57.7632792Z FAILED tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393] - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:57.7634061Z Call log:
+2026-10-09T01:01:57.7634426Z   - waiting for locator("#school-switcher")
+2026-10-09T01:01:57.7635520Z     - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+2026-10-09T01:01:57.7636352Z   - attempting click action
+2026-10-09T01:01:57.7636913Z     2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7637442Z       - element is not visible
+2026-10-09T01:01:57.7637815Z     - retrying click action
+2026-10-09T01:01:57.7638172Z     - waiting 20ms
+2026-10-09T01:01:57.7638697Z     2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7639201Z       - element is not visible
+2026-10-09T01:01:57.7639573Z     - retrying click action
+2026-10-09T01:01:57.7639918Z       - waiting 100ms
+2026-10-09T01:01:57.7640457Z     56 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:57.7641025Z        - element is not visible
+2026-10-09T01:01:57.7641440Z      - retrying click action
+2026-10-09T01:01:58.5980447Z        - waiting 500ms
+2026-10-09T01:01:58.5982421Z FAILED tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834] - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:58.5984511Z Call log:
+2026-10-09T01:01:58.5985180Z   - waiting for locator("#school-switcher")
+2026-10-09T01:01:58.5987253Z     - locator resolved to <button type="button" id="school-switcher" aria-haspopup="dialog" class="school-switcher">…</button>
+2026-10-09T01:01:58.5988311Z   - attempting click action
+2026-10-09T01:01:58.5989126Z     2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:58.5989897Z       - element is not visible
+2026-10-09T01:01:58.5990488Z     - retrying click action
+2026-10-09T01:01:58.5991033Z     - waiting 20ms
+2026-10-09T01:01:58.5991759Z     2 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:58.5992492Z       - element is not visible
+2026-10-09T01:01:58.5993060Z     - retrying click action
+2026-10-09T01:01:58.5993590Z       - waiting 100ms
+2026-10-09T01:01:58.5994565Z     55 × waiting for element to be visible, enabled and stable
+2026-10-09T01:01:58.5995307Z        - element is not visible
+2026-10-09T01:01:58.5995881Z      - retrying click action
+2026-10-09T01:01:58.5996430Z        - waiting 500ms
+2026-10-09T01:01:58.5998057Z FAILED tests/e2e/test_travel_theme.py::test_home_search_navigation_school_switcher_and_responsive - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+2026-10-09T01:01:58.5999449Z Call log:
+2026-10-09T01:01:58.6000395Z   - waiting for locator(".uniway-public-nav").get_by_role("link", name="社群討論", exact=True)
+2026-10-09T01:01:58.6002306Z FAILED tests/e2e/test_travel_theme.py::test_ticket_collection_and_destination_stamp_missing_city - AssertionError: Locator expected to have text '林肯'
+2026-10-09T01:01:58.6003707Z Actual value: 林肯, 坎特伯里（鄰近 基督城） 
+2026-10-09T01:01:58.6004471Z Call log:
+2026-10-09T01:01:58.6005040Z   - Expect "to_have_text" with timeout 5000ms
+2026-10-09T01:01:58.6005758Z   - waiting for locator(".travel-stamp-city")
+2026-10-09T01:01:58.6006815Z     13 × locator resolved to <span class="travel-stamp-city">林肯, 坎特伯里（鄰近 基督城）</span>
+2026-10-09T01:01:58.6007818Z        - unexpected value "林肯, 坎特伯里（鄰近 基督城）"
+2026-10-09T01:01:58.6008314Z 
+2026-10-09T01:01:58.6008645Z Aria snapshot:
+2026-10-09T01:01:58.6009221Z - text: 林肯, 坎特伯里（鄰近 基督城）
+2026-10-09T01:01:58.6010052Z ============= 6 failed, 67 passed, 4 warnings in 983.56s (0:16:23) =============
+2026-10-09T01:01:58.6010875Z WEB_SHARD 1 exit=1 elapsed=985.950s
+2026-10-09T01:02:00.6206626Z ##[error]Process completed with exit code 1.

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="10" time="134.232" timestamp="2026-10-09T00:39:15.073451+00:00" hostname="f6ad0b7a0286"><testcase classname="tests.e2e.test_analytics_tracking" name="test_a_visit_is_recorded_with_pages_searches_and_school_opens" time="15.970" /><testcase classname="tests.e2e.test_analytics_tracking" name="test_automated_browsers_are_not_tracked_unless_asked" time="6.525" /><testcase classname="tests.e2e.test_analytics_tracking" name="test_do_not_track_and_opt_out_stop_everything" time="6.518" /><testcase classname="tests.e2e.test_analytics_tracking" name="test_the_footer_button_opts_out_and_back_in" time="9.648" /><testcase classname="tests.e2e.test_analytics_tracking" name="test_the_address_bar_switch_excludes_your_own_browser" time="5.455" /><testcase classname="tests.e2e.test_application_periods" name="test_sourced_rounds_retry_and_keep_unsent_draft[390]" time="7.139" /><testcase classname="tests.e2e.test_application_periods" name="test_sourced_rounds_retry_and_keep_unsent_draft[1754]" time="7.985" /><testcase classname="tests.e2e.test_discovery_workspace" name="test_combined_search_map_preview_and_chinese_reader" time="25.346"><failure message="AssertionError: Locator expected to contain text 'I cooked'&#10;Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;.discovery-reader-original&quot;)&#10;    11 × locator resolved to &lt;details open=&quot;&quot; class=&quot;discovery-reader-original&quot;&gt;…&lt;/details&gt;&#10;       - unexpected value &quot;資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。&quot;&#10;&#10;Aria snapshot:&#10;- group:&#10;  - text: 資料來源&#10;  - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。">tests/e2e/test_discovery_workspace.py:56: in test_combined_search_map_preview_and_chinese_reader
+    expect(page.locator(".discovery-reader-original")).to_contain_text("I cooked")
+E   AssertionError: Locator expected to contain text 'I cooked'
+E   Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator(".discovery-reader-original")
+E       11 × locator resolved to &lt;details open="" class="discovery-reader-original"&gt;…&lt;/details&gt;
+E          - unexpected value "資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。"
+E   
+E   Aria snapshot:
+E   - group:
+E     - text: 資料來源
+E     - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。</failure></testcase><testcase classname="tests.e2e.test_discovery_workspace" name="test_cloud_selection_roundtrip_home_isolation_and_logout" time="33.659" /><testcase classname="tests.e2e.test_discovery_workspace" name="test_candidates_notes_order_persistence_mobile_and_history" time="15.741" /></testsuite></testsuites>

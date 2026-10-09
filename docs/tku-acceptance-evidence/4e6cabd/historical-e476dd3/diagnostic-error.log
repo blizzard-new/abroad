@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/workspace/abroad-tku-evidence-e476dd3/scripts/report_tku_failure_diagnostics.py", line 76, in <module>
+    a=p.parse_args();report(a.results,a.original_results,a.output)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/abroad-tku-evidence-e476dd3/scripts/report_tku_failure_diagnostics.py", line 54, in report
+    raise ValueError(f'Unclassified baseline failure: {old["id"]}')
+ValueError: Unclassified baseline failure: tests.test_social_community_api::test_private_conversation_retry_replays_generated_resources

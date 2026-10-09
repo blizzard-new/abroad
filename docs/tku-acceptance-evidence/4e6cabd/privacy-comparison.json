@@ -1,0 +1,125 @@
+{
+  "before_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+  "after_commit": "4e6cabd073e4792f94959545efeb4e323fefc3f5",
+  "same_capture_script": true,
+  "before_raw_http": "privacy-before-raw.json",
+  "after_raw_http": "privacy-after-raw.json",
+  "sensitive_before": {
+    "status": 201,
+    "moderation": "approved",
+    "guest_rows": 1
+  },
+  "sensitive_after": {
+    "status": 422,
+    "guest_rows": 0
+  },
+  "deletion_before_public_name": "合成驗收姓名",
+  "deletion_after_public_post_and_comment_name": "已刪除帳號",
+  "stored_author_link_removed": true,
+  "boundary_tests": 19,
+  "boundary_http_calls": 54,
+  "supabase_cases_simulated": true,
+  "simulated_supabase_atomic_calls": [
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[committed-204-False]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 204,
+        "raw_body": "",
+        "returned_mutation_id": "1b9d9c9d30b3dc44aae0a5d487488691"
+      },
+      "repository_backend": "supabase",
+      "rpc_routing_simulated": true,
+      "atomic_commit_calls": [
+        {
+          "mutation_id": "1b9d9c9d30b3dc44aae0a5d487488691",
+          "account_id": "1b2e30c88b8040b7b5d6bbaff7f0edf4",
+          "session_id": "1d8bd2e7c5044d07b9914328ed5ce683",
+          "returned_status": "committed"
+        }
+      ]
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[committed-204-True]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": "synthetic-supabase-routing-0001",
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 204,
+        "raw_body": "",
+        "returned_mutation_id": "synthetic-supabase-routing-0001"
+      },
+      "repository_backend": "supabase",
+      "rpc_routing_simulated": true,
+      "atomic_commit_calls": [
+        {
+          "mutation_id": "synthetic-supabase-routing-0001",
+          "account_id": "368cfd9229c1400ca8e8a13c256cb1cd",
+          "session_id": "6e3e77e316b14fe2b425fb0b0d8d4397",
+          "returned_status": "committed"
+        }
+      ]
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[integrity_conflict-503-False]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 503,
+        "raw_body": "{\"detail\":\"帳號刪除尚未完成，請保留操作識別碼後重試。\"}",
+        "returned_mutation_id": "80f16e5394d80453c8858412bf9f3534"
+      },
+      "repository_backend": "supabase",
+      "rpc_routing_simulated": true,
+      "atomic_commit_calls": [
+        {
+          "mutation_id": "80f16e5394d80453c8858412bf9f3534",
+          "account_id": "7e4beccfa5884f85aacfd80795b15914",
+          "session_id": "147f8082788441ee9e626aa2a8c38c4b",
+          "returned_status": "integrity_conflict"
+        }
+      ]
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[integrity_conflict-503-True]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": "synthetic-supabase-routing-0001",
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 503,
+        "raw_body": "{\"detail\":\"帳號刪除尚未完成，請保留操作識別碼後重試。\"}",
+        "returned_mutation_id": "synthetic-supabase-routing-0001"
+      },
+      "repository_backend": "supabase",
+      "rpc_routing_simulated": true,
+      "atomic_commit_calls": [
+        {
+          "mutation_id": "synthetic-supabase-routing-0001",
+          "account_id": "91512655e2da4afca602301d9bf533ac",
+          "session_id": "0ebf79cc27b34d0f9b916088462877ac",
+          "returned_status": "integrity_conflict"
+        }
+      ]
+    }
+  ],
+  "production_database_access": false
+}

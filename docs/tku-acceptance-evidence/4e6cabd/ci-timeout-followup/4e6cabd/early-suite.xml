@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="10" time="155.354" timestamp="2026-10-09T00:49:23.040288+00:00" hostname="f6ad0b7a0286"><testcase classname="tests.e2e.test_analytics_tracking" name="test_a_visit_is_recorded_with_pages_searches_and_school_opens" time="11.670" /><testcase classname="tests.e2e.test_analytics_tracking" name="test_automated_browsers_are_not_tracked_unless_asked" time="6.040" /><testcase classname="tests.e2e.test_analytics_tracking" name="test_do_not_track_and_opt_out_stop_everything" time="5.042" /><testcase classname="tests.e2e.test_analytics_tracking" name="test_the_footer_button_opts_out_and_back_in" time="10.544" /><testcase classname="tests.e2e.test_analytics_tracking" name="test_the_address_bar_switch_excludes_your_own_browser" time="7.112" /><testcase classname="tests.e2e.test_application_periods" name="test_sourced_rounds_retry_and_keep_unsent_draft[390]" time="34.021"><failure message="playwright._impl._errors.TimeoutError: Timeout 30000ms exceeded while waiting for event &quot;response&quot;">tests/e2e/test_application_periods.py:40: in test_sourced_rounds_retry_and_keep_unsent_draft
+    with page.expect_response(lambda response:'/application-period-options?' in response.url and response.status==503):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py:85: in __exit__
+    self._event.value
+.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py:59: in value
+    raise exception
+E   playwright._impl._errors.TimeoutError: Timeout 30000ms exceeded while waiting for event "response"</failure></testcase><testcase classname="tests.e2e.test_application_periods" name="test_sourced_rounds_retry_and_keep_unsent_draft[1754]" time="9.706" /><testcase classname="tests.e2e.test_discovery_workspace" name="test_combined_search_map_preview_and_chinese_reader" time="21.004"><failure message="AssertionError: Locator expected to contain text 'I cooked'&#10;Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;.discovery-reader-original&quot;)&#10;    11 × locator resolved to &lt;details open=&quot;&quot; class=&quot;discovery-reader-original&quot;&gt;…&lt;/details&gt;&#10;       - unexpected value &quot;資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。&quot;&#10;&#10;Aria snapshot:&#10;- group:&#10;  - text: 資料來源&#10;  - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。">tests/e2e/test_discovery_workspace.py:56: in test_combined_search_map_preview_and_chinese_reader
+    expect(page.locator(".discovery-reader-original")).to_contain_text("I cooked")
+E   AssertionError: Locator expected to contain text 'I cooked'
+E   Actual value: 資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。 
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator(".discovery-reader-original")
+E       11 × locator resolved to &lt;details open="" class="discovery-reader-original"&gt;…&lt;/details&gt;
+E          - unexpected value "資料來源內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。"
+E   
+E   Aria snapshot:
+E   - group:
+E     - text: 資料來源
+E     - paragraph: 內容以繁體中文呈現，專有名詞保留原文。機器翻譯未經人工審核，完整內容可至來源核對。</failure></testcase><testcase classname="tests.e2e.test_discovery_workspace" name="test_cloud_selection_roundtrip_home_isolation_and_logout" time="31.613" /><testcase classname="tests.e2e.test_discovery_workspace" name="test_candidates_notes_order_persistence_mobile_and_history" time="18.195" /></testsuite></testsuites>
