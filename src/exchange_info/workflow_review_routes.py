@@ -21,7 +21,8 @@ from .models import (
 
 
 def register_workflow_review_routes(app: FastAPI, authenticated_admin) -> None:
-    review_lock = RLock()
+    # All workflow, source and destination commands share this app's lock.
+    review_lock = app.state.content_review_lock = RLock()
     store = app.state.content_governance_store
 
     def authorize(request: Request, response: Response):

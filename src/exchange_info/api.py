@@ -65,6 +65,7 @@ from .feedback_routes import register_feedback_routes
 from .notification_routes import register_notification_routes
 from .openapi_contract import install_openapi_contract
 from .workflow_review_routes import register_workflow_review_routes
+from .content_governance_routes import register_content_governance_routes
 from .tku_eligibility_routes import register_tku_eligibility_routes
 from .ai_gateway import (
     ai_embedding_model,
@@ -933,6 +934,8 @@ def create_app(
 
     register_notification_routes(app, authenticated_account, authenticated_content_admin)
     register_workflow_review_routes(app, authenticated_content_admin)
+    register_content_governance_routes(app, authenticated_content_admin,
+                                      data_dir=resolved_data_dir, static_dir=STATIC_DIR)
     register_tku_eligibility_routes(app)
     analytics_countries: dict[str, Any] = {"at": 0.0, "value": {}}
 

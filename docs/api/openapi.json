@@ -5016,6 +5016,54 @@
         "title": "ApplicationSupportStatus",
         "type": "string"
       },
+      "ApplicationWorkflowApplicabilityUpdateRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "academic_year": {
+            "pattern": "^\\d{3}$",
+            "title": "Academic Year",
+            "type": "string"
+          },
+          "application_round": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Round"
+          },
+          "expected_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Expected Content Hash",
+            "type": "string"
+          },
+          "note": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Note",
+            "type": "string"
+          },
+          "source_updates": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowSourceApplicabilityUpdate"
+            },
+            "maxItems": 50,
+            "title": "Source Updates",
+            "type": "array"
+          }
+        },
+        "required": [
+          "expected_content_hash",
+          "academic_year",
+          "note"
+        ],
+        "title": "ApplicationWorkflowApplicabilityUpdateRequest",
+        "type": "object"
+      },
       "ApplicationWorkflowApprovalRequest": {
         "additionalProperties": false,
         "properties": {
@@ -5480,6 +5528,433 @@
         "title": "ApplicationWorkflowPublicationAction",
         "type": "string"
       },
+      "ApplicationWorkflowPublicationHistory": {
+        "properties": {
+          "home_university": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Home University"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowPublicationState"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "publication_revision_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Publication Revision Count",
+            "type": "integer"
+          },
+          "rollback_ready_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Rollback Ready Count",
+            "type": "integer"
+          },
+          "rollback_revision_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Rollback Revision Count",
+            "type": "integer"
+          },
+          "workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Workflow Count",
+            "type": "integer"
+          }
+        },
+        "title": "ApplicationWorkflowPublicationHistory",
+        "type": "object"
+      },
+      "ApplicationWorkflowPublicationRevisionSummary": {
+        "properties": {
+          "content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Content Hash",
+            "type": "string"
+          },
+          "is_current": {
+            "default": false,
+            "title": "Is Current",
+            "type": "boolean"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "publication_action": {
+            "$ref": "#/components/schemas/ApplicationWorkflowPublicationAction"
+          },
+          "published_at": {
+            "format": "date-time",
+            "title": "Published At",
+            "type": "string"
+          },
+          "published_by": {
+            "title": "Published By",
+            "type": "string"
+          },
+          "restored_revision_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Restored Revision Id"
+          },
+          "revision_id": {
+            "title": "Revision Id",
+            "type": "string"
+          },
+          "rolled_back_from_revision_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rolled Back From Revision Id"
+          },
+          "source_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Count",
+            "type": "integer"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApplicationWorkflowReviewStatus"
+          },
+          "step_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Step Count",
+            "type": "integer"
+          },
+          "version": {
+            "minimum": 1.0,
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "revision_id",
+          "version",
+          "content_hash",
+          "status",
+          "publication_action",
+          "published_at",
+          "published_by"
+        ],
+        "title": "ApplicationWorkflowPublicationRevisionSummary",
+        "type": "object"
+      },
+      "ApplicationWorkflowPublicationState": {
+        "properties": {
+          "can_rollback": {
+            "default": false,
+            "title": "Can Rollback",
+            "type": "boolean"
+          },
+          "current_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Current Content Hash",
+            "type": "string"
+          },
+          "current_publication_action": {
+            "$ref": "#/components/schemas/ApplicationWorkflowPublicationAction"
+          },
+          "current_published_at": {
+            "format": "date-time",
+            "title": "Current Published At",
+            "type": "string"
+          },
+          "current_revision_id": {
+            "title": "Current Revision Id",
+            "type": "string"
+          },
+          "current_version": {
+            "minimum": 1.0,
+            "title": "Current Version",
+            "type": "integer"
+          },
+          "home_university": {
+            "title": "Home University",
+            "type": "string"
+          },
+          "pending_revision_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pending Revision Id"
+          },
+          "program_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Program Type"
+          },
+          "publication_history": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowPublicationRevisionSummary"
+            },
+            "title": "Publication History",
+            "type": "array"
+          },
+          "rollback_block_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rollback Block Reason"
+          },
+          "rollback_targets": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowPublicationRevisionSummary"
+            },
+            "title": "Rollback Targets",
+            "type": "array"
+          },
+          "school_name": {
+            "title": "School Name",
+            "type": "string"
+          },
+          "workflow_key": {
+            "title": "Workflow Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "workflow_key",
+          "home_university",
+          "school_name",
+          "current_revision_id",
+          "current_version",
+          "current_content_hash",
+          "current_published_at",
+          "current_publication_action"
+        ],
+        "title": "ApplicationWorkflowPublicationState",
+        "type": "object"
+      },
+      "ApplicationWorkflowReleaseGateCheck": {
+        "properties": {
+          "actual_count": {
+            "minimum": 0.0,
+            "title": "Actual Count",
+            "type": "integer"
+          },
+          "code": {
+            "pattern": "^[a-z0-9_]+$",
+            "title": "Code",
+            "type": "string"
+          },
+          "comparison": {
+            "default": "equal",
+            "enum": [
+              "equal",
+              "at_least"
+            ],
+            "title": "Comparison",
+            "type": "string"
+          },
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "passed": {
+            "title": "Passed",
+            "type": "boolean"
+          },
+          "required_count": {
+            "minimum": 0.0,
+            "title": "Required Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "code",
+          "label",
+          "passed",
+          "actual_count",
+          "required_count",
+          "detail"
+        ],
+        "title": "ApplicationWorkflowReleaseGateCheck",
+        "type": "object"
+      },
+      "ApplicationWorkflowReleaseReadinessReport": {
+        "properties": {
+          "blocking_check_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Blocking Check Count",
+            "type": "integer"
+          },
+          "checks": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowReleaseGateCheck"
+            },
+            "title": "Checks",
+            "type": "array"
+          },
+          "critical_rule_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Critical Rule Count",
+            "type": "integer"
+          },
+          "critical_rule_source_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Critical Rule Source Gap Count",
+            "type": "integer"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "insecure_source_url_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Insecure Source Url Count",
+            "type": "integer"
+          },
+          "missing_academic_year_workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Missing Academic Year Workflow Count",
+            "type": "integer"
+          },
+          "missing_effective_round_workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Missing Effective Round Workflow Count",
+            "type": "integer"
+          },
+          "needs_confirmation_rule_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Needs Confirmation Rule Count",
+            "type": "integer"
+          },
+          "no_verified_exact_deadline_workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "No Verified Exact Deadline Workflow Count",
+            "type": "integer"
+          },
+          "pending_revision_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Pending Revision Count",
+            "type": "integer"
+          },
+          "publication_history_integrity_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Publication History Integrity Gap Count",
+            "type": "integer"
+          },
+          "published_without_dual_review_evidence_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Published Without Dual Review Evidence Count",
+            "type": "integer"
+          },
+          "published_workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Published Workflow Count",
+            "type": "integer"
+          },
+          "release_ready": {
+            "default": false,
+            "title": "Release Ready",
+            "type": "boolean"
+          },
+          "review_timestamp_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Timestamp Gap Count",
+            "type": "integer"
+          },
+          "snapshot_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Snapshot Fingerprint",
+            "type": "string"
+          },
+          "source_metadata_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Metadata Gap Count",
+            "type": "integer"
+          },
+          "source_year_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Year Gap Count",
+            "type": "integer"
+          },
+          "total_workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Total Workflow Count",
+            "type": "integer"
+          },
+          "unpublished_workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Unpublished Workflow Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "snapshot_fingerprint"
+        ],
+        "title": "ApplicationWorkflowReleaseReadinessReport",
+        "type": "object"
+      },
       "ApplicationWorkflowReviewApproval": {
         "properties": {
           "note": {
@@ -5534,6 +6009,740 @@
         ],
         "title": "ApplicationWorkflowReviewApproval",
         "type": "object"
+      },
+      "ApplicationWorkflowReviewBacklog": {
+        "properties": {
+          "critical_rule_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Critical Rule Count",
+            "type": "integer"
+          },
+          "distinct_source_metadata_gap_url_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Distinct Source Metadata Gap Url Count",
+            "type": "integer"
+          },
+          "home_universities": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Home Universities",
+            "type": "array"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowReviewBacklogItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "missing_academic_year_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Missing Academic Year Count",
+            "type": "integer"
+          },
+          "missing_effective_round_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Missing Effective Round Count",
+            "type": "integer"
+          },
+          "needs_confirmation_workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Needs Confirmation Workflow Count",
+            "type": "integer"
+          },
+          "no_verified_exact_deadline_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "No Verified Exact Deadline Count",
+            "type": "integer"
+          },
+          "review_partially_approved_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Partially Approved Count",
+            "type": "integer"
+          },
+          "review_ready_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Ready Count",
+            "type": "integer"
+          },
+          "review_unstarted_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Unstarted Count",
+            "type": "integer"
+          },
+          "source_metadata_gap_groups": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowSourceEvidenceGapGroup"
+            },
+            "title": "Source Metadata Gap Groups",
+            "type": "array"
+          },
+          "source_metadata_gap_reference_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Metadata Gap Reference Count",
+            "type": "integer"
+          },
+          "source_replacement_candidate_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Replacement Candidate Count",
+            "type": "integer"
+          },
+          "staged_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Staged Count",
+            "type": "integer"
+          },
+          "total_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Total Count",
+            "type": "integer"
+          },
+          "transport_blocked_source_replacement_candidate_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Transport Blocked Source Replacement Candidate Count",
+            "type": "integer"
+          },
+          "unstaged_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Unstaged Count",
+            "type": "integer"
+          },
+          "workflows_with_critical_rule_source_gaps": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Workflows With Critical Rule Source Gaps",
+            "type": "integer"
+          },
+          "workflows_with_insecure_sources": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Workflows With Insecure Sources",
+            "type": "integer"
+          },
+          "workflows_with_review_timestamp_gaps": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Workflows With Review Timestamp Gaps",
+            "type": "integer"
+          },
+          "workflows_with_source_metadata_gaps": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Workflows With Source Metadata Gaps",
+            "type": "integer"
+          },
+          "workflows_with_source_replacement_candidates": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Workflows With Source Replacement Candidates",
+            "type": "integer"
+          },
+          "workflows_with_source_year_gaps": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Workflows With Source Year Gaps",
+            "type": "integer"
+          }
+        },
+        "title": "ApplicationWorkflowReviewBacklog",
+        "type": "object"
+      },
+      "ApplicationWorkflowReviewBacklogItem": {
+        "properties": {
+          "academic_year": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Year"
+          },
+          "academic_year_ready": {
+            "default": false,
+            "title": "Academic Year Ready",
+            "type": "boolean"
+          },
+          "application_round": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Round"
+          },
+          "conditional_source_replacement_candidate_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Conditional Source Replacement Candidate Count",
+            "type": "integer"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "critical_rule_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Critical Rule Count",
+            "type": "integer"
+          },
+          "critical_rule_source_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Critical Rule Source Gap Count",
+            "type": "integer"
+          },
+          "effective_application_rounds": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Effective Application Rounds",
+            "type": "array"
+          },
+          "effective_round_ready": {
+            "default": false,
+            "title": "Effective Round Ready",
+            "type": "boolean"
+          },
+          "has_pending_revision": {
+            "default": false,
+            "title": "Has Pending Revision",
+            "type": "boolean"
+          },
+          "home_university": {
+            "title": "Home University",
+            "type": "string"
+          },
+          "insecure_source_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Insecure Source Count",
+            "type": "integer"
+          },
+          "needs_confirmation_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Needs Confirmation Count",
+            "type": "integer"
+          },
+          "pending_revision_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pending Revision Id"
+          },
+          "program_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Program Type"
+          },
+          "reference_deadline_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Reference Deadline Count",
+            "type": "integer"
+          },
+          "required_review_count": {
+            "default": 2,
+            "maximum": 10.0,
+            "minimum": 2.0,
+            "title": "Required Review Count",
+            "type": "integer"
+          },
+          "review_approval_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Approval Count",
+            "type": "integer"
+          },
+          "review_gap_codes": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowReviewGapCode"
+            },
+            "title": "Review Gap Codes",
+            "type": "array"
+          },
+          "review_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Gap Count",
+            "type": "integer"
+          },
+          "review_ready_to_publish": {
+            "default": false,
+            "title": "Review Ready To Publish",
+            "type": "boolean"
+          },
+          "review_status": {
+            "$ref": "#/components/schemas/ApplicationWorkflowReviewStatus"
+          },
+          "review_timestamp_missing_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Timestamp Missing Count",
+            "type": "integer"
+          },
+          "school_name": {
+            "title": "School Name",
+            "type": "string"
+          },
+          "source_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Count",
+            "type": "integer"
+          },
+          "source_metadata_missing_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Metadata Missing Count",
+            "type": "integer"
+          },
+          "source_replacement_candidate_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Replacement Candidate Count",
+            "type": "integer"
+          },
+          "source_year_missing_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Year Missing Count",
+            "type": "integer"
+          },
+          "step_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Step Count",
+            "type": "integer"
+          },
+          "strong_source_replacement_candidate_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Strong Source Replacement Candidate Count",
+            "type": "integer"
+          },
+          "transport_blocked_source_replacement_candidate_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Transport Blocked Source Replacement Candidate Count",
+            "type": "integer"
+          },
+          "verified_exact_deadline_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Verified Exact Deadline Count",
+            "type": "integer"
+          },
+          "version": {
+            "minimum": 1.0,
+            "title": "Version",
+            "type": "integer"
+          },
+          "workflow_key": {
+            "title": "Workflow Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "workflow_key",
+          "home_university",
+          "school_name",
+          "version",
+          "review_status"
+        ],
+        "title": "ApplicationWorkflowReviewBacklogItem",
+        "type": "object"
+      },
+      "ApplicationWorkflowReviewBatchRow": {
+        "properties": {
+          "academic_year": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Academic Year"
+          },
+          "application_rounds": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Application Rounds",
+            "type": "array"
+          },
+          "batch_id": {
+            "pattern": "^review-[0-9a-f]{12}-\\d{3}-\\d{3}$",
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "batch_number": {
+            "minimum": 1.0,
+            "title": "Batch Number",
+            "type": "integer"
+          },
+          "batch_position": {
+            "minimum": 1.0,
+            "title": "Batch Position",
+            "type": "integer"
+          },
+          "batch_rule_checklist_path": {
+            "title": "Batch Rule Checklist Path",
+            "type": "string"
+          },
+          "batch_workbench_path": {
+            "title": "Batch Workbench Path",
+            "type": "string"
+          },
+          "batch_workflow_count": {
+            "minimum": 1.0,
+            "title": "Batch Workflow Count",
+            "type": "integer"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "critical_rule_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Critical Rule Count",
+            "type": "integer"
+          },
+          "critical_rule_source_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Critical Rule Source Gap Count",
+            "type": "integer"
+          },
+          "has_pending_revision": {
+            "default": false,
+            "title": "Has Pending Revision",
+            "type": "boolean"
+          },
+          "home_university": {
+            "title": "Home University",
+            "type": "string"
+          },
+          "insecure_source_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Insecure Source Count",
+            "type": "integer"
+          },
+          "needs_confirmation_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Needs Confirmation Count",
+            "type": "integer"
+          },
+          "pending_revision_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pending Revision Id"
+          },
+          "priority_order": {
+            "minimum": 1.0,
+            "title": "Priority Order",
+            "type": "integer"
+          },
+          "program_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Program Type"
+          },
+          "required_review_count": {
+            "default": 2,
+            "maximum": 10.0,
+            "minimum": 2.0,
+            "title": "Required Review Count",
+            "type": "integer"
+          },
+          "review_approval_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Approval Count",
+            "type": "integer"
+          },
+          "review_content_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Review Content Fingerprint",
+            "type": "string"
+          },
+          "review_gap_codes": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowReviewGapCode"
+            },
+            "title": "Review Gap Codes",
+            "type": "array"
+          },
+          "review_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Gap Count",
+            "type": "integer"
+          },
+          "review_ready_to_publish": {
+            "default": false,
+            "title": "Review Ready To Publish",
+            "type": "boolean"
+          },
+          "review_timestamp_missing_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Timestamp Missing Count",
+            "type": "integer"
+          },
+          "school_name": {
+            "title": "School Name",
+            "type": "string"
+          },
+          "snapshot_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Snapshot Fingerprint",
+            "type": "string"
+          },
+          "source_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Count",
+            "type": "integer"
+          },
+          "source_metadata_missing_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Metadata Missing Count",
+            "type": "integer"
+          },
+          "source_year_missing_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Year Missing Count",
+            "type": "integer"
+          },
+          "verified_exact_deadline_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Verified Exact Deadline Count",
+            "type": "integer"
+          },
+          "workbench_path": {
+            "title": "Workbench Path",
+            "type": "string"
+          },
+          "workflow_key": {
+            "title": "Workflow Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "snapshot_fingerprint",
+          "review_content_fingerprint",
+          "batch_id",
+          "batch_number",
+          "batch_workflow_count",
+          "batch_position",
+          "priority_order",
+          "workflow_key",
+          "home_university",
+          "school_name",
+          "workbench_path",
+          "batch_workbench_path",
+          "batch_rule_checklist_path"
+        ],
+        "title": "ApplicationWorkflowReviewBatchRow",
+        "type": "object"
+      },
+      "ApplicationWorkflowReviewBatchStageItem": {
+        "properties": {
+          "created": {
+            "default": false,
+            "title": "Created",
+            "type": "boolean"
+          },
+          "revision_id": {
+            "title": "Revision Id",
+            "type": "string"
+          },
+          "workflow_key": {
+            "title": "Workflow Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "workflow_key",
+          "revision_id"
+        ],
+        "title": "ApplicationWorkflowReviewBatchStageItem",
+        "type": "object"
+      },
+      "ApplicationWorkflowReviewBatchStageRequest": {
+        "properties": {
+          "batch_size": {
+            "default": 10,
+            "maximum": 50.0,
+            "minimum": 1.0,
+            "title": "Batch Size",
+            "type": "integer"
+          },
+          "expected_snapshot": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Expected Snapshot",
+            "type": "string"
+          }
+        },
+        "required": [
+          "expected_snapshot"
+        ],
+        "title": "ApplicationWorkflowReviewBatchStageRequest",
+        "type": "object"
+      },
+      "ApplicationWorkflowReviewBatchStageResult": {
+        "properties": {
+          "approvals_created": {
+            "const": false,
+            "default": false,
+            "title": "Approvals Created",
+            "type": "boolean"
+          },
+          "batch_id": {
+            "pattern": "^review-[0-9a-f]{12}-\\d{3}-\\d{3}$",
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "batch_size": {
+            "maximum": 50.0,
+            "minimum": 1.0,
+            "title": "Batch Size",
+            "type": "integer"
+          },
+          "created_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Created Count",
+            "type": "integer"
+          },
+          "existing_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Existing Count",
+            "type": "integer"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowReviewBatchStageItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "public_student_data_changed": {
+            "const": false,
+            "default": false,
+            "title": "Public Student Data Changed",
+            "type": "boolean"
+          },
+          "review_content_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Review Content Fingerprint",
+            "type": "string"
+          },
+          "workflow_count": {
+            "minimum": 1.0,
+            "title": "Workflow Count",
+            "type": "integer"
+          },
+          "workflows_published": {
+            "const": false,
+            "default": false,
+            "title": "Workflows Published",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "batch_id",
+          "review_content_fingerprint",
+          "batch_size",
+          "workflow_count"
+        ],
+        "title": "ApplicationWorkflowReviewBatchStageResult",
+        "type": "object"
+      },
+      "ApplicationWorkflowReviewGapCode": {
+        "enum": [
+          "missing_academic_year",
+          "missing_effective_round",
+          "no_verified_exact_deadline",
+          "source_year_missing",
+          "source_metadata_missing",
+          "review_timestamp_missing",
+          "critical_rule_source_missing",
+          "insecure_official_source",
+          "needs_confirmation"
+        ],
+        "title": "ApplicationWorkflowReviewGapCode",
+        "type": "string"
       },
       "ApplicationWorkflowReviewRequest": {
         "properties": {
@@ -5752,6 +6961,55 @@
         "title": "ApplicationWorkflowRevisionEdit",
         "type": "object"
       },
+      "ApplicationWorkflowRollbackRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "expected_current_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Expected Current Content Hash",
+            "type": "string"
+          },
+          "expected_current_revision_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Expected Current Revision Id",
+            "type": "string"
+          },
+          "expected_current_version": {
+            "minimum": 1.0,
+            "title": "Expected Current Version",
+            "type": "integer"
+          },
+          "note": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Note",
+            "type": "string"
+          },
+          "restore_revision_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Restore Revision Id",
+            "type": "string"
+          },
+          "workflow_key": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Workflow Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "workflow_key",
+          "expected_current_revision_id",
+          "expected_current_version",
+          "expected_current_content_hash",
+          "restore_revision_id",
+          "note"
+        ],
+        "title": "ApplicationWorkflowRollbackRequest",
+        "type": "object"
+      },
       "ApplicationWorkflowSource": {
         "properties": {
           "application_round": {
@@ -5842,6 +7100,86 @@
         "title": "ApplicationWorkflowSource",
         "type": "object"
       },
+      "ApplicationWorkflowSourceApplicabilityUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "application_round": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Application Round"
+          },
+          "authority": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationSourceAuthority"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "effective_academic_year": {
+            "pattern": "^\\d{3}$",
+            "title": "Effective Academic Year",
+            "type": "string"
+          },
+          "replacement_source_url": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "minLength": 8,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Replacement Source Url"
+          },
+          "role": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationSourceRole"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source_url": {
+            "maxLength": 2000,
+            "minLength": 8,
+            "title": "Source Url",
+            "type": "string"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "maxLength": 240,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "required": [
+          "source_url",
+          "effective_academic_year"
+        ],
+        "title": "ApplicationWorkflowSourceApplicabilityUpdate",
+        "type": "object"
+      },
       "ApplicationWorkflowSourceChange": {
         "properties": {
           "change_type": {
@@ -5875,6 +7213,519 @@
           "title"
         ],
         "title": "ApplicationWorkflowSourceChange",
+        "type": "object"
+      },
+      "ApplicationWorkflowSourceEvidenceGapGroup": {
+        "properties": {
+          "critical_rule_reference_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Critical Rule Reference Count",
+            "type": "integer"
+          },
+          "home_universities": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Home Universities",
+            "type": "array"
+          },
+          "research_candidate": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationWorkflowSourceMetadataResearchCandidate"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "school_names": {
+            "items": {
+              "type": "string"
+            },
+            "title": "School Names",
+            "type": "array"
+          },
+          "source_evidence_snapshot_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Source Evidence Snapshot Fingerprint",
+            "type": "string"
+          },
+          "source_url": {
+            "title": "Source Url",
+            "type": "string"
+          },
+          "workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Workflow Count",
+            "type": "integer"
+          },
+          "workflow_keys": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Workflow Keys",
+            "type": "array"
+          }
+        },
+        "required": [
+          "source_url",
+          "source_evidence_snapshot_fingerprint"
+        ],
+        "title": "ApplicationWorkflowSourceEvidenceGapGroup",
+        "type": "object"
+      },
+      "ApplicationWorkflowSourceMetadataResearchCandidate": {
+        "additionalProperties": false,
+        "description": "Read-only research for one exact URL that is missing source metadata.",
+        "properties": {
+          "application_level_status": {
+            "enum": [
+              "content_available",
+              "not_found_page"
+            ],
+            "title": "Application Level Status",
+            "type": "string"
+          },
+          "approvals_created": {
+            "const": false,
+            "default": false,
+            "title": "Approvals Created",
+            "type": "boolean"
+          },
+          "automated_evidence": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "minItems": 1,
+            "title": "Automated Evidence",
+            "type": "array"
+          },
+          "batch_id": {
+            "pattern": "^DATA-\\d{3}-BATCH-\\d{3}$",
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "can_prefill": {
+            "const": false,
+            "default": false,
+            "title": "Can Prefill",
+            "type": "boolean"
+          },
+          "checked_at": {
+            "format": "date",
+            "title": "Checked At",
+            "type": "string"
+          },
+          "proposed_application_round": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proposed Application Round"
+          },
+          "proposed_authority": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationSourceAuthority"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "proposed_effective_academic_year": {
+            "anyOf": [
+              {
+                "maxLength": 40,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proposed Effective Academic Year"
+          },
+          "proposed_priority": {
+            "anyOf": [
+              {
+                "maximum": 5.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proposed Priority"
+          },
+          "proposed_role": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ApplicationSourceRole"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "proposed_title": {
+            "anyOf": [
+              {
+                "maxLength": 300,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Proposed Title"
+          },
+          "public_student_data_changed": {
+            "const": false,
+            "default": false,
+            "title": "Public Student Data Changed",
+            "type": "boolean"
+          },
+          "publication_effect": {
+            "const": "none",
+            "default": "none",
+            "title": "Publication Effect",
+            "type": "string"
+          },
+          "reason_not_ready": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Reason Not Ready",
+            "type": "string"
+          },
+          "required_human_checks": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "minItems": 1,
+            "title": "Required Human Checks",
+            "type": "array"
+          },
+          "research_leads": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowSourceResearchLead"
+            },
+            "maxItems": 5,
+            "title": "Research Leads",
+            "type": "array"
+          },
+          "research_status": {
+            "enum": [
+              "verified_exact_source",
+              "source_unavailable"
+            ],
+            "title": "Research Status",
+            "type": "string"
+          },
+          "review_status": {
+            "const": "human_review_required",
+            "default": "human_review_required",
+            "title": "Review Status",
+            "type": "string"
+          },
+          "source_url": {
+            "maxLength": 2000,
+            "minLength": 8,
+            "title": "Source Url",
+            "type": "string"
+          },
+          "transport_checked_at": {
+            "format": "date",
+            "title": "Transport Checked At",
+            "type": "string"
+          },
+          "transport_final_url": {
+            "maxLength": 2000,
+            "minLength": 8,
+            "title": "Transport Final Url",
+            "type": "string"
+          },
+          "transport_http_status": {
+            "exclusiveMaximum": 300.0,
+            "minimum": 200.0,
+            "title": "Transport Http Status",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "batch_id",
+          "checked_at",
+          "source_url",
+          "research_status",
+          "application_level_status",
+          "transport_checked_at",
+          "transport_final_url",
+          "transport_http_status",
+          "automated_evidence",
+          "required_human_checks",
+          "reason_not_ready"
+        ],
+        "title": "ApplicationWorkflowSourceMetadataResearchCandidate",
+        "type": "object"
+      },
+      "ApplicationWorkflowSourceReplacementCandidate": {
+        "additionalProperties": false,
+        "properties": {
+          "approvals_created": {
+            "const": false,
+            "default": false,
+            "title": "Approvals Created",
+            "type": "boolean"
+          },
+          "automated_evidence": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "minItems": 1,
+            "title": "Automated Evidence",
+            "type": "array"
+          },
+          "batch_id": {
+            "pattern": "^DATA-\\d{3}-BATCH-\\d{3}$",
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "can_prefill": {
+            "default": false,
+            "title": "Can Prefill",
+            "type": "boolean"
+          },
+          "candidate_status": {
+            "enum": [
+              "strong_candidate",
+              "conditional_candidate"
+            ],
+            "title": "Candidate Status",
+            "type": "string"
+          },
+          "candidate_url": {
+            "maxLength": 2000,
+            "minLength": 8,
+            "title": "Candidate Url",
+            "type": "string"
+          },
+          "checked_at": {
+            "format": "date",
+            "title": "Checked At",
+            "type": "string"
+          },
+          "current_url": {
+            "maxLength": 2000,
+            "minLength": 8,
+            "title": "Current Url",
+            "type": "string"
+          },
+          "public_student_data_changed": {
+            "const": false,
+            "default": false,
+            "title": "Public Student Data Changed",
+            "type": "boolean"
+          },
+          "publication_effect": {
+            "const": "none",
+            "default": "none",
+            "title": "Publication Effect",
+            "type": "string"
+          },
+          "required_human_checks": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "minItems": 1,
+            "title": "Required Human Checks",
+            "type": "array"
+          },
+          "research_leads": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowSourceResearchLead"
+            },
+            "maxItems": 10,
+            "title": "Research Leads",
+            "type": "array"
+          },
+          "review_status": {
+            "const": "human_review_required",
+            "default": "human_review_required",
+            "title": "Review Status",
+            "type": "string"
+          },
+          "revision_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Revision Id",
+            "type": "string"
+          },
+          "supporting_urls": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "title": "Supporting Urls",
+            "type": "array"
+          },
+          "transport_checked_at": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Transport Checked At"
+          },
+          "transport_final_url": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "minLength": 8,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Transport Final Url"
+          },
+          "transport_http_status": {
+            "anyOf": [
+              {
+                "maximum": 599.0,
+                "minimum": 100.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Transport Http Status"
+          },
+          "transport_status": {
+            "enum": [
+              "verified_https",
+              "downgrades_to_http",
+              "unverified"
+            ],
+            "title": "Transport Status",
+            "type": "string"
+          },
+          "workflow_id": {
+            "pattern": "^workflow-[0-9a-z]+$",
+            "title": "Workflow Id",
+            "type": "string"
+          },
+          "workflow_key": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Workflow Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "batch_id",
+          "checked_at",
+          "workflow_id",
+          "current_url",
+          "candidate_url",
+          "candidate_status",
+          "transport_status",
+          "automated_evidence",
+          "required_human_checks",
+          "revision_id",
+          "workflow_key"
+        ],
+        "title": "ApplicationWorkflowSourceReplacementCandidate",
+        "type": "object"
+      },
+      "ApplicationWorkflowSourceResearchLead": {
+        "additionalProperties": false,
+        "description": "Safe official lead that is useful for research but not an equivalent source.",
+        "properties": {
+          "eligible_as_replacement": {
+            "const": false,
+            "default": false,
+            "title": "Eligible As Replacement",
+            "type": "boolean"
+          },
+          "label": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Label",
+            "type": "string"
+          },
+          "reason_not_equivalent": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Reason Not Equivalent",
+            "type": "string"
+          },
+          "relationship": {
+            "enum": [
+              "official_context",
+              "adjacent_program",
+              "application_system"
+            ],
+            "title": "Relationship",
+            "type": "string"
+          },
+          "transport_checked_at": {
+            "format": "date",
+            "title": "Transport Checked At",
+            "type": "string"
+          },
+          "transport_final_url": {
+            "maxLength": 2000,
+            "minLength": 8,
+            "title": "Transport Final Url",
+            "type": "string"
+          },
+          "transport_http_status": {
+            "exclusiveMaximum": 300.0,
+            "minimum": 200.0,
+            "title": "Transport Http Status",
+            "type": "integer"
+          },
+          "transport_status": {
+            "const": "verified_https",
+            "default": "verified_https",
+            "title": "Transport Status",
+            "type": "string"
+          },
+          "url": {
+            "maxLength": 2000,
+            "minLength": 8,
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "label",
+          "url",
+          "relationship",
+          "transport_checked_at",
+          "transport_final_url",
+          "transport_http_status",
+          "reason_not_equivalent"
+        ],
+        "title": "ApplicationWorkflowSourceResearchLead",
         "type": "object"
       },
       "ApplicationWorkflowStepChange": {
@@ -8273,6 +10124,1123 @@
           "school_name"
         ],
         "title": "DestinationProfile",
+        "type": "object"
+      },
+      "DestinationProfilePromotionEvent": {
+        "description": "Append-only publication evidence for one independently reviewed profile.",
+        "properties": {
+          "home_university": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Home University",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "note": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Note",
+            "type": "string"
+          },
+          "promoted_at": {
+            "format": "date-time",
+            "title": "Promoted At",
+            "type": "string"
+          },
+          "promoted_by_display_name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Promoted By Display Name",
+            "type": "string"
+          },
+          "promoted_by_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Promoted By Id",
+            "type": "string"
+          },
+          "promoted_profile": {
+            "$ref": "#/components/schemas/DestinationProfile"
+          },
+          "promoted_profile_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Promoted Profile Content Hash",
+            "type": "string"
+          },
+          "review_event_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "minItems": 2,
+            "title": "Review Event Ids",
+            "type": "array"
+          },
+          "reviewer_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "minItems": 2,
+            "title": "Reviewer Ids",
+            "type": "array"
+          },
+          "school_name": {
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "School Name",
+            "type": "string"
+          },
+          "snapshot_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Snapshot Fingerprint",
+            "type": "string"
+          },
+          "source_profile_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Source Profile Content Hash",
+            "type": "string"
+          }
+        },
+        "required": [
+          "home_university",
+          "school_name",
+          "source_profile_content_hash",
+          "promoted_profile_content_hash",
+          "snapshot_fingerprint",
+          "review_event_ids",
+          "reviewer_ids",
+          "promoted_by_id",
+          "promoted_by_display_name",
+          "note",
+          "promoted_profile"
+        ],
+        "title": "DestinationProfilePromotionEvent",
+        "type": "object"
+      },
+      "DestinationProfilePromotionRequest": {
+        "properties": {
+          "expected_profile_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Expected Profile Content Hash",
+            "type": "string"
+          },
+          "expected_snapshot": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Expected Snapshot",
+            "type": "string"
+          },
+          "home_university": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Home University",
+            "type": "string"
+          },
+          "note": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Note",
+            "type": "string"
+          },
+          "school_name": {
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "School Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "home_university",
+          "school_name",
+          "expected_snapshot",
+          "expected_profile_content_hash",
+          "note"
+        ],
+        "title": "DestinationProfilePromotionRequest",
+        "type": "object"
+      },
+      "DestinationProfilePublicationHistory": {
+        "properties": {
+          "active_promotion_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Active Promotion Count",
+            "type": "integer"
+          },
+          "home_university": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Home University"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DestinationProfilePublicationState"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "profile_with_history_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Profile With History Count",
+            "type": "integer"
+          },
+          "promotion_event_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Promotion Event Count",
+            "type": "integer"
+          },
+          "rollback_event_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Rollback Event Count",
+            "type": "integer"
+          }
+        },
+        "title": "DestinationProfilePublicationHistory",
+        "type": "object"
+      },
+      "DestinationProfilePublicationState": {
+        "properties": {
+          "active_promotion_event_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Active Promotion Event Id"
+          },
+          "can_rollback": {
+            "default": false,
+            "title": "Can Rollback",
+            "type": "boolean"
+          },
+          "candidate_changed_since_publication": {
+            "default": false,
+            "title": "Candidate Changed Since Publication",
+            "type": "boolean"
+          },
+          "current_candidate_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Current Candidate Content Hash",
+            "type": "string"
+          },
+          "current_public_profile": {
+            "$ref": "#/components/schemas/DestinationProfile"
+          },
+          "current_public_profile_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Current Public Profile Content Hash",
+            "type": "string"
+          },
+          "home_university": {
+            "title": "Home University",
+            "type": "string"
+          },
+          "latest_actor_display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Actor Display Name"
+          },
+          "latest_event_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Event At"
+          },
+          "latest_event_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Event Id"
+          },
+          "latest_event_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "promotion",
+                  "rollback"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Event Type"
+          },
+          "promotion_history": {
+            "items": {
+              "$ref": "#/components/schemas/DestinationProfilePromotionEvent"
+            },
+            "title": "Promotion History",
+            "type": "array"
+          },
+          "rollback_history": {
+            "items": {
+              "$ref": "#/components/schemas/DestinationProfileRollbackEvent"
+            },
+            "title": "Rollback History",
+            "type": "array"
+          },
+          "school_name": {
+            "title": "School Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "home_university",
+          "school_name",
+          "current_candidate_content_hash",
+          "current_public_profile_content_hash",
+          "current_public_profile"
+        ],
+        "title": "DestinationProfilePublicationState",
+        "type": "object"
+      },
+      "DestinationProfileReviewBatchRow": {
+        "description": "One snapshot-bound assignment row in a destination review batch.",
+        "properties": {
+          "batch_checklist_path": {
+            "title": "Batch Checklist Path",
+            "type": "string"
+          },
+          "batch_id": {
+            "pattern": "^destination-[0-9a-f]{12}-\\d{3}-\\d{3}$",
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "batch_number": {
+            "minimum": 1.0,
+            "title": "Batch Number",
+            "type": "integer"
+          },
+          "batch_position": {
+            "minimum": 1.0,
+            "title": "Batch Position",
+            "type": "integer"
+          },
+          "batch_profile_count": {
+            "minimum": 1.0,
+            "title": "Batch Profile Count",
+            "type": "integer"
+          },
+          "batch_workbench_path": {
+            "title": "Batch Workbench Path",
+            "type": "string"
+          },
+          "city": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "City"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "coverage_note": {
+            "title": "Coverage Note",
+            "type": "string"
+          },
+          "coverage_status": {
+            "title": "Coverage Status",
+            "type": "string"
+          },
+          "home_university": {
+            "title": "Home University",
+            "type": "string"
+          },
+          "priority_order": {
+            "minimum": 1.0,
+            "title": "Priority Order",
+            "type": "integer"
+          },
+          "profile_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Profile Content Hash",
+            "type": "string"
+          },
+          "queue_snapshot_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Queue Snapshot Fingerprint",
+            "type": "string"
+          },
+          "ready_for_promotion": {
+            "default": false,
+            "title": "Ready For Promotion",
+            "type": "boolean"
+          },
+          "required_review_count": {
+            "default": 2,
+            "maximum": 10.0,
+            "minimum": 2.0,
+            "title": "Required Review Count",
+            "type": "integer"
+          },
+          "review_approval_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Approval Count",
+            "type": "integer"
+          },
+          "review_change_request_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Change Request Count",
+            "type": "integer"
+          },
+          "review_content_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Review Content Fingerprint",
+            "type": "string"
+          },
+          "review_gap_codes": {
+            "items": {
+              "enum": [
+                "coverage_not_verified",
+                "second_review_required",
+                "missing_sources",
+                "insecure_sources",
+                "missing_last_checked"
+              ],
+              "type": "string"
+            },
+            "title": "Review Gap Codes",
+            "type": "array"
+          },
+          "review_progress": {
+            "default": "unstarted",
+            "enum": [
+              "unstarted",
+              "partial",
+              "ready_for_promotion",
+              "changes_required"
+            ],
+            "title": "Review Progress",
+            "type": "string"
+          },
+          "school_name": {
+            "title": "School Name",
+            "type": "string"
+          },
+          "source_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Count",
+            "type": "integer"
+          },
+          "source_titles": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Titles",
+            "type": "array"
+          },
+          "source_urls": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Urls",
+            "type": "array"
+          },
+          "student_view_path": {
+            "default": "/#partners",
+            "title": "Student View Path",
+            "type": "string"
+          }
+        },
+        "required": [
+          "queue_snapshot_fingerprint",
+          "review_content_fingerprint",
+          "batch_id",
+          "batch_number",
+          "batch_profile_count",
+          "batch_position",
+          "priority_order",
+          "home_university",
+          "school_name",
+          "coverage_status",
+          "coverage_note",
+          "profile_content_hash",
+          "batch_workbench_path",
+          "batch_checklist_path"
+        ],
+        "title": "DestinationProfileReviewBatchRow",
+        "type": "object"
+      },
+      "DestinationProfileReviewDecision": {
+        "enum": [
+          "approve",
+          "changes_required"
+        ],
+        "title": "DestinationProfileReviewDecision",
+        "type": "string"
+      },
+      "DestinationProfileReviewEvent": {
+        "description": "Append-only evidence produced by one authenticated content reviewer.",
+        "properties": {
+          "decision": {
+            "$ref": "#/components/schemas/DestinationProfileReviewDecision"
+          },
+          "home_university": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Home University",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "note": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Note",
+            "type": "string"
+          },
+          "profile_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Profile Content Hash",
+            "type": "string"
+          },
+          "reviewed_at": {
+            "format": "date-time",
+            "title": "Reviewed At",
+            "type": "string"
+          },
+          "reviewed_section_keys": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 30,
+            "minItems": 1,
+            "title": "Reviewed Section Keys",
+            "type": "array"
+          },
+          "reviewed_source_urls": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "title": "Reviewed Source Urls",
+            "type": "array"
+          },
+          "reviewer_display_name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Reviewer Display Name",
+            "type": "string"
+          },
+          "reviewer_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Reviewer Id",
+            "type": "string"
+          },
+          "school_name": {
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "School Name",
+            "type": "string"
+          },
+          "snapshot_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Snapshot Fingerprint",
+            "type": "string"
+          },
+          "supersedes_event_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supersedes Event Id"
+          }
+        },
+        "required": [
+          "home_university",
+          "school_name",
+          "profile_content_hash",
+          "snapshot_fingerprint",
+          "reviewer_id",
+          "reviewer_display_name",
+          "decision",
+          "note",
+          "reviewed_section_keys"
+        ],
+        "title": "DestinationProfileReviewEvent",
+        "type": "object"
+      },
+      "DestinationProfileReviewQueue": {
+        "description": "Snapshot-bound, read-only queue for destination profile reviewers.",
+        "properties": {
+          "change_requested_profile_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Change Requested Profile Count",
+            "type": "integer"
+          },
+          "current_review_event_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Current Review Event Count",
+            "type": "integer"
+          },
+          "explicit_second_review_required_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Explicit Second Review Required Count",
+            "type": "integer"
+          },
+          "home_universities": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Home Universities",
+            "type": "array"
+          },
+          "home_university": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Home University"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/DestinationProfileReviewRow"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "pending_review_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Pending Review Count",
+            "type": "integer"
+          },
+          "pending_source_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Pending Source Count",
+            "type": "integer"
+          },
+          "ready_for_promotion_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Ready For Promotion Count",
+            "type": "integer"
+          },
+          "review_sections": {
+            "items": {
+              "$ref": "#/components/schemas/DestinationProfileReviewSection"
+            },
+            "title": "Review Sections",
+            "type": "array"
+          },
+          "review_started_profile_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Started Profile Count",
+            "type": "integer"
+          },
+          "snapshot_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Snapshot Fingerprint",
+            "type": "string"
+          },
+          "total_profile_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Total Profile Count",
+            "type": "integer"
+          },
+          "total_source_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Total Source Count",
+            "type": "integer"
+          },
+          "verified_profile_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Verified Profile Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "snapshot_fingerprint"
+        ],
+        "title": "DestinationProfileReviewQueue",
+        "type": "object"
+      },
+      "DestinationProfileReviewRow": {
+        "description": "Read-only destination profile row awaiting independent human review.",
+        "properties": {
+          "city": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "City"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "coverage_note": {
+            "title": "Coverage Note",
+            "type": "string"
+          },
+          "coverage_status": {
+            "title": "Coverage Status",
+            "type": "string"
+          },
+          "current_reviewer_decision": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DestinationProfileReviewDecision"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "current_reviews": {
+            "items": {
+              "$ref": "#/components/schemas/DestinationProfileReviewEvent"
+            },
+            "title": "Current Reviews",
+            "type": "array"
+          },
+          "home_university": {
+            "title": "Home University",
+            "type": "string"
+          },
+          "last_checked": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Checked"
+          },
+          "priority_order": {
+            "minimum": 1.0,
+            "title": "Priority Order",
+            "type": "integer"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/DestinationProfile"
+          },
+          "profile_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Profile Content Hash",
+            "type": "string"
+          },
+          "ready_for_promotion": {
+            "default": false,
+            "title": "Ready For Promotion",
+            "type": "boolean"
+          },
+          "required_review_count": {
+            "default": 2,
+            "maximum": 10.0,
+            "minimum": 2.0,
+            "title": "Required Review Count",
+            "type": "integer"
+          },
+          "review_approval_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Approval Count",
+            "type": "integer"
+          },
+          "review_change_request_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Change Request Count",
+            "type": "integer"
+          },
+          "review_gap_codes": {
+            "items": {
+              "enum": [
+                "coverage_not_verified",
+                "second_review_required",
+                "missing_sources",
+                "insecure_sources",
+                "missing_last_checked"
+              ],
+              "type": "string"
+            },
+            "title": "Review Gap Codes",
+            "type": "array"
+          },
+          "review_history": {
+            "items": {
+              "$ref": "#/components/schemas/DestinationProfileReviewEvent"
+            },
+            "title": "Review History",
+            "type": "array"
+          },
+          "review_progress": {
+            "default": "unstarted",
+            "enum": [
+              "unstarted",
+              "partial",
+              "ready_for_promotion",
+              "changes_required"
+            ],
+            "title": "Review Progress",
+            "type": "string"
+          },
+          "school_name": {
+            "title": "School Name",
+            "type": "string"
+          },
+          "snapshot_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Snapshot Fingerprint",
+            "type": "string"
+          },
+          "source_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Count",
+            "type": "integer"
+          },
+          "source_titles": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Titles",
+            "type": "array"
+          },
+          "source_urls": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Source Urls",
+            "type": "array"
+          },
+          "student_view_path": {
+            "default": "/#partners",
+            "title": "Student View Path",
+            "type": "string"
+          }
+        },
+        "required": [
+          "snapshot_fingerprint",
+          "priority_order",
+          "home_university",
+          "school_name",
+          "coverage_status",
+          "coverage_note",
+          "profile_content_hash",
+          "profile"
+        ],
+        "title": "DestinationProfileReviewRow",
+        "type": "object"
+      },
+      "DestinationProfileReviewSection": {
+        "properties": {
+          "description": {
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "Description",
+            "type": "string"
+          },
+          "key": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Key",
+            "type": "string"
+          },
+          "label": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "label",
+          "description"
+        ],
+        "title": "DestinationProfileReviewSection",
+        "type": "object"
+      },
+      "DestinationProfileReviewSubmitRequest": {
+        "properties": {
+          "decision": {
+            "$ref": "#/components/schemas/DestinationProfileReviewDecision"
+          },
+          "expected_profile_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Expected Profile Content Hash",
+            "type": "string"
+          },
+          "expected_snapshot": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Expected Snapshot",
+            "type": "string"
+          },
+          "home_university": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Home University",
+            "type": "string"
+          },
+          "note": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Note",
+            "type": "string"
+          },
+          "reviewed_section_keys": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 30,
+            "minItems": 1,
+            "title": "Reviewed Section Keys",
+            "type": "array"
+          },
+          "reviewed_source_urls": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 50,
+            "title": "Reviewed Source Urls",
+            "type": "array"
+          },
+          "school_name": {
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "School Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "home_university",
+          "school_name",
+          "expected_snapshot",
+          "expected_profile_content_hash",
+          "decision",
+          "note",
+          "reviewed_section_keys"
+        ],
+        "title": "DestinationProfileReviewSubmitRequest",
+        "type": "object"
+      },
+      "DestinationProfileRollbackEvent": {
+        "description": "Append-only restoration of the public profile that preceded a promotion.",
+        "properties": {
+          "home_university": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Home University",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "note": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Note",
+            "type": "string"
+          },
+          "previous_profile_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Previous Profile Content Hash",
+            "type": "string"
+          },
+          "restored_profile": {
+            "$ref": "#/components/schemas/DestinationProfile"
+          },
+          "restored_profile_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Restored Profile Content Hash",
+            "type": "string"
+          },
+          "restored_promotion_event_id": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Restored Promotion Event Id"
+          },
+          "rolled_back_at": {
+            "format": "date-time",
+            "title": "Rolled Back At",
+            "type": "string"
+          },
+          "rolled_back_by_display_name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Rolled Back By Display Name",
+            "type": "string"
+          },
+          "rolled_back_by_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Rolled Back By Id",
+            "type": "string"
+          },
+          "rolled_back_from_event_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Rolled Back From Event Id",
+            "type": "string"
+          },
+          "rolled_back_promotion_event_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Rolled Back Promotion Event Id",
+            "type": "string"
+          },
+          "school_name": {
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "School Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "home_university",
+          "school_name",
+          "rolled_back_from_event_id",
+          "rolled_back_promotion_event_id",
+          "previous_profile_content_hash",
+          "restored_profile_content_hash",
+          "rolled_back_by_id",
+          "rolled_back_by_display_name",
+          "note",
+          "restored_profile"
+        ],
+        "title": "DestinationProfileRollbackEvent",
+        "type": "object"
+      },
+      "DestinationProfileRollbackRequest": {
+        "properties": {
+          "expected_active_promotion_event_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Expected Active Promotion Event Id",
+            "type": "string"
+          },
+          "expected_latest_publication_event_id": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Expected Latest Publication Event Id",
+            "type": "string"
+          },
+          "expected_public_profile_content_hash": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Expected Public Profile Content Hash",
+            "type": "string"
+          },
+          "home_university": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Home University",
+            "type": "string"
+          },
+          "note": {
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Note",
+            "type": "string"
+          },
+          "school_name": {
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "School Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "home_university",
+          "school_name",
+          "expected_active_promotion_event_id",
+          "expected_latest_publication_event_id",
+          "expected_public_profile_content_hash",
+          "note"
+        ],
+        "title": "DestinationProfileRollbackRequest",
         "type": "object"
       },
       "DestinationTip": {
@@ -13372,6 +16340,229 @@
         ],
         "title": "VaultVersionSummary",
         "type": "object"
+      },
+      "WebReleaseReadinessReport": {
+        "properties": {
+          "application_workflow_blocking_check_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Application Workflow Blocking Check Count",
+            "type": "integer"
+          },
+          "application_workflow_snapshot_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Application Workflow Snapshot Fingerprint",
+            "type": "string"
+          },
+          "blocking_check_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Blocking Check Count",
+            "type": "integer"
+          },
+          "checks": {
+            "items": {
+              "$ref": "#/components/schemas/ApplicationWorkflowReleaseGateCheck"
+            },
+            "title": "Checks",
+            "type": "array"
+          },
+          "critical_rule_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Critical Rule Count",
+            "type": "integer"
+          },
+          "critical_rule_source_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Critical Rule Source Gap Count",
+            "type": "integer"
+          },
+          "destination_profile_blocking_check_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Destination Profile Blocking Check Count",
+            "type": "integer"
+          },
+          "destination_profile_change_requested_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Destination Profile Change Requested Count",
+            "type": "integer"
+          },
+          "destination_profile_promotion_event_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Destination Profile Promotion Event Count",
+            "type": "integer"
+          },
+          "destination_profile_publication_integrity_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Destination Profile Publication Integrity Gap Count",
+            "type": "integer"
+          },
+          "destination_profile_ready_for_promotion_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Destination Profile Ready For Promotion Count",
+            "type": "integer"
+          },
+          "destination_profile_review_event_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Destination Profile Review Event Count",
+            "type": "integer"
+          },
+          "destination_profile_review_started_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Destination Profile Review Started Count",
+            "type": "integer"
+          },
+          "destination_profile_rollback_event_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Destination Profile Rollback Event Count",
+            "type": "integer"
+          },
+          "destination_profile_snapshot_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Destination Profile Snapshot Fingerprint",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "insecure_source_url_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Insecure Source Url Count",
+            "type": "integer"
+          },
+          "missing_academic_year_workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Missing Academic Year Workflow Count",
+            "type": "integer"
+          },
+          "missing_effective_round_workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Missing Effective Round Workflow Count",
+            "type": "integer"
+          },
+          "needs_confirmation_rule_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Needs Confirmation Rule Count",
+            "type": "integer"
+          },
+          "no_verified_exact_deadline_workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "No Verified Exact Deadline Workflow Count",
+            "type": "integer"
+          },
+          "pending_destination_profile_review_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Pending Destination Profile Review Count",
+            "type": "integer"
+          },
+          "pending_destination_profile_source_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Pending Destination Profile Source Count",
+            "type": "integer"
+          },
+          "pending_revision_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Pending Revision Count",
+            "type": "integer"
+          },
+          "publication_history_integrity_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Publication History Integrity Gap Count",
+            "type": "integer"
+          },
+          "published_without_dual_review_evidence_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Published Without Dual Review Evidence Count",
+            "type": "integer"
+          },
+          "published_workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Published Workflow Count",
+            "type": "integer"
+          },
+          "release_ready": {
+            "default": false,
+            "title": "Release Ready",
+            "type": "boolean"
+          },
+          "review_timestamp_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Review Timestamp Gap Count",
+            "type": "integer"
+          },
+          "snapshot_fingerprint": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Snapshot Fingerprint",
+            "type": "string"
+          },
+          "source_metadata_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Metadata Gap Count",
+            "type": "integer"
+          },
+          "source_year_gap_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Source Year Gap Count",
+            "type": "integer"
+          },
+          "total_destination_profile_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Total Destination Profile Count",
+            "type": "integer"
+          },
+          "total_workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Total Workflow Count",
+            "type": "integer"
+          },
+          "unpublished_workflow_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Unpublished Workflow Count",
+            "type": "integer"
+          },
+          "verified_destination_profile_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Verified Destination Profile Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "snapshot_fingerprint",
+          "application_workflow_snapshot_fingerprint",
+          "destination_profile_snapshot_fingerprint"
+        ],
+        "title": "WebReleaseReadinessReport",
+        "type": "object"
       }
     }
   },
@@ -14140,6 +17331,440 @@
         "summary": "Review Application Workflow Issue Report"
       }
     },
+    "/admin/application-workflow-publications": {
+      "get": {
+        "operationId": "workflow_history_admin_application_workflow_publications_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "home_university",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Home University"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationWorkflowPublicationHistory"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Workflow History"
+      }
+    },
+    "/admin/application-workflow-release-readiness": {
+      "get": {
+        "operationId": "workflow_readiness_admin_application_workflow_release_readiness_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationWorkflowReleaseReadinessReport"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Workflow Readiness"
+      }
+    },
+    "/admin/application-workflow-review-backlog": {
+      "get": {
+        "operationId": "backlog_admin_application_workflow_review_backlog_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "expected_snapshot",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 64,
+                  "minLength": 64,
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Expected Snapshot"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationWorkflowReviewBacklog"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Backlog"
+      }
+    },
+    "/admin/application-workflow-review-backlog/source-evidence.csv": {
+      "get": {
+        "operationId": "source_evidence_csv_admin_application_workflow_review_backlog_source_evidence_csv_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "source_url",
+            "required": true,
+            "schema": {
+              "maxLength": 2000,
+              "minLength": 8,
+              "title": "Source Url",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "expected_snapshot",
+            "required": true,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Expected Snapshot",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Source Evidence Csv"
+      }
+    },
+    "/admin/application-workflow-review-backlog/{workflow_key}/stage": {
+      "post": {
+        "operationId": "stage_one_admin_application_workflow_review_backlog__workflow_key__stage_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "workflow_key",
+            "required": true,
+            "schema": {
+              "title": "Workflow Key",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationWorkflowRevision"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Stage One"
+      }
+    },
+    "/admin/application-workflow-review-batches.csv": {
+      "get": {
+        "operationId": "workflow_batches_csv_admin_application_workflow_review_batches_csv_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "batch_size",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Batch Size",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "expected_snapshot",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 64,
+                  "minLength": 64,
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Expected Snapshot"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Workflow Batches Csv"
+      }
+    },
+    "/admin/application-workflow-review-batches/{batch_id}": {
+      "get": {
+        "operationId": "workflow_batch_admin_application_workflow_review_batches__batch_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "batch_size",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Batch Size",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "expected_snapshot",
+            "required": true,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Expected Snapshot",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationWorkflowReviewBatchRow"
+                  },
+                  "title": "Response Workflow Batch Admin Application Workflow Review Batches  Batch Id  Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Workflow Batch"
+      }
+    },
+    "/admin/application-workflow-review-batches/{batch_id}/rules.csv": {
+      "get": {
+        "operationId": "workflow_batch_rules_admin_application_workflow_review_batches__batch_id__rules_csv_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "expected_snapshot",
+            "required": true,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Expected Snapshot",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "batch_size",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Batch Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Workflow Batch Rules"
+      }
+    },
+    "/admin/application-workflow-review-batches/{batch_id}/stage": {
+      "post": {
+        "operationId": "stage_batch_admin_application_workflow_review_batches__batch_id__stage_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationWorkflowReviewBatchStageRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationWorkflowReviewBatchStageResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Stage Batch"
+      }
+    },
     "/admin/application-workflow-revisions": {
       "get": {
         "operationId": "revisions_admin_application_workflow_revisions_get",
@@ -14188,6 +17813,55 @@
           }
         },
         "summary": "Revisions"
+      }
+    },
+    "/admin/application-workflow-revisions/{revision_id}/applicability": {
+      "patch": {
+        "operationId": "applicability_admin_application_workflow_revisions__revision_id__applicability_patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "revision_id",
+            "required": true,
+            "schema": {
+              "title": "Revision Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationWorkflowApplicabilityUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationWorkflowRevision"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Applicability"
       }
     },
     "/admin/application-workflow-revisions/{revision_id}/approve": {
@@ -14374,6 +18048,104 @@
           }
         },
         "summary": "Reject"
+      }
+    },
+    "/admin/application-workflow-rollbacks": {
+      "post": {
+        "operationId": "workflow_rollback_admin_application_workflow_rollbacks_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApplicationWorkflowRollbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationWorkflowRevision"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Workflow Rollback"
+      }
+    },
+    "/admin/application-workflow-source-replacement-candidates": {
+      "get": {
+        "operationId": "source_candidates_admin_application_workflow_source_replacement_candidates_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationWorkflowSourceReplacementCandidate"
+                  },
+                  "title": "Response Source Candidates Admin Application Workflow Source Replacement Candidates Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Source Candidates"
+      }
+    },
+    "/admin/application-workflow-source-replacement-review-queue.csv": {
+      "get": {
+        "operationId": "source_candidates_csv_admin_application_workflow_source_replacement_review_queue_csv_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "expected_snapshot",
+            "required": true,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Expected Snapshot",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Source Candidates Csv"
       }
     },
     "/admin/community/content": {
@@ -14677,6 +18449,472 @@
         "summary": "Moderate"
       }
     },
+    "/admin/destination-profile-promotions": {
+      "post": {
+        "operationId": "destination_promotion_admin_destination_profile_promotions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DestinationProfilePromotionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DestinationProfilePromotionEvent"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Destination Promotion"
+      }
+    },
+    "/admin/destination-profile-publications": {
+      "get": {
+        "operationId": "destination_history_admin_destination_profile_publications_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "home_university",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Home University"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DestinationProfilePublicationHistory"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Destination History"
+      }
+    },
+    "/admin/destination-profile-review-batches.csv": {
+      "get": {
+        "operationId": "destination_batches_csv_admin_destination_profile_review_batches_csv_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "home_university",
+            "required": true,
+            "schema": {
+              "maxLength": 200,
+              "minLength": 1,
+              "title": "Home University",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "expected_snapshot",
+            "required": true,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Expected Snapshot",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "batch_size",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Batch Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Destination Batches Csv"
+      }
+    },
+    "/admin/destination-profile-review-batches/{batch_id}": {
+      "get": {
+        "operationId": "destination_batch_admin_destination_profile_review_batches__batch_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home_university",
+            "required": true,
+            "schema": {
+              "maxLength": 200,
+              "minLength": 1,
+              "title": "Home University",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "expected_snapshot",
+            "required": true,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Expected Snapshot",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "batch_size",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Batch Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/DestinationProfileReviewBatchRow"
+                  },
+                  "title": "Response Destination Batch Admin Destination Profile Review Batches  Batch Id  Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Destination Batch"
+      }
+    },
+    "/admin/destination-profile-review-batches/{batch_id}/checklist.csv": {
+      "get": {
+        "operationId": "destination_checklist_admin_destination_profile_review_batches__batch_id__checklist_csv_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "home_university",
+            "required": true,
+            "schema": {
+              "maxLength": 200,
+              "minLength": 1,
+              "title": "Home University",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "expected_snapshot",
+            "required": true,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Expected Snapshot",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "batch_size",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Batch Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Destination Checklist"
+      }
+    },
+    "/admin/destination-profile-review-queue": {
+      "get": {
+        "operationId": "destination_review_queue_admin_destination_profile_review_queue_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "home_university",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Home University"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DestinationProfileReviewQueue"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Destination Review Queue"
+      }
+    },
+    "/admin/destination-profile-review-queue.csv": {
+      "get": {
+        "operationId": "destination_review_csv_admin_destination_profile_review_queue_csv_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "home_university",
+            "required": true,
+            "schema": {
+              "maxLength": 200,
+              "minLength": 1,
+              "title": "Home University",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "expected_snapshot",
+            "required": true,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 64,
+              "pattern": "^[0-9a-f]{64}$",
+              "title": "Expected Snapshot",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Destination Review Csv"
+      }
+    },
+    "/admin/destination-profile-reviews": {
+      "post": {
+        "operationId": "destination_review_admin_destination_profile_reviews_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DestinationProfileReviewSubmitRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DestinationProfileReviewEvent"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Destination Review"
+      }
+    },
+    "/admin/destination-profile-rollbacks": {
+      "post": {
+        "operationId": "destination_rollback_admin_destination_profile_rollbacks_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DestinationProfileRollbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DestinationProfileRollbackEvent"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Destination Rollback"
+      }
+    },
     "/admin/notifications/run-due": {
       "post": {
         "operationId": "run_due_admin_notifications_run_due_post",
@@ -14693,6 +18931,42 @@
           }
         },
         "summary": "Run Due"
+      }
+    },
+    "/admin/session": {
+      "get": {
+        "operationId": "session_admin_session_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountProfile"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Session"
+      }
+    },
+    "/admin/web-release-readiness": {
+      "get": {
+        "operationId": "release_readiness_admin_web_release_readiness_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebReleaseReadinessReport"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Release Readiness"
       }
     },
     "/advisor/ask": {
