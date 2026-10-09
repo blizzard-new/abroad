@@ -1,0 +1,3 @@
+# TKU immutable candidate5af863f
+
+Eight originalCI ZIPs and all members are preserved. Both runs exercise all1789 IDs: PR1766 pass/7 fail/16 skip; push1768 pass/5 fail/16 skip. All12 corrected contracts pass. PR retains two workspace wait failures; five governance failures remain in both runs. ExactSHA local182 unit and32 browser checks pass; this does not relabel the fullCI failures. Option3 governance was authorized at07:33:18UTC and continues on later commits. No acceptance waiver. Actual local guards and eight successful runtime steps/six original complete runtime JSON reports are included; original CI worktree start/end was not captured.

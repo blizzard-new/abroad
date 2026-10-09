@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/push/web-evidence-37900152817-0/main-control/suite.xml",
+  "original_xml_sha256": "9bcfa0150727be1cf7175f135314e4ad96c2d6892f706e5ba1110aa5981bc08b",
+  "case_attributes": {
+    "classname": "tests.test_community_permissions",
+    "name": "test_author_can_delete_own_post_but_not_another_users_post",
+    "time": "0.188"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: assert 200 == 204\n +  where 200 = <Response [200 OK]>.status_code\n +    where <Response [200 OK]> = delete('/community/posts/b7998f585d684a59b840383993346710', headers={'Authorization': 'Bearer account-token-8d170edc9d474dca8c23180bcf327312', 'X-Anonymous-ID': 'f06ddbccaa8f493db31f1ec926a0102b', 'X-Anonymous-Token': 'GDQ5-CzACNXduGEWm5zobo-Kl66ORsZ5mO5AZy4i6Qc'})\n +      where delete = <starlette.testclient.TestClient object at 0x7f86488e2fc0>.delete"
+  },
+  "full_text": "tests/test_community_permissions.py:801: in test_author_can_delete_own_post_but_not_another_users_post\n    assert client.delete(\nE   AssertionError: assert 200 == 204\nE    +  where 200 = <Response [200 OK]>.status_code\nE    +    where <Response [200 OK]> = delete('/community/posts/b7998f585d684a59b840383993346710', headers={'Authorization': 'Bearer account-token-8d170edc9d474dca8c23180bcf327312', 'X-Anonymous-ID': 'f06ddbccaa8f493db31f1ec926a0102b', 'X-Anonymous-Token': 'GDQ5-CzACNXduGEWm5zobo-Kl66ORsZ5mO5AZy4i6Qc'})\nE    +      where delete = <starlette.testclient.TestClient object at 0x7f86488e2fc0>.delete"
+}

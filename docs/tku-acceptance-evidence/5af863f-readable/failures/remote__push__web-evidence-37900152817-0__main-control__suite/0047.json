@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/push/web-evidence-37900152817-0/main-control/suite.xml",
+  "original_xml_sha256": "9bcfa0150727be1cf7175f135314e4ad96c2d6892f706e5ba1110aa5981bc08b",
+  "case_attributes": {
+    "classname": "tests.test_next_phase_contract",
+    "name": "test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing",
+    "time": "1.942"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "KeyError: '/admin/application-workflow-review-batches/{batch_id}/stage'"
+  },
+  "full_text": "tests/test_next_phase_contract.py:388: in test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing\n    assert \"post\" in openapi[\"paths\"][path]\n                     ^^^^^^^^^^^^^^^^^^^^^^\nE   KeyError: '/admin/application-workflow-review-batches/{batch_id}/stage'"
+}

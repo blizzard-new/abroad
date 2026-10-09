@@ -1,0 +1,502 @@
+[
+  {
+    "id": "tests.test_experience_collector::test_fuzhou_candidate_rejects_generic_university_catalog",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_ostrava_candidate_rejects_technical_university",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_go_minnesota_candidate_rejects_unrelated_outbound_program",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_go_minnesota_candidate_accepts_exact_inbound_program_story",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_go_minnesota_refresh_removes_stored_outbound_review_with_generated_title",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_minnesota_candidate_rejects_unrelated_outbound_program",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_minnesota_candidate_accepts_exact_twin_cities_review_page",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_job_review_hosts_are_not_student_experiences",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_uc_irvine_candidate_rejects_outbound_provider_and_internship_pages",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_fordham_candidate_rejects_outbound_london_program",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_generic_directory_and_impostor_hosts_are_not_student_experiences",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_rennes_candidate_rejects_unrelated_ciee_liberal_arts_program",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_youtube_candidate_removes_concatenated_search_results",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_sorbonne_candidate_rejects_third_party_language_program",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_study_abroad_review_title_removes_concatenated_results",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_official_about_page_is_not_a_student_experience",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_official_student_story_is_kept",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_official_sibling_subdomain_is_not_a_student_experience",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_collector::test_video_candidate_keeps_public_author_name",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_digest_counts_sources_and_builds_theme_highlights",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_experience_collector::test_digest_does_not_present_generic_source_description_as_a_key_point",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_digest_does_not_treat_discovery_date_as_publication_year",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_digest_filters_challenge_pages_navigation_and_wrong_chinese_school",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_collector::test_digest_integrates_visible_source_summaries_into_three_decision_groups",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_experience_collector::test_replace_school_experiences_preserves_other_schools",
+    "status": "passed",
+    "seconds": "0.006"
+  },
+  {
+    "id": "tests.test_experience_collector::test_replace_school_experiences_consolidates_alias_and_duplicate_url",
+    "status": "passed",
+    "seconds": "0.007"
+  },
+  {
+    "id": "tests.test_experience_collector::test_collection_audit_upserts_by_school_and_collector",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_experience_collector::test_collection_audit_upserts_across_chinese_name_aliases",
+    "status": "passed",
+    "seconds": "0.004"
+  },
+  {
+    "id": "tests.test_experience_collector::test_destination_profile_upserts_across_chinese_name_aliases",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_experience_collector::test_destination_profile_storage_preserves_same_partner_for_two_home_schools",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_experience_collector::test_ambiguous_legacy_destination_profile_fails_closed",
+    "status": "passed",
+    "seconds": "0.005"
+  },
+  {
+    "id": "tests.test_experience_collector::test_experience_api_reads_cache_and_refreshes_selected_school",
+    "status": "passed",
+    "seconds": "0.354"
+  },
+  {
+    "id": "tests.test_experience_collector::test_experience_refresh_records_verified_no_results",
+    "status": "passed",
+    "seconds": "1.683"
+  },
+  {
+    "id": "tests.test_experience_collector::test_destination_profile_api_returns_verified_official_summary",
+    "status": "passed",
+    "seconds": "1.134"
+  },
+  {
+    "id": "tests.test_experience_collector::test_destination_profile_api_never_shares_research_between_home_schools",
+    "status": "passed",
+    "seconds": "0.254"
+  },
+  {
+    "id": "tests.test_experience_digests::test_sources_are_sorted_by_what_kind_of_page_they_are[https://eduopinions.com/universities/x/student-reviews-1-eduopinions.com-review_collection]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_digests::test_sources_are_sorted_by_what_kind_of_page_they_are[https://www.studyabroad101.com/program/1-studyabroad101.com-review_collection]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_digests::test_sources_are_sorted_by_what_kind_of_page_they_are[https://unirank.org/vn/uni/van-lang-university-unirank.org-directory]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_digests::test_sources_are_sorted_by_what_kind_of_page_they_are[https://www.mastersportal.com/universities/1-mastersportal.com-directory]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_digests::test_sources_are_sorted_by_what_kind_of_page_they_are[https://www.reddit.com/r/malaysia/comments/1-Reddit-community_thread]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_digests::test_sources_are_sorted_by_what_kind_of_page_they_are[https://old.reddit.com/r/x/comments/2-Reddit-community_thread]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_digests::test_sources_are_sorted_by_what_kind_of_page_they_are[https://www.youtube.com/watch?v=1-YouTube-video]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_digests::test_sources_are_sorted_by_what_kind_of_page_they_are[https://someone.blogspot.com/2025/exchange.html-someone.blogspot.com-personal_story]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_digests::test_sources_are_sorted_by_what_kind_of_page_they_are[https://medium.com/@a/my-time-at-tsinghua-Medium-personal_story]",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_digests::test_a_look_alike_host_is_not_mistaken_for_a_known_one",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_digests::test_a_good_digest_has_no_problems",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_digests::test_a_digest_no_better_than_the_old_filler_is_rejected",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_digests::test_a_digest_that_reproduces_the_source_is_rejected",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_digests::test_a_bad_date_key_or_shape_is_rejected",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_digests::test_attaching_adds_the_kind_and_only_the_matching_digest",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_experience_digests::test_a_digest_that_fails_validation_stops_the_app_from_serving_it",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_experience_digests::test_the_bundled_digests_pass_the_validator",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_experience_digests::test_every_digest_needs_matching_usable_source_details",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_experience_digests::test_curated_stories_are_added_for_their_school_even_when_nothing_was_crawled",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_experience_digests::test_the_digest_endpoint_serves_a_written_digest_and_404s_otherwise",
+    "status": "passed",
+    "seconds": "0.152"
+  },
+  {
+    "id": "tests.test_experience_digests::test_the_experience_list_carries_each_sources_kind_and_digest",
+    "status": "passed",
+    "seconds": "1.480"
+  },
+  {
+    "id": "tests.test_experience_digests::test_a_school_with_no_crawled_data_still_lists_its_curated_story",
+    "status": "passed",
+    "seconds": "1.362"
+  },
+  {
+    "id": "tests.test_experience_digests::test_the_shipped_digests_describe_real_partner_schools_and_real_student_accounts",
+    "status": "passed",
+    "seconds": "0.003"
+  },
+  {
+    "id": "tests.test_experience_digests::test_the_experience_tab_lists_stories_first_and_files_everything_else_as_a_reference",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_feedback::test_anyone_can_leave_a_message_and_the_answer_reveals_nothing",
+    "status": "passed",
+    "seconds": "0.155"
+  },
+  {
+    "id": "tests.test_feedback::test_nothing_that_identifies_the_sender_is_stored",
+    "status": "passed",
+    "seconds": "0.148"
+  },
+  {
+    "id": "tests.test_feedback::test_a_message_that_does_not_fit_the_form_is_refused[change0]",
+    "status": "passed",
+    "seconds": "0.150"
+  },
+  {
+    "id": "tests.test_feedback::test_a_message_that_does_not_fit_the_form_is_refused[change1]",
+    "status": "passed",
+    "seconds": "0.151"
+  },
+  {
+    "id": "tests.test_feedback::test_a_message_that_does_not_fit_the_form_is_refused[change2]",
+    "status": "passed",
+    "seconds": "0.156"
+  },
+  {
+    "id": "tests.test_feedback::test_a_message_that_does_not_fit_the_form_is_refused[change3]",
+    "status": "passed",
+    "seconds": "0.153"
+  },
+  {
+    "id": "tests.test_feedback::test_a_message_that_does_not_fit_the_form_is_refused[change4]",
+    "status": "passed",
+    "seconds": "0.153"
+  },
+  {
+    "id": "tests.test_feedback::test_a_message_that_does_not_fit_the_form_is_refused[change5]",
+    "status": "passed",
+    "seconds": "0.149"
+  },
+  {
+    "id": "tests.test_feedback::test_a_message_that_does_not_fit_the_form_is_refused[change6]",
+    "status": "passed",
+    "seconds": "0.151"
+  },
+  {
+    "id": "tests.test_feedback::test_spaces_and_control_characters_are_cleaned_but_words_are_kept_as_typed",
+    "status": "passed",
+    "seconds": "0.153"
+  },
+  {
+    "id": "tests.test_feedback::test_a_bot_that_fills_the_hidden_field_is_thanked_and_ignored",
+    "status": "passed",
+    "seconds": "0.149"
+  },
+  {
+    "id": "tests.test_feedback::test_a_pile_of_links_is_refused",
+    "status": "passed",
+    "seconds": "0.150"
+  },
+  {
+    "id": "tests.test_feedback::test_too_many_messages_in_a_short_time_are_slowed_down",
+    "status": "passed",
+    "seconds": "0.161"
+  },
+  {
+    "id": "tests.test_feedback::test_the_service_limits_each_visitor_separately_and_per_day",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_feedback::test_only_an_administrator_can_read_or_change_anything",
+    "status": "passed",
+    "seconds": "1.205"
+  },
+  {
+    "id": "tests.test_feedback::test_the_inbox_page_holds_no_data_and_is_not_cached",
+    "status": "passed",
+    "seconds": "0.151"
+  },
+  {
+    "id": "tests.test_feedback::test_the_inbox_lists_newest_first_with_counts_filters_and_an_average",
+    "status": "passed",
+    "seconds": "0.172"
+  },
+  {
+    "id": "tests.test_feedback::test_an_administrator_marks_messages_read_or_done_with_a_note",
+    "status": "passed",
+    "seconds": "0.174"
+  },
+  {
+    "id": "tests.test_feedback::test_the_csv_export_opens_in_a_spreadsheet_without_running_anything",
+    "status": "passed",
+    "seconds": "0.152"
+  },
+  {
+    "id": "tests.test_feedback::test_the_routes_are_not_part_of_the_published_api",
+    "status": "passed",
+    "seconds": "1.409"
+  },
+  {
+    "id": "tests.test_feedback::test_the_development_file_keeps_messages_between_restarts",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_feedback::test_the_production_store_talks_to_its_own_table_with_the_server_key_only",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_feedback::test_a_failing_database_is_reported_without_leaking_details",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_feedback::test_production_needs_the_database_and_development_falls_back_to_a_file",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_feedback_migration::test_the_table_is_the_one_the_server_writes_to",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_feedback_migration::test_the_browser_roles_get_nothing_and_every_row_is_protected",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_feedback_migration::test_nothing_that_identifies_the_sender_has_a_column",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_feedback_migration::test_the_database_limits_match_what_the_server_accepts",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_fit_signals::test_only_a_stated_monthly_living_total_is_extracted",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_fit_signals::test_single_cost_items_degree_students_and_per_period_figures_are_not_totals",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_fit_signals::test_housing_excluded_figure_is_partial_and_total_wins",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_fit_signals::test_spaced_thousands_and_historical_benchmarks",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_fit_signals::test_budget_fit_statuses_use_reference_rates_and_never_hide_unknowns",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_fit_signals::test_school_budget_fit_adds_fx_caveat_and_exclusions",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_fit_signals::test_teaching_language_follows_the_official_track_then_requirement_text",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_fit_signals::test_course_interest_is_only_mentioned_never_confirmed",
+    "status": "passed",
+    "seconds": "0.001"
+  },
+  {
+    "id": "tests.test_fit_signals::test_options_on_the_partner_count_for_course_and_language",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_fit_signals::test_bundled_destination_profiles_yield_honest_budget_results",
+    "status": "passed",
+    "seconds": "0.061"
+  },
+  {
+    "id": "tests.test_fit_signals::test_advisor_uses_budget_language_and_courses_without_blocking_eligibility",
+    "status": "passed",
+    "seconds": "0.002"
+  },
+  {
+    "id": "tests.test_fit_signals::test_advisor_without_new_fields_keeps_previous_shape",
+    "status": "passed",
+    "seconds": "0.000"
+  },
+  {
+    "id": "tests.test_flutter_independent_pages::test_flutter_feature_hub_routes_to_independent_pages",
+    "status": "passed",
+    "seconds": "0.001"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/push/web-evidence-37900152817-2/main-control/suite.xml",
+  "original_xml_sha256": "7a69b58148c34680c1952633f3b8994722135c7856a8c0bf18cb63510fe4cca7",
+  "case_attributes": {
+    "classname": "tests.e2e.test_icon_motion",
+    "name": "test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph",
+    "time": "16.975"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "AssertionError: assert 'M12 3C9.5147 5.4853 9.5147 9.5147 12 12C14.4853 14.4853 18.5147 14.4853 21 12C21 16.9706 16.9706 21 12 21C7.0294 21 3 16.9706 3 12C3 7.0294 7.0294 3 12 3Z' != 'M12 3C9.5147 5.4853 9.5147 9.5147 12 12C14.4853 14.4853 18.5147 14.4853 21 12C21 16.9706 16.9706 21 12 21C7.0294 21 3 16.9706 3 12C3 7.0294 7.0294 3 12 3Z'"
+  },
+  "full_text": "tests/e2e/test_icon_motion.py:42: in test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph\n    assert start != middle\nE   AssertionError: assert 'M12 3C9.5147 5.4853 9.5147 9.5147 12 12C14.4853 14.4853 18.5147 14.4853 21 12C21 16.9706 16.9706 21 12 21C7.0294 21 3 16.9706 3 12C3 7.0294 7.0294 3 12 3Z' != 'M12 3C9.5147 5.4853 9.5147 9.5147 12 12C14.4853 14.4853 18.5147 14.4853 21 12C21 16.9706 16.9706 21 12 21C7.0294 21 3 16.9706 3 12C3 7.0294 7.0294 3 12 3Z'"
+}

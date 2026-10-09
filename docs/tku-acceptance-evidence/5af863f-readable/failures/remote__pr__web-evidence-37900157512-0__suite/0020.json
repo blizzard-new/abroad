@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "remote/pr/web-evidence-37900157512-0/suite.xml",
+  "original_xml_sha256": "621a275000be42e25fa08924b9349da356fb597c3f121ad337d774721eb4fe2d",
+  "case_attributes": {
+    "classname": "tests.e2e.test_multi_plan_workspace",
+    "name": "test_shared_progress_survives_reorder_removal_and_reload[390]",
+    "time": "40.394"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "playwright._impl._errors.TimeoutError: Timeout 30000ms exceeded while waiting for event \"response\""
+  },
+  "full_text": "tests/e2e/test_multi_plan_workspace.py:66: in test_shared_progress_survives_reorder_removal_and_reload\n    with page.expect_response(lambda r: r.request.method == 'PUT'\n.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py:85: in __exit__\n    self._event.value\n.venv/lib/python3.12/site-packages/playwright/_impl/_sync_base.py:59: in value\n    raise exception\nE   playwright._impl._errors.TimeoutError: Timeout 30000ms exceeded while waiting for event \"response\""
+}
