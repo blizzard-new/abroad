@@ -6,6 +6,7 @@ URL or secret from the application's environment.
 from datetime import datetime, timezone
 from urllib.parse import urlsplit
 import json
+import copy
 
 import requests
 
@@ -61,6 +62,7 @@ def approve(store, revision, actor):
 def validate_atomic_governance(context, *, psql):
     checks = []
     calls = []
+    operation_relabels = []
     def transport(base):
         def request(method, url, **kwargs):
             parsed = urlsplit(url)
@@ -137,7 +139,23 @@ def validate_atomic_governance(context, *, psql):
         else:
             raise RuntimeError("SQL accepted publication without independent double review")
         require(snapshot() == before,"SQL denial committed revision, public payload or audit")
+        if len(approvals)==2 and approvals[0].reviewer_id!=approvals[1].reviewer_id:
+            original=copy.deepcopy(calls[-1]['envelope'])
+            relabeled=copy.deepcopy(original)
+            relabeled['p_change_summary']['governance_command']['operation']='rollback_published_workflow'
+            before_relabel=snapshot()
+            try:
+                first._request('POST','/rest/v1/rpc/exchange_commit_application_workflow_revision',json=relabeled)
+            except requests.HTTPError as error:
+                require(error.response.status_code==409,'operation relabel was not rejected with409')
+            else:
+                raise RuntimeError('Operation label bypassed publication provenance')
+            require(snapshot()==before_relabel,'operation relabel changed one of the six tables')
+            operation_relabels.append({'original_publish_envelope':original,'only_operation_changed':True,
+                'relabeled_rollback_envelope':relabeled,'HTTP_status':409,'all_six_snapshots_unchanged':True,
+                'before_six_tables':json.loads(before_relabel),'after_six_tables':json.loads(snapshot())})
     checks.append("sql_independent_double_review_denies_single_duplicate_and_unpersisted_reviewer")
+    checks.append('operation_label_cannot_bypass_published_row_provenance')
     wrong_actor = commands.WorkflowCommandBuffer(first)
     approve(wrong_actor, baseline, "synthetic-b")
     try:
@@ -208,11 +226,18 @@ def validate_atomic_governance(context, *, psql):
         expected_current_revision_id=item.current_revision_id, expected_current_version=item.current_version,
         expected_current_content_hash=item.current_content_hash, restore_revision_id=baseline.id,
         note="Synthetic audited restoration of the first reviewed version")
+    from validate_governance_rollback import validate_rollback_denials,validate_chained_rollback
+    rollback_denials=validate_rollback_denials(context,psql=psql,first=first,rollback=rollback,
+        snapshot=snapshot)
+    checks.append('rollback_rejects_operation_action_chain_and_unpersisted_historical_reviews')
     restored = rollback_published_workflow(first, rollback, rolled_back_by="synthetic-a")
     after = snapshot()
     require(rollback_published_workflow(second, rollback, rolled_back_by="synthetic-a").id == restored.id and snapshot() == after, "rollback retry was not idempotent")
     require(workflow_content_hash(second.load_published_workflows()[0]) == baseline.content_hash, "rollback public content differs from history")
     checks.append("workflow_history_rollback_consistency")
+    rollback_chain=validate_chained_rollback(first=first,second=second,restored=restored,
+        snapshot=snapshot)
+    checks.append('legitimate_restoration_of_a_previous_rollback_has_an_audited_review_lineage')
 
     dest_a = SupabaseDestinationProfileReviewStore("https://runtime-supabase.invalid", context.service_token, request_func=transport(context.postgrest_url))
     dest_b = SupabaseDestinationProfileReviewStore("https://runtime-supabase.invalid", context.service_token, request_func=transport(context.postgrest_secondary_url))
@@ -284,4 +309,6 @@ def validate_atomic_governance(context, *, psql):
         "actual_command_audit_count": len(audit), "independent_postgrest_instances": 2, "production_access": False,
         "rpc_evidence":[row for row in calls if row["method"]=="POST"],
         "invalidated_approvals_DB_readback":retained,"followup":followup,
+        "operation_relabel_denials":operation_relabels,"rollback_transition_denials":rollback_denials,
+        "legitimate_chained_rollback":rollback_chain,
         "fixtures": "synthetic identities and content only; existing RPC signatures and service permissions"}

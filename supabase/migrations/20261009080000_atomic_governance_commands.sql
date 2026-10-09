@@ -55,6 +55,14 @@ declare
     v_prior_revision jsonb;
     v_previous_approval_count integer;
     v_command_hash text;
+    v_public_revision jsonb;
+    v_from_revision jsonb;
+    v_restore_revision jsonb;
+    v_provenance_revision jsonb;
+    v_lineage_from jsonb;
+    v_lineage_restore jsonb;
+    v_public_current jsonb;
+    v_lineage_depth integer;
 
 begin
 
@@ -144,9 +152,85 @@ begin
                jsonb_array_length(v_command->'published')<>0 then
                 raise exception using errcode='PT409', message='Only publication and rollback commands may change public payloads';
             end if;
+            if (select count(distinct r->>'id') from jsonb_array_elements(v_command->'revisions') r)
+               <> jsonb_array_length(v_command->'revisions') then
+                raise exception using errcode='PT409', message='Revision identities must be unique within a command';
+            end if;
+            if v_command->>'operation' in ('publish_workflow_revision','rollback_published_workflow') then
+                if (select count(*) from jsonb_array_elements(v_command->'revisions') r where r->>'status'='published')<>1 then
+                    raise exception using errcode='PT409', message='Publication must identify exactly one published revision';
+                end if;
+                select value into v_public_revision from jsonb_array_elements(v_command->'revisions')
+                    where value->>'status'='published';
+                if v_public_revision->>'reviewed_by' is distinct from v_command->>'actor' or
+                   v_public_revision->>'reviewed_at' is null or
+                   v_public_revision->'workflow_payload'->>'review_status'<>'published' or
+                   v_public_revision->'workflow_payload'->>'governance_key' is distinct from v_public_revision->>'workflow_key' or
+                   v_public_revision->'workflow_payload'->>'version' is distinct from v_public_revision->>'version' or
+                   v_public_revision->'workflow_payload'->>'published_at' is null then
+                    raise exception using errcode='PT409', message='Publication metadata must bind the actor and revision';
+                end if;
+                if v_command->>'operation'='publish_workflow_revision' and (
+                    v_public_revision->>'publication_action' is distinct from 'standard' or
+                    v_public_revision->>'rolled_back_from_revision_id' is not null or
+                    v_public_revision->>'restored_revision_id' is not null) then
+                    raise exception using errcode='PT409', message='Standard publication cannot carry a rollback action or chain';
+                end if;
+                if v_command->>'operation'='rollback_published_workflow' then
+                    if v_public_revision->>'publication_action' is distinct from 'rollback' or
+                       v_public_revision->>'rolled_back_from_revision_id' is null or
+                       v_public_revision->>'restored_revision_id' is null then
+                        raise exception using errcode='PT409', message='Rollback requires an explicit restoration action and chain';
+                    end if;
+                    select value into v_from_revision from jsonb_array_elements(v_current_revisions)
+                        where value->>'id'=v_public_revision->>'rolled_back_from_revision_id';
+                    select value into v_restore_revision from jsonb_array_elements(v_current_revisions)
+                        where value->>'id'=v_public_revision->>'restored_revision_id';
+                    select value into v_public_current from jsonb_array_elements(v_current_workflows)
+                        where value->>'workflow_key'=v_public_revision->>'workflow_key';
+                    if v_from_revision is null or v_restore_revision is null or v_public_current is null or
+                       exists(select 1 from jsonb_array_elements(v_current_revisions) r where r->>'id'=v_public_revision->>'id') or
+                       v_from_revision->>'status'<>'published' or v_restore_revision->>'status'<>'superseded' or
+                       v_from_revision->>'workflow_key' is distinct from v_public_revision->>'workflow_key' or
+                       v_restore_revision->>'workflow_key' is distinct from v_public_revision->>'workflow_key' or
+                       (v_restore_revision->>'version')::integer >= (v_from_revision->>'version')::integer or
+                       v_public_current->>'current_revision_id' is distinct from v_from_revision->>'id' or
+                       v_public_current->>'published_version' is distinct from v_from_revision->>'version' or
+                       v_public_current->'published_payload' is distinct from v_from_revision->'workflow_payload' or
+                       v_public_revision->>'base_version' is distinct from v_from_revision->>'version' or
+                       v_public_revision->'workflow_payload'->>'supersedes_version' is distinct from v_from_revision->>'version' or
+                       (v_public_revision->>'version')::integer <> (select max((r->>'version')::integer)+1 from
+                           jsonb_array_elements(v_current_revisions) r where r->>'workflow_key'=v_public_revision->>'workflow_key') or
+                       v_public_revision->>'detected_by' is distinct from v_command->>'actor' or
+                       v_restore_revision->'workflow_payload'->>'review_status'<>'published' or
+                       v_restore_revision->'workflow_payload'->>'published_at' is null or
+                       v_public_revision->>'content_hash' is distinct from v_restore_revision->>'content_hash' or
+                       v_public_revision->>'required_review_count' is distinct from v_restore_revision->>'required_review_count' or
+                       v_public_revision->'review_approvals' is distinct from v_restore_revision->'review_approvals' or
+                       jsonb_array_length(v_command->'revisions')<>2 or
+                       not exists(select 1 from jsonb_array_elements(v_command->'revisions') r where
+                           r->>'id'=v_from_revision->>'id' and r->>'status'='superseded') then
+                        raise exception using errcode='PT409', message='Rollback must restore an audited older snapshot from the unique current publication';
+                    end if;
+                end if;
+            elsif exists(select 1 from jsonb_array_elements(v_command->'revisions') r where r->>'status'='published') then
+                raise exception using errcode='PT409', message='Published rows require a publication command and public payload';
+            end if;
             for v_row in select value from jsonb_array_elements(v_command->'revisions') loop
                 select value into v_prior_revision from jsonb_array_elements(v_current_revisions)
                     where value->>'id'=v_row->>'id';
+                if v_command->>'operation' in ('publish_workflow_revision','rollback_published_workflow') and
+                   v_row->>'id'<>v_public_revision->>'id' then
+                    if v_prior_revision is null or v_prior_revision->>'status'<>'published' or
+                       v_row->>'status'<>'superseded' or
+                       v_row->>'workflow_key' is distinct from v_public_revision->>'workflow_key' or
+                       (v_row-array['status','required_source_urls','required_rule_keys','detected_at','reviewed_at']) is distinct from
+                           (v_prior_revision-array['status','detected_at','reviewed_at']) or
+                       (v_row->>'detected_at')::timestamptz is distinct from (v_prior_revision->>'detected_at')::timestamptz or
+                       (v_row->>'reviewed_at')::timestamptz is distinct from (v_prior_revision->>'reviewed_at')::timestamptz then
+                        raise exception using errcode='PT409', message='Publication companions may only supersede the unchanged current revision';
+                    end if;
+                end if;
                 if v_command->>'operation'='approve_workflow_revision' then
                     v_previous_approval_count := jsonb_array_length(v_prior_revision->'review_approvals');
                     if v_prior_revision is null or v_prior_revision->>'status'<>'pending_review' or
@@ -161,7 +245,7 @@ begin
                            lower(btrim(a->>'reviewer_id'))=lower(btrim(v_command->>'actor'))) then
                         raise exception using errcode='PT409', message='Approval must independently append one actor-bound attestation to the stored revision';
                     end if;
-                elsif v_command->>'operation'='publish_workflow_revision' then
+                elsif v_row->>'status'='published' and v_row->>'publication_action'='standard' then
                     if v_prior_revision is null or v_row->'review_approvals' is distinct from v_prior_revision->'review_approvals' then
                         raise exception using errcode='PT409', message='Publication cannot introduce or change stored approvals';
                     end if;
@@ -171,13 +255,9 @@ begin
                         v_prior_revision->>'required_review_count' is distinct from v_row->>'required_review_count' or
                         v_row->>'reviewed_by' is distinct from v_command->>'actor' or
                         not exists(select 1 from jsonb_array_elements(v_prior_revision->'review_approvals') a where a->>'reviewer_id'=v_command->>'actor') or
-                        exists(select 1 from jsonb_array_elements(v_prior_revision->'review_approvals') a where
-                            not exists(select 1 from public.application_workflow_audit_log e,
-                                lateral jsonb_array_elements(e.metadata->'revisions') r where
-                                e.metadata->>'operation'='approve_workflow_revision' and
-                                e.actor_id=a->>'reviewer_id' and e.metadata->>'actor'=a->>'reviewer_id' and
-                                r->>'id'=v_row->>'id' and r->>'content_hash'=v_row->>'content_hash' and
-                                r->'review_approvals' @> jsonb_build_array(a)))) then
+                        (v_row-array['status','workflow_payload','reviewed_by','reviewed_at','review_note','required_source_urls','required_rule_keys','detected_at']) is distinct from
+                            (v_prior_revision-array['status','workflow_payload','reviewed_by','reviewed_at','review_note','detected_at']) or
+                        (v_row->>'detected_at')::timestamptz is distinct from (v_prior_revision->>'detected_at')::timestamptz) then
                         raise exception using errcode='PT409', message='Publication requires independently persisted actor-bound approval provenance';
                     end if;
                 elsif v_command->>'operation'='update_pending_workflow_applicability' then
@@ -188,6 +268,63 @@ begin
                        v_row->'edit_history'->-1->'invalidated_review_approvals' is distinct from v_prior_revision->'review_approvals' or
                        v_row->'edit_history'->-1->>'edited_by' is distinct from v_command->>'actor' then
                         raise exception using errcode='PT409', message='Source edits must retain the complete stored invalidated attestations';
+                    end if;
+                end if;
+                if v_row->>'status'='published' then
+                    -- The row's actual publication state determines provenance.
+                    -- An operation label cannot exempt a published snapshot.
+                    v_provenance_revision := case when v_row->>'publication_action'='rollback'
+                        then v_restore_revision else v_prior_revision end;
+                    v_lineage_depth := 0;
+                    while v_provenance_revision->>'publication_action'='rollback' loop
+                        v_lineage_depth := v_lineage_depth+1;
+                        select value into v_lineage_from from jsonb_array_elements(v_current_revisions)
+                            where value->>'id'=v_provenance_revision->>'rolled_back_from_revision_id';
+                        select value into v_lineage_restore from jsonb_array_elements(v_current_revisions)
+                            where value->>'id'=v_provenance_revision->>'restored_revision_id';
+                        if v_lineage_depth>jsonb_array_length(v_current_revisions) or
+                           v_lineage_from is null or v_lineage_restore is null or
+                           v_lineage_from->>'workflow_key' is distinct from v_row->>'workflow_key' or
+                           v_lineage_restore->>'workflow_key' is distinct from v_row->>'workflow_key' or
+                           (v_lineage_restore->>'version')::integer >= (v_provenance_revision->>'version')::integer or
+                           (v_lineage_from->>'version')::integer >= (v_provenance_revision->>'version')::integer or
+                           v_provenance_revision->>'base_version' is distinct from v_lineage_from->>'version' or
+                           v_provenance_revision->'workflow_payload'->>'supersedes_version' is distinct from v_lineage_from->>'version' or
+                           v_provenance_revision->>'content_hash' is distinct from v_lineage_restore->>'content_hash' or
+                           v_provenance_revision->>'required_review_count' is distinct from v_lineage_restore->>'required_review_count' or
+                           v_provenance_revision->'review_approvals' is distinct from v_lineage_restore->'review_approvals' or
+                           not exists(select 1 from public.application_workflow_audit_log e,
+                               lateral jsonb_array_elements(e.metadata->'revisions') r where
+                               e.metadata->>'operation'='rollback_published_workflow' and
+                               r->>'id'=v_provenance_revision->>'id' and r->>'status'='published' and
+                               r->>'publication_action'='rollback' and
+                               r->>'restored_revision_id'=v_lineage_restore->>'id' and
+                               r->>'rolled_back_from_revision_id'=v_lineage_from->>'id' and
+                               r->>'content_hash'=v_provenance_revision->>'content_hash' and
+                               r->'review_approvals'=v_provenance_revision->'review_approvals') then
+                            raise exception using errcode='PT409', message='Historical rollback lineage must preserve its audited restoration snapshot';
+                        end if;
+                        v_provenance_revision := v_lineage_restore;
+                    end loop;
+                    if v_provenance_revision is null or
+                       v_provenance_revision->>'workflow_key' is distinct from v_row->>'workflow_key' or
+                       v_provenance_revision->'review_approvals' is distinct from v_row->'review_approvals' or
+                       exists(select 1 from jsonb_array_elements(v_provenance_revision->'review_approvals') a where
+                           not exists(select 1 from public.application_workflow_audit_log e,
+                               lateral jsonb_array_elements(e.metadata->'revisions') r where
+                               e.metadata->>'operation'='approve_workflow_revision' and
+                               e.actor_id=a->>'reviewer_id' and e.metadata->>'actor'=a->>'reviewer_id' and
+                               r->>'id'=v_provenance_revision->>'id' and r->>'content_hash'=v_provenance_revision->>'content_hash' and
+                               r->'review_approvals' @> jsonb_build_array(a))) or
+                       (v_row->>'publication_action'='rollback' and not exists(
+                           select 1 from public.application_workflow_audit_log e,
+                               lateral jsonb_array_elements(e.metadata->'revisions') r where
+                           e.metadata->>'operation'='publish_workflow_revision' and
+                           r->>'id'=v_provenance_revision->>'id' and r->>'status'='published' and
+                           r->>'publication_action'='standard' and
+                           r->>'content_hash'=v_provenance_revision->>'content_hash' and
+                           r->'review_approvals'=v_provenance_revision->'review_approvals')) then
+                        raise exception using errcode='PT409', message='Every published snapshot requires independently stored review and publication provenance';
                     end if;
                 end if;
                 v_hash_payload := (v_row->'workflow_payload') - array[
