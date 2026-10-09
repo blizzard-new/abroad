@@ -7,6 +7,7 @@ from .public_translation import PublicTranslationBatch, translate_public_batch
 from .school_content import complete_destination_profile
 from .ncu_document_conditions import preparation_state_key
 
+import asyncio
 import csv
 from contextvars import ContextVar
 from .access_control import (
@@ -773,13 +774,28 @@ def create_app(
                 raise RuntimeError(f"正式環境禁止使用本機持久層：{name}={actual}（需要 {expected}）")
 
     warm_up: list = []  # filled once the catalogue loaders below exist
+    catalogue_slots: asyncio.Semaphore | None = None
+    catalogue_response_paths = {
+        "/student-dashboard", "/coverage", "/destination-profiles", "/destination-profile",
+        "/application-center/templates", "/application-center/catalog", "/application-period-options",
+        "/application-workflow", "/advisor/plan", "/advisor/ask",
+        "/school-life-context", "/school-data-completeness", "/student-experiences",
+    }
 
     @asynccontextmanager
     async def lifespan(_app: FastAPI):
+        nonlocal catalogue_slots
+        # Build at most two large catalogue responses concurrently on the
+        # 512 MiB host. Wait asynchronously, leaving health/auth/static requests
+        # and the worker pool available. Each server lifespan owns its limiter.
+        catalogue_slots = asyncio.Semaphore(2)
         if warm_up and os.environ.get("EXCHANGE_WARM_CACHES", "").strip().lower() in {"1", "on", "true", "yes"}:
             threading.Thread(target=warm_up[0], name="warm-caches", daemon=True).start()
-        yield
-        analytics_service.flush_api_metrics()  # keep the last minute of request counts on a clean shutdown
+        try:
+            yield
+        finally:
+            catalogue_slots = None
+            analytics_service.flush_api_metrics()  # keep the last minute of request counts on a clean shutdown
 
     app = FastAPI(
         title="Taiwan University Exchange Guide",
@@ -817,7 +833,11 @@ def create_app(
     async def add_security_headers(request: Request, call_next):
         context_token = catalog_request.set(request)
         try:
-            response = await call_next(request)
+            if catalogue_slots is not None and request.url.path in catalogue_response_paths:
+                async with catalogue_slots:
+                    response = await call_next(request)
+            else:
+                response = await call_next(request)
         finally:
             catalog_request.reset(context_token)
         for key, value in _browser_security_headers().items():
@@ -957,12 +977,19 @@ def create_app(
                                       data_dir=resolved_data_dir, static_dir=STATIC_DIR)
     register_tku_eligibility_routes(app)
 
-    def published_destination_profiles():
+    def published_destination_profiles(home_university: str | None = None):
         from .governance_commands import local_governance_lock
         with app.state.content_review_lock, local_governance_lock(resolved_data_dir):
+            home_key = normalize_school(home_university) if home_university else None
+            promotions = dest_store.list_promotion_events()
+            rollbacks = dest_store.list_rollback_events()
+            if home_key:
+                promotions = [row for row in promotions if normalize_school(row.home_university) == home_key]
+                rollbacks = [row for row in rollbacks if normalize_school(row.home_university) == home_key]
             return apply_destination_profile_promotions(
-                load_destination_profiles(resolved_data_dir, include_bundled_baseline=True),
-                dest_store.list_promotion_events(), dest_store.list_rollback_events())
+                load_destination_profiles(resolved_data_dir, include_bundled_baseline=True,
+                                          home_university=home_university),
+                promotions, rollbacks)
     analytics_countries: dict[str, Any] = {"at": 0.0, "value": {}}
 
     def catalogue_countries() -> dict[str, str]:
@@ -1130,6 +1157,7 @@ def create_app(
                 fetch_tku_partner_universities(),
                 load_partner_research(resolved_data_dir),
                 home_university=university.school_name,
+                copy_nested=False,
             )
         if university.id not in partner_cache:
             with partner_cache_lock:
@@ -1149,6 +1177,7 @@ def create_app(
             partner_cache[university.id],
             load_partner_research(resolved_data_dir),
             home_university=university.school_name,
+            copy_nested=False,
         )
 
     def workflows_for_university(
@@ -2827,7 +2856,7 @@ def create_app(
         partners = partners_for_university(university)
         experiences = load_student_experiences(resolved_data_dir)
         workflows = workflows_for_university(university)
-        destination_profiles = published_destination_profiles()
+        destination_profiles = published_destination_profiles(university.school_name)
         audits = load_collection_audits(resolved_data_dir)
         research = load_partner_research(resolved_data_dir, include_bundled_baseline=True)
         school_images = _load_school_image_manifest()
@@ -3050,7 +3079,7 @@ def create_app(
             dashboard,
             pages,
             workflows_for_university(university),
-            published_destination_profiles(),
+            published_destination_profiles(university.school_name),
             retrieved_chunks=retrieved_chunks,
         )
 
@@ -3081,7 +3110,7 @@ def create_app(
             dashboard,
             pages,
             workflows_for_university(university),
-            published_destination_profiles(),
+            published_destination_profiles(university.school_name),
             retrieved_chunks=retrieved_chunks,
         )
 
@@ -3664,7 +3693,7 @@ def create_app(
         normalized = normalize_school(partner.school_name)
         canonical_home = university_for(home_school).school_name if home_school else None
         target_home = normalize_school(canonical_home) if canonical_home else None
-        profiles = published_destination_profiles()
+        profiles = published_destination_profiles(canonical_home)
         if target_home:
             for profile in profiles:
                 if (
@@ -3767,7 +3796,7 @@ def create_app(
         university = university_for(home_school)
         names = {school_identity_key(p.school_name) for p in partners_for_university(university)}
         locations = load_university_locations(resolved_data_dir)
-        profiles = [complete_destination_profile(row, resolved_data_dir, locations=locations) for row in published_destination_profiles()
+        profiles = [complete_destination_profile(row, resolved_data_dir, locations=locations) for row in published_destination_profiles(university.school_name)
                     if school_identity_key(row.school_name) in names
                     and (not row.home_university or normalize_school(row.home_university) == normalize_school(university.school_name))]
         if not compact:

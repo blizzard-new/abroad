@@ -878,7 +878,21 @@ function formatDateOnly(value) {
 
 function initIcons() {
   if (window.lucide) {
-    window.lucide.createIcons({ attrs: { "aria-hidden": "true" } });
+    // Replacing a rendered SVG between pointerdown and pointerup discards the
+    // click. Background form/catalogue renders must preserve existing targets.
+    let pending = false;
+    document.querySelectorAll("[data-lucide]").forEach((element) => {
+      const name = element.getAttribute("data-lucide");
+      if (element.tagName.toLowerCase() === "svg" && element.classList.contains(`lucide-${name}`)) return;
+      element.setAttribute("data-lucide-pending", name);
+      pending = true;
+    });
+    if (!pending) return;
+    try {
+      window.lucide.createIcons({ nameAttr: "data-lucide-pending", attrs: { "aria-hidden": "true" } });
+    } finally {
+      document.querySelectorAll("[data-lucide-pending]").forEach((element) => element.removeAttribute("data-lucide-pending"));
+    }
   }
 }
 

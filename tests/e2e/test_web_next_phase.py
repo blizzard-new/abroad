@@ -23,6 +23,16 @@ from exchange_info.storage import save_application_workflow_revisions
 from .conftest import LiveServer, enter_public_site, login_through_web, open_navigation
 
 
+@pytest.fixture
+def taipei_page(browser: Browser):
+    # Notification dates follow Taipei; the executor may be on the previous UTC day.
+    context = browser.new_context(viewport={"width": 1280, "height": 900}, timezone_id="Asia/Taipei")
+    try:
+        yield context.new_page()
+    finally:
+        context.close()
+
+
 LINCOLN = "林肯大學 Lincoln University"
 MEIJI = "明治大學 Meiji University"
 UNIVERSITI_MALAYA = "馬來西亞馬來亞大學 Universiti Malaya"
@@ -951,9 +961,10 @@ def test_multi_plan_calendar_detects_same_day_conflicts_and_syncs_school_identit
 
 
 def test_calendar_task_schedule_uses_student_days_and_completion_stops_start_marker(
-    page: Page,
+    taipei_page: Page,
     live_server: LiveServer,
 ) -> None:
+    page = taipei_page
     email = _email("calendar-schedule")
     session = live_server.register(email, "E2E 任務排程學生")
     live_server.verify_student(session["profile"]["id"])
@@ -972,7 +983,7 @@ def test_calendar_task_schedule_uses_student_days_and_completion_stops_start_mar
     saved.raise_for_status()
     login_through_web(page, live_server, email)
 
-    today = date.today()
+    today = date.fromisoformat(page.evaluate("localDateKey()"))
     deadline = today + timedelta(days=12)
     title = "E2E 完成英文讀書計畫"
     page.evaluate("window.location.hash = '#calendar'")
