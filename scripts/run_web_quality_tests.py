@@ -11,6 +11,7 @@ from collections import Counter
 import json
 import os
 from pathlib import Path
+import select
 import subprocess
 import sys
 import time
@@ -51,11 +52,36 @@ def partition(shards: int) -> tuple[list[list[str]], dict]:
 
 
 class Progress:
+    def __init__(self):
+        # Pytest replaces stdout while capturing; write to the original pipe.
+        self.output = sys.__stdout__
+
     def pytest_runtest_logreport(self, report):
         if report.when == "call" or report.failed or report.skipped:
-            print(f"WEB_CASE {report.nodeid} {report.when} {report.outcome} {report.duration:.3f}s", flush=True)
+            self.write(f"WEB_CASE {report.nodeid} {report.when} {report.outcome} {report.duration:.3f}s\n")
             if report.failed:
-                print(str(report.longrepr), flush=True)
+                self.write(str(report.longrepr) + "\n")
+
+    def write(self, value: str) -> None:
+        """Retry a full CI pipe even if another library changes its flags.
+
+        os.write reports the exact bytes written, so retrying cannot duplicate
+        or discard part of a long traceback. Pytest's captured TextIO wrapper
+        can raise EAGAIN despite the initial blocking configuration.
+        """
+        pending = memoryview(value.encode(self.output.encoding or "utf-8", errors="backslashreplace"))
+        descriptor = self.output.fileno()
+        while pending:
+            try:
+                written = os.write(descriptor, pending)
+            except BlockingIOError:
+                select.select([], [descriptor], [])
+                continue
+            except InterruptedError:
+                continue
+            if written == 0:
+                raise OSError("CI evidence pipe accepted no bytes")
+            pending = pending[written:]
 
 
 def use_blocking_output() -> None:

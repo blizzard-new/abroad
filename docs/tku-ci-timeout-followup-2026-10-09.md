@@ -29,3 +29,7 @@ motion根因補記：原#dashboard-view > section選擇器漏掉application work
 最後5項working tree探測（三尺寸dialog/FAQ、社群search→reply/reaction/retry/delete、15路由motion）5 passed，59.87秒，JUnit與log另存；不是新固定SHA驗收。準備提交後才執行完整驗收，不套用舊結果。
 
 3ccbf7c 兩次 remote 第0分片在812案例後，Progress長longrepr輸出觸發非阻塞管線BlockingIOError、pytest exit3。各已收集1757，但只有1032實跑、725未跑；原始8份candidate JUnit與8份main-control JUnit都保留，不冒稱full suite。PR checkout merge d738f543與code3cc完全同tree。下一候選設stdout/stderr blocking維持完整byte/back-pressure，滿管線測試重現原錯誤與修正。新source/draft測試增加7nodes、3files，預期1764/182；以實際collect結果為準。所有原案例保留，無新增skip或排除；原始JUnit/collect/log仍always upload，main-control不豁免candidate失敗。
+
+## ce83a50 原始遠端證據與寫出修正
+
+PR 37873683592、push 37873678412 均已結束；第1/2/3分片全部通過，第0分片仍在Progress的TextIO長錯誤輸出遇到BlockingIOError而exit3，不能宣稱完整1764驗收。啟動時設定blocking未充分涵蓋pytest更換capture stream或之後旗標變更。下一候選Progress直接使用原始stdout FD，按os.write回傳的實際bytes推進，EAGAIN等可寫後重試、EINTR重試；不截斷longrepr、不移除原失敗、JUnit原樣保留。滿管線回歸將旗標在啟動修正之後重新設成nonblocking，確認262144-byte長錯誤完整輸出；舊print路徑確實失敗。固定SHA驗收與原始artifact須另核對，不能以此有界probe取代。

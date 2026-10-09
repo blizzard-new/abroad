@@ -20,9 +20,16 @@ while True:
     except BlockingIOError: break
 print('PIPE_FULL', file=sys.stderr, flush=True)
 if {repair!r}: module.use_blocking_output()
-module.Progress().pytest_runtest_logreport(SimpleNamespace(
+report = SimpleNamespace(
     when='call', failed=True, skipped=False, nodeid='synthetic::failure',
-    outcome='failed', duration=0.001, longrepr='ORIGINAL:' + 'y' * 262144 + ':END'))
+    outcome='failed', duration=0.001, longrepr='ORIGINAL:' + 'y' * 262144 + ':END')
+if {repair!r}:
+    # Reproduce the flag changing after startup, as the original CI did.
+    os.set_blocking(sys.stdout.fileno(), False)
+    module.Progress().pytest_runtest_logreport(report)
+else:
+    print(f'WEB_CASE {{report.nodeid}} call failed', flush=True)
+    print(str(report.longrepr), flush=True)
 """
     process = subprocess.Popen([sys.executable, "-c", program], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     assert process.stderr.readline() == b"PIPE_FULL\n"
