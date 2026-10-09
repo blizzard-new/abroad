@@ -74,6 +74,43 @@ def test_reference_packets_stay_separate_from_home_and_block_current_downloads(t
         assert guarantee['requires_on_campus_housing'] and not guarantee['requires_host_admission']
 
 
+@pytest.mark.parametrize('admission,housing', [
+    ('unknown', 'unknown'), ('accepted', 'on_campus'), ('accepted', 'off_campus')])
+def test_kansai_initial_api_notes_preserve_freshness_scope_and_passport_exception(tmp_path, admission, housing):
+    client = TestClient(create_app(tmp_path))
+    workflow = client.get('/application-workflow', params={
+        'home_school': 'NCU', 'school': '關西大學 Kansai University', 'academic_year': '116'})
+    assert workflow.status_code == 200
+    initial_step = next(step for step in workflow.json()['steps']
+                        if step['rule_id'] == 'ncu-129-host-initial-reference')
+    initial_names = {requirement['name'] for requirement in initial_step['document_requirements']}
+    assert len(initial_names) == 6
+    response = client.get('/application-center/catalog', params={
+        'school': 'NCU', 'target_school': '關西大學 Kansai University',
+        'academic_year': '116', 'host_admission_status': admission, 'housing_choice': housing})
+    assert response.status_code == 200
+    initial = [item for item in response.json()['items'] if item['name'] in initial_names]
+    assert len(initial) == 6
+    for item in initial:
+        applicability = item['applicability']
+        assert applicability['status'] == 'needs_confirmation'
+        assert not applicability['current_applicability_verified'] and not item['download_available']
+        note = applicability['note']
+        assert '所有發出三月內' not in note
+        for wording in [
+            '2027春2026/10/16–31 JST upload',
+            'Only documents issued within 3 months are valid.',
+            '對護照等文件的適用範圍仍待兩校確認',
+            '不以護照發照日期自動拒收', '胸片須六個月內', '不互相取代', '116當期']:
+            assert wording in note, (item['name'], wording)
+    passport = next(item for item in initial if item['name'].startswith('初次護照'))
+    assert '能確認姓名的官方證件' in passport['applicability']['note']
+    assert '不免除赴日簽證所需護照' in passport['applicability']['note']
+    assert 'https://www.kansai-u.ac.jp/Kokusai/future/faq_en/' in passport['applicability']['source_urls']
+    health = next(item for item in initial if item['name'].startswith('初次健康'))
+    assert 'medical information依健康表由本人／醫師確認' in health['applicability']['note']
+
+
 @pytest.mark.parametrize('row,name,initial,stages,conditions', CASES)
 def test_degree_language_contradictions_and_costs_reach_dashboard_detail_and_life(tmp_path, row, name, initial, stages, conditions):
     partner = next(p for p in fetch_ncu_partner_universities() if name in p.school_name)
