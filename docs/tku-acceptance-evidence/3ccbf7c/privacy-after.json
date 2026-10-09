@@ -1,0 +1,30 @@
+{
+  "tested_commit": "3ccbf7c3de75b47f2f93f7aa56e96143e2e48a38",
+  "synthetic_only": true,
+  "production_database_access": false,
+  "starting_worktree_status": "",
+  "ending_worktree_status": "",
+  "post_create_status": 201,
+  "post_create_author_id_present": false,
+  "guest_list_author_id_present": false,
+  "guest_detail_author_id_present": false,
+  "sensitive_status": 422,
+  "sensitive_visible_to_guest": false,
+  "delete_status": 204,
+  "post_delete_names": [
+    "已刪除帳號"
+  ],
+  "post_delete_comment_names": [
+    "已刪除帳號"
+  ],
+  "stored_author_still_linked": false,
+  "checks": {
+    "own_post_response_hides_author_id": true,
+    "own_comment_response_hides_author_id": true,
+    "guest_feed_hides_author_id": true,
+    "guest_detail_hides_author_id": true,
+    "sensitive_rejected_before_publication": true,
+    "deleted_post_and_comment_deidentified": true
+  },
+  "all_checks_passed": true
+}

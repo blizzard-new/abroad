@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/tmp/tku-ci-browser-3ccbf7c/verify-package-and-scope.py", line 15, in <module>
+    shutil.copy2(Path('/tmp/tku-acceptance-4e6cabd')/name,out/name)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 475, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/shutil.py", line 260, in copyfile
+    with open(src, 'rb') as fsrc:
+         ^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tku-acceptance-4e6cabd/privacy-before.json'

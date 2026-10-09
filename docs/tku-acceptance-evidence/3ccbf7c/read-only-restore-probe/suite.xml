@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="48.239" timestamp="2026-10-09T01:42:07.927140+00:00" hostname="f6ad0b7a0286"><testcase classname="tests.e2e.test_web_next_phase" name="test_advisor_waits_for_login_and_clears_private_conditions_on_logout" time="24.927"><failure message="AssertionError: Locator expected to have Value '84'&#10;Actual value:  &#10;Call log:&#10;  - Expect &quot;to_have_value&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;#advisor-academic-score&quot;)&#10;    10 × locator resolved to &lt;input min=&quot;0&quot; max=&quot;100&quot; step=&quot;0.1&quot; type=&quot;number&quot; inputmode=&quot;decimal&quot; placeholder=&quot;例如 82&quot; name=&quot;academic_score&quot; id=&quot;advisor-academic-score&quot;/&gt;&#10;       - unexpected value &quot;&quot;&#10;&#10;Aria snapshot:&#10;- spinbutton &quot;學業平均&quot;">tests/e2e/test_web_next_phase.py:435: in test_advisor_waits_for_login_and_clears_private_conditions_on_logout
+    expect(page.locator("#advisor-academic-score")).to_have_value("84")
+E   AssertionError: Locator expected to have Value '84'
+E   Actual value:  
+E   Call log:
+E     - Expect "to_have_value" with timeout 5000ms
+E     - waiting for locator("#advisor-academic-score")
+E       10 × locator resolved to &lt;input min="0" max="100" step="0.1" type="number" inputmode="decimal" placeholder="例如 82" name="academic_score" id="advisor-academic-score"/&gt;
+E          - unexpected value ""
+E   
+E   Aria snapshot:
+E   - spinbutton "學業平均"</failure></testcase><testcase classname="tests.e2e.test_web_next_phase" name="test_session_restore_outage_quarantines_private_state_then_recovers_same_owner" time="11.206" /><testcase classname="tests.e2e.test_web_next_phase" name="test_reload_drains_pending_workspace_for_inactive_home_school" time="11.722" /></testsuite></testsuites>

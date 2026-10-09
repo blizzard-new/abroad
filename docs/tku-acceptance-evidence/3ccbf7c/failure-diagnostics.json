@@ -1,0 +1,385 @@
+{
+  "tested_commit": "3ccbf7c3de75b47f2f93f7aa56e96143e2e48a38",
+  "original_candidate": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+  "baseline_commit": "f6ad1b8cedc4dadb4d00c29eb3456a7a87856d59",
+  "cases": [
+    {
+      "id": "tests.test_college_options::test_college_selects_ignore_partner_notes_and_follow_home_university",
+      "category": "test_harness",
+      "actual_impact": "Node extraction omitted region/country/availability and academic-render dependencies. Added unrelated UI stubs and actual availability function; college assertions retained.",
+      "original_reason": "AssertionError: <anonymous_script>:11\n    fillRegionSelect(\"#region-filter\", allCountries, state.region);\n    ^\n  \n  ReferenceError: fillRegionSelect is not defined\n      at renderPartnerFilters (eval at <anonymous> ([eval]:27:7), <anonymous>:11:3)\n      at renderAll ([eval]:30:7)\n      at [eval]:35:7\n      at runScriptInThisContext (node:internal/vm:219:10)\n      at node:internal/process/execution:451:12\n      at [eval]-wrapper:6:24\n      at runScriptInContext (node:internal/process/execution:449:60)\n      at evalFunction (node:internal/process/execution:283:30)\n      at evalTypeScript (node:internal/process/execution:295:3)\n      at node:internal/main/eval_string:71:3\n  \n  Node.js v24.19.0\n  \nassert 1 == 0\n +  where 1 = CompletedProcess(args=['node', '-e', \"\\n    const assert = require('node:assert/strict');\\n    const fs = require('nod...lTypeScript (node:internal/process/execution:295:3)\\n    at node:internal/main/eval_string:71:3\\n\\nNode.js v24.19.0\\n').returncode",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_community_permissions::test_guest_can_read_every_board_but_unverified_email_cannot_publish",
+      "category": "board_contract_policy",
+      "actual_impact": "Guest board IDs are cgu/ntpu/ntu/tku plus public boards, rather than two university: IDs. Early set assertion prevents subsequent assertions; cannot infer publish permissions from this failure alone.",
+      "original_reason": "AssertionError: assert {'cgu', 'lang...broad', 'tku'} == {'language-sc...versity:ntpu'}\n  \n  Extra items in the left set:\n  'tku'\n  'ntpu'\n  'cgu'\n  'ntu'\n  Extra items in the right set:...\n  \n  ...Full output truncated (3 lines hidden), use '-vv' to show",
+      "candidate_status": "failed",
+      "candidate_reason": "AssertionError: assert {'cgu', 'lang...broad', 'tku'} == {'language-sc...versity:ntpu'}\n  \n  Extra items in the left set:\n  'cgu'\n  'ntpu'\n  'tku'\n  'ntu'\n  Extra items in the right set:...\n  \n  ...Full output truncated (3 lines hidden), use '-vv' to show",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_community_permissions::test_post_rejects_unknown_or_conflicting_board_identifiers",
+      "category": "response_contract",
+      "actual_impact": "Unknown board returned422 with different wording. Later conflicting-board assertion was not reached; probe separately records actual response. Do not treat this whole test as verified.",
+      "original_reason": "AssertionError: assert '不存在' in '不支援建立此討論板貼文。'",
+      "candidate_status": "failed",
+      "candidate_reason": "AssertionError: assert '不存在' in '不支援建立此討論板貼文。'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_community_permissions::test_ntpu_student_can_use_only_ntpu_board_for_posts_and_comments",
+      "category": "board_contract_policy",
+      "actual_impact": "Legacy university:ntpu lookup fails before publish assertions. Current code/test elsewhere permits verified-email cross-school board posts; matching-school requirement and OpenAPI metadata conflict. No permission policy changed.",
+      "original_reason": "KeyError: 'university:ntpu'",
+      "candidate_status": "failed",
+      "candidate_reason": "KeyError: 'university:ntpu'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_community_permissions::test_identity_is_selected_per_submission_and_public_name_is_server_derived",
+      "category": "response_contract",
+      "actual_impact": "Verified-department option adds 學生 suffix. Early label assertion prevents later forged-name checks in this test; synthetic privacy checks cover a separate scenario.",
+      "original_reason": "AssertionError: assert ['匿名學生', '陳小華...庚大學 資訊工程學系學生'] == ['匿名學生', '陳小華...'長庚大學 資訊工程學系']\n  \n  At index 3 diff: '長庚大學 資訊工程學系學生' != '長庚大學 資訊工程學系'\n  Use -v to get more diff",
+      "candidate_status": "failed",
+      "candidate_reason": "AssertionError: assert ['匿名學生', '陳小華...庚大學 資訊工程學系學生'] == ['匿名學生', '陳小華...'長庚大學 資訊工程學系']\n  \n  At index 3 diff: '長庚大學 資訊工程學系學生' != '長庚大學 資訊工程學系'\n  Use -v to get more diff",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_community_permissions::test_public_post_threads_hide_internal_author_ids_but_keep_owner_controls",
+      "category": "own_response_contract",
+      "actual_impact": "Own POST contained author_id; isolated guest legacy/detail GET already hid it. Removed own response ID and retained owner control. This was not proof of a guest ID leak.",
+      "original_reason": "AssertionError: assert 'd5a7c63aea19...6820e6c108490' == ''\n  \n  + d5a7c63aea1944c297c6820e6c108490",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_community_permissions::test_high_risk_content_waits_for_review_and_sensitive_ids_are_blocked",
+      "category": "runtime_privacy",
+      "actual_impact": "Synthetic passport POST201 approved was visible to guest GET. Now422 before storage/publication; full-width numbers also checked.",
+      "original_reason": "assert 201 == 422\n +  where 201 = <Response [201 Created]>.status_code",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_community_permissions::test_reports_and_blocks_validate_targets_and_report_review_is_audited",
+      "category": "response_contract",
+      "actual_impact": "Self-report is denied403 versus expected422; remaining review/block assertions in this test are not reached. No authorization was weakened to satisfy the test.",
+      "original_reason": "assert 403 == 422\n +  where 403 = <Response [403 Forbidden]>.status_code",
+      "candidate_status": "failed",
+      "candidate_reason": "assert 403 == 422\n +  where 403 = <Response [403 Forbidden]>.status_code",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_community_permissions::test_author_can_delete_own_post_but_not_another_users_post",
+      "category": "response_contract",
+      "actual_impact": "Owner deletion returns200 with mutation receipt instead of expected204. Existing modern API uses a receipt; test does not reach final feed assertion. Contract reconciliation remains required.",
+      "original_reason": "AssertionError: assert 200 == 204\n +  where 200 = <Response [200 OK]>.status_code\n +    where <Response [200 OK]> = delete('/community/posts/b3d71469295a4bccb054c9175c134bf8', headers={'Authorization': 'Bearer account-token-299a48b1184c4b6d8c03f2e83d4f02d5', 'X-Anonymous-ID': 'efd03cef27f640c68997550c4b1e571e', 'X-Anonymous-Token': 'BVKDjhfKtKFrHgahEr4qoRRcoNTIE3Lm5JMeVtH5fzI'})\n +      where delete = <starlette.testclient.TestClient object at 0x7fc58d19d4f0>.delete",
+      "candidate_status": "failed",
+      "candidate_reason": "AssertionError: assert 200 == 204\n +  where 200 = <Response [200 OK]>.status_code\n +    where <Response [200 OK]> = delete('/community/posts/3e129117846f430db26db58be969551b', headers={'Authorization': 'Bearer account-token-1e57b256d15c4897b0a89b41364b1374', 'X-Anonymous-ID': 'c85ae2ac5810471997d9de7e99a78e91', 'X-Anonymous-Token': '1VZWv_DDpTFdiS0SRw3jEnZ-jVIgU-3Dr2YSN2kDN0E'})\n +      where delete = <starlette.testclient.TestClient object at 0x7f6b47a22b10>.delete",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_community_permissions::test_account_deletion_keeps_public_content_but_removes_private_links",
+      "category": "runtime_privacy",
+      "actual_impact": "Synthetic real-name post/comment remained named after DELETE204 and guest GET; identities retained author links. Now deidentified, all linked identities purged, failed cleanup retriable. Supabase RPC routing simulated only.",
+      "original_reason": "AssertionError: assert '準備交換的小林' == '已刪除帳號'\n  \n  - 已刪除帳號\n  + 準備交換的小林",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_experience_collector::test_experience_api_reads_cache_and_refreshes_selected_school",
+      "category": "experience_source_contract",
+      "actual_impact": "API adds public reference and bundled experience sources to the isolated one-source cache, yielding3. Counts and refresh assertions require source-scope reconciliation; no CGU source removed.",
+      "original_reason": "assert 3 == 1",
+      "candidate_status": "failed",
+      "candidate_reason": "assert 3 == 1",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_experience_collector::test_destination_profile_api_returns_verified_official_summary",
+      "category": "localized_response_contract",
+      "actual_impact": "City is localized 林肯, 坎特伯里 versus legacy English expectation. This does not prove missing destination data; remaining assertions still need reconciliation.",
+      "original_reason": "AssertionError: assert '林肯, 坎特伯里' == 'Lincoln, Canterbury'\n  \n  - Lincoln, Canterbury\n  + 林肯, 坎特伯里",
+      "candidate_status": "failed",
+      "candidate_reason": "AssertionError: assert '林肯, 坎特伯里' == 'Lincoln, Canterbury'\n  \n  - Lincoln, Canterbury\n  + 林肯, 坎特伯里",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_frontend_contract::test_web_routes_states_and_touch_targets_are_consistent",
+      "category": "ui_literal_contract",
+      "actual_impact": "Old literal/function-location/asset-version/element-ID assertion differs from current UI. Passing selected real-browser flows do not waive this failed assertion or prove all listed UI functions work. Needs behavior-level reconciliation in shared integration.",
+      "original_reason": "assert 'renderCommunityEmpty(\"社群暫時無法載入\", error.message, \"error\")' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "candidate_status": "failed",
+      "candidate_reason": "assert 'renderCommunityEmpty(\"社群暫時無法載入\", error.message, \"error\")' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_frontend_contract::test_community_identity_preview_matches_public_name_and_resets_per_submission",
+      "category": "ui_literal_contract",
+      "actual_impact": "Old literal/function-location/asset-version/element-ID assertion differs from current UI. Passing selected real-browser flows do not waive this failed assertion or prove all listed UI functions work. Needs behavior-level reconciliation in shared integration.",
+      "original_reason": "assert 'fetchCommunityAuth(url)' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "candidate_status": "failed",
+      "candidate_reason": "assert 'fetchCommunityAuth(url)' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_frontend_contract::test_web_notification_center_and_explicit_email_opt_in_are_present",
+      "category": "ui_literal_contract",
+      "actual_impact": "Old literal/function-location/asset-version/element-ID assertion differs from current UI. Passing selected real-browser flows do not waive this failed assertion or prove all listed UI functions work. Needs behavior-level reconciliation in shared integration.",
+      "original_reason": "assert '重新核對申請清單' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "candidate_status": "failed",
+      "candidate_reason": "assert '重新核對申請清單' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_frontend_contract::test_application_center_separates_official_requirements_from_preparation_tools",
+      "category": "ui_literal_contract",
+      "actual_impact": "Old literal/function-location/asset-version/element-ID assertion differs from current UI. Passing selected real-browser flows do not waive this failed assertion or prove all listed UI functions work. Needs behavior-level reconciliation in shared integration.",
+      "original_reason": "assert '不會用其他年度或其他學校的文件代替' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "candidate_status": "failed",
+      "candidate_reason": "assert '不會用其他年度或其他學校的文件代替' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_frontend_contract::test_successful_login_closes_before_noncritical_account_hydration",
+      "category": "ui_literal_contract",
+      "actual_impact": "Old literal/function-location/asset-version/element-ID assertion differs from current UI. Passing selected real-browser flows do not waive this failed assertion or prove all listed UI functions work. Needs behavior-level reconciliation in shared integration.",
+      "original_reason": "assert 'app.js?v=20260929-chinese-1' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...2\" defer></script>\\n    <script src=\"/static/app.js?v=20261008-tku-acceptance-3\" defer></script>\\n  </body>\\n</html>\\n'",
+      "candidate_status": "failed",
+      "candidate_reason": "assert 'app.js?v=20260929-chinese-1' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi... defer></script>\\n    <script src=\"/static/app.js?v=20261008-tku-continuation-4\" defer></script>\\n  </body>\\n</html>\\n'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_frontend_contract::test_personal_application_plan_uses_structured_api_and_progressive_login",
+      "category": "ui_literal_contract",
+      "actual_impact": "Old literal/function-location/asset-version/element-ID assertion differs from current UI. Passing selected real-browser flows do not waive this failed assertion or prove all listed UI functions work. Needs behavior-level reconciliation in shared integration.",
+      "original_reason": "assert 'id=\"eligibility-department\"' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...2\" defer></script>\\n    <script src=\"/static/app.js?v=20261008-tku-acceptance-3\" defer></script>\\n  </body>\\n</html>\\n'",
+      "candidate_status": "failed",
+      "candidate_reason": "assert 'id=\"eligibility-department\"' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi... defer></script>\\n    <script src=\"/static/app.js?v=20261008-tku-continuation-4\" defer></script>\\n  </body>\\n</html>\\n'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_frontend_contract::test_global_home_board_routing_and_following_are_present",
+      "category": "ui_literal_contract",
+      "actual_impact": "Old literal/function-location/asset-version/element-ID assertion differs from current UI. Passing selected real-browser flows do not waive this failed assertion or prove all listed UI functions work. Needs behavior-level reconciliation in shared integration.",
+      "original_reason": "assert '查看學生身分驗證' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "candidate_status": "failed",
+      "candidate_reason": "assert '查看學生身分驗證' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_frontend_contract::test_departmental_partner_references_are_visible_but_blocked_from_formal_plans",
+      "category": "ui_literal_contract",
+      "actual_impact": "Old literal/function-location/asset-version/element-ID assertion differs from current UI. Passing selected real-browser flows do not waive this failed assertion or prove all listed UI functions work. Needs behavior-level reconciliation in shared integration.",
+      "original_reason": "assert '暫不可建立正式申請計畫' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...2\" defer></script>\\n    <script src=\"/static/app.js?v=20261008-tku-acceptance-3\" defer></script>\\n  </body>\\n</html>\\n'",
+      "candidate_status": "failed",
+      "candidate_reason": "assert '暫不可建立正式申請計畫' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi... defer></script>\\n    <script src=\"/static/app.js?v=20261008-tku-continuation-4\" defer></script>\\n  </body>\\n</html>\\n'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_http_client::test_safe_session_blocks_private_ips",
+      "category": "test_environment",
+      "actual_impact": "Machine proxy resolved proxy instead of mocked destination. Three tests pass with per-test proxy env isolation; production HTTP/SSRF/proxy configuration unchanged.",
+      "original_reason": "AssertionError: Regex pattern did not match.\n  Expected regex: 'SSRF blocked: Host internal resolved to non-public IP'\n  Actual message: 'HTTPSConnectionPool(host=\\'internal\\', port=443): Max retries exceeded with url: / (Caused by ProxyError(\\'Unable to connect to proxy\\', NameResolutionError(\"HTTPSConnection(host=\\'proxy\\', port=8080): Failed to resolve \\'proxy\\' (Name or service not known)\")))'",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_independent_page_routing::test_hash_router_shows_one_feature_page_without_scroll_spying",
+      "category": "ui_literal_contract",
+      "actual_impact": "Old literal/function-location/asset-version/element-ID assertion differs from current UI. Passing selected real-browser flows do not waive this failed assertion or prove all listed UI functions work. Needs behavior-level reconciliation in shared integration.",
+      "original_reason": "assert 'window.location.hash = \"#search\"' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "candidate_status": "failed",
+      "candidate_reason": "assert 'window.location.hash = \"#search\"' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_independent_page_routing::test_route_assets_are_cache_busted_together",
+      "category": "ui_literal_contract",
+      "actual_impact": "Old literal/function-location/asset-version/element-ID assertion differs from current UI. Passing selected real-browser flows do not waive this failed assertion or prove all listed UI functions work. Needs behavior-level reconciliation in shared integration.",
+      "original_reason": "assert 'styles.css?v=20260729-b306-progress-2' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...2\" defer></script>\\n    <script src=\"/static/app.js?v=20261008-tku-acceptance-3\" defer></script>\\n  </body>\\n</html>\\n'",
+      "candidate_status": "failed",
+      "candidate_reason": "assert 'styles.css?v=20260729-b306-progress-2' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi... defer></script>\\n    <script src=\"/static/app.js?v=20261008-tku-continuation-4\" defer></script>\\n  </body>\\n</html>\\n'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_private_community_writes_expose_retry_mutation_header",
+      "category": "runtime_missing_retry",
+      "actual_impact": "Current legacy private handlers do not expose/implement the requested X-Community-Mutation-ID contract. Repository primitive tests alone cannot establish API retry behavior. Kept failing rather than advertising a fake capability.",
+      "original_reason": "StopIteration",
+      "candidate_status": "failed",
+      "candidate_reason": "StopIteration",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_workflow_issue_report_contract_exposes_retry_and_admin_review_paths",
+      "category": "openapi_existing_contract",
+      "actual_impact": "Existing runtime already required content-report mutation header; it is now a validated Header parameter in live/frozen schema.",
+      "original_reason": "KeyError: 'parameters'",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_account_deletion_exposes_dedicated_retry_mutation_header",
+      "category": "openapi_existing_contract",
+      "actual_impact": "Existing deletion header now explicit optional validated Header in schema, including no-header atomic production path.",
+      "original_reason": "KeyError: 'parameters'",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_api_contract_page_does_not_depend_on_csp_blocked_assets",
+      "category": "runtime_docs",
+      "actual_impact": "Default Swagger referenced CDN/script blocked by existing CSP. Now script-free OpenAPI download page and redoc redirect; CSP unchanged.",
+      "original_reason": "assert 'href=\"/openapi.json\"' in '\\n    <!DOCTYPE html>\\n    <html>\\n    <head>\\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1...\\n        SwaggerUIBundle.SwaggerUIStandalonePreset\\n        ],\\n    })\\n    </script>\\n    </body>\\n    </html>\\n    '\n +  where '\\n    <!DOCTYPE html>\\n    <html>\\n    <head>\\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1...\\n        SwaggerUIBundle.SwaggerUIStandalonePreset\\n        ],\\n    })\\n    </script>\\n    </body>\\n    </html>\\n    ' = <Response [200 OK]>.text",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_external_calendar_contract_documents_subscription_boundary",
+      "category": "openapi_existing_contract",
+      "actual_impact": "Documented actual existing401/403 release-mode responses without changing calendar permissions.",
+      "original_reason": "AssertionError: assert '403' in {'200': {'description': 'Successful Response', 'content': {'application/json': {'schema': {'$ref': '#/components/schemas/CalendarSyncStatus'}}}}}",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_application_document_contract_keeps_official_forms_public_and_gates_generation",
+      "category": "openapi_existing_contract",
+      "actual_impact": "Documented actual generation401/403 responses; official discovery stays public and existing access gates unchanged.",
+      "original_reason": "AssertionError: assert '401' in {'200': {'description': 'Successful Response', 'content': {'application/json': {'schema': {'$ref': '#/components/schem...'Validation Error', 'content': {'application/json': {'schema': {'$ref': '#/components/schemas/HTTPValidationError'}}}}}",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_document_completeness_contract_is_subscription_gated_and_ai_stays_paused",
+      "category": "openapi_existing_contract",
+      "actual_impact": "Documented actual error responses and made required explicit consent visible in multipart schema. No subscription/auth policy changed.",
+      "original_reason": "AssertionError: assert '401' in {'200': {'description': 'Successful Response', 'content': {'application/json': {'schema': {'$ref': '#/components/schem...'Validation Error', 'content': {'application/json': {'schema': {'$ref': '#/components/schemas/HTTPValidationError'}}}}}",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_ai_compatibility_contract_is_explicitly_paused",
+      "category": "openapi_existing_contract",
+      "actual_impact": "Deprecated/503 annotations now describe existing paused compatibility routes. No AI provider enabled.",
+      "original_reason": "KeyError: 'deprecated'",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_content_review_contract_exposes_nonpublishing_source_candidates",
+      "category": "runtime_missing_admin_feature",
+      "actual_impact": "Source replacement candidate schema/routes absent from current app, while historical workbench references them. Needs separate bounded restoration/integration of the review subsystem; no dummy routes added.",
+      "original_reason": "KeyError: 'ApplicationWorkflowSourceReplacementCandidate'",
+      "candidate_status": "failed",
+      "candidate_reason": "KeyError: 'ApplicationWorkflowSourceReplacementCandidate'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_workflow_batch_stage_contract_is_snapshot_bound_and_nonpublishing",
+      "category": "runtime_missing_admin_feature",
+      "actual_impact": "Snapshot-bound review batch stage route absent. Restoring it requires review/concurrency/publication safeguards beyond TKU catalogue adaptation.",
+      "original_reason": "KeyError: '/admin/application-workflow-review-batches/{batch_id}/stage'",
+      "candidate_status": "failed",
+      "candidate_reason": "KeyError: '/admin/application-workflow-review-batches/{batch_id}/stage'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_destination_profile_review_contract_requires_explicit_audited_promotion",
+      "category": "runtime_missing_admin_feature",
+      "actual_impact": "Destination review queue/promotion/publication/rollback API family absent from current app. This is an actual unavailable feature, not a schema-only typo.",
+      "original_reason": "KeyError: '/admin/destination-profile-review-queue'",
+      "candidate_status": "failed",
+      "candidate_reason": "KeyError: '/admin/destination-profile-review-queue'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_next_phase_contract::test_application_workflow_publication_contract_exposes_safe_rollback",
+      "category": "runtime_missing_admin_feature",
+      "actual_impact": "Workflow publications/rollback/release-readiness routes absent from current app. Do not imply the existing UI or model files make this service operational.",
+      "original_reason": "KeyError: '/admin/application-workflow-publications'",
+      "candidate_status": "failed",
+      "candidate_reason": "KeyError: '/admin/application-workflow-publications'",
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_ntpu_bundled_data::test_runtime_includes_tracked_ntpu_public_baseline_with_isolated_private_data",
+      "category": "runtime_coverage",
+      "actual_impact": "Actual NTPU bundled profile existed but coverage handler counted only CGU/NTU. Counts now depend on matching home ownership; TKU4 profiles also covered without upgrading their partial status.",
+      "original_reason": "assert 0 == 1",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_rag::test_rules_advisor_works_while_ai_compatibility_endpoints_stay_paused",
+      "category": "test_request_contract",
+      "actual_impact": "Rewrite request omitted explicit AI consent and correctly returned422 before paused503. Test now sends consent and retains assertion of zero external AI calls; runtime consent gate unchanged.",
+      "original_reason": "assert 422 == 503\n +  where 422 = <Response [422 Unprocessable Content]>.status_code",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_school_photo_and_match::test_match_missing_profile_fields_and_real_mismatches",
+      "category": "test_harness",
+      "actual_impact": "Node extraction omitted homeSelectionRules. Added explicit synthetic cycle fixture; all degree/language/escaping assertions retained.",
+      "original_reason": "AssertionError: <anonymous_script>:24\n    const cycleConfirmed = !homeSelectionRules().partner_requirements_need_confirmation;\n                           ^\n  \n  ReferenceError: homeSelectionRules is not defined\n      at partnerMatch (eval at <anonymous> ([eval]:14:31), <anonymous>:24:26)\n      at [eval]:18:19\n      at runScriptInThisContext (node:internal/vm:219:10)\n      at node:internal/process/execution:451:12\n      at [eval]-wrapper:6:24\n      at runScriptInContext (node:internal/process/execution:449:60)\n      at evalFunction (node:internal/process/execution:283:30)\n      at evalTypeScript (node:internal/process/execution:295:3)\n      at node:internal/main/eval_string:71:3\n  \n  Node.js v24.19.0\n  \nassert 1 == 0\n +  where 1 = CompletedProcess(args=['node', '-e', '\\n    const assert = require(\\'node:assert/strict\\');\\n    const fs = require(\\'...lTypeScript (node:internal/process/execution:295:3)\\n    at node:internal/main/eval_string:71:3\\n\\nNode.js v24.19.0\\n').returncode",
+      "candidate_status": "passed",
+      "candidate_reason": null,
+      "acceptance_waiver": false
+    },
+    {
+      "id": "tests.test_social_community_api::test_private_conversation_retry_replays_generated_resources",
+      "category": "runtime_missing_retry",
+      "actual_impact": "Isolated actual API first-write201 followed by identical-header retry422 after recipient removal. Repository retry primitives are not wired into this handler. No exact replay capability is claimed.",
+      "original_reason": "assert 422 == 201\n +  where 422 = <Response [422 Unprocessable Content]>.status_code",
+      "candidate_status": "failed",
+      "candidate_reason": "assert 422 == 201\n +  where 422 = <Response [422 Unprocessable Content]>.status_code",
+      "acceptance_waiver": false
+    }
+  ],
+  "category_counts": {
+    "test_harness": 2,
+    "board_contract_policy": 2,
+    "response_contract": 4,
+    "own_response_contract": 1,
+    "runtime_privacy": 2,
+    "experience_source_contract": 1,
+    "localized_response_contract": 1,
+    "ui_literal_contract": 10,
+    "test_environment": 1,
+    "runtime_missing_retry": 2,
+    "openapi_existing_contract": 6,
+    "runtime_docs": 1,
+    "runtime_missing_admin_feature": 4,
+    "runtime_coverage": 1,
+    "test_request_contract": 1
+  },
+  "passed_original_cases": 15,
+  "still_failed_original_cases": 24,
+  "added_failures": [],
+  "matching_baseline_is_acceptable": false,
+  "decision_required": [
+    "Reconcile current verified-email board policy with older matching-school requirement and metadata, without granting rights in this school branch.",
+    "Restore/integrate missing private retry and source/destination/workflow review API families with their real persistence and publication safeguards.",
+    "Replace obsolete UI string/location expectations with reviewed behavior assertions; do not erase requirements solely for a green result."
+  ],
+  "source_blockers": "gap_triage.json:63 original gaps remain, with bounded public-search or conflict evidence."
+}

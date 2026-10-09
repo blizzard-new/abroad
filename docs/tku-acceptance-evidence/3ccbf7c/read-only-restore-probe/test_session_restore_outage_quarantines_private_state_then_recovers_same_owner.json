@@ -1,0 +1,637 @@
+{
+  "case": "tests/e2e/test_web_next_phase.py::test_session_restore_outage_quarantines_private_state_then_recovers_same_owner",
+  "outcome": "passed",
+  "trace": [
+    {
+      "step": "readStoredState:before",
+      "account": "",
+      "quarantined": "",
+      "syncOwner": "",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "pending",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "readStoredState:after-sync",
+      "account": "",
+      "quarantined": "716f7e5b9f55493bb9ead42fa9762af8",
+      "syncOwner": "",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "pending",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "restoreAccount:before",
+      "account": "",
+      "quarantined": "716f7e5b9f55493bb9ead42fa9762af8",
+      "syncOwner": "",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "pending",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "restoreAccount:after-sync",
+      "account": "",
+      "quarantined": "716f7e5b9f55493bb9ead42fa9762af8",
+      "syncOwner": "",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "pending",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "restoreAccount:resolved",
+      "account": "",
+      "quarantined": "716f7e5b9f55493bb9ead42fa9762af8",
+      "syncOwner": "",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "unavailable",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "restoreAccount:before",
+      "account": "",
+      "quarantined": "716f7e5b9f55493bb9ead42fa9762af8",
+      "syncOwner": "",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "unavailable",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "restoreAccount:after-sync",
+      "account": "",
+      "quarantined": "716f7e5b9f55493bb9ead42fa9762af8",
+      "syncOwner": "",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "pending",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "clearProtectedCatalog:before",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "716f7e5b9f55493bb9ead42fa9762af8",
+      "syncOwner": "",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "pending",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "clearProtectedCatalog:after-sync",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "716f7e5b9f55493bb9ead42fa9762af8",
+      "syncOwner": "",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "pending",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "readStoredAuthenticatedState:before",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "716f7e5b9f55493bb9ead42fa9762af8",
+      "syncOwner": "",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "readStoredAuthenticatedState:after-sync",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "prepareAccountWorkspaceSyncForAccount:before",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "prepareAccountWorkspaceSyncForAccount:after-sync",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "hydrateAccountWorkspace:before",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "hydrateAccountWorkspace:after-sync",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "prepareAccountWorkspaceSyncForAccount:before",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "prepareAccountWorkspaceSyncForAccount:after-sync",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "hydrateAccountWorkspace:resolved",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "restoreAccount:resolved",
+      "account": "716f7e5b9f55493bb9ead42fa9762af8",
+      "quarantined": "",
+      "syncOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedOwner": "716f7e5b9f55493bb9ead42fa9762af8",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [
+        "林肯大學 Lincoln University"
+      ],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    }
+  ],
+  "instrumentation": "read-only browser wrappers; no repository source changes; synthetic data only"
+}

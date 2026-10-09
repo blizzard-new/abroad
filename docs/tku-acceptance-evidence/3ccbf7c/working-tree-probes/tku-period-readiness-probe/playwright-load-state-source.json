@@ -1,0 +1,9 @@
+{
+  "installed_playwright_version": "1.62.0",
+  "source_file": "/workspace/abroad-tku/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py",
+  "source_sha256": "194bfc8b899e53633efe1e1f6b9f1d0be9c33428394e904810edcbfae3c70180",
+  "line_start": 300,
+  "line_end": 324,
+  "quote": "    async def _wait_for_load_state_impl(\n        self, state: DocumentLoadState = None, timeout: float = None\n    ) -> None:\n        if not state:\n            state = \"load\"\n        if state not in (\"load\", \"domcontentloaded\", \"networkidle\", \"commit\"):\n            raise Error(\n                \"state: expected one of (load|domcontentloaded|networkidle|commit)\"\n            )\n        waiter = self._setup_navigation_waiter(\"wait_for_load_state\", timeout)\n\n        if state in self._load_states:\n            waiter.log(f'  not waiting, \"{state}\" event already fired')\n            # TODO: align with upstream\n            waiter._fulfill(None)\n        else:\n\n            def handle_load_state_event(actual_state: str) -> bool:\n                waiter.log(f'\"{actual_state}\" event fired')\n                return actual_state == state\n\n            waiter.wait_for_event(\n                self._event_emitter,\n                \"loadstate\",\n                handle_load_state_event,",
+  "interpretation": "The installed implementation returns immediately when the requested load state is already in the cached set; it does not await the application-specific hydration/period promise. A cached load-state wait alone is insufficient for this fixture boundary."
+}

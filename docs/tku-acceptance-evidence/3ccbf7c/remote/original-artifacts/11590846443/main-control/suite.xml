@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="16.663" timestamp="2026-10-09T01:45:22.055712+00:00" hostname="runnervmmprz5"><testcase classname="tests.e2e.test_icon_motion" name="test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph" time="15.973"><failure message="playwright._impl._errors.Error: Locator.get_attribute: Error: strict mode violation: locator(&quot;#theme-toggle&quot;).locator(&quot;svg path&quot;) resolved to 8 elements:&#10;    1) &lt;path d=&quot;M12 2v2&quot;&gt;&lt;/path&gt; aka get_by_role(&quot;button&quot;, name=&quot;切換為淺色模式&quot;)&#10;    2) &lt;path d=&quot;M12 20v2&quot;&gt;&lt;/path&gt; aka get_by_role(&quot;button&quot;, name=&quot;切換為淺色模式&quot;)&#10;    3) &lt;path d=&quot;m4.93 4.93 1.41 1.41&quot;&gt;&lt;/path&gt; aka get_by_role(&quot;button&quot;, name=&quot;切換為淺色模式&quot;)&#10;    4) &lt;path d=&quot;m17.66 17.66 1.41 1.41&quot;&gt;&lt;/path&gt; aka get_by_role(&quot;button&quot;, name=&quot;切換為淺色模式&quot;)&#10;    5) &lt;path d=&quot;M2 12h2&quot;&gt;&lt;/path&gt; aka get_by_role(&quot;button&quot;, name=&quot;切換為淺色模式&quot;)&#10;    6) &lt;path d=&quot;M20 12h2&quot;&gt;&lt;/path&gt; aka get_by_role(&quot;button&quot;, name=&quot;切換為淺色模式&quot;)&#10;    7) &lt;path d=&quot;m6.34 17.66-1.41 1.41&quot;&gt;&lt;/path&gt; aka get_by_role(&quot;button&quot;, name=&quot;切換為淺色模式&quot;)&#10;    8) &lt;path d=&quot;m19.07 4.93-1.41 1.41&quot;&gt;&lt;/path&gt; aka get_by_role(&quot;button&quot;, name=&quot;切換為淺色模式&quot;)&#10;&#10;Call log:&#10;  - waiting for locator(&quot;#theme-toggle&quot;).locator(&quot;svg path&quot;)">tests/e2e/test_icon_motion.py:37: in test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph
+    middle = theme.locator("svg path").get_attribute("d")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:19313: in get_attribute
+    self._sync(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:465: in get_attribute
+    return await self._frame.get_attribute(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:757: in get_attribute
+    return await self._channel.send(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.Error: Locator.get_attribute: Error: strict mode violation: locator("#theme-toggle").locator("svg path") resolved to 8 elements:
+E       1) &lt;path d="M12 2v2"&gt;&lt;/path&gt; aka get_by_role("button", name="切換為淺色模式")
+E       2) &lt;path d="M12 20v2"&gt;&lt;/path&gt; aka get_by_role("button", name="切換為淺色模式")
+E       3) &lt;path d="m4.93 4.93 1.41 1.41"&gt;&lt;/path&gt; aka get_by_role("button", name="切換為淺色模式")
+E       4) &lt;path d="m17.66 17.66 1.41 1.41"&gt;&lt;/path&gt; aka get_by_role("button", name="切換為淺色模式")
+E       5) &lt;path d="M2 12h2"&gt;&lt;/path&gt; aka get_by_role("button", name="切換為淺色模式")
+E       6) &lt;path d="M20 12h2"&gt;&lt;/path&gt; aka get_by_role("button", name="切換為淺色模式")
+E       7) &lt;path d="m6.34 17.66-1.41 1.41"&gt;&lt;/path&gt; aka get_by_role("button", name="切換為淺色模式")
+E       8) &lt;path d="m19.07 4.93-1.41 1.41"&gt;&lt;/path&gt; aka get_by_role("button", name="切換為淺色模式")
+E   
+E   Call log:
+E     - waiting for locator("#theme-toggle").locator("svg path")</failure></testcase></testsuite></testsuites>

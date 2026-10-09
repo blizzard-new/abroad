@@ -1,0 +1,513 @@
+{
+  "tested_commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+  "starting_state": {
+    "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+    "dirty": ""
+  },
+  "ending_state": {
+    "commit": "89217e19d55f3ff615964594e5f83eeb6156ba85",
+    "dirty": ""
+  },
+  "api_module": "/workspace/abroad-tku-privacy-before-89217e1/src/exchange_info/api.py",
+  "api_module_sha256": "9f99266ab7c62323b53eb4a93bff28df9ffd818f6bc056eedc24281f454762f2",
+  "capture_script_sha256": "02c820ead6f8da538151f92d0fe3f33c47349af3f95ddc77b1293b4fad5cafe2",
+  "started_at": "2026-10-09T00:04:27.048880+00:00",
+  "ended_at": "2026-10-09T00:04:27.221134+00:00",
+  "synthetic_only": true,
+  "production_database_access": false,
+  "repository_backends": {
+    "account_repository": "jsonl",
+    "community_repository": "jsonl"
+  },
+  "isolated_data_directory": "/tmp/tku-raw-privacy-sff5_hyr",
+  "raw_http": [
+    {
+      "label": "owner normal post",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。",
+          "identity_mode": "real_name"
+        },
+        "authentication": "synthetic owner bearer; value omitted"
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "content-type": "application/json"
+        },
+        "raw_body": "{\"id\":\"404d429e590448ff9b64f8e4ed07a5a8\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"676520df291040778a1757236b66be88\",\"display_name\":\"合成驗收姓名\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T00:04:27.175693Z\"}",
+        "json": {
+          "id": "404d429e590448ff9b64f8e4ed07a5a8",
+          "board_id": "public-study-abroad",
+          "board_kind": "public_study_abroad",
+          "school_name": "公共留學板",
+          "author_id": "676520df291040778a1757236b66be88",
+          "display_name": "合成驗收姓名",
+          "identity_mode": "real_name",
+          "post_type": "discussion",
+          "topic": "application",
+          "country": null,
+          "academic_year": null,
+          "application_stage": null,
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。",
+          "status": "approved",
+          "comment_count": 0,
+          "viewer_can_delete": false,
+          "created_at": "2026-10-09T00:04:27.175693Z"
+        }
+      }
+    },
+    {
+      "label": "owner comment",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts/404d429e590448ff9b64f8e4ed07a5a8/comments",
+        "json": {
+          "body": "合成留言資料",
+          "identity_mode": "real_name"
+        },
+        "authentication": "synthetic owner bearer; value omitted"
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "content-type": "application/json"
+        },
+        "raw_body": "{\"id\":\"e64777b588e94f2b8618a0b470e0acd2\",\"post_id\":\"404d429e590448ff9b64f8e4ed07a5a8\",\"parent_id\":null,\"deleted\":false,\"author_id\":\"676520df291040778a1757236b66be88\",\"display_name\":\"合成驗收姓名\",\"identity_mode\":\"real_name\",\"body\":\"合成留言資料\",\"status\":\"approved\",\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T00:04:27.181651Z\"}",
+        "json": {
+          "id": "e64777b588e94f2b8618a0b470e0acd2",
+          "post_id": "404d429e590448ff9b64f8e4ed07a5a8",
+          "parent_id": null,
+          "deleted": false,
+          "author_id": "676520df291040778a1757236b66be88",
+          "display_name": "合成驗收姓名",
+          "identity_mode": "real_name",
+          "body": "合成留言資料",
+          "status": "approved",
+          "viewer_can_delete": false,
+          "created_at": "2026-10-09T00:04:27.181651Z"
+        }
+      }
+    },
+    {
+      "label": "guest initial feed",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts?school=公共留學板",
+        "json": null,
+        "authentication": "guest without credentials"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json"
+        },
+        "raw_body": "[{\"post\":{\"id\":\"404d429e590448ff9b64f8e4ed07a5a8\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"合成驗收姓名\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":1,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T00:04:27.175693Z\"},\"comments\":[{\"id\":\"e64777b588e94f2b8618a0b470e0acd2\",\"post_id\":\"404d429e590448ff9b64f8e4ed07a5a8\",\"parent_id\":null,\"deleted\":false,\"author_id\":\"\",\"display_name\":\"合成驗收姓名\",\"identity_mode\":\"real_name\",\"body\":\"合成留言資料\",\"status\":\"approved\",\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T00:04:27.181651Z\"}]}]",
+        "json": [
+          {
+            "post": {
+              "id": "404d429e590448ff9b64f8e4ed07a5a8",
+              "board_id": "public-study-abroad",
+              "board_kind": "public_study_abroad",
+              "school_name": "公共留學板",
+              "author_id": "",
+              "display_name": "合成驗收姓名",
+              "identity_mode": "real_name",
+              "post_type": "discussion",
+              "topic": "application",
+              "country": null,
+              "academic_year": null,
+              "application_stage": null,
+              "title": "交換申請流程討論",
+              "body": "想和同學一起整理申請步驟與校內繳交文件。",
+              "status": "approved",
+              "comment_count": 1,
+              "viewer_can_delete": false,
+              "created_at": "2026-10-09T00:04:27.175693Z"
+            },
+            "comments": [
+              {
+                "id": "e64777b588e94f2b8618a0b470e0acd2",
+                "post_id": "404d429e590448ff9b64f8e4ed07a5a8",
+                "parent_id": null,
+                "deleted": false,
+                "author_id": "",
+                "display_name": "合成驗收姓名",
+                "identity_mode": "real_name",
+                "body": "合成留言資料",
+                "status": "approved",
+                "viewer_can_delete": false,
+                "created_at": "2026-10-09T00:04:27.181651Z"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "guest post detail",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts/404d429e590448ff9b64f8e4ed07a5a8",
+        "json": null,
+        "authentication": "guest without credentials"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": "private, no-store"
+        },
+        "raw_body": "{\"id\":\"404d429e590448ff9b64f8e4ed07a5a8\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"display_name\":\"合成驗收姓名\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":1,\"created_at\":\"2026-10-09T00:04:27.175693Z\",\"viewer_can_delete\":false,\"reactions\":{\"counts\":{\"helpful\":0,\"thanks\":0},\"viewer_reaction\":null}}",
+        "json": {
+          "id": "404d429e590448ff9b64f8e4ed07a5a8",
+          "board_id": "public-study-abroad",
+          "board_kind": "public_study_abroad",
+          "school_name": "公共留學板",
+          "display_name": "合成驗收姓名",
+          "identity_mode": "real_name",
+          "post_type": "discussion",
+          "topic": "application",
+          "country": null,
+          "academic_year": null,
+          "application_stage": null,
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。",
+          "status": "approved",
+          "comment_count": 1,
+          "created_at": "2026-10-09T00:04:27.175693Z",
+          "viewer_can_delete": false,
+          "reactions": {
+            "counts": {
+              "helpful": 0,
+              "thanks": 0
+            },
+            "viewer_reaction": null
+          }
+        }
+      }
+    },
+    {
+      "label": "owner sensitive post",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "合成護照號碼：A12345678，僅供隔離測試。"
+        },
+        "authentication": "synthetic owner bearer; value omitted"
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+          "content-type": "application/json"
+        },
+        "raw_body": "{\"id\":\"fff9488f6bfb4b1c8a9a052031b683df\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"676520df291040778a1757236b66be88\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"合成護照號碼：A12345678，僅供隔離測試。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T00:04:27.192866Z\"}",
+        "json": {
+          "id": "fff9488f6bfb4b1c8a9a052031b683df",
+          "board_id": "public-study-abroad",
+          "board_kind": "public_study_abroad",
+          "school_name": "公共留學板",
+          "author_id": "676520df291040778a1757236b66be88",
+          "display_name": "匿名學生",
+          "identity_mode": "anonymous",
+          "post_type": "discussion",
+          "topic": "application",
+          "country": null,
+          "academic_year": null,
+          "application_stage": null,
+          "title": "交換申請流程討論",
+          "body": "合成護照號碼：A12345678，僅供隔離測試。",
+          "status": "approved",
+          "comment_count": 0,
+          "viewer_can_delete": false,
+          "created_at": "2026-10-09T00:04:27.192866Z"
+        }
+      }
+    },
+    {
+      "label": "guest feed after sensitive post",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "authentication": "guest without credentials"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json"
+        },
+        "raw_body": "[{\"post\":{\"id\":\"fff9488f6bfb4b1c8a9a052031b683df\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"合成護照號碼：A12345678，僅供隔離測試。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T00:04:27.192866Z\"},\"comments\":[]},{\"post\":{\"id\":\"404d429e590448ff9b64f8e4ed07a5a8\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"合成驗收姓名\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":1,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T00:04:27.175693Z\"},\"comments\":[{\"id\":\"e64777b588e94f2b8618a0b470e0acd2\",\"post_id\":\"404d429e590448ff9b64f8e4ed07a5a8\",\"parent_id\":null,\"deleted\":false,\"author_id\":\"\",\"display_name\":\"合成驗收姓名\",\"identity_mode\":\"real_name\",\"body\":\"合成留言資料\",\"status\":\"approved\",\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T00:04:27.181651Z\"}]}]",
+        "json": [
+          {
+            "post": {
+              "id": "fff9488f6bfb4b1c8a9a052031b683df",
+              "board_id": "public-study-abroad",
+              "board_kind": "public_study_abroad",
+              "school_name": "公共留學板",
+              "author_id": "",
+              "display_name": "匿名學生",
+              "identity_mode": "anonymous",
+              "post_type": "discussion",
+              "topic": "application",
+              "country": null,
+              "academic_year": null,
+              "application_stage": null,
+              "title": "交換申請流程討論",
+              "body": "合成護照號碼：A12345678，僅供隔離測試。",
+              "status": "approved",
+              "comment_count": 0,
+              "viewer_can_delete": false,
+              "created_at": "2026-10-09T00:04:27.192866Z"
+            },
+            "comments": []
+          },
+          {
+            "post": {
+              "id": "404d429e590448ff9b64f8e4ed07a5a8",
+              "board_id": "public-study-abroad",
+              "board_kind": "public_study_abroad",
+              "school_name": "公共留學板",
+              "author_id": "",
+              "display_name": "合成驗收姓名",
+              "identity_mode": "real_name",
+              "post_type": "discussion",
+              "topic": "application",
+              "country": null,
+              "academic_year": null,
+              "application_stage": null,
+              "title": "交換申請流程討論",
+              "body": "想和同學一起整理申請步驟與校內繳交文件。",
+              "status": "approved",
+              "comment_count": 1,
+              "viewer_can_delete": false,
+              "created_at": "2026-10-09T00:04:27.175693Z"
+            },
+            "comments": [
+              {
+                "id": "e64777b588e94f2b8618a0b470e0acd2",
+                "post_id": "404d429e590448ff9b64f8e4ed07a5a8",
+                "parent_id": null,
+                "deleted": false,
+                "author_id": "",
+                "display_name": "合成驗收姓名",
+                "identity_mode": "real_name",
+                "body": "合成留言資料",
+                "status": "approved",
+                "viewer_can_delete": false,
+                "created_at": "2026-10-09T00:04:27.181651Z"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "label": "owner account delete",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "authentication": "synthetic owner bearer; value omitted"
+      },
+      "response": {
+        "status": 204,
+        "headers": {
+          "cache-control": "private, no-store, max-age=0",
+          "vary": "Cookie, Authorization, X-Anonymous-Token"
+        },
+        "raw_body": "",
+        "json": null
+      }
+    },
+    {
+      "label": "guest feed after account delete",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "authentication": "guest without credentials"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json"
+        },
+        "raw_body": "[{\"post\":{\"id\":\"fff9488f6bfb4b1c8a9a052031b683df\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"合成護照號碼：A12345678，僅供隔離測試。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T00:04:27.192866Z\"},\"comments\":[]},{\"post\":{\"id\":\"404d429e590448ff9b64f8e4ed07a5a8\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"合成驗收姓名\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":1,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T00:04:27.175693Z\"},\"comments\":[{\"id\":\"e64777b588e94f2b8618a0b470e0acd2\",\"post_id\":\"404d429e590448ff9b64f8e4ed07a5a8\",\"parent_id\":null,\"deleted\":false,\"author_id\":\"\",\"display_name\":\"合成驗收姓名\",\"identity_mode\":\"real_name\",\"body\":\"合成留言資料\",\"status\":\"approved\",\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T00:04:27.181651Z\"}]}]",
+        "json": [
+          {
+            "post": {
+              "id": "fff9488f6bfb4b1c8a9a052031b683df",
+              "board_id": "public-study-abroad",
+              "board_kind": "public_study_abroad",
+              "school_name": "公共留學板",
+              "author_id": "",
+              "display_name": "匿名學生",
+              "identity_mode": "anonymous",
+              "post_type": "discussion",
+              "topic": "application",
+              "country": null,
+              "academic_year": null,
+              "application_stage": null,
+              "title": "交換申請流程討論",
+              "body": "合成護照號碼：A12345678，僅供隔離測試。",
+              "status": "approved",
+              "comment_count": 0,
+              "viewer_can_delete": false,
+              "created_at": "2026-10-09T00:04:27.192866Z"
+            },
+            "comments": []
+          },
+          {
+            "post": {
+              "id": "404d429e590448ff9b64f8e4ed07a5a8",
+              "board_id": "public-study-abroad",
+              "board_kind": "public_study_abroad",
+              "school_name": "公共留學板",
+              "author_id": "",
+              "display_name": "合成驗收姓名",
+              "identity_mode": "real_name",
+              "post_type": "discussion",
+              "topic": "application",
+              "country": null,
+              "academic_year": null,
+              "application_stage": null,
+              "title": "交換申請流程討論",
+              "body": "想和同學一起整理申請步驟與校內繳交文件。",
+              "status": "approved",
+              "comment_count": 1,
+              "viewer_can_delete": false,
+              "created_at": "2026-10-09T00:04:27.175693Z"
+            },
+            "comments": [
+              {
+                "id": "e64777b588e94f2b8618a0b470e0acd2",
+                "post_id": "404d429e590448ff9b64f8e4ed07a5a8",
+                "parent_id": null,
+                "deleted": false,
+                "author_id": "",
+                "display_name": "合成驗收姓名",
+                "identity_mode": "real_name",
+                "body": "合成留言資料",
+                "status": "approved",
+                "viewer_can_delete": false,
+                "created_at": "2026-10-09T00:04:27.181651Z"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "observed": {
+    "sensitive_status": 201,
+    "sensitive_moderation_status": "approved",
+    "sensitive_guest_rows": [
+      {
+        "post": {
+          "id": "fff9488f6bfb4b1c8a9a052031b683df",
+          "board_id": "public-study-abroad",
+          "board_kind": "public_study_abroad",
+          "school_name": "公共留學板",
+          "author_id": "",
+          "display_name": "匿名學生",
+          "identity_mode": "anonymous",
+          "post_type": "discussion",
+          "topic": "application",
+          "country": null,
+          "academic_year": null,
+          "application_stage": null,
+          "title": "交換申請流程討論",
+          "body": "合成護照號碼：A12345678，僅供隔離測試。",
+          "status": "approved",
+          "comment_count": 0,
+          "viewer_can_delete": false,
+          "created_at": "2026-10-09T00:04:27.192866Z"
+        },
+        "comments": []
+      }
+    ],
+    "delete_status": 204,
+    "post_delete_guest_rows": [
+      {
+        "post": {
+          "id": "404d429e590448ff9b64f8e4ed07a5a8",
+          "board_id": "public-study-abroad",
+          "board_kind": "public_study_abroad",
+          "school_name": "公共留學板",
+          "author_id": "",
+          "display_name": "合成驗收姓名",
+          "identity_mode": "real_name",
+          "post_type": "discussion",
+          "topic": "application",
+          "country": null,
+          "academic_year": null,
+          "application_stage": null,
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。",
+          "status": "approved",
+          "comment_count": 1,
+          "viewer_can_delete": false,
+          "created_at": "2026-10-09T00:04:27.175693Z"
+        },
+        "comments": [
+          {
+            "id": "e64777b588e94f2b8618a0b470e0acd2",
+            "post_id": "404d429e590448ff9b64f8e4ed07a5a8",
+            "parent_id": null,
+            "deleted": false,
+            "author_id": "",
+            "display_name": "合成驗收姓名",
+            "identity_mode": "real_name",
+            "body": "合成留言資料",
+            "status": "approved",
+            "viewer_can_delete": false,
+            "created_at": "2026-10-09T00:04:27.181651Z"
+          }
+        ]
+      }
+    ],
+    "post_delete_stored_posts": [
+      {
+        "id": "404d429e590448ff9b64f8e4ed07a5a8",
+        "board_id": "public-study-abroad",
+        "board_kind": "public_study_abroad",
+        "school_name": "公共留學板",
+        "author_id": "676520df291040778a1757236b66be88",
+        "display_name": "合成驗收姓名",
+        "identity_mode": "real_name",
+        "post_type": "discussion",
+        "topic": "application",
+        "country": null,
+        "academic_year": null,
+        "application_stage": null,
+        "title": "交換申請流程討論",
+        "body": "想和同學一起整理申請步驟與校內繳交文件。",
+        "status": "approved",
+        "comment_count": 0,
+        "viewer_can_delete": false,
+        "created_at": "2026-10-09T00:04:27.175693Z"
+      }
+    ],
+    "post_delete_linked_identity_rows": [
+      {
+        "id": "676520df291040778a1757236b66be88",
+        "account_id": null
+      }
+    ]
+  },
+  "interpretation": "Own POST IDs and guest GET IDs are separately retained. Synthetic A12345678 and names are test data. No raw session/identity credentials are exported.",
+  "candidate_guard_passed": true
+}

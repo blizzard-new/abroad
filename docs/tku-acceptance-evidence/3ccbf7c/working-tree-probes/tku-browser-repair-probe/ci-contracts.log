@@ -1,0 +1,13 @@
+CONFTEST LOADED!
+.......F.                                                                [100%]
+=================================== FAILURES ===================================
+_______ test_quality_workflow_pins_external_actions_to_full_commit_shas ________
+tests/test_dependency_security_baseline.py:99: in test_quality_workflow_pins_external_actions_to_full_commit_shas
+    assert actual == expected
+E   AssertionError: assert [('actions/ch...6f43607fa02')] == [('actions/ch...3f7d6820020')]
+E     
+E     Left contains one more item: ('actions/upload-artifact', 'ea165f8d65b6e75b540449e92b4886f43607fa02')
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_dependency_security_baseline.py::test_quality_workflow_pins_external_actions_to_full_commit_shas
+1 failed, 8 passed in 1.04s

@@ -1,0 +1,57 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.6.0 -- /home/runner/work/abroad/abroad/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/runner/work/_temp/tku-main-control-checkout-2
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 1 item
+
+tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph FAILED [100%]
+
+=================================== FAILURES ===================================
+_____ test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph ______
+tests/e2e/test_icon_motion.py:37: in test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph
+    middle = theme.locator("svg path").get_attribute("d")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:19313: in get_attribute
+    self._sync(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:465: in get_attribute
+    return await self._frame.get_attribute(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:757: in get_attribute
+    return await self._channel.send(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.Error: Locator.get_attribute: Error: strict mode violation: locator("#theme-toggle").locator("svg path") resolved to 8 elements:
+E       1) <path d="M12 2v2"></path> aka get_by_role("button", name="切換為淺色模式")
+E       2) <path d="M12 20v2"></path> aka get_by_role("button", name="切換為淺色模式")
+E       3) <path d="m4.93 4.93 1.41 1.41"></path> aka get_by_role("button", name="切換為淺色模式")
+E       4) <path d="m17.66 17.66 1.41 1.41"></path> aka get_by_role("button", name="切換為淺色模式")
+E       5) <path d="M2 12h2"></path> aka get_by_role("button", name="切換為淺色模式")
+E       6) <path d="M20 12h2"></path> aka get_by_role("button", name="切換為淺色模式")
+E       7) <path d="m6.34 17.66-1.41 1.41"></path> aka get_by_role("button", name="切換為淺色模式")
+E       8) <path d="m19.07 4.93-1.41 1.41"></path> aka get_by_role("button", name="切換為淺色模式")
+E   
+E   Call log:
+E     - waiting for locator("#theme-toggle").locator("svg path")
+- generated xml file: /home/runner/work/_temp/web-evidence/main-control/suite.xml -
+============================= slowest 20 durations =============================
+14.84s call     tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph
+0.89s setup    tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph
+0.25s teardown tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph
+=========================== short test summary info ============================
+FAILED tests/e2e/test_icon_motion.py::test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph - playwright._impl._errors.Error: Locator.get_attribute: Error: strict mode violation: locator("#theme-toggle").locator("svg path") resolved to 8 elements:
+    1) <path d="M12 2v2"></path> aka get_by_role("button", name="切換為淺色模式")
+    2) <path d="M12 20v2"></path> aka get_by_role("button", name="切換為淺色模式")
+    3) <path d="m4.93 4.93 1.41 1.41"></path> aka get_by_role("button", name="切換為淺色模式")
+    4) <path d="m17.66 17.66 1.41 1.41"></path> aka get_by_role("button", name="切換為淺色模式")
+    5) <path d="M2 12h2"></path> aka get_by_role("button", name="切換為淺色模式")
+    6) <path d="M20 12h2"></path> aka get_by_role("button", name="切換為淺色模式")
+    7) <path d="m6.34 17.66-1.41 1.41"></path> aka get_by_role("button", name="切換為淺色模式")
+    8) <path d="m19.07 4.93-1.41 1.41"></path> aka get_by_role("button", name="切換為淺色模式")
+
+Call log:
+  - waiting for locator("#theme-toggle").locator("svg path")
+============================== 1 failed in 16.66s ==============================

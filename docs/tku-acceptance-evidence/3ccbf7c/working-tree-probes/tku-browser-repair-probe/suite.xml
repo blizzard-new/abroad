@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="35" time="383.906" timestamp="2026-10-09T01:20:58.578867+00:00" hostname="f6ad0b7a0286"><testcase classname="tests.e2e.test_partner_globe" name="test_direct_query_without_hash_and_all_shared_filters" time="32.720" /><testcase classname="tests.e2e.test_system_motion" name="test_all_routes_share_motion_and_back_retains_working_history" time="37.249"><failure message="playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 30000ms exceeded.">tests/e2e/test_system_motion.py:44: in test_all_routes_share_motion_and_back_retains_working_history
+    page.wait_for_function("n =&gt; __motionLog.filter(x =&gt; x.animation.id === 'uniway:route').length &gt; n", arg=before)
+.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:12761: in wait_for_function
+    self._sync(
+.venv/lib/python3.12/site-packages/playwright/_impl/_page.py:1151: in wait_for_function
+    return await self._main_frame.wait_for_function(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:940: in wait_for_function
+    await self._channel.send("waitForFunction", self._timeout, params)
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Page.wait_for_function: Timeout 30000ms exceeded.</failure></testcase><testcase classname="tests.e2e.test_system_motion" name="test_dialog_menu_details_tabs_and_mobile_layout[393]" time="8.422" /><testcase classname="tests.e2e.test_system_motion" name="test_dialog_menu_details_tabs_and_mobile_layout[834]" time="7.662" /><testcase classname="tests.e2e.test_system_motion" name="test_dialog_menu_details_tabs_and_mobile_layout[1440]" time="10.520"><failure message="AssertionError: Locator expected not to have attribute ''&#10;Actual value:  &#10;Call log:&#10;  - Expect &quot;not_to_have_attribute&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;.guide-faq&quot;)&#10;    14 × locator resolved to &lt;details open=&quot;&quot; class=&quot;guide-faq&quot;&gt;…&lt;/details&gt;&#10;       - unexpected value &quot;&quot;&#10;&#10;Aria snapshot:&#10;- group:&#10;  - text: 校內甄選和合作校申請有什麼不同？&#10;  - paragraph: 一般先由就讀學校甄選與提名，再向合作校申請。兩邊的文件與期限可能不同，請分別確認當期公告。&#10;  - link &quot;查看官方截止日&quot;:&#10;    - /url: &quot;#deadlines&quot;">tests/e2e/test_system_motion.py:82: in test_dialog_menu_details_tabs_and_mobile_layout
+    expect(page.locator(".guide-faq")).not_to_have_attribute("open", "")
+E   AssertionError: Locator expected not to have attribute ''
+E   Actual value:  
+E   Call log:
+E     - Expect "not_to_have_attribute" with timeout 5000ms
+E     - waiting for locator(".guide-faq")
+E       14 × locator resolved to &lt;details open="" class="guide-faq"&gt;…&lt;/details&gt;
+E          - unexpected value ""
+E   
+E   Aria snapshot:
+E   - group:
+E     - text: 校內甄選和合作校申請有什麼不同？
+E     - paragraph: 一般先由就讀學校甄選與提名，再向合作校申請。兩邊的文件與期限可能不同，請分別確認當期公告。
+E     - link "查看官方截止日":
+E       - /url: "#deadlines"</failure></testcase><testcase classname="tests.e2e.test_system_motion" name="test_search_updates_are_bounded_and_rapid_navigation_cancels_old_motion" time="4.473" /><testcase classname="tests.e2e.test_system_motion" name="test_reduced_motion_live_change_and_missing_runtime_are_usable" time="8.167" /><testcase classname="tests.e2e.test_travel_theme" name="test_home_search_navigation_school_switcher_and_responsive" time="11.263" /><testcase classname="tests.e2e.test_travel_theme" name="test_ticket_collection_and_destination_stamp_missing_city" time="14.672" /><testcase classname="tests.e2e.test_travel_theme" name="test_completed_stamp_persists_and_unchecking_removes_it" time="20.812" /><testcase classname="tests.e2e.test_travel_theme" name="test_school_switcher_without_selected_school" time="4.174" /><testcase classname="tests.e2e.test_icon_motion" name="test_all_rendered_icons_are_enhanced_and_theme_uses_true_path_morph" time="4.741" /><testcase classname="tests.e2e.test_icon_motion" name="test_reduced_motion_switches_morphicons_to_an_immediate_final_state" time="4.240" /><testcase classname="tests.e2e.test_navigation_guide" name="test_home_is_the_guide_and_the_forum_is_one_click_away" time="10.636" /><testcase classname="tests.e2e.test_navigation_guide" name="test_an_old_guide_link_opens_the_home_page" time="5.515" /><testcase classname="tests.e2e.test_navigation_guide" name="test_an_old_community_link_opens_the_forum" time="6.325" /><testcase classname="tests.e2e.test_navigation_guide" name="test_guide_shared_shell_and_back_forward_without_loops" time="6.874" /><testcase classname="tests.e2e.test_navigation_guide" name="test_direct_entry_back_stays_inside_site[budget]" time="3.955" /><testcase classname="tests.e2e.test_navigation_guide" name="test_direct_entry_back_stays_inside_site[application-center]" time="3.339" /><testcase classname="tests.e2e.test_navigation_guide" name="test_direct_entry_back_stays_inside_site[school=\u6797\u80af\u5927\u5b78 Lincoln University]" time="4.345" /><testcase classname="tests.e2e.test_navigation_guide" name="test_every_tool_has_shared_navigation_and_return" time="8.318" /><testcase classname="tests.e2e.test_navigation_guide" name="test_school_return_retains_filters_scroll_and_forward" time="4.541" /><testcase classname="tests.e2e.test_navigation_guide" name="test_guide_responsive_menu_keyboard_and_theme[393]" time="5.549" /><testcase classname="tests.e2e.test_navigation_guide" name="test_guide_responsive_menu_keyboard_and_theme[834]" time="4.548" /><testcase classname="tests.e2e.test_navigation_guide" name="test_guide_responsive_menu_keyboard_and_theme[1440]" time="5.402" /><testcase classname="tests.e2e.test_life_context" name="test_life_fallback_retains_evidence_on_refresh_failure" time="7.167" /><testcase classname="tests.e2e.test_discussion_round2" name="test_reply_thread_reaction_retry_persistence_and_author_delete" time="12.997"><failure message="AssertionError: Page URL expected to be 're.compile('discussion_q=.*b026efba')'&#10;Actual value: http://127.0.0.1:45431/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#public-board &#10;Call log:&#10;  - Expect &quot;to_have_url&quot; with timeout 5000ms&#10;    13 × locator resolved to &lt;html lang=&quot;zh-Hant&quot; data-theme=&quot;light&quot; class=&quot;splash-on uw-motion-ready&quot; data-icon-motion-engine=&quot;morphicons@1.7.0&quot;&gt;…&lt;/html&gt;&#10;       - unexpected value &quot;http://127.0.0.1:45431/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#public-board&quot;&#10;&#10;Aria snapshot:&#10;- link &quot;跳到主要內容&quot;:&#10;  - /url: &quot;#main-content&quot;&#10;- complementary &quot;系統功能&quot;:&#10;  - link &quot;UniWay 首頁&quot;:&#10;    - /url: &quot;#home&quot;&#10;    - strong: UniWay&#10;  - navigation &quot;公開探索導覽&quot;:&#10;    - link &quot;首頁&quot;:&#10;      - /url: &quot;#home&quot;&#10;    - link &quot;學校搜尋&quot;:&#10;      - /url: &quot;#partners&quot;&#10;    - link &quot;論壇&quot;:&#10;      - /url: &quot;#forum&quot;&#10;    - link &quot;用戶評價&quot;:&#10;      - /url: &quot;#feedback&quot;&#10;    - group:&#10;      - link &quot;我的申請&quot;:&#10;        - /url: &quot;#advisor&quot;&#10;  - button &quot;返回上一頁&quot;: 返回&#10;  - button &quot;長庚大學&quot;:&#10;    - strong: 長庚大學&#10;  - button &quot;切換為深色模式&quot;&#10;  - button &quot;重新整理最新資料&quot;&#10;  - button &quot;開啟通知中心&quot;&#10;  - status &quot;已同步&quot;: 已同步 條件、收藏與申請進度已同步。&#10;  - button &quot;開啟E2E 測試學生帳號設定&quot;: E2E 測試學生&#10;- main:&#10;  - status&#10;  - region &quot;公共留學板&quot;:&#10;    - heading &quot;公共留學板&quot; [level=1]&#10;    - button &quot;發一篇文章&quot;&#10;    - navigation &quot;貼文動態篩選&quot;:&#10;      - link &quot;全部&quot;:&#10;        - /url: &quot;#forum&quot;&#10;      - link &quot;追蹤&quot;:&#10;        - /url: &quot;#following&quot;&#10;      - link &quot;公共板&quot;:&#10;        - /url: &quot;#public-board&quot;&#10;      - link &quot;語言學校&quot;:&#10;        - /url: &quot;#language-school-board&quot;&#10;      - link &quot;長庚板&quot;:&#10;        - /url: &quot;#university-feed&quot;&#10;    - region &quot;留學看板&quot;:&#10;      - article:&#10;        - text: 公共看板&#10;        - heading &quot;公共留學板&quot; [level=2]&#10;        - paragraph: 跨校申請、簽證、住宿與海外生活。&#10;        - link &quot;查看貼文&quot;:&#10;          - /url: &quot;#public-board&quot;&#10;      - article:&#10;        - text: 校級看板&#10;        - heading &quot;長庚大學板&quot; [level=2]&#10;        - paragraph: 長庚學生的交換申請資訊與討論。&#10;        - button &quot;追蹤長庚大學板&quot;: 追蹤&#10;        - link &quot;進入看板&quot;:&#10;          - /url: &quot;#board=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&quot;&#10;      - article:&#10;        - text: 公共主題板&#10;        - heading &quot;語言學校板&quot; [level=2]&#10;        - paragraph: 課程與海外生活交流；不提供申請代辦。&#10;        - link &quot;查看討論&quot;:&#10;          - /url: &quot;#language-school-board&quot;&#10;    - text: 每一段旅程，都有人同行&#10;    - heading &quot;聊聊留學大小事&quot; [level=2]&#10;    - textbox &quot;搜尋學校、國家或問題&quot;&#10;    - group &quot;文章分類&quot;:&#10;      - button &quot;全部&quot; [pressed]&#10;      - button &quot;申請&quot;&#10;      - button &quot;獎學金&quot;&#10;      - button &quot;住宿&quot;&#10;      - button &quot;生活費&quot;&#10;      - button &quot;簽證&quot;&#10;      - button &quot;課程&quot;&#10;      - button &quot;生活&quot;&#10;      - button &quot;就業&quot;&#10;      - button &quot;避雷&quot;&#10;    - text: 文章排序&#10;    - combobox &quot;文章排序&quot;:&#10;      - option &quot;最新文章&quot; [selected]&#10;      - option &quot;較早文章&quot;&#10;      - option &quot;待回覆&quot;&#10;    - button &quot;我的文章收藏&quot;&#10;    - status: 收藏同步到登入帳號&#10;    - article:&#10;      - text: 公共留學板&#10;      - time: 2026/10/09 上午12:25&#10;      - heading &quot;討論測試b026efba 日本交換經驗 00&quot; [level=3]:&#10;        - link &quot;討論測試b026efba 日本交換經驗 00&quot;:&#10;          - /url: /?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&amp;discussion=c12eec73279a4ba88a4001add9659234#public-board&#10;      - paragraph: 這是日本交換申請經驗，請核對你申請年度的官方公告。 第二段分享住宿與簽證準備。&#10;      - text: 申請 日本 2027 秋季 準備申請 匿名學生&#10;      - link &quot;2 則回覆&quot;:&#10;        - /url: /?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&amp;discussion=c12eec73279a4ba88a4001add9659234#public-board&#10;      - button &quot;收藏文章：討論測試b026efba 日本交換經驗 00&quot;: 收藏&#10;    - status: 已載入 1 篇文章&#10;    - complementary:&#10;      - region &quot;你的經驗，會是誰的起點&quot;:&#10;        - heading &quot;你的經驗，會是誰的起點&quot; [level=3]&#10;        - paragraph: 一個提醒，就能讓同學少走彎路。&#10;        - list:&#10;          - listitem: 01 說說你去了哪裡&#10;          - listitem: 02 帶上年份與申請階段&#10;          - listitem: 03 分享遇到的問題或心得&#10;        - button &quot;寫下我的經驗&quot;&#10;      - region &quot;安心交流，一起守護&quot;:&#10;        - heading &quot;安心交流，一起守護&quot; [level=3]&#10;        - paragraph: 暱稱發文，保護彼此的隱私。&#10;        - list:&#10;          - listitem: 不公開電話、信箱或社群帳號&#10;          - listitem: 私訊需對方接受，可檢舉與封鎖&#10;          - listitem: 申請資訊請再核對官方公告&#10;- paragraph:&#10;  - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），&#10;  - button &quot;停用匿名使用統計&quot;&#10;  - text: 。&#10;  - link &quot;隱私權政策&quot;:&#10;    - /url: /privacy&#10;  - link &quot;使用條款&quot;:&#10;    - /url: /terms">tests/e2e/test_discussion_round2.py:25: in test_reply_thread_reaction_retry_persistence_and_author_delete
+    search(page, marker)
+tests/e2e/test_discussion_reader.py:34: in search
+    expect(page).to_have_url(re.compile("discussion_q=.*" + marker[-8:]))
+E   AssertionError: Page URL expected to be 're.compile('discussion_q=.*b026efba')'
+E   Actual value: http://127.0.0.1:45431/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#public-board 
+E   Call log:
+E     - Expect "to_have_url" with timeout 5000ms
+E       13 × locator resolved to &lt;html lang="zh-Hant" data-theme="light" class="splash-on uw-motion-ready" data-icon-motion-engine="morphicons@1.7.0"&gt;…&lt;/html&gt;
+E          - unexpected value "http://127.0.0.1:45431/?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8#public-board"
+E   
+E   Aria snapshot:
+E   - link "跳到主要內容":
+E     - /url: "#main-content"
+E   - complementary "系統功能":
+E     - link "UniWay 首頁":
+E       - /url: "#home"
+E       - strong: UniWay
+E     - navigation "公開探索導覽":
+E       - link "首頁":
+E         - /url: "#home"
+E       - link "學校搜尋":
+E         - /url: "#partners"
+E       - link "論壇":
+E         - /url: "#forum"
+E       - link "用戶評價":
+E         - /url: "#feedback"
+E       - group:
+E         - link "我的申請":
+E           - /url: "#advisor"
+E     - button "返回上一頁": 返回
+E     - button "長庚大學":
+E       - strong: 長庚大學
+E     - button "切換為深色模式"
+E     - button "重新整理最新資料"
+E     - button "開啟通知中心"
+E     - status "已同步": 已同步 條件、收藏與申請進度已同步。
+E     - button "開啟E2E 測試學生帳號設定": E2E 測試學生
+E   - main:
+E     - status
+E     - region "公共留學板":
+E       - heading "公共留學板" [level=1]
+E       - button "發一篇文章"
+E       - navigation "貼文動態篩選":
+E         - link "全部":
+E           - /url: "#forum"
+E         - link "追蹤":
+E           - /url: "#following"
+E         - link "公共板":
+E           - /url: "#public-board"
+E         - link "語言學校":
+E           - /url: "#language-school-board"
+E         - link "長庚板":
+E           - /url: "#university-feed"
+E       - region "留學看板":
+E         - article:
+E           - text: 公共看板
+E           - heading "公共留學板" [level=2]
+E           - paragraph: 跨校申請、簽證、住宿與海外生活。
+E           - link "查看貼文":
+E             - /url: "#public-board"
+E         - article:
+E           - text: 校級看板
+E           - heading "長庚大學板" [level=2]
+E           - paragraph: 長庚學生的交換申請資訊與討論。
+E           - button "追蹤長庚大學板": 追蹤
+E           - link "進入看板":
+E             - /url: "#board=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8"
+E         - article:
+E           - text: 公共主題板
+E           - heading "語言學校板" [level=2]
+E           - paragraph: 課程與海外生活交流；不提供申請代辦。
+E           - link "查看討論":
+E             - /url: "#language-school-board"
+E       - text: 每一段旅程，都有人同行
+E       - heading "聊聊留學大小事" [level=2]
+E       - textbox "搜尋學校、國家或問題"
+E       - group "文章分類":
+E         - button "全部" [pressed]
+E         - button "申請"
+E         - button "獎學金"
+E         - button "住宿"
+E         - button "生活費"
+E         - button "簽證"
+E         - button "課程"
+E         - button "生活"
+E         - button "就業"
+E         - button "避雷"
+E       - text: 文章排序
+E       - combobox "文章排序":
+E         - option "最新文章" [selected]
+E         - option "較早文章"
+E         - option "待回覆"
+E       - button "我的文章收藏"
+E       - status: 收藏同步到登入帳號
+E       - article:
+E         - text: 公共留學板
+E         - time: 2026/10/09 上午12:25
+E         - heading "討論測試b026efba 日本交換經驗 00" [level=3]:
+E           - link "討論測試b026efba 日本交換經驗 00":
+E             - /url: /?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&amp;discussion=c12eec73279a4ba88a4001add9659234#public-board
+E         - paragraph: 這是日本交換申請經驗，請核對你申請年度的官方公告。 第二段分享住宿與簽證準備。
+E         - text: 申請 日本 2027 秋季 準備申請 匿名學生
+E         - link "2 則回覆":
+E           - /url: /?home=%E9%95%B7%E5%BA%9A%E5%A4%A7%E5%AD%B8&amp;discussion=c12eec73279a4ba88a4001add9659234#public-board
+E         - button "收藏文章：討論測試b026efba 日本交換經驗 00": 收藏
+E       - status: 已載入 1 篇文章
+E       - complementary:
+E         - region "你的經驗，會是誰的起點":
+E           - heading "你的經驗，會是誰的起點" [level=3]
+E           - paragraph: 一個提醒，就能讓同學少走彎路。
+E           - list:
+E             - listitem: 01 說說你去了哪裡
+E             - listitem: 02 帶上年份與申請階段
+E             - listitem: 03 分享遇到的問題或心得
+E           - button "寫下我的經驗"
+E         - region "安心交流，一起守護":
+E           - heading "安心交流，一起守護" [level=3]
+E           - paragraph: 暱稱發文，保護彼此的隱私。
+E           - list:
+E             - listitem: 不公開電話、信箱或社群帳號
+E             - listitem: 私訊需對方接受，可檢舉與封鎖
+E             - listitem: 申請資訊請再核對官方公告
+E   - paragraph:
+E     - text: 資料整理自各校官方公告，仍在逐筆人工核對；申請資格、期限與文件請以學校國際處最新公告為準。本站只收集不含個人資料的匿名使用統計（不使用 cookie），
+E     - button "停用匿名使用統計"
+E     - text: 。
+E     - link "隱私權政策":
+E       - /url: /privacy
+E     - link "使用條款":
+E       - /url: /terms</failure></testcase><testcase classname="tests.e2e.test_discussion_round2" name="test_moderator_approve_hide_report_review_and_suspend" time="9.842" /><testcase classname="tests.e2e.test_discussion_round2" name="test_account_bookmarks_sync_between_two_browser_contexts_and_import_legacy" time="11.163" /><testcase classname="tests.e2e.test_discussion_round2" name="test_login_from_reader_preserves_valid_fields_while_requests_settle" time="31.301" /><testcase classname="tests.e2e.test_discussion_round2" name="test_opening_login_does_not_steal_focus_from_user_selected_field" time="4.740" /><testcase classname="tests.e2e.test_discussion_round2" name="test_slow_bookmark_response_does_not_erase_new_search_text" time="4.270" /><testcase classname="tests.e2e.test_discovery_workspace" name="test_combined_search_map_preview_and_chinese_reader" time="19.324" /><testcase classname="tests.e2e.test_discovery_workspace" name="test_cloud_selection_roundtrip_home_isolation_and_logout" time="29.164" /><testcase classname="tests.e2e.test_discovery_workspace" name="test_candidates_notes_order_persistence_mobile_and_history" time="13.997" /></testsuite></testsuites>

@@ -1,0 +1,8 @@
+{
+  "tested_commit": "3ccbf7c3de75b47f2f93f7aa56e96143e2e48a38",
+  "first_payload_verification_exit_code": 1,
+  "reason": "pip wheel created an untracked build/ directory, so clean-tree verification initially refused to certify packaging",
+  "source_changes": false,
+  "correction": "moved only the generated build/ to /tmp/tku-package-build-3ccbf7c before continuing; candidate source remained unchanged",
+  "clean_state_after_correction": ""
+}

@@ -1,0 +1,14 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku-period-probe
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 2 items
+
+tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[390] PASSED [ 50%]
+tests/e2e/test_application_periods.py::test_sourced_rounds_retry_and_keep_unsent_draft[1754] PASSED [100%]
+
+------- generated xml file: /tmp/tku-period-readiness-probe/repeat-1.xml -------
+============================== 2 passed in 28.57s ==============================

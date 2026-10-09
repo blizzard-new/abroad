@@ -1,0 +1,603 @@
+{
+  "case": "tests/e2e/test_web_next_phase.py::test_reload_drains_pending_workspace_for_inactive_home_school",
+  "outcome": "passed",
+  "trace": [
+    {
+      "step": "readStoredState:before",
+      "account": "",
+      "quarantined": "",
+      "syncOwner": "",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "pending",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "readStoredState:after-sync",
+      "account": "",
+      "quarantined": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "syncOwner": "",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "pending",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "restoreAccount:before",
+      "account": "",
+      "quarantined": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "syncOwner": "",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "pending",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "restoreAccount:after-sync",
+      "account": "",
+      "quarantined": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "syncOwner": "",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "pending",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "clearProtectedCatalog:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "syncOwner": "",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "pending",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "clearProtectedCatalog:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "syncOwner": "",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "pending",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "readStoredAuthenticatedState:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "syncOwner": "",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "readStoredAuthenticatedState:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "prepareAccountWorkspaceSyncForAccount:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "prepareAccountWorkspaceSyncForAccount:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "hydrateAccountWorkspace:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "hydrateAccountWorkspace:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [
+        "國立臺北大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "國立臺北大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "hydrateAccountWorkspace:resolved",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "restoreAccount:resolved",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "prepareAccountWorkspaceSyncForAccount:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "prepareAccountWorkspaceSyncForAccount:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [
+        "長庚大學"
+      ],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:before",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [
+        "長庚大學"
+      ],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    },
+    {
+      "step": "persistAccountWorkspaceSyncMetadata:after-sync",
+      "account": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "quarantined": "",
+      "syncOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedOwner": "992e4bf62ec344c7bfd3a1ffe80ef0bb",
+      "storedPending": [],
+      "pending": [],
+      "favorite": [],
+      "home": "長庚大學",
+      "auth": "authenticated",
+      "draftOwner": null,
+      "score": ""
+    }
+  ],
+  "instrumentation": "read-only browser wrappers; no repository source changes; synthetic data only"
+}

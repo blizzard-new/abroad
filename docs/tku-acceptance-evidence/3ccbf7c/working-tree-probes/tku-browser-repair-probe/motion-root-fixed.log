@@ -1,0 +1,13 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 1 item
+
+tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history PASSED [100%]
+
+--- generated xml file: /tmp/tku-browser-repair-probe/motion-root-fixed.xml ----
+============================== 1 passed in 26.85s ==============================

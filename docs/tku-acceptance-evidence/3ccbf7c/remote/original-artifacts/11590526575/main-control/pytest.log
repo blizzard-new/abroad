@@ -1,0 +1,76 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.15, pytest-9.1.1, pluggy-1.6.0 -- /home/runner/work/abroad/abroad/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/runner/work/_temp/tku-main-control-checkout-3
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 4 items
+
+tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete PASSED [ 25%]
+tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure FAILED [ 50%]
+tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return FAILED [ 75%]
+tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward FAILED [100%]
+
+=================================== FAILURES ===================================
+____________ test_life_fallback_retains_evidence_on_refresh_failure ____________
+tests/e2e/test_life_context.py:39: in test_life_fallback_retains_evidence_on_refresh_failure
+    food.get_by_text("原文與來源", exact=True).click()
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator("[data-life-theme=\"food\"]").get_by_text("原文與來源", exact=True)
+_______________ test_every_tool_has_shared_navigation_and_return _______________
+tests/e2e/test_navigation_guide.py:95: in test_every_tool_has_shared_navigation_and_return
+    page.locator(f'.application-tools-panel a[href="#{route}"]').click()
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/sync_api/_generated.py:17876: in click
+    self._sync(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_locator.py:165: in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_frame.py:593: in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:76: in send
+    return await self._connection.wrap_api_call(
+../../abroad/abroad/.venv/lib/python3.12/site-packages/playwright/_impl/_connection.py:632: in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E   playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+E   Call log:
+E     - waiting for locator(".application-tools-panel a[href=\"#favorites\"]")
+____________ test_school_return_retains_filters_scroll_and_forward _____________
+tests/e2e/test_navigation_guide.py:124: in test_school_return_retains_filters_scroll_and_forward
+    assert tabs["y"] >= toolbar["y"] + toolbar["height"]
+E   assert 8 >= (383 + 119)
+- generated xml file: /home/runner/work/_temp/web-evidence/main-control/suite.xml -
+============================= slowest 20 durations =============================
+36.52s call     tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure
+34.14s call     tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return
+27.64s call     tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete
+4.07s call     tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward
+0.85s setup    tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete
+0.25s setup    tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure
+0.24s setup    tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return
+0.20s teardown tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure
+0.19s teardown tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward
+0.19s teardown tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete
+0.06s setup    tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward
+0.01s teardown tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return
+=========================== short test summary info ============================
+FAILED tests/e2e/test_life_context.py::test_life_fallback_retains_evidence_on_refresh_failure - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("[data-life-theme=\"food\"]").get_by_text("原文與來源", exact=True)
+FAILED tests/e2e/test_navigation_guide.py::test_every_tool_has_shared_navigation_and_return - playwright._impl._errors.TimeoutError: Locator.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator(".application-tools-panel a[href=\"#favorites\"]")
+FAILED tests/e2e/test_navigation_guide.py::test_school_return_retains_filters_scroll_and_forward - assert 8 >= (383 + 119)
+=================== 3 failed, 1 passed in 105.12s (0:01:45) ====================

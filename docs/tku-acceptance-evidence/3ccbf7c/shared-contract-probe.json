@@ -1,0 +1,208 @@
+{
+  "tested_commit": "3ccbf7c3de75b47f2f93f7aa56e96143e2e48a38",
+  "starting_state": {
+    "commit": "3ccbf7c3de75b47f2f93f7aa56e96143e2e48a38",
+    "worktree_status": ""
+  },
+  "synthetic_only": true,
+  "production_database_access": false,
+  "acceptance_waiver": false,
+  "guest_boards": {
+    "status": 200,
+    "body": [
+      {
+        "id": "public-study-abroad",
+        "label": "公共留學板",
+        "kind": "public_study_abroad",
+        "school_name": null,
+        "posting_requirement": "verified_email",
+        "can_read": true,
+        "can_post": false,
+        "can_comment": false,
+        "unavailable_reason": "請先登入"
+      },
+      {
+        "id": "language-school",
+        "label": "語言學校板",
+        "kind": "public_topic",
+        "school_name": null,
+        "posting_requirement": "verified_email",
+        "can_read": true,
+        "can_post": false,
+        "can_comment": false,
+        "unavailable_reason": "請先登入"
+      },
+      {
+        "id": "cgu",
+        "label": "長庚板",
+        "kind": "university_exchange",
+        "school_name": "長庚大學",
+        "posting_requirement": "verified_email",
+        "can_read": true,
+        "can_post": false,
+        "can_comment": false,
+        "unavailable_reason": "請先登入"
+      },
+      {
+        "id": "ntpu",
+        "label": "臺北大學板",
+        "kind": "university_exchange",
+        "school_name": "國立臺北大學",
+        "posting_requirement": "verified_email",
+        "can_read": true,
+        "can_post": false,
+        "can_comment": false,
+        "unavailable_reason": "請先登入"
+      },
+      {
+        "id": "ntu",
+        "label": "臺大板",
+        "kind": "university_exchange",
+        "school_name": "國立臺灣大學",
+        "posting_requirement": "verified_email",
+        "can_read": true,
+        "can_post": false,
+        "can_comment": false,
+        "unavailable_reason": "請先登入"
+      },
+      {
+        "id": "tku",
+        "label": "淡江板",
+        "kind": "university_exchange",
+        "school_name": "淡江大學",
+        "posting_requirement": "verified_email",
+        "can_read": true,
+        "can_post": false,
+        "can_comment": false,
+        "unavailable_reason": "請先登入"
+      }
+    ]
+  },
+  "unverified_email_post": {
+    "status": 403,
+    "body": {
+      "detail": "請先驗證電子郵件"
+    }
+  },
+  "unknown_board": {
+    "status": 422,
+    "body": {
+      "detail": "不支援建立此討論板貼文。"
+    }
+  },
+  "conflicting_board": {
+    "status": 201,
+    "body": {
+      "id": "773072973c544afcb159c1b475b9c5f5",
+      "board_id": "public-study-abroad",
+      "board_kind": "public_study_abroad",
+      "school_name": "公共留學板",
+      "author_id": "",
+      "display_name": "匿名學生",
+      "identity_mode": "anonymous",
+      "post_type": "discussion",
+      "topic": "application",
+      "country": null,
+      "academic_year": null,
+      "application_stage": null,
+      "title": "交換申請流程討論",
+      "body": "想和同學一起整理申請步驟與校內繳交文件。",
+      "status": "approved",
+      "comment_count": 0,
+      "viewer_can_delete": true,
+      "created_at": "2026-10-09T01:38:13.933921Z"
+    }
+  },
+  "verified_ntpu_cross_school_post": {
+    "status": 201,
+    "body": {
+      "id": "ce0e57af6ad244009afe8815af84a514",
+      "board_id": "cgu",
+      "board_kind": "university_exchange",
+      "school_name": "長庚大學",
+      "author_id": "",
+      "display_name": "匿名學生",
+      "identity_mode": "anonymous",
+      "post_type": "discussion",
+      "topic": "application",
+      "country": null,
+      "academic_year": null,
+      "application_stage": null,
+      "title": "交換申請流程討論",
+      "body": "想和同學一起整理申請步驟與校內繳交文件。",
+      "status": "approved",
+      "comment_count": 0,
+      "viewer_can_delete": true,
+      "created_at": "2026-10-09T01:38:13.941059Z"
+    }
+  },
+  "own_delete": {
+    "status": 200,
+    "body": {
+      "status": "committed",
+      "resource_id": "8f41f4f02b2d45159e0007ee0424527c",
+      "deleted_comment_count": 0
+    }
+  },
+  "deleted_post_visible_to_guest": false,
+  "private_retry": {
+    "first": {
+      "status": 201,
+      "body": {
+        "id": "7d8efc14b46047da9916fd3e5a14bbad",
+        "school_name": "林肯大學 Lincoln University",
+        "sender_id": "f48844a68270490cb3c54e02e7f8366c",
+        "sender_name": "合成私訊發送者",
+        "recipient_id": "4f31297c09094809afc1d5a4867ba2b3",
+        "recipient_name": "合成私訊收件者",
+        "status": "pending",
+        "created_at": "2026-10-09T01:38:13.989145Z",
+        "updated_at": "2026-10-09T01:38:13.989147Z"
+      }
+    },
+    "replay": {
+      "status": 422,
+      "body": {
+        "detail": "無法向這個匿名身分發送邀請。"
+      }
+    },
+    "exact_replay": false,
+    "stored_conversations": 1,
+    "stored_messages": 1
+  },
+  "absent_admin_route_families": [
+    "/admin/application-workflow-source-replacement-candidates",
+    "/admin/application-workflow-review-batches/{batch_id}/stage",
+    "/admin/destination-profile-review",
+    "/admin/application-workflow-publications"
+  ],
+  "actual_admin_paths": [
+    "/admin/application-workflow-issue-reports",
+    "/admin/application-workflow-issue-reports/{report_id}",
+    "/admin/application-workflow-revisions",
+    "/admin/application-workflow-revisions/{revision_id}/approve",
+    "/admin/application-workflow-revisions/{revision_id}/comparison",
+    "/admin/application-workflow-revisions/{revision_id}/publish",
+    "/admin/application-workflow-revisions/{revision_id}/reject",
+    "/admin/community/content",
+    "/admin/community/identities/{identity_id}/suspend",
+    "/admin/community/moderation-audits",
+    "/admin/community/moderation-queue",
+    "/admin/community/reports",
+    "/admin/community/reports/{report_id}",
+    "/admin/community/session",
+    "/admin/community/{resource_type}/{resource_id}",
+    "/admin/notifications/run-due"
+  ],
+  "interpretation": [
+    "Current board behavior permits verified-email cross-school posts; older matching-school test and metadata disagree. No permission policy changed.",
+    "Unknown and conflicting board payloads are probed separately; early assertion failures do not establish later behavior.",
+    "A private first-write/retry mismatch is an actual missing retry behavior, not only missing OpenAPI metadata.",
+    "No fabricated review or publication routes were added. Missing families require real persistence and promotion safeguards."
+  ],
+  "ending_state": {
+    "commit": "3ccbf7c3de75b47f2f93f7aa56e96143e2e48a38",
+    "worktree_status": ""
+  },
+  "candidate_guard_passed": true
+}

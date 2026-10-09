@@ -1,0 +1,17 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/abroad-tku/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/abroad-tku
+configfile: pyproject.toml
+plugins: anyio-4.14.2
+collecting ... CONFTEST LOADED!
+collected 5 items
+
+tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[393] PASSED [ 20%]
+tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[834] PASSED [ 40%]
+tests/e2e/test_system_motion.py::test_dialog_menu_details_tabs_and_mobile_layout[1440] PASSED [ 60%]
+tests/e2e/test_discussion_round2.py::test_reply_thread_reaction_retry_persistence_and_author_delete PASSED [ 80%]
+tests/e2e/test_system_motion.py::test_all_routes_share_motion_and_back_retains_working_history PASSED [100%]
+
+------- generated xml file: /tmp/tku-browser-repair-probe/last-fixes.xml -------
+============================== 5 passed in 59.87s ==============================
