@@ -1,0 +1,47 @@
+{
+  "tested_commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+  "local_counts": {
+    "passed": 1502,
+    "failed": 16,
+    "skipped": 8
+  },
+  "local_nodes": 1526,
+  "local_ten_checks_all_executed": true,
+  "actual_runner_exit": 1,
+  "nine_non_pytest_checks_exit": 0,
+  "candidate_guards_all_clean": true,
+  "relevant_browser_passed": 54,
+  "workflow_hash_preservation": {
+    "count": 851,
+    "differences": 0
+  },
+  "additional_privacy_regressions_passed": 19,
+  "additional_http_calls": 54,
+  "remote_actual_conclusion": "failure",
+  "remote_web_suite_executed": false,
+  "remote_artifacts": 0,
+  "remote_failure": "New probe wrongly required idempotent false/true flag equality; fixed separately at 5e010b80b59d274d8a30332aabcab2c46929a313. Never claim either a85 remote Web suite or controls ran.",
+  "local_docker_error": "failed to register layer: no space left on device; no SQL runtime result",
+  "official_data": {
+    "program_rows": 128,
+    "current_round_rows": 4,
+    "reference_rows": 124,
+    "current_announced_quota": 7,
+    "new_home_applications": 0,
+    "verified_fields": 89,
+    "total_fields": 152,
+    "verified_percent": 58.6,
+    "remaining_gaps": 63,
+    "conflict_groups": 13
+  },
+  "all_checks_passed": false,
+  "acceptance_waiver": false,
+  "cli_error_observed": {
+    "command": "gh run view 37883361116 --json status,conclusion,headSha,jobs,url",
+    "exit_code": 1,
+    "message": "HTTP 401: Bad credentials",
+    "capture": "Observed tool output transcribed; no credential change. Active GitHub connector returned authorized results separately."
+  },
+  "latest_code_commit": "5e010b80b59d274d8a30332aabcab2c46929a313",
+  "history_preserved": "All previously pushed evidence branches and original XML remain unchanged."
+}

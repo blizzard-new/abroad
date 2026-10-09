@@ -1,0 +1,1167 @@
+{
+  "tested_commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+  "before": {
+    "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+    "dirty": ""
+  },
+  "after": {
+    "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+    "dirty": ""
+  },
+  "candidate_guard_passed": true,
+  "started_at": "2026-10-09T04:25:45.221896+00:00",
+  "ended_at": "2026-10-09T04:25:51.815332+00:00",
+  "actual_exit_code": 0,
+  "synthetic_only": true,
+  "production_database_access": false,
+  "events": [
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[committed-204-False]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 204,
+        "raw_body": "",
+        "returned_mutation_id": "cb2096fa36ff9af5e5acc459a2392c9c"
+      },
+      "repository_backend": "supabase",
+      "rpc_routing_simulated": true,
+      "atomic_commit_calls": [
+        {
+          "mutation_id": "cb2096fa36ff9af5e5acc459a2392c9c",
+          "account_id": "390727e23bde4200ab5f55c7e14cf821",
+          "session_id": "0ac752eaa02f4364a274b0e0769c5609",
+          "returned_status": "committed"
+        }
+      ]
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[committed-204-True]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": "synthetic-supabase-routing-0001",
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 204,
+        "raw_body": "",
+        "returned_mutation_id": "synthetic-supabase-routing-0001"
+      },
+      "repository_backend": "supabase",
+      "rpc_routing_simulated": true,
+      "atomic_commit_calls": [
+        {
+          "mutation_id": "synthetic-supabase-routing-0001",
+          "account_id": "e026bb197b5d468ca9281bfb098a1bf7",
+          "session_id": "6c348a2301324568b88aab12ef4a2947",
+          "returned_status": "committed"
+        }
+      ]
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[integrity_conflict-503-False]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 503,
+        "raw_body": "{\"detail\":\"帳號刪除尚未完成，請保留操作識別碼後重試。\"}",
+        "returned_mutation_id": "51e0e132f94fdf2e3c76b2081386fbd6"
+      },
+      "repository_backend": "supabase",
+      "rpc_routing_simulated": true,
+      "atomic_commit_calls": [
+        {
+          "mutation_id": "51e0e132f94fdf2e3c76b2081386fbd6",
+          "account_id": "0203e7920d8e43b6b8902b10a039036e",
+          "session_id": "52efa10801d945018fda6f761cb4e595",
+          "returned_status": "integrity_conflict"
+        }
+      ]
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_supabase_backend_always_uses_atomic_deletion_and_never_local_fallback[integrity_conflict-503-True]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": "synthetic-supabase-routing-0001",
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 503,
+        "raw_body": "{\"detail\":\"帳號刪除尚未完成，請保留操作識別碼後重試。\"}",
+        "returned_mutation_id": "synthetic-supabase-routing-0001"
+      },
+      "repository_backend": "supabase",
+      "rpc_routing_simulated": true,
+      "atomic_commit_calls": [
+        {
+          "mutation_id": "synthetic-supabase-routing-0001",
+          "account_id": "8bec28719c444256a97d55017cb69470",
+          "session_id": "82c8466ee20a429a8fe24e932ba78a6f",
+          "returned_status": "integrity_conflict"
+        }
+      ]
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[False]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。",
+          "identity_mode": "real_name"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"a17eb9d35e194c5793204c5bfc8e26ce\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"合成淡江刪帳者\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:47.661568Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[False]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。",
+          "identity_mode": "real_name"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"cf9521006b05475e8147a3a6cb7f7e90\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"合成淡江刪帳者\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:47.668854Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[False]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。",
+          "identity_mode": "real_name"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"27d816e69dec4691ab85d804871b8b48\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"合成保留帳號\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:47.678041Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[False]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 204,
+        "raw_body": "",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[False]",
+      "request": {
+        "method": "GET",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 401,
+        "raw_body": "{\"detail\":\"登入狀態已失效，請重新登入。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[False]",
+      "request": {
+        "method": "GET",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "{\"is_platform_admin\":false,\"catalog_home_university\":\"國立臺北大學\",\"school_basis\":\"self_declared\",\"id\":\"9cb495eb1a214510abf82c4706e2559d\",\"email\":null,\"display_name\":\"合成保留帳號\",\"avatar_url\":null,\"home_university\":\"國立臺北大學\",\"school_change_locked_until\":null,\"target_countries\":[],\"application_stage\":\"exploring\",\"followed_boards\":[],\"notification_preferences\":{\"deadline_reminder_days\":[30,14,7,3,1],\"web_enabled\":true,\"email_enabled\":false,\"push_enabled\":false,\"content_updates_enabled\":true},\"content_updates_seen_at\":null,\"email_verified\":true,\"school_email_verified\":false,\"student_status_verified\":false,\"verified_university\":null,\"verified_department\":null,\"student_verification_method\":null,\"student_verified_at\":null,\"product_tier\":\"free\",\"providers\":[],\"created_at\":\"2026-10-09T04:25:47.645014Z\",\"updated_at\":\"2026-10-09T04:25:47.645015Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[False]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[{\"post\":{\"id\":\"27d816e69dec4691ab85d804871b8b48\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"合成保留帳號\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T04:25:47.678041Z\"},\"comments\":[]},{\"post\":{\"id\":\"cf9521006b05475e8147a3a6cb7f7e90\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"已刪除帳號\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T04:25:47.668854Z\"},\"comments\":[]},{\"post\":{\"id\":\"a17eb9d35e194c5793204c5bfc8e26ce\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"已刪除帳號\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T04:25:47.661568Z\"},\"comments\":[]}]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[True]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。",
+          "identity_mode": "real_name"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"a68831943f5c4e20b9d89b95c7eced2d\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"合成淡江刪帳者\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:47.923846Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[True]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。",
+          "identity_mode": "real_name"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"f6c4fc3d33ee4f96928f2353b09cb9e6\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"合成淡江刪帳者\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:47.932436Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[True]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。",
+          "identity_mode": "real_name"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"20cfec36e8bf4787b28a905ddba27784\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"合成保留帳號\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:47.940519Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[True]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": "synthetic-delete-mutation-0001",
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 204,
+        "raw_body": "",
+        "returned_mutation_id": "synthetic-delete-mutation-0001"
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": [
+        {
+          "mutation_id": "synthetic-delete-mutation-0001",
+          "account_id": "1382af9cadb64e468297e6289709eb1b",
+          "session_id": "3a60286ec7044bddbe298c0595fcf101",
+          "returned_status": "committed"
+        }
+      ]
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[True]",
+      "request": {
+        "method": "GET",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 401,
+        "raw_body": "{\"detail\":\"登入狀態已失效，請重新登入。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[True]",
+      "request": {
+        "method": "GET",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "{\"is_platform_admin\":false,\"catalog_home_university\":\"國立臺北大學\",\"school_basis\":\"self_declared\",\"id\":\"bea7dbb246ab43c9a815662a5a28a32d\",\"email\":null,\"display_name\":\"合成保留帳號\",\"avatar_url\":null,\"home_university\":\"國立臺北大學\",\"school_change_locked_until\":null,\"target_countries\":[],\"application_stage\":\"exploring\",\"followed_boards\":[],\"notification_preferences\":{\"deadline_reminder_days\":[30,14,7,3,1],\"web_enabled\":true,\"email_enabled\":false,\"push_enabled\":false,\"content_updates_enabled\":true},\"content_updates_seen_at\":null,\"email_verified\":true,\"school_email_verified\":false,\"student_status_verified\":false,\"verified_university\":null,\"verified_department\":null,\"student_verification_method\":null,\"student_verified_at\":null,\"product_tier\":\"free\",\"providers\":[],\"created_at\":\"2026-10-09T04:25:47.914580Z\",\"updated_at\":\"2026-10-09T04:25:47.914581Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_deletion_deidentifies_all_linked_identities_and_preserves_other_account[True]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[{\"post\":{\"id\":\"20cfec36e8bf4787b28a905ddba27784\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"合成保留帳號\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T04:25:47.940519Z\"},\"comments\":[]},{\"post\":{\"id\":\"f6c4fc3d33ee4f96928f2353b09cb9e6\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"已刪除帳號\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T04:25:47.932436Z\"},\"comments\":[]},{\"post\":{\"id\":\"a68831943f5c4e20b9d89b95c7eced2d\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"已刪除帳號\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T04:25:47.923846Z\"},\"comments\":[]}]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[False]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。",
+          "identity_mode": "real_name"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"2db741f051114fea9234dcb1b5be9e4e\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"合成清理重試者\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:48.294631Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[False]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 503,
+        "raw_body": "{\"detail\":\"社群資料清理尚未完成，請重試刪除帳號。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[False]",
+      "request": {
+        "method": "GET",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "{\"is_platform_admin\":false,\"catalog_home_university\":\"淡江大學\",\"school_basis\":\"self_declared\",\"id\":\"2cc041822d12481b851fd2d52f437284\",\"email\":null,\"display_name\":\"合成清理重試者\",\"avatar_url\":null,\"home_university\":\"淡江大學\",\"school_change_locked_until\":null,\"target_countries\":[],\"application_stage\":\"exploring\",\"followed_boards\":[],\"notification_preferences\":{\"deadline_reminder_days\":[30,14,7,3,1],\"web_enabled\":true,\"email_enabled\":false,\"push_enabled\":false,\"content_updates_enabled\":true},\"content_updates_seen_at\":null,\"email_verified\":true,\"school_email_verified\":false,\"student_status_verified\":false,\"verified_university\":null,\"verified_department\":null,\"student_verification_method\":null,\"student_verified_at\":null,\"product_tier\":\"free\",\"providers\":[],\"created_at\":\"2026-10-09T04:25:48.283998Z\",\"updated_at\":\"2026-10-09T04:25:48.284003Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[False]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 204,
+        "raw_body": "",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[False]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[{\"post\":{\"id\":\"2db741f051114fea9234dcb1b5be9e4e\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"已刪除帳號\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T04:25:48.294631Z\"},\"comments\":[]}]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[True]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。",
+          "identity_mode": "real_name"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"bbec9bdc56da467485b7e23748fb0466\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"合成清理重試者\",\"identity_mode\":\"real_name\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:48.482863Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[True]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": "synthetic-delete-mutation-0002",
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 503,
+        "raw_body": "{\"detail\":\"社群資料清理尚未完成，請重試刪除帳號。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[True]",
+      "request": {
+        "method": "GET",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "{\"is_platform_admin\":false,\"catalog_home_university\":\"淡江大學\",\"school_basis\":\"self_declared\",\"id\":\"e87bca72f41445e0bfec8a4076176fd6\",\"email\":null,\"display_name\":\"合成清理重試者\",\"avatar_url\":null,\"home_university\":\"淡江大學\",\"school_change_locked_until\":null,\"target_countries\":[],\"application_stage\":\"exploring\",\"followed_boards\":[],\"notification_preferences\":{\"deadline_reminder_days\":[30,14,7,3,1],\"web_enabled\":true,\"email_enabled\":false,\"push_enabled\":false,\"content_updates_enabled\":true},\"content_updates_seen_at\":null,\"email_verified\":true,\"school_email_verified\":false,\"student_status_verified\":false,\"verified_university\":null,\"verified_department\":null,\"student_verification_method\":null,\"student_verified_at\":null,\"product_tier\":\"free\",\"providers\":[],\"created_at\":\"2026-10-09T04:25:48.473091Z\",\"updated_at\":\"2026-10-09T04:25:48.473095Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[True]",
+      "request": {
+        "method": "DELETE",
+        "path": "/auth/me",
+        "json": null,
+        "deletion_mutation_header": "synthetic-delete-mutation-0002",
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 204,
+        "raw_body": "",
+        "returned_mutation_id": "synthetic-delete-mutation-0002"
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": [
+        {
+          "mutation_id": "synthetic-delete-mutation-0002",
+          "account_id": "e87bca72f41445e0bfec8a4076176fd6",
+          "session_id": "a69ad062b8ab425eb3832fd43751e0ad",
+          "returned_status": "committed"
+        }
+      ]
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_failed_cleanup_retains_account_and_can_be_retried[True]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[{\"post\":{\"id\":\"bbec9bdc56da467485b7e23748fb0466\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"已刪除帳號\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T04:25:48.482863Z\"},\"comments\":[]}]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1aA12345678]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "合成護照號碼：A12345678"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 422,
+        "raw_body": "{\"detail\":\"請不要填寫護照號碼或身分證字號等敏感身分資料。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1aA12345678]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1a\\uff21\\uff11\\uff12\\uff13\\uff14\\uff15\\uff16\\uff17\\uff18]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "合成護照號碼：Ａ１２３４５６７８"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 422,
+        "raw_body": "{\"detail\":\"請不要填寫護照號碼或身分證字號等敏感身分資料。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1a\\uff21\\uff11\\uff12\\uff13\\uff14\\uff15\\uff16\\uff17\\uff18]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-\\u5408\\u6210\\u8eab\\u5206\\u8b49\\u5b57\\u865f\\uff1aA123456789]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "合成身分證字號：A123456789"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 422,
+        "raw_body": "{\"detail\":\"請不要填寫護照號碼或身分證字號等敏感身分資料。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-\\u5408\\u6210\\u8eab\\u5206\\u8b49\\u5b57\\u865f\\uff1aA123456789]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-Synthetic passport number: 123456789]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "Synthetic passport number: 123456789"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 422,
+        "raw_body": "{\"detail\":\"請不要填寫護照號碼或身分證字號等敏感身分資料。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-Synthetic passport number: 123456789]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc A12345678\\u8acb\\u4e0d\\u8981\\u516c\\u958b]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "合成護照號碼 A12345678請不要公開"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 422,
+        "raw_body": "{\"detail\":\"請不要填寫護照號碼或身分證字號等敏感身分資料。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[post-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc A12345678\\u8acb\\u4e0d\\u8981\\u516c\\u958b]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1aA12345678]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"76e49dd053954465a2182149c2e15733\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:49.889225Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1aA12345678]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts/76e49dd053954465a2182149c2e15733/comments",
+        "json": {
+          "body": "合成護照號碼：A12345678"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 422,
+        "raw_body": "{\"detail\":\"請不要填寫護照號碼或身分證字號等敏感身分資料。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1aA12345678]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[{\"post\":{\"id\":\"76e49dd053954465a2182149c2e15733\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T04:25:49.889225Z\"},\"comments\":[]}]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1a\\uff21\\uff11\\uff12\\uff13\\uff14\\uff15\\uff16\\uff17\\uff18]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"6408b5cecc654ca6b384f82fe38d01b0\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:50.039476Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1a\\uff21\\uff11\\uff12\\uff13\\uff14\\uff15\\uff16\\uff17\\uff18]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts/6408b5cecc654ca6b384f82fe38d01b0/comments",
+        "json": {
+          "body": "合成護照號碼：Ａ１２３４５６７８"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 422,
+        "raw_body": "{\"detail\":\"請不要填寫護照號碼或身分證字號等敏感身分資料。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc\\uff1a\\uff21\\uff11\\uff12\\uff13\\uff14\\uff15\\uff16\\uff17\\uff18]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[{\"post\":{\"id\":\"6408b5cecc654ca6b384f82fe38d01b0\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T04:25:50.039476Z\"},\"comments\":[]}]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8eab\\u5206\\u8b49\\u5b57\\u865f\\uff1aA123456789]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"6b38ff6f284f4073b431b9759ad5961f\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:50.188839Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8eab\\u5206\\u8b49\\u5b57\\u865f\\uff1aA123456789]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts/6b38ff6f284f4073b431b9759ad5961f/comments",
+        "json": {
+          "body": "合成身分證字號：A123456789"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 422,
+        "raw_body": "{\"detail\":\"請不要填寫護照號碼或身分證字號等敏感身分資料。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8eab\\u5206\\u8b49\\u5b57\\u865f\\uff1aA123456789]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[{\"post\":{\"id\":\"6b38ff6f284f4073b431b9759ad5961f\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T04:25:50.188839Z\"},\"comments\":[]}]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-Synthetic passport number: 123456789]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"01bfaa0ac67745c1a05b99fa32063d12\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:50.314491Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-Synthetic passport number: 123456789]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts/01bfaa0ac67745c1a05b99fa32063d12/comments",
+        "json": {
+          "body": "Synthetic passport number: 123456789"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 422,
+        "raw_body": "{\"detail\":\"請不要填寫護照號碼或身分證字號等敏感身分資料。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-Synthetic passport number: 123456789]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[{\"post\":{\"id\":\"01bfaa0ac67745c1a05b99fa32063d12\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T04:25:50.314491Z\"},\"comments\":[]}]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc A12345678\\u8acb\\u4e0d\\u8981\\u516c\\u958b]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "想和同學一起整理申請步驟與校內繳交文件。"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"145e861670914277806f2a2e94196df2\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:50.454249Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc A12345678\\u8acb\\u4e0d\\u8981\\u516c\\u958b]",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts/145e861670914277806f2a2e94196df2/comments",
+        "json": {
+          "body": "合成護照號碼 A12345678請不要公開"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 422,
+        "raw_body": "{\"detail\":\"請不要填寫護照號碼或身分證字號等敏感身分資料。\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_sensitive_id_is_rejected_before_storage_and_publication[comment-\\u5408\\u6210\\u8b77\\u7167\\u865f\\u78bc A12345678\\u8acb\\u4e0d\\u8981\\u516c\\u958b]",
+      "request": {
+        "method": "GET",
+        "path": "/community/posts",
+        "json": null,
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 200,
+        "raw_body": "[{\"post\":{\"id\":\"145e861670914277806f2a2e94196df2\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"想和同學一起整理申請步驟與校內繳交文件。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":false,\"created_at\":\"2026-10-09T04:25:50.454249Z\"},\"comments\":[]}]",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    },
+    {
+      "case": "tests/test_tku_privacy_regressions.py::test_id_instructions_and_course_numbers_are_not_blocked",
+      "request": {
+        "method": "POST",
+        "path": "/community/posts",
+        "json": {
+          "school_name": "公共留學板",
+          "post_type": "discussion",
+          "topic": "application",
+          "title": "交換申請流程討論",
+          "body": "護照號碼請填官方表格，公開討論不要貼號碼。課程代碼 A12345678 僅為合成測試。"
+        },
+        "deletion_mutation_header": null,
+        "credentials": "omitted; all sessions are isolated synthetic fixtures"
+      },
+      "response": {
+        "status": 201,
+        "raw_body": "{\"id\":\"74d9b7ca01424fabaf01d1b7158d064d\",\"board_id\":\"public-study-abroad\",\"board_kind\":\"public_study_abroad\",\"school_name\":\"公共留學板\",\"author_id\":\"\",\"display_name\":\"匿名學生\",\"identity_mode\":\"anonymous\",\"post_type\":\"discussion\",\"topic\":\"application\",\"country\":null,\"academic_year\":null,\"application_stage\":null,\"title\":\"交換申請流程討論\",\"body\":\"護照號碼請填官方表格，公開討論不要貼號碼。課程代碼 A12345678 僅為合成測試。\",\"status\":\"approved\",\"comment_count\":0,\"viewer_can_delete\":true,\"created_at\":\"2026-10-09T04:25:50.931519Z\"}",
+        "returned_mutation_id": null
+      },
+      "repository_backend": "jsonl",
+      "rpc_routing_simulated": false,
+      "atomic_commit_calls": []
+    }
+  ],
+  "instrumentation": "Only HTTP response and existing commit-result telemetry; assertions, payloads and repository behavior remain the candidate tests. Supabase cases use explicit test fakes, not a database.",
+  "source_tests": "tests/test_tku_privacy_regressions.py"
+}

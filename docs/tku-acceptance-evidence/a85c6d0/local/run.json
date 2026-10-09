@@ -1,0 +1,397 @@
+{
+  "browser_files": [
+    "test_tku_acceptance.py",
+    "test_ntu_school.py",
+    "test_application_workspace.py",
+    "test_application_ui_refinements.py",
+    "test_application_periods.py",
+    "test_fit_and_completeness_ui.py",
+    "test_planning_workspace.py",
+    "test_tku_draft_handoff.py",
+    "test_tku_source_rendering.py"
+  ],
+  "unit_file_count": 140,
+  "deliberately_not_run": [
+    "tests/integration/test_local_ai_runtime.py: unrelated Ollama hardware/runtime integration"
+  ],
+  "checks": [
+    {
+      "name": "pytest-unit-and-browser",
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_account_read_cache.py",
+        "tests/test_account_workspace_api.py",
+        "tests/test_advisor.py",
+        "tests/test_advisor_mascot_contract.py",
+        "tests/test_ai_gateway.py",
+        "tests/test_ai_privacy.py",
+        "tests/test_analytics_api.py",
+        "tests/test_analytics_core.py",
+        "tests/test_analytics_frontend_contract.py",
+        "tests/test_analytics_report.py",
+        "tests/test_api.py",
+        "tests/test_application_document_catalog.py",
+        "tests/test_application_documents_api.py",
+        "tests/test_application_periods.py",
+        "tests/test_application_plan_api.py",
+        "tests/test_application_plan_schedule_api.py",
+        "tests/test_application_plan_scheduling.py",
+        "tests/test_application_rules.py",
+        "tests/test_application_workflow.py",
+        "tests/test_application_workflow_issue_report_migration.py",
+        "tests/test_application_workflow_issue_reports.py",
+        "tests/test_atomic_account_deletion_migration.py",
+        "tests/test_atomic_auth_mutations.py",
+        "tests/test_atomic_private_community_migration.py",
+        "tests/test_atomic_public_community_api.py",
+        "tests/test_atomic_public_community_migration.py",
+        "tests/test_atomic_workspace_moderation.py",
+        "tests/test_auth_api.py",
+        "tests/test_b4_04_ai_limits.py",
+        "tests/test_brand_assets.py",
+        "tests/test_calendar_conflicts.py",
+        "tests/test_calendar_sync_api.py",
+        "tests/test_calendar_task_scheduling.py",
+        "tests/test_catalog_access.py",
+        "tests/test_catalogue_speed.py",
+        "tests/test_cgu_bundled_data.py",
+        "tests/test_change_impact.py",
+        "tests/test_chinese_public_content.py",
+        "tests/test_classifier.py",
+        "tests/test_cli.py",
+        "tests/test_college_options.py",
+        "tests/test_community_api.py",
+        "tests/test_community_browsing.py",
+        "tests/test_community_permissions.py",
+        "tests/test_community_repositories.py",
+        "tests/test_content_governance_wrapper.py",
+        "tests/test_content_summary.py",
+        "tests/test_dependency_security_baseline.py",
+        "tests/test_destination_tips.py",
+        "tests/test_discovery.py",
+        "tests/test_discussion_round2.py",
+        "tests/test_document_check_entitlements.py",
+        "tests/test_document_vault.py",
+        "tests/test_email_verification.py",
+        "tests/test_entitlements.py",
+        "tests/test_experience_collector.py",
+        "tests/test_experience_digests.py",
+        "tests/test_feedback.py",
+        "tests/test_feedback_migration.py",
+        "tests/test_fit_signals.py",
+        "tests/test_flutter_independent_pages.py",
+        "tests/test_flutter_navigation_hierarchy.py",
+        "tests/test_flutter_production_copy.py",
+        "tests/test_form_drafts.py",
+        "tests/test_frontend_contract.py",
+        "tests/test_health_head.py",
+        "tests/test_home_and_forum_routes.py",
+        "tests/test_hong_kong_country.py",
+        "tests/test_http_client.py",
+        "tests/test_icon_motion_contract.py",
+        "tests/test_independent_page_routing.py",
+        "tests/test_jsonl_storage_integrity.py",
+        "tests/test_lai_10_security_audit.py",
+        "tests/test_legal_pages.py",
+        "tests/test_life_context.py",
+        "tests/test_loading_screen.py",
+        "tests/test_local_ai.py",
+        "tests/test_match_document_chunks_migration.py",
+        "tests/test_multi_application_plan.py",
+        "tests/test_my_application_entry.py",
+        "tests/test_native_app_contract.py",
+        "tests/test_next_phase_contract.py",
+        "tests/test_notification_changes.py",
+        "tests/test_notifications.py",
+        "tests/test_ntpu_bundled_data.py",
+        "tests/test_ntpu_support.py",
+        "tests/test_ntu_audit.py",
+        "tests/test_ntu_integration.py",
+        "tests/test_ntu_school_board_migration.py",
+        "tests/test_open_catalog_signup.py",
+        "tests/test_partner_localization.py",
+        "tests/test_partner_map_geometry.py",
+        "tests/test_partner_research.py",
+        "tests/test_pipeline.py",
+        "tests/test_public_translation.py",
+        "tests/test_qualification_scope_consistency.py",
+        "tests/test_rag.py",
+        "tests/test_regions.py",
+        "tests/test_request_origin.py",
+        "tests/test_requirements_traceability.py",
+        "tests/test_responsive_css.py",
+        "tests/test_review_source_candidates.py",
+        "tests/test_review_source_metadata_candidates.py",
+        "tests/test_rls_auto_enable_migration.py",
+        "tests/test_school_choice.py",
+        "tests/test_school_choice_migration.py",
+        "tests/test_school_completeness.py",
+        "tests/test_school_content.py",
+        "tests/test_school_image_collector.py",
+        "tests/test_school_photo_and_match.py",
+        "tests/test_selection_conditions_sync.py",
+        "tests/test_social_community_api.py",
+        "tests/test_source_applicability_cleanup.py",
+        "tests/test_source_metadata_research_audit.py",
+        "tests/test_source_replacement_transport_audit.py",
+        "tests/test_static_caching.py",
+        "tests/test_student_view.py",
+        "tests/test_submission_progress.py",
+        "tests/test_supabase_migration_syntax.py",
+        "tests/test_supabase_repositories.py",
+        "tests/test_supabase_runtime_validation.py",
+        "tests/test_supabase_setup_check.py",
+        "tests/test_task_documents_and_reference_plan.py",
+        "tests/test_terms_consent.py",
+        "tests/test_tku_acceptance_runner.py",
+        "tests/test_tku_community_boundaries.py",
+        "tests/test_tku_continuation.py",
+        "tests/test_tku_privacy_regressions.py",
+        "tests/test_tku_support.py",
+        "tests/test_tku_web_evidence.py",
+        "tests/test_transient_auth.py",
+        "tests/test_translation_requests.py",
+        "tests/test_university_locations.py",
+        "tests/test_uniway_ui_contract.py",
+        "tests/test_web_review_findings_contract.py",
+        "tests/test_workflow_catalog_cache.py",
+        "tests/test_workflow_context_api.py",
+        "tests/test_workflow_structuring.py",
+        "tests/test_workload_planning.py",
+        "tests/test_workload_planning_api.py",
+        "tests/e2e/test_tku_acceptance.py",
+        "tests/e2e/test_ntu_school.py",
+        "tests/e2e/test_application_workspace.py",
+        "tests/e2e/test_application_ui_refinements.py",
+        "tests/e2e/test_application_periods.py",
+        "tests/e2e/test_fit_and_completeness_ui.py",
+        "tests/e2e/test_planning_workspace.py",
+        "tests/e2e/test_tku_draft_handoff.py",
+        "tests/e2e/test_tku_source_rendering.py",
+        "tests/e2e/test_web_next_phase.py::test_application_form_sync_review_and_pdf_download",
+        "-q",
+        "-ra",
+        "--junitxml=/tmp/tku-acceptance-a85c6d0-verified/suite.xml"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 854.8,
+      "log": "/tmp/tku-acceptance-a85c6d0-verified/pytest-unit-and-browser.log",
+      "before": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "tku-switching-and-details",
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/check_tku_target_switching.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 110.76,
+      "log": "/tmp/tku-acceptance-a85c6d0-verified/tku-switching-and-details.log",
+      "before": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "openapi",
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "scripts/export_openapi.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.75,
+      "log": "/tmp/tku-acceptance-a85c6d0-verified/openapi.log",
+      "before": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "javascript-shared",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/app.js"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.04,
+      "log": "/tmp/tku-acceptance-a85c6d0-verified/javascript-shared.log",
+      "before": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "javascript-tku",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/tku-academic-units.js"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.05,
+      "log": "/tmp/tku-acceptance-a85c6d0-verified/javascript-tku.log",
+      "before": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "javascript-tku-eligibility",
+      "command": [
+        "node",
+        "--check",
+        "src/exchange_info/static/tku-eligibility.js"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.03,
+      "log": "/tmp/tku-acceptance-a85c6d0-verified/javascript-tku-eligibility.log",
+      "before": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.01,
+      "log": "/tmp/tku-acceptance-a85c6d0-verified/diff-check.log",
+      "before": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "recovered-wrapper-collection",
+      "command": [
+        "/workspace/abroad-tku/.venv/bin/python",
+        "-m",
+        "pytest",
+        "tests/test_content_governance_wrapper.py",
+        "--collect-only",
+        "-q",
+        "--junitxml=/tmp/tku-acceptance-a85c6d0-verified/wrapper.xml"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.78,
+      "log": "/tmp/tku-acceptance-a85c6d0-verified/recovered-wrapper-collection.log",
+      "before": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "lockfile",
+      "command": [
+        "uv",
+        "lock",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.07,
+      "log": "/tmp/tku-acceptance-a85c6d0-verified/lockfile.log",
+      "before": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      }
+    },
+    {
+      "name": "actionlint",
+      "command": [
+        "/tmp/tku-continuation-20261008/actionlint/actionlint",
+        ".github/workflows/quality.yml"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.01,
+      "log": "/tmp/tku-acceptance-a85c6d0-verified/actionlint.log",
+      "before": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      },
+      "after": {
+        "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+        "worktree_status": "",
+        "valid": true
+      }
+    }
+  ],
+  "tested_commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+  "started_at": 1791519611.6132565,
+  "starting_state": {
+    "commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+    "worktree_status": "",
+    "valid": true
+  },
+  "ended_at": 1791520582.0315747,
+  "ending_commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+  "ending_worktree_status": "",
+  "runner_exit_code": 1,
+  "all_checks_executed": true,
+  "all_checks_passed": false
+}

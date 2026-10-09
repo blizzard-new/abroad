@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/suite.xml",
+  "original_xml_sha256": "ed9e202a35ef0bf393f1d60933621474a13c1d17cb7db3119c2803e70a5ba05f",
+  "case_attributes": {
+    "classname": "tests.test_frontend_contract",
+    "name": "test_personal_application_plan_uses_structured_api_and_progressive_login",
+    "time": "0.002"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert 'id=\"eligibility-department\"' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...-1\" defer></script>\\n    <script src=\"/static/app.js?v=20261009-tku-ci-source-5\" defer></script>\\n  </body>\\n</html>\\n'"
+  },
+  "full_text": "def test_personal_application_plan_uses_structured_api_and_progressive_login() -> None:\n        html = (STATIC_DIR / \"index.html\").read_text(encoding=\"utf-8\")\n        script = (STATIC_DIR / \"app.js\").read_text(encoding=\"utf-8\")\n        styles = (STATIC_DIR / \"product-v2.css\").read_text(encoding=\"utf-8\")\n    \n        for element_id in (\n            \"eligibility-department\",\n            \"eligibility-academic-year\",\n            \"eligibility-application-round\",\n            \"eligibility-preference-1\",\n            \"eligibility-preference-2\",\n            \"eligibility-preference-3\",\n        ):\n>           assert f'id=\"{element_id}\"' in html\nE           assert 'id=\"eligibility-department\"' in '<!doctype html>\\n<html lang=\"zh-Hant\" data-theme=\"light\">\\n  <head>\\n    <meta charset=\"utf-8\" />\\n    <meta name=\"vi...-1\" defer></script>\\n    <script src=\"/static/app.js?v=20261009-tku-ci-source-5\" defer></script>\\n  </body>\\n</html>\\n'\n\ntests/test_frontend_contract.py:1701: AssertionError"
+}

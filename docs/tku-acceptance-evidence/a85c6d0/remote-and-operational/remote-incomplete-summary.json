@@ -1,0 +1,76 @@
+{
+  "tested_commit": "a85c6d0d39fe7896e7560cea15a3c55f02facc83",
+  "pr_run_id": 37883361116,
+  "push_run_id": 37883355918,
+  "actual_conclusion": "failure",
+  "web_suite_executed": false,
+  "original_candidate_junit_available": false,
+  "remote_artifacts": 0,
+  "reason": "New policy probe incorrectly compares the idempotent flag in whole response; SQL intentionally returns false initially, true on replay. Neither Web suite nor main controls ran. No reconstruction or pass claim.",
+  "jobs": [
+    {
+      "job_id": 113667802777,
+      "runtime_failure_lines": [
+        "2026-10-09T04:22:27.9898121Z RUNTIME VALIDATION FAILED: Policy retry differs"
+      ],
+      "web_suite_executed": false,
+      "log_sha256": "58b85355064fa5c809bf4d7a5a1d6e9e45039222c4d2f8da6d031b171d0f79fb"
+    },
+    {
+      "job_id": 113667803057,
+      "runtime_failure_lines": [
+        "2026-10-09T04:22:25.6805780Z RUNTIME VALIDATION FAILED: Policy retry differs"
+      ],
+      "web_suite_executed": false,
+      "log_sha256": "0a84a2164332dcaedc5e9c09f3e02095fe80b8ef4d9ea9ef84c12063c89a1564"
+    },
+    {
+      "job_id": 113667819989,
+      "runtime_failure_lines": [
+        "2026-10-09T04:22:21.2953728Z RUNTIME VALIDATION FAILED: Policy retry differs"
+      ],
+      "web_suite_executed": false,
+      "log_sha256": "02761231c9ff5254fc8122e0b753343b23daeb76d6fa2bcb56e79a052ebb4dd3"
+    },
+    {
+      "job_id": 113667803067,
+      "runtime_failure_lines": [
+        "2026-10-09T04:22:09.4469526Z RUNTIME VALIDATION FAILED: Policy retry differs"
+      ],
+      "web_suite_executed": false,
+      "log_sha256": "44f6ca9f1c8ce87e5bc10eb5278feaab988998ba7e28fd3f99ea83a5cb5be113"
+    },
+    {
+      "job_id": 113667820019,
+      "runtime_failure_lines": [
+        "2026-10-09T04:22:20.1608827Z RUNTIME VALIDATION FAILED: Policy retry differs"
+      ],
+      "web_suite_executed": false,
+      "log_sha256": "219557835d4e0f1437ae9d77009de24881198c61cd1e3fc1b561355b1170e814"
+    },
+    {
+      "job_id": 113667820000,
+      "runtime_failure_lines": [
+        "2026-10-09T04:22:44.8304106Z RUNTIME VALIDATION FAILED: Policy retry differs"
+      ],
+      "web_suite_executed": false,
+      "log_sha256": "3275452a6c1514dbd8f72f06a5c5f0b65b99c2e31d58f16cd4e2c7fe29335dc1"
+    },
+    {
+      "job_id": 113667803019,
+      "runtime_failure_lines": [
+        "2026-10-09T04:22:37.9599456Z RUNTIME VALIDATION FAILED: Policy retry differs"
+      ],
+      "web_suite_executed": false,
+      "log_sha256": "2bbb992d52480cd922fa46733bc41deb2165b10fb58cba58ad64bbd5e91604d4"
+    },
+    {
+      "job_id": 113667819880,
+      "runtime_failure_lines": [
+        "2026-10-09T04:22:49.4196971Z RUNTIME VALIDATION FAILED: Policy retry differs"
+      ],
+      "web_suite_executed": false,
+      "log_sha256": "b4ddf34622adbde0f390a9c4e049596935c8a323a7b43c65668db7545bb9a312"
+    }
+  ]
+}

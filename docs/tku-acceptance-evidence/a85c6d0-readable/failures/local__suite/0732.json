@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/suite.xml",
+  "original_xml_sha256": "ed9e202a35ef0bf393f1d60933621474a13c1d17cb7db3119c2803e70a5ba05f",
+  "case_attributes": {
+    "classname": "tests.test_frontend_contract",
+    "name": "test_web_routes_states_and_touch_targets_are_consistent",
+    "time": "0.005"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "assert 'renderCommunityEmpty(\"社群暫時無法載入\", error.message, \"error\")' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'"
+  },
+  "full_text": "def test_web_routes_states_and_touch_targets_are_consistent() -> None:\n        html = (STATIC_DIR / \"index.html\").read_text(encoding=\"utf-8\")\n        script = (STATIC_DIR / \"app.js\").read_text(encoding=\"utf-8\")\n        styles = (STATIC_DIR / \"product-v2.css\").read_text(encoding=\"utf-8\")\n    \n        assert '<span>資格與志願</span>' in html\n        assert 'eligibility: \"資格與志願\"' in script\n        assert \"function focusRouteHeading(selector)\" in script\n        assert 'focusRouteHeading(\"#community-hub-title\")' in script\n        assert '? PUBLIC_COMMUNITY_BOARD' in script\n        assert '? \"我的追蹤\"' in script\n        assert \"跨校討論交換申請、簽證、住宿與海外生活。\" in script\n        assert 'role=\"${isError ? \"alert\" : \"status\"}\"' in script\n>       assert \"renderCommunityEmpty(\\\"社群暫時無法載入\\\", error.message, \\\"error\\\")\" in script\nE       assert 'renderCommunityEmpty(\"社群暫時無法載入\", error.message, \"error\")' in 'const state = {\\n  dashboard: null,\\n  query: \"\",\\n  partnerQuery: \"\",\\n  partnerView: \"list\",\\n  partnerDataLoading:...wever it ended; it can never stay in front of the page for good.\\nboot().finally(() => window.UniWaySplash?.done());\\n'\n\ntests/test_frontend_contract.py:502: AssertionError"
+}

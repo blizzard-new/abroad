@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/suite.xml",
+  "original_xml_sha256": "ed9e202a35ef0bf393f1d60933621474a13c1d17cb7db3119c2803e70a5ba05f",
+  "case_attributes": {
+    "classname": "tests.test_next_phase_contract",
+    "name": "test_application_workflow_publication_contract_exposes_safe_rollback",
+    "time": "1.081"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "KeyError: '/admin/application-workflow-publications'"
+  },
+  "full_text": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-138/test_application_workflow_publ0')\n\n    def test_application_workflow_publication_contract_exposes_safe_rollback(tmp_path) -> None:\n        client = TestClient(create_app(tmp_path))\n        openapi = client.get(\"/openapi.json\").json()\n        paths = openapi[\"paths\"]\n        schemas = openapi[\"components\"][\"schemas\"]\n    \n>       assert \"get\" in paths[\"/admin/application-workflow-publications\"]\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE       KeyError: '/admin/application-workflow-publications'\n\ntests/test_next_phase_contract.py:544: KeyError"
+}

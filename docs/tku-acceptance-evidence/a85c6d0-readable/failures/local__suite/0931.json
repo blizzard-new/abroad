@@ -1,0 +1,14 @@
+{
+  "original_xml_path": "local/suite.xml",
+  "original_xml_sha256": "ed9e202a35ef0bf393f1d60933621474a13c1d17cb7db3119c2803e70a5ba05f",
+  "case_attributes": {
+    "classname": "tests.test_next_phase_contract",
+    "name": "test_content_review_contract_exposes_nonpublishing_source_candidates",
+    "time": "1.190"
+  },
+  "failure_tag": "failure",
+  "failure_attributes": {
+    "message": "KeyError: 'ApplicationWorkflowSourceReplacementCandidate'"
+  },
+  "full_text": "tmp_path = PosixPath('/tmp/pytest-of-agent/pytest-138/test_content_review_contract_e0')\n\n    def test_content_review_contract_exposes_nonpublishing_source_candidates(tmp_path) -> None:\n        client = TestClient(create_app(tmp_path))\n        openapi = client.get(\"/openapi.json\").json()\n        candidate_path = (\n            \"/admin/application-workflow-source-replacement-candidates\"\n        )\n        candidate_export_path = (\n            \"/admin/application-workflow-source-replacement-review-queue.csv\"\n        )\n        source_evidence_export_path = (\n            \"/admin/application-workflow-review-backlog/source-evidence.csv\"\n        )\n>       candidate = openapi[\"components\"][\"schemas\"][\n            \"ApplicationWorkflowSourceReplacementCandidate\"\n        ][\"properties\"]\nE       KeyError: 'ApplicationWorkflowSourceReplacementCandidate'\n\ntests/test_next_phase_contract.py:316: KeyError"
+}
