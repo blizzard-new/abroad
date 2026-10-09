@@ -7,7 +7,7 @@ import json
 import re
 from functools import lru_cache
 
-from .ccu_sources import BUNDLE, CHECKED_AT, HOME
+from .ccu_sources import BUNDLE, CHECKED_AT, HOME, require_usable_source
 from .models import (
     ApplicationDocumentRequirement,
     ApplicationStep,
@@ -81,6 +81,7 @@ def reviewed_rows() -> dict[int, dict]:
                         BUNDLE / "overseas_sources" / (ev["source_id"] + ".json")
                     ).read_text()
                 )
+                require_usable_source(source)
                 if ev["status"] == "verified_current" and source.get(
                     "access_result"
                 ) in {
@@ -250,7 +251,7 @@ def describe_field(key: str, field: PartnerExchangeDetailField) -> str:
             if evidence.source_pages
             else "；官方文件／網頁原文"
         )
-        scope = f"（{evidence.academic_year}{pages}；查核2026-10-08）"
+        scope = f"（{evidence.academic_year}{pages}；查核{evidence.checked_at.date().isoformat()}）"
     return f"{LABELS[key]} · {STATUS_LABELS[field.status]}：{field.value or field.reason}{scope}"
 
 
@@ -429,7 +430,7 @@ def destination_profile(partner: PartnerUniversity) -> DestinationProfile:
                 title="合作校生活資料（適用年度逐欄標示）",
                 source_url=url,
                 category=PageCategory.PARTNER_SCHOOL,
-                summary=f"{ev.academic_year}；查核2026-10-08；" + (ev.excerpt or ""),
+                summary=f"{ev.academic_year}；查核{ev.checked_at.date().isoformat()}；" + (ev.excerpt or ""),
             )
             for url, ev in refs.items()
         ],

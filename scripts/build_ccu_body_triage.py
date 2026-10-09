@@ -91,6 +91,7 @@ def main():
                 ):
                     raise ValueError("Unproved CCU mapped-body duplicate: " + sid)
             state = (
+                "historical_insecure_acquisition_not_current_evidence" if source.get("current_use_allowed") is False else
                 "access_limited_no_policy_body" if limited or disposition.get("disposition") == "access_limited_no_policy_body" else
                 "mapped_sections_remaining_body_unclaimed" if mapped[sid] else
                 "identical_body_to_mapped_sections" if duplicate else
@@ -107,6 +108,8 @@ def main():
                 "academic_year": source.get("content_academic_year"),
                 "applicability": source.get("content_applicability"),
                 "checked_at": source.get("checked_at"),
+                "current_use_allowed": source.get("current_use_allowed", True),
+                "security_revalidation": source.get("security_revalidation"),
                 "sha256": source.get("sha256"), "text_sha256": source.get("text_sha256"),
                 "body_state": state, "read_evidence": reviews[sid],
                 "mapped_fields": mapped[sid],

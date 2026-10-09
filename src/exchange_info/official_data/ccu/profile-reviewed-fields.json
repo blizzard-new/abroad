@@ -6957,7 +6957,7 @@
   {
     "ccu_page": 83,
     "school_name": "Mapua University 瑪普爾大學",
-    "checked_at": "2026-10-08T09:36:20.774194+00:00",
+    "checked_at": "2026-10-09T00:19:58.792089+00:00",
     "fields": {
       "city": {
         "value": "Manila（Intramuros）",
@@ -7106,6 +7106,87 @@
         "http_status": 200,
         "access_result": null,
         "checked_at": "2026-10-08T09:10:26.945731+00:00"
+      },
+      {
+        "source_id": "p83-r27-root-normal-tls",
+        "source_url": "https://www.mapua.edu.ph/",
+        "result": "normal_tls_scoped_content_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:19:40.770501+00:00",
+        "sha256": "162b9a68d1d2cd81145d88717c0bb44392dd5fb3c0bb1478bab80b5718da126e",
+        "note": "只核首頁國際處與校曆入口；學位招生AY2027–2028不是CCU2027春交換公告，新聞／課程宣傳未全核。"
+      },
+      {
+        "source_id": "p83-r27-calendar-index-normal-tls",
+        "source_url": "https://www.mapua.edu.ph/pages/academics/academic-calendar-and-handbook",
+        "result": "normal_tls_scoped_content_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:19:43.126884+00:00",
+        "sha256": "d269614bfb3a5d4cd2d61018d2ddcee8213e8946ef26660d710138e508eab34d",
+        "note": "實際展開AY2026–2027校曆，內嵌JPEG另保存；2Q註冊2026-10-20至23不是交換申請期限。"
+      },
+      {
+        "source_id": "p83-r27-calendar-image-normal-tls",
+        "source_url": "https://www.mapua.edu.ph/pages/academics/academic-calendar-and-handbook",
+        "result": "normal_tls_scoped_content_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:19:46.719368+00:00",
+        "sha256": "0fced0e26cfd2ac7963a422db3a18108fad9120088fe77400f6738bc8aa65ad3",
+        "note": "直接目視官方內嵌影像後逐字轉錄標題及四季日期；2027第三季2/1–4/24、第四季5/3–7/17，註冊日1/26–29與4/27–30不是nomination/application截止。未聲稱假日圖全部文字抽取。"
+      },
+      {
+        "source_id": "p83-r27-ilrad-contact-normal-tls",
+        "source_url": "https://www.mapua.edu.ph/pages/about-mapua/partners-and-linkages/international-linkages-relations-and-development-cooperation-ilrad",
+        "result": "normal_tls_scoped_content_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:19:48.506027+00:00",
+        "sha256": "b5dc37031ad69ed57433089eca44c219498d2b24145caed4ed79607faa508840",
+        "note": "Inbound/Outbound exchange聯絡對象與Degree Admissions Office分開；無新當期規定。"
+      },
+      {
+        "source_id": "p83-r27-visa-normal-tls",
+        "source_url": "https://www.mapua.edu.ph/pages/about-mapua/partners-and-linkages/international-linkages-relations-and-development-cooperation-ilrad?tab=231",
+        "result": "normal_tls_scoped_content_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:19:51.272681+00:00",
+        "sha256": "ca67fd855e01fcab9569b659256e950747657c48f10181e77e6f651a723bbda0",
+        "note": "非學位少於6月SSP/旅遊簽／I-Card等條件；網頁另含Mapua outbound和degree9F，不套成CCU所有簽證。與手冊p28泛稱9F需按身份核對。"
+      },
+      {
+        "source_id": "p83-r27-application-normal-tls",
+        "source_url": "https://www.mapua.edu.ph/pages/about-mapua/partners-and-linkages/international-linkages-relations-and-development-cooperation-ilrad?tab=232",
+        "result": "normal_tls_scoped_content_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:19:52.774637+00:00",
+        "sha256": "4c3685a13f6d1a57f1a7b95cd199bb92f81829741ac555da9498721d72b2a692",
+        "note": "非學位一般提前六個月、degree12月、outbound3月分開，未印適用年，不當2027春確切截止。"
+      },
+      {
+        "source_id": "p83-r27-dormitories-normal-tls",
+        "source_url": "https://www.mapua.edu.ph/pages/about-mapua/partners-and-linkages/international-linkages-relations-and-development-cooperation-ilrad?tab=233",
+        "result": "normal_tls_scoped_content_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:19:54.221722+00:00",
+        "sha256": "1353602a1e8906ad8c37eeba81382dec07757e18d2b78ad37f0e7716ac600fea",
+        "note": "一般認可住宿估價未標年度；租房USD500/700/900按房型與容量、UniversityPad USD200/140/120 per person分开，未保证床位，不消除當期附件缺字費用。"
+      },
+      {
+        "source_id": "p83-r27-handbook-normal-tls",
+        "source_url": "https://www.mapua.edu.ph/pages/about-mapua/partners-and-linkages/international-linkages-relations-and-development-cooperation-ilrad?tab=427",
+        "result": "normal_tls_scoped_content_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:19:58.278853+00:00",
+        "sha256": "9f25d667ef3642a808a97e695fb18e76e04f4b479c29913c5301871be4c00542",
+        "note": "公開tab只含手冊連結；实际34頁PDF另下載核讀，不把索引當正文。"
+      },
+      {
+        "source_id": "p83-r27-international-handbook-normal-tls",
+        "source_url": "https://fs2.mapua.edu.ph/MapuaWebsite7/ILRAD/Handbook/International%20Hand%20Book.pdf",
+        "result": "normal_tls_scoped_content_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:19:58.792089+00:00",
+        "sha256": "9ff8ef4af2ae1147cc8f43460fef6eb942c449dd2a7a1b24416be80e939579eb",
+        "note": "實際讀34頁保存抽取文字；p14–16母校outbound/SGE、p18inbound、p19四季未年一般提名區間、p22–23April2026不同幣別估計、p24無校內宿舍、p28泛稱9F、p32全體外籍生保險分開。p27圖片流程尚未逐圖核，不聲稱全部圖像政策完成。"
       }
     ]
   },
@@ -12703,7 +12784,7 @@
   {
     "ccu_page": 119,
     "school_name": "Universidad Internacional 墨西哥國際大學",
-    "checked_at": "2026-10-08T09:36:20.774194+00:00",
+    "checked_at": "2026-10-09T00:20:02.381062+00:00",
     "fields": {
       "city": {
         "value": "Cuernavaca",
@@ -12820,6 +12901,24 @@
         "http_status": 503,
         "access_result": null,
         "checked_at": "2026-10-08T09:10:35.823958+00:00"
+      },
+      {
+        "source_id": "p119-r27-form-metadata-normal-tls",
+        "source_url": "https://forms.cloud.microsoft/formapi/api/a5756781-1389-4075-8fc7-ccbce3abb975/users/b605a4f4-cbff-4e9e-a4d7-a1bae1ad8241/light/runtimeForms('gWd1pYkTdUCPx8y846u5dfSkBbb_y55OpNehuuGtgkFURFVLRVpXRk5SV05CMDJYNkNBVVE5NkFLTy4u')?$expand=questions($expand=choices)",
+        "result": "normal_tls_scoped_content_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:20:02.381062+00:00",
+        "sha256": "f02f41bcea3c70b32ceb68a12523d162c88424a6aecb3c31ad2470862c5e7a7d",
+        "note": "正常TLS公開題目API表題Autumn2026 / Spring2027；48筆題目中介資料、不是正常瀏覽器顯示44題的驗證。渲染/分支/實際必填範圍及另行附件仍待核；只讀題目metadata，沒有請求或提交學生回覆。"
+      },
+      {
+        "source_id": "p119-r27-form-page-normal-tls",
+        "source_url": "https://forms.cloud.microsoft/pages/responsepage.aspx?id=gWd1pYkTdUCPx8y846u5dfSkBbb_y55OpNehuuGtgkFURFVLRVpXRk5SV05CMDJYNkNBVVE5NkFLTy4u&route=shorturl",
+        "result": "normal_tls_scoped_content_read",
+        "http_status": 200,
+        "checked_at": "2026-10-09T00:20:02.171775+00:00",
+        "sha256": "7b7a9e86b17c26fe1b89ac9ede189512efc7a75dd4ec70b4e52ca0e08adddc64",
+        "note": "正常TLS前端載入頁只核公開question-only prefetch設定；本頁不含題目正文，另以API正文核實。"
       }
     ]
   }

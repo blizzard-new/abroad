@@ -14,7 +14,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from exchange_info.ccu_overseas import LABELS, reviewed_rows
-from exchange_info.ccu_sources import BUNDLE, HOME, ROUND
+from exchange_info.ccu_sources import BUNDLE, HOME, ROUND, source_security_record
 from exchange_info.ccu_student_view import fetch_ccu_partner_universities
 
 
@@ -26,7 +26,7 @@ def main():
     reviews = reviewed_rows()
     partners = fetch_ccu_partner_universities()
     snapshots = {
-        p.stem: json.loads(p.read_text())
+        p.stem: source_security_record(json.loads(p.read_text()))
         for p in (BUNDLE / "overseas_sources").glob("*.json")
     }
     counts = {key: Counter() for key in LABELS}
@@ -51,6 +51,7 @@ def main():
             "source_acquisition": [],
         }
         if review:
+            row["checked_at"] = review.get("checked_at", row["checked_at"])
             row["overseas_review_note"] = review["review_note"]
             row["overseas_fields"] = review["fields"]
             if set(partner.partner_exchange_details) != set(LABELS):
@@ -71,6 +72,9 @@ def main():
                         "content_academic_year",
                         "content_review_note",
                         "checked_at",
+                        "acquisition_method",
+                        "current_use_allowed",
+                        "security_revalidation",
                     ]
                     if k in s
                 }
@@ -122,7 +126,8 @@ def main():
     report = {
         "home_university": HOME,
         "application_round": ROUND,
-        "checked_at": "2026-10-08",
+        "checked_at": max(r.get("checked_at", "2026-10-08") for r in reviews.values()),
+        "source_security_review": "tls-source-impact.json",
         "catalogue_count": len(partners),
         "reviewed_current_or_unknown_quota_schools": len(reviews),
         "overseas_field_count_per_school": len(LABELS),

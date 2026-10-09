@@ -7,7 +7,7 @@ import json
 import re
 from functools import lru_cache
 
-from .ccu_sources import BUNDLE
+from .ccu_sources import BUNDLE, require_usable_source
 from .models import (
     ExchangeFieldEvidence,
     PartnerProgramOption,
@@ -50,6 +50,7 @@ def reviewed_profiles() -> dict[int, dict]:
                         BUNDLE / "overseas_sources" / (ev["source_id"] + ".json")
                     ).read_text()
                 )
+                require_usable_source(source)
                 text_hash = hashlib.sha256(
                     json.dumps(
                         source.get("text_pages", []), ensure_ascii=False
@@ -128,7 +129,7 @@ def apply_profile(partner: PartnerUniversity) -> PartnerUniversity:
             geocode_status="pending",
             source_url=ev["source_url"],
             identity_source_url=partner.source_url,
-            note=f"查核2026-10-08；{ev['academic_year']}；{location['reason']} 原文：{location['value']}",
+            note=f"查核{ev['checked_at'].split('T')[0]}；{ev['academic_year']}；{location['reason']} 原文：{location['value']}",
         )
         partner.field_evidence["city"] = ExchangeFieldEvidence.model_validate(
             city["evidence"][0]
@@ -174,7 +175,7 @@ def profile_life(
             if ev["source_pages"]
             else ""
         )
-        text = f"{field['value']}（{STATUS_LABELS[field['status']]}；{ev['academic_year']}{pages}；查核2026-10-08）"
+        text = f"{field['value']}（{STATUS_LABELS[field['status']]}；{ev['academic_year']}{pages}；查核{ev['checked_at'].split('T')[0]}）"
         summaries[key] = text
         sections.append(
             StudentGuideSection(
@@ -304,7 +305,7 @@ def align_life_context(context, partner, profile, location):
                 key = "housing" if category.theme == "housing" else "costs"
                 text = describe_field(key, partner.partner_exchange_details[key])
             else:
-                text = f"{field['value']}（{STATUS_LABELS[field['status']]}；{ev['academic_year']}；查核2026-10-08）"
+                text = f"{field['value']}（{STATUS_LABELS[field['status']]}；{ev['academic_year']}；查核{ev['checked_at'].split('T')[0]}）"
             retained.append(
                 LifeEvidence(
                     theme=category.theme,

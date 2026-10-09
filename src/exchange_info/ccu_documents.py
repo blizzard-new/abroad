@@ -8,7 +8,7 @@ import re
 from functools import lru_cache
 from urllib.parse import unquote
 
-from .ccu_sources import BUNDLE
+from .ccu_sources import BUNDLE, require_usable_source
 from .models import (
     ApplicationDocumentRequirement,
     ApplicationStep,
@@ -43,6 +43,7 @@ def reviewed_documents() -> dict[int, dict]:
                         BUNDLE / "overseas_sources" / (ev["source_id"] + ".json")
                     ).read_text()
                 )
+                require_usable_source(source)
                 if source.get("access_result") in {
                     "unrelated_content_anomaly", "password_protected", "challenge_page", "captcha_required", "empty_response"
                 }:
@@ -205,7 +206,7 @@ def enrich_documents(workflow, partner):
             else "；官方原文"
         )
         target.details.append(
-            f"{requirement.name} · 階段{item['stage']}；{ev['academic_year']}{pages}；查核2026-10-08"
+            f"{requirement.name} · 階段{item['stage']}；{ev['academic_year']}{pages}；查核{ev['checked_at'].split('T')[0]}"
         )
         target.source_urls = list(
             dict.fromkeys([*target.source_urls, *requirement.source_urls])

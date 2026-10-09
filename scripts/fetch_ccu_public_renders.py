@@ -23,10 +23,10 @@ FORM = "https://forms.office.com/r/dBVPQn8y5n"
 ROOT = Path(__file__).resolve().parents[1]
 
 
-async def acquire(output, diagnostic):
+async def acquire(output):
     async with async_playwright() as playwright:
         browser = await playwright.chromium.launch(headless=True)
-        context = await browser.new_context(ignore_https_errors=diagnostic)
+        context = await browser.new_context()
         page = await context.new_page()
 
         async def save(name, action):
@@ -38,7 +38,7 @@ async def acquire(output, diagnostic):
                 "checked_at": datetime.now(UTC).isoformat(),
                 "url": page.url, "title": await page.title(), "action": action,
                 "sha256": hashlib.sha256(html).hexdigest(),
-                "diagnostic_context_ignore_https_errors": diagnostic,
+                "https_certificate_errors_ignored": False,
                 "answers_entered": False, "submitted": False,
                 "links": await page.locator("a[href]").evaluate_all(
                     "as => as.map(a => ({text: a.innerText, url: a.href}))"
@@ -48,9 +48,9 @@ async def acquire(output, diagnostic):
 
         try:
             for name, url in [("mapua-root", MAPUA), ("uninter-form", FORM)]:
-                # Independent normal TLS evidence; diagnostic browser trust is
-                # limited to this context and never changes system settings.
-                response = await asyncio.to_thread(requests.get, url, timeout=30)
+                # A successful HTTP read does not verify the browser-rendered
+                # body. Certificate failures stop this path without bypass.
+                response = await asyncio.to_thread(requests.get, url, timeout=30, verify=True)
                 response.raise_for_status()
                 (output / (name + "-verified-tls.html")).write_bytes(response.content)
                 await page.goto(url, wait_until="domcontentloaded", timeout=30000)
@@ -76,7 +76,7 @@ async def acquire(output, diagnostic):
                 if name == "handbook":
                     link = page.get_by_role("link", name="International HandBook Online", exact=False)
                     url = await link.get_attribute("href")
-                    response = await asyncio.to_thread(requests.get, url, timeout=30)
+                    response = await asyncio.to_thread(requests.get, url, timeout=30, verify=True)
                     response.raise_for_status()
                     (output / "mapua-international-handbook.pdf").write_bytes(response.content)
             await page.goto(CALENDAR, wait_until="domcontentloaded", timeout=30000)
@@ -94,13 +94,12 @@ async def acquire(output, diagnostic):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--diagnostic-ignore-https-errors", action="store_true", help="Only this temporary browser context; normal requests still verify TLS")
     args = parser.parse_args()
     output = args.output.resolve()
     if output.is_relative_to(ROOT):
         parser.error("Save research evidence outside the clone")
     output.mkdir(parents=True, exist_ok=True)
-    asyncio.run(acquire(output, args.diagnostic_ignore_https_errors))
+    asyncio.run(acquire(output))
 
 
 if __name__ == "__main__":

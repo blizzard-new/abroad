@@ -35,9 +35,11 @@ def main():
     overseas = {r["ccu_page"]: r for r in read("overseas-reviewed-fields.json")}
     documents = {r["ccu_page"]: r for r in read("partner-document-requirements.json")}
     sources = {
-        r["source_id"]: json.loads(
+        r["source_id"]: {**json.loads(
             (BUNDLE / "overseas_sources" / (r["source_id"] + ".json")).read_text()
-        ) for r in read("overseas-source-registry.json")
+        ), **{key: r[key] for key in ["current_use_allowed", "security_revalidation",
+                                     "content_applicability", "content_review_note"] if key in r}}
+        for r in read("overseas-source-registry.json")
     }
     requests = read("overseas-source-requests.json")
     visited = {r["url"].split("#")[0] for r in requests}
@@ -86,6 +88,8 @@ def main():
                 }
         candidates = {}
         for source in rows:
+            if source.get("current_use_allowed") is False:
+                continue
             if source.get("access_result") in ACCESS_LIMITATIONS:
                 continue
             host = urlsplit(source["source_url"]).hostname or ""
@@ -103,8 +107,10 @@ def main():
                 "source_id", "source_url", "checked_at", "status", "http_status",
                 "access_result", "content_academic_year", "content_applicability",
                 "content_review_note", "sha256", "bundled_file",
+                "current_use_allowed", "security_revalidation",
             ]}
             item["review_state"] = (
+                "historical_insecure_acquisition_not_current_evidence" if source.get("current_use_allowed") is False else
                 "access_limited_not_policy_content" if source.get("access_result") in ACCESS_LIMITATIONS else
                 "mapped_field_evidence_not_whole_document_completion" if sid in mapped else
                 "existing_field_review_ledger_not_all_fields_complete" if sid in read_ids else

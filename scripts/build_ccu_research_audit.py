@@ -15,7 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from exchange_info.ccu_overseas import LABELS
-from exchange_info.ccu_sources import BUNDLE
+from exchange_info.ccu_sources import BUNDLE, source_security_record
 
 PATTERNS = {
     "program_scope": r"exchange|bilateral|campus|交換|校區",
@@ -45,7 +45,9 @@ def write(name, value):
 def source_check(source, field, used, semantically_reviewed=(), partially_reviewed=()):
     sid = source["source_id"]
     timestamp = source["checked_at"]
-    if source["status"] == "fetch_failed":
+    if source.get("current_use_allowed") is False:
+        result = "歷史略過憑證或其衍生來源，不作現行欄位依據；獨立正常TLS新來源另列。"
+    elif source["status"] == "fetch_failed":
         result = f"讀取失敗；HTTP {source.get('http_status', '未取得')}；{source.get('error') or source.get('browser_check_error') or '詳見取得紀錄'}"
     elif source.get("access_result") in {
         "challenge_page",
@@ -131,7 +133,7 @@ def classify(field, sources, candidates, page, key):
 def main():
     rows = json.loads((BUNDLE / "overseas-reviewed-fields.json").read_text())
     sources = {
-        p.stem: json.loads(p.read_text())
+        p.stem: source_security_record(json.loads(p.read_text()))
         for p in (BUNDLE / "overseas_sources").glob("*.json")
     }
     ledger_path = BUNDLE / "semantic-review-ledger.json"
@@ -166,6 +168,8 @@ def main():
             if field["status"] != "missing":
                 continue
             for source in acquired:
+                if source.get("current_use_allowed") is False:
+                    continue
                 for page, text in enumerate(source.get("text_pages", []), 1):
                     hits = list(re.finditer(PATTERNS[key], text, re.IGNORECASE))
                     if hits:
@@ -272,6 +276,7 @@ def main():
             s
             for s in sources.values()
             if s.get("ccu_page") == page and re.search(r"-r\d-", s["source_id"])
+            and s.get("current_use_allowed") is not False
         ]
         failures.append(
             {
