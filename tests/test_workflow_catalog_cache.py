@@ -92,7 +92,7 @@ def test_a_later_override_can_replace_an_earlier_one() -> None:
 def test_loading_the_bundled_catalogue_is_remembered_but_each_caller_gets_its_own_list(monkeypatch) -> None:
     calls = []
     real = storage.read_jsonl
-    monkeypatch.setattr(storage, "read_jsonl", lambda path, model: calls.append(path) or real(path, model))
+    monkeypatch.setattr(storage, "read_jsonl", lambda path, model, **kwargs: calls.append(path) or real(path, model, **kwargs))
     storage._workflow_cache.clear()
     first = load_bundled_application_workflows()
     reads = len(calls)
@@ -127,11 +127,11 @@ def test_simultaneous_cold_catalogue_requests_read_each_bundle_once(monkeypatch)
     barrier = threading.Barrier(3)
     real = storage.read_jsonl
 
-    def read(path, model):
+    def read(path, model, **kwargs):
         calls.append(path)
         first_read.set()
         assert release_read.wait(10), "the test must release the cold file read"
-        return real(path, model)
+        return real(path, model, **kwargs)
 
     monkeypatch.setattr(storage, "read_jsonl", read)
 

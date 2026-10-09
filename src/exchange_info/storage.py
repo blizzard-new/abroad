@@ -9,7 +9,7 @@ from functools import wraps
 from inspect import signature
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Generator, Iterable, TextIO, TypeVar
+from typing import Callable, Generator, Iterable, TextIO, TypeVar
 
 from pydantic import BaseModel
 
@@ -375,7 +375,7 @@ def write_jsonl(path: Path, rows: Iterable[BaseModel]) -> int:
         return count
 
 
-def read_jsonl(path: Path, model: type[T]) -> list[T]:
+def read_jsonl(path: Path, model: type[T], *, transform: Callable[[T], T] | None = None) -> list[T]:
     with storage_path_lock(path):
         if not path.exists():
             return []
@@ -385,7 +385,8 @@ def read_jsonl(path: Path, model: type[T]) -> list[T]:
                 line = line.strip()
                 if not line:
                     continue
-                rows.append(model.model_validate_json(line))
+                row = model.model_validate_json(line)
+                rows.append(transform(row) if transform else row)
         return rows
 
 
@@ -608,10 +609,7 @@ def load_application_workflows(
     key = ("local", str(path), _file_signature(path), include_bundled, _bundled_workflow_signature() if include_bundled else None)
 
     def build() -> list[UniversityApplicationWorkflow]:
-        local = [
-            structure_application_workflow(row)
-            for row in read_jsonl(path, UniversityApplicationWorkflow)
-        ]
+        local = read_jsonl(path, UniversityApplicationWorkflow, transform=structure_application_workflow)
         if not include_bundled:
             return local
         return merge_application_workflows(
@@ -626,12 +624,13 @@ def load_bundled_application_workflows() -> list[UniversityApplicationWorkflow]:
     """Load the tracked official workflow baseline without runtime data-dir rules."""
 
     def build() -> list[UniversityApplicationWorkflow]:
-        bundled = [
+        # Structure each row while reading it. Keeping the entire raw six-school
+        # graph alongside its structured copy retains both during the cold load.
+        return [
             row
             for path in _bundled_workflow_paths()
-            for row in read_jsonl(path, UniversityApplicationWorkflow)
+            for row in read_jsonl(path, UniversityApplicationWorkflow, transform=structure_application_workflow)
         ]
-        return [structure_application_workflow(row) for row in bundled]
 
     return _cached_workflows(("bundled", _bundled_workflow_signature()), build)
 
@@ -738,6 +737,7 @@ def load_destination_profiles(
     data_dir: Path = DEFAULT_DATA_DIR,
     *,
     include_bundled_baseline: bool | None = None,
+    home_university: str | None = None,
 ) -> list[DestinationProfile]:
     local = _scope_legacy_destination_profiles(
         read_jsonl(
@@ -746,6 +746,10 @@ def load_destination_profiles(
         ),
         data_dir,
     )
+    home_key = school_identity_key(home_university) if home_university else None
+    if home_key:
+        local = [row for row in local if not row.home_university
+                 or school_identity_key(row.home_university) == home_key]
     include_bundled = (
         _include_bundled_defaults(data_dir)
         if include_bundled_baseline is None
@@ -754,8 +758,8 @@ def load_destination_profiles(
     if not include_bundled:
         return local
     bundled = [
-        row.model_copy(update={"home_university": home_university})
-        for directory, home_university in (
+        row.model_copy(update={"home_university": bundle_home})
+        for directory, bundle_home in (
             (BUNDLED_NTPU_DIR, NTPU.school_name),
             (BUNDLED_TKU_DIR, TKU.school_name),
             (BUNDLED_CGU_DIR, CGU.school_name),
@@ -763,6 +767,7 @@ def load_destination_profiles(
             (BUNDLED_CCU_DIR, CCU.school_name),
             (BUNDLED_NCU_DIR, NCU.school_name),
         )
+        if home_key is None or school_identity_key(bundle_home) == home_key
         for row in read_jsonl(
             directory / "destination_profiles.jsonl",
             DestinationProfile,

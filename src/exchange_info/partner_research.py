@@ -3170,7 +3170,13 @@ def apply_partner_research(
     records: list[PartnerResearchRecord],
     *,
     home_university: str,
+    copy_nested: bool = True,
 ) -> list[PartnerUniversity]:
+    """Overlay scalar research fields without changing the input catalogue.
+
+    Read-only API consumers may share nested provenance with the cached bundle.
+    Collectors retain independent nested objects by default.
+    """
     record_map = {
         school_identity_key(record.school_name): record
         for record in records
@@ -3180,7 +3186,7 @@ def apply_partner_research(
     }
     return [
         partner.model_copy(
-            deep=True,
+            deep=copy_nested,
             update={
                 "website": record_map[school_identity_key(partner.school_name)].official_website,
                 "ranking_info": record_map[school_identity_key(partner.school_name)].ranking_info,
@@ -3188,7 +3194,7 @@ def apply_partner_research(
             },
         )
         if school_identity_key(partner.school_name) in record_map
-        else partner.model_copy(deep=True)
+        else partner.model_copy(deep=copy_nested)
         for partner in partners
     ]
 
